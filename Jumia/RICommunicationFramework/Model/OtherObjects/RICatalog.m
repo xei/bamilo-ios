@@ -12,39 +12,36 @@
 
 @implementation RICatalog
 
-+ (RICatalog *)parseCatalog:(NSDictionary *)catalogDictionary forCountryConfiguration:(RICountryConfiguration *)configuration
-{
++ (RICatalog *)parseCatalog:(NSDictionary *)catalogDictionary forCountryConfiguration:(RICountryConfiguration *)configuration {
     RICatalog* newCatalog = [[RICatalog alloc] init];
     
     NSArray* filtersJSON = [catalogDictionary objectForKey:@"filters"];
     
-    if (VALID_NOTEMPTY(filtersJSON, NSArray)) {
-        
+    if (filtersJSON.count) {
         newCatalog.filters = [RIFilter parseFilters:filtersJSON];
-        
     }
     
     NSDictionary *bannerJSON = [catalogDictionary objectForKey:@"banner"];
     
-    if(VALID_NOTEMPTY(bannerJSON, NSDictionary))
-    {
+    if(bannerJSON) {
         newCatalog.banner = [RIBanner parseBanner:bannerJSON];
     }
     
-    if (VALID_NOTEMPTY([catalogDictionary objectForKey:@"title"], NSString)) {
+    if ([[catalogDictionary objectForKey:@"title"] length]) {
         newCatalog.title = [catalogDictionary objectForKey:@"title"];
     }
     
-    NSArray* categoriesArray = [NSArray new];
-    if (VALID_NOTEMPTY([catalogDictionary objectForKey:@"categories"], NSString)) {
-        categoriesArray = [[catalogDictionary objectForKey:@"categories"] componentsSeparatedByString:@","];
-    }
+    //_UNS
+//    NSArray* categoriesArray = [NSArray new];
+//    if (VALID_NOTEMPTY([catalogDictionary objectForKey:@"categories"], NSString)) {
+//        categoriesArray = [[catalogDictionary objectForKey:@"categories"] componentsSeparatedByString:@","];
+//    }
     
     newCatalog.totalProducts = [catalogDictionary objectForKey:@"total_products"];
     
     NSArray* results = [catalogDictionary objectForKey:@"results"];
     
-    if (VALID_NOTEMPTY(results, NSArray)) {
+    if (results.count) {
         
         NSMutableArray* products = [NSMutableArray new];
         

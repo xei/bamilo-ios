@@ -83,21 +83,10 @@
 + (NSString *)urlWithFiltersArray:(NSArray*)filtersArray
 {
     NSString* urlString = nil;
-    if (VALID_NOTEMPTY(filtersArray, NSArray)) {
-        for (RIFilter* filter in filtersArray) {
-            if (VALID_NOTEMPTY(filter, RIFilter)) {
-                
-                NSString* stringForFilter = [RIFilter urlWithFilter:filter];
-                
-                if (NOTEMPTY(stringForFilter)) {
-                    
-                    if (ISEMPTY(urlString)) {
-                        urlString = stringForFilter;
-                    } else {
-                        urlString = [NSString stringWithFormat:@"%@/%@", urlString, stringForFilter];
-                    }
-                }
-            }
+    for (RIFilter* filter in filtersArray) {
+        NSString* stringForFilter = [RIFilter urlWithFilter:filter];
+        if (stringForFilter.length) {
+            urlString = stringForFilter;
         }
     }
     return urlString;
@@ -131,8 +120,8 @@
                 
                 if (filterOption.selected) {
                     
-                    filterOption.val = [filterOption.val stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
-                    filterOption.val = [filterOption.val stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+                    //filterOption.val = [filterOption.val stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
+                    //filterOption.val = [filterOption.val stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
                     
                     if (ISEMPTY(urlString)) {
                         NSString* filterUidString = filter.uid;

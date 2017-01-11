@@ -59,27 +59,19 @@
     [self updateTitle];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffMenuSwipePanelNotification
-                                                        object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(applyButtonPressed)
-                                                 name:kDidPressDoneNotification
-                                               object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffMenuSwipePanelNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applyButtonPressed) name:kDidPressDoneNotification object:nil];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)updateTitle
-{
+- (void)updateTitle {
     NSInteger totalSelected = 0;
     for (RIFilter* filter in self.filtersArray) {
         if ([filter.uid isEqualToString:@"price"]) {
@@ -108,8 +100,7 @@
     }
 }
 
--(void)viewWillLayoutSubviews
-{
+-(void)viewWillLayoutSubviews {
     self.clearAllView.frame = CGRectMake(self.view.bounds.origin.x,
                                          self.view.bounds.size.height - 48.0f,
                                          self.view.bounds.size.width,
@@ -120,8 +111,7 @@
                                             self.clearAllView.bounds.size.width,
                                             1.0f);
     CGFloat sideBarWidth = 120.0f;
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
-    {
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
         sideBarWidth = 256.0f;
     }
     self.tableView.frame = CGRectMake(self.view.bounds.origin.x,
@@ -149,23 +139,19 @@
 
 #pragma mark - UITableView
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.filtersArray.count;
 }
 
-- (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-{
+- (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     return [UIView new];
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [JAFilterCell height];
 }
 
-- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *cellIdentifier = @"filterCell";
     
     JAFilterCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -182,8 +168,7 @@
     }
     
     CGFloat margin = 16.0f;
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
-    {
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
         margin = 32.0f;
     }
     [cell setupWithFilter:filter cellIsSelected:cellIsSelected width:tableView.frame.size.width margin:margin];
@@ -193,17 +178,15 @@
     return cell;
 }
 
-- (void)cellWasPressed:(UIControl*)sender
-{
+- (void)cellWasPressed:(UIControl*)sender {
     [self selectIndex:sender.tag];
 }
 
-- (void)selectIndex:(NSInteger)index
-{
+- (void)selectIndex:(NSInteger)index {
     NSIndexPath* oldSelectedIndexPath = self.selectedIndexPath;
     self.selectedIndexPath = [NSIndexPath indexPathForRow:index inSection:0];
     
-    if (VALID_NOTEMPTY(oldSelectedIndexPath, NSIndexPath) && oldSelectedIndexPath.row == self.selectedIndexPath.row) {
+    if (oldSelectedIndexPath && oldSelectedIndexPath.row == self.selectedIndexPath.row) {
         return; //DO NOTHING
     }
     
@@ -241,8 +224,7 @@
 
 #pragma mark - JAFiltersViewDelegate
 
-- (void)updatedValues;
-{
+- (void)updatedValues {
     UITableViewRowAnimation animation = UITableViewRowAnimationAutomatic;
     RIFilter* filter = [self.filtersArray objectAtIndex:self.selectedIndexPath.row];
     if ([filter.uid isEqualToString:@"price"]) {
@@ -254,8 +236,7 @@
 
 #pragma Button Logic
 
-- (void)clearAllFilters
-{
+- (void)clearAllFilters {
     for (RIFilter* filter in self.filtersArray) {
         if ([filter.uid isEqualToString:@"price"]) {
             RIFilterOption* option = [filter.options firstObject];
@@ -275,8 +256,7 @@
     [self selectIndex:indexToReload];
 }
 
-- (void)applyButtonPressed
-{
+- (void)applyButtonPressed {
     if (self.delegate && [self.delegate respondsToSelector:@selector(updatedFilters:)]) {
         [self.delegate updatedFilters:self.filtersArray];
     }

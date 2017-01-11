@@ -8,8 +8,8 @@
 
 #import "RIConfiguration.h"
 
-BOOL const RI_REQUEST_LOGGER = NO;
-BOOL const RI_RESPONSE_LOGGER = NO;
+BOOL const RI_REQUEST_LOGGER = YES;
+BOOL const RI_RESPONSE_LOGGER = YES;
 
 NSString *const RI_USERNAME = @"rocket";
 NSString *const RI_PASSWORD = @"z7euN7qfRD769BP";
@@ -54,9 +54,8 @@ NSString *const RI_UNIQUE_COUNTRY_NAME_SHOP = @"Myanmar";
 NSString *const RI_UNIQUE_COUNTRY_ISO_SHOP = @"MM";
 
 NSString *const RI_UNIQUE_COUNTRY_URL_BAMILO = @"http://www.bamilo.com/mobapi/";
-//NSString *const RI_UNIQUE_COUNTRY_URL_BAMILO_STAGING = @"https://alice-staging.bamilo.com/mobapi/";
-NSString *const RI_UNIQUE_COUNTRY_URL_BAMILO_STAGING = @"http://staging.bamilo.com/mobapi/";
 
+NSString *const RI_UNIQUE_COUNTRY_URL_BAMILO_STAGING = @"http://bamilo.com/mobapi/";
 NSString *const RI_UNIQUE_COUNTRY_URL_BAMILO_INTEGRATION_MOBILE = @"http://integration-mobile-www.bamilo.com/mobapi/";
 NSString *const RI_UNIQUE_COUNTRY_USER_AGENT_INJECTION_BAMILO = @"IRAMZ";
 NSString *const RI_UNIQUE_COUNTRY_USER_AGENT_INJECTION_BAMILO_INTEGRATION_MOBILE = @"M_IRAMZ";

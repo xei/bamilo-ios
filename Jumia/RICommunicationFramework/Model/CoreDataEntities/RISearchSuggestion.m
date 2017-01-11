@@ -214,41 +214,34 @@
                     sortingMethod:(RICatalogSortingEnum)sortingMethod
                           filters:(NSArray*)filters
                      successBlock:(void (^)(RICatalog *catalog))successBlock
-                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm))failureBlock
-{
+                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm))failureBlock {
+    
+
     NSString *tempUrl = [NSString stringWithFormat:@"%@%@search/find/", [RIApi getCountryUrlInUse], RI_API_VERSION];
-    
     NSString *sortingString = [RICatalogSorting urlComponentForSortingMethod:sortingMethod];
+
     
-    if (VALID_NOTEMPTY(sortingString, NSString)) {
+    if (sortingString.length) {
         sortingString = [NSString stringWithFormat:@"/%@", sortingString];
     }
     
     NSString *filtersString = [RIFilter urlWithFiltersArray:filters];
-    if(VALID_NOTEMPTY(filtersString, NSString))
-    {
-        if(NSNotFound == [@"q" rangeOfString:filtersString].location)
-        {
+    if(filtersString.length) {
+        if(NSNotFound == [@"q" rangeOfString:filtersString].location) {
             tempUrl = [NSString stringWithFormat:@"%@q/%@/page/%@/maxitems/%@%@/%@/", tempUrl, query, page, maxItems,
                        sortingString, filtersString];
-        }
-        else
-        {
+        } else {
             tempUrl = [NSString stringWithFormat:@"%@/page/%@/maxitems/%@%@/%@/", tempUrl, page, maxItems,
                           sortingString, filtersString];
         }
-    }
-    else
-    {
+    } else {
         tempUrl = [NSString stringWithFormat:@"%@q/%@/page/%@/maxitems/%@%@/", tempUrl, query, page, maxItems,
                    sortingString];
     }
     
     BOOL discountMode = NO;
-    for (RIFilter* filter in filters)
-    {
-        for (RIFilterOption* filterOption in filter.options)
-        {
+    for (RIFilter* filter in filters) {
+        for (RIFilterOption* filterOption in filter.options) {
             if (filterOption.discountOnly)
             {
                 discountMode = YES;
@@ -256,8 +249,7 @@
             }
         }
     }
-    if (discountMode)
-    {
+    if (discountMode) {
         tempUrl = [NSString stringWithFormat:@"%@/special_price/1", tempUrl];
     }
 
@@ -275,11 +267,11 @@
                                                                   NSDictionary *metadata = [jsonObject objectForKey:@"metadata"];
                                                                   
                                                                   RICatalog *catalog = [RICatalog parseCatalog:metadata forCountryConfiguration:configuration];
-                                                                  if (VALID_NOTEMPTY(catalog, RICatalog) && VALID_NOTEMPTY(catalog.products, NSArray)) {
+                                                                  if (catalog && catalog.products.count != 0) {
                                                                       dispatch_async(dispatch_get_main_queue(), ^{
                                                                           successBlock(catalog);
                                                                       });
-                                                                  }else{
+                                                                  } else {
                                                                       dispatch_async(dispatch_get_main_queue(), ^{
                                                                           failureBlock(apiResponse, nil, nil);
                                                                       });
@@ -295,23 +287,15 @@
                                                           } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               
                                                               dispatch_async(dispatch_get_main_queue(), ^{
-                                                                  if ([errorJsonObject objectForKey:@"metadata"])
-                                                                  {
+                                                                  if ([errorJsonObject objectForKey:@"metadata"]) {
                                                                       failureBlock(apiResponse, nil, [RISearchSuggestion parseUndefinedSearchTerm:[errorJsonObject objectForKey:@"metadata"]]);
-                                                                  }
-                                                                  else
-                                                                  {
-                                                                      if(NOTEMPTY(errorJsonObject))
-                                                                      {
+                                                                  } else {
+                                                                      if(errorJsonObject) {
                                                                           failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject], nil);
-                                                                      }
-                                                                      else if(NOTEMPTY(errorObject))
-                                                                      {
+                                                                      } else if(errorObject) {
                                                                           NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
                                                                           failureBlock(apiResponse, errorArray, nil);
-                                                                      }
-                                                                      else
-                                                                      {
+                                                                      } else {
                                                                           failureBlock(apiResponse, nil, nil);
                                                                       }
                                                                   }

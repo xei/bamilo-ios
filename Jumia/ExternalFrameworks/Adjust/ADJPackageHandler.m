@@ -119,7 +119,7 @@ static const char * const kInternalQueueName    = "io.adjust.PackageQueue";
         return;
     }
 
-    if (dispatch_semaphore_wait(self.sendingSemaphore, DISPATCH_TIME_NOW) != 0) {
+    if (dispatch_semaphore_wait(self.sendingSemaphore, DISPATCH_TIME_NOW)) {
         [self.logger verbose:@"Package handler is already sending"];
         return;
     }

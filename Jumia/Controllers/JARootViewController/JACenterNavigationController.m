@@ -371,11 +371,6 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showFiltersScreen:)
-                                                 name:kShowFiltersScreenNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showProductSpecificationScreen:)
                                                  name:kShowProductSpecificationScreenNotification
                                                object:nil];
@@ -1321,8 +1316,7 @@
     }
 }
 
-- (void)deactivateExternalPayment
-{
+- (void)deactivateExternalPayment {
     self.neeedsExternalPaymentMethod = NO;
 }
 
@@ -1402,23 +1396,6 @@
 }
 
 #pragma mark - Filters
-- (void)showFiltersScreen:(NSNotification*)notification
-{
-    UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAFiltersViewController class]])
-    {
-        JAFiltersViewController* filtersViewController = [[JAFiltersViewController alloc] init];
-        
-        if ([notification.userInfo objectForKey:@"filtersArray"]) {
-            filtersViewController.filtersArray = [notification.userInfo objectForKey:@"filtersArray"];
-        }
-        if ([notification.userInfo objectForKey:@"delegate"]) {
-            filtersViewController.delegate = [notification.userInfo objectForKey:@"delegate"];
-        }
-        
-        [self pushViewController:filtersViewController animated:YES];
-    }
-}
 
 - (void)showProductSpecificationScreen:(NSNotification*)notification
 {

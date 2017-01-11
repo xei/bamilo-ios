@@ -183,7 +183,7 @@
     
     operation.request.timeoutInterval = timeOut;
     
-    if (ISEMPTY(operation.request)) {
+    if (!operation.request) {
         operation.request = [NSMutableURLRequest requestWithURL:url];
     }
     
@@ -196,24 +196,18 @@
         NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:operation.mutableData
                                                                      options:kNilOptions
                                                                        error:&error];
-        if(ISEMPTY(error) && NOTEMPTY([responseJSON objectForKey:@"success"]) && [[responseJSON objectForKey:@"success"] boolValue]) {
+        if(!error && [[responseJSON objectForKey:@"success"] boolValue]) {
             
-            if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-            {
+            if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus]) {
                 operation.failureBlock(RIApiResponseNoInternetConnection, responseJSON, nil);
-            }
-            else
-            {
+            } else {
                 operation.successBlock(RIApiResponseSuccess, responseJSON);
             }
         } else {
             // This should not happen. If the request has an error it shouldn't be saved in cache
-            if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-            {
+            if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus]) {
                 operation.failureBlock(RIApiResponseNoInternetConnection, responseJSON, nil);
-            }
-            else
-            {
+            } else {
                 operation.failureBlock(RIApiResponseAPIError, responseJSON, nil);
             }
         }
@@ -260,7 +254,7 @@
         [operation.request setValue:maxAge forHTTPHeaderField:@"Cache-Control"];
     }
     
-    if (NOTEMPTY(parameters)) {
+    if (parameters) {
         if (!method) {
             NSString *urlWithParameters = [NSString stringWithFormat:@"%@?%@", [url absoluteString], [self getParametersString:parameters]];
             if([urlWithParameters containsString:@"email"]){
@@ -317,25 +311,21 @@
     }
     
     NSString* userAgent;
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
-    {
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
         userAgent = RI_HTTP_USER_AGENT_HEADER_IPAD_VALUE;
-    }
-    else
-    {
+    } else {
         userAgent = RI_HTTP_USER_AGENT_HEADER_IPHONE_VALUE;
     }
-    if (VALID_NOTEMPTY(userAgentInjection, NSString)) {
+    if (userAgentInjection.length) {
         userAgent = [NSString stringWithFormat:@"%@ %@", userAgent, userAgentInjection];
     }
     
     [operation.request addValue:userAgent forHTTPHeaderField:RI_HTTP_USER_AGENT_HEADER_NAME];
     
     NSString* locale = [RILocalizationWrapper getLocalization];
-    if (VALID_NOTEMPTY(locale, NSString)) {
+    if (locale.length) {
         [operation.request addValue:locale forHTTPHeaderField:RI_HTTP_USER_LANGUAGE_HEADER_NAME];
     }
-    
     return operation.request;
 }
 
@@ -344,16 +334,16 @@
     NSMutableArray *encodedParameters = [NSMutableArray array];
     
     NSArray *parametersKeys=[parameters allKeys];
-    if(NOTEMPTY(parametersKeys)) {
+    if(parametersKeys) {
         for(NSString *parameterKey in parametersKeys) {
-            if(NOTEMPTY([parameters objectForKey:parameterKey])) {
+            if([parameters objectForKey:parameterKey]) {
                 id obj = [parameters objectForKey:parameterKey];
                 if ([obj isKindOfClass:[NSString class]]) {
                     obj = @[obj];
                 }
                 if ([obj isKindOfClass:[NSArray class]]) {
                     for (NSString *parameterValue in obj) {
-                        if (VALID_NOTEMPTY(parameterValue, NSString)) {
+                        if (parameterValue.length) {
                             [encodedParameters addObject:[NSString stringWithFormat:@"%@=%@", parameterKey, [self encodeParameter:parameterValue]]];
                         }
                     }
@@ -366,7 +356,7 @@
 }
 
 
-- (NSString *) encodeParameter:(NSString *) string{
+- (NSString *) encodeParameter:(NSString *) string {
     NSMutableString *output = [NSMutableString string];
     const unsigned char *source = (const unsigned char *)[string UTF8String];
     NSInteger sourceLen = strlen((const char *)source);
@@ -386,8 +376,7 @@
     return output;
 }
 
-+ (void)deleteSessionCookie
-{
++ (void)deleteSessionCookie {
     for (NSHTTPCookie *cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies])
     {
         if([[cookie name] rangeOfString:@"PHPSESSID"].location != NSNotFound)
@@ -404,8 +393,7 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-+ (BOOL)setSessionCookie
-{
++ (BOOL)setSessionCookie {
     BOOL sessionCookieSetted = NO;
     NSString* phpSessIDCookie = [NSString stringWithFormat:@"%@%@",kPHPSESSIDCookie,[RIApi getCountryIsoInUse]];
     NSDictionary *cookieProperties = [[NSUserDefaults standardUserDefaults] objectForKey:phpSessIDCookie];
@@ -418,16 +406,14 @@
     return sessionCookieSetted;
 }
 
-- (void)cancelRequest:(NSString*)requestID;
-{
+- (void)cancelRequest:(NSString*)requestID; {
     RIOperation* operationToCancel = [self.operations objectForKey:requestID];
     [operationToCancel cancelRequest];
 }
 
 #pragma mark - RIOperationDelegate
 
-- (void)operationEnded:(RIOperation*)operation;
-{
+- (void)operationEnded:(RIOperation*)operation; {
     [self.operations removeObjectForKey:[NSString stringWithFormat:@"%p",operation]];
 }
 

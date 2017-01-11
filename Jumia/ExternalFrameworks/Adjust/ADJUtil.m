@@ -77,7 +77,7 @@ static NSRegularExpression * universalLinkRegex = nil;
     if (&NSURLIsExcludedFromBackupKey == nil) {
         u_int8_t attrValue = 1;
         int result = setxattr(filePath, attrName, &attrValue, sizeof(attrValue), 0, 0);
-        if (result != 0) {
+        if (result) {
             [logger debug:@"Failed to exclude '%@' from backup", url.lastPathComponent];
         }
     } else { // iOS 5.0 and higher

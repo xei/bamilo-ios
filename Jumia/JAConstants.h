@@ -81,9 +81,6 @@
 #define kShowMyOrdersScreenNotification @"NOTIFICATION_SHOW_MY_ORDERS_SCREEN"
 #define kShowMyOrderDetailScreenNotification @"NOTIFICATION_SHOW_MY_ORDER_DETAIL_SCREEN"
 
-// Filters
-#define kShowFiltersScreenNotification @"NOTIFICATION_SHOW_FILTERS_SCREEN"
-
 // Product
 #define kShowProductSpecificationScreenNotification @"NOTIFICATION_SHOW_PRODUCT_SPECIFICATION_SCREEN"
 #define kShowRatingsScreenNotification @"NOTIFICATION_SHOW_RATINGS_SCREEN"
