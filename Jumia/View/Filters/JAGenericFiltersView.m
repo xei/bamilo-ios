@@ -35,6 +35,7 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
     [self.tableView registerClass:[JAColorFilterCell class] forCellReuseIdentifier:@"JAColorFilterCell"];
     [self.tableView registerClass:[JARatingFilterCell class] forCellReuseIdentifier:@"JARatingFilterCell"];
     [self.tableView registerClass:[JATextFilterCell class] forCellReuseIdentifier:@"JATextFilterCell"];

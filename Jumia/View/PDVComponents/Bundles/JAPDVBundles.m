@@ -107,7 +107,7 @@
     }
     [itemView addSelectTarget:self action:@selector(refreshTotal)];
     [self.bundlesScrollView setContentSize:CGSizeMake(CGRectGetMaxX(itemView.frame), itemView.height)];
-    if (_bundlesArray.count != 0) {
+    if (_bundlesArray.count) {
         CGFloat plusSize = 15;
         [self.bundlesScrollView addSubview:[self plusViewWithFrame:CGRectMake(itemView.x - plusSize/2 - 7.5, 46.0f, plusSize, plusSize)]];
     }

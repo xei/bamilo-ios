@@ -18,6 +18,7 @@
  * If the order of the catalog sorting changes,
  * we've to change it in the push notifications as well
  */
+
 typedef NS_ENUM(NSInteger, RICatalogSorting) {
     RICatalogSortingRating = 0,
     RICatalogSortingPopularity,
@@ -27,6 +28,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
     RICatalogSortingName,
     RICatalogSortingBrand
 };
+
 
 @interface RIProduct : NSObject
 

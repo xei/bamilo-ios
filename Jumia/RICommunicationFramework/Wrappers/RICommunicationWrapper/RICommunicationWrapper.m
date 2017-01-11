@@ -183,7 +183,7 @@
     
     operation.request.timeoutInterval = timeOut;
     
-    if (ISEMPTY(operation.request)) {
+    if (!operation.request) {
         operation.request = [NSMutableURLRequest requestWithURL:url];
     }
     
@@ -196,24 +196,18 @@
         NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:operation.mutableData
                                                                      options:kNilOptions
                                                                        error:&error];
-        if(ISEMPTY(error) && NOTEMPTY([responseJSON objectForKey:@"success"]) && [[responseJSON objectForKey:@"success"] boolValue]) {
+        if(!error && [[responseJSON objectForKey:@"success"] boolValue]) {
             
-            if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-            {
+            if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus]) {
                 operation.failureBlock(RIApiResponseNoInternetConnection, responseJSON, nil);
-            }
-            else
-            {
+            } else {
                 operation.successBlock(RIApiResponseSuccess, responseJSON);
             }
         } else {
             // This should not happen. If the request has an error it shouldn't be saved in cache
-            if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-            {
+            if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus]) {
                 operation.failureBlock(RIApiResponseNoInternetConnection, responseJSON, nil);
-            }
-            else
-            {
+            } else {
                 operation.failureBlock(RIApiResponseAPIError, responseJSON, nil);
             }
         }

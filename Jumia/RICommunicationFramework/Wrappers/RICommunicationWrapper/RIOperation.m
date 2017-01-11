@@ -119,7 +119,7 @@
         if (error) {
             NSLog(@"//////////////////// START RESPONSE ERROR \n responseERROR: %@", error);
         }else
-            NSLog(@"//////////////////// START RESPONSE \n responseJSON: %@", responseJSON);
+            NSLog(@"//////////////////// START RESPONSE for %@ \n responseJSON: %@", self.request.URL, responseJSON);
         NSLog(@"//////////////////// END RESPONSE");
     }
     

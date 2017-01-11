@@ -1304,8 +1304,7 @@
     }
 }
 
-- (void)deactivateExternalPayment
-{
+- (void)deactivateExternalPayment {
     self.neeedsExternalPaymentMethod = NO;
 }
 

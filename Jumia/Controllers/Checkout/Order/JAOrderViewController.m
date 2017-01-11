@@ -501,7 +501,7 @@
         vatPositionY = CGRectGetMaxY(priceRulesLabel.frame);
     }
     
-    if (self.cart.shippingValue.floatValue != 0) {
+    if (self.cart.shippingValue.floatValue) {
         UILabel* shippingLabel = [UILabel new];
         shippingLabel.textAlignment = NSTextAlignmentLeft;
         shippingLabel.font = JABodyFont;
@@ -531,7 +531,7 @@
         nextYPos = CGRectGetMaxY(shippingLabel.frame) + 10.0f;
     }
     
-    if (self.cart.extraCosts.floatValue != 0) {
+    if (self.cart.extraCosts.floatValue) {
         UILabel* extraCostsLabel = [UILabel new];
         extraCostsLabel.textAlignment = NSTextAlignmentLeft;
         extraCostsLabel.font = JABodyFont;
