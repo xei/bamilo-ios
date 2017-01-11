@@ -39,9 +39,9 @@
 {
     RITeaserComponent* newTeaserComponent = (RITeaserComponent*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RITeaserComponent class])];
     
-    if (VALID_NOTEMPTY(teaserComponentJSON, NSDictionary)) {
-
-        if (VALID([teaserComponentJSON objectForKey:@"image"], NSString)) {
+    if (teaserComponentJSON) {
+        
+        if ([teaserComponentJSON objectForKey:@"image"]) {
             NSString* url = [teaserComponentJSON objectForKey:@"image"];
             NSString* realURL = [url stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
             newTeaserComponent.imagePortraitUrl = realURL;

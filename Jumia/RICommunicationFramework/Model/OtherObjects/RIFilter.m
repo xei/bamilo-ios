@@ -120,8 +120,8 @@
                 
                 if (filterOption.selected) {
                     
-                    filterOption.val = [filterOption.val stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
-                    filterOption.val = [filterOption.val stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+                    //filterOption.val = [filterOption.val stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
+                    //filterOption.val = [filterOption.val stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
                     
                     if (ISEMPTY(urlString)) {
                         NSString* filterUidString = filter.uid;
