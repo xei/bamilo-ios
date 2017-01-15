@@ -11,24 +11,19 @@
 
 @implementation JATeaserView
 
--(void)load;
-{
+- (void)load {
     self.backgroundColor = [UIColor clearColor];
-    
-    if (ISEMPTY(self.teaserGrouping)) {
+    if (!self.teaserGrouping) {
         return;
     }
 }
 
-- (void)teaserPressed:(UIControl*)control
-{
+- (void)teaserPressed:(UIControl*)control {
     NSInteger index = control.tag;
-    
     [self teaserPressedForIndex:index];
 }
 
-- (void)teaserPressedForIndex:(NSInteger)index
-{
+- (void)teaserPressedForIndex:(NSInteger)index {
     RITeaserComponent* teaserComponent = [self.teaserGrouping.teaserComponents objectAtIndex:index];
     if (self.validTeaserComponents) {
         teaserComponent = [self.validTeaserComponents objectAtIndex:index];
@@ -38,13 +33,13 @@
     
     NSMutableDictionary* userInfo = [NSMutableDictionary new];
     [userInfo setObject:STRING_HOME forKey:@"show_back_button_title"];
-    if (VALID_NOTEMPTY(teaserComponent.name, NSString)) {
+    if (teaserComponent.name.length) {
         [userInfo setObject:teaserComponent.name forKey:@"title"];
-    } else if (VALID_NOTEMPTY(teaserComponent.title, NSString)) {
+    } else if (teaserComponent.title.length) {
         [userInfo setObject:teaserComponent.title forKey:@"title"];
     }
     
-    if (VALID_NOTEMPTY(teaserComponent.richRelevance, NSString)) {
+    if (teaserComponent.richRelevance.length) {
         [userInfo setObject:teaserComponent.richRelevance forKey:@"richRelevance"];
     }
     
@@ -74,11 +69,9 @@
         }
     }
     
-    if (VALID_NOTEMPTY(teaserComponent.targetString, NSString)) {
+    if (teaserComponent.targetString.length) {
         [userInfo setObject:teaserComponent.targetString forKey:@"targetString"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
-                                                            object:nil
-                                                          userInfo:userInfo];
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:userInfo];
         
         //tracking click
         NSMutableDictionary* teaserTrackingDictionary = [NSMutableDictionary new];
@@ -92,8 +85,7 @@
 
 }
 
-- (NSString*)teaserTrackingInfoForIndex:(NSInteger)index;
-{
+- (NSString*)teaserTrackingInfoForIndex:(NSInteger)index {
     //should be implemented in subclasses
     return nil;
 }

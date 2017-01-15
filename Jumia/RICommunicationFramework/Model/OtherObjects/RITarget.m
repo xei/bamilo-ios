@@ -50,18 +50,16 @@
     return UNKNOWN;
 }
 
-- (NSString *)targetString
-{
+- (NSString *)targetString {
     return [NSString stringWithFormat:@"%@::%@", self.type, self.node];
 }
 
-+ (RITarget*)parseTarget:(NSString*)targetString;
-{
++ (RITarget*)parseTarget:(NSString*)targetString {
     RITarget* newTarget = [[RITarget alloc] init];
     
     NSString* type;
     NSString* node;
-    if (VALID_NOTEMPTY(targetString, NSString)) {
+    if (targetString.length) {
         NSArray *components = [targetString componentsSeparatedByString:@"::"];
         if (1 == components.count) {
             node = [components firstObject];

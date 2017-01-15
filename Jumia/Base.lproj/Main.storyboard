@@ -6,6 +6,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -144,14 +146,99 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vA9-VB-bkS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1543" y="-1305"/>
+            <point key="canvasLocation" x="1624" y="-1298"/>
+        </scene>
+        <!--Catalog No Result View Controller-->
+        <scene sceneID="ZoX-Yu-dMa">
+            <objects>
+                <viewController id="1gH-4D-wsq" customClass="CatalogNoResultViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Zje-vn-ck3"/>
+                        <viewControllerLayoutGuide type="bottom" id="7X9-pl-71p"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="PJC-pk-Qp4">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pN8-34-9vc" userLabel="Top TableView View">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="347"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JRw-GO-gRl" userLabel="Message Container View">
+                                        <rect key="frame" x="43" y="94" width="290" height="160"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pageNotFound" translatesAutoresizingMaskIntoConstraints="NO" id="WnJ-6T-0gc">
+                                                <rect key="frame" x="117" y="5" width="55" height="55"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="55" id="TCQ-Xj-8Vw"/>
+                                                    <constraint firstAttribute="width" secondItem="WnJ-6T-0gc" secondAttribute="height" multiplier="1:1" id="rCE-Yw-TxW"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="متاسفانه برای کلمه شما نتیجه یافت نشد" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lwx-IM-0oN">
+                                                <rect key="frame" x="26" y="80" width="237" height="21"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="✔︎ از صحت نگارش عبارت مورد نظر خود اطمینان حاصل نموده و مجدد جستجو نمایید." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A5u-Np-HlN">
+                                                <rect key="frame" x="29" y="123.5" width="232" height="31.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="WnJ-6T-0gc" firstAttribute="centerX" secondItem="JRw-GO-gRl" secondAttribute="centerX" id="6dR-tn-luW"/>
+                                            <constraint firstItem="A5u-Np-HlN" firstAttribute="centerX" secondItem="JRw-GO-gRl" secondAttribute="centerX" id="Ock-58-Bcy"/>
+                                            <constraint firstItem="A5u-Np-HlN" firstAttribute="width" secondItem="JRw-GO-gRl" secondAttribute="width" multiplier="0.8:1" id="Xas-fk-AqM"/>
+                                            <constraint firstAttribute="height" constant="160" id="aqU-W4-lrE"/>
+                                            <constraint firstAttribute="width" constant="290" id="dGi-2Z-Kpt"/>
+                                            <constraint firstAttribute="bottom" secondItem="A5u-Np-HlN" secondAttribute="bottom" constant="5" id="eNd-oe-GOD"/>
+                                            <constraint firstItem="lwx-IM-0oN" firstAttribute="centerX" secondItem="WnJ-6T-0gc" secondAttribute="centerX" id="ffD-HB-B9L"/>
+                                            <constraint firstItem="lwx-IM-0oN" firstAttribute="top" secondItem="WnJ-6T-0gc" secondAttribute="bottom" constant="20" id="rxt-c5-nan"/>
+                                            <constraint firstItem="WnJ-6T-0gc" firstAttribute="top" secondItem="JRw-GO-gRl" secondAttribute="top" constant="5" id="ulY-Ez-MIY"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="JRw-GO-gRl" firstAttribute="centerY" secondItem="pN8-34-9vc" secondAttribute="centerY" id="Kae-KE-19T"/>
+                                    <constraint firstItem="JRw-GO-gRl" firstAttribute="centerX" secondItem="pN8-34-9vc" secondAttribute="centerX" id="dzf-Bo-19g"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7OA-Gy-dwA">
+                                <rect key="frame" x="0.0" y="347" width="375" height="320"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="320" id="ESL-xx-0ZO"/>
+                                </constraints>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="7X9-pl-71p" firstAttribute="top" secondItem="7OA-Gy-dwA" secondAttribute="bottom" id="0hO-S2-BCN"/>
+                            <constraint firstItem="7OA-Gy-dwA" firstAttribute="leading" secondItem="PJC-pk-Qp4" secondAttribute="leading" id="J84-Br-qPw"/>
+                            <constraint firstAttribute="trailing" secondItem="pN8-34-9vc" secondAttribute="trailing" id="OUM-Ke-2jL"/>
+                            <constraint firstItem="pN8-34-9vc" firstAttribute="top" secondItem="PJC-pk-Qp4" secondAttribute="top" id="P9X-OA-FGS"/>
+                            <constraint firstItem="pN8-34-9vc" firstAttribute="leading" secondItem="PJC-pk-Qp4" secondAttribute="leading" id="bSV-zK-0Ip"/>
+                            <constraint firstItem="7OA-Gy-dwA" firstAttribute="top" secondItem="pN8-34-9vc" secondAttribute="bottom" id="p3s-7F-JRx"/>
+                            <constraint firstAttribute="trailing" secondItem="7OA-Gy-dwA" secondAttribute="trailing" id="s0C-hd-UZH"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="7OA-Gy-dwA" id="h4h-WU-AnH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6ud-77-mC7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2118.5" y="-1581.5"/>
         </scene>
         <!--Side Menu Navigation Controller-->
         <scene sceneID="euH-wI-leh">
             <objects>
                 <navigationController storyboardIdentifier="menuViewController" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="tA5-pZ-pB4" userLabel="Side Menu Navigation Controller" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="UvQ-KB-VPd">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="UvQ-KB-VPd">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -169,7 +256,7 @@
             <objects>
                 <navigationController storyboardIdentifier="rootNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="t6o-pS-UXi" customClass="JACenterNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="tCF-5Z-jLJ">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="tCF-5Z-jLJ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.91764705882352937" green="0.91764705882352937" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -348,7 +435,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="0V7-j2-mJV" userLabel="Application Navigation Controller" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="S2r-Lu-SWl">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="S2r-Lu-SWl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -379,6 +466,9 @@
             </objects>
         </scene>
     </scenes>
+    <resources>
+        <image name="pageNotFound" width="853" height="853"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

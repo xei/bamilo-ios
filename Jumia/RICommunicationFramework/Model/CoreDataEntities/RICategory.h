@@ -103,6 +103,7 @@
  */
 + (NSString*)getCategoryName:(NSString*)categoryId;
 
+
 @end
 
 @interface RICategory (CoreDataGeneratedAccessors)
