@@ -471,7 +471,8 @@
             return YES;
         }
         case CATALOG_SEARCH: {
-            JACatalogViewController *viewController = [JACatalogViewController new];
+            JACatalogViewController *viewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+            //JACatalogViewController *viewController = [JACatalogViewController new];
             [self loadScreenTarget:screenTarget forBaseViewController:viewController];
             [viewController setSearchString:screenTarget.target.node];
             [self pushViewController:viewController animated:screenTarget.pushAnimation];
@@ -553,8 +554,7 @@
     }
 }
 
-- (void)showRootViewController
-{
+- (void)showRootViewController {
     JABaseViewController* rootViewController = [[JABaseViewController alloc] init];
     [self setViewControllers:@[rootViewController]];
 }
@@ -1500,8 +1500,7 @@
 }
 
 
-- (void)showProductVariationsScreen:(NSNotification *)notification
-{
+- (void)showProductVariationsScreen:(NSNotification *)notification {
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAPDVVariationsViewController class]]) {
         
@@ -1510,8 +1509,8 @@
         if (notification.object && [notification.object isKindOfClass:[RIProduct class]]) {
             variationsVC.product = notification.object;
         }
-        if (VALID_NOTEMPTY(notification.userInfo, NSDictionary)) {
-            if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"product.variations"], NSArray)) {
+        if (notification.userInfo) {
+            if ([[notification.userInfo objectForKey:@"product.variations"] count]) {
                 variationsVC.variations = [notification.userInfo objectForKey:@"product.variations"];
             }
         }
@@ -1520,11 +1519,9 @@
     }
 }
 
-- (void)showSellerReviews:(NSNotification*)notification
-{
+- (void)showSellerReviews:(NSNotification*)notification {
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JASellerRatingsViewController class]])
-    {
+    if (![topViewController isKindOfClass:[JASellerRatingsViewController class]]) {
         JASellerRatingsViewController* viewController = [[JASellerRatingsViewController alloc] initWithNibName:@"JASellerRatingsViewController" bundle:nil];
         
         if (notification.object && [notification.object isKindOfClass:[RIProduct class]]) {
@@ -1535,8 +1532,7 @@
     }
 }
 
-- (void)showNewSellerReview:(NSNotification*)notification
-{
+- (void)showNewSellerReview:(NSNotification*)notification {
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JANewRatingViewController class]])
     {
@@ -1599,8 +1595,8 @@
     NSString* title = [notification.userInfo objectForKey:@"title"];
     
     if (targetString.length) {
-        
-        JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
+        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+        //JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
         
         catalog.targetString = targetString;
         catalog.navBarLayout.title = title;
@@ -1637,7 +1633,7 @@
         cameFromTeasers = [notification.userInfo objectForKey:@"teaserTrackingInfo"];
     }
     
-    if (VALID_NOTEMPTY(teaserGrouping, RITeaserGrouping)) {
+    if (teaserGrouping) {
         JACampaignsViewController* campaignsVC = [JACampaignsViewController new];
         
         campaignsVC.teaserGrouping = teaserGrouping;

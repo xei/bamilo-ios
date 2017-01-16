@@ -37,27 +37,23 @@
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
                                                                   NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
                                                                   
-                                                                  if(VALID_NOTEMPTY(metadata, NSDictionary))
-                                                                  {
+                                                                  if(metadata) {
                                                                       NSArray *data = [metadata objectForKey:@"data"];
-                                                                      if(VALID_NOTEMPTY(data, NSArray))
-                                                                      {
-                                                                          NSDictionary* teaserGroupingsDict = [RITeaserGrouping parseTeaserGroupings:data
-                                                                                                           country:configuration];
-                                                                          if (VALID_NOTEMPTY(teaserGroupingsDict, NSDictionary)) {
+                                                                      if(data.count) {
+                                                                          NSDictionary* teaserGroupingsDict = [RITeaserGrouping parseTeaserGroupings:data country:configuration];
+                                                                          if (teaserGroupingsDict) {
                                                                               if ([teaserGroupingsDict objectForKey:@"richTeaserGroupings"]) {
                                                                                   successBlock(teaserGroupingsDict,YES);
-                                                                              } else
+                                                                              } else {
                                                                                   successBlock(teaserGroupingsDict,NO);
+                                                                              }
                                                                           } else {
                                                                               failureBlock(apiResponse, nil);
                                                                           }
                                                                       } else {
                                                                           failureBlock(apiResponse, nil);
                                                                       }
-                                                                  }
-                                                                  else
-                                                                  {
+                                                                  } else {
                                                                       failureBlock(apiResponse, nil);
                                                                   }
                                                               } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
@@ -65,15 +61,12 @@
                                                               }];
                                                           } failureBlock:^(RIApiResponse apiResponse,   NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               
-                                                              if(NOTEMPTY(errorJsonObject))
-                                                              {
+                                                              if(errorJsonObject) {
                                                                   failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
-                                                              } else if(NOTEMPTY(errorObject))
-                                                              {
+                                                              } else if(errorObject) {
                                                                   NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
                                                                   failureBlock(apiResponse, errorArray);
-                                                              } else
-                                                              {
+                                                              } else {
                                                                   failureBlock(apiResponse, nil);
                                                               }
                                                           }];
@@ -222,11 +215,10 @@
 
 
 + (RITeaserGrouping*)parseTeaserGrouping:(NSDictionary*)teaserGroupingJSON
-                                 country:(RICountryConfiguration*)country
-{
+                                 country:(RICountryConfiguration*)country {
     RITeaserGrouping* newTeaserGrouping = (RITeaserGrouping*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RITeaserGrouping class])];
     
-    if (VALID_NOTEMPTY(teaserGroupingJSON, NSDictionary)) {
+    if (teaserGroupingJSON) {
 
         if ([teaserGroupingJSON objectForKey:@"title"]) {
             newTeaserGrouping.title = [teaserGroupingJSON objectForKey:@"title"];
@@ -242,17 +234,18 @@
         } else {
             NSArray* data = [teaserGroupingJSON objectForKey:@"data"];
             
-            if (VALID_NOTEMPTY(data, NSArray)) {
+            if (data.count) {
                 
                 for (NSDictionary* teaserComponentJSON in data) {
                     
-                    if (VALID_NOTEMPTY(teaserComponentJSON, NSDictionary)) {
+                    if (teaserComponentJSON) {
                         
-                        RITeaserComponent* newTeaserComponent = [RITeaserComponent parseTeaserComponent:teaserComponentJSON
-                                                                                                country:country];
+                        RITeaserComponent* newTeaserComponent = [RITeaserComponent parseTeaserComponent:teaserComponentJSON country:country];
                         newTeaserComponent.teaserGrouping = newTeaserGrouping;
                         
-                        [newTeaserGrouping addTeaserComponentsObject:newTeaserComponent];
+                        //[newTeaserGrouping addTeaserComponentsObject:newTeaserComponent];
+                        [newTeaserGrouping.teaserComponents addObject:newTeaserComponent];
+                        
                     }
                 }
             }
@@ -264,8 +257,7 @@
     return newTeaserGrouping;
 }
 
-+ (void)saveTeaserGrouping:(RITeaserGrouping *)teaserGrouping andContext:(BOOL)save
-{
++ (void)saveTeaserGrouping:(RITeaserGrouping *)teaserGrouping andContext:(BOOL)save {
     for (RITeaserComponent *teaserComponent in teaserGrouping.teaserComponents) {
         [RITeaserComponent saveTeaserComponent:teaserComponent andContext:NO];
     }

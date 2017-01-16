@@ -15,7 +15,7 @@
 
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSString * type;
-@property (nonatomic, retain) NSOrderedSet *teaserComponents;
+@property (nonatomic, retain) NSMutableOrderedSet *teaserComponents;
 @end
 
 @interface RITeaserGrouping (CoreDataGeneratedAccessors)
@@ -24,6 +24,8 @@
                         countryUserAgentInjection:(NSString *)countryUserAgentInjection
                                  withSuccessBlock:(void (^)(NSDictionary* teaserGroupings, BOOL richTeasers))successBlock
                                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
+
++ (RITeaserGrouping*)parseTeaserGrouping:(NSDictionary*)teaserGroupingJSON country:(RICountryConfiguration*)country;
 
 + (NSString*)getTeaserGroupingsWithSuccessBlock:(void (^)(NSDictionary* teaserGroupings, BOOL richTeaserGrouping))successBlock
                                 andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock

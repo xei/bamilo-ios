@@ -202,8 +202,7 @@
     return API;
 }
 
-+ (NSString*)formatPrice:(NSNumber*)price country:(RICountryConfiguration*)country
-{
++ (NSString*)formatPrice:(NSNumber*)price country:(RICountryConfiguration*)country {
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
     [formatter setMaximumFractionDigits:[[country noDecimals] integerValue]];
     [formatter setMinimumFractionDigits:[[country noDecimals] integerValue]];
@@ -212,12 +211,9 @@
     [formatter setGroupingSeparator:[country thousandsSep]];
     [formatter setUsesGroupingSeparator:YES];
     
-    if(!VALID_NOTEMPTY([country currencyPosition], NSNumber) || ![[country currencyPosition] boolValue])
-    {
+    if(!VALID_NOTEMPTY([country currencyPosition], NSNumber) || ![[country currencyPosition] boolValue]) {
         return [NSString stringWithFormat:@"%@ %@", [country currencySymbol], [formatter stringFromNumber:price]];
-    }
-    else
-    {
+    } else {
         return [NSString stringWithFormat:@"%@ %@", [formatter stringFromNumber:price], [country currencySymbol]];
     }
 }
