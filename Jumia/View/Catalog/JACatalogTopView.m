@@ -20,8 +20,7 @@
 @implementation JACatalogTopView
 
 @synthesize cellTypeSelected = _cellTypeSelected;
-- (void)setCellTypeSelected:(JACatalogCollectionViewCellType)cellTypeSelected
-{
+- (void)setCellTypeSelected:(JACatalogCollectionViewCellType)cellTypeSelected {
     _cellTypeSelected = cellTypeSelected;
     
     switch (cellTypeSelected) {
@@ -63,35 +62,20 @@
     }
 }
 
-+ (JACatalogTopView *)getNewJACatalogTopView
-{
-    NSArray *xib;
++ (JACatalogTopView *)getNewJACatalogTopView {
+    JACatalogTopView *xib;
     
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-    {
-        xib = [[NSBundle mainBundle] loadNibNamed:@"JACatalogTopView_iphone"
-                                            owner:nil
-                                          options:nil];
-    }
-    else if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-    {
-        xib = [[NSBundle mainBundle] loadNibNamed:@"JACatalogTopView_ipad"
-                                            owner:nil
-                                          options:nil];
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        xib = [[[NSBundle mainBundle] loadNibNamed:@"JACatalogTopView_iphone" owner:nil options:nil] objectAtIndex:0];
+    } else if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        xib = [[[NSBundle mainBundle] loadNibNamed:@"JACatalogTopView_ipad" owner:nil options:nil] objectAtIndex:0];
     }
     
-    for (NSObject *obj in xib) {
-        if ([obj isKindOfClass:[JACatalogTopView class]]) {
-            [(JACatalogTopView *)obj initializeCatalogTopView];
-            return (JACatalogTopView *)obj;
-        }
-    }
-    
-    return nil;
+    [xib initializeCatalogTopView];
+    return xib;
 }
 
-- (void)initializeCatalogTopView
-{
+- (void)initializeCatalogTopView {
     self.backgroundColor = [UIColor clearColor];
     
     [self.sortingButton setImage:[UIImage imageNamed:@"sortingIcon_normal"] forState:UIControlStateNormal];
@@ -127,8 +111,7 @@
     [self addSubview:_seperatorBottom];
 }
 
-- (void)repositionForWidth:(CGFloat)width
-{
+- (void)repositionForWidth:(CGFloat)width {
     self.frame = CGRectMake(self.frame.origin.x,
                             self.frame.origin.y,
                             width,
@@ -145,51 +128,23 @@
     
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         
+        self.filterBackView.frame = CGRectMake(0, 0, halfWidth, self.filterBackView.frame.size.height);
         
-
-        self.filterBackView.frame = CGRectMake(0,
-                                               0,
-                                               halfWidth,
-                                               self.filterBackView.frame.size.height);
-        self.filterButton.frame = CGRectMake(0,
-                                             0.0f,
-                                             halfWidth,
-                                             self.filterButton.frame.size.height);
+        self.filterButton.frame = CGRectMake(0, 0.0f, halfWidth, self.filterButton.frame.size.height);
+        
+        self.sortingBackView.frame = CGRectMake( CGRectGetMaxX(self.filterBackView.frame), 0, halfWidth, self.sortingBackView.frame.size.height);
+        self.sortingButton.frame = CGRectMake(0, 0.0f, halfWidth, self.sortingButton.frame.size.height);
         
         
-        self.sortingBackView.frame = CGRectMake( CGRectGetMaxX(self.filterBackView.frame),
-                                                0,
-                                                halfWidth,
-                                                self.sortingBackView.frame.size.height);
-        self.sortingButton.frame = CGRectMake(0,
-                                              0.0f,
-                                              halfWidth,
-                                              self.sortingButton.frame.size.height);
+    } else {
+        self.filterButton.frame = CGRectMake(0, 0, halfWidth, self.filterButton.frame.size.height);
         
-        
-    }else{
-        self.filterButton.frame = CGRectMake(0,
-                                             0,
-                                             halfWidth,
-                                             self.filterButton.frame.size.height);
-        
-        self.sortingButton.frame = CGRectMake(CGRectGetMaxX(self.filterButton.frame),
-                                              0,
-                                              halfWidth,
-                                              self.sortingButton.frame.size.height);
-        
+        self.sortingButton.frame = CGRectMake(CGRectGetMaxX(self.filterButton.frame), 0,halfWidth, self.sortingButton.frame.size.height);
     }
     CGFloat seperatorHeight = 32.f;
-    [_seperatorFilter setFrame:CGRectMake(halfWidth,
-                                          (self.frame.size.height - 1.f - seperatorHeight)/2.f,
-                                          1.f,
-                                          seperatorHeight)];
-    [_seperatorViewMode setFrame:CGRectMake(self.viewModeButton.frame.origin.x,
-                                            (self.frame.size.height - 1.f - seperatorHeight)/2.f,
-                                            1.f,
-                                            seperatorHeight)];
-    [_seperatorBottom setFrame:CGRectMake(0, self.frame.size.height - 1.f,
-                                          width, 1.f)];
+    [_seperatorFilter setFrame:CGRectMake(halfWidth, (self.frame.size.height - 1.f - seperatorHeight)/2.f, 1.f, seperatorHeight)];
+    [_seperatorViewMode setFrame:CGRectMake(self.viewModeButton.frame.origin.x, (self.frame.size.height - 1.f - seperatorHeight)/2.f, 1.f, seperatorHeight)];
+    [_seperatorBottom setFrame:CGRectMake(0, self.frame.size.height - 1.f, width, 1.f)];
     
     if (RI_IS_RTL) {
         [self.viewModeButton flipViewPositionInsideSuperview];
@@ -199,13 +154,13 @@
         [self.filterButton flipViewPositionInsideSuperview];
         [_seperatorViewMode flipViewPositionInsideSuperview];
         [_seperatorFilter flipViewPositionInsideSuperview];
+        
         //the sorting button will be aligned when the text is set, but we need to align the filters here
         [self.filterButton flipViewAlignment];
     }
 }
 
-- (void)setSorting:(RICatalogSortingEnum)sorting;
-{
+- (void)setSorting:(RICatalogSortingEnum)sorting {
     NSInteger index = sorting;
     if (sorting < 0 || sorting >= [kJASORTINGVIEW_OPTIONS_ARRAY count]) {
         index = 0;
@@ -217,22 +172,19 @@
     }
 }
 
-- (void)sortingButtonPressed:(id)sender
-{
+- (void)sortingButtonPressed:(id)sender {
     if (self.delegate && [self.delegate respondsToSelector:@selector(sortingButtonPressed)]) {
         [self.delegate sortingButtonPressed];
     }
 }
 
-- (void)filterButtonPressed:(id)sender
-{
+- (void)filterButtonPressed:(id)sender {
     if (self.delegate && [self.delegate respondsToSelector:@selector(filterButtonPressed)]) {
         [self.delegate filterButtonPressed];
     }
 }
 
-- (void)viewModeButtonPressed:(id)sender
-{
+- (void)viewModeButtonPressed:(id)sender {
     //reverse selection
     if (self.cellTypeSelected++ == JACatalogCollectionViewPictureCell) {
         self.cellTypeSelected = JACatalogCollectionViewListCell;

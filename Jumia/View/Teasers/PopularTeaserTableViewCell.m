@@ -35,7 +35,7 @@
     self.titleUILabel.text  = nil;
 }
 
-+ (NSString *)nibNAme {
++ (NSString *)nibName {
     return @"PopularTeaserTableViewCell";
 }
 @end

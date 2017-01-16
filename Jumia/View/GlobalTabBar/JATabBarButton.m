@@ -114,18 +114,17 @@
         [self.numberLabel setHidden:YES];
     }
     
-    if (ISEMPTY(self.label)) {
+    if (!self.label) {
         self.label = [UILabel new];
         self.label.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
         self.label.font = JACaptionFont;
         self.label.textAlignment = NSTextAlignmentCenter;
         [self.clickableView addSubview:self.label];
     }
-    
     [self.label setText:title];
     [self.label sizeToFit];
     [self.label setFrame:CGRectMake(self.clickableView.bounds.origin.x,
-                                    self.clickableView.height - self.label.frame.size.height - labelBottomMargin,
+                                    self.clickableView.height - self.label.frame.size.height,
                                     self.clickableView.bounds.size.width,
                                     self.label.frame.size.height)];
     

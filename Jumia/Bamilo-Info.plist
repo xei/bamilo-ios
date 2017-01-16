@@ -104,15 +104,6 @@
 	<string>Bamilo would like to access your contacts</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Bamilo would like to access your photos</string>
-	<key>UIAppFonts</key>
-	<array>
-		<string>Bamilo-No-Reg.ttf</string>
-		<string>BAMILO-SANS BLACK_0.TTF</string>
-		<string>BAMILO-SANS BOLD_0.TTF</string>
-		<string>BAMILO-SANS LIGHT_0.TTF</string>
-		<string>BAMILO-SANS REG_0.TTF</string>
-		<string>BAMILO-SANS ULTRA LIGHT_0.TTF</string>
-	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
@@ -136,5 +127,13 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Bamilosans Reg.ttf</string>
+		<string>Bamilosans Light.ttf</string>
+		<string>Bamilosans UltraLight.ttf</string>
+		<string>Bamilosans Bold.ttf</string>
+		<string>Bamilosans Black.ttf</string>
+	</array>
 </dict>
 </plist>

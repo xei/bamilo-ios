@@ -84,14 +84,8 @@
     if (!_cartCountLabel) {
         
         UIFont *font = JACaptionFont;
-        if ([@"Zawgyi-One" isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:kFontRegularNameKey]]) {
-            font = [UIFont fontWithName:@"HelveticaNeue" size:font.pointSize];
-        }
-        
-        _cartCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(301,
-                                                                    8,
-                                                                    18.f,
-                                                                    18.f)];
+    
+        _cartCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(301, 8, 18.f, 18.f)];
         _cartCountLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
         _cartCountLabel.font = font;
         _cartCountLabel.textColor = JAWhiteColor;

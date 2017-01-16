@@ -12,5 +12,5 @@
     @property (strong, nonatomic) NSString* titleString;
     @property (strong, nonatomic) NSString* imageUrl;
 
-    + (NSString *) nibNAme;
+    + (NSString *) nibName;
 @end
