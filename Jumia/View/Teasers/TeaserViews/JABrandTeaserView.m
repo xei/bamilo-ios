@@ -18,8 +18,7 @@
 
 @implementation JABrandTeaserView
 
-- (void)load
-{
+- (void)load {
     [super load];
     
     CGFloat topAreaHeight = 50.0f; //value by design
@@ -40,10 +39,7 @@
     groupingTitleLabel.text = [STRING_SHOPS_OF_THE_WEEK uppercaseString];
     groupingTitleLabel.textAlignment = NSTextAlignmentLeft;
     [groupingTitleLabel sizeToFit];
-    [groupingTitleLabel setFrame:CGRectMake(groupingTitleLabelMargin,
-                                            0.0f,
-                                            self.frame.size.width - groupingTitleLabelMargin*2,
-                                            topAreaHeight)];
+    [groupingTitleLabel setFrame:CGRectMake(groupingTitleLabelMargin, 0.0f, self.frame.size.width - groupingTitleLabelMargin*2, topAreaHeight)];
     
     [self addSubview:groupingTitleLabel];
     
@@ -67,11 +63,8 @@
     for (int i = 0; i < self.teaserGrouping.teaserComponents.count; i++) {
         RITeaserComponent* component = [self.teaserGrouping.teaserComponents objectAtIndex:i];
         
+        JAClickableView* clickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(currentX, self.scrollView.bounds.origin.y, componentWidth, self.scrollView.bounds.size.height)];
         
-        JAClickableView* clickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(currentX,
-                                                                                           self.scrollView.bounds.origin.y,
-                                                                                           componentWidth,
-                                                                                           self.scrollView.bounds.size.height)];
         clickableView.tag = i;
         clickableView.backgroundColor = [UIColor whiteColor];
         [clickableView addTarget:self action:@selector(teaserPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -98,8 +91,7 @@
     }
 }
 
-- (NSString*)teaserTrackingInfoForIndex:(NSInteger)index;
-{
+- (NSString*)teaserTrackingInfoForIndex:(NSInteger)index {
     NSString* teaserTrackingInfo = [NSString stringWithFormat:@"Brand_Teaser_%ld",(long)index];
     return teaserTrackingInfo;
 }

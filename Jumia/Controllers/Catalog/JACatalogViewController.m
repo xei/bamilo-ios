@@ -15,7 +15,8 @@
 //#import "JACatalogWizardView.h"
 #import "JAClickableView.h"
 #import "JAUndefinedSearchView.h"
-#import "JAFilteredNoResultsView.h"
+//#import "JAFilteredNoResultsView.h"
+#import "CatalogNoResultViewController.h"
 #import "JAAppDelegate.h"
 #import <FBSDKCoreKit/FBSDKAppEvents.h>
 #import "UIImageView+JA.h"
@@ -38,11 +39,13 @@
 
 typedef void (^ProcessActionBlock)(void);
 
-@interface JACatalogViewController () <JAFilteredNoResulsViewDelegate> {
+@interface JACatalogViewController () {
     BOOL _needAddToFavBlock;
     ProcessActionBlock _processActionBlock;
     BOOL _hasBanner;
 }
+
+@property (nonatomic, strong) CatalogNoResultViewController* containerViewController;
 
 //$WIZ$
 //@property (nonatomic, strong) JACatalogWizardView* wizardView;
@@ -120,56 +123,13 @@ typedef void (^ProcessActionBlock)(void);
 
 -(void)showNoResultsView:(CGFloat)withVerticalPadding undefinedSearchTerm:(RIUndefinedSearchTerm*)undefinedSearchTerm {
     
-    //self.filteredNoResultsView.delegate = nil;
-    //[self.filteredNoResultsView removeFromSuperview];
-    //self.filteredNoResultsView = [[JAFilteredNoResultsView alloc] initWithFrame:[self viewBounds]];
-    
-    //self.filteredNoResultsView.tag = 1001;
-    
-    // fail-safe condition: launches error view in case something goes wrong
-//    if(self.filteredNoResultsView == nil || !self.filtersArray.count) {
-//        if(undefinedSearchTerm) {
-//            self.undefinedBackup = undefinedSearchTerm;
-//            self.navBarLayout.subTitle = [NSString stringWithFormat:@"0 %@", STRING_ITEMS];
-//            [self reloadNavBar];
-//            [self addUndefinedSearchView:self.undefinedBackup frame:CGRectMake(6.0f,
-//                                                                               self.catalogTopView.frame.origin.y,
-//                                                                               [self viewBounds].size.width - 12.0f,
-//                                                                               [self viewBounds].size.height)];
-//        } else {
-//            [self onErrorResponse:RIApiResponseUnknownError messages:nil showAsMessage:NO selector:@selector(loadMoreProducts) objects:nil];
-//        }
-//    } else {
-        //self.filteredNoResultsView.delegate = self;
-        
-        //$WIZ$
-        //        if (VALID_NOTEMPTY(self.wizardView, JACatalogWizardView))
-        //        {
-        //            [self.wizardView removeFromSuperview];
-        //        }
-        
+    self.containerViewController.searchQuery = self.searchString ? self.searchString : self.categoryName;
     [self.catalogTopView setHidden:YES];
     [self.collectionView setHidden:YES];
     [self.containerView setHidden:NO];
     
-        
-        //[self.filteredNoResultsView setupView:[self viewBounds]];
-        
-        //[self.view addSubview:self.filteredNoResultsView];
-//    }
 }
 
-/**
- * delegate method to respond when the edit filters button is pressed in the JAFilteredNoResultsView
- *
- */
-//-(void)pressedEditFiltersButton:(JAFilteredNoResultsView *)view {
-//    [self.collectionView setHidden:NO];
-//    
-//    self.catalogTopView.hidden = NO;
-//    
-//    [self filterButtonPressed];
-//}
 
 - (void)showLoading {
     [super showLoading];
@@ -178,16 +138,10 @@ typedef void (^ProcessActionBlock)(void);
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    
-    [self.containerView setHidden:YES];
-    
     self.navBarLayout.showBackButton = YES;
-    
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(navBarClicked)
-                                                 name:kDidPressNavBar
-                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(navBarClicked) name:kDidPressNavBar object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getCategories) name:kSideMenuShouldReload object:nil];
     
     if (self.category) {
@@ -238,6 +192,8 @@ typedef void (^ProcessActionBlock)(void);
     } else {
         [self getCategories];
     }
+    
+    [self.containerView setHidden:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -324,7 +280,6 @@ typedef void (^ProcessActionBlock)(void);
 //    if (self.filteredNoResultsView.superview) {
 //        self.catalogTopView.hidden = YES;
 //    }
-    [self.containerView setHidden:YES];
 }
 
 - (void)setupViews {
@@ -621,6 +576,7 @@ typedef void (^ProcessActionBlock)(void);
         
         if(RIApiResponseAPIError == apiResponse) {
             [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
+        
             [self showNoResultsView:CGRectGetMaxY(self.catalogTopView.frame) undefinedSearchTerm:undefSearchTerm];
         } else {
             [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadMoreProducts) objects:nil];
@@ -1478,8 +1434,7 @@ typedef void (^ProcessActionBlock)(void);
     }];
 }
 
-- (void)trackingEventSort
-{
+- (void)trackingEventSort {
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:self.title forKey:kRIEventLabelKey];
     [trackingDictionary setValue:@"SortingOnCatalog" forKey:kRIEventActionKey];
@@ -1490,8 +1445,7 @@ typedef void (^ProcessActionBlock)(void);
                                               data:[trackingDictionary copy]];
 }
 
-- (void)trackingEventSearchForString:(NSString *)string with:(NSNumber *)numberOfProducts
-{
+- (void)trackingEventSearchForString:(NSString *)string with:(NSNumber *)numberOfProducts {
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
@@ -1517,15 +1471,12 @@ typedef void (^ProcessActionBlock)(void);
                                FBSDKAppEventParameterNameSuccess: @1 }];
 }
 
-- (void)trackingEventGTMListingForCategoryName:(NSString *)categoryName andSubCategoryName:(NSString *)subCategoryName
-{
+- (void)trackingEventGTMListingForCategoryName:(NSString *)categoryName andSubCategoryName:(NSString *)subCategoryName {
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-    if(VALID_NOTEMPTY(categoryName, NSString))
-    {
+    if(VALID_NOTEMPTY(categoryName, NSString)) {
         [trackingDictionary setValue:categoryName forKey:kRIEventCategoryIdKey];
     }
-    if(VALID_NOTEMPTY(subCategoryName, NSString))
-    {
+    if(VALID_NOTEMPTY(subCategoryName, NSString)) {
         [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryIdKey];
     }
     [self trackingEventGTMListing:trackingDictionary];
@@ -1556,8 +1507,7 @@ typedef void (^ProcessActionBlock)(void);
                                               data:[trackingDictionary copy]];
 }
 
-- (void)trackingEventFacebookListeningForProductCategoryName:(NSString *)categoryName
-{
+- (void)trackingEventFacebookListeningForProductCategoryName:(NSString *)categoryName {
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
     
@@ -1573,5 +1523,17 @@ typedef void (^ProcessActionBlock)(void);
                                               data:[trackingDictionary copy]];
     
 }
+
+
+#pragma segue preparation 
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    NSString * segueName = segue.identifier;
+    if ([segueName isEqualToString: @"embedCatalogNoResult"]) {
+        self.containerViewController = (CatalogNoResultViewController *) [segue destinationViewController];
+    }
+}
+
+
 
 @end

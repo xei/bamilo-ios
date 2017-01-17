@@ -14,8 +14,7 @@
 
 @implementation JACustomNavigationBarView
 
-- (UIView *)separatorView
-{
+- (UIView *)separatorView {
     if (!_separatorView) {
         _separatorView = [UIView new];
         [_separatorView setBackgroundColor:JABlack400Color];
@@ -24,8 +23,7 @@
     return _separatorView;
 }
 
-- (UIButton *)leftButton
-{
+- (UIButton *)leftButton {
     if (!_leftButton) {
         _leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_leftButton setFrame:CGRectMake(0, 0, 40, 44)];
@@ -37,8 +35,7 @@
     return _leftButton;
 }
 
-- (UIButton *)backButton
-{
+- (UIButton *)backButton {
     if (!_backButton) {
         _backButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_backButton setFrame:CGRectMake(0, 0, 60, 44)];
@@ -53,8 +50,7 @@
     return _backButton;
 }
 
-- (UIButton *)cartButton
-{
+- (UIButton *)cartButton {
     if (!_cartButton) {
         _cartButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_cartButton setFrame:CGRectMake(275, 0, 45, 44)];
@@ -66,8 +62,7 @@
     return _cartButton;
 }
 
-- (UIButton *)searchButton
-{
+- (UIButton *)searchButton {
     if (!_searchButton) {
         _searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_searchButton setFrame:CGRectMake(232, 0, 44, 44)];
@@ -79,8 +74,7 @@
     return _searchButton;
 }
 
-- (UILabel *)cartCountLabel
-{
+- (UILabel *)cartCountLabel {
     if (!_cartCountLabel) {
         
         UIFont *font = JACaptionFont;
@@ -97,8 +91,7 @@
     return _cartCountLabel;
 }
 
-- (UIImageView *)logoImageView
-{
+- (UIImageView *)logoImageView {
     if (!_logoImageView) {
         _logoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"img_navbar_logo"]];
         [_logoImageView setFrame:CGRectMake(119, 12, 83, 20)];
@@ -106,33 +99,30 @@
     return _logoImageView;
 }
 
-- (UILabel *)titleLabel
-{
+- (UILabel *)titleLabel {
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 0, 230, 44)];
         [_titleLabel setLineBreakMode:NSLineBreakByTruncatingMiddle];
         [_titleLabel setTextAlignment:NSTextAlignmentCenter];
         [_titleLabel setTextColor:JABlackColor];
         [_titleLabel setTintColor:JABlackColor];
-        [self setLabelFont:_titleLabel withFont:JADisplay3Font];
+        [self setLabelFont:_titleLabel withFont:[UIFont fontWithName:kFontRegularName size:14]];
     }
     return _titleLabel;
 }
 
-- (UILabel *)topTitleLabel
-{
+- (UILabel *)topTitleLabel {
     if (!_topTitleLabel) {
         _topTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 0, 230, 24)];
         [_topTitleLabel setLineBreakMode:NSLineBreakByTruncatingMiddle];
         [_topTitleLabel setTextAlignment:NSTextAlignmentCenter];
         [_topTitleLabel setTintColor:JABlackColor];
-        [self setLabelFont:_topTitleLabel withFont:JAListFont];
+        [self setLabelFont:_topTitleLabel withFont:[UIFont fontWithName:kFontRegularName size:14]];
     }
     return _topTitleLabel;
 }
 
-- (UILabel *)bottomTitleLabel
-{
+- (UILabel *)bottomTitleLabel {
     if (!_bottomTitleLabel) {
         _bottomTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 24, 230, 20)];
         [_bottomTitleLabel setLineBreakMode:NSLineBreakByTruncatingMiddle];
@@ -156,8 +146,7 @@
     return _editButton;
 }
 
-- (UIButton *)doneButton
-{
+- (UIButton *)doneButton {
     if (!_doneButton) {
         _doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_doneButton setFrame:CGRectMake(214, 0, 106, 44)];
@@ -169,49 +158,35 @@
     return _doneButton;
 }
 
-- (void)setLabelFont:(UILabel *)label withFont:(UIFont *)font
-{
+- (void)setLabelFont:(UILabel *)label withFont:(UIFont *)font {
     [label setFont:font];
-    if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"]) {
-        [label setFont:[UIFont fontWithName:font.fontName size:font.pointSize-2]];
-    }
 }
 
-- (void)setFrame:(CGRect)frame
-{
+- (void)setFrame:(CGRect)frame {
     [super setFrame:frame];
 }
 
 #pragma mark - Setup
 
-- (void)initialSetup;
-{
+- (void)initialSetup {
     CGFloat initialWidth = [[UIScreen mainScreen] bounds].size.width;
     if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
         UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
         if (UIUserInterfaceIdiomPad != UI_USER_INTERFACE_IDIOM() || (orientation != UIInterfaceOrientationLandscapeLeft && orientation != UIInterfaceOrientationLandscapeRight)) {
             initialWidth = [[UIScreen mainScreen] bounds].size.width;
-        }else{
+        } else {
             initialWidth = [[UIScreen mainScreen] bounds].size.height;
         }
     }
     
-    [self setFrame:CGRectMake(self.frame.origin.x,
-                              self.frame.origin.y,
-                              initialWidth,
-                              self.frame.size.height)];
-    [self.separatorView setFrame:CGRectMake(self.bounds.origin.x,
-                                            self.bounds.size.height - self.separatorView.frame.size.height,
-                                            self.bounds.size.width,
-                                            self.separatorView.frame.size.height)];
+    [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, initialWidth, self.frame.size.height)];
+    [self.separatorView setFrame:CGRectMake(self.bounds.origin.x, self.bounds.size.height - self.separatorView.frame.size.height,
+                                            self.bounds.size.width, self.separatorView.frame.size.height)];
     
     self.backgroundColor = JABlack300Color;
     
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(orientationChanged:)
-                                                 name:UIDeviceOrientationDidChangeNotification
-                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationChanged:) name:UIDeviceOrientationDidChangeNotification object:nil];
     
     [self addSubview:self.leftButton];
     [self addSubview:self.backButton];
@@ -236,8 +211,7 @@
     }
 }
 
-- (void)orientationChanged:(NSNotification *)notification
-{
+- (void)orientationChanged:(NSNotification *)notification {
     if ([[UIDevice currentDevice] orientation] == UIDeviceOrientationFaceUp || [[UIDevice currentDevice] orientation] == UIDeviceOrientationFaceDown || [[UIDevice currentDevice] orientation] == UIDeviceOrientationUnknown) {
         return;
     }
@@ -246,7 +220,7 @@
         UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
         if (UIUserInterfaceIdiomPad != UI_USER_INTERFACE_IDIOM() || (orientation != UIInterfaceOrientationLandscapeLeft && orientation != UIInterfaceOrientationLandscapeRight)) {
             width = [[UIScreen mainScreen] bounds].size.width;
-        }else{
+        } else {
             width = [[UIScreen mainScreen] bounds].size.height;
         }
     }
@@ -257,14 +231,12 @@
     }
 }
 
-- (void)removeFromSuperview
-{
+- (void)removeFromSuperview {
     [super removeFromSuperview];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)setupWithNavigationBarLayout:(JANavigationBarLayout*)layout
-{
+- (void)setupWithNavigationBarLayout:(JANavigationBarLayout*)layout {
     self.separatorView.hidden = !layout.showSeparatorView;
     
     //left side
@@ -302,8 +274,7 @@
 
 
 #pragma mark - Left side
-- (void)showBackButtonWithTitle:(NSString*)backButtonTitle;
-{
+- (void)showBackButtonWithTitle:(NSString*)backButtonTitle {
     [self.backButton setTitle:backButtonTitle forState:UIControlStateNormal];
     self.backButton.hidden = NO;
     self.leftButton.hidden = YES;
@@ -311,8 +282,7 @@
     
     [self adjustTitleFrame];
 }
-- (void)showEditButton;
-{
+- (void)showEditButton {
     [self.editButton setTitle:STRING_EDIT forState:UIControlStateNormal];
     self.backButton.hidden = YES;
     self.leftButton.hidden = YES;
@@ -321,8 +291,7 @@
     [self adjustTitleFrame];
 }
 
-- (void)showMenuButton;
-{
+- (void)showMenuButton {
     self.backButton.hidden = YES;
     self.leftButton.hidden = NO;
     self.editButton.hidden = YES;
@@ -330,29 +299,25 @@
     [self adjustTitleFrame];
 }
 
-- (void)hideLeftItems
-{
+- (void)hideLeftItems {
     self.backButton.hidden = YES;
     self.leftButton.hidden = YES;
     self.editButton.hidden = YES;
 }
 
 #pragma mark - Center
-- (void)showLogo;
-{
+- (void)showLogo {
     self.logoImageView.hidden = NO;
     self.titleLabel.hidden = YES;
     self.topTitleLabel.hidden = YES;
     self.bottomTitleLabel.hidden = YES;
 }
-- (void)showTitleLabelWithTitle:(NSString*)title
-                       subtitle:(NSString*)subtitle;
-{
+- (void)showTitleLabelWithTitle:(NSString*)title subtitle:(NSString*)subtitle {
     [self.topTitleLabel setText:title];
     [self.bottomTitleLabel setText:subtitle];
     [self.titleLabel setText:title];
     
-    if (VALID_NOTEMPTY(subtitle, NSString)) {
+    if (subtitle.length) {
         self.titleLabel.hidden = YES;
         self.topTitleLabel.hidden = NO;
         self.bottomTitleLabel.hidden = NO;
@@ -368,9 +333,7 @@
     self.logoImageView.hidden = YES;
 }
 
--(void)adjustTitleFrame
-{
-
+-(void)adjustTitleFrame {
     CGFloat width = self.width;
     
     CGFloat leftMargin = 0.0f;
@@ -389,8 +352,7 @@
                                             self.logoImageView.frame.size.height)];
     
     CGRect rightItemFrame = CGRectZero;
-    if(!self.doneButton.hidden)
-    {
+    if(!self.doneButton.hidden) {
         NSString *doneButtonText = self.doneButton.titleLabel.text;
         NSDictionary *attributes = @{NSFontAttributeName: JASystemTitleFont};
         CGSize doneButtonTextSize = [doneButtonText sizeWithAttributes:attributes];
@@ -401,9 +363,7 @@
                                              doneButtonWidth,
                                              self.doneButton.frame.size.height)];
         rightItemFrame = self.doneButton.frame;
-    }
-    else if(!self.cartButton.hidden)
-    {
+    } else if(!self.cartButton.hidden) {
         [self.cartButton setFrame:CGRectMake(width - self.cartButton.frame.size.width - leftMargin,
                                              self.cartButton.frame.origin.y,
                                              self.cartButton.frame.size.width,
@@ -431,8 +391,7 @@
     }
     
     CGRect leftItemFrame = CGRectZero;
-    if(!self.backButton.hidden)
-    {
+    if(!self.backButton.hidden) {
         NSString *backButtonText = self.backButton.titleLabel.text;
         NSDictionary *attributes = @{NSFontAttributeName: JASystemTitleFont};
         CGSize backButtonTextSize = [backButtonText sizeWithAttributes:attributes];
@@ -440,20 +399,14 @@
         CGFloat backButtonMaxWidth = backButtonTextSize.width;
         CGFloat backButtonFinalWidth = self.backButton.frame.size.width;
         
-        if(backButtonTextSize.width > 80.0f && !self.titleLabel.hidden)
-        {
+        if(backButtonTextSize.width > 80.0f && !self.titleLabel.hidden) {
             backButtonMaxWidth = 80.0f;
             backButtonFinalWidth = 6.0f + backButtonMaxWidth + 11.0f + 12.0f;
-        }
-        else
-        {
-            if(!self.titleLabel.hidden || !self.topTitleLabel.hidden)
-            {
+        } else {
+            if(!self.titleLabel.hidden || !self.topTitleLabel.hidden) {
                 backButtonMaxWidth = backButtonTextSize.width;
                 backButtonFinalWidth = 6.0f + backButtonMaxWidth + 11.0f + 12.0f;
-            }
-            else
-            {
+            } else {
                 backButtonMaxWidth = width - rightItemFrame.size.width - 12.0f;
                 backButtonFinalWidth = 6.0f + backButtonMaxWidth + 11.0f;
             }
@@ -462,21 +415,17 @@
             UIEdgeInsets insets = self.backButton.imageEdgeInsets;
             insets.right = backButtonLeftInset;
             [self.backButton setImageEdgeInsets:insets];
-        }else{
+        } else {
             UIEdgeInsets insets = self.backButton.imageEdgeInsets;
             insets.left = backButtonLeftInset;
             [self.backButton setImageEdgeInsets:insets];
         }
         [self.backButton setX:leftMargin];
         leftItemFrame = self.backButton.frame;
-    }
-    else if(!self.leftButton.hidden)
-    {
+    } else if(!self.leftButton.hidden) {
         [self.leftButton setX:leftMargin];
         leftItemFrame = self.leftButton.frame;
-    }
-    else if(!self.editButton.hidden)
-    {
+    } else if(!self.editButton.hidden) {
         [self.editButton sizeToFit];
         [self.editButton setFrame:CGRectMake(editButtonLeftMargin,
                                              self.editButton.frame.origin.y,
@@ -487,12 +436,9 @@
     
     CGFloat titleLabelWidth = 0.0f;
     CGFloat titleLabelSideMargin = 0.0f;
-    if(leftItemFrame.size.width >= rightItemFrame.size.width)
-    {
+    if(leftItemFrame.size.width >= rightItemFrame.size.width) {
         titleLabelSideMargin = leftItemFrame.size.width + 3.0f;
-    }
-    else
-    {
+    } else {
         titleLabelSideMargin = rightItemFrame.size.width + 3.0f;
     }
     titleLabelWidth = width - (2 * titleLabelSideMargin);
@@ -500,8 +446,7 @@
     NSString *titleLabelText = self.titleLabel.text;
     NSDictionary *titleLabelAttributes = @{NSFontAttributeName: JASystemTitleFont};
     CGSize titleLabelTextSize = [titleLabelText sizeWithAttributes:titleLabelAttributes];
-    if (titleLabelTextSize.width > titleLabelWidth)
-    {
+    if (titleLabelTextSize.width > titleLabelWidth) {
         titleLabelWidth = width - leftItemFrame.size.width - rightItemFrame.size.width - 24.0f;
         titleLabelSideMargin = (width - titleLabelWidth) / 2;
     }
@@ -525,8 +470,7 @@
     }
 }
 
-- (void)hideCenterItems
-{
+- (void)hideCenterItems {
     self.logoImageView.hidden = YES;
     self.titleLabel.hidden = YES;
     self.topTitleLabel.hidden = YES;
@@ -534,8 +478,7 @@
 }
 
 #pragma mark - Right side
-- (void)showDoneButtonWithTitle:(NSString*)doneButtonTitle;
-{
+- (void)showDoneButtonWithTitle:(NSString*)doneButtonTitle {
     [self.doneButton setTitle:doneButtonTitle forState:UIControlStateNormal];
     self.doneButton.hidden = NO;
     self.cartButton.hidden = YES;
@@ -543,20 +486,17 @@
     self.searchButton.hidden = YES;
 }
 
-- (void)showCartButton;
-{
+- (void)showCartButton {
     self.doneButton.hidden = YES;
     self.cartButton.hidden = NO;
     self.cartCountLabel.hidden = NO;
 }
 
-- (void)showSearchButton
-{
+- (void)showSearchButton {
     self.searchButton.hidden = NO;
 }
 
-- (void)hideRightItems
-{
+- (void)hideRightItems {
     self.doneButton.hidden = YES;
     self.cartButton.hidden = YES;
     self.cartCountLabel.hidden = YES;
@@ -565,12 +505,8 @@
 
 #pragma mark - Details
 
-- (void)updateCartProductCount:(NSNumber*)cartNumber
-{
-    CGRect frame = CGRectMake(self.cartCountLabel.frame.origin.x,
-                              self.cartCountLabel.frame.origin.y,
-                              15.f,
-                              15.f);
+- (void)updateCartProductCount:(NSNumber*)cartNumber {
+    CGRect frame = CGRectMake(self.cartCountLabel.frame.origin.x, self.cartCountLabel.frame.origin.y, 15.f, 15.f);
     self.cartCountLabel.frame = frame;
     [self.cartCountLabel setText:[NSString stringWithFormat:@"%lld", [cartNumber longLongValue]]];
     self.cartCountLabel.layer.masksToBounds = YES;

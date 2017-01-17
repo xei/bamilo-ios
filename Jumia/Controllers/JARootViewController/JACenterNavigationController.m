@@ -1455,8 +1455,7 @@
 
 #pragma mark - PDV Actions
 
-- (void)showOtherOffers:(NSNotification*)notification
-{
+- (void)showOtherOffers:(NSNotification*)notification {
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAOtherOffersViewController class]]) {
     

@@ -15,6 +15,7 @@
 @interface CatalogNoResultViewController ()
     @property (weak, nonatomic) IBOutlet UITableView *tableView;
     @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewHeightConstraint;
+    @property (weak, nonatomic) IBOutlet UILabel *noResultMessageUILabel;
     @property (strong, nonatomic) RITeaserGrouping *teaserGroup;
 @end
 
@@ -29,8 +30,6 @@ const CGFloat tableViewHeaderSectionHeight = 35;
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    
-    
     
     [self.tableView registerNib:[UINib nibWithNibName:[PopularTeaserTableViewCell nibName] bundle:nil]
                     forCellReuseIdentifier:[PopularTeaserTableViewCell nibName]];
@@ -88,6 +87,28 @@ const CGFloat tableViewHeaderSectionHeight = 35;
     [self.tableView reloadData];
 }
 
+- (void)setSearchQuery:(NSString *)searchQuery {
+    NSString* msgToShow;
+    if (searchQuery) {
+        int maxStringCharacters = 7;
+        
+        if (searchQuery.length > maxStringCharacters) {
+            NSRange stringRange = {0, MIN([searchQuery length], maxStringCharacters)};
+            stringRange = [searchQuery rangeOfComposedCharacterSequencesForRange:stringRange];
+            NSString *shortString = [searchQuery substringWithRange:stringRange];
+            
+            searchQuery = [NSString stringWithFormat:@"%@..", shortString];
+        }
+        
+        msgToShow = [NSString stringWithFormat:@"متاسفانه برای %@ شما نتیجه یافت نشد", searchQuery];
+    } else { //if there is no searchQuery (e.g. comes from empty category
+        msgToShow = @"متاسفانه موردی یافت نشد";
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.noResultMessageUILabel.text = msgToShow;
+    });
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [[self.teaserGroup.teaserComponents objectAtIndex:indexPath.row] sendNotificationForTeaseTarget:nil];
