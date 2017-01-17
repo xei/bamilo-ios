@@ -23,13 +23,9 @@
 #import "JATabBarButton.h"
 
 @interface JAHomeViewController () <JAPickerDelegate, JANewsletterGenderProtocol>
-
 @property (strong, nonatomic) JATeaserPageView* teaserPageView;
-
 @property (nonatomic, assign) BOOL isLoaded;
-
 @property (nonatomic, strong)JAFallbackView *fallbackView;
-
 @property (nonatomic, strong) JARadioComponent *radioComponent;
 @property (nonatomic, strong) JAPicker *picker;
 
@@ -39,8 +35,7 @@
 
 #pragma mark - View lifecycle
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"newsletter_subscribed"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     self.navBarLayout.showCartButton = NO;
@@ -53,10 +48,7 @@
     self.screenName = @"Home";
     self.A4SViewControllerAlias = @"HOME";
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(campaignTimerEnded)
-                                                 name:kCampaignMainTeaserTimerEndedNotification
-                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(campaignTimerEnded) name:kCampaignMainTeaserTimerEndedNotification object:nil];
     
     self.isLoaded = NO;
     
@@ -66,20 +58,17 @@
 
 }
 
--(void)campaignTimerEnded
-{
+-(void)campaignTimerEnded {
     if (self.isLoaded) {
         [self.teaserPageView loadTeasersForFrame:[self viewBounds]];
     }
 }
 
-- (void)stopLoading
-{
+- (void)stopLoading {
     [self hideLoading];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     [self requestTeasers];
@@ -103,15 +92,14 @@
                                                object:nil];
     
     [self hideLoading];
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
-    {
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"]) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         [self presentCoachMarks];
     }
 }
 
--(void)presentCoachMarks{
+-(void)presentCoachMarks {
     
     CGRect searchButtonFrame = self.searchIconImageView.frame; //search button
     
@@ -122,8 +110,7 @@
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")){
         searchButtonFrame.origin.y = searchButtonFrame.origin.y + 64.0f;
         moreButtonFrame.origin.y = self.bounds.size.height + 64.0f;
-    }
-    else{
+    } else {
         moreButtonFrame.origin.y = self.bounds.size.height;
     }
 
@@ -181,24 +168,21 @@
 }
 
 
-- (void)viewDidDisappear:(BOOL)animated
-{
+- (void)viewDidDisappear:(BOOL)animated {
     // notify the InAppNotification SDK that this view controller in no more active
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self.teaserPageView];
 }
 
--(void)viewDidAppear:(BOOL)animated
-{
+-(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [[RITrackingWrapper sharedInstance] trackScreenWithName:@"HomeShop"];
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [self showLoading];
     
-    if(VALID_NOTEMPTY(self.fallbackView, JAFallbackView) && VALID_NOTEMPTY(self.fallbackView.superview, UIView))
+    if(VALID_NOTEMPTY(self.fallbackView, JAFallbackView) && self.fallbackView.superview)
     {
         [self.fallbackView setupFallbackView:CGRectMake(self.fallbackView.frame.origin.x,
                                                         self.fallbackView.frame.origin.y,
@@ -210,8 +194,7 @@
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
-- (void)viewWillLayoutSubviews
-{
+- (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     
     if (self.isLoaded) {
@@ -220,20 +203,17 @@
     
     [self hideLoading];
     
-    if(VALID_NOTEMPTY(self.fallbackView, JAFallbackView) && VALID_NOTEMPTY(self.fallbackView.superview, UIView))
-    {
+    if(self.fallbackView && self.fallbackView.superview) {
         [self.fallbackView setupFallbackView:[self viewBounds] orientation:[[UIApplication sharedApplication] statusBarOrientation]];
     }
 }
 
-- (void)reload
-{
+- (void)reload {
     self.isLoaded = NO;
     [self requestTeasers];
 }
 
-- (void)requestTeasers
-{
+- (void)requestTeasers {
     if (self.isLoaded) {
         return;
     }
@@ -252,8 +232,7 @@
         [self.teaserPageView loadTeasersForFrame:[self viewBounds]];
         [self.view addSubview:self.teaserPageView];
         
-        if(self.firstLoading)
-        {
+        if(self.firstLoading) {
             NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
             [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:@""];
             self.firstLoading = NO;
@@ -267,15 +246,13 @@
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
         //if this is the failure came from richBlock, fail gracefully
         if (!self.isLoaded) {
-            if(self.firstLoading)
-            {
+            if(self.firstLoading) {
                 NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
                 [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:@""];
                 self.firstLoading = NO;
             }
             
-            if(RIApiResponseMaintenancePage == apiResponse || RIApiResponseKickoutView == apiResponse || RIApiResponseNoInternetConnection == apiResponse)
-            {
+            if(RIApiResponseMaintenancePage == apiResponse || RIApiResponseKickoutView == apiResponse || RIApiResponseNoInternetConnection == apiResponse) {
                 [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(requestTeasers) objects:nil];
             } else {
                 self.fallbackView = [JAFallbackView getNewJAFallbackView];
@@ -292,8 +269,7 @@
     }];
 }
 
-- (void)loadPromotion:(RIPromotion*)promotion
-{
+- (void)loadPromotion:(RIPromotion*)promotion {
     JAPromotionPopUp* promotionPopUp = [[JAPromotionPopUp alloc] initWithFrame:[self viewBounds]];
     [promotionPopUp loadWithPromotion:promotion];
     [self.view addSubview:promotionPopUp];
@@ -303,11 +279,10 @@
 
 #pragma mark - Picker
 
-- (void)openPicker:(JARadioComponent *)radioComponent
-{
+- (void)openPicker:(JARadioComponent *)radioComponent {
     self.radioComponent = radioComponent;
     
-    if (VALID(self.picker, JAPicker)) {
+    if (self.picker) {
         [self.picker removeFromSuperview];
         self.picker = nil;
     }
@@ -317,7 +292,7 @@
     
     NSMutableArray *dataSource = [[NSMutableArray alloc] init];
     
-    if (VALID_NOTEMPTY([radioComponent options], NSArray)) {
+    if ([[radioComponent options] count]) {
         
         for (id currentObject in [radioComponent options]) {
             if (VALID_NOTEMPTY(currentObject, NSString)) {
@@ -346,9 +321,8 @@
     
     [self.view addSubview:self.picker];
 }
-- (void)selectedRow:(NSInteger)selectedRow
-{
-    if (VALID_NOTEMPTY(self.radioComponent, JARadioComponent)) {
+- (void)selectedRow:(NSInteger)selectedRow {
+    if (self.radioComponent) {
         NSString *selectedValue = [self.radioComponent.options objectAtIndex:selectedRow];
         [self.radioComponent setValue:selectedValue];
         [self.radioComponent.textField setText:[self.radioComponent.optionsLabels objectForKey:selectedValue]];
@@ -356,24 +330,20 @@
     [self closePickers];
 }
 
-- (void)closePickers
-{
+- (void)closePickers {
     CGRect framePhonePrefix = self.picker.frame;
     framePhonePrefix.origin.y = self.view.frame.size.height;
     
-    [UIView animateWithDuration:0.4f
-                     animations:^{
-                         self.picker.frame = framePhonePrefix;
-                     } completion:^(BOOL finished) {
-                         [self.picker removeFromSuperview];
-                         self.picker = nil;
-                     }];
+    [UIView animateWithDuration:0.4f animations:^{
+        self.picker.frame = framePhonePrefix;
+    } completion:^(BOOL finished) {
+        [self.picker removeFromSuperview];
+        self.picker = nil;
+    }];
 }
 
-- (void)submitNewsletter:(JADynamicForm *)dynamicForm andEmail:(NSString *)email
-{
-    if([dynamicForm checkErrors])
-    {
+- (void)submitNewsletter:(JADynamicForm *)dynamicForm andEmail:(NSString *)email {
+    if([dynamicForm checkErrors]) {
         return;
     }
     [self showLoading];
@@ -388,18 +358,15 @@
             [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RIForm class]) withPropertyName:@"type" andPropertyValue:@"newsletter_homepage"];
             [self reload];
         }
-        if(VALID_NOTEMPTY(errorObject, NSDictionary))
-        {
+        if(errorObject) {
             [dynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:@selector(submitNewsletter:andEmail:) objects:@[dynamicForm]];
             }];
-        }
-        else if(VALID_NOTEMPTY(errorObject, NSArray))
-        {
+        } else if(VALID_NOTEMPTY(errorObject, NSArray)) {
             [dynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:@selector(submitNewsletter:andEmail:) objects:@[dynamicForm]];
             }];
-        }else{
+        } else {
             [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(submitNewsletter:andEmail:) objects:@[dynamicForm]];
         }
         [self hideLoading];

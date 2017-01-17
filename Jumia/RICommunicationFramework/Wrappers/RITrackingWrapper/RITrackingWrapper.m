@@ -107,9 +107,7 @@ static dispatch_once_t sharedInstanceToken;
 
 #pragma mark - RIEventTracking protocol
 
-- (void)trackEvent:(NSNumber* )eventType
-              data:(NSDictionary *)data
-{
+- (void)trackEvent:(NSNumber* )eventType data:(NSDictionary *)data {
     RIDebugLog(@"Tracking event: '%@' with data: %@", eventType, data);
     
     [self RI_callTrackersConformToProtocol:@protocol(RIEventTracking)

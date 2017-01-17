@@ -35,9 +35,10 @@
 @property (nonatomic, retain) NSNumber * specialPriceEuroConverted;
 @property (nonatomic, retain) NSString * specialPriceFormatted;
 
-+ (RITeaserComponent*)parseTeaserComponent:(NSDictionary*)teaserComponentJSON
-                                   country:(RICountryConfiguration*)country;
++ (RITeaserComponent*)parseTeaserComponent:(NSDictionary*)teaserComponentJSON country:(RICountryConfiguration*)country;
 
 + (void)saveTeaserComponent:(RITeaserComponent *)teaserComponent andContext:(BOOL)save;
+
+- (void)sendNotificationForTeaseTarget:(NSString *) optionalTrackingInfo;
 
 @end

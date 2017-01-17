@@ -11,89 +11,27 @@
 
 @implementation JATeaserView
 
--(void)load;
-{
+- (void)load {
     self.backgroundColor = [UIColor clearColor];
-    
-    if (ISEMPTY(self.teaserGrouping)) {
+    if (!self.teaserGrouping) {
         return;
     }
 }
 
-- (void)teaserPressed:(UIControl*)control
-{
+- (void)teaserPressed:(UIControl*)control {
     NSInteger index = control.tag;
-    
     [self teaserPressedForIndex:index];
 }
 
-- (void)teaserPressedForIndex:(NSInteger)index
-{
+- (void)teaserPressedForIndex:(NSInteger)index {
     RITeaserComponent* teaserComponent = [self.teaserGrouping.teaserComponents objectAtIndex:index];
     if (self.validTeaserComponents) {
         teaserComponent = [self.validTeaserComponents objectAtIndex:index];
     }
-    
-    RITarget* teaserTarget = [RITarget parseTarget:teaserComponent.targetString];
-    
-    NSMutableDictionary* userInfo = [NSMutableDictionary new];
-    [userInfo setObject:STRING_HOME forKey:@"show_back_button_title"];
-    if (VALID_NOTEMPTY(teaserComponent.name, NSString)) {
-        [userInfo setObject:teaserComponent.name forKey:@"title"];
-    } else if (VALID_NOTEMPTY(teaserComponent.title, NSString)) {
-        [userInfo setObject:teaserComponent.title forKey:@"title"];
-    }
-    
-    if (VALID_NOTEMPTY(teaserComponent.richRelevance, NSString)) {
-        [userInfo setObject:teaserComponent.richRelevance forKey:@"richRelevance"];
-    }
-    
-    [userInfo setObject:[self teaserTrackingInfoForIndex:index] forKey:@"teaserTrackingInfo"];
-    
-    NSString* notificationName;
-    
-    if ([teaserTarget.type isEqualToString:[RITarget getTargetKey:CATALOG_HASH]] || [teaserTarget.type isEqualToString:[RITarget getTargetKey:CATALOG_CATEGORY]]) {
-        
-        notificationName = kDidSelectTeaserWithCatalogUrlNofication;
-        
-    } else if ([teaserTarget.type isEqualToString:[RITarget getTargetKey:PRODUCT_DETAIL]]) {
-        
-        notificationName = kDidSelectTeaserWithPDVUrlNofication;
-        
-    } else if ([teaserTarget.type isEqualToString:[RITarget getTargetKey:STATIC_PAGE]] || [teaserTarget.type isEqualToString:[RITarget getTargetKey:SHOP_IN_SHOP]]) {
-        
-        notificationName = kDidSelectTeaserWithShopUrlNofication;
-        
-    } else if ([teaserTarget.type isEqualToString:[RITarget getTargetKey:CAMPAIGN]]) {
-        
-        notificationName = kDidSelectCampaignNofication;
-        
-        //for the campaigns teaserGrouping we need all the campaign components
-        if ([self.teaserGrouping.type isEqualToString:@"campaigns"]) {
-            [userInfo setObject:self.teaserGrouping forKey:@"teaserGrouping"];
-        }
-    }
-    
-    if (VALID_NOTEMPTY(teaserComponent.targetString, NSString)) {
-        [userInfo setObject:teaserComponent.targetString forKey:@"targetString"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
-                                                            object:nil
-                                                          userInfo:userInfo];
-        
-        //tracking click
-        NSMutableDictionary* teaserTrackingDictionary = [NSMutableDictionary new];
-        [teaserTrackingDictionary setValue:[self teaserTrackingInfoForIndex:index] forKey:kRIEventCategoryKey];
-        [teaserTrackingDictionary setValue:@"BannerClick" forKey:kRIEventActionKey];
-        [teaserTrackingDictionary setValue:teaserTarget.node forKey:kRIEventLabelKey];
-        
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventTeaserClick]
-                                                  data:[teaserTrackingDictionary copy]];
-    }
-
+    [teaserComponent sendNotificationForTeaseTarget: [self teaserTrackingInfoForIndex:index]];
 }
 
-- (NSString*)teaserTrackingInfoForIndex:(NSInteger)index;
-{
+- (NSString*)teaserTrackingInfoForIndex:(NSInteger)index {
     //should be implemented in subclasses
     return nil;
 }

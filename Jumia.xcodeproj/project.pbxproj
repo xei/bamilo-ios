@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C3043021E2A3A5800BD391E /* CatalogNoResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3043011E2A3A5800BD391E /* CatalogNoResultViewController.m */; };
+		1C71FC5E1E2CABAD007ACF02 /* Bamilosans Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1C71FC591E2CABAD007ACF02 /* Bamilosans Black.ttf */; };
+		1C71FC5F1E2CABAD007ACF02 /* ‌Bamilosans Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1C71FC5A1E2CABAD007ACF02 /* ‌Bamilosans Bold.ttf */; };
+		1C71FC601E2CABAD007ACF02 /* Bamilosans Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1C71FC5B1E2CABAD007ACF02 /* Bamilosans Light.ttf */; };
+		1C71FC611E2CABAD007ACF02 /* Bamilosans Reg.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1C71FC5C1E2CABAD007ACF02 /* Bamilosans Reg.ttf */; };
+		1C71FC621E2CABAD007ACF02 /* Bamilosans UltraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1C71FC5D1E2CABAD007ACF02 /* Bamilosans UltraLight.ttf */; };
+		1C71FC631E2CABB2007ACF02 /* Bamilo-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE9AE12C1AB84C2300D56481 /* Bamilo-Info.plist */; };
+		1C71FC671E2CD2AD007ACF02 /* PopularTeaserHeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C71FC651E2CD2AD007ACF02 /* PopularTeaserHeaderTableViewCell.m */; };
+		1C71FC681E2CD2AD007ACF02 /* PopularTeaserHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C71FC661E2CD2AD007ACF02 /* PopularTeaserHeaderTableViewCell.xib */; };
+		1CCD52A01E2BA42F008BAEE4 /* PopularTeaserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCD529E1E2BA42F008BAEE4 /* PopularTeaserTableViewCell.m */; };
+		1CCD52A11E2BA42F008BAEE4 /* PopularTeaserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CCD529F1E2BA42F008BAEE4 /* PopularTeaserTableViewCell.xib */; };
 		69F3CBC41C07143A0016CA12 /* RISuccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 69F3CBBE1C07143A0016CA12 /* RISuccess.m */; };
 		6C18BD741AB87E0A00905FD2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A301BB19811D0700F71726 /* Images.xcassets */; };
 		6C40A8901AD7E647001BFA16 /* RIBanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C40A88C1AD7E647001BFA16 /* RIBanner.m */; };
@@ -15,12 +26,6 @@
 		6CF4AE821ADEAA290024EC34 /* JACatalogBannerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CF4AE7E1ADEAA290024EC34 /* JACatalogBannerCell.xib */; };
 		6CF4AE881ADEABBB0024EC34 /* JACatalogBannerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CF4AE841ADEABBB0024EC34 /* JACatalogBannerCell.m */; };
 		841E81AA1D1680F300A35AAF /* MPCoachMarks.m in Sources */ = {isa = PBXBuildFile; fileRef = 841E81A81D1680F300A35AAF /* MPCoachMarks.m */; };
-		845349E51D1AB724000B97C7 /* Bamilo-No-Reg.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 845349DF1D1AB723000B97C7 /* Bamilo-No-Reg.ttf */; };
-		845349E61D1AB724000B97C7 /* BAMILO-SANS BLACK_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 845349E01D1AB723000B97C7 /* BAMILO-SANS BLACK_0.TTF */; };
-		845349E71D1AB724000B97C7 /* BAMILO-SANS BOLD_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 845349E11D1AB724000B97C7 /* BAMILO-SANS BOLD_0.TTF */; };
-		845349E81D1AB724000B97C7 /* BAMILO-SANS LIGHT_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 845349E21D1AB724000B97C7 /* BAMILO-SANS LIGHT_0.TTF */; };
-		845349E91D1AB724000B97C7 /* BAMILO-SANS REG_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 845349E31D1AB724000B97C7 /* BAMILO-SANS REG_0.TTF */; };
-		845349EA1D1AB724000B97C7 /* BAMILO-SANS ULTRA LIGHT_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 845349E41D1AB724000B97C7 /* BAMILO-SANS ULTRA LIGHT_0.TTF */; };
 		847606B71D77EEE900C54687 /* JAContactUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 847606B41D77EEE900C54687 /* JAContactUsViewController.m */; };
 		84B25D9D1D8048DF0024B476 /* JAContactUsViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B25D9A1D8048DE0024B476 /* JAContactUsViewController~ipad.xib */; };
 		84B25D9F1D8048DF0024B476 /* JAContactUsViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B25D9B1D8048DE0024B476 /* JAContactUsViewController~iphone.xib */; };
@@ -35,8 +40,6 @@
 		89C177BD1BC2DC4A006D3B19 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89AB5C2D1BC2B01B00BA38E5 /* SafariServices.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		89C177BF1BC2EC17006D3B19 /* JAPDVProductInfoSellerInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AC0B9B01BBC4C4A001F4ADE /* JAPDVProductInfoSellerInfo.m */; };
 		89C7AF551BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C7AF4F1BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m */; };
-		9A007C6D1C2027BA007D99FC /* JACatalogViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A007C671C2027BA007D99FC /* JACatalogViewController.xib */; };
-		9A007C721C2027BA007D99FC /* JACatalogViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A007C681C2027BA007D99FC /* JACatalogViewController~ipad.xib */; };
 		9A007C791C203355007D99FC /* JAMyAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A007C741C203355007D99FC /* JAMyAccountViewController.m */; };
 		9A007C801C206920007D99FC /* JAProductInfoSwitchLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A007C7B1C206920007D99FC /* JAProductInfoSwitchLine.m */; };
 		9A007C871C206DE4007D99FC /* JAProductInfoSubtitleLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A007C821C206DE4007D99FC /* JAProductInfoSubtitleLine.m */; };
@@ -567,6 +570,19 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1C3043001E2A3A5800BD391E /* CatalogNoResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CatalogNoResultViewController.h; sourceTree = "<group>"; };
+		1C3043011E2A3A5800BD391E /* CatalogNoResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CatalogNoResultViewController.m; sourceTree = "<group>"; };
+		1C71FC591E2CABAD007ACF02 /* Bamilosans Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bamilosans Black.ttf"; sourceTree = "<group>"; };
+		1C71FC5A1E2CABAD007ACF02 /* ‌Bamilosans Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "‌Bamilosans Bold.ttf"; sourceTree = "<group>"; };
+		1C71FC5B1E2CABAD007ACF02 /* Bamilosans Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bamilosans Light.ttf"; sourceTree = "<group>"; };
+		1C71FC5C1E2CABAD007ACF02 /* Bamilosans Reg.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bamilosans Reg.ttf"; sourceTree = "<group>"; };
+		1C71FC5D1E2CABAD007ACF02 /* Bamilosans UltraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bamilosans UltraLight.ttf"; sourceTree = "<group>"; };
+		1C71FC641E2CD2AD007ACF02 /* PopularTeaserHeaderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopularTeaserHeaderTableViewCell.h; sourceTree = "<group>"; };
+		1C71FC651E2CD2AD007ACF02 /* PopularTeaserHeaderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopularTeaserHeaderTableViewCell.m; sourceTree = "<group>"; };
+		1C71FC661E2CD2AD007ACF02 /* PopularTeaserHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopularTeaserHeaderTableViewCell.xib; sourceTree = "<group>"; };
+		1CCD529D1E2BA42F008BAEE4 /* PopularTeaserTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopularTeaserTableViewCell.h; sourceTree = "<group>"; };
+		1CCD529E1E2BA42F008BAEE4 /* PopularTeaserTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopularTeaserTableViewCell.m; sourceTree = "<group>"; };
+		1CCD529F1E2BA42F008BAEE4 /* PopularTeaserTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopularTeaserTableViewCell.xib; sourceTree = "<group>"; };
 		4A18856219B8A368003337FC /* JAActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAActivityViewController.h; sourceTree = "<group>"; };
 		4A18856319B8A368003337FC /* JAActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAActivityViewController.m; sourceTree = "<group>"; };
 		4A1892D019939A0C0036F327 /* JAReviewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAReviewCell.h; sourceTree = "<group>"; };
@@ -637,12 +653,6 @@
 		6af3ca12ac4f2d50fa243e2b /* calabash.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; path = calabash.framework; sourceTree = "<group>"; };
 		841E81A71D1680F300A35AAF /* MPCoachMarks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPCoachMarks.h; path = ../MPCoachMarks.h; sourceTree = "<group>"; };
 		841E81A81D1680F300A35AAF /* MPCoachMarks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPCoachMarks.m; path = ../MPCoachMarks.m; sourceTree = "<group>"; };
-		845349DF1D1AB723000B97C7 /* Bamilo-No-Reg.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Bamilo-No-Reg.ttf"; path = "../Bamilo-No-Reg.ttf"; sourceTree = "<group>"; };
-		845349E01D1AB723000B97C7 /* BAMILO-SANS BLACK_0.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; name = "BAMILO-SANS BLACK_0.TTF"; path = "../BAMILO-SANS BLACK_0.TTF"; sourceTree = "<group>"; };
-		845349E11D1AB724000B97C7 /* BAMILO-SANS BOLD_0.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; name = "BAMILO-SANS BOLD_0.TTF"; path = "../BAMILO-SANS BOLD_0.TTF"; sourceTree = "<group>"; };
-		845349E21D1AB724000B97C7 /* BAMILO-SANS LIGHT_0.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; name = "BAMILO-SANS LIGHT_0.TTF"; path = "../BAMILO-SANS LIGHT_0.TTF"; sourceTree = "<group>"; };
-		845349E31D1AB724000B97C7 /* BAMILO-SANS REG_0.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; name = "BAMILO-SANS REG_0.TTF"; path = "../BAMILO-SANS REG_0.TTF"; sourceTree = "<group>"; };
-		845349E41D1AB724000B97C7 /* BAMILO-SANS ULTRA LIGHT_0.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; name = "BAMILO-SANS ULTRA LIGHT_0.TTF"; path = "../BAMILO-SANS ULTRA LIGHT_0.TTF"; sourceTree = "<group>"; };
 		847606B31D77EEE900C54687 /* JAContactUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAContactUsViewController.h; path = ContactUs/JAContactUsViewController.h; sourceTree = "<group>"; };
 		847606B41D77EEE900C54687 /* JAContactUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAContactUsViewController.m; path = ContactUs/JAContactUsViewController.m; sourceTree = "<group>"; };
 		84B25D9A1D8048DE0024B476 /* JAContactUsViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "JAContactUsViewController~ipad.xib"; path = "ContactUs/JAContactUsViewController~ipad.xib"; sourceTree = "<group>"; };
@@ -680,8 +690,6 @@
 		89C7AF4F1BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACatalogPictureCollectionViewCell.m; sourceTree = "<group>"; };
 		89FB32531BCD41C5002A6FC2 /* RISellerDelivery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RISellerDelivery.h; sourceTree = "<group>"; };
 		89FB32541BCD41C5002A6FC2 /* RISellerDelivery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RISellerDelivery.m; sourceTree = "<group>"; };
-		9A007C671C2027BA007D99FC /* JACatalogViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACatalogViewController.xib; sourceTree = "<group>"; };
-		9A007C681C2027BA007D99FC /* JACatalogViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JACatalogViewController~ipad.xib"; sourceTree = "<group>"; };
 		9A007C731C203355007D99FC /* JAMyAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMyAccountViewController.h; sourceTree = "<group>"; };
 		9A007C741C203355007D99FC /* JAMyAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMyAccountViewController.m; sourceTree = "<group>"; };
 		9A007C7A1C206920007D99FC /* JAProductInfoSwitchLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAProductInfoSwitchLine.h; path = Lines/JAProductInfoSwitchLine.h; sourceTree = "<group>"; };
@@ -3757,12 +3765,12 @@
 		CE3FC5AB1990E25C003B4A27 /* Catalog */ = {
 			isa = PBXGroup;
 			children = (
-				9A007C671C2027BA007D99FC /* JACatalogViewController.xib */,
-				9A007C681C2027BA007D99FC /* JACatalogViewController~ipad.xib */,
 				CE3FC5AC1990E25C003B4A27 /* JACatalogViewController.h */,
 				CE3FC5AD1990E25C003B4A27 /* JACatalogViewController.m */,
 				CED620561BEB526B00FA8403 /* JAFiltersViewController.h */,
 				CED620571BEB526B00FA8403 /* JAFiltersViewController.m */,
+				1C3043001E2A3A5800BD391E /* CatalogNoResultViewController.h */,
+				1C3043011E2A3A5800BD391E /* CatalogNoResultViewController.m */,
 			);
 			path = Catalog;
 			sourceTree = "<group>";
@@ -3800,6 +3808,12 @@
 				CEE91B9A1989065A0078DFC9 /* JATeaserPageView.h */,
 				CEE91B9B1989065A0078DFC9 /* JATeaserPageView.m */,
 				CE445864198BD20A00CE7E8D /* TeaserViews */,
+				1CCD529D1E2BA42F008BAEE4 /* PopularTeaserTableViewCell.h */,
+				1CCD529E1E2BA42F008BAEE4 /* PopularTeaserTableViewCell.m */,
+				1CCD529F1E2BA42F008BAEE4 /* PopularTeaserTableViewCell.xib */,
+				1C71FC641E2CD2AD007ACF02 /* PopularTeaserHeaderTableViewCell.h */,
+				1C71FC651E2CD2AD007ACF02 /* PopularTeaserHeaderTableViewCell.m */,
+				1C71FC661E2CD2AD007ACF02 /* PopularTeaserHeaderTableViewCell.xib */,
 			);
 			path = Teasers;
 			sourceTree = "<group>";
@@ -3850,12 +3864,11 @@
 		CE9AE1221AB824B700D56481 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				845349DF1D1AB723000B97C7 /* Bamilo-No-Reg.ttf */,
-				845349E01D1AB723000B97C7 /* BAMILO-SANS BLACK_0.TTF */,
-				845349E11D1AB724000B97C7 /* BAMILO-SANS BOLD_0.TTF */,
-				845349E21D1AB724000B97C7 /* BAMILO-SANS LIGHT_0.TTF */,
-				845349E31D1AB724000B97C7 /* BAMILO-SANS REG_0.TTF */,
-				845349E41D1AB724000B97C7 /* BAMILO-SANS ULTRA LIGHT_0.TTF */,
+				1C71FC591E2CABAD007ACF02 /* Bamilosans Black.ttf */,
+				1C71FC5A1E2CABAD007ACF02 /* ‌Bamilosans Bold.ttf */,
+				1C71FC5B1E2CABAD007ACF02 /* Bamilosans Light.ttf */,
+				1C71FC5C1E2CABAD007ACF02 /* Bamilosans Reg.ttf */,
+				1C71FC5D1E2CABAD007ACF02 /* Bamilosans UltraLight.ttf */,
 				CE9AE1251AB8251000D56481 /* zawgyione2008.ttf */,
 				CE9AE1271AB8281400D56481 /* JAFont.h */,
 			);
@@ -4155,12 +4168,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				845349E51D1AB724000B97C7 /* Bamilo-No-Reg.ttf in Resources */,
-				845349E61D1AB724000B97C7 /* BAMILO-SANS BLACK_0.TTF in Resources */,
-				845349E71D1AB724000B97C7 /* BAMILO-SANS BOLD_0.TTF in Resources */,
-				845349E81D1AB724000B97C7 /* BAMILO-SANS LIGHT_0.TTF in Resources */,
-				845349E91D1AB724000B97C7 /* BAMILO-SANS REG_0.TTF in Resources */,
-				845349EA1D1AB724000B97C7 /* BAMILO-SANS ULTRA LIGHT_0.TTF in Resources */,
 				9A0F9B7E1B5E58E900569DF2 /* FBAudienceNetwork.README.txt in Resources */,
 				CE9AE0391AB6D78200D56481 /* 00_choose_country.feature in Resources */,
 				CEDBF8971B0DF5D00073971A /* JANewsletterComponent~iPad_RTL.xib in Resources */,
@@ -4169,6 +4176,7 @@
 				CE9AE03E1AB6D78200D56481 /* init.rb in Resources */,
 				CE9AE03F1AB6D78200D56481 /* 17_recently_viewed.feature in Resources */,
 				9A564CAF1B332FB200F23057 /* JASellerRatingsViewController.xib in Resources */,
+				1C71FC5E1E2CABAD007ACF02 /* Bamilosans Black.ttf in Resources */,
 				9A17D1201C5F775900851D6E /* BMA4SiPhoneWebViewNotifView.xib in Resources */,
 				CE9AE0431AB6D78200D56481 /* JAMaintenancePage.xib in Resources */,
 				9A17D1521C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-landscape-iPad.xib in Resources */,
@@ -4191,6 +4199,7 @@
 				CE9AE0631AB6D78200D56481 /* slider-metal-handle@2x.png in Resources */,
 				CE9AE0641AB6D78200D56481 /* 12_product_details.feature in Resources */,
 				CE9AE0651AB6D78200D56481 /* my_first_steps.rb in Resources */,
+				1C71FC5F1E2CABAD007ACF02 /* ‌Bamilosans Bold.ttf in Resources */,
 				CE9AE0671AB6D78200D56481 /* slider-default-handle-highlighted.png in Resources */,
 				9A17D1701C5F775900851D6E /* BMA4SRichPushWebViewWithToolBar-nobuttons.xib in Resources */,
 				9A17D0F31C5F775900851D6E /* BMA4SRichPushWebViewWithToolBar-iPad.xib in Resources */,
@@ -4198,6 +4207,7 @@
 				CE9AE06A1AB6D78200D56481 /* 18_track_order.feature in Resources */,
 				CED7C5281B78E0570070C855 /* GoogleAppIndexingResources.bundle in Resources */,
 				CE9AE06B1AB6D78200D56481 /* 06_email_notifications.feature in Resources */,
+				1C71FC611E2CABAD007ACF02 /* Bamilosans Reg.ttf in Resources */,
 				CE9AE06C1AB6D78200D56481 /* 02_pre_stop_hooks.rb in Resources */,
 				CE9AE06D1AB6D78200D56481 /* slider-default-trackBackground.png in Resources */,
 				CE9AE06F1AB6D78200D56481 /* JANewsletterComponent.xib in Resources */,
@@ -4245,7 +4255,6 @@
 				CE9AE09A1AB6D78200D56481 /* slider-default-trackCrossedOver@2x.png in Resources */,
 				CE9AE09B1AB6D78200D56481 /* JAPaymentCell.xib in Resources */,
 				9A17D1751C5F775900851D6E /* BMA4SiPhoneTextNotifView-nobuttons-iPad.xib in Resources */,
-				9A007C721C2027BA007D99FC /* JACatalogViewController~ipad.xib in Resources */,
 				6C6EBE2B1ABC66DB006A3D46 /* RITrackingDebug_بامیلو.plist in Resources */,
 				CE9AE0A11AB6D78200D56481 /* 15_my_favourites.feature in Resources */,
 				CE9AE0A21AB6D78200D56481 /* JASwitchCell.xib in Resources */,
@@ -4261,12 +4270,15 @@
 				CE9AE0AF1AB6D78200D56481 /* slider-default7-trackBackground.png in Resources */,
 				9A17D1481C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewNotifView-nobuttons.xib in Resources */,
 				9A17D0A81C5F775900851D6E /* BMA4S.strings in Resources */,
+				1C71FC681E2CD2AD007ACF02 /* PopularTeaserHeaderTableViewCell.xib in Resources */,
 				9A17D0AD1C5F775900851D6E /* BMA4SiPhoneIntersticialTextNotifView-iPad.xib in Resources */,
 				9A564CB51B3411AD00F23057 /* JANewSellerRatingViewController.xib in Resources */,
 				CE9AE0B21AB6D78200D56481 /* slider-default-track@2x.png in Resources */,
+				1C71FC601E2CABAD007ACF02 /* Bamilosans Light.ttf in Resources */,
 				9A17D15C1C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons.xib in Resources */,
 				CE9AE0B31AB6D78200D56481 /* slider-metal-track.png in Resources */,
 				9A17D0D51C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-iPad.xib in Resources */,
+				1C71FC631E2CABB2007ACF02 /* Bamilo-Info.plist in Resources */,
 				6C18BD741AB87E0A00905FD2 /* Images.xcassets in Resources */,
 				CE9AE0B51AB6D78200D56481 /* JACheckBoxComponent.xib in Resources */,
 				9A17D1341C5F775900851D6E /* BMA4SiPhoneIntersticialTextNotifView-nobuttons.xib in Resources */,
@@ -4297,7 +4309,6 @@
 				CE9AE0E01AB6D78200D56481 /* JAPDVProductInfo~iPad_Portrait.xib in Resources */,
 				CEDE870F1B25FEE5006D18EA /* JANoConnectionView.xib in Resources */,
 				9A17D0B21C5F775900851D6E /* BMA4SiPhoneIntersticialTextNotifView-landscape-iPad.xib in Resources */,
-				9A007C6D1C2027BA007D99FC /* JACatalogViewController.xib in Resources */,
 				CE9AE0E41AB6D78200D56481 /* 01_login.feature in Resources */,
 				CEDBF8921B0DF5D00073971A /* JANewsletterComponent_RTL.xib in Resources */,
 				CE9AE0E91AB6D78200D56481 /* slider-default7-track.png in Resources */,
@@ -4311,6 +4322,7 @@
 				9A17D1021C5F775900851D6E /* BMA4SiPhoneTextNotifView-landscape-iPad.xib in Resources */,
 				CE9AE0F81AB6D78200D56481 /* 10_search.feature in Resources */,
 				CE9AE0FC1AB6D78200D56481 /* Main_iPad.storyboard in Resources */,
+				1C71FC621E2CABAD007ACF02 /* Bamilosans UltraLight.ttf in Resources */,
 				6C6EBE281ABC6634006A3D46 /* RITracking_بامیلو.plist in Resources */,
 				9A17D1841C5F775900851D6E /* BMA4SiPhoneTextNotifView-nobuttons.xib in Resources */,
 				9A17D0DA1C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-iPad.xib in Resources */,
@@ -4320,6 +4332,7 @@
 				9A17D1071C5F775900851D6E /* BMA4SiPhoneTextNotifView-landscape.xib in Resources */,
 				CE9AE1021AB6D78200D56481 /* 19_filters.feature in Resources */,
 				CE9AE1041AB6D78200D56481 /* env.rb in Resources */,
+				1CCD52A11E2BA42F008BAEE4 /* PopularTeaserTableViewCell.xib in Resources */,
 				9A17D0B71C5F775900851D6E /* BMA4SiPhoneIntersticialTextNotifView-landscape.xib in Resources */,
 				CE9AE1061AB6D78200D56481 /* slider-default-track.png in Resources */,
 				CE9AE1071AB6D78200D56481 /* JAGrayButtonCell_ipad_portrait.xib in Resources */,
@@ -4362,6 +4375,7 @@
 				9A6BC08A1C4907BB00DD9492 /* JAMessageView.m in Sources */,
 				CE9ADF2A1AB6D78200D56481 /* JACartListHeaderView.m in Sources */,
 				CE9ADF2C1AB6D78200D56481 /* FXBlurView.m in Sources */,
+				1C3043021E2A3A5800BD391E /* CatalogNoResultViewController.m in Sources */,
 				9AE766E21CBFF31D00B63D8E /* JACartTableViewCell.m in Sources */,
 				CE9ADF2E1AB6D78200D56481 /* RIError.m in Sources */,
 				CE9ADF2F1AB6D78200D56481 /* RIStaticBlockIndex.m in Sources */,
@@ -4413,6 +4427,7 @@
 				CE8C92B01B8B555600C77706 /* JAMainFilterCell.m in Sources */,
 				CE9ADF491AB6D78200D56481 /* JAForgotPasswordViewController.m in Sources */,
 				9AED08281C6DFBE000B5FDF0 /* AFURLResponseSerialization.m in Sources */,
+				1C71FC671E2CD2AD007ACF02 /* PopularTeaserHeaderTableViewCell.m in Sources */,
 				CE9ADF4A1AB6D78200D56481 /* RIFieldRatingStars.m in Sources */,
 				CE9ADF4B1AB6D78200D56481 /* RIOperation.m in Sources */,
 				CE59BEFA1AE7EF0B0057F4E2 /* JAShopTeaserView.m in Sources */,
@@ -4537,6 +4552,7 @@
 				CE9ADFB21AB6D78200D56481 /* RISellerReviewInfo.m in Sources */,
 				9AED08341C74CA0E00B5FDF0 /* JASuccessPageViewController.m in Sources */,
 				CEA106F91BD003EC00EF88B1 /* JACategoriesSideMenuCell.m in Sources */,
+				1CCD52A01E2BA42F008BAEE4 /* PopularTeaserTableViewCell.m in Sources */,
 				CE7CC0921BE38B47006F4A56 /* JASearchView.m in Sources */,
 				9A0F9BC31B5EAD9700569DF2 /* AQSFacebookMessengerActivity.m in Sources */,
 				CE9ADFB81AB6D78200D56481 /* JATeaserView.m in Sources */,
@@ -4762,7 +4778,6 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
 				COPY_PHASE_STRIP = YES;
 				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -4778,8 +4793,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
-				PROVISIONING_PROFILE = "01fbea7f-9a03-4c8d-8245-24e6d3060064";
-				PROVISIONING_PROFILE_SPECIFIER = "Bamilo Live";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -4793,9 +4806,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "بامیلو.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
 				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -4823,8 +4833,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
 				PRODUCT_NAME = "بامیلو";
-				PROVISIONING_PROFILE = "01fbea7f-9a03-4c8d-8245-24e6d3060064";
-				PROVISIONING_PROFILE_SPECIFIER = "Bamilo Live";
+				PROVISIONING_PROFILE_SPECIFIER = Bamilo_Distribution;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
 			};
@@ -4848,7 +4857,6 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -4865,8 +4873,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = NO;
-				PROVISIONING_PROFILE = "01fbea7f-9a03-4c8d-8245-24e6d3060064";
-				PROVISIONING_PROFILE_SPECIFIER = "Bamilo Live";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -4891,7 +4897,6 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
 				COPY_PHASE_STRIP = YES;
 				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -4906,8 +4911,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
-				PROVISIONING_PROFILE = "01fbea7f-9a03-4c8d-8245-24e6d3060064";
-				PROVISIONING_PROFILE_SPECIFIER = "Bamilo Live";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -4921,9 +4924,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "بامیلو.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
 				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -4951,8 +4951,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
 				PRODUCT_NAME = "بامیلو";
-				PROVISIONING_PROFILE = "01fbea7f-9a03-4c8d-8245-24e6d3060064";
-				PROVISIONING_PROFILE_SPECIFIER = "Bamilo Live";
+				PROVISIONING_PROFILE_SPECIFIER = Bamilo_Distribution;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
 			};
@@ -4964,9 +4963,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "بامیلو.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
 				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -4994,7 +4990,6 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
 				PRODUCT_NAME = "بامیلو";
-				PROVISIONING_PROFILE = "01fbea7f-9a03-4c8d-8245-24e6d3060064";
 				PROVISIONING_PROFILE_SPECIFIER = "Bamilo Live";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";

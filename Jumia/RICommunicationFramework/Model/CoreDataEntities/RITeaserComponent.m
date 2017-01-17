@@ -35,8 +35,7 @@
 @dynamic specialPriceFormatted;
 
 + (RITeaserComponent*)parseTeaserComponent:(NSDictionary*)teaserComponentJSON
-                                   country:(RICountryConfiguration*)country
-{
+country:(RICountryConfiguration*)country {
     RITeaserComponent* newTeaserComponent = (RITeaserComponent*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RITeaserComponent class])];
     
     if (teaserComponentJSON) {
@@ -128,13 +127,68 @@
     return newTeaserComponent;
 }
 
-+ (void)saveTeaserComponent:(RITeaserComponent *)teaserComponent andContext:(BOOL)save
-{
++ (void)saveTeaserComponent:(RITeaserComponent *)teaserComponent andContext:(BOOL)save {
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:teaserComponent];
     if (save) {
         [[RIDataBaseWrapper sharedInstance] saveContext];
     }
     
+}
+
+- (void)sendNotificationForTeaseTarget:(NSString *)optionalTrackingInfo {
+    RITarget* teaserTarget = [RITarget parseTarget:self.targetString];
+    
+    NSMutableDictionary* userInfo = [NSMutableDictionary new];
+    [userInfo setObject:STRING_HOME forKey:@"show_back_button_title"];
+    if (self.name.length) {
+        [userInfo setObject:self.name forKey:@"title"];
+    } else if (self.title.length) {
+        [userInfo setObject:self.title forKey:@"title"];
+    }
+    
+    if (self.richRelevance.length) {
+        [userInfo setObject:self.richRelevance forKey:@"richRelevance"];
+    }
+    
+    if (optionalTrackingInfo) {
+      [userInfo setObject:optionalTrackingInfo forKey:@"teaserTrackingInfo"];
+    }
+    
+    NSString* notificationName;
+    
+    if ([teaserTarget.type isEqualToString:[RITarget getTargetKey:CATALOG_HASH]] || [teaserTarget.type isEqualToString:[RITarget getTargetKey:CATALOG_CATEGORY]]) {
+        
+        notificationName = kDidSelectTeaserWithCatalogUrlNofication;
+        
+    } else if ([teaserTarget.type isEqualToString:[RITarget getTargetKey:PRODUCT_DETAIL]]) {
+        
+        notificationName = kDidSelectTeaserWithPDVUrlNofication;
+        
+    } else if ([teaserTarget.type isEqualToString:[RITarget getTargetKey:STATIC_PAGE]] || [teaserTarget.type isEqualToString:[RITarget getTargetKey:SHOP_IN_SHOP]]) {
+        
+        notificationName = kDidSelectTeaserWithShopUrlNofication;
+        
+    } else if ([teaserTarget.type isEqualToString:[RITarget getTargetKey:CAMPAIGN]]) {
+        
+        notificationName = kDidSelectCampaignNofication;
+        //For the campaigns teaserGrouping we need all the campaign components
+        if ([self.teaserGrouping.type isEqualToString:@"campaigns"]) {
+            [userInfo setObject:self.teaserGrouping forKey:@"teaserGrouping"];
+        }
+    }
+    
+    if (self.targetString.length) {
+        [userInfo setObject:self.targetString forKey:@"targetString"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:userInfo];
+        
+        //tracking click
+        NSMutableDictionary* teaserTrackingDictionary = [NSMutableDictionary new];
+        [teaserTrackingDictionary setValue:optionalTrackingInfo forKey:kRIEventCategoryKey];
+        [teaserTrackingDictionary setValue:@"BannerClick" forKey:kRIEventActionKey];
+        [teaserTrackingDictionary setValue:teaserTarget.node forKey:kRIEventLabelKey];
+        
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventTeaserClick] data:[teaserTrackingDictionary copy]];
+    }
 }
 
 @end

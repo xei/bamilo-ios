@@ -18,16 +18,14 @@
 @implementation RICommunicationWrapper
 
 @synthesize operations=_operations;
-- (NSMutableDictionary*)operations
-{
+- (NSMutableDictionary*)operations {
     if (nil == _operations) {
         _operations = [NSMutableDictionary new];
     }
     return _operations;
 }
 
-+(RICommunicationWrapper *)sharedInstance;
-{
++(RICommunicationWrapper *)sharedInstance; {
     static dispatch_once_t pred = 0;
     static RICommunicationWrapper *instance = nil;
     dispatch_once(&pred, ^{
@@ -50,8 +48,7 @@
                       cacheTime:(RIURLCacheTime)cacheTime
              userAgentInjection:(NSString*)userAgentInjection
                    successBlock:(void(^)(RIApiResponse apiResponse, NSDictionary* jsonObject))successBlock
-                   failureBlock:(void(^)(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject))failureBlock
-{
+                   failureBlock:(void(^)(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject))failureBlock {
     RIOperation* operation = [[RIOperation alloc] init];
     NSString* operationID = [NSString stringWithFormat:@"%p",operation];
     [self.operations setObject:operation forKey:operationID];
@@ -83,8 +80,7 @@
                       cacheTime:(RIURLCacheTime)cacheTime
              userAgentInjection:(NSString*)userAgentInjection
                    successBlock:(void(^)(RIApiResponse apiResponse, NSDictionary* jsonObject))successBlock
-                   failureBlock:(void(^)(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject))failureBlock
-{
+                   failureBlock:(void(^)(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject))failureBlock {
     RIOperation* operation = [[RIOperation alloc] init];
     NSString* operationID = [NSString stringWithFormat:@"%p",operation];
     [self.operations setObject:operation forKey:operationID];
@@ -115,8 +111,8 @@
                       cacheTime:(RIURLCacheTime)cacheTime
              userAgentInjection:(NSString*)userAgentInjection
                    successBlock:(void(^)(RIApiResponse apiResponse, NSDictionary* jsonObject))successBlock
-                   failureBlock:(void(^)(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject))failureBlock
-{
+                   failureBlock:(void(^)(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject))failureBlock {
+    
     RIOperation* operation = [[RIOperation alloc] init];
     NSString* operationID = [NSString stringWithFormat:@"%p",operation];
     [self.operations setObject:operation forKey:operationID];
@@ -143,8 +139,7 @@
                       cacheTime:(RIURLCacheTime)cacheTime
              userAgentInjection:(NSString*)userAgentInjection
                    successBlock:(void(^)(RIApiResponse apiResponse, NSDictionary* jsonObject))successBlock
-                   failureBlock:(void(^)(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject))failureBlock
-{
+                   failureBlock:(void(^)(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject))failureBlock {
     RIOperation* operation = [[RIOperation alloc] init];
     NSString* operationID = [NSString stringWithFormat:@"%p",operation];
     [self.operations setObject:operation forKey:operationID];
@@ -171,8 +166,7 @@
                            timeOut:(NSInteger)timeOut
                          cacheType:(RIURLCacheType)cacheType
                          cacheTime:(RIURLCacheTime)cacheTime
-                userAgentInjection:(NSString*)userAgentInjection
-{
+                userAgentInjection:(NSString*)userAgentInjection {
     operation.cacheType = cacheType;
     operation.cacheTime = cacheTime;
     

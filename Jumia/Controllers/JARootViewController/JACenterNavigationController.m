@@ -471,7 +471,8 @@
             return YES;
         }
         case CATALOG_SEARCH: {
-            JACatalogViewController *viewController = [JACatalogViewController new];
+            JACatalogViewController *viewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+            //JACatalogViewController *viewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];;
             [self loadScreenTarget:screenTarget forBaseViewController:viewController];
             [viewController setSearchString:screenTarget.target.node];
             [self pushViewController:viewController animated:screenTarget.pushAnimation];
@@ -479,7 +480,7 @@
         }
         case CATALOG_HASH:
         case CATALOG_CATEGORY: {
-            JACatalogViewController *viewController = [JACatalogViewController new];
+            JACatalogViewController *viewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];;
             [self loadScreenTarget:screenTarget forBaseViewController:viewController];
             [self pushViewController:viewController animated:screenTarget.pushAnimation];
             return YES;
@@ -504,7 +505,7 @@
             return YES;
         }
         case CATALOG_BRAND: {
-            JACatalogViewController *viewController = [JACatalogViewController new];
+            JACatalogViewController *viewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];;
             [self loadScreenTarget:screenTarget forBaseViewController:viewController];
             [self pushViewController:viewController animated:screenTarget.pushAnimation];
             return YES;
@@ -553,8 +554,7 @@
     }
 }
 
-- (void)showRootViewController
-{
+- (void)showRootViewController {
     JABaseViewController* rootViewController = [[JABaseViewController alloc] init];
     [self setViewControllers:@[rootViewController]];
 }
@@ -1323,7 +1323,7 @@
 #pragma mark Catalog Screen
 - (void)pushCatalogToShowSearchResults:(NSString *)query
 {
-    JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
+    JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
     catalog.searchString = query;
     
     catalog.navBarLayout.title = query;
@@ -1334,7 +1334,7 @@
 - (void)pushCatalogForUndefinedSearchWithBrandTargetString:(NSString *)brandTargetString
                                               andBrandName:(NSString *)brandName
 {
-    JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
+    JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
     catalog.targetString = brandTargetString;
     catalog.forceShowBackButton = YES;
     
@@ -1353,39 +1353,32 @@
     NSNumber* sorting = [selectedItem objectForKey:@"sorting"];
     NSString* targetString = [selectedItem objectForKey:@"targetString"];
     
-    if (VALID_NOTEMPTY(category, RICategory))
-    {
+    if (category) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
                                                             object:nil];
         
-        JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
+        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
         
         catalog.navBarLayout.title = category.label;
         catalog.category = category;
         
         [self pushViewController:catalog animated:YES];
-    }
-    else if (VALID_NOTEMPTY(categoryId, NSString))
-    {
-        JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
+    } else if (categoryId.length) {
+        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
         
         catalog.categoryId = categoryId;
         
         [self pushViewController:catalog animated:YES];
-    }
-    else if (VALID_NOTEMPTY(categoryUrlKey, NSString))
-    {
-        JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
+    } else if (categoryUrlKey.length) {
+        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
         
         catalog.categoryUrlKey = categoryUrlKey;
         catalog.filterPush = filterPush;
         catalog.sortingMethodFromPush = sorting;
         
         [self pushViewController:catalog animated:YES];
-    }
-    else if (VALID_NOTEMPTY(targetString, NSString))
-    {
-        JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
+    } else if (targetString.length) {
+        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
         
         catalog.targetString = targetString;
         catalog.filterPush = filterPush;
@@ -1397,11 +1390,9 @@
 
 #pragma mark - Filters
 
-- (void)showProductSpecificationScreen:(NSNotification*)notification
-{
+- (void)showProductSpecificationScreen:(NSNotification*)notification {
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JATabNavigationViewController class]])
-    {
+    if (![topViewController isKindOfClass:[JATabNavigationViewController class]]) {
         JATabNavigationViewController *productDetailsViewController = [[JATabNavigationViewController alloc] init];
         
         if ([notification.userInfo objectForKey:@"product"]) {
@@ -1464,8 +1455,7 @@
 
 #pragma mark - PDV Actions
 
-- (void)showOtherOffers:(NSNotification*)notification
-{
+- (void)showOtherOffers:(NSNotification*)notification {
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAOtherOffersViewController class]]) {
     
@@ -1509,8 +1499,7 @@
 }
 
 
-- (void)showProductVariationsScreen:(NSNotification *)notification
-{
+- (void)showProductVariationsScreen:(NSNotification *)notification {
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAPDVVariationsViewController class]]) {
         
@@ -1519,8 +1508,8 @@
         if (notification.object && [notification.object isKindOfClass:[RIProduct class]]) {
             variationsVC.product = notification.object;
         }
-        if (VALID_NOTEMPTY(notification.userInfo, NSDictionary)) {
-            if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"product.variations"], NSArray)) {
+        if (notification.userInfo) {
+            if ([[notification.userInfo objectForKey:@"product.variations"] count]) {
                 variationsVC.variations = [notification.userInfo objectForKey:@"product.variations"];
             }
         }
@@ -1529,11 +1518,9 @@
     }
 }
 
-- (void)showSellerReviews:(NSNotification*)notification
-{
+- (void)showSellerReviews:(NSNotification*)notification {
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JASellerRatingsViewController class]])
-    {
+    if (![topViewController isKindOfClass:[JASellerRatingsViewController class]]) {
         JASellerRatingsViewController* viewController = [[JASellerRatingsViewController alloc] initWithNibName:@"JASellerRatingsViewController" bundle:nil];
         
         if (notification.object && [notification.object isKindOfClass:[RIProduct class]]) {
@@ -1544,8 +1531,7 @@
     }
 }
 
-- (void)showNewSellerReview:(NSNotification*)notification
-{
+- (void)showNewSellerReview:(NSNotification*)notification {
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JANewRatingViewController class]])
     {
@@ -1570,8 +1556,7 @@
     }
 }
 
--(void)showSellerCatalog: (NSNotification *)notification
-{
+- (void)showSellerCatalog: (NSNotification *)notification {
     NSString* targetString = [notification.userInfo objectForKey:@"targetString"];
     NSString* title = [notification.userInfo objectForKey:@"name"];
 
@@ -1579,18 +1564,17 @@
     NSString* filterPush;
     
     NSDictionary *selectedItem = [notification object];
-    if (VALID_NOTEMPTY(selectedItem, NSDictionary)) {
+    if (selectedItem) {
         NSString* categoryUrlKey = [selectedItem objectForKey:@"category_url_key"];
-        if (VALID_NOTEMPTY(categoryUrlKey, NSString)) {
+        if (categoryUrlKey.length) {
             targetString = [NSString stringWithFormat:@"catalog_seller::%@",categoryUrlKey];
         }
         sorting = [selectedItem objectForKey:@"sorting"];
         filterPush = [selectedItem objectForKey:@"filter"];
     }
     
-    if(VALID_NOTEMPTY(targetString, NSString))
-    {
-        JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
+    if(targetString.length) {
+        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
         catalog.targetString = targetString;
         catalog.navBarLayout.title = title;
         catalog.navBarLayout.showBackButton = YES;
@@ -1602,17 +1586,15 @@
 }
 
 #pragma mark - Teaser Actions
-- (void)didSelectTeaserWithCatalogUrl:(NSNotification*)notification
-{
+- (void)didSelectTeaserWithCatalogUrl:(NSNotification*)notification {
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
                                                         object:nil];
     
     NSString* targetString = [notification.userInfo objectForKey:@"targetString"];
     NSString* title = [notification.userInfo objectForKey:@"title"];
     
-    if (VALID_NOTEMPTY(targetString, NSString)) {
-        
-        JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
+    if (targetString.length) {
+        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
         
         catalog.targetString = targetString;
         catalog.navBarLayout.title = title;
@@ -1630,10 +1612,8 @@
     }
 }
 
-- (void)didSelectCampaign:(NSNotification*)notification
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
-                                                        object:nil];
+- (void)didSelectCampaign:(NSNotification*)notification {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification object:nil];
     
     NSString* title = [notification.userInfo objectForKey:@"title"];
     
@@ -1651,8 +1631,7 @@
         cameFromTeasers = [notification.userInfo objectForKey:@"teaserTrackingInfo"];
     }
     
-    if (VALID_NOTEMPTY(teaserGrouping, RITeaserGrouping))
-    {
+    if (teaserGrouping) {
         JACampaignsViewController* campaignsVC = [JACampaignsViewController new];
         
         campaignsVC.teaserGrouping = teaserGrouping;
@@ -1660,16 +1639,14 @@
         campaignsVC.teaserTrackingInfo = cameFromTeasers;
         
         [self pushViewController:campaignsVC animated:YES];
-    }
-    else if (VALID_NOTEMPTY(campaignId, NSString))
-    {
+    } else if (campaignId.length) {
         JACampaignsViewController* campaignsVC = [JACampaignsViewController new];
         
         campaignsVC.campaignId = campaignId;
         campaignsVC.teaserTrackingInfo = cameFromTeasers;
         
         [self pushViewController:campaignsVC animated:YES];
-    } else if (VALID_NOTEMPTY(campaignTargetString, NSString)) {
+    } else if (campaignTargetString.length) {
         JACampaignsViewController* campaignsVC = [JACampaignsViewController new];
         
         campaignsVC.targetString = campaignTargetString;
@@ -1679,16 +1656,14 @@
     }
 }
 
-- (void)didSelectTeaserWithPDVUrl:(NSNotification*)notification
-{
+- (void)didSelectTeaserWithPDVUrl:(NSNotification*)notification {
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
                                                         object:nil];
     
     NSString* targetString = [notification.userInfo objectForKey:@"targetString"];
     NSString* productSku = [notification.userInfo objectForKey:@"sku"];
     
-    if (VALID_NOTEMPTY(targetString, NSString) || VALID_NOTEMPTY(productSku, NSString))
-    {
+    if (targetString.length || productSku.length) {
         JAPDVViewController *pdv = [JAPDVViewController new];
         pdv.targetString = targetString;
         pdv.productSku = productSku;
@@ -1697,17 +1672,13 @@
             pdv.richRelevanceParameter = [notification.userInfo objectForKey:@"richRelevance"];
         }
         
-        if ([notification.userInfo objectForKey:@"fromCatalog"])
-        {
+        if ([notification.userInfo objectForKey:@"fromCatalog"]) {
             pdv.fromCatalogue = YES;
-        }
-        else
-        {
+        } else {
             pdv.fromCatalogue = NO;
         }
         
-        if ([notification.userInfo objectForKey:@"previousCategory"])
-        {
+        if ([notification.userInfo objectForKey:@"previousCategory"]) {
             NSString *previous = [notification.userInfo objectForKey:@"previousCategory"];
             
             if (previous.length > 0) {
@@ -1715,14 +1686,12 @@
             }
         }
         
-        if ([notification.userInfo objectForKey:@"category"])
-        {
+        if ([notification.userInfo objectForKey:@"category"]) {
             pdv.category = [notification.userInfo objectForKey:@"category"];
         }
         
         // For deeplink
-        if ([notification.userInfo objectForKey:@"size"])
-        {
+        if ([notification.userInfo objectForKey:@"size"]) {
             pdv.preSelectedSize = [notification.userInfo objectForKey:@"size"];
         }
         
@@ -1783,7 +1752,7 @@
     RICategory* category = [selectedItem objectForKey:@"category"];
     if (VALID_NOTEMPTY(category, RICategory)) {
         
-        JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
+        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
         
         catalog.category = category;
         
@@ -1976,12 +1945,11 @@
 
 #pragma mark - Recent Search
 
-- (void)didSelectRecentSearch:(NSNotification*)notification
-{
+- (void)didSelectRecentSearch:(NSNotification*)notification {
     RISearchSuggestion *recentSearch = notification.object;
     
-    if (VALID_NOTEMPTY(recentSearch, RISearchSuggestion)) {
-        JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
+    if (recentSearch) {
+        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
         catalog.searchString = recentSearch.item;
         
         catalog.navBarLayout.title = recentSearch.item;
@@ -1992,8 +1960,7 @@
 
 #pragma mark - Tab Bar
 
-- (void)customizeTabBar
-{
+- (void)customizeTabBar {
     self.tabBarView = [[JATabBarView alloc] initWithFrame:CGRectMake(0.0,
                                                                      self.view.frame.size.height - kTabBarHeight,
                                                                      self.view.bounds.size.width,
@@ -2005,8 +1972,7 @@
 
 #pragma mark - Navigation Bar
 
-- (void)customizeNavigationBar
-{
+- (void)customizeNavigationBar {
     [self.navigationItem setHidesBackButton:YES
                                    animated:NO];
     

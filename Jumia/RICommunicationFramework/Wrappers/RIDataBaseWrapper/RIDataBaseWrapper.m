@@ -127,8 +127,7 @@
     return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
 }
 
--(NSManagedObject *)temporaryManagedObjectOfType:(NSString *)objectType
-{
+- (NSManagedObject *)temporaryManagedObjectOfType:(NSString *)objectType {
     NSEntityDescription* description = [NSEntityDescription entityForName:objectType inManagedObjectContext:self.managedObjectContext];
     NSManagedObject *temporaryObject = [[NSManagedObject alloc] initWithEntity:description insertIntoManagedObjectContext:nil];
     
@@ -136,22 +135,20 @@
 }
 
 
--(NSManagedObject *)managedObjectOfType:(NSString *)objectType
-{
+- (NSManagedObject *)managedObjectOfType:(NSString *)objectType {
     NSManagedObject *newObject = [NSEntityDescription insertNewObjectForEntityForName:objectType inManagedObjectContext:self.managedObjectContext];
     
     return newObject;
 }
 
--(NSArray *)allEntriesOfType:(NSString *)objectType;
-{
+- (NSArray *)allEntriesOfType:(NSString *)objectType {
     NSEntityDescription *entity = [NSEntityDescription entityForName:objectType inManagedObjectContext:self.managedObjectContext];
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:entity];
     [request setIncludesPendingChanges:YES];
     NSError *error = nil;
     NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&error];
-    if (NOTEMPTY(error)) {
+    if (error) {
         NSLog(@"ERROR WHILE FETCHING COREDATA REQUEST");
         return nil;
     }
@@ -160,8 +157,7 @@
 
 -(NSArray*) getEntryOfType:(NSString *)objectType
           withPropertyName:(NSString *)propertyName
-          andPropertyValue:(NSString *)propertyValue
-{
+          andPropertyValue:(NSString *)propertyValue {
     NSEntityDescription *entity = [NSEntityDescription entityForName:objectType inManagedObjectContext:self.managedObjectContext];
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:entity];
@@ -173,16 +169,14 @@
     
     NSError *error = nil;
     NSArray *result = [self.managedObjectContext executeFetchRequest:request error:&error];
-    if (NOTEMPTY(error)) {
+    if (error) {
         NSLog(@"ERROR WHILE FETCHING COREDATA REQUEST");
         return nil;
     }
     return result;
 }
 
--(NSArray*) getEntryOfType:(NSString *)objectType
-          withPropertyName:(NSString *)propertyName
-{
+- (NSArray*) getEntryOfType:(NSString *)objectType withPropertyName:(NSString *)propertyName {
     NSEntityDescription *entity = [NSEntityDescription entityForName:objectType inManagedObjectContext:self.managedObjectContext];
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:entity];
@@ -194,15 +188,14 @@
     
     NSError *error = nil;
     NSArray *result = [self.managedObjectContext executeFetchRequest:request error:&error];
-    if (NOTEMPTY(error)) {
+    if (error) {
         NSLog(@"ERROR WHILE FETCHING COREDATA REQUEST");
         return nil;
     }
     return result;
 }
 
--(void)deleteAllEntriesOfType:(NSString *)objectType;
-{
+-(void)deleteAllEntriesOfType:(NSString *)objectType {
     NSEntityDescription *entity = [NSEntityDescription entityForName:objectType inManagedObjectContext:self.managedObjectContext];
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:entity];
