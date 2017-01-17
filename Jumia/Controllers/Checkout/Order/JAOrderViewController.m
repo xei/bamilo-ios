@@ -105,7 +105,14 @@
         if(self.firstLoading)
         {
             NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
-            [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:self.cart.orderNr];
+            NSMutableArray *cartItemsSkus = [[NSMutableArray alloc]init];
+            for (int i = 0; i < self.cart.cartItems.count; i++) {
+                RICartItem* cartItem = [self.cart.cartItems objectAtIndex:i];
+                [cartItemsSkus addObject:cartItem.simpleSku];
+            }
+            NSString * labelString = [cartItemsSkus componentsJoinedByString:@", "];
+            
+            [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:labelString];
             self.firstLoading = NO;
         }
         [self setupViews];
