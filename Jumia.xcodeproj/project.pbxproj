@@ -9,13 +9,13 @@
 /* Begin PBXBuildFile section */
 		1C3043021E2A3A5800BD391E /* CatalogNoResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3043011E2A3A5800BD391E /* CatalogNoResultViewController.m */; };
 		1C71FC5E1E2CABAD007ACF02 /* Bamilosans Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1C71FC591E2CABAD007ACF02 /* Bamilosans Black.ttf */; };
-		1C71FC5F1E2CABAD007ACF02 /* ‌Bamilosans Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1C71FC5A1E2CABAD007ACF02 /* ‌Bamilosans Bold.ttf */; };
 		1C71FC601E2CABAD007ACF02 /* Bamilosans Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1C71FC5B1E2CABAD007ACF02 /* Bamilosans Light.ttf */; };
 		1C71FC611E2CABAD007ACF02 /* Bamilosans Reg.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1C71FC5C1E2CABAD007ACF02 /* Bamilosans Reg.ttf */; };
 		1C71FC621E2CABAD007ACF02 /* Bamilosans UltraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1C71FC5D1E2CABAD007ACF02 /* Bamilosans UltraLight.ttf */; };
 		1C71FC631E2CABB2007ACF02 /* Bamilo-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE9AE12C1AB84C2300D56481 /* Bamilo-Info.plist */; };
 		1C71FC671E2CD2AD007ACF02 /* PopularTeaserHeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C71FC651E2CD2AD007ACF02 /* PopularTeaserHeaderTableViewCell.m */; };
 		1C71FC681E2CD2AD007ACF02 /* PopularTeaserHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C71FC661E2CD2AD007ACF02 /* PopularTeaserHeaderTableViewCell.xib */; };
+		1C80D8841E2E3D850036B514 /* ‌Bamilosans Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1C71FC5A1E2CABAD007ACF02 /* ‌Bamilosans Bold.ttf */; };
 		1CCD52A01E2BA42F008BAEE4 /* PopularTeaserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCD529E1E2BA42F008BAEE4 /* PopularTeaserTableViewCell.m */; };
 		1CCD52A11E2BA42F008BAEE4 /* PopularTeaserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CCD529F1E2BA42F008BAEE4 /* PopularTeaserTableViewCell.xib */; };
 		69F3CBC41C07143A0016CA12 /* RISuccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 69F3CBBE1C07143A0016CA12 /* RISuccess.m */; };
@@ -4199,7 +4199,6 @@
 				CE9AE0631AB6D78200D56481 /* slider-metal-handle@2x.png in Resources */,
 				CE9AE0641AB6D78200D56481 /* 12_product_details.feature in Resources */,
 				CE9AE0651AB6D78200D56481 /* my_first_steps.rb in Resources */,
-				1C71FC5F1E2CABAD007ACF02 /* ‌Bamilosans Bold.ttf in Resources */,
 				CE9AE0671AB6D78200D56481 /* slider-default-handle-highlighted.png in Resources */,
 				9A17D1701C5F775900851D6E /* BMA4SRichPushWebViewWithToolBar-nobuttons.xib in Resources */,
 				9A17D0F31C5F775900851D6E /* BMA4SRichPushWebViewWithToolBar-iPad.xib in Resources */,
@@ -4339,6 +4338,7 @@
 				CE9AE1081AB6D78200D56481 /* Main.storyboard in Resources */,
 				9A17D1111C5F775900851D6E /* BMA4SiPhoneWebViewNotifView-iPad.xib in Resources */,
 				CE9AE1091AB6D78200D56481 /* slider-default_trackBackground@2x.png in Resources */,
+				1C80D8841E2E3D850036B514 /* ‌Bamilosans Bold.ttf in Resources */,
 				9A17D0C11C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewNotifView-iPad.xib in Resources */,
 				CE9AE1121AB6D78200D56481 /* slider-default7-track@2x.png in Resources */,
 				CE9AE1391AB8997B00D56481 /* Bamilo.xcassets in Resources */,
