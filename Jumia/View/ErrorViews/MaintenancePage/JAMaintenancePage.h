@@ -17,4 +17,5 @@
 - (void)setRetryBlock:(void(^)(BOOL dismiss))completion;
 
 -(void)removeViews;
+
 @end

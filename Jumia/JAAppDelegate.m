@@ -11,9 +11,10 @@
 #import "JAUtils.h"
 #import "RIAdjustTracker.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
-#import <HockeySDK/HockeySDK.h>
 #import <GoogleAppIndexing/GoogleAppIndexing.h>
 #import "RIProduct.h"
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
 
 #define kSessionDuration 1800.0f
 
@@ -35,40 +36,16 @@
     [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans-Bold" forKey:kFontBoldNameKey];
     [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans" forKey:kFontMediumNameKey];
     [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans-Black" forKey:kFontItalicNameKey];
-    
-#if defined(DEBUG) && DEBUG
-    
+
 #ifdef IS_STAGING
-   //        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"b69eae07b51d81f272e9ae78312967a8"];
-        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"2f8bd69b5ea4458c8282b58a33a6d1f9"];
-    
-#else
-        //empty
-        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@""];
-#endif
-    [[BITHockeyManager sharedHockeyManager].crashManager setCrashManagerStatus:BITCrashManagerStatusAutoSend];
-    [[BITHockeyManager sharedHockeyManager] startManager];
-    
-    // we will run authenticateInstallation only if it is a from hockey
-#if defined(HOCKEY) && HOCKEY
-    [[BITHockeyManager sharedHockeyManager].authenticator authenticateInstallation];
+    [Fabric with:@[[Crashlytics class]]];
 #endif
     
-    NSString *plistPath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"RITrackingDebug_%@", [APP_NAME uppercaseString]] ofType:@"plist"];
-    [[RITrackingWrapper sharedInstance] startWithConfigurationFromPropertyListAtPath:plistPath
-                                                                       launchOptions:launchOptions
-                                                                        delegate:self];
-#else
-    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"64935d72b0c34cd51a7a806f7bb70e4a"];
-    [[BITHockeyManager sharedHockeyManager].crashManager setCrashManagerStatus:BITCrashManagerStatusAutoSend];
-    [[BITHockeyManager sharedHockeyManager] startManager];
-    
+#ifdef IS_RELEASE
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"RITracking_%@", [APP_NAME uppercaseString]] ofType:@"plist"];
-    [[RITrackingWrapper sharedInstance] startWithConfigurationFromPropertyListAtPath:plistPath
-                                                                       launchOptions:launchOptions
-                                                                            delegate:self];
+    [[RITrackingWrapper sharedInstance] startWithConfigurationFromPropertyListAtPath:plistPath launchOptions:launchOptions delegate:self];
 #endif
-    
+
     [[GSDAppIndexing sharedInstance] registerApp:kAppStoreIdBamiloInteger];
     
     [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
