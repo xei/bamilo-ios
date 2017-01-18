@@ -28,6 +28,8 @@
 		847606B71D77EEE900C54687 /* JAContactUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 847606B41D77EEE900C54687 /* JAContactUsViewController.m */; };
 		84B25D9D1D8048DF0024B476 /* JAContactUsViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B25D9A1D8048DE0024B476 /* JAContactUsViewController~ipad.xib */; };
 		84B25D9F1D8048DF0024B476 /* JAContactUsViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B25D9B1D8048DE0024B476 /* JAContactUsViewController~iphone.xib */; };
+		8709D0CC1E2FC832002220BC /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8709D0CA1E2FC832002220BC /* Fabric.framework */; };
+		8709D0CD1E2FC832002220BC /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8709D0CB1E2FC832002220BC /* Crashlytics.framework */; };
 		892EB9351BC6795800FBF094 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 892EB9301BC6795800FBF094 /* libGoogleAnalytics.a */; };
 		892EB9441BC679A800FBF094 /* libTagManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 892EB93F1BC679A800FBF094 /* libTagManager.a */; };
 		893AADCB1C1F0DD7006314FB /* RIPhonePrefix.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEADDCF1C10B1C40074034A /* RIPhonePrefix.m */; };
@@ -654,6 +656,8 @@
 		84B25D9A1D8048DE0024B476 /* JAContactUsViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "JAContactUsViewController~ipad.xib"; path = "ContactUs/JAContactUsViewController~ipad.xib"; sourceTree = "<group>"; };
 		84B25D9B1D8048DE0024B476 /* JAContactUsViewController~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "JAContactUsViewController~iphone.xib"; path = "ContactUs/JAContactUsViewController~iphone.xib"; sourceTree = "<group>"; };
 		84D47A0E1DD0725B00642C3E /* بامیلو.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "بامیلو.entitlements"; sourceTree = "<group>"; };
+		8709D0CA1E2FC832002220BC /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		8709D0CB1E2FC832002220BC /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		892EB9251BC6795800FBF094 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
 		892EB9261BC6795800FBF094 /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIDictionaryBuilder.h; sourceTree = "<group>"; };
 		892EB9271BC6795800FBF094 /* GAIEcommerceFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommerceFields.h; sourceTree = "<group>"; };
@@ -1563,6 +1567,7 @@
 				CE9AE01C1AB6D78200D56481 /* CoreText.framework in Frameworks */,
 				89C177BD1BC2DC4A006D3B19 /* SafariServices.framework in Frameworks */,
 				CED7C5231B78E0570070C855 /* GoogleAppIndexing.framework in Frameworks */,
+				8709D0CD1E2FC832002220BC /* Crashlytics.framework in Frameworks */,
 				CE9AE01D1AB6D78200D56481 /* CoreTelephony.framework in Frameworks */,
 				892EB9351BC6795800FBF094 /* libGoogleAnalytics.a in Frameworks */,
 				CE9AE01E1AB6D78200D56481 /* Social.framework in Frameworks */,
@@ -1574,6 +1579,7 @@
 				9A0F9B881B5E58E900569DF2 /* FBSDKLoginKit.framework in Frameworks */,
 				CE9AE0241AB6D78200D56481 /* ImageIO.framework in Frameworks */,
 				9A0F9B921B5E58E900569DF2 /* FBSDKShareKit.framework in Frameworks */,
+				8709D0CC1E2FC832002220BC /* Fabric.framework in Frameworks */,
 				9A0F9B791B5E58E900569DF2 /* FBAudienceNetwork.framework in Frameworks */,
 				CE9AE0261AB6D78200D56481 /* CoreLocation.framework in Frameworks */,
 				CE9AE0271AB6D78200D56481 /* SystemConfiguration.framework in Frameworks */,
@@ -3004,6 +3010,8 @@
 		B5A301D119811E7600F71726 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8709D0CA1E2FC832002220BC /* Fabric.framework */,
+				8709D0CB1E2FC832002220BC /* Crashlytics.framework */,
 				89AB5C2D1BC2B01B00BA38E5 /* SafariServices.framework */,
 				9A0F9BAA1B5E7DE600569DF2 /* StoreKit.framework */,
 				9A0F9BA81B5E7DB400569DF2 /* CoreMotion.framework */,
@@ -4787,6 +4795,7 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
@@ -4911,6 +4920,7 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
@@ -4944,6 +4954,7 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";

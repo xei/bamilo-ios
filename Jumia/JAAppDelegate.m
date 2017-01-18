@@ -13,6 +13,8 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <GoogleAppIndexing/GoogleAppIndexing.h>
 #import "RIProduct.h"
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
 
 #define kSessionDuration 1800.0f
 
@@ -35,6 +37,10 @@
     [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans" forKey:kFontMediumNameKey];
     [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans-Black" forKey:kFontItalicNameKey];
 
+#ifdef IS_STAGING
+    [Fabric with:@[[Crashlytics class]]];
+#endif
+    
 #ifdef IS_RELEASE
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"RITracking_%@", [APP_NAME uppercaseString]] ofType:@"plist"];
     [[RITrackingWrapper sharedInstance] startWithConfigurationFromPropertyListAtPath:plistPath launchOptions:launchOptions delegate:self];

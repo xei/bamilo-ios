@@ -48,6 +48,20 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>20</string>
+	<key>Fabric</key>
+	<dict>
+		<key>APIKey</key>
+		<string>ddde4ad6ad210575fdac10a908040d1a93e74833</string>
+		<key>Kits</key>
+		<array>
+			<dict>
+				<key>KitInfo</key>
+				<dict/>
+				<key>KitName</key>
+				<string>Crashlytics</string>
+			</dict>
+		</array>
+	</dict>
 	<key>FacebookAppID</key>
 	<string>304887043046936</string>
 	<key>FacebookDisplayName</key>
@@ -104,6 +118,14 @@
 	<string>Bamilo would like to access your contacts</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Bamilo would like to access your photos</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Bamilosans Reg.ttf</string>
+		<string>Bamilosans Light.ttf</string>
+		<string>Bamilosans UltraLight.ttf</string>
+		<string>Bamilosans Bold.ttf</string>
+		<string>Bamilosans Black.ttf</string>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
@@ -127,13 +149,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
-	<key>UIAppFonts</key>
-	<array>
-		<string>Bamilosans Reg.ttf</string>
-		<string>Bamilosans Light.ttf</string>
-		<string>Bamilosans UltraLight.ttf</string>
-		<string>Bamilosans Bold.ttf</string>
-		<string>Bamilosans Black.ttf</string>
-	</array>
 </dict>
 </plist>
