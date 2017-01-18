@@ -25,12 +25,8 @@
     self.navBarLayout.title = STRING_CONTACT_US;
     self.view.backgroundColor = [UIColor whiteColor];
     self.addresslabel.text = @"تهران، میدان ونک، بزرگراه حقانی \n نرسیده به چهارراه جهان کودک \n پلاک ۶۳، طبقه اول و دوم";
-//    UIDevice *device = [UIDevice currentDevice];
-//    
-//    if ([[device model] isEqualToString:@"iPhone"] || [[device model] isEqualToString:@"iPhone Simulator"])
-//    {
-//    }
-//    [self.callToContactUsButton addTarget:self action:@selector(callToContactUs)forControlEvents:UIControlEventTouchUpInside];
+    self.addresslabel.font = JATitleFont;
+    
     UIImage* currentImage = _arrowImageView1.image;
     
     UIImage* newImage = [currentImage flipImageWithOrientation:UIImageOrientationUpMirrored];
@@ -38,34 +34,27 @@
     _arrowImageView2.image = newImage;
     [self.mailForAppFeedbackButton addTarget:self action:@selector(mailForAppFeedback)forControlEvents:UIControlEventTouchUpInside];
     float sizeOfContent = 0;
-//    UIView *lLast = [self.contactUsScreen.subviews lastObject];
+    
     NSInteger wd = self.mailForAppFeedbackButton.frame.origin.y + 100 ;
     NSInteger ht = self.mailForAppFeedbackButton.frame.size.height;
     
     sizeOfContent = wd+ht;
-    // Do any additional setup after loading the view from its nib.
-//    [self.contactUsScreen setContentSize:CGSizeMake(self.contactUsScreen.frame.size.width,
-//                                                     800)];
+    
     [self.contactUsScreen setContentSize:CGSizeMake(self.contactUsScreen.frame.size.width, sizeOfContent)];
 
 }
 
--(IBAction)callToContactUs:(id)sender
-{
+-(IBAction)callToContactUs:(id)sender {
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"تماس با تیم خدمات مشتریان بامیلو" delegate:nil cancelButtonTitle:@"لغو" otherButtonTitles:@"تایید", nil];
     alert.delegate = self;
     [alert show];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if(buttonIndex ==0){
-        
-    }
-    else{
+    if(buttonIndex != 0) {
         [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
             
             [self trackingEventCallToOrder];
-            
             NSString *phoneNumber = [@"tel://" stringByAppendingString:[JAUtils convertToEnglishNumber:configuration.phoneNumber]];//tessa
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
@@ -73,20 +62,22 @@
     }
 }
 
--(void)mailForAppFeedback
-{
-    if(![MFMailComposeViewController canSendMail])
-    {
+- (void)mailForAppFeedback {
+    if(![MFMailComposeViewController canSendMail]) {
 //        [JAUtils showAlertWithTitle:ERROR_STRING message:EMAIL_NOT_CONFIGURED delegate:nil];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"EMAIL NOT CONFIGURED"
                                                        delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:  nil];
         [alert show];
-    }
-    else
-    {
+    } else {
         
         NSString *emailTitle = [NSString stringWithFormat:@" گزارش مشکلات برنامه"];
-        NSString *messageBody = [NSString stringWithFormat:@"OS Version: %@ \n Device Name: %@ \n App Version: %@",[UIDevice currentDevice].systemVersion, [JAContactUsViewController deviceName],[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
+        
+        NSString *messageBody = [NSString stringWithFormat:@"OS Version: %@ \n Device Name: %@ \n App Version: %@",
+                                 [UIDevice currentDevice].systemVersion,
+                                 [[UIDevice currentDevice] model],
+                                 [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
+        
+        
         NSArray *toRecipents = [NSArray arrayWithObjects:@"application@bamilo.com", nil];
         //        NSArray *toRecipents = [NSArray arrayWithObjects:@"tessa@qburst.com", nil];
         
@@ -104,82 +95,77 @@
     }
 }
 
-+ (NSString*)deviceName {
+//- (NSString*)deviceName {
     
-    static NSDictionary* deviceNamesByCode = nil;
-    static NSString* deviceName = nil;
-    
-    if (deviceName) {
-        return deviceName;
-    }
-    
-    deviceNamesByCode = @{
-                          @"i386"      :@"Simulator",
-                          @"iPod1,1"   :@"iPod Touch",      // (Original)
-                          @"iPod2,1"   :@"iPod Touch",      // (Second Generation)
-                          @"iPod3,1"   :@"iPod Touch",      // (Third Generation)
-                          @"iPod4,1"   :@"iPod Touch",      // (Fourth Generation)
-                          @"iPhone1,1" :@"iPhone",          // (Original)
-                          @"iPhone1,2" :@"iPhone",          // (3G)
-                          @"iPhone2,1" :@"iPhone",          // (3GS)
-                          @"iPad1,1"   :@"iPad",            // (Original)
-                          @"iPad2,1"   :@"iPad 2",          //
-                          @"iPad3,1"   :@"iPad",            // (3rd Generation)
-                          @"iPhone3,1" :@"iPhone 4",        //
-                          @"iPhone4,1" :@"iPhone 4S",       //
-                          @"iPhone5,1" :@"iPhone 5",        // (model A1428, AT&T/Canada)
-                          @"iPhone5,2" :@"iPhone 5",        // (model A1429, everything else)
-                          @"iPad3,4"   :@"iPad",            // (4th Generation)
-                          @"iPad2,5"   :@"iPad Mini",       // (Original)
-                          @"iPhone5,3" :@"iPhone 5c",       // (model A1456, A1532 | GSM)
-                          @"iPhone5,4" :@"iPhone 5c",       // (model A1507, A1516, A1526 (China), A1529 | Global)
-                          @"iPhone6,1" :@"iPhone 5s",       // (model A1433, A1533 | GSM)
-                          @"iPhone6,2" :@"iPhone 5s",       // (model A1457, A1518, A1528 (China), A1530 | Global)
-                          @"iPhone7,2" :@"iPhone 6",
-                          @"iPhone7,1" :@"iPhone 6 Plus",
-                          @"iPhone8,1" :@"iPhone 6s",
-                          @"iPhone8,2" :@"iPhone 6S Plus",    //
-                          @"iPhone8,4" :@"iPhone SE",         //
-                          @"iPhone9,1" :@"iPhone 7",          //
-                          @"iPhone9,3" :@"iPhone 7",          //
-                          @"iPhone9,2" :@"iPhone 7 Plus",     //
-                          @"iPhone9,4" :@"iPhone 7 Plus",     //
-                          @"iPad4,1"   :@"iPad Air",        // 5th Generation iPad (iPad Air) - Wifi
-                          @"iPad4,2"   :@"iPad Air",        // 5th Generation iPad (iPad Air) - Cellular
-                          @"iPad4,4"   :@"iPad Mini",       // (2nd Generation iPad Mini - Wifi)
-                          @"iPad4,5"   :@"iPad Mini",       // (2nd Generation iPad Mini - Cellular)
-                          @"iPad4,7"   :@"iPad Mini",         // (3rd Generation iPad Mini - Wifi (model A1599))
-                          @"iPad6,7"   :@"iPad Pro (12.9\")", // iPad Pro 12.9 inches - (model A1584)
-                          @"iPad6,8"   :@"iPad Pro (12.9\")", // iPad Pro 12.9 inches - (model A1652)
-                          @"iPad6,3"   :@"iPad Pro (9.7\")",  // iPad Pro 9.7 inches - (model A1673)
-                          @"iPad6,4"   :@"iPad Pro (9.7\")"   // iPad Pro 9.7 inches - (models A1674 and A1675)
-                          };
-    
-    struct utsname systemInfo;
-    uname(&systemInfo);
-    NSString* code = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
-    
-    deviceName = [deviceNamesByCode objectForKey:code];
-    
-    if (!deviceName) {
-        // Not found in database. At least guess main device type from string contents:
-        
-        if ([code rangeOfString:@"iPod"].location != NSNotFound) {
-            deviceName = @"iPod Touch";
-        } else if([code rangeOfString:@"iPad"].location != NSNotFound) {
-            deviceName = @"iPad";
-        } else if([code rangeOfString:@"iPhone"].location != NSNotFound){
-            deviceName = @"iPhone";
-        } else {
-            deviceName = @"Simulator";
-        }
-    }
-    
-    return deviceName;
-}
+//    static NSDictionary* deviceNamesByCode = nil;
+//    static NSString* deviceName = nil;
+//    
+//    deviceNamesByCode = @{
+//                          @"i386"      :@"Simulator",
+//                          @"iPod1,1"   :@"iPod Touch",      // (Original)
+//                          @"iPod2,1"   :@"iPod Touch",      // (Second Generation)
+//                          @"iPod3,1"   :@"iPod Touch",      // (Third Generation)
+//                          @"iPod4,1"   :@"iPod Touch",      // (Fourth Generation)
+//                          @"iPhone1,1" :@"iPhone",          // (Original)
+//                          @"iPhone1,2" :@"iPhone",          // (3G)
+//                          @"iPhone2,1" :@"iPhone",          // (3GS)
+//                          @"iPad1,1"   :@"iPad",            // (Original)
+//                          @"iPad2,1"   :@"iPad 2",          //
+//                          @"iPad3,1"   :@"iPad",            // (3rd Generation)
+//                          @"iPhone3,1" :@"iPhone 4",        //
+//                          @"iPhone4,1" :@"iPhone 4S",       //
+//                          @"iPhone5,1" :@"iPhone 5",        // (model A1428, AT&T/Canada)
+//                          @"iPhone5,2" :@"iPhone 5",        // (model A1429, everything else)
+//                          @"iPad3,4"   :@"iPad",            // (4th Generation)
+//                          @"iPad2,5"   :@"iPad Mini",       // (Original)
+//                          @"iPhone5,3" :@"iPhone 5c",       // (model A1456, A1532 | GSM)
+//                          @"iPhone5,4" :@"iPhone 5c",       // (model A1507, A1516, A1526 (China), A1529 | Global)
+//                          @"iPhone6,1" :@"iPhone 5s",       // (model A1433, A1533 | GSM)
+//                          @"iPhone6,2" :@"iPhone 5s",       // (model A1457, A1518, A1528 (China), A1530 | Global)
+//                          @"iPhone7,2" :@"iPhone 6",
+//                          @"iPhone7,1" :@"iPhone 6 Plus",
+//                          @"iPhone8,1" :@"iPhone 6s",
+//                          @"iPhone8,2" :@"iPhone 6S Plus",    //
+//                          @"iPhone8,4" :@"iPhone SE",         //
+//                          @"iPhone9,1" :@"iPhone 7",          //
+//                          @"iPhone9,3" :@"iPhone 7",          //
+//                          @"iPhone9,2" :@"iPhone 7 Plus",     //
+//                          @"iPhone9,4" :@"iPhone 7 Plus",     //
+//                          @"iPad4,1"   :@"iPad Air",        // 5th Generation iPad (iPad Air) - Wifi
+//                          @"iPad4,2"   :@"iPad Air",        // 5th Generation iPad (iPad Air) - Cellular
+//                          @"iPad4,4"   :@"iPad Mini",       // (2nd Generation iPad Mini - Wifi)
+//                          @"iPad4,5"   :@"iPad Mini",       // (2nd Generation iPad Mini - Cellular)
+//                          @"iPad4,7"   :@"iPad Mini",         // (3rd Generation iPad Mini - Wifi (model A1599))
+//                          @"iPad6,7"   :@"iPad Pro (12.9\")", // iPad Pro 12.9 inches - (model A1584)
+//                          @"iPad6,8"   :@"iPad Pro (12.9\")", // iPad Pro 12.9 inches - (model A1652)
+//                          @"iPad6,3"   :@"iPad Pro (9.7\")",  // iPad Pro 9.7 inches - (model A1673)
+//                          @"iPad6,4"   :@"iPad Pro (9.7\")"   // iPad Pro 9.7 inches - (models A1674 and A1675)
+//                          };
+//    
+//    struct utsname systemInfo;
+//    uname(&systemInfo);
+//    NSString* code = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+//    
+//    deviceName = [deviceNamesByCode objectForKey:code];
+//    
+//    if (!deviceName) {
+//        // Not found in database. At least guess main device type from string contents:
+//        
+//        if ([code rangeOfString:@"iPod"].location != NSNotFound) {
+//            deviceName = @"iPod Touch";
+//        } else if([code rangeOfString:@"iPad"].location != NSNotFound) {
+//            deviceName = @"iPad";
+//        } else if([code rangeOfString:@"iPhone"].location != NSNotFound){
+//            deviceName = @"iPhone";
+//        } else {
+//            deviceName = @"Simulator";
+//        }
+//    }
+//    
+//    return deviceName;
+//}
 
-- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
-{
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
     switch (result) {
         case MFMailComposeResultSent:
             NSLog(@"You sent the email.");
@@ -202,8 +188,7 @@
 }
 
 
-- (void)trackingEventCallToOrder
-{
+- (void)trackingEventCallToOrder {
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
     [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];

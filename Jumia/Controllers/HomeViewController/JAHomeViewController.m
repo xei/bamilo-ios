@@ -160,7 +160,6 @@
                                 @"caption2":@"حرکت در میان محصولات برگزیده"
                                 }
                             ];
-//    @"caption": @"حرکت در میان رویدادهای جاری",
 
     MPCoachMarks *coachMarksView = [[MPCoachMarks alloc] initWithFrame:self.navigationController.view.bounds coachMarks:coachMarks];
     [self.navigationController.view addSubview:coachMarksView];
@@ -182,8 +181,7 @@
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [self showLoading];
     
-    if(VALID_NOTEMPTY(self.fallbackView, JAFallbackView) && self.fallbackView.superview)
-    {
+    if(self.fallbackView && self.fallbackView.superview) {
         [self.fallbackView setupFallbackView:CGRectMake(self.fallbackView.frame.origin.x,
                                                         self.fallbackView.frame.origin.y,
                                                         [self viewBounds].size.height + [self viewBounds].origin.y,

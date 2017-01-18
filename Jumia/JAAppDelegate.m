@@ -34,7 +34,7 @@
     [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans-Light" forKey:kFontLightNameKey];
     [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans-Bold" forKey:kFontBoldNameKey];
     [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans" forKey:kFontMediumNameKey];
-    [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans-Back" forKey:kFontItalicNameKey];
+    [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans-Black" forKey:kFontItalicNameKey];
     
 #if defined(DEBUG) && DEBUG
     

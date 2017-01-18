@@ -93,33 +93,26 @@ JAActivityViewControllerDelegate
 @synthesize selectedBundles = _selectedBundles;
 @synthesize viewLoaded = _viewLoaded;
 
-- (JAPDVImageSection *)productImageSection
-{
-    if (!VALID_NOTEMPTY(_productImageSection, JAPDVImageSection)) {
+- (JAPDVImageSection *)productImageSection {
+    if (!_productImageSection) {
         
         _productImageSection = [[JAPDVImageSection alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 500)];
         _productImageSection.delegate = self;
-        [_productImageSection.wishListButton addTarget:self
-                                                action:@selector(wishListButtonPressed:)
-                                      forControlEvents:UIControlEventTouchUpInside];
+        [_productImageSection.wishListButton addTarget:self action:@selector(wishListButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
-    _productImageSection.wishListButton.selected = VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate);
+    _productImageSection.wishListButton.selected = self.product.favoriteAddDate;
     return _productImageSection;
 }
 
 #pragma mark - View lifecycle
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     self.apiResponse = RIApiResponseSuccess;
-    if(VALID_NOTEMPTY(self.product.sku, NSString))
-    {
+    if (self.product.sku.length) {
         self.screenName = [NSString stringWithFormat:@"PDS / %@", self.product.sku];
-    }
-    else
-    {
+    } else {
         self.screenName = @"PDV";
     }
     
@@ -136,15 +129,11 @@ JAActivityViewControllerDelegate
     [self.landscapeScrollView setHidden:YES];
     [self.view addSubview:self.landscapeScrollView];
     
-    [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector( applicationDidEnterBackgroundNotification:)
-                                                 name: UIApplicationDidEnterBackgroundNotification
-                                               object: nil];
+    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector( applicationDidEnterBackgroundNotification:) name: UIApplicationDidEnterBackgroundNotification object: nil];
     
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     //$WIZ$
@@ -157,24 +146,18 @@ JAActivityViewControllerDelegate
     //        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJAPDVWizardUserDefaultsKey];
     //    }
     
-    if(self.hasLoaddedProduct)
-    {
+    if(self.hasLoaddedProduct) {
         [self removeSuperviews];
-        if (_needRefreshProduct)
+        if (_needRefreshProduct) {
             [self loadCompleteProduct];
-        else
+        } else {
             [self fillTheViews];
-    }
-    else
-    {
-        if (VALID_NOTEMPTY(self.targetString, NSString) || VALID_NOTEMPTY(self.productSku, NSString))
-        {
-            [self loadCompleteProduct];
         }
-        else
-        {
-            if(self.firstLoading)
-            {
+    } else {
+        if (self.targetString.length || self.productSku.length) {
+            [self loadCompleteProduct];
+        } else {
+            if(self.firstLoading) {
                 [self trackingEventLoadingTime];
                 self.firstLoading = NO;
             }
@@ -190,114 +173,112 @@ JAActivityViewControllerDelegate
     _needRefreshProduct = NO;
 }
 
--(void)presentCoachMarks{
+- (void)presentCoachMarks {
     
     CGRect wishListButtonFrame = _productImageSection.wishListButton.frame; //search button
     UIDevice *device = [UIDevice currentDevice];
     NSArray *coachMarks;
-    if ([[device model] isEqualToString:@"iPhone"] || [[device model] isEqualToString:@"iPhone Simulator"])
-    {
+    if ([[device model] isEqualToString:@"iPhone"] || [[device model] isEqualToString:@"iPhone Simulator"]) {
         UIButton *callToOrderButton = [self.ctaView.smallButtonsArray objectAtIndex:1];
         UIButton *addToCartButton = [self.ctaView.buttonsArray objectAtIndex:0];
-    
-    // Setup coach marks
-    CGRect coachmark1 = CGRectMake( wishListButtonFrame.origin.x-15, wishListButtonFrame.origin.y + 44, wishListButtonFrame.size.width +35, wishListButtonFrame.size.height + 35);
-    CGRect coachmark2 = CGRectMake(callToOrderButton.frame.origin.x, self.view.height+15, callToOrderButton.width, callToOrderButton.height+12);
-    CGRect coachmark3 = CGRectMake( self.view.center.x, self.view.center.y,0,0);
-    CGRect coachmark4 = CGRectMake( self.productImageSection.center.x, self.productImageSection.center.y,0,0);
-    CGRect coachmark6 = CGRectMake(addToCartButton.frame.origin.x, self.view.height+20, addToCartButton.width, addToCartButton.height);
-
-    // Setup coach marks
-    coachMarks = @[
-                            @{
-                                @"rect": [NSValue valueWithCGRect:coachmark4],
-                                @"caption": @"مشاهده گالری تصاویر بزرگ کالا",
-                                @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
-                                @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
-                                @"position":[NSNumber numberWithInteger:LABEL_POSITION_RIGHT],
-                                @"showArrow":[NSNumber numberWithBool:YES],
-                                @"productDetailPage":[NSNumber numberWithBool:YES]
-                                },
-                            @{
-                                @"rect": [NSValue valueWithCGRect:coachmark1],
-                                @"caption": @"افزودن به لیست علاقه مندی ها\n(لیست خریدهای آینده)",
-                                @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
-                                @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
-                                @"position":[NSNumber numberWithInteger:LABEL_POSITION_RIGHT]
-                                },
-                            @{
-                                @"rect": [NSValue valueWithCGRect:coachmark2],
-                                @"caption":@"تماس با خدمات مشتریان بامیلو",
-                                @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
-                                @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
-                                @"position":[NSNumber numberWithInteger:LABEL_POSITION_TOP]
-                                },
-                            @{
-                                @"rect": [NSValue valueWithCGRect:coachmark6],
-                                @"caption": @"افزودن کالا به سبد خرید",
-                                @"shape": [NSNumber numberWithInteger:SHAPE_SQUARE],
-                                @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
-                                @"position":[NSNumber numberWithInteger:LABEL_POSITION_RIGHT],
-                                @"showArrow":[NSNumber numberWithBool:YES],
-                                @"addToCart":[NSNumber numberWithBool:YES]
-                            },
-                            @{
-                                @"rect": [NSValue valueWithCGRect:coachmark3],
-                                @"caption": @"حرکت عمودی برای مشاهده اطلاعات کالا",
-                                @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
-                                @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
-                                @"position":[NSNumber numberWithInteger:LABEL_POSITION_BOTTOM],
-                                @"showArrow":[NSNumber numberWithBool:YES],
-                                @"productDetailPage":[NSNumber numberWithBool:YES]
-                                }
-                            ];
-    }
-    else{
-            UIButton *addToCartButton = [self.ctaView.buttonsArray objectAtIndex:0];
-            
-            // Setup coach marks
-            CGRect coachmark1 = CGRectMake( wishListButtonFrame.origin.x-15, wishListButtonFrame.origin.y + 44, wishListButtonFrame.size.width +35, wishListButtonFrame.size.height + 35);
-            CGRect coachmark3 = CGRectMake( self.view.center.x, self.view.center.y,0,0);
-            CGRect coachmark4 = CGRectMake( self.productImageSection.center.x, self.productImageSection.center.y,0,0);
-            CGRect coachmark6 = CGRectMake(addToCartButton.frame.origin.x, self.view.height+20, addToCartButton.width, addToCartButton.height);
-            
-            // Setup coach marks
-          coachMarks = @[
-                                    @{
-                                        @"rect": [NSValue valueWithCGRect:coachmark4],
-                                        @"caption": @"مشاهده گالری تصاویر بزرگ کالا",
-                                        @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
-                                        @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
-                                        @"position":[NSNumber numberWithInteger:LABEL_POSITION_RIGHT],
-                                        @"showArrow":[NSNumber numberWithBool:YES],
-                                        @"productDetailPage":[NSNumber numberWithBool:YES]
-                                        },
-                                    @{
-                                        @"rect": [NSValue valueWithCGRect:coachmark1],
-                                        @"caption": @"افزودن به لیست علاقه مندی ها\n(لیست خریدهای آینده)",
-                                        @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
-                                        @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
-                                        @"position":[NSNumber numberWithInteger:LABEL_POSITION_RIGHT]
-                                        },
-                                    @{
-                                        @"rect": [NSValue valueWithCGRect:coachmark6],
-                                        @"caption": @"افزودن کالا به سبد خرید",
-                                        @"shape": [NSNumber numberWithInteger:SHAPE_SQUARE],
-                                        @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
-                                        @"position":[NSNumber numberWithInteger:LABEL_POSITION_RIGHT],
-                                        @"showArrow":[NSNumber numberWithBool:YES],
-                                        @"addToCart":[NSNumber numberWithBool:YES]
-                                        },
-                                    @{
-                                        @"rect": [NSValue valueWithCGRect:coachmark3],
-                                        @"caption": @"حركت عمودي براي مشاهده اطلاعات كالا",
-                                        @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
-                                        @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
-                                        @"position":[NSNumber numberWithInteger:LABEL_POSITION_BOTTOM],
-                                        @"showArrow":[NSNumber numberWithBool:YES],
-                                        @"productDetailPage":[NSNumber numberWithBool:YES]
-                                        }
-                                    ];
+        
+        // Setup coach marks
+        CGRect coachmark1 = CGRectMake( wishListButtonFrame.origin.x-15, wishListButtonFrame.origin.y + 44, wishListButtonFrame.size.width +35, wishListButtonFrame.size.height + 35);
+        CGRect coachmark2 = CGRectMake(callToOrderButton.frame.origin.x, self.view.height+15, callToOrderButton.width, callToOrderButton.height+12);
+        CGRect coachmark3 = CGRectMake( self.view.center.x, self.view.center.y,0,0);
+        CGRect coachmark4 = CGRectMake( self.productImageSection.center.x, self.productImageSection.center.y,0,0);
+        CGRect coachmark6 = CGRectMake(addToCartButton.frame.origin.x, self.view.height+20, addToCartButton.width, addToCartButton.height);
+        
+        // Setup coach marks
+        coachMarks = @[
+                       @{
+                           @"rect": [NSValue valueWithCGRect:coachmark4],
+                           @"caption": @"مشاهده گالری تصاویر بزرگ کالا",
+                           @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
+                           @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
+                           @"position":[NSNumber numberWithInteger:LABEL_POSITION_RIGHT],
+                           @"showArrow":[NSNumber numberWithBool:YES],
+                           @"productDetailPage":[NSNumber numberWithBool:YES]
+                           },
+                       @{
+                           @"rect": [NSValue valueWithCGRect:coachmark1],
+                           @"caption": @"افزودن به لیست علاقه مندی ها\n(لیست خریدهای آینده)",
+                           @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
+                           @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
+                           @"position":[NSNumber numberWithInteger:LABEL_POSITION_RIGHT]
+                           },
+                       @{
+                           @"rect": [NSValue valueWithCGRect:coachmark2],
+                           @"caption":@"تماس با خدمات مشتریان بامیلو",
+                           @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
+                           @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
+                           @"position":[NSNumber numberWithInteger:LABEL_POSITION_TOP]
+                           },
+                       @{
+                           @"rect": [NSValue valueWithCGRect:coachmark6],
+                           @"caption": @"افزودن کالا به سبد خرید",
+                           @"shape": [NSNumber numberWithInteger:SHAPE_SQUARE],
+                           @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
+                           @"position":[NSNumber numberWithInteger:LABEL_POSITION_RIGHT],
+                           @"showArrow":[NSNumber numberWithBool:YES],
+                           @"addToCart":[NSNumber numberWithBool:YES]
+                           },
+                       @{
+                           @"rect": [NSValue valueWithCGRect:coachmark3],
+                           @"caption": @"حرکت عمودی برای مشاهده اطلاعات کالا",
+                           @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
+                           @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
+                           @"position":[NSNumber numberWithInteger:LABEL_POSITION_BOTTOM],
+                           @"showArrow":[NSNumber numberWithBool:YES],
+                           @"productDetailPage":[NSNumber numberWithBool:YES]
+                           }
+                       ];
+    } else {
+        UIButton *addToCartButton = [self.ctaView.buttonsArray objectAtIndex:0];
+        
+        // Setup coach marks
+        CGRect coachmark1 = CGRectMake( wishListButtonFrame.origin.x-15, wishListButtonFrame.origin.y + 44, wishListButtonFrame.size.width +35, wishListButtonFrame.size.height + 35);
+        CGRect coachmark3 = CGRectMake( self.view.center.x, self.view.center.y,0,0);
+        CGRect coachmark4 = CGRectMake( self.productImageSection.center.x, self.productImageSection.center.y,0,0);
+        CGRect coachmark6 = CGRectMake(addToCartButton.frame.origin.x, self.view.height+20, addToCartButton.width, addToCartButton.height);
+        
+        // Setup coach marks
+        coachMarks = @[
+                       @{
+                           @"rect": [NSValue valueWithCGRect:coachmark4],
+                           @"caption": @"مشاهده گالری تصاویر بزرگ کالا",
+                           @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
+                           @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
+                           @"position":[NSNumber numberWithInteger:LABEL_POSITION_RIGHT],
+                           @"showArrow":[NSNumber numberWithBool:YES],
+                           @"productDetailPage":[NSNumber numberWithBool:YES]
+                           },
+                       @{
+                           @"rect": [NSValue valueWithCGRect:coachmark1],
+                           @"caption": @"افزودن به لیست علاقه مندی ها\n(لیست خریدهای آینده)",
+                           @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
+                           @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
+                           @"position":[NSNumber numberWithInteger:LABEL_POSITION_RIGHT]
+                           },
+                       @{
+                           @"rect": [NSValue valueWithCGRect:coachmark6],
+                           @"caption": @"افزودن کالا به سبد خرید",
+                           @"shape": [NSNumber numberWithInteger:SHAPE_SQUARE],
+                           @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
+                           @"position":[NSNumber numberWithInteger:LABEL_POSITION_RIGHT],
+                           @"showArrow":[NSNumber numberWithBool:YES],
+                           @"addToCart":[NSNumber numberWithBool:YES]
+                           },
+                       @{
+                           @"rect": [NSValue valueWithCGRect:coachmark3],
+                           @"caption": @"حركت عمودي براي مشاهده اطلاعات كالا",
+                           @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
+                           @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
+                           @"position":[NSNumber numberWithInteger:LABEL_POSITION_BOTTOM],
+                           @"showArrow":[NSNumber numberWithBool:YES],
+                           @"productDetailPage":[NSNumber numberWithBool:YES]
+                           }
+                       ];
     }
     
     MPCoachMarks *coachMarksView = [[MPCoachMarks alloc] initWithFrame:self.navigationController.view.bounds coachMarks:coachMarks];
@@ -326,16 +307,13 @@ JAActivityViewControllerDelegate
                                                object:nil];
 }
 
--(void)viewDidAppear:(BOOL)animated
-{
+-(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self trackingEventScreenName:@"ShopProductDetail"];
 }
 
-- (void)applicationDidEnterBackgroundNotification:(NSNotification*)notification
-{
-    if(VALID_NOTEMPTY(self.currentPopoverController, UIPopoverController))
-    {
+- (void)applicationDidEnterBackgroundNotification:(NSNotification*)notification {
+    if(self.currentPopoverController) {
         [self.currentPopoverController dismissPopoverAnimated:NO];
     }
     
@@ -411,45 +389,45 @@ JAActivityViewControllerDelegate
      {
          UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
          // do whatever
-             [self fillTheViews];
+         [self fillTheViews];
+         
+         //$WIZ$
+         //    if(VALID_NOTEMPTY(self.wizardView, JAPDVWizardView))
+         //    {
+         //        [self.wizardView reloadForFrame:self.view.bounds];
+         //    }
+         
+         if(VALID_NOTEMPTY(self.galleryPaged, JAPDVGallery))
+         {
+             UIView *gallerySuperView = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
              
-             //$WIZ$
-             //    if(VALID_NOTEMPTY(self.wizardView, JAPDVWizardView))
-             //    {
-             //        [self.wizardView reloadForFrame:self.view.bounds];
-             //    }
+             CGFloat width = gallerySuperView.frame.size.width;
+             CGFloat height = gallerySuperView.frame.size.height;
+             CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
              
-             if(VALID_NOTEMPTY(self.galleryPaged, JAPDVGallery))
+             if(UIInterfaceOrientationIsLandscape(orientation))
              {
-                 UIView *gallerySuperView = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
-                 
-                 CGFloat width = gallerySuperView.frame.size.width;
-                 CGFloat height = gallerySuperView.frame.size.height;
-                 CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
-                 
-                 if(UIInterfaceOrientationIsLandscape(orientation))
+                 if(width < height)
                  {
-                     if(width < height)
-                     {
-                         width = gallerySuperView.frame.size.height;
-                         height = gallerySuperView.frame.size.width;
-                     }
-                     if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0"))
-                         statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.width;
+                     width = gallerySuperView.frame.size.height;
+                     height = gallerySuperView.frame.size.width;
                  }
-                 else
+                 if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0"))
+                     statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.width;
+             }
+             else
+             {
+                 if(width > height)
                  {
-                     if(width > height)
-                     {
-                         width = gallerySuperView.frame.size.height;
-                         height = gallerySuperView.frame.size.width;
-                     }
+                     width = gallerySuperView.frame.size.height;
+                     height = gallerySuperView.frame.size.width;
                  }
-                 
-                 [self.galleryPaged reloadFrame:CGRectMake(0.0f, statusBarHeight, width, height)];
-                 [self.view bringSubviewToFront:self.galleryPaged];
              }
              
+             [self.galleryPaged reloadFrame:CGRectMake(0.0f, statusBarHeight, width, height)];
+             [self.view bringSubviewToFront:self.galleryPaged];
+         }
+         
      } completion:^(id<UIViewControllerTransitionCoordinatorContext> context)
      {
          
@@ -1190,7 +1168,7 @@ JAActivityViewControllerDelegate
     //crash fix on clicking items with name in farsi
     NSString* webStringURL = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSURL* urlToBeShared = [NSURL URLWithString:webStringURL];
-
+    
     WhatsAppMessage *whatsappMsg = [[WhatsAppMessage alloc] initWithMessage:[NSString stringWithFormat:@"%@ %@",STRING_SHARE_PRODUCT_MESSAGE, url] forABID:nil];
     
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[STRING_SHARE_PRODUCT_MESSAGE, urlToBeShared, whatsappMsg] applicationActivities:nil];
@@ -1666,7 +1644,7 @@ JAActivityViewControllerDelegate
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
     [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
-
+    
     [trackingDictionary setValue:[price stringValue] forKey:kRIEventFBValueToSumKey];
     [trackingDictionary setValue:self.product.sku forKey:kRIEventFBContentIdKey];
     [trackingDictionary setValue:@"product" forKey:kRIEventFBContentTypeKey];
@@ -1785,7 +1763,7 @@ JAActivityViewControllerDelegate
 - (void)trackingEventAddToCart:(RICart *)cart
 {
     CGRect addToCartEventCoachMark = CGRectMake([JACenterNavigationController sharedInstance].navigationBarView.cartButton.frame.origin.x, [JACenterNavigationController sharedInstance].navigationBarView.cartButton.frame.origin.y+20,35, 35);
-
+    
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"FirtTimeAddToCart"])
     {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"FirtTimeAddToCart"];
@@ -1803,7 +1781,7 @@ JAActivityViewControllerDelegate
         [self.navigationController.view addSubview:coachMarksView];
         [coachMarksView start];
     }
-
+    
     NSNumber *price = [self getPrice];
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:((RIProduct *)[self.product.productSimples firstObject]).sku forKey:kRIEventLabelKey];
