@@ -11,8 +11,9 @@ platform :ios do
     # set 'export_method' to 'ad-hoc' if your Crashlytics Beta distribution uses ad-hoc provisioning
     gym(scheme: 'Bamilo (Staging)', export_method: 'ad-hoc')
 
-    emails = values[:test_email] ? values[:test_email] : ['narbeh.mirzaei@bamilo.com'] # You can list more emails here
-    groups = values[:test_email] ? nil : nil # You can define groups on the web and reference them here
+    # emails = values[:test_email] ? values[:test_email] : ['narbeh.mirzaei@bamilo.com'] # You can list more emails here
+    # groups = values[:test_email] ? nil : nil # You can define groups on the web and reference them here
+      groups = values[:group] ? values[:group] : nil
 
     crashlytics(api_token: 'ddde4ad6ad210575fdac10a908040d1a93e74833',
              build_secret: 'c37b1e5c603fb0fd9b71f1bf627d92f87718c6efd4aada50d724ab8ad126fe35',
