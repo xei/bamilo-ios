@@ -29,7 +29,7 @@ platform :ios do
     slack(
       slack_url: "https://hooks.slack.com/services/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",
       channel: "mobile-alerts",
-      message: "Successfully uploaded a beta release " + get_version_number
+      message: "Successfully uploaded a beta release " + get_version_number + "(" + get_build_number + ")"
     )
   end
 end
