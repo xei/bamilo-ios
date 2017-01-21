@@ -9,14 +9,13 @@
 
 #import "JAMyOrderCell.h"
 
-#define kMyOrderHeight 48.0f
+#define kMyOrderHeight 52.0f
 #define KTopPadding 8.f
 #define KPadding 16.f
 #define KPricePadding 10.f
 #define KSeperatorHeight 1.f
 
-@interface JAMyOrderCell ()
-{
+@interface JAMyOrderCell () {
     CGFloat padding;
 }
 

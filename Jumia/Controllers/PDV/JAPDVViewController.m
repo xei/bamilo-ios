@@ -311,21 +311,17 @@ typedef void (^ProcessActionBlock)(void);
         [self.currentPopoverController dismissPopoverAnimated:NO];
     }
     
-    if([self respondsToSelector:@selector(dismissViewControllerAnimated:completion:)])
-    {
+    if([self respondsToSelector:@selector(dismissViewControllerAnimated:completion:)]) {
         [self dismissViewControllerAnimated:NO completion:nil];
     }
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    if(VALID_NOTEMPTY(self.currentPopoverController, UIPopoverController))
-    {
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    if(self.currentPopoverController) {
         [self.currentPopoverController dismissPopoverAnimated:NO];
     }
     
@@ -343,29 +339,23 @@ typedef void (^ProcessActionBlock)(void);
     //        [self.wizardView reloadForFrame:newFrame];
     //    }
     
-    if (VALID_NOTEMPTY(self.picker, JAPicker)) {
+    if (self.picker) {
         [self closePicker];
     }
     
-    if(VALID_NOTEMPTY(self.galleryPaged, JAPDVGallery))
-    {
+    if(self.galleryPaged) {
         UIView *gallerySuperView = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
         
         CGFloat width = gallerySuperView.frame.size.height;
         CGFloat height = gallerySuperView.frame.size.width;
         
-        if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
-        {
-            if(width < height)
-            {
+        if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
+            if(width < height) {
                 width = gallerySuperView.frame.size.width;
                 height = gallerySuperView.frame.size.height;
             }
-        }
-        else
-        {
-            if(width > height)
-            {
+        } else {
+            if(width > height) {
                 width = gallerySuperView.frame.size.width;
                 height = gallerySuperView.frame.size.height;
             }
@@ -397,20 +387,16 @@ typedef void (^ProcessActionBlock)(void);
              CGFloat height = gallerySuperView.frame.size.height;
              CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
              
-             if(UIInterfaceOrientationIsLandscape(orientation))
-             {
-                 if(width < height)
-                 {
+             if(UIInterfaceOrientationIsLandscape(orientation)) {
+                 if(width < height) {
                      width = gallerySuperView.frame.size.height;
                      height = gallerySuperView.frame.size.width;
                  }
-                 if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0"))
-                     statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.width;
-             }
-             else
-             {
-                 if(width > height)
-                 {
+                 if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
+                    statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.width;
+                 }
+             } else {
+                 if(width > height) {
                      width = gallerySuperView.frame.size.height;
                      height = gallerySuperView.frame.size.width;
                  }
@@ -429,8 +415,7 @@ typedef void (^ProcessActionBlock)(void);
 }
 
 
-- (void)viewWillLayoutSubviews
-{
+- (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
 }
 
@@ -448,8 +433,7 @@ typedef void (^ProcessActionBlock)(void);
         }
     }
     
-    if(VALID_NOTEMPTY(self.ctaView, JABottomBar))
-    {
+    if(self.ctaView) {
         [self.ctaView removeFromSuperview];
     }
 }

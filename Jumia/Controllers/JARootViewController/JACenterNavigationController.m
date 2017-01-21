@@ -827,13 +827,11 @@
     }
 }
 
-- (void)showSignInScreen:(NSNotification *)notification
-{
+- (void)showSignInScreen:(NSNotification *)notification {
     JASignInViewController *signInVC = [[JASignInViewController alloc] init];
     
     BOOL animated = YES;
-    if(VALID_NOTEMPTY(notification, NSNotification))
-    {
+    if(VALID_NOTEMPTY(notification, NSNotification)) {
         signInVC.nextStepBlock = notification.object;
         
         if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"shows_back_button"], NSNumber)) {
@@ -858,7 +856,7 @@
             animated = [animatedNumber boolValue];
         }
         
-        if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"email"], NSString)) {
+        if ([[notification.userInfo objectForKey:@"email"] length]) {
             signInVC.authenticationEmail = [notification.userInfo objectForKey:@"email"];
         }
     }
@@ -869,17 +867,15 @@
     }
     if (checkout) {
         [self goToStep:signInVC forStepByStepViewController:self.checkoutStepByStepViewController];
-    }else{
+    } else {
         [self pushViewController:signInVC animated:YES];
     }
 }
 
 #pragma mark Sign Up Screen
-- (void)showSignUpScreen:(NSNotification *)notification
-{
+- (void)showSignUpScreen:(NSNotification *)notification {
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JARegisterViewController class]] && ![RICustomer checkIfUserIsLogged])
-    {
+    if (![topViewController isKindOfClass:[JARegisterViewController class]] && ![RICustomer checkIfUserIsLogged]) {
         JARegisterViewController *signUpVC = [[JARegisterViewController alloc] init];
         
         if(VALID_NOTEMPTY(notification, NSNotification)) {
@@ -890,16 +886,14 @@
                 signUpVC.authenticationEmail = [notification.userInfo objectForKey:@"email"];
             }
             signUpVC.nextStepBlock = notification.object;
-        }
-        else
-        {
+        } else {
             signUpVC.fromSideMenu = YES;
             //$$$ NOT SURE ABOUT THIS
 //            [self popToRootViewControllerAnimated:NO];
         }
         
         BOOL checkout = NO;
-        if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"checkout"], NSNumber)) {
+        if ([notification.userInfo objectForKey:@"checkout"]) {
             checkout = [[notification.userInfo objectForKey:@"checkout"] boolValue];
         }
         if (checkout) {
@@ -911,14 +905,12 @@
 }
 
 #pragma mark Forgot Password Screen
-- (void)showForgotPasswordScreen:(NSNotification *)notification
-{
+- (void)showForgotPasswordScreen:(NSNotification *)notification {
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAForgotPasswordViewController class]] && ![RICustomer checkIfUserIsLogged])
-    {
+    if (![topViewController isKindOfClass:[JAForgotPasswordViewController class]] && ![RICustomer checkIfUserIsLogged]) {
         JAForgotPasswordViewController *forgotVC = [[JAForgotPasswordViewController alloc] init];
         
-        if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"email"], NSString)) {
+        if (notification && [[notification.userInfo objectForKey:@"email"] length]) {
             forgotVC.loginEmail = [notification.userInfo objectForKey:@"email"];
         }
         
@@ -929,11 +921,9 @@
 }
 
 #pragma mark Recently Viewed Screen
-- (void)showRecentlyViewedController
-{
+- (void)showRecentlyViewedController {
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JARecentlyViewedViewController class]])
-    {
+    if (![topViewController isKindOfClass:[JARecentlyViewedViewController class]]) {
         JARecentlyViewedViewController *recentlyViewedViewController = [[JARecentlyViewedViewController alloc]init];
         
         [self pushViewController:recentlyViewedViewController animated:YES];
@@ -941,11 +931,9 @@
 }
 
 #pragma mark ContactUs Screen
-- (void)showContactUsViewController
-{
+- (void)showContactUsViewController {
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAContactUsViewController class]])
-    {
+    if (![topViewController isKindOfClass:[JAContactUsViewController class]]) {
         JAContactUsViewController *contactUsViewController = [[JAContactUsViewController alloc]init];
         
         [self pushViewController:contactUsViewController animated:YES];
@@ -953,22 +941,18 @@
 }
 
 #pragma mark My Account Screen
-- (void)showMyAccountController
-{
+- (void)showMyAccountController {
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAMyAccountViewController class]])
-    {
+    if (![topViewController isKindOfClass:[JAMyAccountViewController class]]) {
         JAMyAccountViewController *myAccountViewController = [[JAMyAccountViewController alloc] init];
         [self pushViewController:myAccountViewController animated:NO];
     }
 }
 
 #pragma mark Track Order Screen
-- (void)showMyOrdersViewController:(NSNotification*)notification
-{
+- (void)showMyOrdersViewController:(NSNotification*)notification {
     UIViewController *topViewController = [self topViewController];
-    if([RICustomer checkIfUserIsLogged])
-    {
+    if([RICustomer checkIfUserIsLogged]) {
         if (VALID_NOTEMPTY(notification.object, NSString)) {
             if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
                 if(UIDeviceOrientationLandscapeLeft == [UIDevice currentDevice].orientation || UIDeviceOrientationLandscapeRight == [UIDevice currentDevice].orientation) {
@@ -984,10 +968,9 @@
                     [myOrderVC setOrderNumber:notification.object];
                     [self pushViewController:myOrderVC animated:YES];
                 }
-            }else{
+            } else {
                 
-                if (![topViewController isKindOfClass:[JAMyOrderDetailViewController class]])
-                {
+                if (![topViewController isKindOfClass:[JAMyOrderDetailViewController class]]) {
                     JAMyOrderDetailViewController *myOrderVC = [JAMyOrderDetailViewController new];
                     [myOrderVC setOrderNumber:notification.object];
                     [self pushViewController:myOrderVC animated:YES];
@@ -1339,8 +1322,7 @@
     [self pushViewController:catalog animated:YES];
 }
 
-- (void)didSelectLeafCategoryInMenu:(NSNotification *)notification
-{
+- (void)didSelectLeafCategoryInMenu:(NSNotification *)notification {
     NSDictionary *selectedItem = [notification object];
     RICategory* category = [selectedItem objectForKey:@"category"];
     NSString* categoryId = [selectedItem objectForKey:@"category_id"];
@@ -1408,8 +1390,7 @@
     }
 }
 
-- (void)showNewRatingScreen:(NSNotification*)notification
-{
+- (void)showNewRatingScreen:(NSNotification*)notification {
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JANewRatingViewController class]])
     {
@@ -1433,8 +1414,7 @@
     }
 }
 
-- (void)showSizeGuide:(NSNotification*)notification
-{
+- (void)showSizeGuide:(NSNotification*)notification {
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JASizeGuideViewController class]])
     {
@@ -1465,8 +1445,7 @@
     }
 }
 
-- (void)showProductBundlesScreen:(NSNotification *)notification
-{
+- (void)showProductBundlesScreen:(NSNotification *)notification {
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JABundlesViewController class]]) {
         
