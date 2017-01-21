@@ -44,13 +44,7 @@
 
 typedef void (^ProcessActionBlock)(void);
 
-@interface JAPDVViewController ()
-<
-JAPDVGalleryDelegate,
-JAPickerDelegate,
-JAActivityViewControllerDelegate
->
-{
+@interface JAPDVViewController () <JAPDVGalleryDelegate, JAPickerDelegate, JAActivityViewControllerDelegate> {
     BOOL _needRefreshProduct;
     BOOL _needAddToFavBlock;
     ProcessActionBlock _processActionBlock;
@@ -317,21 +311,17 @@ JAActivityViewControllerDelegate
         [self.currentPopoverController dismissPopoverAnimated:NO];
     }
     
-    if([self respondsToSelector:@selector(dismissViewControllerAnimated:completion:)])
-    {
+    if([self respondsToSelector:@selector(dismissViewControllerAnimated:completion:)]) {
         [self dismissViewControllerAnimated:NO completion:nil];
     }
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    if(VALID_NOTEMPTY(self.currentPopoverController, UIPopoverController))
-    {
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    if(self.currentPopoverController) {
         [self.currentPopoverController dismissPopoverAnimated:NO];
     }
     
@@ -349,29 +339,23 @@ JAActivityViewControllerDelegate
     //        [self.wizardView reloadForFrame:newFrame];
     //    }
     
-    if (VALID_NOTEMPTY(self.picker, JAPicker)) {
+    if (self.picker) {
         [self closePicker];
     }
     
-    if(VALID_NOTEMPTY(self.galleryPaged, JAPDVGallery))
-    {
+    if(self.galleryPaged) {
         UIView *gallerySuperView = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
         
         CGFloat width = gallerySuperView.frame.size.height;
         CGFloat height = gallerySuperView.frame.size.width;
         
-        if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
-        {
-            if(width < height)
-            {
+        if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
+            if(width < height) {
                 width = gallerySuperView.frame.size.width;
                 height = gallerySuperView.frame.size.height;
             }
-        }
-        else
-        {
-            if(width > height)
-            {
+        } else {
+            if(width > height) {
                 width = gallerySuperView.frame.size.width;
                 height = gallerySuperView.frame.size.height;
             }
@@ -383,8 +367,7 @@ JAActivityViewControllerDelegate
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
-{
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context)
      {
          UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
@@ -397,28 +380,23 @@ JAActivityViewControllerDelegate
          //        [self.wizardView reloadForFrame:self.view.bounds];
          //    }
          
-         if(VALID_NOTEMPTY(self.galleryPaged, JAPDVGallery))
-         {
+         if(self.galleryPaged) {
              UIView *gallerySuperView = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
              
              CGFloat width = gallerySuperView.frame.size.width;
              CGFloat height = gallerySuperView.frame.size.height;
              CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
              
-             if(UIInterfaceOrientationIsLandscape(orientation))
-             {
-                 if(width < height)
-                 {
+             if(UIInterfaceOrientationIsLandscape(orientation)) {
+                 if(width < height) {
                      width = gallerySuperView.frame.size.height;
                      height = gallerySuperView.frame.size.width;
                  }
-                 if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0"))
-                     statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.width;
-             }
-             else
-             {
-                 if(width > height)
-                 {
+                 if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
+                    statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.width;
+                 }
+             } else {
+                 if(width > height) {
                      width = gallerySuperView.frame.size.height;
                      height = gallerySuperView.frame.size.width;
                  }
@@ -437,39 +415,32 @@ JAActivityViewControllerDelegate
 }
 
 
-- (void)viewWillLayoutSubviews
-{
+- (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
 }
 
-- (void) removeSuperviews
-{
+- (void) removeSuperviews {
     [self.mainScrollView setHidden:YES];
     [self.landscapeScrollView setHidden:YES];
     
-    for(UIView *subView in self.mainScrollView.subviews)
-    {
+    for(UIView *subView in self.mainScrollView.subviews) {
         [subView removeFromSuperview];
     }
     
-    if(VALID_NOTEMPTY(self.landscapeScrollView, UIScrollView))
-    {
-        for(UIView *subView in self.landscapeScrollView.subviews)
-        {
+    if(self.landscapeScrollView) {
+        for(UIView *subView in self.landscapeScrollView.subviews) {
             [subView removeFromSuperview];
         }
     }
     
-    if(VALID_NOTEMPTY(self.ctaView, JABottomBar))
-    {
+    if(self.ctaView) {
         [self.ctaView removeFromSuperview];
     }
 }
 
 #pragma mark - Product methods
 
-- (void)updatedProduct:(NSNotification*)notification
-{
+- (void)updatedProduct:(NSNotification*)notification {
     if (VALID_NOTEMPTY(notification.object, NSArray)) {
         for (id object in notification.object) {
             if (VALID_NOTEMPTY(object, NSString) && [object isEqualToString:self.productSku]) {
@@ -484,10 +455,8 @@ JAActivityViewControllerDelegate
     }
 }
 
-- (void)loadCompleteProduct
-{
-    if(self.apiResponse == RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess)
-    {
+- (void)loadCompleteProduct {
+    if(self.apiResponse == RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess) {
         [self showLoading];
     }
     
@@ -496,8 +465,9 @@ JAActivityViewControllerDelegate
     NSDictionary *richParameter;
     if (VALID_NOTEMPTY(self.richRelevanceParameter, NSString)) {
         richParameter = [NSDictionary dictionaryWithObject:self.richRelevanceParameter forKey:@"rich_parameter"];
-    } else
+    } else {
         richParameter = nil;
+    }
     
     if (VALID_NOTEMPTY(self.targetString, NSString)) {
         [RIProduct getCompleteProductWithTargetString:self.targetString
@@ -574,8 +544,7 @@ JAActivityViewControllerDelegate
     [self trackingEventMostViewedBrand];
 }
 
-- (void)retryAddToCart
-{
+- (void)retryAddToCart {
     [self addToCart];
 }
 
@@ -588,8 +557,7 @@ JAActivityViewControllerDelegate
     self.hasLoaddedProduct = YES;
     
     [self.mainScrollView setFrame:[self viewBounds]];
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-    {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
         if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation)
         {
@@ -699,8 +667,7 @@ JAActivityViewControllerDelegate
 
 #pragma mark - Fill the views
 
-- (void)fillTheViews
-{
+- (void)fillTheViews {
     if (self.product == nil) {
         return;
     }
@@ -711,8 +678,7 @@ JAActivityViewControllerDelegate
     CGFloat landscapeScrollViewY = 0.0f;
     
     BOOL isiPadInLandscape = NO;
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-    {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
         if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation)
         {
@@ -724,28 +690,23 @@ JAActivityViewControllerDelegate
      Image Section
      *******/
     
-    self.productImageSection.frame = CGRectMake(0.0f,
-                                                scrollViewY,
-                                                self.productImageSection.frame.size.width,
-                                                self.productImageSection.frame.size.height);
+    self.productImageSection.frame = CGRectMake(0.0f, scrollViewY, self.productImageSection.frame.size.width, self.productImageSection.frame.size.height);
     
     CGRect imageSectionFrame = self.mainScrollView.bounds;
     [self.productImageSection setupWithFrame:imageSectionFrame product:self.product preSelectedSize:self.preSelectedSize];
-    if (VALID_NOTEMPTY(self.product.seller, RISeller) && [self.product.seller isGlobal]) {
+    if (self.product.seller && [self.product.seller isGlobal]) {
         [self.productImageSection addGlobalButtonTarget:self action:@selector(showSeller)];
     }
     
-    if(isiPadInLandscape)
-    {
+    if(isiPadInLandscape) {
         [self.landscapeScrollView addSubview:self.productImageSection];
         landscapeScrollViewY = CGRectGetMaxY(self.productImageSection.frame) + 6.0f;
-    }else{
+    } else {
         [self.mainScrollView addSubview:self.productImageSection];
         scrollViewY = CGRectGetMaxY(self.productImageSection.frame) + 6.0f;
     }
     
-    if (VALID_NOTEMPTY(self.product.variations, NSArray))
-    {
+    if (self.product.variations.count) {
         self.variationsSection = [JAPDVVariations getNewPDVVariationsSection];
         [self.variationsSection setupWithFrame:self.mainScrollView.frame];
     }
@@ -758,7 +719,7 @@ JAActivityViewControllerDelegate
     CGRect productInfoSectionFrame = CGRectMake(0, 6, self.mainScrollView.width, 0);
     [self.productInfoSection setupWithFrame:productInfoSectionFrame product:self.product preSelectedSize:self.preSelectedSize];
     
-    if (VALID_NOTEMPTY(self.currentSimple, RIProductSimple)) {
+    if (self.currentSimple) {
         [self.productInfoSection setSpecialPrice:self.currentSimple.specialPriceFormatted andPrice:self.currentSimple.priceFormatted andMaxSavingPercentage:self.product.maxSavingPercentage shouldForceFlip:NO];
     }
     [self.productInfoSection addReviewsTarget:self action:@selector(goToReviews)];
@@ -786,14 +747,11 @@ JAActivityViewControllerDelegate
         [subview removeFromSuperview];
     }
     
-    if (VALID_NOTEMPTY(self.productBundle, RIBundle)) {
+    if (self.productBundle) {
         CGFloat bundleSingleItemStart = 5.0f;
         self.bundleSingleItemsArray = [NSMutableArray new];
         
-        for(int i= 0;
-            i<self.productBundle.bundleProducts.count;
-            i++)
-        {
+        for(int i= 0; i<self.productBundle.bundleProducts.count; i++) {
             
             RIProduct *bundleProduct = [self.productBundle.bundleProducts objectAtIndex:i];
             
@@ -818,12 +776,9 @@ JAActivityViewControllerDelegate
             tempFrame.origin.x = bundleSingleItemStart;
             bundleSingleItem.frame = tempFrame;
             
-            if (VALID_NOTEMPTY(bundleProduct.images, NSArray))
-            {
+            if (bundleProduct.images.count) {
                 RIImage *imageTemp = [bundleProduct.images firstObject];
-                
-                [bundleSingleItem.productImageView setImageWithURL:[NSURL URLWithString:imageTemp.url]
-                                                  placeholderImage:[UIImage imageNamed:@"placeholder_scrollable"]];
+                [bundleSingleItem.productImageView setImageWithURL:[NSURL URLWithString:imageTemp.url] placeholderImage:[UIImage imageNamed:@"placeholder_scrollable"]];
             }
             
             bundleSingleItem.productNameLabel.text = bundleProduct.name;
@@ -835,7 +790,7 @@ JAActivityViewControllerDelegate
             }
             bundleSingleItem.product = bundleProduct;
             
-            if (0==i) {
+            if ( 0 == i ) {
                 //always selected
                 bundleSingleItem.alwaysSelected = YES;
             }
@@ -899,29 +854,29 @@ JAActivityViewControllerDelegate
         
     }
     
-    /*******
+    /****************
      Related Items
-     *******/
+     ***************/
     
-    if (VALID_NOTEMPTY(self.product.relatedProducts, NSSet) && 1 < self.product.relatedProducts.count)
-    {
-        if (VALID_NOTEMPTY(self.relatedItemsView, JAPDVRelatedItem)) {
+    if (self.product.relatedProducts.count > 1) {
+        if (self.relatedItemsView) {
             for (UIView *view in self.relatedItemsView.subviews) {
                 [view removeFromSuperview];
             }
         }
         
-        if (VALID_NOTEMPTY(self.product.richRelevanceTitle, NSString)) {
+        if (self.product.richRelevanceTitle.length) {
             [self.relatedItemsView setHeaderText:self.product.richRelevanceTitle];
-        } else
+        } else {
             [self.relatedItemsView setHeaderText:[STRING_YOU_MAY_ALSO_LIKE uppercaseString]];
+        }
         
         CGFloat relatedItemX = .0f;
         CGFloat relatedItemY = 0;
         
         NSArray* relatedProducts = [self.product.relatedProducts allObjects];
         
-        CGFloat singleItemHeight = 235;
+        CGFloat singleItemHeight = 245;
         NSInteger numberOfCols = 2;
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
             if (!isiPadInLandscape) {

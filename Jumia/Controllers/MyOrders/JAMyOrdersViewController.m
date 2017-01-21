@@ -66,8 +66,7 @@ UICollectionViewDelegateFlowLayout>
 
 #pragma mark init
 
-- (JAProductInfoHeaderLine *)ordersHistoryHeader
-{
+- (JAProductInfoHeaderLine *)ordersHistoryHeader {
     if (!VALID(_ordersHistoryHeader, JAProductInfoHeaderLine)) {
         _ordersHistoryHeader = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, self.viewBounds.origin.y, self.view.width, kProductInfoHeaderLineHeight)];
         [_ordersHistoryHeader setTitle:STRING_MY_ORDER_HISTORY];
@@ -161,7 +160,7 @@ UICollectionViewDelegateFlowLayout>
 }
 
 -(JAMyOrderDetailView *)orderDetailsView {
-    if (!VALID_NOTEMPTY(_orderDetailsView,JAMyOrderDetailView)) {
+    if (!VALID_NOTEMPTY(_orderDetailsView, JAMyOrderDetailView)) {
         _orderDetailsView = [JAMyOrderDetailView new];
         [_orderDetailsView setParent:self];
         [_orderDetailsView setHidden:YES];
@@ -197,14 +196,12 @@ UICollectionViewDelegateFlowLayout>
     [self setupViews];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self loadOrders];
 }
 
-- (void) loadOrders
-{
+- (void) loadOrders {
     [self showLoading];
     
     self.isLoadingOrders = YES;
@@ -301,7 +298,7 @@ UICollectionViewDelegateFlowLayout>
 
 
 -(void) setupViews {
-    if (VALID_NOTEMPTY(self.orders, NSMutableArray) ) {
+    if ( self.orders.count ) {
         
         [self.ordersCollectionView setHidden:NO];
         [self.emptyOrderHistoryView setHidden:YES];
@@ -370,7 +367,7 @@ UICollectionViewDelegateFlowLayout>
     
     if ((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
         
-        if (VALID_NOTEMPTY(self.selectedOrderIndexPath,NSIndexPath)) {
+        if (self.selectedOrderIndexPath) {
             
             [self.orderDetailsScrollView setHidden: NO];
             [self.orderDetailsScrollView setFrame:CGRectMake(self.viewBounds.size.width/2, self.viewBounds.origin.y,
@@ -421,19 +418,15 @@ UICollectionViewDelegateFlowLayout>
     return numberOfItemsInSection;
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell *cell = nil;
     
-    if(collectionView == self.ordersCollectionView)
-    {
-        if (!self.isLoadingOrders && [self.orders count] < self.ordersTotal && [self.orders count] - 5 <= indexPath.row)
-        {
+    if(collectionView == self.ordersCollectionView) {
+        if (!self.isLoadingOrders && [self.orders count] < self.ordersTotal && [self.orders count] - 5 <= indexPath.row) {
             [self loadOrders];
         }
         
-        if(VALID_NOTEMPTY(self.orders, NSArray) && indexPath.row < [self.orders count])
-        {
+        if(self.orders.count && indexPath.row < [self.orders count]) {
             RITrackOrder *order = [self.orders objectAtIndex:indexPath.row];
             JAMyOrderCell *myOrderCell = (JAMyOrderCell*) [collectionView dequeueReusableCellWithReuseIdentifier:@"myOrderCell" forIndexPath:indexPath];
             [myOrderCell setupWithOrder:order];

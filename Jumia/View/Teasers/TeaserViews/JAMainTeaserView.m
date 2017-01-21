@@ -23,13 +23,11 @@
 
 @implementation JAMainTeaserView
 
-- (NSInteger)currentPage
-{
+- (NSInteger)currentPage {
     return self.pageControl.currentPage;
 }
 
-- (void)load;
-{
+- (void)load {
     [super load];
 
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
@@ -150,8 +148,7 @@
 
 #pragma mark - Scrollview delegate
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     if (self.isInfinite && 2 < _teasersArray.count) {
         
         if (scrollView.contentOffset.x == self.scrollView.contentSize.width - self.scrollView.frame.size.width) {
@@ -162,9 +159,7 @@
                                                             self.scrollView.bounds.size.height)
                                               animated:NO];
             
-        }
-        else if (scrollView.contentOffset.x == 0)
-        {
+        } else if (scrollView.contentOffset.x == 0) {
             [self.scrollView scrollRectToVisible:CGRectMake(self.scrollView.contentSize.width - (2*self.scrollView.frame.size.width),
                                                             self.scrollView.bounds.origin.y,
                                                             self.scrollView.bounds.size.width,
@@ -175,13 +170,11 @@
     self.pageControl.currentPage = [self getCurrentPage:scrollView];
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     self.pageControl.currentPage = [self getCurrentPage:scrollView];
 }
 
-- (NSInteger)getCurrentPage:(UIScrollView *)scrollView
-{
+- (NSInteger)getCurrentPage:(UIScrollView *)scrollView {
     CGFloat infinityOffset = 0.0f;
     if (self.isInfinite && 2 < _teasersArray.count) {
         //subtract 1 to make up for the fake image offset (fake images that are used for infinite scrolling)
@@ -193,8 +186,7 @@
     return page;
 }
 
-- (CGRect)getVisibleRectToPage:(NSInteger)page
-{
+- (CGRect)getVisibleRectToPage:(NSInteger)page {
     return CGRectMake(self.scrollView.contentSize.width - (self.scrollView.frame.size.width * 2),
                self.scrollView.bounds.origin.y,
                self.scrollView.bounds.size.width,
@@ -202,18 +194,15 @@
 }
 
 - (UIView *) hitTest:(CGPoint)point withEvent:(UIEvent *)event {
-    if ([self pointInside:point withEvent:event])
-    {
+    if ([self pointInside:point withEvent:event]) {
         return self.scrollView;
     }
     return nil;
 }
 
-- (void)touchedInScrollView:(UITapGestureRecognizer *)tap
-{
+- (void)touchedInScrollView:(UITapGestureRecognizer *)tap {
     CGPoint point = [tap locationInView:self];
-    if (point.x > self.scrollView.frame.origin.x && point.x < (self.scrollView.frame.origin.x + self.scrollView.frame.size.width))
-    {
+    if (point.x > self.scrollView.frame.origin.x && point.x < (self.scrollView.frame.origin.x + self.scrollView.frame.size.width)) {
         NSInteger page = self.scrollView.contentOffset.x / self.scrollView.frame.size.width;
         if (self.isInfinite && 2 < _teasersArray.count) {
             page--;
@@ -225,8 +214,7 @@
     }
 }
 
-- (void)scrollToIndex:(NSInteger)index
-{
+- (void)scrollToIndex:(NSInteger)index {
     self.pageControl.currentPage = index;
     //adjust index to the infinite scroll
     if (self.isInfinite && 2 < _teasersArray.count) {
@@ -243,8 +231,7 @@
     
 }
 
-- (NSString*)teaserTrackingInfoForIndex:(NSInteger)index;
-{
+- (NSString*)teaserTrackingInfoForIndex:(NSInteger)index {
     NSString* teaserTrackingInfo = [NSString stringWithFormat:@"Main_Teaser_%ld",(long)index];
     return teaserTrackingInfo;
 }

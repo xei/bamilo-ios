@@ -203,16 +203,14 @@
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context)
-     {
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
          UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
          // do whatever
          CGRect viewFrame = self.view.frame;
          CGFloat screenWidth = viewFrame.size.width;
          CGFloat screenHeight = viewFrame.size.height;
          
-         if (VALID_NOTEMPTY(self.noConnectionView, JANoConnectionView)) {
-             
+         if (self.noConnectionView) {
              self.noConnectionView.frame = CGRectMake(_noConnectionViewFrame.origin.x,
                                                       _noConnectionViewFrame.origin.y,
                                                       screenWidth,
@@ -221,20 +219,17 @@
              [self.view bringSubviewToFront:self.noConnectionView];
          }
          UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
-         if (VALID_NOTEMPTY(self.maintenancePage, JAMaintenancePage)) {
+         if (self.maintenancePage) {
              [self.maintenancePage setupMaintenancePage:CGRectMake(0.0f, 0.0f, window.frame.size.width, window.frame.size.height) orientation:orientation];
          }
-         if (VALID_NOTEMPTY(self.kickoutView, JAKickoutView)) {
+         if (self.kickoutView) {
              [self.kickoutView setupKickoutView:CGRectMake(0.0f, 0.0f, window.frame.size.width, window.frame.size.height) orientation:orientation];
          }
          if (self.searchBarIsVisible) {
              [self reloadSearchBar];
          }
 
-     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context)
-     {
-         
-     }];
+     } completion: nil];
     
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
@@ -502,10 +497,10 @@
 
 - (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY target:(id)target selector:(SEL)selector objects:(NSArray *)objects {
     
-    if (VALID_NOTEMPTY(self.noConnectionView, JANoConnectionView)) {
+    if (self.noConnectionView) {
         //        [self.noConnectionView removeFromSuperview];
         
-    }else{
+    } else {
         self.noConnectionView = [JANoConnectionView getNewJANoConnectionViewWithFrame:self.viewBounds];
         
         // This is to avoid a retain cycle
@@ -517,11 +512,9 @@
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
                  if (ISEMPTY(objects)) {
                      [viewController performSelector:selector];
-                 }
-                 else if (1 == [objects count]) {
+                 } else if (1 == [objects count]) {
                      [viewController performSelector:selector withObject:[objects objectAtIndex:0]];
-                 }
-                 else if (2 == [objects count]) {
+                 } else if (2 == [objects count]) {
                      [viewController performSelector:selector withObject:[objects objectAtIndex:0] withObject:[objects objectAtIndex:1]];
                  }
 #pragma clang diagnostic pop
@@ -568,8 +561,8 @@
     
     // This is to avoid a retain cycle
     __block id viewController = target;
-    __block void (^block)(void) = ^
-    {
+    __block void (^block)(void) = ^{
+        
         if ([viewController respondsToSelector:selector]) {
             if (ISEMPTY(objects)) {
                 ((void (*)(id, SEL))[viewController methodForSelector:selector])(viewController, selector);
@@ -650,8 +643,7 @@
     [self.kickoutView setupKickoutView:window.frame orientation:[[UIApplication sharedApplication] statusBarOrientation]];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     __block id viewController = target;
-    [self.kickoutView setRetryBlock: ^(BOOL dismiss)
-     {
+    [self.kickoutView setRetryBlock: ^(BOOL dismiss) {
          if ([viewController respondsToSelector:selector]) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
@@ -688,19 +680,15 @@
     }
 }
 
-- (BOOL)isIpad
-{
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
-    {
+- (BOOL)isIpad {
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
         return YES;
     }
     return NO;
 }
 
-- (BOOL)isIpadLandscape
-{
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
-    {
+- (BOOL)isIpadLandscape {
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
         return YES;
     }
     return NO;

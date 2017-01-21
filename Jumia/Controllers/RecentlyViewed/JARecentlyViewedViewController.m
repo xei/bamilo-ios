@@ -90,7 +90,7 @@
     return _emptyTitleLabel;
 }
 
--(UIImageView *)emptyListImageView {
+- (UIImageView *)emptyListImageView {
     if (!VALID_NOTEMPTY(_emptyListImageView, UIImageView)) {
         _emptyListImageView = [UIImageView new];
         UIImage * img = [UIImage imageNamed:@"emptyRecentlyViewedIcon"];
@@ -102,7 +102,7 @@
     return _emptyListImageView;
 }
 
--(UILabel *)emptyListLabel {
+- (UILabel *)emptyListLabel {
     if (!VALID_NOTEMPTY(_emptyListLabel, UILabel)) {
         _emptyListLabel = [UILabel new];
         _emptyListLabel.font = JABodyFont;
@@ -116,8 +116,7 @@
     return _emptyListLabel;
 }
 
-- (JAProductCollectionViewFlowLayout *)flowLayout
-{
+- (JAProductCollectionViewFlowLayout *)flowLayout {
     if (!VALID_NOTEMPTY(_flowLayout, JAProductCollectionViewFlowLayout)) {
         
         _flowLayout = [[JAProductCollectionViewFlowLayout alloc] init];
@@ -133,8 +132,7 @@
     return _flowLayout;
 }
 
-- (UICollectionView *)collectionView
-{
+- (UICollectionView *)collectionView {
     CGRect frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.viewBounds.size.height - self.bottomView.height-self.clearAllButton.height);
     if (!VALID_NOTEMPTY(_collectionView, UICollectionView)) {
         _collectionView = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:self.flowLayout];
@@ -152,8 +150,7 @@
     return _collectionView;
 }
 
-- (UIView *)bottomView
-{
+- (UIView *)bottomView {
     if (!VALID(_bottomView, UIView)) {
         _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.viewBounds.size.height - 49.f, self.viewBounds.size.width, 1.f)];
         [_bottomView setBackgroundColor:JABlack700Color];
@@ -162,13 +159,13 @@
     return _bottomView;
 }
 
-- (UIButton *)clearAllButton
-{
-    if (!VALID(_clearAllButton, UIButton)) {
+- (UIButton *)clearAllButton {
+    if (!_clearAllButton) {
         _clearAllButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         [_clearAllButton setFrame:CGRectMake(0, self.viewBounds.size.height - 48.f, self.viewBounds.size.width, 48.f)];
         [_clearAllButton setBackgroundColor:[UIColor whiteColor]];
         [_clearAllButton setTitle:STRING_CLEAR_ALL forState:UIControlStateNormal];
+        [_clearAllButton.titleLabel setFont:JAListFont];
         [_clearAllButton addTarget:self action:@selector(clearAllButtonPressed) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:_clearAllButton];
     }
@@ -183,8 +180,7 @@
     self.navBarLayout.title = STRING_RECENTLY_VIEWED;
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self loadProducts];
 }
@@ -203,10 +199,8 @@
     [self.clearAllButton setYBottomAligned:0.f];
 }
 
-- (void)onOrientationChanged
-{
-    if(VALID(self.picker, JAPicker))
-    {
+- (void)onOrientationChanged {
+    if(self.picker) {
         [self closePicker];
     }
 }

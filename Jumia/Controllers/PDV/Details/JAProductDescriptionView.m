@@ -35,12 +35,11 @@
     return self;
 }
 
-- (UILabel *)descriptionLabel
-{
+- (UILabel *)descriptionLabel {
     CGFloat width = self.contentScrollView.width - 32;
     if (!VALID_NOTEMPTY(_descriptionLabel, UILabel)) {
         _descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(16, 16, self.contentScrollView.width - 32, 10)];
-        [_descriptionLabel setFont:JACaptionFont];
+        [_descriptionLabel setFont:[UIFont fontWithName:kFontRegularName size:12]];
         [_descriptionLabel setNumberOfLines:0];
         [_descriptionLabel setTextAlignment:NSTextAlignmentLeft];
         [self.contentScrollView addSubview:_descriptionLabel];
@@ -61,8 +60,7 @@
     [self addSubview:self.contentScrollView];
 }
 
-- (void)setProduct:(RIProduct *)product
-{
+- (void)setProduct:(RIProduct *)product {
     _product = product;
     if (VALID_NOTEMPTY(_product.shortSummary, NSString)) {
         [self.descriptionLabel setText:[NSString stringWithFormat:@"%@\n%@", _product.summary, _product.shortSummary]];
@@ -71,8 +69,7 @@
     }
 }
 
-- (UIScrollView *)contentScrollView
-{
+- (UIScrollView *)contentScrollView {
     CGRect frame = CGRectMake(0, 0, self.width, self.height);
     if (!VALID_NOTEMPTY(_contentScrollView, UIScrollView)) {
         _contentScrollView = [[UIScrollView alloc] initWithFrame:frame];

@@ -18,8 +18,7 @@
 
 @implementation JACheckoutButton
 
-- (instancetype)init
-{
+- (instancetype)init {
     self = [super init];
     if (self) {
         [self setDefaults];
@@ -27,8 +26,7 @@
     return self;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
+- (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         [self setDefaults];
@@ -36,27 +34,22 @@
     return self;
 }
 
-- (void)setDefaults
-{
-    [self.titleLabel setFont:JABodyFont];
+- (void)setDefaults {
+    [self.titleLabel setFont: [UIFont fontWithName:kFontRegularName size:9]];
     [self setTitleColor:JABlackColor forState:UIControlStateNormal];
-    // disable button color
-//    [self setTitleColor:JABlack800Color forState:UIControlStateDisabled];
     [self.titleLabel setTextColor:JABlackColor];
     [self setTintColor:JABlackColor];
 }
 
-- (UIImageView *)iconImageView
-{
-    if (!VALID(_iconImageView, UIImageView)) {
+- (UIImageView *)iconImageView {
+    if (!_iconImageView) {
         _iconImageView = [[UIImageView alloc] init];
         [self addSubview:_iconImageView];
     }
     return _iconImageView;
 }
 
-- (void)setImage:(UIImage *)image
-{
+- (void)setImage:(UIImage *)image {
     self.iconImage = image;
     image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [self.iconImageView setImage:image];
@@ -67,13 +60,12 @@
     if (self.titleString) {
         [self setContentVerticalAlignment:UIControlContentVerticalAlignmentBottom];
         [self.iconImageView setY:0.f];
-    }else{
+    } else {
         [self.iconImageView setYCenterAligned];
     }
 }
 
-- (void)setTitle:(NSString *)title forState:(UIControlState)state
-{
+- (void)setTitle:(NSString *)title forState:(UIControlState)state {
     self.titleString = title;
     [super setTitle:title forState:state];
     
@@ -85,20 +77,12 @@
     }
 }
 
-- (void)setTag:(NSInteger)tag
-{
+- (void)setTag:(NSInteger)tag {
     [super setTag:tag];
 }
 
-- (void)setEnabled:(BOOL)enabled
-{
+- (void)setEnabled:(BOOL)enabled {
     [super setEnabled:enabled];
-    // disable button color
-//    if (self.iconImageView) {
-//        [UIView animateWithDuration:.2 animations:^{
-//            [self.iconImageView setAlpha:enabled?1.f:.5f];
-//        }];
-//    }
 }
 
 @end

@@ -79,65 +79,57 @@
 }
 
 
-- (JAProductDescriptionView *)descriptionView
-{
+- (JAProductDescriptionView *)descriptionView {
     CGRect frame;
     if(RI_IS_RTL){
         frame = CGRectMake(self.view.width*2, 0, self.view.width, self.contentScrollView.height);
-    }
-    else{
+    } else{
         frame = CGRectMake(0, 0, self.view.width, self.contentScrollView.height);
     }
-    if (!VALID_NOTEMPTY(_descriptionView, JAProductDescriptionView))
-    {
+    if (!VALID_NOTEMPTY(_descriptionView, JAProductDescriptionView)) {
         _descriptionView = [[JAProductDescriptionView alloc] initWithFrame:frame];
-    }else{
+    } else {
         if (!CGRectEqualToRect(frame, _descriptionView.frame)) {
             [_descriptionView setFrame:frame];
         }
     }
-    if (VALID_NOTEMPTY(self.product, RIProduct) && !VALID_NOTEMPTY(_descriptionView.product, RIProduct)) {
+    if (self.product && !_descriptionView.product) {
         _descriptionView.product = self.product;
     }
     return _descriptionView;
 }
 
-- (JAProductSpecificationView *)spectificationView
-{
+- (JAProductSpecificationView *)spectificationView {
     CGRect frame = CGRectMake(self.view.width, 0, self.view.width, self.contentScrollView.height);
-    if (!VALID_NOTEMPTY(_spectificationView, JAProductSpecificationView))
-    {
+    if (!_spectificationView) {
         _spectificationView = [[JAProductSpecificationView alloc] initWithFrame:frame];
-    }else{
+    } else {
         if (!CGRectEqualToRect(frame, _spectificationView.frame)) {
             [_spectificationView setFrame:frame];
         }
     }
-    if (VALID_NOTEMPTY(self.product, RIProduct) && !VALID_NOTEMPTY(_spectificationView.product, RIProduct)) {
+    if (self.product && !_spectificationView.product) {
         _spectificationView.product = self.product;
     }
     return _spectificationView;
 }
 
-- (JAProductReviewsView *)reviewsView
-{
+- (JAProductReviewsView *)reviewsView {
     CGRect frame;
     
     if(RI_IS_RTL) {
         frame = CGRectMake(0, 0, self.view.width, self.contentScrollView.height);
-    }
-    else{
+    } else {
         frame = CGRectMake(self.view.width*2, 0, self.view.width, self.contentScrollView.height);
     }
-    if (!VALID_NOTEMPTY(_reviewsView, JAProductReviewsView))
-    {
+    if (!VALID_NOTEMPTY(_reviewsView, JAProductReviewsView)) {
         _reviewsView = [[JAProductReviewsView alloc] initWithFrame:frame];
-    }else{
+    } else {
         if (!CGRectEqualToRect(frame, _reviewsView.frame)) {
             [_reviewsView setFrame:frame];
         }
     }
-    if (VALID_NOTEMPTY(self.product, RIProduct) && !VALID_NOTEMPTY(_reviewsView.product, RIProduct)) {
+    if (self.product && !_reviewsView.product) {
         _reviewsView.product = self.product;
     }
     return _reviewsView;
