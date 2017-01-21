@@ -10,6 +10,7 @@ platform :ios do
     # Fabric generated this lane for deployment to Crashlytics Beta
     # set 'export_method' to 'ad-hoc' if your Crashlytics Beta distribution uses ad-hoc provisioning
     gym(scheme: 'Bamilo (Staging)', export_method: 'ad-hoc')
+    scan(scheme: 'Bamilo (Staging)', devices: ["iPhone SE"], clean: false)
 
     emails = values[:emails] ? values[:emails] : nil
     groups = values[:groups] ? values[:groups] : nil
@@ -29,7 +30,7 @@ platform :ios do
     slack(
       slack_url: "https://hooks.slack.com/services/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",
       channel: "mobile-alerts",
-      message: "Successfully uploaded a beta release " + get_version_number + "(" + get_build_number + ")"
+      message: "Successfully uploaded a beta release " + get_version_number + " (" + get_build_number + ")"
     )
   end
 end

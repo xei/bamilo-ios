@@ -31,6 +31,8 @@
 		870F8CD71E335BFC0021F87B /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 870F8CD51E335BFC0021F87B /* Main_iPad.storyboard */; };
 		870F8CD91E335F3C0021F87B /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F8CD81E335F3C0021F87B /* Crashlytics.framework */; };
 		870F8CDB1E335F420021F87B /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F8CDA1E335F420021F87B /* Fabric.framework */; };
+		870F8CF61E338D2D0021F87B /* BamiloUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 870F8CF51E338D2D0021F87B /* BamiloUITests.m */; };
+		870F8D061E33975A0021F87B /* IntUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 870F8D051E33975A0021F87B /* IntUtility.m */; };
 		892EB9351BC6795800FBF094 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 892EB9301BC6795800FBF094 /* libGoogleAnalytics.a */; };
 		892EB9441BC679A800FBF094 /* libTagManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 892EB93F1BC679A800FBF094 /* libTagManager.a */; };
 		893AADCB1C1F0DD7006314FB /* RIPhonePrefix.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEADDCF1C10B1C40074034A /* RIPhonePrefix.m */; };
@@ -533,6 +535,16 @@
 		FFF900871C6B5BDF00DDF538 /* JARadioGroupComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF900821C6B5BDF00DDF538 /* JARadioGroupComponent.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		870F8CF81E338D2D0021F87B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B5A301A019811D0700F71726 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CE9ADF271AB6D78200D56481;
+			remoteInfo = Bamilo;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		1C3043001E2A3A5800BD391E /* CatalogNoResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CatalogNoResultViewController.h; sourceTree = "<group>"; };
 		1C3043011E2A3A5800BD391E /* CatalogNoResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CatalogNoResultViewController.m; sourceTree = "<group>"; };
@@ -624,6 +636,11 @@
 		870F8CD61E335BFC0021F87B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Jumia/Base.lproj/Main_iPad.storyboard; sourceTree = SOURCE_ROOT; };
 		870F8CD81E335F3C0021F87B /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = Jumia/Crashlytics.framework; sourceTree = "<group>"; };
 		870F8CDA1E335F420021F87B /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fabric.framework; path = Jumia/Fabric.framework; sourceTree = "<group>"; };
+		870F8CF31E338D2C0021F87B /* BamiloUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BamiloUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		870F8CF51E338D2D0021F87B /* BamiloUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BamiloUITests.m; sourceTree = "<group>"; };
+		870F8CF71E338D2D0021F87B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		870F8D041E33975A0021F87B /* IntUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntUtility.h; sourceTree = "<group>"; };
+		870F8D051E33975A0021F87B /* IntUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntUtility.m; sourceTree = "<group>"; };
 		892EB9251BC6795800FBF094 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
 		892EB9261BC6795800FBF094 /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIDictionaryBuilder.h; sourceTree = "<group>"; };
 		892EB9271BC6795800FBF094 /* GAIEcommerceFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommerceFields.h; sourceTree = "<group>"; };
@@ -1483,6 +1500,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		870F8CF01E338D2C0021F87B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CE9AE0171AB6D78200D56481 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1989,6 +2013,33 @@
 			children = (
 			);
 			name = Libraries;
+			sourceTree = "<group>";
+		};
+		870F8CF41E338D2D0021F87B /* BamiloUITests */ = {
+			isa = PBXGroup;
+			children = (
+				870F8CF51E338D2D0021F87B /* BamiloUITests.m */,
+				870F8CF71E338D2D0021F87B /* Info.plist */,
+			);
+			path = BamiloUITests;
+			sourceTree = "<group>";
+		};
+		870F8D021E3397270021F87B /* JAUtils */ = {
+			isa = PBXGroup;
+			children = (
+				B50B03A9198A8861002046DF /* JAUtils.h */,
+				B50B03AA198A8861002046DF /* JAUtils.m */,
+			);
+			name = JAUtils;
+			sourceTree = "<group>";
+		};
+		870F8D031E3397400021F87B /* IntUtility */ = {
+			isa = PBXGroup;
+			children = (
+				870F8D041E33975A0021F87B /* IntUtility.h */,
+				870F8D051E33975A0021F87B /* IntUtility.m */,
+			);
+			name = IntUtility;
 			sourceTree = "<group>";
 		};
 		892EB9221BC6795800FBF094 /* GoogleAnalytics */ = {
@@ -2677,9 +2728,9 @@
 		B50B03A8198A883D002046DF /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				870F8D031E3397400021F87B /* IntUtility */,
 				4A19C51119D019100070D194 /* Reachability */,
-				B50B03A9198A8861002046DF /* JAUtils.h */,
-				B50B03AA198A8861002046DF /* JAUtils.m */,
+				870F8D021E3397270021F87B /* JAUtils */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -2944,6 +2995,7 @@
 			children = (
 				B5A301AA19811D0700F71726 /* Jumia */,
 				B5A301C419811D0700F71726 /* JumiaTests */,
+				870F8CF41E338D2D0021F87B /* BamiloUITests */,
 				B5A301D119811E7600F71726 /* Frameworks */,
 				B5A301A919811D0700F71726 /* Products */,
 			);
@@ -2953,6 +3005,7 @@
 			isa = PBXGroup;
 			children = (
 				CE9AE11F1AB6D78200D56481 /* Bamilo.app */,
+				870F8CF31E338D2C0021F87B /* BamiloUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3896,6 +3949,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		870F8CF21E338D2C0021F87B /* BamiloUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 870F8CFD1E338D2D0021F87B /* Build configuration list for PBXNativeTarget "BamiloUITests" */;
+			buildPhases = (
+				870F8CEF1E338D2C0021F87B /* Sources */,
+				870F8CF01E338D2C0021F87B /* Frameworks */,
+				870F8CF11E338D2C0021F87B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				870F8CF91E338D2D0021F87B /* PBXTargetDependency */,
+			);
+			name = BamiloUITests;
+			productName = BamiloUITests;
+			productReference = 870F8CF31E338D2C0021F87B /* BamiloUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		CE9ADF271AB6D78200D56481 /* Bamilo */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CE9AE11A1AB6D78200D56481 /* Build configuration list for PBXNativeTarget "Bamilo" */;
@@ -3925,6 +3996,12 @@
 				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Rocket Internet";
 				TargetAttributes = {
+					870F8CF21E338D2C0021F87B = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 3GCCEEQ32X;
+						ProvisioningStyle = Automatic;
+						TestTargetID = CE9ADF271AB6D78200D56481;
+					};
 					CE9ADF271AB6D78200D56481 = {
 						DevelopmentTeam = 3GCCEEQ32X;
 						ProvisioningStyle = Manual;
@@ -3956,11 +4033,19 @@
 			projectRoot = "";
 			targets = (
 				CE9ADF271AB6D78200D56481 /* Bamilo */,
+				870F8CF21E338D2C0021F87B /* BamiloUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		870F8CF11E338D2C0021F87B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CE9AE0311AB6D78200D56481 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -4137,6 +4222,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		870F8CEF1E338D2C0021F87B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				870F8CF61E338D2D0021F87B /* BamiloUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CE9ADF281AB6D78200D56481 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -4339,6 +4432,7 @@
 				FF0464BF1CA96E9000B82FD2 /* ADJEventFailure.m in Sources */,
 				CE9ADFBB1AB6D78200D56481 /* JAPDVViewController.m in Sources */,
 				FF0464C41CA96E9000B82FD2 /* ADJEventSuccess.m in Sources */,
+				870F8D061E33975A0021F87B /* IntUtility.m in Sources */,
 				CE9ADFBC1AB6D78200D56481 /* JAColorView.m in Sources */,
 				FF0464DD1CA96E9000B82FD2 /* ADJResponseData.m in Sources */,
 				CE9ADFBD1AB6D78200D56481 /* RICountryConfiguration.m in Sources */,
@@ -4497,6 +4591,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		870F8CF91E338D2D0021F87B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CE9ADF271AB6D78200D56481 /* Bamilo */;
+			targetProxy = 870F8CF81E338D2D0021F87B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		870F8CD51E335BFC0021F87B /* Main_iPad.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -4620,6 +4722,66 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
 				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = AdHoc;
+		};
+		870F8CFA1E338D2D0021F87B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 3GCCEEQ32X;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = BamiloUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.BamiloUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = Bamilo;
+			};
+			name = Debug;
+		};
+		870F8CFB1E338D2D0021F87B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 3GCCEEQ32X;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = BamiloUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.BamiloUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = Bamilo;
+			};
+			name = Release;
+		};
+		870F8CFC1E338D2D0021F87B /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 3GCCEEQ32X;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = BamiloUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.BamiloUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = Bamilo;
 			};
 			name = AdHoc;
 		};
@@ -4791,6 +4953,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		870F8CFD1E338D2D0021F87B /* Build configuration list for PBXNativeTarget "BamiloUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				870F8CFA1E338D2D0021F87B /* Debug */,
+				870F8CFB1E338D2D0021F87B /* Release */,
+				870F8CFC1E338D2D0021F87B /* AdHoc */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		B5A301A319811D0700F71726 /* Build configuration list for PBXProject "Jumia" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
