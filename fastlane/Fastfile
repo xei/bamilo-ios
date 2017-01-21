@@ -7,11 +7,21 @@ platform :ios do
   # Learn more here: https://github.com/fastlane/setups/blob/master/samples-ios/distribute-beta-build.md 🚀
   #
 
+  ensure_git_status_clean
+  ensure_git_branch(branch: 'develop')
+
+  version =  get_version_number + " (" + get_build_number + ")"
+
   # Alpha (Crashlytics)
   lane :alpha do |values|
-    # Fabric generated this lane for deployment to Crashlytics Beta
-    # set 'export_method' to 'ad-hoc' if your Crashlytics Beta distribution uses ad-hoc provisioning
+    #---------------------------
+    # Build
+    #---------------------------
     gym(scheme: 'Bamilo (Staging)', export_method: 'ad-hoc')
+
+    #---------------------------
+    # Run Tests
+    #---------------------------
     scan(scheme: 'Bamilo (Staging)', devices: ["iPhone SE"], clean: false)
 
     emails = values[:emails] ? values[:emails] : nil
@@ -19,6 +29,9 @@ platform :ios do
 
     notify = values[:notify] ? values[:notify] : true
 
+    #---------------------------
+    # Upload to Crashlytics
+    #---------------------------
     crashlytics(api_token: 'ddde4ad6ad210575fdac10a908040d1a93e74833',
       build_secret: 'c37b1e5c603fb0fd9b71f1bf627d92f87718c6efd4aada50d724ab8ad126fe35',
       emails: emails,
@@ -26,33 +39,18 @@ platform :ios do
       notes: changelog_from_git_commits,
       notifications: notify)
 
-    # for all available options run `fastlane action crashlytics`
-
-    # You can notify your team in chat that a beta build has been uploaded
+    #---------------------------
+    # Push to Slack
+    #---------------------------
     slack(
       slack_url: "https://hooks.slack.com/services/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",
       channel: "mobile-alerts",
-      message: "Successfully uploaded an alpha release " + get_version_number + " (" + get_build_number + ")"
+      message: "Successfully uploaded an alpha release " + version + " to Crashlytics"
     )
   end
 
   # Beta (TestFlight)
   lane :beta do |values|
-    ensure_git_status_clean
-    ensure_git_branch(branch: 'develop')
-
-    # ---------------------------
-    # Increment our version numbers. This needs to be done for all of our targets (app, notification center, watch etc.). Here the build and version number will match.
-    # ---------------------------
-    increment_version_number
-    version = get_version_number()
-    increment_build_number(build_number: version)
-
-    #---------------------------
-    # Commit version bump
-    #---------------------------
-    commit_version_bump(message: 'Bump version', force: true)
-
     #---------------------------
     # Build
     #---------------------------
@@ -71,17 +69,20 @@ platform :ios do
     #---------------------------
     # Tag the submit
     #---------------------------
-    git_tag = "Version_" + version
-    add_git_tag(tag: git_tag)
+    add_git_tag(tag: version)
 
     #---------------------------
-    # Push to GitHub
+    # Push to Slack
     #---------------------------
-    push_to_git_remote(remote: 'origin', local_branch: 'develop', remote_branch: 'develop', force: false)
-
-    #---------------------------
-    # Clean up our files
-    #---------------------------
-    clean_build_artifacts
+    slack(
+      slack_url: "https://hooks.slack.com/services/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",
+      channel: "mobile-alerts",
+      message: "Successfully uploaded a beta release " + version + " to TestFlight"
+    )
   end
+
+  #---------------------------
+  # Clean up our files
+  #---------------------------
+  clean_build_artifacts
 end
