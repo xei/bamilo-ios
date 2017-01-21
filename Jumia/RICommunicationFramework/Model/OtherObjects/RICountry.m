@@ -255,27 +255,9 @@
     return country;
 }
 
-+ (RICountry*)getUniqueCountry
-{
++ (RICountry*)getUniqueCountry {
     RICountry* uniqueCountry = [[RICountry alloc] init];
     
-//_UNS
-//    if([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
-//    {
-//        NSDictionary* languageJSON = @{@"code":@"my_MM",@"default":@1,@"name":@"ျမန္မာ"};
-//        RILanguage* language = [RILanguage parseLanguage:languageJSON];
-//        uniqueCountry.selectedLanguage = language;
-//        uniqueCountry.name = RI_UNIQUE_COUNTRY_NAME_SHOP;
-//        uniqueCountry.countryIso = RI_UNIQUE_COUNTRY_ISO_SHOP;
-//        uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_SHOP;
-//        uniqueCountry.isLive = YES;
-//#if defined(STAGING) && STAGING
-//        uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_SHOP_STAGING;
-//        uniqueCountry.isLive = NO;
-//        uniqueCountry.userAgentInjection = RI_UNIQUE_COUNTRY_USER_AGENT_INJECTION_SHOP;
-//#endif
-//        return uniqueCountry;
-//    } else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"]) {
         NSDictionary* languageJSON = @{@"code":@"fa_IR",@"default":@1,@"name":@"فارسی"};
         RILanguage* language = [RILanguage parseLanguage:languageJSON];
         uniqueCountry.selectedLanguage = language;
@@ -289,9 +271,6 @@
         uniqueCountry.userAgentInjection = RI_UNIQUE_COUNTRY_USER_AGENT_INJECTION_BAMILO_INTEGRATION_MOBILE;
 #endif
         return uniqueCountry;
-//    } else {
-//        return nil;
-//    }
 }
 
 + (NSString *)getCountryPhonePrefixesWithSuccessBlock:(void (^)(NSArray *prefixes))successBlock

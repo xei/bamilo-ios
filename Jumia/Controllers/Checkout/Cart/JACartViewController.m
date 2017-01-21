@@ -275,18 +275,14 @@
     }];
 }
 
-- (void)proceedToCall
-{
+- (void)proceedToCall {
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"تماس با تیم خدمات مشتریان بامیلو" delegate:nil cancelButtonTitle:@"لغو" otherButtonTitles:@"تایید", nil];
     alert.delegate = self;
     [alert show];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if(buttonIndex ==0){
-        
-    }
-    else{
+    if(buttonIndex != 0) {
         [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
             NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
             [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
@@ -306,8 +302,7 @@
     }
 }
 
-- (void)useCoupon
-{
+- (void)useCoupon {
     NSString *voucherCode = self.resumeView.couponTextField.text;
     if (!VALID_NOTEMPTY(voucherCode, NSString)) {
         [self onErrorResponse:RIApiResponseUnknownError messages:@[STRING_VOUCHER_ERROR] showAsMessage:YES target:nil selector:nil objects:nil];

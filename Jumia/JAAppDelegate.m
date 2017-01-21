@@ -111,9 +111,7 @@
         [Adjust appWillOpenUrl:[userActivity webpageURL]];
         
         NSString* appName = [APP_NAME lowercaseString];
-        if ([appName isEqualToString:@"بامیلو"]) {
-            appName = @"bamilo";
-        }
+        
         NSURL * deeplink = [Adjust convertUniversalLink:[userActivity webpageURL] scheme:appName];
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -302,23 +300,18 @@
     return urlWasHandled;
 }
 
-- (void)handlePushNotificationURL:(NSURL *)url
-{
+- (void)handlePushNotificationURL:(NSURL *)url {
     NSString *urlScheme = [url scheme];
     
     NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
     NSString *faceAppId = [infoDict objectForKey:@"FacebookAppID"];
     NSString *facebookSchema = @"";
     
-    if (faceAppId.length > 0)
-    {
+    if (faceAppId.length > 0) {
         facebookSchema = [NSString stringWithFormat:@"fb%@", faceAppId];
     }
-    
     NSString* appName = [APP_NAME lowercaseString];
-    if ([appName isEqualToString:@"بامیلو"]) {
-        appName = @"bamilo";
-    }
+
     if ((urlScheme != nil && [urlScheme isEqualToString:appName]) || (urlScheme != nil && [facebookSchema isEqualToString:urlScheme]))
     {
         NSMutableDictionary *pushNotification = [NSMutableDictionary dictionaryWithObject:@"" forKey:@"u"];

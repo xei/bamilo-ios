@@ -62,14 +62,7 @@
     
     UIImage* image = [UIImage imageNamed:@"loadingAnimationFrame1"];
     
-    int lastFrame = 24;
-    if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"] || [[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
-    {
-        lastFrame = 6;
-    }else if([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
-    {
-        lastFrame = 8;
-    }
+    int lastFrame = 8;
     self.loadingBaseAnimation = [[UIImageView alloc] initWithFrame:CGRectMake(0,
                                                                               0,
                                                                               image.size.width,
@@ -350,66 +343,26 @@
 
 #pragma mark UIAlertView
 
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     self.isPopupOpened = NO;
-    if(kUpdateAvailableAlertViewTag == [alertView tag])
-    {
-        if(0 == buttonIndex)
-        {
+    if(kUpdateAvailableAlertViewTag == [alertView tag]) {
+        if (buttonIndex == 0) {
             if (0 >= self.requestCount) {
                 [self getConfigurations];
             }
-        }
-        else if(1 == buttonIndex)
-        {
+        } else if(buttonIndex == 1) {
             if (0 >= self.requestCount) {
                 [self getConfigurations];
             }
-            
-            NSURL  *url;
-            if([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
-            {
-                url = [NSURL URLWithString:kAppStoreUrl];
-            }
-            else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
-            {
-                url = [NSURL URLWithString:kAppStoreUrlDaraz];
-            }
-            else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
-            {
-                url = [NSURL URLWithString:kAppStoreUrlShop];
-            }
-            else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
-            {
-                url = [NSURL URLWithString:kAppStoreUrlBamilo];
-            }
+            NSURL  *url = [NSURL URLWithString:kAppStoreUrlBamilo];
             if([[UIApplication sharedApplication] canOpenURL:url]) {
                 [[UIApplication sharedApplication] openURL:url];
             }
         }
-    }
-    else if(kForceUpdateAlertViewTag == [alertView tag])
-    {
-        if(0 == buttonIndex)
-        {
-            NSURL  *url;
-            if([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
-            {
-                url = [NSURL URLWithString:kAppStoreUrl];
-            }
-            else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
-            {
-                url = [NSURL URLWithString:kAppStoreUrlDaraz];
-            }
-            else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
-            {
-                url = [NSURL URLWithString:kAppStoreUrlShop];
-            }
-            else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
-            {
-                url = [NSURL URLWithString:kAppStoreUrlBamilo];
-            }
+    } else if(kForceUpdateAlertViewTag == [alertView tag]) {
+        if(buttonIndex == 0) {
+            NSURL  *url = [NSURL URLWithString:kAppStoreUrlBamilo];
+
             if([[UIApplication sharedApplication] canOpenURL:url]) {
                 [[UIApplication sharedApplication] openURL:url];
             }

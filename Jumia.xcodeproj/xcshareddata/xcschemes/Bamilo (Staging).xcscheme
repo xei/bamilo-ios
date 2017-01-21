@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "CE9ADF271AB6D78200D56481"
-               BuildableName = "&#x628;&#x627;&#x645;&#x6cc;&#x644;&#x648;.app"
+               BuildableName = "Bamilo.app"
                BlueprintName = "Bamilo"
                ReferencedContainer = "container:Jumia.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CE9ADF271AB6D78200D56481"
-            BuildableName = "&#x628;&#x627;&#x645;&#x6cc;&#x644;&#x648;.app"
+            BuildableName = "Bamilo.app"
             BlueprintName = "Bamilo"
             ReferencedContainer = "container:Jumia.xcodeproj">
          </BuildableReference>
@@ -56,7 +56,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CE9ADF271AB6D78200D56481"
-            BuildableName = "&#x628;&#x627;&#x645;&#x6cc;&#x644;&#x648;.app"
+            BuildableName = "Bamilo.app"
             BlueprintName = "Bamilo"
             ReferencedContainer = "container:Jumia.xcodeproj">
          </BuildableReference>
@@ -75,7 +75,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CE9ADF271AB6D78200D56481"
-            BuildableName = "&#x628;&#x627;&#x645;&#x6cc;&#x644;&#x648;.app"
+            BuildableName = "Bamilo.app"
             BlueprintName = "Bamilo"
             ReferencedContainer = "container:Jumia.xcodeproj">
          </BuildableReference>

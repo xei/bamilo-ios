@@ -589,30 +589,11 @@
         appActivities = @[fbmActivity, whatsAppActivity];
     }
     
-    if ([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
-    {
-        whatsAppMsg = [[WhatsAppMessage alloc] initWithMessage:[NSString stringWithFormat:@"%@ %@",shareTheAppString, kAppStoreUrl] forABID:nil];
-        
-        activityController = [[JAActivityViewController alloc] initWithActivityItems:@[shareTheAppString, [NSURL URLWithString:kAppStoreUrl], whatsAppMsg ] applicationActivities:appActivities];
-        
-    }else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
-    {
-        whatsAppMsg = [[WhatsAppMessage alloc] initWithMessage:[NSString stringWithFormat:@"%@ %@",shareTheAppString, kAppStoreUrlDaraz] forABID:nil];
-        
-        activityController = [[JAActivityViewController alloc] initWithActivityItems:@[shareTheAppString, [NSURL URLWithString:kAppStoreUrlDaraz], whatsAppMsg] applicationActivities:appActivities];
-        
-    }else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
-    {
-        whatsAppMsg = [[WhatsAppMessage alloc] initWithMessage:[NSString stringWithFormat:@"%@ %@",shareTheAppString, kAppStoreUrlShop] forABID:nil];
-        
-        activityController = [[JAActivityViewController alloc] initWithActivityItems:@[shareTheAppString, [NSURL URLWithString:kAppStoreUrlShop], whatsAppMsg] applicationActivities:appActivities];
-        
-    }else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
-    {
-        whatsAppMsg = [[WhatsAppMessage alloc] initWithMessage:[NSString stringWithFormat:@"%@ %@",shareTheAppString, kAppStoreUrlBamilo]  forABID:nil];
-        
-        activityController = [[JAActivityViewController alloc] initWithActivityItems:@[shareTheAppString, [NSURL URLWithString:kAppStoreUrlBamilo], whatsAppMsg] applicationActivities:appActivities];
-    }
+    
+    whatsAppMsg = [[WhatsAppMessage alloc] initWithMessage:[NSString stringWithFormat:@"%@ %@",shareTheAppString, kAppStoreUrlBamilo]  forABID:nil];
+    
+    activityController = [[JAActivityViewController alloc] initWithActivityItems:@[shareTheAppString, [NSURL URLWithString:kAppStoreUrlBamilo], whatsAppMsg] applicationActivities:appActivities];
+    
     
     
     
@@ -622,8 +603,7 @@
     
     activityController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList];
     
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
-    {
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
         CGRect sharePopoverRect = CGRectMake(self.shareTheAppSingleLine.frame.size.width / 2,
                                              self.shareTheAppSingleLine.frame.size.height - 6.0f,
                                              0.0f,
@@ -634,34 +614,20 @@
         [popoverController presentPopoverFromRect:sharePopoverRect inView:self.shareTheAppSingleLine permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
         popoverController.passthroughViews = nil;
         self.currentPopoverController = popoverController;
-    }
-    else
-    {
+    } else {
         [self presentViewController:activityController animated:YES completion:nil];
     }
 }
 
-- (void)rateTheAppSelection
-{
+- (void)rateTheAppSelection {
     [self openAppStore];
 }
 
-- (void)openAppStore
-{
+- (void)openAppStore {
     static NSString *const iOS7AppStoreURLFormat = @"itms-apps://itunes.apple.com/app/apple-store/id%@";
     static NSString *const iOSAppStoreURLFormat = @"itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@";
     
-    NSString *appStoreId;
-    
-    if([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"]) {
-        appStoreId = kAppStoreId;
-    } else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"]) {
-        appStoreId = kAppStoreIdDaraz;
-    } else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"]) {
-        appStoreId = kAppStoreIdShop;
-    } else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"]) {
-        appStoreId = kAppStoreIdBamilo;
-    }
+    NSString *appStoreId = kAppStoreIdBamilo;
     
     NSURL *appStoreLink = [NSURL URLWithString:
                            [NSString stringWithFormat:
@@ -671,14 +637,10 @@
 
 }
 
-- (void)changeNotification
-{
-    if (self.pushNotificationsSwitchLine.lineSwitch.on)
-    {
+- (void)changeNotification {
+    if (self.pushNotificationsSwitchLine.lineSwitch.on) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey: kChangeNotificationsOptions];
-    }
-    else
-    {
+    } else {
         [[UIApplication sharedApplication] unregisterForRemoteNotifications];
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey: kChangeNotificationsOptions];
     }
@@ -687,17 +649,14 @@
 
 #pragma mark - JAPicker
 
--(void)removePickerView
-{
-    if(VALID_NOTEMPTY(self.languagePicker, JAPicker))
-    {
+-(void)removePickerView {
+    if(VALID_NOTEMPTY(self.languagePicker, JAPicker)) {
         [self.languagePicker removeFromSuperview];
         self.languagePicker = nil;
     }
 }
 
-- (void)openLanguagePicker
-{
+- (void)openLanguagePicker {
     [self removePickerView];
     
     self.languagePicker = [[JAPicker alloc] initWithFrame:[self viewBounds]];
@@ -726,22 +685,16 @@
                                              pickerViewHeight)];
     [self.view addSubview:self.languagePicker];
     
-    [UIView animateWithDuration:0.4f
-                     animations:^{
-                         [self.languagePicker setFrame:CGRectMake(0.0f,
-                                                                  [self viewBounds].origin.y,
-                                                                  pickerViewWidth,
-                                                                  pickerViewHeight)];
+    [UIView animateWithDuration:0.4f animations:^{
+                         [self.languagePicker setFrame:CGRectMake(0.0f, [self viewBounds].origin.y, pickerViewWidth, pickerViewHeight)];
                      }];
 }
 
-- (void)selectedRowNumber:(NSNumber *)selectedRowNumber
-{
+- (void)selectedRowNumber:(NSNumber *)selectedRowNumber {
     [self selectedRow:selectedRowNumber.integerValue];
 }
 
-- (void)selectedRow:(NSInteger)selectedRow
-{
+- (void)selectedRow:(NSInteger)selectedRow {
     [self removePickerView];
     RILanguage* selectedLanguage = [[RICountryConfiguration getCurrentConfiguration].languages objectAtIndex:selectedRow];
     if ([selectedLanguage.langName isEqualToString:self.languageSubtitleLine.subTitle]) {

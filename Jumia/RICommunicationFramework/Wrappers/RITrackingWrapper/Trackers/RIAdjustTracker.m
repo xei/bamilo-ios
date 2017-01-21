@@ -58,8 +58,7 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
 @synthesize queue;
 @synthesize registeredEvents;
 
-- (id)init
-{
+- (id)init {
     RIDebugLog(@"Initializing Adjust tracker");
     
     if ((self = [super init])) {
@@ -151,8 +150,7 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
 - (void)trackEvent:(NSNumber *)eventType data:(NSDictionary *)data
 {
     RIDebugLog(@"Adjust - Tracking event = %@, data %@", eventType, data);
-    if([self.registeredEvents containsObject:eventType])
-    {
+    if([self.registeredEvents containsObject:eventType]) {
         
         NSString *keyRIEventLoginSuccess;
         NSString *keyRIEventLogout;
@@ -181,123 +179,34 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
         NSString *keyRIEventFacebookViewTransaction;
         NSString *keyRIEventFacebookAddToCart;
         
-        if ([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"]){
-
-            keyRIEventFacebookViewProduct = @"e91496";
-            keyRIEventFacebookViewListing = @"hdcfgj";
-            keyRIEventFacebookViewTransaction = @"29kvfe";
-            keyRIEventFacebookAddToCart = @"hjk3f4";
-            
-            keyRIEventLoginSuccess = @"1uv3mg";
-            keyRIEventLogout = @"qdcwli";
-            keyRIEventRegisterSuccess = @"mkq863";
-            keyRIEventAddToCart = @"c5vseo";
-            keyRIEventRemoveFromCart = @"ew5nzy";
-            keyRIEventAddToWishlist = @"g6en5v";
-            keyRIEventRemoveFromWishlist = @"v878b6";
-            keyRIEventFacebookLoginSuccess = @"u98xtu";
-            keyRIEventShareFacebook = @"kj8g12";
-            keyRIEventShareTwitter = @"pzlwy3";
-            keyRIEventShareEmail = @"i83rho";
-            keyRIEventShareSMS = @"lxq8jt";
-            keyRIEventCallToOrder = @"eaaq0p";
-            keyRIEventRateProduct = @"b0mavy";
-            keyRIEventGuestCustomer = @"z9v5ec";
-            keyRIEventSearch = @"469opz";
-            keyRIEventViewProduct = @"b499d1";
-            keyRIEventViewListing = @"rce3dz";
-            keyRIEventViewCart = @"3lv2b5";
-            keyRIEventTransactionConfirm = @"mtzu4i";
-            keyRIEventOpenApp = @"2x9nt2";
-            
-        }else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
-        {
-            keyRIEventFacebookAddToCart = @"3plk96";
-            keyRIEventLoginSuccess = @"uimi1s";
-            keyRIEventLogout = @"b7d5z7";
-            keyRIEventRegisterSuccess = @"ki2v58";
-            keyRIEventAddToCart = @"dylm86";
-            keyRIEventRemoveFromCart = @"ywxrqe";
-            keyRIEventAddToWishlist = @"yuiufs";
-            keyRIEventRemoveFromWishlist = @"b9wdnu";
-            keyRIEventFacebookLoginSuccess = @"6rfw93";
-            keyRIEventShareFacebook = @"cghg3d";
-            keyRIEventShareTwitter = @"14x0sr";
-            keyRIEventShareEmail = @"m2l7u9";
-            keyRIEventShareSMS = @"p567x1";
-            keyRIEventCallToOrder = @"931l91";
-            keyRIEventRateProduct = @"oph3t5";
-            keyRIEventGuestCustomer = @"3hm0mq";
-            keyRIEventSearch = @"qxtbp0";
-            keyRIEventViewProduct = @"m1m7wf";
-            keyRIEventViewListing = @"no3zac";
-            keyRIEventViewCart = @"lmueu3";
-            keyRIEventTransactionConfirm = @"ltv1b3";
-            keyRIEventFacebookViewListing = @"mlnk8m";
-            keyRIEventFacebookViewProduct = @"l71l28";
-            keyRIEventFacebookViewTransaction = @"gzixi6";
-            keyRIEventOpenApp = @"3rpdak";
-            
         
-        }else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
-        {
-            keyRIEventFacebookAddToCart = @"id2m8z";
-            keyRIEventLoginSuccess = @"9z78zz";
-            keyRIEventLogout = @"odyj1u";
-            keyRIEventRegisterSuccess = @"o0zaft";
-            keyRIEventAddToCart = @"9crynm";
-            keyRIEventRemoveFromCart = @"lndy5q";
-            keyRIEventAddToWishlist = @"gsbx7c";
-            keyRIEventRemoveFromWishlist = @"g6penx";
-            keyRIEventFacebookLoginSuccess = @"w9oyr4";
-            keyRIEventShareFacebook = @"is4v4r";
-            keyRIEventShareTwitter = @"k5jswk";
-            keyRIEventShareEmail = @"dkip1r";
-            keyRIEventShareSMS = @"mv11tk";
-            keyRIEventCallToOrder = @"8j8r8b";
-            keyRIEventRateProduct = @"lv2buv";
-            keyRIEventGuestCustomer = @"fmaf2b";
-            keyRIEventSearch = @"yqt9za";
-            keyRIEventViewProduct = @"x1n6ez";
-            keyRIEventViewListing = @"txh1xg";
-            keyRIEventViewCart = @"qjpcka";
-            keyRIEventTransactionConfirm = @"lfar8t";
-            keyRIEventFacebookViewListing = @"lpvuzj";
-            keyRIEventFacebookViewProduct = @"xyl86d";
-            keyRIEventFacebookViewTransaction = @"u6q2wt";
-            keyRIEventOpenApp = @"8upm01";
-
-        
-        }else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
-        {
             
-            keyRIEventFacebookAddToCart = @"";
-            keyRIEventLoginSuccess = @"y3ehk5";
-            keyRIEventLogout = @"rev85g";
-            keyRIEventRegisterSuccess = @"6hodya";
-            keyRIEventAddToCart = @"k53qfh";
-            keyRIEventRemoveFromCart = @"5mj3it";
-            keyRIEventAddToWishlist = @"ik3rb5";
-            keyRIEventRemoveFromWishlist = @"7inzjw";
-            keyRIEventFacebookLoginSuccess = @"zckrfc";
-            keyRIEventShareFacebook = @"iijbca";
-            keyRIEventShareTwitter = @"w4ug0f";
-            keyRIEventShareEmail = @"y7ryl9";
-            keyRIEventShareSMS = @"a7rn6n";
-            keyRIEventCallToOrder = @"x1e24b";
-            keyRIEventRateProduct = @"3t4nj8";
-            keyRIEventGuestCustomer = @"uwuz8b";
-            keyRIEventSearch = @"1vupdt";
-            keyRIEventViewProduct = @"nnwjjo";
-            keyRIEventViewListing = @"n5hlwu";
-            keyRIEventViewCart = @"pexi13";
-            keyRIEventTransactionConfirm = @"ca8jou";
-            keyRIEventFacebookViewListing = @"dtglhr";
-            keyRIEventFacebookViewProduct = @"l2fxva";
-            keyRIEventFacebookViewTransaction = @"ys7sle";
-            keyRIEventOpenApp = @"3qdwyi";
+        keyRIEventFacebookAddToCart = @"";
+        keyRIEventLoginSuccess = @"y3ehk5";
+        keyRIEventLogout = @"rev85g";
+        keyRIEventRegisterSuccess = @"6hodya";
+        keyRIEventAddToCart = @"k53qfh";
+        keyRIEventRemoveFromCart = @"5mj3it";
+        keyRIEventAddToWishlist = @"ik3rb5";
+        keyRIEventRemoveFromWishlist = @"7inzjw";
+        keyRIEventFacebookLoginSuccess = @"zckrfc";
+        keyRIEventShareFacebook = @"iijbca";
+        keyRIEventShareTwitter = @"w4ug0f";
+        keyRIEventShareEmail = @"y7ryl9";
+        keyRIEventShareSMS = @"a7rn6n";
+        keyRIEventCallToOrder = @"x1e24b";
+        keyRIEventRateProduct = @"3t4nj8";
+        keyRIEventGuestCustomer = @"uwuz8b";
+        keyRIEventSearch = @"1vupdt";
+        keyRIEventViewProduct = @"nnwjjo";
+        keyRIEventViewListing = @"n5hlwu";
+        keyRIEventViewCart = @"pexi13";
+        keyRIEventTransactionConfirm = @"ca8jou";
+        keyRIEventFacebookViewListing = @"dtglhr";
+        keyRIEventFacebookViewProduct = @"l2fxva";
+        keyRIEventFacebookViewTransaction = @"ys7sle";
+        keyRIEventOpenApp = @"3qdwyi";
 
-        }
 
         
         BOOL amountOfTransactions = YES;
@@ -673,21 +582,9 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
     
     // First Adjust launch event
     ADJEvent *launchEvent;
-    if ([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
-    {
-       launchEvent = [ADJEvent eventWithEventToken:@"2x9nt2"];
-    }else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
-    {
-        launchEvent = [ADJEvent eventWithEventToken:@"3rpdak"];
-        
-    }else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
-    {
-        launchEvent = [ADJEvent eventWithEventToken:@"8upm01"];
-        
-    }else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
-    {
-        launchEvent = [ADJEvent eventWithEventToken:@"3qdwyi"];
-    }
+    
+    launchEvent = [ADJEvent eventWithEventToken:@"3qdwyi"];
+    
     [launchEvent addCallbackParameter:kAdjustEventAppVersionDataKey value:[dataDictionary objectForKey:kRILaunchEventAppVersionDataKey]];
     [launchEvent addPartnerParameter:kAdjustEventAppVersionDataKey value:[dataDictionary objectForKey:kRILaunchEventAppVersionDataKey]];
     [launchEvent addCallbackParameter:kAdjustEventDeviceModelDataKey value:[dataDictionary objectForKey:kRILaunchEventDeviceModelDataKey]];
@@ -698,37 +595,21 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
     
     // Second Adjust launch event
     ADJEvent *event;
-    if ([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
-    {
-        event = [ADJEvent eventWithEventToken:@"xnjttw"];
-        
-    }else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
-    {
-        event = [ADJEvent eventWithEventToken:@"4wfs87"];
-        
-    }else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
-    {
-        event = [ADJEvent eventWithEventToken:@"x9cr8q"];
-        
-    }else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
-    {
-        event = [ADJEvent eventWithEventToken:@"tly4ql"];
-    }
+   
+    event = [ADJEvent eventWithEventToken:@"tly4ql"];
+   
     
-    if ([dataDictionary objectForKey:kRIEventShopCountryKey])
-    {
+    if ([dataDictionary objectForKey:kRIEventShopCountryKey]) {
         [event addCallbackParameter:kAdjustEventShopCountryKey value:[dataDictionary objectForKey:kRIEventShopCountryKey]];
         [event addPartnerParameter:kAdjustEventShopCountryKey value:[dataDictionary objectForKey:kRIEventShopCountryKey]];
     }
     NSString *userId = [dataDictionary objectForKey:kRIEventUserIdKey];
-    if(VALID_NOTEMPTY(userId, NSString) && ![@"0" isEqualToString:userId])
-    {
+    if(VALID_NOTEMPTY(userId, NSString) && ![@"0" isEqualToString:userId]) {
         [event addCallbackParameter:kAdjustEventUserIdKey value:userId];
         [event addPartnerParameter:kAdjustEventUserIdKey value:userId];
     }
     NSString *gender = [dataDictionary objectForKey:kRIEventGenderKey];
-    if(VALID_NOTEMPTY(gender, NSString))
-    {
+    if(VALID_NOTEMPTY(gender, NSString)) {
         [event addCallbackParameter:kAdjustEventGenderKey value:gender];
         [event addPartnerParameter:kAdjustEventGenderKey value:gender];
     }
@@ -744,48 +625,16 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
 
 #pragma mark - RIEcommerceEventTracking implementation
 
-- (void)trackCheckout:(NSDictionary *)data
-{
+- (void)trackCheckout:(NSDictionary *)data {
     RIDebugLog(@"Adjust - Ecommerce event with data:%@", data);
     
     NSString *eventKey;
-    
-    if ([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
-    {
-        eventKey = @"jk6lja";
-        
-    }else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
-    {
-        eventKey = @"lrcw7z";
-        
-    }else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
-    {
-        eventKey = @"cdta89";
-        
-    }else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
-    {
-        eventKey = @"pakn7o";
-    }
+
+    eventKey = @"pakn7o";
 
     NSNumber *guest = [data objectForKey:kRIEcommerceGuestKey];
-    if(VALID_NOTEMPTY(guest, NSNumber) && [guest boolValue])
-    {
-        if ([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
-        {
-            eventKey = @"m1il3s";
-        }
-        else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
-        {
-            eventKey = @"q7oi8w";
-            
-        }else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
-        {
-            eventKey =@"sg766z";
-            
-        }else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
-        {
-            eventKey =@"cndznn";
-        }
+    if(VALID_NOTEMPTY(guest, NSNumber) && [guest boolValue]) {
+        eventKey =@"cndznn";
     }
     
     ADJEvent *event = [ADJEvent eventWithEventToken:eventKey];
@@ -823,16 +672,10 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
 }
 
 #pragma mark AdjustDelegate
-- (void)adjustAttributionChanged:(ADJAttribution *)attribution
-{
-    if(VALID_NOTEMPTY(attribution, ADJAttribution))
-    {
-        if(self.delegate && [self.delegate respondsToSelector:@selector(adjustAttributionChanged:campaign:adGroup:creative:)])
-        {
-            [self.delegate adjustAttributionChanged:attribution.network
-                                           campaign:attribution.campaign
-                                            adGroup:attribution.adgroup
-                                           creative:attribution.creative];
+- (void)adjustAttributionChanged:(ADJAttribution *)attribution {
+    if(VALID_NOTEMPTY(attribution, ADJAttribution)) {
+        if(self.delegate && [self.delegate respondsToSelector:@selector(adjustAttributionChanged:campaign:adGroup:creative:)]) {
+            [self.delegate adjustAttributionChanged:attribution.network campaign:attribution.campaign adGroup:attribution.adgroup creative:attribution.creative];
         }
     }
 }

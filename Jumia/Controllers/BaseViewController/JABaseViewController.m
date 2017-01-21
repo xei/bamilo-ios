@@ -123,13 +123,8 @@
     
     UIImage *image = [UIImage imageNamed:@"loadingAnimationFrame1"];
     
-    int lastFrame = 24;
-    if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"] || [[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"]) {
-        lastFrame = 6;
-    }else if([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
-    {
-        lastFrame = 8;
-    }
+    int lastFrame = 8;
+  
     self.loadingAnimation = [[UIImageView alloc] initWithFrame:CGRectMake(0,
                                                                           0,
                                                                           image.size.width,
@@ -148,14 +143,6 @@
     
 }
 
-- (void)appWillEnterForeground
-{
-}
-
-- (void)appDidEnterBackground
-{
-}
-
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
     [self changeLoadingFrame:[[UIScreen mainScreen] bounds] orientation:toInterfaceOrientation];
@@ -170,8 +157,7 @@
     }
 }
 
-- (void)viewWillLayoutSubviews
-{
+- (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     if ([[UIApplication sharedApplication] statusBarOrientation] != self.orientation) {
         [self onOrientationChanged];
@@ -181,8 +167,7 @@
     }
 }
 
-- (void)onOrientationChanged
-{
+- (void)onOrientationChanged {
     if (self.searchBarIsVisible) {
         [self reloadSearchBar];
     }
@@ -217,8 +202,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
-{
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context)
      {
          UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
@@ -261,18 +245,11 @@
     [self reloadNavBar];
     [self reloadTabBar];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOnMenuSwipePanelNotification
-                                                        object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOnMenuSwipePanelNotification object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(sideMenuIsOpening)
-                                                 name:kOpenMenuNotification
-                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sideMenuIsOpening) name:kOpenMenuNotification object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showSearchView)
-                                                 name:kDidPressSearchButtonNotification
-                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showSearchView) name:kDidPressSearchButtonNotification object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillEnterForeground) name:kAppWillEnterForeground object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground) name:kAppDidEnterBackground object:nil];
@@ -327,6 +304,7 @@
                                        self.searchBarBackground.bounds.size.height - 1.0f,
                                        self.searchBarBackground.bounds.size.width,
                                        1.0f)];
+
     [self.searchBarBackground addSubview:separatorView];
     
     CGFloat horizontalMargin = 3.0f; //adjustment to native searchbar margin
@@ -484,44 +462,36 @@
 
 # pragma mark Error Views
 
-- (void)onSuccessResponse:(RIApiResponse)apiResponse messages:(NSArray *)successMessages showMessage:(BOOL)showMessage
-{
+- (void)onSuccessResponse:(RIApiResponse)apiResponse messages:(NSArray *)successMessages showMessage:(BOOL)showMessage {
     [self removeErrorView];
     if (showMessage) {
         [self showMessage:[successMessages componentsJoinedByString:@","] success:YES];
     }
 }
 
-- (void)onErrorResponse:(RIApiResponse)apiResponse messages:(NSArray *)errorMessages showAsMessage:(BOOL)showAsMessage selector:(SEL)selector objects:(NSArray *)objects
-{
+- (void)onErrorResponse:(RIApiResponse)apiResponse messages:(NSArray *)errorMessages showAsMessage:(BOOL)showAsMessage selector:(SEL)selector objects:(NSArray *)objects {
     [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:showAsMessage target:self selector:selector objects:objects];
 }
 
-- (void)onErrorResponse:(RIApiResponse)apiResponse messages:(NSArray *)errorMessages showAsMessage:(BOOL)showAsMessage target:(id)target selector:(SEL)selector objects:(NSArray *)objects
-{
+- (void)onErrorResponse:(RIApiResponse)apiResponse messages:(NSArray *)errorMessages showAsMessage:(BOOL)showAsMessage target:(id)target selector:(SEL)selector objects:(NSArray *)objects {
     [self removeErrorView];
     if (RIApiResponseAuthorizationError == apiResponse) {
         [self showAuthenticationPage:target selector:selector objects:objects];
-    }
-    else if (RIApiResponseMaintenancePage == apiResponse) {
+    } else if (RIApiResponseMaintenancePage == apiResponse) {
         [self showMaintenancePage:target selector:selector objects:objects];
-    }
-    else if(RIApiResponseKickoutView == apiResponse)
-    {
+    } else if(RIApiResponseKickoutView == apiResponse) {
         [self showKickoutView:target selector:selector objects:objects];
-    }
-    else if (RIApiResponseNoInternetConnection == apiResponse)
-    {
+    } else if (RIApiResponseNoInternetConnection == apiResponse) {
         if (showAsMessage) {
             [self showMessage:STRING_NO_CONNECTION success:NO];
-        }else{
+        } else {
             [self showErrorView:YES startingY:self.viewBounds.origin.y target:target selector:selector objects:objects];
         }
-    }else if (showAsMessage) {
+    } else if (showAsMessage) {
         if (VALID_NOTEMPTY(errorMessages, NSArray)) {
             [self showMessage:[errorMessages componentsJoinedByString:@", "] success:NO];
         }
-    }else{
+    } else {
         [self showErrorView:NO startingY:self.viewBounds.origin.y target:target selector:selector objects:objects];
     }
 }

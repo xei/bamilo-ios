@@ -85,20 +85,15 @@ void(^retryBock)(BOOL dismiss);
     self.backgroundImageName = @"maintenancePageBackground";
     CGFloat startingY = 27.0f;
     CGFloat leftPadding = 6.0f;
-    NSString *orangeButtonName = @"orangeBig_%@";
+    NSString *orangeButtonName = @"maintGreyBig_%@";
     NSString *greyButtonName = @"greyBig_%@";
-    if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"]) {
-        orangeButtonName = @"maintGreyBig_%@";
-    }
+    
     NSString *mapName = @"map";
     CGFloat buttonsWidth = 12.0f;
     CGFloat marginBottom = 15.0f;
     
     if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad){
-        orangeButtonName = @"orangeFullPortrait_%@";
-        if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"]) {
-            orangeButtonName = @"maintGreyFull_%@";
-        }
+        orangeButtonName = @"maintGreyFull_%@";
         greyButtonName = @"greyFullPortrait_%@";
         mapName = @"mapiPad";
         
@@ -117,10 +112,6 @@ void(^retryBock)(BOOL dismiss);
     
     RIApi *apiInformation = [RIApi getApiInformation];
     NSString *countryName = @"";
-    if(NO == [[APP_NAME uppercaseString] isEqualToString:@"بامیلو"] && VALID_NOTEMPTY(apiInformation, RIApi) && VALID_NOTEMPTY(apiInformation.countryName, NSString))
-    {
-        countryName = apiInformation.countryName;
-    }
     
     UIImage *backgroundImage = [UIImage imageNamed:self.backgroundImageName];
     [self.imageBackground setFrame:CGRectMake(0.0f, 0.0f, backgroundImage.size.width, backgroundImage.size.height)];
@@ -193,16 +184,6 @@ void(^retryBock)(BOOL dismiss);
     [self addSubview:self.logoView];
     
     NSString *bestShoppingExperienceString = @"";
-    if (NO == [[APP_NAME uppercaseString] isEqualToString:@"بامیلو"]) {
-        if(VALID_NOTEMPTY(countryName, NSString))
-        {
-            bestShoppingExperienceString = [NSString stringWithFormat:@"%@'s %@", countryName, STRING_BEST_SHOPPING_EXPERIENCE];
-        }
-        else
-        {
-            bestShoppingExperienceString = [STRING_BEST_SHOPPING_EXPERIENCE capitalizedString];
-        }
-    }
     
     UIFont *bestShoppingExperienceFont = JAListFont;
     CGRect bestShoppingExperienceLabelRect = [bestShoppingExperienceString boundingRectWithSize:CGSizeMake(self.frame.size.width - 20.0f, self.frame.size.height)
@@ -222,59 +203,8 @@ void(^retryBock)(BOOL dismiss);
                                                           bestShoppingExperienceLabelRect.size.height + 2.0f)];
     [self addSubview:self.bestShoppingExperienceLabel];
     
-
-    if (NO == [[APP_NAME uppercaseString] isEqualToString:@"بامیلو"]) {
-        NSString *widestChoicedString = @"";
-        widestChoicedString = [NSString stringWithFormat:@"%@ %@", STRING_WIDEST_CHOICE, STRING_AT_YOUR_DOORSTEP];
-        
-        NSMutableAttributedString *widestChoiceAttributedString = [[NSMutableAttributedString alloc] initWithString:widestChoicedString];
-        
-        UIFont *doorStepTextFont = [UIFont fontWithName:kFontLightName size:10.0f];
-        UIColor *doorStepTextColor = JABlackColor;
-        
-        [widestChoiceAttributedString addAttribute:NSFontAttributeName
-                                             value:doorStepTextFont
-                                             range:NSMakeRange([STRING_WIDEST_CHOICE length], [widestChoicedString length] - [STRING_WIDEST_CHOICE length])];
-        [widestChoiceAttributedString addAttribute:NSForegroundColorAttributeName
-                                             value:doorStepTextColor
-                                             range:NSMakeRange([STRING_WIDEST_CHOICE length], [widestChoicedString length] - [STRING_WIDEST_CHOICE length])];
-        
-        UIFont *widestChoiceAttributedFont = [UIFont fontWithName:kFontMediumName size:10.0f];
-        CGRect widestChoiceLabelRect = [widestChoicedString boundingRectWithSize:CGSizeMake(self.frame.size.width - 20.0f, self.frame.size.height)
-                                                                         options:NSStringDrawingUsesLineFragmentOrigin
-                                                                      attributes:@{NSFontAttributeName:widestChoiceAttributedFont} context:nil];
-        
-        self.widestChoiceLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        [self.widestChoiceLabel setFont:widestChoiceAttributedFont];
-        [self.widestChoiceLabel setLineBreakMode:NSLineBreakByWordWrapping];
-        [self.widestChoiceLabel setNumberOfLines:0];
-        [self.widestChoiceLabel setTextColor:JAWhiteColor];
-        [self.widestChoiceLabel setAttributedText:widestChoiceAttributedString];
-        [self.widestChoiceLabel sizeToFit];
-        [self.widestChoiceLabel setFrame:CGRectMake((self.frame.size.width - widestChoiceLabelRect.size.width) / 2,
-                                                    CGRectGetMaxY(self.bestShoppingExperienceLabel.frame),
-                                                    widestChoiceLabelRect.size.width,
-                                                    widestChoiceLabelRect.size.height + 2.0f)];
-        [self addSubview:self.widestChoiceLabel];
-    }
     
     CGFloat nextButtonPosition = self.frame.size.height - 44.0f - marginBottom;
-    if(NO == [[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"] &&
-       NO == [[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
-    {
-        self.changeCountryButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [self.changeCountryButton setFrame:CGRectMake(leftPadding, nextButtonPosition, self.frame.size.width - buttonsWidth, 44.0f)];
-        [self.changeCountryButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"normal"]]forState:UIControlStateNormal];
-        [self.changeCountryButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"highlighted"]]forState:UIControlStateHighlighted];
-        [self.changeCountryButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"highlighted"]]forState:UIControlStateSelected];
-        [self.changeCountryButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"disabled"]]forState:UIControlStateDisabled];
-        [self.changeCountryButton setTitle:STRING_CHOOSE_COUNTRY forState:UIControlStateNormal];
-        [self.changeCountryButton setTitleColor:JAButtonTextOrange forState:UIControlStateNormal];
-        [self.changeCountryButton addTarget:self action:@selector(changeCountryButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-        [self.changeCountryButton.titleLabel setFont:JADisplay3Font];
-        [self addSubview:self.changeCountryButton];
-        nextButtonPosition = CGRectGetMinY(self.changeCountryButton.frame) - 44.0f - 6.0f;
-    }
     
     self.retryButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.retryButton setFrame:CGRectMake(leftPadding, nextButtonPosition, self.frame.size.width - buttonsWidth, 44.0f)];
@@ -288,27 +218,6 @@ void(^retryBock)(BOOL dismiss);
     [self.retryButton.titleLabel setFont:JADisplay3Font];
     [self addSubview:self.retryButton];
     
-    if(NO == [[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
-    {
-        UIFont *tryToBeBriefLabelFont = [UIFont fontWithName:kFontLightName size:12.0f];
-        CGRect tryToBeBriefLabelRect = [STRING_TRY_TO_BE_BRIEF boundingRectWithSize:CGSizeMake(self.frame.size.width - 80.0f, self.frame.size.height)
-                                                                            options:NSStringDrawingUsesLineFragmentOrigin
-                                                                         attributes:@{NSFontAttributeName:tryToBeBriefLabelFont} context:nil];
-        
-        self.tryToBeBriefLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        [self.tryToBeBriefLabel setFont:tryToBeBriefLabelFont];
-        [self.tryToBeBriefLabel setLineBreakMode:NSLineBreakByWordWrapping];
-        [self.tryToBeBriefLabel setTextAlignment:NSTextAlignmentCenter];
-        [self.tryToBeBriefLabel setNumberOfLines:0];
-        [self.tryToBeBriefLabel setTextColor:JABlackColor];
-        [self.tryToBeBriefLabel setText:STRING_TRY_TO_BE_BRIEF];
-        [self.tryToBeBriefLabel sizeToFit];
-        [self.tryToBeBriefLabel setFrame:CGRectMake((self.frame.size.width - tryToBeBriefLabelRect.size.width) / 2,
-                                                    CGRectGetMinY(self.retryButton.frame) - tryToBeBriefLabelRect.size.height - 20.0f,
-                                                    tryToBeBriefLabelRect.size.width,
-                                                    tryToBeBriefLabelRect.size.height + 2.0f)];
-        [self addSubview:self.tryToBeBriefLabel];
-    }
         
     NSString *jumiaString = @"";
     if(VALID_NOTEMPTY(countryName, NSString))
@@ -339,9 +248,7 @@ void(^retryBock)(BOOL dismiss);
     [self.currentlyMaintenanceLabel setTextAlignment:NSTextAlignmentCenter];
     [self.currentlyMaintenanceLabel setNumberOfLines:0];
     [self.currentlyMaintenanceLabel setTextColor:JABlackColor];
-    if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"]) {
-        [self.currentlyMaintenanceLabel setTextColor:JAWhiteColor];
-    }
+    [self.currentlyMaintenanceLabel setTextColor:JAWhiteColor];
     [self.currentlyMaintenanceLabel setAttributedText:currentlyMaintenanceAttributedString];
     [self.currentlyMaintenanceLabel sizeToFit];
     [self.currentlyMaintenanceLabel setFrame:CGRectMake((self.frame.size.width - self.currentlyMaintenanceLabel.frame.size.width) / 2,
@@ -354,37 +261,35 @@ void(^retryBock)(BOOL dismiss);
     self.mapImageView = [[UIImageView alloc] initWithImage:mapImage];
     
     CGFloat mapImageviewTopPadding = self.frame.size.height / 2;
-    if (NO == [[APP_NAME uppercaseString] isEqualToString:@"بامیلو"]) {
-        mapImageviewTopPadding = CGRectGetMaxY(self.widestChoiceLabel.frame) + (((CGRectGetMinY(self.currentlyMaintenanceLabel.frame) - CGRectGetMaxY(self.widestChoiceLabel.frame)) / 2));
-    }
+   
     [self.mapImageView setCenter:CGPointMake((self.frame.size.width  / 2),
                                              mapImageviewTopPadding)];
     [self addSubview:self.mapImageView];
     
     //after all this we still have to change the button and label order for bamilo
     //doing it here to avoid muddying the code above even more
-    if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"]) {
-        if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad){
-            [self.retryButton setFrame:CGRectMake(self.retryButton.frame.origin.x,
-                                                  self.frame.size.height - self.retryButton.frame.size.height - 50.0f,
-                                                  self.retryButton.frame.size.width,
-                                                  self.retryButton.frame.size.height)];
-            [self.currentlyMaintenanceLabel setFrame:CGRectMake(self.currentlyMaintenanceLabel.frame.origin.x,
-                                                                self.retryButton.frame.origin.y - self.currentlyMaintenanceLabel.frame.size.height - 18.0f,
-                                                                self.currentlyMaintenanceLabel.frame.size.width,
-                                                                self.currentlyMaintenanceLabel.frame.size.height)];
 
-        } else {
-            [self.currentlyMaintenanceLabel setFrame:CGRectMake(self.currentlyMaintenanceLabel.frame.origin.x,
-                                                                self.frame.size.height - self.currentlyMaintenanceLabel.frame.size.height - marginBottom - 40.0f,
-                                                                self.currentlyMaintenanceLabel.frame.size.width,
-                                                                self.currentlyMaintenanceLabel.frame.size.height)];
-            [self.retryButton setFrame:CGRectMake(self.retryButton.frame.origin.x,
-                                                  self.currentlyMaintenanceLabel.frame.origin.y - self.retryButton.frame.size.height - 12.0f,
-                                                  self.retryButton.frame.size.width,
-                                                  self.retryButton.frame.size.height)];
-        }
+    if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad){
+        [self.retryButton setFrame:CGRectMake(self.retryButton.frame.origin.x,
+                                              self.frame.size.height - self.retryButton.frame.size.height - 50.0f,
+                                              self.retryButton.frame.size.width,
+                                              self.retryButton.frame.size.height)];
+        [self.currentlyMaintenanceLabel setFrame:CGRectMake(self.currentlyMaintenanceLabel.frame.origin.x,
+                                                            self.retryButton.frame.origin.y - self.currentlyMaintenanceLabel.frame.size.height - 18.0f,
+                                                            self.currentlyMaintenanceLabel.frame.size.width,
+                                                            self.currentlyMaintenanceLabel.frame.size.height)];
+
+    } else {
+        [self.currentlyMaintenanceLabel setFrame:CGRectMake(self.currentlyMaintenanceLabel.frame.origin.x,
+                                                            self.frame.size.height - self.currentlyMaintenanceLabel.frame.size.height - marginBottom - 40.0f,
+                                                            self.currentlyMaintenanceLabel.frame.size.width,
+                                                            self.currentlyMaintenanceLabel.frame.size.height)];
+        [self.retryButton setFrame:CGRectMake(self.retryButton.frame.origin.x,
+                                              self.currentlyMaintenanceLabel.frame.origin.y - self.retryButton.frame.size.height - 12.0f,
+                                              self.retryButton.frame.size.width,
+                                              self.retryButton.frame.size.height)];
     }
+    
 }
 
 - (void)retryConnectionButtonTapped:(id)sender

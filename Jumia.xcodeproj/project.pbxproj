@@ -20,8 +20,8 @@
 		69F3CBC41C07143A0016CA12 /* RISuccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 69F3CBBE1C07143A0016CA12 /* RISuccess.m */; };
 		6C18BD741AB87E0A00905FD2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A301BB19811D0700F71726 /* Images.xcassets */; };
 		6C40A8901AD7E647001BFA16 /* RIBanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C40A88C1AD7E647001BFA16 /* RIBanner.m */; };
-		6C6EBE281ABC6634006A3D46 /* RITracking_بامیلو.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C6EBE261ABC6600006A3D46 /* RITracking_بامیلو.plist */; };
-		6C6EBE2B1ABC66DB006A3D46 /* RITrackingDebug_بامیلو.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C6EBE291ABC66BE006A3D46 /* RITrackingDebug_بامیلو.plist */; };
+		6C6EBE281ABC6634006A3D46 /* RITracking_Bamilo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C6EBE261ABC6600006A3D46 /* RITracking_Bamilo.plist */; };
+		6C6EBE2B1ABC66DB006A3D46 /* RITrackingDebug_Bamilo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C6EBE291ABC66BE006A3D46 /* RITrackingDebug_Bamilo.plist */; };
 		6CF4AE821ADEAA290024EC34 /* JACatalogBannerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CF4AE7E1ADEAA290024EC34 /* JACatalogBannerCell.xib */; };
 		6CF4AE881ADEABBB0024EC34 /* JACatalogBannerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CF4AE841ADEABBB0024EC34 /* JACatalogBannerCell.m */; };
 		841E81AA1D1680F300A35AAF /* MPCoachMarks.m in Sources */ = {isa = PBXBuildFile; fileRef = 841E81A81D1680F300A35AAF /* MPCoachMarks.m */; };
@@ -637,13 +637,14 @@
 		520A37CC1A48904B0046C8B1 /* JAMyOrdersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMyOrdersViewController.m; sourceTree = "<group>"; };
 		52AC8FDA1A4056CB00E7C874 /* JASizeGuideWizardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASizeGuideWizardView.h; sourceTree = "<group>"; };
 		52AC8FDB1A4056CB00E7C874 /* JASizeGuideWizardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASizeGuideWizardView.m; sourceTree = "<group>"; };
+		61197E7C1E3350700038F8B1 /* Bamilo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bamilo.entitlements; sourceTree = "<group>"; };
 		69F3CBBD1C07143A0016CA12 /* RISuccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RISuccess.h; sourceTree = "<group>"; };
 		69F3CBBE1C07143A0016CA12 /* RISuccess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RISuccess.m; sourceTree = "<group>"; };
 		6C18BDAB1A1B4CA300626706 /* JANewsletterComponent~iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JANewsletterComponent~iPad.xib"; sourceTree = "<group>"; };
 		6C40A88B1AD7E647001BFA16 /* RIBanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIBanner.h; sourceTree = "<group>"; };
 		6C40A88C1AD7E647001BFA16 /* RIBanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIBanner.m; sourceTree = "<group>"; };
-		6C6EBE261ABC6600006A3D46 /* RITracking_بامیلو.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RITracking_بامیلو.plist"; sourceTree = "<group>"; };
-		6C6EBE291ABC66BE006A3D46 /* RITrackingDebug_بامیلو.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RITrackingDebug_بامیلو.plist"; sourceTree = "<group>"; };
+		6C6EBE261ABC6600006A3D46 /* RITracking_Bamilo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RITracking_Bamilo.plist; sourceTree = "<group>"; };
+		6C6EBE291ABC66BE006A3D46 /* RITrackingDebug_Bamilo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RITrackingDebug_Bamilo.plist; sourceTree = "<group>"; };
 		6CC5C4B81A9634FE00E362F3 /* Model_1.5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.5.xcdatamodel; sourceTree = "<group>"; };
 		6CF4AE7E1ADEAA290024EC34 /* JACatalogBannerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACatalogBannerCell.xib; sourceTree = "<group>"; };
 		6CF4AE831ADEABBB0024EC34 /* JACatalogBannerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACatalogBannerCell.h; sourceTree = "<group>"; };
@@ -655,7 +656,6 @@
 		847606B41D77EEE900C54687 /* JAContactUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAContactUsViewController.m; path = ContactUs/JAContactUsViewController.m; sourceTree = "<group>"; };
 		84B25D9A1D8048DE0024B476 /* JAContactUsViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "JAContactUsViewController~ipad.xib"; path = "ContactUs/JAContactUsViewController~ipad.xib"; sourceTree = "<group>"; };
 		84B25D9B1D8048DE0024B476 /* JAContactUsViewController~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "JAContactUsViewController~iphone.xib"; path = "ContactUs/JAContactUsViewController~iphone.xib"; sourceTree = "<group>"; };
-		84D47A0E1DD0725B00642C3E /* بامیلو.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "بامیلو.entitlements"; sourceTree = "<group>"; };
 		8709D0CA1E2FC832002220BC /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		8709D0CB1E2FC832002220BC /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		892EB9251BC6795800FBF094 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
@@ -1336,7 +1336,7 @@
 		CE9193BE19F5040E00F89840 /* JAFallbackView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAFallbackView.xib; sourceTree = "<group>"; };
 		CE97D2EC19AE1ED50090D01C /* JANavigationBarLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JANavigationBarLayout.h; sourceTree = "<group>"; };
 		CE97D2ED19AE1ED50090D01C /* JANavigationBarLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JANavigationBarLayout.m; sourceTree = "<group>"; };
-		CE9AE11F1AB6D78200D56481 /* بامیلو.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "بامیلو.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE9AE11F1AB6D78200D56481 /* Bamilo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bamilo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE9AE1211AB823C100D56481 /* my */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = my; path = my.lproj/RIStrings.strings; sourceTree = "<group>"; };
 		CE9AE1251AB8251000D56481 /* zawgyione2008.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = zawgyione2008.ttf; sourceTree = "<group>"; };
 		CE9AE1271AB8281400D56481 /* JAFont.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JAFont.h; sourceTree = "<group>"; };
@@ -2938,7 +2938,7 @@
 		B5A3019F19811D0700F71726 = {
 			isa = PBXGroup;
 			children = (
-				84D47A0E1DD0725B00642C3E /* بامیلو.entitlements */,
+				61197E7C1E3350700038F8B1 /* Bamilo.entitlements */,
 				BBA262C519DB1F7600374CA3 /* features */,
 				B5A301AA19811D0700F71726 /* Jumia */,
 				B5A301C419811D0700F71726 /* JumiaTests */,
@@ -2950,7 +2950,7 @@
 		B5A301A919811D0700F71726 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CE9AE11F1AB6D78200D56481 /* بامیلو.app */,
+				CE9AE11F1AB6D78200D56481 /* Bamilo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3312,8 +3312,8 @@
 				B5A302AD19811E9200F71726 /* RIOpenURLHandler.m */,
 				B5A302AF19811E9200F71726 /* RITrackingConfiguration.h */,
 				B5A302B019811E9200F71726 /* RITrackingConfiguration.m */,
-				6C6EBE261ABC6600006A3D46 /* RITracking_بامیلو.plist */,
-				6C6EBE291ABC66BE006A3D46 /* RITrackingDebug_بامیلو.plist */,
+				6C6EBE261ABC6600006A3D46 /* RITracking_Bamilo.plist */,
+				6C6EBE291ABC66BE006A3D46 /* RITrackingDebug_Bamilo.plist */,
 			);
 			path = SupportingFiles;
 			sourceTree = "<group>";
@@ -4097,7 +4097,7 @@
 			);
 			name = Bamilo;
 			productName = Jumia;
-			productReference = CE9AE11F1AB6D78200D56481 /* بامیلو.app */;
+			productReference = CE9AE11F1AB6D78200D56481 /* Bamilo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -4236,7 +4236,7 @@
 				CE9AE09A1AB6D78200D56481 /* slider-default-trackCrossedOver@2x.png in Resources */,
 				CE9AE09B1AB6D78200D56481 /* JAPaymentCell.xib in Resources */,
 				9A17D1751C5F775900851D6E /* BMA4SiPhoneTextNotifView-nobuttons-iPad.xib in Resources */,
-				6C6EBE2B1ABC66DB006A3D46 /* RITrackingDebug_بامیلو.plist in Resources */,
+				6C6EBE2B1ABC66DB006A3D46 /* RITrackingDebug_Bamilo.plist in Resources */,
 				CE9AE0A11AB6D78200D56481 /* 15_my_favourites.feature in Resources */,
 				CE9AE0A21AB6D78200D56481 /* JASwitchCell.xib in Resources */,
 				CE9AE0A31AB6D78200D56481 /* JAUndefinedSearchView.xib in Resources */,
@@ -4301,7 +4301,7 @@
 				CE9AE0F81AB6D78200D56481 /* 10_search.feature in Resources */,
 				CE9AE0FC1AB6D78200D56481 /* Main_iPad.storyboard in Resources */,
 				1C71FC621E2CABAD007ACF02 /* Bamilosans UltraLight.ttf in Resources */,
-				6C6EBE281ABC6634006A3D46 /* RITracking_بامیلو.plist in Resources */,
+				6C6EBE281ABC6634006A3D46 /* RITracking_Bamilo.plist in Resources */,
 				9A17D1841C5F775900851D6E /* BMA4SiPhoneTextNotifView-nobuttons.xib in Resources */,
 				9A17D0DA1C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-iPad.xib in Resources */,
 				CE9AE1001AB6D78200D56481 /* slider-default-trackCrossedOver.png in Resources */,
@@ -4803,7 +4803,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "بامیلو.entitlements";
+				CODE_SIGN_ENTITLEMENTS = Bamilo.entitlements;
 				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/",
@@ -4824,7 +4824,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
-				PRODUCT_NAME = "بامیلو";
+				PRODUCT_NAME = Bamilo;
 				PROVISIONING_PROFILE_SPECIFIER = Bamilo_Distribution;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -4928,7 +4928,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "بامیلو.entitlements";
+				CODE_SIGN_ENTITLEMENTS = Bamilo.entitlements;
 				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/",
@@ -4949,7 +4949,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
-				PRODUCT_NAME = "بامیلو";
+				PRODUCT_NAME = Bamilo;
 				PROVISIONING_PROFILE_SPECIFIER = Bamilo_Distribution;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -4962,7 +4962,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "بامیلو.entitlements";
+				CODE_SIGN_ENTITLEMENTS = Bamilo.entitlements;
 				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/",
@@ -4983,7 +4983,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
-				PRODUCT_NAME = "بامیلو";
+				PRODUCT_NAME = Bamilo;
 				PROVISIONING_PROFILE_SPECIFIER = "Bamilo Live";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
