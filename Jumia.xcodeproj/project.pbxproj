@@ -1760,9 +1760,10 @@
 			path = JASidePanel;
 			sourceTree = "<group>";
 		};
-		4AE242DB198655D900E37C90 /* View */ = {
+		4AE242DB198655D900E37C90 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				870F8CD11E3357340021F87B /* GradientLayer */,
 				84A7B54F1D101D9F00CA9754 /* OnBoardingView */,
 				FF4465141CEB4F59003A65EA /* ORProductView */,
 				9A4077491CE61CF700313D20 /* OnlineReturns */,
@@ -1784,8 +1785,6 @@
 				4A39213B198921A100B70A9C /* GlobalNavigationBar */,
 				CEA106FA1BD78A7000EF88B1 /* GlobalTabBar */,
 				B51777AF19A78FEB00ED0AC7 /* Headers */,
-				B57822581A37516800B4DD8B /* JAGradientLayer.h */,
-				B57822591A37516800B4DD8B /* JAGradientLayer.m */,
 				CE88F7BA1A23882E00A3A586 /* OrderSummaryView */,
 				4AE730B0198F8A74000CA1DD /* PDVComponents */,
 				CE3AF90F19DD5D4B00D8C51B /* PromotionPopUp */,
@@ -1794,16 +1793,17 @@
 				4A3719BA19C05F3C002D4199 /* UndefinedSearchView */,
 				CEC376DA19EFC1D500558B98 /* Wizard */,
 			);
+			name = Views;
 			path = View;
 			sourceTree = "<group>";
 		};
-		4AE242DC198655D900E37C90 /* Storyboard */ = {
+		4AE242DC198655D900E37C90 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
 				CE69B585198662E6005CC699 /* Main.storyboard */,
 				B5CDC7531A00E50C00DA8ADB /* Main_iPad.storyboard */,
 			);
-			name = Storyboard;
+			name = Storyboards;
 			path = View/Storyboard;
 			sourceTree = "<group>";
 		};
@@ -2015,6 +2015,49 @@
 				CE9AE1341AB8994F00D56481 /* Bamilo.xcassets */,
 			);
 			name = Images;
+			sourceTree = "<group>";
+		};
+		870F8CCF1E3356F00021F87B /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				870F8CD01E3356F90021F87B /* Protocols */,
+				B5C1E33419BA1E3D009C422C /* Categories */,
+				B50B03A8198A883D002046DF /* Utilities */,
+				870F8CD41E3357D40021F87B /* Libraries */,
+			);
+			name = Support;
+			sourceTree = "<group>";
+		};
+		870F8CD01E3356F90021F87B /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
+		870F8CD11E3357340021F87B /* GradientLayer */ = {
+			isa = PBXGroup;
+			children = (
+				B57822581A37516800B4DD8B /* JAGradientLayer.h */,
+				B57822591A37516800B4DD8B /* JAGradientLayer.m */,
+			);
+			name = GradientLayer;
+			sourceTree = "<group>";
+		};
+		870F8CD21E3357420021F87B /* ScreenTarget */ = {
+			isa = PBXGroup;
+			children = (
+				9AEF73FF1CD20E5700A5D574 /* JAScreenTarget.h */,
+				9AEF74001CD20E5700A5D574 /* JAScreenTarget.m */,
+			);
+			name = ScreenTarget;
+			sourceTree = "<group>";
+		};
+		870F8CD41E3357D40021F87B /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Libraries;
 			sourceTree = "<group>";
 		};
 		892EB9221BC6795800FBF094 /* GoogleAnalytics */ = {
@@ -2651,9 +2694,8 @@
 		9AEF73D41CD20DA200A5D574 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				870F8CD21E3357420021F87B /* ScreenTarget */,
 				9AEF74061CD20E6700A5D574 /* StepByStepModels */,
-				9AEF73FF1CD20E5700A5D574 /* JAScreenTarget.h */,
-				9AEF74001CD20E5700A5D574 /* JAScreenTarget.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -2701,14 +2743,14 @@
 			name = OnlineReturns;
 			sourceTree = "<group>";
 		};
-		B50B03A8198A883D002046DF /* Utils */ = {
+		B50B03A8198A883D002046DF /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
 				4A19C51119D019100070D194 /* Reachability */,
 				B50B03A9198A8861002046DF /* JAUtils.h */,
 				B50B03AA198A8861002046DF /* JAUtils.m */,
 			);
-			name = Utils;
+			name = Utilities;
 			sourceTree = "<group>";
 		};
 		B510B00119AE466B00A9754A /* DynamicForms */ = {
@@ -2989,12 +3031,11 @@
 			isa = PBXGroup;
 			children = (
 				870F8CCC1E33548F0021F87B /* Application */,
+				4AE242DC198655D900E37C90 /* Storyboards */,
 				9AEF73D41CD20DA200A5D574 /* Models */,
-				4AE242DC198655D900E37C90 /* Storyboard */,
-				B5C1E33419BA1E3D009C422C /* Categories */,
-				B50B03A8198A883D002046DF /* Utils */,
-				4AE242DB198655D900E37C90 /* View */,
+				4AE242DB198655D900E37C90 /* Views */,
 				B5A302FF1981218E00F71726 /* Controllers */,
+				870F8CCF1E3356F00021F87B /* Support */,
 			);
 			path = Jumia;
 			sourceTree = "<group>";
