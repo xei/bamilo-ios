@@ -28,8 +28,9 @@
 		847606B71D77EEE900C54687 /* JAContactUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 847606B41D77EEE900C54687 /* JAContactUsViewController.m */; };
 		84B25D9D1D8048DF0024B476 /* JAContactUsViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B25D9A1D8048DE0024B476 /* JAContactUsViewController~ipad.xib */; };
 		84B25D9F1D8048DF0024B476 /* JAContactUsViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B25D9B1D8048DE0024B476 /* JAContactUsViewController~iphone.xib */; };
-		8709D0CC1E2FC832002220BC /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8709D0CA1E2FC832002220BC /* Fabric.framework */; };
-		8709D0CD1E2FC832002220BC /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8709D0CB1E2FC832002220BC /* Crashlytics.framework */; };
+		870F8CD71E335BFC0021F87B /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 870F8CD51E335BFC0021F87B /* Main_iPad.storyboard */; };
+		870F8CD91E335F3C0021F87B /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F8CD81E335F3C0021F87B /* Crashlytics.framework */; };
+		870F8CDB1E335F420021F87B /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F8CDA1E335F420021F87B /* Fabric.framework */; };
 		892EB9351BC6795800FBF094 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 892EB9301BC6795800FBF094 /* libGoogleAnalytics.a */; };
 		892EB9441BC679A800FBF094 /* libTagManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 892EB93F1BC679A800FBF094 /* libTagManager.a */; };
 		893AADCB1C1F0DD7006314FB /* RIPhonePrefix.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEADDCF1C10B1C40074034A /* RIPhonePrefix.m */; };
@@ -402,59 +403,35 @@
 		CE9AE02B1AB6D78200D56481 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302E719811EBF00F71726 /* CFNetwork.framework */; };
 		CE9AE02C1AB6D78200D56481 /* BugSense-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A3020719811E8900F71726 /* BugSense-iOS.framework */; };
 		CE9AE02F1AB6D78200D56481 /* NewRelicAgent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5FE9FB219A1F4C6006F7D63 /* NewRelicAgent.framework */; };
-		CE9AE0391AB6D78200D56481 /* 00_choose_country.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA707B719EEB93C0094C565 /* 00_choose_country.feature */; };
 		CE9AE03C1AB6D78200D56481 /* JANewsletterComponent~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C18BDAB1A1B4CA300626706 /* JANewsletterComponent~iPad.xib */; };
-		CE9AE03D1AB6D78200D56481 /* 13_related_items.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CBC19E3F764004271B2 /* 13_related_items.feature */; };
-		CE9AE03E1AB6D78200D56481 /* init.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459E19DC56BF003F0CA7 /* init.rb */; };
-		CE9AE03F1AB6D78200D56481 /* 17_recently_viewed.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CCC19E4339F004271B2 /* 17_recently_viewed.feature */; };
 		CE9AE0431AB6D78200D56481 /* JAMaintenancePage.xib in Resources */ = {isa = PBXBuildFile; fileRef = B524312019EC117F001E532C /* JAMaintenancePage.xib */; };
 		CE9AE0441AB6D78200D56481 /* JAGenericFiltersView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEABEEC01A122BFD000D0CF8 /* JAGenericFiltersView.xib */; };
-		CE9AE0451AB6D78200D56481 /* keyboard.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459F19DC56BF003F0CA7 /* keyboard.rb */; };
 		CE9AE0521AB6D78200D56481 /* slider-default7-handle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB99D199BA8FA0022BAB5 /* slider-default7-handle@2x.png */; };
-		CE9AE0561AB6D78200D56481 /* 14_side_menu.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CC019E3F902004271B2 /* 14_side_menu.feature */; };
 		CE9AE0581AB6D78200D56481 /* JAPDVVariations.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A862226198FA00D007FD76A /* JAPDVVariations.xib */; };
 		CE9AE05B1AB6D78200D56481 /* RIStrings.strings in Resources */ = {isa = PBXBuildFile; fileRef = B5210E8819C4863400FDB0D1 /* RIStrings.strings */; };
 		CE9AE05F1AB6D78200D56481 /* slider-metal-handle.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9A7199BA8FA0022BAB5 /* slider-metal-handle.png */; };
-		CE9AE0601AB6D78200D56481 /* 08_registration.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBB12A9719DD874D00656529 /* 08_registration.feature */; };
 		CE9AE0611AB6D78200D56481 /* JAOrangeButtonCell_ipad_portrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE88F7A41A1DFFCD00A3A586 /* JAOrangeButtonCell_ipad_portrait.xib */; };
-		CE9AE0621AB6D78200D56481 /* 01_launch.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A719DC56BF003F0CA7 /* 01_launch.rb */; };
 		CE9AE0631AB6D78200D56481 /* slider-metal-handle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9A8199BA8FA0022BAB5 /* slider-metal-handle@2x.png */; };
-		CE9AE0641AB6D78200D56481 /* 12_product_details.feature in Resources */ = {isa = PBXBuildFile; fileRef = BB128EA619E30B650033514F /* 12_product_details.feature */; };
-		CE9AE0651AB6D78200D56481 /* my_first_steps.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A119DC56BF003F0CA7 /* my_first_steps.rb */; };
 		CE9AE0671AB6D78200D56481 /* slider-default-handle-highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB991199BA8FA0022BAB5 /* slider-default-handle-highlighted.png */; };
 		CE9AE0691AB6D78200D56481 /* JAOrangeButtonCell_ipad_landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE88F7A31A1DFFCD00A3A586 /* JAOrangeButtonCell_ipad_landscape.xib */; };
-		CE9AE06A1AB6D78200D56481 /* 18_track_order.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CD019E43993004271B2 /* 18_track_order.feature */; };
-		CE9AE06B1AB6D78200D56481 /* 06_email_notifications.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459A19DC56BF003F0CA7 /* 06_email_notifications.feature */; };
-		CE9AE06C1AB6D78200D56481 /* 02_pre_stop_hooks.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A819DC56BF003F0CA7 /* 02_pre_stop_hooks.rb */; };
 		CE9AE06D1AB6D78200D56481 /* slider-default-trackBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB997199BA8FA0022BAB5 /* slider-default-trackBackground.png */; };
 		CE9AE06F1AB6D78200D56481 /* JANewsletterComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5BDD98A19FFAAF000C2C2CC /* JANewsletterComponent.xib */; };
 		CE9AE0731AB6D78200D56481 /* slider-default-handle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB994199BA8FA0022BAB5 /* slider-default-handle@2x.png */; };
-		CE9AE0741AB6D78200D56481 /* 20_cart.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CD719E45799004271B2 /* 20_cart.feature */; };
 		CE9AE0751AB6D78200D56481 /* JAFallbackView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE9193BE19F5040E00F89840 /* JAFallbackView.xib */; };
-		CE9AE0791AB6D78200D56481 /* 05_user_data.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459919DC56BF003F0CA7 /* 05_user_data.feature */; };
-		CE9AE07C1AB6D78200D56481 /* 16_recent_searches.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CC819E42E9A004271B2 /* 16_recent_searches.feature */; };
-		CE9AE07D1AB6D78200D56481 /* touch.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A319DC56BF003F0CA7 /* touch.rb */; };
 		CE9AE07E1AB6D78200D56481 /* slider-metal-trackBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9AB199BA8FA0022BAB5 /* slider-metal-trackBackground.png */; };
 		CE9AE0811AB6D78200D56481 /* JAGrayButtonCell_ipad_landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE88F7B41A1F88FB00A3A586 /* JAGrayButtonCell_ipad_landscape.xib */; };
-		CE9AE0841AB6D78200D56481 /* multi_step.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A019DC56BF003F0CA7 /* multi_step.rb */; };
-		CE9AE0871AB6D78200D56481 /* 02_logout.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459619DC56BF003F0CA7 /* 02_logout.feature */; };
 		CE9AE0881AB6D78200D56481 /* slider-metal-trackBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9AC199BA8FA0022BAB5 /* slider-metal-trackBackground@2x.png */; };
-		CE9AE0891AB6D78200D56481 /* 21_native_checkout.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBB7F57519E532FA00E898E3 /* 21_native_checkout.feature */; };
 		CE9AE08A1AB6D78200D56481 /* slider-default-handle-highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB992199BA8FA0022BAB5 /* slider-default-handle-highlighted@2x.png */; };
 		CE9AE08C1AB6D78200D56481 /* slider-metal-handle-highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9A6199BA8FA0022BAB5 /* slider-metal-handle-highlighted@2x.png */; };
-		CE9AE08D1AB6D78200D56481 /* navigation.rb in Resources */ = {isa = PBXBuildFile; fileRef = BB4F1BD319E2D4D600E89C3F /* navigation.rb */; };
 		CE9AE08E1AB6D78200D56481 /* slider-default7-handle.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB99C199BA8FA0022BAB5 /* slider-default7-handle.png */; };
 		CE9AE0931AB6D78200D56481 /* JAGrayButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3F71A19A5FDDA00DE12F6 /* JAGrayButtonCell.xib */; };
 		CE9AE0961AB6D78200D56481 /* slider-default7-trackCrossedOver@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9A3199BA8FA0022BAB5 /* slider-default7-trackCrossedOver@2x.png */; };
 		CE9AE09A1AB6D78200D56481 /* slider-default-trackCrossedOver@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB999199BA8FA0022BAB5 /* slider-default-trackCrossedOver@2x.png */; };
 		CE9AE09B1AB6D78200D56481 /* JAPaymentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B58DBF3819C0AF9600D4678A /* JAPaymentCell.xib */; };
-		CE9AE0A11AB6D78200D56481 /* 15_my_favourites.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CC419E41F83004271B2 /* 15_my_favourites.feature */; };
 		CE9AE0A21AB6D78200D56481 /* JASwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B59DCA7519B88DAD00DE7960 /* JASwitchCell.xib */; };
 		CE9AE0A31AB6D78200D56481 /* JAUndefinedSearchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A3719BE19C05F5D002D4199 /* JAUndefinedSearchView.xib */; };
-		CE9AE0A41AB6D78200D56481 /* wait.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A519DC56BF003F0CA7 /* wait.rb */; };
 		CE9AE0A81AB6D78200D56481 /* JACartListHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B542546A19AE9F7500C792FF /* JACartListHeaderView.xib */; };
 		CE9AE0AC1AB6D78200D56481 /* JACatalogTopView_iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE06FCBA1A88CA7D002FCD25 /* JACatalogTopView_iphone.xib */; };
-		CE9AE0AE1AB6D78200D56481 /* 11_catalog.feature in Resources */ = {isa = PBXBuildFile; fileRef = BB128EA219E2FA410033514F /* 11_catalog.feature */; };
 		CE9AE0AF1AB6D78200D56481 /* slider-default7-trackBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9A0199BA8FA0022BAB5 /* slider-default7-trackBackground.png */; };
 		CE9AE0B21AB6D78200D56481 /* slider-default-track@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB996199BA8FA0022BAB5 /* slider-default-track@2x.png */; };
 		CE9AE0B31AB6D78200D56481 /* slider-metal-track.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9A9199BA8FA0022BAB5 /* slider-metal-track.png */; };
@@ -462,31 +439,20 @@
 		CE9AE0B71AB6D78200D56481 /* slider-default7-trackCrossedOver.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9A2199BA8FA0022BAB5 /* slider-default7-trackCrossedOver.png */; };
 		CE9AE0B81AB6D78200D56481 /* JAPDVVariations~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B3AB541A07A57400994BFA /* JAPDVVariations~iPad.xib */; };
 		CE9AE0BA1AB6D78200D56481 /* slider-metal-handle-highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9A5199BA8FA0022BAB5 /* slider-metal-handle-highlighted.png */; };
-		CE9AE0BB1AB6D78200D56481 /* calabash_steps.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459D19DC56BF003F0CA7 /* calabash_steps.rb */; };
-		CE9AE0BC1AB6D78200D56481 /* 03_remember_email.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA7780F1A25E3B1003A39D5 /* 03_remember_email.feature */; };
 		CE9AE0C21AB6D78200D56481 /* JACatalogTopView_ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEBEEE7B1A8E13CF001998E5 /* JACatalogTopView_ipad.xib */; };
 		CE9AE0C41AB6D78200D56481 /* JAPriceFiltersView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEABEEB81A1118A1000D0CF8 /* JAPriceFiltersView.xib */; };
-		CE9AE0C61AB6D78200D56481 /* 07_forgot_password.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBB12A9319DD485400656529 /* 07_forgot_password.feature */; };
 		CE9AE0CA1AB6D78200D56481 /* JAPDVProductInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A2FD841199119D900C65C1D /* JAPDVProductInfo.xib */; };
 		CE9AE0CD1AB6D78200D56481 /* JAOrangeButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3F71B19A5FDDA00DE12F6 /* JAOrangeButtonCell.xib */; };
 		CE9AE0CE1AB6D78200D56481 /* slider-metal-track@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9AA199BA8FA0022BAB5 /* slider-metal-track@2x.png */; };
 		CE9AE0D01AB6D78200D56481 /* slider-default-handle.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB993199BA8FA0022BAB5 /* slider-default-handle.png */; };
 		CE9AE0D51AB6D78200D56481 /* JAPDVBundleSingleItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEED472A1A7B973B006D9CE7 /* JAPDVBundleSingleItem.xib */; };
 		CE9AE0D91AB6D78200D56481 /* JAOtherOffersView_Landscape~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE283E691A714FD300F3E92D /* JAOtherOffersView_Landscape~iPad.xib */; };
-		CE9AE0DA1AB6D78200D56481 /* 09_home.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBB12A9B19DDA01E00656529 /* 09_home.feature */; };
 		CE9AE0E01AB6D78200D56481 /* JAPDVProductInfo~iPad_Portrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B3AB4F1A0779A000994BFA /* JAPDVProductInfo~iPad_Portrait.xib */; };
-		CE9AE0E41AB6D78200D56481 /* 01_login.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459519DC56BF003F0CA7 /* 01_login.feature */; };
 		CE9AE0E91AB6D78200D56481 /* slider-default7-track.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB99E199BA8FA0022BAB5 /* slider-default7-track.png */; };
 		CE9AE0EA1AB6D78200D56481 /* JARatingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE55A4E819936B6300EE75DE /* JARatingsView.xib */; };
 		CE9AE0EF1AB6D78200D56481 /* JARatingsViewMedium.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5CBFF651A10B33D0050C553 /* JARatingsViewMedium.xib */; };
-		CE9AE0F41AB6D78200D56481 /* assert.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459C19DC56BF003F0CA7 /* assert.rb */; };
-		CE9AE0F71AB6D78200D56481 /* 04_my_account.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459819DC56BF003F0CA7 /* 04_my_account.feature */; };
-		CE9AE0F81AB6D78200D56481 /* 10_search.feature in Resources */ = {isa = PBXBuildFile; fileRef = BB128E9E19E2F4260033514F /* 10_search.feature */; };
-		CE9AE0FC1AB6D78200D56481 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5CDC7531A00E50C00DA8ADB /* Main_iPad.storyboard */; };
 		CE9AE1001AB6D78200D56481 /* slider-default-trackCrossedOver.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB998199BA8FA0022BAB5 /* slider-default-trackCrossedOver.png */; };
 		CE9AE1011AB6D78200D56481 /* slider-default7-trackBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9A1199BA8FA0022BAB5 /* slider-default7-trackBackground@2x.png */; };
-		CE9AE1021AB6D78200D56481 /* 19_filters.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CD319E44CDC004271B2 /* 19_filters.feature */; };
-		CE9AE1041AB6D78200D56481 /* env.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A919DC56BF003F0CA7 /* env.rb */; };
 		CE9AE1061AB6D78200D56481 /* slider-default-track.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB995199BA8FA0022BAB5 /* slider-default-track.png */; };
 		CE9AE1071AB6D78200D56481 /* JAGrayButtonCell_ipad_portrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE88F7B51A1F88FB00A3A586 /* JAGrayButtonCell_ipad_portrait.xib */; };
 		CE9AE1081AB6D78200D56481 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE69B585198662E6005CC699 /* Main.storyboard */; };
@@ -637,7 +603,6 @@
 		520A37CC1A48904B0046C8B1 /* JAMyOrdersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMyOrdersViewController.m; sourceTree = "<group>"; };
 		52AC8FDA1A4056CB00E7C874 /* JASizeGuideWizardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASizeGuideWizardView.h; sourceTree = "<group>"; };
 		52AC8FDB1A4056CB00E7C874 /* JASizeGuideWizardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASizeGuideWizardView.m; sourceTree = "<group>"; };
-		61197E7C1E3350700038F8B1 /* Bamilo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bamilo.entitlements; sourceTree = "<group>"; };
 		69F3CBBD1C07143A0016CA12 /* RISuccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RISuccess.h; sourceTree = "<group>"; };
 		69F3CBBE1C07143A0016CA12 /* RISuccess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RISuccess.m; sourceTree = "<group>"; };
 		6C18BDAB1A1B4CA300626706 /* JANewsletterComponent~iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JANewsletterComponent~iPad.xib"; sourceTree = "<group>"; };
@@ -649,15 +614,16 @@
 		6CF4AE7E1ADEAA290024EC34 /* JACatalogBannerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACatalogBannerCell.xib; sourceTree = "<group>"; };
 		6CF4AE831ADEABBB0024EC34 /* JACatalogBannerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACatalogBannerCell.h; sourceTree = "<group>"; };
 		6CF4AE841ADEABBB0024EC34 /* JACatalogBannerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACatalogBannerCell.m; sourceTree = "<group>"; };
-		6af3ca12ac4f2d50fa243e2b /* calabash.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; path = calabash.framework; sourceTree = "<group>"; };
 		841E81A71D1680F300A35AAF /* MPCoachMarks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPCoachMarks.h; path = ../MPCoachMarks.h; sourceTree = "<group>"; };
 		841E81A81D1680F300A35AAF /* MPCoachMarks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPCoachMarks.m; path = ../MPCoachMarks.m; sourceTree = "<group>"; };
 		847606B31D77EEE900C54687 /* JAContactUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAContactUsViewController.h; path = ContactUs/JAContactUsViewController.h; sourceTree = "<group>"; };
 		847606B41D77EEE900C54687 /* JAContactUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAContactUsViewController.m; path = ContactUs/JAContactUsViewController.m; sourceTree = "<group>"; };
 		84B25D9A1D8048DE0024B476 /* JAContactUsViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "JAContactUsViewController~ipad.xib"; path = "ContactUs/JAContactUsViewController~ipad.xib"; sourceTree = "<group>"; };
 		84B25D9B1D8048DE0024B476 /* JAContactUsViewController~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "JAContactUsViewController~iphone.xib"; path = "ContactUs/JAContactUsViewController~iphone.xib"; sourceTree = "<group>"; };
-		8709D0CA1E2FC832002220BC /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
-		8709D0CB1E2FC832002220BC /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		870F8CCB1E3354700021F87B /* Bamilo.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Bamilo.entitlements; sourceTree = "<group>"; };
+		870F8CD61E335BFC0021F87B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Jumia/Base.lproj/Main_iPad.storyboard; sourceTree = SOURCE_ROOT; };
+		870F8CD81E335F3C0021F87B /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = Jumia/Crashlytics.framework; sourceTree = "<group>"; };
+		870F8CDA1E335F420021F87B /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fabric.framework; path = Jumia/Fabric.framework; sourceTree = "<group>"; };
 		892EB9251BC6795800FBF094 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
 		892EB9261BC6795800FBF094 /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIDictionaryBuilder.h; sourceTree = "<group>"; };
 		892EB9271BC6795800FBF094 /* GAIEcommerceFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommerceFields.h; sourceTree = "<group>"; };
@@ -1187,7 +1153,6 @@
 		B5CBFF631A10B33D0050C553 /* JARatingsViewMedium.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JARatingsViewMedium.h; sourceTree = "<group>"; };
 		B5CBFF641A10B33D0050C553 /* JARatingsViewMedium.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JARatingsViewMedium.m; sourceTree = "<group>"; };
 		B5CBFF651A10B33D0050C553 /* JARatingsViewMedium.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JARatingsViewMedium.xib; sourceTree = "<group>"; };
-		B5CDC7531A00E50C00DA8ADB /* Main_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main_iPad.storyboard; sourceTree = SOURCE_ROOT; };
 		B5CFE9981A0CE3BC004CE545 /* JAAddRatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAAddRatingView.h; sourceTree = "<group>"; };
 		B5CFE9991A0CE3BC004CE545 /* JAAddRatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAAddRatingView.m; sourceTree = "<group>"; };
 		B5FBD58919CAF26800BD9510 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
@@ -1197,40 +1162,6 @@
 		B5FE9FB219A1F4C6006F7D63 /* NewRelicAgent.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = NewRelicAgent.framework; sourceTree = "<group>"; };
 		B5FE9FBA19A204F1006F7D63 /* RINewRelicTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RINewRelicTracker.h; sourceTree = "<group>"; };
 		B5FE9FBB19A204F1006F7D63 /* RINewRelicTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RINewRelicTracker.m; sourceTree = "<group>"; };
-		BB128E9E19E2F4260033514F /* 10_search.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 10_search.feature; sourceTree = "<group>"; };
-		BB128EA219E2FA410033514F /* 11_catalog.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 11_catalog.feature; sourceTree = "<group>"; };
-		BB128EA619E30B650033514F /* 12_product_details.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 12_product_details.feature; sourceTree = "<group>"; };
-		BB4F1BD319E2D4D600E89C3F /* navigation.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = navigation.rb; sourceTree = "<group>"; };
-		BBA1459519DC56BF003F0CA7 /* 01_login.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 01_login.feature; sourceTree = "<group>"; };
-		BBA1459619DC56BF003F0CA7 /* 02_logout.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 02_logout.feature; sourceTree = "<group>"; };
-		BBA1459819DC56BF003F0CA7 /* 04_my_account.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 04_my_account.feature; sourceTree = "<group>"; };
-		BBA1459919DC56BF003F0CA7 /* 05_user_data.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 05_user_data.feature; sourceTree = "<group>"; };
-		BBA1459A19DC56BF003F0CA7 /* 06_email_notifications.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 06_email_notifications.feature; sourceTree = "<group>"; };
-		BBA1459C19DC56BF003F0CA7 /* assert.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = assert.rb; sourceTree = "<group>"; };
-		BBA1459D19DC56BF003F0CA7 /* calabash_steps.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = calabash_steps.rb; sourceTree = "<group>"; };
-		BBA1459E19DC56BF003F0CA7 /* init.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = init.rb; sourceTree = "<group>"; };
-		BBA1459F19DC56BF003F0CA7 /* keyboard.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = keyboard.rb; sourceTree = "<group>"; };
-		BBA145A019DC56BF003F0CA7 /* multi_step.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = multi_step.rb; sourceTree = "<group>"; };
-		BBA145A119DC56BF003F0CA7 /* my_first_steps.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = my_first_steps.rb; sourceTree = "<group>"; };
-		BBA145A319DC56BF003F0CA7 /* touch.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = touch.rb; sourceTree = "<group>"; };
-		BBA145A519DC56BF003F0CA7 /* wait.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = wait.rb; sourceTree = "<group>"; };
-		BBA145A719DC56BF003F0CA7 /* 01_launch.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = 01_launch.rb; sourceTree = "<group>"; };
-		BBA145A819DC56BF003F0CA7 /* 02_pre_stop_hooks.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = 02_pre_stop_hooks.rb; sourceTree = "<group>"; };
-		BBA145A919DC56BF003F0CA7 /* env.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = env.rb; sourceTree = "<group>"; };
-		BBA707B719EEB93C0094C565 /* 00_choose_country.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 00_choose_country.feature; sourceTree = "<group>"; };
-		BBA7780F1A25E3B1003A39D5 /* 03_remember_email.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 03_remember_email.feature; sourceTree = "<group>"; };
-		BBB12A9319DD485400656529 /* 07_forgot_password.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 07_forgot_password.feature; sourceTree = "<group>"; };
-		BBB12A9719DD874D00656529 /* 08_registration.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 08_registration.feature; sourceTree = "<group>"; };
-		BBB12A9B19DDA01E00656529 /* 09_home.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 09_home.feature; sourceTree = "<group>"; };
-		BBB7F57519E532FA00E898E3 /* 21_native_checkout.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 21_native_checkout.feature; sourceTree = "<group>"; };
-		BBBA4CBC19E3F764004271B2 /* 13_related_items.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 13_related_items.feature; sourceTree = "<group>"; };
-		BBBA4CC019E3F902004271B2 /* 14_side_menu.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 14_side_menu.feature; sourceTree = "<group>"; };
-		BBBA4CC419E41F83004271B2 /* 15_my_favourites.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 15_my_favourites.feature; sourceTree = "<group>"; };
-		BBBA4CC819E42E9A004271B2 /* 16_recent_searches.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 16_recent_searches.feature; sourceTree = "<group>"; };
-		BBBA4CCC19E4339F004271B2 /* 17_recently_viewed.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 17_recently_viewed.feature; sourceTree = "<group>"; };
-		BBBA4CD019E43993004271B2 /* 18_track_order.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 18_track_order.feature; sourceTree = "<group>"; };
-		BBBA4CD319E44CDC004271B2 /* 19_filters.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 19_filters.feature; sourceTree = "<group>"; };
-		BBBA4CD719E45799004271B2 /* 20_cart.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 20_cart.feature; sourceTree = "<group>"; };
 		CE06FCB51A88C3A5002FCD25 /* JACatalogTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACatalogTopView.h; path = Catalog/JACatalogTopView.h; sourceTree = "<group>"; };
 		CE06FCB61A88C3A5002FCD25 /* JACatalogTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACatalogTopView.m; path = Catalog/JACatalogTopView.m; sourceTree = "<group>"; };
 		CE06FCBA1A88CA7D002FCD25 /* JACatalogTopView_iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JACatalogTopView_iphone.xib; path = Catalog/JACatalogTopView_iphone.xib; sourceTree = "<group>"; };
@@ -1504,7 +1435,6 @@
 		FF0464FF1CA96EAC00B82FD2 /* NSString+ADJAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+ADJAdditions.m"; path = "Jumia/ExternalFrameworks/Adjust/ADJAdditions/NSString+ADJAdditions.m"; sourceTree = SOURCE_ROOT; };
 		FF0465001CA96EAC00B82FD2 /* UIDevice+ADJAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIDevice+ADJAdditions.h"; path = "Jumia/ExternalFrameworks/Adjust/ADJAdditions/UIDevice+ADJAdditions.h"; sourceTree = SOURCE_ROOT; };
 		FF0465011CA96EAC00B82FD2 /* UIDevice+ADJAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIDevice+ADJAdditions.m"; path = "Jumia/ExternalFrameworks/Adjust/ADJAdditions/UIDevice+ADJAdditions.m"; sourceTree = SOURCE_ROOT; };
-		FF09B2BA1CD2505C00DF5C59 /* Jumia.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Jumia.entitlements; sourceTree = "<group>"; };
 		FF4383DD1C6CD4AC003BA957 /* JASwitchRadioComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASwitchRadioComponent.h; sourceTree = "<group>"; };
 		FF4383DE1C6CD4AC003BA957 /* JASwitchRadioComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASwitchRadioComponent.m; sourceTree = "<group>"; };
 		FF4383E41C6E1F49003BA957 /* JAScreenRadioComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAScreenRadioComponent.h; sourceTree = "<group>"; };
@@ -1557,42 +1487,42 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE9AE0201AB6D78200D56481 /* UIKit.framework in Frameworks */,
+				CE9AE02B1AB6D78200D56481 /* CFNetwork.framework in Frameworks */,
 				9A0F9BAF1B5E803300569DF2 /* StoreKit.framework in Frameworks */,
 				9A0F9BAE1B5E802000569DF2 /* CoreMedia.framework in Frameworks */,
 				9A0F9BAD1B5E801800569DF2 /* CoreMotion.framework in Frameworks */,
 				9A0F9BAC1B5E800700569DF2 /* AVFoundation.framework in Frameworks */,
 				CE9AE0181AB6D78200D56481 /* iAd.framework in Frameworks */,
 				CE9AE01A1AB6D78200D56481 /* AdSupport.framework in Frameworks */,
+				870F8CD91E335F3C0021F87B /* Crashlytics.framework in Frameworks */,
 				CE9AE01B1AB6D78200D56481 /* Security.framework in Frameworks */,
 				CE9AE01C1AB6D78200D56481 /* CoreText.framework in Frameworks */,
 				89C177BD1BC2DC4A006D3B19 /* SafariServices.framework in Frameworks */,
 				CED7C5231B78E0570070C855 /* GoogleAppIndexing.framework in Frameworks */,
-				8709D0CD1E2FC832002220BC /* Crashlytics.framework in Frameworks */,
 				CE9AE01D1AB6D78200D56481 /* CoreTelephony.framework in Frameworks */,
-				892EB9351BC6795800FBF094 /* libGoogleAnalytics.a in Frameworks */,
 				CE9AE01E1AB6D78200D56481 /* Social.framework in Frameworks */,
 				CE9AE01F1AB6D78200D56481 /* QuartzCore.framework in Frameworks */,
-				CE9AE0201AB6D78200D56481 /* UIKit.framework in Frameworks */,
 				CE9AE0211AB6D78200D56481 /* CoreGraphics.framework in Frameworks */,
 				CE9AE0231AB6D78200D56481 /* Foundation.framework in Frameworks */,
-				9A17D0991C5F775900851D6E /* libBMA4SSDK.a in Frameworks */,
 				9A0F9B881B5E58E900569DF2 /* FBSDKLoginKit.framework in Frameworks */,
 				CE9AE0241AB6D78200D56481 /* ImageIO.framework in Frameworks */,
 				9A0F9B921B5E58E900569DF2 /* FBSDKShareKit.framework in Frameworks */,
-				8709D0CC1E2FC832002220BC /* Fabric.framework in Frameworks */,
 				9A0F9B791B5E58E900569DF2 /* FBAudienceNetwork.framework in Frameworks */,
+				870F8CDB1E335F420021F87B /* Fabric.framework in Frameworks */,
 				CE9AE0261AB6D78200D56481 /* CoreLocation.framework in Frameworks */,
 				CE9AE0271AB6D78200D56481 /* SystemConfiguration.framework in Frameworks */,
 				9A0F9B6F1B5E58E900569DF2 /* Bolts.framework in Frameworks */,
 				CE9AE0281AB6D78200D56481 /* CoreData.framework in Frameworks */,
-				CE9AE0291AB6D78200D56481 /* libsqlite3.dylib in Frameworks */,
+				CE9AE02C1AB6D78200D56481 /* BugSense-iOS.framework in Frameworks */,
 				9A0F9B8D1B5E58E900569DF2 /* FBSDKMessengerShareKit.framework in Frameworks */,
+				9A0F9B831B5E58E900569DF2 /* FBSDKCoreKit.framework in Frameworks */,
+				CE9AE02F1AB6D78200D56481 /* NewRelicAgent.framework in Frameworks */,
 				CE9AE02A1AB6D78200D56481 /* libz.dylib in Frameworks */,
 				892EB9441BC679A800FBF094 /* libTagManager.a in Frameworks */,
-				CE9AE02B1AB6D78200D56481 /* CFNetwork.framework in Frameworks */,
-				9A0F9B831B5E58E900569DF2 /* FBSDKCoreKit.framework in Frameworks */,
-				CE9AE02C1AB6D78200D56481 /* BugSense-iOS.framework in Frameworks */,
-				CE9AE02F1AB6D78200D56481 /* NewRelicAgent.framework in Frameworks */,
+				9A17D0991C5F775900851D6E /* libBMA4SSDK.a in Frameworks */,
+				892EB9351BC6795800FBF094 /* libGoogleAnalytics.a in Frameworks */,
+				CE9AE0291AB6D78200D56481 /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1761,9 +1691,10 @@
 			path = JASidePanel;
 			sourceTree = "<group>";
 		};
-		4AE242DB198655D900E37C90 /* View */ = {
+		4AE242DB198655D900E37C90 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				870F8CD11E3357340021F87B /* GradientLayer */,
 				84A7B54F1D101D9F00CA9754 /* OnBoardingView */,
 				FF4465141CEB4F59003A65EA /* ORProductView */,
 				9A4077491CE61CF700313D20 /* OnlineReturns */,
@@ -1785,8 +1716,6 @@
 				4A39213B198921A100B70A9C /* GlobalNavigationBar */,
 				CEA106FA1BD78A7000EF88B1 /* GlobalTabBar */,
 				B51777AF19A78FEB00ED0AC7 /* Headers */,
-				B57822581A37516800B4DD8B /* JAGradientLayer.h */,
-				B57822591A37516800B4DD8B /* JAGradientLayer.m */,
 				CE88F7BA1A23882E00A3A586 /* OrderSummaryView */,
 				4AE730B0198F8A74000CA1DD /* PDVComponents */,
 				CE3AF90F19DD5D4B00D8C51B /* PromotionPopUp */,
@@ -1795,16 +1724,17 @@
 				4A3719BA19C05F3C002D4199 /* UndefinedSearchView */,
 				CEC376DA19EFC1D500558B98 /* Wizard */,
 			);
+			name = Views;
 			path = View;
 			sourceTree = "<group>";
 		};
-		4AE242DC198655D900E37C90 /* Storyboard */ = {
+		4AE242DC198655D900E37C90 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
 				CE69B585198662E6005CC699 /* Main.storyboard */,
-				B5CDC7531A00E50C00DA8ADB /* Main_iPad.storyboard */,
+				870F8CD51E335BFC0021F87B /* Main_iPad.storyboard */,
 			);
-			name = Storyboard;
+			name = Storyboards;
 			path = View/Storyboard;
 			sourceTree = "<group>";
 		};
@@ -1984,6 +1914,81 @@
 				841E81A81D1680F300A35AAF /* MPCoachMarks.m */,
 			);
 			name = OnBoardingView;
+			sourceTree = "<group>";
+		};
+		870F8CCC1E33548F0021F87B /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				B5A301AD19811D0700F71726 /* main.m */,
+				B5A301AF19811D0700F71726 /* JAAppDelegate.h */,
+				B5A301B019811D0700F71726 /* JAAppDelegate.m */,
+				B5A302FD19811F8E00F71726 /* Jumia-Prefix.pch */,
+				B5A301AB19811D0700F71726 /* Supporting Files */,
+			);
+			name = Application;
+			sourceTree = "<group>";
+		};
+		870F8CCD1E3354E10021F87B /* Consts */ = {
+			isa = PBXGroup;
+			children = (
+				9AB5179F1C91D068007E1327 /* JAColors.h */,
+				B5210E8A19C48F1700FDB0D1 /* JAStrings.h */,
+				4A3921191988E27A00B70A9C /* JAConstants.h */,
+				B5210E8819C4863400FDB0D1 /* RIStrings.strings */,
+			);
+			name = Consts;
+			sourceTree = "<group>";
+		};
+		870F8CCE1E3355060021F87B /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				B5A301BB19811D0700F71726 /* Images.xcassets */,
+				CE9AE1341AB8994F00D56481 /* Bamilo.xcassets */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		870F8CCF1E3356F00021F87B /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				870F8CD01E3356F90021F87B /* Protocols */,
+				B5C1E33419BA1E3D009C422C /* Categories */,
+				B50B03A8198A883D002046DF /* Utilities */,
+				870F8CD41E3357D40021F87B /* Libraries */,
+			);
+			name = Support;
+			sourceTree = "<group>";
+		};
+		870F8CD01E3356F90021F87B /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
+		870F8CD11E3357340021F87B /* GradientLayer */ = {
+			isa = PBXGroup;
+			children = (
+				B57822581A37516800B4DD8B /* JAGradientLayer.h */,
+				B57822591A37516800B4DD8B /* JAGradientLayer.m */,
+			);
+			name = GradientLayer;
+			sourceTree = "<group>";
+		};
+		870F8CD21E3357420021F87B /* ScreenTarget */ = {
+			isa = PBXGroup;
+			children = (
+				9AEF73FF1CD20E5700A5D574 /* JAScreenTarget.h */,
+				9AEF74001CD20E5700A5D574 /* JAScreenTarget.m */,
+			);
+			name = ScreenTarget;
+			sourceTree = "<group>";
+		};
+		870F8CD41E3357D40021F87B /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Libraries;
 			sourceTree = "<group>";
 		};
 		892EB9221BC6795800FBF094 /* GoogleAnalytics */ = {
@@ -2620,9 +2625,8 @@
 		9AEF73D41CD20DA200A5D574 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				870F8CD21E3357420021F87B /* ScreenTarget */,
 				9AEF74061CD20E6700A5D574 /* StepByStepModels */,
-				9AEF73FF1CD20E5700A5D574 /* JAScreenTarget.h */,
-				9AEF74001CD20E5700A5D574 /* JAScreenTarget.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -2670,14 +2674,14 @@
 			name = OnlineReturns;
 			sourceTree = "<group>";
 		};
-		B50B03A8198A883D002046DF /* Utils */ = {
+		B50B03A8198A883D002046DF /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
 				4A19C51119D019100070D194 /* Reachability */,
 				B50B03A9198A8861002046DF /* JAUtils.h */,
 				B50B03AA198A8861002046DF /* JAUtils.m */,
 			);
-			name = Utils;
+			name = Utilities;
 			sourceTree = "<group>";
 		};
 		B510B00119AE466B00A9754A /* DynamicForms */ = {
@@ -2938,8 +2942,6 @@
 		B5A3019F19811D0700F71726 = {
 			isa = PBXGroup;
 			children = (
-				61197E7C1E3350700038F8B1 /* Bamilo.entitlements */,
-				BBA262C519DB1F7600374CA3 /* features */,
 				B5A301AA19811D0700F71726 /* Jumia */,
 				B5A301C419811D0700F71726 /* JumiaTests */,
 				B5A301D119811E7600F71726 /* Frameworks */,
@@ -2958,18 +2960,12 @@
 		B5A301AA19811D0700F71726 /* Jumia */ = {
 			isa = PBXGroup;
 			children = (
-				FF09B2BA1CD2505C00DF5C59 /* Jumia.entitlements */,
+				870F8CCC1E33548F0021F87B /* Application */,
+				4AE242DC198655D900E37C90 /* Storyboards */,
 				9AEF73D41CD20DA200A5D574 /* Models */,
-				4AE242DC198655D900E37C90 /* Storyboard */,
-				B5C1E33419BA1E3D009C422C /* Categories */,
-				B50B03A8198A883D002046DF /* Utils */,
-				4AE242DB198655D900E37C90 /* View */,
+				4AE242DB198655D900E37C90 /* Views */,
 				B5A302FF1981218E00F71726 /* Controllers */,
-				B5A301AF19811D0700F71726 /* JAAppDelegate.h */,
-				B5A301B019811D0700F71726 /* JAAppDelegate.m */,
-				B5A301BB19811D0700F71726 /* Images.xcassets */,
-				CE9AE1341AB8994F00D56481 /* Bamilo.xcassets */,
-				B5A301AB19811D0700F71726 /* Supporting Files */,
+				870F8CCF1E3356F00021F87B /* Support */,
 			);
 			path = Jumia;
 			sourceTree = "<group>";
@@ -2977,15 +2973,12 @@
 		B5A301AB19811D0700F71726 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				CE9AE1221AB824B700D56481 /* Fonts */,
-				CE9AE12C1AB84C2300D56481 /* Bamilo-Info.plist */,
 				B5A301AC19811D0700F71726 /* Info.plist */,
-				B5A301AD19811D0700F71726 /* main.m */,
-				B5A302FD19811F8E00F71726 /* Jumia-Prefix.pch */,
-				4A3921191988E27A00B70A9C /* JAConstants.h */,
-				B5210E8819C4863400FDB0D1 /* RIStrings.strings */,
-				B5210E8A19C48F1700FDB0D1 /* JAStrings.h */,
-				9AB5179F1C91D068007E1327 /* JAColors.h */,
+				CE9AE12C1AB84C2300D56481 /* Bamilo-Info.plist */,
+				870F8CCB1E3354700021F87B /* Bamilo.entitlements */,
+				870F8CCD1E3354E10021F87B /* Consts */,
+				CE9AE1221AB824B700D56481 /* Fonts */,
+				870F8CCE1E3355060021F87B /* Images */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -3010,8 +3003,8 @@
 		B5A301D119811E7600F71726 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8709D0CA1E2FC832002220BC /* Fabric.framework */,
-				8709D0CB1E2FC832002220BC /* Crashlytics.framework */,
+				870F8CDA1E335F420021F87B /* Fabric.framework */,
+				870F8CD81E335F3C0021F87B /* Crashlytics.framework */,
 				89AB5C2D1BC2B01B00BA38E5 /* SafariServices.framework */,
 				9A0F9BAA1B5E7DE600569DF2 /* StoreKit.framework */,
 				9A0F9BA81B5E7DB400569DF2 /* CoreMotion.framework */,
@@ -3036,7 +3029,6 @@
 				B5A302E719811EBF00F71726 /* CFNetwork.framework */,
 				B5A3025F19811E9200F71726 /* RICommunicationFramework */,
 				B5A301D219811E8900F71726 /* ExternalFrameworks */,
-				6af3ca12ac4f2d50fa243e2b /* calabash.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -3428,183 +3420,6 @@
 				B5C9C7031A1A5E6F0065AFD4 /* JADatePicker.m */,
 			);
 			name = JADatePicker;
-			sourceTree = "<group>";
-		};
-		BB128E9D19E2F4060033514F /* search */ = {
-			isa = PBXGroup;
-			children = (
-				BB128E9E19E2F4260033514F /* 10_search.feature */,
-			);
-			name = search;
-			sourceTree = "<group>";
-		};
-		BB128EA119E2FA2B0033514F /* catalog */ = {
-			isa = PBXGroup;
-			children = (
-				BB128EA219E2FA410033514F /* 11_catalog.feature */,
-				BBBA4CD319E44CDC004271B2 /* 19_filters.feature */,
-			);
-			name = catalog;
-			sourceTree = "<group>";
-		};
-		BB128EA519E30A2E0033514F /* product details */ = {
-			isa = PBXGroup;
-			children = (
-				BB128EA619E30B650033514F /* 12_product_details.feature */,
-				BBBA4CBC19E3F764004271B2 /* 13_related_items.feature */,
-			);
-			name = "product details";
-			sourceTree = "<group>";
-		};
-		BBA1459B19DC56BF003F0CA7 /* step_definitions */ = {
-			isa = PBXGroup;
-			children = (
-				BBA1459D19DC56BF003F0CA7 /* calabash_steps.rb */,
-				BBA1459C19DC56BF003F0CA7 /* assert.rb */,
-				BBA1459E19DC56BF003F0CA7 /* init.rb */,
-				BBA1459F19DC56BF003F0CA7 /* keyboard.rb */,
-				BBA145A019DC56BF003F0CA7 /* multi_step.rb */,
-				BBA145A119DC56BF003F0CA7 /* my_first_steps.rb */,
-				BBA145A319DC56BF003F0CA7 /* touch.rb */,
-				BBA145A519DC56BF003F0CA7 /* wait.rb */,
-				BB4F1BD319E2D4D600E89C3F /* navigation.rb */,
-			);
-			path = step_definitions;
-			sourceTree = "<group>";
-		};
-		BBA145A619DC56BF003F0CA7 /* support */ = {
-			isa = PBXGroup;
-			children = (
-				BBA145A719DC56BF003F0CA7 /* 01_launch.rb */,
-				BBA145A819DC56BF003F0CA7 /* 02_pre_stop_hooks.rb */,
-				BBA145A919DC56BF003F0CA7 /* env.rb */,
-			);
-			path = support;
-			sourceTree = "<group>";
-		};
-		BBA145BD19DC56F5003F0CA7 /* login */ = {
-			isa = PBXGroup;
-			children = (
-				BBA1459519DC56BF003F0CA7 /* 01_login.feature */,
-				BBA1459619DC56BF003F0CA7 /* 02_logout.feature */,
-				BBB12A9319DD485400656529 /* 07_forgot_password.feature */,
-			);
-			name = login;
-			sourceTree = "<group>";
-		};
-		BBA145BE19DC5724003F0CA7 /* my account */ = {
-			isa = PBXGroup;
-			children = (
-				BBA7780F1A25E3B1003A39D5 /* 03_remember_email.feature */,
-				BBA1459819DC56BF003F0CA7 /* 04_my_account.feature */,
-				BBA1459919DC56BF003F0CA7 /* 05_user_data.feature */,
-				BBA1459A19DC56BF003F0CA7 /* 06_email_notifications.feature */,
-			);
-			name = "my account";
-			sourceTree = "<group>";
-		};
-		BBA262C519DB1F7600374CA3 /* features */ = {
-			isa = PBXGroup;
-			children = (
-				BBA707B619EEB9280094C565 /* choose country */,
-				BBA145BD19DC56F5003F0CA7 /* login */,
-				BBA145BE19DC5724003F0CA7 /* my account */,
-				BBB12A9619DD872600656529 /* registration */,
-				BBB12A9A19DDA00B00656529 /* home */,
-				BB128E9D19E2F4060033514F /* search */,
-				BB128EA119E2FA2B0033514F /* catalog */,
-				BB128EA519E30A2E0033514F /* product details */,
-				BBBA4CBF19E3F8E9004271B2 /* side menu */,
-				BBBA4CC319E41F69004271B2 /* my favourites */,
-				BBBA4CC719E42E74004271B2 /* recent searches */,
-				BBBA4CCB19E43382004271B2 /* recently viewed */,
-				BBBA4CCF19E4397F004271B2 /* track order */,
-				BBBA4CD619E4577E004271B2 /* cart */,
-				BBB7F57419E532D900E898E3 /* native checkout */,
-				BBA1459B19DC56BF003F0CA7 /* step_definitions */,
-				BBA145A619DC56BF003F0CA7 /* support */,
-			);
-			path = features;
-			sourceTree = "<group>";
-		};
-		BBA707B619EEB9280094C565 /* choose country */ = {
-			isa = PBXGroup;
-			children = (
-				BBA707B719EEB93C0094C565 /* 00_choose_country.feature */,
-			);
-			name = "choose country";
-			sourceTree = "<group>";
-		};
-		BBB12A9619DD872600656529 /* registration */ = {
-			isa = PBXGroup;
-			children = (
-				BBB12A9719DD874D00656529 /* 08_registration.feature */,
-			);
-			name = registration;
-			sourceTree = "<group>";
-		};
-		BBB12A9A19DDA00B00656529 /* home */ = {
-			isa = PBXGroup;
-			children = (
-				BBB12A9B19DDA01E00656529 /* 09_home.feature */,
-			);
-			name = home;
-			sourceTree = "<group>";
-		};
-		BBB7F57419E532D900E898E3 /* native checkout */ = {
-			isa = PBXGroup;
-			children = (
-				BBB7F57519E532FA00E898E3 /* 21_native_checkout.feature */,
-			);
-			name = "native checkout";
-			sourceTree = "<group>";
-		};
-		BBBA4CBF19E3F8E9004271B2 /* side menu */ = {
-			isa = PBXGroup;
-			children = (
-				BBBA4CC019E3F902004271B2 /* 14_side_menu.feature */,
-			);
-			name = "side menu";
-			sourceTree = "<group>";
-		};
-		BBBA4CC319E41F69004271B2 /* my favourites */ = {
-			isa = PBXGroup;
-			children = (
-				BBBA4CC419E41F83004271B2 /* 15_my_favourites.feature */,
-			);
-			name = "my favourites";
-			sourceTree = "<group>";
-		};
-		BBBA4CC719E42E74004271B2 /* recent searches */ = {
-			isa = PBXGroup;
-			children = (
-				BBBA4CC819E42E9A004271B2 /* 16_recent_searches.feature */,
-			);
-			name = "recent searches";
-			sourceTree = "<group>";
-		};
-		BBBA4CCB19E43382004271B2 /* recently viewed */ = {
-			isa = PBXGroup;
-			children = (
-				BBBA4CCC19E4339F004271B2 /* 17_recently_viewed.feature */,
-			);
-			name = "recently viewed";
-			sourceTree = "<group>";
-		};
-		BBBA4CCF19E4397F004271B2 /* track order */ = {
-			isa = PBXGroup;
-			children = (
-				BBBA4CD019E43993004271B2 /* 18_track_order.feature */,
-			);
-			name = "track order";
-			sourceTree = "<group>";
-		};
-		BBBA4CD619E4577E004271B2 /* cart */ = {
-			isa = PBXGroup;
-			children = (
-				BBBA4CD719E45799004271B2 /* 20_cart.feature */,
-			);
-			name = cart;
 			sourceTree = "<group>";
 		};
 		CE06FCB41A88C374002FCD25 /* Catalog */ = {
@@ -4151,12 +3966,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A0F9B7E1B5E58E900569DF2 /* FBAudienceNetwork.README.txt in Resources */,
-				CE9AE0391AB6D78200D56481 /* 00_choose_country.feature in Resources */,
 				CEDBF8971B0DF5D00073971A /* JANewsletterComponent~iPad_RTL.xib in Resources */,
 				CE9AE03C1AB6D78200D56481 /* JANewsletterComponent~iPad.xib in Resources */,
-				CE9AE03D1AB6D78200D56481 /* 13_related_items.feature in Resources */,
-				CE9AE03E1AB6D78200D56481 /* init.rb in Resources */,
-				CE9AE03F1AB6D78200D56481 /* 17_recently_viewed.feature in Resources */,
 				9A564CAF1B332FB200F23057 /* JASellerRatingsViewController.xib in Resources */,
 				1C71FC5E1E2CABAD007ACF02 /* Bamilosans Black.ttf in Resources */,
 				9A17D1201C5F775900851D6E /* BMA4SiPhoneWebViewNotifView.xib in Resources */,
@@ -4164,56 +3975,40 @@
 				9A17D1521C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-landscape-iPad.xib in Resources */,
 				CE9AE0441AB6D78200D56481 /* JAGenericFiltersView.xib in Resources */,
 				9A17D1161C5F775900851D6E /* BMA4SiPhoneWebViewNotifView-landscape-iPad.xib in Resources */,
-				CE9AE0451AB6D78200D56481 /* keyboard.rb in Resources */,
 				6CF4AE821ADEAA290024EC34 /* JACatalogBannerCell.xib in Resources */,
 				9A17D1931C5F775900851D6E /* BMA4SiPhoneWebViewNotifView-nobuttons-landscape.xib in Resources */,
 				84B25D9D1D8048DF0024B476 /* JAContactUsViewController~ipad.xib in Resources */,
 				9A0F9B741B5E58E900569DF2 /* FacebookSDKStrings.bundle in Resources */,
 				9A564CBB1B34273800F23057 /* JASellerRatingsViewController~ipad.xib in Resources */,
 				CE9AE0521AB6D78200D56481 /* slider-default7-handle@2x.png in Resources */,
-				CE9AE0561AB6D78200D56481 /* 14_side_menu.feature in Resources */,
+				870F8CD71E335BFC0021F87B /* Main_iPad.storyboard in Resources */,
 				CE9AE0581AB6D78200D56481 /* JAPDVVariations.xib in Resources */,
 				CE9AE05B1AB6D78200D56481 /* RIStrings.strings in Resources */,
 				CE9AE05F1AB6D78200D56481 /* slider-metal-handle.png in Resources */,
-				CE9AE0601AB6D78200D56481 /* 08_registration.feature in Resources */,
 				CE9AE0611AB6D78200D56481 /* JAOrangeButtonCell_ipad_portrait.xib in Resources */,
-				CE9AE0621AB6D78200D56481 /* 01_launch.rb in Resources */,
 				CE9AE0631AB6D78200D56481 /* slider-metal-handle@2x.png in Resources */,
-				CE9AE0641AB6D78200D56481 /* 12_product_details.feature in Resources */,
-				CE9AE0651AB6D78200D56481 /* my_first_steps.rb in Resources */,
 				CE9AE0671AB6D78200D56481 /* slider-default-handle-highlighted.png in Resources */,
 				9A17D1701C5F775900851D6E /* BMA4SRichPushWebViewWithToolBar-nobuttons.xib in Resources */,
 				9A17D0F31C5F775900851D6E /* BMA4SRichPushWebViewWithToolBar-iPad.xib in Resources */,
 				CE9AE0691AB6D78200D56481 /* JAOrangeButtonCell_ipad_landscape.xib in Resources */,
-				CE9AE06A1AB6D78200D56481 /* 18_track_order.feature in Resources */,
 				CED7C5281B78E0570070C855 /* GoogleAppIndexingResources.bundle in Resources */,
-				CE9AE06B1AB6D78200D56481 /* 06_email_notifications.feature in Resources */,
 				1C71FC611E2CABAD007ACF02 /* Bamilosans Reg.ttf in Resources */,
-				CE9AE06C1AB6D78200D56481 /* 02_pre_stop_hooks.rb in Resources */,
 				CE9AE06D1AB6D78200D56481 /* slider-default-trackBackground.png in Resources */,
 				CE9AE06F1AB6D78200D56481 /* JANewsletterComponent.xib in Resources */,
 				9A17D11B1C5F775900851D6E /* BMA4SiPhoneWebViewNotifView-landscape.xib in Resources */,
 				CE9AE0731AB6D78200D56481 /* slider-default-handle@2x.png in Resources */,
-				CE9AE0741AB6D78200D56481 /* 20_cart.feature in Resources */,
 				CE9AE0751AB6D78200D56481 /* JAFallbackView.xib in Resources */,
-				CE9AE0791AB6D78200D56481 /* 05_user_data.feature in Resources */,
 				9A17D1251C5F775900851D6E /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-iPad.xib in Resources */,
 				9A17D0F81C5F775900851D6E /* BMA4SRichPushWebViewWithToolBar.xib in Resources */,
-				CE9AE07C1AB6D78200D56481 /* 16_recent_searches.feature in Resources */,
-				CE9AE07D1AB6D78200D56481 /* touch.rb in Resources */,
 				CE9AE07E1AB6D78200D56481 /* slider-metal-trackBackground.png in Resources */,
 				CE9AE0811AB6D78200D56481 /* JAGrayButtonCell_ipad_landscape.xib in Resources */,
-				CE9AE0841AB6D78200D56481 /* multi_step.rb in Resources */,
-				CE9AE0871AB6D78200D56481 /* 02_logout.feature in Resources */,
 				CE9AE0881AB6D78200D56481 /* slider-metal-trackBackground@2x.png in Resources */,
 				9A17D09E1C5F775900851D6E /* A4S.bundle in Resources */,
 				9A17D0E91C5F775900851D6E /* BMA4SRichPushWebView-iPad.xib in Resources */,
-				CE9AE0891AB6D78200D56481 /* 21_native_checkout.feature in Resources */,
 				CE9AE08A1AB6D78200D56481 /* slider-default-handle-highlighted@2x.png in Resources */,
 				9A17D0D01C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewNotifView.xib in Resources */,
 				CE9AE08C1AB6D78200D56481 /* slider-metal-handle-highlighted@2x.png in Resources */,
 				9A17D14D1C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-iPad.xib in Resources */,
-				CE9AE08D1AB6D78200D56481 /* navigation.rb in Resources */,
 				9A17D0BC1C5F775900851D6E /* BMA4SiPhoneIntersticialTextNotifView.xib in Resources */,
 				CE9AE08E1AB6D78200D56481 /* slider-default7-handle.png in Resources */,
 				9A17D0DF1C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape.xib in Resources */,
@@ -4237,14 +4032,11 @@
 				CE9AE09B1AB6D78200D56481 /* JAPaymentCell.xib in Resources */,
 				9A17D1751C5F775900851D6E /* BMA4SiPhoneTextNotifView-nobuttons-iPad.xib in Resources */,
 				6C6EBE2B1ABC66DB006A3D46 /* RITrackingDebug_Bamilo.plist in Resources */,
-				CE9AE0A11AB6D78200D56481 /* 15_my_favourites.feature in Resources */,
 				CE9AE0A21AB6D78200D56481 /* JASwitchCell.xib in Resources */,
 				CE9AE0A31AB6D78200D56481 /* JAUndefinedSearchView.xib in Resources */,
-				CE9AE0A41AB6D78200D56481 /* wait.rb in Resources */,
 				CE9AE0A81AB6D78200D56481 /* JACartListHeaderView.xib in Resources */,
 				CE9AE0AC1AB6D78200D56481 /* JACatalogTopView_iphone.xib in Resources */,
 				9A2036F51B25F39E00F36F55 /* JANoConnectionView~iPad.xib in Resources */,
-				CE9AE0AE1AB6D78200D56481 /* 11_catalog.feature in Resources */,
 				9A17D1611C5F775900851D6E /* BMA4SRichPushWebView-nobuttons-iPad.xib in Resources */,
 				CE9AE0AF1AB6D78200D56481 /* slider-default7-trackBackground.png in Resources */,
 				9A17D1481C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewNotifView-nobuttons.xib in Resources */,
@@ -4263,13 +4055,10 @@
 				CE9AE0B71AB6D78200D56481 /* slider-default7-trackCrossedOver.png in Resources */,
 				CE9AE0B81AB6D78200D56481 /* JAPDVVariations~iPad.xib in Resources */,
 				CE9AE0BA1AB6D78200D56481 /* slider-metal-handle-highlighted.png in Resources */,
-				CE9AE0BB1AB6D78200D56481 /* calabash_steps.rb in Resources */,
-				CE9AE0BC1AB6D78200D56481 /* 03_remember_email.feature in Resources */,
 				9A17D16B1C5F775900851D6E /* BMA4SRichPushWebViewWithToolBar-nobuttons-iPad.xib in Resources */,
 				CEDBF8791B0CEC570073971A /* JACheckBoxComponent_RTL.xib in Resources */,
 				CE9AE0C21AB6D78200D56481 /* JACatalogTopView_ipad.xib in Resources */,
 				CE9AE0C41AB6D78200D56481 /* JAPriceFiltersView.xib in Resources */,
-				CE9AE0C61AB6D78200D56481 /* 07_forgot_password.feature in Resources */,
 				CE9AE0CA1AB6D78200D56481 /* JAPDVProductInfo.xib in Resources */,
 				CE9AE0CD1AB6D78200D56481 /* JAOrangeButtonCell.xib in Resources */,
 				9A17D12F1C5F775900851D6E /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-landscape.xib in Resources */,
@@ -4280,26 +4069,20 @@
 				9A0F9B9C1B5E58E900569DF2 /* README.txt in Resources */,
 				CE9AE0D51AB6D78200D56481 /* JAPDVBundleSingleItem.xib in Resources */,
 				CE9AE0D91AB6D78200D56481 /* JAOtherOffersView_Landscape~iPad.xib in Resources */,
-				CE9AE0DA1AB6D78200D56481 /* 09_home.feature in Resources */,
 				9A17D17A1C5F775900851D6E /* BMA4SiPhoneTextNotifView-nobuttons-landscape-iPad.xib in Resources */,
 				9A17D0EE1C5F775900851D6E /* BMA4SRichPushWebView.xib in Resources */,
 				CEE5F4E41B1CB6B500556150 /* JARecentSearchesViewController.xib in Resources */,
 				CE9AE0E01AB6D78200D56481 /* JAPDVProductInfo~iPad_Portrait.xib in Resources */,
 				CEDE870F1B25FEE5006D18EA /* JANoConnectionView.xib in Resources */,
 				9A17D0B21C5F775900851D6E /* BMA4SiPhoneIntersticialTextNotifView-landscape-iPad.xib in Resources */,
-				CE9AE0E41AB6D78200D56481 /* 01_login.feature in Resources */,
 				CEDBF8921B0DF5D00073971A /* JANewsletterComponent_RTL.xib in Resources */,
 				CE9AE0E91AB6D78200D56481 /* slider-default7-track.png in Resources */,
 				CE9AE0EA1AB6D78200D56481 /* JARatingsView.xib in Resources */,
 				9A17D10C1C5F775900851D6E /* BMA4SiPhoneTextNotifView.xib in Resources */,
 				9A17D1571C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-landscape.xib in Resources */,
 				CE9AE0EF1AB6D78200D56481 /* JARatingsViewMedium.xib in Resources */,
-				CE9AE0F41AB6D78200D56481 /* assert.rb in Resources */,
-				CE9AE0F71AB6D78200D56481 /* 04_my_account.feature in Resources */,
 				9A17D1431C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewNotifView-nobuttons-landscape.xib in Resources */,
 				9A17D1021C5F775900851D6E /* BMA4SiPhoneTextNotifView-landscape-iPad.xib in Resources */,
-				CE9AE0F81AB6D78200D56481 /* 10_search.feature in Resources */,
-				CE9AE0FC1AB6D78200D56481 /* Main_iPad.storyboard in Resources */,
 				1C71FC621E2CABAD007ACF02 /* Bamilosans UltraLight.ttf in Resources */,
 				6C6EBE281ABC6634006A3D46 /* RITracking_Bamilo.plist in Resources */,
 				9A17D1841C5F775900851D6E /* BMA4SiPhoneTextNotifView-nobuttons.xib in Resources */,
@@ -4308,8 +4091,6 @@
 				CE9AE1011AB6D78200D56481 /* slider-default7-trackBackground@2x.png in Resources */,
 				9A17D1891C5F775900851D6E /* BMA4SiPhoneWebViewNotifView-nobuttons-iPad.xib in Resources */,
 				9A17D1071C5F775900851D6E /* BMA4SiPhoneTextNotifView-landscape.xib in Resources */,
-				CE9AE1021AB6D78200D56481 /* 19_filters.feature in Resources */,
-				CE9AE1041AB6D78200D56481 /* env.rb in Resources */,
 				1CCD52A11E2BA42F008BAEE4 /* PopularTeaserTableViewCell.xib in Resources */,
 				9A17D0B71C5F775900851D6E /* BMA4SiPhoneIntersticialTextNotifView-landscape.xib in Resources */,
 				CE9AE1061AB6D78200D56481 /* slider-default-track.png in Resources */,
@@ -4338,7 +4119,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Fabric.framework/run ddde4ad6ad210575fdac10a908040d1a93e74833 c37b1e5c603fb0fd9b71f1bf627d92f87718c6efd4aada50d724ab8ad126fe35";
+			shellScript = "./Jumia/Fabric.framework/run ddde4ad6ad210575fdac10a908040d1a93e74833 c37b1e5c603fb0fd9b71f1bf627d92f87718c6efd4aada50d724ab8ad126fe35";
 		};
 		CE9AE1191AB6D78200D56481 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -4717,6 +4498,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		870F8CD51E335BFC0021F87B /* Main_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				870F8CD61E335BFC0021F87B /* Base */,
+			);
+			name = Main_iPad.storyboard;
+			sourceTree = "<group>";
+		};
 		9A17D04C1C5F775900851D6E /* BMA4S.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -4803,13 +4592,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = Bamilo.entitlements;
+				CURRENT_PROJECT_VERSION = 23;
 				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Jumia",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
@@ -4828,6 +4619,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = Bamilo_Distribution;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = AdHoc;
 		};
@@ -4928,13 +4720,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = Bamilo.entitlements;
+				CURRENT_PROJECT_VERSION = 23;
 				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Jumia",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
@@ -4953,6 +4747,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = Bamilo_Distribution;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
@@ -4962,13 +4757,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = Bamilo.entitlements;
+				CURRENT_PROJECT_VERSION = 23;
 				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Jumia",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
@@ -4987,6 +4784,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "Bamilo Live";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
