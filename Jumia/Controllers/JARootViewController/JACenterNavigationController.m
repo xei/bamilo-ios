@@ -95,16 +95,14 @@
     return defaultInstance;
 }
 
-- (JAStepByStepTabViewController *)checkoutStepByStepViewController
-{
-    if (!VALID(_checkoutStepByStepViewController, JAStepByStepTabViewController)) {
+- (JAStepByStepTabViewController *)checkoutStepByStepViewController {
+    if (!_checkoutStepByStepViewController) {
         _checkoutStepByStepViewController = [self getNewCheckoutStepByStepViewController];
     }
     return _checkoutStepByStepViewController;
 }
 
-- (JAStepByStepTabViewController *)getNewCheckoutStepByStepViewController
-{
+- (JAStepByStepTabViewController *)getNewCheckoutStepByStepViewController {
     JAStepByStepTabViewController *checkoutStepByStepViewController = [JAStepByStepTabViewController new];
     [checkoutStepByStepViewController setStepByStepModel:[JACheckoutStepByStepModel new]];
     checkoutStepByStepViewController.navBarLayout.showCartButton = NO;
@@ -123,8 +121,7 @@
     return _returnsStepByStepViewController;
 }
 
-- (JAStepByStepTabViewController *)getNewReturnsStepByStepViewController
-{
+- (JAStepByStepTabViewController *)getNewReturnsStepByStepViewController {
     JAStepByStepTabViewController *returnsStepByStepViewController = [JAStepByStepTabViewController new];
     [returnsStepByStepViewController setStepByStepModel:[JAReturnStepByStepModel new]];
     returnsStepByStepViewController.navBarLayout.showCartButton = NO;
@@ -137,8 +134,7 @@
 
 #pragma mark - View Lifecycle
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     self.neeedsExternalPaymentMethod = NO;

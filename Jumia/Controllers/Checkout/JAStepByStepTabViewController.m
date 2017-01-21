@@ -276,7 +276,7 @@
 {
     for (int i = 0; i < self.stepByStepModel.viewControllersArray.count; i++)
     {
-        JACheckoutButton *button1 = [[JACheckoutButton alloc] initWithFrame:CGRectMake(i*kTabBarButtonWidth, 8, kTabBarButtonWidth, _tabBarView.height-16)];
+        JACheckoutButton *button1 = [[JACheckoutButton alloc] initWithFrame:CGRectMake(i*kTabBarButtonWidth, 8, kTabBarButtonWidth, _tabBarView.height-10)];
         if (VALID([self.stepByStepModel getTitleForIndex:i], NSString)) {
             [button1 setTitle:[self.stepByStepModel getTitleForIndex:i] forState:UIControlStateNormal];
         }

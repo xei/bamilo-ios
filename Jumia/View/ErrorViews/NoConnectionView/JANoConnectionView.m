@@ -171,7 +171,7 @@
     }
                            
     CGFloat spaceBetweenLabelandImage = 12.0f;
-    CGFloat labelAndImageTotalWidth = tryAgainImage.size.width + spaceBetweenLabelandImage + buttonLabel.size.width;
+    CGFloat labelAndImageTotalWidth = tryAgainImage.size.width + spaceBetweenLabelandImage + buttonLabel.size.width + 15;
     
     [self.animationView setFrame:CGRectMake((self.retryButton.frame.size.width - labelAndImageTotalWidth)/2,
                                            (self.retryButton.frame.size.height - tryAgainImage.size.height)/2,

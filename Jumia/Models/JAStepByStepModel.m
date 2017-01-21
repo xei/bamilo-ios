@@ -39,9 +39,8 @@
     return [self.iconsArray objectAtIndex:index];
 }
 
-- (NSString *)getTitleForIndex:(NSInteger)index
-{
-    if (VALID_NOTEMPTY(self.titlesArray, NSArray) && self.titlesArray.count >index && VALID_NOTEMPTY([self.titlesArray objectAtIndex:index], NSString)) {
+- (NSString *)getTitleForIndex:(NSInteger)index {
+    if (self.titlesArray.count && self.titlesArray.count >index && VALID_NOTEMPTY([self.titlesArray objectAtIndex:index], NSString)) {
         return [self.titlesArray objectAtIndex:index];
     }
     return nil;
