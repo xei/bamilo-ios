@@ -25,32 +25,24 @@
 @property (weak, nonatomic) IBOutlet UIView *noInternetFirstView;
 @property (weak, nonatomic) IBOutlet UIView *errorFirstView;
 @property (weak, nonatomic) IBOutlet UILabel *noConnectionDetailsLabel;
-
 @property (strong, nonatomic) UIImageView *animationView;
-
 @property (nonatomic) BOOL noConnection;
-
 @property (nonatomic, strong) void(^retryBock)(BOOL dismiss);
-
 @end
 
 @implementation JANoConnectionView
 
-+ (JANoConnectionView *)getNewJANoConnectionViewWithFrame:(CGRect)frame
-{
++ (JANoConnectionView *)getNewJANoConnectionViewWithFrame:(CGRect)frame {
     NSArray *xib = [[NSBundle mainBundle] loadNibNamed:@"JANoConnectionView"
                                                  owner:self
                                                options:nil];
     
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-    {
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         xib = [[NSBundle mainBundle] loadNibNamed:@"JANoConnectionView~iPad" owner:nil options:nil];
     }
     
-    for (NSObject *obj in xib)
-    {
-        if ([obj isKindOfClass:[JANoConnectionView class]])
-        {
+    for (NSObject *obj in xib) {
+        if ([obj isKindOfClass:[JANoConnectionView class]]) {
             [((JANoConnectionView *)obj) setFrame:frame];
             return (JANoConnectionView *)obj;
         }
@@ -58,8 +50,7 @@
     return nil;
 }
 
-- (void)setupNoConnectionViewForNoInternetConnection:(BOOL)internetConnection
-{
+- (void)setupNoConnectionViewForNoInternetConnection:(BOOL)internetConnection {
     _internetConnection = internetConnection;
     if (_noConnection) {
         if (!_lockAnim) {
@@ -74,8 +65,7 @@
     _noConnection = YES;
     
     
-    if (internetConnection)
-    {
+    if (internetConnection) {
         self.textLabel.text = STRING_NO_CONNECTION;
         self.noConnectionDetailsLabel.text = STRING_NO_NETWORK_DETAILS;
         self.noInternetImageView.hidden = NO;
@@ -90,9 +80,7 @@
         [self.noConnectionDetailsLabel sizeToFit];
         [self.textLabel setXCenterAligned];
         [self.noConnectionDetailsLabel setXCenterAligned];
-    }
-    else
-    {
+    } else {
         self.noInternetImageView.hidden = YES;
         self.textLabel.hidden = YES;
         self.noConnectionDetailsLabel.hidden = YES;
@@ -113,7 +101,7 @@
     self.backgroundColor = JANoConnectionBackground;
     self.noNetworkView.layer.cornerRadius = 5.0f;
     [self.noNetworkView setX:6.f];
-    [self.noNetworkView setWidth:self.width - 2*6.f];
+    [self.noNetworkView setWidth:self.width - 2 * 6.f];
     [self.noInternetFirstView setX:0.f];
     [self.noInternetFirstView setWidth:self.noNetworkView.width];
     [self.errorFirstView setX:0.f];
@@ -132,7 +120,7 @@
     
     self.noConnectionDetailsLabel.font = [UIFont fontWithName:kFontRegularName size:self.noConnectionDetailsLabel.font.pointSize];
     self.noConnectionDetailsLabel.textColor = JAButtonTextOrange;
-    [self.noConnectionDetailsLabel setWidth:self.width-2*6.f];
+    [self.noConnectionDetailsLabel setWidth:self.width - 2 * 6.f];
     [self.noConnectionDetailsLabel sizeToFit];
     [self.noConnectionDetailsLabel setXCenterAligned];
     self.genericErrorLabel.font = [UIFont fontWithName:kFontRegularName size:self.genericErrorLabel.font.pointSize];
@@ -148,7 +136,7 @@
     
     CGRect buttonLabel = [self.retryButton.titleLabel.text boundingRectWithSize: CGSizeMake(1000.0f, self.retryButton.frame.size.height)
                                                                         options:NSStringDrawingUsesLineFragmentOrigin
-                                                                     attributes:@{NSFontAttributeName:self.textLabel.font} context:nil];
+                                                                        attributes:@{NSFontAttributeName:self.textLabel.font} context:nil];
     
     
     
@@ -160,12 +148,11 @@
     
     UIImage *tryAgainImage = [UIImage imageNamed:@"tryAgainAnimationF1"];
     CGFloat offset = 40.0f;
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
-    {
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
         offset = 50.0f;
     }
     
-    if (!VALID(self.animationView, UIImageView)) {
+    if (!self.animationView) {
         self.animationView = [[UIImageView alloc] init];
         [self.retryButton addSubview:self.animationView];
         
@@ -179,9 +166,7 @@
         }
         
         self.animationView.animationImages = [animationFrames copy];
-        
         self.animationView.animationDuration = 2.0f;
-        
         self.animationView.alpha = 1.0f;
     }
                            
@@ -204,8 +189,7 @@
     }
 }
 
-- (void)reDraw
-{
+- (void)reDraw {
     [self setupNoConnectionViewForNoInternetConnection:_internetConnection];
 }
 
@@ -213,14 +197,12 @@
 {
     [self.animationView startAnimating];
     
-    if (self.retryBock)
-    {
+    if (self.retryBock) {
         self.retryBock(YES);
     }   
 }
 
-- (void)setRetryBlock:(void(^)(BOOL dismiss))completion
-{
+- (void)setRetryBlock:(void(^)(BOOL dismiss))completion {
     self.retryBock = completion;
 }
 
