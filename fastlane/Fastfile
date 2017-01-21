@@ -22,7 +22,7 @@ platform :ios do
     #---------------------------
     # Run Tests
     #---------------------------
-    scan(scheme: 'Bamilo (Staging)', devices: ["iPhone SE"], clean: false)
+    scan(scheme: 'Bamilo (Staging)', devices: ["iPhone SE"], clean: false, skip_build: true)
 
     emails = values[:emails] ? values[:emails] : nil
     groups = values[:groups] ? values[:groups] : nil
@@ -59,7 +59,7 @@ platform :ios do
     #---------------------------
     # Run Tests
     #---------------------------
-    scan(scheme: 'Bamilo', devices: ["iPhone SE"], clean: false)
+    scan(scheme: 'Bamilo', devices: ["iPhone SE"], clean: false, skip_build: true)
 
     #---------------------------
     # Upload to TestFlight

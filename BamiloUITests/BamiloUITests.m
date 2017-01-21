@@ -32,7 +32,7 @@
     [super tearDown];
 }
 
-- (void)testUserRegister {
+- (void)test_A_UserRegister {
     XCUIApplication *app = [[XCUIApplication alloc] init];
     
     XCUIElementQuery *userFlow = [[[[[[[[[app childrenMatchingType:XCUIElementTypeWindow] elementBoundByIndex:0] childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther];
@@ -85,7 +85,7 @@
     }
 }
 
-- (void)testUserLogin {
+- (void)test_B_UserLogin {
     XCUIApplication *app = [[XCUIApplication alloc] init];
     
     XCUIElementQuery *userFlow = [[[[[[[[[app childrenMatchingType:XCUIElementTypeWindow] elementBoundByIndex:0] childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther];
