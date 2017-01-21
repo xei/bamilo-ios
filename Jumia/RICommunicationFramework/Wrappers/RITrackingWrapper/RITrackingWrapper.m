@@ -37,8 +37,7 @@ static dispatch_once_t sharedInstanceToken;
     return sharedInstance;
 }
 
-- (instancetype)initWithTrackers:(NSArray *)trackers
-{
+- (instancetype)initWithTrackers:(NSArray *)trackers {
     if ((self = [super init])) {
         self.handlers = [NSMutableArray array];
         self.cartState = RICartEmpty;
@@ -56,8 +55,7 @@ static dispatch_once_t sharedInstanceToken;
 
 - (void)startWithConfigurationFromPropertyListAtPath:(NSString *)path
                                        launchOptions:(NSDictionary *)launchOptions
-                                            delegate:(id)delegate
-{
+                                            delegate:(id)delegate {
     RIDebugLog(@"Starting initialisation with launch options '%@' and property list at path '%@'",
                launchOptions, path);
     
@@ -79,27 +77,22 @@ static dispatch_once_t sharedInstanceToken;
     
     self.trackers = @[googleAnalyticsTracker, bugsenseTracker, ad4PushTracker, newRelicTracker, adjustTracker, gtmTracker];
     
-    if(VALID_NOTEMPTY(launchOptions, NSDictionary))
-    {
+    if(VALID_NOTEMPTY(launchOptions, NSDictionary)) {
         [self RI_callTrackersConformToProtocol:@protocol(RITracker)
                                       selector:@selector(applicationDidLaunchWithOptions:)
                                      arguments:@[launchOptions]];
-    }
-    else
-    {
+    } else {
         [self RI_callTrackersConformToProtocol:@protocol(RITracker)
                                       selector:@selector(applicationDidLaunchWithOptions:)
                                      arguments:nil];
     }
 }
 
-- (RICartState)getCartState
-{
+- (RICartState)getCartState {
     return self.cartState;
 }
 
-- (void)applicationDidEnterBackground:(UIApplication *)application
-{
+- (void)applicationDidEnterBackground:(UIApplication *)application {
     [self RI_callTrackersConformToProtocol:@protocol(RITracker)
                                   selector:@selector(applicationDidEnterBackground:)
                                  arguments:[NSArray arrayWithObjects:application, nil]];
@@ -117,8 +110,7 @@ static dispatch_once_t sharedInstanceToken;
 
 #pragma mark - RIExceptionTracking protocolx
 
-- (void)trackExceptionWithName:(NSString *)name
-{
+- (void)trackExceptionWithName:(NSString *)name {
     RIDebugLog(@"Tracking exception with name '%@'", name);
     
     [self RI_callTrackersConformToProtocol:@protocol(RIExceptionTracking)
@@ -282,8 +274,7 @@ static dispatch_once_t sharedInstanceToken;
 
 #pragma mark - RILaunchEventTracker protocol
 
-- (void)sendLaunchEventWithData:(NSDictionary *)dataDictionary;
-{
+- (void)sendLaunchEventWithData:(NSDictionary *)dataDictionary {
     RIDebugLog(@"Tracking launch event with data '%@'", dataDictionary);
     
     if (!self.trackers) {
@@ -298,8 +289,7 @@ static dispatch_once_t sharedInstanceToken;
 
 #pragma mark - Campaign protocol
 
-- (void)trackCampaignWithName:(NSString *)campaignName
-{
+- (void)trackCampaignWithName:(NSString *)campaignName {
     RIDebugLog(@"Tracking campaign with name '%@'", campaignName);
     
     if (!self.trackers) {
@@ -314,8 +304,7 @@ static dispatch_once_t sharedInstanceToken;
 
 #pragma mark - RIStaticPageTracker
 
-- (void)trackStaticPage:(NSString *)staticPageKey
-{
+- (void)trackStaticPage:(NSString *)staticPageKey {
     RIDebugLog(@"Tracking static page with staticPageKey '%@'", staticPageKey);
     
     if (!self.trackers) {
@@ -330,10 +319,7 @@ static dispatch_once_t sharedInstanceToken;
 
 #pragma mark - Private methods
 
-- (void)RI_callTrackersConformToProtocol:(Protocol *)protocol
-                                selector:(SEL)selector
-                               arguments:(NSArray *)arguments;
-{
+- (void)RI_callTrackersConformToProtocol:(Protocol *)protocol selector:(SEL)selector arguments:(NSArray *)arguments {
     if (!self.trackers) {
         RIRaiseError(@"Invalid call with non-existent trackers. Tracking initialisation was either "
                      @"missing or has probably failed.");
@@ -361,8 +347,7 @@ static dispatch_once_t sharedInstanceToken;
 
 #pragma mark - Hidden test helpers
 
-+ (void)reset
-{
++ (void)reset {
     sharedInstance = nil;
     sharedInstanceToken = 0;
 }

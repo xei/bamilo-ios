@@ -1657,8 +1657,7 @@
 }
 
 - (void)didSelectTeaserWithPDVUrl:(NSNotification*)notification {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
-                                                        object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification object:nil];
     
     NSString* targetString = [notification.userInfo objectForKey:@"targetString"];
     NSString* productSku = [notification.userInfo objectForKey:@"sku"];

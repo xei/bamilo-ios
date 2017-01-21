@@ -23,17 +23,15 @@
 
 @implementation JAPDVRelatedItem
 
-- (NSMutableArray *)verticalSeparators
-{
-    if (!VALID_NOTEMPTY(_verticalSeparators, NSMutableArray)) {
+- (NSMutableArray *)verticalSeparators {
+    if (!_verticalSeparators.count) {
         _verticalSeparators = [NSMutableArray new];
     }
     return _verticalSeparators;
 }
 
-- (JAProductInfoHeaderLine *)topLabel
-{
-    if (!VALID_NOTEMPTY(_topLabel, JAProductInfoHeaderLine)) {
+- (JAProductInfoHeaderLine *)topLabel {
+    if (!_topLabel) {
         _topLabel = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, 0, self.width, kProductInfoHeaderLineHeight)];
         [_topLabel setTitle:[STRING_YOU_MAY_ALSO_LIKE uppercaseString]];
         [self addSubview:_topLabel];
@@ -41,23 +39,20 @@
     return _topLabel;
 }
 
-- (void)setHeaderText:(NSString *)headerText
-{
+- (void)setHeaderText:(NSString *)headerText {
     _headerText = headerText;
     [self.topLabel setMultilineTitle:YES];
     [self.topLabel setTitle:_headerText];
 }
 
-- (NSMutableArray *)viewsArray
-{
-    if (!VALID_NOTEMPTY(_viewsArray, NSMutableArray)) {
+- (NSMutableArray *)viewsArray {
+    if (!_viewsArray.count) {
         _viewsArray = [NSMutableArray new];
     }
     return _viewsArray;
 }
 
-- (void)addRelatedItemView:(JAPDVSingleRelatedItem *)itemView
-{
+- (void)addRelatedItemView:(JAPDVSingleRelatedItem *)itemView {
     CGFloat headerOffset = CGRectGetMaxY(self.topLabel.frame);
     itemView.y += headerOffset;
     _lastItemSize = itemView.frame.size;
@@ -69,8 +64,7 @@
 }
 
 // separators for a table with 2 columns
-- (void)reloadHorizontalSeparators
-{
+- (void)reloadHorizontalSeparators {
     [self removeHorizontalSeperators];
     
     //horizontal separators
@@ -85,8 +79,7 @@
 }
 
 //separators for single column
-- (void)reloadVerticalSeparators
-{
+- (void)reloadVerticalSeparators {
     [self removeVerticalSeperators];
 
     for (int i = 0; i < self.viewsArray.count ; i++) {
@@ -101,12 +94,8 @@
     }
 }
 
-- (UIView *)newHorizontalSeparator
-{
-    UIView* horizontalSeparator = [[UIView alloc] initWithFrame:CGRectMake(0,
-                                                                           self.height/2,
-                                                                           self.width,
-                                                                           1)];
+- (UIView *)newHorizontalSeparator {
+    UIView* horizontalSeparator = [[UIView alloc] initWithFrame:CGRectMake(0, self.height/2, self.width, 1)];
     [horizontalSeparator setBackgroundColor:JABlack700Color];
     [self addSubview:horizontalSeparator];
     [self.horizontalSeparators addObject:horizontalSeparator];
@@ -114,12 +103,8 @@
     return horizontalSeparator;
 }
 
-- (UIView *)newVerticalSeparator
-{
-    UIView* verticalSeparator = [[UIView alloc] initWithFrame:CGRectMake(self.width/2,
-                                                                         self.topLabel.height,
-                                                                         1,
-                                                                         self.height - self.topLabel.height)];
+- (UIView *)newVerticalSeparator {
+    UIView* verticalSeparator = [[UIView alloc] initWithFrame:CGRectMake(self.width/2, self.topLabel.height, 1, self.height - self.topLabel.height)];
     [verticalSeparator setBackgroundColor:JABlack700Color];
     [self addSubview:verticalSeparator];
     [self.verticalSeparators addObject:verticalSeparator];
