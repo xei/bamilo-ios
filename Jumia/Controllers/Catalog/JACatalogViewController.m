@@ -397,9 +397,8 @@ typedef void (^ProcessActionBlock)(void);
 }
 
 - (void)loadMoreProducts {
-    //[self.filteredNoResultsView removeFromSuperview];
-    [self.containerView setHidden:NO];
     
+    [self.containerView setHidden: YES];
     if(!self.isLoadingMoreProducts) {
         self.loadedEverything = NO;
         NSNumber *pageNumber = [NSNumber numberWithInteger:[self getCurrentPage] + 1];
