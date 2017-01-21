@@ -30,6 +30,7 @@
 		84B25D9F1D8048DF0024B476 /* JAContactUsViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B25D9B1D8048DE0024B476 /* JAContactUsViewController~iphone.xib */; };
 		8709D0CC1E2FC832002220BC /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8709D0CA1E2FC832002220BC /* Fabric.framework */; };
 		8709D0CD1E2FC832002220BC /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8709D0CB1E2FC832002220BC /* Crashlytics.framework */; };
+		870F8CD71E335BFC0021F87B /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 870F8CD51E335BFC0021F87B /* Main_iPad.storyboard */; };
 		892EB9351BC6795800FBF094 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 892EB9301BC6795800FBF094 /* libGoogleAnalytics.a */; };
 		892EB9441BC679A800FBF094 /* libTagManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 892EB93F1BC679A800FBF094 /* libTagManager.a */; };
 		893AADCB1C1F0DD7006314FB /* RIPhonePrefix.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEADDCF1C10B1C40074034A /* RIPhonePrefix.m */; };
@@ -482,7 +483,6 @@
 		CE9AE0F41AB6D78200D56481 /* assert.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459C19DC56BF003F0CA7 /* assert.rb */; };
 		CE9AE0F71AB6D78200D56481 /* 04_my_account.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459819DC56BF003F0CA7 /* 04_my_account.feature */; };
 		CE9AE0F81AB6D78200D56481 /* 10_search.feature in Resources */ = {isa = PBXBuildFile; fileRef = BB128E9E19E2F4260033514F /* 10_search.feature */; };
-		CE9AE0FC1AB6D78200D56481 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5CDC7531A00E50C00DA8ADB /* Main_iPad.storyboard */; };
 		CE9AE1001AB6D78200D56481 /* slider-default-trackCrossedOver.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB998199BA8FA0022BAB5 /* slider-default-trackCrossedOver.png */; };
 		CE9AE1011AB6D78200D56481 /* slider-default7-trackBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9A1199BA8FA0022BAB5 /* slider-default7-trackBackground@2x.png */; };
 		CE9AE1021AB6D78200D56481 /* 19_filters.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CD319E44CDC004271B2 /* 19_filters.feature */; };
@@ -648,7 +648,6 @@
 		6CF4AE7E1ADEAA290024EC34 /* JACatalogBannerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACatalogBannerCell.xib; sourceTree = "<group>"; };
 		6CF4AE831ADEABBB0024EC34 /* JACatalogBannerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACatalogBannerCell.h; sourceTree = "<group>"; };
 		6CF4AE841ADEABBB0024EC34 /* JACatalogBannerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACatalogBannerCell.m; sourceTree = "<group>"; };
-		6af3ca12ac4f2d50fa243e2b /* calabash.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; path = calabash.framework; sourceTree = "<group>"; };
 		841E81A71D1680F300A35AAF /* MPCoachMarks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPCoachMarks.h; path = ../MPCoachMarks.h; sourceTree = "<group>"; };
 		841E81A81D1680F300A35AAF /* MPCoachMarks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPCoachMarks.m; path = ../MPCoachMarks.m; sourceTree = "<group>"; };
 		847606B31D77EEE900C54687 /* JAContactUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAContactUsViewController.h; path = ContactUs/JAContactUsViewController.h; sourceTree = "<group>"; };
@@ -658,6 +657,7 @@
 		8709D0CA1E2FC832002220BC /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		8709D0CB1E2FC832002220BC /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		870F8CCB1E3354700021F87B /* Bamilo.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Bamilo.entitlements; sourceTree = "<group>"; };
+		870F8CD61E335BFC0021F87B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Jumia/Base.lproj/Main_iPad.storyboard; sourceTree = SOURCE_ROOT; };
 		892EB9251BC6795800FBF094 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
 		892EB9261BC6795800FBF094 /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIDictionaryBuilder.h; sourceTree = "<group>"; };
 		892EB9271BC6795800FBF094 /* GAIEcommerceFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommerceFields.h; sourceTree = "<group>"; };
@@ -1187,7 +1187,6 @@
 		B5CBFF631A10B33D0050C553 /* JARatingsViewMedium.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JARatingsViewMedium.h; sourceTree = "<group>"; };
 		B5CBFF641A10B33D0050C553 /* JARatingsViewMedium.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JARatingsViewMedium.m; sourceTree = "<group>"; };
 		B5CBFF651A10B33D0050C553 /* JARatingsViewMedium.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JARatingsViewMedium.xib; sourceTree = "<group>"; };
-		B5CDC7531A00E50C00DA8ADB /* Main_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main_iPad.storyboard; sourceTree = SOURCE_ROOT; };
 		B5CFE9981A0CE3BC004CE545 /* JAAddRatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAAddRatingView.h; sourceTree = "<group>"; };
 		B5CFE9991A0CE3BC004CE545 /* JAAddRatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAAddRatingView.m; sourceTree = "<group>"; };
 		B5FBD58919CAF26800BD9510 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
@@ -1801,7 +1800,7 @@
 			isa = PBXGroup;
 			children = (
 				CE69B585198662E6005CC699 /* Main.storyboard */,
-				B5CDC7531A00E50C00DA8ADB /* Main_iPad.storyboard */,
+				870F8CD51E335BFC0021F87B /* Main_iPad.storyboard */,
 			);
 			name = Storyboards;
 			path = View/Storyboard;
@@ -3099,7 +3098,6 @@
 				B5A302E719811EBF00F71726 /* CFNetwork.framework */,
 				B5A3025F19811E9200F71726 /* RICommunicationFramework */,
 				B5A301D219811E8900F71726 /* ExternalFrameworks */,
-				6af3ca12ac4f2d50fa243e2b /* calabash.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -4234,6 +4232,7 @@
 				9A0F9B741B5E58E900569DF2 /* FacebookSDKStrings.bundle in Resources */,
 				9A564CBB1B34273800F23057 /* JASellerRatingsViewController~ipad.xib in Resources */,
 				CE9AE0521AB6D78200D56481 /* slider-default7-handle@2x.png in Resources */,
+				870F8CD71E335BFC0021F87B /* Main_iPad.storyboard in Resources */,
 				CE9AE0561AB6D78200D56481 /* 14_side_menu.feature in Resources */,
 				CE9AE0581AB6D78200D56481 /* JAPDVVariations.xib in Resources */,
 				CE9AE05B1AB6D78200D56481 /* RIStrings.strings in Resources */,
@@ -4362,7 +4361,6 @@
 				9A17D1431C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewNotifView-nobuttons-landscape.xib in Resources */,
 				9A17D1021C5F775900851D6E /* BMA4SiPhoneTextNotifView-landscape-iPad.xib in Resources */,
 				CE9AE0F81AB6D78200D56481 /* 10_search.feature in Resources */,
-				CE9AE0FC1AB6D78200D56481 /* Main_iPad.storyboard in Resources */,
 				1C71FC621E2CABAD007ACF02 /* Bamilosans UltraLight.ttf in Resources */,
 				6C6EBE281ABC6634006A3D46 /* RITracking_Bamilo.plist in Resources */,
 				9A17D1841C5F775900851D6E /* BMA4SiPhoneTextNotifView-nobuttons.xib in Resources */,
@@ -4780,6 +4778,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		870F8CD51E335BFC0021F87B /* Main_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				870F8CD61E335BFC0021F87B /* Base */,
+			);
+			name = Main_iPad.storyboard;
+			sourceTree = "<group>";
+		};
 		9A17D04C1C5F775900851D6E /* BMA4S.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
