@@ -35,6 +35,13 @@
 - (void)test_A_UserRegister {
     XCUIApplication *app = [[XCUIApplication alloc] init];
     
+    XCUIElement *onboardingSkipButton = app.buttons[@"بستن"];
+    [self waitForElementToAppear:onboardingSkipButton withTimeout:5];
+    
+    if (onboardingSkipButton.exists) {
+        [onboardingSkipButton tap];
+    }
+    
     XCUIElementQuery *userFlow = [[[[[[[[[app childrenMatchingType:XCUIElementTypeWindow] elementBoundByIndex:0] childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther];
     
     XCUIElementQuery *tabBar = [[userFlow elementBoundByIndex:1] childrenMatchingType:XCUIElementTypeOther];
@@ -110,6 +117,22 @@
         
         [app.buttons[@"ادامه"] tap];
     }
+}
+
+- (void)waitForElementToAppear:(XCUIElement *)element withTimeout:(NSTimeInterval)timeout
+{
+    NSUInteger line = __LINE__;
+    NSString *file = [NSString stringWithUTF8String:__FILE__];
+    NSPredicate *existsPredicate = [NSPredicate predicateWithFormat:@"exists == true"];
+    
+    [self expectationForPredicate:existsPredicate evaluatedWithObject:element handler:nil];
+    
+    [self waitForExpectationsWithTimeout:timeout handler:^(NSError * _Nullable error) {
+        if (error != nil) {
+            NSString *message = [NSString stringWithFormat:@"Failed to find %@ after %f seconds",element,timeout];
+            [self recordFailureWithDescription:message inFile:file atLine:line expected:YES];
+        }
+    }];
 }
 
 @end
