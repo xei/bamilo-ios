@@ -18,6 +18,8 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+
+    [self.titleUILabel setFont: [UIFont fontWithName:kFontRegularName size:11]];
 }
 
 - (void)setImageUrl:(NSString *)imageUrl {
