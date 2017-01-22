@@ -74,14 +74,6 @@
         
         [app.toolbars.buttons[@"اعمال"] tap];
         [app.buttons[@"ادامه"] tap];
-        
-        //... Now see if the registration was done successfully
-        
-        [[[[tabBar elementBoundByIndex:1] childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeButton].element tap];
-        
-        [[[app.scrollViews.otherElements containingType:XCUIElementTypeStaticText identifier:@"اطلاعات کاربر"] childrenMatchingType:XCUIElementTypeButton].element tap];
-        
-        NSAssert([app.scrollViews.otherElements.textFields[@"نام"].value isEqualToString:@"ناربه"], @"testUserRegister :: User registration failed.");
     }
 }
 
@@ -96,13 +88,13 @@
     [[[[tabBar elementBoundByIndex:0] childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeButton].element tap];
     
     //Tap ورود
-    XCUIElement *loginButton = [[[[[[userFlow elementBoundByIndex:0] childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther] elementBoundByIndex:2] childrenMatchingType:XCUIElementTypeButton].element;
-    [loginButton tap];
+    XCUIElement *logutButton = [[[[[[userFlow elementBoundByIndex:0] childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther] elementBoundByIndex:2] childrenMatchingType:XCUIElementTypeButton].element;
+    [logutButton tap];
     
     //Tap سایر تنظیمات
     [[[[tabBar elementBoundByIndex:0] childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeButton].element tap];
 
-    loginButton = [[[[[[userFlow elementBoundByIndex:0] childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther] elementBoundByIndex:2] childrenMatchingType:XCUIElementTypeButton].element;
+    XCUIElement *loginButton = [[[[[[userFlow elementBoundByIndex:0] childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther] elementBoundByIndex:2] childrenMatchingType:XCUIElementTypeButton].element;
     [loginButton tap];
     
     XCUIElement *emailBamiloComTextField = app.scrollViews.textFields[@"email@bamilo.com"];
@@ -117,14 +109,6 @@
         [passwordTextField typeText:@"123456"];
         
         [app.buttons[@"ادامه"] tap];
-        
-        //... Now see if the login was done successfully
-        
-        [[[[tabBar elementBoundByIndex:1] childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeButton].element tap];
-        
-        [[[app.scrollViews.otherElements containingType:XCUIElementTypeStaticText identifier:@"اطلاعات کاربر"] childrenMatchingType:XCUIElementTypeButton].element tap];
-        
-        NSAssert([app.scrollViews.otherElements.textFields[@"نام"].value isEqualToString:@"ناربه"], @"testUserLogin :: User login failed.");
     }
 }
 
