@@ -56,10 +56,10 @@ platform :ios do
   ############################# POST ##############################
   after_all do |lane|
     clean_build_artifacts
-    notify "Fastlane finished '#{lane}' successfully"
+    notification(subtitle: "Build Success :-)", message: "Fastlane finished '#{lane}' successfully")
   end
 
   error do |lane, exception|
-    notify "Fastlane '#{lane}' errored"
+    notification(subtitle: "Build Failed!", message: "Fastlane '#{lane}' errored - Exception #{exception}")
   end
 end
