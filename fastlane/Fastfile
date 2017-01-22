@@ -7,31 +7,21 @@ platform :ios do
   # Learn more here: https://github.com/fastlane/setups/blob/master/samples-ios/distribute-beta-build.md 🚀
   #
 
-  ensure_git_status_clean
-  ensure_git_branch(branch: 'develop')
+  ############################## PRE ##############################
+  before_all do
+    ensure_git_status_clean
+    ensure_git_branch(branch: 'develop')
+  end
 
-  version =  get_version_number + " (" + get_build_number + ")"
-
-  # Alpha (Crashlytics)
+  ############################## Alpha (Crashlytics) ##############################
   lane :alpha do |values|
-    #---------------------------
-    # Build
-    #---------------------------
-    gym(scheme: 'Bamilo (Staging)', export_method: 'ad-hoc')
-
-    #---------------------------
-    # Run Tests
-    #---------------------------
+    gym(scheme: 'Bamilo (Staging)', export_method: 'ad-hoc', clean: true)
     scan(scheme: 'Bamilo (Staging)', devices: ["iPhone SE"], clean: false, skip_build: true)
 
     emails = values[:emails] ? values[:emails] : nil
     groups = values[:groups] ? values[:groups] : nil
-
     notify = values[:notify] ? values[:notify] : true
 
-    #---------------------------
-    # Upload to Crashlytics
-    #---------------------------
     crashlytics(api_token: 'ddde4ad6ad210575fdac10a908040d1a93e74833',
       build_secret: 'c37b1e5c603fb0fd9b71f1bf627d92f87718c6efd4aada50d724ab8ad126fe35',
       emails: emails,
@@ -39,50 +29,37 @@ platform :ios do
       notes: changelog_from_git_commits,
       notifications: notify)
 
-    #---------------------------
-    # Push to Slack
-    #---------------------------
-    slack(
-      slack_url: "https://hooks.slack.com/services/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",
-      channel: "mobile-alerts",
-      message: "Successfully uploaded an alpha release " + version + " to Crashlytics"
-    )
+      post_to_slack(scheme: "alpha", destination: "Crashlytics")
   end
 
-  # Beta (TestFlight)
+  ############################# Beta (TestFlight) ##############################
   lane :beta do |values|
-    #---------------------------
-    # Build
-    #---------------------------
-    gym(clean: true, output_directory: "/tmp", scheme: "Bamilo", codesigning_identity: "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)")
-
-    #---------------------------
-    # Run Tests
-    #---------------------------
+    gym(scheme: "Bamilo", codesigning_identity: "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)", clean: true)
     scan(scheme: 'Bamilo', devices: ["iPhone SE"], clean: false, skip_build: true)
+    pilot(skip_submission: true, distribute_external: false, skip_waiting_for_build_processing: true, username: "narbeh.mirzaei@bamilo.com")
+    post_to_slack(scheme: "beta", destination: "TestFlight")
+  end
 
-    #---------------------------
-    # Upload to TestFlight
-    #---------------------------
-    pilot(skip_submission: true, username: "narbeh.mirzaei@bamilo.com")
+  ############################# UTIL ##############################
+  private_lane :post_to_slack do |options|
+    scheme      = options[:scheme]
+    environment = scheme.upcase
+    destination = options[:destination]
 
-    #---------------------------
-    # Tag the submit
-    #---------------------------
-    add_git_tag(tag: version)
-
-    #---------------------------
-    # Push to Slack
-    #---------------------------
     slack(
       slack_url: "https://hooks.slack.com/services/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",
       channel: "mobile-alerts",
-      message: "Successfully uploaded a beta release " + version + " to TestFlight"
+      message: "<!here|here>: New :ios: *#{get_version_number}* (#{get_build_number}) running `#{environment}` has been submitted to *#{destination}*  :rocket:",
     )
   end
 
-  #---------------------------
-  # Clean up our files
-  #---------------------------
-  clean_build_artifacts
+  ############################# POST ##############################
+  after_all do |lane|
+    clean_build_artifacts
+    notify "Fastlane finished '#{lane}' successfully"
+  end
+
+  error do |lane, exception|
+    notify "Fastlane '#{lane}' errored"
+  end
 end
