@@ -6,16 +6,32 @@ platform :ios do
   #
   # Learn more here: https://github.com/fastlane/setups/blob/master/samples-ios/distribute-beta-build.md 🚀
   #
-  lane :beta do |values|
-    # Fabric generated this lane for deployment to Crashlytics Beta
-    # set 'export_method' to 'ad-hoc' if your Crashlytics Beta distribution uses ad-hoc provisioning
+
+  ensure_git_status_clean
+  ensure_git_branch(branch: 'develop')
+
+  version =  get_version_number + " (" + get_build_number + ")"
+
+  # Alpha (Crashlytics)
+  lane :alpha do |values|
+    #---------------------------
+    # Build
+    #---------------------------
     gym(scheme: 'Bamilo (Staging)', export_method: 'ad-hoc')
+
+    #---------------------------
+    # Run Tests
+    #---------------------------
+    scan(scheme: 'Bamilo (Staging)', devices: ["iPhone SE"], clean: false, skip_build: true)
 
     emails = values[:emails] ? values[:emails] : nil
     groups = values[:groups] ? values[:groups] : nil
 
     notify = values[:notify] ? values[:notify] : true
 
+    #---------------------------
+    # Upload to Crashlytics
+    #---------------------------
     crashlytics(api_token: 'ddde4ad6ad210575fdac10a908040d1a93e74833',
       build_secret: 'c37b1e5c603fb0fd9b71f1bf627d92f87718c6efd4aada50d724ab8ad126fe35',
       emails: emails,
@@ -23,13 +39,50 @@ platform :ios do
       notes: changelog_from_git_commits,
       notifications: notify)
 
-    # for all available options run `fastlane action crashlytics`
-
-    # You can notify your team in chat that a beta build has been uploaded
+    #---------------------------
+    # Push to Slack
+    #---------------------------
     slack(
       slack_url: "https://hooks.slack.com/services/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",
       channel: "mobile-alerts",
-      message: "Successfully uploaded a beta release " + get_version_number + "(" + get_build_number + ")"
+      message: "Successfully uploaded an alpha release " + version + " to Crashlytics"
     )
   end
+
+  # Beta (TestFlight)
+  lane :beta do |values|
+    #---------------------------
+    # Build
+    #---------------------------
+    gym(clean: true, output_directory: "/tmp", scheme: "Bamilo", codesigning_identity: "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)")
+
+    #---------------------------
+    # Run Tests
+    #---------------------------
+    scan(scheme: 'Bamilo', devices: ["iPhone SE"], clean: false, skip_build: true)
+
+    #---------------------------
+    # Upload to TestFlight
+    #---------------------------
+    pilot(skip_submission: true, username: "narbeh.mirzaei@bamilo.com")
+
+    #---------------------------
+    # Tag the submit
+    #---------------------------
+    add_git_tag(tag: version)
+
+    #---------------------------
+    # Push to Slack
+    #---------------------------
+    slack(
+      slack_url: "https://hooks.slack.com/services/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",
+      channel: "mobile-alerts",
+      message: "Successfully uploaded a beta release " + version + " to TestFlight"
+    )
+  end
+
+  #---------------------------
+  # Clean up our files
+  #---------------------------
+  clean_build_artifacts
 end

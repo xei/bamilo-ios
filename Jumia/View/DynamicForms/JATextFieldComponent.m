@@ -8,6 +8,7 @@
 
 #import "JATextFieldComponent.h"
 #import "JARadioRelatedComponent.h"
+#import "IntUtility.h"
 
 @interface JATextFieldComponent ()
 
@@ -36,6 +37,7 @@
         [_textField setFont:JAListFont];
         [_textField setTextColor:JABlackColor];
         [_textField setValue:JATextFieldColor forKeyPath:@"_placeholderLabel.textColor"];
+        [_textField setIsAccessibilityElement:YES];
         [self addSubview:_textField];
     }
     return _textField;

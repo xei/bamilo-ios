@@ -181,6 +181,7 @@
         }
         _emailTextField = [[JATextFieldComponent alloc] init];
         [_emailTextField setFrame:CGRectMake((self.view.width - kWidth)/2, yOffset, kWidth, _emailTextField.height)];
+        [_emailTextField.textField setAutocorrectionType:UITextAutocorrectionTypeNo];
         [_emailTextField.textField setReturnKeyType:UIReturnKeyNext];
         [_emailTextField.textField setKeyboardType:UIKeyboardTypeEmailAddress];
         [_emailTextField.textField setAutocapitalizationType:UITextAutocapitalizationTypeNone];
