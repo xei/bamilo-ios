@@ -108,7 +108,7 @@
         
         
         UILabel* freeShippingLabel = [UILabel new];
-        [freeShippingLabel setFont:JACaptionItalicFont];
+        [freeShippingLabel setFont:[UIFont fontWithName:kFontRegularName size:11]];
         [freeShippingLabel setTextColor:JABlack800Color];
         [freeShippingLabel setText:STRING_FREE_SHIPPING_POSSIBLE];
         [freeShippingLabel sizeToFit];

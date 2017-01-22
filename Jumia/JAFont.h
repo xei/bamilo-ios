@@ -13,13 +13,13 @@
 #define kFontLightNameKey @"kFontLightNameKey"
 #define kFontBoldNameKey @"kFontBoldNameKey"
 #define kFontMediumNameKey @"kFontMediumNameKey"
-#define kFontItalicNameKey @"kFontItalicNameKey"
+#define kFontBlackNameKey @"kFontBlackNameKey"
 
 #define kFontRegularName [[NSUserDefaults standardUserDefaults] objectForKey:kFontRegularNameKey]
 #define kFontLightName [[NSUserDefaults standardUserDefaults] objectForKey:kFontLightNameKey]
 #define kFontBoldName [[NSUserDefaults standardUserDefaults] objectForKey:kFontBoldNameKey]
 #define kFontMediumName [[NSUserDefaults standardUserDefaults] objectForKey:kFontMediumNameKey]
-#define kFontItalicName [[NSUserDefaults standardUserDefaults] objectForKey:kFontItalicNameKey]
+#define kFontBlackName [[NSUserDefaults standardUserDefaults] objectForKey:kFontBlackNameKey]
 
 #define JADisplay1Font      [UIFont fontWithName:kFontRegularName size:25]
 #define JADisplay2Font      [UIFont fontWithName:kFontRegularName size:15]
@@ -30,7 +30,6 @@
 #define JAHEADLINEFont      [UIFont fontWithName:kFontBoldName size:11]
 #define JABodyFont          [UIFont fontWithName:kFontRegularName size:12]
 #define JACaptionFont       [UIFont fontWithName:kFontRegularName size:10]
-#define JACaptionItalicFont [UIFont fontWithName:kFontItalicName size:10]
 #define JABADGEFont         [UIFont fontWithName:kFontMediumName size:10]
 #define JABUTTONFont        [UIFont fontWithName:kFontBoldName size:11]
 #define JABUTTON2Font       [UIFont fontWithName:kFontBoldName size:10]
