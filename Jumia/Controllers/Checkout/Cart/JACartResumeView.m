@@ -115,7 +115,7 @@
 {
     if (!VALID(_freeShippingLabel, UILabel)) {
         _freeShippingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.f, 0.f, self.width, 30)];
-        [_freeShippingLabel setFont:JACaptionItalicFont];
+        [_freeShippingLabel setFont: [UIFont fontWithName:kFontRegularName size:11]];
         [_freeShippingLabel setTextColor:JABlack800Color];
         [_freeShippingLabel setText:STRING_FREE_SHIPPING_POSSIBLE];
         [_freeShippingLabel sizeToFit];
@@ -123,8 +123,7 @@
     return _freeShippingLabel;
 }
 
-- (JAButton *)proceedToCheckoutButton
-{
+- (JAButton *)proceedToCheckoutButton {
     if (!VALID(_proceedToCheckoutButton, JAButton)) {
         _proceedToCheckoutButton = [[JAButton alloc] initButtonWithTitle:STRING_CONTINUE];
         [_proceedToCheckoutButton setFrame:CGRectMake(0.f, CGRectGetMaxY(self.subtotalView.frame), self.width, kBottomDefaultHeight)];
@@ -133,9 +132,8 @@
     return _proceedToCheckoutButton;
 }
 
-- (JAButton *)callToOrderButton
-{
-    if (!VALID(_callToOrderButton, JAButton)) {
+- (JAButton *)callToOrderButton {
+    if (!_callToOrderButton) {
         _callToOrderButton = [[JAButton alloc] initAlternativeButtonWithTitle:STRING_CALL_TO_ORDER];
         [_callToOrderButton setFrame:CGRectMake(0.f, CGRectGetMaxY(self.proceedToCheckoutButton.frame) + 10.f, self.width, kBottomDefaultHeight)];
         [_callToOrderButton setHidden:YES];
@@ -144,8 +142,7 @@
     return _callToOrderButton;
 }
 
-- (JAProductInfoPriceDescriptionLine *)newPriceDescriptionLineWithHeight:(CGFloat)height
-{
+- (JAProductInfoPriceDescriptionLine *)newPriceDescriptionLineWithHeight:(CGFloat)height {
     JAProductInfoPriceDescriptionLine *priceDescriptionLine = [[JAProductInfoPriceDescriptionLine alloc] initWithFrame:CGRectMake(0, 0, self.width, height)];
     return priceDescriptionLine;
 }

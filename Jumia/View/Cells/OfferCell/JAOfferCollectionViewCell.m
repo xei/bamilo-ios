@@ -133,7 +133,7 @@
     
     if (!self.freeShippingLabel) {
         self.freeShippingLabel = [UILabel new];
-        [self.freeShippingLabel setFont:JACaptionItalicFont];
+        [self.freeShippingLabel setFont: [UIFont fontWithName:kFontRegularName size:11]];
         [self.freeShippingLabel setTextColor:JABlack800Color];
         [self.freeShippingLabel setText:STRING_FREE_SHIPPING_POSSIBLE];
         [self.freeShippingLabel sizeToFit];

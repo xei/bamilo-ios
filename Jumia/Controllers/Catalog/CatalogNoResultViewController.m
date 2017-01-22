@@ -16,6 +16,8 @@
     @property (weak, nonatomic) IBOutlet UITableView *tableView;
     @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewHeightConstraint;
     @property (weak, nonatomic) IBOutlet UILabel *noResultMessageUILabel;
+    @property (weak, nonatomic) IBOutlet UILabel *warningMessageUILabel;
+
     @property (strong, nonatomic) RITeaserGrouping *teaserGroup;
 @end
 
@@ -35,6 +37,9 @@ const CGFloat tableViewHeaderSectionHeight = 35;
                     forCellReuseIdentifier:[PopularTeaserTableViewCell nibName]];
     [self.tableView registerNib:[UINib nibWithNibName:[PopularTeaserHeaderTableViewCell nibName] bundle:nil]
          forCellReuseIdentifier:[PopularTeaserHeaderTableViewCell nibName]];
+    
+    [self.noResultMessageUILabel setFont: [UIFont fontWithName:kFontRegularName size:14]];
+    [self.warningMessageUILabel setFont: [UIFont fontWithName:kFontLightName size:11]];
 
 }
 
