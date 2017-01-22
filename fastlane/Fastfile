@@ -55,7 +55,7 @@ platform :ios do
     slack(
       slack_url: "https://hooks.slack.com/services/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",
       channel: "mobile-alerts",
-      message: "<!here|here>: New :ios: *#{get_version_number}* (#{get_build_number}) running `#{environment}` has been submitted to *#{destination}*  :rocket:",
+      message: "Hey guys! A new iOS *#{get_version_number}* (#{get_build_number}) running `#{environment}` has been submitted to *#{destination}*  :rocket:",
     )
   end
 
