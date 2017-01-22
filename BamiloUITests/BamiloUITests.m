@@ -42,16 +42,7 @@
         [onboardingSkipButton tap];
     }
     
-    XCUIElementQuery *userFlow = [[[[[[[[[app childrenMatchingType:XCUIElementTypeWindow] elementBoundByIndex:0] childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther];
-    
-    XCUIElementQuery *tabBar = [[userFlow elementBoundByIndex:1] childrenMatchingType:XCUIElementTypeOther];
-    
-    //Tap سایر تنظیمات
-    [[[[tabBar elementBoundByIndex:0] childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeButton].element tap];
-    
-    //Tap ورود
-    [[[[[[[userFlow elementBoundByIndex:0] childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther] elementBoundByIndex:2] childrenMatchingType:XCUIElementTypeButton].element tap];
-    
+    [self navigateToLoginOrRegisterFromTabBar:app];
     
     XCUIElement *emailBamiloComTextField = app.scrollViews.textFields[@"email@bamilo.com"];
     if (emailBamiloComTextField.exists) {
@@ -87,38 +78,37 @@
 - (void)test_B_UserLogin {
     XCUIApplication *app = [[XCUIApplication alloc] init];
     
-    XCUIElementQuery *userFlow = [[[[[[[[[app childrenMatchingType:XCUIElementTypeWindow] elementBoundByIndex:0] childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther];
-    
-    XCUIElementQuery *tabBar = [[userFlow elementBoundByIndex:1] childrenMatchingType:XCUIElementTypeOther];
-    
-    //Tap سایر تنظیمات
-    [[[[tabBar elementBoundByIndex:0] childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeButton].element tap];
-    
-    //Tap ورود
-    XCUIElement *logutButton = [[[[[[userFlow elementBoundByIndex:0] childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther] elementBoundByIndex:2] childrenMatchingType:XCUIElementTypeButton].element;
-    [logutButton tap];
-    
-    //Tap سایر تنظیمات
-    [[[[tabBar elementBoundByIndex:0] childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeButton].element tap];
+    [self navigateToLoginOrRegisterFromTabBar:app];
 
-    XCUIElement *loginButton = [[[[[[userFlow elementBoundByIndex:0] childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther] elementBoundByIndex:2] childrenMatchingType:XCUIElementTypeButton].element;
-    [loginButton tap];
-    
     XCUIElement *emailBamiloComTextField = app.scrollViews.textFields[@"email@bamilo.com"];
     if (emailBamiloComTextField.exists) {
         [emailBamiloComTextField tap];
         [emailBamiloComTextField typeText:@"narbeh.mirzaei@bamilo.com"];
         
-        [app.scrollViews.otherElements.buttons[@"ادامه"] tap];
+        [app.buttons[@"ادامه"] tap];
         
         XCUIElement *passwordTextField = app.scrollViews.otherElements.secureTextFields[@"رمز عبور جدید"];
         [passwordTextField tap];
-        [passwordTextField typeText:@"123456"];
+        [passwordTextField typeText:@"123456\n"];
         
         [app.buttons[@"ادامه"] tap];
     }
 }
 
+//MARK: - Private methods
+- (void)navigateToLoginOrRegisterFromTabBar:(XCUIApplication *)app {
+    XCUIElementQuery *userFlow = [[[[[[[[[app childrenMatchingType:XCUIElementTypeWindow] elementBoundByIndex:0] childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther];
+    
+    XCUIElementQuery *tabBar = [[userFlow elementBoundByIndex:1] childrenMatchingType:XCUIElementTypeOther];
+    
+    //Tap بیشتر
+    [[[[tabBar elementBoundByIndex:0] childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeButton].element tap];
+    
+    //Tap ورود
+    [[[[[[[userFlow elementBoundByIndex:0] childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther] elementBoundByIndex:2] childrenMatchingType:XCUIElementTypeButton].element tap];
+}
+
+//MARK: - Helpers
 - (void)waitForElementToAppear:(XCUIElement *)element withTimeout:(NSTimeInterval)timeout
 {
     NSUInteger line = __LINE__;
@@ -133,6 +123,15 @@
             [self recordFailureWithDescription:message inFile:file atLine:line expected:YES];
         }
     }];
+}
+
+- (void)forceTapElement:(XCUIElement *)element {
+    if (element.hittable) {
+        [element tap];
+    } else {
+        XCUICoordinate *elementCoordinate = [element coordinateWithNormalizedOffset:CGVectorMake(0, 0)];
+        [elementCoordinate tap];
+    }
 }
 
 @end
