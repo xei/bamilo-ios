@@ -30,11 +30,18 @@
                                                                centerViewHeight)];
     unsigned int colorInt = [JAUtils intFromHexString:hexString];
     [self.centerView setBackgroundColor:UIColorFromRGB(colorInt)];
+    
+    
+    
+    
     [self addSubview:self.centerView];
     
     self.centerView.layer.cornerRadius = self.centerView.frame.size.height /2;
     self.centerView.layer.masksToBounds = YES;
-    self.centerView.layer.borderWidth = 0;
+    if ([hexString isEqualToString:@"#FFFFFF"]) {
+        self.centerView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        self.centerView.layer.borderWidth = 1;
+    }
 }
 
 @end

@@ -207,9 +207,7 @@
         
         [(JAPriceFiltersView*)self.currentFilterView initializeWithPriceFilterOption:[filter.options firstObject]];
     } else {
-        
         self.currentFilterView = [[[NSBundle mainBundle] loadNibNamed:@"JAGenericFiltersView" owner:self options:nil] objectAtIndex:0];
-
         self.currentFilterView.frame = self.currentFilterView.frame = CGRectMake(CGRectGetMaxX(self.tableView.frame),
                                                                                  self.view.bounds.origin.y,
                                                                                  self.view.bounds.size.width - self.tableView.frame.size.width,

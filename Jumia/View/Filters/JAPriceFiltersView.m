@@ -12,8 +12,8 @@
 @interface JAPriceFiltersView()
 
 @property (weak, nonatomic) IBOutlet TTRangeSlider *priceRangeSlider;
-@property (weak, nonatomic) IBOutlet UISwitch *discountSwitch;
-@property (weak, nonatomic) IBOutlet UILabel *discountLabel;
+//@property (weak, nonatomic) IBOutlet UISwitch *discountSwitch;
+//@property (weak, nonatomic) IBOutlet UILabel *discountLabel;
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 
 @property (strong, nonatomic) IBOutletCollection(UILabel) NSArray *textsInPriceRangeUILabels;
@@ -31,8 +31,8 @@
     self.priceFilterOption = priceFilterOption;
     
     self.backgroundColor = [UIColor whiteColor];
-    self.discountLabel.font = JAListFont;
-    self.discountLabel.textColor = JAButtonTextOrange;
+    //self.discountLabel.font = JAListFont;
+    //self.discountLabel.textColor = JAButtonTextOrange;
     
     self.priceRangeSlider.step = self.priceFilterOption.interval;
     
@@ -48,20 +48,10 @@
     self.priceRangeSlider.hideLabels = YES;
     self.priceRangeSlider.handleBorderWidth = 1;
     self.priceRangeSlider.handleColor = [UIColor whiteColor];
-    
-    self.discountLabel.translatesAutoresizingMaskIntoConstraints = YES;
-    self.discountLabel.text = STRING_WITH_DISCOUNT_ONLY;
-    [self.discountLabel sizeToFit];
-    self.discountSwitch.on = self.priceFilterOption.discountOnly;
-    [self.discountSwitch setAccessibilityLabel:STRING_WITH_DISCOUNT_ONLY];
-    [self.discountSwitch addTarget:self action:@selector(switchMoved:) forControlEvents:UIControlEventTouchUpInside];
-    
-    self.discountSwitch.translatesAutoresizingMaskIntoConstraints = YES;
+
     self.contentView.translatesAutoresizingMaskIntoConstraints = YES;
     self.contentView.frame = CGRectMake(16.0f, (self.frame.size.height - self.contentView.frame.size.width)/2, self.contentView.frame.size.width, self.contentView.frame.size.height);
-//    if (RI_IS_RTL) {
-//        //[self flipAllSubviews];
-//    }
+    
     
     for (UILabel *label in self.textsInPriceRangeUILabels) {
         label.font = [UIFont fontWithName:kFontRegularName size: 13];
@@ -74,7 +64,11 @@
 }
 
 - (void)reload {
-    self.contentView.frame = CGRectMake(16.0f, (self.frame.size.height - self.contentView.frame.size.width)/2,
+    
+    //Magic_Number
+    CGFloat centerYConstainetValue = 50;
+    
+    self.contentView.frame = CGRectMake(16.0f, (self.frame.size.height  - self.contentView.frame.size.height)/2 - centerYConstainetValue,
                                         self.contentView.frame.size.width,
                                         self.contentView.frame.size.height);
     if (RI_IS_RTL) {
@@ -86,7 +80,6 @@
     //save selection in filter
     self.priceFilterOption.lowerValue = self.priceRangeSlider.selectedMinimum;
     self.priceFilterOption.upperValue = self.priceRangeSlider.selectedMaximum;
-    self.priceFilterOption.discountOnly = self.discountSwitch.on;
     
     [super saveOptions];
 }
@@ -119,8 +112,8 @@
     [self.lowerSelectedPriceUITextField endEditing:true];
 }
 
-- (void)switchMoved:(id)sender {
-    [self saveOptions];
-}
+//- (void)switchMoved:(id)sender {
+//    [self saveOptions];
+//}
 
 @end
