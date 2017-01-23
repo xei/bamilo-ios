@@ -694,4 +694,12 @@
     return NO;
 }
 
+-(void)appWillEnterForeground {
+    return;
+}
+
+-(void)appDidEnterBackground {
+    return;
+}
+
 @end
