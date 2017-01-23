@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "JAFiltersView.h"
 #import "RIFilter.h"
+#import "TTRangeSlider.h"
 
-@interface JAPriceFiltersView : JAFiltersView
+@interface JAPriceFiltersView : JAFiltersView <TTRangeSliderDelegate>
 
 - (void)initializeWithPriceFilterOption:(RIFilterOption*)priceFilterOption;
 - (void)saveOptions;
