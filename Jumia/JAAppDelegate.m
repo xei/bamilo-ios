@@ -37,14 +37,16 @@
     [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans" forKey:kFontMediumNameKey];
     [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans-Black" forKey:kFontBlackNameKey];
 
-#ifdef IS_STAGING
+#ifdef IS_DEBUG
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITrackingDebug_Bamilo" ofType:@"plist"];
+#elif IS_STAGING
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITrackingDebug_Bamilo" ofType:@"plist"];
     [Fabric with:@[[Crashlytics class]]];
+#elif IS_RELEASE
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITracking_Bamilo" ofType:@"plist"];
 #endif
     
-#ifdef IS_RELEASE
-    NSString *plistPath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"RITracking_%@", [APP_NAME uppercaseString]] ofType:@"plist"];
     [[RITrackingWrapper sharedInstance] startWithConfigurationFromPropertyListAtPath:plistPath launchOptions:launchOptions delegate:self];
-#endif
 
     [[GSDAppIndexing sharedInstance] registerApp:kAppStoreIdBamiloInteger];
     
