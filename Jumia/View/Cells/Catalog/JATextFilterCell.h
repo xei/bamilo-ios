@@ -18,9 +18,7 @@
 @property (nonatomic, strong) UILabel* nameLabel;
 @property (nonatomic, strong) UILabel* quantityLabel;
 
-- (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier
-                            isLandscape:(BOOL)isLandscape
-                                  frame:(CGRect)frame;
+- (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier isLandscape:(BOOL)isLandscape frame:(CGRect)frame;
 
 - (void)setupIsLandscape:(BOOL)landscape;
 

@@ -7,6 +7,7 @@
 //
 
 #import "JATextFilterCell.h"
+#import "NSString+Style.h"
 
 @implementation JATextFilterCell
 
@@ -20,11 +21,8 @@
 }
 
 -(UIView *)separatorView {
-    if (!VALID(_separatorView, UIView)) {
-        _separatorView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
-                                                             self.clickableView.frame.size.height - 1,
-                                                             self.width,
-                                                             1.0f)];
+    if (!_separatorView) {
+        _separatorView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, self.clickableView.frame.size.height - 1, self.width, 1.0f)];
         _separatorView.backgroundColor = JABlack400Color;
         [self.clickableView addSubview:_separatorView];
     }
@@ -32,10 +30,11 @@
 }
 
 -(UIImageView *)customAccessoryView {
-    if (!VALID(_customAccessoryView, UIImageView)) {
-        UIImage* customAccessoryIcon = [UIImage imageNamed:@"noSelectionCheckMark"];
-        _customAccessoryView = [[UIImageView alloc] initWithImage:customAccessoryIcon];
-        _customAccessoryView.highlightedImage = [UIImage imageNamed:@"selectionCheckmark"];
+    if (!_customAccessoryView) {
+        UIImage* customAccessoryIcon = [UIImage imageNamed:@"selectionCheckmark"];
+        
+        _customAccessoryView = [[UIImageView alloc] init];
+        _customAccessoryView.highlightedImage = customAccessoryIcon;
         _customAccessoryView.frame = CGRectMake(self.clickableView.frame.size.width - customAccessoryIcon.size.width,
                                                (self.clickableView.frame.size.height - customAccessoryIcon.size.height) / 2,
                                                customAccessoryIcon.size.width,
@@ -46,7 +45,7 @@
 }
 
 -(UILabel *)nameLabel {
-    if (!VALID(_nameLabel, UILabel)) {
+    if (!_nameLabel) {
         _nameLabel = [UILabel new];
         _nameLabel.font = JADisplay3Font;
         _nameLabel.textColor = JAButtonTextOrange;
@@ -69,8 +68,7 @@
 
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier
                             isLandscape:(BOOL)isLandscape
-                                  frame:(CGRect)frame;
-{
+                                  frame:(CGRect)frame {
     self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
     if (self) {
         self.frame = frame;
@@ -120,7 +118,7 @@
 
 -(void)setFilterOption:(RIFilterOption *)filterOption {
     self.nameLabel.text = filterOption.name;
-    self.quantityLabel.text = [NSString stringWithFormat:@"(%ld)",[filterOption.totalProducts longValue]];
+    self.quantityLabel.text = [[NSString stringWithFormat:@"(%ld)",[filterOption.totalProducts longValue]] numbersToPersian];
     [self.customAccessoryView setHighlighted:filterOption.selected];
 }
 

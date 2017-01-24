@@ -17,7 +17,6 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong)NSMutableArray* selectedIndexes;
-
 @property (nonatomic, strong)RIFilter* filter;
 @property (nonatomic, assign)BOOL isLandscape;
 
@@ -50,13 +49,10 @@
 
 - (void)saveOptions {
     //save selection in filter
-    
     for (int i = 0; i < self.selectedIndexes.count; i++) {
         
         NSNumber *selectionNumber = [self.selectedIndexes objectAtIndex:i];
-        
         RIFilterOption* filterOption = [self.filter.options objectAtIndex:i];
-        
         filterOption.selected = [selectionNumber boolValue];
     }
     
@@ -88,12 +84,7 @@
         
         cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
         if (ISEMPTY(cell)) {
-            cell = [[JAColorFilterCell alloc] initWithReuseIdentifier:cellIdentifier
-                                                          isLandscape:self.isLandscape
-                                                                frame:CGRectMake(0.0f,
-                                                                                 0.0f,
-                                                                                 tableView.frame.size.width,
-                                                                                 [JAColorFilterCell height])];
+            cell = [[JAColorFilterCell alloc] initWithReuseIdentifier:cellIdentifier isLandscape:self.isLandscape frame:CGRectMake(0.0f, 0.0f, tableView.frame.size.width, [JAColorFilterCell height])];
         } else {
             [(JAColorFilterCell*)cell setupIsLandscape:self.isLandscape];
         }
@@ -110,12 +101,7 @@
         cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
         
         if (ISEMPTY(cell)) {
-            cell = [[JARatingFilterCell alloc] initWithReuseIdentifier:cellIdentifier
-                                                           isLandscape:self.isLandscape
-                                                                 frame:CGRectMake(0.0f,
-                                                                                  0.0f,
-                                                                                  tableView.frame.size.width,
-                                                                                  [JAColorFilterCell height])];
+            cell = [[JARatingFilterCell alloc] initWithReuseIdentifier:cellIdentifier isLandscape:self.isLandscape frame:CGRectMake(0.0f, 0.0f, tableView.frame.size.width, [JAColorFilterCell height])];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         
@@ -125,20 +111,14 @@
     } else {
         
         if (ISEMPTY(cell)) {
-            cell = [[JATextFilterCell alloc] initWithReuseIdentifier:cellIdentifier
-                                                         isLandscape:self.isLandscape
-                                                               frame:CGRectMake(0.0f,
-                                                                                0.0f,
-                                                                                tableView.frame.size.width,
-                                                                                [JAColorFilterCell height])];
-
+            cell = [[JATextFilterCell alloc] initWithReuseIdentifier:cellIdentifier isLandscape:self.isLandscape frame:CGRectMake(0.0f, 0.0f, tableView.frame.size.width, [JAColorFilterCell height])];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         
-        [(JATextFilterCell*)cell clickableView].tag = indexPath.row;
-        [[(JATextFilterCell*)cell clickableView] addTarget:self action:@selector(cellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
-        [(JATextFilterCell*)cell setFilterOption:[self.filter.options objectAtIndex:indexPath.row]];
-        [(JATextFilterCell*)cell setupIsLandscape:self.isLandscape];
+        [(JATextFilterCell*) cell clickableView].tag = indexPath.row;
+        [[(JATextFilterCell*) cell clickableView] addTarget:self action:@selector(cellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [(JATextFilterCell*) cell setFilterOption:[self.filter.options objectAtIndex:indexPath.row]];
+        [(JATextFilterCell*) cell setupIsLandscape:self.isLandscape];
     }
     
     return cell;

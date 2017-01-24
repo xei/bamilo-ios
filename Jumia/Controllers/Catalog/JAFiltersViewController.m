@@ -11,6 +11,7 @@
 #import "RIFilter.h"
 #import "JAGenericFiltersView.h"
 #import "JAPriceFiltersView.h"
+#import "NSString+Style.h"
 
 @interface JAFiltersViewController () <UITableViewDataSource, UITableViewDelegate, JAFiltersViewDelegate>
 
@@ -35,33 +36,8 @@
     
     self.navBarLayout.title = STRING_FILTERS;
     self.navBarLayout.showBackButton = YES;
-    //self.navBarLayout.doneButtonTitle = STRING_APPLY;
-//
-//    self.tableView = [[UITableView alloc] init];
-//    self.tableView.delegate = self;
-//    self.tableView.dataSource = self;
-//    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-//    [self.view addSubview:self.tableView];
-//    
-//    self.clearAllView = [[JAClickableView alloc] init];
-//    self.clearAllView.backgroundColor = [UIColor whiteColor];
-//    [self.clearAllView setFont:JAListFont];
-//    [self.clearAllView setTitle:STRING_CLEAR_ALL forState:UIControlStateNormal];
-//    [self.clearAllView setTitleColor:JASysBlueColor forState:UIControlStateNormal];
-//    [self.clearAllView addTarget:self action:@selector(clearAllFilters) forControlEvents:UIControlEventTouchUpInside];
-//    [self.view addSubview:self.clearAllView];
-//    
-//    self.bottomSeparator = [[UIView alloc] init];
-//    self.bottomSeparator.backgroundColor = JABlack400Color;
-//    [self.clearAllView addSubview:self.bottomSeparator];
-//    
-//    self.verticalSeparator = [[UIView alloc] init];
-//    self.verticalSeparator.backgroundColor = JABlack400Color;
-//    [self.view addSubview:self.verticalSeparator];
-//    
     [self selectIndex:0];
     [self updateTitle];
-    
     
     // Get the index of price filter in filterArray
     [self.filtersArray enumerateObjectsUsingBlock: ^(RIFilter *filter, NSUInteger index, BOOL *stop) {
@@ -81,10 +57,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffMenuSwipePanelNotification object:nil];
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applyButtonPressed) name:kDidPressEditNotification object:nil];
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applyButtonPressed) name:kDidPressDoneNotification object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -112,7 +85,7 @@
     if (0 == totalSelected) {
         newTitle = STRING_FILTERS;
     } else {
-        newTitle = [NSString stringWithFormat:@"%@ (%ld)", STRING_FILTERS, (long)totalSelected];
+        newTitle = [[NSString stringWithFormat:@"%@ (%ld)", STRING_FILTERS, (long)totalSelected] numbersToPersian];
     }
     if (![newTitle isEqualToString:self.navBarLayout.title]) {
         //the title changed, force a reload
@@ -121,14 +94,8 @@
     }
 }
 
--(void)viewWillLayoutSubviews {
+- (void)viewWillLayoutSubviews {
     [self.currentFilterView reload];
-//
-//    if (RI_IS_RTL) {
-//        [self.tableView flipViewPositionInsideSuperview];
-//        [self.verticalSeparator flipViewPositionInsideSuperview];
-//        [self.currentFilterView flipViewPositionInsideSuperview];
-//    }
 }
 
 #pragma mark - UITableView
@@ -162,7 +129,7 @@
     }
     
     CGFloat margin = 16.0f;
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
+    if (UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
         margin = 32.0f;
     }
     [cell setupWithFilter:filter cellIsSelected:cellIsSelected width:tableView.frame.size.width margin:margin];
@@ -186,9 +153,7 @@
     }
     
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:oldSelectedIndexPath, self.selectedIndexPath, nil] withRowAnimation:UITableViewRowAnimationAutomatic];
-    
     [self.currentFilterView removeFromSuperview];
-    
     RIFilter* filter = [self.filtersArray objectAtIndex:index];
     
     if ([filter.uid isEqualToString:@"price"]) {
@@ -203,10 +168,10 @@
         
     }
     
-    self.currentFilterView.frame = self.currentFilterView.frame = CGRectMake(self.view.bounds.origin.x,
-                                                                             self.view.bounds.origin.y,
-                                                                             self.currentFilterContainerView.frame.size.width,
-                                                                             self.currentFilterContainerView.frame.size.height);
+    self.currentFilterView.frame =  CGRectMake(self.view.bounds.origin.x,
+                                               self.view.bounds.origin.y,
+                                               self.currentFilterContainerView.frame.size.width,
+                                               self.currentFilterContainerView.frame.size.height);
     
     self.currentFilterView.filtersViewDelegate = self;
     [self.currentFilterContainerView addSubview:self.currentFilterView];

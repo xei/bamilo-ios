@@ -10,4 +10,5 @@
 
 @interface NSString (Style)
 - (NSString *)wrapWithMaxSize:(int)maxSize;
+- (NSString *) numbersToPersian;
 @end

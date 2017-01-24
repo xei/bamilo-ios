@@ -24,4 +24,15 @@
     
 }
 
+- (NSString *) numbersToPersian {
+    NSNumberFormatter *formatter = [NSNumberFormatter new];
+    formatter.locale = [NSLocale localeWithLocaleIdentifier:@"ar"];
+    NSString *result = self;
+    for (NSInteger i = 0; i < 10; i++) {
+        NSNumber *num = @(i);
+        result = [result stringByReplacingOccurrencesOfString:num.stringValue withString:[formatter stringFromNumber:num]];
+    }
+    return result;
+}
+
 @end
