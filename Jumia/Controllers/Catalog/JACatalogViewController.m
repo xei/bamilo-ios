@@ -776,9 +776,7 @@ typedef void (^ProcessActionBlock)(void);
                   forControlEvents:UIControlEventTouchUpInside];
     
     cell.feedbackView.tag = indexPath.row;
-    [cell.feedbackView addTarget:self
-                          action:@selector(clickableViewPressedInCell:)
-                forControlEvents:UIControlEventTouchUpInside];
+    [cell.feedbackView addTarget:self action:@selector(clickableViewPressedInCell:) forControlEvents:UIControlEventTouchUpInside];
     
     [cell setProduct:product];
     
@@ -968,14 +966,8 @@ typedef void (^ProcessActionBlock)(void);
 }
 
 #pragma mark - JACatalogTopViewDelegate
-
 - (void)filterButtonPressed {
-    JAFiltersViewController* filtersViewController = [[JAFiltersViewController alloc] init];
-    if(self.filtersArray) {
-        filtersViewController.filtersArray = self.filtersArray;
-    }
-    filtersViewController.delegate = self;
-    [self.navigationController pushViewController:filtersViewController animated:YES];
+    [self performSegueWithIdentifier: @"showFilterView" sender:nil];
 }
 
 - (void)sortingButtonPressed {
@@ -988,7 +980,7 @@ typedef void (^ProcessActionBlock)(void);
     [self.sortingView animateIn];
 }
 
-- (void)viewModeChanged; {
+- (void)viewModeChanged {
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:self.catalogTopView.cellTypeSelected] forKey:JACatalogGridSelected];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
@@ -1530,6 +1522,14 @@ typedef void (^ProcessActionBlock)(void);
     NSString * segueName = segue.identifier;
     if ([segueName isEqualToString: @"embedCatalogNoResult"]) {
         self.containerViewController = (CatalogNoResultViewController *) [segue destinationViewController];
+    }
+    
+    if ([segueName isEqualToString: @"showFilterView"]) {
+        
+        JAFiltersViewController *destinationViewCtrl =  [segue destinationViewController];
+        destinationViewCtrl.filtersArray = self.filtersArray ?: @[];
+        destinationViewCtrl.delegate = self;
+        
     }
 }
 

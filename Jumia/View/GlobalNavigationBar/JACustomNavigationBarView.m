@@ -243,7 +243,7 @@
     if (layout.showBackButton) {
         [self showBackButtonWithTitle:layout.backButtonTitle];
     } else if (layout.showEditButton) {
-        [self showEditButton];
+        [self showEditButtonWithTitle:layout.editButtonTitle];
     } else if (layout.showMenuButton) {
         [self showMenuButton];
     } else {
@@ -282,8 +282,8 @@
     
     [self adjustTitleFrame];
 }
-- (void)showEditButton {
-    [self.editButton setTitle:STRING_EDIT forState:UIControlStateNormal];
+- (void)showEditButtonWithTitle: (NSString *) title {
+    [self.editButton setTitle: title forState:UIControlStateNormal];
     self.backButton.hidden = YES;
     self.leftButton.hidden = YES;
     self.editButton.hidden = NO;
@@ -340,8 +340,7 @@
     CGFloat backButtonLeftInset = 10.0f;
     CGFloat editButtonLeftMargin = 7.0f;
     
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
-    {
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
         leftMargin = 6.0f;
         editButtonLeftMargin = 16.0f;
     }

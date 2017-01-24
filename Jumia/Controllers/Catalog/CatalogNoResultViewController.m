@@ -11,6 +11,7 @@
 #import "RITeaserComponent.h"
 #import "PopularTeaserTableViewCell.h"
 #import "PopularTeaserHeaderTableViewCell.h"
+#import "NSString+Style.h"
 
 @interface CatalogNoResultViewController ()
     @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -95,17 +96,10 @@ const CGFloat tableViewHeaderSectionHeight = 35;
 - (void)setSearchQuery:(NSString *)searchQuery {
     NSString* msgToShow;
     if (searchQuery) {
-        int maxStringCharacters = 7;
         
-        if (searchQuery.length > maxStringCharacters) {
-            NSRange stringRange = {0, MIN([searchQuery length], maxStringCharacters)};
-            stringRange = [searchQuery rangeOfComposedCharacterSequencesForRange:stringRange];
-            NSString *shortString = [searchQuery substringWithRange:stringRange];
-            
-            searchQuery = [NSString stringWithFormat:@"%@..", shortString];
-        }
-        
+        searchQuery = [searchQuery wrapWithMaxSize:7];
         msgToShow = [NSString stringWithFormat:@"متاسفانه برای %@ شما نتیجه یافت نشد", searchQuery];
+        
     } else { //if there is no searchQuery (e.g. comes from empty category
         msgToShow = @"متاسفانه موردی یافت نشد";
     }

@@ -17,6 +17,9 @@
 		1C80D8841E2E3D850036B514 /* ‌Bamilosans Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1C71FC5A1E2CABAD007ACF02 /* ‌Bamilosans Bold.ttf */; };
 		1CCD52A01E2BA42F008BAEE4 /* PopularTeaserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCD529E1E2BA42F008BAEE4 /* PopularTeaserTableViewCell.m */; };
 		1CCD52A11E2BA42F008BAEE4 /* PopularTeaserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CCD529F1E2BA42F008BAEE4 /* PopularTeaserTableViewCell.xib */; };
+		6101BE731E36075D005AA646 /* NSString+Style.m in Sources */ = {isa = PBXBuildFile; fileRef = 6101BE721E36075D005AA646 /* NSString+Style.m */; };
+		6101BE761E36129C005AA646 /* UIView+Style.m in Sources */ = {isa = PBXBuildFile; fileRef = 6101BE751E36129C005AA646 /* UIView+Style.m */; };
+		6101BE791E373569005AA646 /* UIColor+Format.m in Sources */ = {isa = PBXBuildFile; fileRef = 6101BE781E373569005AA646 /* UIColor+Format.m */; };
 		6161CC131E34E60300D60767 /* TTRangeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 6161CC111E34E60300D60767 /* TTRangeSlider.m */; };
 		69F3CBC41C07143A0016CA12 /* RISuccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 69F3CBBE1C07143A0016CA12 /* RISuccess.m */; };
 		6C18BD741AB87E0A00905FD2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A301BB19811D0700F71726 /* Images.xcassets */; };
@@ -589,6 +592,12 @@
 		520A37CC1A48904B0046C8B1 /* JAMyOrdersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMyOrdersViewController.m; sourceTree = "<group>"; };
 		52AC8FDA1A4056CB00E7C874 /* JASizeGuideWizardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASizeGuideWizardView.h; sourceTree = "<group>"; };
 		52AC8FDB1A4056CB00E7C874 /* JASizeGuideWizardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASizeGuideWizardView.m; sourceTree = "<group>"; };
+		6101BE711E36075D005AA646 /* NSString+Style.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Style.h"; sourceTree = "<group>"; };
+		6101BE721E36075D005AA646 /* NSString+Style.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Style.m"; sourceTree = "<group>"; };
+		6101BE741E36129C005AA646 /* UIView+Style.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Style.h"; sourceTree = "<group>"; };
+		6101BE751E36129C005AA646 /* UIView+Style.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Style.m"; sourceTree = "<group>"; };
+		6101BE771E373569005AA646 /* UIColor+Format.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Format.h"; sourceTree = "<group>"; };
+		6101BE781E373569005AA646 /* UIColor+Format.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Format.m"; sourceTree = "<group>"; };
 		6161CC101E34E60300D60767 /* TTRangeSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTRangeSlider.h; sourceTree = "<group>"; };
 		6161CC111E34E60300D60767 /* TTRangeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTRangeSlider.m; sourceTree = "<group>"; };
 		6161CC121E34E60300D60767 /* TTRangeSliderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTRangeSliderDelegate.h; sourceTree = "<group>"; };
@@ -3412,6 +3421,12 @@
 				9A4077271CE0CF5200313D20 /* UILabel+Size.m */,
 				9A40772D1CE0CFD700313D20 /* UIButton+Size.h */,
 				9A40772E1CE0CFD700313D20 /* UIButton+Size.m */,
+				6101BE711E36075D005AA646 /* NSString+Style.h */,
+				6101BE721E36075D005AA646 /* NSString+Style.m */,
+				6101BE741E36129C005AA646 /* UIView+Style.h */,
+				6101BE751E36129C005AA646 /* UIView+Style.m */,
+				6101BE771E373569005AA646 /* UIColor+Format.h */,
+				6101BE781E373569005AA646 /* UIColor+Format.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -4115,6 +4130,7 @@
 				9A6BC08A1C4907BB00DD9492 /* JAMessageView.m in Sources */,
 				CE9ADF2A1AB6D78200D56481 /* JACartListHeaderView.m in Sources */,
 				CE9ADF2C1AB6D78200D56481 /* FXBlurView.m in Sources */,
+				6101BE731E36075D005AA646 /* NSString+Style.m in Sources */,
 				1C3043021E2A3A5800BD391E /* CatalogNoResultViewController.m in Sources */,
 				9AE766E21CBFF31D00B63D8E /* JACartTableViewCell.m in Sources */,
 				CE9ADF2E1AB6D78200D56481 /* RIError.m in Sources */,
@@ -4429,6 +4445,7 @@
 				CE9ADFFF1AB6D78200D56481 /* Reachability.m in Sources */,
 				CE9AE0001AB6D78200D56481 /* JAMainTeaserView.m in Sources */,
 				FF0464E71CA96E9000B82FD2 /* ADJSessionSuccess.m in Sources */,
+				6101BE761E36129C005AA646 /* UIView+Style.m in Sources */,
 				CE9AE0021AB6D78200D56481 /* JAAddressCell.m in Sources */,
 				FF6BDCA71CE34ACB002BFE11 /* JAListNumberComponent.m in Sources */,
 				FF4B433F1C56735D0074241E /* RIRecentlyViewedProductSku.m in Sources */,
@@ -4452,6 +4469,7 @@
 				CE9AE00E1AB6D78200D56481 /* JACampaignPageView.m in Sources */,
 				CE9AE00F1AB6D78200D56481 /* RIOrder.m in Sources */,
 				CE9AE0101AB6D78200D56481 /* JABirthDateComponent.m in Sources */,
+				6101BE791E373569005AA646 /* UIColor+Format.m in Sources */,
 				CE9AE0111AB6D78200D56481 /* JANewSellerRatingViewController.m in Sources */,
 				CE9AE0121AB6D78200D56481 /* RIURLCache.m in Sources */,
 				9A4F91181B3D5E7200E34C0B /* JAPDVWizardView.m in Sources */,

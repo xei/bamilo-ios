@@ -26,9 +26,7 @@
 @implementation JAGenericFiltersView
 
 
-- (void)initializeWithFilter:(RIFilter*)filter
-                 isLandscape:(BOOL)isLandscape;
-{
+- (void)initializeWithFilter:(RIFilter*)filter isLandscape:(BOOL)isLandscape; {
     self.filter = filter;
     self.isLandscape = isLandscape;
     
@@ -50,8 +48,7 @@
     }
 }
 
-- (void)saveOptions
-{
+- (void)saveOptions {
     //save selection in filter
     
     for (int i = 0; i < self.selectedIndexes.count; i++) {
@@ -68,23 +65,19 @@
 
 #pragma mark - UITableView
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [JAColorFilterCell height];
 }
 
-- (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-{
+- (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     return [UIView new];
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.filter.options.count;
 }
 
-- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *cellIdentifier = @"JATextFilterCell";
     
     NSNumber* selected = [self.selectedIndexes objectAtIndex:indexPath.row];
@@ -152,13 +145,11 @@
     
 }
 
-- (void)cellWasPressed:(UIControl*)sender
-{
+- (void)cellWasPressed:(UIControl*)sender {
     [self tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSNumber* selected = [self.selectedIndexes objectAtIndex:indexPath.row];
     if (!self.filter.multi) {
         //if this filter doesn't support multi selection, unselect all other indexes
@@ -186,8 +177,7 @@
     [self saveOptions];
 }
 
-- (void)reload
-{
+- (void)reload {
     [self.tableView reloadData];
 }
 

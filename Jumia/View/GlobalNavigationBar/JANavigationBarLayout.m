@@ -39,11 +39,18 @@
     }
 }
 @synthesize backButtonTitle=_backButtonTitle;
-- (void)setBackButtonTitle:(NSString *)backButtonTitle
-{
-    if (VALID_NOTEMPTY(backButtonTitle, NSString)) {
+- (void)setBackButtonTitle:(NSString *)backButtonTitle {
+    if (backButtonTitle.length) {
         _backButtonTitle=backButtonTitle;
         self.showBackButton = YES;
+    }
+}
+
+@synthesize editButtonTitle = _editButtonTitle;
+- (void)setEditButtonTitle:(NSString *)editButtonTitle {
+    if (editButtonTitle.length) {
+        _editButtonTitle = editButtonTitle;
+        self.showEditButton = YES;
     }
 }
 

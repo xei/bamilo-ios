@@ -86,15 +86,14 @@
 
 - (IBAction)textFieldEditingChaned:(UITextField *)sender {
     float validateValue = MAX(self.priceFilterOption.min, MIN(self.priceFilterOption.max, sender.text.floatValue));
+    float valueToBeSet;
     if (sender == self.upperSelectedPriceUITextField) {
-        float valueToBeSet = MAX(validateValue, self.lowerSelectedPriceUITextField.text.floatValue);
-        self.priceRangeSlider.selectedMaximum = valueToBeSet;
-        sender.text = [NSString stringWithFormat:@"%.0f", valueToBeSet];
+        valueToBeSet = MAX(validateValue, self.lowerSelectedPriceUITextField.text.floatValue);
     } else  {
-        float valueToBeSet = MIN(validateValue, self.upperSelectedPriceUITextField.text.floatValue);
-        self.priceRangeSlider.selectedMinimum = valueToBeSet;
-        sender.text = [NSString stringWithFormat:@"%.0f", valueToBeSet];
+        valueToBeSet = MIN(validateValue, self.upperSelectedPriceUITextField.text.floatValue);
     }
+    self.priceRangeSlider.selectedMinimum = valueToBeSet;
+    sender.text = [NSString stringWithFormat:@"%.0f", valueToBeSet];
     
 }
 
@@ -111,9 +110,5 @@
     [self.upperSelectedPriceUITextField endEditing:true];
     [self.lowerSelectedPriceUITextField endEditing:true];
 }
-
-//- (void)switchMoved:(id)sender {
-//    [self saveOptions];
-//}
 
 @end

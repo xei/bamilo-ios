@@ -196,8 +196,7 @@
     return cell;
 }
 
-- (void)cellWasPressed:(UIButton*)button
-{
+- (void)cellWasPressed:(UIButton*)button {
     [self removeFromSuperview];
     if (self.delegate && [self.delegate respondsToSelector:@selector(selectedSortingMethod:)]) {
         [self.delegate selectedSortingMethod:button.tag];

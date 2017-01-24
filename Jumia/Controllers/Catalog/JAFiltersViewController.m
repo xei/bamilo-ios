@@ -14,12 +14,17 @@
 
 @interface JAFiltersViewController () <UITableViewDataSource, UITableViewDelegate, JAFiltersViewDelegate>
 
-@property (nonatomic, strong) UITableView* tableView;
+
 @property (nonatomic, strong) JAFiltersView* currentFilterView;
+@property (nonatomic, weak) IBOutlet UITableView* tableView;
+@property (nonatomic, weak) IBOutlet UIButton* clearAllUIButton;
+@property (nonatomic, weak) IBOutlet UIButton* applyUIButton;
+@property (nonatomic, weak) IBOutlet UILabel* discountOnlyUILabel;
+@property (weak, nonatomic) IBOutlet UISwitch *discountOnlyUISwitch;
+@property (weak, nonatomic) IBOutlet UIView *currentFilterContainerView;
+
 @property (nonatomic, strong) NSIndexPath* selectedIndexPath;
-@property (nonatomic, strong) JAClickableView* clearAllView;
-@property (nonatomic, strong) UIView* bottomSeparator;
-@property (nonatomic, strong) UIView* verticalSeparator;
+@property (nonatomic) NSUInteger avaiablePriceFilterIndex;
 
 @end
 
@@ -27,43 +32,59 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     self.navBarLayout.title = STRING_FILTERS;
     self.navBarLayout.showBackButton = YES;
-    self.navBarLayout.doneButtonTitle = STRING_APPLY;
-    
-    self.tableView = [[UITableView alloc] init];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.view addSubview:self.tableView];
-    
-    self.clearAllView = [[JAClickableView alloc] init];
-    self.clearAllView.backgroundColor = [UIColor whiteColor];
-    [self.clearAllView setFont:JAListFont];
-    [self.clearAllView setTitle:STRING_CLEAR_ALL forState:UIControlStateNormal];
-    [self.clearAllView setTitleColor:JASysBlueColor forState:UIControlStateNormal];
-    [self.clearAllView addTarget:self action:@selector(clearAllFilters) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.clearAllView];
-    
-    self.bottomSeparator = [[UIView alloc] init];
-    self.bottomSeparator.backgroundColor = JABlack400Color;
-    [self.clearAllView addSubview:self.bottomSeparator];
-    
-    self.verticalSeparator = [[UIView alloc] init];
-    self.verticalSeparator.backgroundColor = JABlack400Color;
-    [self.view addSubview:self.verticalSeparator];
-    
+    //self.navBarLayout.doneButtonTitle = STRING_APPLY;
+//
+//    self.tableView = [[UITableView alloc] init];
+//    self.tableView.delegate = self;
+//    self.tableView.dataSource = self;
+//    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    [self.view addSubview:self.tableView];
+//    
+//    self.clearAllView = [[JAClickableView alloc] init];
+//    self.clearAllView.backgroundColor = [UIColor whiteColor];
+//    [self.clearAllView setFont:JAListFont];
+//    [self.clearAllView setTitle:STRING_CLEAR_ALL forState:UIControlStateNormal];
+//    [self.clearAllView setTitleColor:JASysBlueColor forState:UIControlStateNormal];
+//    [self.clearAllView addTarget:self action:@selector(clearAllFilters) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:self.clearAllView];
+//    
+//    self.bottomSeparator = [[UIView alloc] init];
+//    self.bottomSeparator.backgroundColor = JABlack400Color;
+//    [self.clearAllView addSubview:self.bottomSeparator];
+//    
+//    self.verticalSeparator = [[UIView alloc] init];
+//    self.verticalSeparator.backgroundColor = JABlack400Color;
+//    [self.view addSubview:self.verticalSeparator];
+//    
     [self selectIndex:0];
     [self updateTitle];
+    
+    
+    // Get the index of price filter in filterArray
+    [self.filtersArray enumerateObjectsUsingBlock: ^(RIFilter *filter, NSUInteger index, BOOL *stop) {
+        if ([filter.uid isEqualToString:@"price"]) {
+            self.avaiablePriceFilterIndex = index;
+            *stop = YES;
+        }
+     }];
+    
+    if (self.avaiablePriceFilterIndex) {
+        self.discountOnlyUISwitch.enabled = YES;
+        RIFilter *priceFilter = [self.filtersArray objectAtIndex:self.avaiablePriceFilterIndex];
+        RIFilterOption *priceFilterOption = [priceFilter.options firstObject];
+        self.discountOnlyUISwitch.on = priceFilterOption.discountOnly;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffMenuSwipePanelNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applyButtonPressed) name:kDidPressDoneNotification object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applyButtonPressed) name:kDidPressEditNotification object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applyButtonPressed) name:kDidPressDoneNotification object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -93,7 +114,7 @@
     } else {
         newTitle = [NSString stringWithFormat:@"%@ (%ld)", STRING_FILTERS, (long)totalSelected];
     }
-    if (NO == [newTitle isEqualToString:self.navBarLayout.title]) {
+    if (![newTitle isEqualToString:self.navBarLayout.title]) {
         //the title changed, force a reload
         self.navBarLayout.title = newTitle;
         [self reloadNavBar];
@@ -101,40 +122,13 @@
 }
 
 -(void)viewWillLayoutSubviews {
-    self.clearAllView.frame = CGRectMake(self.view.bounds.origin.x,
-                                         self.view.bounds.size.height - 48.0f,
-                                         self.view.bounds.size.width,
-                                         48.0f);
-    
-    self.bottomSeparator.frame = CGRectMake(self.clearAllView.bounds.origin.x,
-                                            self.clearAllView.bounds.origin.y,
-                                            self.clearAllView.bounds.size.width,
-                                            1.0f);
-    CGFloat sideBarWidth = 120.0f;
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
-        sideBarWidth = 256.0f;
-    }
-    self.tableView.frame = CGRectMake(self.view.bounds.origin.x,
-                                      self.view.bounds.origin.y,
-                                      sideBarWidth,
-                                      self.view.bounds.size.height - self.clearAllView.frame.size.height);
-    
-    self.verticalSeparator.frame = CGRectMake(CGRectGetMaxX(self.tableView.frame) - 1.0f,
-                                              self.tableView.frame.origin.y,
-                                              1.0f,
-                                              self.tableView.frame.size.height);
-    
-    self.currentFilterView.frame = CGRectMake(CGRectGetMaxX(self.tableView.frame),
-                                              self.view.bounds.origin.y,
-                                              self.view.bounds.size.width - self.tableView.frame.size.width,
-                                              self.view.bounds.size.height - self.clearAllView.frame.size.height);
     [self.currentFilterView reload];
-    
-    if (RI_IS_RTL) {
-        [self.tableView flipViewPositionInsideSuperview];
-        [self.verticalSeparator flipViewPositionInsideSuperview];
-        [self.currentFilterView flipViewPositionInsideSuperview];
-    }
+//
+//    if (RI_IS_RTL) {
+//        [self.tableView flipViewPositionInsideSuperview];
+//        [self.verticalSeparator flipViewPositionInsideSuperview];
+//        [self.currentFilterView flipViewPositionInsideSuperview];
+//    }
 }
 
 #pragma mark - UITableView
@@ -183,6 +177,7 @@
 }
 
 - (void)selectIndex:(NSInteger)index {
+    
     NSIndexPath* oldSelectedIndexPath = self.selectedIndexPath;
     self.selectedIndexPath = [NSIndexPath indexPathForRow:index inSection:0];
     
@@ -199,24 +194,22 @@
     if ([filter.uid isEqualToString:@"price"]) {
         
         self.currentFilterView = [[[NSBundle mainBundle] loadNibNamed:@"JAPriceFiltersView" owner:self options:nil] objectAtIndex:0];
-
-        self.currentFilterView.frame = self.currentFilterView.frame = CGRectMake(CGRectGetMaxX(self.tableView.frame),
-                                                                                 self.view.bounds.origin.y,
-                                                                                 self.view.bounds.size.width - self.tableView.frame.size.width,
-                                                                                 self.view.bounds.size.height);
-        
         [(JAPriceFiltersView*)self.currentFilterView initializeWithPriceFilterOption:[filter.options firstObject]];
-    } else {
-        self.currentFilterView = [[[NSBundle mainBundle] loadNibNamed:@"JAGenericFiltersView" owner:self options:nil] objectAtIndex:0];
-        self.currentFilterView.frame = self.currentFilterView.frame = CGRectMake(CGRectGetMaxX(self.tableView.frame),
-                                                                                 self.view.bounds.origin.y,
-                                                                                 self.view.bounds.size.width - self.tableView.frame.size.width,
-                                                                                 self.view.bounds.size.height);
         
-        [(JAGenericFiltersView*)self.currentFilterView initializeWithFilter:filter isLandscape:YES];
+    } else {
+        
+        self.currentFilterView = [[[NSBundle mainBundle] loadNibNamed:@"JAGenericFiltersView" owner:self options:nil] objectAtIndex:0];
+        [(JAGenericFiltersView*) self.currentFilterView initializeWithFilter:filter isLandscape:YES];
+        
     }
+    
+    self.currentFilterView.frame = self.currentFilterView.frame = CGRectMake(self.view.bounds.origin.x,
+                                                                             self.view.bounds.origin.y,
+                                                                             self.currentFilterContainerView.frame.size.width,
+                                                                             self.currentFilterContainerView.frame.size.height);
+    
     self.currentFilterView.filtersViewDelegate = self;
-    [self.view addSubview:self.currentFilterView];
+    [self.currentFilterContainerView addSubview:self.currentFilterView];
 }
 
 
@@ -234,7 +227,7 @@
 
 #pragma Button Logic
 
-- (void)clearAllFilters {
+- (IBAction)clearAllFilters {
     for (RIFilter* filter in self.filtersArray) {
         if ([filter.uid isEqualToString:@"price"]) {
             RIFilterOption* option = [filter.options firstObject];
@@ -254,9 +247,17 @@
     [self selectIndex:indexToReload];
 }
 
-- (void)applyButtonPressed {
+- (IBAction) applyButtonPressed {
     if (self.delegate && [self.delegate respondsToSelector:@selector(updatedFilters:)]) {
+        [self.navigationController popViewControllerAnimated:true];
         [self.delegate updatedFilters:self.filtersArray];
+    }
+}
+
+
+- (IBAction)discountOnlySwitch:(UISwitch *)sender {
+    if (self.avaiablePriceFilterIndex && self.filtersArray.count) {
+        ((RIFilterOption *) ([[(RIFilter *) ([self.filtersArray objectAtIndex:self.avaiablePriceFilterIndex]) options] firstObject])).discountOnly = sender.on;
     }
 }
 
