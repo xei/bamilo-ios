@@ -216,6 +216,7 @@
         return;
     }
     CGFloat width = [[UIScreen mainScreen] bounds].size.width;
+    
     if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
         UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
         if (UIUserInterfaceIdiomPad != UI_USER_INTERFACE_IDIOM() || (orientation != UIInterfaceOrientationLandscapeLeft && orientation != UIInterfaceOrientationLandscapeRight)) {
@@ -224,6 +225,7 @@
             width = [[UIScreen mainScreen] bounds].size.height;
         }
     }
+    
     if (self.width != width) {
         self.width = width;
         self.separatorView.width = width;
@@ -287,7 +289,6 @@
     self.backButton.hidden = YES;
     self.leftButton.hidden = YES;
     self.editButton.hidden = NO;
-    
     [self adjustTitleFrame];
 }
 
@@ -295,7 +296,6 @@
     self.backButton.hidden = YES;
     self.leftButton.hidden = NO;
     self.editButton.hidden = YES;
-    
     [self adjustTitleFrame];
 }
 
@@ -329,7 +329,6 @@
     }
     
     [self adjustTitleFrame];
-    
     self.logoImageView.hidden = YES;
 }
 

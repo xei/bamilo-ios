@@ -71,10 +71,12 @@
     float valueToBeSet;
     if (sender == self.upperSelectedPriceUITextField) {
         valueToBeSet = MAX(validateValue, self.lowerSelectedPriceUITextField.text.floatValue);
+        self.priceRangeSlider.selectedMaximum = valueToBeSet;
     } else  {
         valueToBeSet = MIN(validateValue, self.upperSelectedPriceUITextField.text.floatValue);
+        self.priceRangeSlider.selectedMinimum = valueToBeSet;
     }
-    self.priceRangeSlider.selectedMinimum = valueToBeSet;
+    
     sender.text = [NSString stringWithFormat:@"%.0f", valueToBeSet];
     
 }
