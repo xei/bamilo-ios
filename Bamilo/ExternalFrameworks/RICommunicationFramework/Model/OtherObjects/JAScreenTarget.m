@@ -10,4 +10,8 @@
 
 @implementation JAScreenTarget
 
+-(instancetype)initWithTarget:(RITarget *)target {
+    [self setTarget:target];
+}
+
 @end

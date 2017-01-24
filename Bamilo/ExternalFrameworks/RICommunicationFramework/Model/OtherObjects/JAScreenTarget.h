@@ -13,6 +13,8 @@
 @property (nonatomic, strong) RITarget *target;
 @property (nonatomic, strong) JANavigationBarLayout *navBarLayout;
 @property (nonatomic) BOOL pushAnimation;
-@property (nonatomic, strong) NSDictionary *screenInfo;
+@property (nonatomic, strong) NSMutableDictionary *screenInfo;
+
+-(instancetype) initWithTarget:(RITarget *)target;
 
 @end

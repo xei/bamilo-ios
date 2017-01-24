@@ -269,7 +269,6 @@
 		CE9ADF471AB6D78200D56481 /* JAOfferCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E741A72B42000F3E92D /* JAOfferCollectionViewCell.m */; };
 		CE9ADF491AB6D78200D56481 /* JAForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A454F49199CE67500B44821 /* JAForgotPasswordViewController.m */; };
 		CE9ADF4C1AB6D78200D56481 /* UIImageView+JA.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C1E33619BA1E73009C422C /* UIImageView+JA.m */; };
-		CE9ADF511AB6D78200D56481 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBE2A7A1A9E312F00F457FA /* GTMNSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CE9ADF531AB6D78200D56481 /* JALoadCountryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B55BFB9419E6A83E0098467E /* JALoadCountryViewController.m */; };
 		CE9ADF541AB6D78200D56481 /* JAClickableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376D219EBCA5800558B98 /* JAClickableView.m */; };
 		CE9ADF551AB6D78200D56481 /* JACampaignsTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE445878198BF15B00CE7E8D /* JACampaignsTeaserView.m */; };
@@ -1150,9 +1149,6 @@
 		CEABEEBD1A122BEA000D0CF8 /* JAGenericFiltersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAGenericFiltersView.h; path = Filters/JAGenericFiltersView.h; sourceTree = "<group>"; };
 		CEABEEBE1A122BEA000D0CF8 /* JAGenericFiltersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAGenericFiltersView.m; path = Filters/JAGenericFiltersView.m; sourceTree = "<group>"; };
 		CEABEEC01A122BFD000D0CF8 /* JAGenericFiltersView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JAGenericFiltersView.xib; path = Filters/JAGenericFiltersView.xib; sourceTree = "<group>"; };
-		CEBE2A781A9E312F00F457FA /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
-		CEBE2A791A9E312F00F457FA /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSString+HTML.h"; sourceTree = "<group>"; };
-		CEBE2A7A1A9E312F00F457FA /* GTMNSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+HTML.m"; sourceTree = "<group>"; };
 		CEBEEE761A8CF205001998E5 /* JASortingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JASortingView.h; path = Catalog/JASortingView.h; sourceTree = "<group>"; };
 		CEBEEE771A8CF205001998E5 /* JASortingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JASortingView.m; path = Catalog/JASortingView.m; sourceTree = "<group>"; };
 		CEBEEE7B1A8E13CF001998E5 /* JACatalogTopView_ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JACatalogTopView_ipad.xib; path = Catalog/JACatalogTopView_ipad.xib; sourceTree = "<group>"; };
@@ -2829,7 +2825,6 @@
 			children = (
 				87B926061E373CA7004AC9E8 /* RICommunicationFramework */,
 				9A17D0331C5F775900851D6E /* BMA4SSDK */,
-				CEBE2A771A9E312F00F457FA /* GTM */,
 				CE28EE571A9397C6000A264C /* WhatsAppActivity */,
 			);
 			name = ExternalFrameworks;
@@ -3236,17 +3231,6 @@
 				CE4848961A161979003C3D53 /* JAFiltersView.m */,
 			);
 			name = Filters;
-			sourceTree = "<group>";
-		};
-		CEBE2A771A9E312F00F457FA /* GTM */ = {
-			isa = PBXGroup;
-			children = (
-				CEBE2A781A9E312F00F457FA /* GTMDefines.h */,
-				CEBE2A791A9E312F00F457FA /* GTMNSString+HTML.h */,
-				CEBE2A7A1A9E312F00F457FA /* GTMNSString+HTML.m */,
-			);
-			name = GTM;
-			path = Bamilo/ExternalFrameworks/GTM;
 			sourceTree = "<group>";
 		};
 		CEBE2A7D1A9E31E800F457FA /* Web */ = {
@@ -3726,7 +3710,6 @@
 				9A86F80A1C281F8F001A91D5 /* JARecentlyViewedViewController.m in Sources */,
 				CE9ADF4C1AB6D78200D56481 /* UIImageView+JA.m in Sources */,
 				CED6205C1BEB526B00FA8403 /* JAFiltersViewController.m in Sources */,
-				CE9ADF511AB6D78200D56481 /* GTMNSString+HTML.m in Sources */,
 				87D625071E3755750036E976 /* RIProductRatings.m in Sources */,
 				9A7EE9C91B5557C9004E2505 /* UIButton+Extensions.m in Sources */,
 				CE9ADF531AB6D78200D56481 /* JALoadCountryViewController.m in Sources */,

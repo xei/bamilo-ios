@@ -42,9 +42,9 @@
     for (NSString *imageURL in accountServicesArray) {
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(i*kPadding + xOffset, 0, 20, kAccountServicesLineHeight)];
         [weakSelf.imageViewArray addObject:imageView];
-        [imageView setImageWithURL:[NSURL URLWithString:imageURL] placeholderImage:nil success:^(UIImage *image, BOOL cached) {
+        [imageView sd_setImageWithURL:[NSURL URLWithString:imageURL] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             [weakSelf regroupImages];
-        } failure:nil];
+        }];
     }
 }
 

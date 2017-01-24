@@ -255,11 +255,11 @@
             NSString* sisImageUrl = product.brandImage;
             
             __weak JAProductInfoSISLine *weakSis = sis;
-            [sis.sisImageView setImageWithURL:[NSURL URLWithString:sisImageUrl] placeholderImage:nil success:^(UIImage *image, BOOL cached) {
+            [sis.sisImageView sd_setImageWithURL:[NSURL URLWithString:sisImageUrl] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                 [weakSis.sisImageView setWidth:image.size.width*weakSis.sisImageView.height/image.size.height];
                 weakSis.lineContentXOffset = CGRectGetMaxX(weakSis.sisImageView.frame) + 8.f;
                 [weakSis setTitle:weakSis.title];
-            } failure:nil];
+            }];
         }
         
         [sis addTarget:self action:@selector(tapSisLine) forControlEvents:UIControlEventTouchUpInside];

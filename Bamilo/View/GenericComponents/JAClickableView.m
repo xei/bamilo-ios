@@ -168,7 +168,7 @@
 }
 - (void)setImageWithURL:(NSURL*)url placeholderImage:(UIImage*)image;
 {
-    [self.overlayButton setImageWithURL:url placeholderImage:image];
+    [self.overlayButton sd_setImageWithURL:url forState:UIControlStateNormal placeholderImage:image];
 }
 - (void)setTitle:(NSString*)title forState:(UIControlState)state;
 {
