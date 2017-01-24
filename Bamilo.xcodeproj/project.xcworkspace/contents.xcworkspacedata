@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:Jumia.xcodeproj">
+      location = "self:/Users/narbeh/Documents/Bamilo/ios/Bamilo.xcodeproj">
    </FileRef>
 </Workspace>
