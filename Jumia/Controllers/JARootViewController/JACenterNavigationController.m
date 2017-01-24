@@ -49,7 +49,6 @@
 #import "JAPDVVariationsViewController.h"
 #import "JAMoreMenuViewController.h"
 #import "RICountry.h"
-#import "JAFiltersViewController.h"
 #import "JANewsletterViewController.h"
 #import "JANewsletterSubscriptionViewController.h"
 
@@ -1869,17 +1868,14 @@
     }];
 }
 
-- (void)goToOnlineReturnsConfirmScreenForItems:(NSArray *)items
-                                         order:(RITrackOrder*)order
-{
+- (void)goToOnlineReturnsConfirmScreenForItems:(NSArray *)items order:(RITrackOrder*)order {
     JAORConfirmationScreenViewController *viewController = [[JAORConfirmationScreenViewController alloc] init];
     [viewController setItems:items];
     [viewController setOrder:order];
     [self goToStep:viewController forStepByStepViewController:self.returnsStepByStepViewController];
 }
 
-- (void)goToStep:(UIViewController *)viewController forStepByStepViewController:(JAStepByStepTabViewController *)stepByStepViewController
-{
+- (void)goToStep:(UIViewController *)viewController forStepByStepViewController:(JAStepByStepTabViewController *)stepByStepViewController {
     if ([self.viewControllers indexOfObject:stepByStepViewController] == NSNotFound)
     {
         if (stepByStepViewController == self.checkoutStepByStepViewController) {
@@ -1987,14 +1983,12 @@
     
 }
 
-- (void)changeTabBarWithNotification:(NSNotification*)notification
-{
+- (void)changeTabBarWithNotification:(NSNotification*)notification {
     NSNumber* isVisible = notification.object;
     self.tabBarView.hidden = ![isVisible boolValue];
 }
 
-- (void)changeNavigationWithNotification:(NSNotification*)notification
-{
+- (void)changeNavigationWithNotification:(NSNotification*)notification {
     JANavigationBarLayout* layout = notification.object;
     if (VALID_NOTEMPTY(layout, JANavigationBarLayout)) {
         [self.navigationBarView setupWithNavigationBarLayout:layout];

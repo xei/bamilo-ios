@@ -31,8 +31,6 @@
     self.priceFilterOption = priceFilterOption;
     
     self.backgroundColor = [UIColor whiteColor];
-    //self.discountLabel.font = JAListFont;
-    //self.discountLabel.textColor = JAButtonTextOrange;
     
     self.priceRangeSlider.step = self.priceFilterOption.interval;
     
@@ -48,9 +46,6 @@
     self.priceRangeSlider.hideLabels = YES;
     self.priceRangeSlider.handleBorderWidth = 1;
     self.priceRangeSlider.handleColor = [UIColor whiteColor];
-
-    self.contentView.translatesAutoresizingMaskIntoConstraints = YES;
-    self.contentView.frame = CGRectMake(16.0f, (self.frame.size.height - self.contentView.frame.size.width)/2, self.contentView.frame.size.width, self.contentView.frame.size.height);
     
     
     for (UILabel *label in self.textsInPriceRangeUILabels) {
@@ -63,21 +58,8 @@
     self.lowerSelectedPriceUITextField.text = lowerValue.length ? lowerValue : @"0";
 }
 
-- (void)reload {
-    
-    //Magic_Number
-    CGFloat centerYConstainetValue = 50;
-    
-    self.contentView.frame = CGRectMake(16.0f, (self.frame.size.height  - self.contentView.frame.size.height)/2 - centerYConstainetValue,
-                                        self.contentView.frame.size.width,
-                                        self.contentView.frame.size.height);
-    if (RI_IS_RTL) {
-        [self.contentView flipViewPositionInsideSuperview];
-    }
-}
-
 - (void)saveOptions {
-    //save selection in filter
+    //Save selection in filter
     self.priceFilterOption.lowerValue = self.priceRangeSlider.selectedMinimum;
     self.priceFilterOption.upperValue = self.priceRangeSlider.selectedMaximum;
     
@@ -86,15 +68,16 @@
 
 - (IBAction)textFieldEditingChaned:(UITextField *)sender {
     float validateValue = MAX(self.priceFilterOption.min, MIN(self.priceFilterOption.max, sender.text.floatValue));
+    float valueToBeSet;
     if (sender == self.upperSelectedPriceUITextField) {
-        float valueToBeSet = MAX(validateValue, self.lowerSelectedPriceUITextField.text.floatValue);
+        valueToBeSet = MAX(validateValue, self.lowerSelectedPriceUITextField.text.floatValue);
         self.priceRangeSlider.selectedMaximum = valueToBeSet;
-        sender.text = [NSString stringWithFormat:@"%.0f", valueToBeSet];
     } else  {
-        float valueToBeSet = MIN(validateValue, self.upperSelectedPriceUITextField.text.floatValue);
+        valueToBeSet = MIN(validateValue, self.upperSelectedPriceUITextField.text.floatValue);
         self.priceRangeSlider.selectedMinimum = valueToBeSet;
-        sender.text = [NSString stringWithFormat:@"%.0f", valueToBeSet];
     }
+    
+    sender.text = [NSString stringWithFormat:@"%.0f", valueToBeSet];
     
 }
 
@@ -111,9 +94,5 @@
     [self.upperSelectedPriceUITextField endEditing:true];
     [self.lowerSelectedPriceUITextField endEditing:true];
 }
-
-//- (void)switchMoved:(id)sender {
-//    [self saveOptions];
-//}
 
 @end

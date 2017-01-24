@@ -216,6 +216,7 @@
         return;
     }
     CGFloat width = [[UIScreen mainScreen] bounds].size.width;
+    
     if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
         UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
         if (UIUserInterfaceIdiomPad != UI_USER_INTERFACE_IDIOM() || (orientation != UIInterfaceOrientationLandscapeLeft && orientation != UIInterfaceOrientationLandscapeRight)) {
@@ -224,6 +225,7 @@
             width = [[UIScreen mainScreen] bounds].size.height;
         }
     }
+    
     if (self.width != width) {
         self.width = width;
         self.separatorView.width = width;
@@ -243,7 +245,7 @@
     if (layout.showBackButton) {
         [self showBackButtonWithTitle:layout.backButtonTitle];
     } else if (layout.showEditButton) {
-        [self showEditButton];
+        [self showEditButtonWithTitle:layout.editButtonTitle];
     } else if (layout.showMenuButton) {
         [self showMenuButton];
     } else {
@@ -282,12 +284,11 @@
     
     [self adjustTitleFrame];
 }
-- (void)showEditButton {
-    [self.editButton setTitle:STRING_EDIT forState:UIControlStateNormal];
+- (void)showEditButtonWithTitle: (NSString *) title {
+    [self.editButton setTitle: title forState:UIControlStateNormal];
     self.backButton.hidden = YES;
     self.leftButton.hidden = YES;
     self.editButton.hidden = NO;
-    
     [self adjustTitleFrame];
 }
 
@@ -295,7 +296,6 @@
     self.backButton.hidden = YES;
     self.leftButton.hidden = NO;
     self.editButton.hidden = YES;
-    
     [self adjustTitleFrame];
 }
 
@@ -329,7 +329,6 @@
     }
     
     [self adjustTitleFrame];
-    
     self.logoImageView.hidden = YES;
 }
 
@@ -340,8 +339,7 @@
     CGFloat backButtonLeftInset = 10.0f;
     CGFloat editButtonLeftMargin = 7.0f;
     
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
-    {
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
         leftMargin = 6.0f;
         editButtonLeftMargin = 16.0f;
     }

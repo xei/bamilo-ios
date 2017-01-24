@@ -8,6 +8,7 @@
 
 #import "JAFilterCell.h"
 #import "RIFilter.h"
+#import "NSString+Style.h"
 
 @implementation JAFilterCell
 
@@ -55,7 +56,7 @@
     NSString* cellText = [NSString stringWithFormat:@"%@",filter.name];
     if (0 < numberOfSelectedOptions) {
         labelFont = JAFilterCellCategoryTitle;
-        cellText = [NSString stringWithFormat:@"%@ (%ld)",filter.name, (long)numberOfSelectedOptions];
+        cellText = [[NSString stringWithFormat:@"%@ (%ld)",filter.name, (long)numberOfSelectedOptions] numbersToPersian];
     }
     UILabel* mainLabel = [UILabel new];
     mainLabel.font = labelFont;

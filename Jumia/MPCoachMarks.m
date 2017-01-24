@@ -58,8 +58,6 @@ NSString *const KOkGotIt = @"متوجه شدم";
     if (self) {
         // Save the coach marks
         self.coachMarks = marks;
-        
-        // Setup
         [self setup];
     }
     return self;
@@ -68,7 +66,6 @@ NSString *const KOkGotIt = @"متوجه شدم";
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        // Setup
         [self setup];
     }
     return self;
@@ -77,7 +74,6 @@ NSString *const KOkGotIt = @"متوجه شدم";
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        // Setup
         [self setup];
     }
     return self;
@@ -108,7 +104,7 @@ NSString *const KOkGotIt = @"متوجه شدم";
     self.lblCaption = [[UILabel alloc] initWithFrame:(CGRect){{0.0f, 0.0f}, {self.maxLblWidth, 0.0f}}];
     self.lblCaption.backgroundColor = [UIColor clearColor];
     self.lblCaption.textColor = [UIColor whiteColor];
-    self.lblCaption.font = [UIFont fontWithName:@"Bamilo-Sans" size:12.0f];
+    self.lblCaption.font = [UIFont fontWithName: kFontRegularName size:12.0f];
     self.lblCaption.lineBreakMode = NSLineBreakByWordWrapping;
     self.lblCaption.numberOfLines = 0;
     self.lblCaption.textAlignment = NSTextAlignmentCenter;
@@ -128,30 +124,29 @@ NSString *const KOkGotIt = @"متوجه شدم";
     
     UIBezierPath *maskPath;
     UIBezierPath *cutoutPath;
-
+    
     CGFloat width = [UIScreen mainScreen].bounds.size.width + 50;
     CGFloat height = [UIScreen mainScreen].bounds.size.height + 50;
     
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         maskPath = [UIBezierPath bezierPathWithRect:CGRectMake(-25, -25, width, height)];
-    }
-    else{
-    // Define shape
+    } else {
+        //Define shape
         maskPath = [UIBezierPath bezierPathWithRect:CGRectMake(-25, -25, width, height)];
     }
     
-    if (shape == SHAPE_CIRCLE)
+    if (shape == SHAPE_CIRCLE) {
         cutoutPath = [UIBezierPath bezierPathWithOvalInRect:rect];
-    else if (shape == SHAPE_SQUARE)
+    } else if (shape == SHAPE_SQUARE) {
         cutoutPath = [UIBezierPath bezierPathWithRect:rect];
-    else
+    } else {
         cutoutPath = [UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:self.cutoutRadius];
+    }
     
     [maskPath appendPath:cutoutPath];
-    
     // Set the new path
     mask.path = maskPath.CGPath;
-   
+    
 }
 
 -(void)setOuterCircle:(CGRect)rect{
@@ -171,8 +166,7 @@ NSString *const KOkGotIt = @"متوجه شدم";
     
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         maskPath = [UIBezierPath bezierPathWithRect:CGRectMake(-25, -25, width, height)];
-    }
-    else{
+    } else {
         // Define shape
         maskPath = [UIBezierPath bezierPathWithRect:CGRectMake(-25, -25, width, height)];
     }
@@ -182,7 +176,7 @@ NSString *const KOkGotIt = @"متوجه شدم";
         cutoutPath = [UIBezierPath bezierPathWithRect:rect];
     else
         cutoutPath = [UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:self.cutoutRadius];
-
+    
     [maskPath appendPath:cutoutPath];
     
     // Animate it
@@ -197,18 +191,13 @@ NSString *const KOkGotIt = @"متوجه شدم";
     [mask addAnimation:anim forKey:@"path"];
     mask.path = maskPath.CGPath;
     mask.strokeColor = [UIColor orangeColor].CGColor;
-//    mask.lineWidth = 2.0f;
 }
 
 -(void)animateOuterCircle:(CGRect)fromValue toPosition:(CGRect)toValue{
-    [UIView animateWithDuration:self.animationDuration
-                          delay:0.0
-                        options: UIViewAnimationOptionCurveEaseOut
-                     animations:^{
-                         [self.outerCircleImageView setFrame:toValue];
-                     }
-                     completion:^(BOOL finished){
-                     }];
+    [UIView animateWithDuration:self.animationDuration delay:0.0 options: UIViewAnimationOptionCurveEaseOut animations:^{
+        [self.outerCircleImageView setFrame:toValue];
+    } completion:^(BOOL finished){
+    }];
 }
 
 #pragma mark - Mask color
@@ -225,7 +214,7 @@ NSString *const KOkGotIt = @"متوجه شدم";
     [self goToCoachMarkIndexed:(markIndex+1)];
 }
 
--(void)didClickNextButton:(id)sender{
+- (void)didClickNextButton:(id)sender{
     // Go to the next coach mark
     [self goToCoachMarkIndexed:(markIndex+1)];
 }
@@ -236,14 +225,11 @@ NSString *const KOkGotIt = @"متوجه شدم";
     // Fade in self
     self.alpha = 0.0f;
     self.hidden = NO;
-    [UIView animateWithDuration:self.animationDuration
-                     animations:^{
-                         self.alpha = 1.0f;
-                     }
-                     completion:^(BOOL finished) {
-                         // Go to the first coach mark
-                         [self goToCoachMarkIndexed:0];
-                     }];
+    [UIView animateWithDuration:self.animationDuration animations:^{
+        self.alpha = 1.0f;
+    } completion:^(BOOL finished) {
+        [self goToCoachMarkIndexed:0];
+    }];
 }
 
 - (void)skipCoach {
@@ -318,8 +304,7 @@ NSString *const KOkGotIt = @"متوجه شدم";
     //as its an image remove outerringcircle
     if(showArrow){
         [self.outerCircleImageView setHidden:TRUE];
-    }
-    else{
+    } else {
         [self.outerCircleImageView setHidden:FALSE];
     }
     
@@ -331,7 +316,7 @@ NSString *const KOkGotIt = @"متوجه شدم";
     //Bold the below text if substring is found in caption
     NSRange range1 = [self.lblCaption.text rangeOfString:@"جستجو در فروشگاه"];
     NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:self.lblCaption.text];
-    [attributedText setAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"Bamilo-Sans-Bold" size:18.0]}range:range1];
+    [attributedText setAttributes:@{NSFontAttributeName:[UIFont fontWithName: kFontBoldName size:18.0]}range:range1];
     self.lblCaption.attributedText = attributedText;
     [self.lblCaption sizeToFit];
     
@@ -386,8 +371,7 @@ NSString *const KOkGotIt = @"متوجه شدم";
                     //setting new value to y2
                     y2 += verticalImageViewFrame.size.height/2;
                     
-                }
-                else{
+                } else {
                     
                     //should replace with iPad image
                     //                    self.horizontalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"slideFingerVertical_iPhone"]];
@@ -415,8 +399,7 @@ NSString *const KOkGotIt = @"متوجه شدم";
             }
         }
             break;
-        case LABEL_POSITION_LEFT:
-        {
+        case LABEL_POSITION_LEFT: {
             y = markRect.origin.y + markRect.size.height/2 - self.lblCaption.frame.size.height/2;
             x = self.bounds.size.width - self.lblCaption.frame.size.width - kLabelMargin - markRect.size.width;
             if(showArrow) {
@@ -430,8 +413,7 @@ NSString *const KOkGotIt = @"متوجه شدم";
             }
         }
             break;
-        case LABEL_POSITION_RIGHT:
-        {
+        case LABEL_POSITION_RIGHT: {
             y = markRect.origin.y + markRect.size.height/2 - self.lblCaption.frame.size.height/2;
             x = markRect.origin.x + markRect.size.width + kLabelMargin;
             if(showArrow) {
@@ -459,14 +441,13 @@ NSString *const KOkGotIt = @"متوجه شدم";
                     imageViewFrame.origin.x -= 40;
                 }
                 self.verticalImage.frame = imageViewFrame;
-
-            [self addSubview:self.verticalImage];
-    
+                
+                [self addSubview:self.verticalImage];
+                
             }
         }
             break;
-        case LABEL_POSITION_RIGHT_BOTTOM:
-        {
+        case LABEL_POSITION_RIGHT_BOTTOM: {
             y = markRect.origin.y + markRect.size.height + self.lblSpacing;
             CGFloat bottomY = y + self.lblCaption.frame.size.height + self.lblSpacing;
             if (bottomY > self.bounds.size.height) {
@@ -492,7 +473,7 @@ NSString *const KOkGotIt = @"متوجه شدم";
                 y2 = markRect.origin.y - self.lblSpacing - self.lblCaption.frame.size.height;
             }
             if(showArrow) {
-
+                
                 BOOL productDetailPage = NO;
                 if( [markDef objectForKey:@"productDetailPage"])
                     productDetailPage = [[markDef objectForKey:@"productDetailPage"] boolValue];
@@ -511,7 +492,7 @@ NSString *const KOkGotIt = @"متوجه شدم";
                     imageViewFrame.origin.y = self.center.y;
                     imageViewFrame.origin.x -= 20;
                 }
-
+                
                 y2 += imageViewFrame.size.height/2;
                 self.verticalImage.frame = imageViewFrame;
                 [self addSubview:self.verticalImage];
@@ -523,15 +504,16 @@ NSString *const KOkGotIt = @"متوجه شدم";
     // Animate the caption label
     self.lblCaption.frame = (CGRect){{x, y}, self.lblCaption.frame.size};
     
-    if(showArrow){
+    if(showArrow) {
         
         BOOL pdvGallery = NO;
-        if( [markDef objectForKey:@"PDVGallery"])
+        if( [markDef objectForKey:@"PDVGallery"]) {
             pdvGallery = [[markDef objectForKey:@"PDVGallery"] boolValue];
-
+        }
+        
         if(pdvGallery){
             self.lblCaption.center = self.center;
-             CGRect lblCaptionFrame = self.lblCaption.frame;
+            CGRect lblCaptionFrame = self.lblCaption.frame;
             lblCaptionFrame.origin.y -= 80;
             self.lblCaption.frame = lblCaptionFrame;
             self.verticalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"zoom"]];
@@ -539,28 +521,25 @@ NSString *const KOkGotIt = @"متوجه شدم";
         }
         else if([markDef objectForKey:@"addToCart"]){
             self.lblCaption.frame = (CGRect){{20, self.lblCaption.frame.origin.y - 50}, self.lblCaption.frame.size};
-        }
-        else{
-            if( ![markDef objectForKey:@"productDetailPage"])
-            {
-            // Animate the caption label
-            self.lblCaption.frame = (CGRect){{self.verticalImage.frame.origin.x +15, y}, self.lblCaption.frame.size};
-            }
-            else{
+        } else {
+            if( ![markDef objectForKey:@"productDetailPage"]) {
+                // Animate the caption label
+                self.lblCaption.frame = (CGRect){{self.verticalImage.frame.origin.x +15, y}, self.lblCaption.frame.size};
+            } else {
                 self.lblCaption.frame = (CGRect){{self.verticalImage.frame.origin.x, y}, self.lblCaption.frame.size};
             }
         }
         BOOL productDetailPage = NO;
-        if( [markDef objectForKey:@"productDetailPage"])
+        if( [markDef objectForKey:@"productDetailPage"]) {
             productDetailPage = [[markDef objectForKey:@"productDetailPage"] boolValue];
+        }
         
-        if(productDetailPage){
+        if (productDetailPage) {
             self.lblCaption.center = self.center;
             CGRect lblCaptionFrame = self.lblCaption.frame;
             lblCaptionFrame.origin.y -= 60;
             self.lblCaption.frame = lblCaptionFrame;
-        }
-        else{
+        } else {
             // caption2 and 3 for scroll screen
             NSDictionary *markDef = [self.coachMarks objectAtIndex:index];
             NSString *verticalText = [markDef objectForKey:@"caption2"];
@@ -570,7 +549,7 @@ NSString *const KOkGotIt = @"متوجه شدم";
             
             self.verticalCaption.backgroundColor = [UIColor clearColor];
             self.verticalCaption.textColor = [UIColor whiteColor];
-            self.verticalCaption.font = [UIFont fontWithName:@"Bamilo-Sans" size:12.0f];
+            self.verticalCaption.font = [UIFont fontWithName: kFontRegularName size:12.0f];
             self.verticalCaption.lineBreakMode = NSLineBreakByWordWrapping;
             self.verticalCaption.numberOfLines = 0;
             self.verticalCaption.textAlignment = NSTextAlignmentRight;
@@ -592,7 +571,7 @@ NSString *const KOkGotIt = @"متوجه شدم";
             self.verticalCaption2 = [[UILabel alloc] initWithFrame:(CGRect){{0.0f, 0.0f}, {self.maxLblWidth, 0.0f}}];
             self.verticalCaption2.backgroundColor = [UIColor clearColor];
             self.verticalCaption2.textColor = [UIColor whiteColor];
-            self.verticalCaption2.font = [UIFont fontWithName:@"Bamilo-Sans" size:12.0f];
+            self.verticalCaption2.font = [UIFont fontWithName: kFontRegularName size:12.0f];
             self.verticalCaption2.lineBreakMode = NSLineBreakByWordWrapping;
             self.verticalCaption2.numberOfLines = 0;
             self.verticalCaption2.textAlignment = NSTextAlignmentRight;
@@ -632,7 +611,7 @@ NSString *const KOkGotIt = @"متوجه شدم";
     else{
         [self.outerCircleImageView setHidden:FALSE];
     }
-
+    
     CGRect currentRect = CGRectMake(markRect.origin.x-45, markRect.origin.y-45, markRect.size.width+90, markRect.size.height+90);
     // Animate the cutout
     [self animateCutoutToRect:markRect withShape:shape];
@@ -664,7 +643,7 @@ NSString *const KOkGotIt = @"متوجه شدم";
         }
         lblContinue.frame = continueButtonFrame;
         [lblContinue setTitle: self.continueLabelText forState: UIControlStateNormal];
-        lblContinue.titleLabel.font = [UIFont fontWithName:@"Bamilo-Sans" size:20.0f];;
+        lblContinue.titleLabel.font = [UIFont fontWithName: kFontRegularName size:20.0f];;
         lblContinue.layer.borderWidth = 1.0f;
         lblContinue.layer.borderColor = [UIColor whiteColor].CGColor;
         [self addSubview:lblContinue];
@@ -676,8 +655,8 @@ NSString *const KOkGotIt = @"متوجه شدم";
                                           self.bounds.size.height / 2 +150);
         [btnSkipCoach addTarget:self action:@selector(skipCoach) forControlEvents:UIControlEventTouchUpInside];
         NSDictionary *attrDict = @{NSFontAttributeName : [UIFont
-                                                          fontWithName:@"Bamilo-Sans" size:10.0],NSForegroundColorAttributeName : [UIColor
-                                                                                                                                   whiteColor]};
+                                                          fontWithName: kFontRegularName size:10.0],NSForegroundColorAttributeName : [UIColor
+                                                                                                                                      whiteColor]};
         NSMutableAttributedString *title =[[NSMutableAttributedString alloc] initWithString:self.skipButtonText attributes: attrDict];
         [title addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(0,[title length])];
         [btnSkipCoach setAttributedTitle:title forState:UIControlStateNormal];

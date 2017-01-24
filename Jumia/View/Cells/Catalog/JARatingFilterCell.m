@@ -12,7 +12,7 @@
 
 
 -(UIImageView *)customAccessoryView {
-    if (!VALID(_customAccessoryView, UIImageView)) {
+    if (!_customAccessoryView) {
         CGFloat margin = 12.0f;
         UIImage* customAccessoryIcon = [UIImage imageNamed:@"selectionCheckmark"];
         _customAccessoryView = [[UIImageView alloc] initWithImage:customAccessoryIcon];
@@ -28,21 +28,15 @@
 
 -(JAProductInfoRatingLine *)ratingLine {
     if (!VALID(_ratingLine, JAProductInfoRatingLine)) {
-        _ratingLine = [[JAProductInfoRatingLine alloc] initWithFrame:CGRectMake(0.0f,
-                                                                               0.0f,
-                                                                               self.width,
-                                                                               self.height)];
+        _ratingLine = [[JAProductInfoRatingLine alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.width, self.height)];
         _ratingLine.imageRatingSize = kImageRatingSizeSmall;
-
         [self addSubview:_ratingLine];
     }
     return _ratingLine;
 }
 
-- (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier
-                            isLandscape:(BOOL)isLandscape
-                                  frame:(CGRect)frame;
-{
+- (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier isLandscape:(BOOL)isLandscape frame:(CGRect)frame {
+    
     self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
     if (self) {
         self.frame = frame;
@@ -50,6 +44,7 @@
         
     }
     return self;
+    
 }
 
 - (void)setupIsLandscape:(BOOL)landscape {
@@ -63,6 +58,7 @@
 }
 
 -(void)setFilterOption:(RIFilterOption *)filterOption {
+    
     self.ratingLine.ratingAverage = filterOption.average;
     self.ratingLine.ratingSum = filterOption.totalProducts;
     self.ratingLine.imageRatingSize = kImageRatingSizeSmall;

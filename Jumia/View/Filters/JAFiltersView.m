@@ -10,16 +10,13 @@
 
 @implementation JAFiltersView
 
-- (void)saveOptions
-{
+- (void)saveOptions {
     if (self.filtersViewDelegate && [self.filtersViewDelegate respondsToSelector:@selector(updatedValues)]) {
         [self.filtersViewDelegate updatedValues];
     }
 }
 
-- (void)reload
-{
-    //virtual, implement on subclasses
+- (void)reload {
 }
 
 @end
