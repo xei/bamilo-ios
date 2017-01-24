@@ -100,12 +100,14 @@ typedef void (^ProcessActionBlock)(void);
                 imageURL = self.banner.iPadImageUrl;
             }
             
-            [_bannerImageView setImageWithURL:[NSURL URLWithString:imageURL] success:^(UIImage *image, BOOL cache) {
-                _hasBanner = YES;
-                [blockedImageView changeImageHeight:0.0f andWidth:weakSelf.view.width];
-                [weakSelf.collectionView reloadData];
-            } failure:^(NSError *error) {
-                _hasBanner = NO;
+            [_bannerImageView sd_setImageWithURL:[NSURL URLWithString:imageURL] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                if(error) {
+                    _hasBanner = NO;
+                } else {
+                    _hasBanner = YES;
+                    [blockedImageView changeImageHeight:0.0f andWidth:weakSelf.view.width];
+                    [weakSelf.collectionView reloadData];
+                }
             }];
         }
     } else {

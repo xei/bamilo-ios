@@ -107,9 +107,7 @@
     
     if (product.images.count) {
         RIImage *imageTemp = [product.images firstObject];
-        [self.imageViewItem setImageWithURL:[NSURL URLWithString:imageTemp.url]
-                           placeholderImage:placeHolderImage success:^(UIImage *image, BOOL cached) {
-                           } failure:nil];
+        [self.imageViewItem sd_setImageWithURL:[NSURL URLWithString:imageTemp.url] placeholderImage:placeHolderImage completed:nil];
     } else {
         [self.imageViewItem setImage:placeHolderImage];
     }

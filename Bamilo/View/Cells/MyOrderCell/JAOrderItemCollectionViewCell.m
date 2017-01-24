@@ -320,8 +320,7 @@
     [self.returnsLabel setYBottomOf:self.returnsTitleLabel at:0.f];
     [self.returnsLabel setX:_labelsLeftMargin];
     
-    [self.productImageView setImageWithURL:[NSURL URLWithString:item.imageURL]
-                      placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
+    [self.productImageView sd_setImageWithURL:[NSURL URLWithString:item.imageURL] placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
     
     if (RI_IS_RTL) {
         [self flipAllSubviews];
