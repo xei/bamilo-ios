@@ -29,7 +29,6 @@
 
 - (void)initializeWithPriceFilterOption:(RIFilterOption*)priceFilterOption {
     self.priceFilterOption = priceFilterOption;
-    
     self.backgroundColor = [UIColor whiteColor];
     
     self.priceRangeSlider.step = self.priceFilterOption.interval;
@@ -49,7 +48,7 @@
     
     
     for (UILabel *label in self.textsInPriceRangeUILabels) {
-        label.font = [UIFont fontWithName:kFontRegularName size: 13];
+        label.font = [UIFont fontWithName:kFontRegularName size: 12];
     }
     
     self.upperSelectedPriceUITextField.text = [NSString stringWithFormat:@"%.0ld", (long)self.priceFilterOption.upperValue];

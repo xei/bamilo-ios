@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -21,53 +21,53 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="27g-VH-AHK" userLabel="Content View">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <rect key="frame" x="0.0" y="266.5" width="375" height="134"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cAD-L9-feZ" customClass="TTRangeSlider">
-                            <rect key="frame" x="20" y="100" width="335" height="40"/>
+                            <rect key="frame" x="20" y="8" width="335" height="40"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="xvR-xS-Gvw"/>
                             </constraints>
                         </view>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UD3-fK-0TF">
-                            <rect key="frame" x="43" y="148" width="297" height="30"/>
+                            <rect key="frame" x="46.5" y="56" width="293.5" height="30"/>
                             <nil key="textColor"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="13"/>
                             <textInputTraits key="textInputTraits" keyboardType="phonePad" returnKeyType="done"/>
                             <connections>
                                 <action selector="textFieldEditingChaned:" destination="yiC-iY-0zx" eventType="editingDidEnd" id="H0v-gY-mgw"/>
                             </connections>
                         </textField>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4PZ-s5-3GA">
-                            <rect key="frame" x="43" y="186" width="297" height="30"/>
+                            <rect key="frame" x="46.5" y="94" width="293.5" height="30"/>
                             <nil key="textColor"/>
-                            <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="16"/>
+                            <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="13"/>
                             <textInputTraits key="textInputTraits" keyboardType="phonePad" returnKeyType="done"/>
                             <connections>
                                 <action selector="textFieldEditingChaned:" destination="yiC-iY-0zx" eventType="editingDidEnd" id="ho0-Gd-0iw"/>
                             </connections>
                         </textField>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="از" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KbW-g9-ksO">
-                            <rect key="frame" x="345" y="155.5" width="10" height="16.5"/>
+                            <rect key="frame" x="345" y="57.5" width="10" height="27"/>
                             <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="14"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ریال" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m0U-Sg-RMS">
-                            <rect key="frame" x="20" y="194.5" width="18" height="14"/>
+                            <rect key="frame" x="20" y="98" width="21.5" height="23"/>
                             <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ریال" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tak-Nb-gWu">
-                            <rect key="frame" x="20" y="156" width="18" height="14"/>
+                            <rect key="frame" x="20" y="59.5" width="21.5" height="23"/>
                             <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="تا" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3OR-ss-exX">
-                            <rect key="frame" x="345" y="193.5" width="10" height="16.5"/>
+                            <rect key="frame" x="345" y="95.5" width="10" height="27"/>
                             <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="14"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -83,6 +83,8 @@
                         <constraint firstItem="Tak-Nb-gWu" firstAttribute="centerY" secondItem="UD3-fK-0TF" secondAttribute="centerY" id="BSA-Cd-qgu"/>
                         <constraint firstItem="UD3-fK-0TF" firstAttribute="top" secondItem="cAD-L9-feZ" secondAttribute="bottom" constant="8" id="EfY-U3-YtI"/>
                         <constraint firstItem="3OR-ss-exX" firstAttribute="trailing" secondItem="cAD-L9-feZ" secondAttribute="trailing" id="GHE-vc-P69"/>
+                        <constraint firstAttribute="height" constant="134" id="Hdo-Cf-OtA"/>
+                        <constraint firstAttribute="bottom" secondItem="4PZ-s5-3GA" secondAttribute="bottom" constant="10" id="LhJ-jd-vSL"/>
                         <constraint firstItem="cAD-L9-feZ" firstAttribute="centerX" secondItem="27g-VH-AHK" secondAttribute="centerX" id="Oae-9U-jqX"/>
                         <constraint firstItem="KbW-g9-ksO" firstAttribute="centerY" secondItem="UD3-fK-0TF" secondAttribute="centerY" id="cwJ-mg-pfO"/>
                         <constraint firstItem="UD3-fK-0TF" firstAttribute="leading" secondItem="Tak-Nb-gWu" secondAttribute="trailing" constant="5" id="df2-jH-b9E"/>
@@ -93,20 +95,21 @@
                         <constraint firstItem="m0U-Sg-RMS" firstAttribute="leading" secondItem="cAD-L9-feZ" secondAttribute="leading" id="qkR-I3-XMp"/>
                         <constraint firstItem="4PZ-s5-3GA" firstAttribute="leading" secondItem="m0U-Sg-RMS" secondAttribute="trailing" constant="5" id="rER-f8-vqE"/>
                         <constraint firstItem="4PZ-s5-3GA" firstAttribute="top" secondItem="UD3-fK-0TF" secondAttribute="bottom" constant="8" id="rjk-st-4YK"/>
-                        <constraint firstItem="cAD-L9-feZ" firstAttribute="top" secondItem="27g-VH-AHK" secondAttribute="top" constant="100" id="xFK-wW-tx7"/>
+                        <constraint firstItem="cAD-L9-feZ" firstAttribute="top" secondItem="27g-VH-AHK" secondAttribute="top" constant="8" id="xFK-wW-tx7"/>
                     </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="27g-VH-AHK" firstAttribute="left" secondItem="yiC-iY-0zx" secondAttribute="left" id="35f-iZ-0KL"/>
-                <constraint firstItem="27g-VH-AHK" firstAttribute="top" secondItem="yiC-iY-0zx" secondAttribute="top" id="7Uy-jk-6zG"/>
-                <constraint firstAttribute="trailing" secondItem="27g-VH-AHK" secondAttribute="trailing" id="iUJ-m9-Bm2"/>
-                <constraint firstAttribute="bottom" secondItem="27g-VH-AHK" secondAttribute="bottom" id="r02-T4-zCS"/>
+                <constraint firstAttribute="trailing" secondItem="27g-VH-AHK" secondAttribute="trailing" id="Dku-Pz-f9i"/>
+                <constraint firstAttribute="centerY" secondItem="27g-VH-AHK" secondAttribute="centerY" id="F9n-M1-aW7"/>
+                <constraint firstItem="27g-VH-AHK" firstAttribute="leading" secondItem="yiC-iY-0zx" secondAttribute="leading" id="z0S-uS-0ZX"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <connections>
+                <outlet property="centeredContentHeightConstraint" destination="Hdo-Cf-OtA" id="h65-YQ-4Eb"/>
                 <outlet property="contentView" destination="27g-VH-AHK" id="OOp-iv-0ae"/>
+                <outlet property="contentViewVerticalCenterContstraint" destination="F9n-M1-aW7" id="lwy-X2-pqF"/>
                 <outlet property="lowerSelectedPriceUITextField" destination="UD3-fK-0TF" id="1zV-aP-ECc"/>
                 <outlet property="priceRangeSlider" destination="cAD-L9-feZ" id="81B-j3-vOj"/>
                 <outlet property="upperSelectedPriceUITextField" destination="4PZ-s5-3GA" id="6K1-PJ-BCx"/>
@@ -115,7 +118,7 @@
                 <outletCollection property="textsInPriceRangeUILabels" destination="Tak-Nb-gWu" id="hkA-mg-PVH"/>
                 <outletCollection property="textsInPriceRangeUILabels" destination="m0U-Sg-RMS" id="cD4-RO-qKe"/>
             </connections>
-            <point key="canvasLocation" x="-14" y="40"/>
+            <point key="canvasLocation" x="-14.5" y="39.5"/>
         </view>
     </objects>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

@@ -13,6 +13,9 @@
 
 @interface JAPriceFiltersView : JAFiltersView <TTRangeSliderDelegate>
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *contentViewVerticalCenterContstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *centeredContentHeightConstraint;
+
 - (void)initializeWithPriceFilterOption:(RIFilterOption*)priceFilterOption;
 - (void)saveOptions;
 

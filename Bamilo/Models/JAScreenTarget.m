@@ -10,8 +10,7 @@
 
 @implementation JAScreenTarget
 
-- (instancetype)initWithTarget:(RITarget *)target
-{
+- (instancetype)initWithTarget:(RITarget *)target {
     self = [super init];
     if (self) {
         self.target = target;
@@ -22,8 +21,7 @@
     return self;
 }
 
-- (instancetype)initWithTarget:(RITarget *)target andTitle:(NSString *)title
-{
+- (instancetype)initWithTarget:(RITarget *)target andTitle:(NSString *)title {
     self = [[JAScreenTarget alloc] initWithTarget:target];
     if (self) {
         [self.navBarLayout setTitle:title];
