@@ -15,8 +15,10 @@ target 'Bamilo' do
   pod 'FXBlurView','~> 1.6.4'
   pod 'FBSDKCoreKit','~> 4.18.0'
   pod 'FBSDKMessengerShareKit','~> 1.3.2'
-  pod 'GoogleTagManager', '~> 5.0.8'
-  pod 'GoogleAnalytics', '~> 3.17.0'
+  # pod 'GoogleTagManager', '~> 5.0.8'
+  pod 'GoogleTagManager', '3.15.0' # ********** Legacy
+  # pod 'GoogleAnalytics', '~> 3.17.0'
+  pod 'GoogleAnalytics', '3.14.0' # ********** Legacy
   pod 'GoogleAppIndexing','~> 2.0.3'
   pod 'JBWhatsAppActivity', '~> 1.0'
   pod 'NewRelicAgent', '~> 5.10.0'
