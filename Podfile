@@ -1,3 +1,9 @@
+# Accengage specs source repo
+source 'https://github.com/Accengage/ios-pod-specs.git'
+
+# CocoaPods master specs repo
+source 'https://github.com/CocoaPods/Specs.git'
+
 # Uncomment the next line to define a global platform for your project
 platform :ios, '8.0'
 
@@ -6,6 +12,7 @@ target 'Bamilo' do
   # use_frameworks!
 
   # Pods for Bamilo
+  pod 'Accengage-iOS-SDK', '~> 5.4.0'
   pod 'Adjust', '~> 4.11.0'
   pod 'AlgoliaSearch-Client', '~> 3.5'  
   # pod 'AQSFacebookMessengerActivity'    

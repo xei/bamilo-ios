@@ -1,4 +1,5 @@
 PODS:
+  - Accengage-iOS-SDK (5.4.2)
   - Adjust (4.11.0):
     - Adjust/Core (= 4.11.0)
   - Adjust/Core (4.11.0)
@@ -53,6 +54,7 @@ PODS:
   - TTRangeSlider (1.0.5)
 
 DEPENDENCIES:
+  - Accengage-iOS-SDK (~> 5.4.0)
   - Adjust (~> 4.11.0)
   - AlgoliaSearch-Client (~> 3.5)
   - BugSense (~> 3.6)
@@ -71,6 +73,7 @@ DEPENDENCIES:
   - TTRangeSlider (~> 1.0.5)
 
 SPEC CHECKSUMS:
+  Accengage-iOS-SDK: 97eadb712016eade23f8ec4873064a71974ddfbf
   Adjust: 87b3f066ea103f1dabfaa8e428a75b992bf7712e
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
   AlgoliaSearch-Client: 8a937017f9faad0eef7a2d43fdb695f7620de140
@@ -90,6 +93,6 @@ SPEC CHECKSUMS:
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   TTRangeSlider: 2f2ce4a33b32bb323c6575b9f5161c4664459c58
 
-PODFILE CHECKSUM: 8846e77d7ce26a12747f7774c750dfaca476f343
+PODFILE CHECKSUM: 743f4978f8f2de47f977a61e060ed54c52a20a2f
 
 COCOAPODS: 1.1.1
