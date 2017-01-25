@@ -39,7 +39,7 @@ NSString * const kRINewRelicTokenAPIKey = @"RINewRelicTokenAPIKey";
         return;
     }
     
-    //[NewRelicAgent startWithApplicationToken:apiKey];
+    [NewRelicAgent startWithApplicationToken:apiKey];
 }
 
 @end

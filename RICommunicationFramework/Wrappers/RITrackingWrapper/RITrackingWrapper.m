@@ -17,7 +17,7 @@
 
 @interface RITrackingWrapper ()
 
-@property NSArray *trackers;
+@property NSMutableArray *trackers;
 @property NSMutableArray *handlers;
 @property int productCount;
 
@@ -67,15 +67,28 @@ static dispatch_once_t sharedInstanceToken;
         return;
     }
     
+    //Google Analytics Tracker
     RIGoogleAnalyticsTracker *googleAnalyticsTracker = [[RIGoogleAnalyticsTracker alloc] init];
+    
+    //Bug Sense Tracker
     RIBugSenseTracker *bugsenseTracker = [[RIBugSenseTracker alloc] init];
+    
+    //Ad4Push Tracker
     RIAd4PushTracker *ad4PushTracker = [[RIAd4PushTracker alloc] init];
-    RINewRelicTracker *newRelicTracker = [[RINewRelicTracker alloc] init];
+    
+    //Adjust Tracker
     RIAdjustTracker *adjustTracker = [[RIAdjustTracker alloc] init];
     [adjustTracker setDelegate:delegate];
+    
+    //Google Tag Manager Tracker
     RIGTMTracker *gtmTracker = [RIGTMTracker sharedInstance];
     
-    self.trackers = @[googleAnalyticsTracker, bugsenseTracker, ad4PushTracker, newRelicTracker, adjustTracker, gtmTracker];
+    self.trackers = [NSMutableArray arrayWithObjects:googleAnalyticsTracker, bugsenseTracker, ad4PushTracker, adjustTracker, gtmTracker, nil];
+    
+#ifdef IS_RELEASE
+    RINewRelicTracker *newRelicTracker = [[RINewRelicTracker alloc] init];
+    [self.trackers addObject:newRelicTracker];
+#endif
     
     if(VALID_NOTEMPTY(launchOptions, NSDictionary)) {
         [self RI_callTrackersConformToProtocol:@protocol(RITracker)

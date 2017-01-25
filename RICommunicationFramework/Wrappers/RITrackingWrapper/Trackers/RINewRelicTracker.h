@@ -9,9 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <NewRelicAgent/NewRelic.h>
 
-@interface RINewRelicTracker : NSObject
-<
-RITracker
->
+@interface RINewRelicTracker : NSObject <RITracker>
 
 @end

@@ -2994,6 +2994,7 @@
 				CE9AE0311AB6D78200D56481 /* Resources */,
 				E55B59308D01EE1B5CA4D6B0 /* [CP] Embed Pods Frameworks */,
 				8E107F76DDE210B1D4BE7056 /* [CP] Copy Pods Resources */,
+				875AD58C1E38C62A00584ABF /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -3158,6 +3159,19 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
+		};
+		875AD58C1E38C62A00584ABF /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "SCRIPT=`/usr/bin/find \"${SRCROOT}\" -name newrelic_postbuild.sh | head -n 1`\n\n/bin/sh \"${SCRIPT}\" \"AAdde6b4d1fb2abb804137521a6709a5f5c771df14\"";
 		};
 		8E107F76DDE210B1D4BE7056 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
