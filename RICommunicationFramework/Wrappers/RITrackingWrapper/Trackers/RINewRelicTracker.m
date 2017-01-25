@@ -39,7 +39,8 @@ NSString * const kRINewRelicTokenAPIKey = @"RINewRelicTokenAPIKey";
         return;
     }
     
-    [NewRelicAgent startWithApplicationToken:apiKey];
+#warning Uncomment and move New Relic to App Delegate. IOS-28
+    //[NewRelicAgent startWithApplicationToken:apiKey];
 }
 
 @end
