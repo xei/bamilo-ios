@@ -28,6 +28,7 @@
 		870F8CD71E335BFC0021F87B /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 870F8CD51E335BFC0021F87B /* Main_iPad.storyboard */; };
 		870F8CF61E338D2D0021F87B /* BamiloUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 870F8CF51E338D2D0021F87B /* BamiloUITests.m */; };
 		870F8D061E33975A0021F87B /* IntUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 870F8D051E33975A0021F87B /* IntUtility.m */; };
+		87181D111E388BDC00BCE636 /* BMA4SViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87181D101E388BDC00BCE636 /* BMA4SViewController.m */; };
 		87B9261C1E373DCF004AC9E8 /* RIConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B9261B1E373DCF004AC9E8 /* RIConfiguration.m */; };
 		87B926281E373E64004AC9E8 /* RICommunicationWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B926251E373E64004AC9E8 /* RICommunicationWrapper.m */; };
 		87B926291E373E64004AC9E8 /* RIOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B926271E373E64004AC9E8 /* RIOperation.m */; };
@@ -66,7 +67,6 @@
 		87D624851E3755280036E976 /* RITeaserComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D6246E1E3755280036E976 /* RITeaserComponent.m */; };
 		87D624861E3755280036E976 /* RITeaserGrouping.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D624701E3755280036E976 /* RITeaserGrouping.m */; };
 		87D624871E3755280036E976 /* RIURLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D624721E3755280036E976 /* RIURLCache.m */; };
-		87D624F01E3755750036E976 /* JAScreenTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D624A51E3755750036E976 /* JAScreenTarget.m */; };
 		87D624F11E3755750036E976 /* RIAlgolia.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D624A71E3755750036E976 /* RIAlgolia.m */; };
 		87D624F21E3755750036E976 /* RIBanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D624A91E3755750036E976 /* RIBanner.m */; };
 		87D624F31E3755750036E976 /* RICampaign.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D624AB1E3755750036E976 /* RICampaign.m */; };
@@ -123,7 +123,6 @@
 		9A0F9BAE1B5E802000569DF2 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A0F9BA41B5E7D0000569DF2 /* CoreMedia.framework */; };
 		9A0F9BAF1B5E803300569DF2 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A0F9BAA1B5E7DE600569DF2 /* StoreKit.framework */; };
 		9A1737331B68EBB0004905B4 /* JACheckoutBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17372A1B669B0E004905B4 /* JACheckoutBottomView.m */; };
-		9A17D0941C5F775900851D6E /* BMA4SViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17D0361C5F775900851D6E /* BMA4SViewController.m */; };
 		9A17D0991C5F775900851D6E /* libBMA4SSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A17D0471C5F775900851D6E /* libBMA4SSDK.a */; };
 		9A17D09E1C5F775900851D6E /* A4S.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9A17D0491C5F775900851D6E /* A4S.bundle */; };
 		9A17D0A31C5F775900851D6E /* BMA4SCloseButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 9A17D04A1C5F775900851D6E /* BMA4SCloseButton.png */; };
@@ -533,6 +532,8 @@
 		870F8CF71E338D2D0021F87B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		870F8D041E33975A0021F87B /* IntUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntUtility.h; sourceTree = "<group>"; };
 		870F8D051E33975A0021F87B /* IntUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntUtility.m; sourceTree = "<group>"; };
+		87181D0F1E388BDC00BCE636 /* BMA4SViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BMA4SViewController.h; path = Bamilo/ExternalFrameworks/BMA4SSDK/BMA4SViewController/BMA4SViewController.h; sourceTree = SOURCE_ROOT; };
+		87181D101E388BDC00BCE636 /* BMA4SViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BMA4SViewController.m; path = Bamilo/ExternalFrameworks/BMA4SSDK/BMA4SViewController/BMA4SViewController.m; sourceTree = SOURCE_ROOT; };
 		87B9261A1E373DCF004AC9E8 /* RIConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RIConfiguration.h; path = Bamilo/ExternalFrameworks/RICommunicationFramework/Configuration/RIConfiguration.h; sourceTree = SOURCE_ROOT; };
 		87B9261B1E373DCF004AC9E8 /* RIConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RIConfiguration.m; path = Bamilo/ExternalFrameworks/RICommunicationFramework/Configuration/RIConfiguration.m; sourceTree = SOURCE_ROOT; };
 		87B926231E373E4F004AC9E8 /* RIWrapperConfiguration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RIWrapperConfiguration.h; path = Bamilo/ExternalFrameworks/RICommunicationFramework/Wrappers/RIWrapperConfiguration.h; sourceTree = SOURCE_ROOT; };
@@ -608,8 +609,6 @@
 		87D624701E3755280036E976 /* RITeaserGrouping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RITeaserGrouping.m; path = Bamilo/ExternalFrameworks/RICommunicationFramework/Model/CoreDataEntities/RITeaserGrouping.m; sourceTree = SOURCE_ROOT; };
 		87D624711E3755280036E976 /* RIURLCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RIURLCache.h; path = Bamilo/ExternalFrameworks/RICommunicationFramework/Model/CoreDataEntities/RIURLCache.h; sourceTree = SOURCE_ROOT; };
 		87D624721E3755280036E976 /* RIURLCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RIURLCache.m; path = Bamilo/ExternalFrameworks/RICommunicationFramework/Model/CoreDataEntities/RIURLCache.m; sourceTree = SOURCE_ROOT; };
-		87D624A41E3755750036E976 /* JAScreenTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAScreenTarget.h; path = Bamilo/ExternalFrameworks/RICommunicationFramework/Model/OtherObjects/JAScreenTarget.h; sourceTree = SOURCE_ROOT; };
-		87D624A51E3755750036E976 /* JAScreenTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAScreenTarget.m; path = Bamilo/ExternalFrameworks/RICommunicationFramework/Model/OtherObjects/JAScreenTarget.m; sourceTree = SOURCE_ROOT; };
 		87D624A61E3755750036E976 /* RIAlgolia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RIAlgolia.h; path = Bamilo/ExternalFrameworks/RICommunicationFramework/Model/OtherObjects/RIAlgolia.h; sourceTree = SOURCE_ROOT; };
 		87D624A71E3755750036E976 /* RIAlgolia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RIAlgolia.m; path = Bamilo/ExternalFrameworks/RICommunicationFramework/Model/OtherObjects/RIAlgolia.m; sourceTree = SOURCE_ROOT; };
 		87D624A81E3755750036E976 /* RIBanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RIBanner.h; path = Bamilo/ExternalFrameworks/RICommunicationFramework/Model/OtherObjects/RIBanner.h; sourceTree = SOURCE_ROOT; };
@@ -716,8 +715,6 @@
 		9A17372A1B669B0E004905B4 /* JACheckoutBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACheckoutBottomView.m; path = ../Controllers/Checkout/JACheckoutBottomView.m; sourceTree = "<group>"; };
 		9A17372D1B679740004905B4 /* UIImage+WithColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+WithColor.h"; path = "Categories/UIImage+WithColor.h"; sourceTree = "<group>"; };
 		9A17372E1B679740004905B4 /* UIImage+WithColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+WithColor.m"; path = "Categories/UIImage+WithColor.m"; sourceTree = "<group>"; };
-		9A17D0351C5F775900851D6E /* BMA4SViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMA4SViewController.h; sourceTree = "<group>"; };
-		9A17D0361C5F775900851D6E /* BMA4SViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMA4SViewController.m; sourceTree = "<group>"; };
 		9A17D0381C5F775900851D6E /* A4SWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = A4SWebView.h; sourceTree = "<group>"; };
 		9A17D0391C5F775900851D6E /* BMA4SBeaconsService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMA4SBeaconsService.h; sourceTree = "<group>"; };
 		9A17D03A1C5F775900851D6E /* BMA4SInAppMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMA4SInAppMessage.h; sourceTree = "<group>"; };
@@ -1942,8 +1939,6 @@
 		87B926811E373FC2004AC9E8 /* OtherObjects */ = {
 			isa = PBXGroup;
 			children = (
-				87D624A41E3755750036E976 /* JAScreenTarget.h */,
-				87D624A51E3755750036E976 /* JAScreenTarget.m */,
 				87D624A61E3755750036E976 /* RIAlgolia.h */,
 				87D624A71E3755750036E976 /* RIAlgolia.m */,
 				87D624A81E3755750036E976 /* RIBanner.h */,
@@ -2066,8 +2061,8 @@
 		9A17D0341C5F775900851D6E /* BMA4SViewController */ = {
 			isa = PBXGroup;
 			children = (
-				9A17D0351C5F775900851D6E /* BMA4SViewController.h */,
-				9A17D0361C5F775900851D6E /* BMA4SViewController.m */,
+				87181D0F1E388BDC00BCE636 /* BMA4SViewController.h */,
+				87181D101E388BDC00BCE636 /* BMA4SViewController.m */,
 			);
 			path = BMA4SViewController;
 			sourceTree = "<group>";
@@ -3821,7 +3816,6 @@
 				9AEA3B291B15DD9C00771EEA /* UIView+Frame.m in Sources */,
 				CEA106F11BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m in Sources */,
 				FFF900721C6A5CC700DDF538 /* JATextFieldComponent.m in Sources */,
-				87D624F01E3755750036E976 /* JAScreenTarget.m in Sources */,
 				CE9ADFC71AB6D78200D56481 /* JAButtonWithBlur.m in Sources */,
 				FFB1B08E1CE5E163000F60AD /* JAORWaysViewController.m in Sources */,
 				87D624FB1E3755750036E976 /* RIFilter.m in Sources */,
@@ -3843,7 +3837,6 @@
 				CE9ADFD21AB6D78200D56481 /* JAPriceView.m in Sources */,
 				87B926281E373E64004AC9E8 /* RICommunicationWrapper.m in Sources */,
 				9A59E7F61C3A8D5100F37D3F /* JASavedListViewController.m in Sources */,
-				9A17D0941C5F775900851D6E /* BMA4SViewController.m in Sources */,
 				CE9ADFD61AB6D78200D56481 /* JAFilteredNoResultsView.m in Sources */,
 				CE9ADFD71AB6D78200D56481 /* JAProductListFlowLayout.m in Sources */,
 				87D6247C1E3755280036E976 /* RIFieldRatingStars.m in Sources */,
@@ -3873,6 +3866,7 @@
 				847606B71D77EEE900C54687 /* JAContactUsViewController.m in Sources */,
 				CE9ADFE91AB6D78200D56481 /* JADynamicForm.m in Sources */,
 				89C7AF551BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m in Sources */,
+				87181D111E388BDC00BCE636 /* BMA4SViewController.m in Sources */,
 				87B926321E373E87004AC9E8 /* RITrackingWrapper.m in Sources */,
 				CE9ADFEA1AB6D78200D56481 /* main.m in Sources */,
 				87D624801E3755280036E976 /* RILanguage.m in Sources */,
