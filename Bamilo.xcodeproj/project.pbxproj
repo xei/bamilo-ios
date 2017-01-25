@@ -25,12 +25,11 @@
 		84B25D9D1D8048DF0024B476 /* JAContactUsViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B25D9A1D8048DE0024B476 /* JAContactUsViewController~ipad.xib */; };
 		84B25D9F1D8048DF0024B476 /* JAContactUsViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B25D9B1D8048DE0024B476 /* JAContactUsViewController~iphone.xib */; };
 		870E49E11E3744F000BE02D8 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 870E49E01E3744F000BE02D8 /* Model.xcdatamodeld */; };
-		870F8CD71E335BFC0021F87B /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 870F8CD51E335BFC0021F87B /* Main_iPad.storyboard */; };
 		870F8CF61E338D2D0021F87B /* BamiloUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 870F8CF51E338D2D0021F87B /* BamiloUITests.m */; };
 		870F8D061E33975A0021F87B /* IntUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 870F8D051E33975A0021F87B /* IntUtility.m */; };
-		87A6ACEE1E38919C00C0E7DC /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 87A6ACE51E38919C00C0E7DC /* .gitignore */; };
+		8716987C1E38A94C0027B34A /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 871698781E38A94C0027B34A /* Main_iPad.storyboard */; };
+		8716987D1E38A94C0027B34A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8716987A1E38A94C0027B34A /* Main.storyboard */; };
 		87A6ACEF1E38919C00C0E7DC /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A6ACE81E38919C00C0E7DC /* GTMNSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		87A6ACF11E38919C00C0E7DC /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 87A6ACEA1E38919C00C0E7DC /* LICENSE */; };
 		87A6ACF21E38919C00C0E7DC /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A6ACEC1E38919C00C0E7DC /* NSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		87B9261C1E373DCF004AC9E8 /* RIConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B9261B1E373DCF004AC9E8 /* RIConfiguration.m */; };
 		87B926281E373E64004AC9E8 /* RICommunicationWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B926251E373E64004AC9E8 /* RICommunicationWrapper.m */; };
@@ -349,7 +348,6 @@
 		CE9AE0EA1AB6D78200D56481 /* JARatingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE55A4E819936B6300EE75DE /* JARatingsView.xib */; };
 		CE9AE0EF1AB6D78200D56481 /* JARatingsViewMedium.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5CBFF651A10B33D0050C553 /* JARatingsViewMedium.xib */; };
 		CE9AE1071AB6D78200D56481 /* JAGrayButtonCell_ipad_portrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE88F7B51A1F88FB00A3A586 /* JAGrayButtonCell_ipad_portrait.xib */; };
-		CE9AE1081AB6D78200D56481 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE69B585198662E6005CC699 /* Main.storyboard */; };
 		CE9AE1391AB8997B00D56481 /* Bamilo.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE9AE1341AB8994F00D56481 /* Bamilo.xcassets */; };
 		CEA106F11BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106EC1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m */; };
 		CEA106F91BD003EC00EF88B1 /* JACategoriesSideMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106F41BD003EC00EF88B1 /* JACategoriesSideMenuCell.m */; };
@@ -477,12 +475,13 @@
 		84B25D9B1D8048DE0024B476 /* JAContactUsViewController~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "JAContactUsViewController~iphone.xib"; path = "ContactUs/JAContactUsViewController~iphone.xib"; sourceTree = "<group>"; };
 		850CF874AEC982CAEC443E10 /* libPods-BamiloUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BamiloUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		870F8CCB1E3354700021F87B /* Bamilo.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Bamilo.entitlements; sourceTree = "<group>"; };
-		870F8CD61E335BFC0021F87B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Jumia/Base.lproj/Main_iPad.storyboard; sourceTree = SOURCE_ROOT; };
 		870F8CF31E338D2C0021F87B /* BamiloUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BamiloUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		870F8CF51E338D2D0021F87B /* BamiloUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BamiloUITests.m; sourceTree = "<group>"; };
 		870F8CF71E338D2D0021F87B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		870F8D041E33975A0021F87B /* IntUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntUtility.h; sourceTree = "<group>"; };
 		870F8D051E33975A0021F87B /* IntUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntUtility.m; sourceTree = "<group>"; };
+		871698791E38A94C0027B34A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Bamilo/Base.lproj/Main_iPad.storyboard; sourceTree = SOURCE_ROOT; };
+		8716987B1E38A94C0027B34A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Bamilo/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		87A6ACE51E38919C00C0E7DC /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		87A6ACE61E38919C00C0E7DC /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
 		87A6ACE71E38919C00C0E7DC /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSString+HTML.h"; sourceTree = "<group>"; };
@@ -976,7 +975,6 @@
 		CE59BF181AE8097C0057F4E2 /* JAFeatureStoresTeaserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAFeatureStoresTeaserView.m; sourceTree = "<group>"; };
 		CE59BF1E1AE906180057F4E2 /* JATopSellersTeaserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATopSellersTeaserView.h; sourceTree = "<group>"; };
 		CE59BF1F1AE906180057F4E2 /* JATopSellersTeaserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JATopSellersTeaserView.m; sourceTree = "<group>"; };
-		CE69B586198662E6005CC699 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Jumia/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		CE73BB751AA60426002336B3 /* JANewSellerRatingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JANewSellerRatingViewController.h; sourceTree = "<group>"; };
 		CE73BB761AA60426002336B3 /* JANewSellerRatingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JANewSellerRatingViewController.m; sourceTree = "<group>"; };
 		CE7CC08C1BE38B47006F4A56 /* JASearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASearchView.h; sourceTree = "<group>"; };
@@ -1360,8 +1358,8 @@
 		4AE242DC198655D900E37C90 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
-				CE69B585198662E6005CC699 /* Main.storyboard */,
-				870F8CD51E335BFC0021F87B /* Main_iPad.storyboard */,
+				871698781E38A94C0027B34A /* Main_iPad.storyboard */,
+				8716987A1E38A94C0027B34A /* Main.storyboard */,
 			);
 			name = Storyboards;
 			path = View/Storyboard;
@@ -2970,7 +2968,6 @@
 				CE9ADF281AB6D78200D56481 /* Sources */,
 				CE9AE0171AB6D78200D56481 /* Frameworks */,
 				CE9AE0311AB6D78200D56481 /* Resources */,
-				8709D0CE1E2FCD97002220BC /* ShellScript */,
 				E55B59308D01EE1B5CA4D6B0 /* [CP] Embed Pods Frameworks */,
 				8E107F76DDE210B1D4BE7056 /* [CP] Copy Pods Resources */,
 			);
@@ -3050,23 +3047,17 @@
 				CEDBF8971B0DF5D00073971A /* JANewsletterComponent~iPad_RTL.xib in Resources */,
 				CE9AE03C1AB6D78200D56481 /* JANewsletterComponent~iPad.xib in Resources */,
 				9A564CAF1B332FB200F23057 /* JASellerRatingsViewController.xib in Resources */,
-				87A6ACF11E38919C00C0E7DC /* LICENSE in Resources */,
-				1C71FC5E1E2CABAD007ACF02 /* Bamilosans Black.ttf in Resources */,
 				CE9AE0431AB6D78200D56481 /* JAMaintenancePage.xib in Resources */,
 				CE9AE0441AB6D78200D56481 /* JAGenericFiltersView.xib in Resources */,
 				6CF4AE821ADEAA290024EC34 /* JACatalogBannerCell.xib in Resources */,
 				84B25D9D1D8048DF0024B476 /* JAContactUsViewController~ipad.xib in Resources */,
 				9A564CBB1B34273800F23057 /* JASellerRatingsViewController~ipad.xib in Resources */,
-				870F8CD71E335BFC0021F87B /* Main_iPad.storyboard in Resources */,
 				CE9AE0581AB6D78200D56481 /* JAPDVVariations.xib in Resources */,
-				CE9AE05B1AB6D78200D56481 /* RIStrings.strings in Resources */,
 				CE9AE0611AB6D78200D56481 /* JAOrangeButtonCell_ipad_portrait.xib in Resources */,
 				CE9AE0691AB6D78200D56481 /* JAOrangeButtonCell_ipad_landscape.xib in Resources */,
-				1C71FC611E2CABAD007ACF02 /* Bamilosans Reg.ttf in Resources */,
 				CE9AE06F1AB6D78200D56481 /* JANewsletterComponent.xib in Resources */,
 				CE9AE0751AB6D78200D56481 /* JAFallbackView.xib in Resources */,
 				CE9AE0811AB6D78200D56481 /* JAGrayButtonCell_ipad_landscape.xib in Resources */,
-				87A6ACEE1E38919C00C0E7DC /* .gitignore in Resources */,
 				CE9AE0931AB6D78200D56481 /* JAGrayButtonCell.xib in Resources */,
 				CEA2A1BB1B25D53B00E5973F /* JANewRatingViewController.xib in Resources */,
 				84B25D9F1D8048DF0024B476 /* JAContactUsViewController~iphone.xib in Resources */,
@@ -3077,12 +3068,8 @@
 				CE9AE0A81AB6D78200D56481 /* JACartListHeaderView.xib in Resources */,
 				CE9AE0AC1AB6D78200D56481 /* JACatalogTopView_iphone.xib in Resources */,
 				9A2036F51B25F39E00F36F55 /* JANoConnectionView~iPad.xib in Resources */,
-				87B9264D1E373F56004AC9E8 /* RITrackingDebug_Bamilo.plist in Resources */,
 				1C71FC681E2CD2AD007ACF02 /* PopularTeaserHeaderTableViewCell.xib in Resources */,
 				9A564CB51B3411AD00F23057 /* JANewSellerRatingViewController.xib in Resources */,
-				1C71FC601E2CABAD007ACF02 /* Bamilosans Light.ttf in Resources */,
-				87B9264B1E373F56004AC9E8 /* RITracking_Bamilo.plist in Resources */,
-				6C18BD741AB87E0A00905FD2 /* Images.xcassets in Resources */,
 				CE9AE0B51AB6D78200D56481 /* JACheckBoxComponent.xib in Resources */,
 				CE9AE0B81AB6D78200D56481 /* JAPDVVariations~iPad.xib in Resources */,
 				CEDBF8791B0CEC570073971A /* JACheckBoxComponent_RTL.xib in Resources */,
@@ -3098,11 +3085,19 @@
 				CEDBF8921B0DF5D00073971A /* JANewsletterComponent_RTL.xib in Resources */,
 				CE9AE0EA1AB6D78200D56481 /* JARatingsView.xib in Resources */,
 				CE9AE0EF1AB6D78200D56481 /* JARatingsViewMedium.xib in Resources */,
-				1C71FC621E2CABAD007ACF02 /* Bamilosans UltraLight.ttf in Resources */,
 				1CCD52A11E2BA42F008BAEE4 /* PopularTeaserTableViewCell.xib in Resources */,
 				CE9AE1071AB6D78200D56481 /* JAGrayButtonCell_ipad_portrait.xib in Resources */,
-				CE9AE1081AB6D78200D56481 /* Main.storyboard in Resources */,
+				CE9AE05B1AB6D78200D56481 /* RIStrings.strings in Resources */,
+				87B9264D1E373F56004AC9E8 /* RITrackingDebug_Bamilo.plist in Resources */,
+				87B9264B1E373F56004AC9E8 /* RITracking_Bamilo.plist in Resources */,
+				1C71FC611E2CABAD007ACF02 /* Bamilosans Reg.ttf in Resources */,
+				1C71FC5E1E2CABAD007ACF02 /* Bamilosans Black.ttf in Resources */,
+				1C71FC601E2CABAD007ACF02 /* Bamilosans Light.ttf in Resources */,
+				1C71FC621E2CABAD007ACF02 /* Bamilosans UltraLight.ttf in Resources */,
 				1C80D8841E2E3D850036B514 /* ‌Bamilosans Bold.ttf in Resources */,
+				8716987D1E38A94C0027B34A /* Main.storyboard in Resources */,
+				8716987C1E38A94C0027B34A /* Main_iPad.storyboard in Resources */,
+				6C18BD741AB87E0A00905FD2 /* Images.xcassets in Resources */,
 				CE9AE1391AB8997B00D56481 /* Bamilo.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3139,19 +3134,6 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
-		};
-		8709D0CE1E2FCD97002220BC /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "./Jumia/Fabric.framework/run ddde4ad6ad210575fdac10a908040d1a93e74833 c37b1e5c603fb0fd9b71f1bf627d92f87718c6efd4aada50d724ab8ad126fe35";
 		};
 		8E107F76DDE210B1D4BE7056 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3540,12 +3522,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		870F8CD51E335BFC0021F87B /* Main_iPad.storyboard */ = {
+		871698781E38A94C0027B34A /* Main_iPad.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				870F8CD61E335BFC0021F87B /* Base */,
+				871698791E38A94C0027B34A /* Base */,
 			);
 			name = Main_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+		8716987A1E38A94C0027B34A /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8716987B1E38A94C0027B34A /* Base */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 		B5210E8819C4863400FDB0D1 /* RIStrings.strings */ = {
@@ -3560,14 +3550,6 @@
 				CE8BF04D1BF4DD28001F20D1 /* ur */,
 			);
 			name = RIStrings.strings;
-			sourceTree = "<group>";
-		};
-		CE69B585198662E6005CC699 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CE69B586198662E6005CC699 /* Base */,
-			);
-			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
