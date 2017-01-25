@@ -31,10 +31,8 @@
 		87181D111E388BDC00BCE636 /* BMA4SViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87181D101E388BDC00BCE636 /* BMA4SViewController.m */; };
 		87A6ACEE1E38919C00C0E7DC /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 87A6ACE51E38919C00C0E7DC /* .gitignore */; };
 		87A6ACEF1E38919C00C0E7DC /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A6ACE81E38919C00C0E7DC /* GTMNSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		87A6ACF01E38919C00C0E7DC /* GTMNSString-HTML.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 87A6ACE91E38919C00C0E7DC /* GTMNSString-HTML.podspec */; };
 		87A6ACF11E38919C00C0E7DC /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 87A6ACEA1E38919C00C0E7DC /* LICENSE */; };
 		87A6ACF21E38919C00C0E7DC /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A6ACEC1E38919C00C0E7DC /* NSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		87A6ACF31E38919C00C0E7DC /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 87A6ACED1E38919C00C0E7DC /* README.md */; };
 		87B9261C1E373DCF004AC9E8 /* RIConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B9261B1E373DCF004AC9E8 /* RIConfiguration.m */; };
 		87B926281E373E64004AC9E8 /* RICommunicationWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B926251E373E64004AC9E8 /* RICommunicationWrapper.m */; };
 		87B926291E373E64004AC9E8 /* RIOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B926271E373E64004AC9E8 /* RIOperation.m */; };
@@ -544,11 +542,9 @@
 		87A6ACE61E38919C00C0E7DC /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
 		87A6ACE71E38919C00C0E7DC /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSString+HTML.h"; sourceTree = "<group>"; };
 		87A6ACE81E38919C00C0E7DC /* GTMNSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+HTML.m"; sourceTree = "<group>"; };
-		87A6ACE91E38919C00C0E7DC /* GTMNSString-HTML.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "GTMNSString-HTML.podspec"; sourceTree = "<group>"; };
 		87A6ACEA1E38919C00C0E7DC /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		87A6ACEB1E38919C00C0E7DC /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HTML.h"; sourceTree = "<group>"; };
 		87A6ACEC1E38919C00C0E7DC /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HTML.m"; sourceTree = "<group>"; };
-		87A6ACED1E38919C00C0E7DC /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		87B9261A1E373DCF004AC9E8 /* RIConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RIConfiguration.h; path = Bamilo/ExternalFrameworks/RICommunicationFramework/Configuration/RIConfiguration.h; sourceTree = SOURCE_ROOT; };
 		87B9261B1E373DCF004AC9E8 /* RIConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RIConfiguration.m; path = Bamilo/ExternalFrameworks/RICommunicationFramework/Configuration/RIConfiguration.m; sourceTree = SOURCE_ROOT; };
 		87B926231E373E4F004AC9E8 /* RIWrapperConfiguration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RIWrapperConfiguration.h; path = Bamilo/ExternalFrameworks/RICommunicationFramework/Wrappers/RIWrapperConfiguration.h; sourceTree = SOURCE_ROOT; };
@@ -1783,11 +1779,9 @@
 				87A6ACE61E38919C00C0E7DC /* GTMDefines.h */,
 				87A6ACE71E38919C00C0E7DC /* GTMNSString+HTML.h */,
 				87A6ACE81E38919C00C0E7DC /* GTMNSString+HTML.m */,
-				87A6ACE91E38919C00C0E7DC /* GTMNSString-HTML.podspec */,
 				87A6ACEA1E38919C00C0E7DC /* LICENSE */,
 				87A6ACEB1E38919C00C0E7DC /* NSString+HTML.h */,
 				87A6ACEC1E38919C00C0E7DC /* NSString+HTML.m */,
-				87A6ACED1E38919C00C0E7DC /* README.md */,
 			);
 			name = "GTMNSString-HTML";
 			path = "Bamilo/ExternalFrameworks/GTMNSString-HTML";
@@ -3339,7 +3333,6 @@
 				CE9ADF281AB6D78200D56481 /* Sources */,
 				CE9AE0171AB6D78200D56481 /* Frameworks */,
 				CE9AE0311AB6D78200D56481 /* Resources */,
-				CE9AE1191AB6D78200D56481 /* ShellScript */,
 				8709D0CE1E2FCD97002220BC /* ShellScript */,
 				E55B59308D01EE1B5CA4D6B0 /* [CP] Embed Pods Frameworks */,
 				8E107F76DDE210B1D4BE7056 /* [CP] Copy Pods Resources */,
@@ -3512,7 +3505,6 @@
 				CE9AE0EF1AB6D78200D56481 /* JARatingsViewMedium.xib in Resources */,
 				9A17D1431C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewNotifView-nobuttons-landscape.xib in Resources */,
 				9A17D1021C5F775900851D6E /* BMA4SiPhoneTextNotifView-landscape-iPad.xib in Resources */,
-				87A6ACF01E38919C00C0E7DC /* GTMNSString-HTML.podspec in Resources */,
 				1C71FC621E2CABAD007ACF02 /* Bamilosans UltraLight.ttf in Resources */,
 				9A17D1841C5F775900851D6E /* BMA4SiPhoneTextNotifView-nobuttons.xib in Resources */,
 				9A17D0DA1C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-iPad.xib in Resources */,
@@ -3619,19 +3611,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BamiloUITests/Pods-BamiloUITests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		CE9AE1191AB6D78200D56481 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = "SCRIPT=`/usr/bin/find \"${SRCROOT}\" -name newrelic_postbuild.sh | head -n 1`\n/bin/sh \"${SCRIPT}\" \"AA11211e8c9c311f3a9ec6ca6902bc3115602b7b8d\"";
 		};
 		E55B59308D01EE1B5CA4D6B0 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3825,7 +3804,6 @@
 				CED620511BEA5EE800FA8403 /* JACollectionSeparator.m in Sources */,
 				87D624871E3755280036E976 /* RIURLCache.m in Sources */,
 				CE9ADFBA1AB6D78200D56481 /* JAUtils.m in Sources */,
-				87A6ACF31E38919C00C0E7DC /* README.md in Sources */,
 				9A3876641BCD0DFD0088B186 /* JAProductReviewsView.m in Sources */,
 				87D625151E3755750036E976 /* RIVariation.m in Sources */,
 				9A189E6A1BB31AF70039BC14 /* JAProductInfoRatingLine.m in Sources */,
@@ -4068,46 +4046,22 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1274CAF67DB255894D733AEE /* Pods-Bamilo.adhoc.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Bamilo/Bamilo.entitlements;
 				CURRENT_PROJECT_VERSION = 25;
 				DEVELOPMENT_TEAM = 3GCCEEQ32X;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/Bamilo",
-					"$(PROJECT_DIR)/Bamilo/ExternalFrameworks",
-					"$(PROJECT_DIR)/Bamilo/ExternalFrameworks/FacebookSDK",
-				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bamilo/Bamilo-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Bamilo/ExternalFrameworks/FacebookSDK",
-					"$(PROJECT_DIR)/Bamilo/ExternalFrameworks/GoogleAppIndexing/**",
-				);
 				INFOPLIST_FILE = "Bamilo/Bamilo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Bamilo/ExternalFrameworks/GoogleAnalytics/Libraries",
-					"$(PROJECT_DIR)/Bamilo/ExternalFrameworks/GoogleTagManager/Libraries",
-					"$(PROJECT_DIR)/Bamilo/ExternalFrameworks/BMA4SSDK",
-				);
-				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
 				PRODUCT_NAME = Bamilo;
 				PROVISIONING_PROFILE_SPECIFIER = Bamilo_Distribution;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(PROJECT_DIR)/Bamilo $(PROJECT_DIR)/Bamilo/ExternalFrameworks $(PROJECT_DIR)/Bamilo/ExternalFrameworks/RICommunicationFramework/** $(PROJECT_DIR)/Bamilo/ExternalFrameworks/BMA4SSDK/** $(PROJECT_DIR)/Bamilo/ExternalFrameworks/FXBlurView/**";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(PROJECT_DIR)/Bamilo/ExternalFrameworks/RICommunicationFramework/** $(PROJECT_DIR)/Bamilo/ExternalFrameworks/BMA4SSDK/** $(PROJECT_DIR)/Bamilo/ExternalFrameworks/FXBlurView/**";
 				VALID_ARCHS = "armv7 armv7s arm64";
 			};
 			name = AdHoc;
@@ -4269,46 +4223,22 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A2D17BADD33026AEFE65A1B8 /* Pods-Bamilo.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Bamilo/Bamilo.entitlements;
 				CURRENT_PROJECT_VERSION = 25;
 				DEVELOPMENT_TEAM = 3GCCEEQ32X;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/Bamilo",
-					"$(PROJECT_DIR)/Bamilo/ExternalFrameworks",
-					"$(PROJECT_DIR)/Bamilo/ExternalFrameworks/FacebookSDK",
-				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bamilo/Bamilo-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Bamilo/ExternalFrameworks/FacebookSDK",
-					"$(PROJECT_DIR)/Bamilo/ExternalFrameworks/GoogleAppIndexing/**",
-				);
 				INFOPLIST_FILE = "Bamilo/Bamilo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Bamilo/ExternalFrameworks/GoogleAnalytics/Libraries",
-					"$(PROJECT_DIR)/Bamilo/ExternalFrameworks/GoogleTagManager/Libraries",
-					"$(PROJECT_DIR)/Bamilo/ExternalFrameworks/BMA4SSDK",
-				);
-				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
 				PRODUCT_NAME = Bamilo;
 				PROVISIONING_PROFILE_SPECIFIER = Bamilo_Distribution;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(PROJECT_DIR)/Bamilo $(PROJECT_DIR)/Bamilo/ExternalFrameworks $(PROJECT_DIR)/Bamilo/ExternalFrameworks/RICommunicationFramework/** $(PROJECT_DIR)/Bamilo/ExternalFrameworks/BMA4SSDK/** $(PROJECT_DIR)/Bamilo/ExternalFrameworks/FXBlurView/**";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(PROJECT_DIR)/Bamilo/ExternalFrameworks/RICommunicationFramework/** $(PROJECT_DIR)/Bamilo/ExternalFrameworks/BMA4SSDK/** $(PROJECT_DIR)/Bamilo/ExternalFrameworks/FXBlurView/**";
 				VALID_ARCHS = "armv7 armv7s arm64";
 			};
 			name = Debug;
@@ -4317,46 +4247,22 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 87F976FD954B3D3090770B27 /* Pods-Bamilo.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Bamilo/Bamilo.entitlements;
 				CURRENT_PROJECT_VERSION = 25;
 				DEVELOPMENT_TEAM = 3GCCEEQ32X;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/Bamilo",
-					"$(PROJECT_DIR)/Bamilo/ExternalFrameworks",
-					"$(PROJECT_DIR)/Bamilo/ExternalFrameworks/FacebookSDK",
-				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bamilo/Bamilo-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Bamilo/ExternalFrameworks/FacebookSDK",
-					"$(PROJECT_DIR)/Bamilo/ExternalFrameworks/GoogleAppIndexing/**",
-				);
 				INFOPLIST_FILE = "Bamilo/Bamilo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Bamilo/ExternalFrameworks/GoogleAnalytics/Libraries",
-					"$(PROJECT_DIR)/Bamilo/ExternalFrameworks/GoogleTagManager/Libraries",
-					"$(PROJECT_DIR)/Bamilo/ExternalFrameworks/BMA4SSDK",
-				);
-				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
 				PRODUCT_NAME = Bamilo;
 				PROVISIONING_PROFILE_SPECIFIER = "Bamilo Live";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(PROJECT_DIR)/Bamilo $(PROJECT_DIR)/Bamilo/ExternalFrameworks $(PROJECT_DIR)/Bamilo/ExternalFrameworks/RICommunicationFramework/** $(PROJECT_DIR)/Bamilo/ExternalFrameworks/BMA4SSDK/** $(PROJECT_DIR)/Bamilo/ExternalFrameworks/FXBlurView/**";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(PROJECT_DIR)/Bamilo/ExternalFrameworks/RICommunicationFramework/** $(PROJECT_DIR)/Bamilo/ExternalFrameworks/BMA4SSDK/** $(PROJECT_DIR)/Bamilo/ExternalFrameworks/FXBlurView/**";
 				VALID_ARCHS = "armv7 armv7s arm64";
 			};
 			name = Release;

@@ -131,14 +131,15 @@
             
             __block UIImageView *blockedImageView = _bannerImageView;
             __weak JACampaignPageView* weakSelf = self;
-            [_bannerImageView setImageWithURL:[NSURL URLWithString:self.campaign.bannerImageURL]
-                                  success:^(UIImage *image, BOOL cached){
-                                      _hasBanner = YES;
-                                      [blockedImageView changeImageHeight:0.0f andWidth:weakSelf.frame.size.width];
-                                      [weakSelf.collectionView reloadData];
-                                  }failure:^(NSError *error){
-                                      _hasBanner = NO;
-                                  }];
+            [_bannerImageView sd_setImageWithURL:[NSURL URLWithString:self.campaign.bannerImageURL] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                if(error) {
+                    _hasBanner = NO;
+                } else {
+                    _hasBanner = YES;
+                    [blockedImageView changeImageHeight:0.0f andWidth:weakSelf.frame.size.width];
+                    [weakSelf.collectionView reloadData];
+                }
+            }];
         }
     }else{
         _hasBanner = NO;
