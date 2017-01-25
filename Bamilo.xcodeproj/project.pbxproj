@@ -342,7 +342,6 @@
 		CE9ADFF51AB6D78200D56481 /* JAOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59D195E19C33122004843C3 /* JAOrderViewController.m */; };
 		CE9ADFF61AB6D78200D56481 /* JAShippingInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B55CF28E19BE072800A6C6B6 /* JAShippingInfoCell.m */; };
 		CE9ADFF71AB6D78200D56481 /* JASidePanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242D91986547C00E37C90 /* JASidePanelController.m */; };
-		CE9ADFF81AB6D78200D56481 /* JBWhatsAppActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28EE591A9397C6000A264C /* JBWhatsAppActivity.m */; };
 		CE9ADFFD1AB6D78200D56481 /* JATeaserPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE91B9B1989065A0078DFC9 /* JATeaserPageView.m */; };
 		CE9ADFFF1AB6D78200D56481 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A19C51319D019100070D194 /* Reachability.m */; };
 		CE9AE0001AB6D78200D56481 /* JAMainTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE445866198BD20A00CE7E8D /* JAMainTeaserView.m */; };
@@ -1059,8 +1058,6 @@
 		CE28A79E1BDA30B400B1FADA /* JAGenericMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAGenericMenuCell.m; path = GenericMenuCell/JAGenericMenuCell.m; sourceTree = "<group>"; };
 		CE28A7A41BDE987400B1FADA /* JATabBarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JATabBarButton.h; path = GlobalTabBar/JATabBarButton.h; sourceTree = "<group>"; };
 		CE28A7A51BDE987400B1FADA /* JATabBarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JATabBarButton.m; path = GlobalTabBar/JATabBarButton.m; sourceTree = "<group>"; };
-		CE28EE581A9397C6000A264C /* JBWhatsAppActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JBWhatsAppActivity.h; sourceTree = "<group>"; };
-		CE28EE591A9397C6000A264C /* JBWhatsAppActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JBWhatsAppActivity.m; sourceTree = "<group>"; };
 		CE33C9FF19AB36FA00333B1A /* JAPriceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPriceView.h; sourceTree = "<group>"; };
 		CE33CA0019AB36FA00333B1A /* JAPriceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPriceView.m; sourceTree = "<group>"; };
 		CE3AF8FE19DBF4FB00D8C51B /* JACampaignsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACampaignsViewController.h; sourceTree = "<group>"; };
@@ -2825,7 +2822,6 @@
 			children = (
 				87B926061E373CA7004AC9E8 /* RICommunicationFramework */,
 				9A17D0331C5F775900851D6E /* BMA4SSDK */,
-				CE28EE571A9397C6000A264C /* WhatsAppActivity */,
 			);
 			name = ExternalFrameworks;
 			path = Jumia/ExternalFrameworks;
@@ -2972,16 +2968,6 @@
 				CE28A79E1BDA30B400B1FADA /* JAGenericMenuCell.m */,
 			);
 			name = GenericMenuCell;
-			sourceTree = "<group>";
-		};
-		CE28EE571A9397C6000A264C /* WhatsAppActivity */ = {
-			isa = PBXGroup;
-			children = (
-				CE28EE581A9397C6000A264C /* JBWhatsAppActivity.h */,
-				CE28EE591A9397C6000A264C /* JBWhatsAppActivity.m */,
-			);
-			name = WhatsAppActivity;
-			path = Bamilo/ExternalFrameworks/WhatsAppActivity;
 			sourceTree = "<group>";
 		};
 		CE2F576B19913B33000A9E09 /* Catalog */ = {
@@ -3907,7 +3893,6 @@
 				9AC4D6991B45A51A00036F1C /* JACatalogListCollectionViewCell.m in Sources */,
 				9AEF73F91CD20E1C00A5D574 /* JAReturnStepByStepModel.m in Sources */,
 				CE9ADFF71AB6D78200D56481 /* JASidePanelController.m in Sources */,
-				CE9ADFF81AB6D78200D56481 /* JBWhatsAppActivity.m in Sources */,
 				87D625111E3755750036E976 /* RISpecification.m in Sources */,
 				9AC4D6A01B46A50000036F1C /* JACatalogCollectionViewCell.m in Sources */,
 				893AADD11C1F1A54006314FB /* JAMyOrderDetailViewController.m in Sources */,

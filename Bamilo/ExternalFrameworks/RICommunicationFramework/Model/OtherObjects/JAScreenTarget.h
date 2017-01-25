@@ -15,6 +15,6 @@
 @property (nonatomic) BOOL pushAnimation;
 @property (nonatomic, strong) NSMutableDictionary *screenInfo;
 
--(instancetype) initWithTarget:(RITarget *)target;
+-(void) initWithTarget:(RITarget *)target;
 
 @end
