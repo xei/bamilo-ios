@@ -29,6 +29,12 @@
 		870F8CF61E338D2D0021F87B /* BamiloUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 870F8CF51E338D2D0021F87B /* BamiloUITests.m */; };
 		870F8D061E33975A0021F87B /* IntUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 870F8D051E33975A0021F87B /* IntUtility.m */; };
 		87181D111E388BDC00BCE636 /* BMA4SViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87181D101E388BDC00BCE636 /* BMA4SViewController.m */; };
+		87A6ACEE1E38919C00C0E7DC /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 87A6ACE51E38919C00C0E7DC /* .gitignore */; };
+		87A6ACEF1E38919C00C0E7DC /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A6ACE81E38919C00C0E7DC /* GTMNSString+HTML.m */; };
+		87A6ACF01E38919C00C0E7DC /* GTMNSString-HTML.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 87A6ACE91E38919C00C0E7DC /* GTMNSString-HTML.podspec */; };
+		87A6ACF11E38919C00C0E7DC /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 87A6ACEA1E38919C00C0E7DC /* LICENSE */; };
+		87A6ACF21E38919C00C0E7DC /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A6ACEC1E38919C00C0E7DC /* NSString+HTML.m */; };
+		87A6ACF31E38919C00C0E7DC /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 87A6ACED1E38919C00C0E7DC /* README.md */; };
 		87B9261C1E373DCF004AC9E8 /* RIConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B9261B1E373DCF004AC9E8 /* RIConfiguration.m */; };
 		87B926281E373E64004AC9E8 /* RICommunicationWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B926251E373E64004AC9E8 /* RICommunicationWrapper.m */; };
 		87B926291E373E64004AC9E8 /* RIOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B926271E373E64004AC9E8 /* RIOperation.m */; };
@@ -534,6 +540,15 @@
 		870F8D051E33975A0021F87B /* IntUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntUtility.m; sourceTree = "<group>"; };
 		87181D0F1E388BDC00BCE636 /* BMA4SViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BMA4SViewController.h; path = Bamilo/ExternalFrameworks/BMA4SSDK/BMA4SViewController/BMA4SViewController.h; sourceTree = SOURCE_ROOT; };
 		87181D101E388BDC00BCE636 /* BMA4SViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BMA4SViewController.m; path = Bamilo/ExternalFrameworks/BMA4SSDK/BMA4SViewController/BMA4SViewController.m; sourceTree = SOURCE_ROOT; };
+		87A6ACE51E38919C00C0E7DC /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		87A6ACE61E38919C00C0E7DC /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
+		87A6ACE71E38919C00C0E7DC /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSString+HTML.h"; sourceTree = "<group>"; };
+		87A6ACE81E38919C00C0E7DC /* GTMNSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+HTML.m"; sourceTree = "<group>"; };
+		87A6ACE91E38919C00C0E7DC /* GTMNSString-HTML.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "GTMNSString-HTML.podspec"; sourceTree = "<group>"; };
+		87A6ACEA1E38919C00C0E7DC /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		87A6ACEB1E38919C00C0E7DC /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HTML.h"; sourceTree = "<group>"; };
+		87A6ACEC1E38919C00C0E7DC /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HTML.m"; sourceTree = "<group>"; };
+		87A6ACED1E38919C00C0E7DC /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		87B9261A1E373DCF004AC9E8 /* RIConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RIConfiguration.h; path = Bamilo/ExternalFrameworks/RICommunicationFramework/Configuration/RIConfiguration.h; sourceTree = SOURCE_ROOT; };
 		87B9261B1E373DCF004AC9E8 /* RIConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RIConfiguration.m; path = Bamilo/ExternalFrameworks/RICommunicationFramework/Configuration/RIConfiguration.m; sourceTree = SOURCE_ROOT; };
 		87B926231E373E4F004AC9E8 /* RIWrapperConfiguration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RIWrapperConfiguration.h; path = Bamilo/ExternalFrameworks/RICommunicationFramework/Wrappers/RIWrapperConfiguration.h; sourceTree = SOURCE_ROOT; };
@@ -1761,6 +1776,23 @@
 			name = IntUtility;
 			sourceTree = "<group>";
 		};
+		87A6ACE41E38919C00C0E7DC /* GTMNSString-HTML */ = {
+			isa = PBXGroup;
+			children = (
+				87A6ACE51E38919C00C0E7DC /* .gitignore */,
+				87A6ACE61E38919C00C0E7DC /* GTMDefines.h */,
+				87A6ACE71E38919C00C0E7DC /* GTMNSString+HTML.h */,
+				87A6ACE81E38919C00C0E7DC /* GTMNSString+HTML.m */,
+				87A6ACE91E38919C00C0E7DC /* GTMNSString-HTML.podspec */,
+				87A6ACEA1E38919C00C0E7DC /* LICENSE */,
+				87A6ACEB1E38919C00C0E7DC /* NSString+HTML.h */,
+				87A6ACEC1E38919C00C0E7DC /* NSString+HTML.m */,
+				87A6ACED1E38919C00C0E7DC /* README.md */,
+			);
+			name = "GTMNSString-HTML";
+			path = "Bamilo/ExternalFrameworks/GTMNSString-HTML";
+			sourceTree = SOURCE_ROOT;
+		};
 		87B926061E373CA7004AC9E8 /* RICommunicationFramework */ = {
 			isa = PBXGroup;
 			children = (
@@ -2816,6 +2848,7 @@
 			isa = PBXGroup;
 			children = (
 				87B926061E373CA7004AC9E8 /* RICommunicationFramework */,
+				87A6ACE41E38919C00C0E7DC /* GTMNSString-HTML */,
 				9A17D0331C5F775900851D6E /* BMA4SSDK */,
 			);
 			name = ExternalFrameworks;
@@ -3387,6 +3420,7 @@
 				CEDBF8971B0DF5D00073971A /* JANewsletterComponent~iPad_RTL.xib in Resources */,
 				CE9AE03C1AB6D78200D56481 /* JANewsletterComponent~iPad.xib in Resources */,
 				9A564CAF1B332FB200F23057 /* JASellerRatingsViewController.xib in Resources */,
+				87A6ACF11E38919C00C0E7DC /* LICENSE in Resources */,
 				1C71FC5E1E2CABAD007ACF02 /* Bamilosans Black.ttf in Resources */,
 				9A17D1201C5F775900851D6E /* BMA4SiPhoneWebViewNotifView.xib in Resources */,
 				CE9AE0431AB6D78200D56481 /* JAMaintenancePage.xib in Resources */,
@@ -3423,6 +3457,7 @@
 				9A17D13E1C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewNotifView-nobuttons-landscape-iPad.xib in Resources */,
 				9A17D0E41C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib in Resources */,
 				9A17D0FD1C5F775900851D6E /* BMA4SiPhoneTextNotifView-iPad.xib in Resources */,
+				87A6ACEE1E38919C00C0E7DC /* .gitignore in Resources */,
 				9A17D17F1C5F775900851D6E /* BMA4SiPhoneTextNotifView-nobuttons-landscape.xib in Resources */,
 				CE9AE0931AB6D78200D56481 /* JAGrayButtonCell.xib in Resources */,
 				9A17D1391C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewNotifView-nobuttons-iPad.xib in Resources */,
@@ -3477,6 +3512,7 @@
 				CE9AE0EF1AB6D78200D56481 /* JARatingsViewMedium.xib in Resources */,
 				9A17D1431C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewNotifView-nobuttons-landscape.xib in Resources */,
 				9A17D1021C5F775900851D6E /* BMA4SiPhoneTextNotifView-landscape-iPad.xib in Resources */,
+				87A6ACF01E38919C00C0E7DC /* GTMNSString-HTML.podspec in Resources */,
 				1C71FC621E2CABAD007ACF02 /* Bamilosans UltraLight.ttf in Resources */,
 				9A17D1841C5F775900851D6E /* BMA4SiPhoneTextNotifView-nobuttons.xib in Resources */,
 				9A17D0DA1C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-iPad.xib in Resources */,
@@ -3789,6 +3825,7 @@
 				CED620511BEA5EE800FA8403 /* JACollectionSeparator.m in Sources */,
 				87D624871E3755280036E976 /* RIURLCache.m in Sources */,
 				CE9ADFBA1AB6D78200D56481 /* JAUtils.m in Sources */,
+				87A6ACF31E38919C00C0E7DC /* README.md in Sources */,
 				9A3876641BCD0DFD0088B186 /* JAProductReviewsView.m in Sources */,
 				87D625151E3755750036E976 /* RIVariation.m in Sources */,
 				9A189E6A1BB31AF70039BC14 /* JAProductInfoRatingLine.m in Sources */,
@@ -3814,6 +3851,7 @@
 				FFB1B0951CE61D96000F60AD /* JARadioExpandableComponent.m in Sources */,
 				CE28A7A31BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */,
 				9AEA3B291B15DD9C00771EEA /* UIView+Frame.m in Sources */,
+				87A6ACF21E38919C00C0E7DC /* NSString+HTML.m in Sources */,
 				CEA106F11BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m in Sources */,
 				FFF900721C6A5CC700DDF538 /* JATextFieldComponent.m in Sources */,
 				CE9ADFC71AB6D78200D56481 /* JAButtonWithBlur.m in Sources */,
@@ -3832,6 +3870,7 @@
 				9A189E811BB54C2D0039BC14 /* JAScrolledImageGalleryView.m in Sources */,
 				87D625041E3755750036E976 /* RIPhonePrefix.m in Sources */,
 				8976FB2C1C0F323700483651 /* JARatingFilterCell.m in Sources */,
+				87A6ACEF1E38919C00C0E7DC /* GTMNSString+HTML.m in Sources */,
 				9AB488891B727B2D00886A44 /* UIImage+WithColor.m in Sources */,
 				CE9ADFD11AB6D78200D56481 /* JAOrderSummaryView.m in Sources */,
 				CE9ADFD21AB6D78200D56481 /* JAPriceView.m in Sources */,
