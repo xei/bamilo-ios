@@ -9,6 +9,7 @@
 #import "JAFilterCell.h"
 #import "RIFilter.h"
 #import "NSString+Style.h"
+#import "UIColor+Format.h"
 
 @implementation JAFilterCell
 
@@ -52,26 +53,22 @@
         }
     }
     
-    UIFont* labelFont = JADisplay3Font;
     NSString* cellText = [NSString stringWithFormat:@"%@",filter.name];
     if (0 < numberOfSelectedOptions) {
-        labelFont = JAFilterCellCategoryTitle;
         cellText = [[NSString stringWithFormat:@"%@ (%ld)",filter.name, (long)numberOfSelectedOptions] numbersToPersian];
     }
     UILabel* mainLabel = [UILabel new];
-    mainLabel.font = labelFont;
+    mainLabel.font = [UIFont fontWithName:kFontRegularName size: 13];
     mainLabel.textColor = [UIColor blackColor];
     mainLabel.text = cellText;
     mainLabel.textAlignment = NSTextAlignmentLeft;
     [mainLabel sizeToFit];
-    mainLabel.frame = CGRectMake(margin,
-                                 self.clickView.bounds.origin.y,
-                                 width - margin,
-                                 self.clickView.bounds.size.height);
+    mainLabel.frame = CGRectMake(margin, self.clickView.bounds.origin.y, width - margin, self.clickView.bounds.size.height);
+    
     [self.clickView addSubview:mainLabel];
     
     UIView* separator = [UIView new];
-    separator.backgroundColor = JABlack400Color;
+    separator.backgroundColor = [UIColor withHexString: @"#E5E5E5"];
     separator.frame = CGRectMake(self.clickView.bounds.origin.x,
                                  self.clickView.bounds.size.height - 1.0f,
                                  self.clickView.bounds.size.width,

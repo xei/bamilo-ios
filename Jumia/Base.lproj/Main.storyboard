@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="0V7-j2-mJV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="0V7-j2-mJV">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -16,6 +16,9 @@
         </array>
         <array key="Bamilosans Reg.ttf">
             <string>Bamilo-Sans</string>
+        </array>
+        <array key="‌Bamilosans Bold.ttf">
+            <string>Bamilo-Sans-Bold</string>
         </array>
     </customFonts>
     <scenes>
@@ -451,12 +454,13 @@
                                         <subviews>
                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="02K-RQ-ZgY">
                                                 <rect key="frame" x="103" y="10" width="51" height="31"/>
+                                                <color key="onTintColor" red="0.47450980392156861" green="0.71372549019607845" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
                                                     <action selector="discountOnlySwitch:" destination="L8G-Sy-CpX" eventType="valueChanged" id="di2-jw-7cr"/>
                                                 </connections>
                                             </switch>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="فقط با تخفیف ها" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gEn-nz-ntR">
-                                                <rect key="frame" x="12.5" y="14.5" width="85.5" height="21.5"/>
+                                                <rect key="frame" x="12.5" y="15" width="85.5" height="21.5"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -483,9 +487,9 @@
                                         <subviews>
                                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="frd-em-X2G">
                                                 <rect key="frame" x="0.0" y="0.0" width="160" height="50"/>
-                                                <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="13"/>
+                                                <fontDescription key="fontDescription" name="Bamilo-Sans-Bold" family="Bamilo-Sans" pointSize="12"/>
                                                 <state key="normal" title="پاک کردن همه">
-                                                    <color key="titleColor" red="0.22352941179999999" green="0.52549019610000003" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleColor" red="0.12941176470588234" green="0.52156862745098043" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
                                                 <connections>
                                                     <action selector="clearAllFilters" destination="L8G-Sy-CpX" eventType="touchUpInside" id="dLU-OA-Xv7"/>
@@ -510,7 +514,7 @@
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y2G-Vh-l9y" userLabel="top filter buttons seperator view">
                                         <rect key="frame" x="159" y="0.0" width="1" height="50"/>
-                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" red="0.89803921568627454" green="0.89803921568627454" blue="0.89803921568627454" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="0.5" id="gzV-mo-rAG"/>
                                         </constraints>
@@ -542,7 +546,7 @@
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xAc-ga-3ha" userLabel="vertical seperator view">
                                 <rect key="frame" x="199" y="70" width="1" height="453"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.89803921568627454" green="0.89803921568627454" blue="0.89803921568627454" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="0.5" id="eEm-l1-oVF"/>
                                 </constraints>
@@ -553,7 +557,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="leJ-N8-27u"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="15"/>
+                                <fontDescription key="fontDescription" name="Bamilo-Sans-Bold" family="Bamilo-Sans" pointSize="13"/>
                                 <state key="normal" title="تایید">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>

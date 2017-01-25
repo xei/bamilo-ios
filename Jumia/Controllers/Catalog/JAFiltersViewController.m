@@ -53,6 +53,9 @@
         RIFilterOption *priceFilterOption = [priceFilter.options firstObject];
         self.discountOnlyUISwitch.on = priceFilterOption.discountOnly;
     }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -226,5 +229,46 @@
     }
 }
 
+#pragma Keyboard delegate notification 
 
+- (void) keyboardWillShow:(NSNotification *)notification {
+    
+    if ([self.currentFilterView isKindOfClass: JAPriceFiltersView.class]) {
+        CGFloat keyboardHeight = [self getKeyboardHeight:notification];
+        CGFloat priceFilterCenteredContentHeight = ((JAPriceFiltersView *)self.currentFilterView).centeredContentHeightConstraint.constant;
+        
+        CGFloat properMaxKeyboardHeight = self.applyUIButton.frame.size.height + (self.currentFilterContainerView.frame.size.height / 2) - (priceFilterCenteredContentHeight/2);
+        
+        if (keyboardHeight > properMaxKeyboardHeight) {
+            [UIView animateWithDuration:0.5 animations:^{
+                ((JAPriceFiltersView *)self.currentFilterView).contentViewVerticalCenterContstraint.constant = keyboardHeight - properMaxKeyboardHeight;
+                [self.currentFilterContainerView layoutIfNeeded];
+            } completion: nil];
+            
+        }
+    }
+}
+
+- (void) keyboardWillHide:(NSNotification *)notification {
+    if ([self.currentFilterView isKindOfClass: JAPriceFiltersView.class] && ((JAPriceFiltersView *)self.currentFilterView).contentViewVerticalCenterContstraint.constant != 0) {
+        [UIView animateWithDuration:0.5 animations:^{
+            ((JAPriceFiltersView *)self.currentFilterView).contentViewVerticalCenterContstraint.constant = 0;
+            [self.currentFilterContainerView layoutIfNeeded];
+        } completion: nil];
+    }
+}
+
+
+#pragma mark - helper functions
+- (CGFloat)getKeyboardHeight:(NSNotification *)notification {
+    NSDictionary *userInfo = [notification userInfo];
+    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    CGFloat height = kbSize.height;
+    
+    if (self.view.frame.size.width == kbSize.height) {
+        height = kbSize.width;
+    }
+    
+    return height;
+}
 @end
