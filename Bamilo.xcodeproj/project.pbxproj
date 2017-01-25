@@ -28,6 +28,7 @@
 		870F8CD71E335BFC0021F87B /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 870F8CD51E335BFC0021F87B /* Main_iPad.storyboard */; };
 		870F8CF61E338D2D0021F87B /* BamiloUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 870F8CF51E338D2D0021F87B /* BamiloUITests.m */; };
 		870F8D061E33975A0021F87B /* IntUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 870F8D051E33975A0021F87B /* IntUtility.m */; };
+		871698761E38A18A0027B34A /* libBMA4SSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A17D0471C5F775900851D6E /* libBMA4SSDK.a */; };
 		87181D111E388BDC00BCE636 /* BMA4SViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87181D101E388BDC00BCE636 /* BMA4SViewController.m */; };
 		87A6ACEE1E38919C00C0E7DC /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 87A6ACE51E38919C00C0E7DC /* .gitignore */; };
 		87A6ACEF1E38919C00C0E7DC /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A6ACE81E38919C00C0E7DC /* GTMNSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -127,7 +128,6 @@
 		9A0F9BAE1B5E802000569DF2 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A0F9BA41B5E7D0000569DF2 /* CoreMedia.framework */; };
 		9A0F9BAF1B5E803300569DF2 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A0F9BAA1B5E7DE600569DF2 /* StoreKit.framework */; };
 		9A1737331B68EBB0004905B4 /* JACheckoutBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17372A1B669B0E004905B4 /* JACheckoutBottomView.m */; };
-		9A17D0991C5F775900851D6E /* libBMA4SSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A17D0471C5F775900851D6E /* libBMA4SSDK.a */; };
 		9A17D09E1C5F775900851D6E /* A4S.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9A17D0491C5F775900851D6E /* A4S.bundle */; };
 		9A17D0A31C5F775900851D6E /* BMA4SCloseButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 9A17D04A1C5F775900851D6E /* BMA4SCloseButton.png */; };
 		9A17D0A81C5F775900851D6E /* BMA4S.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9A17D04C1C5F775900851D6E /* BMA4S.strings */; };
@@ -1261,8 +1261,8 @@
 				CE9AE0271AB6D78200D56481 /* SystemConfiguration.framework in Frameworks */,
 				CE9AE0281AB6D78200D56481 /* CoreData.framework in Frameworks */,
 				CE9AE02A1AB6D78200D56481 /* libz.dylib in Frameworks */,
-				9A17D0991C5F775900851D6E /* libBMA4SSDK.a in Frameworks */,
 				CE9AE0291AB6D78200D56481 /* libsqlite3.dylib in Frameworks */,
+				871698761E38A18A0027B34A /* libBMA4SSDK.a in Frameworks */,
 				FBC6D3E5FF8035ED077AD2A6 /* libPods-Bamilo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4057,6 +4057,10 @@
 				GCC_PREFIX_HEADER = "Bamilo/Bamilo-Prefix.pch";
 				INFOPLIST_FILE = "Bamilo/Bamilo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Bamilo/ExternalFrameworks/BMA4SSDK",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
 				PRODUCT_NAME = Bamilo;
 				PROVISIONING_PROFILE_SPECIFIER = Bamilo_Distribution;
@@ -4234,6 +4238,10 @@
 				GCC_PREFIX_HEADER = "Bamilo/Bamilo-Prefix.pch";
 				INFOPLIST_FILE = "Bamilo/Bamilo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Bamilo/ExternalFrameworks/BMA4SSDK",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
 				PRODUCT_NAME = Bamilo;
 				PROVISIONING_PROFILE_SPECIFIER = Bamilo_Distribution;
@@ -4258,6 +4266,10 @@
 				GCC_PREFIX_HEADER = "Bamilo/Bamilo-Prefix.pch";
 				INFOPLIST_FILE = "Bamilo/Bamilo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Bamilo/ExternalFrameworks/BMA4SSDK",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
 				PRODUCT_NAME = Bamilo;
 				PROVISIONING_PROFILE_SPECIFIER = "Bamilo Live";

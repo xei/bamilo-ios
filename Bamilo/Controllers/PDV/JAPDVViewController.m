@@ -29,7 +29,7 @@
 #import "JAPDVWizardView.h"
 #import <FBSDKCoreKit/FBSDKAppEvents.h>
 #import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
-#import "AQSFacebookMessengerActivity.h"
+//#import "AQSFacebookMessengerActivity.h"
 #import "JAPDVBundles.h"
 #import "JAPDVBundleSingleItem.h"
 #import "RIProduct.h"
@@ -1116,10 +1116,10 @@ typedef void (^ProcessActionBlock)(void);
     
     // Share with Facebook Messenger and WhatsApp
     
-    UIActivity *fbmActivity = [[AQSFacebookMessengerActivity alloc] init];
+    //UIActivity *fbmActivity = [[AQSFacebookMessengerActivity alloc] init];
     UIActivity *whatsAppActivity = [[JBWhatsAppActivity alloc] init];
     
-    NSArray *objectToShare = @[fbmActivity, whatsAppActivity];;
+    //NSArray *objectToShare = @[fbmActivity, whatsAppActivity];;
     //crash fix on clicking items with name in farsi
     NSString* webStringURL = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSURL* urlToBeShared = [NSURL URLWithString:webStringURL];
@@ -1130,7 +1130,7 @@ typedef void (^ProcessActionBlock)(void);
     
     if(!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")){
         
-        activityController = [[UIActivityViewController alloc] initWithActivityItems:@[STRING_SHARE_PRODUCT_MESSAGE, urlToBeShared, whatsappMsg] applicationActivities:objectToShare];
+        //activityController = [[UIActivityViewController alloc] initWithActivityItems:@[STRING_SHARE_PRODUCT_MESSAGE, urlToBeShared, whatsappMsg] applicationActivities:objectToShare];
         
     }
     

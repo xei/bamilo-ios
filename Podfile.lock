@@ -25,8 +25,6 @@ PODS:
     - AFNetworking/NSURLSession
   - AlgoliaSearch-Client (3.7.0):
     - AFNetworking (~> 2.2)
-  - AQSFacebookMessengerActivity (0.1.1):
-    - Facebook-iOS-SDK
   - Bolts (1.8.4):
     - Bolts/AppLinks (= 1.8.4)
     - Bolts/Tasks (= 1.8.4)
@@ -37,24 +35,10 @@ PODS:
   - Crashlytics (3.8.3):
     - Fabric (~> 1.6.3)
   - Fabric (1.6.11)
-  - Facebook-iOS-SDK (4.1.0):
-    - Bolts (~> 1.1)
-    - Facebook-iOS-SDK/CoreKit (= 4.1.0)
-    - Facebook-iOS-SDK/LoginKit (= 4.1.0)
-    - Facebook-iOS-SDK/ShareKit (= 4.1.0)
-  - Facebook-iOS-SDK/CoreKit (4.1.0):
-    - Bolts (~> 1.1)
-    - Facebook-iOS-SDK/CoreKit/no-arc (= 4.1.0)
-  - Facebook-iOS-SDK/CoreKit/no-arc (4.1.0):
-    - Bolts (~> 1.1)
-  - Facebook-iOS-SDK/LoginKit (4.1.0):
-    - Bolts (~> 1.1)
-    - Facebook-iOS-SDK/CoreKit
-  - Facebook-iOS-SDK/ShareKit (4.1.0):
-    - Bolts (~> 1.1)
-    - Facebook-iOS-SDK/CoreKit
   - FBSDKCoreKit (4.18.0):
     - Bolts (~> 1.7)
+  - FBSDKLoginKit (4.18.0):
+    - FBSDKCoreKit
   - FBSDKMessengerShareKit (1.3.2)
   - FXBlurView (1.6.4)
   - GoogleAnalytics (3.14.0)
@@ -71,11 +55,11 @@ PODS:
 DEPENDENCIES:
   - Adjust (~> 4.11.0)
   - AlgoliaSearch-Client (~> 3.5)
-  - AQSFacebookMessengerActivity
   - BugSense (~> 3.6)
   - Crashlytics (~> 3.8.3)
   - Fabric (~> 1.6.11)
   - FBSDKCoreKit (~> 4.18.0)
+  - FBSDKLoginKit (~> 4.18.0)
   - FBSDKMessengerShareKit (~> 1.3.2)
   - FXBlurView (~> 1.6.4)
   - GoogleAnalytics (= 3.14.0)
@@ -90,13 +74,12 @@ SPEC CHECKSUMS:
   Adjust: 87b3f066ea103f1dabfaa8e428a75b992bf7712e
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
   AlgoliaSearch-Client: 8a937017f9faad0eef7a2d43fdb695f7620de140
-  AQSFacebookMessengerActivity: 5fc25d00e3996267acb2cae7b58c5695f83994e3
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   BugSense: 778c28028810e114f21faade24d074ede7f9b467
   Crashlytics: 2b6dbe138a42395577cfa73dfa1aa7248cadf39e
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
-  Facebook-iOS-SDK: f42dfb27283bf5f05e3a9edc88459a75b9892d99
   FBSDKCoreKit: 15fef8804a4629f98c6f4e55e81a76c9d725d85e
+  FBSDKLoginKit: 6773073e970b2b15fb12e451ce7f11da0532b880
   FBSDKMessengerShareKit: 41c0b1a667d685c9433f993eb9611b3d5074e1cb
   FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
   GoogleAnalytics: 9be1afdb8deeac4bb5f13ca7f7d3b9db2a1f43dc
@@ -107,6 +90,6 @@ SPEC CHECKSUMS:
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   TTRangeSlider: 2f2ce4a33b32bb323c6575b9f5161c4664459c58
 
-PODFILE CHECKSUM: f12a50ccf06bb4b205a1260c1427ab6097e1a2e1
+PODFILE CHECKSUM: 8846e77d7ce26a12747f7774c750dfaca476f343
 
 COCOAPODS: 1.1.1

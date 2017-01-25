@@ -15,7 +15,7 @@
 #import "JAPicker.h"
 #import "JAActivityViewController.h"
 #import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
-#import "AQSFacebookMessengerActivity.h"
+//#import "AQSFacebookMessengerActivity.h"
 #import "JBWhatsAppActivity.h"
 #import "RITarget.h"
 
@@ -578,7 +578,7 @@
 {
     NSArray *appActivities = @[];
     
-    UIActivity *fbmActivity = [[AQSFacebookMessengerActivity alloc] init];
+    //UIActivity *fbmActivity = [[AQSFacebookMessengerActivity alloc] init];
     UIActivity *whatsAppActivity = [[JBWhatsAppActivity alloc] init];
     WhatsAppMessage *whatsAppMsg;
     
@@ -586,7 +586,7 @@
     NSString *shareTheAppString = [[NSString alloc] initWithString:[NSString stringWithFormat:STRING_SHARE_APP, APP_NAME]];
     if(!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")){
         
-        appActivities = @[fbmActivity, whatsAppActivity];
+        appActivities = @[/*fbmActivity, */whatsAppActivity];
     }
     
     
