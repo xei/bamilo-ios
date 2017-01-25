@@ -90,16 +90,13 @@
 }
 
 #ifdef __IPHONE_8_0
-- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:   (UIUserNotificationSettings *)notificationSettings
-{
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:   (UIUserNotificationSettings *)notificationSettings {
     //register to receive notifications
     [application registerForRemoteNotifications];
 }
 
-- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString   *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler
-{
-    if(!VALID_NOTEMPTY(application, UIApplication) || UIApplicationStateActive != application.applicationState)
-    {
+- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString   *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler {
+    if(!VALID_NOTEMPTY(application, UIApplication) || UIApplicationStateActive != application.applicationState) {
         [[RITrackingWrapper sharedInstance] applicationHandleActionWithIdentifier:identifier forRemoteNotification:userInfo];
     }
     
@@ -107,8 +104,7 @@
 }
 #endif
 
-- (BOOL)application:(UIApplication *)application continueUserActivity:(nonnull NSUserActivity *)userActivity restorationHandler:(nonnull void (^)(NSArray * _Nullable))restorationHandler
-{
+- (BOOL)application:(UIApplication *)application continueUserActivity:(nonnull NSUserActivity *)userActivity restorationHandler:(nonnull void (^)(NSArray * _Nullable))restorationHandler {
     if ([[userActivity activityType] isEqualToString:NSUserActivityTypeBrowsingWeb]) {
         [Adjust appWillOpenUrl:[userActivity webpageURL]];
         
@@ -124,11 +120,9 @@
     return YES;
 }
 
-- (void)checkSession
-{
+- (void)checkSession {
     NSNumber *numberOfSessions = [[NSUserDefaults standardUserDefaults] objectForKey:kNumberOfSessions];
-    if(VALID_NOTEMPTY(numberOfSessions, NSNumber))
-    {
+    if(VALID_NOTEMPTY(numberOfSessions, NSNumber)) {
         NSInteger numberOfSessionsInteger = [numberOfSessions integerValue];
         NSDate *startSessionDate = [[NSUserDefaults standardUserDefaults] objectForKey:kSessionDate];
         if(VALID_NOTEMPTY(startSessionDate, NSDate))
@@ -151,7 +145,7 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    UINavigationController *rootViewController = (UINavigationController*)self.window.rootViewController;
+    UINavigationController *rootViewController = (UINavigationController*) self.window.rootViewController;
     JARootViewController* mainController = (JARootViewController*) [rootViewController topViewController];
     if(VALID_NOTEMPTY(mainController, JARootViewController))
     {
@@ -178,8 +172,7 @@
 
 // In case the app was sent into the background when there was no network connection, we will use
 // the background data fetching mechanism to send any pending Google Analytics data.
-- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
-{
+- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     [[RITrackingWrapper sharedInstance] applicationDidEnterBackground:application];
     completionHandler(UIBackgroundFetchResultNewData);
 }
@@ -396,8 +389,7 @@
 - (void)adjustAttributionChanged:(NSString *)network campaign:(NSString *)campaign adGroup:(NSString *)adGroup creative:(NSString *)creative
 {
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
-    if(VALID_NOTEMPTY(network, NSString))
-    {
+    if(VALID_NOTEMPTY(network, NSString)) {
         [dictionary setObject:network forKey:kRIEventNetworkKey];
     }
     if(VALID_NOTEMPTY(campaign, NSString))

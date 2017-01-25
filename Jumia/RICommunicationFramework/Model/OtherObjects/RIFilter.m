@@ -10,8 +10,7 @@
 
 @implementation RIFilterOption
 
-+ (RIFilterOption *)parseFilterOption:(NSDictionary *)filterOptionJSON;
-{
++ (RIFilterOption *)parseFilterOption:(NSDictionary *)filterOptionJSON {
     RIFilterOption* newFilterOption = [[RIFilterOption alloc] init];
     
     if (VALID_NOTEMPTY(filterOptionJSON, NSDictionary)) {
@@ -80,8 +79,7 @@
 
 @implementation RIFilter
 
-+ (NSString *)urlWithFiltersArray:(NSArray*)filtersArray
-{
++ (NSString *)urlWithFiltersArray:(NSArray*)filtersArray {
     NSString* urlString = nil;
     for (RIFilter* filter in filtersArray) {
         NSString* stringForFilter = [RIFilter urlWithFilter:filter];
@@ -92,22 +90,19 @@
     return urlString;
 }
 
-+ (NSString *)urlWithFilter:(RIFilter*)filter
-{
++ (NSString *)urlWithFilter:(RIFilter*)filter {
     NSString* urlString = nil;
     
-    if (VALID_NOTEMPTY(filter.uid, NSString) && VALID_NOTEMPTY(filter.options, NSArray) && 0 < filter.options.count) {
+    if (filter.uid.length && filter.options.count > 0) {
         
         if ([filter.uid isEqualToString:@"price"]) {
             RIFilterOption* filterOption = [filter.options firstObject];
-            if (VALID_NOTEMPTY(filterOption, RIFilterOption)) {
-                
+            if (filterOption) {
                 if (filterOption.lowerValue != filterOption.min || filterOption.upperValue != filterOption.max) {
                     urlString = [NSString stringWithFormat:@"price/%ld%@%ld", (long)filterOption.lowerValue, filter.filterSeparator, (long)filterOption.upperValue];
                 }
-
                 if (filterOption.discountOnly) {
-                    if (VALID_NOTEMPTY(urlString, NSString)) {
+                    if (urlString.length) {
                         urlString = [NSString stringWithFormat:@"%@/special_price/1", urlString];
                     } else {
                         urlString = @"special_price/1";
@@ -115,7 +110,6 @@
                 }
             }
         } else {
-            NSString *brands = [NSString new];
             for (RIFilterOption* filterOption in filter.options) {
                 
                 if (filterOption.selected) {
@@ -123,7 +117,7 @@
                     //filterOption.val = [filterOption.val stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
                     //filterOption.val = [filterOption.val stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
                     
-                    if (ISEMPTY(urlString)) {
+                    if (!urlString) {
                         NSString* filterUidString = filter.uid;
                         urlString = [NSString stringWithFormat:@"%@/%@", filterUidString, filterOption.val];
                     } else {
@@ -131,19 +125,13 @@
                     }
                 }
             }
-            
-            if (VALID_NOTEMPTY(brands, NSString)) {
-                urlString = [NSString stringWithFormat:@"%@%@", urlString, brands];
-            }
-            
         }
     }
     
     return urlString;
 }
 
-+ (NSArray *)parseFilters:(NSArray *)filtersJSON;
-{
++ (NSArray *)parseFilters:(NSArray *)filtersJSON {
     NSMutableArray* newFiltersArray = [NSMutableArray new];
     
     if (VALID_NOTEMPTY(filtersJSON, NSArray)) {
@@ -168,11 +156,10 @@
 }
 
 
-+ (RIFilter *)parseFilter:(NSDictionary *)filterJSON;
-{
++ (RIFilter *)parseFilter:(NSDictionary *)filterJSON {
     RIFilter* newFilter = [[RIFilter alloc] init];
     
-    if (VALID_NOTEMPTY(filterJSON, NSDictionary)) {
+    if (filterJSON) {
         if ([filterJSON objectForKey:@"id"]) {
             newFilter.uid = [filterJSON objectForKey:@"id"];
         }
@@ -215,8 +202,7 @@
     return newFilter;
 }
 
-+ (NSArray*)copyFiltersArray:(NSArray*)filtersArray;
-{
++ (NSArray*)copyFiltersArray:(NSArray*)filtersArray {
     NSMutableArray* newFiltersArray = [NSMutableArray new];
     for (RIFilter* filter in filtersArray) {
         [newFiltersArray addObject:[filter copy]];
@@ -224,8 +210,7 @@
     return [newFiltersArray copy];
 }
 
-- (RIFilter*)copy
-{
+- (RIFilter*)copy {
     RIFilter* newFilter = [[RIFilter alloc] init];
     
     newFilter.uid = [self.uid copy];
