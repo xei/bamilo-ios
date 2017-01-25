@@ -12,6 +12,7 @@ platform :ios do
     # ensure_git_status_clean
     # ensure_git_branch(branch: 'develop')
     sh 'bash ./scripts/xcrun_simctl_erase_all.sh'
+    cocoapods
   end
 
   ############################## Test Only ##############################
@@ -21,13 +22,17 @@ platform :ios do
 
   ############################## Build Alpha (Crashlytics) ##############################
   lane :alpha do |values|
-    gym(scheme: 'Bamilo (Staging)', export_method: 'ad-hoc', clean: true)
-    scan(scheme: 'Bamilo (Staging)', devices: ["iPhone SE"], clean: false, skip_build: true)
+    gym(workspace: "Bamilo.xcworkspace", scheme: "Bamilo (Staging)", export_method: "ad-hoc", clean: true)
+    
+    skip_testing = values[:skip_testing] ? values[:skip_testing] : false
+    if skip_testing == false
+       scan(scheme: "Bamilo (Staging)", devices: ["iPhone SE"], clean: false, skip_build: true)
+    end
 
     emails = values[:emails] ? values[:emails] : nil
     groups = values[:groups] ? values[:groups] : nil
-    notify = values[:notify] ? values[:notify] : true
-
+    notify = values[:notify] ? values[:notify] : true  
+  
     crashlytics(api_token: 'ddde4ad6ad210575fdac10a908040d1a93e74833',
       build_secret: 'c37b1e5c603fb0fd9b71f1bf627d92f87718c6efd4aada50d724ab8ad126fe35',
       emails: emails,
@@ -40,8 +45,8 @@ platform :ios do
 
   ############################# Build Beta (TestFlight) ##############################
   lane :beta do |values|
-    gym(scheme: "Bamilo", codesigning_identity: "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)", clean: true)
-    scan(scheme: 'Bamilo', devices: ["iPhone SE"], clean: false, skip_build: true)
+    gym(workspace: "Bamilo.xcworkspace", scheme: "Bamilo", codesigning_identity: "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)", clean: true)
+    scan(scheme: "Bamilo", devices: ["iPhone SE"], clean: false, skip_build: true)
     pilot(skip_submission: true, distribute_external: false, skip_waiting_for_build_processing: true, username: "narbeh.mirzaei@bamilo.com")
     post_to_slack(scheme: "beta", destination: "TestFlight")
   end
