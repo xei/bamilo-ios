@@ -11,7 +11,6 @@
 #import "RIBugSenseTracker.h"
 #import "RIOpenURLHandler.h"
 #import "RIAd4PushTracker.h"
-#import "RINewRelicTracker.h"
 #import "RIAdjustTracker.h"
 #import "RIGTMTracker.h"
 

@@ -172,7 +172,7 @@ UITableViewDelegate>
             
             self.shippingAddress = [self.addresses objectForKey:@"shipping"];
             self.billingAddress = [self.addresses objectForKey:@"billing"];
-            
+
             if([[self.shippingAddress uid] isEqualToString:[self.billingAddress uid]])
             {
                 self.useSameAddressAsBillingAndShipping = YES;
@@ -324,12 +324,13 @@ UITableViewDelegate>
     
     [self setupViews:newWidth toInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
     
-    if(self.firstLoading)
+#warning temporarily disabled until we migrate to new GA Google Analytics
+    /*if(self.firstLoading)
     {
         NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
         [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:_billingAddress.uid];
         self.firstLoading = NO;
-    }
+    }*/
 }
 
 -(BOOL)checkIfAddressIsAdded:(RIAddress*)addressToAdd addresses:(NSArray*)addresses

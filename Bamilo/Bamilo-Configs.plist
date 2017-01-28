@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NewRelic</key>
+	<dict>
+		<key>Staging</key>
+		<string>AA67be087b82827f774f5a5eaaa7433d31bd09b1b8</string>
+		<key>Live</key>
+		<string>AAdde6b4d1fb2abb804137521a6709a5f5c771df14</string>
+	</dict>
+</dict>
+</plist>
