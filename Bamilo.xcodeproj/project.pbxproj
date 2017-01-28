@@ -102,7 +102,6 @@
 		875AD5871E38C0C900584ABF /* RIBugSenseTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD5341E38C0C800584ABF /* RIBugSenseTracker.m */; };
 		875AD5881E38C0C900584ABF /* RIGoogleAnalyticsTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD5361E38C0C800584ABF /* RIGoogleAnalyticsTracker.m */; };
 		875AD5891E38C0C900584ABF /* RIGTMTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD5381E38C0C800584ABF /* RIGTMTracker.m */; };
-		875AD58A1E38C0C900584ABF /* RINewRelicTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD53A1E38C0C800584ABF /* RINewRelicTracker.m */; };
 		875AD58B1E38C0C900584ABF /* RIURLCacheWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD53D1E38C0C800584ABF /* RIURLCacheWrapper.m */; };
 		87A6ACEF1E38919C00C0E7DC /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A6ACE81E38919C00C0E7DC /* GTMNSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		87A6ACF21E38919C00C0E7DC /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A6ACEC1E38919C00C0E7DC /* NSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -479,7 +478,7 @@
 		870F8CCB1E3354700021F87B /* Bamilo.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Bamilo.entitlements; sourceTree = "<group>"; };
 		870F8CF31E338D2C0021F87B /* BamiloUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BamiloUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		870F8CF51E338D2D0021F87B /* BamiloUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BamiloUITests.m; sourceTree = "<group>"; };
-		870F8CF71E338D2D0021F87B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		870F8CF71E338D2D0021F87B /* Bamilo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Bamilo-Info.plist"; sourceTree = "<group>"; };
 		870F8D041E33975A0021F87B /* IntUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntUtility.h; sourceTree = "<group>"; };
 		870F8D051E33975A0021F87B /* IntUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntUtility.m; sourceTree = "<group>"; };
 		871698791E38A94C0027B34A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Bamilo/Base.lproj/Main_iPad.storyboard; sourceTree = SOURCE_ROOT; };
@@ -645,16 +644,12 @@
 		875AD5361E38C0C800584ABF /* RIGoogleAnalyticsTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIGoogleAnalyticsTracker.m; sourceTree = "<group>"; };
 		875AD5371E38C0C800584ABF /* RIGTMTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIGTMTracker.h; sourceTree = "<group>"; };
 		875AD5381E38C0C800584ABF /* RIGTMTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIGTMTracker.m; sourceTree = "<group>"; };
-		875AD5391E38C0C800584ABF /* RINewRelicTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RINewRelicTracker.h; sourceTree = "<group>"; };
-		875AD53A1E38C0C800584ABF /* RINewRelicTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RINewRelicTracker.m; sourceTree = "<group>"; };
 		875AD53C1E38C0C800584ABF /* RIURLCacheWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIURLCacheWrapper.h; sourceTree = "<group>"; };
 		875AD53D1E38C0C800584ABF /* RIURLCacheWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIURLCacheWrapper.m; sourceTree = "<group>"; };
 		875AD53E1E38C0C800584ABF /* RIWrapperConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIWrapperConfiguration.h; sourceTree = "<group>"; };
-		87A6ACE51E38919C00C0E7DC /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		87A6ACE61E38919C00C0E7DC /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
 		87A6ACE71E38919C00C0E7DC /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSString+HTML.h"; sourceTree = "<group>"; };
 		87A6ACE81E38919C00C0E7DC /* GTMNSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+HTML.m"; sourceTree = "<group>"; };
-		87A6ACEA1E38919C00C0E7DC /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		87A6ACEB1E38919C00C0E7DC /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HTML.h"; sourceTree = "<group>"; };
 		87A6ACEC1E38919C00C0E7DC /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HTML.m"; sourceTree = "<group>"; };
 		87C69DA91E38B78E0026018F /* NSString+Style.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Style.h"; path = "Categories/NSString+Style.h"; sourceTree = "<group>"; };
@@ -902,7 +897,6 @@
 		B59DCA7319B88DAD00DE7960 /* JASwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JASwitchCell.h; path = SwitchCell/JASwitchCell.h; sourceTree = "<group>"; };
 		B59DCA7419B88DAD00DE7960 /* JASwitchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JASwitchCell.m; path = SwitchCell/JASwitchCell.m; sourceTree = "<group>"; };
 		B59DCA7519B88DAD00DE7960 /* JASwitchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JASwitchCell.xib; path = SwitchCell/JASwitchCell.xib; sourceTree = "<group>"; };
-		B5A301AC19811D0700F71726 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B5A301AD19811D0700F71726 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B5A301AF19811D0700F71726 /* JAAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JAAppDelegate.h; sourceTree = "<group>"; };
 		B5A301B019811D0700F71726 /* JAAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JAAppDelegate.m; sourceTree = "<group>"; };
@@ -1020,7 +1014,6 @@
 		CE97D2ED19AE1ED50090D01C /* JANavigationBarLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JANavigationBarLayout.m; sourceTree = "<group>"; };
 		CE9AE11F1AB6D78200D56481 /* Bamilo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bamilo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE9AE1211AB823C100D56481 /* my */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = my; path = my.lproj/RIStrings.strings; sourceTree = "<group>"; };
-		CE9AE1251AB8251000D56481 /* zawgyione2008.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = zawgyione2008.ttf; sourceTree = "<group>"; };
 		CE9AE1271AB8281400D56481 /* JAFont.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JAFont.h; sourceTree = "<group>"; };
 		CE9AE12C1AB84C2300D56481 /* Bamilo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Bamilo-Info.plist"; sourceTree = "<group>"; };
 		CE9AE1341AB8994F00D56481 /* Bamilo.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Bamilo.xcassets; sourceTree = "<group>"; };
@@ -1645,7 +1638,7 @@
 			isa = PBXGroup;
 			children = (
 				870F8CF51E338D2D0021F87B /* BamiloUITests.m */,
-				870F8CF71E338D2D0021F87B /* Info.plist */,
+				870F8CF71E338D2D0021F87B /* Bamilo-Info.plist */,
 			);
 			path = BamiloUITests;
 			sourceTree = "<group>";
@@ -1885,9 +1878,9 @@
 			children = (
 				875AD5281E38C0C800584ABF /* RIOpenURLHandler.h */,
 				875AD5291E38C0C800584ABF /* RIOpenURLHandler.m */,
-				875AD52A1E38C0C800584ABF /* RITracking_Bamilo.plist */,
 				875AD52B1E38C0C800584ABF /* RITrackingConfiguration.h */,
 				875AD52C1E38C0C800584ABF /* RITrackingConfiguration.m */,
+				875AD52A1E38C0C800584ABF /* RITracking_Bamilo.plist */,
 				875AD52D1E38C0C800584ABF /* RITrackingDebug_Bamilo.plist */,
 			);
 			path = SupportingFiles;
@@ -1906,8 +1899,6 @@
 				875AD5361E38C0C800584ABF /* RIGoogleAnalyticsTracker.m */,
 				875AD5371E38C0C800584ABF /* RIGTMTracker.h */,
 				875AD5381E38C0C800584ABF /* RIGTMTracker.m */,
-				875AD5391E38C0C800584ABF /* RINewRelicTracker.h */,
-				875AD53A1E38C0C800584ABF /* RINewRelicTracker.m */,
 			);
 			path = Trackers;
 			sourceTree = "<group>";
@@ -1924,11 +1915,9 @@
 		87A6ACE41E38919C00C0E7DC /* GTMNSString-HTML */ = {
 			isa = PBXGroup;
 			children = (
-				87A6ACE51E38919C00C0E7DC /* .gitignore */,
 				87A6ACE61E38919C00C0E7DC /* GTMDefines.h */,
 				87A6ACE71E38919C00C0E7DC /* GTMNSString+HTML.h */,
 				87A6ACE81E38919C00C0E7DC /* GTMNSString+HTML.m */,
-				87A6ACEA1E38919C00C0E7DC /* LICENSE */,
 				87A6ACEB1E38919C00C0E7DC /* NSString+HTML.h */,
 				87A6ACEC1E38919C00C0E7DC /* NSString+HTML.m */,
 			);
@@ -2452,7 +2441,6 @@
 		B5A301AB19811D0700F71726 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				B5A301AC19811D0700F71726 /* Info.plist */,
 				CE9AE12C1AB84C2300D56481 /* Bamilo-Info.plist */,
 				870F8CCB1E3354700021F87B /* Bamilo.entitlements */,
 				870F8CCD1E3354E10021F87B /* Consts */,
@@ -2826,7 +2814,6 @@
 				1C71FC5B1E2CABAD007ACF02 /* Bamilosans Light.ttf */,
 				1C71FC5C1E2CABAD007ACF02 /* Bamilosans Reg.ttf */,
 				1C71FC5D1E2CABAD007ACF02 /* Bamilosans UltraLight.ttf */,
-				CE9AE1251AB8251000D56481 /* zawgyione2008.ttf */,
 				CE9AE1271AB8281400D56481 /* JAFont.h */,
 			);
 			name = Fonts;
@@ -3470,7 +3457,6 @@
 				875AD5471E38C0C900584ABF /* RIFieldDataSetComponent.m in Sources */,
 				CE9ADFDE1AB6D78200D56481 /* JABaseViewController.m in Sources */,
 				9AEF74051CD20E5700A5D574 /* JAScreenTarget.m in Sources */,
-				875AD58A1E38C0C900584ABF /* RINewRelicTracker.m in Sources */,
 				CE59BF081AE8057A0057F4E2 /* JAShopsWeekTeaserView.m in Sources */,
 				875AD5431E38C0C900584ABF /* RICountryConfiguration.m in Sources */,
 				CE9ADFDF1AB6D78200D56481 /* JAMyOrderCell.m in Sources */,
@@ -3677,7 +3663,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = BamiloUITests/Info.plist;
+				INFOPLIST_FILE = "BamiloUITests/Bamilo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.BamiloUITests;
@@ -3697,7 +3683,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = BamiloUITests/Info.plist;
+				INFOPLIST_FILE = "BamiloUITests/Bamilo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.BamiloUITests;
@@ -3717,7 +3703,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = BamiloUITests/Info.plist;
+				INFOPLIST_FILE = "BamiloUITests/Bamilo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.BamiloUITests;
