@@ -31,6 +31,7 @@
 		874AAB551E3C764600B3F8FE /* Bamilo-Configs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 874AAB541E3C764600B3F8FE /* Bamilo-Configs.plist */; };
 		874AAB5E1E3C778E00B3F8FE /* ConfigManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB5D1E3C778E00B3F8FE /* ConfigManager.m */; };
 		874AAB651E3CE35B00B3F8FE /* ConfigManager-Consts.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB641E3CE35B00B3F8FE /* ConfigManager-Consts.m */; };
+		874AAB691E3CEA0700B3F8FE /* AppManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB681E3CEA0700B3F8FE /* AppManager.m */; };
 		875AD53F1E38C0C800584ABF /* RIConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD48C1E38C0C800584ABF /* RIConfiguration.m */; };
 		875AD5401E38C0C800584ABF /* RIAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD4901E38C0C800584ABF /* RIAddress.m */; };
 		875AD5411E38C0C900584ABF /* RIApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD4921E38C0C800584ABF /* RIApi.m */; };
@@ -491,6 +492,8 @@
 		874AAB621E3CE32C00B3F8FE /* ConfigManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigManager.h; sourceTree = "<group>"; };
 		874AAB631E3CE35B00B3F8FE /* ConfigManager-Consts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConfigManager-Consts.h"; sourceTree = "<group>"; };
 		874AAB641E3CE35B00B3F8FE /* ConfigManager-Consts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ConfigManager-Consts.m"; sourceTree = "<group>"; };
+		874AAB671E3CEA0700B3F8FE /* AppManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppManager.h; sourceTree = "<group>"; };
+		874AAB681E3CEA0700B3F8FE /* AppManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppManager.m; sourceTree = "<group>"; };
 		875AD48B1E38C0C800584ABF /* RIConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIConfiguration.h; sourceTree = "<group>"; };
 		875AD48C1E38C0C800584ABF /* RIConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIConfiguration.m; sourceTree = "<group>"; };
 		875AD48F1E38C0C800584ABF /* RIAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIAddress.h; sourceTree = "<group>"; };
@@ -1673,19 +1676,20 @@
 		874AAB5B1E3C775900B3F8FE /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				874AAB5F1E3C790300B3F8FE /* ConfigurationManager */,
+				874AAB661E3CE9F400B3F8FE /* AppManager */,
+				874AAB5F1E3C790300B3F8FE /* ConfigManager */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
 		};
-		874AAB5F1E3C790300B3F8FE /* ConfigurationManager */ = {
+		874AAB5F1E3C790300B3F8FE /* ConfigManager */ = {
 			isa = PBXGroup;
 			children = (
 				874AAB611E3CE2FC00B3F8FE /* ConfigManager-Constants */,
 				874AAB621E3CE32C00B3F8FE /* ConfigManager.h */,
 				874AAB5D1E3C778E00B3F8FE /* ConfigManager.m */,
 			);
-			name = ConfigurationManager;
+			name = ConfigManager;
 			sourceTree = "<group>";
 		};
 		874AAB611E3CE2FC00B3F8FE /* ConfigManager-Constants */ = {
@@ -1695,6 +1699,15 @@
 				874AAB641E3CE35B00B3F8FE /* ConfigManager-Consts.m */,
 			);
 			name = "ConfigManager-Constants";
+			sourceTree = "<group>";
+		};
+		874AAB661E3CE9F400B3F8FE /* AppManager */ = {
+			isa = PBXGroup;
+			children = (
+				874AAB671E3CEA0700B3F8FE /* AppManager.h */,
+				874AAB681E3CEA0700B3F8FE /* AppManager.m */,
+			);
+			name = AppManager;
 			sourceTree = "<group>";
 		};
 		875AD4891E38C0C800584ABF /* RICommunicationFramework */ = {
@@ -3516,6 +3529,7 @@
 				CE9ADFE51AB6D78200D56481 /* JANewsletterComponent.m in Sources */,
 				9A007C801C206920007D99FC /* JAProductInfoSwitchLine.m in Sources */,
 				847606B71D77EEE900C54687 /* JAContactUsViewController.m in Sources */,
+				874AAB691E3CEA0700B3F8FE /* AppManager.m in Sources */,
 				CE9ADFE91AB6D78200D56481 /* JADynamicForm.m in Sources */,
 				89C7AF551BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m in Sources */,
 				CE9ADFEA1AB6D78200D56481 /* main.m in Sources */,

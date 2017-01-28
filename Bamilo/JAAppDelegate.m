@@ -18,6 +18,7 @@
 #import "RIAdjustTracker.h"
 #import "RIProduct.h"
 #import "ConfigManager.h"
+#import "AppManager.h"
 
 #define kSessionDuration 1800.0f
 
@@ -96,6 +97,8 @@
 #endif
     
     if (newRelicApiKey) {
+        [NewRelicAgent setApplicationVersion:[[AppManager sharedInstance] getAppVersionNumber]];
+        [NewRelicAgent setApplicationBuild:[[AppManager sharedInstance] getAppBuildNumber]];
         [NewRelicAgent startWithApplicationToken:newRelicApiKey];
     }
     
@@ -196,7 +199,8 @@
     [RIApi startApiWithCountry:nil
                      reloadAPI:NO
                   successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory){
-                      if(hasUpdate)
+#warning Disable auto-update for now until we figure out what to do with it
+                      if(NO && hasUpdate)
                       {
                           if(isUpdateMandatory)
                           {
