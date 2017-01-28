@@ -37,11 +37,21 @@
                             <constraint firstAttribute="height" constant="16" id="9ak-K7-h3U"/>
                         </constraints>
                     </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KhZ-P2-Pqt" userLabel="Seperator view">
+                        <rect key="frame" x="0.0" y="71" width="370" height="1"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.5" id="IOI-T5-5aa"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailing" secondItem="KhZ-P2-Pqt" secondAttribute="trailing" id="0ib-4g-VMX"/>
+                    <constraint firstItem="KhZ-P2-Pqt" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="8X7-Md-P0t"/>
                     <constraint firstItem="Mq4-Yr-pRJ" firstAttribute="centerY" secondItem="kKY-Mc-Ce9" secondAttribute="centerY" id="Gek-5N-4Ep"/>
                     <constraint firstItem="Mq4-Yr-pRJ" firstAttribute="left" secondItem="H2p-sc-9uM" secondAttribute="left" constant="16" id="MsX-yz-9VZ"/>
                     <constraint firstAttribute="trailing" secondItem="kKY-Mc-Ce9" secondAttribute="trailing" constant="16" id="f5F-Uo-x2u"/>
+                    <constraint firstAttribute="bottom" secondItem="KhZ-P2-Pqt" secondAttribute="bottom" id="fPD-gB-6iS"/>
                     <constraint firstItem="kKY-Mc-Ce9" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="xOY-TA-30w"/>
                 </constraints>
             </tableViewCellContentView>

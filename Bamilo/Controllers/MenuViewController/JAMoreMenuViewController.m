@@ -71,6 +71,7 @@ const int tableViewCllHeihgt = 50;
 
 
 - (void)viewDidLayoutSubviews {
+    //Must be refactored later 
     self.tableView.frame = self.viewBounds;
 }
 
@@ -144,9 +145,8 @@ const int tableViewCllHeihgt = 50;
         if ([RICustomer checkIfUserIsLogged]) {
             [self logout];
             return;
-        } else {
-            userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"from_side_menu"];
         }
+        userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"from_side_menu"];
     }
     
     if([(self.tableViewListItems[indexPath.row]) objectForKey:@"isFAQBtn"]) {
