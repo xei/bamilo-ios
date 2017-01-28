@@ -751,3 +751,5 @@
 "invalid_address_shipping_billing" = "This address is not correct, please change it.";
 
 "invalid_address_other" = "This address is not correct.";
+
+"faq" = "FAQ";

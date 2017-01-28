@@ -14,8 +14,7 @@
 
 @implementation JAProductInfoSingleLine
 
-- (instancetype)init
-{
+- (instancetype)init {
     self = [super init];
     if (self) {
         [self setDefaults];
@@ -23,8 +22,7 @@
     return self;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
+- (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         [self setDefaults];
@@ -32,26 +30,22 @@
     return self;
 }
 
-- (void)setDefaults
-{
+- (void)setDefaults {
     [self setTopSeparatorVisibility:YES];
     [self setTopSeparatorXOffset:self.label.x];
 }
 
-- (void)setFrame:(CGRect)frame
-{
+- (void)setFrame:(CGRect)frame {
     [super setFrame:frame];
 }
 
-- (void)sizeToFit
-{
+- (void)sizeToFit {
     [self setWidth:CGRectGetMaxX(self.label.frame)];
     [self setHeight:self.label.height];
     [self.label setYCenterAligned];
 }
 
-- (UILabel *)label
-{
+- (UILabel *)label {
     [super.label setFont:JAListFont];
     return super.label;
 }

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Bamilosans Reg.ttf">
+            <string>Bamilo-Sans</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="72" id="KGk-i7-Jjw" customClass="MoreMenuTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="370" height="72"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="370" height="71"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ایتم منو" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kKY-Mc-Ce9">
+                        <rect key="frame" x="315" y="25" width="39" height="21.5"/>
+                        <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_left" translatesAutoresizingMaskIntoConstraints="NO" id="Mq4-Yr-pRJ">
+                        <rect key="frame" x="16" y="27" width="16" height="16"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="Mq4-Yr-pRJ" secondAttribute="height" multiplier="1:1" id="0ua-QE-mJx"/>
+                            <constraint firstAttribute="height" constant="16" id="9ak-K7-h3U"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Mq4-Yr-pRJ" firstAttribute="centerY" secondItem="kKY-Mc-Ce9" secondAttribute="centerY" id="Gek-5N-4Ep"/>
+                    <constraint firstItem="Mq4-Yr-pRJ" firstAttribute="left" secondItem="H2p-sc-9uM" secondAttribute="left" constant="16" id="MsX-yz-9VZ"/>
+                    <constraint firstAttribute="trailing" secondItem="kKY-Mc-Ce9" secondAttribute="trailing" constant="16" id="f5F-Uo-x2u"/>
+                    <constraint firstItem="kKY-Mc-Ce9" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="xOY-TA-30w"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="titleUILabel" destination="kKY-Mc-Ce9" id="wEE-dQ-lXU"/>
+            </connections>
+            <point key="canvasLocation" x="0.0" y="66"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="arrow_left" width="8" height="14"/>
+    </resources>
+</document>

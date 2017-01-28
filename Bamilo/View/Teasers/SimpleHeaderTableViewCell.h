@@ -1,5 +1,5 @@
 //
-//  PopularTeaserHeaderTableViewCell.h
+//  SimpleHeaderTableViewCell.h
 //  Jumia
 //
 //  Created by aliunco on 1/16/17.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PopularTeaserHeaderTableViewCell : UITableViewCell
+@interface SimpleHeaderTableViewCell : UITableViewCell
     @property (strong, nonatomic) NSString * titleString;
     + (NSString *) nibName;
 @end

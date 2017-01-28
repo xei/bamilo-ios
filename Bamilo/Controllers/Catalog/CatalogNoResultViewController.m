@@ -10,7 +10,7 @@
 #import "RITeaserGrouping.h"
 #import "RITeaserComponent.h"
 #import "PopularTeaserTableViewCell.h"
-#import "PopularTeaserHeaderTableViewCell.h"
+#import "SimpleHeaderTableViewCell.h"
 #import "NSString+Style.h"
 
 @interface CatalogNoResultViewController ()
@@ -36,8 +36,8 @@ const CGFloat tableViewHeaderSectionHeight = 35;
     
     [self.tableView registerNib:[UINib nibWithNibName:[PopularTeaserTableViewCell nibName] bundle:nil]
                     forCellReuseIdentifier:[PopularTeaserTableViewCell nibName]];
-    [self.tableView registerNib:[UINib nibWithNibName:[PopularTeaserHeaderTableViewCell nibName] bundle:nil]
-         forCellReuseIdentifier:[PopularTeaserHeaderTableViewCell nibName]];
+    [self.tableView registerNib:[UINib nibWithNibName:[SimpleHeaderTableViewCell nibName] bundle:nil]
+         forCellReuseIdentifier:[SimpleHeaderTableViewCell nibName]];
     
     [self.noResultMessageUILabel setFont: [UIFont fontWithName:kFontRegularName size:14]];
     [self.warningMessageUILabel setFont: [UIFont fontWithName:kFontLightName size:11]];
@@ -115,7 +115,7 @@ const CGFloat tableViewHeaderSectionHeight = 35;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    PopularTeaserHeaderTableViewCell * headerCell = [self.tableView dequeueReusableCellWithIdentifier: [PopularTeaserHeaderTableViewCell nibName]];
+    SimpleHeaderTableViewCell * headerCell = [self.tableView dequeueReusableCellWithIdentifier: [SimpleHeaderTableViewCell nibName]];
     headerCell.titleString = self.teaserGroup.title;
     return headerCell;
 }

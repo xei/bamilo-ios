@@ -12,11 +12,15 @@
 		1C71FC601E2CABAD007ACF02 /* Bamilosans Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1C71FC5B1E2CABAD007ACF02 /* Bamilosans Light.ttf */; };
 		1C71FC611E2CABAD007ACF02 /* Bamilosans Reg.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1C71FC5C1E2CABAD007ACF02 /* Bamilosans Reg.ttf */; };
 		1C71FC621E2CABAD007ACF02 /* Bamilosans UltraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1C71FC5D1E2CABAD007ACF02 /* Bamilosans UltraLight.ttf */; };
-		1C71FC671E2CD2AD007ACF02 /* PopularTeaserHeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C71FC651E2CD2AD007ACF02 /* PopularTeaserHeaderTableViewCell.m */; };
-		1C71FC681E2CD2AD007ACF02 /* PopularTeaserHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C71FC661E2CD2AD007ACF02 /* PopularTeaserHeaderTableViewCell.xib */; };
+		1C71FC671E2CD2AD007ACF02 /* SimpleHeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C71FC651E2CD2AD007ACF02 /* SimpleHeaderTableViewCell.m */; };
+		1C71FC681E2CD2AD007ACF02 /* SimpleHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C71FC661E2CD2AD007ACF02 /* SimpleHeaderTableViewCell.xib */; };
 		1C80D8841E2E3D850036B514 /* ‌Bamilosans Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1C71FC5A1E2CABAD007ACF02 /* ‌Bamilosans Bold.ttf */; };
 		1CCD52A01E2BA42F008BAEE4 /* PopularTeaserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCD529E1E2BA42F008BAEE4 /* PopularTeaserTableViewCell.m */; };
 		1CCD52A11E2BA42F008BAEE4 /* PopularTeaserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CCD529F1E2BA42F008BAEE4 /* PopularTeaserTableViewCell.xib */; };
+		48AD8FE22FD2C5FDC1CEBFF8 /* libPods-BamiloUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18BD9C21DAEE905E1607A899 /* libPods-BamiloUITests.a */; };
+		503C9D52C4AD9778E8C113A7 /* libPods-Bamilo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D245C5FE6A656AA98164739 /* libPods-Bamilo.a */; };
+		611195821E3CB14B00D06690 /* MoreMenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 611195801E3CB14B00D06690 /* MoreMenuTableViewCell.m */; };
+		611195831E3CB14B00D06690 /* MoreMenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 611195811E3CB14B00D06690 /* MoreMenuTableViewCell.xib */; };
 		6C18BD741AB87E0A00905FD2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A301BB19811D0700F71726 /* Images.xcassets */; };
 		6CF4AE821ADEAA290024EC34 /* JACatalogBannerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CF4AE7E1ADEAA290024EC34 /* JACatalogBannerCell.xib */; };
 		6CF4AE881ADEABBB0024EC34 /* JACatalogBannerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CF4AE841ADEABBB0024EC34 /* JACatalogBannerCell.m */; };
@@ -369,8 +373,6 @@
 		CEE5F4E41B1CB6B500556150 /* JARecentSearchesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEE5F4DF1B1CB6B500556150 /* JARecentSearchesViewController.xib */; };
 		CEF0C48D1BE8EE44005B5B12 /* JAReviewCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A2CD0B61BD113D300A878D2 /* JAReviewCollectionCell.m */; };
 		CEF0C48E1BE8EE56005B5B12 /* JASellerDeliveryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 898A24BF1BCE9EAF00BBEE31 /* JASellerDeliveryView.m */; };
-		EF9C278E3EA20B29E014EC27 /* libPods-BamiloUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 850CF874AEC982CAEC443E10 /* libPods-BamiloUITests.a */; };
-		FBC6D3E5FF8035ED077AD2A6 /* libPods-Bamilo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB4E531030142E6F9B7E1774 /* libPods-Bamilo.a */; };
 		FF4383E31C6CD4AC003BA957 /* JASwitchRadioComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4383DE1C6CD4AC003BA957 /* JASwitchRadioComponent.m */; };
 		FF4383EA1C6E1F49003BA957 /* JAScreenRadioComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4383E51C6E1F49003BA957 /* JAScreenRadioComponent.m */; };
 		FF4383F11C71DCE1003BA957 /* JANewsletterSubscriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4383EC1C71DCE1003BA957 /* JANewsletterSubscriptionViewController.m */; };
@@ -400,7 +402,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1274CAF67DB255894D733AEE /* Pods-Bamilo.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bamilo.adhoc.xcconfig"; path = "Pods/Target Support Files/Pods-Bamilo/Pods-Bamilo.adhoc.xcconfig"; sourceTree = "<group>"; };
+		1123BA1ABA81805B2A214BA9 /* Pods-Bamilo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bamilo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bamilo/Pods-Bamilo.release.xcconfig"; sourceTree = "<group>"; };
+		18BD9C21DAEE905E1607A899 /* libPods-BamiloUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BamiloUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C3043001E2A3A5800BD391E /* CatalogNoResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CatalogNoResultViewController.h; sourceTree = "<group>"; };
 		1C3043011E2A3A5800BD391E /* CatalogNoResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CatalogNoResultViewController.m; sourceTree = "<group>"; };
 		1C71FC591E2CABAD007ACF02 /* Bamilosans Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bamilosans Black.ttf"; sourceTree = "<group>"; };
@@ -408,12 +411,15 @@
 		1C71FC5B1E2CABAD007ACF02 /* Bamilosans Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bamilosans Light.ttf"; sourceTree = "<group>"; };
 		1C71FC5C1E2CABAD007ACF02 /* Bamilosans Reg.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bamilosans Reg.ttf"; sourceTree = "<group>"; };
 		1C71FC5D1E2CABAD007ACF02 /* Bamilosans UltraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bamilosans UltraLight.ttf"; sourceTree = "<group>"; };
-		1C71FC641E2CD2AD007ACF02 /* PopularTeaserHeaderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopularTeaserHeaderTableViewCell.h; sourceTree = "<group>"; };
-		1C71FC651E2CD2AD007ACF02 /* PopularTeaserHeaderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopularTeaserHeaderTableViewCell.m; sourceTree = "<group>"; };
-		1C71FC661E2CD2AD007ACF02 /* PopularTeaserHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopularTeaserHeaderTableViewCell.xib; sourceTree = "<group>"; };
+		1C71FC641E2CD2AD007ACF02 /* SimpleHeaderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleHeaderTableViewCell.h; sourceTree = "<group>"; };
+		1C71FC651E2CD2AD007ACF02 /* SimpleHeaderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleHeaderTableViewCell.m; sourceTree = "<group>"; };
+		1C71FC661E2CD2AD007ACF02 /* SimpleHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SimpleHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		1CCD529D1E2BA42F008BAEE4 /* PopularTeaserTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopularTeaserTableViewCell.h; sourceTree = "<group>"; };
 		1CCD529E1E2BA42F008BAEE4 /* PopularTeaserTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopularTeaserTableViewCell.m; sourceTree = "<group>"; };
 		1CCD529F1E2BA42F008BAEE4 /* PopularTeaserTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopularTeaserTableViewCell.xib; sourceTree = "<group>"; };
+		214E380AB23DDD93A37D6F33 /* Pods-BamiloUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BamiloUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BamiloUITests/Pods-BamiloUITests.release.xcconfig"; sourceTree = "<group>"; };
+		2BCD5E92B240360FF1F67925 /* Pods-BamiloUITests.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BamiloUITests.adhoc.xcconfig"; path = "Pods/Target Support Files/Pods-BamiloUITests/Pods-BamiloUITests.adhoc.xcconfig"; sourceTree = "<group>"; };
+		3CDBBD39997BD425232FA211 /* Pods-BamiloUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BamiloUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BamiloUITests/Pods-BamiloUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		4A18856219B8A368003337FC /* JAActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAActivityViewController.h; sourceTree = "<group>"; };
 		4A18856319B8A368003337FC /* JAActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAActivityViewController.m; sourceTree = "<group>"; };
 		4A1892D019939A0C0036F327 /* JAReviewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAReviewCell.h; sourceTree = "<group>"; };
@@ -464,7 +470,12 @@
 		520A37CC1A48904B0046C8B1 /* JAMyOrdersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMyOrdersViewController.m; sourceTree = "<group>"; };
 		52AC8FDA1A4056CB00E7C874 /* JASizeGuideWizardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASizeGuideWizardView.h; sourceTree = "<group>"; };
 		52AC8FDB1A4056CB00E7C874 /* JASizeGuideWizardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASizeGuideWizardView.m; sourceTree = "<group>"; };
-		68846065C35CF5EDD8E0834D /* Pods-BamiloUITests.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BamiloUITests.adhoc.xcconfig"; path = "Pods/Target Support Files/Pods-BamiloUITests/Pods-BamiloUITests.adhoc.xcconfig"; sourceTree = "<group>"; };
+		5D245C5FE6A656AA98164739 /* libPods-Bamilo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Bamilo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D35AAC06173E4696653CF50 /* Pods-Bamilo.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bamilo.adhoc.xcconfig"; path = "Pods/Target Support Files/Pods-Bamilo/Pods-Bamilo.adhoc.xcconfig"; sourceTree = "<group>"; };
+		6111957F1E3CB14B00D06690 /* MoreMenuTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreMenuTableViewCell.h; sourceTree = "<group>"; };
+		611195801E3CB14B00D06690 /* MoreMenuTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreMenuTableViewCell.m; sourceTree = "<group>"; };
+		611195811E3CB14B00D06690 /* MoreMenuTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MoreMenuTableViewCell.xib; sourceTree = "<group>"; };
+		633B32545D30D5C2D6CFFC51 /* Pods-Bamilo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bamilo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bamilo/Pods-Bamilo.debug.xcconfig"; sourceTree = "<group>"; };
 		6C18BDAB1A1B4CA300626706 /* JANewsletterComponent~iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JANewsletterComponent~iPad.xib"; sourceTree = "<group>"; };
 		6CF4AE7E1ADEAA290024EC34 /* JACatalogBannerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACatalogBannerCell.xib; sourceTree = "<group>"; };
 		6CF4AE831ADEABBB0024EC34 /* JACatalogBannerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACatalogBannerCell.h; sourceTree = "<group>"; };
@@ -475,7 +486,6 @@
 		847606B41D77EEE900C54687 /* JAContactUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAContactUsViewController.m; path = ContactUs/JAContactUsViewController.m; sourceTree = "<group>"; };
 		84B25D9A1D8048DE0024B476 /* JAContactUsViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "JAContactUsViewController~ipad.xib"; path = "ContactUs/JAContactUsViewController~ipad.xib"; sourceTree = "<group>"; };
 		84B25D9B1D8048DE0024B476 /* JAContactUsViewController~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "JAContactUsViewController~iphone.xib"; path = "ContactUs/JAContactUsViewController~iphone.xib"; sourceTree = "<group>"; };
-		850CF874AEC982CAEC443E10 /* libPods-BamiloUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BamiloUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		870F8CCB1E3354700021F87B /* Bamilo.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Bamilo.entitlements; sourceTree = "<group>"; };
 		870F8CF31E338D2C0021F87B /* BamiloUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BamiloUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		870F8CF51E338D2D0021F87B /* BamiloUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BamiloUITests.m; sourceTree = "<group>"; };
@@ -661,7 +671,6 @@
 		87C69DAA1E38B78E0026018F /* NSString+Style.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Style.m"; path = "Categories/NSString+Style.m"; sourceTree = "<group>"; };
 		87C69DAC1E38B7A50026018F /* UIColor+Format.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+Format.h"; path = "Categories/UIColor+Format.h"; sourceTree = "<group>"; };
 		87C69DAD1E38B7A50026018F /* UIColor+Format.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+Format.m"; path = "Categories/UIColor+Format.m"; sourceTree = "<group>"; };
-		87F976FD954B3D3090770B27 /* Pods-Bamilo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bamilo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bamilo/Pods-Bamilo.release.xcconfig"; sourceTree = "<group>"; };
 		893AADCC1C1F1A54006314FB /* JAMyOrderDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMyOrderDetailViewController.h; sourceTree = "<group>"; };
 		893AADCD1C1F1A54006314FB /* JAMyOrderDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMyOrderDetailViewController.m; sourceTree = "<group>"; };
 		897460D91C19DDFD00A38073 /* JACollectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACollectionHeaderView.h; path = Bamilo/View/Headers/JACollectionHeaderView.h; sourceTree = SOURCE_ROOT; };
@@ -837,7 +846,6 @@
 		9D4431E91C242BA8005A8B4A /* JAUserDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAUserDataViewController.m; sourceTree = "<group>"; };
 		9DBD0C1B1C7F1CBB00F60374 /* JAProductInfoSISLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAProductInfoSISLine.h; path = Lines/JAProductInfoSISLine.h; sourceTree = "<group>"; };
 		9DBD0C1C1C7F1CBB00F60374 /* JAProductInfoSISLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAProductInfoSISLine.m; path = Lines/JAProductInfoSISLine.m; sourceTree = "<group>"; };
-		A2D17BADD33026AEFE65A1B8 /* Pods-Bamilo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bamilo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bamilo/Pods-Bamilo.debug.xcconfig"; sourceTree = "<group>"; };
 		B5007AC519A4E9170024035A /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		B5007AC719A4E92F0024035A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		B501E88A19BEF7DE00BE51DD /* JAPickupStationInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAPickupStationInfoCell.h; path = ShippingCell/JAPickupStationInfoCell.h; sourceTree = "<group>"; };
@@ -941,7 +949,6 @@
 		B5CFE9991A0CE3BC004CE545 /* JAAddRatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAAddRatingView.m; sourceTree = "<group>"; };
 		B5FBD58919CAF26800BD9510 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		B5FE9FB019A1F362006F7D63 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
-		C87338091872EC4FA2E84F5E /* Pods-BamiloUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BamiloUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BamiloUITests/Pods-BamiloUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		CE06FCB51A88C3A5002FCD25 /* JACatalogTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACatalogTopView.h; path = Catalog/JACatalogTopView.h; sourceTree = "<group>"; };
 		CE06FCB61A88C3A5002FCD25 /* JACatalogTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACatalogTopView.m; path = Catalog/JACatalogTopView.m; sourceTree = "<group>"; };
 		CE06FCBA1A88CA7D002FCD25 /* JACatalogTopView_iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JACatalogTopView_iphone.xib; path = Catalog/JACatalogTopView_iphone.xib; sourceTree = "<group>"; };
@@ -1088,8 +1095,6 @@
 		CEED47291A7B973B006D9CE7 /* JAPDVBundleSingleItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAPDVBundleSingleItem.m; path = Bundles/JAPDVBundleSingleItem.m; sourceTree = "<group>"; };
 		CEED472A1A7B973B006D9CE7 /* JAPDVBundleSingleItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JAPDVBundleSingleItem.xib; path = Bundles/JAPDVBundleSingleItem.xib; sourceTree = "<group>"; };
 		CEF0C4891BE8C391005B5B12 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/RIStrings.strings; sourceTree = "<group>"; };
-		CFF0BFD49862DFF3D31001E8 /* Pods-BamiloUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BamiloUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BamiloUITests/Pods-BamiloUITests.release.xcconfig"; sourceTree = "<group>"; };
-		DB4E531030142E6F9B7E1774 /* libPods-Bamilo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Bamilo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF4383DD1C6CD4AC003BA957 /* JASwitchRadioComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASwitchRadioComponent.h; sourceTree = "<group>"; };
 		FF4383DE1C6CD4AC003BA957 /* JASwitchRadioComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASwitchRadioComponent.m; sourceTree = "<group>"; };
 		FF4383E41C6E1F49003BA957 /* JAScreenRadioComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAScreenRadioComponent.h; sourceTree = "<group>"; };
@@ -1129,7 +1134,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF9C278E3EA20B29E014EC27 /* libPods-BamiloUITests.a in Frameworks */,
+				48AD8FE22FD2C5FDC1CEBFF8 /* libPods-BamiloUITests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1159,26 +1164,13 @@
 				CE9AE0281AB6D78200D56481 /* CoreData.framework in Frameworks */,
 				CE9AE02A1AB6D78200D56481 /* libz.dylib in Frameworks */,
 				CE9AE0291AB6D78200D56481 /* libsqlite3.dylib in Frameworks */,
-				FBC6D3E5FF8035ED077AD2A6 /* libPods-Bamilo.a in Frameworks */,
+				503C9D52C4AD9778E8C113A7 /* libPods-Bamilo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		34FE3B9DAD0D31F650488569 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				A2D17BADD33026AEFE65A1B8 /* Pods-Bamilo.debug.xcconfig */,
-				87F976FD954B3D3090770B27 /* Pods-Bamilo.release.xcconfig */,
-				1274CAF67DB255894D733AEE /* Pods-Bamilo.adhoc.xcconfig */,
-				C87338091872EC4FA2E84F5E /* Pods-BamiloUITests.debug.xcconfig */,
-				CFF0BFD49862DFF3D31001E8 /* Pods-BamiloUITests.release.xcconfig */,
-				68846065C35CF5EDD8E0834D /* Pods-BamiloUITests.adhoc.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		4A01EE5E199259B6005F5AD1 /* Gallery */ = {
 			isa = PBXGroup;
 			children = (
@@ -1415,6 +1407,9 @@
 				CEA106EC1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m */,
 				CE28A7951BD9475100B1FADA /* JAMoreMenuViewController.h */,
 				CE28A7961BD9475100B1FADA /* JAMoreMenuViewController.m */,
+				6111957F1E3CB14B00D06690 /* MoreMenuTableViewCell.h */,
+				611195801E3CB14B00D06690 /* MoreMenuTableViewCell.m */,
+				611195811E3CB14B00D06690 /* MoreMenuTableViewCell.xib */,
 			);
 			path = MenuViewController;
 			sourceTree = "<group>";
@@ -2161,6 +2156,19 @@
 			name = OnlineReturns;
 			sourceTree = "<group>";
 		};
+		A0ABAE906DF2A6D103470865 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				633B32545D30D5C2D6CFFC51 /* Pods-Bamilo.debug.xcconfig */,
+				1123BA1ABA81805B2A214BA9 /* Pods-Bamilo.release.xcconfig */,
+				5D35AAC06173E4696653CF50 /* Pods-Bamilo.adhoc.xcconfig */,
+				3CDBBD39997BD425232FA211 /* Pods-BamiloUITests.debug.xcconfig */,
+				214E380AB23DDD93A37D6F33 /* Pods-BamiloUITests.release.xcconfig */,
+				2BCD5E92B240360FF1F67925 /* Pods-BamiloUITests.adhoc.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		B50B03A8198A883D002046DF /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -2423,7 +2431,7 @@
 				870F8CF41E338D2D0021F87B /* BamiloUITests */,
 				B5A301D119811E7600F71726 /* Frameworks */,
 				B5A301A919811D0700F71726 /* Products */,
-				34FE3B9DAD0D31F650488569 /* Pods */,
+				A0ABAE906DF2A6D103470865 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -2489,8 +2497,8 @@
 				B5A301D219811E8900F71726 /* ExternalFrameworks */,
 				B5A302ED19811EDD00F71726 /* libsqlite3.dylib */,
 				B5A302EB19811ED700F71726 /* libz.dylib */,
-				DB4E531030142E6F9B7E1774 /* libPods-Bamilo.a */,
-				850CF874AEC982CAEC443E10 /* libPods-BamiloUITests.a */,
+				5D245C5FE6A656AA98164739 /* libPods-Bamilo.a */,
+				18BD9C21DAEE905E1607A899 /* libPods-BamiloUITests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2768,9 +2776,9 @@
 				1CCD529D1E2BA42F008BAEE4 /* PopularTeaserTableViewCell.h */,
 				1CCD529E1E2BA42F008BAEE4 /* PopularTeaserTableViewCell.m */,
 				1CCD529F1E2BA42F008BAEE4 /* PopularTeaserTableViewCell.xib */,
-				1C71FC641E2CD2AD007ACF02 /* PopularTeaserHeaderTableViewCell.h */,
-				1C71FC651E2CD2AD007ACF02 /* PopularTeaserHeaderTableViewCell.m */,
-				1C71FC661E2CD2AD007ACF02 /* PopularTeaserHeaderTableViewCell.xib */,
+				1C71FC641E2CD2AD007ACF02 /* SimpleHeaderTableViewCell.h */,
+				1C71FC651E2CD2AD007ACF02 /* SimpleHeaderTableViewCell.m */,
+				1C71FC661E2CD2AD007ACF02 /* SimpleHeaderTableViewCell.xib */,
 			);
 			path = Teasers;
 			sourceTree = "<group>";
@@ -2967,12 +2975,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 870F8CFD1E338D2D0021F87B /* Build configuration list for PBXNativeTarget "BamiloUITests" */;
 			buildPhases = (
-				7F35BF54ABE0ADE3A300B587 /* [CP] Check Pods Manifest.lock */,
+				FE49243541E7D535F61FF552 /* [CP] Check Pods Manifest.lock */,
 				870F8CEF1E338D2C0021F87B /* Sources */,
 				870F8CF01E338D2C0021F87B /* Frameworks */,
 				870F8CF11E338D2C0021F87B /* Resources */,
-				ACE2AFC90E075D03328F0CE2 /* [CP] Embed Pods Frameworks */,
-				CCDBAD1FB6DF59C122F4B85A /* [CP] Copy Pods Resources */,
+				E2D26D37E2B5CB81073DC6A9 /* [CP] Embed Pods Frameworks */,
+				F65A2B7D5611451816C48721 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2988,13 +2996,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CE9AE11A1AB6D78200D56481 /* Build configuration list for PBXNativeTarget "Bamilo" */;
 			buildPhases = (
-				30BDA06E3C3131F37ACDF9B2 /* [CP] Check Pods Manifest.lock */,
+				3C503BE271A9C067EA8A72C0 /* [CP] Check Pods Manifest.lock */,
 				CE9ADF281AB6D78200D56481 /* Sources */,
 				CE9AE0171AB6D78200D56481 /* Frameworks */,
 				CE9AE0311AB6D78200D56481 /* Resources */,
-				E55B59308D01EE1B5CA4D6B0 /* [CP] Embed Pods Frameworks */,
-				8E107F76DDE210B1D4BE7056 /* [CP] Copy Pods Resources */,
 				875AD58C1E38C62A00584ABF /* ShellScript */,
+				A496F8EDC748088D90A309BD /* [CP] Embed Pods Frameworks */,
+				AF99C33FE560E007DC18281B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -3094,7 +3102,7 @@
 				CE9AE0A81AB6D78200D56481 /* JACartListHeaderView.xib in Resources */,
 				CE9AE0AC1AB6D78200D56481 /* JACatalogTopView_iphone.xib in Resources */,
 				9A2036F51B25F39E00F36F55 /* JANoConnectionView~iPad.xib in Resources */,
-				1C71FC681E2CD2AD007ACF02 /* PopularTeaserHeaderTableViewCell.xib in Resources */,
+				1C71FC681E2CD2AD007ACF02 /* SimpleHeaderTableViewCell.xib in Resources */,
 				9A564CB51B3411AD00F23057 /* JANewSellerRatingViewController.xib in Resources */,
 				CE9AE0B51AB6D78200D56481 /* JACheckBoxComponent.xib in Resources */,
 				CE9AE0B81AB6D78200D56481 /* JAPDVVariations~iPad.xib in Resources */,
@@ -3114,6 +3122,7 @@
 				CE9AE0EF1AB6D78200D56481 /* JARatingsViewMedium.xib in Resources */,
 				1CCD52A11E2BA42F008BAEE4 /* PopularTeaserTableViewCell.xib in Resources */,
 				CE9AE1071AB6D78200D56481 /* JAGrayButtonCell_ipad_portrait.xib in Resources */,
+				611195831E3CB14B00D06690 /* MoreMenuTableViewCell.xib in Resources */,
 				CE9AE05B1AB6D78200D56481 /* RIStrings.strings in Resources */,
 				1C71FC611E2CABAD007ACF02 /* Bamilosans Reg.ttf in Resources */,
 				1C71FC5E1E2CABAD007ACF02 /* Bamilosans Black.ttf in Resources */,
@@ -3130,22 +3139,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		30BDA06E3C3131F37ACDF9B2 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		7F35BF54ABE0ADE3A300B587 /* [CP] Check Pods Manifest.lock */ = {
+		3C503BE271A9C067EA8A72C0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -3173,7 +3167,22 @@
 			shellPath = /bin/sh;
 			shellScript = "SCRIPT=`/usr/bin/find \"${SRCROOT}\" -name newrelic_postbuild.sh | head -n 1`\n\n/bin/sh \"${SCRIPT}\" \"AAdde6b4d1fb2abb804137521a6709a5f5c771df14\"";
 		};
-		8E107F76DDE210B1D4BE7056 /* [CP] Copy Pods Resources */ = {
+		A496F8EDC748088D90A309BD /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Bamilo/Pods-Bamilo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AF99C33FE560E007DC18281B /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -3188,7 +3197,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Bamilo/Pods-Bamilo-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		ACE2AFC90E075D03328F0CE2 /* [CP] Embed Pods Frameworks */ = {
+		E2D26D37E2B5CB81073DC6A9 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -3203,7 +3212,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BamiloUITests/Pods-BamiloUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		CCDBAD1FB6DF59C122F4B85A /* [CP] Copy Pods Resources */ = {
+		F65A2B7D5611451816C48721 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -3218,19 +3227,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BamiloUITests/Pods-BamiloUITests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E55B59308D01EE1B5CA4D6B0 /* [CP] Embed Pods Frameworks */ = {
+		FE49243541E7D535F61FF552 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "[CP] Embed Pods Frameworks";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Bamilo/Pods-Bamilo-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -3304,7 +3313,7 @@
 				CE59BF1D1AE8097C0057F4E2 /* JAFeatureStoresTeaserView.m in Sources */,
 				CE8C92B01B8B555600C77706 /* JAMainFilterCell.m in Sources */,
 				CE9ADF491AB6D78200D56481 /* JAForgotPasswordViewController.m in Sources */,
-				1C71FC671E2CD2AD007ACF02 /* PopularTeaserHeaderTableViewCell.m in Sources */,
+				1C71FC671E2CD2AD007ACF02 /* SimpleHeaderTableViewCell.m in Sources */,
 				CE59BEFA1AE7EF0B0057F4E2 /* JAShopTeaserView.m in Sources */,
 				9A86F80A1C281F8F001A91D5 /* JARecentlyViewedViewController.m in Sources */,
 				CE9ADF4C1AB6D78200D56481 /* UIImageView+JA.m in Sources */,
@@ -3355,6 +3364,7 @@
 				CE9ADF871AB6D78200D56481 /* JAAddressesViewController.m in Sources */,
 				CE9ADF891AB6D78200D56481 /* JAReviewCell.m in Sources */,
 				9A189E7D1BB449CC0039BC14 /* JAProductInfoPriceLine.m in Sources */,
+				611195821E3CB14B00D06690 /* MoreMenuTableViewCell.m in Sources */,
 				9A007C8E1C2095A9007D99FC /* JAProductInfoRightSubtitleLine.m in Sources */,
 				CE9ADF8E1AB6D78200D56481 /* JACatalogTopView.m in Sources */,
 				CE9ADF8F1AB6D78200D56481 /* JAPDVBundles.m in Sources */,
@@ -3641,7 +3651,7 @@
 		};
 		1C1D852A1E265B99006A0278 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1274CAF67DB255894D733AEE /* Pods-Bamilo.adhoc.xcconfig */;
+			baseConfigurationReference = 5D35AAC06173E4696653CF50 /* Pods-Bamilo.adhoc.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -3665,7 +3675,7 @@
 		};
 		870F8CFA1E338D2D0021F87B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C87338091872EC4FA2E84F5E /* Pods-BamiloUITests.debug.xcconfig */;
+			baseConfigurationReference = 3CDBBD39997BD425232FA211 /* Pods-BamiloUITests.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -3688,7 +3698,7 @@
 		};
 		870F8CFB1E338D2D0021F87B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CFF0BFD49862DFF3D31001E8 /* Pods-BamiloUITests.release.xcconfig */;
+			baseConfigurationReference = 214E380AB23DDD93A37D6F33 /* Pods-BamiloUITests.release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -3708,7 +3718,7 @@
 		};
 		870F8CFC1E338D2D0021F87B /* AdHoc */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 68846065C35CF5EDD8E0834D /* Pods-BamiloUITests.adhoc.xcconfig */;
+			baseConfigurationReference = 2BCD5E92B240360FF1F67925 /* Pods-BamiloUITests.adhoc.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -3818,7 +3828,7 @@
 		};
 		CE9AE11B1AB6D78200D56481 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A2D17BADD33026AEFE65A1B8 /* Pods-Bamilo.debug.xcconfig */;
+			baseConfigurationReference = 633B32545D30D5C2D6CFFC51 /* Pods-Bamilo.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -3842,7 +3852,7 @@
 		};
 		CE9AE11E1AB6D78200D56481 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 87F976FD954B3D3090770B27 /* Pods-Bamilo.release.xcconfig */;
+			baseConfigurationReference = 1123BA1ABA81805B2A214BA9 /* Pods-Bamilo.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
