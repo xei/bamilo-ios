@@ -155,7 +155,8 @@
                                          reloadAPI:YES
                                       successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory)
                          {
-                             if(hasUpdate)
+#warning disabling has update for now. Enable and correct its behavior later.
+                             if(NO || hasUpdate)
                              {
                                  self.isPopupOpened = YES;
                                  self.isRequestDone = YES;

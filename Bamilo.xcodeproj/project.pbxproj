@@ -28,6 +28,9 @@
 		870F8D061E33975A0021F87B /* IntUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 870F8D051E33975A0021F87B /* IntUtility.m */; };
 		8716987C1E38A94C0027B34A /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 871698781E38A94C0027B34A /* Main_iPad.storyboard */; };
 		8716987D1E38A94C0027B34A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8716987A1E38A94C0027B34A /* Main.storyboard */; };
+		874AAB551E3C764600B3F8FE /* Bamilo-Configs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 874AAB541E3C764600B3F8FE /* Bamilo-Configs.plist */; };
+		874AAB5E1E3C778E00B3F8FE /* ConfigManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB5D1E3C778E00B3F8FE /* ConfigManager.m */; };
+		874AAB651E3CE35B00B3F8FE /* ConfigManager-Consts.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB641E3CE35B00B3F8FE /* ConfigManager-Consts.m */; };
 		875AD53F1E38C0C800584ABF /* RIConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD48C1E38C0C800584ABF /* RIConfiguration.m */; };
 		875AD5401E38C0C800584ABF /* RIAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD4901E38C0C800584ABF /* RIAddress.m */; };
 		875AD5411E38C0C900584ABF /* RIApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD4921E38C0C800584ABF /* RIApi.m */; };
@@ -483,6 +486,11 @@
 		870F8D051E33975A0021F87B /* IntUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntUtility.m; sourceTree = "<group>"; };
 		871698791E38A94C0027B34A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Bamilo/Base.lproj/Main_iPad.storyboard; sourceTree = SOURCE_ROOT; };
 		8716987B1E38A94C0027B34A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Bamilo/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
+		874AAB541E3C764600B3F8FE /* Bamilo-Configs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Bamilo-Configs.plist"; sourceTree = "<group>"; };
+		874AAB5D1E3C778E00B3F8FE /* ConfigManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigManager.m; sourceTree = "<group>"; };
+		874AAB621E3CE32C00B3F8FE /* ConfigManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigManager.h; sourceTree = "<group>"; };
+		874AAB631E3CE35B00B3F8FE /* ConfigManager-Consts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConfigManager-Consts.h"; sourceTree = "<group>"; };
+		874AAB641E3CE35B00B3F8FE /* ConfigManager-Consts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ConfigManager-Consts.m"; sourceTree = "<group>"; };
 		875AD48B1E38C0C800584ABF /* RIConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIConfiguration.h; sourceTree = "<group>"; };
 		875AD48C1E38C0C800584ABF /* RIConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIConfiguration.m; sourceTree = "<group>"; };
 		875AD48F1E38C0C800584ABF /* RIAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIAddress.h; sourceTree = "<group>"; };
@@ -1597,6 +1605,7 @@
 				870F8CD01E3356F90021F87B /* Protocols */,
 				B5C1E33419BA1E3D009C422C /* Categories */,
 				B50B03A8198A883D002046DF /* Utilities */,
+				874AAB5B1E3C775900B3F8FE /* Managers */,
 				870F8CD41E3357D40021F87B /* Libraries */,
 			);
 			name = Support;
@@ -1659,6 +1668,33 @@
 				870F8D051E33975A0021F87B /* IntUtility.m */,
 			);
 			name = IntUtility;
+			sourceTree = "<group>";
+		};
+		874AAB5B1E3C775900B3F8FE /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				874AAB5F1E3C790300B3F8FE /* ConfigurationManager */,
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
+		874AAB5F1E3C790300B3F8FE /* ConfigurationManager */ = {
+			isa = PBXGroup;
+			children = (
+				874AAB611E3CE2FC00B3F8FE /* ConfigManager-Constants */,
+				874AAB621E3CE32C00B3F8FE /* ConfigManager.h */,
+				874AAB5D1E3C778E00B3F8FE /* ConfigManager.m */,
+			);
+			name = ConfigurationManager;
+			sourceTree = "<group>";
+		};
+		874AAB611E3CE2FC00B3F8FE /* ConfigManager-Constants */ = {
+			isa = PBXGroup;
+			children = (
+				874AAB631E3CE35B00B3F8FE /* ConfigManager-Consts.h */,
+				874AAB641E3CE35B00B3F8FE /* ConfigManager-Consts.m */,
+			);
+			name = "ConfigManager-Constants";
 			sourceTree = "<group>";
 		};
 		875AD4891E38C0C800584ABF /* RICommunicationFramework */ = {
@@ -2442,6 +2478,7 @@
 			isa = PBXGroup;
 			children = (
 				CE9AE12C1AB84C2300D56481 /* Bamilo-Info.plist */,
+				874AAB541E3C764600B3F8FE /* Bamilo-Configs.plist */,
 				870F8CCB1E3354700021F87B /* Bamilo.entitlements */,
 				870F8CCD1E3354E10021F87B /* Consts */,
 				CE9AE1221AB824B700D56481 /* Fonts */,
@@ -3056,6 +3093,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				874AAB551E3C764600B3F8FE /* Bamilo-Configs.plist in Resources */,
 				CEDBF8971B0DF5D00073971A /* JANewsletterComponent~iPad_RTL.xib in Resources */,
 				CE9AE03C1AB6D78200D56481 /* JANewsletterComponent~iPad.xib in Resources */,
 				9A564CAF1B332FB200F23057 /* JASellerRatingsViewController.xib in Resources */,
@@ -3276,6 +3314,7 @@
 				CE9ADF3F1AB6D78200D56481 /* JACampaignProductCell.m in Sources */,
 				875AD57C1E38C0C900584ABF /* RICommunicationWrapper.m in Sources */,
 				875AD5641E38C0C900584ABF /* RILocale.m in Sources */,
+				874AAB651E3CE35B00B3F8FE /* ConfigManager-Consts.m in Sources */,
 				9ADEA09F1C9C0E6D00B2A605 /* JAProductInfoSizeLine.m in Sources */,
 				FF4383EA1C6E1F49003BA957 /* JAScreenRadioComponent.m in Sources */,
 				FF6BDCA01CE238F3002BFE11 /* JAORReasonsViewController.m in Sources */,
@@ -3427,6 +3466,7 @@
 				875AD5531E38C0C900584ABF /* RITeaserGrouping.m in Sources */,
 				FFF900721C6A5CC700DDF538 /* JATextFieldComponent.m in Sources */,
 				875AD54F1E38C0C900584ABF /* RISearchSuggestion.m in Sources */,
+				874AAB5E1E3C778E00B3F8FE /* ConfigManager.m in Sources */,
 				CE9ADFC71AB6D78200D56481 /* JAButtonWithBlur.m in Sources */,
 				FFB1B08E1CE5E163000F60AD /* JAORWaysViewController.m in Sources */,
 				CE9ADFCB1AB6D78200D56481 /* JAAddRatingView.m in Sources */,
@@ -3615,6 +3655,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "Bamilo/Bamilo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
@@ -3638,7 +3679,6 @@
 				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bamilo/Bamilo-Prefix.pch";
-				INFOPLIST_FILE = "Bamilo/Bamilo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
 				PRODUCT_NAME = Bamilo;
@@ -3749,6 +3789,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "Bamilo/Bamilo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -3792,6 +3833,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "Bamilo/Bamilo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
@@ -3815,7 +3857,6 @@
 				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bamilo/Bamilo-Prefix.pch";
-				INFOPLIST_FILE = "Bamilo/Bamilo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
 				PRODUCT_NAME = Bamilo;
@@ -3839,7 +3880,6 @@
 				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bamilo/Bamilo-Prefix.pch";
-				INFOPLIST_FILE = "Bamilo/Bamilo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
 				PRODUCT_NAME = Bamilo;
