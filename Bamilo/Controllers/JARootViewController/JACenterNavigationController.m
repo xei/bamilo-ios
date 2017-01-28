@@ -710,24 +710,19 @@
 }
 
 #pragma mark MoreMenu
-- (void)showMoreMenu
-{
+- (void)showMoreMenu {
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAMoreMenuViewController class]])
-    {
-        UIViewController* moreMenuViewController = [[JAMoreMenuViewController alloc] init];
-        
+    if (![topViewController isKindOfClass:[JAMoreMenuViewController class]]) {
+        JAMoreMenuViewController *moreMenuViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"moreMenuViewController"];
         [self popToRootViewControllerAnimated:NO];
         [self pushViewController:moreMenuViewController animated:NO];
     }
 }
 
 #pragma mark Recent Searches Screen
-- (void)showRecentSearchesController:(NSNotification*)notification
-{
+- (void)showRecentSearchesController:(NSNotification*)notification {
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JARecentSearchesViewController class]])
-    {
+    if (![topViewController isKindOfClass:[JARecentSearchesViewController class]]) {
         JARecentSearchesViewController *recentSearches = [[JARecentSearchesViewController alloc] initWithNibName:@"JARecentSearchesViewController" bundle:nil];
         
         [self popToRootViewControllerAnimated:NO];
@@ -736,8 +731,7 @@
 }
 
 #pragma mark Sign In Screen
-- (void)showAuthenticationScreen:(NSNotification *)notification
-{
+- (void)showAuthenticationScreen:(NSNotification *)notification {
     JAAuthenticationViewController *authenticationViewController = [[JAAuthenticationViewController alloc] init];
     
     if (VALID_NOTEMPTY(notification, NSNotification) && notification.object) {
@@ -784,13 +778,12 @@
     
     if (checkout) {
         [self goToStep:authenticationViewController forStepByStepViewController:self.checkoutStepByStepViewController];
-    }else{
+    } else {
         [self pushViewController:authenticationViewController animated:YES];
     }
 }
 
-- (void)runBlockAfterAuthentication:(NSNotification *)notification
-{
+- (void)runBlockAfterAuthentication:(NSNotification *)notification {
     if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"from_side_menu"], NSNumber)) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
     } else {
@@ -802,7 +795,7 @@
                 NextStepBlock nextStepBlock = notification.object;
                 nextStepBlock();
             }
-        }else{
+        } else {
             NSInteger count = [self.viewControllers count];
             if (count > 2)
             {
@@ -1105,10 +1098,8 @@
 }
 
 #pragma mark Checkout Addresses Screen
-- (void)showCheckoutAddressesScreen:(NSNotification*)notification
-{
-    if (![RICustomer checkIfUserIsLogged])
-    {
+- (void)showCheckoutAddressesScreen:(NSNotification*)notification {
+    if (![RICustomer checkIfUserIsLogged]) {
         JAAuthenticationViewController *auth = [[JAAuthenticationViewController alloc] init];
         
         auth.navBarLayout.showBackButton = YES;
@@ -1120,14 +1111,12 @@
     }
     
     BOOL animated = NO;
-    if(VALID_NOTEMPTY(notification.object, NSDictionary) && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber))
-    {
+    if(VALID_NOTEMPTY(notification.object, NSDictionary) && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber)) {
         animated = [[notification.object objectForKey:@"animated"] boolValue];
     }
     
     BOOL fromCheckout = YES;
-    if(VALID_NOTEMPTY(notification.userInfo, NSDictionary) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"from_checkout"], NSNumber))
-    {
+    if(VALID_NOTEMPTY(notification.userInfo, NSDictionary) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"from_checkout"], NSNumber)) {
         fromCheckout = [[notification.userInfo objectForKey:@"from_checkout"] boolValue];
     }
     
@@ -1142,17 +1131,15 @@
         if (fromCheckout) {
             addressesVC.navBarLayout.showCartButton = NO;
             [self goToStep:addressesVC forStepByStepViewController:self.checkoutStepByStepViewController];
-        }else{
+        } else {
             [self pushViewController:addressesVC animated:NO];
         }
     }
 }
 
 #pragma mark Checkout Add Address Screen
-- (void)showCheckoutAddAddressScreen:(NSNotification*)notification
-{
-    if (![RICustomer checkIfUserIsLogged])
-    {
+- (void)showCheckoutAddAddressScreen:(NSNotification*)notification {
+    if (![RICustomer checkIfUserIsLogged]) {
         JAAuthenticationViewController *auth = [[JAAuthenticationViewController alloc] init];
         
         auth.navBarLayout.showBackButton = YES;
@@ -1170,29 +1157,22 @@
         animated = [notification.userInfo objectForKey:@"animated"];
     }
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAAddNewAddressViewController class]])
-    {
+    if (![topViewController isKindOfClass:[JAAddNewAddressViewController class]]) {
         JAAddNewAddressViewController *addAddressVC = [[JAAddNewAddressViewController alloc] init];
         
         addAddressVC.fromCheckout = [fromCheckout boolValue];
         addAddressVC.cart = self.cart;
         
-        if([fromCheckout boolValue])
-        {
+        if([fromCheckout boolValue]) {
             addAddressVC.navBarLayout.showCartButton = NO;
-            if([showBackButton boolValue])
-            {
+            if([showBackButton boolValue]) {
                 [addAddressVC.navBarLayout setShowBackButton:YES];
                 addAddressVC.navBarLayout.showLogo = NO;
-            }
-            else
-            {
+            } else {
                 addAddressVC.navBarLayout.title = STRING_CHECKOUT;
             }
             [self goToStep:addAddressVC forStepByStepViewController:self.checkoutStepByStepViewController];
-        }
-        else
-        {
+        } else {
             [addAddressVC.navBarLayout setShowBackButton:YES];
             addAddressVC.navBarLayout.showLogo = NO;
             [self pushViewController:addAddressVC animated:animated.boolValue];
@@ -1202,13 +1182,11 @@
 }
 
 #pragma mark Checkout Edit Address Screen
-- (void)showCheckoutEditAddressScreen:(NSNotification*)notification
-{
+- (void)showCheckoutEditAddressScreen:(NSNotification*)notification {
     NSNumber* fromCheckout = [notification.userInfo objectForKey:@"from_checkout"];
     
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAEditAddressViewController class]] && [RICustomer checkIfUserIsLogged])
-    {
+    if (![topViewController isKindOfClass:[JAEditAddressViewController class]] && [RICustomer checkIfUserIsLogged]) {
         JAEditAddressViewController *editAddressVC = [[JAEditAddressViewController alloc] init];
         
         RIAddress* editAddress = [notification.userInfo objectForKey:@"address_to_edit"];
@@ -1216,45 +1194,38 @@
         editAddressVC.cart = self.cart;
         editAddressVC.fromCheckout = [fromCheckout boolValue];
         
-        if([fromCheckout boolValue])
-        {
+        if([fromCheckout boolValue]) {
             editAddressVC.navBarLayout.showCartButton = NO;
             editAddressVC.navBarLayout.title = STRING_CHECKOUT;
-        }
-        else
-        {
+        } else {
             [editAddressVC.navBarLayout setShowBackButton:YES];
             editAddressVC.navBarLayout.showLogo = NO;
         }
         
         if (fromCheckout.boolValue) {
             [self goToStep:editAddressVC forStepByStepViewController:self.checkoutStepByStepViewController];
-        }else{
+        } else {
             [self pushViewController:editAddressVC animated:YES];
         }
     }
 }
 
 #pragma mark Checkout Shipping Screen
-- (void)showCheckoutShippingScreen
-{
+- (void)showCheckoutShippingScreen {
     JAShippingViewController *viewController = [[JAShippingViewController alloc] init];
     [self goToStep:viewController forStepByStepViewController:self.checkoutStepByStepViewController];
 }
 
 #pragma mark Checkout Payment Screen
-- (void)showCheckoutPaymentScreen
-{
+- (void)showCheckoutPaymentScreen {
     JAPaymentViewController *viewController = [[JAPaymentViewController alloc] init];
     [self goToStep:viewController forStepByStepViewController:self.checkoutStepByStepViewController];
 }
 
 #pragma mark Checkout Finish Screen
-- (void)showCheckoutFinishScreen:(NSNotification*)notification
-{
+- (void)showCheckoutFinishScreen:(NSNotification*)notification {
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAOrderViewController class]] && [RICustomer checkIfUserIsLogged])
-    {
+    if (![topViewController isKindOfClass:[JAOrderViewController class]] && [RICustomer checkIfUserIsLogged]) {
         JAOrderViewController *orderVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"orderViewController"];
         
         [self pushViewController:orderVC animated:YES];
@@ -1262,11 +1233,9 @@
 }
 
 #pragma mark Checkout External Payments Screen
-- (void)showCheckoutExternalPaymentsScreen:(NSNotification *)notification
-{
+- (void)showCheckoutExternalPaymentsScreen:(NSNotification *)notification {
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAExternalPaymentsViewController class]] && [RICustomer checkIfUserIsLogged])
-    {
+    if (![topViewController isKindOfClass:[JAExternalPaymentsViewController class]] && [RICustomer checkIfUserIsLogged]) {
         self.neeedsExternalPaymentMethod = YES;
         
         JAExternalPaymentsViewController *externalPaymentsVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"externalPaymentsViewController"];
@@ -1278,11 +1247,9 @@
 }
 
 #pragma mark Checkout Thanks Screen
-- (void)showCheckoutThanksScreen:(NSNotification *)notification
-{
+- (void)showCheckoutThanksScreen:(NSNotification *)notification {
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JASuccessPageViewController class]] && [RICustomer checkIfUserIsLogged])
-    {
+    if (![topViewController isKindOfClass:[JASuccessPageViewController class]] && [RICustomer checkIfUserIsLogged]) {
         self.neeedsExternalPaymentMethod = NO;
         
         JASuccessPageViewController *thanksVC = [[JASuccessPageViewController alloc] init];
@@ -1299,8 +1266,7 @@
 }
 
 #pragma mark Catalog Screen
-- (void)pushCatalogToShowSearchResults:(NSString *)query
-{
+- (void)pushCatalogToShowSearchResults:(NSString *)query {
     JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
     catalog.searchString = query;
     
@@ -1309,9 +1275,7 @@
     [self pushViewController:catalog animated:YES];
 }
 
-- (void)pushCatalogForUndefinedSearchWithBrandTargetString:(NSString *)brandTargetString
-                                              andBrandName:(NSString *)brandName
-{
+- (void)pushCatalogForUndefinedSearchWithBrandTargetString:(NSString *)brandTargetString andBrandName:(NSString *)brandName {
     JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
     catalog.targetString = brandTargetString;
     catalog.forceShowBackButton = YES;
@@ -1507,8 +1471,7 @@
 
 - (void)showNewSellerReview:(NSNotification*)notification {
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JANewRatingViewController class]])
-    {
+    if (![topViewController isKindOfClass:[JANewRatingViewController class]]) {
         JANewSellerRatingViewController* newSellerRatingViewController = [[JANewSellerRatingViewController alloc] initWithNibName:@"JANewSellerRatingViewController" bundle:nil];
         
         if ([notification.userInfo objectForKey:@"product"]) {
@@ -1700,8 +1663,7 @@
         viewController.teaserTrackingInfo = [notification.userInfo objectForKey:@"teaserTrackingInfo"];
     }
     
-    if (VALID_NOTEMPTY(targetString, NSString))
-    {
+    if (targetString.length) {
         viewController.targetString = targetString;
         [self pushViewController:viewController animated:YES];
 
@@ -1715,10 +1677,8 @@
 
 }
 
-- (void)didSelectCategoryFromCenterPanel:(NSNotification*)notification
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
-                                                        object:nil];
+- (void)didSelectCategoryFromCenterPanel:(NSNotification*)notification {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification object:nil];
     
     NSDictionary *selectedItem = [notification object];
     
@@ -1740,22 +1700,18 @@
     }
 }
 
-- (void)closeCurrentScreenNotificaion:(NSNotification*)notification
-{
+- (void)closeCurrentScreenNotificaion:(NSNotification*)notification {
     BOOL animated = YES;
-    if(VALID_NOTEMPTY(notification.userInfo, NSDictionary) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"animated"], NSNumber))
-    {
+    if(VALID_NOTEMPTY(notification.userInfo, NSDictionary) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"animated"], NSNumber)) {
         animated = [[notification.userInfo objectForKey:@"animated"] boolValue];
     }
-    if(VALID_NOTEMPTY(notification.userInfo, NSDictionary) && VALID_NOTEMPTY(notification.object, UIViewController))
-    {
+    if(VALID_NOTEMPTY(notification.userInfo, NSDictionary) && VALID_NOTEMPTY(notification.object, UIViewController)) {
         if ([self topViewController] != notification.object) {
             return;
         }
     }
     JAStepByStepTabViewController *topViewController = (JAStepByStepTabViewController *)[self topViewController];
-    if ([topViewController isKindOfClass:[JAStepByStepTabViewController class]] && !topViewController.stackIsEmpty)
-    {
+    if ([topViewController isKindOfClass:[JAStepByStepTabViewController class]] && !topViewController.stackIsEmpty) {
         if ([topViewController sendBack]) {
             return;
         }
@@ -1763,8 +1719,7 @@
     [self popViewControllerAnimated:animated];
 }
 
-- (BOOL)closeScreensToStackClass:(Class)classKind animated:(BOOL)animated
-{
+- (BOOL)closeScreensToStackClass:(Class)classKind animated:(BOOL)animated {
     for (UIViewController *viewController in [[self.viewControllers reverseObjectEnumerator] allObjects]) {
         if ([viewController isKindOfClass:classKind]) {
             [self popToViewController:viewController animated:animated];
@@ -1774,8 +1729,7 @@
     return NO;
 }
 
-- (void) closeTopTwoScreensNotificaion:(NSNotification*)notification
-{
+- (void) closeTopTwoScreensNotificaion:(NSNotification*)notification {
     NSInteger thirdToLastIndex = self.viewControllers.count-3;
     if (0 <= thirdToLastIndex) {
         UIViewController* thirdToLastViewController = [self.viewControllers objectAtIndex:thirdToLastIndex];
@@ -1789,8 +1743,7 @@
     }
 }
 
-- (void)checkRedirectInfo
-{
+- (void)checkRedirectInfo {
     if ([RICountryConfiguration getCurrentConfiguration]) {
         if (VALID([RICountryConfiguration getCurrentConfiguration].redirectStringTarget, NSString)) {
             
@@ -1809,52 +1762,41 @@
 
 #pragma mark - OnlineReturns
 
-- (void)goToPickupStationWebViewControllerWithCMS:(NSString*)cmsBlock
-{
+- (void)goToPickupStationWebViewControllerWithCMS:(NSString*)cmsBlock {
     JAORPickupStationWebViewController* viewController = [[JAORPickupStationWebViewController alloc] init];
     [viewController setCmsBlock:cmsBlock];
     [self pushViewController:viewController animated:YES];
 }
 
-- (void)goToOnlineReturnsPaymentScreenForItems:(NSArray *)items
-                                         order:(RITrackOrder*)order
-{
+- (void)goToOnlineReturnsPaymentScreenForItems:(NSArray *)items order:(RITrackOrder*)order {
     JAORPaymentViewController* viewController = [[JAORPaymentViewController alloc] init];
     [viewController setItems:items];
     [viewController setOrder:order];
     [self goToStep:viewController forStepByStepViewController:self.returnsStepByStepViewController];
 }
 
-- (void)goToOnlineReturnsWaysScreenForItems:(NSArray *)items
-                                      order:(RITrackOrder*)order
-{
+- (void)goToOnlineReturnsWaysScreenForItems:(NSArray *)items order:(RITrackOrder*)order {
     JAORWaysViewController* viewController = [[JAORWaysViewController alloc] init];
     [viewController setItems:items];
     [viewController setOrder:order];
     [self goToStep:viewController forStepByStepViewController:self.returnsStepByStepViewController];
 }
 
-- (void)goToOnlineReturnsReasonsScreenForItems:(NSArray *)items
-                                         order:(RITrackOrder*)order
-{
+- (void)goToOnlineReturnsReasonsScreenForItems:(NSArray *)items order:(RITrackOrder*)order {
     JAORReasonsViewController* viewController = [[JAORReasonsViewController alloc] init];
     [viewController setItems:items];
     [viewController setOrder:order];
     [self goToStep:viewController forStepByStepViewController:self.returnsStepByStepViewController];
 }
     
-- (void)goToOnlineReturnsCall:(RIItemCollection *)item
-              fromOrderNumber:(NSString *)orderNumber
-{
+- (void)goToOnlineReturnsCall:(RIItemCollection *)item fromOrderNumber:(NSString *)orderNumber {
     JAORCallToReturnViewController *viewController = [[JAORCallToReturnViewController alloc] init];
     [viewController setItem:item];
     [viewController setOrderNumber:orderNumber];
     [self pushViewController:viewController animated:YES];
 }
 
-- (void)goToOnlineReturnsConfirmConditionsForItems:(NSArray *)items
-                                             order:(RITrackOrder*)order
-{
+- (void)goToOnlineReturnsConfirmConditionsForItems:(NSArray *)items order:(RITrackOrder*)order {
     NSString *targetString = [(RIItemCollection *)[items firstObject] onlineReturnTargetString];
     
     [RIHtmlShop getHtmlShopForTargetString:targetString successBlock:^(RIHtmlShop *htmlShop) {
@@ -1958,24 +1900,12 @@
                                 barMetrics:UIBarMetricsDefault];
     [self.navigationBar setShadowImage:[UIImage new]];
     
-    [self.navigationBarView.cartButton addTarget:self
-                                          action:@selector(openCart:)
-                                forControlEvents:UIControlEventTouchUpInside];
-    [self.navigationBarView.leftButton addTarget:self
-                                          action:@selector(openMenu)
-                                forControlEvents:UIControlEventTouchUpInside];
-    [self.navigationBarView.doneButton addTarget:self
-                                          action:@selector(done)
-                                forControlEvents:UIControlEventTouchUpInside];
-    [self.navigationBarView.editButton addTarget:self
-                                          action:@selector(edit)
-                                forControlEvents:UIControlEventTouchUpInside];
-    [self.navigationBarView.backButton addTarget:self
-                                          action:@selector(back)
-                                forControlEvents:UIControlEventTouchUpInside];
-    [self.navigationBarView.searchButton addTarget:self
-                                            action:@selector(search)
-                                  forControlEvents:UIControlEventTouchUpInside];
+    [self.navigationBarView.cartButton addTarget:self action:@selector(openCart:) forControlEvents:UIControlEventTouchUpInside];
+    [self.navigationBarView.leftButton addTarget:self action:@selector(openMenu) forControlEvents:UIControlEventTouchUpInside];
+    [self.navigationBarView.doneButton addTarget:self action:@selector(done) forControlEvents:UIControlEventTouchUpInside];
+    [self.navigationBarView.editButton addTarget:self action:@selector(edit) forControlEvents:UIControlEventTouchUpInside];
+    [self.navigationBarView.backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    [self.navigationBarView.searchButton addTarget:self action:@selector(search) forControlEvents:UIControlEventTouchUpInside];
     
     self.navigationBarView.titleLabel.userInteractionEnabled = YES;
     UITapGestureRecognizer *touched = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goTop)];
@@ -1995,48 +1925,36 @@
     }
 }
 
-- (void)changeEditButtonState:(NSNotification *)notification
-{
+- (void)changeEditButtonState:(NSNotification *)notification {
     NSNumber* state = [notification.userInfo objectForKey:@"enabled"];
     self.navigationBarView.editButton.enabled = [state boolValue];
 }
 
-- (void)changeDoneButtonState:(NSNotification *)notification
-{
+- (void)changeDoneButtonState:(NSNotification *)notification {
     NSNumber* state = [notification.userInfo objectForKey:@"enabled"];
     self.navigationBarView.doneButton.enabled = [state boolValue];
 }
 
-- (void)updateCart:(NSNotification*) notification
-{
+- (void)updateCart:(NSNotification*) notification {
     NSMutableDictionary* userInfo = nil;
-    if(VALID_NOTEMPTY(notification, NSNotification))
-    {
+    if(VALID_NOTEMPTY(notification, NSNotification)) {
         userInfo = [[NSMutableDictionary alloc] initWithDictionary:notification.userInfo];
         
-        if(VALID_NOTEMPTY([userInfo objectForKey:kUpdateCartNotificationValue], RICart))
-        {
+        if(VALID_NOTEMPTY([userInfo objectForKey:kUpdateCartNotificationValue], RICart)) {
             self.cart = [userInfo objectForKey:kUpdateCartNotificationValue];
-        }
-        else
-        {
+        } else {
             self.cart = nil;
         }
         
-        if(VALID_NOTEMPTY(self.cart, RICart))
-        {
+        if(self.cart) {
             [self.navigationBarView updateCartProductCount:self.cart.cartCount];
             [self.tabBarView updateCartNumber:[self.cart.cartCount integerValue]];
-        }
-        else
-        {
+        } else {
             [userInfo removeObjectForKey:kUpdateCartNotificationValue];
             [self.navigationBarView updateCartProductCount:0];
             [self.tabBarView updateCartNumber:0];
         }
-    }
-    else
-    {
+    } else {
         self.cart = nil;
         [self.navigationBarView updateCartProductCount:0];
         [self.tabBarView updateCartNumber:0];
@@ -2045,14 +1963,12 @@
 
 #pragma mark - Navbar Button actions
 
-- (void)back
-{
+- (void)back {
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressBackNotification
                                                         object:nil];
     
     JAStepByStepTabViewController *topViewController = (JAStepByStepTabViewController *)[self topViewController];
-    if ([topViewController isKindOfClass:[JAStepByStepTabViewController class]] && !topViewController.stackIsEmpty)
-    {
+    if ([topViewController isKindOfClass:[JAStepByStepTabViewController class]] && !topViewController.stackIsEmpty) {
         if ([topViewController sendBack]) {
             return;
         }
@@ -2060,44 +1976,35 @@
     [self popViewControllerAnimated:YES];
 }
 
--(void)goTop
-{
+-(void)goTop {
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressNavBar object:nil];
 }
 
-- (void)done
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressDoneNotification
-                                                        object:nil];
+- (void)done {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressDoneNotification object:nil];
     [self back];
 }
 
-- (void)edit
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressEditNotification
-                                                        object:nil];
+- (void)edit {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressEditNotification object:nil];
 }
 
-- (void)search
-{
+- (void)search {
     [self showSearchView];
 }
 
-- (void)openCart:(NSNotification*) notification
-{
+- (void)openCart:(NSNotification*) notification {
     if ([[self topViewController] isKindOfClass:[JALoadCountryViewController class]]) {
         //inore the notification
         return;
     }
     
     typedef void (^GoToCartBlock)(void);
-    GoToCartBlock goToCartBlock = ^void{
+    GoToCartBlock goToCartBlock = ^void {
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
-                                                            object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification object:nil];
         
-        if (![[self topViewController] isKindOfClass:[JACartViewController class]])
-        {
+        if (![[self topViewController] isKindOfClass:[JACartViewController class]]) {
             JACartViewController *cartViewController = [[JACartViewController alloc] init];
             [cartViewController setCart:self.cart];
             
@@ -2113,14 +2020,13 @@
         } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages, BOOL outOfStock) {
             goToCartBlock();
         }];
-    }else{
+    } else {
         goToCartBlock();
     }
     
 }
 
-- (void)openMenu
-{
+- (void)openMenu {
     if ([[self topViewController] isKindOfClass:[JALoadCountryViewController class]]) {
         //inore the notification
         return;
@@ -2128,39 +2034,32 @@
     
     NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];;
     
-    if(VALID_NOTEMPTY(self.cart, RICart))
-    {
+    if(self.cart) {
         [userInfo setObject:self.cart forKey:kUpdateCartNotificationValue];
     }
     
     [userInfo setObject:[NSNumber numberWithBool:self.neeedsExternalPaymentMethod] forKey:kExternalPaymentValue];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenMenuNotification
-                                                        object:nil
-                                                      userInfo:[userInfo copy]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenMenuNotification object:nil userInfo:[userInfo copy]];
 }
 
-- (void)didLoggedIn
-{
+- (void)didLoggedIn {
     //remove existing ones from database
     [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RITeaserGrouping class])];
 }
 
-- (void)didLoggedOut
-{
+- (void)didLoggedOut {
     //remove existing ones from database
     [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RITeaserGrouping class])];
 }
 
-- (void)viewWillLayoutSubviews
-{
+- (void)viewWillLayoutSubviews {
     [self.searchView resetFrame:self.view.bounds];
 }
 
 #pragma mark - Search Bar
 
-- (JASearchView *)searchView
-{
+- (JASearchView *)searchView {
     if (!VALID(_searchView, JASearchView)) {
         _searchView = [[JASearchView alloc] initWithFrame:self.view.bounds andText:@""];
         [_searchView setHidden:YES];
@@ -2169,9 +2068,8 @@
     return _searchView;
 }
 
-- (void)showSearchView
-{
-    if (NO == self.searchViewAlwaysHidden) {
+- (void)showSearchView {
+    if (!self.searchViewAlwaysHidden) {
         [self.searchView setHidden:NO];
     }
 }

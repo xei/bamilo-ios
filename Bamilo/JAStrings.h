@@ -31,6 +31,7 @@
 #define STRING_RECENT_SEARCHES RILocalizedString(@"recent_searches", nil)
 #define STRING_RECENTLY_VIEWED RILocalizedString(@"recently_viewed", nil)
 #define STRING_CONTACT_US RILocalizedString(@"contact us", nil)
+#define STRING_FAQ RILocalizedString(@"faq", nil)
 #define STRING_MY_ACCOUNT RILocalizedString(@"my_account", nil)
 #define STRING_TRACK_MY_ORDER RILocalizedString(@"nav_track_order", nil)
 #define STRING_CHOOSE_COUNTRY RILocalizedString(@"nav_country", nil)

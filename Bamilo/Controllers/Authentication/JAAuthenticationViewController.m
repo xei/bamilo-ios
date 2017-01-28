@@ -621,12 +621,10 @@
     [self authenticateAndExecuteBlock:authenticatedBlock showBackButtonForAuthentication:backButton showContinueWithoutLogin:NO];
 }
 
-+ (void)authenticateAndExecuteBlock:(void (^)(void))authenticatedBlock showBackButtonForAuthentication:(BOOL)backButton showContinueWithoutLogin:(BOOL)continueButton
-{
-    if([RICustomer checkIfUserIsLogged])
-    {
++ (void)authenticateAndExecuteBlock:(void (^)(void))authenticatedBlock showBackButtonForAuthentication:(BOOL)backButton showContinueWithoutLogin:(BOOL)continueButton {
+    if([RICustomer checkIfUserIsLogged]) {
         authenticatedBlock();
-    }else{
+    } else {
         NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];
         [userInfo setObject:[NSNumber numberWithBool:continueButton] forKey:@"continue_button"];
         [userInfo setObject:[NSNumber numberWithBool:backButton] forKey:@"shows_back_button"];
@@ -634,16 +632,14 @@
     }
 }
 
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-{
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     if (self.emailTextField.hasError) {
         [self.emailTextField cleanError];
     }
     return YES;
 }
 
-- (void)accountServicesViewChange
-{
+- (void)accountServicesViewChange {
     [self.emailTextField setYBottomOf:self.casAccountServicesImagesView at:kAccountServices2Email];
     [self.continueToLoginButton setYBottomOf:self.emailTextField at:kEmail2ContinueLogin];
     [self.orView setYBottomOf:self.continueToLoginButton at:kContinueLogin2OrMess];

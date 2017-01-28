@@ -20,8 +20,7 @@
 
 @implementation JATabBarView
 
-- (void)initialSetup
-{
+- (void)initialSetup {
     self.backgroundColor = [UIColor whiteColor];
     
     self.tabButtonsArray = [NSMutableArray new];
@@ -58,8 +57,7 @@
     }
 }
 
-- (void)buttonPressed:(UIControl*)sender
-{
+- (void)buttonPressed:(UIControl*)sender {
     [self selectButtonAtIndex:sender.tag];
     
     NSString* identifier = [kButtonIds objectAtIndex:sender.tag];
@@ -77,8 +75,7 @@
     }
 }
 
-- (void)selectButtonAtIndex:(NSInteger)index;
-{
+- (void)selectButtonAtIndex:(NSInteger)index; {
     if (index < kButtonIds.count) {
         JATabBarButton* previousTab = [self.tabButtonsArray objectAtIndex:self.selectedIndex];
         previousTab.selected = NO;
@@ -88,8 +85,7 @@
     }
 }
 
-- (void)updateCartNumber:(NSInteger)cartNumber
-{
+- (void)updateCartNumber:(NSInteger)cartNumber {
     JATabBarButton* cartButton = [self.tabButtonsArray objectAtIndex:2];
     [cartButton setNumber:cartNumber];
 }

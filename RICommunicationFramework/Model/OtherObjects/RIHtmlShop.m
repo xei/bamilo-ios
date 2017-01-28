@@ -49,11 +49,9 @@
     }];
 }
 
-+ (RIHtmlShop*)parseHtmlShop:(NSDictionary*)json
-                     country:(RICountryConfiguration*)country;
-{
-    RIHtmlShop* newHtmlStore = [[RIHtmlShop alloc] init];
++ (RIHtmlShop*)parseHtmlShop:(NSDictionary*)json country:(RICountryConfiguration*)country; {
     
+    RIHtmlShop* newHtmlStore = [[RIHtmlShop alloc] init];
     if (VALID_NOTEMPTY(json, NSDictionary)) {
         NSString* htmlRaw = [json objectForKey:@"html"];
         if (VALID_NOTEMPTY(htmlRaw, NSString)) {
@@ -65,7 +63,6 @@
         
         NSArray* featuredBoxesJson = [json objectForKey:@"featured_box"];
         if (VALID_NOTEMPTY(featuredBoxesJson, NSArray)) {
-            
             NSMutableArray* featuredBoxesArray = [NSMutableArray new];
             for (NSDictionary* featuredBoxJson in featuredBoxesJson) {
                 if (VALID_NOTEMPTY(featuredBoxJson, NSDictionary)) {
