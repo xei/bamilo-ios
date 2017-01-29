@@ -652,7 +652,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
         if(VALID_NOTEMPTY([notification objectForKey:@"u"], NSString))
         {
             NSString *urlString = [notification objectForKey:@"u"];
-            NSArray *urlComponents = [urlString componentsSeparatedByString:@"/"];
+            NSArray *urlComponents = [[urlString componentsSeparatedByString:@"/"] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"length > 0"]];
             
             NSString *key = @"";
             NSString *arguments = @"";

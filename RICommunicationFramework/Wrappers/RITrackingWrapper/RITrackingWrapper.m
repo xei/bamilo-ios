@@ -84,11 +84,6 @@ static dispatch_once_t sharedInstanceToken;
     
     self.trackers = [NSMutableArray arrayWithObjects:googleAnalyticsTracker, bugsenseTracker, ad4PushTracker, adjustTracker, gtmTracker, nil];
     
-#ifdef IS_RELEASE
-    RINewRelicTracker *newRelicTracker = [[RINewRelicTracker alloc] init];
-    [self.trackers addObject:newRelicTracker];
-#endif
-    
     if(VALID_NOTEMPTY(launchOptions, NSDictionary)) {
         [self RI_callTrackersConformToProtocol:@protocol(RITracker)
                                       selector:@selector(applicationDidLaunchWithOptions:)

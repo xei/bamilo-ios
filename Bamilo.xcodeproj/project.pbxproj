@@ -36,6 +36,8 @@
 		874AAB5E1E3C778E00B3F8FE /* ConfigManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB5D1E3C778E00B3F8FE /* ConfigManager.m */; };
 		874AAB651E3CE35B00B3F8FE /* ConfigManager-Consts.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB641E3CE35B00B3F8FE /* ConfigManager-Consts.m */; };
 		874AAB691E3CEA0700B3F8FE /* AppManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB681E3CEA0700B3F8FE /* AppManager.m */; };
+		874AAB6D1E3DCEDB00B3F8FE /* SessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB6C1E3DCEDB00B3F8FE /* SessionManager.m */; };
+		874AAB771E3DD31600B3F8FE /* URLUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB761E3DD31600B3F8FE /* URLUtility.m */; };
 		875AD53F1E38C0C800584ABF /* RIConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD48C1E38C0C800584ABF /* RIConfiguration.m */; };
 		875AD5401E38C0C800584ABF /* RIAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD4901E38C0C800584ABF /* RIAddress.m */; };
 		875AD5411E38C0C900584ABF /* RIApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD4921E38C0C800584ABF /* RIApi.m */; };
@@ -504,6 +506,10 @@
 		874AAB641E3CE35B00B3F8FE /* ConfigManager-Consts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ConfigManager-Consts.m"; sourceTree = "<group>"; };
 		874AAB671E3CEA0700B3F8FE /* AppManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppManager.h; sourceTree = "<group>"; };
 		874AAB681E3CEA0700B3F8FE /* AppManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppManager.m; sourceTree = "<group>"; };
+		874AAB6B1E3DCEDB00B3F8FE /* SessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionManager.h; sourceTree = "<group>"; };
+		874AAB6C1E3DCEDB00B3F8FE /* SessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionManager.m; sourceTree = "<group>"; };
+		874AAB751E3DD31600B3F8FE /* URLUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLUtility.h; sourceTree = "<group>"; };
+		874AAB761E3DD31600B3F8FE /* URLUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLUtility.m; sourceTree = "<group>"; };
 		875AD48B1E38C0C800584ABF /* RIConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIConfiguration.h; sourceTree = "<group>"; };
 		875AD48C1E38C0C800584ABF /* RIConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIConfiguration.m; sourceTree = "<group>"; };
 		875AD48F1E38C0C800584ABF /* RIAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIAddress.h; sourceTree = "<group>"; };
@@ -1671,6 +1677,7 @@
 		874AAB5B1E3C775900B3F8FE /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				874AAB6A1E3DCECD00B3F8FE /* SessionManager */,
 				874AAB661E3CE9F400B3F8FE /* AppManager */,
 				874AAB5F1E3C790300B3F8FE /* ConfigManager */,
 			);
@@ -1703,6 +1710,42 @@
 				874AAB681E3CEA0700B3F8FE /* AppManager.m */,
 			);
 			name = AppManager;
+			sourceTree = "<group>";
+		};
+		874AAB6A1E3DCECD00B3F8FE /* SessionManager */ = {
+			isa = PBXGroup;
+			children = (
+				874AAB6B1E3DCEDB00B3F8FE /* SessionManager.h */,
+				874AAB6C1E3DCEDB00B3F8FE /* SessionManager.m */,
+			);
+			name = SessionManager;
+			sourceTree = "<group>";
+		};
+		874AAB6E1E3DD27900B3F8FE /* NSString+Style */ = {
+			isa = PBXGroup;
+			children = (
+				87C69DA91E38B78E0026018F /* NSString+Style.h */,
+				87C69DAA1E38B78E0026018F /* NSString+Style.m */,
+			);
+			name = "NSString+Style";
+			sourceTree = "<group>";
+		};
+		874AAB6F1E3DD28D00B3F8FE /* UIColor+Format */ = {
+			isa = PBXGroup;
+			children = (
+				87C69DAC1E38B7A50026018F /* UIColor+Format.h */,
+				87C69DAD1E38B7A50026018F /* UIColor+Format.m */,
+			);
+			name = "UIColor+Format";
+			sourceTree = "<group>";
+		};
+		874AAB741E3DD30400B3F8FE /* URLUtility */ = {
+			isa = PBXGroup;
+			children = (
+				874AAB751E3DD31600B3F8FE /* URLUtility.h */,
+				874AAB761E3DD31600B3F8FE /* URLUtility.m */,
+			);
+			name = URLUtility;
 			sourceTree = "<group>";
 		};
 		875AD4891E38C0C800584ABF /* RICommunicationFramework */ = {
@@ -2210,6 +2253,7 @@
 		B50B03A8198A883D002046DF /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				874AAB741E3DD30400B3F8FE /* URLUtility */,
 				870F8D031E3397400021F87B /* IntUtility */,
 				4A19C51119D019100070D194 /* Reachability */,
 				870F8D021E3397270021F87B /* JAUtils */,
@@ -2594,10 +2638,8 @@
 		B5C1E33419BA1E3D009C422C /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				87C69DA91E38B78E0026018F /* NSString+Style.h */,
-				87C69DAA1E38B78E0026018F /* NSString+Style.m */,
-				87C69DAC1E38B7A50026018F /* UIColor+Format.h */,
-				87C69DAD1E38B7A50026018F /* UIColor+Format.m */,
+				874AAB6F1E3DD28D00B3F8FE /* UIColor+Format */,
+				874AAB6E1E3DD27900B3F8FE /* NSString+Style */,
 				9ABCAEEC1B0F6A2C00A69271 /* UIView+Mirror.h */,
 				9ABCAEED1B0F6A2C00A69271 /* UIView+Mirror.m */,
 				CEDBF85F1B0A01B60073971A /* UIImage+Mirror.h */,
@@ -3337,6 +3379,7 @@
 				875AD57C1E38C0C900584ABF /* RICommunicationWrapper.m in Sources */,
 				875AD5641E38C0C900584ABF /* RILocale.m in Sources */,
 				874AAB651E3CE35B00B3F8FE /* ConfigManager-Consts.m in Sources */,
+				874AAB771E3DD31600B3F8FE /* URLUtility.m in Sources */,
 				9ADEA09F1C9C0E6D00B2A605 /* JAProductInfoSizeLine.m in Sources */,
 				FF4383EA1C6E1F49003BA957 /* JAScreenRadioComponent.m in Sources */,
 				FF6BDCA01CE238F3002BFE11 /* JAORReasonsViewController.m in Sources */,
@@ -3513,6 +3556,7 @@
 				875AD55A1E38C0C900584ABF /* RICart.m in Sources */,
 				CE9ADFD91AB6D78200D56481 /* JAPromotionPopUp.m in Sources */,
 				9A55A68B1BBECB09008EF4A6 /* JABottomBar.m in Sources */,
+				874AAB6D1E3DCEDB00B3F8FE /* SessionManager.m in Sources */,
 				875AD5541E38C0C900584ABF /* RIURLCache.m in Sources */,
 				875AD5651E38C0C900584ABF /* RIOrder.m in Sources */,
 				FF4465221CECB806003A65EA /* JAORPaymentViewController.m in Sources */,

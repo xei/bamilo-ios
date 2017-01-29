@@ -258,19 +258,23 @@
 + (RICountry*)getUniqueCountry {
     RICountry* uniqueCountry = [[RICountry alloc] init];
     
-        NSDictionary* languageJSON = @{@"code":@"fa_IR",@"default":@1,@"name":@"فارسی"};
-        RILanguage* language = [RILanguage parseLanguage:languageJSON];
-        uniqueCountry.selectedLanguage = language;
-        uniqueCountry.name = RI_UNIQUE_COUNTRY_NAME_BAMILO;
-        uniqueCountry.countryIso = RI_UNIQUE_COUNTRY_ISO_BAMILO;
-        uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO;
-        uniqueCountry.isLive = YES;
-#ifdef IS_STAGING
-        uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO_STAGING;
-        uniqueCountry.isLive = NO;
-        uniqueCountry.userAgentInjection = RI_UNIQUE_COUNTRY_USER_AGENT_INJECTION_BAMILO_INTEGRATION_MOBILE;
+    NSDictionary* languageJSON = @{ @"code" : @"fa_IR", @"default" : @1, @"name" : @"فارسی" };
+    RILanguage* language = [RILanguage parseLanguage:languageJSON];
+    uniqueCountry.selectedLanguage = language;
+    uniqueCountry.name = RI_UNIQUE_COUNTRY_NAME_BAMILO;
+    uniqueCountry.countryIso = RI_UNIQUE_COUNTRY_ISO_BAMILO;
+#ifdef IS_RELEASE
+    uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO;
+    uniqueCountry.isLive = YES;
+#elif IS_DEBUG
+    uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO;
+    uniqueCountry.isLive = NO;
+#else
+    uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO_STAGING;
+    uniqueCountry.isLive = NO;
+    uniqueCountry.userAgentInjection = RI_UNIQUE_COUNTRY_USER_AGENT_INJECTION_BAMILO_INTEGRATION_MOBILE;
 #endif
-        return uniqueCountry;
+    return uniqueCountry;
 }
 
 + (NSString *)getCountryPhonePrefixesWithSuccessBlock:(void (^)(NSArray *prefixes))successBlock

@@ -130,110 +130,79 @@
 //    [self hideLoading];
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
     [self.coverView setFrame:self.view.bounds];
     self.loadingBaseAnimation.center = CGPointMake(self.view.center.x, self.view.center.y - 64.0f);
 }
 
-- (void)continueProcessing
-{
-    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess)
-    {
+- (void)continueProcessing {
+    if(self.apiResponse == RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess) {
 //        [self showLoading];
     }
     
     self.isRequestDone = NO;
-    
     self.requestCount = 0;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(incrementRequestCount) name:RISectionRequestStartedNotificationName object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(decrementRequestCount) name:RISectionRequestEndedNotificationName object:nil];
 
-    self.apiRequestId = [RIApi startApiWithCountry:self.selectedCountry
-                                         reloadAPI:YES
-                                      successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory)
-                         {
-#warning disabling has update for now. Enable and correct its behavior later.
-                             if(NO && hasUpdate)
-                             {
-                                 self.isPopupOpened = YES;
-                                 self.isRequestDone = YES;
-                                 if(isUpdateMandatory)
-                                 {
-                                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_NECESSARY_TITLE message:[NSString stringWithFormat:STRING_UPDATE_NECESSARY_MESSAGE, APP_NAME] delegate:self cancelButtonTitle:STRING_OK_UPDATE otherButtonTitles:nil];
-                                     [alert setTag:kForceUpdateAlertViewTag];
-                                     [alert show];
-                                     [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
-                                     return;
-//                                     [self hideLoading];
-                                 }
-                                 else
-                                 {
-                                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_AVAILABLE_TITLE message:[NSString stringWithFormat:STRING_UPDATE_AVAILABLE_MESSAGE, APP_NAME] delegate:self cancelButtonTitle:STRING_NO_THANKS otherButtonTitles:STRING_UPDATE, nil];
-                                     [alert setTag:kUpdateAvailableAlertViewTag];
-                                     [alert show];
-                                     
-//                                     [self hideLoading];
-                                 }
-                             }
-                             else
-                             {
-                                 if (0 >= self.requestCount)
-                                 {
-                                     [self getConfigurations];
-                                 }
-                             }
-                             [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
-                             //show loading has to be added here, in case the no connection error view was shown
-                             // and the loading was removed because of that
-//                             [self showLoading];
-                         }
-                                   andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage)
-                         {
-                             self.apiResponse = apiResponse;
-                             self.isRequestDone=YES;
-                             [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(continueProcessing) objects:nil];
-                         }];
+    self.apiRequestId = [RIApi startApiWithCountry:self.selectedCountry reloadAPI:YES successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory) {
+        if(hasUpdate) {
+            self.isPopupOpened = YES;
+            self.isRequestDone = YES;
+            if(isUpdateMandatory) {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_NECESSARY_TITLE message:[NSString stringWithFormat:STRING_UPDATE_NECESSARY_MESSAGE, APP_NAME] delegate:self cancelButtonTitle:STRING_OK_UPDATE otherButtonTitles:nil];
+                [alert setTag:kForceUpdateAlertViewTag];
+                [alert show];
+                [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
+                return;
+            } else {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_AVAILABLE_TITLE message:[NSString stringWithFormat:STRING_UPDATE_AVAILABLE_MESSAGE, APP_NAME] delegate:self cancelButtonTitle:STRING_NO_THANKS otherButtonTitles:STRING_UPDATE, nil];
+                [alert setTag:kUpdateAvailableAlertViewTag];
+                [alert show];
+            }
+         } else {
+             if (0 >= self.requestCount) {
+                 [self getConfigurations];
+             }
+         }
+        
+         [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
+    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
+        self.apiResponse = apiResponse;
+        self.isRequestDone = YES;
+        [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(continueProcessing) objects:nil];
+    }];
 }
 
-- (void)incrementRequestCount
-{
+- (void)incrementRequestCount {
     self.requestCount++;
 }
 
-- (void)decrementRequestCount
-{
+- (void)decrementRequestCount {
     self.requestCount--;
     
-    if (0 >= self.requestCount)
-    {
+    if (0 >= self.requestCount) {
         [self getConfigurations];
     }
 }
 
-- (void)getConfigurations
-{
-    if(!self.isPopupOpened)
-    {
+- (void)getConfigurations {
+    if(!self.isPopupOpened) {
         self.configurationRequestCount = 1;
         
-        if([RICommunicationWrapper setSessionCookie])
-        {
+        if([RICommunicationWrapper setSessionCookie]) {
             self.configurationRequestCount = 2;
             
-            self.cartRequestId = [RICart getCartWithSuccessBlock:^(RICart *cartData)
-                                  {
-                                      NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cartData forKey:kUpdateCartNotificationValue];
-                                      [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
-                                      
-                                      self.configurationRequestCount--;
-                                      
-                                  } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages)
-                                  {
-                                      self.configurationRequestCount--;
-                                  }];
+            self.cartRequestId = [RICart getCartWithSuccessBlock:^(RICart *cartData) {
+                NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cartData forKey:kUpdateCartNotificationValue];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
+
+                self.configurationRequestCount--;
+            } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+                self.configurationRequestCount--;
+            }];
         }
         
         self.customerRequestId = [RICustomer autoLogin:^(BOOL success, NSDictionary *entities, NSString *loginMethod)

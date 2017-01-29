@@ -233,7 +233,7 @@ JAAccountServicesProtocol
            
            CGFloat yOffset = CGRectGetMaxY(self.topMessageLabel.frame) + kHeaderToTopMess;
            
-           self.dynamicForm = [[JADynamicForm alloc] initWithForm:form values:@{@"email" : self.authenticationEmail} startingPosition:yOffset  hasFieldNavigation:YES];
+           self.dynamicForm = [[JADynamicForm alloc] initWithForm:form values:@{@"email" : self.authenticationEmail ?: @""} startingPosition:yOffset hasFieldNavigation:YES];
            [self.dynamicForm setDelegate:self];
            for(UIView *view in self.dynamicForm.formViews)
            {
@@ -319,7 +319,7 @@ JAAccountServicesProtocol
     if(self.firstLoading)
     {
         NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
-        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:_authenticationEmail];
+        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:self.authenticationEmail ?: @""];
         self.firstLoading = NO;
     }
     

@@ -480,15 +480,12 @@
             [self pushViewController:viewController animated:screenTarget.pushAnimation];
             return YES;
         }
-        case SHOP_IN_SHOP:
-        case STATIC_PAGE: {
+        case STATIC_PAGE:
+        case SHOP_IN_SHOP: {
             JAShopWebViewController* viewController = [[JAShopWebViewController alloc] init];
             [self loadScreenTarget:screenTarget forBaseViewController:viewController];
             [viewController.navBarLayout setShowBackButton:YES];
-            if (!VALID(screenTarget.navBarLayout, JANavigationBarLayout)) {
-                viewController.navBarLayout = [JANavigationBarLayout new];
-                [viewController.navBarLayout setTitle:screenTarget.target.node];
-            }
+            [viewController.navBarLayout setTitle:screenTarget.target.node];
             [self pushViewController:viewController animated:screenTarget.pushAnimation];
             return YES;
         }

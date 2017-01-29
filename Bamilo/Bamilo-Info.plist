@@ -35,14 +35,8 @@
 			<string>com.bamilo.ios</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>Bamilo</string>
-				<string>gsd-Bamilo</string>
-			</array>
-		</dict>
-		<dict>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>fb304887043046936</string>
+				<string>bamilo</string>
+				<string>gsd-bamilo</string>
 			</array>
 		</dict>
 	</array>
