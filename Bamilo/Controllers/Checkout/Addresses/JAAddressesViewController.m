@@ -47,17 +47,14 @@ UITableViewDelegate>
 
 // Order summary
 @property (strong, nonatomic) JAOrderSummaryView *orderSummary;
-
 @property (assign, nonatomic) BOOL shouldForceAddAddress;
-
 @property (assign, nonatomic) RIApiResponse apiResponse;
 
 @end
 
 @implementation JAAddressesViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     self.apiResponse = RIApiResponseSuccess;
@@ -70,7 +67,7 @@ UITableViewDelegate>
     if (self.fromCheckout) {
         self.navBarLayout.showCartButton = NO;
         self.navBarLayout.title = STRING_CHECKOUT;
-    }else{
+    } else {
         self.navBarLayout.title = STRING_MY_ADDRESSES;
     }
     
@@ -112,8 +109,7 @@ UITableViewDelegate>
     [self.view addSubview:_bottomView];
 }
 
-- (void)viewWillLayoutSubviews
-{
+- (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     
     [self setCart:[JACenterNavigationController sharedInstance].cart];
@@ -121,47 +117,41 @@ UITableViewDelegate>
     if (self.fromCheckout) {
         if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
             [_bottomView setNoTotal:YES];
-        }else{
+        } else {
             [_bottomView setNoTotal:NO];
         }
-    }else{
+    } else {
         [_bottomView setNoTotal:YES];
     }
     
     CGFloat newWidth = self.view.frame.size.width;
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]) && self.fromCheckout)
-    {
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]) && self.fromCheckout) {
         newWidth = self.view.frame.size.height + self.view.frame.origin.y;
     }
-    if(VALID_NOTEMPTY(self.addresses, NSDictionary))
-    {
+    if(self.addresses.count) {
         [self setupViews:newWidth toInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
     }
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
     [self getAddressList];
 }
 
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
+-(void)viewDidAppear:(BOOL)animated {
     
+    [super viewDidAppear:animated];
     [[RITrackingWrapper sharedInstance]trackScreenWithName:@"AddressesList"];
+    
 }
 
-- (void)getAddressList
-{
+- (void)getAddressList {
     [self showLoading];
     [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
         self.addresses = adressList;
-        if(VALID_NOTEMPTY(self.addresses, NSDictionary))
-        {
-            if(VALID_NOTEMPTY(self.orderSummary, JAOrderSummaryView))
-            {
+        if(self.addresses.count) {
+            if(self.orderSummary) {
                 [self.orderSummary setHidden:NO];
             }
             
@@ -173,34 +163,28 @@ UITableViewDelegate>
             self.shippingAddress = [self.addresses objectForKey:@"shipping"];
             self.billingAddress = [self.addresses objectForKey:@"billing"];
 
-            if([[self.shippingAddress uid] isEqualToString:[self.billingAddress uid]])
-            {
+            if([[self.shippingAddress uid] isEqualToString:[self.billingAddress uid]]) {
                 self.useSameAddressAsBillingAndShipping = YES;
-            }
-            else
-            {
+            } else {
                 self.useSameAddressAsBillingAndShipping = NO;
             }
             
             [self finishedLoadingAddresses];
-        }
-        else
-        {
+        } else {
             [self hideLoading];
             
-            if(self.shouldForceAddAddress)
-            {
+            if(self.shouldForceAddAddress) {
                 // shouldForceAddAddress should be setted to NO otherwise, everytime that the user goes back in add address screen the screen will reopen
                 self.shouldForceAddAddress = NO;
                 
-                NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:NO], [NSNumber numberWithBool:self.fromCheckout]] forKeys:@[@"show_back_button", @"from_checkout"]];
+                NSDictionary *userInfo = @{
+                                           @"show_back_button"  :@NO,
+                                           @"animated"          :@NO,
+                                           @"from_checkout"     : [NSNumber numberWithBool:self.fromCheckout]
+                                           };
                 
-                [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
-                                                                    object:nil
-                                                                  userInfo:userInfo];
-            }
-            else
-            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification object:nil userInfo:userInfo];
+            } else {
                 [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification	 object:nil];
             }
         }
@@ -212,34 +196,27 @@ UITableViewDelegate>
         [trackingDictionary setValue:@"NativeCheckoutError" forKey:kRIEventActionKey];
         [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
         
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutError]
-                                                  data:[trackingDictionary copy]];
-        
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutError] data:[trackingDictionary copy]];
         
         [self.contentScrollView setHidden:YES];
         [_bottomView setHidden:YES];
         
-        if(VALID_NOTEMPTY(self.orderSummary, JAOrderSummaryView))
-        {
+        if(VALID_NOTEMPTY(self.orderSummary, JAOrderSummaryView)) {
             [self.orderSummary setHidden:YES];
         }
         [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(getAddressList) objects:nil];
-        
         [self hideLoading];
     }];
 }
 
-- (void) setupViews:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-{
+- (void) setupViews:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
     CGFloat scrollViewStartY = 0.0f;
     
-    if(VALID_NOTEMPTY(self.orderSummary, JAOrderSummaryView))
-    {
+    if(VALID_NOTEMPTY(self.orderSummary, JAOrderSummaryView)) {
         [self.orderSummary removeFromSuperview];
     }
     
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation)  && (width < self.view.frame.size.width) && self.fromCheckout)
-    {
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation)  && (width < self.view.frame.size.width) && self.fromCheckout) {
         CGFloat orderSummaryRightMargin = 0.0f;
         self.orderSummary = [[JAOrderSummaryView alloc] initWithFrame:CGRectMake(width,
                                                                                  scrollViewStartY,
@@ -259,19 +236,13 @@ UITableViewDelegate>
     CGFloat headerHeight = [self tableView:self.shippingAddressTableView heightForHeaderInSection:0];
     CGFloat footerHeight = [self tableView:self.shippingAddressTableView heightForFooterInSection:0];
     CGFloat totalShippingCollectionViewHeight = headerHeight + cellHeight + footerHeight;
-    [self.shippingAddressTableView setFrame:CGRectMake(0.0f,
-                                                       0.0f,
-                                                       self.contentScrollView.frame.size.width,
-                                                       totalShippingCollectionViewHeight)];
+    [self.shippingAddressTableView setFrame:CGRectMake(0.0f, 0.0f, self.contentScrollView.frame.size.width, totalShippingCollectionViewHeight)];
     
     CGFloat totalBillingCollectionViewHeight = totalShippingCollectionViewHeight;
     if (self.useSameAddressAsBillingAndShipping) {
         totalBillingCollectionViewHeight = 0.0f;
     }
-    [self.billingAddressTableView setFrame:CGRectMake(0.0f,
-                                                      CGRectGetMaxY(self.shippingAddressTableView.frame),
-                                                      self.contentScrollView.frame.size.width,
-                                                      totalBillingCollectionViewHeight)];
+    [self.billingAddressTableView setFrame:CGRectMake(0.0f, CGRectGetMaxY(self.shippingAddressTableView.frame), self.contentScrollView.frame.size.width, totalBillingCollectionViewHeight)];
 
     NSArray* otherAddresses = [self.addresses objectForKey:@"other"];
     CGFloat totalOtherAddressesTableHeight = headerHeight + cellHeight * otherAddresses.count + footerHeight;
@@ -292,8 +263,7 @@ UITableViewDelegate>
                                             self.view.frame.size.height - _bottomView.frame.size.height,
                                             width,
                                             _bottomView.frame.size.height)];
-    if(self.fromCheckout)
-    {
+    if(self.fromCheckout) {
         [_bottomView setButtonText:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
         [_bottomView setHidden:NO];
     }
@@ -314,14 +284,11 @@ UITableViewDelegate>
     }
 }
 
--(void)finishedLoadingAddresses
-{
+-(void)finishedLoadingAddresses {
     CGFloat newWidth = self.view.frame.size.width;
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]) && self.fromCheckout)
-    {
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]) && self.fromCheckout) {
         newWidth = self.view.frame.size.height + self.view.frame.origin.y;
     }
-    
     [self setupViews:newWidth toInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
     
 #warning temporarily disabled until we migrate to new GA Google Analytics
@@ -333,8 +300,7 @@ UITableViewDelegate>
     }*/
 }
 
--(BOOL)checkIfAddressIsAdded:(RIAddress*)addressToAdd addresses:(NSArray*)addresses
-{
+-(BOOL)checkIfAddressIsAdded:(RIAddress*)addressToAdd addresses:(NSArray*)addresses {
     BOOL checkIfAddressIsAdded = NO;
     
     for(RIAddress *address in addresses)

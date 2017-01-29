@@ -11,7 +11,7 @@
 #import "JAUtils.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
-#import "MoreMenuTableViewCell.h"
+#import "PlainTableViewCell.h"
 #import "SimpleHeaderTableViewCell.h"
 
 @interface JAMoreMenuViewController ()
@@ -23,11 +23,8 @@
 
 @implementation JAMoreMenuViewController
 
-const int tableViewCllHeihgt = 50;
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     
     self.navBarLayout.showCartButton = NO;
     self.navBarLayout.showSeparatorView = NO;
@@ -38,10 +35,11 @@ const int tableViewCllHeihgt = 50;
     
     
     //   Nib registration for tableView
-    [self.tableView registerNib: [UINib nibWithNibName: [MoreMenuTableViewCell nibName] bundle:nil] forCellReuseIdentifier: [MoreMenuTableViewCell nibName]];
+    [self.tableView registerNib: [UINib nibWithNibName: [PlainTableViewCell nibName] bundle:nil]
+                    forCellReuseIdentifier: [PlainTableViewCell nibName]];
     
-    [self.tableView registerNib:[UINib nibWithNibName:[SimpleHeaderTableViewCell nibName] bundle:nil]
-         forCellReuseIdentifier:[SimpleHeaderTableViewCell nibName]];
+    [self.tableView registerNib: [UINib nibWithNibName:[SimpleHeaderTableViewCell nibName] bundle:nil]
+                    forHeaderFooterViewReuseIdentifier:[SimpleHeaderTableViewCell nibName]];
     
     self.tableViewListItems = @[
                                 @{
@@ -119,23 +117,23 @@ const int tableViewCllHeihgt = 50;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MoreMenuTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:[MoreMenuTableViewCell nibName] forIndexPath:indexPath];
+    PlainTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:[PlainTableViewCell nibName] forIndexPath:indexPath];
     cell.title = [self.tableViewListItems[indexPath.row] objectForKey:@"title"];
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return tableViewCllHeihgt;
+    return [PlainTableViewCell heightSize];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    SimpleHeaderTableViewCell * headerCell = [self.tableView dequeueReusableCellWithIdentifier: [SimpleHeaderTableViewCell nibName]];
+    SimpleHeaderTableViewCell * headerCell = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:[SimpleHeaderTableViewCell nibName]];
     headerCell.titleString = STRING_MORE;
     return headerCell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return tableViewCllHeihgt;
+    return [PlainTableViewCell heightSize];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

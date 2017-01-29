@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SimpleHeaderTableViewCell : UITableViewCell
+@interface SimpleHeaderTableViewCell : UITableViewHeaderFooterView
     @property (strong, nonatomic) NSString * titleString;
     + (NSString *) nibName;
 @end

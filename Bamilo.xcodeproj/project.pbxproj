@@ -19,8 +19,16 @@
 		1CCD52A11E2BA42F008BAEE4 /* PopularTeaserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CCD529F1E2BA42F008BAEE4 /* PopularTeaserTableViewCell.xib */; };
 		48AD8FE22FD2C5FDC1CEBFF8 /* libPods-BamiloUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18BD9C21DAEE905E1607A899 /* libPods-BamiloUITests.a */; };
 		503C9D52C4AD9778E8C113A7 /* libPods-Bamilo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D245C5FE6A656AA98164739 /* libPods-Bamilo.a */; };
-		611195821E3CB14B00D06690 /* MoreMenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 611195801E3CB14B00D06690 /* MoreMenuTableViewCell.m */; };
-		611195831E3CB14B00D06690 /* MoreMenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 611195811E3CB14B00D06690 /* MoreMenuTableViewCell.xib */; };
+		611195821E3CB14B00D06690 /* PlainTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 611195801E3CB14B00D06690 /* PlainTableViewCell.m */; };
+		611195831E3CB14B00D06690 /* PlainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 611195811E3CB14B00D06690 /* PlainTableViewCell.xib */; };
+		61E099641E3E0E21004ED14E /* IconTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E099621E3E0E21004ED14E /* IconTableViewCell.m */; };
+		61E099651E3E0E21004ED14E /* IconTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E099631E3E0E21004ED14E /* IconTableViewCell.xib */; };
+		61E0996C1E3E117F004ED14E /* BaseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E0996B1E3E117F004ED14E /* BaseTableViewCell.m */; };
+		61E099711E3E18F0004ED14E /* NotificationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E0996F1E3E18F0004ED14E /* NotificationTableViewCell.m */; };
+		61E099721E3E18F0004ED14E /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E099701E3E18F0004ED14E /* NotificationTableViewCell.xib */; };
+		61E099771E3E1A02004ED14E /* VersionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E099751E3E1A02004ED14E /* VersionTableViewCell.m */; };
+		61E099781E3E1A02004ED14E /* VersionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E099761E3E1A02004ED14E /* VersionTableViewCell.xib */; };
+		61E0997B1E3E2352004ED14E /* UIView+Style.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E0997A1E3E2352004ED14E /* UIView+Style.m */; };
 		6C18BD741AB87E0A00905FD2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A301BB19811D0700F71726 /* Images.xcassets */; };
 		6CF4AE821ADEAA290024EC34 /* JACatalogBannerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CF4AE7E1ADEAA290024EC34 /* JACatalogBannerCell.xib */; };
 		6CF4AE881ADEABBB0024EC34 /* JACatalogBannerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CF4AE841ADEABBB0024EC34 /* JACatalogBannerCell.m */; };
@@ -414,9 +422,9 @@
 		1C71FC5B1E2CABAD007ACF02 /* Bamilosans Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bamilosans Light.ttf"; sourceTree = "<group>"; };
 		1C71FC5C1E2CABAD007ACF02 /* Bamilosans Reg.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bamilosans Reg.ttf"; sourceTree = "<group>"; };
 		1C71FC5D1E2CABAD007ACF02 /* Bamilosans UltraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bamilosans UltraLight.ttf"; sourceTree = "<group>"; };
-		1C71FC641E2CD2AD007ACF02 /* SimpleHeaderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleHeaderTableViewCell.h; sourceTree = "<group>"; };
-		1C71FC651E2CD2AD007ACF02 /* SimpleHeaderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleHeaderTableViewCell.m; sourceTree = "<group>"; };
-		1C71FC661E2CD2AD007ACF02 /* SimpleHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SimpleHeaderTableViewCell.xib; sourceTree = "<group>"; };
+		1C71FC641E2CD2AD007ACF02 /* SimpleHeaderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleHeaderTableViewCell.h; path = Teasers/SimpleHeaderTableViewCell.h; sourceTree = "<group>"; };
+		1C71FC651E2CD2AD007ACF02 /* SimpleHeaderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleHeaderTableViewCell.m; path = Teasers/SimpleHeaderTableViewCell.m; sourceTree = "<group>"; };
+		1C71FC661E2CD2AD007ACF02 /* SimpleHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SimpleHeaderTableViewCell.xib; path = Teasers/SimpleHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		1CCD529D1E2BA42F008BAEE4 /* PopularTeaserTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopularTeaserTableViewCell.h; sourceTree = "<group>"; };
 		1CCD529E1E2BA42F008BAEE4 /* PopularTeaserTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopularTeaserTableViewCell.m; sourceTree = "<group>"; };
 		1CCD529F1E2BA42F008BAEE4 /* PopularTeaserTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopularTeaserTableViewCell.xib; sourceTree = "<group>"; };
@@ -475,9 +483,22 @@
 		52AC8FDB1A4056CB00E7C874 /* JASizeGuideWizardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASizeGuideWizardView.m; sourceTree = "<group>"; };
 		5D245C5FE6A656AA98164739 /* libPods-Bamilo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Bamilo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D35AAC06173E4696653CF50 /* Pods-Bamilo.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bamilo.adhoc.xcconfig"; path = "Pods/Target Support Files/Pods-Bamilo/Pods-Bamilo.adhoc.xcconfig"; sourceTree = "<group>"; };
-		6111957F1E3CB14B00D06690 /* MoreMenuTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreMenuTableViewCell.h; sourceTree = "<group>"; };
-		611195801E3CB14B00D06690 /* MoreMenuTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreMenuTableViewCell.m; sourceTree = "<group>"; };
-		611195811E3CB14B00D06690 /* MoreMenuTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MoreMenuTableViewCell.xib; sourceTree = "<group>"; };
+		6111957F1E3CB14B00D06690 /* PlainTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlainTableViewCell.h; path = ../Controllers/MenuViewController/PlainTableViewCell.h; sourceTree = "<group>"; };
+		611195801E3CB14B00D06690 /* PlainTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlainTableViewCell.m; path = ../Controllers/MenuViewController/PlainTableViewCell.m; sourceTree = "<group>"; };
+		611195811E3CB14B00D06690 /* PlainTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PlainTableViewCell.xib; path = ../Controllers/MenuViewController/PlainTableViewCell.xib; sourceTree = "<group>"; };
+		61E099611E3E0E21004ED14E /* IconTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconTableViewCell.h; sourceTree = "<group>"; };
+		61E099621E3E0E21004ED14E /* IconTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconTableViewCell.m; sourceTree = "<group>"; };
+		61E099631E3E0E21004ED14E /* IconTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IconTableViewCell.xib; sourceTree = "<group>"; };
+		61E0996A1E3E117F004ED14E /* BaseTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTableViewCell.h; sourceTree = "<group>"; };
+		61E0996B1E3E117F004ED14E /* BaseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTableViewCell.m; sourceTree = "<group>"; };
+		61E0996E1E3E18F0004ED14E /* NotificationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationTableViewCell.h; sourceTree = "<group>"; };
+		61E0996F1E3E18F0004ED14E /* NotificationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationTableViewCell.m; sourceTree = "<group>"; };
+		61E099701E3E18F0004ED14E /* NotificationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationTableViewCell.xib; sourceTree = "<group>"; };
+		61E099741E3E1A02004ED14E /* VersionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionTableViewCell.h; sourceTree = "<group>"; };
+		61E099751E3E1A02004ED14E /* VersionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersionTableViewCell.m; sourceTree = "<group>"; };
+		61E099761E3E1A02004ED14E /* VersionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VersionTableViewCell.xib; sourceTree = "<group>"; };
+		61E099791E3E2352004ED14E /* UIView+Style.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Style.h"; sourceTree = "<group>"; };
+		61E0997A1E3E2352004ED14E /* UIView+Style.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Style.m"; sourceTree = "<group>"; };
 		633B32545D30D5C2D6CFFC51 /* Pods-Bamilo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bamilo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bamilo/Pods-Bamilo.debug.xcconfig"; sourceTree = "<group>"; };
 		6C18BDAB1A1B4CA300626706 /* JANewsletterComponent~iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JANewsletterComponent~iPad.xib"; sourceTree = "<group>"; };
 		6CF4AE7E1ADEAA290024EC34 /* JACatalogBannerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACatalogBannerCell.xib; sourceTree = "<group>"; };
@@ -1340,6 +1361,8 @@
 		4AE242DB198655D900E37C90 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				61E099661E3E10F0004ED14E /* TableViewCells */,
+				61E099601E3DD3BC004ED14E /* SimpleViews */,
 				870F8CD11E3357340021F87B /* GradientLayer */,
 				84A7B54F1D101D9F00CA9754 /* OnBoardingView */,
 				FF4465141CEB4F59003A65EA /* ORProductView */,
@@ -1411,9 +1434,6 @@
 				CEA106EC1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m */,
 				CE28A7951BD9475100B1FADA /* JAMoreMenuViewController.h */,
 				CE28A7961BD9475100B1FADA /* JAMoreMenuViewController.m */,
-				6111957F1E3CB14B00D06690 /* MoreMenuTableViewCell.h */,
-				611195801E3CB14B00D06690 /* MoreMenuTableViewCell.m */,
-				611195811E3CB14B00D06690 /* MoreMenuTableViewCell.xib */,
 			);
 			path = MenuViewController;
 			sourceTree = "<group>";
@@ -1530,6 +1550,77 @@
 				CE7CC08D1BE38B47006F4A56 /* JASearchView.m */,
 			);
 			path = Search;
+			sourceTree = "<group>";
+		};
+		61E099601E3DD3BC004ED14E /* SimpleViews */ = {
+			isa = PBXGroup;
+			children = (
+				1C71FC641E2CD2AD007ACF02 /* SimpleHeaderTableViewCell.h */,
+				1C71FC651E2CD2AD007ACF02 /* SimpleHeaderTableViewCell.m */,
+				1C71FC661E2CD2AD007ACF02 /* SimpleHeaderTableViewCell.xib */,
+			);
+			name = SimpleViews;
+			sourceTree = "<group>";
+		};
+		61E099661E3E10F0004ED14E /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				61E099691E3E1163004ED14E /* BaseTableViewCell */,
+				61E099681E3E114E004ED14E /* IconTableViewCell */,
+				61E0996D1E3E18B7004ED14E /* NotificationTableViewCell */,
+				61E099671E3E113F004ED14E /* SimpleTableViewCell */,
+				61E099731E3E19CF004ED14E /* VersionTableViewCell */,
+			);
+			name = TableViewCells;
+			sourceTree = "<group>";
+		};
+		61E099671E3E113F004ED14E /* SimpleTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				6111957F1E3CB14B00D06690 /* PlainTableViewCell.h */,
+				611195801E3CB14B00D06690 /* PlainTableViewCell.m */,
+				611195811E3CB14B00D06690 /* PlainTableViewCell.xib */,
+			);
+			name = SimpleTableViewCell;
+			sourceTree = "<group>";
+		};
+		61E099681E3E114E004ED14E /* IconTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				61E099611E3E0E21004ED14E /* IconTableViewCell.h */,
+				61E099621E3E0E21004ED14E /* IconTableViewCell.m */,
+				61E099631E3E0E21004ED14E /* IconTableViewCell.xib */,
+			);
+			name = IconTableViewCell;
+			sourceTree = "<group>";
+		};
+		61E099691E3E1163004ED14E /* BaseTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				61E0996A1E3E117F004ED14E /* BaseTableViewCell.h */,
+				61E0996B1E3E117F004ED14E /* BaseTableViewCell.m */,
+			);
+			name = BaseTableViewCell;
+			sourceTree = "<group>";
+		};
+		61E0996D1E3E18B7004ED14E /* NotificationTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				61E0996E1E3E18F0004ED14E /* NotificationTableViewCell.h */,
+				61E0996F1E3E18F0004ED14E /* NotificationTableViewCell.m */,
+				61E099701E3E18F0004ED14E /* NotificationTableViewCell.xib */,
+			);
+			name = NotificationTableViewCell;
+			sourceTree = "<group>";
+		};
+		61E099731E3E19CF004ED14E /* VersionTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				61E099741E3E1A02004ED14E /* VersionTableViewCell.h */,
+				61E099751E3E1A02004ED14E /* VersionTableViewCell.m */,
+				61E099761E3E1A02004ED14E /* VersionTableViewCell.xib */,
+			);
+			name = VersionTableViewCell;
 			sourceTree = "<group>";
 		};
 		6C9355941A6EC8E700167486 /* Bundles */ = {
@@ -2616,6 +2707,8 @@
 				9A4077271CE0CF5200313D20 /* UILabel+Size.m */,
 				9A40772D1CE0CFD700313D20 /* UIButton+Size.h */,
 				9A40772E1CE0CFD700313D20 /* UIButton+Size.m */,
+				61E099791E3E2352004ED14E /* UIView+Style.h */,
+				61E0997A1E3E2352004ED14E /* UIView+Style.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -2814,9 +2907,6 @@
 				1CCD529D1E2BA42F008BAEE4 /* PopularTeaserTableViewCell.h */,
 				1CCD529E1E2BA42F008BAEE4 /* PopularTeaserTableViewCell.m */,
 				1CCD529F1E2BA42F008BAEE4 /* PopularTeaserTableViewCell.xib */,
-				1C71FC641E2CD2AD007ACF02 /* SimpleHeaderTableViewCell.h */,
-				1C71FC651E2CD2AD007ACF02 /* SimpleHeaderTableViewCell.m */,
-				1C71FC661E2CD2AD007ACF02 /* SimpleHeaderTableViewCell.xib */,
 			);
 			path = Teasers;
 			sourceTree = "<group>";
@@ -3118,6 +3208,7 @@
 				CEDBF8971B0DF5D00073971A /* JANewsletterComponent~iPad_RTL.xib in Resources */,
 				CE9AE03C1AB6D78200D56481 /* JANewsletterComponent~iPad.xib in Resources */,
 				9A564CAF1B332FB200F23057 /* JASellerRatingsViewController.xib in Resources */,
+				61E099651E3E0E21004ED14E /* IconTableViewCell.xib in Resources */,
 				CE9AE0431AB6D78200D56481 /* JAMaintenancePage.xib in Resources */,
 				CE9AE0441AB6D78200D56481 /* JAGenericFiltersView.xib in Resources */,
 				6CF4AE821ADEAA290024EC34 /* JACatalogBannerCell.xib in Resources */,
@@ -3159,9 +3250,11 @@
 				CE9AE0EA1AB6D78200D56481 /* JARatingsView.xib in Resources */,
 				CE9AE0EF1AB6D78200D56481 /* JARatingsViewMedium.xib in Resources */,
 				1CCD52A11E2BA42F008BAEE4 /* PopularTeaserTableViewCell.xib in Resources */,
+				61E099781E3E1A02004ED14E /* VersionTableViewCell.xib in Resources */,
 				CE9AE1071AB6D78200D56481 /* JAGrayButtonCell_ipad_portrait.xib in Resources */,
-				611195831E3CB14B00D06690 /* MoreMenuTableViewCell.xib in Resources */,
+				611195831E3CB14B00D06690 /* PlainTableViewCell.xib in Resources */,
 				CE9AE05B1AB6D78200D56481 /* RIStrings.strings in Resources */,
+				61E099721E3E18F0004ED14E /* NotificationTableViewCell.xib in Resources */,
 				1C71FC611E2CABAD007ACF02 /* Bamilosans Reg.ttf in Resources */,
 				1C71FC5E1E2CABAD007ACF02 /* Bamilosans Black.ttf in Resources */,
 				1C71FC601E2CABAD007ACF02 /* Bamilosans Light.ttf in Resources */,
@@ -3305,11 +3398,13 @@
 				CE9ADF301AB6D78200D56481 /* JAShippingViewController.m in Sources */,
 				CE59BF241AE906180057F4E2 /* JATopSellersTeaserView.m in Sources */,
 				875AD56A1E38C0C900584ABF /* RIPhonePrefix.m in Sources */,
+				61E0997B1E3E2352004ED14E /* UIView+Style.m in Sources */,
 				875AD56D1E38C0C900584ABF /* RIProductRatings.m in Sources */,
 				CE9ADF311AB6D78200D56481 /* JACheckBoxComponent.m in Sources */,
 				87C69DAE1E38B7A50026018F /* UIColor+Format.m in Sources */,
 				875AD5851E38C0C900584ABF /* RIAd4PushTracker.m in Sources */,
 				875AD5781E38C0C900584ABF /* RISpecificationAttribute.m in Sources */,
+				61E0996C1E3E117F004ED14E /* BaseTableViewCell.m in Sources */,
 				9A38765D1BCD0DE00088B186 /* JAProductSpecificationView.m in Sources */,
 				9AEF74151CD20F0C00A5D574 /* JAStepByStepTabViewController.m in Sources */,
 				875AD55B1E38C0C900584ABF /* RICartItem.m in Sources */,
@@ -3353,6 +3448,7 @@
 				CE8C92B01B8B555600C77706 /* JAMainFilterCell.m in Sources */,
 				CE9ADF491AB6D78200D56481 /* JAForgotPasswordViewController.m in Sources */,
 				1C71FC671E2CD2AD007ACF02 /* SimpleHeaderTableViewCell.m in Sources */,
+				61E099641E3E0E21004ED14E /* IconTableViewCell.m in Sources */,
 				CE59BEFA1AE7EF0B0057F4E2 /* JAShopTeaserView.m in Sources */,
 				9A86F80A1C281F8F001A91D5 /* JARecentlyViewedViewController.m in Sources */,
 				CE9ADF4C1AB6D78200D56481 /* UIImageView+JA.m in Sources */,
@@ -3403,7 +3499,7 @@
 				CE9ADF871AB6D78200D56481 /* JAAddressesViewController.m in Sources */,
 				CE9ADF891AB6D78200D56481 /* JAReviewCell.m in Sources */,
 				9A189E7D1BB449CC0039BC14 /* JAProductInfoPriceLine.m in Sources */,
-				611195821E3CB14B00D06690 /* MoreMenuTableViewCell.m in Sources */,
+				611195821E3CB14B00D06690 /* PlainTableViewCell.m in Sources */,
 				9A007C8E1C2095A9007D99FC /* JAProductInfoRightSubtitleLine.m in Sources */,
 				CE9ADF8E1AB6D78200D56481 /* JACatalogTopView.m in Sources */,
 				CE9ADF8F1AB6D78200D56481 /* JAPDVBundles.m in Sources */,
@@ -3567,6 +3663,7 @@
 				9A55A6991BC2E8AA008EF4A6 /* JABundlesViewController.m in Sources */,
 				CE9ADFFD1AB6D78200D56481 /* JATeaserPageView.m in Sources */,
 				9AEF73F41CD20E1C00A5D574 /* JACheckoutStepByStepModel.m in Sources */,
+				61E099711E3E18F0004ED14E /* NotificationTableViewCell.m in Sources */,
 				9A189E8F1BB5630C0039BC14 /* JAProductInfoSubLine.m in Sources */,
 				CE9ADFFF1AB6D78200D56481 /* Reachability.m in Sources */,
 				CE9AE0001AB6D78200D56481 /* JAMainTeaserView.m in Sources */,
@@ -3583,6 +3680,7 @@
 				CE9AE0081AB6D78200D56481 /* JAMaintenancePage.m in Sources */,
 				875AD5551E38C0C900584ABF /* Model.xcdatamodeld in Sources */,
 				CE9AE00C1AB6D78200D56481 /* JAWizardView.m in Sources */,
+				61E099771E3E1A02004ED14E /* VersionTableViewCell.m in Sources */,
 				875AD5611E38C0C900584ABF /* RIFilter.m in Sources */,
 				875AD5831E38C0C900584ABF /* RITrackingConfiguration.m in Sources */,
 				9A38766B1BCD121A0088B186 /* JATabButton.m in Sources */,

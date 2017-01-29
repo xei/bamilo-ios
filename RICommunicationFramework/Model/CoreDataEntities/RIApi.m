@@ -285,13 +285,11 @@
     }
 }
 
-+ (RIApi *)getApiInformation
-{
++ (RIApi *)getApiInformation {
     NSArray *apiArray = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIApi class])];
     
     RIApi *apiInformation = nil;
-    if(VALID_NOTEMPTY(apiArray, NSArray))
-    {
+    if(apiArray.count) {
         apiInformation = [apiArray firstObject];
     }
     return apiInformation;
