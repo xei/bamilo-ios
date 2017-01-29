@@ -35,13 +35,13 @@
 			<string>com.bamilo.ios</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>Bamilo</string>
-				<string>gsd-Bamilo</string>
+				<string>bamilo</string>
+				<string>gsd-bamilo</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2</string>
+	<string>5</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>

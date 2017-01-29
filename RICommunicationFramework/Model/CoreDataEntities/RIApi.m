@@ -1,4 +1,4 @@
-//
+ //
 //  RIApi.m
 //  Comunication Project
 //
@@ -182,7 +182,7 @@
                                                                       
                                                                   }
                                                                   [[NSNotificationCenter defaultCenter] postNotificationName:kCheckRedirectInfoNotification object:nil];
-                                                                  
+#warning Disabled app update for now
                                                                   successBlock(newApi, hasUpdate, isUpdateMandatory);
                                                                   return;
                                                               }

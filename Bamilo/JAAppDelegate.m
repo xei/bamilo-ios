@@ -22,8 +22,7 @@
 #import "SessionManager.h"
 #import "URLUtility.h"
 
-@interface JAAppDelegate ()
-<RIAdjustTrackerDelegate>
+@interface JAAppDelegate () <RIAdjustTrackerDelegate>
 
 @property (nonatomic, strong)NSDate *startLoadingTime;
 
@@ -125,13 +124,8 @@
         [Adjust appWillOpenUrl:[userActivity webpageURL]];
         
         NSString* appName = [APP_NAME lowercaseString];
-        
         NSURL * deeplink = [Adjust convertUniversalLink:[userActivity webpageURL] scheme:appName];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self handlePushNotificationURL:deeplink];
-        });
-        
+        [self handleOpenAppWithURL:deeplink];
     }
     return YES;
 }
@@ -171,29 +165,21 @@
 }
 
 
-- (void)applicationWillEnterForeground:(UIApplication *)application
-{
-    [RIApi startApiWithCountry:nil
-                     reloadAPI:NO
-                  successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory){
-#warning Disable auto-update for now until we figure out what to do with it
-                      if(NO && hasUpdate)
-                      {
-                          if(isUpdateMandatory)
-                          {
-                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_NECESSARY_TITLE message:[NSString stringWithFormat:STRING_UPDATE_NECESSARY_MESSAGE, APP_NAME] delegate:self cancelButtonTitle:STRING_OK_UPDATE otherButtonTitles:nil];
-                              [alert setTag:kForceUpdateAlertViewTag];
-                              [alert show];
-                          }
-                          else
-                          {
-                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_AVAILABLE_TITLE message:[NSString stringWithFormat:STRING_UPDATE_AVAILABLE_MESSAGE, APP_NAME] delegate:self cancelButtonTitle:STRING_NO_THANKS otherButtonTitles:STRING_UPDATE, nil];
-                              [alert setTag:kUpdateAvailableAlertViewTag];
-                              [alert show];
-                          }
-                      }
-                  }
-               andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage){}];
+- (void)applicationWillEnterForeground:(UIApplication *)application {
+    [RIApi startApiWithCountry:nil reloadAPI:NO successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory){
+        if(hasUpdate) {
+            if(isUpdateMandatory) {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_NECESSARY_TITLE message:[NSString stringWithFormat:STRING_UPDATE_NECESSARY_MESSAGE, APP_NAME] delegate:self cancelButtonTitle:STRING_OK_UPDATE otherButtonTitles:nil];
+                [alert setTag:kForceUpdateAlertViewTag];
+                [alert show];
+            } else {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_AVAILABLE_TITLE message:[NSString stringWithFormat:STRING_UPDATE_AVAILABLE_MESSAGE, APP_NAME] delegate:self cancelButtonTitle:STRING_NO_THANKS otherButtonTitles:STRING_UPDATE, nil];
+                [alert setTag:kUpdateAvailableAlertViewTag];
+                [alert show];
+            }
+        }
+    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage){
+    }];
     
     self.startLoadingTime = [NSDate date];
     
@@ -273,12 +259,9 @@
     
     [Adjust appWillOpenUrl:url = [GSDDeepLink handleDeepLink:url]];
     
-    //BOOL urlWasHandled = [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
-    
-    //if (!urlWasHandled && VALID_NOTEMPTY(url, NSURL)) {
     if (url) {
         [[RITrackingWrapper sharedInstance] trackOpenURL:url];
-        [self handlePushNotificationURL:url];
+        [self handleOpenAppWithURL:url];
         return YES;
     }
     
@@ -286,61 +269,69 @@
 }
 
 #pragma mark - Private Methods
-- (void)handlePushNotificationURL:(NSURL *)url {
+- (void)handleOpenAppWithURL:(NSURL *)url {
     NSString *urlScheme = [url scheme];
-    //NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
     
-    //NSString *faceAppId = [infoDict objectForKey:@"FacebookAppID"];
-    //NSString *facebookSchema = @"";
-    
-    /*(if (faceAppId.length > 0) {
-        facebookSchema = [NSString stringWithFormat:@"fb%@", faceAppId];
-    }*/
-    //NSString* appName = [APP_NAME lowercaseString];
-
-    //if ((urlScheme != nil && [urlScheme isEqualToString:appName]) || (urlScheme != nil && [facebookSchema isEqualToString:urlScheme])) {
     if (urlScheme) {
-        NSMutableDictionary *pushNotification = [NSMutableDictionary dictionaryWithObject:@"" forKey:@"u"];
+        NSString *urlHost = [NSString stringWithString:url.host];
+        NSDictionary *queryString = [URLUtility parseQueryString:url];
         
-        /*if ([facebookSchema isEqualToString:urlScheme]) {
-            [[RITrackingWrapper sharedInstance] handlePushNotifcation:pushNotification];
-        } else {*/
-            NSString *path = [NSString stringWithString:url.path];
-            NSString *urlHost = [NSString stringWithString:url.host];
-            NSString *urlQuery = nil;
-            
-            if (url.query && [url.query length] >= 5) {
-                if (![[url.query substringToIndex:4] isEqualToString:@"ADXID"]) {
-                    NSRange range = [url.query rangeOfString:@"?ADXID"];
-                    if (range.location != NSNotFound) {
-                        NSString *paramsWithoutAdXData = [url.query substringToIndex:range.location];
-                        urlQuery = [NSString stringWithFormat:@"?%@",paramsWithoutAdXData];
-                        path = [url.path stringByAppendingString:urlQuery];
-                    } else {
-                        urlQuery = [NSString stringWithFormat:@"?%@",url.query];
-                        path = [url.path stringByAppendingString:urlQuery];
-                    }
+        NSMutableString *queryBuilder = [NSMutableString new];
+        for(id key in queryString) {
+            if(![key isEqualToString:@"UTM"]) {
+                [queryBuilder appendFormat:@"%@/%@", key, [queryString valueForKey:key]];
+            }
+        }
+        
+        NSString *path = [url.path stringByAppendingFormat:@"/%@", [NSString stringWithString:queryBuilder]];
+        
+        NSString *utm = [queryString valueForKey:@"UTM"];
+        if(utm) {
+            [path stringByAppendingFormat:@"/?%@", utm];
+        }
+        
+        NSMutableDictionary *fullUrl = [NSMutableDictionary dictionaryWithObject:[urlHost stringByAppendingString:path] forKey:@"u"];
+        
+        [[RITrackingWrapper sharedInstance] handlePushNotifcation:fullUrl];
+    }
+    
+    /*
+    NSString *urlScheme = [url scheme];
+    if (urlScheme) {
+        NSMutableDictionary *fullUrl = [NSMutableDictionary dictionaryWithObject:@"" forKey:@"u"];
+        
+        NSString *path = [NSString stringWithString:url.path];
+        NSString *urlHost = [NSString stringWithString:url.host];
+        
+        if (url.query && [url.query length] >= 5) {
+            if (![[url.query substringToIndex:4] isEqualToString:@"ADXID"]) {
+                NSRange range = [url.query rangeOfString:@"?ADXID"];
+                if (range.location != NSNotFound) {
+                    NSString *paramsWithoutAdXData = [url.query substringToIndex:range.location];
+                    path = [url.path stringByAppendingString:[NSString stringWithFormat:@"?%@", paramsWithoutAdXData]];
+                } else {
+                    path = [url.path stringByAppendingString:[NSString stringWithFormat:@"?%@", url.query]];
                 }
             }
-            
-            NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
-            if (![urlHost isEqualToString:bundleIdentifier]) {
-                path = [urlHost stringByAppendingString:path];
-            } else {
-                path = [path substringFromIndex:1];
-            }
-            
-            NSDictionary *dict = [URLUtility parseQueryString:url];
-            
-            pushNotification = [NSMutableDictionary dictionaryWithObject:path forKey:@"u"];
-            
-            if ([dict objectForKey:@"UTM"]) {
-                [pushNotification addEntriesFromDictionary:dict];
-            }
-            
-            [[RITrackingWrapper sharedInstance] handlePushNotifcation:pushNotification];
-        //}
-    }
+        }
+        
+        NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+        if (![urlHost isEqualToString:bundleIdentifier]) {
+            path = [urlHost stringByAppendingString:path];
+        } else {
+            path = [path substringFromIndex:1];
+        }
+        
+        NSDictionary *dict = [URLUtility parseQueryString:url];
+        
+        fullUrl = [NSMutableDictionary dictionaryWithObject:path forKey:@"u"];
+        
+        if ([dict objectForKey:@"UTM"]) {
+            [fullUrl addEntriesFromDictionary:dict];
+        }
+        
+        [[RITrackingWrapper sharedInstance] handlePushNotifcation:fullUrl];
+    }*/
 }
 
 - (void)adjustAttributionChanged:(NSString *)network campaign:(NSString *)campaign adGroup:(NSString *)adGroup creative:(NSString *)creative {
@@ -363,39 +354,5 @@
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventInstallViaAdjust] data:dictionary];
 }
-
-#pragma mark UIAlertView
-/*
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    if(kUpdateAvailableAlertViewTag == [alertView tag])
-    {
-        if(0 == buttonIndex)
-        {
-            //cancel
-        }
-        else if(1 == buttonIndex)
-        {
-            NSURL  *url;
-            
-            url = [NSURL URLWithString:kAppStoreUrlBamilo];
-
-            if([[UIApplication sharedApplication] canOpenURL:url]) {
-                [[UIApplication sharedApplication] openURL:url];
-            }
-        }
-    }
-    else if(kForceUpdateAlertViewTag == [alertView tag])
-    {
-        if(0 == buttonIndex)
-        {
-            NSURL  *url;
-            url = [NSURL URLWithString:kAppStoreUrlBamilo];
-            if([[UIApplication sharedApplication] canOpenURL:url]) {
-                [[UIApplication sharedApplication] openURL:url];
-            }
-        }
-    }
-}*/
 
 @end
