@@ -97,8 +97,8 @@
 #endif
     
     if (newRelicApiKey) {
-        [NewRelicAgent setApplicationVersion:[[AppManager sharedInstance] getAppVersionNumber]];
-        [NewRelicAgent setApplicationBuild:[[AppManager sharedInstance] getAppBuildNumber]];
+        //[NewRelicAgent setApplicationVersion:[[AppManager sharedInstance] getAppVersionNumber]];
+        //[NewRelicAgent setApplicationBuild:[[AppManager sharedInstance] getAppBuildNumber]];
         [NewRelicAgent startWithApplicationToken:newRelicApiKey];
     }
     
