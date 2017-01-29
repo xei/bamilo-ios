@@ -10,8 +10,6 @@
 
 @implementation UIView (Frame)
 
-@dynamic x, y, width, height;
-
 - (CGFloat)x {
     return self.frame.origin.x;
 }
@@ -36,13 +34,11 @@
     return self.superview.height - CGRectGetMaxY(self.frame);
 }
 
-- (CGSize)size
-{
+- (CGSize)size {
     return self.frame.size;
 }
 
-- (CGPoint)position
-{
+- (CGPoint)position {
     return self.frame.origin;
 }
 

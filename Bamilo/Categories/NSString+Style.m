@@ -18,7 +18,7 @@
         stringRange = [self rangeOfComposedCharacterSequencesForRange:stringRange];
         NSString *shortString = [self substringWithRange:stringRange];
         
-         result = [NSString stringWithFormat:@"%@..", shortString];
+         result = [NSString stringWithFormat:@"%@...", shortString];
     }
     return result;
     

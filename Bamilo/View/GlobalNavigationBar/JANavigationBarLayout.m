@@ -27,7 +27,6 @@
 #pragma mark - Automation
 #pragma mark Left buttons
 
-@synthesize showBackButton=_showBackButton;
 - (void)setShowBackButton:(BOOL)showBackButton {
     _showBackButton=showBackButton;
     if (showBackButton) {
@@ -35,7 +34,7 @@
         self.showMenuButton = NO;
     }
 }
-@synthesize backButtonTitle=_backButtonTitle;
+
 - (void)setBackButtonTitle:(NSString *)backButtonTitle {
     if (backButtonTitle.length) {
         _backButtonTitle=backButtonTitle;
@@ -43,7 +42,6 @@
     }
 }
 
-@synthesize editButtonTitle = _editButtonTitle;
 - (void)setEditButtonTitle:(NSString *)editButtonTitle {
     if (editButtonTitle.length) {
         _editButtonTitle = editButtonTitle;
@@ -51,7 +49,6 @@
     }
 }
 
-@synthesize showMenuButton=_showMenuButton;
 - (void)setShowMenuButton:(BOOL)showMenuButton {
     _showMenuButton=showMenuButton;
     if (showMenuButton) {
@@ -60,7 +57,6 @@
     }
 }
 
-@synthesize showEditButton=_showEditButton;
 - (void)setShowEditButton:(BOOL)showEditButton {
     _showEditButton=showEditButton;
     if (showEditButton) {
@@ -72,7 +68,6 @@
 
 #pragma mark Center
 
-@synthesize showLogo=_showLogo;
 - (void)setShowLogo:(BOOL)showLogo {
     _showLogo=showLogo;
     if (showLogo) {
@@ -80,21 +75,20 @@
     }
 }
 
-@synthesize showTitleLabel=_showTitleLabel;
 -(void)setShowTitleLabel:(BOOL)showTitleLabel {
     _showTitleLabel=showTitleLabel;
     if (showTitleLabel) {
         self.showLogo = NO;
     }
 }
-@synthesize title=_title;
+
 - (void)setTitle:(NSString *)title {
     _title=title;
     if (title.length) {
         self.showTitleLabel = YES;
     }
 }
-@synthesize subTitle=_subTitle;
+
 - (void)setSubTitle:(NSString *)subTitle {
     _subTitle = [subTitle numbersToPersian];
     if (subTitle.length) {
@@ -105,7 +99,7 @@
 
 #pragma mark Right buttons
 
-@synthesize showDoneButton=_showDoneButton;
+
 - (void)setShowDoneButton:(BOOL)showDoneButton {
     _showDoneButton=showDoneButton;
     if (showDoneButton) {
@@ -113,7 +107,7 @@
         self.showSearchButton = NO;
     }
 }
-@synthesize doneButtonTitle=_doneButtonTitle;
+
 - (void)setDoneButtonTitle:(NSString *)doneButtonTitle {
     if (doneButtonTitle.length) {
         _doneButtonTitle=doneButtonTitle;
@@ -123,7 +117,7 @@
     }
 }
 
-@synthesize showCartButton=_showCartButton;
+
 - (void)setShowCartButton:(BOOL)showCartButton {
     _showCartButton=showCartButton;
     if (showCartButton) {
@@ -131,7 +125,7 @@
     }
 }
 
-@synthesize showSearchButton=_showSearchButton;
+
 - (void)setShowSearchButton:(BOOL)showSearchButton {
     _showSearchButton=showSearchButton;
 }
