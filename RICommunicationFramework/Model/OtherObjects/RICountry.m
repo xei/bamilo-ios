@@ -266,6 +266,9 @@
 #ifdef IS_RELEASE
     uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO;
     uniqueCountry.isLive = YES;
+#elif IS_DEBUG
+    uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO;
+    uniqueCountry.isLive = NO;
 #else
     uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO_STAGING;
     uniqueCountry.isLive = NO;

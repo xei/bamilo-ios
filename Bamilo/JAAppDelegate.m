@@ -287,7 +287,7 @@
         
         NSString *utm = [queryString valueForKey:@"UTM"];
         if(utm) {
-            [path stringByAppendingFormat:@"/?%@", utm];
+            [path stringByAppendingFormat:@"?%@", utm];
         }
         
         NSMutableDictionary *fullUrl = [NSMutableDictionary dictionaryWithObject:[urlHost stringByAppendingString:path] forKey:@"u"];
