@@ -7,14 +7,18 @@
 //
 
 #import "JAAppDelegate.h"
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
+#import <NewRelicAgent/NewRelic.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <GoogleAppIndexing/GoogleAppIndexing.h>
+
 #import "JARootViewController.h"
 #import "JAUtils.h"
 #import "RIAdjustTracker.h"
-#import <FBSDKCoreKit/FBSDKCoreKit.h>
-#import <GoogleAppIndexing/GoogleAppIndexing.h>
 #import "RIProduct.h"
-#import <Fabric/Fabric.h>
-#import <Crashlytics/Crashlytics.h>
+#import "ConfigManager.h"
+#import "AppManager.h"
 
 #define kSessionDuration 1800.0f
 
@@ -82,6 +86,20 @@
             mainController.notification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
         }
         [[RITrackingWrapper sharedInstance] applicationDidReceiveRemoteNotification:[launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey]];
+    }
+    
+//#########################################################################################################
+    ConfigManager *configManager = [[ConfigManager alloc] initWithConfigurationFile:@"Bamilo-Configs"];
+#ifdef IS_RELEASE
+    NSString *newRelicApiKey = [configManager getConfigurationForKey:@"NewRelic" variation:kConfManagerEnvLive];
+#else
+    NSString *newRelicApiKey = [configManager getConfigurationForKey:@"NewRelic" variation:kConfManagerEnvStaging];
+#endif
+    
+    if (newRelicApiKey) {
+        //[NewRelicAgent setApplicationVersion:[[AppManager sharedInstance] getAppVersionNumber]];
+        //[NewRelicAgent setApplicationBuild:[[AppManager sharedInstance] getAppBuildNumber]];
+        [NewRelicAgent startWithApplicationToken:newRelicApiKey];
     }
     
     return YES;
@@ -181,7 +199,8 @@
     [RIApi startApiWithCountry:nil
                      reloadAPI:NO
                   successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory){
-                      if(hasUpdate)
+#warning Disable auto-update for now until we figure out what to do with it
+                      if(NO && hasUpdate)
                       {
                           if(isUpdateMandatory)
                           {
