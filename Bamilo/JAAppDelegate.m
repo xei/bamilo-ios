@@ -19,8 +19,8 @@
 #import "RIProduct.h"
 #import "ConfigManager.h"
 #import "AppManager.h"
-
-#define kSessionDuration 1800.0f
+#import "SessionManager.h"
+#import "URLUtility.h"
 
 @interface JAAppDelegate ()
 <RIAdjustTrackerDelegate>
@@ -54,7 +54,7 @@
     
     [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
     
-    [self checkSession];
+    [[SessionManager sharedInstance] evaluateActiveSessions];
     
     [[UINavigationBar appearance] setBarTintColor:JABlack300Color];
     
@@ -136,29 +136,6 @@
     return YES;
 }
 
-- (void)checkSession {
-    NSNumber *numberOfSessions = [[NSUserDefaults standardUserDefaults] objectForKey:kNumberOfSessions];
-    if(VALID_NOTEMPTY(numberOfSessions, NSNumber)) {
-        NSInteger numberOfSessionsInteger = [numberOfSessions integerValue];
-        NSDate *startSessionDate = [[NSUserDefaults standardUserDefaults] objectForKey:kSessionDate];
-        if(VALID_NOTEMPTY(startSessionDate, NSDate))
-        {
-            CGFloat timeSinceStartOfSession = [startSessionDate timeIntervalSinceNow];
-            if(fabs(timeSinceStartOfSession) > kSessionDuration)
-            {
-                [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kSessionDate];
-                [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:numberOfSessionsInteger + 1] forKey:kNumberOfSessions];
-            }
-        }
-    }
-    else
-    {
-        [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kSessionDate];
-        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:1] forKey:kNumberOfSessions];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
-}
-
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     UINavigationController *rootViewController = (UINavigationController*) self.window.rootViewController;
@@ -220,7 +197,7 @@
     
     self.startLoadingTime = [NSDate date];
     
-    [self checkSession];
+    [[SessionManager sharedInstance] evaluateActiveSessions];
     
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
@@ -236,6 +213,11 @@
                                               data:[trackingDictionary copy]];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kAppWillEnterForeground object:nil];
+}
+
+-(void)applicationDidBecomeActive:(UIApplication *)application
+{
+    [FBSDKAppEvents activateApp];
 }
 
 - (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
@@ -270,141 +252,98 @@
     return supportedInterfaceOrientationsForWindow;
 }
 
-#pragma mark - Push notification
-
-- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
-{
+#pragma mark - Push Notification
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     [[RITrackingWrapper sharedInstance] applicationDidRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 }
 
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
-{
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     if(!VALID_NOTEMPTY(application, UIApplication) || UIApplicationStateActive != application.applicationState)
     {
         [[RITrackingWrapper sharedInstance] applicationDidReceiveRemoteNotification:userInfo];
     }
 }
 
-- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
-{
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
     [[RITrackingWrapper sharedInstance] applicationDidReceiveLocalNotification:notification];
 }
 
-- (BOOL)application:(UIApplication *)application
-            openURL:(NSURL *)url
-  sourceApplication:(NSString *)sourceApplication
-         annotation:(id)annotation
-{
-    url = [GSDDeepLink handleDeepLink:url];
-    [Adjust appWillOpenUrl:url];
+#pragma mark - Open URL Scheme
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     
-    BOOL urlWasHandled = [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
+    [Adjust appWillOpenUrl:url = [GSDDeepLink handleDeepLink:url]];
     
-    if (!urlWasHandled && VALID_NOTEMPTY(url, NSURL))
-    {
+    //BOOL urlWasHandled = [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
+    
+    //if (!urlWasHandled && VALID_NOTEMPTY(url, NSURL)) {
+    if (url) {
         [[RITrackingWrapper sharedInstance] trackOpenURL:url];
-            
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self handlePushNotificationURL:url];
-        });
+        [self handlePushNotificationURL:url];
+        return YES;
     }
     
-    return urlWasHandled;
+    return NO;
 }
 
+#pragma mark - Private Methods
 - (void)handlePushNotificationURL:(NSURL *)url {
     NSString *urlScheme = [url scheme];
+    //NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
     
-    NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
-    NSString *faceAppId = [infoDict objectForKey:@"FacebookAppID"];
-    NSString *facebookSchema = @"";
+    //NSString *faceAppId = [infoDict objectForKey:@"FacebookAppID"];
+    //NSString *facebookSchema = @"";
     
-    if (faceAppId.length > 0) {
+    /*(if (faceAppId.length > 0) {
         facebookSchema = [NSString stringWithFormat:@"fb%@", faceAppId];
-    }
-    NSString* appName = [APP_NAME lowercaseString];
+    }*/
+    //NSString* appName = [APP_NAME lowercaseString];
 
-    if ((urlScheme != nil && [urlScheme isEqualToString:appName]) || (urlScheme != nil && [facebookSchema isEqualToString:urlScheme]))
-    {
+    //if ((urlScheme != nil && [urlScheme isEqualToString:appName]) || (urlScheme != nil && [facebookSchema isEqualToString:urlScheme])) {
+    if (urlScheme) {
         NSMutableDictionary *pushNotification = [NSMutableDictionary dictionaryWithObject:@"" forKey:@"u"];
         
-        if ([facebookSchema isEqualToString:urlScheme])
-        {
+        /*if ([facebookSchema isEqualToString:urlScheme]) {
             [[RITrackingWrapper sharedInstance] handlePushNotifcation:pushNotification];
-        }
-        else
-        {
+        } else {*/
             NSString *path = [NSString stringWithString:url.path];
             NSString *urlHost = [NSString stringWithString:url.host];
             NSString *urlQuery = nil;
             
-            if (url.query != nil)
-            {
-                if ([url.query length] >= 5)
-                {
-                    if (![[url.query substringToIndex:4] isEqualToString:@"ADXID"])
-                    {
-                        NSRange range = [url.query rangeOfString:@"?ADXID"];
-                        if (range.location != NSNotFound)
-                        {
-                            NSString *paramsWithoutAdXData = [url.query substringToIndex:range.location];
-                            urlQuery = [NSString stringWithFormat:@"?%@",paramsWithoutAdXData];
-                            path = [url.path stringByAppendingString:urlQuery];
-                        } else
-                        {
-                            urlQuery = [NSString stringWithFormat:@"?%@",url.query];
-                            path = [url.path stringByAppendingString:urlQuery];
-                        }
+            if (url.query && [url.query length] >= 5) {
+                if (![[url.query substringToIndex:4] isEqualToString:@"ADXID"]) {
+                    NSRange range = [url.query rangeOfString:@"?ADXID"];
+                    if (range.location != NSNotFound) {
+                        NSString *paramsWithoutAdXData = [url.query substringToIndex:range.location];
+                        urlQuery = [NSString stringWithFormat:@"?%@",paramsWithoutAdXData];
+                        path = [url.path stringByAppendingString:urlQuery];
+                    } else {
+                        urlQuery = [NSString stringWithFormat:@"?%@",url.query];
+                        path = [url.path stringByAppendingString:urlQuery];
                     }
                 }
             }
             
             NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
-            if (![urlHost isEqualToString:bundleIdentifier])
-            {
+            if (![urlHost isEqualToString:bundleIdentifier]) {
                 path = [urlHost stringByAppendingString:path];
-            }
-            else
-            {
+            } else {
                 path = [path substringFromIndex:1];
             }
             
-            NSDictionary *dict = [self parseQueryString:[url query]];
+            NSDictionary *dict = [URLUtility parseQueryString:url];
             
             pushNotification = [NSMutableDictionary dictionaryWithObject:path forKey:@"u"];
             
-            NSString *temp = [dict objectForKey:@"UTM"];
-            
-            if (temp)
-            {
+            if ([dict objectForKey:@"UTM"]) {
                 [pushNotification addEntriesFromDictionary:dict];
             }
             
             [[RITrackingWrapper sharedInstance] handlePushNotifcation:pushNotification];
-        }
+        //}
     }
 }
 
-- (NSDictionary *)parseQueryString:(NSString *)query
-{
-    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:16];
-    NSArray *pairs = [query componentsSeparatedByString:@"&"];
-    
-    for (NSString *pair in pairs)
-    {
-        NSArray *elements = [pair componentsSeparatedByString:@"="];
-        
-        NSString *key = [elements[0] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        NSString *val = [elements[1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        
-        [dict setObject:val forKey:key];
-    }
-    
-    return dict;
-}
-
-- (void)adjustAttributionChanged:(NSString *)network campaign:(NSString *)campaign adGroup:(NSString *)adGroup creative:(NSString *)creative
-{
+- (void)adjustAttributionChanged:(NSString *)network campaign:(NSString *)campaign adGroup:(NSString *)adGroup creative:(NSString *)creative {
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
     if(VALID_NOTEMPTY(network, NSString)) {
         [dictionary setObject:network forKey:kRIEventNetworkKey];
@@ -425,14 +364,8 @@
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventInstallViaAdjust] data:dictionary];
 }
 
--(void)applicationDidBecomeActive:(UIApplication *)application
-{
-    [FBSDKAppEvents activateApp];
-}
-
-
 #pragma mark UIAlertView
-
+/*
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if(kUpdateAvailableAlertViewTag == [alertView tag])
@@ -463,6 +396,6 @@
             }
         }
     }
-}
+}*/
 
 @end
