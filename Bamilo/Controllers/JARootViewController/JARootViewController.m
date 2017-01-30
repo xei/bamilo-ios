@@ -29,10 +29,10 @@
     if(self)
     {
         self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
-        {
+        /*
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
             self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
-        }
+        }*/
     }
     return self;
 }
@@ -43,10 +43,10 @@
     if(ISEMPTY(self.mainStoryboard))
     {
         self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
-        {
+        /*
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
             self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
-        }
+        }*/
     }
     
     self.shouldResizeLeftPanel = YES;
@@ -129,10 +129,9 @@
 - (void)awakeFromNib
 {
     self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
-    {
+    /*if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
-    }
+    }*/
     
     if (RI_IS_RTL) {
         [self setRightPanel:[self.mainStoryboard instantiateViewControllerWithIdentifier:@"menuViewController"]];

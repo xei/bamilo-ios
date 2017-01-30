@@ -11,10 +11,6 @@
 #import "RICustomer.h"
 #import <sys/utsname.h>
 
-@interface JAContactUsViewController ()
-
-@end
-
 @implementation JAContactUsViewController
 
 - (void)viewDidLoad {

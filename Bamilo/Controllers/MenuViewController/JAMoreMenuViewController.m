@@ -59,7 +59,7 @@ const int tableViewCllHeihgt = 50;
                                     },
                                 @{
                                     @"title": STRING_CONTACT_US,
-                                    @"notification" : kShowAuthenticationScreenNotification
+                                    @"notification" : kShowContactUsScreenNotification
                                     },
                                 @{
                                     @"title": STRING_FAQ,
