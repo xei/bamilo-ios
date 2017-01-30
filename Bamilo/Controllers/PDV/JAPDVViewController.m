@@ -1111,9 +1111,7 @@ typedef void (^ProcessActionBlock)(void);
 {
     NSString *url = self.product.shareUrl;
     
-    // Share with Facebook Messenger and WhatsApp
-    
-    //UIActivity *fbmActivity = [[AQSFacebookMessengerActivity alloc] init];
+    // Share with WhatsApp
     UIActivity *whatsAppActivity = [[JBWhatsAppActivity alloc] init];
     
     //NSArray *objectToShare = @[fbmActivity, whatsAppActivity];;
@@ -2024,11 +2022,11 @@ typedef void (^ProcessActionBlock)(void);
         type = @"Email";
         eventType = [NSNumber numberWithInt:RIEventShareEmail];
     }
-    else if ([activityType isEqualToString:UIActivityTypePostToFacebook])
+    /*else if ([activityType isEqualToString:UIActivityTypePostToFacebook])
     {
         type = @"Facebook";
         eventType = [NSNumber numberWithInt:RIEventShareFacebook];
-    }
+    }*/
     else if ([activityType isEqualToString:UIActivityTypePostToTwitter])
     {
         type = @"Twitter";

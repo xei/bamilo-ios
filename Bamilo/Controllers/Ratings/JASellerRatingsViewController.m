@@ -20,7 +20,6 @@
 #import "RICustomer.h"
 #import "JAUtils.h"
 #import "RICategory.h"
-//#import <FacebookSDK/FacebookSDK.h>
 
 #define kDistanceBetweenStarsAndText 70.0f
 

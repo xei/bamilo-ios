@@ -576,7 +576,6 @@
 {
     NSArray *appActivities = @[];
     
-    //UIActivity *fbmActivity = [[AQSFacebookMessengerActivity alloc] init];
     UIActivity *whatsAppActivity = [[JBWhatsAppActivity alloc] init];
     WhatsAppMessage *whatsAppMsg;
     

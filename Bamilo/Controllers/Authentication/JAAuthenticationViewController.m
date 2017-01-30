@@ -33,15 +33,13 @@
 @property (nonatomic) UIImageView *userIcon;
 @property (nonatomic) UILabel *casTitleLabel;
 @property (nonatomic) UILabel *topMessageLabel;
-@property (nonatomic) JAButton *facebookButton;
+//@property (nonatomic) JAButton *facebookButton;
 @property (nonatomic) UIView *orView;
 @property (nonatomic) JAButton *continueWithoutLoginButton;
 @property (nonatomic) JAButton *continueToLoginButton;
 @property (nonatomic) JATextFieldComponent *emailTextField;
 
 @property (nonatomic) JAAccountServicesView *casAccountServicesImagesView;
-
-@property (strong, nonatomic) UIButton *facebookLoginButton;
 
 @end
 
@@ -126,16 +124,6 @@
     return _casAccountServicesImagesView;
 }
 
-- (JAButton *)facebookButton
-{
-    if (!VALID_NOTEMPTY(_facebookButton, JAButton)) {
-        _facebookButton = [[JAButton alloc] initFacebookButtonWithTitle:STRING_LOGIN_WITH_FACEBOOK target:self action:@selector(facebookLoginButtonPressed:)];
-        [_facebookButton setFrame:CGRectMake((self.view.width - kWidth)/2, CGRectGetMaxY(self.orView.frame) + kOrMess2FacebookButton, kWidth, 45)];
-        [_facebookButton setTitleEdgeInsets:UIEdgeInsetsMake(_facebookButton.titleEdgeInsets.top, 30, _facebookButton.titleEdgeInsets.bottom, 10)];
-    }
-    return _facebookButton;
-}
-
 - (UIView *)orView
 {
     if (!VALID_NOTEMPTY(_orView, UIView)) {
@@ -193,9 +181,9 @@
     if (!VALID_NOTEMPTY(_continueWithoutLoginButton, JAButton)) {
         _continueWithoutLoginButton = [[JAButton alloc] initAlternativeButtonWithTitle:STRING_CONTINUE_WITHOUT_LOGIN target:self action:@selector(continueWithoutLogin)];
         CGFloat yOffset = CGRectGetMaxY(self.continueToLoginButton.frame) + kContinueLogin2OrMess;
-        if ([[RICountryConfiguration getCurrentConfiguration].facebookAvailable boolValue]){
+        /*if ([[RICountryConfiguration getCurrentConfiguration].facebookAvailable boolValue]){
             yOffset = CGRectGetMaxY(self.facebookButton.frame) + kFacebookButton2ContinueWithout;
-        }
+        }*/
         [_continueWithoutLoginButton setFrame:CGRectMake((self.view.width - kWidth)/2, yOffset, kWidth, kBottomDefaultHeight)];
         if (self.checkout)
         {
@@ -238,16 +226,16 @@
     [self.mainScrollView addSubview:self.emailTextField];
     [self.mainScrollView addSubview:self.continueToLoginButton];
     
-    if ([[RICountryConfiguration getCurrentConfiguration].facebookAvailable boolValue]){
+    /*if ([[RICountryConfiguration getCurrentConfiguration].facebookAvailable boolValue]){
         [self.mainScrollView addSubview:self.facebookButton];
         [self.mainScrollView addSubview:self.orView];
-    }
+    }*/
     [self.mainScrollView addSubview:self.continueWithoutLoginButton];
     
     CGFloat height = CGRectGetMaxY(self.continueToLoginButton.frame) + kContinueLogin2OrMess;
-    if (!self.facebookButton.hidden) {
+    /*if (!self.facebookButton.hidden) {
         height = CGRectGetMaxY(self.facebookButton.frame) + kFacebookButton2ContinueWithout;
-    }
+    }*/
     if (self.checkout) {
         height = CGRectGetMaxY(self.continueWithoutLoginButton.frame) + kContinueLogin2OrMess;
     }
@@ -484,8 +472,8 @@
     [self.emailTextField setYBottomOf:self.casAccountServicesImagesView at:kAccountServices2Email];
     [self.continueToLoginButton setYBottomOf:self.emailTextField at:kEmail2ContinueLogin];
     [self.orView setYBottomOf:self.continueToLoginButton at:kContinueLogin2OrMess];
-    [self.facebookButton setYBottomOf:self.orView at:kOrMess2FacebookButton];
-    [self.continueWithoutLoginButton setYBottomOf:self.facebookButton at:kFacebookButton2ContinueWithout];
+    //[self.facebookButton setYBottomOf:self.orView at:kOrMess2FacebookButton];
+    //[self.continueWithoutLoginButton setYBottomOf:self.facebookButton at:kFacebookButton2ContinueWithout];
 }
 
 @end

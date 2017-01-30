@@ -56,10 +56,6 @@
 			</dict>
 		</array>
 	</dict>
-	<key>FacebookAppID</key>
-	<string>304887043046936</string>
-	<key>FacebookDisplayName</key>
-	<string>Bamilo</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>bma4sreceiver</string>
@@ -88,15 +84,6 @@
 		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
-			<key>facebook.com</key>
-			<dict>
-				<key>NSExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
-				<key>NSExceptionRequiresForwardSecrecy</key>
-				<true/>
-				<key>NSIncludesSubdomains</key>
-				<true/>
-			</dict>
 			<key>localhost</key>
 			<dict>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
