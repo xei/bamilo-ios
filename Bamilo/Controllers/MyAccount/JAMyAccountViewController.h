@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JAMyAccountViewController : JABaseViewController
+@interface JAMyAccountViewController : JABaseViewController <UITableViewDelegate, UITableViewDataSource>
 
 @end

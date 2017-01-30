@@ -52,5 +52,8 @@
 }
 
 
++ (NSString *)nibName {
+    return @"VersionTableViewCell";
+}
 
 @end

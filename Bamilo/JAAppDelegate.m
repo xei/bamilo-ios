@@ -200,7 +200,7 @@
                      reloadAPI:NO
                   successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory){
 #warning Disable auto-update for now until we figure out what to do with it
-                      if(NO && hasUpdate)
+                      if(hasUpdate)
                       {
                           if(isUpdateMandatory)
                           {

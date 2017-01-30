@@ -25,7 +25,7 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LdG-da-kzY">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LdG-da-kzY">
                         <rect key="frame" x="297" y="41" width="20" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="djG-u8-NJ0"/>
@@ -44,11 +44,21 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vwl-lJ-nxl" userLabel="bottom seperator">
+                        <rect key="frame" x="0.0" y="100" width="317" height="1"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.5" id="UV4-zT-ifI"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="vwl-lJ-nxl" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="1Lo-L4-aJz"/>
                     <constraint firstItem="LdG-da-kzY" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="AkP-j2-qwL"/>
                     <constraint firstItem="99H-Uc-yUU" firstAttribute="leading" secondItem="RuV-cn-oil" secondAttribute="leading" id="KNt-jq-CUV"/>
+                    <constraint firstAttribute="trailing" secondItem="vwl-lJ-nxl" secondAttribute="trailing" constant="16" id="KgW-6Z-PRB"/>
                     <constraint firstItem="99H-Uc-yUU" firstAttribute="centerY" secondItem="3bm-Fz-2Y6" secondAttribute="centerY" constant="8" id="KvT-4f-yf0"/>
+                    <constraint firstAttribute="bottom" secondItem="vwl-lJ-nxl" secondAttribute="bottom" id="Njq-5v-3s8"/>
                     <constraint firstAttribute="trailing" secondItem="LdG-da-kzY" secondAttribute="trailing" constant="16" id="PS2-Sr-C6X"/>
                     <constraint firstItem="RuV-cn-oil" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="QxU-t1-DAQ"/>
                     <constraint firstItem="3bm-Fz-2Y6" firstAttribute="centerY" secondItem="LdG-da-kzY" secondAttribute="centerY" id="VsR-0K-2Id"/>

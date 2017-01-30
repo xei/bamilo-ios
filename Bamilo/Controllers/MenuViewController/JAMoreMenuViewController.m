@@ -12,6 +12,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import "PlainTableViewCell.h"
+#import "IconTableViewCell.h"
 #import "SimpleHeaderTableViewCell.h"
 
 @interface JAMoreMenuViewController ()
@@ -44,32 +45,39 @@
     self.tableViewListItems = @[
                                 @{
                                     @"title": [RICustomer checkIfUserIsLogged] ? STRING_LOGOUT : STRING_LOGIN,
-                                    @"isLoginBtn" : @YES,
-                                    @"notification" : kShowAuthenticationScreenNotification
+                                    @"cellType": PlainTableViewCell.nibName,
+                                    @"selectorName" : @"loginOrLogoutBtnTouchUpInside"
                                   },
                                 @{
                                     @"title": STRING_RECENTLY_VIEWED,
-                                    @"notification" : kShowAuthenticationScreenNotification
+                                    @"cellType": PlainTableViewCell.nibName,
+                                    @"notification" : kShowRecentlyViewedScreenNotification,
+                                    @"animated": @YES,
                                     },
                                 @{
                                     @"title": STRING_TRACK_MY_ORDER,
-                                    @"notification" : kShowAuthenticationScreenNotification
+                                    @"cellType": PlainTableViewCell.nibName,
+                                    @"notification" : kShowMyOrdersScreenNotification,
+                                    @"animated": @YES,
                                     },
                                 @{
                                     @"title": STRING_CONTACT_US,
-                                    @"notification" : kShowAuthenticationScreenNotification
+                                    @"cellType": PlainTableViewCell.nibName,
+                                    @"notification" : kShowContactUsScreenNotification,
+                                    @"animated": @YES,
                                     },
                                 @{
                                     @"title": STRING_FAQ,
-                                    @"isFAQBtn":@YES,
-                                    @"notification" : kDidSelectTeaserWithShopUrlNofication
+                                    @"cellType": PlainTableViewCell.nibName,
+                                    @"selectorName": @"fAQBtnTouchUpInside"
                                     }
                                 ];
 }
 
 
 - (void)viewDidLayoutSubviews {
-    //Must be refactored later 
+    [super viewDidLayoutSubviews];
+    //Must be refactored later
     self.tableView.frame = self.viewBounds;
 }
 
@@ -117,7 +125,8 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    PlainTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:[PlainTableViewCell nibName] forIndexPath:indexPath];
+    NSString *cellID = [self.tableViewListItems[indexPath.row] objectForKey:@"cellType"];
+    PlainTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellID forIndexPath:indexPath];
     cell.title = [self.tableViewListItems[indexPath.row] objectForKey:@"title"];
     return cell;
 }
@@ -137,27 +146,38 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary* userInfo;
     
-    if([(self.tableViewListItems[indexPath.row]) objectForKey:@"isLoginBtn"]) {
-        if ([RICustomer checkIfUserIsLogged]) {
-            [self logout];
-            return;
-        }
-        userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"from_side_menu"];
-    }
-    
-    if([(self.tableViewListItems[indexPath.row]) objectForKey:@"isFAQBtn"]) {
-        userInfo = @{
-                     @"title"                   : @"راهنما",
-                     @"targetString"            : @"shop_in_shop::help",
-                     @"show_back_button_title"  : @""
-                     };
-    }
-    
-    NSString *notificationName = [(self.tableViewListItems[indexPath.row]) objectForKey:@"notification"];
-    [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo: userInfo];
     [self.tableView deselectRowAtIndexPath:indexPath animated:true];
+    
+    NSDictionary *selectedObjItem = self.tableViewListItems[indexPath.row];
+    if ([selectedObjItem objectForKey:@"selectorName"]) {
+        SEL customSelector = NSSelectorFromString([selectedObjItem objectForKey:@"selectorName"]);
+        [self performSelector:customSelector withObject: 0];
+        return;
+    }
+    
+    if ([selectedObjItem objectForKey:@"notification"]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:[selectedObjItem objectForKey:@"notification"]
+                                                            object:@{@"animated":[selectedObjItem objectForKey:@"animated"]}
+                                                          userInfo:@{@"from_checkout":@NO}];
+    }
+}
+
+- (void)fAQBtnTouchUpInside {
+    NSDictionary *userInfo = @{
+                 @"title"                   : @"راهنما",
+                 @"targetString"            : @"shop_in_shop::help",
+                 @"show_back_button_title"  : @""
+                 };
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithShopUrlNofication object:nil userInfo: userInfo];
+}
+
+- (void)loginOrLogoutBtnTouchUpInside {
+    if ([RICustomer checkIfUserIsLogged]) {
+        [self logout];
+        return;
+    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowAuthenticationScreenNotification object:nil userInfo: @{@"from_side_menu":@YES}];
 }
 
 @end

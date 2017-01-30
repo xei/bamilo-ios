@@ -936,8 +936,8 @@
 - (void)showMyAccountController {
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAMyAccountViewController class]]) {
-        JAMyAccountViewController *myAccountViewController = [[JAMyAccountViewController alloc] init];
-        [self pushViewController:myAccountViewController animated:NO];
+        JAMyAccountViewController *myAccountViewCtrl = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"myAccountViewController"];
+        [self pushViewController:myAccountViewCtrl animated:NO];
     }
 }
 
