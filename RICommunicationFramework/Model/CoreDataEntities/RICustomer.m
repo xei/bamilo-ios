@@ -10,7 +10,7 @@
 #import "RIAddress.h"
 #import "RIForm.h"
 #import "RIField.h"
-#import <FBSDKLoginKit/FBSDKLoginKit.h>
+//#import <FBSDKLoginKit/FBSDKLoginKit.h>
 
 #define kUserIsGuestFlagKey [NSString stringWithFormat:@"%@_user_is_guest", [RIApi getCountryIsoInUse]]
 
@@ -456,7 +456,7 @@
     }
     else
     {
-        [[[FBSDKLoginManager alloc] init] logOut];
+        //[[[FBSDKLoginManager alloc] init] logOut];
         return NO;
     }
 }

@@ -10,7 +10,7 @@
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 #import <NewRelicAgent/NewRelic.h>
-#import <FBSDKCoreKit/FBSDKCoreKit.h>
+//#import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <GoogleAppIndexing/GoogleAppIndexing.h>
 
 #import "JARootViewController.h"
@@ -51,7 +51,7 @@
 
     [[GSDAppIndexing sharedInstance] registerApp:kAppStoreIdBamiloInteger];
     
-    [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
+    //[[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
     
     [[SessionManager sharedInstance] evaluateActiveSessions];
     
@@ -203,7 +203,7 @@
 
 -(void)applicationDidBecomeActive:(UIApplication *)application
 {
-    [FBSDKAppEvents activateApp];
+    //[FBSDKAppEvents activateApp];
 }
 
 - (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window

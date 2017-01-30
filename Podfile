@@ -20,9 +20,9 @@ target 'Bamilo' do
   pod 'Crashlytics', '~> 3.8.3'
   pod 'Fabric', '~> 1.6.11'
   pod 'FXBlurView','~> 1.6.4'
-  pod 'FBSDKLoginKit', '~> 4.18.0'
-  pod 'FBSDKCoreKit','~> 4.18.0'
-  pod 'FBSDKMessengerShareKit', '~> 1.3.2'
+  # pod 'FBSDKLoginKit', '~> 4.18.0'
+  # pod 'FBSDKCoreKit','~> 4.18.0'
+  # pod 'FBSDKMessengerShareKit', '~> 1.3.2'
   # pod 'GoogleTagManager', '~> 5.0.8'
   pod 'GoogleTagManager', '3.15.0' # ********** Legacy
   # pod 'GoogleAnalytics', '~> 3.17.0'

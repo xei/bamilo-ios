@@ -16,7 +16,7 @@
 #import "JAUtils.h"
 #import "JAProductListFlowLayout.h"
 #import "JAPicker.h"
-#import <FBSDKCoreKit/FBSDKAppEvents.h>
+//#import <FBSDKCoreKit/FBSDKAppEvents.h>
 
 @interface JAOtherOffersViewController () <JAPickerDelegate>
 {
@@ -352,12 +352,12 @@
                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
                                                                 data:[tracking copy]];
                       
-                      float value = [price floatValue];
+                      /*float value = [price floatValue];
                       [FBSDKAppEvents logEvent:FBSDKAppEventNameAddedToCart
                                     valueToSum:value
                                     parameters:@{ FBSDKAppEventParameterNameCurrency    : @"EUR",
                                                   FBSDKAppEventParameterNameContentType : self.product.name,
-                                                  FBSDKAppEventParameterNameContentID   : self.product.sku}];
+                                                  FBSDKAppEventParameterNameContentID   : self.product.sku}];*/
                       
                       trackingDictionary = [NSMutableDictionary new];
                       [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];

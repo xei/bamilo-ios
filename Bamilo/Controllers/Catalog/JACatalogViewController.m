@@ -18,7 +18,7 @@
 //#import "JAFilteredNoResultsView.h"
 #import "CatalogNoResultViewController.h"
 #import "JAAppDelegate.h"
-#import <FBSDKCoreKit/FBSDKAppEvents.h>
+//#import <FBSDKCoreKit/FBSDKAppEvents.h>
 #import "UIImageView+JA.h"
 #import "UIImageView+WebCache.h"
 #import "JACampaignBannerCell.h"
@@ -1385,12 +1385,12 @@ typedef void (^ProcessActionBlock)(void);
     }];
     
     
-    float value = [price floatValue];
+    /*float value = [price floatValue];
     [FBSDKAppEvents logEvent:FBSDKAppEventNameAddedToWishlist
                   valueToSum:value
                   parameters:@{ FBSDKAppEventParameterNameCurrency    : @"EUR",
                                 FBSDKAppEventParameterNameContentType : product.name,
-                                FBSDKAppEventParameterNameContentID   : product.sku}];
+                                FBSDKAppEventParameterNameContentID   : product.sku}];*/
 }
 
 - (void)trackingEventRemoveFromWishlist:(RIProduct *)product {
@@ -1459,9 +1459,9 @@ typedef void (^ProcessActionBlock)(void);
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSearch]
                                               data:[trackingDictionary copy]];
     
-    [FBSDKAppEvents logEvent:FBSDKAppEventNameSearched
+    /*[FBSDKAppEvents logEvent:FBSDKAppEventNameSearched
                   parameters:@{FBSDKAppEventParameterNameSearchString:string,
-                               FBSDKAppEventParameterNameSuccess: @1 }];
+                               FBSDKAppEventParameterNameSuccess: @1 }];*/
 }
 
 - (void)trackingEventGTMListingForCategoryName:(NSString *)categoryName andSubCategoryName:(NSString *)subCategoryName {

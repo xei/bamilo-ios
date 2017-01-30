@@ -8,8 +8,8 @@
 
 #import "JAAuthenticationViewController.h"
 #import "JAButton.h"
-#import <FBSDKCoreKit/FBSDKCoreKit.h>
-#import <FBSDKLoginKit/FBSDKLoginKit.h>
+//#import <FBSDKCoreKit/FBSDKCoreKit.h>
+//#import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import "JATextFieldComponent.h"
 #import "RICustomer.h"
 #import "JAUtils.h"
@@ -329,7 +329,7 @@
 #pragma mark - Button actions
 
 #pragma mark - Facebook Login
-- (void)facebookLoginButtonPressed:(id)sender
+/*- (void)facebookLoginButtonPressed:(id)sender
 {
     FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
     [login logInWithReadPermissions:@[@"public_profile", @"email", @"user_birthday"] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
@@ -483,7 +483,7 @@
         [connection start];
         
     }];
-}
+}*/
 
 #pragma mark - Continue Button Action
 

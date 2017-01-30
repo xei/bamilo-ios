@@ -11,7 +11,7 @@
 #import "RICampaign.h"
 #import "RICustomer.h"
 #import "JAUtils.h"
-#import <FBSDKCoreKit/FBSDKAppEvents.h>
+//#import <FBSDKCoreKit/FBSDKAppEvents.h>
 #import "RITeaserComponent.h"
 
 @interface JACampaignsViewController ()
@@ -534,12 +534,12 @@ withCampaignTargetString:(NSString*)campaignTargetString
                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
                                                                 data:[trackingDictionary copy]];
                       
-                      float value = [price floatValue];
+                      /*float value = [price floatValue];
                       [FBSDKAppEvents logEvent:FBSDKAppEventNameAddedToCart
                                     valueToSum:value
                                  parameters:@{ FBSDKAppEventParameterNameCurrency    : @"EUR",
                                                FBSDKAppEventParameterNameContentType : self.backupCampaignProduct.name,
-                                               FBSDKAppEventParameterNameContentID   : self.backupSimpleSku}];
+                                               FBSDKAppEventParameterNameContentID   : self.backupSimpleSku}];*/
                       
                       
                       trackingDictionary = [NSMutableDictionary new];
