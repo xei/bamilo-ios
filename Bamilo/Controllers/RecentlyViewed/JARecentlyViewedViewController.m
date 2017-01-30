@@ -8,7 +8,6 @@
 
 #import "JARecentlyViewedViewController.h"
 #import "JAProductCollectionViewFlowLayout.h"
-#import <FBSDKCoreKit/FBSDKAppEvents.h>
 #import "JARecentlyViewedCell.h"
 #import "RIProductSimple.h"
 #import "RICategory.h"
@@ -441,15 +440,7 @@
                       tracking = [NSMutableDictionary new];
                       [tracking setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
                       [tracking setValue:cart.cartCount forKey:kRIEventQuantityKey];
-                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
-                                                                data:[tracking copy]];
-                      
-                      float value = [price floatValue];
-                      [FBSDKAppEvents logEvent:FBSDKAppEventNameAddedToCart
-                                    valueToSum:value
-                                    parameters:@{ FBSDKAppEventParameterNameCurrency    : @"EUR",
-                                                  FBSDKAppEventParameterNameContentType : product.name,
-                                                  FBSDKAppEventParameterNameContentID   : product.sku}];
+                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart] data:[tracking copy]];
                       
                       trackingDictionary = [NSMutableDictionary new];
                       [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];

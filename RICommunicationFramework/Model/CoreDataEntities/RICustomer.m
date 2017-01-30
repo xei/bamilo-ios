@@ -10,7 +10,6 @@
 #import "RIAddress.h"
 #import "RIForm.h"
 #import "RIField.h"
-#import <FBSDKLoginKit/FBSDKLoginKit.h>
 
 #define kUserIsGuestFlagKey [NSString stringWithFormat:@"%@_user_is_guest", [RIApi getCountryIsoInUse]]
 
@@ -450,13 +449,9 @@
 {
     NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
     
-    if (VALID_NOTEMPTY(customers, NSArray))
-    {
+    if (VALID_NOTEMPTY(customers, NSArray)) {
         return YES;
-    }
-    else
-    {
-        [[[FBSDKLoginManager alloc] init] logOut];
+    } else {
         return NO;
     }
 }
