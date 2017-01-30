@@ -17,7 +17,6 @@
 #import "JAProductInfoPriceLine.h"
 #import "JAUtils.h"
 #import "RIProduct.h"
-//#import <FBSDKCoreKit/FBSDKAppEvents.h>
 #import "RICategory.h"
 
 #define kDistanceBetweenStarsAndText 70.0f
@@ -700,13 +699,6 @@ UIAlertViewDelegate
                     
                     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRateProduct]
                                                               data:[trackingDictionary copy]];
-                    
-                    /*float value = [@(ratingView.rating) floatValue];
-                    [FBSDKAppEvents logEvent:FBSDKAppEventNameRated
-                               valueToSum:value
-                               parameters:@{FBSDKAppEventParameterNameContentType: self.product.name,
-                                            FBSDKAppEventParameterNameContentID: self.product.sku,
-                                            FBSDKAppEventParameterNameMaxRatingValue: @5 }];*/
                 }
             }
             

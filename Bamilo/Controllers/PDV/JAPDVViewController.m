@@ -27,9 +27,6 @@
 #import "JAUtils.h"
 #import "RICustomer.h"
 #import "JAPDVWizardView.h"
-//#import <FBSDKCoreKit/FBSDKAppEvents.h>
-//#import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
-//#import "AQSFacebookMessengerActivity.h"
 #import "JAPDVBundles.h"
 #import "JAPDVBundleSingleItem.h"
 #import "RIProduct.h"
@@ -1706,13 +1703,6 @@ typedef void (^ProcessActionBlock)(void);
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewProduct]
                                               data:[trackingDictionary copy]];
-    
-    /*float value = [[self getPrice] floatValue];
-    [FBSDKAppEvents logEvent:FBSDKAppEventNameViewedContent
-                  valueToSum: value
-                  parameters:@{FBSDKAppEventParameterNameContentID: self.product.sku,
-                               FBSDKAppEventParameterNameContentType: self.product.name,
-                               FBSDKAppEventParameterNameCurrency:@"EUR"}];*/
 }
 
 - (void)trackingEventAddToCart:(RICart *)cart
@@ -1854,15 +1844,7 @@ typedef void (^ProcessActionBlock)(void);
     [self trackingEventCart:cart];
 }
 
-- (void)trackingEventCart:(RICart *)cart
-{
-    /*float value = [[self getPrice] floatValue];
-    [FBSDKAppEvents logEvent:FBSDKAppEventNameAddedToCart
-                  valueToSum:value
-                  parameters:@{ FBSDKAppEventParameterNameCurrency    : @"EUR",
-                                FBSDKAppEventParameterNameContentType : self.product.name,
-                                FBSDKAppEventParameterNameContentID   : self.product.sku}];*/
-    
+- (void)trackingEventCart:(RICart *)cart {
     NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
     [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
     [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
@@ -2030,15 +2012,8 @@ typedef void (^ProcessActionBlock)(void);
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToWishlist]
                                                   data:[trackingDictionary copy]];
     }];
-    
-    
-    /*float value = [price floatValue];
-    [FBSDKAppEvents logEvent:FBSDKAppEventNameAddedToWishlist
-                  valueToSum:value
-                  parameters:@{ FBSDKAppEventParameterNameCurrency    : @"EUR",
-                                FBSDKAppEventParameterNameContentType : self.product.name,
-                                FBSDKAppEventParameterNameContentID   : self.product.sku}];*/
 }
+
 - (void)trackingEventShared:(NSString *)activityType
 {
     

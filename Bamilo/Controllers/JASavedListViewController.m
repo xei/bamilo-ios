@@ -8,7 +8,6 @@
 
 #import "JASavedListViewController.h"
 #import "JAProductCollectionViewFlowLayout.h"
-//#import <FBSDKCoreKit/FBSDKAppEvents.h>
 #import "JARecentlyViewedCell.h"
 #import "RIProductSimple.h"
 #import "RICategory.h"
@@ -495,15 +494,7 @@
                       [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
                       [trackingDictionary setValue:@"Wishlist" forKey:kRIEventLocationKey];
                       
-                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
-                                                                data:[trackingDictionary copy]];
-                      
-                      /*float value = [price floatValue];
-                      [FBSDKAppEvents logEvent:FBSDKAppEventNameAddedToCart
-                                    valueToSum:value
-                                    parameters:@{ FBSDKAppEventParameterNameCurrency    : @"EUR",
-                                                  FBSDKAppEventParameterNameContentType : product.name,
-                                                  FBSDKAppEventParameterNameContentID   : product.sku}];*/
+                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart] data:[trackingDictionary copy]];
                       
                       NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];

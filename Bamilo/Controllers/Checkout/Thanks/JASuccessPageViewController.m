@@ -12,7 +12,6 @@
 #import "JAUtils.h"
 #import "RIAddress.h"
 #import "RICartItem.h"
-//#import <FBSDKCoreKit/FBSDKAppEvents.h>
 #import "RIProduct.h"
 #import "JAButton.h"
 #import "JAProductInfoHeaderLine.h"
@@ -263,10 +262,6 @@
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventTeaserPurchase]
                                                       data:[teaserTrackingDictionary copy]];
         }
-        
-        /*float value = [cartItem.price floatValue];
-        [FBSDKAppEvents logPurchase:value currency:@"EUR" parameters:@{FBSDKAppEventParameterNameContentID: cartItem.sku,
-                                                                       FBSDKAppEventParameterNameContentType:cartItem.name}];*/
         
         NSMutableDictionary *viewCartTrackingProduct = [[NSMutableDictionary alloc] init];
         [viewCartTrackingProduct setValue:cartItem.sku forKey:kRIEventSkuKey];

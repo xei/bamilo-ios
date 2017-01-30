@@ -17,8 +17,6 @@
 #import "RICustomer.h"
 #import "JAProductCollectionViewFlowLayout.h"
 
-//#import <FBSDKCoreKit/FBSDKAppEvents.h>
-
 typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
 
 @interface JABundlesViewController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, JAPickerDelegate>
@@ -571,15 +569,7 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
     [self trackingEventCart:cart];
 }
 
-- (void)trackingEventCart:(RICart *)cart
-{
-    /*float value = [[self getPrice] floatValue];
-    [FBSDKAppEvents logEvent:FBSDKAppEventNameAddedToCart
-                  valueToSum:value
-                  parameters:@{ FBSDKAppEventParameterNameCurrency    : @"EUR",
-                                FBSDKAppEventParameterNameContentType : self.product.name,
-                                FBSDKAppEventParameterNameContentID   : self.product.sku}];
-    */
+- (void)trackingEventCart:(RICart *)cart {
     NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
     [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
     [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];

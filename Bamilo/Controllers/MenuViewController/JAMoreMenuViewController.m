@@ -9,8 +9,6 @@
 #import "JAMoreMenuViewController.h"
 #import "RICustomer.h"
 #import "JAUtils.h"
-//#import <FBSDKCoreKit/FBSDKCoreKit.h>
-//#import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import "MoreMenuTableViewCell.h"
 #import "SimpleHeaderTableViewCell.h"
 
@@ -79,8 +77,6 @@ const int tableViewCllHeihgt = 50;
     [self showLoading];
     
     __block NSString *custumerId = [RICustomer getCustomerId];
-    
-    /*[[[FBSDKLoginManager alloc] init] logOut];*/
     
     [RICustomer logoutCustomerWithSuccessBlock:^ {
          [self hideLoading];

@@ -10,7 +10,6 @@
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 #import <NewRelicAgent/NewRelic.h>
-//#import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <GoogleAppIndexing/GoogleAppIndexing.h>
 
 #import "JARootViewController.h"
@@ -50,8 +49,6 @@
     [[RITrackingWrapper sharedInstance] startWithConfigurationFromPropertyListAtPath:plistPath launchOptions:launchOptions delegate:self];
 
     [[GSDAppIndexing sharedInstance] registerApp:kAppStoreIdBamiloInteger];
-    
-    //[[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
     
     [[SessionManager sharedInstance] evaluateActiveSessions];
     
@@ -201,9 +198,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kAppWillEnterForeground object:nil];
 }
 
--(void)applicationDidBecomeActive:(UIApplication *)application
-{
-    //[FBSDKAppEvents activateApp];
+-(void)applicationDidBecomeActive:(UIApplication *)application {
 }
 
 - (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window

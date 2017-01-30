@@ -14,8 +14,6 @@
 #import "JAProductInfoRightSubtitleLine.h"
 #import "JAPicker.h"
 #import "JAActivityViewController.h"
-//#import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
-//#import "AQSFacebookMessengerActivity.h"
 #import "JBWhatsAppActivity.h"
 #import "RITarget.h"
 

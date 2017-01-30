@@ -11,7 +11,6 @@
 #import "RICampaign.h"
 #import "RICustomer.h"
 #import "JAUtils.h"
-//#import <FBSDKCoreKit/FBSDKAppEvents.h>
 #import "RITeaserComponent.h"
 
 @interface JACampaignsViewController ()
@@ -533,14 +532,6 @@ withCampaignTargetString:(NSString*)campaignTargetString
                       [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
                                                                 data:[trackingDictionary copy]];
-                      
-                      /*float value = [price floatValue];
-                      [FBSDKAppEvents logEvent:FBSDKAppEventNameAddedToCart
-                                    valueToSum:value
-                                 parameters:@{ FBSDKAppEventParameterNameCurrency    : @"EUR",
-                                               FBSDKAppEventParameterNameContentType : self.backupCampaignProduct.name,
-                                               FBSDKAppEventParameterNameContentID   : self.backupSimpleSku}];*/
-                      
                       
                       trackingDictionary = [NSMutableDictionary new];
                       [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
