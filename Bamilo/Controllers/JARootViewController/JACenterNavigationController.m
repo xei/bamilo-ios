@@ -69,7 +69,7 @@
 #import "JAORWaysViewController.h"
 #import "JAORPaymentViewController.h"
 #import "JAORPickupStationWebViewController.h"
-#import "JAContactUsViewController.h"
+#import "ContactUsViewController.h"
 
 @interface JACenterNavigationController ()
 
@@ -921,8 +921,8 @@
 #pragma mark ContactUs Screen
 - (void)showContactUsViewController {
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAContactUsViewController class]]) {
-        JAContactUsViewController *contactUsViewController = [[JAContactUsViewController alloc]init];
+    if (![topViewController isKindOfClass:[ContactUsViewController class]]) {
+        ContactUsViewController *contactUsViewController = [[ContactUsViewController alloc]init];
         
         [self pushViewController:contactUsViewController animated:YES];
     }

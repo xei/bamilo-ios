@@ -33,7 +33,7 @@
 		6CF4AE821ADEAA290024EC34 /* JACatalogBannerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CF4AE7E1ADEAA290024EC34 /* JACatalogBannerCell.xib */; };
 		6CF4AE881ADEABBB0024EC34 /* JACatalogBannerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CF4AE841ADEABBB0024EC34 /* JACatalogBannerCell.m */; };
 		841E81AA1D1680F300A35AAF /* MPCoachMarks.m in Sources */ = {isa = PBXBuildFile; fileRef = 841E81A81D1680F300A35AAF /* MPCoachMarks.m */; };
-		847606B71D77EEE900C54687 /* JAContactUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 847606B41D77EEE900C54687 /* JAContactUsViewController.m */; };
+		8708A1721E406C1100ABA7D8 /* ContactUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8708A1711E406C1100ABA7D8 /* ContactUsViewController.m */; };
 		870F8CF61E338D2D0021F87B /* BamiloUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 870F8CF51E338D2D0021F87B /* BamiloUITests.m */; };
 		870F8D061E33975A0021F87B /* IntUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 870F8D051E33975A0021F87B /* IntUtility.m */; };
 		8716987D1E38A94C0027B34A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8716987A1E38A94C0027B34A /* Main.storyboard */; };
@@ -43,7 +43,6 @@
 		874AAB691E3CEA0700B3F8FE /* AppManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB681E3CEA0700B3F8FE /* AppManager.m */; };
 		874AAB6D1E3DCEDB00B3F8FE /* SessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB6C1E3DCEDB00B3F8FE /* SessionManager.m */; };
 		874AAB771E3DD31600B3F8FE /* URLUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB761E3DD31600B3F8FE /* URLUtility.m */; };
-		875077611E3F86DC00011877 /* JAContactUsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 875077601E3F86DC00011877 /* JAContactUsViewController.xib */; };
 		875AD53F1E38C0C800584ABF /* RIConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD48C1E38C0C800584ABF /* RIConfiguration.m */; };
 		875AD5401E38C0C800584ABF /* RIAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD4901E38C0C800584ABF /* RIAddress.m */; };
 		875AD5411E38C0C900584ABF /* RIApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD4921E38C0C800584ABF /* RIApi.m */; };
@@ -506,8 +505,8 @@
 		6CF4AE841ADEABBB0024EC34 /* JACatalogBannerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACatalogBannerCell.m; sourceTree = "<group>"; };
 		841E81A71D1680F300A35AAF /* MPCoachMarks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPCoachMarks.h; path = ../MPCoachMarks.h; sourceTree = "<group>"; };
 		841E81A81D1680F300A35AAF /* MPCoachMarks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPCoachMarks.m; path = ../MPCoachMarks.m; sourceTree = "<group>"; };
-		847606B31D77EEE900C54687 /* JAContactUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAContactUsViewController.h; path = ContactUs/JAContactUsViewController.h; sourceTree = "<group>"; };
-		847606B41D77EEE900C54687 /* JAContactUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAContactUsViewController.m; path = ContactUs/JAContactUsViewController.m; sourceTree = "<group>"; };
+		8708A1701E406C1100ABA7D8 /* ContactUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactUsViewController.h; sourceTree = "<group>"; };
+		8708A1711E406C1100ABA7D8 /* ContactUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactUsViewController.m; sourceTree = "<group>"; };
 		870F8CCB1E3354700021F87B /* Bamilo.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Bamilo.entitlements; sourceTree = "<group>"; };
 		870F8CF31E338D2C0021F87B /* BamiloUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BamiloUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		870F8CF51E338D2D0021F87B /* BamiloUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BamiloUITests.m; sourceTree = "<group>"; };
@@ -526,7 +525,6 @@
 		874AAB6C1E3DCEDB00B3F8FE /* SessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionManager.m; sourceTree = "<group>"; };
 		874AAB751E3DD31600B3F8FE /* URLUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLUtility.h; sourceTree = "<group>"; };
 		874AAB761E3DD31600B3F8FE /* URLUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLUtility.m; sourceTree = "<group>"; };
-		875077601E3F86DC00011877 /* JAContactUsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAContactUsViewController.xib; sourceTree = "<group>"; };
 		875AD48B1E38C0C800584ABF /* RIConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIConfiguration.h; sourceTree = "<group>"; };
 		875AD48C1E38C0C800584ABF /* RIConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIConfiguration.m; sourceTree = "<group>"; };
 		875AD48F1E38C0C800584ABF /* RIAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIAddress.h; sourceTree = "<group>"; };
@@ -1636,17 +1634,6 @@
 			name = Bundles;
 			sourceTree = "<group>";
 		};
-		847606B21D77EE7B00C54687 /* ContactUs */ = {
-			isa = PBXGroup;
-			children = (
-				847606B31D77EEE900C54687 /* JAContactUsViewController.h */,
-				847606B41D77EEE900C54687 /* JAContactUsViewController.m */,
-				875077601E3F86DC00011877 /* JAContactUsViewController.xib */,
-			);
-			name = ContactUs;
-			path = Ratings;
-			sourceTree = "<group>";
-		};
 		84A7B54F1D101D9F00CA9754 /* OnBoardingView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1654,6 +1641,15 @@
 				841E81A81D1680F300A35AAF /* MPCoachMarks.m */,
 			);
 			name = OnBoardingView;
+			sourceTree = "<group>";
+		};
+		8708A16F1E406BF600ABA7D8 /* ContactUsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8708A1701E406C1100ABA7D8 /* ContactUsViewController.h */,
+				8708A1711E406C1100ABA7D8 /* ContactUsViewController.m */,
+			);
+			name = ContactUsViewController;
 			sourceTree = "<group>";
 		};
 		870F8CCC1E33548F0021F87B /* Application */ = {
@@ -2682,6 +2678,7 @@
 		B5A302FF1981218E00F71726 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				8708A16F1E406BF600ABA7D8 /* ContactUsViewController */,
 				9AEF741E1CD8A81700A5D574 /* OnlineReturns */,
 				9AEF741D1CD8A7FB00A5D574 /* StepByStep */,
 				9AE03A881C076CB3003CBEF1 /* Authentication */,
@@ -2702,7 +2699,6 @@
 				520A37CA1A48904B0046C8B1 /* MyOrders */,
 				4AE730AF198F88CB000CA1DD /* PDV */,
 				4A944FF2199273E000C02734 /* Ratings */,
-				847606B21D77EE7B00C54687 /* ContactUs */,
 				4A39211D19891F1500B70A9C /* RecentlyViewed */,
 				4A39211E19891F1500B70A9C /* RecentSearches */,
 				4AFC7F8E199BC0B2007D67F4 /* SignInViewController */,
@@ -3253,7 +3249,6 @@
 				CE9AE0611AB6D78200D56481 /* JAOrangeButtonCell_ipad_portrait.xib in Resources */,
 				CE9AE0691AB6D78200D56481 /* JAOrangeButtonCell_ipad_landscape.xib in Resources */,
 				CE9AE06F1AB6D78200D56481 /* JANewsletterComponent.xib in Resources */,
-				875077611E3F86DC00011877 /* JAContactUsViewController.xib in Resources */,
 				CE9AE0751AB6D78200D56481 /* JAFallbackView.xib in Resources */,
 				CE9AE0811AB6D78200D56481 /* JAGrayButtonCell_ipad_landscape.xib in Resources */,
 				875AD5841E38C0C900584ABF /* RITrackingDebug_Bamilo.plist in Resources */,
@@ -3577,6 +3572,7 @@
 				9AB517A61C934342007E1327 /* JAButton.m in Sources */,
 				9A55A6911BC2E894008EF4A6 /* JAPDVVariationsViewController.m in Sources */,
 				CE9ADFAB1AB6D78200D56481 /* JANavigationBarLayout.m in Sources */,
+				8708A1721E406C1100ABA7D8 /* ContactUsViewController.m in Sources */,
 				CE9ADFAD1AB6D78200D56481 /* JASizeGuideWizardView.m in Sources */,
 				9A40772C1CE0CF5200313D20 /* UILabel+Size.m in Sources */,
 				CE9ADFB11AB6D78200D56481 /* JAUndefinedSearchView.m in Sources */,
@@ -3670,7 +3666,6 @@
 				9AEF742C1CD8A8BD00A5D574 /* JAORConfirmationScreenViewController.m in Sources */,
 				CE9ADFE51AB6D78200D56481 /* JANewsletterComponent.m in Sources */,
 				9A007C801C206920007D99FC /* JAProductInfoSwitchLine.m in Sources */,
-				847606B71D77EEE900C54687 /* JAContactUsViewController.m in Sources */,
 				874AAB691E3CEA0700B3F8FE /* AppManager.m in Sources */,
 				CE9ADFE91AB6D78200D56481 /* JADynamicForm.m in Sources */,
 				89C7AF551BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m in Sources */,

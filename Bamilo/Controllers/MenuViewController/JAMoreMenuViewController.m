@@ -48,8 +48,8 @@
                                 @{
                                     @"title": STRING_CONTACT_US,
                                     @"cellType": IconTableViewCell.nibName,
-                                    @"notification" : kShowContactUsScreenNotification,
-                                    @"animated": @YES,
+                                    //@"notification" : kShowContactUsScreenNotification,
+                                    @"selectorName": @"segueToContactUsViewController"
                                     },
                                 @{
                                     @"title": STRING_FAQ,
@@ -141,6 +141,10 @@
     
 }
 
+-(void)segueToContactUsViewController {
+    [self performSegueWithIdentifier:@"segueMoreToContactUsViewController" sender:nil];
+}
+
 - (void)appWillEnterForeground {
     if(VALID_NOTEMPTY(self.currentPopoverController, UIPopoverController)) {
         [self.currentPopoverController dismissPopoverAnimated:NO];
@@ -158,8 +162,6 @@
         [self.currentPopoverController dismissPopoverAnimated:NO];
     }
 }
-
-
 
 #pragma tableView DetaSource Delegates
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
