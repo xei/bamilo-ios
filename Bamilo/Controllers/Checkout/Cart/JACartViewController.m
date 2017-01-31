@@ -196,8 +196,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
 }
 
-- (void)proceedToCheckout
-{
+- (void)proceedToCheckout {
     [JAAuthenticationViewController goToCheckoutWithBlock:^{
 //        [self showLoading];
         

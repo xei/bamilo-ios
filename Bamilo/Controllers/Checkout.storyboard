@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="cPx-eU-fFb">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Checkout Address View Controller-->
+        <scene sceneID="MHk-nt-BjF">
+            <objects>
+                <viewController storyboardIdentifier="CheckoutAddressViewController" id="cPx-eU-fFb" customClass="CheckoutAddressViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cB1-xR-npY"/>
+                        <viewControllerLayoutGuide type="bottom" id="nKf-T7-VCI"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="IvS-Li-N4L">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <connections>
+                        <segue destination="RR0-PB-qTp" kind="show" identifier="" id="Vuf-MV-Cbd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qrc-mW-Y1H" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-310" y="-71"/>
+        </scene>
+        <!--Checkout Confirmation View Controller-->
+        <scene sceneID="j2x-NO-ZKO">
+            <objects>
+                <viewController storyboardIdentifier="CheckoutConfirmationViewController" id="RR0-PB-qTp" customClass="CheckoutConfirmationViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="qVA-Rv-cap"/>
+                        <viewControllerLayoutGuide type="bottom" id="jbe-49-at3"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="htM-qu-iwa">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.40699419394213698" green="0.82547861277131862" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                    <connections>
+                        <segue destination="YAa-kj-ypS" kind="show" id="8lA-ov-Vmp"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="c6o-Zu-FYQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="550" y="-72"/>
+        </scene>
+        <!--Checkout Payment View Controller-->
+        <scene sceneID="6Dw-Fn-eYF">
+            <objects>
+                <viewController storyboardIdentifier="CheckoutPaymentViewController" id="YAa-kj-ypS" customClass="CheckoutPaymentViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Rb1-m2-ocz"/>
+                        <viewControllerLayoutGuide type="bottom" id="ll1-YN-aeW"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hA3-mv-iin">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="0.57953985223996241" blue="0.58901249803895506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="w3x-oZ-fdD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1383" y="-70"/>
+        </scene>
+    </scenes>
+</document>

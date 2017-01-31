@@ -10,7 +10,7 @@
 #import "RICustomer.h"
 #import "PlainTableViewCell.h"
 #import "IconTableViewCell.h"
-#import "SimpleHeaderTableViewCell.h"
+#import "PlainTableViewHeaderCell.h"
 #import "VersionTableViewCell.h"
 #import "IconTableViewCell.h"
 #import "JAActivityViewController.h"
@@ -41,8 +41,8 @@
     [self.tableView registerNib:[UINib nibWithNibName:[VersionTableViewCell nibName] bundle:nil] forCellReuseIdentifier: [VersionTableViewCell nibName]];
     
     
-    [self.tableView registerNib: [UINib nibWithNibName:[SimpleHeaderTableViewCell nibName] bundle:nil]
-                    forHeaderFooterViewReuseIdentifier:[SimpleHeaderTableViewCell nibName]];
+    [self.tableView registerNib: [UINib nibWithNibName:[PlainTableViewHeaderCell nibName] bundle:nil]
+                    forHeaderFooterViewReuseIdentifier:[PlainTableViewHeaderCell nibName]];
     
     self.tableViewListItems = @[
                                 @{
@@ -181,7 +181,7 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    SimpleHeaderTableViewCell * headerCell = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:[SimpleHeaderTableViewCell nibName]];
+    PlainTableViewHeaderCell * headerCell = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:[PlainTableViewHeaderCell nibName]];
     headerCell.titleString = STRING_MORE;
     return headerCell;
 }
