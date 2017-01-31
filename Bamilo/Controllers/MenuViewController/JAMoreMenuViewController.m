@@ -91,7 +91,6 @@
 - (void)shareTheAppSelection {
     NSArray *appActivities = @[];
     
-    //UIActivity *fbmActivity = [[AQSFacebookMessengerActivity alloc] init];
     UIActivity *whatsAppActivity = [[JBWhatsAppActivity alloc] init];
     WhatsAppMessage *whatsAppMsg;
     
@@ -143,7 +142,7 @@
 }
 
 -(void)segueToContactUsViewController {
-    [self performSegueWithIdentifier:@"segueMoreToContactUsViewController" sender:nil];
+    [self performSegueWithIdentifier:@"pushMoreToContactUsViewController" sender:nil];
 }
 
 - (void)appWillEnterForeground {

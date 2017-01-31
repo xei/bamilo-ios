@@ -199,10 +199,6 @@
                                              selector:@selector(showMyOrdersViewController:)
                                                  name:kShowMyOrdersScreenNotification
                                                object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showContactUsViewController)
-                                                 name:kShowContactUsScreenNotification
-                                               object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showMyOrderDetailViewController:)
@@ -915,16 +911,6 @@
         JARecentlyViewedViewController *recentlyViewedViewController = [[JARecentlyViewedViewController alloc]init];
         
         [self pushViewController:recentlyViewedViewController animated:YES];
-    }
-}
-
-#pragma mark ContactUs Screen
-- (void)showContactUsViewController {
-    UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[ContactUsViewController class]]) {
-        ContactUsViewController *contactUsViewController = [[ContactUsViewController alloc]init];
-        
-        [self pushViewController:contactUsViewController animated:YES];
     }
 }
 
@@ -2014,19 +2000,14 @@
 }
 
 - (void)openMenu {
-    if ([[self topViewController] isKindOfClass:[JALoadCountryViewController class]]) {
-        //inore the notification
-        return;
-    }
-    
-    NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];;
+    if ([[self topViewController] isKindOfClass:[JALoadCountryViewController class]]) { return; }
+    NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];
     
     if(self.cart) {
         [userInfo setObject:self.cart forKey:kUpdateCartNotificationValue];
     }
     
     [userInfo setObject:[NSNumber numberWithBool:self.neeedsExternalPaymentMethod] forKey:kExternalPaymentValue];
-    
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenMenuNotification object:nil userInfo:[userInfo copy]];
 }
 

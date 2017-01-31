@@ -249,11 +249,10 @@
 
 + (NSString *)addMultipleProducts:(NSArray *)productsToAdd
                  withSuccessBlock:(void (^)(RICart *cart, NSArray *productsNotAdded))sucessBlock
-                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, BOOL outOfStock))failureBlock
-{
+                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, BOOL outOfStock))failureBlock {
+    
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-    if(VALID_NOTEMPTY(productsToAdd, NSArray))
-    {
+    if(productsToAdd.count) {
         [parameters setValue:productsToAdd forKey:[NSString stringWithFormat:@"product_list[]"]];
     }
     
@@ -268,26 +267,19 @@
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
                                                                   RICart *cart = nil;
                                                                   NSDictionary *metadata = [jsonObject objectForKey:@"metadata"];
-                                                                  if (VALID_NOTEMPTY(metadata, NSDictionary))
-                                                                  {
+                                                                  if (VALID_NOTEMPTY(metadata, NSDictionary)) {
                                                                       cart = [RICart parseCart:[jsonObject objectForKey:@"metadata"] country:configuration];
                                                                   }
                                                                   
                                                                   NSDictionary *errorMessages = [RIError getErrorDictionary:jsonObject];
                                                                   
-                                                                  if(VALID_NOTEMPTY(cart, RICart))
-                                                                  {
-                                                                      if(VALID_NOTEMPTY(errorMessages, NSDictionary))
-                                                                      {
+                                                                  if(VALID_NOTEMPTY(cart, RICart)) {
+                                                                      if(VALID_NOTEMPTY(errorMessages, NSDictionary)) {
                                                                           sucessBlock(cart, [errorMessages allKeys]);
-                                                                      }
-                                                                      else
-                                                                      {
+                                                                      } else {
                                                                           sucessBlock(cart, nil);
                                                                       }
-                                                                  }
-                                                                  else
-                                                                  {
+                                                                  } else {
                                                                       failureBlock(apiResponse, nil, NO);
                                                                   }
                                                               } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
@@ -296,30 +288,23 @@
                                                               
                                                           } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               
-                                                              if (NOTEMPTY(errorJsonObject))
-                                                              {
+                                                              if (NOTEMPTY(errorJsonObject)) {
                                                                   NSArray *errorMessagesArray = [RIError getErrorMessages:errorJsonObject];
                                                                   NSArray *errorMessages = nil;
                                                                   
                                                                   BOOL outOfStockError = YES;
                                                                   
-                                                                  if(VALID_NOTEMPTY(errorMessagesArray, NSArray))
-                                                                  {
+                                                                  if(VALID_NOTEMPTY(errorMessagesArray, NSArray)) {
                                                                       outOfStockError = NO;
                                                                       errorMessages = [errorMessagesArray copy];
-                                                                  }
-                                                                  else
-                                                                  {
+                                                                  } else {
                                                                       NSDictionary *errorMessagesDictionary = [RIError getErrorDictionary:errorJsonObject];
                                                                       
-                                                                      if(VALID_NOTEMPTY(errorMessagesDictionary, NSDictionary))
-                                                                      {
+                                                                      if(VALID_NOTEMPTY(errorMessagesDictionary, NSDictionary)) {
                                                                           errorMessages = [errorMessagesDictionary allKeys];
-                                                                          for(NSString *errorMessagesKey in errorMessages)
-                                                                          {
+                                                                          for(NSString *errorMessagesKey in errorMessages) {
                                                                               NSString *errorMessageValue = [errorMessagesDictionary objectForKey:errorMessagesKey];
-                                                                              if(VALID_NOTEMPTY(errorMessageValue, NSString) && ![@"ORDER_PRODUCT_SOLD_OUT" isEqualToString:errorMessageValue])
-                                                                              {
+                                                                              if(VALID_NOTEMPTY(errorMessageValue, NSString) && ![@"ORDER_PRODUCT_SOLD_OUT" isEqualToString:errorMessageValue]) {
                                                                                   outOfStockError = NO;
                                                                                   break;
                                                                               }
@@ -329,14 +314,10 @@
                                                                   
                                                                   failureBlock(apiResponse, errorMessages, outOfStockError);
                                                                   
-                                                              }
-                                                              else if (NOTEMPTY(errorObject))
-                                                              {
+                                                              } else if (NOTEMPTY(errorObject)) {
                                                                   NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
                                                                   failureBlock(apiResponse, errorArray, NO);
-                                                                  
-                                                              } else
-                                                              {
+                                                              } else {
                                                                   failureBlock(apiResponse, nil, NO);
                                                               }
                                                           }];

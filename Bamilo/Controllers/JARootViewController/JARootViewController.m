@@ -193,8 +193,7 @@
     }
 }
 
-- (void)showCenterViewController
-{
+- (void)showCenterViewController {
     [self showCenterPanelAnimated:YES];
 }
 

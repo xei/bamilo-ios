@@ -100,11 +100,7 @@
 
 - (void)setFilterOption:(RIFilterOption*)filterOption {
     
-    if (RI_IS_RTL) {
-        self.colorTitleLabel.text = [[NSString stringWithFormat:@"(%ld) %@", [filterOption.totalProducts longValue],filterOption.name] numbersToPersian];
-    } else {
-        self.colorTitleLabel.text = [[NSString stringWithFormat:@"%@ (%ld)",filterOption.name, [filterOption.totalProducts longValue]] numbersToPersian];
-    }
+    self.colorTitleLabel.text = [[NSString stringWithFormat:@"%@ (%ld)",filterOption.name, [filterOption.totalProducts longValue]] numbersToPersian];
     
     if (filterOption.colorHexValue) {
         [self.colorView setColorWithHexString:filterOption.colorHexValue];

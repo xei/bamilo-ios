@@ -62,7 +62,6 @@
 #define kShowMoreMenuScreenNotification @"NOTIFICATION_MORE_MENU_SCREEN"
 #define kShowRecentSearchesScreenNotification @"NOTIFICATION_SHOW_RECENT_SEARCHES_SCREEN"
 #define kShowRecentlyViewedScreenNotification @"NOTIFICATION_SHOW_RECENTLY_VIEWED_SCREEN"
-#define kShowContactUsScreenNotification @"NOTIFICATION_SHOW_CONTACT_US_SCREEN"
 #define kShowMyAccountScreenNotification @"NOTIFICATION_SHOW_MY_ACCOUNT_SCREEN"
 #define kShowUserDataScreenNotification @"NOTIFICATION_SHOW_USER_DATA_SCREEN"
 #define kShowEmailNotificationsScreenNotification @"NOTIFICATION_SHOW_EMAIL_NOTIFICAITONS_SCREEN"
