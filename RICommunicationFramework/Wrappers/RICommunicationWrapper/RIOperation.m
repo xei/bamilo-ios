@@ -15,8 +15,7 @@
 @implementation RIOperation
 
 #pragma mark - Create and return the Communication Wrapper
-- (id)init
-{
+- (id)init {
     self = [super init];
     
     if (self) {
@@ -29,8 +28,7 @@
     return self;
 }
 
-- (void)startRequest
-{
+- (void)startRequest {
     if (self.request) {
         self.connection = [[NSURLConnection alloc] initWithRequest:self.request
                                                           delegate:self];
@@ -48,15 +46,13 @@
 
 #pragma mark - NSURLConnection delegates
 
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
     NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse *)response;
     self.lastStatusCode = [httpResponse statusCode];
     [self.mutableData setLength:0];
 }
 
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     if(ISEMPTY(self.mutableData)) {
         self.mutableData = [NSMutableData dataWithData:data];
     } else {
@@ -107,28 +103,24 @@
     }
 }
 
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     NSError *error;
     
-    NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:self.mutableData
-                                                                 options:kNilOptions
-                                                                   error:&error];
+    NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:self.mutableData options:kNilOptions error:&error];
 
     if (RI_RESPONSE_LOGGER) {
         if (error) {
             NSLog(@"//////////////////// START RESPONSE ERROR \n responseERROR: %@", error);
-        }else
+        } else {
             NSLog(@"//////////////////// START RESPONSE for %@ \n responseJSON: %@", self.request.URL, responseJSON);
+        }
         NSLog(@"//////////////////// END RESPONSE");
     }
-    
-    if(VALID_NOTEMPTY(error, NSError) || ISEMPTY(responseJSON) || ISEMPTY([responseJSON objectForKey:@"success"]) || ![[responseJSON objectForKey:@"success"] boolValue]) {
+    if(error || !responseJSON.count || ISEMPTY([responseJSON objectForKey:@"success"]) || ![[responseJSON objectForKey:@"success"] boolValue]) {
         [[RIURLCacheWrapper sharedInstance] removeRequestFromLocalCache:[connection originalRequest]
                                                               cacheType:self.cacheType];
         
-        if(VALID_NOTEMPTY(responseJSON, NSDictionary) &&  (!ISEMPTY([responseJSON objectForKey:@"success"]) && ![[responseJSON objectForKey:@"success"] boolValue]))
-        {
+        if(VALID_NOTEMPTY(responseJSON, NSDictionary) &&  (!ISEMPTY([responseJSON objectForKey:@"success"]) && ![[responseJSON objectForKey:@"success"] boolValue])) {
             NSDictionary* messages = [responseJSON objectForKey:@"messages"];
             if (VALID_NOTEMPTY(messages, NSDictionary)) {
                 NSArray* errorMessages = [messages objectForKey:@"error"];
@@ -139,17 +131,13 @@
                                 self.failureBlock(RIApiResponseAuthorizationError, responseJSON, nil);
                                 return;
                             }
-                        }else if (VALID_NOTEMPTY(errorMessage, NSDictionary))
-                        {
-                            if([[errorMessage objectForKey:@"reason"] isEqualToString:@"CUSTOMER_NOT_LOGGED_IN"] ||
-                               [(NSNumber *)[errorMessage objectForKey:@"code"] isEqualToNumber:@231])
-                            {
+                        } else if (VALID_NOTEMPTY(errorMessage, NSDictionary)) {
+                            if([[errorMessage objectForKey:@"reason"] isEqualToString:@"CUSTOMER_NOT_LOGGED_IN"] || [(NSNumber *)[errorMessage objectForKey:@"code"] isEqualToNumber:@231]) {
                                 self.failureBlock(RIApiResponseAuthorizationError, responseJSON, nil);
                                 return;
                             }
                             // MUST BE A BETTER WAY
-                            if([[errorMessage objectForKey:@"reason"] isEqualToString:@"ALREADY_SUBSCRIBED"])
-                            {
+                            if([[errorMessage objectForKey:@"reason"] isEqualToString:@"ALREADY_SUBSCRIBED"]) {
                                 self.failureBlock(RIApiResponseSuccess, responseJSON, nil);
                                 return;
                             }
@@ -158,9 +146,7 @@
                 }
             }
             self.failureBlock(RIApiResponseAPIError, responseJSON, nil);            
-        }
-        else
-        {
+        } else {
             if (429 == self.lastStatusCode) {
                 self.lastStatusCode = 0;
                 self.failureBlock(RIApiResponseKickoutView, responseJSON, nil);
@@ -179,8 +165,7 @@
 }
 
 
-- (NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse
-{
+- (NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse {
     NSCachedURLResponse *temp = nil;
     
     if( [[connection originalRequest] cachePolicy] == NSURLRequestUseProtocolCachePolicy) {

@@ -932,8 +932,8 @@
 - (void)showMyAccountController {
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAMyAccountViewController class]]) {
-        JAMyAccountViewController *myAccountViewController = [[JAMyAccountViewController alloc] init];
-        [self pushViewController:myAccountViewController animated:NO];
+        JAMyAccountViewController *myAccountViewCtrl = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"myAccountViewController"];
+        [self pushViewController:myAccountViewCtrl animated:NO];
     }
 }
 
@@ -986,8 +986,7 @@
 }
 
 #pragma mark Track Order Detail Screen
-- (void)showMyOrderDetailViewController:(NSNotification*)notification
-{
+- (void)showMyOrderDetailViewController:(NSNotification*)notification {
     UIViewController *topViewController = [self topViewController];
     if ([topViewController isKindOfClass:[JAMyOrdersViewController class]]) {
         
@@ -1003,8 +1002,7 @@
 }
 
 #pragma mark User Data Screen
-- (void)showUserData:(NSNotification*)notification
-{
+- (void)showUserData:(NSNotification*)notification {
     UIViewController *topViewController = [self topViewController];
     if([RICustomer checkIfUserIsLogged]) {
         if (![topViewController isKindOfClass:[JAUserDataViewController class]]) {
@@ -1034,8 +1032,7 @@
 }
 
 #pragma mark Email Notifications Screen
--(void)showEmailNotificaitons:(NSNotification*)notification
-{
+-(void)showEmailNotificaitons:(NSNotification*)notification {
     UIViewController *topViewController = [self topViewController];
     if([RICustomer checkIfUserIsLogged])
     {
@@ -1060,8 +1057,7 @@
     }
 }
 
-- (void)showNewsletterSubscritions:(NSNotification*)notification
-{
+- (void)showNewsletterSubscritions:(NSNotification*)notification {
     NSDictionary* userInfo = notification.userInfo;
     NSString* targetString = [userInfo objectForKey:@"targetString"];
     
@@ -1078,7 +1074,7 @@
     }
 }
 
-#pragma mark Checkout Forgot Password Screen
+#pragma mark - Checkout Forgot Password Screen
 - (void)showCheckoutForgotPasswordScreen
 {
     UIViewController *topViewController = [self topViewController];
@@ -1093,7 +1089,7 @@
     }
 }
 
-#pragma mark Checkout Addresses Screen
+#pragma mark - Checkout Addresses Screen
 - (void)showCheckoutAddressesScreen:(NSNotification*)notification {
     if (![RICustomer checkIfUserIsLogged]) {
         JAAuthenticationViewController *auth = [[JAAuthenticationViewController alloc] init];
@@ -1106,12 +1102,7 @@
         return;
     }
     
-    BOOL animated = NO;
-    if(VALID_NOTEMPTY(notification.object, NSDictionary) && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber)) {
-        animated = [[notification.object objectForKey:@"animated"] boolValue];
-    }
-    
-    BOOL fromCheckout = YES;
+    BOOL fromCheckout = NO;
     if(VALID_NOTEMPTY(notification.userInfo, NSDictionary) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"from_checkout"], NSNumber)) {
         fromCheckout = [[notification.userInfo objectForKey:@"from_checkout"] boolValue];
     }
@@ -1123,7 +1114,7 @@
         addressesVC.cart = self.cart;
         addressesVC.fromCheckout = fromCheckout;
         [addressesVC.navBarLayout setShowBackButton:YES];
-        addressesVC.navBarLayout.showLogo = NO;
+        addressesVC.navBarLayout.showLogo = NO; 
         if (fromCheckout) {
             addressesVC.navBarLayout.showCartButton = NO;
             [self goToStep:addressesVC forStepByStepViewController:self.checkoutStepByStepViewController];

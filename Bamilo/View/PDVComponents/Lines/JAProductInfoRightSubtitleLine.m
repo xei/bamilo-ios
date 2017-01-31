@@ -19,8 +19,7 @@
 
 @implementation JAProductInfoRightSubtitleLine
 
-- (UILabel *)rightTitleLabel
-{
+- (UILabel *)rightTitleLabel {
     if (!VALID(_rightTitleLabel, UILabel)) {
         _rightTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, kTopMargin, self.width, 16)];
         [_rightTitleLabel setFont:JACaptionFont];
@@ -30,8 +29,7 @@
     return _rightTitleLabel;
 }
 
-- (UILabel *)rightSubTitleLabel
-{
+- (UILabel *)rightSubTitleLabel {
     if (!VALID(_rightSubTitleLabel, UILabel)) {
         _rightSubTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.rightTitleLabel.frame), self.width, 16)];
         [_rightSubTitleLabel setFont:JACaptionFont];
@@ -41,8 +39,7 @@
     return _rightSubTitleLabel;
 }
 
-- (void)setRightTitle:(NSString *)rightTitle
-{
+- (void)setRightTitle:(NSString *)rightTitle {
     _rightTitle = rightTitle;
     [self.rightTitleLabel setWidth:self.width];
     [self.rightTitleLabel setText:rightTitle];
@@ -56,8 +53,7 @@
     }
 }
 
-- (void)setRightSubTitle:(NSString *)rightSubTitle
-{
+- (void)setRightSubTitle:(NSString *)rightSubTitle {
     _rightSubTitle = rightSubTitle;
     [self.rightSubTitleLabel setWidth:self.width];
     [self.rightSubTitleLabel setText:rightSubTitle];
@@ -69,8 +65,7 @@
 
 }
 
-- (void)setFrame:(CGRect)frame
-{
+- (void)setFrame:(CGRect)frame {
     [super setFrame:frame];
     [self.rightTitleLabel setXRightAligned:self.lineContentXOffset + (self.enabled?16.f:0.0f)];
     [self.rightSubTitleLabel setXRightAligned:self.lineContentXOffset + (self.enabled?16.f:0.0f)];

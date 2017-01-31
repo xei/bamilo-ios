@@ -66,8 +66,7 @@ JAPickerDelegate>
 
 @implementation JAAddNewAddressViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     self.screenName = @"NewAddress";
@@ -76,30 +75,21 @@ JAPickerDelegate>
     
     if (self.fromCheckout) {
         self.navBarLayout.showCartButton = NO;
+        self.navBarLayout.title = STRING_CHECKOUT;
+    } else {
+        self.navBarLayout.title = STRING_MY_ADDRESSES;
     }
     
     self.hasErrors = NO;
     
     self.extraParameters = nil;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow:)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillHide:)
-                                                 name:UIKeyboardWillHideNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(hideKeyboard)
-                                                 name:kOpenMenuNotification
-                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideKeyboard) name:kOpenMenuNotification object:nil];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     [self initViews];
@@ -109,17 +99,14 @@ JAPickerDelegate>
     [self getForms];
 }
 
--(void)viewDidAppear:(BOOL)animated
-{
+- (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
     [[RITrackingWrapper sharedInstance] trackScreenWithName:@"NewAddress"];
 }
 
-- (void)getForms
-{
-    if(RIApiResponseSuccess == self.apiResponse)
-    {
+- (void)getForms {
+    if(RIApiResponseSuccess == self.apiResponse) {
         [self showLoading];
     }
     
@@ -155,14 +142,12 @@ JAPickerDelegate>
     }];
 }
 
-- (void)getLocales
-{
+- (void)getLocales {
     for (JADynamicField* field in self.dynamicForm.formViews) {
         if ([field isKindOfClass:[JARadioComponent class]]) {
             JARadioComponent* radioComponent = (JARadioComponent*)field;
             
-            if([radioComponent isComponentWithKey:@"region"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
-            {
+            if([radioComponent isComponentWithKey:@"region"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString)) {
                 [RILocale getLocalesForUrl:[radioComponent getApiCallUrl] parameters:nil successBlock:^(NSArray *regions) {
                     self.regionsDataset = [regions copy];
                     
@@ -175,9 +160,7 @@ JAPickerDelegate>
                     }
                 } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
                 }];
-            }
-            else if([radioComponent isComponentWithKey:@"city"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
-            {
+            } else if([radioComponent isComponentWithKey:@"city"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString)) {
                 NSDictionary* requestParameters = [self getRequestParametersForRadioComponent:radioComponent andForm:self.dynamicForm];
                 [RILocale getLocalesForUrl:[radioComponent getApiCallUrl]
                                 parameters:requestParameters
@@ -193,9 +176,7 @@ JAPickerDelegate>
                                   }
                               } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
                               }];
-            }
-            else if([radioComponent isComponentWithKey:@"postcode"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
-            {
+            } else if([radioComponent isComponentWithKey:@"postcode"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString)) {
                 NSDictionary* requestParameters = [self getRequestParametersForRadioComponent:radioComponent andForm:self.dynamicForm];
                 [RILocale getLocalesForUrl:[radioComponent getApiCallUrl]
                                 parameters:requestParameters
@@ -218,13 +199,11 @@ JAPickerDelegate>
 }
 
 
-- (void)hideKeyboard
-{
+- (void)hideKeyboard {
     [self.dynamicForm resignResponder];
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     if(VALID(self.picker, JAPicker))
     {
         [self.picker removeFromSuperview];
@@ -235,15 +214,13 @@ JAPickerDelegate>
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
-{
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context)
      {
          UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
          // do whatever
          CGFloat newWidth = self.view.frame.size.width;
-         if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(orientation) && self.fromCheckout)
-         {
+         if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(orientation) && self.fromCheckout) {
              newWidth = self.view.frame.size.height + self.view.frame.origin.y;
          }
          

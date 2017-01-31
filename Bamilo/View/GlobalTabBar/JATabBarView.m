@@ -36,10 +36,7 @@
         NSString* buttonNameHighlighted = [NSString stringWithFormat:@"tabbar_button_%@_highlighted", identifier];
 
         JATabBarButton* tabButton = [[JATabBarButton alloc] init];
-        tabButton.frame = CGRectMake(currentX,
-                                     self.bounds.origin.y,
-                                     width,
-                                     self.bounds.size.height);
+        tabButton.frame = CGRectMake(currentX, self.bounds.origin.y, width, self.bounds.size.height);
         tabButton.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
         [tabButton setupWithImageName:buttonNameNormal highlightedImageName:buttonNameHighlighted title:string];
         tabButton.clickableView.tag = i;

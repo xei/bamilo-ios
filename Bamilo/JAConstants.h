@@ -153,4 +153,5 @@
 #define kNumberOfSessions @"amount_sessions"
 #define kSessionDate @"session_date"
 #define kChangeNotificationsOptions @"change_notifications_option"
+#define kChangeNotificationsOptionsNotification @"DID_CHANGE_NOTIFICATION_SETTING"
 #define kChangeSoundOptions @"change_sound_option"

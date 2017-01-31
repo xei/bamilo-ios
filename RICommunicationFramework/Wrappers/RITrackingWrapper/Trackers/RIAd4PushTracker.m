@@ -155,30 +155,22 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
         BOOL checkNotificationsSwitch = YES;
         BOOL checkSoundSwitch = YES;
         
-        if(!ISEMPTY([[NSUserDefaults standardUserDefaults] objectForKey:kChangeNotificationsOptions]))
-        {
+        if(!ISEMPTY([[NSUserDefaults standardUserDefaults] objectForKey:kChangeNotificationsOptions])) {
             checkNotificationsSwitch = [[NSUserDefaults standardUserDefaults] boolForKey:kChangeNotificationsOptions];
-        }
-        else
-        {
+        } else {
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kChangeNotificationsOptions];
             [[NSUserDefaults standardUserDefaults] synchronize];
         }
         
-        if(!ISEMPTY([[NSUserDefaults standardUserDefaults] objectForKey:kChangeSoundOptions]))
-        {
+        if(!ISEMPTY([[NSUserDefaults standardUserDefaults] objectForKey:kChangeSoundOptions])) {
             checkSoundSwitch = [[NSUserDefaults standardUserDefaults] boolForKey:kChangeSoundOptions];
-        }
-        else
-        {
+        } else {
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kChangeSoundOptions];
             [[NSUserDefaults standardUserDefaults] synchronize];
         }
         
         NSSet *categories = [[BMA4SNotification sharedBMA4S] notificationCategories];
-        if (checkNotificationsSwitch && checkSoundSwitch)
-        {
-            
+        if (checkNotificationsSwitch && checkSoundSwitch) {
             if(IS_IOS_8_OR_LATER) {
                 UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes: (UIUserNotificationTypeSound
                                                                                                       |UIUserNotificationTypeAlert) categories:categories];
@@ -187,9 +179,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIUserNotificationTypeSound |
                                                                                         UIUserNotificationTypeAlert )];
             }
-        }
-        else if(checkNotificationsSwitch && !checkNotificationsSwitch)
-        {
+        } else if(checkNotificationsSwitch && !checkNotificationsSwitch) {
             if(IS_IOS_8_OR_LATER) {
                 UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes: (UIUserNotificationTypeSound) categories:categories];
                 [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
