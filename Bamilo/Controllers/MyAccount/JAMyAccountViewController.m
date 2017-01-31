@@ -22,7 +22,7 @@
 
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) NSArray* tableViewListItems;
+@property (nonatomic, strong) NSMutableArray* tableViewListItems;
 
 
 @end
@@ -48,13 +48,7 @@
     [self.tableView registerNib:[UINib nibWithNibName:[IconTableViewCell nibName] bundle:nil] forCellReuseIdentifier: [IconTableViewCell nibName]];
     [self.tableView registerNib:[UINib nibWithNibName:[NotificationTableViewCell nibName] bundle:nil] forCellReuseIdentifier: [NotificationTableViewCell nibName]];
 
-    
-    self.tableViewListItems = @[
-                                @{
-                                    @"title": [RICustomer checkIfUserIsLogged] ? STRING_LOGOUT : STRING_LOGIN,
-                                    @"cellType": IconTableViewCell.nibName,
-                                    @"selectorName" : @"loginOrLogoutBtnTouchUpInside"
-                                    },
+    self.tableViewListItems = [NSMutableArray arrayWithArray: @[
                                 @{
                                     @"title": STRING_PROFILE,
                                     @"icon": @"user-information-icons",
@@ -71,12 +65,14 @@
                                     },
                                 @{
                                     @"title": STRING_TRACK_MY_ORDER,
+                                    @"icon": @"OrderTracking",
                                     @"cellType": IconTableViewCell.nibName,
                                     @"notification" : kShowMyOrdersScreenNotification,
                                     @"animated": @YES,
                                     },
                                 @{
                                     @"title": STRING_RECENTLY_VIEWED,
+                                    @"icon": @"LastViews",
                                     @"cellType": IconTableViewCell.nibName,
                                     @"notification" : kShowRecentlyViewedScreenNotification,
                                     @"animated": @YES,
@@ -93,7 +89,16 @@
                                     @"notification": kShowEmailNotificationsScreenNotification,
                                     @"animated": @YES
                                     },
-                                ];
+                                ]];
+    
+    NSObject * loginOrLoginCell = @{
+          @"title":[RICustomer checkIfUserIsLogged] ? STRING_LOGOUT : STRING_LOGIN,
+          @"icon": [RICustomer checkIfUserIsLogged] ? @"Logout" : @"HappyFace",
+          @"cellType": IconTableViewCell.nibName,
+          @"selectorName" : @"loginOrLogoutBtnTouchUpInside"
+          };
+    
+    [self.tableViewListItems insertObject: loginOrLoginCell atIndex:[RICustomer checkIfUserIsLogged] ? self.tableViewListItems.count : 0];
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;

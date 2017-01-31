@@ -47,12 +47,13 @@
     self.tableViewListItems = @[
                                 @{
                                     @"title": STRING_CONTACT_US,
+                                    @"icon": @"ContactUs",
                                     @"cellType": IconTableViewCell.nibName,
-                                    //@"notification" : kShowContactUsScreenNotification,
                                     @"selectorName": @"segueToContactUsViewController"
                                     },
                                 @{
                                     @"title": STRING_FAQ,
+                                    @"icon": @"",
                                     @"cellType": IconTableViewCell.nibName,
                                     @"selectorName": @"fAQBtnTouchUpInside"
                                     },
