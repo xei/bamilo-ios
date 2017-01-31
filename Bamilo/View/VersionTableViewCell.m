@@ -19,7 +19,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    self.versionUILabel.text = [[AppManager sharedInstance] getAppBuildNumber];
+    self.versionUILabel.text = [[AppManager sharedInstance] getAppVersionNumber];
     self.subtitleUILabel.text = [self.isLastVersion boolValue] ? STRING_UP_TO_DATE : STRING_UPDATE_NOW;
     
     [self.versionUILabel setFont:JACaptionFont];

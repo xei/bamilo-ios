@@ -12,20 +12,23 @@
 //#import "JAProductInfoSubtitleLine.h"
 //#import "JAProductInfoSwitchLine.h"
 //#import "JAProductInfoRightSubtitleLine.h"
-#import "JAActivityViewController.h"
+
 #import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
-#import "JBWhatsAppActivity.h"
+
 #import "RITarget.h"
+
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import "JAUtils.h"
 
 #import "IconTableViewCell.h"
 #import "NotificationTableViewCell.h"
-#import "VersionTableViewCell.h"
+#import "RICustomer.h"
 
 @interface JAMyAccountViewController ()
 
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) UIPopoverController *currentPopoverController;
 @property (nonatomic, strong) NSArray* tableViewListItems;
 
 
@@ -51,9 +54,14 @@
     
     [self.tableView registerNib:[UINib nibWithNibName:[IconTableViewCell nibName] bundle:nil] forCellReuseIdentifier: [IconTableViewCell nibName]];
     [self.tableView registerNib:[UINib nibWithNibName:[NotificationTableViewCell nibName] bundle:nil] forCellReuseIdentifier: [NotificationTableViewCell nibName]];
-    [self.tableView registerNib:[UINib nibWithNibName:[VersionTableViewCell nibName] bundle:nil] forCellReuseIdentifier: [VersionTableViewCell nibName]];
+
     
     self.tableViewListItems = @[
+                                @{
+                                    @"title": [RICustomer checkIfUserIsLogged] ? STRING_LOGOUT : STRING_LOGIN,
+                                    @"cellType": IconTableViewCell.nibName,
+                                    @"selectorName" : @"loginOrLogoutBtnTouchUpInside"
+                                    },
                                 @{
                                     @"title": STRING_PROFILE,
                                     @"icon": @"user-information-icons",
@@ -69,6 +77,18 @@
                                     @"animated" : @NO
                                     },
                                 @{
+                                    @"title": STRING_TRACK_MY_ORDER,
+                                    @"cellType": IconTableViewCell.nibName,
+                                    @"notification" : kShowMyOrdersScreenNotification,
+                                    @"animated": @YES,
+                                    },
+                                @{
+                                    @"title": STRING_RECENTLY_VIEWED,
+                                    @"cellType": IconTableViewCell.nibName,
+                                    @"notification" : kShowRecentlyViewedScreenNotification,
+                                    @"animated": @YES,
+                                    },
+                                @{
                                     @"title": STRING_NOTIFICATIONS,
                                     @"icon": @"announcements-icon",
                                     @"cellType": NotificationTableViewCell.nibName
@@ -80,26 +100,6 @@
                                     @"notification": kShowEmailNotificationsScreenNotification,
                                     @"animated": @YES
                                     },
-                                @{
-                                    @"title": STRING_APP_VERSION,
-                                    @"icon": @"app-ver-icons",
-                                    @"cellType": VersionTableViewCell.nibName,
-                                    @"selectorName": @"openAppStore"
-                                    },
-                                @{
-                                    @"title": STRING_APP_SOCIAL,
-                                    @"icon": @"share-icons",
-                                    @"cellType": IconTableViewCell.nibName,
-                                    @"selectorName": @"shareTheAppSelection"
-                                    
-                                    },
-                                @{
-                                    @"title": STRING_RATE_THE_APP,
-                                    @"icon": @"rate-icons",
-                                    @"cellType": IconTableViewCell.nibName,
-                                    @"selectorName": @"openAppStore",
-                                    
-                                    }
                                 ];
     
     self.tableView.dataSource = self;
@@ -113,78 +113,51 @@
     self.tableView.frame = self.viewBounds;
 }
 
-- (void)appWillEnterForeground {
-    if(VALID_NOTEMPTY(self.currentPopoverController, UIPopoverController)) {
-        [self.currentPopoverController dismissPopoverAnimated:NO];
+
+- (void)loginOrLogoutBtnTouchUpInside {
+    if ([RICustomer checkIfUserIsLogged]) {
+        [self logout];
+        return;
     }
-    
-    if([self respondsToSelector:@selector(dismissViewControllerAnimated:completion:)]) {
-        [self dismissViewControllerAnimated:NO completion:nil];
-    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowAuthenticationScreenNotification object:nil userInfo: @{@"from_side_menu":@YES}];
 }
 
-
-- (void)onOrientationChanged {
-    [super onOrientationChanged];
-    if(self.currentPopoverController) {
-        [self.currentPopoverController dismissPopoverAnimated:NO];
-    }
-}
-
-- (void)shareTheAppSelection {
-    NSArray *appActivities = @[];
+- (void)logout {
+    [self showLoading];
     
-    //UIActivity *fbmActivity = [[AQSFacebookMessengerActivity alloc] init];
-    UIActivity *whatsAppActivity = [[JBWhatsAppActivity alloc] init];
-    WhatsAppMessage *whatsAppMsg;
+    __block NSString *custumerId = [RICustomer getCustomerId];
     
-    JAActivityViewController  *activityController = [[JAActivityViewController alloc] initWithActivityItems:@[] applicationActivities:appActivities];
-    NSString *shareTheAppString = [[NSString alloc] initWithString:[NSString stringWithFormat:STRING_SHARE_APP, APP_NAME]];
-    if(!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")){
+    [[[FBSDKLoginManager alloc] init] logOut];
+    
+    [RICustomer logoutCustomerWithSuccessBlock:^ {
+        [self hideLoading];
         
-        appActivities = @[/*fbmActivity, */whatsAppActivity];
-    }
-    
-    
-    whatsAppMsg = [[WhatsAppMessage alloc] initWithMessage:[NSString stringWithFormat:@"%@ %@",shareTheAppString, kAppStoreUrlBamilo]  forABID:nil];
-    
-    activityController = [[JAActivityViewController alloc] initWithActivityItems:@[shareTheAppString, [NSURL URLWithString:kAppStoreUrlBamilo], whatsAppMsg] applicationActivities:appActivities];
-    
-    
-    
-    
-    [activityController setValue:[NSString stringWithFormat:STRING_SHARE_APP, APP_NAME] forKey:@"subject"];
-    
-    
-    
-    activityController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList];
-    
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
-        CGRect sharePopoverRect = CGRectMake(self.view.frame.size.width / 2, self.view.frame.size.height - 6.0f, 0.0f, 0.0f);
+        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+        [trackingDictionary setValue:custumerId forKey:kRIEventLabelKey];
+        [trackingDictionary setValue:@"LogoutSuccess" forKey:kRIEventActionKey];
+        [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+        [trackingDictionary setValue:custumerId forKey:kRIEventUserIdKey];
+        [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+        [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+        [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLogout] data:[trackingDictionary copy]];
+        [self userDidLogout];
         
-        UIPopoverController* popoverController =
-        [[UIPopoverController alloc] initWithContentViewController:activityController];
-        [popoverController presentPopoverFromRect:sharePopoverRect inView:self.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
-        popoverController.passthroughViews = nil;
-        self.currentPopoverController = popoverController;
-    } else {
-        [self presentViewController:activityController animated:YES completion:nil];
-    }
+    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject) {
+        [self hideLoading];
+        [self userDidLogout];
+    }];
 }
 
-- (void)openAppStore {
-    static NSString *const iOS7AppStoreURLFormat = @"itms-apps://itunes.apple.com/app/apple-store/id%@";
-    static NSString *const iOSAppStoreURLFormat = @"itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@";
+- (void)userDidLogout {
     
-    NSString *appStoreId = kAppStoreIdBamilo;
+    [RICommunicationWrapper deleteSessionCookie];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedOutNotification object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
     
-    NSURL *appStoreLink = [NSURL URLWithString: [NSString stringWithFormat:
-                            ([[UIDevice currentDevice].systemVersion floatValue] >= 7.0f) ? iOS7AppStoreURLFormat : iOSAppStoreURLFormat, appStoreId]];
-    
-    [[UIApplication sharedApplication] openURL:appStoreLink];
-
 }
-
 
 #pragma mark - TableView delegates
 
