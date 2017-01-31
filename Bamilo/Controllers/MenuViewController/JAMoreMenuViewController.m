@@ -53,7 +53,7 @@
                                     },
                                 @{
                                     @"title": STRING_FAQ,
-                                    @"icon": @"",
+                                    @"icon": @"FAQ",
                                     @"cellType": IconTableViewCell.nibName,
                                     @"selectorName": @"fAQBtnTouchUpInside"
                                     },
