@@ -298,46 +298,38 @@
 #pragma mark - Parser
 
 + (RIApi *)parseApi:(NSDictionary*)api
-         countryIso:(NSString *)countryIso
+        countryIso:(NSString *)countryIso
         countryName:(NSString *)countryName
         countryFlag:(NSString *)countryFlag
-countryUserAgentInjection:(NSString*)countryUserAgentInjection
-{
+countryUserAgentInjection:(NSString*)countryUserAgentInjection {
     RIApi* newApi = (RIApi*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RIApi class])];
     
-    if (VALID_NOTEMPTY(countryIso, NSString))
-    {
+    if (countryIso.length) {
         newApi.countryIso = countryIso;
     }
     
-    if (VALID_NOTEMPTY(countryName, NSString))
-    {
+    if (countryName.length) {
         newApi.countryName = countryName;
     }
     
-    if (VALID_NOTEMPTY(countryFlag, NSString))
-    {
+    if (countryFlag.length) {
         newApi.countryFlag = countryFlag;
     }
 
-    if (VALID_NOTEMPTY(countryUserAgentInjection, NSString))
-    {
+    if (countryUserAgentInjection.length) {
         newApi.countryUserAgentInjection = countryUserAgentInjection;
     }
     
-    if ([api objectForKey:@"countryUrl"])
-    {
+    if ([api objectForKey:@"countryUrl"]) {
         newApi.countryUrl = [api objectForKey:@"countryUrl"];
     }
     
     NSDictionary *versionInfo = [api objectForKey:@"version"];
-    if (VALID_NOTEMPTY(versionInfo, NSDictionary))
-    {
+    if (versionInfo.count) {
         NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
         NSDictionary *bundleVersionInfo = [versionInfo objectForKey:bundleIdentifier];
         
-        if(VALID_NOTEMPTY(bundleVersionInfo, NSDictionary))
-        {
+        if(bundleVersionInfo.count) {
             newApi.curVersion = [bundleVersionInfo objectForKey:@"cur_version"];
             newApi.minVersion = [bundleVersionInfo objectForKey:@"min_version"];
         }
@@ -345,12 +337,9 @@ countryUserAgentInjection:(NSString*)countryUserAgentInjection
     
     NSArray* data = [api objectForKey:@"data"];
     
-    if (VALID_NOTEMPTY(data, NSArray))
-    {
-        for (NSDictionary* sectionJSON in data)
-        {
-            if (VALID_NOTEMPTY(sectionJSON, NSDictionary))
-            {
+    if (data.count) {
+        for (NSDictionary* sectionJSON in data) {
+            if (sectionJSON.count) {
                 RISection* section = [RISection parseSection:sectionJSON];
                 section.api = newApi;
                 [newApi addSectionsObject:section];
@@ -361,8 +350,7 @@ countryUserAgentInjection:(NSString*)countryUserAgentInjection
     return newApi;
 }
 
-+ (void)saveApi:(RIApi*)api andContext:(BOOL)save
-{
++ (void)saveApi:(RIApi*)api andContext:(BOOL)save {
     for (RISection* section in api.sections) {
         [RISection saveSection:section andContext:NO];
     }

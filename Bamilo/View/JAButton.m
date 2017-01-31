@@ -94,19 +94,19 @@
     return self;
 }
 
-- (instancetype)initFacebookButtonWithTitle:(NSString *)title target:(id)target action:(SEL)action
-{
-    self = [super init];
-    if (self) {
-        [self setTitle:title forState:UIControlStateNormal];
-        [self.titleLabel setFont:JABodyFont];
-        [self setBackgroundColor:[UIColor clearColor]];
-        [self setTitleColor:JABlue1Color forState:UIControlStateNormal];
-        [self addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
-        [self setImage:[UIImage imageNamed:@"facebook_icon"] forState:UIControlStateNormal];
-    }
-    return self;
-}
+//- (instancetype)initFacebookButtonWithTitle:(NSString *)title target:(id)target action:(SEL)action
+//{
+//    self = [super init];
+//    if (self) {
+//        [self setTitle:title forState:UIControlStateNormal];
+//        [self.titleLabel setFont:JABodyFont];
+//        [self setBackgroundColor:[UIColor clearColor]];
+//        [self setTitleColor:JABlue1Color forState:UIControlStateNormal];
+//        [self addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+//        [self setImage:[UIImage imageNamed:@"facebook_icon"] forState:UIControlStateNormal];
+//    }
+//    return self;
+//}
 
 - (void)setEnabled:(BOOL)enabled
 {

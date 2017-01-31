@@ -20,8 +20,8 @@
 #define kAccountServices2Email 30
 #define kEmail2ContinueLogin 20
 #define kContinueLogin2OrMess 20
-#define kOrMess2FacebookButton 10 // reducing 10px to get button bigger and clickable
-#define kFacebookButton2ContinueWithout 20
+//#define kOrMess2FacebookButton 10 // reducing 10px to get button bigger and clickable
+//#define kFacebookButton2ContinueWithout 20
 #define kWidth 288
 
 @interface JAAuthenticationViewController () <UITextFieldDelegate, JAAccountServicesProtocol>

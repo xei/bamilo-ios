@@ -67,7 +67,7 @@
                                     @"title": STRING_RATE_THE_APP,
                                     @"icon": @"rate-icons",
                                     @"cellType": IconTableViewCell.nibName,
-                                    @"selectorName": @"openAppStore",
+                                    @"selectorName": @"openAppStore"
                                     
                                     },
                                 @{
