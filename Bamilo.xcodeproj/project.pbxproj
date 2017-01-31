@@ -26,11 +26,8 @@
 		6CF4AE881ADEABBB0024EC34 /* JACatalogBannerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CF4AE841ADEABBB0024EC34 /* JACatalogBannerCell.m */; };
 		841E81AA1D1680F300A35AAF /* MPCoachMarks.m in Sources */ = {isa = PBXBuildFile; fileRef = 841E81A81D1680F300A35AAF /* MPCoachMarks.m */; };
 		847606B71D77EEE900C54687 /* JAContactUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 847606B41D77EEE900C54687 /* JAContactUsViewController.m */; };
-		84B25D9D1D8048DF0024B476 /* JAContactUsViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B25D9A1D8048DE0024B476 /* JAContactUsViewController~ipad.xib */; };
-		84B25D9F1D8048DF0024B476 /* JAContactUsViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B25D9B1D8048DE0024B476 /* JAContactUsViewController~iphone.xib */; };
 		870F8CF61E338D2D0021F87B /* BamiloUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 870F8CF51E338D2D0021F87B /* BamiloUITests.m */; };
 		870F8D061E33975A0021F87B /* IntUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 870F8D051E33975A0021F87B /* IntUtility.m */; };
-		8716987C1E38A94C0027B34A /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 871698781E38A94C0027B34A /* Main_iPad.storyboard */; };
 		8716987D1E38A94C0027B34A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8716987A1E38A94C0027B34A /* Main.storyboard */; };
 		874AAB551E3C764600B3F8FE /* Bamilo-Configs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 874AAB541E3C764600B3F8FE /* Bamilo-Configs.plist */; };
 		874AAB5E1E3C778E00B3F8FE /* ConfigManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB5D1E3C778E00B3F8FE /* ConfigManager.m */; };
@@ -38,6 +35,7 @@
 		874AAB691E3CEA0700B3F8FE /* AppManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB681E3CEA0700B3F8FE /* AppManager.m */; };
 		874AAB6D1E3DCEDB00B3F8FE /* SessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB6C1E3DCEDB00B3F8FE /* SessionManager.m */; };
 		874AAB771E3DD31600B3F8FE /* URLUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB761E3DD31600B3F8FE /* URLUtility.m */; };
+		875077611E3F86DC00011877 /* JAContactUsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 875077601E3F86DC00011877 /* JAContactUsViewController.xib */; };
 		875AD53F1E38C0C800584ABF /* RIConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD48C1E38C0C800584ABF /* RIConfiguration.m */; };
 		875AD5401E38C0C800584ABF /* RIAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD4901E38C0C800584ABF /* RIAddress.m */; };
 		875AD5411E38C0C900584ABF /* RIApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD4921E38C0C800584ABF /* RIApi.m */; };
@@ -489,15 +487,12 @@
 		841E81A81D1680F300A35AAF /* MPCoachMarks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPCoachMarks.m; path = ../MPCoachMarks.m; sourceTree = "<group>"; };
 		847606B31D77EEE900C54687 /* JAContactUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAContactUsViewController.h; path = ContactUs/JAContactUsViewController.h; sourceTree = "<group>"; };
 		847606B41D77EEE900C54687 /* JAContactUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAContactUsViewController.m; path = ContactUs/JAContactUsViewController.m; sourceTree = "<group>"; };
-		84B25D9A1D8048DE0024B476 /* JAContactUsViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "JAContactUsViewController~ipad.xib"; path = "ContactUs/JAContactUsViewController~ipad.xib"; sourceTree = "<group>"; };
-		84B25D9B1D8048DE0024B476 /* JAContactUsViewController~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "JAContactUsViewController~iphone.xib"; path = "ContactUs/JAContactUsViewController~iphone.xib"; sourceTree = "<group>"; };
 		870F8CCB1E3354700021F87B /* Bamilo.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Bamilo.entitlements; sourceTree = "<group>"; };
 		870F8CF31E338D2C0021F87B /* BamiloUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BamiloUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		870F8CF51E338D2D0021F87B /* BamiloUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BamiloUITests.m; sourceTree = "<group>"; };
 		870F8CF71E338D2D0021F87B /* Bamilo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Bamilo-Info.plist"; sourceTree = "<group>"; };
 		870F8D041E33975A0021F87B /* IntUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntUtility.h; sourceTree = "<group>"; };
 		870F8D051E33975A0021F87B /* IntUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntUtility.m; sourceTree = "<group>"; };
-		871698791E38A94C0027B34A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Bamilo/Base.lproj/Main_iPad.storyboard; sourceTree = SOURCE_ROOT; };
 		8716987B1E38A94C0027B34A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Bamilo/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		874AAB541E3C764600B3F8FE /* Bamilo-Configs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Bamilo-Configs.plist"; sourceTree = "<group>"; };
 		874AAB5D1E3C778E00B3F8FE /* ConfigManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigManager.m; sourceTree = "<group>"; };
@@ -510,6 +505,7 @@
 		874AAB6C1E3DCEDB00B3F8FE /* SessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionManager.m; sourceTree = "<group>"; };
 		874AAB751E3DD31600B3F8FE /* URLUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLUtility.h; sourceTree = "<group>"; };
 		874AAB761E3DD31600B3F8FE /* URLUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLUtility.m; sourceTree = "<group>"; };
+		875077601E3F86DC00011877 /* JAContactUsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAContactUsViewController.xib; sourceTree = "<group>"; };
 		875AD48B1E38C0C800584ABF /* RIConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIConfiguration.h; sourceTree = "<group>"; };
 		875AD48C1E38C0C800584ABF /* RIConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIConfiguration.m; sourceTree = "<group>"; };
 		875AD48F1E38C0C800584ABF /* RIAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIAddress.h; sourceTree = "<group>"; };
@@ -1383,7 +1379,6 @@
 		4AE242DC198655D900E37C90 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
-				871698781E38A94C0027B34A /* Main_iPad.storyboard */,
 				8716987A1E38A94C0027B34A /* Main.storyboard */,
 			);
 			name = Storyboards;
@@ -1555,8 +1550,7 @@
 			children = (
 				847606B31D77EEE900C54687 /* JAContactUsViewController.h */,
 				847606B41D77EEE900C54687 /* JAContactUsViewController.m */,
-				84B25D9A1D8048DE0024B476 /* JAContactUsViewController~ipad.xib */,
-				84B25D9B1D8048DE0024B476 /* JAContactUsViewController~iphone.xib */,
+				875077601E3F86DC00011877 /* JAContactUsViewController.xib */,
 			);
 			name = ContactUs;
 			path = Ratings;
@@ -3163,18 +3157,17 @@
 				CE9AE0431AB6D78200D56481 /* JAMaintenancePage.xib in Resources */,
 				CE9AE0441AB6D78200D56481 /* JAGenericFiltersView.xib in Resources */,
 				6CF4AE821ADEAA290024EC34 /* JACatalogBannerCell.xib in Resources */,
-				84B25D9D1D8048DF0024B476 /* JAContactUsViewController~ipad.xib in Resources */,
 				9A564CBB1B34273800F23057 /* JASellerRatingsViewController~ipad.xib in Resources */,
 				CE9AE0581AB6D78200D56481 /* JAPDVVariations.xib in Resources */,
 				CE9AE0611AB6D78200D56481 /* JAOrangeButtonCell_ipad_portrait.xib in Resources */,
 				CE9AE0691AB6D78200D56481 /* JAOrangeButtonCell_ipad_landscape.xib in Resources */,
 				CE9AE06F1AB6D78200D56481 /* JANewsletterComponent.xib in Resources */,
+				875077611E3F86DC00011877 /* JAContactUsViewController.xib in Resources */,
 				CE9AE0751AB6D78200D56481 /* JAFallbackView.xib in Resources */,
 				CE9AE0811AB6D78200D56481 /* JAGrayButtonCell_ipad_landscape.xib in Resources */,
 				875AD5841E38C0C900584ABF /* RITrackingDebug_Bamilo.plist in Resources */,
 				CE9AE0931AB6D78200D56481 /* JAGrayButtonCell.xib in Resources */,
 				CEA2A1BB1B25D53B00E5973F /* JANewRatingViewController.xib in Resources */,
-				84B25D9F1D8048DF0024B476 /* JAContactUsViewController~iphone.xib in Resources */,
 				9A564CC11B38187100F23057 /* JANewSellerRatingViewController~ipad.xib in Resources */,
 				CE9AE09B1AB6D78200D56481 /* JAPaymentCell.xib in Resources */,
 				CE9AE0A21AB6D78200D56481 /* JASwitchCell.xib in Resources */,
@@ -3210,7 +3203,6 @@
 				1C71FC621E2CABAD007ACF02 /* Bamilosans UltraLight.ttf in Resources */,
 				1C80D8841E2E3D850036B514 /* ‌Bamilosans Bold.ttf in Resources */,
 				8716987D1E38A94C0027B34A /* Main.storyboard in Resources */,
-				8716987C1E38A94C0027B34A /* Main_iPad.storyboard in Resources */,
 				6C18BD741AB87E0A00905FD2 /* Images.xcassets in Resources */,
 				CE9AE1391AB8997B00D56481 /* Bamilo.xcassets in Resources */,
 			);
@@ -3656,14 +3648,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		871698781E38A94C0027B34A /* Main_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				871698791E38A94C0027B34A /* Base */,
-			);
-			name = Main_iPad.storyboard;
-			sourceTree = "<group>";
-		};
 		8716987A1E38A94C0027B34A /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

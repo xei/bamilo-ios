@@ -141,10 +141,9 @@
     [self loadNavigationViews];
     
     self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
-    {
+    /*if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
-    }
+    }*/
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showLoadCountryScreen:)
