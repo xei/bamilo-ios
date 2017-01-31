@@ -448,8 +448,7 @@
     [self openScreenTarget:screenTarget];
 }
 
-- (BOOL)openScreenTarget:(JAScreenTarget *)screenTarget
-{
+- (BOOL)openScreenTarget:(JAScreenTarget *)screenTarget {
     if ([[self topViewController] isKindOfClass:[JABaseViewController class]] && [[(JABaseViewController *)[self topViewController] targetString] isEqualToString:screenTarget.target.targetString]) {
         return NO;
     }
@@ -528,8 +527,7 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAHomeViewController class]])
     {
-        if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification object], NSDictionary))
-        {
+        if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification object], NSDictionary)){
             [self showRootViewController];
         } else {
             [self popToRootViewControllerAnimated:NO];
@@ -1980,7 +1978,6 @@
         if (![[self topViewController] isKindOfClass:[JACartViewController class]]) {
             JACartViewController *cartViewController = [[JACartViewController alloc] init];
             [cartViewController setCart:self.cart];
-            
             [self popToRootViewControllerAnimated:NO];
             [self.tabBarView selectButtonAtIndex:2];
             [self pushViewController:cartViewController animated:NO];

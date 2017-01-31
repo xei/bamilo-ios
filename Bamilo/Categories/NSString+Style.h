@@ -11,4 +11,5 @@
 @interface NSString (Style)
 - (NSString *)wrapWithMaxSize:(int)maxSize;
 - (NSString *) numbersToPersian;
+- (NSString *) numbersToEnglish;
 @end

@@ -32,8 +32,7 @@
 
 @implementation JACartViewController
 
-- (UIScrollView *)scrollView
-{
+- (UIScrollView *)scrollView {
     if (!VALID(_scrollView, UIScrollView)) {
         _scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
         [self.view addSubview:_scrollView];
@@ -41,8 +40,7 @@
     return _scrollView;
 }
 
-- (JAEmptyCartView *)emptyCartView
-{
+- (JAEmptyCartView *)emptyCartView {
     if (!VALID(_emptyCartView, JAEmptyCartView)) {
         _emptyCartView = [[JAEmptyCartView alloc] initWithFrame:self.viewBounds];
         [_emptyCartView setBackgroundColor:JAWhiteColor];
@@ -52,8 +50,7 @@
     return _emptyCartView;
 }
 
-- (JACartProductsView *)cartProductsView
-{
+- (JACartProductsView *)cartProductsView {
     if (!VALID(_cartProductsView, JACartProductsView)) {
         _cartProductsView = [[JACartProductsView alloc] initWithFrame:CGRectZero];
         [_cartProductsView setBackgroundColor:JAOrange1Color];
@@ -63,8 +60,7 @@
     return _cartProductsView;
 }
 
-- (JACartResumeView *)resumeView
-{
+- (JACartResumeView *)resumeView {
     if (!VALID(_resumeView, JACartResumeView)) {
         _resumeView = [[JACartResumeView alloc] initWithFrame:CGRectZero];
         [_resumeView addProceedTarget:self action:@selector(proceedToCheckout)];
@@ -75,8 +71,7 @@
     return _resumeView;
 }
 
-- (void)setCart:(RICart *)cart
-{
+- (void)setCart:(RICart *)cart {
     _cart = cart;
     if (VALID(self.cart, RICart)) {
         if (self.cart.cartCount.integerValue == 0) {
@@ -91,15 +86,13 @@
     }
 }
 
-- (void)setCartEmpty:(BOOL)empty
-{
+- (void)setCartEmpty:(BOOL)empty {
     [self.cartProductsView setHidden:empty];
     [self.resumeView setHidden:empty];
     [self.emptyCartView setHidden:!empty];
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     self.A4SViewControllerAlias = @"CART";
     self.screenName = @"Cart";
@@ -112,8 +105,7 @@
     [self.view setBackgroundColor:JAWhiteColor];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self loadingCart];
     if (self.firstLoading) {
@@ -125,8 +117,7 @@
     }
 }
 
-- (void)loadingCart
-{
+- (void)loadingCart {
     [self showLoading];
     [self setCartEmpty:YES];
     [RICart getCartWithSuccessBlock:^(RICart *cartData) {

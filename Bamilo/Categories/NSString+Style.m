@@ -25,8 +25,16 @@
 }
 
 - (NSString *) numbersToPersian {
+    return [self changeNumberToLocalId:@"ar"];
+}
+
+- (NSString *) numbersToEnglish {
+    return [self changeNumberToLocalId:@"en"];
+}
+
+- (NSString *)changeNumberToLocalId:(NSString *) identifier {
     NSNumberFormatter *formatter = [NSNumberFormatter new];
-    formatter.locale = [NSLocale localeWithLocaleIdentifier:@"ar"];
+    formatter.locale = [NSLocale localeWithLocaleIdentifier:identifier];
     NSString *result = self;
     for (NSInteger i = 0; i < 10; i++) {
         NSNumber *num = @(i);
@@ -34,5 +42,4 @@
     }
     return result;
 }
-
 @end

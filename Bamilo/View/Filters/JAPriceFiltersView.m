@@ -8,6 +8,7 @@
 
 #import "JAPriceFiltersView.h"
 #import "TTRangeSlider.h"
+#import "NSString+Style.h"
 
 @interface JAPriceFiltersView()
 
@@ -51,10 +52,10 @@
         label.font = [UIFont fontWithName:kFontRegularName size: 12];
     }
     
-    self.upperSelectedPriceUITextField.text = [NSString stringWithFormat:@"%.0ld", (long)self.priceFilterOption.upperValue];
+    self.upperSelectedPriceUITextField.text = [[NSString stringWithFormat:@"%.0ld", (long)self.priceFilterOption.upperValue] numbersToPersian];
     
-    NSString *lowerValue = [NSString stringWithFormat:@"%.0ld", (long)self.priceFilterOption.lowerValue];
-    self.lowerSelectedPriceUITextField.text = lowerValue.length ? lowerValue : @"0";
+    NSString *lowerValue = [[NSString stringWithFormat:@"%.0ld", (long)self.priceFilterOption.lowerValue] numbersToPersian];
+    self.lowerSelectedPriceUITextField.text = lowerValue.length ? lowerValue : @"۰";
 }
 
 - (void)saveOptions {
@@ -65,25 +66,29 @@
     [super saveOptions];
 }
 
-- (IBAction)textFieldEditingChaned:(UITextField *)sender {
-    float validateValue = MAX(self.priceFilterOption.min, MIN(self.priceFilterOption.max, sender.text.floatValue));
+- (IBAction)textFieldEditingDidEnd:(UITextField *)sender {
+    float validateValue = MAX(self.priceFilterOption.min, MIN(self.priceFilterOption.max, [sender.text numbersToEnglish].floatValue));
     float valueToBeSet;
     if (sender == self.upperSelectedPriceUITextField) {
-        valueToBeSet = MAX(validateValue, self.lowerSelectedPriceUITextField.text.floatValue);
+        valueToBeSet = MAX(validateValue, [self.lowerSelectedPriceUITextField.text numbersToEnglish].floatValue);
         self.priceRangeSlider.selectedMaximum = valueToBeSet;
     } else  {
         valueToBeSet = MIN(validateValue, self.upperSelectedPriceUITextField.text.floatValue);
         self.priceRangeSlider.selectedMinimum = valueToBeSet;
     }
     
-    sender.text = [NSString stringWithFormat:@"%.0f", valueToBeSet];
+    sender.text = [[NSString stringWithFormat:@"%.0f", valueToBeSet] numbersToPersian];
     
+}
+
+- (IBAction)textFieldEditingDidChanged:(UITextField *)sender {
+    sender.text = [sender.text numbersToPersian];
 }
 
 - (void)rangeSlider:(TTRangeSlider *)sender didChangeSelectedMinimumValue:(float)selectedMinimum andMaximumValue:(float)selectedMaximum {
     if (sender == self.priceRangeSlider) {
-        self.lowerSelectedPriceUITextField.text = [NSString stringWithFormat:@"%.0f", selectedMinimum];
-        self.upperSelectedPriceUITextField.text = [NSString stringWithFormat:@"%.0f", selectedMaximum];
+        self.lowerSelectedPriceUITextField.text = [[NSString stringWithFormat:@"%.0f", selectedMinimum] numbersToPersian];
+        self.upperSelectedPriceUITextField.text = [[NSString stringWithFormat:@"%.0f", selectedMaximum] numbersToPersian];
     }
     
     [self saveOptions];
