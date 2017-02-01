@@ -122,6 +122,7 @@
 		87A681581E40F21B00D252AC /* BaseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A681571E40F21B00D252AC /* BaseButton.m */; };
 		87A6815C1E40F9C000D252AC /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A6815B1E40F9C000D252AC /* BaseViewController.m */; };
 		87A681611E41B88000D252AC /* SearchBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A681601E41B88000D252AC /* SearchBaseViewController.m */; };
+		87A681711E41FCF300D252AC /* CheckoutProgressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A681701E41FCF300D252AC /* CheckoutProgressViewController.m */; };
 		87A6ACEF1E38919C00C0E7DC /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A6ACE81E38919C00C0E7DC /* GTMNSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		87A6ACF21E38919C00C0E7DC /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A6ACEC1E38919C00C0E7DC /* NSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		87C69DAB1E38B78E0026018F /* NSString+Style.m in Sources */ = {isa = PBXBuildFile; fileRef = 87C69DAA1E38B78E0026018F /* NSString+Style.m */; };
@@ -712,6 +713,8 @@
 		87A681601E41B88000D252AC /* SearchBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchBaseViewController.m; sourceTree = "<group>"; };
 		87A681631E41C8BC00D252AC /* TabBarProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarProtocol.h; sourceTree = "<group>"; };
 		87A681651E41DD1800D252AC /* SideMenuProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SideMenuProtocol.h; sourceTree = "<group>"; };
+		87A6816F1E41FCF300D252AC /* CheckoutProgressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckoutProgressViewController.h; sourceTree = "<group>"; };
+		87A681701E41FCF300D252AC /* CheckoutProgressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckoutProgressViewController.m; sourceTree = "<group>"; };
 		87A6ACE61E38919C00C0E7DC /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
 		87A6ACE71E38919C00C0E7DC /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSString+HTML.h"; sourceTree = "<group>"; };
 		87A6ACE81E38919C00C0E7DC /* GTMNSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+HTML.m"; sourceTree = "<group>"; };
@@ -1597,9 +1600,10 @@
 			isa = PBXGroup;
 			children = (
 				61E099691E3E1163004ED14E /* BaseTableViewCell */,
+				87A681721E42003100D252AC /* AddressTableViewCell */,
+				61E099671E3E113F004ED14E /* PlainTableViewCell */,
 				61E099681E3E114E004ED14E /* IconTableViewCell */,
 				61E0996D1E3E18B7004ED14E /* NotificationTableViewCell */,
-				61E099671E3E113F004ED14E /* PlainTableViewCell */,
 				61E099731E3E19CF004ED14E /* VersionTableViewCell */,
 			);
 			name = TableViewCells;
@@ -2168,6 +2172,48 @@
 			name = Protocols;
 			sourceTree = "<group>";
 		};
+		87A681681E41FAA900D252AC /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				87D07D721E4097D600C00AC6 /* BaseViewController */,
+				87D07D701E40978100C00AC6 /* AddressViewController */,
+				87D07D791E40996F00C00AC6 /* ConfirmationViewController */,
+				87D07D7D1E4099C600C00AC6 /* PaymentViewController */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		87A6816D1E41FCDE00D252AC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				87A6816E1E41FCE200D252AC /* CheckoutProgressViewController */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		87A6816E1E41FCE200D252AC /* CheckoutProgressViewController */ = {
+			isa = PBXGroup;
+			children = (
+				87A6816F1E41FCF300D252AC /* CheckoutProgressViewController.h */,
+				87A681701E41FCF300D252AC /* CheckoutProgressViewController.m */,
+			);
+			name = CheckoutProgressViewController;
+			sourceTree = "<group>";
+		};
+		87A681721E42003100D252AC /* AddressTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = AddressTableViewCell;
+			sourceTree = "<group>";
+		};
+		87A681731E4200B900D252AC /* AddressTableViewHeaderCell */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = AddressTableViewHeaderCell;
+			sourceTree = "<group>";
+		};
 		87A6ACE41E38919C00C0E7DC /* GTMNSString-HTML */ = {
 			isa = PBXGroup;
 			children = (
@@ -2193,10 +2239,8 @@
 		87D07D711E4097CC00C00AC6 /* Checkout */ = {
 			isa = PBXGroup;
 			children = (
-				87D07D721E4097D600C00AC6 /* BaseViewController */,
-				87D07D701E40978100C00AC6 /* AddressViewController */,
-				87D07D791E40996F00C00AC6 /* ConfirmationViewController */,
-				87D07D7D1E4099C600C00AC6 /* PaymentViewController */,
+				87A681681E41FAA900D252AC /* Controllers */,
+				87A6816D1E41FCDE00D252AC /* Views */,
 			);
 			name = Checkout;
 			sourceTree = "<group>";
@@ -2232,8 +2276,8 @@
 			isa = PBXGroup;
 			children = (
 				87D07D841E40B4DA00C00AC6 /* TableViewHeaderFooters */,
-				87D07D831E40B4C800C00AC6 /* Buttons */,
 				61E099661E3E10F0004ED14E /* TableViewCells */,
+				87D07D831E40B4C800C00AC6 /* Buttons */,
 			);
 			name = BML;
 			sourceTree = "<group>";
@@ -2262,6 +2306,7 @@
 			isa = PBXGroup;
 			children = (
 				61E099601E3DD3BC004ED14E /* PlainTableViewHeaderCell */,
+				87A681731E4200B900D252AC /* AddressTableViewHeaderCell */,
 			);
 			name = TableViewHeaderFooters;
 			sourceTree = "<group>";
@@ -3795,6 +3840,7 @@
 				875AD5531E38C0C900584ABF /* RITeaserGrouping.m in Sources */,
 				FFF900721C6A5CC700DDF538 /* JATextFieldComponent.m in Sources */,
 				875AD54F1E38C0C900584ABF /* RISearchSuggestion.m in Sources */,
+				87A681711E41FCF300D252AC /* CheckoutProgressViewController.m in Sources */,
 				874AAB5E1E3C778E00B3F8FE /* ConfigManager.m in Sources */,
 				CE9ADFC71AB6D78200D56481 /* JAButtonWithBlur.m in Sources */,
 				FFB1B08E1CE5E163000F60AD /* JAORWaysViewController.m in Sources */,
