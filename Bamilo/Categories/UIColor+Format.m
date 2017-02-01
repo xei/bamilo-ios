@@ -10,16 +10,21 @@
 
 @implementation UIColor (Format)
 
-+ (UIColor *) withHexString:(NSString *)hexString {
++(UIColor *) withHexString:(NSString *)hexString {
     unsigned rgbValue = 0;
     if([hexString hasPrefix:@"#"]) {
         hexString = [hexString substringFromIndex:1];
     }
+    
     NSScanner *scanner = [NSScanner scannerWithString:hexString];
     [scanner setScanLocation:0];
     [scanner scanHexInt:&rgbValue];
     
-    return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:1.0];
+    return [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0x00FF00) >> 8))/255.0 blue:((float)((rgbValue & 0x0000FF) >>  0))/255.0 alpha:1.0];
+}
+
++(UIColor *) withRGBA:(int)red green:(int)green blue:(int)blue alpha:(float)alpha {
+    return [UIColor colorWithRed:red/255.0f green:green/255.0f blue:blue/255.0f alpha:alpha];
 }
 
 @end

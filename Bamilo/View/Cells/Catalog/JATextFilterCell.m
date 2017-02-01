@@ -7,7 +7,6 @@
 //
 
 #import "JATextFilterCell.h"
-#import "NSString+Style.h"
 
 @implementation JATextFilterCell
 
