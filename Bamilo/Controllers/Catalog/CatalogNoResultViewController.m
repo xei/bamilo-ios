@@ -11,7 +11,6 @@
 #import "RITeaserComponent.h"
 #import "PopularTeaserTableViewCell.h"
 #import "PlainTableViewHeaderCell.h"
-#import "NSString+Style.h"
 
 @interface CatalogNoResultViewController ()
     @property (weak, nonatomic) IBOutlet UITableView *tableView;

@@ -7,7 +7,6 @@
 //
 
 #import "JANavigationBarLayout.h"
-#import "NSString+Style.h"
 
 @implementation JANavigationBarLayout
 

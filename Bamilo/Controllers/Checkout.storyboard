@@ -20,7 +20,23 @@
                     <view key="view" contentMode="scaleToFill" id="IvS-Li-N4L">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Sh-o6-mCT" customClass="OrangeButton">
+                                <rect key="frame" x="10" y="607" width="355" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="8JA-hL-lNi"/>
+                                </constraints>
+                                <state key="normal" title="ادامه">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="2Sh-o6-mCT" secondAttribute="trailing" constant="10" id="0G7-rF-27w"/>
+                            <constraint firstItem="nKf-T7-VCI" firstAttribute="top" secondItem="2Sh-o6-mCT" secondAttribute="bottom" constant="10" id="oP3-qF-Hv6"/>
+                            <constraint firstItem="2Sh-o6-mCT" firstAttribute="leading" secondItem="IvS-Li-N4L" secondAttribute="leading" constant="10" id="rm1-HV-W9t"/>
+                        </constraints>
                     </view>
                     <connections>
                         <segue destination="RR0-PB-qTp" kind="show" identifier="" id="Vuf-MV-Cbd"/>

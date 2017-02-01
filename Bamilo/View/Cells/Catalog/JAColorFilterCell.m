@@ -8,7 +8,6 @@
 
 #import "JAColorFilterCell.h"
 #import "RIFilter.h"
-#import "NSString+Style.h"
 
 @implementation JAColorFilterCell
 

@@ -33,6 +33,9 @@
 @property (nonatomic, strong) UIButton *searchBarBackButton;
 @property (nonatomic) UIInterfaceOrientation orientation;
 
+@property (nonatomic, strong) UISearchBar *searchBar;
+@property (nonatomic, strong) UIView *searchBarBackground;
+
 @end
 
 @implementation JABaseViewController
@@ -165,13 +168,6 @@
             [self setOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
         });
     }
-}
-
-- (void)onOrientationChanged {
-    if (self.searchBarIsVisible) {
-        [self reloadSearchBar];
-    }
-    self.orientation = [[UIApplication sharedApplication] statusBarOrientation];
 }
 
 - (void)changeLoadingFrame:(CGRect)frame orientation:(UIInterfaceOrientation)orientation {
@@ -700,6 +696,13 @@
 
 -(void)appDidEnterBackground {
     return;
+}
+
+- (void)onOrientationChanged {
+    if (self.searchBarIsVisible) {
+        [self reloadSearchBar];
+    }
+    self.orientation = [[UIApplication sharedApplication] statusBarOrientation];
 }
 
 @end

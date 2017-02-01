@@ -69,7 +69,11 @@
 #import "JAORWaysViewController.h"
 #import "JAORPaymentViewController.h"
 #import "JAORPickupStationWebViewController.h"
+
+//###################################################
+#import "ViewControllerManager.h"
 #import "ContactUsViewController.h"
+#import "CheckoutAddressViewController.h"
 
 @interface JACenterNavigationController ()
 
@@ -1110,6 +1114,19 @@
     }
     
     UIViewController *topViewController = [self topViewController];
+    if (![topViewController isKindOfClass:[CheckoutAddressViewController class]]) {
+        CheckoutAddressViewController *checkoutAddressViewController = (CheckoutAddressViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"CheckoutAddressViewController"];
+        
+        if (fromCheckout) {
+            checkoutAddressViewController.navBarLayout.showCartButton = NO;
+            [self goToStep:checkoutAddressViewController forStepByStepViewController:self.checkoutStepByStepViewController];
+        } else {
+            [self pushViewController:checkoutAddressViewController animated:YES];
+        }
+    }
+    
+    /*
+    UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAAddressesViewController class]]) {
         JAAddressesViewController *addressesVC = [[JAAddressesViewController alloc] init];
         
@@ -1123,7 +1140,7 @@
         } else {
             [self pushViewController:addressesVC animated:NO];
         }
-    }
+    }*/
 }
 
 #pragma mark Checkout Add Address Screen
@@ -2059,9 +2076,6 @@
     if (!self.searchViewAlwaysHidden) {
         [self.searchView setHidden:NO];
     }
-}
-
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 }
 
 @end

@@ -8,15 +8,10 @@
 
 #import "CheckoutAddressViewController.h"
 
-@interface CheckoutAddressViewController ()
-
-@end
-
 @implementation CheckoutAddressViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
@@ -24,6 +19,12 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Overrides
+-(void)updateNavBar {
+    [super updateNavBar];
+    
+    self.navBarLayout.title = STRING_CHOOSE_ADDRESS;
+}
 /*
 #pragma mark - Navigation
 

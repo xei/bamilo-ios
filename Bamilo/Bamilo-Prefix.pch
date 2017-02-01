@@ -68,4 +68,6 @@
     #import "UIView+Frame.h"
     #import "UILabel+Size.h"
     #import "UIButton+Size.h"
+//########################################
+    #import "Categories.pch"
 #endif

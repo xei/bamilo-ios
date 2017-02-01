@@ -7,7 +7,8 @@
 //
 
 #import "JABaseViewController.h"
+#import "BaseViewController.h"
 
-@interface CheckoutBaseViewController : JABaseViewController
+@interface CheckoutBaseViewController : BaseViewController
 
 @end

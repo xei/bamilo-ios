@@ -456,4 +456,7 @@
 #define STRING_INVALID_ADDRESS_BILLING_SHIPPING RILocalizedString(@"invalid_address_shipping_billing", nil)
 #define STRING_INVALID_ADDRESS_OTHER RILocalizedString(@"invalid_address_other", nil)
 
+//##################################################################################################################
+#define STRING_CHOOSE_ADDRESS RILocalizedString(@"choose_address", nil) 
+
 #endif
