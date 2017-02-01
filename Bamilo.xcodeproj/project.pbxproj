@@ -123,6 +123,8 @@
 		87A6815C1E40F9C000D252AC /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A6815B1E40F9C000D252AC /* BaseViewController.m */; };
 		87A681611E41B88000D252AC /* SearchBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A681601E41B88000D252AC /* SearchBaseViewController.m */; };
 		87A681711E41FCF300D252AC /* CheckoutProgressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A681701E41FCF300D252AC /* CheckoutProgressViewController.m */; };
+		87A681791E4201B500D252AC /* AddressTableViewHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A681781E4201B500D252AC /* AddressTableViewHeaderCell.m */; };
+		87A6817B1E4201F400D252AC /* AddressTableViewHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87A6817A1E4201F400D252AC /* AddressTableViewHeaderCell.xib */; };
 		87A6ACEF1E38919C00C0E7DC /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A6ACE81E38919C00C0E7DC /* GTMNSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		87A6ACF21E38919C00C0E7DC /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A6ACEC1E38919C00C0E7DC /* NSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		87C69DAB1E38B78E0026018F /* NSString+Style.m in Sources */ = {isa = PBXBuildFile; fileRef = 87C69DAA1E38B78E0026018F /* NSString+Style.m */; };
@@ -715,6 +717,9 @@
 		87A681651E41DD1800D252AC /* SideMenuProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SideMenuProtocol.h; sourceTree = "<group>"; };
 		87A6816F1E41FCF300D252AC /* CheckoutProgressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckoutProgressViewController.h; sourceTree = "<group>"; };
 		87A681701E41FCF300D252AC /* CheckoutProgressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckoutProgressViewController.m; sourceTree = "<group>"; };
+		87A681771E4201B500D252AC /* AddressTableViewHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressTableViewHeaderCell.h; sourceTree = "<group>"; };
+		87A681781E4201B500D252AC /* AddressTableViewHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressTableViewHeaderCell.m; sourceTree = "<group>"; };
+		87A6817A1E4201F400D252AC /* AddressTableViewHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressTableViewHeaderCell.xib; sourceTree = "<group>"; };
 		87A6ACE61E38919C00C0E7DC /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
 		87A6ACE71E38919C00C0E7DC /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSString+HTML.h"; sourceTree = "<group>"; };
 		87A6ACE81E38919C00C0E7DC /* GTMNSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+HTML.m"; sourceTree = "<group>"; };
@@ -2210,6 +2215,9 @@
 		87A681731E4200B900D252AC /* AddressTableViewHeaderCell */ = {
 			isa = PBXGroup;
 			children = (
+				87A681771E4201B500D252AC /* AddressTableViewHeaderCell.h */,
+				87A681781E4201B500D252AC /* AddressTableViewHeaderCell.m */,
+				87A6817A1E4201F400D252AC /* AddressTableViewHeaderCell.xib */,
 			);
 			name = AddressTableViewHeaderCell;
 			sourceTree = "<group>";
@@ -3473,6 +3481,7 @@
 				CE9AE0811AB6D78200D56481 /* JAGrayButtonCell_ipad_landscape.xib in Resources */,
 				875AD5841E38C0C900584ABF /* RITrackingDebug_Bamilo.plist in Resources */,
 				CE9AE0931AB6D78200D56481 /* JAGrayButtonCell.xib in Resources */,
+				87A6817B1E4201F400D252AC /* AddressTableViewHeaderCell.xib in Resources */,
 				CEA2A1BB1B25D53B00E5973F /* JANewRatingViewController.xib in Resources */,
 				9A564CC11B38187100F23057 /* JANewSellerRatingViewController~ipad.xib in Resources */,
 				CE9AE09B1AB6D78200D56481 /* JAPaymentCell.xib in Resources */,
@@ -3776,6 +3785,7 @@
 				9AE766BF1CBBF01C00B63D8E /* JAEmptyCartView.m in Sources */,
 				9AEF741C1CD27C1400A5D574 /* JACheckoutButton.m in Sources */,
 				CE9ADF9C1AB6D78200D56481 /* JAAddNewAddressViewController.m in Sources */,
+				87A681791E4201B500D252AC /* AddressTableViewHeaderCell.m in Sources */,
 				875AD5481E38C0C900584ABF /* RIFieldOption.m in Sources */,
 				FFF900871C6B5BDF00DDF538 /* JARadioGroupComponent.m in Sources */,
 				875AD56B1E38C0C900584ABF /* RIProduct.m in Sources */,

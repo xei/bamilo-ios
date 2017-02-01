@@ -8,10 +8,15 @@
 
 #import "CheckoutAddressViewController.h"
 
-@implementation CheckoutAddressViewController
+@implementation CheckoutAddressViewController {
+@private
+    NSArray *_addresses;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    _addresses = [NSArray new];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -25,14 +30,16 @@
     
     self.navBarLayout.title = STRING_CHOOSE_ADDRESS;
 }
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma mark - UITableViewDelegate
+
+#pragma mark - UITableViewDataSource
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [_addresses count];
 }
-*/
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+}
 
 @end
