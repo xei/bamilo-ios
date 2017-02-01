@@ -224,12 +224,10 @@
     }
 }
 
-- (void)initCountry
-{
+- (void)initCountry {
     self.isRequestDone = YES;
     
-    if(VALID_NOTEMPTY(self.loginMethod, NSString) && [@"signup" isEqualToString:self.loginMethod])
-    {
+    if(self.loginMethod.length && [@"signup" isEqualToString:self.loginMethod]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:nil];
         [RICommunicationWrapper deleteSessionCookie];
     }
@@ -239,13 +237,11 @@
     
     NSNumber *event = [NSNumber numberWithInt:RIEventAutoLoginFail];
     [trackingDictionary setValue:@"AutoLoginFailed" forKey:kRIEventActionKey];
-    if(VALID_NOTEMPTY(self.customer, RICustomer))
-    {
+    if(self.customer) {
         event = [NSNumber numberWithInt:RIEventAutoLoginSuccess];
         [trackingDictionary setValue:@"AutoLoginSuccess" forKey:kRIEventActionKey];
         
-        if(VALID_NOTEMPTY(self.customer, RICustomer))
-        {
+        if(self.customer) {
             [trackingDictionary setValue:self.customer.customerId forKey:kRIEventLabelKey];
             [trackingDictionary setValue:self.customer.customerId forKey:kRIEventUserIdKey];
             [trackingDictionary setValue:self.customer.firstName forKey:kRIEventUserFirstNameKey];
@@ -280,21 +276,16 @@
     [launchData setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
     
     NSString *source = @"Organic";
-    if(VALID_NOTEMPTY(self.pushNotification, NSDictionary))
-    {
+    if(self.pushNotification.count) {
         source = @"Push";
-        if(VALID_NOTEMPTY([self.pushNotification objectForKey:@"UTM"], NSString))
-        {
+        if([[self.pushNotification objectForKey:@"UTM"] length]) {
             [launchData setObject:[self.pushNotification objectForKey:@"UTM"] forKey:kRILaunchEventCampaignKey];
         }
     }
 
     [launchData setValue:source forKey:kRILaunchEventSourceKey];
     [[RITrackingWrapper sharedInstance] sendLaunchEventWithData:[launchData copy]];
-    
-    [[RITrackingWrapper sharedInstance] trackEvent:event
-                                              data:[trackingDictionary copy]];
-    
+    [[RITrackingWrapper sharedInstance] trackEvent:event data:[trackingDictionary copy]];
     trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
     
@@ -302,13 +293,9 @@
     NSString *languageCode = [componentsFromLocale objectForKey:NSLocaleLanguageCode];
     [trackingDictionary setValue:languageCode forKey:kRIEventLanguageCode];
     
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventChangeCountry]
-                                              data:[trackingDictionary copy]];
-    
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventChangeCountry] data:[trackingDictionary copy]];
     [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCountryNotification object:nil userInfo:self.pushNotification];
-    
-//    [self hideLoading];
-    
+
 }
 
 #pragma mark UIAlertView

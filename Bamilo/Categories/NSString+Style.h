@@ -12,4 +12,5 @@
 - (NSString *)wrapWithMaxSize:(int)maxSize;
 - (NSString *) numbersToPersian;
 - (NSString *) numbersToEnglish;
+- (NSString *) formatTheNumbers;
 @end

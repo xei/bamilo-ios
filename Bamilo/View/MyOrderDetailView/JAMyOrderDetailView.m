@@ -251,8 +251,7 @@
                                                       userInfo:userInfo];
 }
 
-- (void)addToCart:(UIButton *)button
-{
+- (void)addToCart:(UIButton *)button {
     if (!self.parent) {
         return;
     }

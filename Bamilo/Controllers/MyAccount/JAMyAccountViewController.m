@@ -7,11 +7,6 @@
 //
 
 #import "JAMyAccountViewController.h"
-//#import "JAProductInfoHeaderLine.h"
-//#import "JAProductInfoSingleLine.h"
-//#import "JAProductInfoSubtitleLine.h"
-//#import "JAProductInfoSwitchLine.h"
-//#import "JAProductInfoRightSubtitleLine.h"
 #import "RITarget.h"
 #import "JAUtils.h"
 #import "IconTableViewCell.h"
@@ -180,11 +175,6 @@
     [self.tableView deselectRowAtIndexPath:indexPath animated:true];
     
     NSDictionary *selectedObjItem = self.tableViewListItems[indexPath.row];
-    if ([selectedObjItem objectForKey:@"selectorName"]) {
-        SEL customSelector = NSSelectorFromString([selectedObjItem objectForKey:@"selectorName"]);
-        [self performSelector:customSelector withObject: 0];
-        return;
-    }
     
     if ([selectedObjItem objectForKey:@"notification"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:[selectedObjItem objectForKey:@"notification"]

@@ -49,33 +49,33 @@
                                     @"title": STRING_CONTACT_US,
                                     @"icon": @"ContactUs",
                                     @"cellType": IconTableViewCell.nibName,
-                                    @"selectorName": @"segueToContactUsViewController"
+                                    @"selector": [NSValue valueWithPointer:@selector(segueToContactUsViewController)]
                                     },
                                 @{
                                     @"title": STRING_FAQ,
                                     @"icon": @"FAQ",
                                     @"cellType": IconTableViewCell.nibName,
-                                    @"selectorName": @"fAQBtnTouchUpInside"
+                                    @"selector": [NSValue valueWithPointer:@selector(fAQBtnTouchUpInside)]
                                     },
                                 @{
                                     @"title": STRING_APP_SOCIAL,
                                     @"icon": @"share-icons",
                                     @"cellType": IconTableViewCell.nibName,
-                                    @"selectorName": @"shareTheAppSelection"
+                                    @"selector": [NSValue valueWithPointer:@selector(shareTheAppSelection)]
                                     
                                     },
                                 @{
                                     @"title": STRING_RATE_THE_APP,
                                     @"icon": @"rate-icons",
                                     @"cellType": IconTableViewCell.nibName,
-                                    @"selectorName": @"openAppStore"
+                                    @"selector": [NSValue valueWithPointer:@selector(openAppStore)]
                                     
                                     },
                                 @{
                                     @"title": STRING_APP_VERSION,
                                     @"icon": @"app-ver-icons",
                                     @"cellType": VersionTableViewCell.nibName,
-                                    @"selectorName": @"openAppStore"
+                                    @"selector": [NSValue valueWithPointer:@selector(openAppStore)]
                                     }
                                 ];
 }
@@ -195,9 +195,10 @@
     [self.tableView deselectRowAtIndexPath:indexPath animated:true];
     
     NSDictionary *selectedObjItem = self.tableViewListItems[indexPath.row];
-    if ([selectedObjItem objectForKey:@"selectorName"]) {
-        SEL customSelector = NSSelectorFromString([selectedObjItem objectForKey:@"selectorName"]);
-        [self performSelector:customSelector withObject: 0];
+    if ([[selectedObjItem objectForKey:@"selector"] pointerValue]) {
+        SEL customSelector = [[selectedObjItem objectForKey:@"selector"] pointerValue];
+        //[self performSelector:customSelector withObject: 0];
+        [self performSelector:customSelector];
         return;
     }
     

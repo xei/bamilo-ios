@@ -42,4 +42,15 @@
     }
     return result;
 }
+
+- (NSString *)formatTheNumbers {
+    if (!self.floatValue) {
+        return 0;
+    }
+    NSNumberFormatter * numberFormatter = [[NSNumberFormatter alloc] init];
+    numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
+    NSNumber * numberFromString = [numberFormatter numberFromString:self];
+    NSString * formattedNumberString = [numberFormatter stringFromNumber:numberFromString];
+    return formattedNumberString;
+}
 @end

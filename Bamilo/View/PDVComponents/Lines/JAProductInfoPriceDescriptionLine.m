@@ -17,8 +17,7 @@
 
 @implementation JAProductInfoPriceDescriptionLine
 
-- (UILabel *)descriptionLabel
-{
+- (UILabel *)descriptionLabel {
     CGRect frame = CGRectMake(self.lineContentXOffset, 6, self.width-32, self.height-12);
     if (!VALID_NOTEMPTY(_descriptionLabel, UILabel)) {
         _descriptionLabel = [[UILabel alloc] initWithFrame:frame];
@@ -33,8 +32,7 @@
     return _descriptionLabel;
 }
 
-- (JAProductInfoPriceLine *)priceLine
-{
+- (JAProductInfoPriceLine *)priceLine {
     if (!VALID(_priceLine, JAProductInfoPriceLine)) {
         _priceLine = [[JAProductInfoPriceLine alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height)];
         [_priceLine setPriceSize:JAPriceSizeSmall];
@@ -49,16 +47,14 @@
     [self reload];
 }
 
-- (void)setSize:(JAPriceSize)size
-{
+- (void)setSize:(JAPriceSize)size {
     _size = size;
     [self.priceLine setPriceSize:size];
     [self.descriptionLabel setFont:[self priceSizeFont]];
     [self reload];
 }
 
-- (void)setPrice:(NSString *)price andOldPrice:(NSString *)oldPrice
-{
+- (void)setPrice:(NSString *)price andOldPrice:(NSString *)oldPrice {
     [self.priceLine setPrice:price];
     if (VALID(oldPrice, NSString)) {
         [self.priceLine setOldPrice:oldPrice];
@@ -66,8 +62,7 @@
     [self reload];
 }
 
-- (void)reload
-{
+- (void)reload {
     [self.priceLine sizeToFit];
     [self.priceLine setYCenterAligned];
     [self.priceLine setXRightAligned:0.f];
@@ -77,8 +72,7 @@
     [self.descriptionLabel setWidth:self.priceLine.x - self.descriptionLabel.x - 10.f];
 }
 
-- (UIFont *)priceSizeFont
-{
+- (UIFont *)priceSizeFont {
     switch (self.size) {
         case JAPriceSizeSmall:
             return JABodyFont;

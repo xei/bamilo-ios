@@ -119,14 +119,12 @@
 
 - (void)loadingCart {
     [self showLoading];
-    [self setCartEmpty:YES];
     [RICart getCartWithSuccessBlock:^(RICart *cartData) {
-        NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cartData forKey:kUpdateCartNotificationValue];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo: @{kUpdateCartNotificationValue: cartData}];
         self.cart = cartData;
-        if (VALID_NOTEMPTY(self.cart.cartItems, NSArray)) {
+        if (self.cart.cartItems.count) {
             [self setCartEmpty:NO];
-        }else{
+        } else {
             [self setCartEmpty:YES];
         }
         [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
@@ -137,8 +135,7 @@
     }];
 }
 
-- (void)viewWillLayoutSubviews
-{
+- (void)viewWillLayoutSubviews {
     [self.emptyCartView setFrame:self.viewBounds];
     if (self.isIpadLandscape) {
         if (self.cartProductsView.superview != self.view) {
@@ -147,7 +144,7 @@
         [self.scrollView setFrame:CGRectMake(self.view.width/2, 0.f, self.viewBounds.size.width/2, self.viewBounds.size.height)];
         [self.cartProductsView setFrame:CGRectMake(self.viewBounds.origin.x, self.viewBounds.origin.y, self.viewBounds.size.width/2, self.viewBounds.size.height)];
         [self.resumeView setY:0.f];
-    }else{
+    } else {
         if (self.cartProductsView.superview != self.scrollView) {
             [self.scrollView addSubview:self.cartProductsView];
         }
@@ -166,16 +163,13 @@
     [super viewWillLayoutSubviews];
 }
 
-- (void)onOrientationChanged
-{
-    if(VALID(self.picker, JAPicker))
-    {
+- (void)onOrientationChanged {
+    if(VALID(self.picker, JAPicker)) {
         [self setupPickerView];
     }
 }
 
--(void)goToHomeScreen
-{
+-(void)goToHomeScreen {
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
     [trackingDictionary setValue:@"ContinueShopping" forKey:kRIEventActionKey];

@@ -147,8 +147,7 @@
     return priceDescriptionLine;
 }
 
-- (void)setCart:(RICart *)cart
-{
+- (void)setCart:(RICart *)cart {
     _cart = cart;
     [self.subtotalView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
@@ -162,7 +161,7 @@
     [itemsNumLine setTopSeparatorVisibility:NO];
     if ([[[self cart] cartCount] integerValue] == 1) {
         [itemsNumLine setTitle:STRING_ITEM_CART];
-    }else{
+    } else {
         [itemsNumLine setTitle:[NSString stringWithFormat:STRING_ITEMS_CART, [[[self cart] cartCount] integerValue]]];
     }
     

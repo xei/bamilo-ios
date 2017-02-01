@@ -131,9 +131,6 @@
 		89C177BF1BC2EC17006D3B19 /* JAPDVProductInfoSellerInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AC0B9B01BBC4C4A001F4ADE /* JAPDVProductInfoSellerInfo.m */; };
 		89C7AF551BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C7AF4F1BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m */; };
 		9A007C791C203355007D99FC /* JAMyAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A007C741C203355007D99FC /* JAMyAccountViewController.m */; };
-		9A007C801C206920007D99FC /* JAProductInfoSwitchLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A007C7B1C206920007D99FC /* JAProductInfoSwitchLine.m */; };
-		9A007C871C206DE4007D99FC /* JAProductInfoSubtitleLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A007C821C206DE4007D99FC /* JAProductInfoSubtitleLine.m */; };
-		9A007C8E1C2095A9007D99FC /* JAProductInfoRightSubtitleLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A007C891C2095A9007D99FC /* JAProductInfoRightSubtitleLine.m */; };
 		9A08B1131CC7C377003282CB /* JAActionWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A08B10E1CC7C377003282CB /* JAActionWebViewController.m */; };
 		9A0BBE951BFE2482007D35CE /* JACustomNavigationBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1B7C411BFCF849000111D7 /* JACustomNavigationBarView.m */; };
 		9A0F9BAC1B5E800700569DF2 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A0F9BA61B5E7D3600569DF2 /* AVFoundation.framework */; };
@@ -713,12 +710,6 @@
 		89C7AF4F1BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACatalogPictureCollectionViewCell.m; sourceTree = "<group>"; };
 		9A007C731C203355007D99FC /* JAMyAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMyAccountViewController.h; sourceTree = "<group>"; };
 		9A007C741C203355007D99FC /* JAMyAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMyAccountViewController.m; sourceTree = "<group>"; };
-		9A007C7A1C206920007D99FC /* JAProductInfoSwitchLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAProductInfoSwitchLine.h; path = Lines/JAProductInfoSwitchLine.h; sourceTree = "<group>"; };
-		9A007C7B1C206920007D99FC /* JAProductInfoSwitchLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAProductInfoSwitchLine.m; path = Lines/JAProductInfoSwitchLine.m; sourceTree = "<group>"; };
-		9A007C811C206DE4007D99FC /* JAProductInfoSubtitleLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAProductInfoSubtitleLine.h; sourceTree = "<group>"; };
-		9A007C821C206DE4007D99FC /* JAProductInfoSubtitleLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAProductInfoSubtitleLine.m; sourceTree = "<group>"; };
-		9A007C881C2095A9007D99FC /* JAProductInfoRightSubtitleLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAProductInfoRightSubtitleLine.h; path = Lines/JAProductInfoRightSubtitleLine.h; sourceTree = "<group>"; };
-		9A007C891C2095A9007D99FC /* JAProductInfoRightSubtitleLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAProductInfoRightSubtitleLine.m; path = Lines/JAProductInfoRightSubtitleLine.m; sourceTree = "<group>"; };
 		9A08B10D1CC7C377003282CB /* JAActionWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAActionWebViewController.h; sourceTree = "<group>"; };
 		9A08B10E1CC7C377003282CB /* JAActionWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAActionWebViewController.m; sourceTree = "<group>"; };
 		9A0F9BA41B5E7D0000569DF2 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -2137,12 +2128,6 @@
 				9A189E711BB31B1F0039BC14 /* JAProductInfoBaseLine.m */,
 				9A189E771BB449CC0039BC14 /* JAProductInfoPriceLine.h */,
 				9A189E781BB449CC0039BC14 /* JAProductInfoPriceLine.m */,
-				9A007C7A1C206920007D99FC /* JAProductInfoSwitchLine.h */,
-				9A007C7B1C206920007D99FC /* JAProductInfoSwitchLine.m */,
-				9A007C811C206DE4007D99FC /* JAProductInfoSubtitleLine.h */,
-				9A007C821C206DE4007D99FC /* JAProductInfoSubtitleLine.m */,
-				9A007C881C2095A9007D99FC /* JAProductInfoRightSubtitleLine.h */,
-				9A007C891C2095A9007D99FC /* JAProductInfoRightSubtitleLine.m */,
 				9DBD0C1B1C7F1CBB00F60374 /* JAProductInfoSISLine.h */,
 				9DBD0C1C1C7F1CBB00F60374 /* JAProductInfoSISLine.m */,
 				9ADEA0991C9C0E6D00B2A605 /* JAProductInfoSizeLine.h */,
@@ -3503,7 +3488,6 @@
 				CE9ADF5C1AB6D78200D56481 /* JAEmailNotificationsViewController.m in Sources */,
 				CE9ADF601AB6D78200D56481 /* JANoConnectionView.m in Sources */,
 				9A189E6F1BB31AF70039BC14 /* JAProductInfoSingleLine.m in Sources */,
-				9A007C871C206DE4007D99FC /* JAProductInfoSubtitleLine.m in Sources */,
 				875AD5701E38C0C900584ABF /* RISeller.m in Sources */,
 				89C177BF1BC2EC17006D3B19 /* JAPDVProductInfoSellerInfo.m in Sources */,
 				CE9ADF621AB6D78200D56481 /* JASellerRatingsViewController.m in Sources */,
@@ -3530,7 +3514,6 @@
 				CE9ADF891AB6D78200D56481 /* JAReviewCell.m in Sources */,
 				9A189E7D1BB449CC0039BC14 /* JAProductInfoPriceLine.m in Sources */,
 				611195821E3CB14B00D06690 /* PlainTableViewCell.m in Sources */,
-				9A007C8E1C2095A9007D99FC /* JAProductInfoRightSubtitleLine.m in Sources */,
 				CE9ADF8E1AB6D78200D56481 /* JACatalogTopView.m in Sources */,
 				CE9ADF8F1AB6D78200D56481 /* JAPDVBundles.m in Sources */,
 				CE9ADF911AB6D78200D56481 /* JAPDVRelatedItem.m in Sources */,
@@ -3665,7 +3648,6 @@
 				6CF4AE881ADEABBB0024EC34 /* JACatalogBannerCell.m in Sources */,
 				9AEF742C1CD8A8BD00A5D574 /* JAORConfirmationScreenViewController.m in Sources */,
 				CE9ADFE51AB6D78200D56481 /* JANewsletterComponent.m in Sources */,
-				9A007C801C206920007D99FC /* JAProductInfoSwitchLine.m in Sources */,
 				874AAB691E3CEA0700B3F8FE /* AppManager.m in Sources */,
 				CE9ADFE91AB6D78200D56481 /* JADynamicForm.m in Sources */,
 				89C7AF551BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m in Sources */,
