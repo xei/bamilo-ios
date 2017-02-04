@@ -67,6 +67,7 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="tableView" destination="Bu1-25-svr" id="eYw-Hu-Yu9"/>
                         <segue destination="RR0-PB-qTp" kind="show" identifier="" id="Vuf-MV-Cbd"/>
                     </connections>
                 </viewController>
@@ -149,6 +150,10 @@
         <scene sceneID="5k1-E7-G3I">
             <objects>
                 <viewController storyboardIdentifier="CheckoutProgressViewController" id="3Ao-wO-bkU" customClass="CheckoutProgressViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="v95-3n-JGA"/>
+                        <viewControllerLayoutGuide type="bottom" id="zfw-QM-sz9"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Vdh-36-vp8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

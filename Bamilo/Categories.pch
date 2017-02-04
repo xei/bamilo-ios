@@ -10,6 +10,10 @@
 #define Categories_pch
 
 #import "UIColor+Format.h"
-#import "NSString+Style.h"
+
+#import "NSString+Extensions.h"
+#import "NSMutableString+Extensions.h"
+#import "UIButton+Extensions.h"
+#import "UILabel+Extensions.h"
 
 #endif /* Categories_pch */

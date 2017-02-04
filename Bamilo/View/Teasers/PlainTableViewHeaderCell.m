@@ -17,9 +17,11 @@
 -(void)awakeFromNib {
     [super awakeFromNib];
     
-    self.titleLabel.font = [UIFont fontWithName:kFontRegularName size:13];
-    self.titleLabel.textColor = [UIColor withRGBA:80 green:80 blue:80 alpha:1.0f];
+    //Content View Setup
     self.contentView.backgroundColor = [UIColor withRGBA:244 green:244 blue:244 alpha:1.0f];
+    
+    //Title Label Setup
+    [self.titleLabel applyStyle:kFontBoldName fontSize:12 color:[UIColor withRGBA:80 green:80 blue:80 alpha:1.0f]];
 }
 
 -(void)setTitle:(NSString *)title {

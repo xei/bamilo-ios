@@ -40,4 +40,9 @@ static const NSString *KEY_HIT_TEST_EDGE_INSETS = @"HitTestEdgeInsets";
     return CGRectContainsPoint(hitFrame, point);
 }
 
+-(void)applyStyle:(NSString *)fontName fontSize:(CGFloat)fontSize color:(UIColor *)color {
+    self.titleLabel.font = [UIFont fontWithName:fontName size:fontSize];
+    [self setTitleColor:color forState:UIControlStateNormal];
+}
+
 @end

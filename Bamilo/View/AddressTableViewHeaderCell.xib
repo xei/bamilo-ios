@@ -57,6 +57,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="addAddressButton" destination="Thk-L1-74p" id="rku-4C-G1J"/>
+                <outlet property="titleLabel" destination="Lrz-Sn-LUX" id="0qw-A2-12b"/>
             </connections>
         </view>
     </objects>

@@ -12,7 +12,6 @@
 @interface PlainTableViewCell : BaseTableViewCell
 
 @property (nonatomic , strong) NSString* title;
-+(NSString *) nibName;
 +(CGFloat) heightSize;
 
 @end

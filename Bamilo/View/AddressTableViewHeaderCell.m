@@ -17,8 +17,9 @@
 -(void)awakeFromNib {
     [super awakeFromNib];
     
-    [self.addAddressButton setTitleColor:[UIColor withRGBA:61 green:146 blue:243 alpha:1.0f] forState:UIControlStateNormal];
-    self.addAddressButton.titleLabel.font = [UIFont fontWithName:kFontBoldName size:12];
+    //Add Addres Button Setup
+    [self.addAddressButton applyStyle:kFontBoldName fontSize:12 color:[UIColor withRGBA:61 green:146 blue:243 alpha:1.0f]];
+    self.addAddressButton.titleLabel.text = STRING_NEW_ADDRESS;
 }
 
 +(NSString *)nibName {

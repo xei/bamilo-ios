@@ -457,6 +457,9 @@
 #define STRING_INVALID_ADDRESS_OTHER RILocalizedString(@"invalid_address_other", nil)
 
 //##################################################################################################################
-#define STRING_CHOOSE_ADDRESS RILocalizedString(@"choose_address", nil) 
+#define STRING_CHOOSE_ADDRESS RILocalizedString(@"choose_address", nil)
+#define STRING_NEW_ADDRESS RILocalizedString(@"new_address", nil)
+#define STRING_PHONE RILocalizedString(@"phone", nil)
+#define STRING_PLEASE_CHOOSE_YOUR_ADDRESS RILocalizedString(@"please_choose_your_address", nil)
 
 #endif
