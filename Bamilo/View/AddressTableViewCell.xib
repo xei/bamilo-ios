@@ -24,6 +24,15 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="نغمه حیامنش" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qvy-0u-gkK">
+                    <rect key="frame" x="10" y="9" width="323" height="23"/>
+                    <constraints>
+                        <constraint firstAttribute="height" priority="250" constant="22" id="VVa-dC-QXh"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Bamilo-Sans-Bold" family="Bamilo-Sans" pointSize="12"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iSG-39-dvH" userLabel="CheckmarkImage">
                     <rect key="frame" x="343" y="10" width="22" height="22"/>
                     <constraints>
@@ -31,17 +40,17 @@
                         <constraint firstAttribute="height" constant="22" id="kme-wg-Ral"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="میدان ونک ،حقانی ، نرسیده به حهان کودک ، نرسیده به جهان کودک، پلاک" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="42A-p9-Ncc">
-                    <rect key="frame" x="10" y="37" width="323" height="44"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="میدان ونک ،حقانی ، نرسیده به حهان کودک ، نرسیده به جهان کودک، پلاک" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="42A-p9-Ncc">
+                    <rect key="frame" x="10" y="37" width="323" height="46"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="44" id="6Nb-g7-J6p"/>
+                        <constraint firstAttribute="height" priority="250" constant="44" id="6Nb-g7-J6p"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="تلفن : ۰۹۱۲۲۰۹۵۷۷۸۹" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kl6-R4-pkZ">
-                    <rect key="frame" x="10" y="86" width="323" height="22"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="تلفن: ۰۹۱۲۲۰۹۵۷۷۸۹" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kl6-R4-pkZ">
+                    <rect key="frame" x="10" y="93" width="323" height="22"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="22" id="2gW-YO-fKo"/>
                     </constraints>
@@ -50,7 +59,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HWJ-Ix-ALr">
-                    <rect key="frame" x="10" y="126" width="55" height="34"/>
+                    <rect key="frame" x="15" y="125" width="55" height="34"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="55" id="DI0-Ye-aqs"/>
                     </constraints>
@@ -62,29 +71,20 @@
                         <action selector="addressEditButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="8Zb-PB-K4U"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="نغمه حیامنش" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qvy-0u-gkK">
-                    <rect key="frame" x="10" y="10" width="323" height="22"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="22" id="VVa-dC-QXh"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="Bamilo-Sans-Bold" family="Bamilo-Sans" pointSize="12"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="42A-p9-Ncc" firstAttribute="trailing" secondItem="qvy-0u-gkK" secondAttribute="trailing" id="3KJ-KR-H5t"/>
-                <constraint firstItem="kl6-R4-pkZ" firstAttribute="top" secondItem="42A-p9-Ncc" secondAttribute="bottom" constant="5" id="8kh-M5-0EI"/>
+                <constraint firstItem="kl6-R4-pkZ" firstAttribute="top" secondItem="42A-p9-Ncc" secondAttribute="bottom" constant="10" id="8kh-M5-0EI"/>
                 <constraint firstItem="iSG-39-dvH" firstAttribute="bottom" secondItem="qvy-0u-gkK" secondAttribute="bottom" id="DER-VE-U23"/>
                 <constraint firstAttribute="trailing" secondItem="iSG-39-dvH" secondAttribute="trailing" constant="10" id="SaP-gb-Z7m"/>
                 <constraint firstItem="qvy-0u-gkK" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="cNv-Jk-huo"/>
-                <constraint firstAttribute="bottom" secondItem="HWJ-Ix-ALr" secondAttribute="bottom" id="dWC-1i-2g3"/>
+                <constraint firstAttribute="bottom" secondItem="HWJ-Ix-ALr" secondAttribute="bottom" constant="1" id="dWC-1i-2g3"/>
                 <constraint firstItem="kl6-R4-pkZ" firstAttribute="trailing" secondItem="42A-p9-Ncc" secondAttribute="trailing" id="jfm-JO-HnC"/>
                 <constraint firstItem="42A-p9-Ncc" firstAttribute="leading" secondItem="qvy-0u-gkK" secondAttribute="leading" id="kPk-Hl-Pmz"/>
                 <constraint firstItem="iSG-39-dvH" firstAttribute="leading" secondItem="qvy-0u-gkK" secondAttribute="trailing" constant="10" id="kj4-PB-bJX"/>
                 <constraint firstItem="kl6-R4-pkZ" firstAttribute="leading" secondItem="42A-p9-Ncc" secondAttribute="leading" id="qRJ-YB-StZ"/>
-                <constraint firstItem="HWJ-Ix-ALr" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="sB1-Zw-YtJ"/>
+                <constraint firstItem="HWJ-Ix-ALr" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="sB1-Zw-YtJ"/>
                 <constraint firstItem="42A-p9-Ncc" firstAttribute="top" secondItem="qvy-0u-gkK" secondAttribute="bottom" constant="5" id="sJ8-dr-TT7"/>
                 <constraint firstItem="iSG-39-dvH" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="vsF-WZ-G5D"/>
             </constraints>

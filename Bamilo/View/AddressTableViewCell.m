@@ -70,12 +70,8 @@
     [phoneText smartAppend:addressObj.phone replacer:@"-"];
     
     self.addressPhoneLabel.text = phoneText;
-}
-
--(void)setSelected:(BOOL)selected {
-    [super setSelected:selected];
     
-    self.checkmarkIconImageView.image = selected ? [UIImage imageNamed:@"ArrowLeft"] : nil;
+    self.checkmarkIconImageView.image = [addressObj.isDefaultShipping isEqualToString:@"1"] ? [UIImage imageNamed:@"ArrowLeft"] : nil;
 }
 
 #pragma mark - IBActions
