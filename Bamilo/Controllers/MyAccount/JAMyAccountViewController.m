@@ -90,7 +90,7 @@
           @"title":[RICustomer checkIfUserIsLogged] ? STRING_LOGOUT : STRING_LOGIN,
           @"icon": [RICustomer checkIfUserIsLogged] ? @"Logout" : @"HappyFace",
           @"cellType": IconTableViewCell.nibName,
-          @"selectorName" : @"loginOrLogoutBtnTouchUpInside"
+          @"selector": [NSValue valueWithPointer:@selector(loginOrLogoutBtnTouchUpInside)]
           };
     
     [self.tableViewListItems insertObject: loginOrLoginCell atIndex:[RICustomer checkIfUserIsLogged] ? self.tableViewListItems.count : 0];
@@ -175,6 +175,13 @@
     [self.tableView deselectRowAtIndexPath:indexPath animated:true];
     
     NSDictionary *selectedObjItem = self.tableViewListItems[indexPath.row];
+    
+    if ([[selectedObjItem objectForKey:@"selector"] pointerValue]) {
+        SEL customSelector = [[selectedObjItem objectForKey:@"selector"] pointerValue];
+        //[self performSelector:customSelector withObject: 0];
+        [self performSelector:customSelector];
+        return;
+    }
     
     if ([selectedObjItem objectForKey:@"notification"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:[selectedObjItem objectForKey:@"notification"]

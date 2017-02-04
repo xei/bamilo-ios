@@ -9,7 +9,7 @@
 #import "UIView+Style.h"
 
 @implementation UIView (Style)
-@dynamic cornerRadius, borderColor, borderWidth;
+@dynamic cornerRadius, borderColor, borderWidth, shadowColor, shadowOffset, shadowRadius, shadowOpacity;
 
 - (void)setCornerRadius:(CGFloat)cornerRadius {
     self.layer.cornerRadius = cornerRadius;
@@ -22,5 +22,21 @@
 
 - (void)setBorderWidth:(CGFloat)borderWidth {
     self.layer.borderWidth = borderWidth;
+}
+
+- (void)setShadowColor:(UIColor *)shadowColor {
+    [self.layer setShadowColor:[[UIColor blackColor] CGColor]];
+}
+
+- (void)setShadowOffset:(CGSize)shadowOffset {
+    [self.layer setShadowOffset:CGSizeMake(-4.0, 4.0)];
+}
+
+- (void)setShadowRadius:(CGFloat)shadowRadius {
+    [self.layer setShadowRadius:4.75];
+}
+
+- (void)setShadowOpacity:(CGFloat)shadowOpacity {
+    [self.layer setShadowOpacity:0.4];
 }
 @end

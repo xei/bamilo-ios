@@ -1984,17 +1984,14 @@
 
 - (void)openCart:(NSNotification*) notification {
     if ([[self topViewController] isKindOfClass:[JALoadCountryViewController class]]) {
-        //inore the notification
         return;
     }
     
     typedef void (^GoToCartBlock)(void);
     GoToCartBlock goToCartBlock = ^void {
-        
         [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification object:nil];
-        
         if (![[self topViewController] isKindOfClass:[JACartViewController class]]) {
-            JACartViewController *cartViewController = [[JACartViewController alloc] init];
+            JACartViewController *cartViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"CartViewController"];
             [cartViewController setCart:self.cart];
             [self popToRootViewControllerAnimated:NO];
             [self.tabBarView selectButtonAtIndex:2];

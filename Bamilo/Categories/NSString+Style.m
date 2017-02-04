@@ -10,8 +10,16 @@
 
 @implementation NSString (Style)
 
++ (NSNumberFormatter*) numberFormatter {
+    static NSNumberFormatter *_numberFormatter;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _numberFormatter = [[NSNumberFormatter alloc] init];
+    });
+    return _numberFormatter;
+}
+
 - (NSString *)wrapWithMaxSize:(int)maxSize {
-    
     NSString *result = self;
     if (self.length > maxSize) {
         NSRange stringRange = {0, MIN([self length], maxSize)};
@@ -47,10 +55,9 @@
     if (!self.floatValue) {
         return 0;
     }
-    NSNumberFormatter * numberFormatter = [[NSNumberFormatter alloc] init];
-    numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
-    NSNumber * numberFromString = [numberFormatter numberFromString:self];
-    NSString * formattedNumberString = [numberFormatter stringFromNumber:numberFromString];
+    [NSString numberFormatter].numberStyle = NSNumberFormatterDecimalStyle;
+    NSNumber * numberFromString = [[NSString numberFormatter] numberFromString:self];
+    NSString * formattedNumberString = [[NSString numberFormatter] stringFromNumber:numberFromString];
     return formattedNumberString;
 }
 @end
