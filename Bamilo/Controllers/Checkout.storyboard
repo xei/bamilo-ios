@@ -43,6 +43,10 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Bu1-25-svr">
                                 <rect key="frame" x="0.0" y="60" width="375" height="547"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="cPx-eU-fFb" id="5mz-Kk-f2R"/>
+                                    <outlet property="delegate" destination="cPx-eU-fFb" id="PtF-rz-gvh"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -63,6 +67,7 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="tableView" destination="Bu1-25-svr" id="eYw-Hu-Yu9"/>
                         <segue destination="RR0-PB-qTp" kind="show" identifier="" id="Vuf-MV-Cbd"/>
                     </connections>
                 </viewController>
@@ -145,6 +150,10 @@
         <scene sceneID="5k1-E7-G3I">
             <objects>
                 <viewController storyboardIdentifier="CheckoutProgressViewController" id="3Ao-wO-bkU" customClass="CheckoutProgressViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="v95-3n-JGA"/>
+                        <viewControllerLayoutGuide type="bottom" id="zfw-QM-sz9"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Vdh-36-vp8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

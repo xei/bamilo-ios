@@ -11,7 +11,6 @@
 
 @interface NotificationTableViewCell()
 @property (weak, nonatomic) IBOutlet UISwitch *notificationSwitch;
-
 @end
 
 @implementation NotificationTableViewCell {
@@ -38,8 +37,9 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-
+#pragma mark - Overrides
 + (NSString *)nibName {
     return @"NotificationTableViewCell";
 }
+
 @end

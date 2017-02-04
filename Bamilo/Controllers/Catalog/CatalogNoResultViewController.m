@@ -115,7 +115,7 @@ const CGFloat tableViewHeaderSectionHeight = 35;
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     PlainTableViewHeaderCell *headerCell = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:[PlainTableViewHeaderCell nibName]];
-    headerCell.titleString = self.teaserGroup.title;
+    headerCell.title = self.teaserGroup.title;
     return headerCell;
 }
 

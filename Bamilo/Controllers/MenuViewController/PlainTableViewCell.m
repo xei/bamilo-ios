@@ -9,7 +9,7 @@
 #import "PlainTableViewCell.h"
 
 @interface PlainTableViewCell()
-    @property (nonatomic, weak) IBOutlet UILabel* titleUILabel;
+@property (nonatomic, weak) IBOutlet UILabel* titleUILabel;
 @end
 
 @implementation PlainTableViewCell
@@ -19,16 +19,17 @@
     [self.titleUILabel setFont: [UIFont fontWithName:kFontRegularName size:12]];
 }
 
-+ (NSString *) nibName {
-    return @"PlainTableViewCell";
-}
-
 + (CGFloat)heightSize {
     return 50;
 }
 
 - (void)setTitle:(NSString *)title {
     self.titleUILabel.text = title;
+}
+
+#pragma mark - Overrides
++ (NSString *) nibName {
+    return @"PlainTableViewCell";
 }
 
 @end

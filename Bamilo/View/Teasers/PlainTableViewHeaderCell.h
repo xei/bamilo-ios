@@ -10,7 +10,8 @@
 
 @interface PlainTableViewHeaderCell : UITableViewHeaderFooterView
 
-@property (strong, nonatomic) NSString * titleString;
 +(NSString *) nibName;
+
+@property (copy, nonatomic) NSString *title;
 
 @end

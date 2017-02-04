@@ -1,14 +1,14 @@
 //
-//  NSString+Style.m
+//  NSString+Extensions.m
 //  Jumia
 //
 //  Created by Ali saiedifar on 1/23/17.
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import "NSString+Style.h"
+#import "NSString+Extensions.h"
 
-@implementation NSString (Style)
+@implementation NSString (Extensions)
 
 + (NSNumberFormatter*) numberFormatter {
     static NSNumberFormatter *_numberFormatter;

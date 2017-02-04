@@ -7,11 +7,25 @@
 //
 
 #import "CheckoutAddressViewController.h"
+#import "AddressTableViewHeaderCell.h"
+#import "AddressTableViewCell.h"
 
-@implementation CheckoutAddressViewController
+@interface CheckoutAddressViewController()
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@end
+
+@implementation CheckoutAddressViewController {
+@private
+    NSArray *_addresses;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self.tableView registerNib:[UINib nibWithNibName:[AddressTableViewHeaderCell nibName] bundle:nil] forHeaderFooterViewReuseIdentifier:[AddressTableViewHeaderCell nibName]];
+    [self.tableView registerNib:[UINib nibWithNibName:[AddressTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[AddressTableViewCell nibName]];
+    
+    _addresses = [NSArray new];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -25,14 +39,31 @@
     
     self.navBarLayout.title = STRING_CHOOSE_ADDRESS;
 }
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma mark - UITableViewDelegate
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 40.0f;
 }
-*/
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    AddressTableViewHeaderCell *addressTableViewHeaderCell = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:[AddressTableViewHeaderCell nibName]];
+    addressTableViewHeaderCell.title = STRING_PLEASE_CHOOSE_YOUR_ADDRESS;
+    return addressTableViewHeaderCell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 160.0f;
+}
+
+#pragma mark - UITableViewDataSource
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 1;//[_addresses count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    AddressTableViewCell *addressTableViewCell = [self.tableView dequeueReusableCellWithIdentifier:[AddressTableViewCell nibName] forIndexPath:indexPath];
+    
+    return addressTableViewCell;
+}
 
 @end

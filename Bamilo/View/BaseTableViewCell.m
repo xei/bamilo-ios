@@ -12,13 +12,24 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
+    
+    self.contentView.backgroundColor = [UIColor clearColor];
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+#pragma mark - Public Methods
++(NSString *)nibName {
+    return nil;
+}
+
+-(void)updateWithModel:(NSManagedObject *)model {
+    return;
 }
 
 @end

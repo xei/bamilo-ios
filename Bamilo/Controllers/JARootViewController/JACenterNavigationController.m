@@ -1099,7 +1099,7 @@
     
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[CheckoutAddressViewController class]]) {
-        CheckoutAddressViewController *checkoutAddressViewController = (CheckoutAddressViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"CheckoutAddressViewController"];
+        CheckoutAddressViewController *checkoutAddressViewController = (CheckoutAddressViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Checkout" nibName:@"CheckoutAddressViewController" resetCache:YES];
         
         if (fromCheckout) {
             checkoutAddressViewController.navBarLayout.showCartButton = NO;

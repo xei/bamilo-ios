@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Bamilosans Reg.ttf">
+            <string>Bamilo-Sans</string>
+        </array>
+        <array key="‌Bamilosans Bold.ttf">
+            <string>Bamilo-Sans-Bold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="AddressTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iSG-39-dvH" userLabel="CheckmarkImage">
+                    <rect key="frame" x="343" y="10" width="22" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="iSG-39-dvH" secondAttribute="height" multiplier="1:1" id="k4P-tt-cIk"/>
+                        <constraint firstAttribute="height" constant="22" id="kme-wg-Ral"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="میدان ونک ،حقانی ، نرسیده به حهان کودک ، نرسیده به جهان کودک، پلاک" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="42A-p9-Ncc">
+                    <rect key="frame" x="10" y="37" width="323" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="6Nb-g7-J6p"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
+                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="تلفن : ۰۹۱۲۲۰۹۵۷۷۸۹" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kl6-R4-pkZ">
+                    <rect key="frame" x="10" y="86" width="323" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="22" id="2gW-YO-fKo"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HWJ-Ix-ALr">
+                    <rect key="frame" x="10" y="126" width="55" height="34"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="55" id="DI0-Ye-aqs"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
+                    <state key="normal" title="ویرایش">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="addressEditButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="8Zb-PB-K4U"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="نغمه حیامنش" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qvy-0u-gkK">
+                    <rect key="frame" x="10" y="10" width="323" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="22" id="VVa-dC-QXh"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Bamilo-Sans-Bold" family="Bamilo-Sans" pointSize="12"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="42A-p9-Ncc" firstAttribute="trailing" secondItem="qvy-0u-gkK" secondAttribute="trailing" id="3KJ-KR-H5t"/>
+                <constraint firstItem="kl6-R4-pkZ" firstAttribute="top" secondItem="42A-p9-Ncc" secondAttribute="bottom" constant="5" id="8kh-M5-0EI"/>
+                <constraint firstItem="iSG-39-dvH" firstAttribute="bottom" secondItem="qvy-0u-gkK" secondAttribute="bottom" id="DER-VE-U23"/>
+                <constraint firstAttribute="trailing" secondItem="iSG-39-dvH" secondAttribute="trailing" constant="10" id="SaP-gb-Z7m"/>
+                <constraint firstItem="qvy-0u-gkK" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="cNv-Jk-huo"/>
+                <constraint firstAttribute="bottom" secondItem="HWJ-Ix-ALr" secondAttribute="bottom" id="dWC-1i-2g3"/>
+                <constraint firstItem="kl6-R4-pkZ" firstAttribute="trailing" secondItem="42A-p9-Ncc" secondAttribute="trailing" id="jfm-JO-HnC"/>
+                <constraint firstItem="42A-p9-Ncc" firstAttribute="leading" secondItem="qvy-0u-gkK" secondAttribute="leading" id="kPk-Hl-Pmz"/>
+                <constraint firstItem="iSG-39-dvH" firstAttribute="leading" secondItem="qvy-0u-gkK" secondAttribute="trailing" constant="10" id="kj4-PB-bJX"/>
+                <constraint firstItem="kl6-R4-pkZ" firstAttribute="leading" secondItem="42A-p9-Ncc" secondAttribute="leading" id="qRJ-YB-StZ"/>
+                <constraint firstItem="HWJ-Ix-ALr" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="sB1-Zw-YtJ"/>
+                <constraint firstItem="42A-p9-Ncc" firstAttribute="top" secondItem="qvy-0u-gkK" secondAttribute="bottom" constant="5" id="sJ8-dr-TT7"/>
+                <constraint firstItem="iSG-39-dvH" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="vsF-WZ-G5D"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="addressEditButton" destination="HWJ-Ix-ALr" id="5Tj-us-Sk2"/>
+                <outlet property="addressLabel" destination="42A-p9-Ncc" id="ACU-fv-rEq"/>
+                <outlet property="addressPhoneLabel" destination="kl6-R4-pkZ" id="Rmy-5G-X2R"/>
+                <outlet property="addressTitleLabel" destination="qvy-0u-gkK" id="9no-FO-EBD"/>
+                <outlet property="checkmarkIconImageView" destination="iSG-39-dvH" id="x4n-eo-afH"/>
+            </connections>
+            <point key="canvasLocation" x="25.5" y="53"/>
+        </view>
+    </objects>
+</document>
