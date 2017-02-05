@@ -38,6 +38,8 @@
 		8714E0381E45CDC3004C9B1D /* AddressTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8714E0371E45CDC3004C9B1D /* AddressTableViewCell.xib */; };
 		8714E0441E45E247004C9B1D /* UILabel+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8714E0431E45E247004C9B1D /* UILabel+Extensions.m */; };
 		8714E0491E45FDF9004C9B1D /* NSMutableString+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8714E0481E45FDF9004C9B1D /* NSMutableString+Extensions.m */; };
+		8714E0561E471E25004C9B1D /* RequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8714E0551E471E25004C9B1D /* RequestManager.m */; };
+		8714E0591E471E2F004C9B1D /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8714E0581E471E2F004C9B1D /* DataManager.m */; };
 		8716987D1E38A94C0027B34A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8716987A1E38A94C0027B34A /* Main.storyboard */; };
 		874AAB551E3C764600B3F8FE /* Bamilo-Configs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 874AAB541E3C764600B3F8FE /* Bamilo-Configs.plist */; };
 		874AAB5E1E3C778E00B3F8FE /* ConfigManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB5D1E3C778E00B3F8FE /* ConfigManager.m */; };
@@ -536,6 +538,10 @@
 		8714E0431E45E247004C9B1D /* UILabel+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+Extensions.m"; sourceTree = "<group>"; };
 		8714E0471E45FDF9004C9B1D /* NSMutableString+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableString+Extensions.h"; sourceTree = "<group>"; };
 		8714E0481E45FDF9004C9B1D /* NSMutableString+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableString+Extensions.m"; sourceTree = "<group>"; };
+		8714E0541E471E25004C9B1D /* RequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestManager.h; sourceTree = "<group>"; };
+		8714E0551E471E25004C9B1D /* RequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestManager.m; sourceTree = "<group>"; };
+		8714E0571E471E2F004C9B1D /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
+		8714E0581E471E2F004C9B1D /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
 		8716987B1E38A94C0027B34A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Bamilo/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		874AAB541E3C764600B3F8FE /* Bamilo-Configs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Bamilo-Configs.plist"; sourceTree = "<group>"; };
 		874AAB5D1E3C778E00B3F8FE /* ConfigManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigManager.m; sourceTree = "<group>"; };
@@ -1834,9 +1840,38 @@
 			name = "NSMutableString+Extensions";
 			sourceTree = "<group>";
 		};
+		8714E0521E471DDB004C9B1D /* DataManager */ = {
+			isa = PBXGroup;
+			children = (
+				8714E0571E471E2F004C9B1D /* DataManager.h */,
+				8714E0581E471E2F004C9B1D /* DataManager.m */,
+			);
+			name = DataManager;
+			sourceTree = "<group>";
+		};
+		8714E0531E471DE8004C9B1D /* RequestManager */ = {
+			isa = PBXGroup;
+			children = (
+				8714E0541E471E25004C9B1D /* RequestManager.h */,
+				8714E0551E471E25004C9B1D /* RequestManager.m */,
+			);
+			name = RequestManager;
+			sourceTree = "<group>";
+		};
+		8714E05A1E471EC6004C9B1D /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				870F8CD21E3357420021F87B /* ScreenTarget */,
+				9AEF74061CD20E6700A5D574 /* StepByStepModels */,
+			);
+			name = ViewModels;
+			sourceTree = "<group>";
+		};
 		874AAB5B1E3C775900B3F8FE /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				8714E0531E471DE8004C9B1D /* RequestManager */,
+				8714E0521E471DDB004C9B1D /* DataManager */,
 				874AAB661E3CE9F400B3F8FE /* AppManager */,
 				874AAB5F1E3C790300B3F8FE /* ConfigManager */,
 				874AAB6A1E3DCECD00B3F8FE /* SessionManager */,
@@ -2536,8 +2571,6 @@
 		9AEF73D41CD20DA200A5D574 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				870F8CD21E3357420021F87B /* ScreenTarget */,
-				9AEF74061CD20E6700A5D574 /* StepByStepModels */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -2880,6 +2913,7 @@
 				870F8CCC1E33548F0021F87B /* Application */,
 				4AE242DC198655D900E37C90 /* Storyboards */,
 				9AEF73D41CD20DA200A5D574 /* Models */,
+				8714E05A1E471EC6004C9B1D /* ViewModels */,
 				4AE242DB198655D900E37C90 /* Views */,
 				B5A302FF1981218E00F71726 /* Controllers */,
 				870F8CCF1E3356F00021F87B /* Support */,
@@ -3817,6 +3851,7 @@
 				875AD5661E38C0C900584ABF /* RIPaymentInformation.m in Sources */,
 				CEE558661AFCC2FB00FC87D4 /* JARadioRelatedComponent.m in Sources */,
 				CE9ADF941AB6D78200D56481 /* JAPicker.m in Sources */,
+				8714E0591E471E2F004C9B1D /* DataManager.m in Sources */,
 				CE9ADF971AB6D78200D56481 /* JAFallbackView.m in Sources */,
 				9AE766A21CB3CF5300B63D8E /* JAAccountServicesView.m in Sources */,
 				9A3D21811CA3041A00FE41B6 /* JAChooseCountryViewController.m in Sources */,
@@ -4010,6 +4045,7 @@
 				CEF0C48D1BE8EE44005B5B12 /* JAReviewCollectionCell.m in Sources */,
 				875AD5681E38C0C900584ABF /* RIPaymentMethodFormField.m in Sources */,
 				875AD55C1E38C0C900584ABF /* RICatalog.m in Sources */,
+				8714E0561E471E25004C9B1D /* RequestManager.m in Sources */,
 				8714E0441E45E247004C9B1D /* UILabel+Extensions.m in Sources */,
 				CE9AE0151AB6D78200D56481 /* JARootViewController.m in Sources */,
 				CEF0C48E1BE8EE56005B5B12 /* JASellerDeliveryView.m in Sources */,
