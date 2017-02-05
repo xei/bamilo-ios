@@ -70,4 +70,5 @@
     #import "UIButton+Size.h"
 //########################################
     #import "Categories.pch"
+    #import "DataManager.h"
 #endif

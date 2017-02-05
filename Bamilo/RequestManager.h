@@ -8,11 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void(^RequestSuccessBlock)(id data);
-typedef void(^RequestFailureBlock)(NSError *error);
+typedef void(^RequestCompletion)(RIApiResponse response, id data, NSArray* errorMessages);
 
 @interface RequestManager : NSObject
 
-+(void) asyncRequest:(NSURLRequest *)request success:(RequestSuccessBlock)success failure:(RequestFailureBlock)failure;
++(void) asyncGET:(NSString *)path params:(NSDictionary *)params completion:(RequestCompletion)completion;
++(void) asyncPOST:(NSString *)path params:(NSDictionary *)params completion:(RequestCompletion)completion;
++(void) asyncPUT:(NSString *)path params:(NSDictionary *)params completion:(RequestCompletion)completion;
++(void) asyncDELETE:(NSString *)path params:(NSDictionary *)params completion:(RequestCompletion)completion;
 
 @end

@@ -224,7 +224,7 @@
     [self showLoading];
     [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_RETURN_FINISH]]
                                                      parameters:[self.stateInfoValues copy]
-                                                     httpMethod:HttpResponsePost
+                                                     httpMethod:HttpVerbPOST
                                                       cacheType:RIURLCacheNoCache
                                                       cacheTime:RIURLCacheNoTime
                                              userAgentInjection:[RIApi getCountryUserAgentInjection]

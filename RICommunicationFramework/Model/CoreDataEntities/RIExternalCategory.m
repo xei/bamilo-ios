@@ -40,7 +40,7 @@
 {
     [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RIExternalCategory class])];
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", countryUrl, RI_API_VERSION, RI_API_EXTERNAL_LINKS]]
-                                                            parameters:nil httpMethod:HttpResponsePost
+                                                            parameters:nil httpMethod:HttpVerbPOST
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
                                                     userAgentInjection:countryUserAgentInjection

@@ -41,7 +41,7 @@
  */
 - (NSString*)sendRequestWithUrl:(NSURL *)url
                      parameters:(NSDictionary *)parameters
-                     httpMethod:(HttpResponse)method
+                     httpMethod:(HttpVerb)method
                       cacheType:(RIURLCacheType)cacheType
                       cacheTime:(RIURLCacheTime)cacheTime
              userAgentInjection:(NSString*)userAgentInjection
@@ -68,7 +68,7 @@
  */
 - (NSString*)sendRequestWithUrl:(NSURL *)url
                      parameters:(NSDictionary *)parameters
-                     httpMethod:(HttpResponse)method
+                     httpMethod:(HttpVerb)method
                         timeOut:(NSInteger)timeOut
                       cacheType:(RIURLCacheType)cacheType
                       cacheTime:(RIURLCacheTime)cacheTime
@@ -97,7 +97,7 @@
  */
 - (NSString*)sendRequestWithUrl:(NSURL *)url
                      parameters:(NSDictionary *)parameters
-                     httpMethod:(HttpResponse)method
+                     httpMethod:(HttpVerb)method
                     shouldRetry:(BOOL)shouldRetry
                 numberOfRetries:(NSInteger)numberOfRetries
                       cacheType:(RIURLCacheType)cacheType
@@ -125,7 +125,7 @@
  */
 - (NSString*)sendRequestWithUrl:(NSURL *)url
                      parameters:(NSDictionary *)parameters
-                     httpMethod:(HttpResponse)method
+                     httpMethod:(HttpVerb)method
                         timeOut:(NSInteger)timeOut
                     shouldRetry:(BOOL)shouldRetry
                 numberOfRetries:(NSInteger)numberOfRetries

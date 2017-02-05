@@ -42,22 +42,22 @@
 #endif
 
 typedef NS_ENUM(NSInteger, RIApiResponse) {
-    RIApiResponseSuccess                = 0,
-    RIApiResponseAuthorizationError     = 1,
-    RIApiResponseTimeOut                = 2,
-    RIApiResponseBadUrl                 = 3,
-    RIApiResponseUnknownError           = 4,
-    RIApiResponseAPIError               = 5,
-    RIApiResponseNoInternetConnection   = 6,
-    RIApiResponseMaintenancePage        = 7,
-    RIApiResponseKickoutView            = 8
+    RIApiResponseSuccess                = 9000,
+    RIApiResponseAuthorizationError     = 9001,
+    RIApiResponseTimeOut                = 9002,
+    RIApiResponseBadUrl                 = 9003,
+    RIApiResponseUnknownError           = 9004,
+    RIApiResponseAPIError               = 9005,
+    RIApiResponseNoInternetConnection   = 9006,
+    RIApiResponseMaintenancePage        = 9007,
+    RIApiResponseKickoutView            = 9008
 };
 
-typedef NS_ENUM(NSInteger, HttpResponse) {
-    HttpResponsePost                    = 0,
-    HttpResponseGet                     = 1,
-    HttpResponsePut                     = 2,
-    HttpResponseDelete                  = 3
+typedef NS_ENUM(NSInteger, HttpVerb) {
+    HttpVerbPOST                    = 0,
+    HttpVerbGET                     = 1,
+    HttpVerbPUT                     = 2,
+    HttpVerbDELETE                  = 3
 };
 
 #ifndef UIColorFromRGB

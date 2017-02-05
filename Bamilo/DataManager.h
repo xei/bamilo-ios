@@ -7,9 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RequestManager.h"
+
+typedef void(^DataCompletion)(id data, NSError *error);
 
 @interface DataManager : NSObject
 
-+(instancetype) sharedInstance;
++ (instancetype)sharedInstance;
+- (void)getUserAddressList:(DataCompletion)completion;
 
 @end

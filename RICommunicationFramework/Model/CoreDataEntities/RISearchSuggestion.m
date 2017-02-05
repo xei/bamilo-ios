@@ -172,7 +172,7 @@
         NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_SEARCH_SUGGESTIONS,[query stringByReplacingOccurrencesOfString:@" " withString:@"+"]]];
         return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
                                                                 parameters:nil
-                                                                httpMethod:HttpResponseGet
+                                                                httpMethod:HttpVerbGET
                                                                  cacheType:RIURLCacheNoCache
                                                                  cacheTime:RIURLCacheNoTime
                                                         userAgentInjection:[RIApi getCountryUserAgentInjection]
@@ -258,7 +258,7 @@
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
                                                             parameters:nil
-                                                            httpMethod:HttpResponseGet
+                                                            httpMethod:HttpVerbGET
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]

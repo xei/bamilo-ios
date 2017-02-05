@@ -9,6 +9,7 @@
 #import "CheckoutAddressViewController.h"
 #import "AddressTableViewHeaderCell.h"
 #import "AddressTableViewCell.h"
+#import "AddressList.h"
 
 @interface CheckoutAddressViewController()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -26,6 +27,12 @@
     [self.tableView registerNib:[UINib nibWithNibName:[AddressTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[AddressTableViewCell nibName]];
     
     _addresses = [NSArray new];
+    
+    [[DataManager sharedInstance] getUserAddressList:^(id data, NSError *error) {
+        if(error == nil) {
+            __unused AddressList *addressList = (AddressList *)data;
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -61,7 +61,7 @@
             
             [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
                                                              parameters:nil
-                                                             httpMethod:HttpResponsePost
+                                                             httpMethod:HttpVerbPOST
                                                               cacheType:RIURLCacheNoCache
                                                               cacheTime:RIURLCacheDefaultTime
                                                      userAgentInjection:[RIApi getCountryUserAgentInjection]
@@ -126,7 +126,7 @@
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
                                                             parameters:nil
-                                                            httpMethod:HttpResponsePost
+                                                            httpMethod:HttpVerbPOST
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]
@@ -218,7 +218,7 @@
     //BOOL isPostRequest = [@"post" isEqualToString:[form.method lowercaseString]];
     //TODO: DELELE
     
-    HttpResponse response = [self getHttpResponseMethodFromForm:form];
+    HttpVerb response = [self getHttpResponseMethodFromForm:form];
     
     NSMutableDictionary *allParameters = [[NSMutableDictionary alloc] initWithDictionary:parameters];
     for(RIField *formField in form.fields)
@@ -449,19 +449,19 @@
 
 #pragma mark - Auxiliar functions
 
-+ (HttpResponse)getHttpResponseMethodFromForm:(RIForm *) form {
++ (HttpVerb)getHttpResponseMethodFromForm:(RIForm *) form {
     NSString* formMethod = [form.method lowercaseString];
     if([@"post" isEqualToString:formMethod]){
-        return HttpResponsePost;
+        return HttpVerbPOST;
     }
     if([@"get" isEqualToString:formMethod]){
-        return HttpResponseGet;
+        return HttpVerbGET;
     }
     if([@"put" isEqualToString:formMethod]){
-        return HttpResponsePut;
+        return HttpVerbPUT;
     }
     else{
-        return HttpResponseDelete;
+        return HttpVerbDELETE;
     }
 }
 
