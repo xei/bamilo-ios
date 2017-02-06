@@ -25,18 +25,18 @@
 }
 
 - (void)setShadowColor:(UIColor *)shadowColor {
-    [self.layer setShadowColor:[[UIColor blackColor] CGColor]];
+    [self.layer setShadowColor: shadowColor.CGColor];
 }
 
 - (void)setShadowOffset:(CGSize)shadowOffset {
-    [self.layer setShadowOffset:CGSizeMake(-4.0, 4.0)];
+    [self.layer setShadowOffset: shadowOffset];
 }
 
 - (void)setShadowRadius:(CGFloat)shadowRadius {
-    [self.layer setShadowRadius:4.75];
+    [self.layer setShadowRadius: shadowRadius];
 }
 
 - (void)setShadowOpacity:(CGFloat)shadowOpacity {
-    [self.layer setShadowOpacity:0.4];
+    [self.layer setShadowOpacity:shadowOpacity];
 }
 @end

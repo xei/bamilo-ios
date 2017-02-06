@@ -437,37 +437,123 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qMZ-Vq-mnw" userLabel="container view wrapper">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="594"/>
                                 <subviews>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ig0-vW-kqW">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="587"/>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ig0-vW-kqW">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="549"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </tableView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p33-7W-5AD" userLabel="footerView container">
-                                        <rect key="frame" x="0.0" y="537" width="375" height="50"/>
+                                    <view alpha="0.93999999999999995" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fm5-0g-qnq" userLabel="Cart Summery View">
+                                        <rect key="frame" x="0.0" y="429" width="375" height="75"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="مجموع خرید:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iiG-ZB-Lk2">
+                                                <rect key="frame" x="297" y="10" width="68" height="22"/>
+                                                <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
+                                                <color key="textColor" red="0.33725490196078434" green="0.33725490196078434" blue="0.33725490196078434" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="مجموع تخفیف:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QIn-JG-WlR">
+                                                <rect key="frame" x="287" y="43" width="78" height="22"/>
+                                                <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
+                                                <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="در حال محاسبه" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vgt-Lp-1Ci" userLabel="total price">
+                                                <rect key="frame" x="10" y="10" width="277" height="22"/>
+                                                <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
+                                                <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="در حال محاسبه" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Co6-Dd-SGv" userLabel="total discounted Price">
+                                                <rect key="frame" x="10" y="43" width="267" height="22"/>
+                                                <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
+                                                <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="b21-n5-iMy"/>
+                                            <constraint firstItem="QIn-JG-WlR" firstAttribute="leading" secondItem="Co6-Dd-SGv" secondAttribute="trailing" constant="10" id="1VT-qk-bqR"/>
+                                            <constraint firstAttribute="trailing" secondItem="QIn-JG-WlR" secondAttribute="trailing" constant="10" id="3Aa-kJ-ykb"/>
+                                            <constraint firstAttribute="trailing" secondItem="iiG-ZB-Lk2" secondAttribute="trailing" constant="10" id="8cj-GQ-7Cg"/>
+                                            <constraint firstItem="Co6-Dd-SGv" firstAttribute="centerY" secondItem="QIn-JG-WlR" secondAttribute="centerY" id="HAJ-1L-HeC"/>
+                                            <constraint firstAttribute="height" constant="75" id="MPR-Po-5gq"/>
+                                            <constraint firstItem="Co6-Dd-SGv" firstAttribute="leading" secondItem="Fm5-0g-qnq" secondAttribute="leading" constant="10" id="NwG-ng-j5w"/>
+                                            <constraint firstItem="Vgt-Lp-1Ci" firstAttribute="centerY" secondItem="iiG-ZB-Lk2" secondAttribute="centerY" id="ZZy-3Y-bS1"/>
+                                            <constraint firstItem="iiG-ZB-Lk2" firstAttribute="top" secondItem="Fm5-0g-qnq" secondAttribute="top" constant="10" id="g5a-T3-sps"/>
+                                            <constraint firstAttribute="bottom" secondItem="QIn-JG-WlR" secondAttribute="bottom" constant="10" id="iZL-uH-RlE"/>
+                                            <constraint firstItem="Vgt-Lp-1Ci" firstAttribute="left" secondItem="Fm5-0g-qnq" secondAttribute="left" constant="10" id="jK7-SJ-Lcz"/>
+                                            <constraint firstItem="iiG-ZB-Lk2" firstAttribute="left" secondItem="Vgt-Lp-1Ci" secondAttribute="right" constant="10" id="m6s-Zm-KBy"/>
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
                                                 <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                                <real key="value" value="0.34000000000000002"/>
+                                                <real key="value" value="0.39000000000000001"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
-                                                <size key="value" width="0.0" height="-4"/>
+                                                <size key="value" width="0.0" height="-2"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                                <real key="value" value="4"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p33-7W-5AD" userLabel="footerView container">
+                                        <rect key="frame" x="0.0" y="504" width="375" height="45"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="جمع نهایی (۵ کالا): " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E8d-he-29d">
+                                                <rect key="frame" x="264" y="11" width="101" height="23"/>
+                                                <fontDescription key="fontDescription" name="Bamilo-Sans-Bold" family="Bamilo-Sans" pointSize="12"/>
+                                                <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="در حال محاسبه" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U4w-35-zeg">
+                                                <rect key="frame" x="10" y="11" width="244" height="23"/>
+                                                <fontDescription key="fontDescription" name="Bamilo-Sans-Bold" family="Bamilo-Sans" pointSize="12"/>
+                                                <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F0s-0d-AWP" userLabel="total payment summery">
+                                                <rect key="frame" x="0.0" y="0.5" width="375" height="45"/>
+                                                <connections>
+                                                    <action selector="totalPaymentViewTapped:" destination="9Ss-pC-YRE" eventType="touchUpInside" id="Y0N-AG-I2D"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.85098039215686272" green="0.85098039215686272" blue="0.85098039215686272" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="U4w-35-zeg" firstAttribute="leading" secondItem="p33-7W-5AD" secondAttribute="leading" constant="10" id="0nj-18-EWa"/>
+                                            <constraint firstItem="F0s-0d-AWP" firstAttribute="centerX" secondItem="p33-7W-5AD" secondAttribute="centerX" id="9XW-B0-IAO"/>
+                                            <constraint firstAttribute="trailing" secondItem="E8d-he-29d" secondAttribute="trailing" constant="10" id="JG1-Ih-cso"/>
+                                            <constraint firstItem="F0s-0d-AWP" firstAttribute="height" secondItem="p33-7W-5AD" secondAttribute="height" id="JVi-KL-lNI"/>
+                                            <constraint firstItem="F0s-0d-AWP" firstAttribute="width" secondItem="p33-7W-5AD" secondAttribute="width" id="L3v-0h-Xqh"/>
+                                            <constraint firstItem="F0s-0d-AWP" firstAttribute="centerY" secondItem="p33-7W-5AD" secondAttribute="centerY" id="LJU-lk-LJU"/>
+                                            <constraint firstItem="U4w-35-zeg" firstAttribute="centerY" secondItem="E8d-he-29d" secondAttribute="centerY" id="QIO-hT-BJT"/>
+                                            <constraint firstAttribute="height" constant="45" id="b21-n5-iMy"/>
+                                            <constraint firstItem="E8d-he-29d" firstAttribute="centerY" secondItem="p33-7W-5AD" secondAttribute="centerY" id="rCm-x6-jnt"/>
+                                            <constraint firstItem="E8d-he-29d" firstAttribute="leading" secondItem="U4w-35-zeg" secondAttribute="trailing" constant="10" id="vuW-at-VOE"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                                <real key="value" value="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
+                                                <size key="value" width="0.0" height="0.0"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f8h-QL-QyM" customClass="OrangeButton">
-                                        <rect key="frame" x="0.0" y="587" width="375" height="60"/>
+                                        <rect key="frame" x="0.0" y="549" width="375" height="45"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="60" id="hPB-NM-phs"/>
+                                            <constraint firstAttribute="height" constant="45" id="hPB-NM-phs"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="15"/>
                                         <state key="normal" title="تایید"/>
+                                        <connections>
+                                            <action selector="proceedToCheckout:" destination="9Ss-pC-YRE" eventType="touchUpInside" id="ycL-d3-M2W"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -476,10 +562,13 @@
                                     <constraint firstItem="ig0-vW-kqW" firstAttribute="leading" secondItem="qMZ-Vq-mnw" secondAttribute="leading" id="6CI-FM-OM4"/>
                                     <constraint firstAttribute="trailing" secondItem="f8h-QL-QyM" secondAttribute="trailing" id="8yX-IY-Sbo"/>
                                     <constraint firstItem="f8h-QL-QyM" firstAttribute="top" secondItem="p33-7W-5AD" secondAttribute="bottom" id="Dah-MT-3HE"/>
+                                    <constraint firstItem="p33-7W-5AD" firstAttribute="top" secondItem="Fm5-0g-qnq" secondAttribute="top" constant="75" id="IjK-Yp-1Zm"/>
+                                    <constraint firstAttribute="trailing" secondItem="Fm5-0g-qnq" secondAttribute="trailing" id="MhF-KG-bfK"/>
                                     <constraint firstAttribute="bottom" secondItem="f8h-QL-QyM" secondAttribute="bottom" id="Wg7-fO-RXM"/>
                                     <constraint firstItem="f8h-QL-QyM" firstAttribute="top" secondItem="ig0-vW-kqW" secondAttribute="bottom" id="YMd-KB-IjR"/>
-                                    <constraint firstItem="p33-7W-5AD" firstAttribute="leading" secondItem="qMZ-Vq-mnw" secondAttribute="leading" id="kPL-wY-Bdf"/>
-                                    <constraint firstAttribute="trailing" secondItem="p33-7W-5AD" secondAttribute="trailing" id="lHl-aJ-vDh"/>
+                                    <constraint firstItem="p33-7W-5AD" firstAttribute="left" secondItem="qMZ-Vq-mnw" secondAttribute="left" id="kPL-wY-Bdf"/>
+                                    <constraint firstAttribute="right" secondItem="p33-7W-5AD" secondAttribute="right" id="lHl-aJ-vDh"/>
+                                    <constraint firstItem="Fm5-0g-qnq" firstAttribute="leading" secondItem="qMZ-Vq-mnw" secondAttribute="leading" id="uIf-kq-CEM"/>
                                     <constraint firstItem="f8h-QL-QyM" firstAttribute="leading" secondItem="qMZ-Vq-mnw" secondAttribute="leading" id="x3I-Ed-hU9"/>
                                     <constraint firstItem="ig0-vW-kqW" firstAttribute="top" secondItem="qMZ-Vq-mnw" secondAttribute="top" id="y7A-sY-3qT"/>
                                 </constraints>
@@ -490,9 +579,19 @@
                             <constraint firstAttribute="trailing" secondItem="qMZ-Vq-mnw" secondAttribute="trailing" id="Bqe-ih-ffK"/>
                             <constraint firstItem="qMZ-Vq-mnw" firstAttribute="top" secondItem="Onn-cX-YGc" secondAttribute="bottom" id="IwI-zf-lh1"/>
                             <constraint firstItem="qMZ-Vq-mnw" firstAttribute="leading" secondItem="lCD-v1-Ceg" secondAttribute="leading" id="qIY-DF-UQs"/>
-                            <constraint firstItem="wSM-EL-UVj" firstAttribute="top" secondItem="qMZ-Vq-mnw" secondAttribute="bottom" id="xHH-IR-cj0"/>
+                            <constraint firstItem="wSM-EL-UVj" firstAttribute="top" secondItem="qMZ-Vq-mnw" secondAttribute="bottom" constant="53" id="xHH-IR-cj0"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="cartSummeryView" destination="Fm5-0g-qnq" id="8eC-Pb-QM4"/>
+                        <outlet property="contentWrapper" destination="qMZ-Vq-mnw" id="sgB-Sg-cim"/>
+                        <outlet property="costSummeryContainerTopToWholeCostTopConstraint" destination="IjK-Yp-1Zm" id="TLP-Ua-e9U"/>
+                        <outlet property="tableView" destination="ig0-vW-kqW" id="RND-tc-DDe"/>
+                        <outlet property="totalDiscountedPrice" destination="Co6-Dd-SGv" id="0bN-5P-QFj"/>
+                        <outlet property="totalPaymentPrice" destination="U4w-35-zeg" id="EI3-Qs-Zgt"/>
+                        <outlet property="totalPaymentTitleLabel" destination="E8d-he-29d" id="skD-Z3-5TW"/>
+                        <outlet property="totalPrice" destination="Vgt-Lp-1Ci" id="7zs-aA-CeE"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9mC-sw-S7i" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

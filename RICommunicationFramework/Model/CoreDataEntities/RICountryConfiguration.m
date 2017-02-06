@@ -8,7 +8,7 @@
 
 #import "RICountryConfiguration.h"
 #import "RILanguage.h"
-
+#import "NSString+Extensions.h"
 
 @implementation RICountryConfiguration
 
@@ -214,7 +214,7 @@
     if(!VALID_NOTEMPTY([country currencyPosition], NSNumber) || ![[country currencyPosition] boolValue]) {
         return [NSString stringWithFormat:@"%@ %@", [country currencySymbol], [formatter stringFromNumber:price]];
     } else {
-        return [NSString stringWithFormat:@"%@ %@", [formatter stringFromNumber:price], [country currencySymbol]];
+        return [NSString stringWithFormat:@"%@ %@", [[[formatter stringFromNumber:price] formatTheNumbers] numbersToPersian], [country currencySymbol]];
     }
 }
 

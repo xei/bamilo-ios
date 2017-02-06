@@ -24,11 +24,11 @@
 }
 
 #pragma mark - Public Methods
-+(NSString *)nibName {
++ (NSString *)nibName {
     return nil;
 }
 
--(void)updateWithModel:(NSManagedObject *)model {
+- (void)updateWithModel:(NSManagedObject *)model {
     return;
 }
 

@@ -8,7 +8,7 @@
 
 #import "JAPriceFiltersView.h"
 #import "TTRangeSlider.h"
-#import "NSString+Style.h"
+#import "NSString+Extensions.h"
 
 @interface JAPriceFiltersView()
 

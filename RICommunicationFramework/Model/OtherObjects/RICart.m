@@ -609,6 +609,11 @@
             }
         }
         
+        if([cartEntityJSON objectForKey:@"sub_total_undiscounted"]) {
+            cart.cartUnreducedValue = [cartEntityJSON objectForKey:@"sub_total_undiscounted"];
+            cart.cartUnreducedValueFormatted = [RICountryConfiguration formatPrice:cart.cartUnreducedValue country:country];
+        }
+        
         if([cartEntityJSON objectForKey:@"sub_total"]){
             if(![[cartEntityJSON objectForKey:@"sub_total"] isKindOfClass:[NSNull class]]){
                 cart.subTotal = [cartEntityJSON objectForKey:@"sub_total"];
@@ -627,6 +632,11 @@
                 cart.cartValue = [cartEntityJSON objectForKey:@"total"];
                 cart.cartValueFormatted = [RICountryConfiguration formatPrice:cart.cartValue country:country];
             }
+        }
+        
+        if (cart.cartValue && cart.cartUnreducedValue) {
+            NSNumber *discountValue = [NSNumber numberWithInt: cart.cartUnreducedValue.intValue - cart.cartValue.intValue];
+            cart.discountedValueFormated = [RICountryConfiguration formatPrice:discountValue country:country];
         }
         
         if ([cartEntityJSON objectForKey:@"total_converted"]) {

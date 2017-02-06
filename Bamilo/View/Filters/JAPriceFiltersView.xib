@@ -21,7 +21,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="27g-VH-AHK" userLabel="Content View">
-                    <rect key="frame" x="0.0" y="266.5" width="375" height="134"/>
+                    <rect key="frame" x="0.0" y="267" width="375" height="134"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cAD-L9-feZ" customClass="TTRangeSlider">
                             <rect key="frame" x="20" y="8" width="335" height="40"/>
@@ -63,7 +63,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ریال" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tak-Nb-gWu">
-                            <rect key="frame" x="20" y="59.5" width="21.5" height="23"/>
+                            <rect key="frame" x="20" y="60" width="21.5" height="23"/>
                             <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>

@@ -14,5 +14,6 @@
 - (NSString *) numbersToPersian;
 - (NSString *) numbersToEnglish;
 - (NSString *) formatTheNumbers;
+- (NSString *) struckThroughText;
 
 @end

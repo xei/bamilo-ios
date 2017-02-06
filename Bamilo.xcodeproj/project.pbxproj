@@ -19,6 +19,12 @@
 		503C9D52C4AD9778E8C113A7 /* libPods-Bamilo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D245C5FE6A656AA98164739 /* libPods-Bamilo.a */; };
 		611195821E3CB14B00D06690 /* PlainTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 611195801E3CB14B00D06690 /* PlainTableViewCell.m */; };
 		611195831E3CB14B00D06690 /* PlainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 611195811E3CB14B00D06690 /* PlainTableViewCell.xib */; };
+		61148E051E4724FC00E2540B /* StepperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61148E041E4724FC00E2540B /* StepperView.m */; };
+		61148E081E47250A00E2540B /* StepperViewControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 61148E071E47250A00E2540B /* StepperViewControl.m */; };
+		61148E0A1E47255F00E2540B /* StepperView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61148E091E47255F00E2540B /* StepperView.xib */; };
+		612FDC371E45E0A900A9D0BD /* CartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 612FDC351E45E0A900A9D0BD /* CartTableViewCell.m */; };
+		612FDC381E45E0A900A9D0BD /* CartTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 612FDC361E45E0A900A9D0BD /* CartTableViewCell.xib */; };
+		61DBCCB61E46128300BA8251 /* IconButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 61DBCCB51E46128300BA8251 /* IconButton.m */; };
 		61E099641E3E0E21004ED14E /* IconTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E099621E3E0E21004ED14E /* IconTableViewCell.m */; };
 		61E099651E3E0E21004ED14E /* IconTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E099631E3E0E21004ED14E /* IconTableViewCell.xib */; };
 		61E0996C1E3E117F004ED14E /* BaseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E0996B1E3E117F004ED14E /* BaseTableViewCell.m */; };
@@ -498,6 +504,18 @@
 		6111957F1E3CB14B00D06690 /* PlainTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlainTableViewCell.h; path = ../Controllers/MenuViewController/PlainTableViewCell.h; sourceTree = "<group>"; };
 		611195801E3CB14B00D06690 /* PlainTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlainTableViewCell.m; path = ../Controllers/MenuViewController/PlainTableViewCell.m; sourceTree = "<group>"; };
 		611195811E3CB14B00D06690 /* PlainTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PlainTableViewCell.xib; path = ../Controllers/MenuViewController/PlainTableViewCell.xib; sourceTree = "<group>"; };
+		61148E031E4724FC00E2540B /* StepperView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepperView.h; sourceTree = "<group>"; };
+		61148E041E4724FC00E2540B /* StepperView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StepperView.m; sourceTree = "<group>"; };
+		61148E061E47250A00E2540B /* StepperViewControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepperViewControl.h; sourceTree = "<group>"; };
+		61148E071E47250A00E2540B /* StepperViewControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StepperViewControl.m; sourceTree = "<group>"; };
+		61148E091E47255F00E2540B /* StepperView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StepperView.xib; sourceTree = "<group>"; };
+		612FDC341E45E0A900A9D0BD /* CartTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartTableViewCell.h; sourceTree = "<group>"; };
+		612FDC351E45E0A900A9D0BD /* CartTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartTableViewCell.m; sourceTree = "<group>"; };
+		612FDC361E45E0A900A9D0BD /* CartTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartTableViewCell.xib; sourceTree = "<group>"; };
+		61C407C31E476486004ACEE8 /* StepperViewControlDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepperViewControlDelegate.h; sourceTree = "<group>"; };
+		61C407C41E476939004ACEE8 /* CartTableViewCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartTableViewCellDelegate.h; sourceTree = "<group>"; };
+		61DBCCB41E46128300BA8251 /* IconButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconButton.h; sourceTree = "<group>"; };
+		61DBCCB51E46128300BA8251 /* IconButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconButton.m; sourceTree = "<group>"; };
 		61E099611E3E0E21004ED14E /* IconTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconTableViewCell.h; sourceTree = "<group>"; };
 		61E099621E3E0E21004ED14E /* IconTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconTableViewCell.m; sourceTree = "<group>"; };
 		61E099631E3E0E21004ED14E /* IconTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IconTableViewCell.xib; sourceTree = "<group>"; };
@@ -1593,6 +1611,55 @@
 			path = Search;
 			sourceTree = "<group>";
 		};
+		61148E001E47226200E2540B /* Stepper */ = {
+			isa = PBXGroup;
+			children = (
+				61148E011E4724D900E2540B /* View */,
+				61148E021E4724DD00E2540B /* ViewControl */,
+			);
+			name = Stepper;
+			sourceTree = "<group>";
+		};
+		61148E011E4724D900E2540B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				61148E031E4724FC00E2540B /* StepperView.h */,
+				61148E041E4724FC00E2540B /* StepperView.m */,
+				61148E091E47255F00E2540B /* StepperView.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		61148E021E4724DD00E2540B /* ViewControl */ = {
+			isa = PBXGroup;
+			children = (
+				61148E061E47250A00E2540B /* StepperViewControl.h */,
+				61148E071E47250A00E2540B /* StepperViewControl.m */,
+				61C407C31E476486004ACEE8 /* StepperViewControlDelegate.h */,
+			);
+			name = ViewControl;
+			sourceTree = "<group>";
+		};
+		612FDC331E45E08500A9D0BD /* CartTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				612FDC341E45E0A900A9D0BD /* CartTableViewCell.h */,
+				612FDC351E45E0A900A9D0BD /* CartTableViewCell.m */,
+				612FDC361E45E0A900A9D0BD /* CartTableViewCell.xib */,
+				61C407C41E476939004ACEE8 /* CartTableViewCellDelegate.h */,
+			);
+			name = CartTableViewCell;
+			sourceTree = "<group>";
+		};
+		61DBCCB31E46127600BA8251 /* IconButton */ = {
+			isa = PBXGroup;
+			children = (
+				61DBCCB41E46128300BA8251 /* IconButton.h */,
+				61DBCCB51E46128300BA8251 /* IconButton.m */,
+			);
+			name = IconButton;
+			sourceTree = "<group>";
+		};
 		61E099601E3DD3BC004ED14E /* PlainTableViewHeaderCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -1606,6 +1673,7 @@
 		61E099661E3E10F0004ED14E /* TableViewCells */ = {
 			isa = PBXGroup;
 			children = (
+				612FDC331E45E08500A9D0BD /* CartTableViewCell */,
 				61E099691E3E1163004ED14E /* BaseTableViewCell */,
 				87A681721E42003100D252AC /* AddressTableViewCell */,
 				61E099671E3E113F004ED14E /* PlainTableViewCell */,
@@ -2315,6 +2383,7 @@
 		87D07D811E40B45A00C00AC6 /* BML */ = {
 			isa = PBXGroup;
 			children = (
+				61148E001E47226200E2540B /* Stepper */,
 				87D07D841E40B4DA00C00AC6 /* TableViewHeaderFooters */,
 				61E099661E3E10F0004ED14E /* TableViewCells */,
 				87D07D831E40B4C800C00AC6 /* Buttons */,
@@ -2336,6 +2405,7 @@
 		87D07D831E40B4C800C00AC6 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
+				61DBCCB31E46127600BA8251 /* IconButton */,
 				87A681551E40F20A00D252AC /* BaseButton */,
 				87A6814F1E40ECFC00D252AC /* OrangeButton */,
 			);
@@ -3491,6 +3561,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61148E0A1E47255F00E2540B /* StepperView.xib in Resources */,
 				874AAB551E3C764600B3F8FE /* Bamilo-Configs.plist in Resources */,
 				CEDBF8971B0DF5D00073971A /* JANewsletterComponent~iPad_RTL.xib in Resources */,
 				CE9AE03C1AB6D78200D56481 /* JANewsletterComponent~iPad.xib in Resources */,
@@ -3528,6 +3599,7 @@
 				CE9AE0D51AB6D78200D56481 /* JAPDVBundleSingleItem.xib in Resources */,
 				CE9AE0D91AB6D78200D56481 /* JAOtherOffersView_Landscape~iPad.xib in Resources */,
 				CEE5F4E41B1CB6B500556150 /* JARecentSearchesViewController.xib in Resources */,
+				612FDC381E45E0A900A9D0BD /* CartTableViewCell.xib in Resources */,
 				875AD5821E38C0C900584ABF /* RITracking_Bamilo.plist in Resources */,
 				CE9AE0E01AB6D78200D56481 /* JAPDVProductInfo~iPad_Portrait.xib in Resources */,
 				CEDE870F1B25FEE5006D18EA /* JANoConnectionView.xib in Resources */,
@@ -3844,6 +3916,7 @@
 				87D07D7C1E4099C300C00AC6 /* CheckoutConfirmationViewController.m in Sources */,
 				9A3C76171C285D9300EB0B11 /* JARecentlyViewedCell.m in Sources */,
 				CED620511BEA5EE800FA8403 /* JACollectionSeparator.m in Sources */,
+				61DBCCB61E46128300BA8251 /* IconButton.m in Sources */,
 				CE9ADFBA1AB6D78200D56481 /* JAUtils.m in Sources */,
 				875AD5811E38C0C900584ABF /* RIOpenURLHandler.m in Sources */,
 				9A3876641BCD0DFD0088B186 /* JAProductReviewsView.m in Sources */,
@@ -3876,6 +3949,7 @@
 				CEA106F11BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m in Sources */,
 				875AD5531E38C0C900584ABF /* RITeaserGrouping.m in Sources */,
 				FFF900721C6A5CC700DDF538 /* JATextFieldComponent.m in Sources */,
+				61148E051E4724FC00E2540B /* StepperView.m in Sources */,
 				875AD54F1E38C0C900584ABF /* RISearchSuggestion.m in Sources */,
 				87A681711E41FCF300D252AC /* CheckoutProgressViewController.m in Sources */,
 				874AAB5E1E3C778E00B3F8FE /* ConfigManager.m in Sources */,
@@ -3936,6 +4010,7 @@
 				CE9ADFEA1AB6D78200D56481 /* main.m in Sources */,
 				CE9ADFEC1AB6D78200D56481 /* JARatingsViewMedium.m in Sources */,
 				841E81AA1D1680F300A35AAF /* MPCoachMarks.m in Sources */,
+				612FDC371E45E0A900A9D0BD /* CartTableViewCell.m in Sources */,
 				CE9ADFEF1AB6D78200D56481 /* JAPickerScrollView.m in Sources */,
 				875AD5411E38C0C900584ABF /* RIApi.m in Sources */,
 				CE9ADFF11AB6D78200D56481 /* JARecentSearchesViewController.m in Sources */,
@@ -3959,6 +4034,7 @@
 				8714E0491E45FDF9004C9B1D /* NSMutableString+Extensions.m in Sources */,
 				CE9ADFFD1AB6D78200D56481 /* JATeaserPageView.m in Sources */,
 				9AEF73F41CD20E1C00A5D574 /* JACheckoutStepByStepModel.m in Sources */,
+				61148E081E47250A00E2540B /* StepperViewControl.m in Sources */,
 				61E099711E3E18F0004ED14E /* NotificationTableViewCell.m in Sources */,
 				9A189E8F1BB5630C0039BC14 /* JAProductInfoSubLine.m in Sources */,
 				CE9ADFFF1AB6D78200D56481 /* Reachability.m in Sources */,

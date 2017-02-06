@@ -32,6 +32,12 @@
     
 }
 
+- (NSAttributedString *) struckThroughText {
+    NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:self];
+    [attributeString addAttribute:NSStrikethroughStyleAttributeName value:@1 range:NSMakeRange(0, [attributeString length])];
+    return attributeString;
+}
+
 - (NSString *) numbersToPersian {
     return [self changeNumberToLocalId:@"ar"];
 }
