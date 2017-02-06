@@ -29,16 +29,16 @@
                                 <state key="normal" title="ادامه">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="continueButtonTapped:" destination="cPx-eU-fFb" eventType="touchUpInside" id="14B-C8-Huo"/>
+                                </connections>
                             </button>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RaY-Nc-0ZR">
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RaY-Nc-0ZR" customClass="CheckoutProgressViewControl">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="d0h-R8-HHm"/>
                                 </constraints>
-                                <connections>
-                                    <segue destination="3Ao-wO-bkU" kind="embed" id="bEi-ct-BU4"/>
-                                </connections>
                             </containerView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Bu1-25-svr">
                                 <rect key="frame" x="0.0" y="60" width="375" height="547"/>
@@ -67,8 +67,10 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="checkoutProgressViewControl" destination="RaY-Nc-0ZR" id="zW7-UC-yur"/>
+                        <outlet property="continueButton" destination="2Sh-o6-mCT" id="Gah-em-65h"/>
                         <outlet property="tableView" destination="Bu1-25-svr" id="eYw-Hu-Yu9"/>
-                        <segue destination="RR0-PB-qTp" kind="show" identifier="" id="Vuf-MV-Cbd"/>
+                        <segue destination="RR0-PB-qTp" kind="show" identifier="pushAddressToReview" id="Vuf-MV-Cbd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qrc-mW-Y1H" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -87,25 +89,52 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="22G-Q0-TRN">
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="22G-Q0-TRN" customClass="CheckoutProgressViewControl">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="jcl-RL-nUK"/>
                                 </constraints>
-                                <connections>
-                                    <segue destination="3Ao-wO-bkU" kind="embed" id="TxE-vD-bQV"/>
-                                </connections>
                             </containerView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a6b-JE-wIw" customClass="OrangeButton">
+                                <rect key="frame" x="10" y="607" width="355" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Npj-Ll-dJh"/>
+                                </constraints>
+                                <state key="normal" title="ادامه">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="continueButtonTapped:" destination="RR0-PB-qTp" eventType="touchUpInside" id="Yhg-gN-D0m"/>
+                                </connections>
+                            </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dCv-DP-nKy">
+                                <rect key="frame" x="0.0" y="60" width="375" height="547"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="RR0-PB-qTp" id="ZJK-AX-9du"/>
+                                    <outlet property="delegate" destination="RR0-PB-qTp" id="aNW-ld-vWM"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" red="0.40699419394213698" green="0.82547861277131862" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="dCv-DP-nKy" secondAttribute="trailing" id="1Nr-CW-Q2X"/>
                             <constraint firstItem="22G-Q0-TRN" firstAttribute="leading" secondItem="htM-qu-iwa" secondAttribute="leading" id="71R-3o-6kr"/>
+                            <constraint firstItem="a6b-JE-wIw" firstAttribute="top" secondItem="dCv-DP-nKy" secondAttribute="bottom" id="75i-aM-qU3"/>
                             <constraint firstAttribute="trailing" secondItem="22G-Q0-TRN" secondAttribute="trailing" id="F1N-Sr-GKb"/>
                             <constraint firstItem="22G-Q0-TRN" firstAttribute="top" secondItem="qVA-Rv-cap" secondAttribute="bottom" id="Fwk-T5-fOP"/>
+                            <constraint firstItem="dCv-DP-nKy" firstAttribute="top" secondItem="22G-Q0-TRN" secondAttribute="bottom" id="GsR-NS-7c0"/>
+                            <constraint firstItem="a6b-JE-wIw" firstAttribute="leading" secondItem="htM-qu-iwa" secondAttribute="leading" constant="10" id="Ldw-aW-VvZ"/>
+                            <constraint firstItem="jbe-49-at3" firstAttribute="top" secondItem="a6b-JE-wIw" secondAttribute="bottom" constant="10" id="Spf-8c-S8P"/>
+                            <constraint firstAttribute="trailing" secondItem="a6b-JE-wIw" secondAttribute="trailing" constant="10" id="fxL-XE-i6j"/>
+                            <constraint firstItem="dCv-DP-nKy" firstAttribute="leading" secondItem="htM-qu-iwa" secondAttribute="leading" id="lcu-2q-VKV"/>
                         </constraints>
                     </view>
                     <connections>
-                        <segue destination="YAa-kj-ypS" kind="show" id="8lA-ov-Vmp"/>
+                        <outlet property="checkoutProgressViewControl" destination="22G-Q0-TRN" id="SJw-3T-MTK"/>
+                        <outlet property="continueButton" destination="a6b-JE-wIw" id="xw9-Qc-5YA"/>
+                        <outlet property="tableView" destination="dCv-DP-nKy" id="rj7-oJ-fIb"/>
+                        <segue destination="YAa-kj-ypS" kind="show" identifier="pushReviewToPayment" id="8lA-ov-Vmp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c6o-Zu-FYQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -124,14 +153,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Bg-pG-uxa">
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Bg-pG-uxa" customClass="CheckoutProgressViewControl">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="Svr-CK-Tio"/>
                                 </constraints>
-                                <connections>
-                                    <segue destination="3Ao-wO-bkU" kind="embed" id="ED1-fm-gUk"/>
-                                </connections>
                             </containerView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.57953985223996241" blue="0.58901249803895506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -141,31 +167,13 @@
                             <constraint firstItem="7Bg-pG-uxa" firstAttribute="top" secondItem="Rb1-m2-ocz" secondAttribute="bottom" id="d8f-Zr-zbO"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="checkoutProgressViewControl" destination="7Bg-pG-uxa" id="9Vi-Co-9mf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w3x-oZ-fdD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1383" y="-70"/>
         </scene>
-        <!--Checkout Progress View Controller-->
-        <scene sceneID="5k1-E7-G3I">
-            <objects>
-                <viewController storyboardIdentifier="CheckoutProgressViewController" id="3Ao-wO-bkU" customClass="CheckoutProgressViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="v95-3n-JGA"/>
-                        <viewControllerLayoutGuide type="bottom" id="zfw-QM-sz9"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Vdh-36-vp8">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.6704331863589621" green="0.30399855265364584" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="s69-Kn-KT6" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="550" y="512"/>
-        </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="bEi-ct-BU4"/>
-    </inferredMetricsTieBreakers>
 </document>

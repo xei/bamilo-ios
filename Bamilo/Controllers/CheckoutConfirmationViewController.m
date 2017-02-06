@@ -7,9 +7,10 @@
 //
 
 #import "CheckoutConfirmationViewController.h"
+#import "CheckoutProgressViewButtonModel.h"
 
-@interface CheckoutConfirmationViewController ()
-
+@interface CheckoutConfirmationViewController()
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @end
 
 @implementation CheckoutConfirmationViewController
@@ -24,14 +25,33 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma mark - Overrides
+-(NSString *)getNextStepViewControllerSegueIdentifier {
+    return @"pushReviewToPayment";
 }
-*/
+
+-(void)updateNavBar {
+    [super updateNavBar];
+    
+    self.navBarLayout.title = STRING_FINAL_REVIEW;
+}
+
+#pragma mark - UITableViewDataSource
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 0;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return nil;
+}
+
+#pragma mark - CheckoutProgressViewDelegate
+-(NSArray *)getButtonsForCheckoutProgressView {
+    return @[
+        [CheckoutProgressViewButtonModel buttonWith:1 state:CHECKOUT_PROGRESSVIEW_BUTTON_STATE_DONE],
+        [CheckoutProgressViewButtonModel buttonWith:2 state:CHECKOUT_PROGRESSVIEW_BUTTON_STATE_ACTIVE],
+        [CheckoutProgressViewButtonModel buttonWith:3 state:CHECKOUT_PROGRESSVIEW_BUTTON_STATE_PENDING]
+    ];
+}
 
 @end

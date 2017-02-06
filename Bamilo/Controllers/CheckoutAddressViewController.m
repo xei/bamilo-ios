@@ -7,6 +7,7 @@
 //
 
 #import "CheckoutAddressViewController.h"
+#import "CheckoutProgressViewButtonModel.h"
 #import "AddressTableViewHeaderCell.h"
 #import "AddressTableViewCell.h"
 #import "AddressList.h"
@@ -41,9 +42,13 @@
 }
 
 #pragma mark - Overrides
+-(NSString *)getNextStepViewControllerSegueIdentifier {
+    return @"pushAddressToReview";
+}
+
 -(void)updateNavBar {
     [super updateNavBar];
-    
+
     self.navBarLayout.title = STRING_CHOOSE_ADDRESS;
 }
 
@@ -75,6 +80,15 @@
     AddressTableViewCell *addressTableViewCell = [self.tableView dequeueReusableCellWithIdentifier:[AddressTableViewCell nibName] forIndexPath:indexPath];
     
     return addressTableViewCell;
+}
+
+#pragma mark - CheckoutProgressViewDelegate
+-(NSArray *)getButtonsForCheckoutProgressView {
+    return @[
+        [CheckoutProgressViewButtonModel buttonWith:1 state:CHECKOUT_PROGRESSVIEW_BUTTON_STATE_ACTIVE],
+        [CheckoutProgressViewButtonModel buttonWith:2 state:CHECKOUT_PROGRESSVIEW_BUTTON_STATE_PENDING],
+        [CheckoutProgressViewButtonModel buttonWith:3 state:CHECKOUT_PROGRESSVIEW_BUTTON_STATE_PENDING]
+    ];
 }
 
 @end

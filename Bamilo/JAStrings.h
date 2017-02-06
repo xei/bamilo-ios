@@ -461,5 +461,9 @@
 #define STRING_NEW_ADDRESS RILocalizedString(@"new_address", nil)
 #define STRING_PHONE RILocalizedString(@"phone", nil)
 #define STRING_PLEASE_CHOOSE_YOUR_ADDRESS RILocalizedString(@"please_choose_your_address", nil)
+#define STRING_LABEL_ADDRESS RILocalizedString(@"address", nil)
+#define STRING_LABEL_REVIEW RILocalizedString(@"review", nil)
+#define STRING_LABEL_PAY RILocalizedString(@"pay", nil)
+#define STRING_FINAL_REVIEW RILocalizedString(@"final_review", nil)
 
 #endif

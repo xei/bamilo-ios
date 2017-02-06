@@ -42,6 +42,10 @@
 		8714E05D1E472CDC004C9B1D /* Address.m in Sources */ = {isa = PBXBuildFile; fileRef = 8714E05C1E472CDC004C9B1D /* Address.m */; };
 		8714E0611E474025004C9B1D /* RequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8714E0601E474025004C9B1D /* RequestManager.m */; };
 		8714E0661E476DF8004C9B1D /* AddressList.m in Sources */ = {isa = PBXBuildFile; fileRef = 8714E0651E476DF8004C9B1D /* AddressList.m */; };
+		8714E0681E478DF2004C9B1D /* CheckoutProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8714E0671E478DF2004C9B1D /* CheckoutProgressView.xib */; };
+		8714E06D1E47949D004C9B1D /* CheckoutProgressViewControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 8714E06C1E47949D004C9B1D /* CheckoutProgressViewControl.m */; };
+		8714E0721E47977D004C9B1D /* BaseViewControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 8714E0711E47977D004C9B1D /* BaseViewControl.m */; };
+		8714E0771E479C00004C9B1D /* CheckoutProgressViewButtonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8714E0761E479C00004C9B1D /* CheckoutProgressViewButtonModel.m */; };
 		8716987D1E38A94C0027B34A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8716987A1E38A94C0027B34A /* Main.storyboard */; };
 		874AAB551E3C764600B3F8FE /* Bamilo-Configs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 874AAB541E3C764600B3F8FE /* Bamilo-Configs.plist */; };
 		874AAB5E1E3C778E00B3F8FE /* ConfigManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB5D1E3C778E00B3F8FE /* ConfigManager.m */; };
@@ -130,7 +134,7 @@
 		87A681581E40F21B00D252AC /* BaseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A681571E40F21B00D252AC /* BaseButton.m */; };
 		87A6815C1E40F9C000D252AC /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A6815B1E40F9C000D252AC /* BaseViewController.m */; };
 		87A681611E41B88000D252AC /* SearchBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A681601E41B88000D252AC /* SearchBaseViewController.m */; };
-		87A681711E41FCF300D252AC /* CheckoutProgressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A681701E41FCF300D252AC /* CheckoutProgressViewController.m */; };
+		87A681711E41FCF300D252AC /* CheckoutProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A681701E41FCF300D252AC /* CheckoutProgressView.m */; };
 		87A681791E4201B500D252AC /* AddressTableViewHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A681781E4201B500D252AC /* AddressTableViewHeaderCell.m */; };
 		87A6817B1E4201F400D252AC /* AddressTableViewHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87A6817A1E4201F400D252AC /* AddressTableViewHeaderCell.xib */; };
 		87A6ACEF1E38919C00C0E7DC /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A6ACE81E38919C00C0E7DC /* GTMNSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -549,6 +553,14 @@
 		8714E0631E47484B004C9B1D /* Models.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Models.pch; sourceTree = "<group>"; };
 		8714E0641E476DF8004C9B1D /* AddressList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressList.h; sourceTree = "<group>"; };
 		8714E0651E476DF8004C9B1D /* AddressList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressList.m; sourceTree = "<group>"; };
+		8714E0671E478DF2004C9B1D /* CheckoutProgressView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckoutProgressView.xib; sourceTree = "<group>"; };
+		8714E06B1E47949D004C9B1D /* CheckoutProgressViewControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckoutProgressViewControl.h; sourceTree = "<group>"; };
+		8714E06C1E47949D004C9B1D /* CheckoutProgressViewControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckoutProgressViewControl.m; sourceTree = "<group>"; };
+		8714E0701E47977D004C9B1D /* BaseViewControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewControl.h; sourceTree = "<group>"; };
+		8714E0711E47977D004C9B1D /* BaseViewControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewControl.m; sourceTree = "<group>"; };
+		8714E0731E47996C004C9B1D /* CheckoutProgressViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckoutProgressViewDelegate.h; sourceTree = "<group>"; };
+		8714E0751E479C00004C9B1D /* CheckoutProgressViewButtonModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckoutProgressViewButtonModel.h; sourceTree = "<group>"; };
+		8714E0761E479C00004C9B1D /* CheckoutProgressViewButtonModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckoutProgressViewButtonModel.m; sourceTree = "<group>"; };
 		8716987B1E38A94C0027B34A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Bamilo/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		874AAB541E3C764600B3F8FE /* Bamilo-Configs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Bamilo-Configs.plist"; sourceTree = "<group>"; };
 		874AAB5D1E3C778E00B3F8FE /* ConfigManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigManager.m; sourceTree = "<group>"; };
@@ -739,8 +751,8 @@
 		87A681601E41B88000D252AC /* SearchBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchBaseViewController.m; sourceTree = "<group>"; };
 		87A681631E41C8BC00D252AC /* TabBarProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarProtocol.h; sourceTree = "<group>"; };
 		87A681651E41DD1800D252AC /* SideMenuProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SideMenuProtocol.h; sourceTree = "<group>"; };
-		87A6816F1E41FCF300D252AC /* CheckoutProgressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckoutProgressViewController.h; sourceTree = "<group>"; };
-		87A681701E41FCF300D252AC /* CheckoutProgressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckoutProgressViewController.m; sourceTree = "<group>"; };
+		87A6816F1E41FCF300D252AC /* CheckoutProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckoutProgressView.h; sourceTree = "<group>"; };
+		87A681701E41FCF300D252AC /* CheckoutProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckoutProgressView.m; sourceTree = "<group>"; };
 		87A681771E4201B500D252AC /* AddressTableViewHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressTableViewHeaderCell.h; sourceTree = "<group>"; };
 		87A681781E4201B500D252AC /* AddressTableViewHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressTableViewHeaderCell.m; sourceTree = "<group>"; };
 		87A6817A1E4201F400D252AC /* AddressTableViewHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressTableViewHeaderCell.xib; sourceTree = "<group>"; };
@@ -1882,6 +1894,66 @@
 			name = Base;
 			sourceTree = "<group>";
 		};
+		8714E0691E479415004C9B1D /* CheckoutProgressView */ = {
+			isa = PBXGroup;
+			children = (
+				87A6816F1E41FCF300D252AC /* CheckoutProgressView.h */,
+				87A681701E41FCF300D252AC /* CheckoutProgressView.m */,
+				8714E0671E478DF2004C9B1D /* CheckoutProgressView.xib */,
+			);
+			name = CheckoutProgressView;
+			sourceTree = "<group>";
+		};
+		8714E06A1E47943F004C9B1D /* CheckoutProgressViewControl */ = {
+			isa = PBXGroup;
+			children = (
+				8714E06B1E47949D004C9B1D /* CheckoutProgressViewControl.h */,
+				8714E06C1E47949D004C9B1D /* CheckoutProgressViewControl.m */,
+			);
+			name = CheckoutProgressViewControl;
+			sourceTree = "<group>";
+		};
+		8714E06E1E479763004C9B1D /* Controls */ = {
+			isa = PBXGroup;
+			children = (
+				8714E06F1E47976E004C9B1D /* Base */,
+			);
+			name = Controls;
+			sourceTree = "<group>";
+		};
+		8714E06F1E47976E004C9B1D /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				8714E0701E47977D004C9B1D /* BaseViewControl.h */,
+				8714E0711E47977D004C9B1D /* BaseViewControl.m */,
+			);
+			name = Base;
+			sourceTree = "<group>";
+		};
+		8714E0741E479BDA004C9B1D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8714E0751E479C00004C9B1D /* CheckoutProgressViewButtonModel.h */,
+				8714E0761E479C00004C9B1D /* CheckoutProgressViewButtonModel.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		8714E0781E4876F1004C9B1D /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				8714E0731E47996C004C9B1D /* CheckoutProgressViewDelegate.h */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
+		8714E0791E48793C004C9B1D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		874AAB5B1E3C775900B3F8FE /* Managers */ = {
 			isa = PBXGroup;
 			children = (
@@ -2287,8 +2359,11 @@
 		87A6816E1E41FCE200D252AC /* CheckoutProgressViewController */ = {
 			isa = PBXGroup;
 			children = (
-				87A6816F1E41FCF300D252AC /* CheckoutProgressViewController.h */,
-				87A681701E41FCF300D252AC /* CheckoutProgressViewController.m */,
+				8714E0781E4876F1004C9B1D /* Protocols */,
+				8714E0741E479BDA004C9B1D /* Models */,
+				8714E0791E48793C004C9B1D /* Views */,
+				8714E0691E479415004C9B1D /* CheckoutProgressView */,
+				8714E06A1E47943F004C9B1D /* CheckoutProgressViewControl */,
 			);
 			name = CheckoutProgressViewController;
 			sourceTree = "<group>";
@@ -2377,6 +2452,7 @@
 				87D07D841E40B4DA00C00AC6 /* TableViewHeaderFooters */,
 				61E099661E3E10F0004ED14E /* TableViewCells */,
 				87D07D831E40B4C800C00AC6 /* Buttons */,
+				8714E06E1E479763004C9B1D /* Controls */,
 			);
 			name = BML;
 			sourceTree = "<group>";
@@ -3611,6 +3687,7 @@
 				611195831E3CB14B00D06690 /* PlainTableViewCell.xib in Resources */,
 				CE9AE05B1AB6D78200D56481 /* RIStrings.strings in Resources */,
 				61E099721E3E18F0004ED14E /* NotificationTableViewCell.xib in Resources */,
+				8714E0681E478DF2004C9B1D /* CheckoutProgressView.xib in Resources */,
 				1C71FC611E2CABAD007ACF02 /* Bamilosans Reg.ttf in Resources */,
 				1C71FC5E1E2CABAD007ACF02 /* Bamilosans Black.ttf in Resources */,
 				1C71FC601E2CABAD007ACF02 /* Bamilosans Light.ttf in Resources */,
@@ -3831,6 +3908,7 @@
 				875AD5591E38C0C900584ABF /* RICampaign.m in Sources */,
 				CE9ADF5C1AB6D78200D56481 /* JAEmailNotificationsViewController.m in Sources */,
 				CE9ADF601AB6D78200D56481 /* JANoConnectionView.m in Sources */,
+				8714E0771E479C00004C9B1D /* CheckoutProgressViewButtonModel.m in Sources */,
 				9A189E6F1BB31AF70039BC14 /* JAProductInfoSingleLine.m in Sources */,
 				9A007C871C206DE4007D99FC /* JAProductInfoSubtitleLine.m in Sources */,
 				875AD5701E38C0C900584ABF /* RISeller.m in Sources */,
@@ -3879,6 +3957,7 @@
 				9A3D21811CA3041A00FE41B6 /* JAChooseCountryViewController.m in Sources */,
 				9DBD0C211C7F1CBB00F60374 /* JAProductInfoSISLine.m in Sources */,
 				CE9ADF9A1AB6D78200D56481 /* JASmallTeaserView.m in Sources */,
+				8714E0721E47977D004C9B1D /* BaseViewControl.m in Sources */,
 				875AD5631E38C0C900584ABF /* RIImage.m in Sources */,
 				CE9ADF9B1AB6D78200D56481 /* JACenterNavigationController.m in Sources */,
 				875AD5621E38C0C900584ABF /* RIHtmlShop.m in Sources */,
@@ -3951,7 +4030,7 @@
 				875AD5531E38C0C900584ABF /* RITeaserGrouping.m in Sources */,
 				FFF900721C6A5CC700DDF538 /* JATextFieldComponent.m in Sources */,
 				875AD54F1E38C0C900584ABF /* RISearchSuggestion.m in Sources */,
-				87A681711E41FCF300D252AC /* CheckoutProgressViewController.m in Sources */,
+				87A681711E41FCF300D252AC /* CheckoutProgressView.m in Sources */,
 				874AAB5E1E3C778E00B3F8FE /* ConfigManager.m in Sources */,
 				CE9ADFC71AB6D78200D56481 /* JAButtonWithBlur.m in Sources */,
 				FFB1B08E1CE5E163000F60AD /* JAORWaysViewController.m in Sources */,
@@ -3989,6 +4068,7 @@
 				CE59BF081AE8057A0057F4E2 /* JAShopsWeekTeaserView.m in Sources */,
 				875AD5431E38C0C900584ABF /* RICountryConfiguration.m in Sources */,
 				CE9ADFDF1AB6D78200D56481 /* JAMyOrderCell.m in Sources */,
+				8714E06D1E47949D004C9B1D /* CheckoutProgressViewControl.m in Sources */,
 				875AD5421E38C0C900584ABF /* RICategory.m in Sources */,
 				9A40773A1CE24DF800313D20 /* JAORCallToReturnViewController.m in Sources */,
 				875AD5401E38C0C800584ABF /* RIAddress.m in Sources */,

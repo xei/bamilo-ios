@@ -8,7 +8,10 @@
 
 #import "JABaseViewController.h"
 #import "BaseViewController.h"
+#import "CheckoutProgressViewControl.h"
 
-@interface CheckoutBaseViewController : BaseViewController
+@interface CheckoutBaseViewController : BaseViewController <CheckoutProgressViewDelegate>
+
+-(NSString *)getNextStepViewControllerSegueIdentifier;
 
 @end
