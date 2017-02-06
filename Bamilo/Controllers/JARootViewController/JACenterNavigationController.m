@@ -69,7 +69,11 @@
 #import "JAORWaysViewController.h"
 #import "JAORPaymentViewController.h"
 #import "JAORPickupStationWebViewController.h"
+
+//###################################################
+#import "ViewControllerManager.h"
 #import "ContactUsViewController.h"
+#import "CheckoutAddressViewController.h"
 
 @interface JACenterNavigationController ()
 
@@ -846,9 +850,11 @@
     }
     
     BOOL checkout = NO;
+    
     if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"checkout"], NSNumber)) {
         checkout = [[notification.userInfo objectForKey:@"checkout"] boolValue];
     }
+    
     if (checkout) {
         [self goToStep:signInVC forStepByStepViewController:self.checkoutStepByStepViewController];
     } else {
@@ -1094,6 +1100,19 @@
     }
     
     UIViewController *topViewController = [self topViewController];
+    if (![topViewController isKindOfClass:[CheckoutAddressViewController class]]) {
+        CheckoutAddressViewController *checkoutAddressViewController = (CheckoutAddressViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Checkout" nibName:@"CheckoutAddressViewController" resetCache:YES];
+        
+        if (fromCheckout) {
+            checkoutAddressViewController.navBarLayout.showCartButton = NO;
+            [self goToStep:checkoutAddressViewController forStepByStepViewController:self.checkoutStepByStepViewController];
+        } else {
+            [self pushViewController:checkoutAddressViewController animated:YES];
+        }
+    }
+    
+    /*
+    UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAAddressesViewController class]]) {
         JAAddressesViewController *addressesVC = [[JAAddressesViewController alloc] init];
         
@@ -1107,7 +1126,7 @@
         } else {
             [self pushViewController:addressesVC animated:NO];
         }
-    }
+    }*/
 }
 
 #pragma mark Checkout Add Address Screen
@@ -1935,7 +1954,6 @@
 }
 
 #pragma mark - Navbar Button actions
-
 - (void)back {
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressBackNotification
                                                         object:nil];
@@ -2026,7 +2044,6 @@
 }
 
 #pragma mark - Search Bar
-
 - (JASearchView *)searchView {
     if (!VALID(_searchView, JASearchView)) {
         _searchView = [[JASearchView alloc] initWithFrame:self.view.bounds andText:@""];

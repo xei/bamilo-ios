@@ -8,7 +8,6 @@
 
 #import "JAColorView.h"
 #import "JAUtils.h"
-#import "UIColor+Format.h"
 
 @interface JAColorView()
 

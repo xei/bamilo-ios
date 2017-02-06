@@ -38,7 +38,7 @@
 //#endif
     return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:countryListURL]
                                                              parameters:nil
-                                                             httpMethod:HttpResponseGet
+                                                             httpMethod:HttpVerbGET
                                                               cacheType:RIURLCacheNoCache
                                                               cacheTime:RIURLCacheNoTime
                                                      userAgentInjection:nil
@@ -79,7 +79,7 @@
 {
     return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", countryUrl, RI_API_VERSION, RI_API_COUNTRY_CONFIGURATION]]
                                                              parameters:nil
-                                                             httpMethod:HttpResponsePost
+                                                             httpMethod:HttpVerbPOST
                                                               cacheType:RIURLCacheNoCache
                                                               cacheTime:RIURLCacheNoTime
                                                      userAgentInjection:userAgentInjection
@@ -282,7 +282,7 @@
 {
     return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_GET_PHONE_PREFIXES]]
                                                              parameters:nil
-                                                             httpMethod:HttpResponsePost
+                                                             httpMethod:HttpVerbPOST
                                                               cacheType:RIURLCacheNoCache
                                                               cacheTime:RIURLCacheNoTime
                                                      userAgentInjection:[RIApi getCountryUserAgentInjection]
@@ -321,7 +321,7 @@
 {
     return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_GET_FAQ_AND_TERMS]]
                                                              parameters:nil
-                                                         httpMethod:HttpResponsePost
+                                                         httpMethod:HttpVerbPOST
                                                               cacheType:RIURLCacheNoCache
                                                               cacheTime:RIURLCacheNoTime
                                                      userAgentInjection:[RIApi getCountryUserAgentInjection]

@@ -21,9 +21,8 @@
 @property (nonatomic, assign)BOOL firstLoading;
 @property (nonatomic, assign)BOOL searchBarIsVisible;
 @property (nonatomic, assign)BOOL tabBarIsVisible;
+
 @property (nonatomic, strong) UIImageView *searchIconImageView;
-@property (nonatomic, strong) UISearchBar *searchBar;
-@property (nonatomic, strong) UIView *searchBarBackground;
 
 @property (nonatomic, strong) NSString *targetString;
 

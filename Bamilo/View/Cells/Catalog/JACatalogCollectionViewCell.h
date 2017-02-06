@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UIButton+Extensions.h"
 
 #import "JAPriceView.h"
 #import "JAClickableView.h"

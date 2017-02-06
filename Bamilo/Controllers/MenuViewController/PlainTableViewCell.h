@@ -10,7 +10,8 @@
 #import "BaseTableViewCell.h"
 
 @interface PlainTableViewCell : BaseTableViewCell
-    @property (nonatomic , strong) NSString* title;
-    +(NSString *) nibName;
-    +(CGFloat) heightSize;
+
+@property (nonatomic , strong) NSString* title;
++(CGFloat) heightSize;
+
 @end

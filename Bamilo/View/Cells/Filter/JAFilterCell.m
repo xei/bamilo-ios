@@ -8,8 +8,6 @@
 
 #import "JAFilterCell.h"
 #import "RIFilter.h"
-#import "NSString+Style.h"
-#import "UIColor+Format.h"
 
 @implementation JAFilterCell
 

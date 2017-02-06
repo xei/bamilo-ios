@@ -1,5 +1,5 @@
 //
-//  NSString+Style.h
+//  NSString+Extensions.h
 //  Jumia
 //
 //  Created by Ali saiedifar on 1/23/17.
@@ -8,7 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSString (Style)
-- (NSString *)wrapWithMaxSize:(int)maxSize;
-- (NSString *) numbersToPersian;
+@interface NSString (Extensions)
+
+-(NSString *) wrapWithMaxSize:(int)maxSize;
+-(NSString *) numbersToPersian;
+
 @end

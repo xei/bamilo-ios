@@ -56,7 +56,7 @@
         operationID = [[RICommunicationWrapper sharedInstance]
                        sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", url, urlEnding]]
                        parameters:nil
-                       httpMethod:HttpResponsePost
+                       httpMethod:HttpVerbPOST
                        cacheType:RIURLCacheNoCache
                        cacheTime:RIURLCacheDefaultTime
                        userAgentInjection:[RIApi getCountryUserAgentInjection]

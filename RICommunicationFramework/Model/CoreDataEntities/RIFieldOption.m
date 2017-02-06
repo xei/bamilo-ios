@@ -30,7 +30,7 @@
 
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:apiCall]
                                                             parameters:nil
-                                                            httpMethod:HttpResponsePost
+                                                            httpMethod:HttpVerbPOST
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]

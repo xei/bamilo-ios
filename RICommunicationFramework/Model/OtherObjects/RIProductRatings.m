@@ -171,7 +171,7 @@
         operationID = [[RICommunicationWrapper sharedInstance]
                        sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", url, urlEnding]]
                        parameters:nil
-                       httpMethod:HttpResponsePost
+                       httpMethod:HttpVerbPOST
                        cacheType:RIURLCacheDBCache
                        cacheTime:RIURLCacheDefaultTime
                        userAgentInjection:[RIApi getCountryUserAgentInjection]
@@ -214,7 +214,7 @@
     NSString *finalUrl = [NSString stringWithFormat:@"%@%@%@%@/%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_PRODUCT_DETAIL, sku, RI_API_PROD_RATING_DETAILS];
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:finalUrl]
                                                             parameters:nil
-                                                            httpMethod:HttpResponsePost
+                                                            httpMethod:HttpVerbPOST
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]

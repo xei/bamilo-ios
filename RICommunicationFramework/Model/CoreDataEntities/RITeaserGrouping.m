@@ -28,7 +28,7 @@
     NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", countryUrl, RI_API_VERSION, RI_API_GET_TEASERS]];
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
                                                             parameters:nil
-                                                            httpMethod:HttpResponsePost
+                                                            httpMethod:HttpVerbPOST
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
                                                     userAgentInjection:countryUserAgentInjection
@@ -119,7 +119,7 @@
     
     [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
                                                      parameters:nil
-                                                     httpMethod:HttpResponsePost
+                                                     httpMethod:HttpVerbPOST
                                                       cacheType:RIURLCacheNoCache
                                                       cacheTime:RIURLCacheDefaultTime
                                              userAgentInjection:[RIApi getCountryUserAgentInjection]

@@ -16,5 +16,8 @@
  *  @output : {UIColor}
  */
 
-+ (UIColor *) withHexString:(NSString *)hexString;
++(UIColor *) withHexString:(NSString *)hexString;
++(UIColor *) withRepeatingRGBA:(int)rgb alpha:(float)alpha; //#E6E6E6 -> E6
++(UIColor *) withRGBA:(int)red green:(int)green blue:(int)blue alpha:(float)alpha;
+
 @end

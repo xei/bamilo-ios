@@ -11,7 +11,6 @@
 #import "RIFilter.h"
 #import "JAGenericFiltersView.h"
 #import "JAPriceFiltersView.h"
-#import "NSString+Style.h"
 
 @interface JAFiltersViewController () <UITableViewDataSource, UITableViewDelegate, JAFiltersViewDelegate>
 

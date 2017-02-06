@@ -148,7 +148,7 @@
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:url]
                                                             parameters:nil
-                                                            httpMethod:HttpResponsePost
+                                                            httpMethod:HttpVerbPOST
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]
@@ -206,7 +206,7 @@
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
                                                             parameters:nil
-                                                            httpMethod:HttpResponsePost
+                                                            httpMethod:HttpVerbPOST
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]
@@ -272,7 +272,7 @@
     NSURL *finalURL = [NSURL URLWithString:url];
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:finalURL
                                                             parameters:nil
-                                                            httpMethod:HttpResponseGet
+                                                            httpMethod:HttpVerbGET
                                                              cacheType:RIURLCacheDBCache
                                                              cacheTime:RIURLCacheDefaultTime
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]
@@ -345,7 +345,7 @@
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
                                                             parameters:[parametersDictionary copy]
-                                                            httpMethod:HttpResponsePost
+                                                            httpMethod:HttpVerbPOST
                                                              cacheType:RIURLCacheDBCache
                                                              cacheTime:RIURLCacheDefaultTime
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]
@@ -777,7 +777,7 @@
     }
     [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:finalUrl]
                                                      parameters:parameters
-                                                     httpMethod:HttpResponsePost
+                                                     httpMethod:HttpVerbPOST
                                                       cacheType:RIURLCacheNoCache
                                                       cacheTime:RIURLCacheDefaultTime
                                              userAgentInjection:[RIApi getCountryUserAgentInjection]
@@ -839,7 +839,7 @@
     NSDictionary *parameters = [NSDictionary dictionaryWithObject:product.sku forKey:@"sku"];
     [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:finalUrl]
                                                      parameters:parameters
-                                                     httpMethod:HttpResponsePost
+                                                     httpMethod:HttpVerbPOST
                                                       cacheType:RIURLCacheNoCache
                                                       cacheTime:RIURLCacheDefaultTime
                                              userAgentInjection:[RIApi getCountryUserAgentInjection]
@@ -886,7 +886,7 @@
     NSString *finalUrl = [NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_REMOVE_FOM_WISHLIST];
     NSDictionary *parameters = [NSDictionary dictionaryWithObject:product.sku forKey:@"sku"];
     [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:finalUrl]
-                                                     parameters:parameters httpMethod:HttpResponseDelete
+                                                     parameters:parameters httpMethod:HttpVerbDELETE
                                                       cacheType:RIURLCacheNoCache
                                                       cacheTime:RIURLCacheDefaultTime
                                              userAgentInjection:[RIApi getCountryUserAgentInjection]
@@ -947,7 +947,7 @@
     NSString *finalUrl = [NSString stringWithFormat:@"%@%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_BUNDLE, sku];
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:finalUrl]
                                                             parameters:nil
-                                                            httpMethod:HttpResponsePost
+                                                            httpMethod:HttpVerbPOST
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]
