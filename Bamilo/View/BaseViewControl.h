@@ -10,6 +10,4 @@
 
 @interface BaseViewControl : UIView
 
--(void) anchorMatch:(UIView *)view;
-
 @end

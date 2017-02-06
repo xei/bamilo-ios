@@ -32,7 +32,6 @@
 		61E099721E3E18F0004ED14E /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E099701E3E18F0004ED14E /* NotificationTableViewCell.xib */; };
 		61E099771E3E1A02004ED14E /* VersionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E099751E3E1A02004ED14E /* VersionTableViewCell.m */; };
 		61E099781E3E1A02004ED14E /* VersionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E099761E3E1A02004ED14E /* VersionTableViewCell.xib */; };
-		61E0997B1E3E2352004ED14E /* UIView+Style.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E0997A1E3E2352004ED14E /* UIView+Style.m */; };
 		6C18BD741AB87E0A00905FD2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A301BB19811D0700F71726 /* Images.xcassets */; };
 		6CF4AE821ADEAA290024EC34 /* JACatalogBannerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CF4AE7E1ADEAA290024EC34 /* JACatalogBannerCell.xib */; };
 		6CF4AE881ADEABBB0024EC34 /* JACatalogBannerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CF4AE841ADEABBB0024EC34 /* JACatalogBannerCell.m */; };
@@ -52,6 +51,7 @@
 		8714E06D1E47949D004C9B1D /* CheckoutProgressViewControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 8714E06C1E47949D004C9B1D /* CheckoutProgressViewControl.m */; };
 		8714E0721E47977D004C9B1D /* BaseViewControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 8714E0711E47977D004C9B1D /* BaseViewControl.m */; };
 		8714E0771E479C00004C9B1D /* CheckoutProgressViewButtonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8714E0761E479C00004C9B1D /* CheckoutProgressViewButtonModel.m */; };
+		8714E07E1E48C1C5004C9B1D /* UIView+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8714E07D1E48C1C5004C9B1D /* UIView+Extensions.m */; };
 		8716987D1E38A94C0027B34A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8716987A1E38A94C0027B34A /* Main.storyboard */; };
 		874AAB551E3C764600B3F8FE /* Bamilo-Configs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 874AAB541E3C764600B3F8FE /* Bamilo-Configs.plist */; };
 		874AAB5E1E3C778E00B3F8FE /* ConfigManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB5D1E3C778E00B3F8FE /* ConfigManager.m */; };
@@ -535,8 +535,6 @@
 		61E099741E3E1A02004ED14E /* VersionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionTableViewCell.h; sourceTree = "<group>"; };
 		61E099751E3E1A02004ED14E /* VersionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersionTableViewCell.m; sourceTree = "<group>"; };
 		61E099761E3E1A02004ED14E /* VersionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VersionTableViewCell.xib; sourceTree = "<group>"; };
-		61E099791E3E2352004ED14E /* UIView+Style.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Style.h"; sourceTree = "<group>"; };
-		61E0997A1E3E2352004ED14E /* UIView+Style.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Style.m"; sourceTree = "<group>"; };
 		633B32545D30D5C2D6CFFC51 /* Pods-Bamilo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bamilo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bamilo/Pods-Bamilo.debug.xcconfig"; sourceTree = "<group>"; };
 		6C18BDAB1A1B4CA300626706 /* JANewsletterComponent~iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JANewsletterComponent~iPad.xib"; sourceTree = "<group>"; };
 		6CF4AE7E1ADEAA290024EC34 /* JACatalogBannerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACatalogBannerCell.xib; sourceTree = "<group>"; };
@@ -576,6 +574,8 @@
 		8714E0731E47996C004C9B1D /* CheckoutProgressViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckoutProgressViewDelegate.h; sourceTree = "<group>"; };
 		8714E0751E479C00004C9B1D /* CheckoutProgressViewButtonModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckoutProgressViewButtonModel.h; sourceTree = "<group>"; };
 		8714E0761E479C00004C9B1D /* CheckoutProgressViewButtonModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckoutProgressViewButtonModel.m; sourceTree = "<group>"; };
+		8714E07C1E48C1C5004C9B1D /* UIView+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extensions.h"; sourceTree = "<group>"; };
+		8714E07D1E48C1C5004C9B1D /* UIView+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extensions.m"; sourceTree = "<group>"; };
 		8716987B1E38A94C0027B34A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Bamilo/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		874AAB541E3C764600B3F8FE /* Bamilo-Configs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Bamilo-Configs.plist"; sourceTree = "<group>"; };
 		874AAB5D1E3C778E00B3F8FE /* ConfigManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigManager.m; sourceTree = "<group>"; };
@@ -1698,8 +1698,8 @@
 		61E099661E3E10F0004ED14E /* TableViewCells */ = {
 			isa = PBXGroup;
 			children = (
-				612FDC331E45E08500A9D0BD /* CartTableViewCell */,
 				61E099691E3E1163004ED14E /* BaseTableViewCell */,
+				612FDC331E45E08500A9D0BD /* CartTableViewCell */,
 				87A681721E42003100D252AC /* AddressTableViewCell */,
 				61E099671E3E113F004ED14E /* PlainTableViewCell */,
 				61E099681E3E114E004ED14E /* IconTableViewCell */,
@@ -2011,6 +2011,15 @@
 			children = (
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		8714E07B1E48C1A6004C9B1D /* UIView+Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				8714E07C1E48C1C5004C9B1D /* UIView+Extensions.h */,
+				8714E07D1E48C1C5004C9B1D /* UIView+Extensions.m */,
+			);
+			name = "UIView+Extensions";
 			sourceTree = "<group>";
 		};
 		874AAB5B1E3C775900B3F8FE /* Managers */ = {
@@ -3178,6 +3187,7 @@
 				8714E0461E45FD36004C9B1D /* NSMutableString+Extensions */,
 				8714E0401E45E186004C9B1D /* UIButton+Extensions */,
 				8714E0411E45E22B004C9B1D /* UILabel+Extensions */,
+				8714E07B1E48C1A6004C9B1D /* UIView+Extensions */,
 				9ABCAEEC1B0F6A2C00A69271 /* UIView+Mirror.h */,
 				9ABCAEED1B0F6A2C00A69271 /* UIView+Mirror.m */,
 				CEDBF85F1B0A01B60073971A /* UIImage+Mirror.h */,
@@ -3194,8 +3204,6 @@
 				9A4077271CE0CF5200313D20 /* UILabel+Size.m */,
 				9A40772D1CE0CFD700313D20 /* UIButton+Size.h */,
 				9A40772E1CE0CFD700313D20 /* UIButton+Size.m */,
-				61E099791E3E2352004ED14E /* UIView+Style.h */,
-				61E0997A1E3E2352004ED14E /* UIView+Style.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -3889,7 +3897,6 @@
 				CE9ADF301AB6D78200D56481 /* JAShippingViewController.m in Sources */,
 				CE59BF241AE906180057F4E2 /* JATopSellersTeaserView.m in Sources */,
 				875AD56A1E38C0C900584ABF /* RIPhonePrefix.m in Sources */,
-				61E0997B1E3E2352004ED14E /* UIView+Style.m in Sources */,
 				875AD56D1E38C0C900584ABF /* RIProductRatings.m in Sources */,
 				CE9ADF311AB6D78200D56481 /* JACheckBoxComponent.m in Sources */,
 				87C69DAE1E38B7A50026018F /* UIColor+Format.m in Sources */,
@@ -3936,6 +3943,7 @@
 				875AD54B1E38C0C900584ABF /* RIFormIndex.m in Sources */,
 				9A7A77291B2B45F1002F530F /* JAPagedView.m in Sources */,
 				875AD5441E38C0C900584ABF /* RICustomer.m in Sources */,
+				8714E07E1E48C1C5004C9B1D /* UIView+Extensions.m in Sources */,
 				875AD5601E38C0C900584ABF /* RIFeaturedBoxTeaserGrouping.m in Sources */,
 				CE59BF1D1AE8097C0057F4E2 /* JAFeatureStoresTeaserView.m in Sources */,
 				CE8C92B01B8B555600C77706 /* JAMainFilterCell.m in Sources */,

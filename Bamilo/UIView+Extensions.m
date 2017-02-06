@@ -1,14 +1,15 @@
 //
-//  UIView+Style.m
-//  Jumia
+//  UIView+Extensions.m
+//  Bamilo
 //
-//  Created by Ali saiedifar on 1/23/17.
+//  Created by Narbeh Mirzaei on 2/6/17.
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import "UIView+Style.h"
+#import "UIView+Extensions.h"
 
-@implementation UIView (Style)
+@implementation UIView (Extensions)
+
 @dynamic cornerRadius, borderColor, borderWidth, shadowColor, shadowOffset, shadowRadius, shadowOpacity;
 
 - (void)setCornerRadius:(CGFloat)cornerRadius {
@@ -39,4 +40,12 @@
 - (void)setShadowOpacity:(CGFloat)shadowOpacity {
     [self.layer setShadowOpacity:shadowOpacity];
 }
+
+-(void)anchorMatch:(UIView *)view {
+    NSDictionary *views = NSDictionaryOfVariableBindings(view);
+    
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|" options:0 metrics:nil views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[view]|"options:0 metrics:nil views:views]];
+}
+
 @end
