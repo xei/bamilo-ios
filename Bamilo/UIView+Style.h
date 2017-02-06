@@ -12,4 +12,8 @@
 @property (nonatomic, assign) IBInspectable CGFloat cornerRadius;
 @property (nonatomic, assign) IBInspectable CGFloat borderWidth;
 @property (nonatomic, assign) IBInspectable UIColor *borderColor;
+@property (nonatomic, assign) IBInspectable UIColor *shadowColor;
+@property (nonatomic, assign) IBInspectable CGSize shadowOffset;
+@property (nonatomic, assign) IBInspectable CGFloat shadowRadius;
+@property (nonatomic, assign) IBInspectable CGFloat shadowOpacity;
 @end

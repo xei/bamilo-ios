@@ -10,7 +10,10 @@
 
 @interface NSString (Extensions)
 
--(NSString *) wrapWithMaxSize:(int)maxSize;
--(NSString *) numbersToPersian;
+- (NSString *) wrapWithMaxSize:(int) maxSize;
+- (NSString *) numbersToPersian;
+- (NSString *) numbersToEnglish;
+- (NSString *) formatTheNumbers;
+- (NSString *) struckThroughText;
 
 @end

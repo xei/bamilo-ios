@@ -32,12 +32,10 @@
                                                               
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
                                                                   NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
-                                                                  if (VALID_NOTEMPTY(metadata, NSDictionary) && VALID_NOTEMPTY([metadata objectForKey:@"cart_entity"], NSDictionary))
-                                                                  {
+                                                                  if (VALID_NOTEMPTY(metadata, NSDictionary) && VALID_NOTEMPTY([metadata objectForKey:@"cart_entity"], NSDictionary)) {
                                                                           NSDictionary *cartEntity = metadata;
                                                                           sucessBlock([RICart parseCart:cartEntity country:configuration]);
-                                                                  } else
-                                                                  {
+                                                                  } else {
                                                                       failureBlock(apiResponse, nil);
                                                                   }
                                                               } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
@@ -552,8 +550,7 @@
     return cart;
 }
 
-+ (RICart *)parseCart:(NSDictionary *)entitiesJSON country:(RICountryConfiguration*)country
-{
++ (RICart *)parseCart:(NSDictionary *)entitiesJSON country:(RICountryConfiguration*)country {
     RICart *cart = [[RICart alloc] init];
     
     cart.cartUnreducedValue = nil;
@@ -571,8 +568,7 @@
         cart.shippingMethodForm = shippingMethodForm;
     }
     
-    if(VALID_NOTEMPTY([entitiesJSON objectForKey:@"paymentMethodForm"], NSDictionary))
-    {
+    if(VALID_NOTEMPTY([entitiesJSON objectForKey:@"paymentMethodForm"], NSDictionary)) {
         RIPaymentMethodForm* paymentMethodForm = [RIPaymentMethodForm parseForm:[entitiesJSON objectForKey:@"paymentMethodForm"]];
         cart.paymentMethodForm = paymentMethodForm;
     }
@@ -592,29 +588,30 @@
         CGFloat cartUnreducedValue = 0.0f;
         if ([cartEntityJSON objectForKey:@"products"]) {
             NSArray *cartItemObjects = [cartEntityJSON objectForKey:@"products"];
-            if (VALID_NOTEMPTY(cartItemObjects, NSArray))
-            {
+            if (VALID_NOTEMPTY(cartItemObjects, NSArray)) {
                 NSMutableArray *cartItems = [[NSMutableArray alloc] init];
-                for(NSDictionary *cartItemObject in cartItemObjects)
-                {
+                for(NSDictionary *cartItemObject in cartItemObjects) {
                     RICartItem *cartItem = [RICartItem parseCartItem:cartItemObject country:country];
                     [cartItems addObject:cartItem];
                     
                     cartUnreducedValue += ([cartItem.price floatValue] * [cartItem.quantity integerValue]);
-                    if(!showUnreducedPrice && VALID_NOTEMPTY(cartItem.specialPrice , NSNumber) && 0.0f < [cartItem.specialPrice floatValue] && [cartItem.price floatValue] != [cartItem.specialPrice floatValue])
-                    {
+                    if(!showUnreducedPrice && VALID_NOTEMPTY(cartItem.specialPrice , NSNumber) && 0.0f < [cartItem.specialPrice floatValue] && [cartItem.price floatValue] != [cartItem.specialPrice floatValue]) {
                         showUnreducedPrice = YES;
                     }
                 }
                 
                 cart.cartItems = [cartItems copy];
                 
-                if(showUnreducedPrice)
-                {
+                if(showUnreducedPrice) {
                     cart.cartUnreducedValue = [NSNumber numberWithFloat:cartUnreducedValue];
                     cart.cartUnreducedValueFormatted = [RICountryConfiguration formatPrice:cart.cartUnreducedValue country:country];
                 }
             }
+        }
+        
+        if([cartEntityJSON objectForKey:@"sub_total_undiscounted"]) {
+            cart.cartUnreducedValue = [cartEntityJSON objectForKey:@"sub_total_undiscounted"];
+            cart.cartUnreducedValueFormatted = [RICountryConfiguration formatPrice:cart.cartUnreducedValue country:country];
         }
         
         if([cartEntityJSON objectForKey:@"sub_total"]){
@@ -635,6 +632,11 @@
                 cart.cartValue = [cartEntityJSON objectForKey:@"total"];
                 cart.cartValueFormatted = [RICountryConfiguration formatPrice:cart.cartValue country:country];
             }
+        }
+        
+        if (cart.cartValue && cart.cartUnreducedValue) {
+            NSNumber *discountValue = [NSNumber numberWithInt: cart.cartUnreducedValue.intValue - cart.cartValue.intValue];
+            cart.discountedValueFormated = [RICountryConfiguration formatPrice:discountValue country:country];
         }
         
         if ([cartEntityJSON objectForKey:@"total_converted"]) {
@@ -731,26 +733,16 @@
         if ([cartEntityJSON objectForKey:@"price_rules"]) {
             if (![[cartEntityJSON objectForKey:@"price_rules"] isKindOfClass:[NSNull class]]) {
                 NSArray *priceRulesObject = [cartEntityJSON objectForKey:@"price_rules"];
-                if(VALID_NOTEMPTY(priceRulesObject, NSArray))
-                {
+                if(VALID_NOTEMPTY(priceRulesObject, NSArray)) {
                     NSMutableDictionary *priceRules = [[NSMutableDictionary alloc] init];
-                    for(NSDictionary *priceRulesDictionary in priceRulesObject)
-                    {
-                        if(VALID_NOTEMPTY(priceRulesDictionary, NSDictionary))
-                        {
-                            if ([priceRulesDictionary objectForKey:@"label"] && ![[priceRulesDictionary objectForKey:@"label"] isKindOfClass:[NSNull class]])
-                            {
-                                if ([priceRulesDictionary objectForKey:@"value"] && ![[priceRulesDictionary objectForKey:@"value"] isKindOfClass:[NSNull class]])
-                                {
-                                    if(VALID_NOTEMPTY([priceRulesDictionary objectForKey:@"value"], NSNumber))
-                                    {
+                    for(NSDictionary *priceRulesDictionary in priceRulesObject) {
+                        if(VALID_NOTEMPTY(priceRulesDictionary, NSDictionary)) {
+                            if ([priceRulesDictionary objectForKey:@"label"] && ![[priceRulesDictionary objectForKey:@"label"] isKindOfClass:[NSNull class]]) {
+                                if ([priceRulesDictionary objectForKey:@"value"] && ![[priceRulesDictionary objectForKey:@"value"] isKindOfClass:[NSNull class]]) {
+                                    if(VALID_NOTEMPTY([priceRulesDictionary objectForKey:@"value"], NSNumber)) {
                                         //since it's a rule to create a discount, add the minus signal to the string
-                                        [priceRules setValue:[@"- " stringByAppendingString:[RICountryConfiguration formatPrice:[priceRulesDictionary objectForKey:@"value"]
-                                                                                                                        country:country]]
-                                                      forKey:[priceRulesDictionary objectForKey:@"label"]];
-                                    }
-                                    else
-                                    {
+                                        [priceRules setValue:[@"- " stringByAppendingString:[RICountryConfiguration formatPrice:[priceRulesDictionary objectForKey:@"value"] country:country]] forKey:[priceRulesDictionary objectForKey:@"label"]];
+                                    } else {
                                         [priceRules setValue:[priceRulesDictionary objectForKey:@"value"] forKey: [priceRulesDictionary objectForKey:@"label"]];
                                     }
                                 }

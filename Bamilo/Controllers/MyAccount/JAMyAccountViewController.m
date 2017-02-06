@@ -7,11 +7,6 @@
 //
 
 #import "JAMyAccountViewController.h"
-//#import "JAProductInfoHeaderLine.h"
-//#import "JAProductInfoSingleLine.h"
-//#import "JAProductInfoSubtitleLine.h"
-//#import "JAProductInfoSwitchLine.h"
-//#import "JAProductInfoRightSubtitleLine.h"
 #import "RITarget.h"
 #import "JAUtils.h"
 #import "IconTableViewCell.h"
@@ -95,7 +90,7 @@
           @"title":[RICustomer checkIfUserIsLogged] ? STRING_LOGOUT : STRING_LOGIN,
           @"icon": [RICustomer checkIfUserIsLogged] ? @"Logout" : @"HappyFace",
           @"cellType": IconTableViewCell.nibName,
-          @"selectorName" : @"loginOrLogoutBtnTouchUpInside"
+          @"selector": [NSValue valueWithPointer:@selector(loginOrLogoutBtnTouchUpInside)]
           };
     
     [self.tableViewListItems insertObject: loginOrLoginCell atIndex:[RICustomer checkIfUserIsLogged] ? self.tableViewListItems.count : 0];
@@ -180,9 +175,11 @@
     [self.tableView deselectRowAtIndexPath:indexPath animated:true];
     
     NSDictionary *selectedObjItem = self.tableViewListItems[indexPath.row];
-    if ([selectedObjItem objectForKey:@"selectorName"]) {
-        SEL customSelector = NSSelectorFromString([selectedObjItem objectForKey:@"selectorName"]);
-        [self performSelector:customSelector withObject: 0];
+    
+    if ([[selectedObjItem objectForKey:@"selector"] pointerValue]) {
+        SEL customSelector = [[selectedObjItem objectForKey:@"selector"] pointerValue];
+        //[self performSelector:customSelector withObject: 0];
+        [self performSelector:customSelector];
         return;
     }
     

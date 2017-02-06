@@ -62,8 +62,7 @@
     return JACartViewControllerListCellHeight;
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
@@ -78,8 +77,7 @@
     return numberOfItemsInSection;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     JACartTableViewCell *cell =  [tableView dequeueReusableCellWithIdentifier:@"JACartTableViewCell"];
     RICartItem *cartItem = [self.cart.cartItems objectAtIndex:indexPath.row];
     if (indexPath.row+1 == self.cart.cartItems.count) {
@@ -90,9 +88,7 @@
     if (VALID(cartItem, RICartItem)) {
         [cell setCartItem:cartItem];
         cell.tag = indexPath.row;
-        [cell.feedbackView addTarget:self
-                              action:@selector(clickableViewPressedInCell:)
-                    forControlEvents:UIControlEventTouchUpInside];
+        [cell.feedbackView addTarget:self action:@selector(clickableViewPressedInCell:) forControlEvents:UIControlEventTouchUpInside];
         [cell.removeButton addTarget:self
                               action:@selector(removeFromCartPressed:)
                     forControlEvents:UIControlEventTouchUpInside];

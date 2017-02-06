@@ -11,7 +11,7 @@
 #import "RIFilter.h"
 #import "TTRangeSlider.h"
 
-@interface JAPriceFiltersView : JAFiltersView <TTRangeSliderDelegate>
+@interface JAPriceFiltersView : JAFiltersView <TTRangeSliderDelegate, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *contentViewVerticalCenterContstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *centeredContentHeightConstraint;

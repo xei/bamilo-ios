@@ -62,8 +62,7 @@
         UIImage *shopFirstImage = [UIImage imageNamed:@"shop_first_logo"];
         _shopFirstImageView = [[UIImageView alloc] initWithImage:shopFirstImage];
         [_shopFirstImageView setUserInteractionEnabled:YES];
-        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                    action:@selector(shopFirstLogoTapped:)];
+        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(shopFirstLogoTapped:)];
         [_shopFirstImageView addGestureRecognizer:singleTap];
     }
     return _shopFirstImageView;
@@ -288,9 +287,7 @@
     [self.brandLabel setText:cartItem.brand];
     [self.nameLabel setText:cartItem.name];
     
-    [self.productImageView setImageWithURL:[NSURL URLWithString:cartItem.imageUrl]
-                      placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
-    
+    [self.productImageView sd_setImageWithURL:[NSURL URLWithString:cartItem.imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
     if (VALID_NOTEMPTY(cartItem.specialPrice, NSNumber)) {
         [self.priceLabel setText:[RICountryConfiguration formatPrice:cartItem.specialPrice country:[RICountryConfiguration getCurrentConfiguration]]];
     }else{
