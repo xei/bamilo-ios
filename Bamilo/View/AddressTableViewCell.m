@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressPhoneLabel;
 @property (weak, nonatomic) IBOutlet UIButton *addressEditButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *checkmarkIconTrailingConstraint;
 @end
 
 @implementation AddressTableViewCell
@@ -36,6 +37,18 @@
     //Address Edit Button Setup
     [self.addressEditButton applyStyle:kFontRegularName fontSize:11 color:cLIGHT_GRAY_COLOR];
     self.addressEditButton.titleLabel.text = STRING_EDIT;
+}
+
+-(void)setIsReadonly:(BOOL)isReadonly {
+    if(isReadonly) {
+        self.addressEditButton.hidden = YES;
+        self.checkmarkIconTrailingConstraint.constant = -1 * self.checkmarkIconImageView.frame.size.width;
+    } else {
+        self.addressEditButton.hidden = NO;
+        self.checkmarkIconTrailingConstraint.constant = 10;
+    }
+    
+    _isReadonly = isReadonly;
 }
 
 #pragma mark - Overrides
