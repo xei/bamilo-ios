@@ -150,6 +150,8 @@
 		87A6817B1E4201F400D252AC /* AddressTableViewHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87A6817A1E4201F400D252AC /* AddressTableViewHeaderCell.xib */; };
 		87A6ACEF1E38919C00C0E7DC /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A6ACE81E38919C00C0E7DC /* GTMNSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		87A6ACF21E38919C00C0E7DC /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A6ACEC1E38919C00C0E7DC /* NSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		87B684D51E49AB890042C09F /* DiscountCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B684D41E49AB890042C09F /* DiscountCodeView.m */; };
+		87B684D71E49AB900042C09F /* DiscountCodeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87B684D61E49AB900042C09F /* DiscountCodeView.xib */; };
 		87C69DAB1E38B78E0026018F /* NSString+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 87C69DAA1E38B78E0026018F /* NSString+Extensions.m */; };
 		87C69DAE1E38B7A50026018F /* UIColor+Format.m in Sources */ = {isa = PBXBuildFile; fileRef = 87C69DAD1E38B7A50026018F /* UIColor+Format.m */; };
 		87D07D6F1E40939100C00AC6 /* Checkout.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87D07D6E1E40939100C00AC6 /* Checkout.storyboard */; };
@@ -790,6 +792,9 @@
 		87A6ACE81E38919C00C0E7DC /* GTMNSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+HTML.m"; sourceTree = "<group>"; };
 		87A6ACEB1E38919C00C0E7DC /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HTML.h"; sourceTree = "<group>"; };
 		87A6ACEC1E38919C00C0E7DC /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HTML.m"; sourceTree = "<group>"; };
+		87B684D31E49AB890042C09F /* DiscountCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscountCodeView.h; sourceTree = "<group>"; };
+		87B684D41E49AB890042C09F /* DiscountCodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscountCodeView.m; sourceTree = "<group>"; };
+		87B684D61E49AB900042C09F /* DiscountCodeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiscountCodeView.xib; sourceTree = "<group>"; };
 		87C69DA91E38B78E0026018F /* NSString+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Extensions.h"; path = "Categories/NSString+Extensions.h"; sourceTree = "<group>"; };
 		87C69DAA1E38B78E0026018F /* NSString+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Extensions.m"; path = "Categories/NSString+Extensions.m"; sourceTree = "<group>"; };
 		87C69DAC1E38B7A50026018F /* UIColor+Format.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+Format.h"; path = "Categories/UIColor+Format.h"; sourceTree = "<group>"; };
@@ -1461,35 +1466,7 @@
 			isa = PBXGroup;
 			children = (
 				87D07D811E40B45A00C00AC6 /* BML */,
-				870F8CD11E3357340021F87B /* GradientLayer */,
-				84A7B54F1D101D9F00CA9754 /* OnBoardingView */,
-				FF4465141CEB4F59003A65EA /* ORProductView */,
-				9A4077491CE61CF700313D20 /* OnlineReturns */,
-				9AE7669B1CB3CF2300B63D8E /* Authentication */,
-				FFC9C0C01C984B1A00DD5851 /* TopTabsView */,
-				9A4ADF651C2AF0BD0019F439 /* CustomControls */,
-				CE06FCB41A88C374002FCD25 /* Catalog */,
-				CEA86DF31A49D247000032AD /* Campaigns */,
-				B5240E451A496E59006264E9 /* MyOrderDetailView */,
-				520A37CF1A4890CD0046C8B1 /* Search */,
-				B59DCA6719B851F700DE7960 /* Buttons */,
-				4A4ABF08198B902600342D92 /* Cells */,
-				9A17372C1B677A13004905B4 /* Checkout */,
-				CE88F7A91A1E339F00A3A586 /* CollectionViewLayouts */,
-				B510B00119AE466B00A9754A /* DynamicForms */,
-				8C38E17F19CF164A0007F6F9 /* ErrorViews */,
-				CEABEEB71A11186F000D0CF8 /* Filters */,
-				CE3FC5A41990E209003B4A27 /* GenericComponents */,
-				4A39213B198921A100B70A9C /* GlobalNavigationBar */,
-				CEA106FA1BD78A7000EF88B1 /* GlobalTabBar */,
-				B51777AF19A78FEB00ED0AC7 /* Headers */,
-				CE88F7BA1A23882E00A3A586 /* OrderSummaryView */,
-				4AE730B0198F8A74000CA1DD /* PDVComponents */,
-				CE3AF90F19DD5D4B00D8C51B /* PromotionPopUp */,
-				4A1892CF199399EC0036F327 /* ReviewCell */,
-				CE69B58D19868B7A005CC699 /* Teasers */,
-				4A3719BA19C05F3C002D4199 /* UndefinedSearchView */,
-				CEC376DA19EFC1D500558B98 /* Wizard */,
+				87B684D91E49B2D70042C09F /* JA */,
 			);
 			name = Views;
 			path = View;
@@ -2080,6 +2057,7 @@
 			isa = PBXGroup;
 			children = (
 				8714E0881E48CC9F004C9B1D /* DiscountSwitcherView */,
+				87B684D21E49AB6D0042C09F /* DiscountCodeView */,
 			);
 			name = Discount;
 			sourceTree = "<group>";
@@ -2539,6 +2517,83 @@
 			name = "GTMNSString-HTML";
 			path = "Bamilo/ExternalFrameworks/GTMNSString-HTML";
 			sourceTree = SOURCE_ROOT;
+		};
+		87B684D21E49AB6D0042C09F /* DiscountCodeView */ = {
+			isa = PBXGroup;
+			children = (
+				87B684D31E49AB890042C09F /* DiscountCodeView.h */,
+				87B684D41E49AB890042C09F /* DiscountCodeView.m */,
+				87B684D61E49AB900042C09F /* DiscountCodeView.xib */,
+			);
+			name = DiscountCodeView;
+			sourceTree = "<group>";
+		};
+		87B684D81E49B2C80042C09F /* JA */ = {
+			isa = PBXGroup;
+			children = (
+				B5A303001981218E00F71726 /* JABaseViewController */,
+				9AEF741E1CD8A81700A5D574 /* OnlineReturns */,
+				9AEF741D1CD8A7FB00A5D574 /* StepByStep */,
+				9AE03A881C076CB3003CBEF1 /* Authentication */,
+				CEBE2A7D1A9E31E800F457FA /* Web */,
+				CE283E6E1A7296AE00F3E92D /* OtherOffers */,
+				CE3AF8FD19DBF4FB00D8C51B /* Campaigns */,
+				CE3FC5AB1990E25C003B4A27 /* Catalog */,
+				B5225E281989475E00C18F1E /* Checkout */,
+				4A39211A19891F1500B70A9C /* ChooseCountry */,
+				4AE242E1198656F500E37C90 /* HomeViewController */,
+				4AE242DD1986567800E37C90 /* JARootViewController */,
+				4AE242D71986547C00E37C90 /* JASidePanel */,
+				B55BFB9219E6A83E0098467E /* LoadCountryViewController */,
+				4AE242E2198656F500E37C90 /* MenuViewController */,
+				4A39211B19891F1500B70A9C /* MyAccount */,
+				9A59E7EF1C3A8D2300F37D3F /* SavedList */,
+				520A37CA1A48904B0046C8B1 /* MyOrders */,
+				4AE730AF198F88CB000CA1DD /* PDV */,
+				4A944FF2199273E000C02734 /* Ratings */,
+				4A39211D19891F1500B70A9C /* RecentlyViewed */,
+				4A39211E19891F1500B70A9C /* RecentSearches */,
+				4AFC7F8E199BC0B2007D67F4 /* SignInViewController */,
+				CEA86D9B1A3756A6000032AD /* SizeGuide */,
+			);
+			name = JA;
+			sourceTree = "<group>";
+		};
+		87B684D91E49B2D70042C09F /* JA */ = {
+			isa = PBXGroup;
+			children = (
+				870F8CD11E3357340021F87B /* GradientLayer */,
+				84A7B54F1D101D9F00CA9754 /* OnBoardingView */,
+				FF4465141CEB4F59003A65EA /* ORProductView */,
+				9A4077491CE61CF700313D20 /* OnlineReturns */,
+				9AE7669B1CB3CF2300B63D8E /* Authentication */,
+				FFC9C0C01C984B1A00DD5851 /* TopTabsView */,
+				9A4ADF651C2AF0BD0019F439 /* CustomControls */,
+				CE06FCB41A88C374002FCD25 /* Catalog */,
+				CEA86DF31A49D247000032AD /* Campaigns */,
+				B5240E451A496E59006264E9 /* MyOrderDetailView */,
+				520A37CF1A4890CD0046C8B1 /* Search */,
+				B59DCA6719B851F700DE7960 /* Buttons */,
+				4A4ABF08198B902600342D92 /* Cells */,
+				9A17372C1B677A13004905B4 /* Checkout */,
+				CE88F7A91A1E339F00A3A586 /* CollectionViewLayouts */,
+				B510B00119AE466B00A9754A /* DynamicForms */,
+				8C38E17F19CF164A0007F6F9 /* ErrorViews */,
+				CEABEEB71A11186F000D0CF8 /* Filters */,
+				CE3FC5A41990E209003B4A27 /* GenericComponents */,
+				4A39213B198921A100B70A9C /* GlobalNavigationBar */,
+				CEA106FA1BD78A7000EF88B1 /* GlobalTabBar */,
+				B51777AF19A78FEB00ED0AC7 /* Headers */,
+				CE88F7BA1A23882E00A3A586 /* OrderSummaryView */,
+				4AE730B0198F8A74000CA1DD /* PDVComponents */,
+				CE3AF90F19DD5D4B00D8C51B /* PromotionPopUp */,
+				4A1892CF199399EC0036F327 /* ReviewCell */,
+				CE69B58D19868B7A005CC699 /* Teasers */,
+				4A3719BA19C05F3C002D4199 /* UndefinedSearchView */,
+				CEC376DA19EFC1D500558B98 /* Wizard */,
+			);
+			name = JA;
+			sourceTree = "<group>";
 		};
 		87D07D701E40978100C00AC6 /* AddressViewController */ = {
 			isa = PBXGroup;
@@ -3211,30 +3266,7 @@
 			isa = PBXGroup;
 			children = (
 				87D07D821E40B4B100C00AC6 /* BML */,
-				B5A303001981218E00F71726 /* JABaseViewController */,
-				9AEF741E1CD8A81700A5D574 /* OnlineReturns */,
-				9AEF741D1CD8A7FB00A5D574 /* StepByStep */,
-				9AE03A881C076CB3003CBEF1 /* Authentication */,
-				CEBE2A7D1A9E31E800F457FA /* Web */,
-				CE283E6E1A7296AE00F3E92D /* OtherOffers */,
-				CE3AF8FD19DBF4FB00D8C51B /* Campaigns */,
-				CE3FC5AB1990E25C003B4A27 /* Catalog */,
-				B5225E281989475E00C18F1E /* Checkout */,
-				4A39211A19891F1500B70A9C /* ChooseCountry */,
-				4AE242E1198656F500E37C90 /* HomeViewController */,
-				4AE242DD1986567800E37C90 /* JARootViewController */,
-				4AE242D71986547C00E37C90 /* JASidePanel */,
-				B55BFB9219E6A83E0098467E /* LoadCountryViewController */,
-				4AE242E2198656F500E37C90 /* MenuViewController */,
-				4A39211B19891F1500B70A9C /* MyAccount */,
-				9A59E7EF1C3A8D2300F37D3F /* SavedList */,
-				520A37CA1A48904B0046C8B1 /* MyOrders */,
-				4AE730AF198F88CB000CA1DD /* PDV */,
-				4A944FF2199273E000C02734 /* Ratings */,
-				4A39211D19891F1500B70A9C /* RecentlyViewed */,
-				4A39211E19891F1500B70A9C /* RecentSearches */,
-				4AFC7F8E199BC0B2007D67F4 /* SignInViewController */,
-				CEA86D9B1A3756A6000032AD /* SizeGuide */,
+				87B684D81E49B2C80042C09F /* JA */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -3808,6 +3840,7 @@
 				CE9AE0CD1AB6D78200D56481 /* JAOrangeButtonCell.xib in Resources */,
 				CE9AE0D51AB6D78200D56481 /* JAPDVBundleSingleItem.xib in Resources */,
 				CE9AE0D91AB6D78200D56481 /* JAOtherOffersView_Landscape~iPad.xib in Resources */,
+				87B684D71E49AB900042C09F /* DiscountCodeView.xib in Resources */,
 				CEE5F4E41B1CB6B500556150 /* JARecentSearchesViewController.xib in Resources */,
 				612FDC381E45E0A900A9D0BD /* CartTableViewCell.xib in Resources */,
 				875AD5821E38C0C900584ABF /* RITracking_Bamilo.plist in Resources */,
@@ -3971,6 +4004,7 @@
 				CE59BF241AE906180057F4E2 /* JATopSellersTeaserView.m in Sources */,
 				875AD56A1E38C0C900584ABF /* RIPhonePrefix.m in Sources */,
 				875AD56D1E38C0C900584ABF /* RIProductRatings.m in Sources */,
+				87B684D51E49AB890042C09F /* DiscountCodeView.m in Sources */,
 				CE9ADF311AB6D78200D56481 /* JACheckBoxComponent.m in Sources */,
 				87C69DAE1E38B7A50026018F /* UIColor+Format.m in Sources */,
 				875AD5851E38C0C900584ABF /* RIAd4PushTracker.m in Sources */,

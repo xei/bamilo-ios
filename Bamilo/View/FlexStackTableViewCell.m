@@ -14,6 +14,8 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *upperViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *lowerViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *boldSeparatorHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *boldSeparatorBottomConstraint;
+
 @end
 
 @implementation FlexStackTableViewCell
@@ -23,12 +25,28 @@
     
     self.contentView.backgroundColor = [UIColor whiteColor];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
-    self.hasBoldSeparator = YES;
+    self.options = NONE;
 }
 
--(void)setHasBoldSeparator:(BOOL)hasBoldSeparator {
-    self.boldSeparatorHeightConstraint.constant = hasBoldSeparator ? 2 : 0;
-    _hasBoldSeparator = hasBoldSeparator;
+-(void)setOptions:(FlexStackViewOptions)options {
+    switch (options) {
+        case BOLD_SEPARATOR:
+            self.boldSeparatorHeightConstraint.constant = 2;
+            self.boldSeparatorBottomConstraint.constant = 0;
+        break;
+            
+        case SHADOW:
+            self.boldSeparatorHeightConstraint.constant = 1;
+            self.boldSeparatorBottomConstraint.constant = 5;
+        break;
+            
+        default:
+            self.boldSeparatorHeightConstraint.constant = 0;
+            self.boldSeparatorBottomConstraint.constant = 0;
+        break;
+    }
+    
+    _options = options;
 }
 
 #pragma mark - Public Methos

@@ -9,6 +9,7 @@
 #import "DiscountSwitcherView.h"
 
 #define cGREEN_COLOR [UIColor withRGBA:0 green:160 blue:0 alpha:1.0]
+#define cDARK_GRAY_COLOR [UIColor withRepeatingRGBA:171 alpha:1.0]
 
 @interface DiscountSwitcherView()
 @property (weak, nonatomic) IBOutlet UISwitch *switcherView;
@@ -23,11 +24,12 @@
     self.backgroundColor = [UIColor whiteColor];
     
     //Initial Setup
-    [self.switcherView setTintColor:cGREEN_COLOR];
+    [self.switcherView setBackgroundColor:cDARK_GRAY_COLOR];
+    [self.switcherView setTintColor:cDARK_GRAY_COLOR];
+    self.switcherView.layer.cornerRadius = 16.0;
     [self.switcherView setOnTintColor:cGREEN_COLOR];
     
-    self.descriptionLabel.textColor = [UIColor withRepeatingRGBA:110 alpha:1.0f];
-    self.descriptionLabel.font = [UIFont fontWithName:kFontRegularName size:12.0f];
+    [self.descriptionLabel applyStyle:kFontRegularName fontSize:12.0f color:[UIColor withRepeatingRGBA:110 alpha:1.0f]];
     self.descriptionLabel.text = STRING_COUPON;
 }
 

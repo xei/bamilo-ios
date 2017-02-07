@@ -28,6 +28,7 @@
                 </label>
                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="x8B-ww-aOi">
                     <rect key="frame" x="30" y="10" width="51" height="31"/>
+                    <color key="onTintColor" red="0.090531297028064728" green="0.52686542272567749" blue="0.11270476132631302" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
                         <action selector="switcherValueToggled:" destination="iN0-l3-epB" eventType="valueChanged" id="C7b-Hc-Qpv"/>
                     </connections>

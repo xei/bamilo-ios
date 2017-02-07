@@ -12,6 +12,7 @@
 #import "FlexStackTableViewCell.h"
 #import "AddressTableViewCell.h"
 #import "DiscountSwitcherView.h"
+#import "DiscountCodeView.h"
 
 @interface CheckoutConfirmationViewController() <DiscountSwitcherViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -67,15 +68,19 @@
                 //Discount Cell
                 case 0: {
                     FlexStackTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:[FlexStackTableViewCell nibName] forIndexPath:indexPath];
+                    
                     DiscountSwitcherView *discountSwitcherView = [[[NSBundle mainBundle] loadNibNamed:[DiscountSwitcherView nibName] owner:self options:nil] lastObject];
                     if(discountSwitcherView) {
                         discountSwitcherView.delegate = self;
                         [cell setUpperViewTo:discountSwitcherView];
                     }
                     
-                    UIView *dummyLowerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
-                    dummyLowerView.backgroundColor = [UIColor redColor];
-                    [cell setLowerViewTo:dummyLowerView];
+                    DiscountCodeView *discountCodeView = [[[NSBundle mainBundle] loadNibNamed:[DiscountCodeView nibName] owner:self options:nil] lastObject];
+                    if(discountCodeView) {
+                        [cell setLowerViewTo:discountCodeView];
+                    }
+                    
+                    cell.options = SHADOW;
                     
                     return cell;
                 }

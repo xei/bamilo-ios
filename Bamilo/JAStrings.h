@@ -468,5 +468,7 @@
 #define STRING_TOTAL_SUM RILocalizedString(@"total_sum", nil)
 #define STRING_PURCHASE_SUMMARY RILocalizedString(@"purchase_summary", nil)
 #define STRING_RECIPIENT_ADDRESS RILocalizedString(@"recipient_address", nil)
+#define STRING_ENTER_YOUR_DISCOUNT_CODE RILocalizedString(@"enter_your_discount_code", nil)
+#define STRING_APPLY_DISCOUNT RILocalizedString(@"apply_discount_code", nil)
 
 #endif
