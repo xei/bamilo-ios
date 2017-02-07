@@ -465,5 +465,8 @@
 #define STRING_LABEL_REVIEW RILocalizedString(@"review", nil)
 #define STRING_LABEL_PAY RILocalizedString(@"pay", nil)
 #define STRING_FINAL_REVIEW RILocalizedString(@"final_review", nil)
+#define STRING_TOTAL_SUM RILocalizedString(@"total_sum", nil)
+#define STRING_PURCHASE_SUMMARY RILocalizedString(@"purchase_summary", nil)
+#define STRING_RECIPIENT_ADDRESS RILocalizedString(@"recipient_address", nil)
 
 #endif

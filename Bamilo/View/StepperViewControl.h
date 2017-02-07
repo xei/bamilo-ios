@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseViewControl.h"
 #import "StepperViewControlDelegate.h"
 
-@interface StepperViewControl : UIView
-@property (nonatomic) int quantity;
-@property (nonatomic) int maxQuantity;
-@property (nonatomic) int minQuantity;
-@property (nonatomic, strong) id<StepperViewControlDelegate> delegate;
+@interface StepperViewControl : BaseViewControl
+
+@property (weak, nonatomic) id<StepperViewControlDelegate> delegate;
+@property (assign, nonatomic) int quantity;
+@property (assign, nonatomic) int maxQuantity;
+@property (assign, nonatomic) int minQuantity;
+
 @end

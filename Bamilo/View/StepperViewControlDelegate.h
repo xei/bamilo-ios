@@ -9,5 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @protocol StepperViewControlDelegate
-- (void)valueHasBeenChanged:(id) stepperViewControl withNewValue:(int)value;
+
+- (void)valueHasBeenChanged:(id) stepperViewControl withNewValue:(int) value;
+
 @end
+

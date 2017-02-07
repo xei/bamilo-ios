@@ -56,7 +56,7 @@
     return @"AddressTableViewCell";
 }
 
--(void)updateWithModel:(NSManagedObject *)model {
+-(void)updateWithModel:(id)model {
     RIAddress *addressObj = (RIAddress *)model;
 
     //Address Title Setup

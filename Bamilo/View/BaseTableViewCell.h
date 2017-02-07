@@ -16,6 +16,6 @@
 
 +(NSString *) nibName;
 
--(void) updateWithModel:(NSManagedObject *)model;
+-(void) updateWithModel:(id)model;
 
 @end

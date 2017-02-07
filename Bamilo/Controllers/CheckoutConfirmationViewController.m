@@ -8,8 +8,12 @@
 
 #import "CheckoutConfirmationViewController.h"
 #import "CheckoutProgressViewButtonModel.h"
+#import "PlainTableViewHeaderCell.h"
+#import "FlexStackTableViewCell.h"
+#import "AddressTableViewCell.h"
+#import "DiscountSwitcherView.h"
 
-@interface CheckoutConfirmationViewController()
+@interface CheckoutConfirmationViewController() <DiscountSwitcherViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @end
 
@@ -17,7 +21,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    [self.tableView registerNib:[UINib nibWithNibName:[PlainTableViewHeaderCell nibName] bundle:nil] forHeaderFooterViewReuseIdentifier:[PlainTableViewHeaderCell nibName]];
+    [self.tableView registerNib:[UINib nibWithNibName:[FlexStackTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[FlexStackTableViewCell nibName]];
+    [self.tableView registerNib:[UINib nibWithNibName:[AddressTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[AddressTableViewCell nibName]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -37,12 +44,95 @@
 }
 
 #pragma mark - UITableViewDataSource
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 3;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    switch (section) {
+        case 0:
+            return 1;
+        default:
+            break;
+    }
+    
     return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch (indexPath.section) {
+        //Total Sum Section
+        case 0:
+            switch (indexPath.row) {
+                //Discount Cell
+                case 0: {
+                    FlexStackTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:[FlexStackTableViewCell nibName] forIndexPath:indexPath];
+                    DiscountSwitcherView *discountSwitcherView = [[[NSBundle mainBundle] loadNibNamed:[DiscountSwitcherView nibName] owner:self options:nil] lastObject];
+                    if(discountSwitcherView) {
+                        discountSwitcherView.delegate = self;
+                        [cell setUpperViewTo:discountSwitcherView];
+                    }
+                    
+                    UIView *dummyLowerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+                    dummyLowerView.backgroundColor = [UIColor redColor];
+                    [cell setLowerViewTo:dummyLowerView];
+                    
+                    return cell;
+                }
+                    
+                default:
+                    break;
+            }
+        break;
+          
+        //Purchase Summary Section
+        case 1:
+        break;
+            
+        //Recipient Address Section
+        case 2:
+        break;
+    }
+    
     return nil;
+}
+
+#pragma mark - UITableViewDelegate
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 40.0f;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    PlainTableViewHeaderCell *plainTableViewHeaderCell = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:[PlainTableViewHeaderCell nibName]];
+    
+    switch (section) {
+        case 0:
+            plainTableViewHeaderCell.title = STRING_TOTAL_SUM;
+        break;
+            
+        case 1:
+            plainTableViewHeaderCell.title = STRING_PURCHASE_SUMMARY;
+        break;
+            
+        case 2:
+            plainTableViewHeaderCell.title = STRING_RECIPIENT_ADDRESS;
+        break;
+    }
+    
+    return plainTableViewHeaderCell;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewAutomaticDimension;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 150;
+}
+
+#pragma mark - DiscountSwitcherViewDelegate
+-(void)discountSwitcherViewDidToggle:(BOOL)isOn {
+    NSLog(@"Discount Switcher Toggled to %@", @(isOn));
 }
 
 #pragma mark - CheckoutProgressViewDelegate

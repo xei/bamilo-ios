@@ -14,7 +14,10 @@
 
 
 @interface CartTableViewCell : BaseTableViewCell
-@property (nonatomic, strong) RICartItem *cartItem;
-@property (nonatomic, strong) id<CartTableViewCellDelegate> delegate;
+
+@property (strong, nonatomic) RICartItem *cartItem;
+@property (weak, nonatomic) id<CartTableViewCellDelegate> delegate;
+
 - (void)quantityChangeTo:(int)newQuantity;
+
 @end
