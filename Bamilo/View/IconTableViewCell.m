@@ -9,13 +9,13 @@
 #import "IconTableViewCell.h"
 
 @interface IconTableViewCell()
-@property (weak, nonatomic) IBOutlet UIImageView* iconUIImage;
+@property (weak, nonatomic) IBOutlet UIImageView* iconImage;
 @end
 
 @implementation IconTableViewCell
 
 - (void)setImageName:(NSString *)imageName {
-    self.iconUIImage.image = [UIImage imageNamed:imageName];
+    self.iconImage.image = [UIImage imageNamed:imageName];
 }
 
 #pragma mark - Overrides

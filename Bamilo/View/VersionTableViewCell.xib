@@ -68,9 +68,9 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="iconUIImage" destination="LdG-da-kzY" id="ep7-HM-tu3"/>
+                <outlet property="iconImage" destination="LdG-da-kzY" id="jdd-be-l1C"/>
                 <outlet property="subtitleUILabel" destination="99H-Uc-yUU" id="T4f-qX-m1s"/>
-                <outlet property="titleUILabel" destination="3bm-Fz-2Y6" id="nOg-PF-6Ft"/>
+                <outlet property="titleLabel" destination="3bm-Fz-2Y6" id="4Ga-vw-vjn"/>
                 <outlet property="versionUILabel" destination="RuV-cn-oil" id="hIQ-X9-PrR"/>
             </connections>
             <point key="canvasLocation" x="31.5" y="81"/>
