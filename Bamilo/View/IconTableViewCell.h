@@ -10,5 +10,7 @@
 #import "PlainTableViewCell.h"
 
 @interface IconTableViewCell : PlainTableViewCell
-    @property (strong, nonatomic) NSString* imageName;
+
+@property (copy, nonatomic) NSString *imageName;
+
 @end

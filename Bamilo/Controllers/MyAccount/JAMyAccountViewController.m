@@ -156,7 +156,7 @@
     
     NSString *cellID = [self.tableViewListItems[indexPath.row] objectForKey:@"cellType"];
     IconTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellID forIndexPath:indexPath];
-    cell.title = [self.tableViewListItems[indexPath.row] objectForKey:@"title"];
+    cell.titleLabel.text = [self.tableViewListItems[indexPath.row] objectForKey:@"title"];
     cell.imageName = [self.tableViewListItems[indexPath.row] objectForKey:@"icon"];
     
     return cell;

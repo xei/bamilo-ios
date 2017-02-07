@@ -8,23 +8,16 @@
 
 #import "PlainTableViewCell.h"
 
-@interface PlainTableViewCell()
-@property (nonatomic, weak) IBOutlet UILabel* titleUILabel;
-@end
-
 @implementation PlainTableViewCell
 
-- (void)awakeFromNib {
+-(void)awakeFromNib {
     [super awakeFromNib];
-    [self.titleUILabel setFont: [UIFont fontWithName:kFontRegularName size:12]];
+    
+    [self.titleLabel applyStyle:kFontRegularName fontSize:11.0f color:[UIColor blackColor]];
 }
 
 + (CGFloat)heightSize {
     return 50;
-}
-
-- (void)setTitle:(NSString *)title {
-    self.titleUILabel.text = title;
 }
 
 #pragma mark - Overrides

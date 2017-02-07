@@ -10,5 +10,7 @@
 #import "IconTableViewCell.h"
 
 @interface VersionTableViewCell : IconTableViewCell
+
 @property (nonatomic) NSNumber *isLastVersion;
+
 @end

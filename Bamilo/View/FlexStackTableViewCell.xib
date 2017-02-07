@@ -15,7 +15,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="28"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KzB-Cf-5MZ" userLabel="UpperView">
+                <view clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KzB-Cf-5MZ" userLabel="UpperView">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="10"/>
                     <color key="backgroundColor" red="0.67043318640000005" green="0.30399855269999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
@@ -29,7 +29,7 @@
                         <constraint firstAttribute="height" constant="1" id="Utv-Un-6ri"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LbC-FA-fLA" userLabel="LowerView">
+                <view clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LbC-FA-fLA" userLabel="LowerView">
                     <rect key="frame" x="0.0" y="11" width="375" height="10"/>
                     <color key="backgroundColor" red="0.40699419390000002" green="0.82547861280000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
