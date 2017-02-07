@@ -249,11 +249,17 @@
 
 - (IBAction)totalPaymentViewTapped :(id)sender{
     if (self.costSummeryContainerTopToWholeCostTopConstraint.constant == 0) {
-        [UIView animateWithDuration:0.15 animations:^{
-            self.costSummeryContainerTopToWholeCostTopConstraint.constant = 75;
-            [self.view layoutIfNeeded];
-        } completion:nil];
+        [self changeTheSummeryTopConstraintByAnimationTo:75];
+    } else {
+        [self changeTheSummeryTopConstraintByAnimationTo:0];
     }
+}
+
+- (void) changeTheSummeryTopConstraintByAnimationTo:(CGFloat)constant {
+    [UIView animateWithDuration:0.15 animations:^{
+        self.costSummeryContainerTopToWholeCostTopConstraint.constant = constant;
+        [self.view layoutIfNeeded];
+    } completion:nil];
 }
 
 #pragma mark - tableView dataSource & delegates
@@ -279,10 +285,7 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (self.costSummeryContainerTopToWholeCostTopConstraint.constant == 75) {
-        [UIView animateWithDuration:0.15 animations:^{
-            self.costSummeryContainerTopToWholeCostTopConstraint.constant = 0;
-            [self.view layoutIfNeeded];
-        } completion:nil];
+        [self changeTheSummeryTopConstraintByAnimationTo:0];
     }
 }
 
