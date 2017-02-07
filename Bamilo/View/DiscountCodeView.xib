@@ -46,12 +46,12 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kIV-If-VIx" userLabel="DiscountApplyButton">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kIV-If-VIx" userLabel="DiscountApplyButton">
                     <rect key="frame" x="20" y="57" width="335" height="35"/>
                     <color key="backgroundColor" red="0.80975550413131714" green="0.81037485599517822" blue="0.80985146760940552" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
                     <state key="normal" title="ثبت کد تخفیف">
-                        <color key="titleColor" red="0.47951453924179077" green="0.47989743947982788" blue="0.47957384586334229" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="titleColor" red="0.47951453919999998" green="0.47989743950000002" blue="0.47957384590000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                 </button>
             </subviews>

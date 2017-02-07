@@ -16,9 +16,33 @@
 
 @interface CheckoutConfirmationViewController() <DiscountSwitcherViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+@property (weak, nonatomic) FlexStackTableViewCell *totalSumDiscountFlexTableViewCell;
 @end
 
 @implementation CheckoutConfirmationViewController
+
+-(FlexStackTableViewCell *)totalSumDiscountFlexTableViewCell {
+    if(_totalSumDiscountFlexTableViewCell == nil) {
+        _totalSumDiscountFlexTableViewCell = [self.tableView dequeueReusableCellWithIdentifier:[FlexStackTableViewCell nibName]];
+        _totalSumDiscountFlexTableViewCell.options = BOLD_SEPARATOR;
+        
+        DiscountSwitcherView *discountSwitcherView = [[[NSBundle mainBundle] loadNibNamed:[DiscountSwitcherView nibName] owner:self options:nil] lastObject];
+        if(discountSwitcherView) {
+            discountSwitcherView.delegate = self;
+            [_totalSumDiscountFlexTableViewCell setUpperViewTo:discountSwitcherView];
+        }
+        
+        DiscountCodeView *discountCodeView = [[[NSBundle mainBundle] loadNibNamed:[DiscountCodeView nibName] owner:self options:nil] lastObject];
+        if(discountCodeView) {
+            [_totalSumDiscountFlexTableViewCell setLowerViewTo:discountCodeView];
+        }
+        
+        [_totalSumDiscountFlexTableViewCell update:LOWER_VIEW set:NO animated:NO];
+    }
+    
+    return _totalSumDiscountFlexTableViewCell;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -67,22 +91,7 @@
             switch (indexPath.row) {
                 //Discount Cell
                 case 0: {
-                    FlexStackTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:[FlexStackTableViewCell nibName] forIndexPath:indexPath];
-                    
-                    DiscountSwitcherView *discountSwitcherView = [[[NSBundle mainBundle] loadNibNamed:[DiscountSwitcherView nibName] owner:self options:nil] lastObject];
-                    if(discountSwitcherView) {
-                        discountSwitcherView.delegate = self;
-                        [cell setUpperViewTo:discountSwitcherView];
-                    }
-                    
-                    DiscountCodeView *discountCodeView = [[[NSBundle mainBundle] loadNibNamed:[DiscountCodeView nibName] owner:self options:nil] lastObject];
-                    if(discountCodeView) {
-                        [cell setLowerViewTo:discountCodeView];
-                    }
-                    
-                    cell.options = SHADOW;
-                    
-                    return cell;
+                    return self.totalSumDiscountFlexTableViewCell;
                 }
                     
                 default:
@@ -137,7 +146,9 @@
 
 #pragma mark - DiscountSwitcherViewDelegate
 -(void)discountSwitcherViewDidToggle:(BOOL)isOn {
-    NSLog(@"Discount Switcher Toggled to %@", @(isOn));
+    [self.tableView beginUpdates];
+    [self.totalSumDiscountFlexTableViewCell update:LOWER_VIEW set:isOn animated:YES];
+    [self.tableView endUpdates];
 }
 
 #pragma mark - CheckoutProgressViewDelegate

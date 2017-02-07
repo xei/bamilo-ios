@@ -1690,9 +1690,9 @@
 			isa = PBXGroup;
 			children = (
 				8714E0801E48C3B1004C9B1D /* Base */,
+				61E099671E3E113F004ED14E /* PlainTableViewCell */,
 				612FDC331E45E08500A9D0BD /* CartTableViewCell */,
 				87A681721E42003100D252AC /* AddressTableViewCell */,
-				61E099671E3E113F004ED14E /* PlainTableViewCell */,
 				61E099681E3E114E004ED14E /* IconTableViewCell */,
 				61E0996D1E3E18B7004ED14E /* NotificationTableViewCell */,
 				61E099731E3E19CF004ED14E /* VersionTableViewCell */,
