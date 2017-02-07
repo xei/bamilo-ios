@@ -152,6 +152,8 @@
 		87A6ACF21E38919C00C0E7DC /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A6ACEC1E38919C00C0E7DC /* NSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		87B684D51E49AB890042C09F /* DiscountCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B684D41E49AB890042C09F /* DiscountCodeView.m */; };
 		87B684D71E49AB900042C09F /* DiscountCodeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87B684D61E49AB900042C09F /* DiscountCodeView.xib */; };
+		87B684DC1E49CE660042C09F /* BasicTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87B684DB1E49CE660042C09F /* BasicTableViewCell.xib */; };
+		87B684DF1E49CE740042C09F /* BasicTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B684DE1E49CE740042C09F /* BasicTableViewCell.m */; };
 		87C69DAB1E38B78E0026018F /* NSString+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 87C69DAA1E38B78E0026018F /* NSString+Extensions.m */; };
 		87C69DAE1E38B7A50026018F /* UIColor+Format.m in Sources */ = {isa = PBXBuildFile; fileRef = 87C69DAD1E38B7A50026018F /* UIColor+Format.m */; };
 		87D07D6F1E40939100C00AC6 /* Checkout.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87D07D6E1E40939100C00AC6 /* Checkout.storyboard */; };
@@ -795,6 +797,9 @@
 		87B684D31E49AB890042C09F /* DiscountCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscountCodeView.h; sourceTree = "<group>"; };
 		87B684D41E49AB890042C09F /* DiscountCodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscountCodeView.m; sourceTree = "<group>"; };
 		87B684D61E49AB900042C09F /* DiscountCodeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiscountCodeView.xib; sourceTree = "<group>"; };
+		87B684DB1E49CE660042C09F /* BasicTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BasicTableViewCell.xib; sourceTree = "<group>"; };
+		87B684DD1E49CE740042C09F /* BasicTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicTableViewCell.h; sourceTree = "<group>"; };
+		87B684DE1E49CE740042C09F /* BasicTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicTableViewCell.m; sourceTree = "<group>"; };
 		87C69DA91E38B78E0026018F /* NSString+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Extensions.h"; path = "Categories/NSString+Extensions.h"; sourceTree = "<group>"; };
 		87C69DAA1E38B78E0026018F /* NSString+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Extensions.m"; path = "Categories/NSString+Extensions.m"; sourceTree = "<group>"; };
 		87C69DAC1E38B7A50026018F /* UIColor+Format.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+Format.h"; path = "Categories/UIColor+Format.h"; sourceTree = "<group>"; };
@@ -1690,7 +1695,6 @@
 			isa = PBXGroup;
 			children = (
 				8714E0801E48C3B1004C9B1D /* Base */,
-				61E099671E3E113F004ED14E /* PlainTableViewCell */,
 				612FDC331E45E08500A9D0BD /* CartTableViewCell */,
 				87A681721E42003100D252AC /* AddressTableViewCell */,
 				61E099681E3E114E004ED14E /* IconTableViewCell */,
@@ -2018,6 +2022,8 @@
 			isa = PBXGroup;
 			children = (
 				61E099691E3E1163004ED14E /* BaseTableViewCell */,
+				87B684DA1E49CE550042C09F /* BasicTableViewCell */,
+				61E099671E3E113F004ED14E /* PlainTableViewCell */,
 				8714E0811E48C3B9004C9B1D /* FlexStackTableViewCell */,
 			);
 			name = Base;
@@ -2593,6 +2599,16 @@
 				CEC376DA19EFC1D500558B98 /* Wizard */,
 			);
 			name = JA;
+			sourceTree = "<group>";
+		};
+		87B684DA1E49CE550042C09F /* BasicTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				87B684DD1E49CE740042C09F /* BasicTableViewCell.h */,
+				87B684DE1E49CE740042C09F /* BasicTableViewCell.m */,
+				87B684DB1E49CE660042C09F /* BasicTableViewCell.xib */,
+			);
+			name = BasicTableViewCell;
 			sourceTree = "<group>";
 		};
 		87D07D701E40978100C00AC6 /* AddressViewController */ = {
@@ -3846,6 +3862,7 @@
 				875AD5821E38C0C900584ABF /* RITracking_Bamilo.plist in Resources */,
 				CE9AE0E01AB6D78200D56481 /* JAPDVProductInfo~iPad_Portrait.xib in Resources */,
 				CEDE870F1B25FEE5006D18EA /* JANoConnectionView.xib in Resources */,
+				87B684DC1E49CE660042C09F /* BasicTableViewCell.xib in Resources */,
 				CEDBF8921B0DF5D00073971A /* JANewsletterComponent_RTL.xib in Resources */,
 				CE9AE0EA1AB6D78200D56481 /* JARatingsView.xib in Resources */,
 				CE9AE0EF1AB6D78200D56481 /* JARatingsViewMedium.xib in Resources */,
@@ -4233,6 +4250,7 @@
 				875AD5541E38C0C900584ABF /* RIURLCache.m in Sources */,
 				875AD5651E38C0C900584ABF /* RIOrder.m in Sources */,
 				FF4465221CECB806003A65EA /* JAORPaymentViewController.m in Sources */,
+				87B684DF1E49CE740042C09F /* BasicTableViewCell.m in Sources */,
 				9A0BBE951BFE2482007D35CE /* JACustomNavigationBarView.m in Sources */,
 				875AD5471E38C0C900584ABF /* RIFieldDataSetComponent.m in Sources */,
 				CE9ADFDE1AB6D78200D56481 /* JABaseViewController.m in Sources */,

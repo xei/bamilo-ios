@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -25,13 +25,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ایتم منو" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kKY-Mc-Ce9">
-                        <rect key="frame" x="315" y="25.5" width="39" height="21.5"/>
+                        <rect key="frame" x="315" y="25" width="39" height="21.5"/>
                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ArrowLeft" translatesAutoresizingMaskIntoConstraints="NO" id="Mq4-Yr-pRJ">
-                        <rect key="frame" x="16" y="30" width="12" height="12"/>
+                        <rect key="frame" x="16" y="29" width="12" height="12"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="Mq4-Yr-pRJ" secondAttribute="height" multiplier="1:1" id="0ua-QE-mJx"/>
                             <constraint firstAttribute="height" constant="12" id="9ak-K7-h3U"/>
@@ -56,7 +56,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="titleUILabel" destination="kKY-Mc-Ce9" id="wEE-dQ-lXU"/>
+                <outlet property="titleLabel" destination="kKY-Mc-Ce9" id="o5c-35-s2r"/>
             </connections>
             <point key="canvasLocation" x="0.0" y="66"/>
         </tableViewCell>

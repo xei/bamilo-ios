@@ -13,11 +13,13 @@
 #import "AddressTableViewCell.h"
 #import "DiscountSwitcherView.h"
 #import "DiscountCodeView.h"
+#import "BasicTableViewCell.h"
 
 @interface CheckoutConfirmationViewController() <DiscountSwitcherViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (weak, nonatomic) FlexStackTableViewCell *totalSumDiscountFlexTableViewCell;
+@property (weak, nonatomic) FlexStackTableViewCell *totalSumReceiptFlexTableViewCell;
 @end
 
 @implementation CheckoutConfirmationViewController
@@ -44,10 +46,20 @@
     return _totalSumDiscountFlexTableViewCell;
 }
 
+-(FlexStackTableViewCell *)totalSumReceiptFlexTableViewCell {
+    if(_totalSumReceiptFlexTableViewCell == nil) {
+        _totalSumReceiptFlexTableViewCell = [self.tableView dequeueReusableCellWithIdentifier:[FlexStackTableViewCell nibName]];
+    }
+    
+    return _totalSumReceiptFlexTableViewCell;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self.tableView registerNib:[UINib nibWithNibName:[PlainTableViewHeaderCell nibName] bundle:nil] forHeaderFooterViewReuseIdentifier:[PlainTableViewHeaderCell nibName]];
+    
+    [self.tableView registerNib:[UINib nibWithNibName:[BasicTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[BasicTableViewCell nibName]];
     [self.tableView registerNib:[UINib nibWithNibName:[FlexStackTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[FlexStackTableViewCell nibName]];
     [self.tableView registerNib:[UINib nibWithNibName:[AddressTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[AddressTableViewCell nibName]];
 }
@@ -75,10 +87,9 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
-        case 0:
-            return 1;
-        default:
-            break;
+        case 0: return 3;
+        //case 1: return 0;
+        //case 2: return 1;
     }
     
     return 0;
@@ -90,12 +101,16 @@
         case 0:
             switch (indexPath.row) {
                 //Discount Cell
-                case 0: {
-                    return self.totalSumDiscountFlexTableViewCell;
-                }
+                case 0: return self.totalSumDiscountFlexTableViewCell;
+                case 1: return self.totalSumReceiptFlexTableViewCell;
+                case 2: {
+                    BasicTableViewCell *deliveryTimeTableViewCell = [tableView dequeueReusableCellWithIdentifier:[BasicTableViewCell nibName] forIndexPath:indexPath];
+                    if(deliveryTimeTableViewCell) {
+                        deliveryTimeTableViewCell.titleLabel.text = @"زمان تحویل: ۶ - ۳ روز";
+                    }
                     
-                default:
-                    break;
+                    return deliveryTimeTableViewCell;
+                }
             }
         break;
           
@@ -137,6 +152,14 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch (indexPath.section) {
+        case 0:
+            switch (indexPath.row) {
+                case 2: return 50.0f; //Delivery Time Cell
+            }
+        break;
+    }
+    
     return UITableViewAutomaticDimension;
 }
 

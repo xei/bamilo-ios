@@ -60,9 +60,9 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="iconUIImage" destination="noh-Xs-e3O" id="AQK-WJ-moX"/>
+                <outlet property="iconImage" destination="noh-Xs-e3O" id="aS6-Ks-AGH"/>
                 <outlet property="notificationSwitch" destination="LxS-AV-SoF" id="x5g-nG-Pai"/>
-                <outlet property="titleUILabel" destination="KKq-Z9-Wfe" id="osD-a3-5FM"/>
+                <outlet property="titleLabel" destination="KKq-Z9-Wfe" id="4nW-Id-U3u"/>
             </connections>
             <point key="canvasLocation" x="130.5" y="71"/>
         </tableViewCell>
