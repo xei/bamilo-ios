@@ -16,7 +16,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="DiscountCodeView">
+        <view clipsSubviews="YES" contentMode="scaleToFill" id="iN0-l3-epB" customClass="DiscountCodeView">
             <rect key="frame" x="0.0" y="0.0" width="375" height="110"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -62,6 +62,7 @@
                 <constraint firstItem="QFZ-Cn-mfg" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="SZH-x8-mFo"/>
                 <constraint firstAttribute="trailing" secondItem="QFZ-Cn-mfg" secondAttribute="trailing" constant="20" id="fhi-3T-hzH"/>
                 <constraint firstItem="kIV-If-VIx" firstAttribute="trailing" secondItem="QFZ-Cn-mfg" secondAttribute="trailing" id="hua-qd-PNa"/>
+                <constraint firstAttribute="bottom" secondItem="kIV-If-VIx" secondAttribute="bottom" constant="18" id="ly4-sa-BjJ"/>
                 <constraint firstItem="QFZ-Cn-mfg" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="upH-sE-ZDQ"/>
                 <constraint firstItem="kIV-If-VIx" firstAttribute="top" secondItem="QFZ-Cn-mfg" secondAttribute="bottom" constant="10" id="vTc-Qg-ZKU"/>
             </constraints>

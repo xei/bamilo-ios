@@ -8,9 +8,6 @@
 
 #import "DiscountCodeView.h"
 
-#define cLIGHT_GRAY_COLOR [UIColor withRepeatingRGBA:215 alpha:1.0]
-#define cDARK_GRAY_COLOR [UIColor withRepeatingRGBA:111 alpha:1.0]
-
 @interface DiscountCodeView() <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIView *discountCodeTextFieldContainerView;
 @property (weak, nonatomic) IBOutlet UITextField *discountCodeTextField;

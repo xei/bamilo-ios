@@ -21,13 +21,13 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="کد تخفیف" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qyx-ev-mr6">
-                    <rect key="frame" x="309.5" y="14" width="55.5" height="23"/>
+                    <rect key="frame" x="299.5" y="14" width="55.5" height="23"/>
                     <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="x8B-ww-aOi">
-                    <rect key="frame" x="30" y="10" width="51" height="31"/>
+                    <rect key="frame" x="20" y="10" width="51" height="31"/>
                     <color key="onTintColor" red="0.090531297028064728" green="0.52686542272567749" blue="0.11270476132631302" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
                         <action selector="switcherValueToggled:" destination="iN0-l3-epB" eventType="valueChanged" id="C7b-Hc-Qpv"/>
@@ -37,8 +37,8 @@
             <color key="backgroundColor" red="1" green="0.57953985220000004" blue="0.589012498" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="Qyx-ev-mr6" firstAttribute="centerY" secondItem="x8B-ww-aOi" secondAttribute="centerY" id="BXj-Sl-ZyS"/>
-                <constraint firstItem="x8B-ww-aOi" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="30" id="F9s-0j-0IS"/>
-                <constraint firstAttribute="trailing" secondItem="Qyx-ev-mr6" secondAttribute="trailing" constant="10" id="Z6J-FI-LfD"/>
+                <constraint firstItem="x8B-ww-aOi" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="F9s-0j-0IS"/>
+                <constraint firstAttribute="trailing" secondItem="Qyx-ev-mr6" secondAttribute="trailing" constant="20" id="Z6J-FI-LfD"/>
                 <constraint firstItem="Qyx-ev-mr6" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="eLp-k8-Xn2"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>

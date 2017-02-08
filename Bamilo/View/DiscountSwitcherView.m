@@ -8,9 +8,6 @@
 
 #import "DiscountSwitcherView.h"
 
-#define cGREEN_COLOR [UIColor withRGBA:0 green:160 blue:0 alpha:1.0]
-#define cDARK_GRAY_COLOR [UIColor withRepeatingRGBA:171 alpha:1.0]
-
 @interface DiscountSwitcherView()
 @property (weak, nonatomic) IBOutlet UISwitch *switcherView;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;

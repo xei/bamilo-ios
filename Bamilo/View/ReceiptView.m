@@ -9,25 +9,25 @@
 #import "ReceiptView.h"
 #import "ReceiptItemView.h"
 
-@interface ReceiptView() <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
-@property (weak, nonatomic) IBOutlet UICollectionView *receiptCollectionView;
+@interface ReceiptView() <UITableViewDelegate, UITableViewDataSource>
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @end
 
-@implementation ReceiptView
+@implementation ReceiptView {
+@private
+    NSArray<ReceiptItemModel *> *_items;
+}
 
 -(void)awakeFromNib {
     [super awakeFromNib];
     
     self.backgroundColor = [UIColor whiteColor];
     
-    [self.receiptCollectionView registerNib:[UINib nibWithNibName:[ReceiptItemView nibName] bundle:nil] forCellWithReuseIdentifier:[ReceiptItemView nibName]];
+    [self.tableView registerNib:[UINib nibWithNibName:[ReceiptItemView nibName] bundle:nil] forCellReuseIdentifier:[ReceiptItemView nibName]];
     
-    self.receiptCollectionView.delegate = self;
-    self.receiptCollectionView.dataSource = self;
-}
-
--(void)resizeToFitItems {
-    [self setFrame:CGRectMake(0, 0, 0, self.items.count * [ReceiptItemView cellHeight])];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
 #pragma mark - Overrides
@@ -35,24 +35,29 @@
     return @"ReceiptView";
 }
 
-#pragma mark - UICollectionViewDataSource
--(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+-(void)updateWithModel:(id)model {
+    _items = (NSArray *)model;
+    [self.tableView reloadData];
+}
+
+#pragma mark - UITableViewDelegate
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [ReceiptItemView cellHeight];
+}
+
+#pragma mark - UITableViewDataSource
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.items.count;
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return _items.count;
 }
 
--(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    ReceiptItemView *receiptItemView = [self.receiptCollectionView dequeueReusableCellWithReuseIdentifier:[ReceiptItemView nibName] forIndexPath:indexPath];
-    [receiptItemView updateWithModel:[self.items objectAtIndex:indexPath.row]];
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    ReceiptItemView *receiptItemView = [self.tableView dequeueReusableCellWithIdentifier:[ReceiptItemView nibName] forIndexPath:indexPath];
+    [receiptItemView updateWithModel:[_items objectAtIndex:indexPath.row]];
     return receiptItemView;
-}
-
-#pragma mark - UICollectionViewDelegateFlowLayout
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(self.frame.size.width, [ReceiptItemView cellHeight]);
 }
 
 @end

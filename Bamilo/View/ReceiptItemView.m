@@ -29,6 +29,12 @@
     [self.itemCurrencyLabel applyStyle:kFontRegularName fontSize:11.0f color:cDARK_GRAY_COLOR];
 }
 
+-(void)applyColor:(UIColor *)color {
+    [self.itemNameLabel applyStyle:self.itemNameLabel.font.fontName fontSize:self.itemNameLabel.font.pointSize color:color];
+    [self.itemPriceLabel applyStyle:self.itemPriceLabel.font.fontName fontSize:self.itemPriceLabel.font.pointSize color:color];
+    [self.itemCurrencyLabel applyStyle:self.itemCurrencyLabel.font.fontName fontSize:self.itemCurrencyLabel.font.pointSize color:color];
+}
+
 #pragma mark - Overrides
 +(CGFloat)cellHeight {
     return 30.0f;

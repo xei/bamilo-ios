@@ -6,9 +6,11 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import "BaseCollectionViewCell.h"
+#import "BaseTableViewCell.h"
 #import "ReceiptItemModel.h"
 
-@interface ReceiptItemView : BaseCollectionViewCell
+@interface ReceiptItemView : BaseTableViewCell
+
+-(void) applyColor:(UIColor *)color;
 
 @end

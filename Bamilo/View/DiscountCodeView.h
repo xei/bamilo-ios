@@ -6,8 +6,8 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import "ReusableViewBase.h"
+#import "BaseTableViewCell.h"
 
-@interface DiscountCodeView : ReusableViewBase
+@interface DiscountCodeView : BaseTableViewCell
 
 @end

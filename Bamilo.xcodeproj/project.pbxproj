@@ -52,9 +52,6 @@
 		8714E0721E47977D004C9B1D /* BaseViewControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 8714E0711E47977D004C9B1D /* BaseViewControl.m */; };
 		8714E0771E479C00004C9B1D /* CheckoutProgressViewButtonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8714E0761E479C00004C9B1D /* CheckoutProgressViewButtonModel.m */; };
 		8714E07E1E48C1C5004C9B1D /* UIView+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8714E07D1E48C1C5004C9B1D /* UIView+Extensions.m */; };
-		8714E0831E48C3E2004C9B1D /* FlexStackTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8714E0821E48C3E2004C9B1D /* FlexStackTableViewCell.xib */; };
-		8714E0861E48C451004C9B1D /* FlexStackTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8714E0851E48C451004C9B1D /* FlexStackTableViewCell.m */; };
-		8714E08D1E48CD20004C9B1D /* ReusableViewBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 8714E08C1E48CD20004C9B1D /* ReusableViewBase.m */; };
 		8714E0901E48CD41004C9B1D /* DiscountSwitcherView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8714E08F1E48CD41004C9B1D /* DiscountSwitcherView.m */; };
 		8714E0921E48CD57004C9B1D /* DiscountSwitcherView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8714E0911E48CD57004C9B1D /* DiscountSwitcherView.xib */; };
 		8716987D1E38A94C0027B34A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8716987A1E38A94C0027B34A /* Main.storyboard */; };
@@ -159,7 +156,6 @@
 		87B684F51E4A04030042C09F /* ReceiptItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B684F41E4A04030042C09F /* ReceiptItemModel.m */; };
 		87B685071E4AFB6B0042C09F /* ReceiptView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B685061E4AFB6B0042C09F /* ReceiptView.m */; };
 		87B685091E4AFB740042C09F /* ReceiptView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87B685081E4AFB740042C09F /* ReceiptView.xib */; };
-		87B6850E1E4AFDF30042C09F /* BaseCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B6850D1E4AFDF30042C09F /* BaseCollectionViewCell.m */; };
 		87C69DAB1E38B78E0026018F /* NSString+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 87C69DAA1E38B78E0026018F /* NSString+Extensions.m */; };
 		87C69DAE1E38B7A50026018F /* UIColor+Format.m in Sources */ = {isa = PBXBuildFile; fileRef = 87C69DAD1E38B7A50026018F /* UIColor+Format.m */; };
 		87D07D6F1E40939100C00AC6 /* Checkout.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87D07D6E1E40939100C00AC6 /* Checkout.storyboard */; };
@@ -591,11 +587,6 @@
 		8714E0761E479C00004C9B1D /* CheckoutProgressViewButtonModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckoutProgressViewButtonModel.m; sourceTree = "<group>"; };
 		8714E07C1E48C1C5004C9B1D /* UIView+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extensions.h"; sourceTree = "<group>"; };
 		8714E07D1E48C1C5004C9B1D /* UIView+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extensions.m"; sourceTree = "<group>"; };
-		8714E0821E48C3E2004C9B1D /* FlexStackTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FlexStackTableViewCell.xib; sourceTree = "<group>"; };
-		8714E0841E48C451004C9B1D /* FlexStackTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlexStackTableViewCell.h; sourceTree = "<group>"; };
-		8714E0851E48C451004C9B1D /* FlexStackTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlexStackTableViewCell.m; sourceTree = "<group>"; };
-		8714E08B1E48CD20004C9B1D /* ReusableViewBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReusableViewBase.h; sourceTree = "<group>"; };
-		8714E08C1E48CD20004C9B1D /* ReusableViewBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReusableViewBase.m; sourceTree = "<group>"; };
 		8714E08E1E48CD41004C9B1D /* DiscountSwitcherView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscountSwitcherView.h; sourceTree = "<group>"; };
 		8714E08F1E48CD41004C9B1D /* DiscountSwitcherView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscountSwitcherView.m; sourceTree = "<group>"; };
 		8714E0911E48CD57004C9B1D /* DiscountSwitcherView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiscountSwitcherView.xib; sourceTree = "<group>"; };
@@ -814,8 +805,6 @@
 		87B685051E4AFB6B0042C09F /* ReceiptView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptView.h; sourceTree = "<group>"; };
 		87B685061E4AFB6B0042C09F /* ReceiptView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptView.m; sourceTree = "<group>"; };
 		87B685081E4AFB740042C09F /* ReceiptView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceiptView.xib; sourceTree = "<group>"; };
-		87B6850C1E4AFDF30042C09F /* BaseCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseCollectionViewCell.h; sourceTree = "<group>"; };
-		87B6850D1E4AFDF30042C09F /* BaseCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseCollectionViewCell.m; sourceTree = "<group>"; };
 		87C69DA91E38B78E0026018F /* NSString+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Extensions.h"; path = "Categories/NSString+Extensions.h"; sourceTree = "<group>"; };
 		87C69DAA1E38B78E0026018F /* NSString+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Extensions.m"; path = "Categories/NSString+Extensions.m"; sourceTree = "<group>"; };
 		87C69DAC1E38B7A50026018F /* UIColor+Format.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+Format.h"; path = "Categories/UIColor+Format.h"; sourceTree = "<group>"; };
@@ -1716,6 +1705,8 @@
 				61E099681E3E114E004ED14E /* IconTableViewCell */,
 				61E0996D1E3E18B7004ED14E /* NotificationTableViewCell */,
 				61E099731E3E19CF004ED14E /* VersionTableViewCell */,
+				8714E0891E48CD03004C9B1D /* Discount */,
+				87B684E01E49F2FD0042C09F /* Receipt */,
 			);
 			name = TableViewCells;
 			sourceTree = "<group>";
@@ -2040,27 +2031,13 @@
 				61E099691E3E1163004ED14E /* BaseTableViewCell */,
 				87B684DA1E49CE550042C09F /* BasicTableViewCell */,
 				61E099671E3E113F004ED14E /* PlainTableViewCell */,
-				8714E0811E48C3B9004C9B1D /* FlexStackTableViewCell */,
 			);
 			name = Base;
-			sourceTree = "<group>";
-		};
-		8714E0811E48C3B9004C9B1D /* FlexStackTableViewCell */ = {
-			isa = PBXGroup;
-			children = (
-				8714E0841E48C451004C9B1D /* FlexStackTableViewCell.h */,
-				8714E0851E48C451004C9B1D /* FlexStackTableViewCell.m */,
-				8714E0821E48C3E2004C9B1D /* FlexStackTableViewCell.xib */,
-			);
-			name = FlexStackTableViewCell;
 			sourceTree = "<group>";
 		};
 		8714E0871E48CC95004C9B1D /* ReusableViews */ = {
 			isa = PBXGroup;
 			children = (
-				8714E08A1E48CD12004C9B1D /* Base */,
-				8714E0891E48CD03004C9B1D /* Discount */,
-				87B684E01E49F2FD0042C09F /* Receipt */,
 			);
 			name = ReusableViews;
 			sourceTree = "<group>";
@@ -2083,15 +2060,6 @@
 				87B684D21E49AB6D0042C09F /* DiscountCodeView */,
 			);
 			name = Discount;
-			sourceTree = "<group>";
-		};
-		8714E08A1E48CD12004C9B1D /* Base */ = {
-			isa = PBXGroup;
-			children = (
-				8714E08B1E48CD20004C9B1D /* ReusableViewBase.h */,
-				8714E08C1E48CD20004C9B1D /* ReusableViewBase.m */,
-			);
-			name = Base;
 			sourceTree = "<group>";
 		};
 		874AAB5B1E3C775900B3F8FE /* Managers */ = {
@@ -2667,23 +2635,6 @@
 			name = ReceiptView;
 			sourceTree = "<group>";
 		};
-		87B6850A1E4AFDCF0042C09F /* CollectionViewCells */ = {
-			isa = PBXGroup;
-			children = (
-				87B6850B1E4AFDDB0042C09F /* Base */,
-			);
-			name = CollectionViewCells;
-			sourceTree = "<group>";
-		};
-		87B6850B1E4AFDDB0042C09F /* Base */ = {
-			isa = PBXGroup;
-			children = (
-				87B6850C1E4AFDF30042C09F /* BaseCollectionViewCell.h */,
-				87B6850D1E4AFDF30042C09F /* BaseCollectionViewCell.m */,
-			);
-			name = Base;
-			sourceTree = "<group>";
-		};
 		87D07D701E40978100C00AC6 /* AddressViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -2734,7 +2685,6 @@
 			children = (
 				87D07D841E40B4DA00C00AC6 /* TableViewHeaderFooters */,
 				61E099661E3E10F0004ED14E /* TableViewCells */,
-				87B6850A1E4AFDCF0042C09F /* CollectionViewCells */,
 				87D07D831E40B4C800C00AC6 /* Buttons */,
 				8714E06E1E479763004C9B1D /* Controls */,
 				8714E0871E48CC95004C9B1D /* ReusableViews */,
@@ -3912,7 +3862,6 @@
 				875AD5841E38C0C900584ABF /* RITrackingDebug_Bamilo.plist in Resources */,
 				CE9AE0931AB6D78200D56481 /* JAGrayButtonCell.xib in Resources */,
 				87A6817B1E4201F400D252AC /* AddressTableViewHeaderCell.xib in Resources */,
-				8714E0831E48C3E2004C9B1D /* FlexStackTableViewCell.xib in Resources */,
 				CEA2A1BB1B25D53B00E5973F /* JANewRatingViewController.xib in Resources */,
 				9A564CC11B38187100F23057 /* JANewSellerRatingViewController~ipad.xib in Resources */,
 				CE9AE09B1AB6D78200D56481 /* JAPaymentCell.xib in Resources */,
@@ -4265,7 +4214,6 @@
 				CE9ADFBA1AB6D78200D56481 /* JAUtils.m in Sources */,
 				875AD5811E38C0C900584ABF /* RIOpenURLHandler.m in Sources */,
 				9A3876641BCD0DFD0088B186 /* JAProductReviewsView.m in Sources */,
-				87B6850E1E4AFDF30042C09F /* BaseCollectionViewCell.m in Sources */,
 				9A189E6A1BB31AF70039BC14 /* JAProductInfoRatingLine.m in Sources */,
 				CE9ADFBB1AB6D78200D56481 /* JAPDVViewController.m in Sources */,
 				870F8D061E33975A0021F87B /* IntUtility.m in Sources */,
@@ -4350,7 +4298,6 @@
 				9AEF74251CD8A86900A5D574 /* JAORConfirmConditionsViewController.m in Sources */,
 				6CF4AE881ADEABBB0024EC34 /* JACatalogBannerCell.m in Sources */,
 				9AEF742C1CD8A8BD00A5D574 /* JAORConfirmationScreenViewController.m in Sources */,
-				8714E0861E48C451004C9B1D /* FlexStackTableViewCell.m in Sources */,
 				CE9ADFE51AB6D78200D56481 /* JANewsletterComponent.m in Sources */,
 				874AAB691E3CEA0700B3F8FE /* AppManager.m in Sources */,
 				CE9ADFE91AB6D78200D56481 /* JADynamicForm.m in Sources */,
@@ -4367,7 +4314,6 @@
 				9A4077251CE0CDA600313D20 /* NSString+Size.m in Sources */,
 				9A38764E1BCD0CDC0088B186 /* JATabNavigationViewController.m in Sources */,
 				CE9ADFF41AB6D78200D56481 /* JAActivityViewController.m in Sources */,
-				8714E08D1E48CD20004C9B1D /* ReusableViewBase.m in Sources */,
 				CE9ADFF51AB6D78200D56481 /* JAOrderViewController.m in Sources */,
 				CE9ADFF61AB6D78200D56481 /* JAShippingInfoCell.m in Sources */,
 				9AC4D6991B45A51A00036F1C /* JACatalogListCollectionViewCell.m in Sources */,

@@ -6,13 +6,9 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import "ReusableViewBase.h"
+#import "BaseTableViewCell.h"
 #import "ReceiptItemModel.h"
 
-@interface ReceiptView : ReusableViewBase
-
-@property (strong, nonatomic) NSArray<ReceiptItemModel *> *items;
-
--(void) resizeToFitItems;
+@interface ReceiptView : BaseTableViewCell
 
 @end
