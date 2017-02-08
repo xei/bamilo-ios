@@ -24,6 +24,13 @@
 		61148E0A1E47255F00E2540B /* StepperView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61148E091E47255F00E2540B /* StepperView.xib */; };
 		612FDC371E45E0A900A9D0BD /* CartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 612FDC351E45E0A900A9D0BD /* CartTableViewCell.m */; };
 		612FDC381E45E0A900A9D0BD /* CartTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 612FDC361E45E0A900A9D0BD /* CartTableViewCell.xib */; };
+		613FF2AF1E4B24DC008660CF /* CAPSPageMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 613FF2AE1E4B24DC008660CF /* CAPSPageMenu.m */; };
+		613FF2B51E4B283F008660CF /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 613FF2B31E4B283F008660CF /* SignInViewController.m */; };
+		613FF2B61E4B283F008660CF /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 613FF2B41E4B283F008660CF /* SignInViewController.xib */; };
+		613FF2BA1E4B2858008660CF /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 613FF2B81E4B2858008660CF /* SignUpViewController.m */; };
+		613FF2BB1E4B2858008660CF /* SignUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 613FF2B91E4B2858008660CF /* SignUpViewController.xib */; };
+		613FF2BF1E4B2871008660CF /* AuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 613FF2BE1E4B2871008660CF /* AuthenticationViewController.m */; };
+		613FF2C11E4B3D1B008660CF /* Authentication.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 613FF2C01E4B3D1B008660CF /* Authentication.storyboard */; };
 		61DBCCB61E46128300BA8251 /* IconButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 61DBCCB51E46128300BA8251 /* IconButton.m */; };
 		61E099641E3E0E21004ED14E /* IconTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E099621E3E0E21004ED14E /* IconTableViewCell.m */; };
 		61E099651E3E0E21004ED14E /* IconTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E099631E3E0E21004ED14E /* IconTableViewCell.xib */; };
@@ -529,6 +536,17 @@
 		612FDC341E45E0A900A9D0BD /* CartTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartTableViewCell.h; sourceTree = "<group>"; };
 		612FDC351E45E0A900A9D0BD /* CartTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartTableViewCell.m; sourceTree = "<group>"; };
 		612FDC361E45E0A900A9D0BD /* CartTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartTableViewCell.xib; sourceTree = "<group>"; };
+		613FF2AD1E4B24DC008660CF /* CAPSPageMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAPSPageMenu.h; sourceTree = SOURCE_ROOT; };
+		613FF2AE1E4B24DC008660CF /* CAPSPageMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAPSPageMenu.m; sourceTree = SOURCE_ROOT; };
+		613FF2B21E4B283F008660CF /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
+		613FF2B31E4B283F008660CF /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
+		613FF2B41E4B283F008660CF /* SignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignInViewController.xib; sourceTree = "<group>"; };
+		613FF2B71E4B2858008660CF /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
+		613FF2B81E4B2858008660CF /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
+		613FF2B91E4B2858008660CF /* SignUpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignUpViewController.xib; sourceTree = "<group>"; };
+		613FF2BD1E4B2871008660CF /* AuthenticationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthenticationViewController.h; sourceTree = "<group>"; };
+		613FF2BE1E4B2871008660CF /* AuthenticationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthenticationViewController.m; sourceTree = "<group>"; };
+		613FF2C01E4B3D1B008660CF /* Authentication.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Authentication.storyboard; path = Bamilo/Controllers/Authentication.storyboard; sourceTree = SOURCE_ROOT; };
 		61C407C31E476486004ACEE8 /* StepperViewControlDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepperViewControlDelegate.h; sourceTree = "<group>"; };
 		61C407C41E476939004ACEE8 /* CartTableViewCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartTableViewCellDelegate.h; sourceTree = "<group>"; };
 		61DBCCB41E46128300BA8251 /* IconButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconButton.h; sourceTree = "<group>"; };
@@ -1482,6 +1500,7 @@
 			children = (
 				8716987A1E38A94C0027B34A /* Main.storyboard */,
 				87D07D6E1E40939100C00AC6 /* Checkout.storyboard */,
+				613FF2C01E4B3D1B008660CF /* Authentication.storyboard */,
 			);
 			name = Storyboards;
 			path = View/Storyboard;
@@ -1670,6 +1689,44 @@
 				61C407C41E476939004ACEE8 /* CartTableViewCellDelegate.h */,
 			);
 			name = CartTableViewCell;
+			sourceTree = "<group>";
+		};
+		613FF2AC1E4B24CD008660CF /* CAPSPageMenu */ = {
+			isa = PBXGroup;
+			children = (
+				613FF2AD1E4B24DC008660CF /* CAPSPageMenu.h */,
+				613FF2AE1E4B24DC008660CF /* CAPSPageMenu.m */,
+			);
+			name = CAPSPageMenu;
+			sourceTree = "<group>";
+		};
+		613FF2B01E4B281A008660CF /* SignInViewController */ = {
+			isa = PBXGroup;
+			children = (
+				613FF2B21E4B283F008660CF /* SignInViewController.h */,
+				613FF2B31E4B283F008660CF /* SignInViewController.m */,
+				613FF2B41E4B283F008660CF /* SignInViewController.xib */,
+			);
+			name = SignInViewController;
+			sourceTree = "<group>";
+		};
+		613FF2B11E4B2825008660CF /* SignUpViewController */ = {
+			isa = PBXGroup;
+			children = (
+				613FF2B71E4B2858008660CF /* SignUpViewController.h */,
+				613FF2B81E4B2858008660CF /* SignUpViewController.m */,
+				613FF2B91E4B2858008660CF /* SignUpViewController.xib */,
+			);
+			name = SignUpViewController;
+			sourceTree = "<group>";
+		};
+		613FF2BC1E4B285C008660CF /* AuthenticationViewController */ = {
+			isa = PBXGroup;
+			children = (
+				613FF2BD1E4B2871008660CF /* AuthenticationViewController.h */,
+				613FF2BE1E4B2871008660CF /* AuthenticationViewController.m */,
+			);
+			name = AuthenticationViewController;
 			sourceTree = "<group>";
 		};
 		61DBCCB31E46127600BA8251 /* IconButton */ = {
@@ -2671,6 +2728,9 @@
 		87D07D821E40B4B100C00AC6 /* BML */ = {
 			isa = PBXGroup;
 			children = (
+				613FF2BC1E4B285C008660CF /* AuthenticationViewController */,
+				613FF2B11E4B2825008660CF /* SignUpViewController */,
+				613FF2B01E4B281A008660CF /* SignInViewController */,
 				87A681591E40F99300D252AC /* BaseViewController */,
 				87A6815E1E41B84000D252AC /* SearchBaseViewController */,
 				8708A16F1E406BF600ABA7D8 /* ContactUsViewController */,
@@ -3272,6 +3332,7 @@
 		B5A301D219811E8900F71726 /* ExternalFrameworks */ = {
 			isa = PBXGroup;
 			children = (
+				613FF2AC1E4B24CD008660CF /* CAPSPageMenu */,
 				87A6ACE41E38919C00C0E7DC /* GTMNSString-HTML */,
 			);
 			name = ExternalFrameworks;
@@ -3846,6 +3907,7 @@
 				CE9AE0A81AB6D78200D56481 /* JACartListHeaderView.xib in Resources */,
 				CE9AE0AC1AB6D78200D56481 /* JACatalogTopView_iphone.xib in Resources */,
 				9A2036F51B25F39E00F36F55 /* JANoConnectionView~iPad.xib in Resources */,
+				613FF2BB1E4B2858008660CF /* SignUpViewController.xib in Resources */,
 				9A564CB51B3411AD00F23057 /* JANewSellerRatingViewController.xib in Resources */,
 				CE9AE0B51AB6D78200D56481 /* JACheckBoxComponent.xib in Resources */,
 				CE9AE0B81AB6D78200D56481 /* JAPDVVariations~iPad.xib in Resources */,
@@ -3858,6 +3920,7 @@
 				CE9AE0D91AB6D78200D56481 /* JAOtherOffersView_Landscape~iPad.xib in Resources */,
 				87B684D71E49AB900042C09F /* DiscountCodeView.xib in Resources */,
 				CEE5F4E41B1CB6B500556150 /* JARecentSearchesViewController.xib in Resources */,
+				613FF2B61E4B283F008660CF /* SignInViewController.xib in Resources */,
 				612FDC381E45E0A900A9D0BD /* CartTableViewCell.xib in Resources */,
 				875AD5821E38C0C900584ABF /* RITracking_Bamilo.plist in Resources */,
 				CE9AE0E01AB6D78200D56481 /* JAPDVProductInfo~iPad_Portrait.xib in Resources */,
@@ -3880,6 +3943,7 @@
 				1C71FC601E2CABAD007ACF02 /* Bamilosans Light.ttf in Resources */,
 				1C71FC621E2CABAD007ACF02 /* Bamilosans UltraLight.ttf in Resources */,
 				1C80D8841E2E3D850036B514 /* ‌Bamilosans Bold.ttf in Resources */,
+				613FF2C11E4B3D1B008660CF /* Authentication.storyboard in Resources */,
 				87D07D6F1E40939100C00AC6 /* Checkout.storyboard in Resources */,
 				8716987D1E38A94C0027B34A /* Main.storyboard in Resources */,
 				6C18BD741AB87E0A00905FD2 /* Images.xcassets in Resources */,
@@ -4075,8 +4139,10 @@
 				61E099641E3E0E21004ED14E /* IconTableViewCell.m in Sources */,
 				CE59BEFA1AE7EF0B0057F4E2 /* JAShopTeaserView.m in Sources */,
 				9A86F80A1C281F8F001A91D5 /* JARecentlyViewedViewController.m in Sources */,
+				613FF2BF1E4B2871008660CF /* AuthenticationViewController.m in Sources */,
 				CE9ADF4C1AB6D78200D56481 /* UIImageView+JA.m in Sources */,
 				875AD5891E38C0C900584ABF /* RIGTMTracker.m in Sources */,
+				613FF2AF1E4B24DC008660CF /* CAPSPageMenu.m in Sources */,
 				CED6205C1BEB526B00FA8403 /* JAFiltersViewController.m in Sources */,
 				875AD57E1E38C0C900584ABF /* RIDataBaseWrapper.m in Sources */,
 				875AD5761E38C0C900584ABF /* RIShippingMethodPickupStationOption.m in Sources */,
@@ -4114,6 +4180,7 @@
 				CE9ADF731AB6D78200D56481 /* JAPaymentCell.m in Sources */,
 				CE9ADF741AB6D78200D56481 /* JAPDVBundleSingleItem.m in Sources */,
 				CE9ADF7A1AB6D78200D56481 /* JAPercentageBarView.m in Sources */,
+				613FF2BA1E4B2858008660CF /* SignUpViewController.m in Sources */,
 				875AD56F1E38C0C900584ABF /* RIPromotion.m in Sources */,
 				9A6BC0831C43CBB900DD9492 /* JAMyOrderResumeView.m in Sources */,
 				875AD56E1E38C0C900584ABF /* RIProductSimple.m in Sources */,
@@ -4204,6 +4271,7 @@
 				87A681611E41B88000D252AC /* SearchBaseViewController.m in Sources */,
 				9AB488841B72748500886A44 /* JAShopWebViewController.m in Sources */,
 				9A17D1A51C64B61200851D6E /* JANewsletterTeaserView.m in Sources */,
+				613FF2B51E4B283F008660CF /* SignInViewController.m in Sources */,
 				875AD5451E38C0C900584ABF /* RIExternalCategory.m in Sources */,
 				CE9ADFC21AB6D78200D56481 /* JAPriceFiltersView.m in Sources */,
 				9AEF73FE1CD20E1C00A5D574 /* JAStepByStepModel.m in Sources */,

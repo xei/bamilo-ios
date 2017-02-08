@@ -18,11 +18,10 @@
     self.title = nil;
     
     self.view.backgroundColor = JABackgroundGrey;
-    
     self.navBarLayout = [[JANavigationBarLayout alloc] init];
 }
 
--(void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     [self updateNavBar];
@@ -33,12 +32,12 @@
     if([self getIsSideMenuAvailable]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOnMenuSwipePanelNotification object:nil];
     }
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillEnterForeground) name:kAppWillEnterForeground object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground) name:kAppDidEnterBackground object:nil];
 }
 
--(void)viewWillDisappear:(BOOL)animated {
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kTurnOnMenuSwipePanelNotification object:nil];
@@ -51,31 +50,31 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:YES];
 }
 
 #pragma mark - Private Methods
--(void)requestNavigationBarReload {
+- (void)requestNavigationBarReload {
     [[NSNotificationCenter defaultCenter] postNotificationName:kChangeNavigationBarNotification object:self.navBarLayout];
 }
 
--(void)requestTabBarReload {
+- (void)requestTabBarReload {
     [[NSNotificationCenter defaultCenter] postNotificationName:kChangeTabBarVisibility object:[NSNumber numberWithBool:[self getTabBarVisible]]];
 }
 
 #pragma mark - Public Methods
--(void)updateNavBar {
+- (void)updateNavBar {
     return;
 }
 
 #pragma mark - SideMenuProtocol
--(BOOL)getIsSideMenuAvailable {
+- (BOOL)getIsSideMenuAvailable {
     return YES;
 }
 
 #pragma mark - TabBarProtocol
--(BOOL)getTabBarVisible {
+- (BOOL)getTabBarVisible {
     return NO;
 }
 

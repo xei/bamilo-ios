@@ -17,7 +17,6 @@
 #import "JABottomBar.h"
 #import "JATextFieldComponent.h"
 #import "RIPhonePrefix.h"
-#import "JAAuthenticationViewController.h"
 #import "JAAccountServicesView.h"
 
 #define kTopMargin 30.f

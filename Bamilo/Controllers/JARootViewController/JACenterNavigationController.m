@@ -7,7 +7,7 @@
 //
 
 #import "JACenterNavigationController.h"
-
+#import "AuthenticationViewController.h"
 #import "JAChooseCountryViewController.h"
 #import "JAHomeViewController.h"
 #import "JALoadCountryViewController.h"
@@ -690,9 +690,8 @@
 }
 
 #pragma mark Favorites Screen
-- (void)showSavedListViewController:(NSNotification*)notification
-{
-    [JAAuthenticationViewController authenticateAndExecuteBlock:^{
+- (void)showSavedListViewController:(NSNotification*)notification {
+        [JAAuthenticationViewController authenticateAndExecuteBlock:^{
         UIViewController *topViewController = [self topViewController];
         if (![topViewController isKindOfClass:[JASavedListViewController class]])
         {
@@ -726,8 +725,11 @@
 
 #pragma mark Sign In Screen
 - (void)showAuthenticationScreen:(NSNotification *)notification {
-    JAAuthenticationViewController *authenticationViewController = [[JAAuthenticationViewController alloc] init];
+    //JAAuthenticationViewController *authenticationViewController = [[JAAuthenticationViewController alloc] init];
+//    AuthenticationViewController *authenticationViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"AuthenticationViewController"];
     
+    AuthenticationViewController *authenticationViewController = (AuthenticationViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Authentication" nibName:@"AuthenticationViewController" resetCache:YES];
+
     if (VALID_NOTEMPTY(notification, NSNotification) && notification.object) {
         [authenticationViewController setNextStepBlock:notification.object];
     }
@@ -736,7 +738,7 @@
         NSNumber* showsBack = [notification.userInfo objectForKey:@"shows_back_button"];
         authenticationViewController.navBarLayout.showBackButton = [showsBack boolValue];
         if (![showsBack boolValue]) {
-            authenticationViewController.tabBarIsVisible = YES;
+//            authenticationViewController.tabBarIsVisible = YES;
             [self popToRootViewControllerAnimated:NO];
         }
     } else {
@@ -751,7 +753,7 @@
     BOOL animated = YES;
     if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"tabbar_is_visible"], NSNumber)) {
         NSNumber* tabbarIsVisible = [notification.userInfo objectForKey:@"tabbar_is_visible"];
-        authenticationViewController.tabBarIsVisible = [tabbarIsVisible boolValue];
+//        authenticationViewController.tabBarIsVisible = [tabbarIsVisible boolValue];
         [self popToRootViewControllerAnimated:NO];
         animated = NO;
     }

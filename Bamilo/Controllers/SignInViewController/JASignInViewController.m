@@ -12,7 +12,6 @@
 #import "RICustomer.h"
 #import "JAUtils.h"
 #import "JABottomBar.h"
-#import "JAAuthenticationViewController.h"
 #import "JAAccountServicesView.h"
 
 #define kSideMargin 16
@@ -186,10 +185,7 @@
                                                  name:UIKeyboardWillShowNotification
                                                object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillHide:)
-                                                 name:UIKeyboardWillHideNotification
-                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(hideKeyboard)
@@ -220,57 +216,47 @@
     [self.mainScrollView addSubview:self.forgotPasswordButton];
     [self.mainScrollView addSubview:self.loginButton];
     
-    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess)
-    {
+    if(self.apiResponse == RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess) {
         [self showLoading];
     }
     
     [self getLoginForm];
 }
 
-- (void)viewWillLayoutSubviews
-{
+- (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     [self.mainScrollView setXCenterAligned];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
+- (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
     [[RITrackingWrapper sharedInstance]trackScreenWithName:@"CustomerSignUp"];
 }
 
-- (void)viewDidDisappear:(BOOL)animated
-{
+- (void)viewDidDisappear:(BOOL)animated {
     // notify the InAppNotification SDK that this view controller in no more active
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
 }
 
-- (void)dealloc
-{
+- (void)dealloc     {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)getLoginForm
-{
+- (void)getLoginForm {
     self.requestDone = NO;
     
-    [RIForm getForm:@"login"
-       successBlock:^(RIForm *form)
-     {
+    [RIForm getForm:@"login" successBlock:^(RIForm *form) {
          CGFloat yOffset = CGRectGetMaxY(self.subTitleLabel.frame) + kSubTitleMargin;
          
          self.dynamicForm = [[JADynamicForm alloc] initWithForm:form values:@{@"email" : self.authenticationEmail} startingPosition:yOffset hasFieldNavigation:YES];
          [self.dynamicForm setDelegate:self];
          
-         for(UIView *view in self.dynamicForm.formViews)
-         {
+         for(UIView *view in self.dynamicForm.formViews) {
              [self.mainScrollView addSubview:view];
          }
          
@@ -282,8 +268,7 @@
          [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
          [self hideLoading];
          
-     } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
-     {
+     } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
          self.apiResponse = apiResponse;
          self.requestDone = YES;
          [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(getLoginForm) objects:nil];
@@ -310,8 +295,7 @@
     [self setupViewsHorizontally];
 }
 
-- (void)setupViewsHorizontally
-{
+- (void)setupViewsHorizontally {
     [self.titleLabel setXCenterAligned];
     [self.casSubtitleLabel setXCenterAligned];
     [self.casAccountServicesImagesView setXCenterAligned];
@@ -341,16 +325,12 @@
     }
 }
 
-- (void)forgotPasswordButtonPressed:(id)sender
-{
+- (void)forgotPasswordButtonPressed:(id)sender {
     [self hideKeyboard];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShowForgotPasswordScreenNotification
-                                                        object:nil
-                                                      userInfo:@{@"email" : self.authenticationEmail}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowForgotPasswordScreenNotification object:nil userInfo:@{@"email" : self.authenticationEmail}];
 }
 
-- (void)loginButtonPressed:(id)sender
-{
+- (void)loginButtonPressed:(id)sender {
     [self continueLogin];
 }
 
@@ -455,8 +435,7 @@
 }
 
 #pragma mark - Keyboard observers
-- (void) hideKeyboard
-{
+- (void) hideKeyboard {
     [[self findFirstResponder] resignFirstResponder];
 }
 
@@ -498,8 +477,7 @@
 }
 
 #pragma mark - DynamicForms delegate
-- (void)changedFocus:(UIView *)view
-{
+- (void)changedFocus:(UIView *)view {
     _firstResponder = view;
 }
 
