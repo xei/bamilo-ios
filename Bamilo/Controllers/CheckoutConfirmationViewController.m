@@ -14,6 +14,7 @@
 #import "DiscountSwitcherView.h"
 #import "DiscountCodeView.h"
 #import "BasicTableViewCell.h"
+#import "ReceiptView.h"
 
 @interface CheckoutConfirmationViewController() <DiscountSwitcherViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -49,6 +50,24 @@
 -(FlexStackTableViewCell *)totalSumReceiptFlexTableViewCell {
     if(_totalSumReceiptFlexTableViewCell == nil) {
         _totalSumReceiptFlexTableViewCell = [self.tableView dequeueReusableCellWithIdentifier:[FlexStackTableViewCell nibName]];
+        _totalSumReceiptFlexTableViewCell.options = BOLD_SEPARATOR;
+        
+        ReceiptView *receiptView = (ReceiptView *)[[[NSBundle mainBundle] loadNibNamed:[ReceiptView nibName] owner:self options:nil] lastObject];
+        if(receiptView) {
+            NSArray<ReceiptItemModel *> *items = @[
+               [ReceiptItemModel with:@"جمع کل" price:@"۹۹۹،۰۰۰،۵۵۵" currency:@"ریال"],
+               [ReceiptItemModel with:@"مجموع تخفیفها" price:@"۱،۵۰۰،۰۰۰" currency:@"ریال"]
+            ];
+            
+            [receiptView setItems:items];
+            [receiptView resizeToFitItems];
+            
+            [_totalSumReceiptFlexTableViewCell setUpperViewTo:receiptView];
+        }
+        
+        UIView *v = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+        v.backgroundColor = [UIColor redColor];
+        [_totalSumReceiptFlexTableViewCell setLowerViewTo:v];
     }
     
     return _totalSumReceiptFlexTableViewCell;
@@ -62,6 +81,8 @@
     [self.tableView registerNib:[UINib nibWithNibName:[BasicTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[BasicTableViewCell nibName]];
     [self.tableView registerNib:[UINib nibWithNibName:[FlexStackTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[FlexStackTableViewCell nibName]];
     [self.tableView registerNib:[UINib nibWithNibName:[AddressTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[AddressTableViewCell nibName]];
+    
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -89,7 +110,7 @@
     switch (section) {
         case 0: return 3;
         //case 1: return 0;
-        //case 2: return 1;
+        case 2: return 1;
     }
     
     return 0;
@@ -119,7 +140,14 @@
         break;
             
         //Recipient Address Section
-        case 2:
+        case 2: {
+            AddressTableViewCell *customerAddressTableViewCell = [tableView dequeueReusableCellWithIdentifier:[AddressTableViewCell nibName] forIndexPath:indexPath];
+            if(customerAddressTableViewCell) {
+                customerAddressTableViewCell.isReadonly = YES;
+            }
+            
+            return customerAddressTableViewCell;
+        }
         break;
     }
     
@@ -158,6 +186,7 @@
                 case 2: return 50.0f; //Delivery Time Cell
             }
         break;
+        case 2: return 150.0f; //Customer Address Cell
     }
     
     return UITableViewAutomaticDimension;

@@ -19,5 +19,6 @@
 @property (nonatomic, assign) IBInspectable CGFloat shadowOpacity;
 
 -(void) anchorMatch:(UIView *)view;
+-(CGSize) sizeToFitSubviews;
 
 @end

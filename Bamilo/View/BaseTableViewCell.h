@@ -14,6 +14,7 @@
 
 @interface BaseTableViewCell : UITableViewCell
 
++(CGFloat) cellHeight;
 +(NSString *) nibName;
 
 -(void) updateWithModel:(id)model;

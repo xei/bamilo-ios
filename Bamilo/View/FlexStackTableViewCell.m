@@ -8,9 +8,6 @@
 
 #import "FlexStackTableViewCell.h"
 
-#define kUPPER_VIEW_TAG 9001
-#define kLOWER_VIEW_TAG 9002
-
 @interface FlexStackTableViewCell()
 @property (weak, nonatomic) IBOutlet UIView *upperView;
 @property (weak, nonatomic) IBOutlet UIView *lowerView;
@@ -59,14 +56,12 @@
 
 #pragma mark - Public Methos
 -(void)setUpperViewTo:(UIView *)upperView {
-    upperView.tag = kUPPER_VIEW_TAG;
     [self.upperView addSubview:upperView];
     [self.upperView anchorMatch:upperView];
     upperViewFrameHeight = self.upperViewHeightConstraint.constant = upperView.frame.size.height;
 }
 
 -(void)setLowerViewTo:(UIView *)lowerView {
-    lowerView.tag = kLOWER_VIEW_TAG;
     [self.lowerView addSubview:lowerView];
     [self.lowerView anchorMatch:lowerView];
     lowerViewFrameHeight = self.lowerViewHeightConstraint.constant = lowerView.frame.size.height;
