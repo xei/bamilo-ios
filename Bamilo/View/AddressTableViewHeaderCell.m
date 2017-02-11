@@ -22,6 +22,7 @@
     self.addAddressButton.titleLabel.text = STRING_NEW_ADDRESS;
 }
 
+#pragma mark - Overrides
 +(NSString *)nibName {
     return @"AddressTableViewHeaderCell";
 }

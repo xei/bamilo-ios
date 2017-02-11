@@ -776,3 +776,9 @@
 "enter_your_discount_code" = "کد تخفیف خود را وارد کنید";
 
 "apply_discount_code" = "ثبت کد تخفیف";
+
+"payment_option" = "نحوه پرداخت";
+
+"online_payment" = "پرداخت اینترنتی";
+
+"pay_on_delivery" = "پرداخت در محل";

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -23,14 +23,14 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z8M-mM-eKg" userLabel="LineView">
-                    <rect key="frame" x="76" y="29" width="225" height="2"/>
+                    <rect key="frame" x="75" y="29" width="225" height="2"/>
                     <color key="backgroundColor" red="0.90402406454086304" green="0.90471094846725464" blue="0.90413039922714233" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="2" id="YjU-JC-8qg"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m6h-jt-r08" userLabel="StepOneBgView">
-                    <rect key="frame" x="278" y="7" width="46" height="46"/>
+                    <rect key="frame" x="277" y="7" width="46" height="46"/>
                     <subviews>
                         <view tag="111" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IGY-VI-jED" userLabel="StepOneBorderView">
                             <rect key="frame" x="7.5" y="7" width="32" height="32"/>
@@ -39,7 +39,7 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M5A-cf-tRK" userLabel="StepOne">
-                    <rect key="frame" x="286" y="15" width="30" height="30"/>
+                    <rect key="frame" x="285" y="15" width="30" height="30"/>
                     <color key="backgroundColor" red="0.0" green="0.62931185960769653" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="M5A-cf-tRK" secondAttribute="height" multiplier="1:1" id="irj-e0-kXs"/>
@@ -47,7 +47,7 @@
                     </constraints>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" tag="11" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="آدرس" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uWD-gQ-fhc">
-                    <rect key="frame" x="250" y="22" width="28" height="16"/>
+                    <rect key="frame" x="249" y="22.5" width="28" height="15.5"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="28" id="P36-0u-3hg"/>
                     </constraints>
@@ -56,7 +56,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Xb-lk-t0K" userLabel="StepTwoBgView">
-                    <rect key="frame" x="165" y="7" width="46" height="46"/>
+                    <rect key="frame" x="164" y="7" width="46" height="46"/>
                     <subviews>
                         <view tag="112" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X8a-dM-sV2" userLabel="StepTwoBorderView">
                             <rect key="frame" x="7" y="7" width="32" height="32"/>
@@ -65,7 +65,7 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bgL-uu-7bS" userLabel="StepTwo">
-                    <rect key="frame" x="173" y="15" width="30" height="30"/>
+                    <rect key="frame" x="172" y="15" width="30" height="30"/>
                     <color key="backgroundColor" red="0.0" green="0.62931185960000002" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="30" id="Oxw-mu-JkG"/>
@@ -73,22 +73,22 @@
                     </constraints>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" tag="12" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="بررسی" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b5X-U9-H7d">
-                    <rect key="frame" x="137" y="22" width="28" height="16"/>
+                    <rect key="frame" x="136" y="22.5" width="28" height="15.5"/>
                     <fontDescription key="fontDescription" name="Bamilo-Sans-Bold" family="Bamilo-Sans" pointSize="8"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WrZ-0G-VGi" userLabel="StepThreeBgView">
-                    <rect key="frame" x="53" y="7" width="46" height="46"/>
+                    <rect key="frame" x="52" y="7" width="46" height="46"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sBP-bY-jtM" userLabel="StepThreeBorderView">
-                            <rect key="frame" x="8" y="7" width="32" height="32"/>
+                        <view tag="113" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sBP-bY-jtM" userLabel="StepThreeBorderView">
+                            <rect key="frame" x="7" y="7" width="32" height="32"/>
                         </view>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7lj-Hc-zIZ" userLabel="StepThree">
-                    <rect key="frame" x="61" y="15" width="30" height="30"/>
+                    <rect key="frame" x="60" y="15" width="30" height="30"/>
                     <color key="backgroundColor" red="0.0" green="0.62931185960000002" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="30" id="MHN-A5-RLV"/>
@@ -96,7 +96,7 @@
                     </constraints>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" tag="13" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="پرداخت" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1fD-Q1-ZWD">
-                    <rect key="frame" x="25" y="22" width="28" height="16"/>
+                    <rect key="frame" x="24" y="22.5" width="28" height="15.5"/>
                     <fontDescription key="fontDescription" name="Bamilo-Sans-Bold" family="Bamilo-Sans" pointSize="8"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>

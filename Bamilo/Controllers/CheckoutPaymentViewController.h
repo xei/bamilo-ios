@@ -8,6 +8,6 @@
 
 #import "CheckoutBaseViewController.h"
 
-@interface CheckoutPaymentViewController : CheckoutBaseViewController
+@interface CheckoutPaymentViewController : CheckoutBaseViewController <UITableViewDelegate, UITableViewDataSource>
 
 @end

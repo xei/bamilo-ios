@@ -28,6 +28,11 @@
     self.titleLabel.text = title;
 }
 
+#pragma mark - Overrides
++(CGFloat)cellHeight {
+    return 40.0f;
+}
+
 +(NSString *)nibName {
     return @"PlainTableViewHeaderCell";
 }

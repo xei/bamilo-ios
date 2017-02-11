@@ -7,10 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseTableViewHeaderFooterCell.h"
 
-@interface PlainTableViewHeaderCell : UITableViewHeaderFooterView
-
-+(NSString *) nibName;
+@interface PlainTableViewHeaderCell : BaseTableViewHeaderFooterCell
 
 @property (copy, nonatomic) NSString *title;
 
