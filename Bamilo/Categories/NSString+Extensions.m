@@ -39,11 +39,11 @@
 }
 
 - (NSString *) numbersToPersian {
-    return [self changeNumberToLocalId:@"ar"];
+    return [self changeNumberToLocalId:@"ar"] ?: @"۰";
 }
 
 - (NSString *) numbersToEnglish {
-    return [self changeNumberToLocalId:@"en"];
+    return [self changeNumberToLocalId:@"en"] ?: @"0";
 }
 
 - (NSString *)changeNumberToLocalId:(NSString *) identifier {
@@ -59,7 +59,7 @@
 
 - (NSString *)formatTheNumbers {
     if (!self.floatValue) {
-        return 0;
+        return @"0";
     }
     [NSString numberFormatter].numberStyle = NSNumberFormatterDecimalStyle;
     NSNumber * numberFromString = [[NSString numberFormatter] numberFromString:self];

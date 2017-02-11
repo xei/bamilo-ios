@@ -39,8 +39,8 @@
     self.addressEditButton.titleLabel.text = STRING_EDIT;
 }
 
--(void)setIsReadonly:(BOOL)isReadonly {
-    if(isReadonly) {
+-(void)setIsReadOnly:(BOOL)isReadOnly {
+    if(isReadOnly) {
         self.addressEditButton.hidden = YES;
         self.checkmarkIconTrailingConstraint.constant = -1 * self.checkmarkIconImageView.frame.size.width;
     } else {
@@ -48,7 +48,7 @@
         self.checkmarkIconTrailingConstraint.constant = 10;
     }
     
-    _isReadonly = isReadonly;
+    _isReadOnly = isReadOnly;
 }
 
 #pragma mark - Overrides

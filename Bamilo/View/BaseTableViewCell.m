@@ -24,6 +24,10 @@
 }
 
 #pragma mark - Public Methods
++(CGFloat)cellHeight {
+    return 0;
+}
+
 + (NSString *)nibName {
     return nil;
 }

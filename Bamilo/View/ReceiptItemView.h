@@ -1,5 +1,5 @@
 //
-//  DiscountCodeView.h
+//  ReceiptItemTableViewCell.h
 //  Bamilo
 //
 //  Created by Narbeh Mirzaei on 2/7/17.
@@ -7,9 +7,10 @@
 //
 
 #import "BaseTableViewCell.h"
+#import "ReceiptItemModel.h"
 
-@interface DiscountCodeView : BaseTableViewCell
+@interface ReceiptItemView : BaseTableViewCell
 
--(void) clearOut;
+-(void) applyColor:(UIColor *)color;
 
 @end

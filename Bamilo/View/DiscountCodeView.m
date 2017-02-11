@@ -8,9 +8,6 @@
 
 #import "DiscountCodeView.h"
 
-#define cLIGHT_GRAY_COLOR [UIColor withRepeatingRGBA:215 alpha:1.0]
-#define cDARK_GRAY_COLOR [UIColor withRepeatingRGBA:111 alpha:1.0]
-
 @interface DiscountCodeView() <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIView *discountCodeTextFieldContainerView;
 @property (weak, nonatomic) IBOutlet UITextField *discountCodeTextField;
@@ -34,6 +31,12 @@
     
     [self.discountApplyButton applyStyle:kFontRegularName fontSize:12.0f color:cDARK_GRAY_COLOR];
     self.discountApplyButton.titleLabel.text = STRING_APPLY_DISCOUNT;
+}
+
+-(void)clearOut {
+    self.discountCodeTextField.text = @"";
+    self.discountCodeTextField.textAlignment = NSTextAlignmentRight;
+    self.discountCodeTextField.placeholder = STRING_ENTER_YOUR_DISCOUNT_CODE;
 }
 
 #pragma mark - Overrides

@@ -52,7 +52,7 @@ static DataManager *instance;
             completion(nil, error);
         }
     } else {
-        completion(nil, [NSError errorWithDomain:@"com.bamilo.ios" code:response userInfo:@{ @"errorMessages" : errorMessages }]);
+        completion(nil, [NSError errorWithDomain:@"com.bamilo.ios" code:response userInfo:(errorMessages ? @{ @"errorMessages" : errorMessages } : nil)]);
     }
 }
 

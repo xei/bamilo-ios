@@ -48,4 +48,19 @@
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[view]|"options:0 metrics:nil views:views]];
 }
 
+-(CGSize) sizeToFitSubviews {
+    float width = 0, height = 0;
+    
+    for (UIView *view in self.subviews) {
+        float fw = view.frame.origin.x + view.frame.size.width;
+        float fh = view.frame.origin.y + view.frame.size.height;
+        width = MAX(fw, width);
+        height = MAX(fh, height);
+    }
+    
+    [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, width, height)];
+    
+    return CGSizeMake(width, height);
+}
+
 @end

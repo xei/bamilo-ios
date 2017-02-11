@@ -6,10 +6,10 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import "ReusableViewBase.h"
+#import "BaseTableViewCell.h"
 #import "DiscountSwitcherViewDelegate.h"
 
-@interface DiscountSwitcherView : ReusableViewBase
+@interface DiscountSwitcherView : BaseTableViewCell
 
 @property (weak, nonatomic) id<DiscountSwitcherViewDelegate> delegate;
 
