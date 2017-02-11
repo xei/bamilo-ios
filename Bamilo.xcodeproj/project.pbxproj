@@ -55,6 +55,8 @@
 		8714E0901E48CD41004C9B1D /* DiscountSwitcherView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8714E08F1E48CD41004C9B1D /* DiscountSwitcherView.m */; };
 		8714E0921E48CD57004C9B1D /* DiscountSwitcherView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8714E0911E48CD57004C9B1D /* DiscountSwitcherView.xib */; };
 		8716987D1E38A94C0027B34A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8716987A1E38A94C0027B34A /* Main.storyboard */; };
+		87459C821E4EF37200743120 /* CartListItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87459C811E4EF37200743120 /* CartListItemTableViewCell.m */; };
+		87459C841E4EF37D00743120 /* CartListItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87459C831E4EF37D00743120 /* CartListItemTableViewCell.xib */; };
 		874AAB551E3C764600B3F8FE /* Bamilo-Configs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 874AAB541E3C764600B3F8FE /* Bamilo-Configs.plist */; };
 		874AAB5E1E3C778E00B3F8FE /* ConfigManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB5D1E3C778E00B3F8FE /* ConfigManager.m */; };
 		874AAB651E3CE35B00B3F8FE /* ConfigManager-Consts.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB641E3CE35B00B3F8FE /* ConfigManager-Consts.m */; };
@@ -592,6 +594,9 @@
 		8714E0911E48CD57004C9B1D /* DiscountSwitcherView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiscountSwitcherView.xib; sourceTree = "<group>"; };
 		8714E0941E48CE9F004C9B1D /* DiscountSwitcherViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscountSwitcherViewDelegate.h; sourceTree = "<group>"; };
 		8716987B1E38A94C0027B34A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Bamilo/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
+		87459C801E4EF37200743120 /* CartListItemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartListItemTableViewCell.h; sourceTree = "<group>"; };
+		87459C811E4EF37200743120 /* CartListItemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartListItemTableViewCell.m; sourceTree = "<group>"; };
+		87459C831E4EF37D00743120 /* CartListItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartListItemTableViewCell.xib; sourceTree = "<group>"; };
 		874AAB541E3C764600B3F8FE /* Bamilo-Configs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Bamilo-Configs.plist"; sourceTree = "<group>"; };
 		874AAB5D1E3C778E00B3F8FE /* ConfigManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigManager.m; sourceTree = "<group>"; };
 		874AAB621E3CE32C00B3F8FE /* ConfigManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigManager.h; sourceTree = "<group>"; };
@@ -1707,6 +1712,7 @@
 				61E099731E3E19CF004ED14E /* VersionTableViewCell */,
 				8714E0891E48CD03004C9B1D /* Discount */,
 				87B684E01E49F2FD0042C09F /* Receipt */,
+				87459C7F1E4EF2AD00743120 /* CartListItemTableViewCell */,
 			);
 			name = TableViewCells;
 			sourceTree = "<group>";
@@ -2060,6 +2066,16 @@
 				87B684D21E49AB6D0042C09F /* DiscountCodeView */,
 			);
 			name = Discount;
+			sourceTree = "<group>";
+		};
+		87459C7F1E4EF2AD00743120 /* CartListItemTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				87459C801E4EF37200743120 /* CartListItemTableViewCell.h */,
+				87459C811E4EF37200743120 /* CartListItemTableViewCell.m */,
+				87459C831E4EF37D00743120 /* CartListItemTableViewCell.xib */,
+			);
+			name = CartListItemTableViewCell;
 			sourceTree = "<group>";
 		};
 		874AAB5B1E3C775900B3F8FE /* Managers */ = {
@@ -3856,6 +3872,7 @@
 				CE9AE03C1AB6D78200D56481 /* JANewsletterComponent~iPad.xib in Resources */,
 				9A564CAF1B332FB200F23057 /* JASellerRatingsViewController.xib in Resources */,
 				61E099651E3E0E21004ED14E /* IconTableViewCell.xib in Resources */,
+				87459C841E4EF37D00743120 /* CartListItemTableViewCell.xib in Resources */,
 				CE9AE0431AB6D78200D56481 /* JAMaintenancePage.xib in Resources */,
 				CE9AE0441AB6D78200D56481 /* JAGenericFiltersView.xib in Resources */,
 				6CF4AE821ADEAA290024EC34 /* JACatalogBannerCell.xib in Resources */,
@@ -4120,6 +4137,7 @@
 				CE9ADF551AB6D78200D56481 /* JACampaignsTeaserView.m in Sources */,
 				CE9ADF561AB6D78200D56481 /* JASwitchCell.m in Sources */,
 				87A681581E40F21B00D252AC /* BaseButton.m in Sources */,
+				87459C821E4EF37200743120 /* CartListItemTableViewCell.m in Sources */,
 				875AD5691E38C0C900584ABF /* RIPaymentMethodFormOption.m in Sources */,
 				FF4383F11C71DCE1003BA957 /* JANewsletterSubscriptionViewController.m in Sources */,
 				CE9ADF571AB6D78200D56481 /* JACampaignBannerCell.m in Sources */,

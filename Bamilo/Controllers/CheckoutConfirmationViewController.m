@@ -15,6 +15,7 @@
 #import "BasicTableViewCell.h"
 #import "ReceiptView.h"
 #import "ReceiptItemView.h"
+#import "CartListItemTableViewCell.h"
 
 @interface CheckoutConfirmationViewController() <DiscountSwitcherViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -43,6 +44,10 @@
     //ReceiptItemView
     [self.tableView registerNib:[UINib nibWithNibName:[ReceiptItemView nibName] bundle:nil] forCellReuseIdentifier:[ReceiptItemView nibName]];
     
+    //Cart List Item TableView Cell
+    [self.tableView registerNib:[UINib nibWithNibName:[CartListItemTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[CartListItemTableViewCell nibName]];
+    
+    //Address TableView Cell
     [self.tableView registerNib:[UINib nibWithNibName:[BasicTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[BasicTableViewCell nibName]];
     [self.tableView registerNib:[UINib nibWithNibName:[AddressTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[AddressTableViewCell nibName]];
     
@@ -57,7 +62,9 @@
                                 //[NSIndexPath indexPathForRow:1 inSection:0],
                                 [NSIndexPath indexPathForRow:2 inSection:0],
                                 [NSIndexPath indexPathForRow:3 inSection:0], nil],
-                        @[],
+                            //Cart Items
+                            [NSMutableArray arrayWithObjects:
+                                [NSIndexPath indexPathForRow:0 inSection:1], nil],
                             //Delivery Address
                             [NSMutableArray arrayWithObjects:
                                 [NSIndexPath indexPathForRow:0 inSection:2], nil],
@@ -142,15 +149,16 @@
         break;
           
         //Purchase Summary Section
-        case 1:
+        case 1: {
+            CartListItemTableViewCell *cartListItemTableViewCell = [tableView dequeueReusableCellWithIdentifier:[CartListItemTableViewCell nibName] forIndexPath:indexPath];
+            return cartListItemTableViewCell;
+        }
         break;
             
         //Recipient Address Section
         case 2: {
             AddressTableViewCell *customerAddressTableViewCell = [tableView dequeueReusableCellWithIdentifier:[AddressTableViewCell nibName] forIndexPath:indexPath];
-            if(customerAddressTableViewCell) {
-                customerAddressTableViewCell.isReadOnly = YES;
-            }
+            customerAddressTableViewCell.isReadOnly = YES;
             
             return customerAddressTableViewCell;
         }
@@ -197,6 +205,7 @@
             }
             break;
         }
+        case 1: return [CartListItemTableViewCell cellHeight];
     }
     
     return UITableViewAutomaticDimension;
