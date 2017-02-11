@@ -23,7 +23,7 @@
 @implementation CheckoutConfirmationViewController {
 @private
     NSArray<ReceiptItemModel *> *receiptViewItems;
-    BOOL _discountCodeIsOn;
+    NSMutableArray *_cellsIndexPaths;
 }
 
 - (void)viewDidLoad {
@@ -49,6 +49,19 @@
     self.tableView.separatorColor = [UIColor withRepeatingRGBA:243 alpha:1.0f];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.separatorInset = UIEdgeInsetsZero;
+    
+    _cellsIndexPaths = [NSMutableArray arrayWithObjects:
+                            //Total Sum
+                            [NSMutableArray arrayWithObjects:
+                                [NSIndexPath indexPathForRow:0 inSection:0],
+                                //[NSIndexPath indexPathForRow:1 inSection:0],
+                                [NSIndexPath indexPathForRow:2 inSection:0],
+                                [NSIndexPath indexPathForRow:3 inSection:0], nil],
+                        @[],
+                            //Delivery Address
+                            [NSMutableArray arrayWithObjects:
+                                [NSIndexPath indexPathForRow:0 inSection:2], nil],
+                        nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -69,24 +82,21 @@
 
 #pragma mark - UITableViewDataSource
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return [_cellsIndexPaths count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    switch (section) {
-        case 0: return 5;
-        //case 1: return 0;
-        case 2: return 1;
-    }
-    
-    return 0;
+    return [[_cellsIndexPaths objectAtIndex:section] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    switch (indexPath.section) {
+    
+    NSIndexPath *_cellIndexPath = [[_cellsIndexPaths objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    
+    switch (_cellIndexPath.section) {
         //Total Sum Section
         case 0: {
-            switch (indexPath.row) {
+            switch (_cellIndexPath.row) {
                 //Discount Switcher Cell
                 case 0: {
                     DiscountSwitcherView *discountSwitcherView = [tableView dequeueReusableCellWithIdentifier:[DiscountSwitcherView nibName]];
@@ -104,10 +114,10 @@
                 case 2: {
                     ReceiptView *receiptView = [tableView dequeueReusableCellWithIdentifier:[ReceiptView nibName] forIndexPath:indexPath];
                     receiptViewItems = @[
-                                         [ReceiptItemModel with:@"جمع کل" price:@"۹۹۹،۰۰۰،۵۵۵" currency:@"ریال"],
-                                         [ReceiptItemModel with:@"مجموع تخفیفها" price:@"۱،۵۰۰،۰۰۰" currency:@"ریال"],
-                                         [ReceiptItemModel with:@"هزینه حمل" price:@"۵۰۰،۰۰۰" currency:@"ریال"]
-                                         ];
+                         [ReceiptItemModel with:@"جمع کل" price:@"۹۹۹،۰۰۰،۵۵۵" currency:@"ریال"],
+                         [ReceiptItemModel with:@"مجموع تخفیفها" price:@"۱،۵۰۰،۰۰۰" currency:@"ریال"],
+                         [ReceiptItemModel with:@"هزینه حمل" price:@"۵۰۰،۰۰۰" currency:@"ریال"]
+                    ];
                     
                     [receiptView updateWithModel:receiptViewItems];
                     return receiptView;
@@ -139,7 +149,7 @@
         case 2: {
             AddressTableViewCell *customerAddressTableViewCell = [tableView dequeueReusableCellWithIdentifier:[AddressTableViewCell nibName] forIndexPath:indexPath];
             if(customerAddressTableViewCell) {
-                customerAddressTableViewCell.isReadonly = YES;
+                customerAddressTableViewCell.isReadOnly = YES;
             }
             
             return customerAddressTableViewCell;
@@ -176,18 +186,17 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    switch (indexPath.section) {
+    NSIndexPath *_cellIndexPath = [[_cellsIndexPaths objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    
+    switch (_cellIndexPath.section) {
         case 0: {
-            switch (indexPath.row) {
-                case 1: return _discountCodeIsOn ? UITableViewAutomaticDimension : 0; //Discount Code View
+            switch (_cellIndexPath.row) {
                 case 2: return receiptViewItems.count * [ReceiptItemView cellHeight]; //Receipt Items View
                 case 3: return 40.0f; //Receipt Total View
                 case 4: return 50.0f; //Delivery Time Cell
             }
             break;
         }
-
-        case 2: return 150.0f; //Customer Address Cell
     }
     
     return UITableViewAutomaticDimension;
@@ -201,13 +210,17 @@
 -(void)discountSwitcherViewDidToggle:(BOOL)isOn {
     NSIndexPath *discountCodeViewIndexPath = [NSIndexPath indexPathForRow:1 inSection:0];
     
-    _discountCodeIsOn = isOn;
+    if(isOn) {
+        [[_cellsIndexPaths objectAtIndex:discountCodeViewIndexPath.section] insertObject:discountCodeViewIndexPath atIndex:discountCodeViewIndexPath.row];
+    } else {
+        [[_cellsIndexPaths objectAtIndex:discountCodeViewIndexPath.section] removeObjectAtIndex:discountCodeViewIndexPath.row];
+    }
     
     [self.tableView beginUpdates];
     if(isOn) {
-        [self.tableView reloadRowsAtIndexPaths:@[discountCodeViewIndexPath] withRowAnimation:UITableViewRowAnimationBottom];
+        [self.tableView insertRowsAtIndexPaths:@[discountCodeViewIndexPath] withRowAnimation:UITableViewRowAnimationBottom];
     } else {
-        [self.tableView reloadRowsAtIndexPaths:@[discountCodeViewIndexPath] withRowAnimation:UITableViewRowAnimationTop];
+        [self.tableView deleteRowsAtIndexPaths:@[discountCodeViewIndexPath] withRowAnimation:UITableViewRowAnimationTop];
     }
     [self.tableView endUpdates];
 }

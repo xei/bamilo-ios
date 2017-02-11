@@ -10,4 +10,6 @@
 
 @interface DiscountCodeView : BaseTableViewCell
 
+-(void) clearOut;
+
 @end

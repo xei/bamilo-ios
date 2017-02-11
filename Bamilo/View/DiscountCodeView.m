@@ -33,6 +33,12 @@
     self.discountApplyButton.titleLabel.text = STRING_APPLY_DISCOUNT;
 }
 
+-(void)clearOut {
+    self.discountCodeTextField.text = @"";
+    self.discountCodeTextField.textAlignment = NSTextAlignmentRight;
+    self.discountCodeTextField.placeholder = STRING_ENTER_YOUR_DISCOUNT_CODE;
+}
+
 #pragma mark - Overrides
 +(NSString *)nibName {
     return @"DiscountCodeView";

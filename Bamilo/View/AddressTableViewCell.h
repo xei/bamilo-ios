@@ -11,6 +11,6 @@
 
 @interface AddressTableViewCell : BaseTableViewCell
 
-@property (assign, nonatomic) BOOL isReadonly;
+@property (assign, nonatomic) BOOL isReadOnly;
 
 @end

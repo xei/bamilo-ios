@@ -2635,6 +2635,18 @@
 			name = ReceiptView;
 			sourceTree = "<group>";
 		};
+		87B685191E4B746B0042C09F /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				8714E0621E47483B004C9B1D /* Base */,
+				8714E05B1E472CDC004C9B1D /* Address.h */,
+				8714E05C1E472CDC004C9B1D /* Address.m */,
+				8714E0641E476DF8004C9B1D /* AddressList.h */,
+				8714E0651E476DF8004C9B1D /* AddressList.m */,
+			);
+			name = Service;
+			sourceTree = "<group>";
+		};
 		87D07D701E40978100C00AC6 /* AddressViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -2892,11 +2904,7 @@
 		9AEF73D41CD20DA200A5D574 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				8714E0621E47483B004C9B1D /* Base */,
-				8714E05B1E472CDC004C9B1D /* Address.h */,
-				8714E05C1E472CDC004C9B1D /* Address.m */,
-				8714E0641E476DF8004C9B1D /* AddressList.h */,
-				8714E0651E476DF8004C9B1D /* AddressList.m */,
+				87B685191E4B746B0042C09F /* Service */,
 			);
 			name = Models;
 			sourceTree = "<group>";
