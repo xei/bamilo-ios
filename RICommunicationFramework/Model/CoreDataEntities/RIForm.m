@@ -213,8 +213,7 @@
        extraArguments:(NSDictionary *)extraArguments
            parameters:(NSDictionary*)parameters
          successBlock:(void (^)(id object, NSArray* successMessages))successBlock
-      andFailureBlock:(void (^)(RIApiResponse apiResponse, id errorObject))failureBlock
-{
+      andFailureBlock:(void (^)(RIApiResponse apiResponse, id errorObject))failureBlock {
     //BOOL isPostRequest = [@"post" isEqualToString:[form.method lowercaseString]];
     //TODO: DELELE
     
@@ -232,12 +231,10 @@
     NSString* urlString = [RITarget getURLStringforTargetString:form.action];
     
     NSURL *url = [NSURL URLWithString:urlString];
-    if(VALID_NOTEMPTY(extraArguments, NSDictionary))
-    {
+    if(VALID_NOTEMPTY(extraArguments, NSDictionary)) {
         NSArray *keys = [extraArguments allKeys];
         NSMutableArray *extraArgumentsArray = [[NSMutableArray alloc] init];
-        for(NSString *key in keys)
-        {
+        for(NSString *key in keys) {
             [extraArgumentsArray addObject:[NSString stringWithFormat:@"%@=%@", key, [extraArguments objectForKey:key]]];
         }
 
@@ -254,13 +251,13 @@
                                                               
                                                               NSMutableArray* messagesArray = [NSMutableArray new];
                                                               NSDictionary* messages = [jsonObject objectForKey:@"messages"];
-                                                              if (VALID_NOTEMPTY(messages, NSDictionary)) {
+                                                              if (messages && messages.count) {
                                                                   NSArray* successMessages = [messages objectForKey:@"success"];
-                                                                  if (VALID_NOTEMPTY(successMessages, NSArray)) {
+                                                                  if (successMessages.count) {
                                                                       NSDictionary* messageDictionary = [successMessages firstObject];
-                                                                      if (VALID_NOTEMPTY(messageDictionary, NSDictionary)) {
+                                                                      if (messageDictionary && messageDictionary.count) {
                                                                           NSString* message = [messageDictionary objectForKey:@"message"];
-                                                                          if (VALID_NOTEMPTY(message, NSString)) {
+                                                                          if (message.length) {
                                                                               [messagesArray addObject:message];
                                                                           }
                                                                       }
@@ -278,13 +275,6 @@
                                                                       password = [parameters objectForKey:key];
                                                                       break;
                                                                   }
-                                                              }
-
-                                                              NSString* type;
-                                                              if (VALID_NOTEMPTY(form.type, NSString)) {
-                                                                  type = form.type;
-                                                              } else if (VALID_NOTEMPTY(form.formIndex.type, NSString)) {
-                                                                  type = form.formIndex.type;
                                                               }
                                                               
                                                               BOOL responseProcessed = NO;
@@ -306,30 +296,20 @@
                                                                   failureBlock(apiResponse, nil);
                                                               }
                                                           } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
-                                                              if(NOTEMPTY(errorJsonObject))
-                                                              {
+                                                              if(NOTEMPTY(errorJsonObject)) {
                                                                   NSDictionary *errorDictionary = [RIError getErrorDictionary:errorJsonObject];
                                                                   NSArray *errorArray = [RIError getErrorMessages:errorJsonObject];
-                                                                  if(VALID_NOTEMPTY(errorDictionary, NSDictionary))
-                                                                  {
+                                                                  if(errorDictionary && errorDictionary.count) {
                                                                       failureBlock(apiResponse, errorDictionary);
-                                                                  }
-                                                                  else if(VALID_NOTEMPTY(errorArray, NSArray))
-                                                                  {
+                                                                  } else if(errorArray.count) {
                                                                       failureBlock(apiResponse, errorArray);
-                                                                  }
-                                                                  else
-                                                                  {
+                                                                  } else {
                                                                       failureBlock(apiResponse, nil);
                                                                   }
-                                                              }
-                                                              else if(NOTEMPTY(errorObject))
-                                                              {
+                                                              } else if(NOTEMPTY(errorObject)) {
                                                                   NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
                                                                   failureBlock(apiResponse, errorArray);
-                                                              }
-                                                              else
-                                                              {
+                                                              } else {
                                                                   failureBlock(apiResponse, nil);
                                                               }
                                                           }];

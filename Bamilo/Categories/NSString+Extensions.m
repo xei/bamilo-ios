@@ -19,6 +19,11 @@
     return _numberFormatter;
 }
 
++ (NSString *)emailRegxPattern {
+//    @"[a-zA-Z0-9äöüÄÖÜ_+.-]+@[a-zA-Z0-9äöüÄÖÜ][a-zA-Z0-9-äöüÄÖÜ.]+\\.([a-zA-Z]{2,6})"
+    return @"^.+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2}[A-Za-z]*$";
+}
+
 - (NSString *)wrapWithMaxSize:(int)maxSize {
     NSString *result = self;
     if (self.length > maxSize) {
@@ -65,5 +70,10 @@
     NSNumber * numberFromString = [[NSString numberFormatter] numberFromString:self];
     NSString * formattedNumberString = [[NSString numberFormatter] stringFromNumber:numberFromString];
     return formattedNumberString;
+}
+
+- (BOOL)isValidEmail {
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", [NSString emailRegxPattern]];
+    return [emailTest evaluateWithObject:self];
 }
 @end

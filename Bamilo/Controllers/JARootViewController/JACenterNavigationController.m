@@ -752,7 +752,7 @@
     }
     BOOL animated = YES;
     if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"tabbar_is_visible"], NSNumber)) {
-        NSNumber* tabbarIsVisible = [notification.userInfo objectForKey:@"tabbar_is_visible"];
+      //  NSNumber* tabbarIsVisible = [notification.userInfo objectForKey:@"tabbar_is_visible"];
 //        authenticationViewController.tabBarIsVisible = [tabbarIsVisible boolValue];
         [self popToRootViewControllerAnimated:NO];
         animated = NO;

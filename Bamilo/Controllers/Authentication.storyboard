@@ -12,7 +12,7 @@
         <!--Authentication View Controller-->
         <scene sceneID="rAQ-tj-tHl">
             <objects>
-                <viewController id="3BH-rN-hyO" customClass="AuthenticationViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AuthenticationViewController" id="3BH-rN-hyO" customClass="AuthenticationViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="H5u-sf-4zE"/>
                         <viewControllerLayoutGuide type="bottom" id="qJm-B0-GaN"/>
@@ -25,7 +25,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cdC-45-A1Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-76" y="131"/>
+            <point key="canvasLocation" x="-938" y="-88"/>
         </scene>
     </scenes>
 </document>

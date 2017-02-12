@@ -7,6 +7,8 @@
 //
 
 #import "AuthenticationViewController.h"
+#import "SignInViewController.h"
+#import "SignUpViewController.h"
 #import "CAPSPageMenu.h"
 #import "RICustomer.h"
 
@@ -16,7 +18,7 @@
 #define cLIGHT_GRAY_COLOR [UIColor withRGBA:146 green:146 blue:146 alpha:1.0f]
 #define cEXTRA_ORAGNE_COLOR [UIColor withRGBA:247 green:151 blue:32 alpha:1.0f]
 
-@interface AuthenticationViewController ()
+@interface AuthenticationViewController()
 @property (nonatomic) CAPSPageMenu *pagemenu;
 @end
 
@@ -26,15 +28,19 @@
 
     [super viewDidLoad];
     
+    self.screenName = @"Authentication";
+    self.navBarLayout.title = STRING_LOGIN;
+    self.navBarLayout.showCartButton = NO;
+    
     
     //Page Menu Regsiteration 
     NSMutableArray *controllerArray = [NSMutableArray array];
-    UIViewController *controller = [[UIViewController alloc] initWithNibName:@"SignUpViewController" bundle:nil];
+    UIViewController *controller =   [[SignUpViewController alloc] initWithNibName: @"SignUpViewController" bundle: nil];
     controller.title = @"عضویت";
     [controllerArray addObject:controller];
     
     
-    controller = [[UIViewController alloc] initWithNibName:@"SignInViewController" bundle:nil];
+    controller = [[SignInViewController alloc] initWithNibName:@"SignInViewController" bundle:nil];
     controller.title = @"ورود";
     [controllerArray addObject:controller];
     
@@ -46,7 +52,8 @@
                                  CAPSPageMenuOptionBottomMenuHairlineColor:cLIGHT_GRAY_COLOR,
                                  CAPSPageMenuOptionAddBottomMenuHairline: @(YES),
                                  CAPSPageMenuOptionUnselectedMenuItemLabelColor: cDARK_GRAY_COLOR,
-                                 CAPSPageMenuOptionSelectedMenuItemLabelColor: cEXTRA_DARK_GRAY_COLOR
+                                 CAPSPageMenuOptionSelectedMenuItemLabelColor: cEXTRA_DARK_GRAY_COLOR,
+                                 CAPSPageMenuOptionScrollAnimationDurationOnMenuItemTap: @(150)
                                  };
     
     self.pagemenu = [[CAPSPageMenu alloc] initWithViewControllers:controllerArray frame:CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height) options:parameters];

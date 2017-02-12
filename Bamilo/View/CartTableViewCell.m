@@ -15,14 +15,14 @@
 @interface CartTableViewCell () <StepperViewControlDelegate>
 @property (nonatomic, weak) IBOutlet UILabel *discountValue;
 @property (nonatomic, weak) IBOutlet UIButton *brandLabelButton;
-@property (nonatomic, weak) IBOutlet UILabel *productNameLabel;
+@property (nonatomic, weak) IBOutlet UILabel *nameLabel;
 @property (nonatomic, weak) IBOutlet UILabel *sizeLabel;
 @property (nonatomic, weak) IBOutlet UILabel *productColorLabel;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *colorLabelDismessConstraint;
 @property (nonatomic, weak) IBOutlet StepperViewControl *stepper;
 @property (nonatomic, weak) IBOutlet UILabel *priceLabel;
 @property (nonatomic, weak) IBOutlet UILabel *discountLabel;
-@property (nonatomic, weak) IBOutlet UIImageView *cartItemImage;
+@property (nonatomic, weak) IBOutlet UIImageView *itemImage;
 @end
 
 @implementation CartTableViewCell
@@ -30,13 +30,13 @@
 - (void)setCartItem:(RICartItem *)cartItem {
     _cartItem = cartItem;
     self.brandLabelButton.titleLabel.text = cartItem.brand;
-    self.productNameLabel.text = cartItem.name;
+    self.nameLabel.text = cartItem.name;
     
     //-------- this code must be implemented in server side not here! (refactor)
     NSString *imageUrl = [cartItem.imageUrl stringByReplacingOccurrencesOfString:@"cart" withString:@"catalog_grid_3"];
     
     
-    [self.cartItemImage sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
+    [self.itemImage sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
     self.stepper.quantity = cartItem.quantity.intValue;
     self.stepper.maxQuantity = cartItem.maxQuantity.intValue;
     NSString *realPrice = [[[NSString stringWithFormat:@"%d", cartItem.price.intValue] formatTheNumbers] numbersToPersian];
@@ -83,8 +83,8 @@
 
 - (void)prepareForReuse {
     self.brandLabelButton.titleLabel.text = nil;
-    self.productNameLabel.text = nil;
-    self.cartItemImage.image = nil;
+    self.nameLabel.text = nil;
+    self.itemImage.image = nil;
     self.stepper.quantity = 0;
     self.stepper.maxQuantity = 0;
     self.priceLabel.text = nil;

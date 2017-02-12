@@ -87,7 +87,7 @@
                                 ]];
     
     NSObject * loginOrLoginCell = @{
-          @"title":[RICustomer checkIfUserIsLogged] ? STRING_LOGOUT : STRING_LOGIN,
+          @"title":[RICustomer checkIfUserIsLogged] ? STRING_LOGOUT : STRING_LOGIN_OR_SIGNUP,
           @"icon": [RICustomer checkIfUserIsLogged] ? @"Logout" : @"HappyFace",
           @"cellType": IconTableViewCell.nibName,
           @"selector": [NSValue valueWithPointer:@selector(loginOrLogoutBtnTouchUpInside)]

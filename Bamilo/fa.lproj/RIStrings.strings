@@ -30,6 +30,8 @@
 
 "login_label" = "ورود";
 
+"login_or_signup_label" = "ورود/ثبت نام";
+
 "action_label_logout" = "خروج";
 
 "home" = "خانه";

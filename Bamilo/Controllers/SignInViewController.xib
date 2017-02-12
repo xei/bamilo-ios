@@ -8,9 +8,17 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Bamilosans Reg.ttf">
+            <string>Bamilo-Sans</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SignInViewController">
             <connections>
+                <outlet property="emailControl" destination="Vgd-q1-5fi" id="Ze6-Bx-m16"/>
+                <outlet property="passwordControl" destination="sNJ-uO-icl" id="eyk-sm-dS6"/>
+                <outlet property="scrollView" destination="hjF-u9-yTY" id="WTA-IC-I1Q"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -19,19 +27,71 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="signin " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H4t-H3-0oJ">
-                    <rect key="frame" x="162.5" y="323.5" width="50" height="20.5"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="hjF-u9-yTY">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Vgd-q1-5fi" customClass="InputTextFieldControl">
+                            <rect key="frame" x="30" y="30" width="315" height="35"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="35" id="cSM-NJ-eN1"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="sNJ-uO-icl" customClass="InputTextFieldControl">
+                            <rect key="frame" x="30" y="90" width="315" height="35"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9xR-AT-4xc">
+                            <rect key="frame" x="210" y="135" width="135" height="32"/>
+                            <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="10"/>
+                            <state key="normal" title="کلمه عبور خود را فراموش کردم">
+                                <color key="titleColor" red="0.3529411764705882" green="0.63921568627450975" blue="0.90980392156862744" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KEe-C2-McQ" customClass="BlueButton">
+                            <rect key="frame" x="30" y="187" width="315" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="oTI-F2-sqd"/>
+                            </constraints>
+                            <state key="normal" title="ورود"/>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Py-CW-4wp">
+                            <rect key="frame" x="241" y="237" width="104" height="32"/>
+                            <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="10"/>
+                            <state key="normal" title="ثبت سفارش بدون ورود">
+                                <color key="titleColor" red="0.35294117650000001" green="0.63921568630000003" blue="0.90980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="KEe-C2-McQ" firstAttribute="width" secondItem="sNJ-uO-icl" secondAttribute="width" id="149-A9-mZ0"/>
+                        <constraint firstItem="sNJ-uO-icl" firstAttribute="top" secondItem="Vgd-q1-5fi" secondAttribute="bottom" constant="25" id="2NL-n0-CF0"/>
+                        <constraint firstItem="sNJ-uO-icl" firstAttribute="trailing" secondItem="Vgd-q1-5fi" secondAttribute="trailing" id="62W-EB-9KW"/>
+                        <constraint firstItem="Vgd-q1-5fi" firstAttribute="top" secondItem="hjF-u9-yTY" secondAttribute="top" constant="30" id="CeE-g4-t3M"/>
+                        <constraint firstItem="9xR-AT-4xc" firstAttribute="trailing" secondItem="sNJ-uO-icl" secondAttribute="trailing" id="Hwb-la-6eC"/>
+                        <constraint firstItem="sNJ-uO-icl" firstAttribute="height" secondItem="Vgd-q1-5fi" secondAttribute="height" id="JQI-ld-MYD"/>
+                        <constraint firstItem="KEe-C2-McQ" firstAttribute="trailing" secondItem="9xR-AT-4xc" secondAttribute="trailing" id="NYW-Ya-nSB"/>
+                        <constraint firstItem="0Py-CW-4wp" firstAttribute="top" secondItem="KEe-C2-McQ" secondAttribute="bottom" constant="10" id="fY1-UP-avf"/>
+                        <constraint firstAttribute="trailing" secondItem="Vgd-q1-5fi" secondAttribute="trailing" constant="30" id="hVn-hq-XgS"/>
+                        <constraint firstItem="KEe-C2-McQ" firstAttribute="top" secondItem="9xR-AT-4xc" secondAttribute="bottom" constant="20" id="nGt-vt-8Io"/>
+                        <constraint firstAttribute="bottom" secondItem="0Py-CW-4wp" secondAttribute="bottom" constant="10" id="ndE-7V-cv4"/>
+                        <constraint firstItem="9xR-AT-4xc" firstAttribute="top" secondItem="sNJ-uO-icl" secondAttribute="bottom" constant="10" id="sA2-dj-sPe"/>
+                        <constraint firstItem="sNJ-uO-icl" firstAttribute="width" secondItem="Vgd-q1-5fi" secondAttribute="width" id="uVh-Nb-ByQ"/>
+                        <constraint firstItem="0Py-CW-4wp" firstAttribute="trailing" secondItem="KEe-C2-McQ" secondAttribute="trailing" id="vfc-Rm-kFm"/>
+                        <constraint firstItem="Vgd-q1-5fi" firstAttribute="leading" secondItem="hjF-u9-yTY" secondAttribute="leading" constant="30" id="ym7-Tb-frh"/>
+                    </constraints>
+                </scrollView>
             </subviews>
-            <color key="backgroundColor" red="0.12941176469999999" green="0.52156862749999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="H4t-H3-0oJ" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="GDi-sA-fsI"/>
-                <constraint firstItem="H4t-H3-0oJ" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Sv4-NG-7KB"/>
+                <constraint firstItem="Vgd-q1-5fi" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="0rY-rY-6so"/>
+                <constraint firstItem="hjF-u9-yTY" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="5tm-ys-Roo"/>
+                <constraint firstAttribute="trailing" secondItem="hjF-u9-yTY" secondAttribute="trailing" id="XJC-Qe-Zr2"/>
+                <constraint firstAttribute="trailing" secondItem="Vgd-q1-5fi" secondAttribute="trailing" constant="30" id="rac-TA-EVD"/>
+                <constraint firstItem="hjF-u9-yTY" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="sIG-xP-EsA"/>
+                <constraint firstAttribute="bottom" secondItem="hjF-u9-yTY" secondAttribute="bottom" id="uAH-5e-J6S"/>
             </constraints>
-            <point key="canvasLocation" x="-72" y="21"/>
+            <point key="canvasLocation" x="-629" y="-186"/>
         </view>
     </objects>
 </document>

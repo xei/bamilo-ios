@@ -1,16 +1,16 @@
 //
-//  OrangeButton.m
+//  BlueButton.m
 //  Bamilo
 //
-//  Created by Narbeh Mirzaei on 1/31/17.
+//  Created by Ali saiedifar on 2/11/17.
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import "OrangeButton.h"
+#import "BlueButton.h"
+#define cBLUE_COLOR [UIColor withHexString:@"4A90E2"]
 
-#define cEXTRA_DARK_GRAY_COLOR [UIColor withRGBA:80 green:80 blue:80 alpha:1.0f]
-#define cEXTRA_ORAGNE_COLOR [UIColor withRGBA:247 green:151 blue:32 alpha:1.0f]
-@implementation OrangeButton
+
+@implementation BlueButton
 
 -(instancetype)initWithFrame:(CGRect)frame {
     if(self = [super initWithFrame:frame]) {
@@ -20,15 +20,14 @@
 }
 
 -(void)awakeFromNib {
-    [super awakeFromNib];
-    
+    [super awakeFromNib];   
     [self setupButtonAppearance];
 }
 
 -(void)setupButtonAppearance {
     [super setupButtonAppearance];
-    [self setBackgroundColor:cEXTRA_ORAGNE_COLOR];
-    [self.titleLabel applyStyle:kFontBoldName fontSize:15 color: cEXTRA_ORAGNE_COLOR];
+    [self setBackgroundColor:cBLUE_COLOR];
+    [self.titleLabel applyStyle:kFontBoldName fontSize:15 color: cBLUE_COLOR];
     [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 }
 

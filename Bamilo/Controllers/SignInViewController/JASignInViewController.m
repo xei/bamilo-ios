@@ -341,8 +341,7 @@
     
     [RIForm sendForm:[self.dynamicForm form]
           parameters:[self.dynamicForm getValues]
-        successBlock:^(id object, NSArray* successMessages)
-     {
+        successBlock:^(id object, NSArray* successMessages) {
          [RICustomer resetCustomerAsGuest];
          [self.dynamicForm resetValues];
          
