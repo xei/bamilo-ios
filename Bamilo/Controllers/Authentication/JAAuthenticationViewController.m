@@ -53,8 +53,7 @@
     return _mainScrollView;
 }
 
-- (UIImageView *)userIcon
-{
+- (UIImageView *)userIcon {
     if (!VALID_NOTEMPTY(_userIcon, UIImageView)) {
         UIImage *image = [UIImage imageNamed:@"user_icon"];
         _userIcon = [[UIImageView alloc] initWithImage:image];
@@ -108,15 +107,14 @@
     return _topMessageLabel;
 }
 
-- (JAAccountServicesView *)casAccountServicesImagesView
-{
+- (JAAccountServicesView *)casAccountServicesImagesView {
     if (!VALID_NOTEMPTY(_casAccountServicesImagesView, JAAccountServicesView)) {
         _casAccountServicesImagesView = [[JAAccountServicesView alloc] initWithFrame:CGRectMake((self.view.width - kWidth)/2, CGRectGetMaxY(self.topMessageLabel.frame) + kTopMess2AccountServices, kWidth, 0.f)]; // view will define its height
         [_casAccountServicesImagesView setHidden:YES];
         if ([RICountryConfiguration getCurrentConfiguration].casIsActive.boolValue) {
             if (VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casImages, NSArray)) {
                 [_casAccountServicesImagesView setHidden:NO];
-                [_casAccountServicesImagesView setAccountServicesArray:[RICountryConfiguration getCurrentConfiguration].casImages];
+                [_casAccountServicesImagesView setAccountServicesArray: [RICountryConfiguration getCurrentConfiguration].casImages];
                 _casAccountServicesImagesView.delegate = self;
             }
         }
@@ -124,8 +122,7 @@
     return _casAccountServicesImagesView;
 }
 
-- (UIView *)orView
-{
+- (UIView *)orView {
     if (!VALID_NOTEMPTY(_orView, UIView)) {
         
         CGRect frame = CGRectMake((self.view.width - kWidth)/2, CGRectGetMaxY(self.continueToLoginButton.frame) + kContinueLogin2OrMess, kWidth, 30);
@@ -155,8 +152,7 @@
     return _orView;
 }
 
-- (JATextFieldComponent *)emailTextField
-{
+- (JATextFieldComponent *)emailTextField {
     if (!VALID_NOTEMPTY(_emailTextField, JATextFieldComponent)) {
         CGFloat yOffset = CGRectGetMaxY(self.topMessageLabel.frame) + kAccountServices2Email;
         
@@ -225,17 +221,10 @@
     
     [self.mainScrollView addSubview:self.emailTextField];
     [self.mainScrollView addSubview:self.continueToLoginButton];
-    
-    /*if ([[RICountryConfiguration getCurrentConfiguration].facebookAvailable boolValue]){
-        [self.mainScrollView addSubview:self.facebookButton];
-        [self.mainScrollView addSubview:self.orView];
-    }*/
+ 
     [self.mainScrollView addSubview:self.continueWithoutLoginButton];
     
     CGFloat height = CGRectGetMaxY(self.continueToLoginButton.frame) + kContinueLogin2OrMess;
-    /*if (!self.facebookButton.hidden) {
-        height = CGRectGetMaxY(self.facebookButton.frame) + kFacebookButton2ContinueWithout;
-    }*/
     if (self.checkout) {
         height = CGRectGetMaxY(self.continueWithoutLoginButton.frame) + kContinueLogin2OrMess;
     }
@@ -345,12 +334,12 @@
             userInfo = [self.userInfo mutableCopy];
         }
         
-        [userInfo setObject:self.emailTextField.textField.text forKey:@"email"];
+        [userInfo setObject: self.emailTextField.textField.text forKey:@"email"];
         [userInfo setObject:[NSNumber numberWithBool:self.checkout] forKey:@"checkout"];
         
         if (knownEmail) {
             [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:self.nextStepBlock userInfo:userInfo];
-        }else{
+        } else {
             [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignUpScreenNotification object:self.nextStepBlock userInfo:userInfo];
         }
         [self hideLoading];
@@ -358,8 +347,7 @@
         
         NSString *errorMessage = @"invalid email";
         if (VALID_NOTEMPTY(errorObject, NSArray)) {
-            if (VALID_NOTEMPTY([errorObject firstObject], NSString))
-            {
+            if (VALID_NOTEMPTY([errorObject firstObject], NSString)) {
                 errorMessage = [errorObject firstObject];
             }else if (VALID_NOTEMPTY([[errorObject firstObject] objectForKey:@"message"], NSString)) {
                 errorMessage = [[errorObject firstObject] objectForKey:@"message"];

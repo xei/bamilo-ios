@@ -7,6 +7,7 @@
 //
 
 #import "IconButton.h"
+#import "NSString+Size.h"
 
 @interface IconButton()
 @property (nonatomic, strong) CABasicAnimation *bounceAnim;
@@ -32,17 +33,21 @@
     [super layoutSubviews];
     const CGFloat spaceBtwIconAndLabel = 3;
     
-    CGRect lableFrame = self.titleLabel.frame;
+    CGRect labelFrame = self.titleLabel.frame;
     CGRect imageFrame = self.imageView.frame;
-    CGFloat imageRatio = imageFrame.size.height / imageFrame.size.width;
     
-    imageFrame.size.height = self.frame.size.height - 15;
-    imageFrame.size.width = imageFrame.size.height / imageRatio;
-    lableFrame.origin.x = (self.frame.size.width / 2)  - ((imageFrame.size.width + lableFrame.size.width + spaceBtwIconAndLabel) / 2);
-    imageFrame.origin.x = lableFrame.origin.x + lableFrame.size.width + spaceBtwIconAndLabel;
+    labelFrame.size = [self.titleLabel.text sizeForFont:self.titleLabel.font withMaxWidth:self.size.width];
     
+    imageFrame.size.height = self.size.height - 15;
+    imageFrame.size.width = imageFrame.size.height;
+    labelFrame.origin.x = (self.size.width / 2)  - ((imageFrame.size.width + labelFrame.size.width + spaceBtwIconAndLabel) / 2);
+    imageFrame.origin.x = labelFrame.origin.x + labelFrame.size.width + spaceBtwIconAndLabel;
+    imageFrame.origin.y = (self.size.height / 2) - (imageFrame.size.height / 2);
+    labelFrame.origin.y = (self.size.height / 2) - (labelFrame.size.height / 2);
+    
+    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
     self.imageView.frame = imageFrame;
-    self.titleLabel.frame = lableFrame;
+    self.titleLabel.frame = labelFrame;
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {

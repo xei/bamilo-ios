@@ -8,6 +8,7 @@
 
 #import "DataManager.h"
 #import "Models.pch"
+#import "RIForm.h"
 
 @implementation DataManager {
 @private
@@ -37,6 +38,12 @@ static DataManager *instance;
 - (void)getUserAddressList:(DataCompletion)completion {
     [RequestManager asyncPOST:RI_API_GET_CUSTOMER_ADDRESS_LIST params:nil completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
         [self serialize:data into:[AddressList class] response:response errorMessages:errorMessages completion:completion];
+    }];
+}
+
+- (void)loginUserViaUsername:(NSString *)username password:(NSString *)password complitionBlock:(RequestCompletion)complitionBlock {
+    [RequestManager asyncPOST:RI_API_LOGIN_CUSTOMER params:@{@"login[email]": username, @"login[password]": password} completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+        [RIForm parseEntities:data plainPassword:password loginMethod:@"normal"];
     }];
 }
 

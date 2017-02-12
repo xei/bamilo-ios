@@ -15,7 +15,7 @@
 
 @implementation CheckoutProgressViewControl
 
--(void)awakeFromNib {
+- (void)awakeFromNib {
     [super awakeFromNib];
     
     self.checkoutProgressView = [[[NSBundle mainBundle] loadNibNamed:@"CheckoutProgressView" owner:self options:nil] lastObject];
@@ -26,7 +26,7 @@
     }
 }
 
--(void)requestUpdate {
+- (void)requestUpdate {
     NSArray *buttonModels = [self.delegate getButtonsForCheckoutProgressView];
     
     if(buttonModels && buttonModels.count > 0) {

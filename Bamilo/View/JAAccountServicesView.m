@@ -24,15 +24,13 @@
 
 @implementation JAAccountServicesView
 
-- (UIView *)getNewContentView
-{
+- (UIView *)getNewContentView {
     UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.width, kAccountServicesLineHeight)];
     [self addSubview:contentView];
     return contentView;
 }
 
-- (void)setAccountServicesArray:(NSArray *)accountServicesArray
-{
+- (void)setAccountServicesArray:(NSArray *)accountServicesArray {
     _accountServicesArray = accountServicesArray;
     self.contentViewsArray = [NSMutableArray new];
     self.imageViewArray = [NSMutableArray new];
@@ -48,8 +46,7 @@
     }
 }
 
-- (void)regroupImages
-{
+- (void)regroupImages {
     if (!VALID_NOTEMPTY(_lock, NSLock)) {
         _lock = [NSLock new];
     }
@@ -77,7 +74,7 @@
             if (!VALID_NOTEMPTY(imageView.superview, UIView)) {
                 if (self.contentViewsArray.count < l+1) {
                     [self.contentViewsArray addObject:[self getNewContentView]];
-                    CGFloat yOffset = l*(kAccountServicesLineHeight+3.f);
+                    CGFloat yOffset = l * (kAccountServicesLineHeight + 3.f);
                     [(UIView *)[self.contentViewsArray lastObject] setY:yOffset];
                 }
                 [(UIView *)[self.contentViewsArray lastObject] addSubview:imageView];
@@ -89,8 +86,7 @@
     [_lock unlock];
 }
 
-- (void)alignContentViews
-{
+- (void)alignContentViews {
     for (UIView *contentView in self.contentViewsArray) {
         [contentView setWidth:CGRectGetMaxX([contentView.subviews lastObject].frame)];
         [contentView setXCenterAligned];

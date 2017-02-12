@@ -33,15 +33,15 @@ static ViewControllerManager *instance;
     return instance;
 }
 
--(UIViewController *) loadViewController:(NSString *)nibName {
+- (UIViewController *) loadViewController:(NSString *)nibName {
     return [self loadViewController:nibName resetCache:YES];
 }
 
--(UIViewController *) loadViewController:(NSString *)nibName resetCache:(BOOL)resetCache {
+- (UIViewController *) loadViewController:(NSString *)nibName resetCache:(BOOL)resetCache {
     return [self loadViewController:@"Main" nibName:nibName resetCache:resetCache];
 }
 
--(UIViewController *) loadViewController:(NSString *)storyboard nibName:(NSString *)nibName resetCache:(BOOL)resetCache {
+- (UIViewController *) loadViewController:(NSString *)storyboard nibName:(NSString *)nibName resetCache:(BOOL)resetCache {
     UIStoryboard *destStoryboard = [_storyboardCache objectForKey:storyboard];
     
     if(destStoryboard == nil) {

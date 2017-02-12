@@ -22,8 +22,22 @@
 		61148E051E4724FC00E2540B /* StepperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61148E041E4724FC00E2540B /* StepperView.m */; };
 		61148E081E47250A00E2540B /* StepperViewControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 61148E071E47250A00E2540B /* StepperViewControl.m */; };
 		61148E0A1E47255F00E2540B /* StepperView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61148E091E47255F00E2540B /* StepperView.xib */; };
+		612553471E4EE5B500975C6F /* InputTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 612553461E4EE5B500975C6F /* InputTextField.m */; };
+		612553491E4EE5C600975C6F /* InputTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 612553481E4EE5C600975C6F /* InputTextField.xib */; };
+		6125534C1E4EF63000975C6F /* InputTextFieldControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 6125534B1E4EF63000975C6F /* InputTextFieldControl.m */; };
+		612553501E4F18E800975C6F /* BlueButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 6125534F1E4F18E800975C6F /* BlueButton.m */; };
+		6125535B1E4F382100975C6F /* UIScrollView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 6125535A1E4F382100975C6F /* UIScrollView+Extension.m */; };
+		612553611E4F514100975C6F /* FormItemValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = 612553601E4F514100975C6F /* FormItemValidation.m */; };
 		612FDC371E45E0A900A9D0BD /* CartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 612FDC351E45E0A900A9D0BD /* CartTableViewCell.m */; };
 		612FDC381E45E0A900A9D0BD /* CartTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 612FDC361E45E0A900A9D0BD /* CartTableViewCell.xib */; };
+		613FF2AF1E4B24DC008660CF /* CAPSPageMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 613FF2AE1E4B24DC008660CF /* CAPSPageMenu.m */; };
+		613FF2B51E4B283F008660CF /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 613FF2B31E4B283F008660CF /* SignInViewController.m */; };
+		613FF2B61E4B283F008660CF /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 613FF2B41E4B283F008660CF /* SignInViewController.xib */; };
+		613FF2BA1E4B2858008660CF /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 613FF2B81E4B2858008660CF /* SignUpViewController.m */; };
+		613FF2BB1E4B2858008660CF /* SignUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 613FF2B91E4B2858008660CF /* SignUpViewController.xib */; };
+		613FF2BF1E4B2871008660CF /* AuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 613FF2BE1E4B2871008660CF /* AuthenticationViewController.m */; };
+		613FF2C11E4B3D1B008660CF /* Authentication.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 613FF2C01E4B3D1B008660CF /* Authentication.storyboard */; };
+		617AAA441E503AB9004D9430 /* FormItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 617AAA431E503AB9004D9430 /* FormItemModel.m */; };
 		61DBCCB61E46128300BA8251 /* IconButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 61DBCCB51E46128300BA8251 /* IconButton.m */; };
 		61E099641E3E0E21004ED14E /* IconTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E099621E3E0E21004ED14E /* IconTableViewCell.m */; };
 		61E099651E3E0E21004ED14E /* IconTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E099631E3E0E21004ED14E /* IconTableViewCell.xib */; };
@@ -539,9 +553,33 @@
 		61148E061E47250A00E2540B /* StepperViewControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepperViewControl.h; sourceTree = "<group>"; };
 		61148E071E47250A00E2540B /* StepperViewControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StepperViewControl.m; sourceTree = "<group>"; };
 		61148E091E47255F00E2540B /* StepperView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StepperView.xib; sourceTree = "<group>"; };
+		612553451E4EE5B500975C6F /* InputTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputTextField.h; sourceTree = "<group>"; };
+		612553461E4EE5B500975C6F /* InputTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputTextField.m; sourceTree = "<group>"; };
+		612553481E4EE5C600975C6F /* InputTextField.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InputTextField.xib; sourceTree = "<group>"; };
+		6125534A1E4EF63000975C6F /* InputTextFieldControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputTextFieldControl.h; sourceTree = "<group>"; };
+		6125534B1E4EF63000975C6F /* InputTextFieldControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputTextFieldControl.m; sourceTree = "<group>"; };
+		6125534E1E4F18E800975C6F /* BlueButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlueButton.h; sourceTree = "<group>"; };
+		6125534F1E4F18E800975C6F /* BlueButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlueButton.m; sourceTree = "<group>"; };
+		612553591E4F382000975C6F /* UIScrollView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+Extension.h"; sourceTree = "<group>"; };
+		6125535A1E4F382100975C6F /* UIScrollView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+Extension.m"; sourceTree = "<group>"; };
+		6125535F1E4F514100975C6F /* FormItemValidation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormItemValidation.h; sourceTree = "<group>"; };
+		612553601E4F514100975C6F /* FormItemValidation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormItemValidation.m; sourceTree = "<group>"; };
 		612FDC341E45E0A900A9D0BD /* CartTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartTableViewCell.h; sourceTree = "<group>"; };
 		612FDC351E45E0A900A9D0BD /* CartTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartTableViewCell.m; sourceTree = "<group>"; };
 		612FDC361E45E0A900A9D0BD /* CartTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartTableViewCell.xib; sourceTree = "<group>"; };
+		613FF2AD1E4B24DC008660CF /* CAPSPageMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAPSPageMenu.h; sourceTree = SOURCE_ROOT; };
+		613FF2AE1E4B24DC008660CF /* CAPSPageMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAPSPageMenu.m; sourceTree = SOURCE_ROOT; };
+		613FF2B21E4B283F008660CF /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
+		613FF2B31E4B283F008660CF /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
+		613FF2B41E4B283F008660CF /* SignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignInViewController.xib; sourceTree = "<group>"; };
+		613FF2B71E4B2858008660CF /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
+		613FF2B81E4B2858008660CF /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
+		613FF2B91E4B2858008660CF /* SignUpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignUpViewController.xib; sourceTree = "<group>"; };
+		613FF2BD1E4B2871008660CF /* AuthenticationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthenticationViewController.h; sourceTree = "<group>"; };
+		613FF2BE1E4B2871008660CF /* AuthenticationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthenticationViewController.m; sourceTree = "<group>"; };
+		613FF2C01E4B3D1B008660CF /* Authentication.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Authentication.storyboard; path = Bamilo/Controllers/Authentication.storyboard; sourceTree = SOURCE_ROOT; };
+		617AAA421E503AB9004D9430 /* FormItemModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormItemModel.h; sourceTree = "<group>"; };
+		617AAA431E503AB9004D9430 /* FormItemModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormItemModel.m; sourceTree = "<group>"; };
 		61C407C31E476486004ACEE8 /* StepperViewControlDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepperViewControlDelegate.h; sourceTree = "<group>"; };
 		61C407C41E476939004ACEE8 /* CartTableViewCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartTableViewCellDelegate.h; sourceTree = "<group>"; };
 		61DBCCB41E46128300BA8251 /* IconButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconButton.h; sourceTree = "<group>"; };
@@ -1523,6 +1561,7 @@
 			children = (
 				8716987A1E38A94C0027B34A /* Main.storyboard */,
 				87D07D6E1E40939100C00AC6 /* Checkout.storyboard */,
+				613FF2C01E4B3D1B008660CF /* Authentication.storyboard */,
 			);
 			name = Storyboards;
 			path = View/Storyboard;
@@ -1702,6 +1741,61 @@
 			name = ViewControl;
 			sourceTree = "<group>";
 		};
+		612553421E4EE4FD00975C6F /* inputTextField */ = {
+			isa = PBXGroup;
+			children = (
+				612553431E4EE57300975C6F /* View */,
+				612553441E4EE57D00975C6F /* ViewControl */,
+			);
+			name = inputTextField;
+			sourceTree = "<group>";
+		};
+		612553431E4EE57300975C6F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				612553451E4EE5B500975C6F /* InputTextField.h */,
+				612553461E4EE5B500975C6F /* InputTextField.m */,
+				612553481E4EE5C600975C6F /* InputTextField.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		612553441E4EE57D00975C6F /* ViewControl */ = {
+			isa = PBXGroup;
+			children = (
+				6125534A1E4EF63000975C6F /* InputTextFieldControl.h */,
+				6125534B1E4EF63000975C6F /* InputTextFieldControl.m */,
+			);
+			name = ViewControl;
+			sourceTree = "<group>";
+		};
+		6125534D1E4F18CD00975C6F /* BlueButton */ = {
+			isa = PBXGroup;
+			children = (
+				6125534E1E4F18E800975C6F /* BlueButton.h */,
+				6125534F1E4F18E800975C6F /* BlueButton.m */,
+			);
+			name = BlueButton;
+			sourceTree = "<group>";
+		};
+		612553581E4F37AD00975C6F /* UIScrollView+Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				612553591E4F382000975C6F /* UIScrollView+Extension.h */,
+				6125535A1E4F382100975C6F /* UIScrollView+Extension.m */,
+			);
+			name = "UIScrollView+Extensions";
+			sourceTree = "<group>";
+		};
+		6125535C1E4F50DF00975C6F /* FormItemValidation */ = {
+			isa = PBXGroup;
+			children = (
+				6125535F1E4F514100975C6F /* FormItemValidation.h */,
+				612553601E4F514100975C6F /* FormItemValidation.m */,
+			);
+			name = FormItemValidation;
+			sourceTree = "<group>";
+		};
 		612FDC331E45E08500A9D0BD /* CartTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -1711,6 +1805,62 @@
 				61C407C41E476939004ACEE8 /* CartTableViewCellDelegate.h */,
 			);
 			name = CartTableViewCell;
+			sourceTree = "<group>";
+		};
+		613FF2AC1E4B24CD008660CF /* CAPSPageMenu */ = {
+			isa = PBXGroup;
+			children = (
+				613FF2AD1E4B24DC008660CF /* CAPSPageMenu.h */,
+				613FF2AE1E4B24DC008660CF /* CAPSPageMenu.m */,
+			);
+			name = CAPSPageMenu;
+			sourceTree = "<group>";
+		};
+		613FF2B01E4B281A008660CF /* SignInViewController */ = {
+			isa = PBXGroup;
+			children = (
+				613FF2B21E4B283F008660CF /* SignInViewController.h */,
+				613FF2B31E4B283F008660CF /* SignInViewController.m */,
+				613FF2B41E4B283F008660CF /* SignInViewController.xib */,
+			);
+			name = SignInViewController;
+			sourceTree = "<group>";
+		};
+		613FF2B11E4B2825008660CF /* SignUpViewController */ = {
+			isa = PBXGroup;
+			children = (
+				613FF2B71E4B2858008660CF /* SignUpViewController.h */,
+				613FF2B81E4B2858008660CF /* SignUpViewController.m */,
+				613FF2B91E4B2858008660CF /* SignUpViewController.xib */,
+			);
+			name = SignUpViewController;
+			sourceTree = "<group>";
+		};
+		613FF2BC1E4B285C008660CF /* AuthenticationViewController */ = {
+			isa = PBXGroup;
+			children = (
+				613FF2BD1E4B2871008660CF /* AuthenticationViewController.h */,
+				613FF2BE1E4B2871008660CF /* AuthenticationViewController.m */,
+			);
+			name = AuthenticationViewController;
+			sourceTree = "<group>";
+		};
+		617AAA401E503A71004D9430 /* Form */ = {
+			isa = PBXGroup;
+			children = (
+				617AAA411E503A86004D9430 /* FormItemModel */,
+				6125535C1E4F50DF00975C6F /* FormItemValidation */,
+			);
+			name = Form;
+			sourceTree = "<group>";
+		};
+		617AAA411E503A86004D9430 /* FormItemModel */ = {
+			isa = PBXGroup;
+			children = (
+				617AAA421E503AB9004D9430 /* FormItemModel.h */,
+				617AAA431E503AB9004D9430 /* FormItemModel.m */,
+			);
+			name = FormItemModel;
 			sourceTree = "<group>";
 		};
 		61DBCCB31E46127600BA8251 /* IconButton */ = {
@@ -2003,6 +2153,7 @@
 			isa = PBXGroup;
 			children = (
 				8714E06F1E47976E004C9B1D /* Base */,
+				612553421E4EE4FD00975C6F /* inputTextField */,
 				61148E001E47226200E2540B /* Stepper */,
 				87459C901E4F05D700743120 /* RadioButton */,
 			);
@@ -2852,6 +3003,9 @@
 		87D07D821E40B4B100C00AC6 /* BML */ = {
 			isa = PBXGroup;
 			children = (
+				613FF2BC1E4B285C008660CF /* AuthenticationViewController */,
+				613FF2B11E4B2825008660CF /* SignUpViewController */,
+				613FF2B01E4B281A008660CF /* SignInViewController */,
 				87A681591E40F99300D252AC /* BaseViewController */,
 				87A6815E1E41B84000D252AC /* SearchBaseViewController */,
 				8708A16F1E406BF600ABA7D8 /* ContactUsViewController */,
@@ -2863,6 +3017,9 @@
 		87D07D831E40B4C800C00AC6 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
+
+				6125534D1E4F18CD00975C6F /* BlueButton */,
+				61DBCCB31E46127600BA8251 /* IconButton */,
 				87A681551E40F20A00D252AC /* BaseButton */,
 				61DBCCB31E46127600BA8251 /* IconButton */,
 				87A6814F1E40ECFC00D252AC /* OrangeButton */,
@@ -3051,6 +3208,12 @@
 			isa = PBXGroup;
 			children = (
 				87B685191E4B746B0042C09F /* Service */,
+				617AAA401E503A71004D9430 /* Form */,
+				8714E0621E47483B004C9B1D /* Base */,
+				8714E05B1E472CDC004C9B1D /* Address.h */,
+				8714E05C1E472CDC004C9B1D /* Address.m */,
+				8714E0641E476DF8004C9B1D /* AddressList.h */,
+				8714E0651E476DF8004C9B1D /* AddressList.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -3450,6 +3613,7 @@
 		B5A301D219811E8900F71726 /* ExternalFrameworks */ = {
 			isa = PBXGroup;
 			children = (
+				613FF2AC1E4B24CD008660CF /* CAPSPageMenu */,
 				87A6ACE41E38919C00C0E7DC /* GTMNSString-HTML */,
 			);
 			name = ExternalFrameworks;
@@ -3478,6 +3642,7 @@
 		B5C1E33419BA1E3D009C422C /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				612553581E4F37AD00975C6F /* UIScrollView+Extensions */,
 				87A681541E40EF3700D252AC /* Categories.pch */,
 				879F87EC1E5048550033FE87 /* NSMutableArray+Extensions */,
 				874AAB6F1E3DD28D00B3F8FE /* UIColor+Format */,
@@ -4030,6 +4195,7 @@
 				CE9AE0A81AB6D78200D56481 /* JACartListHeaderView.xib in Resources */,
 				CE9AE0AC1AB6D78200D56481 /* JACatalogTopView_iphone.xib in Resources */,
 				9A2036F51B25F39E00F36F55 /* JANoConnectionView~iPad.xib in Resources */,
+				613FF2BB1E4B2858008660CF /* SignUpViewController.xib in Resources */,
 				9A564CB51B3411AD00F23057 /* JANewSellerRatingViewController.xib in Resources */,
 				CE9AE0B51AB6D78200D56481 /* JACheckBoxComponent.xib in Resources */,
 				CE9AE0B81AB6D78200D56481 /* JAPDVVariations~iPad.xib in Resources */,
@@ -4044,7 +4210,9 @@
 				87B684D71E49AB900042C09F /* DiscountCodeView.xib in Resources */,
 				CEE5F4E41B1CB6B500556150 /* JARecentSearchesViewController.xib in Resources */,
 				87B685091E4AFB740042C09F /* ReceiptView.xib in Resources */,
+				613FF2B61E4B283F008660CF /* SignInViewController.xib in Resources */,
 				612FDC381E45E0A900A9D0BD /* CartTableViewCell.xib in Resources */,
+				612553491E4EE5C600975C6F /* InputTextField.xib in Resources */,
 				875AD5821E38C0C900584ABF /* RITracking_Bamilo.plist in Resources */,
 				CE9AE0E01AB6D78200D56481 /* JAPDVProductInfo~iPad_Portrait.xib in Resources */,
 				CEDE870F1B25FEE5006D18EA /* JANoConnectionView.xib in Resources */,
@@ -4065,6 +4233,7 @@
 				1C71FC601E2CABAD007ACF02 /* Bamilosans Light.ttf in Resources */,
 				1C71FC621E2CABAD007ACF02 /* Bamilosans UltraLight.ttf in Resources */,
 				1C80D8841E2E3D850036B514 /* ‌Bamilosans Bold.ttf in Resources */,
+				613FF2C11E4B3D1B008660CF /* Authentication.storyboard in Resources */,
 				87D07D6F1E40939100C00AC6 /* Checkout.storyboard in Resources */,
 				8716987D1E38A94C0027B34A /* Main.storyboard in Resources */,
 				6C18BD741AB87E0A00905FD2 /* Images.xcassets in Resources */,
@@ -4202,6 +4371,7 @@
 				1C3043021E2A3A5800BD391E /* CatalogNoResultViewController.m in Sources */,
 				875AD55E1E38C0C900584ABF /* RICountry.m in Sources */,
 				9AE766E21CBFF31D00B63D8E /* JACartTableViewCell.m in Sources */,
+				612553471E4EE5B500975C6F /* InputTextField.m in Sources */,
 				CE9ADF301AB6D78200D56481 /* JAShippingViewController.m in Sources */,
 				CE59BF241AE906180057F4E2 /* JATopSellersTeaserView.m in Sources */,
 				875AD56A1E38C0C900584ABF /* RIPhonePrefix.m in Sources */,
@@ -4263,8 +4433,10 @@
 				61E099641E3E0E21004ED14E /* IconTableViewCell.m in Sources */,
 				CE59BEFA1AE7EF0B0057F4E2 /* JAShopTeaserView.m in Sources */,
 				9A86F80A1C281F8F001A91D5 /* JARecentlyViewedViewController.m in Sources */,
+				613FF2BF1E4B2871008660CF /* AuthenticationViewController.m in Sources */,
 				CE9ADF4C1AB6D78200D56481 /* UIImageView+JA.m in Sources */,
 				875AD5891E38C0C900584ABF /* RIGTMTracker.m in Sources */,
+				613FF2AF1E4B24DC008660CF /* CAPSPageMenu.m in Sources */,
 				CED6205C1BEB526B00FA8403 /* JAFiltersViewController.m in Sources */,
 				875AD57E1E38C0C900584ABF /* RIDataBaseWrapper.m in Sources */,
 				875AD5761E38C0C900584ABF /* RIShippingMethodPickupStationOption.m in Sources */,
@@ -4286,6 +4458,7 @@
 				875AD5591E38C0C900584ABF /* RICampaign.m in Sources */,
 				CE9ADF5C1AB6D78200D56481 /* JAEmailNotificationsViewController.m in Sources */,
 				CE9ADF601AB6D78200D56481 /* JANoConnectionView.m in Sources */,
+				617AAA441E503AB9004D9430 /* FormItemModel.m in Sources */,
 				8714E0771E479C00004C9B1D /* CheckoutProgressViewButtonModel.m in Sources */,
 				9A189E6F1BB31AF70039BC14 /* JAProductInfoSingleLine.m in Sources */,
 				875AD5701E38C0C900584ABF /* RISeller.m in Sources */,
@@ -4299,10 +4472,12 @@
 				CE9ADF691AB6D78200D56481 /* JAMyOrdersViewController.m in Sources */,
 				CE9ADF6B1AB6D78200D56481 /* JAFiltersView.m in Sources */,
 				CE9ADF6F1AB6D78200D56481 /* JAPDVProductInfo.m in Sources */,
+				612553611E4F514100975C6F /* FormItemValidation.m in Sources */,
 				8714E05D1E472CDC004C9B1D /* Address.m in Sources */,
 				CE9ADF731AB6D78200D56481 /* JAPaymentCell.m in Sources */,
 				CE9ADF741AB6D78200D56481 /* JAPDVBundleSingleItem.m in Sources */,
 				CE9ADF7A1AB6D78200D56481 /* JAPercentageBarView.m in Sources */,
+				613FF2BA1E4B2858008660CF /* SignUpViewController.m in Sources */,
 				875AD56F1E38C0C900584ABF /* RIPromotion.m in Sources */,
 				9A6BC0831C43CBB900DD9492 /* JAMyOrderResumeView.m in Sources */,
 				875AD56E1E38C0C900584ABF /* RIProductSimple.m in Sources */,
@@ -4394,6 +4569,7 @@
 				87A681611E41B88000D252AC /* SearchBaseViewController.m in Sources */,
 				9AB488841B72748500886A44 /* JAShopWebViewController.m in Sources */,
 				9A17D1A51C64B61200851D6E /* JANewsletterTeaserView.m in Sources */,
+				613FF2B51E4B283F008660CF /* SignInViewController.m in Sources */,
 				875AD5451E38C0C900584ABF /* RIExternalCategory.m in Sources */,
 				CE9ADFC21AB6D78200D56481 /* JAPriceFiltersView.m in Sources */,
 				9AEF73FE1CD20E1C00A5D574 /* JAStepByStepModel.m in Sources */,
@@ -4436,6 +4612,7 @@
 				CE9ADFD91AB6D78200D56481 /* JAPromotionPopUp.m in Sources */,
 				9A55A68B1BBECB09008EF4A6 /* JABottomBar.m in Sources */,
 				874AAB6D1E3DCEDB00B3F8FE /* SessionManager.m in Sources */,
+				6125534C1E4EF63000975C6F /* InputTextFieldControl.m in Sources */,
 				875AD5541E38C0C900584ABF /* RIURLCache.m in Sources */,
 				875AD5651E38C0C900584ABF /* RIOrder.m in Sources */,
 				FF4465221CECB806003A65EA /* JAORPaymentViewController.m in Sources */,
@@ -4511,6 +4688,7 @@
 				FF6BDCA71CE34ACB002BFE11 /* JAListNumberComponent.m in Sources */,
 				FF4383F81C71EEEB003BA957 /* JAScreenTitleComponent.m in Sources */,
 				87A6814E1E40DC3C00D252AC /* ViewControllerManager.m in Sources */,
+				612553501E4F18E800975C6F /* BlueButton.m in Sources */,
 				8714E0611E474025004C9B1D /* RequestManager.m in Sources */,
 				CE9AE0041AB6D78200D56481 /* JAOtherOffersViewController.m in Sources */,
 				CE9AE0051AB6D78200D56481 /* JAMyOrderDetailView.m in Sources */,
@@ -4529,6 +4707,7 @@
 				9A4077501CE61D1300313D20 /* JAOptionResumeView.m in Sources */,
 				CED620551BEA5EFC00FA8403 /* JAProductCollectionViewFlowLayout.m in Sources */,
 				CE9AE00E1AB6D78200D56481 /* JACampaignPageView.m in Sources */,
+				6125535B1E4F382100975C6F /* UIScrollView+Extension.m in Sources */,
 				8714E0901E48CD41004C9B1D /* DiscountSwitcherView.m in Sources */,
 				CE9AE0101AB6D78200D56481 /* JABirthDateComponent.m in Sources */,
 				CE9AE0111AB6D78200D56481 /* JANewSellerRatingViewController.m in Sources */,
