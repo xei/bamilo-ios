@@ -107,4 +107,17 @@
 }
 
 
+
+- (IBAction)submitLogin:(id)sender {
+    
+    if (![self.emailControl isValid] || ![self.passwordControl isValid]) {
+        return;
+    }
+    
+    [[DataManager sharedInstance] loginUserViaUsername:@"aliunco90@gmail.com" password:@"ali1123581321" complitionBlock:^(RIApiResponse response, id data, NSArray *errorMessages) {
+        
+    }];
+}
+
+
 @end

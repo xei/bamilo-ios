@@ -36,7 +36,7 @@
                             <view contentMode="scaleToFill" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="w6C-5U-LQK" userLabel="right side container view">
                                 <rect key="frame" x="235" y="44" width="130" height="202"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" image="07FFD34D-0203-4DDD-A8ED-0BC50E31B28B" translatesAutoresizingMaskIntoConstraints="NO" id="RW7-NT-MKZ">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" image="C837F1AD-F9CD-453D-8D41-EC0D87DFD6FA" translatesAutoresizingMaskIntoConstraints="NO" id="RW7-NT-MKZ">
                                         <rect key="frame" x="0.0" y="0.0" width="130" height="165"/>
                                         <gestureRecognizers/>
                                         <constraints>
@@ -118,7 +118,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kyq-o6-cff" customClass="StepperViewControl">
-                                <rect key="frame" x="10" y="157.5" width="90" height="26"/>
+                                <rect key="frame" x="10" y="157" width="90" height="26"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="26" id="5Op-SK-YPX"/>
@@ -132,13 +132,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۱۰،۰۰۰ ریال" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VFE-aN-ZLR">
-                                <rect key="frame" x="10" y="199.5" width="176" height="17.5"/>
+                                <rect key="frame" x="10" y="199" width="176" height="17.5"/>
                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="9"/>
                                 <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۱۰،۰۰۰ ریال" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="naZ-B0-fgP">
-                                <rect key="frame" x="10" y="220" width="176" height="17.5"/>
+                                <rect key="frame" x="10" y="219.5" width="176" height="17.5"/>
                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="9"/>
                                 <color key="textColor" red="0.62352941179999999" green="0.62352941179999999" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -247,7 +247,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="07FFD34D-0203-4DDD-A8ED-0BC50E31B28B" width="146" height="182">
+        <image name="C837F1AD-F9CD-453D-8D41-EC0D87DFD6FA" width="146" height="182">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw

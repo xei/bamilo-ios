@@ -691,7 +691,7 @@
 
 #pragma mark Favorites Screen
 - (void)showSavedListViewController:(NSNotification*)notification {
-        [JAAuthenticationViewController authenticateAndExecuteBlock:^{
+        [AuthenticationViewController authenticateAndExecuteBlock:^{
         UIViewController *topViewController = [self topViewController];
         if (![topViewController isKindOfClass:[JASavedListViewController class]])
         {
@@ -734,16 +734,16 @@
         [authenticationViewController setNextStepBlock:notification.object];
     }
     
-    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"shows_back_button"], NSNumber)) {
-        NSNumber* showsBack = [notification.userInfo objectForKey:@"shows_back_button"];
-        authenticationViewController.navBarLayout.showBackButton = [showsBack boolValue];
-        if (![showsBack boolValue]) {
-//            authenticationViewController.tabBarIsVisible = YES;
-            [self popToRootViewControllerAnimated:NO];
-        }
-    } else {
-        authenticationViewController.navBarLayout.showBackButton = YES;
-    }
+//    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"shows_back_button"], NSNumber)) {
+//        NSNumber* showsBack = [notification.userInfo objectForKey:@"shows_back_button"];
+//        authenticationViewController.navBarLayout.showBackButton = [showsBack boolValue];
+//        if (![showsBack boolValue]) {
+////            authenticationViewController.tabBarIsVisible = YES;
+//            [self popToRootViewControllerAnimated:NO];
+//        }
+//    } else {
+    authenticationViewController.navBarLayout.showBackButton = YES;
+//    }
     
     authenticationViewController.fromSideMenu = NO;
     if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"from_side_menu"], NSNumber)) {

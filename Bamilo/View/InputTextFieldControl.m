@@ -8,6 +8,10 @@
 
 #import "InputTextFieldControl.h"
 
+@interface InputTextFieldControl()
+@property (nonatomic, copy) NSString *errorMsg;
+@end
+
 @implementation InputTextFieldControl
 
 - (void)awakeFromNib {
@@ -58,22 +62,25 @@
 }
 
 - (Boolean)isValid {
-    
     if (!self.validation) {
         return YES;
     }
+    self.errorMsg = nil;
     
     NSUInteger lengthOfInputText = self.input.textField.text.length;
     
     if (self.validation.isRequired && !lengthOfInputText) {
+        self.errorMsg = [self.validation getErrorMsgOfType:FormItemValidationErrorIsRequired];
         return NO;
     }
     
     if (self.validation.max && lengthOfInputText > self.validation.max) {
+        self.errorMsg = [self.validation getErrorMsgOfType:FormItemValidationErrorMax];
         return NO;
     }
     
     if (self.validation.min && lengthOfInputText < self.validation.min) {
+        self.errorMsg = [self.validation getErrorMsgOfType:FormItemValidationErrorMin];
         return NO;
     }
     
@@ -85,6 +92,7 @@
         NSTextCheckingResult *match = [regex firstMatchInString:inputTextValue options:0 range:NSMakeRange(0, [inputTextValue length])];
         
         if (match) {
+            self.errorMsg = [self.validation getErrorMsgOfType:FormItemValidationErrorRegx];
             return NO;
         }
     }

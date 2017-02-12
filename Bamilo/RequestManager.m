@@ -10,24 +10,24 @@
 
 @implementation RequestManager
 
-+(void)asyncGET:(NSString *)path params:(NSDictionary *)params completion:(RequestCompletion)completion {
++ (void)asyncGET:(NSString *)path params:(NSDictionary *)params completion:(RequestCompletion)completion {
     [RequestManager asyncRequest:HttpVerbGET path:path params:params completion:completion];
 }
 
-+(void)asyncPOST:(NSString *)path params:(NSDictionary *)params completion:(RequestCompletion)completion {
++ (void)asyncPOST:(NSString *)path params:(NSDictionary *)params completion:(RequestCompletion)completion {
     [RequestManager asyncRequest:HttpVerbPOST path:path params:params completion:completion];
 }
 
-+(void)asyncPUT:(NSString *)path params:(NSDictionary *)params completion:(RequestCompletion)completion {
++ (void)asyncPUT:(NSString *)path params:(NSDictionary *)params completion:(RequestCompletion)completion {
     [RequestManager asyncRequest:HttpVerbPUT path:path params:params completion:completion];
 }
 
-+(void)asyncDELETE:(NSString *)path params:(NSDictionary *)params completion:(RequestCompletion)completion {
++ (void)asyncDELETE:(NSString *)path params:(NSDictionary *)params completion:(RequestCompletion)completion {
     [RequestManager asyncRequest:HttpVerbDELETE path:path params:params completion:completion];
 }
 
 #pragma mark - Private Methods
-+(void)asyncRequest:(HttpVerb)method path:(NSString *)path params:(NSDictionary *)params completion:(RequestCompletion)completion {
++ (void)asyncRequest:(HttpVerb)method path:(NSString *)path params:(NSDictionary *)params completion:(RequestCompletion)completion {
     [[RICommunicationWrapper sharedInstance]
      sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, path]]
      parameters:params

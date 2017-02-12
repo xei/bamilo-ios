@@ -15,5 +15,6 @@ typedef void(^DataCompletion)(id data, NSError *error);
 
 + (instancetype)sharedInstance;
 - (void)getUserAddressList:(DataCompletion)completion;
+- (void)loginUserViaUsername:(NSString *)username password:(NSString *)password complitionBlock:(RequestCompletion)complitionBlock;
 
 @end
