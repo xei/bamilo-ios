@@ -470,5 +470,8 @@
 #define STRING_RECIPIENT_ADDRESS RILocalizedString(@"recipient_address", nil)
 #define STRING_ENTER_YOUR_DISCOUNT_CODE RILocalizedString(@"enter_your_discount_code", nil)
 #define STRING_APPLY_DISCOUNT RILocalizedString(@"apply_discount_code", nil)
+#define STRING_PAYMENT_OPTION RILocalizedString(@"payment_option", nil)
+#define STRING_ONLINE_PAYMENT RILocalizedString(@"online_payment", nil)
+#define STRING_PAY_ON_DELIVERY RILocalizedString(@"pay_on_delivery", nil)
 
 #endif

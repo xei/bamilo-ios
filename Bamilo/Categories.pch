@@ -16,5 +16,6 @@
 #import "UIButton+Extensions.h"
 #import "UILabel+Extensions.h"
 #import "UIView+Extensions.h"
+#import "NSMutableArray+Extensions.h"
 
 #endif /* Categories_pch */

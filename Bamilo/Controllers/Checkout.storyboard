@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="cPx-eU-fFb">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="cPx-eU-fFb">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -40,7 +40,7 @@
                                     <constraint firstAttribute="height" constant="60" id="d0h-R8-HHm"/>
                                 </constraints>
                             </containerView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Bu1-25-svr">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" delaysContentTouches="NO" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Bu1-25-svr">
                                 <rect key="frame" x="0.0" y="60" width="375" height="547"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -107,7 +107,7 @@
                                     <action selector="continueButtonTapped:" destination="RR0-PB-qTp" eventType="touchUpInside" id="Yhg-gN-D0m"/>
                                 </connections>
                             </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dCv-DP-nKy">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" delaysContentTouches="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dCv-DP-nKy">
                                 <rect key="frame" x="0.0" y="60" width="375" height="547"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -159,16 +159,45 @@
                                     <constraint firstAttribute="height" constant="60" id="Svr-CK-Tio"/>
                                 </constraints>
                             </containerView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" delaysContentTouches="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="zc7-Vb-nIS">
+                                <rect key="frame" x="0.0" y="60" width="375" height="547"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="YAa-kj-ypS" id="4cQ-iA-kbV"/>
+                                    <outlet property="delegate" destination="YAa-kj-ypS" id="4kE-BC-auj"/>
+                                </connections>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dAO-l3-ogF" customClass="OrangeButton">
+                                <rect key="frame" x="10" y="607" width="355" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="SIc-FD-Oua"/>
+                                </constraints>
+                                <state key="normal" title="پرداخت">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="continueButtonTapped:" destination="YAa-kj-ypS" eventType="touchUpInside" id="dQ3-gK-kNt"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.57953985223996241" blue="0.58901249803895506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="dAO-l3-ogF" firstAttribute="leading" secondItem="hA3-mv-iin" secondAttribute="leading" constant="10" id="8c4-09-UwQ"/>
+                            <constraint firstItem="zc7-Vb-nIS" firstAttribute="leading" secondItem="hA3-mv-iin" secondAttribute="leading" id="B5w-oo-f6K"/>
+                            <constraint firstAttribute="trailing" secondItem="zc7-Vb-nIS" secondAttribute="trailing" id="Gmq-KJ-Ngb"/>
                             <constraint firstItem="7Bg-pG-uxa" firstAttribute="leading" secondItem="hA3-mv-iin" secondAttribute="leading" id="Q1F-uK-rx7"/>
+                            <constraint firstItem="ll1-YN-aeW" firstAttribute="top" secondItem="dAO-l3-ogF" secondAttribute="bottom" constant="10" id="SVx-nL-sf5"/>
                             <constraint firstAttribute="trailing" secondItem="7Bg-pG-uxa" secondAttribute="trailing" id="T6W-xc-0fk"/>
+                            <constraint firstItem="zc7-Vb-nIS" firstAttribute="top" secondItem="7Bg-pG-uxa" secondAttribute="bottom" id="VoH-5k-HXv"/>
+                            <constraint firstAttribute="trailing" secondItem="dAO-l3-ogF" secondAttribute="trailing" constant="10" id="b4t-Pp-xhU"/>
                             <constraint firstItem="7Bg-pG-uxa" firstAttribute="top" secondItem="Rb1-m2-ocz" secondAttribute="bottom" id="d8f-Zr-zbO"/>
+                            <constraint firstItem="dAO-l3-ogF" firstAttribute="top" secondItem="zc7-Vb-nIS" secondAttribute="bottom" id="hyV-vz-BGr"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="checkoutProgressViewControl" destination="7Bg-pG-uxa" id="9Vi-Co-9mf"/>
+                        <outlet property="continueButton" destination="dAO-l3-ogF" id="Iyt-m0-eWg"/>
+                        <outlet property="tableView" destination="zc7-Vb-nIS" id="ghJ-n9-PSq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w3x-oZ-fdD" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -1,8 +1,8 @@
 //
 //  PlainTableViewHeaderCell.m
-//  Jumia
+//  Bamilo
 //
-//  Created by aliunco on 1/16/17.
+//  Created by Narbeh Mirzaei on 2/12/17.
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
@@ -18,14 +18,19 @@
     [super awakeFromNib];
     
     //Content View Setup
-    self.contentView.backgroundColor = [UIColor withRGBA:244 green:244 blue:244 alpha:1.0f];
+    self.contentView.backgroundColor = [UIColor withRepeatingRGBA:244 alpha:1.0f];
     
     //Title Label Setup
-    [self.titleLabel applyStyle:kFontBoldName fontSize:12 color:[UIColor withRGBA:80 green:80 blue:80 alpha:1.0f]];
+    [self.titleLabel applyStyle:kFontBoldName fontSize:12 color:[UIColor withRepeatingRGBA:80 alpha:1.0f]];
 }
 
 -(void)setTitle:(NSString *)title {
     self.titleLabel.text = title;
+}
+
+#pragma mark - Overrides
++(CGFloat)cellHeight {
+    return 40.0f;
 }
 
 +(NSString *)nibName {
