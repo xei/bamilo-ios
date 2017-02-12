@@ -6,11 +6,11 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import <Mantle/Mantle.h>
+#import "BaseModel.h"
 
 @class RICustomer;
 
-@interface Address : MTLModel <MTLJSONSerializing>
+@interface Address : BaseModel
 
 @property (copy, nonatomic) NSString *uid;
 @property (copy, nonatomic) NSString *firstName;

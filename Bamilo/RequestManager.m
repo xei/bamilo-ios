@@ -7,27 +7,40 @@
 //
 
 #import "RequestManager.h"
+#import "LoadingManager.h"
 
-@implementation RequestManager
-
-+(void)asyncGET:(NSString *)path params:(NSDictionary *)params completion:(RequestCompletion)completion {
-    [RequestManager asyncRequest:HttpVerbGET path:path params:params completion:completion];
+@implementation RequestManager {
+@private
+    int _pendingRequestsNumber;
 }
 
-+(void)asyncPOST:(NSString *)path params:(NSDictionary *)params completion:(RequestCompletion)completion {
-    [RequestManager asyncRequest:HttpVerbPOST path:path params:params completion:completion];
++(void) asyncGET:(id<DataServiceProtocol>)target path:(NSString *)path params:(NSDictionary *)params type:(RequestExecutionType)type completion:(RequestCompletion)completion {
+    [RequestManager asyncRequest:HttpVerbGET path:path params:params type:type target:target completion:completion];
 }
 
-+(void)asyncPUT:(NSString *)path params:(NSDictionary *)params completion:(RequestCompletion)completion {
-    [RequestManager asyncRequest:HttpVerbPUT path:path params:params completion:completion];
++(void) asyncPOST:(id<DataServiceProtocol>)target path:(NSString *)path params:(NSDictionary *)params type:(RequestExecutionType)type completion:(RequestCompletion)completion {
+    [RequestManager asyncRequest:HttpVerbPOST path:path params:params type:type target:target completion:completion];
 }
 
-+(void)asyncDELETE:(NSString *)path params:(NSDictionary *)params completion:(RequestCompletion)completion {
-    [RequestManager asyncRequest:HttpVerbDELETE path:path params:params completion:completion];
++(void) asyncPUT:(id<DataServiceProtocol>)target path:(NSString *)path params:(NSDictionary *)params type:(RequestExecutionType)type completion:(RequestCompletion)completion {
+    [RequestManager asyncRequest:HttpVerbPUT path:path params:params type:type target:target completion:completion];
+}
+
++(void) asyncDELETE:(id<DataServiceProtocol>)target path:(NSString *)path params:(NSDictionary *)params type:(RequestExecutionType)type completion:(RequestCompletion)completion {
+    [RequestManager asyncRequest:HttpVerbDELETE path:path params:params type:type target:target completion:completion];
 }
 
 #pragma mark - Private Methods
-+(void)asyncRequest:(HttpVerb)method path:(NSString *)path params:(NSDictionary *)params completion:(RequestCompletion)completion {
++(void)asyncRequest:(HttpVerb)method path:(NSString *)path params:(NSDictionary *)params type:(RequestExecutionType)type target:(id<DataServiceProtocol>)target completion:(RequestCompletion)completion {
+    switch (type) {
+        case REQUEST_EXEC_IN_FOREGROUND:
+            [[LoadingManager sharedInstance] showLoadingOn:target];
+        break;
+            
+        default:
+            break;
+    }
+    
     [[RICommunicationWrapper sharedInstance]
      sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, path]]
      parameters:params
@@ -41,6 +54,9 @@
         } else {
             completion(apiResponse, nil, nil);
         }
+         
+        [[LoadingManager sharedInstance] hideLoading];
+         
     } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
         if(errorJsonObject && errorJsonObject.allKeys.count) {
             completion(apiResponse, nil, [RIError getErrorMessages:errorJsonObject]);
@@ -50,6 +66,8 @@
         } else {
             completion(apiResponse, nil, nil);
         }
+        
+        [[LoadingManager sharedInstance] hideLoading];
     }];
 }
 

@@ -7,6 +7,7 @@
 //
 
 #import "AddressTableViewCell.h"
+#import "Address.h"
 
 @interface AddressTableViewCell()
 @property (weak, nonatomic) IBOutlet UIImageView *checkmarkIconImageView;
@@ -52,27 +53,30 @@
 }
 
 #pragma mark - Overrides
++(CGFloat)cellHeight {
+    return 160.0f;
+}
+
 +(NSString *)nibName {
     return @"AddressTableViewCell";
 }
 
 -(void)updateWithModel:(id)model {
-    RIAddress *addressObj = (RIAddress *)model;
-
+    Address *addressObj = (Address *)model;
+    
     //Address Title Setup
-    if(addressObj.firstName && addressObj.lastName) {
-        self.addressTitleLabel.text = [NSString stringWithFormat:@"%@ %@", addressObj.firstName, addressObj.lastName];
-    } else if(addressObj.firstName) {
-        self.addressTitleLabel.text = addressObj.firstName;
-    } else if(addressObj.lastName) {
-        self.addressTitleLabel.text = addressObj.lastName;
-    }
+    NSMutableString *addressTitleText = [NSMutableString new];
+    
+    [addressTitleText smartAppend:addressObj.firstName];
+    [addressTitleText smartAppend:addressObj.lastName];
+    
+    self.addressTitleLabel.text = addressTitleText;
     
     //Address Setup
     NSMutableString *addressText = [NSMutableString new];
     
     [addressText smartAppend:addressObj.address];
-    [addressText smartAppend:addressObj.address2];
+    [addressText smartAppend:addressObj.address1];
     [addressText smartAppend:addressObj.city];
     [addressText smartAppend:addressObj.postcode];
     
@@ -80,11 +84,11 @@
     
     //Phone Setup
     NSMutableString *phoneText = [NSMutableString stringWithFormat:@"%@:", STRING_PHONE];
-    [phoneText smartAppend:addressObj.phone replacer:@"-"];
+    [phoneText smartAppend:[addressObj.phone numbersToPersian] replacer:@"-"];
     
     self.addressPhoneLabel.text = phoneText;
     
-    self.checkmarkIconImageView.image = [addressObj.isDefaultShipping isEqualToString:@"1"] ? [UIImage imageNamed:@"ArrowLeft"] : nil;
+    self.checkmarkIconImageView.image = addressObj.isDefaultShipping ? [UIImage imageNamed:@"BlueTick"] : nil;
 }
 
 #pragma mark - IBActions

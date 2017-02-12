@@ -25,7 +25,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="نغمه حیامنش" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qvy-0u-gkK">
-                    <rect key="frame" x="15" y="9" width="313" height="23"/>
+                    <rect key="frame" x="15" y="6.5" width="320" height="23"/>
                     <constraints>
                         <constraint firstAttribute="height" priority="250" constant="22" id="VVa-dC-QXh"/>
                     </constraints>
@@ -33,15 +33,15 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iSG-39-dvH" userLabel="CheckmarkImage">
-                    <rect key="frame" x="343" y="10" width="22" height="22"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iSG-39-dvH" userLabel="CheckmarkImage">
+                    <rect key="frame" x="350" y="10" width="15" height="15"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="iSG-39-dvH" secondAttribute="height" multiplier="1:1" id="k4P-tt-cIk"/>
-                        <constraint firstAttribute="height" constant="22" id="kme-wg-Ral"/>
+                        <constraint firstAttribute="height" constant="15" id="kme-wg-Ral"/>
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="میدان ونک ،حقانی ، نرسیده به حهان کودک ، نرسیده به جهان کودک، پلاک" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="42A-p9-Ncc">
-                    <rect key="frame" x="15" y="37" width="313" height="46"/>
+                    <rect key="frame" x="15" y="34.5" width="320" height="48.5"/>
                     <constraints>
                         <constraint firstAttribute="height" priority="250" constant="44" id="6Nb-g7-J6p"/>
                     </constraints>
@@ -50,7 +50,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="تلفن: ۰۹۱۲۲۰۹۵۷۷۸۹" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kl6-R4-pkZ">
-                    <rect key="frame" x="15" y="93" width="313" height="22"/>
+                    <rect key="frame" x="15" y="93" width="320" height="22"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="22" id="2gW-YO-fKo"/>
                     </constraints>
@@ -59,10 +59,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HWJ-Ix-ALr">
-                    <rect key="frame" x="15" y="125" width="55" height="34"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="55" id="DI0-Ye-aqs"/>
-                    </constraints>
+                    <rect key="frame" x="15" y="125" width="38" height="34"/>
                     <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                     <state key="normal" title="ویرایش">
                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -71,14 +68,23 @@
                         <action selector="addressEditButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="8Zb-PB-K4U"/>
                     </connections>
                 </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="EditPencilIcon" translatesAutoresizingMaskIntoConstraints="NO" id="a8A-Yd-096" userLabel="Edit Pencil Icon">
+                    <rect key="frame" x="58" y="134.5" width="15" height="15"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="a8A-Yd-096" secondAttribute="height" multiplier="1:1" id="Arb-BI-hZN"/>
+                        <constraint firstAttribute="width" constant="15" id="bfJ-PU-6iy"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="42A-p9-Ncc" firstAttribute="trailing" secondItem="qvy-0u-gkK" secondAttribute="trailing" id="3KJ-KR-H5t"/>
                 <constraint firstItem="kl6-R4-pkZ" firstAttribute="top" secondItem="42A-p9-Ncc" secondAttribute="bottom" constant="10" id="8kh-M5-0EI"/>
                 <constraint firstAttribute="bottom" secondItem="kl6-R4-pkZ" secondAttribute="bottom" constant="45" id="9yP-iJ-KTs"/>
-                <constraint firstItem="iSG-39-dvH" firstAttribute="bottom" secondItem="qvy-0u-gkK" secondAttribute="bottom" id="DER-VE-U23"/>
+                <constraint firstItem="a8A-Yd-096" firstAttribute="centerY" secondItem="HWJ-Ix-ALr" secondAttribute="centerY" id="DWV-Mx-y0i"/>
+                <constraint firstItem="a8A-Yd-096" firstAttribute="leading" secondItem="HWJ-Ix-ALr" secondAttribute="trailing" constant="5" id="N4j-48-R70"/>
                 <constraint firstAttribute="trailing" secondItem="iSG-39-dvH" secondAttribute="trailing" constant="10" id="SaP-gb-Z7m"/>
+                <constraint firstItem="iSG-39-dvH" firstAttribute="centerY" secondItem="qvy-0u-gkK" secondAttribute="centerY" id="aTV-6F-Urb"/>
                 <constraint firstItem="qvy-0u-gkK" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="cNv-Jk-huo"/>
                 <constraint firstAttribute="bottom" secondItem="HWJ-Ix-ALr" secondAttribute="bottom" constant="1" id="dWC-1i-2g3"/>
                 <constraint firstItem="kl6-R4-pkZ" firstAttribute="trailing" secondItem="42A-p9-Ncc" secondAttribute="trailing" id="jfm-JO-HnC"/>
@@ -101,7 +107,10 @@
                 <outlet property="checkmarkIconImageView" destination="iSG-39-dvH" id="x4n-eo-afH"/>
                 <outlet property="checkmarkIconTrailingConstraint" destination="SaP-gb-Z7m" id="EUs-rO-k8o"/>
             </connections>
-            <point key="canvasLocation" x="25.5" y="53"/>
+            <point key="canvasLocation" x="23" y="54"/>
         </view>
     </objects>
+    <resources>
+        <image name="EditPencilIcon" width="14" height="13"/>
+    </resources>
 </document>

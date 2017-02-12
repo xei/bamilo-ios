@@ -10,12 +10,13 @@
 
 @implementation AddressList
 
-#pragma mark - MTLJSONSerializing
-+ (NSDictionary *)JSONKeyPathsByPropertyKey {
-    return @{
-        @"billing": @"billing",
-        @"shipping": @"shipping"
-    };
+#pragma mark - JSONModel
++(JSONKeyMapper *)keyMapper {
+    return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{
+      @"billing": @"billing",
+      @"shipping": @"shipping",
+      @"other": @"other"
+    }];
 }
 
 @end

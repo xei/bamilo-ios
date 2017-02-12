@@ -6,6 +6,7 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
+#import "DataManager.h"
 #import "CheckoutAddressViewController.h"
 #import "CheckoutProgressViewButtonModel.h"
 #import "AddressTableViewHeaderCell.h"
@@ -18,7 +19,7 @@
 
 @implementation CheckoutAddressViewController {
 @private
-    NSArray *_addresses;
+    NSMutableArray *_addresses;
 }
 
 - (void)viewDidLoad {
@@ -27,18 +28,13 @@
     [self.tableView registerNib:[UINib nibWithNibName:[AddressTableViewHeaderCell nibName] bundle:nil] forHeaderFooterViewReuseIdentifier:[AddressTableViewHeaderCell nibName]];
     [self.tableView registerNib:[UINib nibWithNibName:[AddressTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[AddressTableViewCell nibName]];
     
-    _addresses = [NSArray new];
+    _addresses = [NSMutableArray array];
     
-    [[DataManager sharedInstance] getUserAddressList:^(id data, NSError *error) {
+    [[DataManager sharedInstance] getUserAddressList:self completion:^(id data, NSError *error) {
         if(error == nil) {
-            __unused AddressList *addressList = (AddressList *)data;
+            [self parse:data forRequestId:0];
         }
     }];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Overrides
@@ -69,15 +65,35 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    NSIndexPath *selectedAddressIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    
+    //Trying to reselect the selected address. Ignore.
+    if(indexPath.row == selectedAddressIndexPath.row) {
+        return;
+    }
+    
+    /*[tableView beginUpdates];
+    [tableView deleteRowsAtIndexPaths:@[ selectedAddressIndexPath ] withRowAnimation:UITableViewRowAnimationLeft];
+    [tableView insertRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationLeft];
+    [tableView endUpdates];*/
+    
+    [[DataManager sharedInstance] setDefaultAddress:self address:[_addresses objectAtIndex:indexPath.row] isBilling:NO completion:^(id data, NSError *error) {
+        if(error == nil) {
+            [self parse:data forRequestId:1];
+        }
+    }];
 }
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;//[_addresses count];
+    return [_addresses count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     AddressTableViewCell *addressTableViewCell = [self.tableView dequeueReusableCellWithIdentifier:[AddressTableViewCell nibName] forIndexPath:indexPath];
+    
+    [addressTableViewCell updateWithModel:[_addresses objectAtIndex:indexPath.row]];
     
     return addressTableViewCell;
 }
@@ -89,6 +105,25 @@
         [CheckoutProgressViewButtonModel buttonWith:2 state:CHECKOUT_PROGRESSVIEW_BUTTON_STATE_PENDING],
         [CheckoutProgressViewButtonModel buttonWith:3 state:CHECKOUT_PROGRESSVIEW_BUTTON_STATE_PENDING]
     ];
+}
+
+#pragma mark - Helpers
+-(void)parse:(id)data forRequestId:(int)rid {
+    [_addresses removeAllObjects];
+    
+    AddressList *addressList = (AddressList *)data;
+    
+    if(addressList) {
+        if(addressList.shipping) {
+            [_addresses addObject:addressList.shipping];
+        }
+        
+        for(Address *otherAddress in addressList.other) {
+            [_addresses addObject:otherAddress];
+        }
+        
+        [self.tableView reloadData];
+    }
 }
 
 @end

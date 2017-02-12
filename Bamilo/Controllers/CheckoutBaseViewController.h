@@ -9,8 +9,9 @@
 #import "JABaseViewController.h"
 #import "BaseViewController.h"
 #import "CheckoutProgressViewControl.h"
+#import "DataServiceProtocol.h"
 
-@interface CheckoutBaseViewController : BaseViewController <CheckoutProgressViewDelegate>
+@interface CheckoutBaseViewController : BaseViewController <DataServiceProtocol, CheckoutProgressViewDelegate>
 
 -(NSString *)getNextStepViewControllerSegueIdentifier;
 

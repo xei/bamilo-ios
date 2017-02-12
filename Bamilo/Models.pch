@@ -9,6 +9,7 @@
 #ifndef Models_pch
 #define Models_pch
 
+#import "BaseModel.h"
 #import "Address.h"
 #import "AddressList.h"
 

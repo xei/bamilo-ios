@@ -10,21 +10,21 @@
 
 @implementation Address
 
-#pragma mark - MTLJSONSerializing
-+ (NSDictionary *)JSONKeyPathsByPropertyKey {
-    return @{
-        @"uid": @"id",
-        @"firstName": @"first_name",
-        @"lastName": @"last_name",
-        @"address": @"address1",
-        @"address1": @"address2",
-        @"city": @"city",
-        @"postcode": @"postcode",
-        @"phone": @"phone",
-        @"isDefaultBilling": @"is_default_billing",
-        @"isDefaultShipping": @"is_default_shipping",
-        @"isValid": @"is_valid"
-    };
+#pragma mark - JSONModel
++(JSONKeyMapper *)keyMapper {
+    return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{
+      @"uid": @"id",
+      @"firstName": @"first_name",
+      @"lastName": @"last_name",
+      @"address": @"address1",
+      @"address1": @"address2",
+      @"city": @"city",
+      @"postcode": @"postcode",
+      @"phone": @"phone",
+      @"isDefaultBilling": @"is_default_billing",
+      @"isDefaultShipping": @"is_default_shipping",
+      @"isValid": @"is_valid"
+    }];
 }
 
 @end

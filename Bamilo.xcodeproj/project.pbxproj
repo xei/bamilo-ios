@@ -151,6 +151,8 @@
 		879F87EF1E5048790033FE87 /* NSMutableArray+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F87EE1E5048790033FE87 /* NSMutableArray+Extensions.m */; };
 		879F87F21E5057F10033FE87 /* PlainTableViewHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 879F87F11E5057F10033FE87 /* PlainTableViewHeaderCell.xib */; };
 		879F87F51E5058060033FE87 /* PlainTableViewHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F87F41E5058060033FE87 /* PlainTableViewHeaderCell.m */; };
+		879F87F91E507FD10033FE87 /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F87F81E507FD10033FE87 /* BaseModel.m */; };
+		879F87FF1E5095E00033FE87 /* LoadingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F87FE1E5095E00033FE87 /* LoadingManager.m */; };
 		87A6814E1E40DC3C00D252AC /* ViewControllerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A6814D1E40DC3C00D252AC /* ViewControllerManager.m */; };
 		87A681521E40ED9200D252AC /* OrangeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A681511E40ED9200D252AC /* OrangeButton.m */; };
 		87A681581E40F21B00D252AC /* BaseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A681571E40F21B00D252AC /* BaseButton.m */; };
@@ -804,6 +806,11 @@
 		879F87F11E5057F10033FE87 /* PlainTableViewHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlainTableViewHeaderCell.xib; sourceTree = "<group>"; };
 		879F87F31E5058060033FE87 /* PlainTableViewHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlainTableViewHeaderCell.h; sourceTree = "<group>"; };
 		879F87F41E5058060033FE87 /* PlainTableViewHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlainTableViewHeaderCell.m; sourceTree = "<group>"; };
+		879F87F71E507FD10033FE87 /* BaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseModel.h; sourceTree = "<group>"; };
+		879F87F81E507FD10033FE87 /* BaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseModel.m; sourceTree = "<group>"; };
+		879F87FB1E5088E30033FE87 /* DataServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataServiceProtocol.h; sourceTree = "<group>"; };
+		879F87FD1E5095E00033FE87 /* LoadingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingManager.h; sourceTree = "<group>"; };
+		879F87FE1E5095E00033FE87 /* LoadingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingManager.m; sourceTree = "<group>"; };
 		87A6814C1E40DC3C00D252AC /* ViewControllerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewControllerManager.h; sourceTree = "<group>"; };
 		87A6814D1E40DC3C00D252AC /* ViewControllerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewControllerManager.m; sourceTree = "<group>"; };
 		87A681501E40ED9200D252AC /* OrangeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrangeButton.h; sourceTree = "<group>"; };
@@ -1976,6 +1983,7 @@
 			isa = PBXGroup;
 			children = (
 				8714E0631E47484B004C9B1D /* Models.pch */,
+				879F87FA1E507FD90033FE87 /* BaseModel */,
 			);
 			name = Base;
 			sourceTree = "<group>";
@@ -2197,6 +2205,7 @@
 				874AAB5F1E3C790300B3F8FE /* ConfigManager */,
 				874AAB6A1E3DCECD00B3F8FE /* SessionManager */,
 				87A6814B1E40DC2000D252AC /* ViewControllerManager */,
+				879F87FC1E5095CF0033FE87 /* LoadingManager */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -2535,6 +2544,31 @@
 			name = PlainTableViewHeaderCell;
 			sourceTree = "<group>";
 		};
+		879F87F61E5069ED0033FE87 /* Local */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Local;
+			sourceTree = "<group>";
+		};
+		879F87FA1E507FD90033FE87 /* BaseModel */ = {
+			isa = PBXGroup;
+			children = (
+				879F87F71E507FD10033FE87 /* BaseModel.h */,
+				879F87F81E507FD10033FE87 /* BaseModel.m */,
+			);
+			name = BaseModel;
+			sourceTree = "<group>";
+		};
+		879F87FC1E5095CF0033FE87 /* LoadingManager */ = {
+			isa = PBXGroup;
+			children = (
+				879F87FD1E5095E00033FE87 /* LoadingManager.h */,
+				879F87FE1E5095E00033FE87 /* LoadingManager.m */,
+			);
+			name = LoadingManager;
+			sourceTree = "<group>";
+		};
 		87A6814B1E40DC2000D252AC /* ViewControllerManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -2584,6 +2618,7 @@
 		87A681641E41C8C000D252AC /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				879F87FB1E5088E30033FE87 /* DataServiceProtocol.h */,
 				87A681651E41DD1800D252AC /* SideMenuProtocol.h */,
 				87A681631E41C8BC00D252AC /* TabBarProtocol.h */,
 			);
@@ -3050,6 +3085,7 @@
 		9AEF73D41CD20DA200A5D574 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				879F87F61E5069ED0033FE87 /* Local */,
 				87B685191E4B746B0042C09F /* Service */,
 			);
 			name = Models;
@@ -4263,6 +4299,7 @@
 				61E099641E3E0E21004ED14E /* IconTableViewCell.m in Sources */,
 				CE59BEFA1AE7EF0B0057F4E2 /* JAShopTeaserView.m in Sources */,
 				9A86F80A1C281F8F001A91D5 /* JARecentlyViewedViewController.m in Sources */,
+				879F87F91E507FD10033FE87 /* BaseModel.m in Sources */,
 				CE9ADF4C1AB6D78200D56481 /* UIImageView+JA.m in Sources */,
 				875AD5891E38C0C900584ABF /* RIGTMTracker.m in Sources */,
 				CED6205C1BEB526B00FA8403 /* JAFiltersViewController.m in Sources */,
@@ -4465,6 +4502,7 @@
 				874AAB691E3CEA0700B3F8FE /* AppManager.m in Sources */,
 				CE9ADFE91AB6D78200D56481 /* JADynamicForm.m in Sources */,
 				87A681521E40ED9200D252AC /* OrangeButton.m in Sources */,
+				879F87FF1E5095E00033FE87 /* LoadingManager.m in Sources */,
 				89C7AF551BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m in Sources */,
 				CE9ADFEA1AB6D78200D56481 /* main.m in Sources */,
 				CE9ADFEC1AB6D78200D56481 /* JARatingsViewMedium.m in Sources */,
