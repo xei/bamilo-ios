@@ -9,10 +9,7 @@
 #import "DataManager.h"
 #import "Models.pch"
 
-@implementation DataManager {
-@private
-    RequestCompletion responseProcessor;
-}
+@implementation DataManager
 
 static DataManager *instance;
 
@@ -25,17 +22,20 @@ static DataManager *instance;
     return instance;
 }
 
-- (instancetype)init {
-    if (self = [super init]) {
-        responseProcessor = ^(RIApiResponse response, id data, NSArray* errorMessages) {
-            
-        };
-    }
-    return self;
+//### ADDRESS
+-(void) getUserAddressList:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
+    [RequestManager asyncPOST:target path:RI_API_GET_CUSTOMER_ADDRESS_LIST params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+        [self serialize:data into:[AddressList class] response:response errorMessages:errorMessages completion:completion];
+    }];
 }
 
-- (void)getUserAddressList:(DataCompletion)completion {
-    [RequestManager asyncPOST:RI_API_GET_CUSTOMER_ADDRESS_LIST params:nil completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+-(void) setDefaultAddress:(id<DataServiceProtocol>)target address:(Address *)address isBilling:(BOOL)isBilling completion:(DataCompletion)completion {
+    NSDictionary *params = @{
+         @"id": address.uid,
+         @"type": isBilling ? @"billing" : @"shipping"
+    };
+    
+    [RequestManager asyncPUT:target path:RI_API_GET_CUSTOMER_SELECT_DEFAULT params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
         [self serialize:data into:[AddressList class] response:response errorMessages:errorMessages completion:completion];
     }];
 }
@@ -44,8 +44,11 @@ static DataManager *instance;
 - (void)serialize:(id)data into:(Class)aClass response:(RIApiResponse)response errorMessages:(NSArray *)errorMessages completion:(DataCompletion)completion {
     if(response == RIApiResponseSuccess && data) {
         NSError *error;
-        id dataModel = [MTLJSONAdapter modelOfClass:[aClass class] fromJSONDictionary:data error:&error];
         
+        id dataModel = [[aClass alloc] init];
+        
+        [dataModel mergeFromDictionary:data useKeyMapping:YES error:&error];
+
         if(error == nil) {
             completion(dataModel, nil);
         } else {

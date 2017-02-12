@@ -68,4 +68,10 @@
         [self performSegueWithIdentifier:nextStepViewControllerSegueIdentifier sender:self];
     }
 }
+
+#pragma mark - DataServiceProtocol
+-(void)parse:(id)data forRequestId:(int)rid {
+    return;
+}
+
 @end

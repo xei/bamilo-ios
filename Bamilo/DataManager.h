@@ -8,13 +8,15 @@
 
 #import <Foundation/Foundation.h>
 #import "RequestManager.h"
+#import "Address.h"
 
 typedef void(^DataCompletion)(id data, NSError *error);
 
 @interface DataManager : NSObject
 
-+ (instancetype)sharedInstance;
++(instancetype) sharedInstance;
 
-- (void)getUserAddressList:(DataCompletion)completion;
+-(void) getUserAddressList:(id<DataServiceProtocol>)target completion:(DataCompletion)completion;
+-(void) setDefaultAddress:(id<DataServiceProtocol>)target address:(Address *)address isBilling:(BOOL)isBilling completion:(DataCompletion)completion;
 
 @end

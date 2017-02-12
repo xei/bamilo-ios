@@ -281,20 +281,15 @@
 }
 
 - (void)showSearchBar {
-    self.searchBarBackground = [[UIView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x,
-                                                                        self.view.bounds.origin.y,
-                                                                        self.view.bounds.size.width,
-                                                                        kSearchViewBarHeight)];
+    self.searchBarBackground = [[UIView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, kSearchViewBarHeight)];
+    
     self.searchBarBackground.backgroundColor = JABlack300Color;
     [self.view addSubview:self.searchBarBackground];
     
     UIView* separatorView = [UIView new];
     [separatorView setBackgroundColor:JABlack400Color];
     [separatorView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    [separatorView setFrame:CGRectMake(self.searchBarBackground.bounds.origin.x,
-                                       self.searchBarBackground.bounds.size.height - 1.0f,
-                                       self.searchBarBackground.bounds.size.width,
-                                       1.0f)];
+    [separatorView setFrame:CGRectMake(self.searchBarBackground.bounds.origin.x, self.searchBarBackground.bounds.size.height - 1.0f, self.searchBarBackground.bounds.size.width, 1.0f)];
 
     [self.searchBarBackground addSubview:separatorView];
     
@@ -302,15 +297,12 @@
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         horizontalMargin = 10.0f;
     }
-    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(self.searchBarBackground.bounds.origin.x + horizontalMargin,
-                                                                   self.searchBarBackground.bounds.origin.y,
-                                                                   self.searchBarBackground.bounds.size.width - horizontalMargin * 2,
-                                                                   self.searchBarBackground.bounds.size.height - 1.0f)];
+    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(self.searchBarBackground.bounds.origin.x + horizontalMargin, self.searchBarBackground.bounds.origin.y, self.searchBarBackground.bounds.size.width - horizontalMargin * 2, self.searchBarBackground.bounds.size.height - 1.0f)];
+    
     self.searchBar.delegate = self;
     self.searchBar.barTintColor = JABlack300Color;
     self.searchBar.placeholder = STRING_SEARCH_PLACEHOLDER;
     self.searchBar.showsCancelButton = NO;
-    
     
     [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTintColor:[UIColor orangeColor]];
     
@@ -327,10 +319,7 @@
     UIImage *searchIcon = [UIImage imageNamed:@"searchIcon"];
     
     self.searchIconImageView = [[UIImageView alloc] initWithImage:searchIcon];
-    self.searchIconImageView.frame = CGRectMake(self.searchBar.frame.size.width - horizontalMargin - searchIcon.size.width,
-                                                (self.searchBar.frame.size.height - searchIcon.size.height) / 2,
-                                                searchIcon.size.width,
-                                                searchIcon.size.height);
+    self.searchIconImageView.frame = CGRectMake(self.searchBar.frame.size.width - horizontalMargin - searchIcon.size.width,(self.searchBar.frame.size.height - searchIcon.size.height) / 2, searchIcon.size.width, searchIcon.size.height);
     
     [self.searchBar addSubview:self.searchIconImageView];
     

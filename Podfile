@@ -28,7 +28,8 @@ target 'Bamilo' do
   pod 'NewRelicAgent', '~> 5.10.0'
   pod 'SDWebImage', '~> 3.8'  
   pod 'TTRangeSlider', '~> 1.0.5'
-  pod 'Mantle'
+  # pod 'Mantle'
+  pod 'JSONModel'
 
   target 'BamiloUITests' do
     inherit! :search_paths

@@ -7,7 +7,6 @@
 //
 
 #import "BaseTableViewCell.h"
-#import "RIAddress.h"
 
 @interface AddressTableViewCell : BaseTableViewCell
 
