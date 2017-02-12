@@ -48,6 +48,24 @@
     self.navBarLayout.title = STRING_CHOOSE_ADDRESS;
 }
 
+-(void)parse:(id)data forRequestId:(int)rid {
+    [_addresses removeAllObjects];
+    
+    AddressList *addressList = (AddressList *)data;
+    
+    if(addressList) {
+        if(addressList.shipping) {
+            [_addresses addObject:addressList.shipping];
+        }
+        
+        for(Address *otherAddress in addressList.other) {
+            [_addresses addObject:otherAddress];
+        }
+        
+        [self.tableView reloadData];
+    }
+}
+
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 40.0f;
@@ -105,25 +123,6 @@
         [CheckoutProgressViewButtonModel buttonWith:2 state:CHECKOUT_PROGRESSVIEW_BUTTON_STATE_PENDING],
         [CheckoutProgressViewButtonModel buttonWith:3 state:CHECKOUT_PROGRESSVIEW_BUTTON_STATE_PENDING]
     ];
-}
-
-#pragma mark - Helpers
--(void)parse:(id)data forRequestId:(int)rid {
-    [_addresses removeAllObjects];
-    
-    AddressList *addressList = (AddressList *)data;
-    
-    if(addressList) {
-        if(addressList.shipping) {
-            [_addresses addObject:addressList.shipping];
-        }
-        
-        for(Address *otherAddress in addressList.other) {
-            [_addresses addObject:otherAddress];
-        }
-        
-        [self.tableView reloadData];
-    }
 }
 
 @end

@@ -36,7 +36,7 @@
                             <view contentMode="scaleToFill" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="w6C-5U-LQK" userLabel="right side container view">
                                 <rect key="frame" x="235" y="44" width="130" height="202"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" image="46CDF880-3B0B-4B8B-B878-4B8D64F813C2" translatesAutoresizingMaskIntoConstraints="NO" id="RW7-NT-MKZ">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" image="C837F1AD-F9CD-453D-8D41-EC0D87DFD6FA" translatesAutoresizingMaskIntoConstraints="NO" id="RW7-NT-MKZ">
                                         <rect key="frame" x="0.0" y="0.0" width="130" height="165"/>
                                         <gestureRecognizers/>
                                         <constraints>
@@ -234,12 +234,12 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="brandLabelButton" destination="f58-oU-gJg" id="jtJ-HB-ZeR"/>
-                <outlet property="cartItemImage" destination="RW7-NT-MKZ" id="fQU-6y-hSN"/>
                 <outlet property="discountLabel" destination="naZ-B0-fgP" id="P9g-OU-eHL"/>
                 <outlet property="discountValue" destination="naZ-B0-fgP" id="6UT-6T-mqg"/>
+                <outlet property="itemImage" destination="RW7-NT-MKZ" id="mhf-fP-8f9"/>
+                <outlet property="nameLabel" destination="rfE-Vo-IY0" id="Rhb-Iq-MZa"/>
                 <outlet property="priceLabel" destination="VFE-aN-ZLR" id="PDp-s1-fdN"/>
                 <outlet property="productColorLabel" destination="7Fb-p3-91j" id="88z-R7-eXe"/>
-                <outlet property="productNameLabel" destination="rfE-Vo-IY0" id="tUt-wG-TA4"/>
                 <outlet property="sizeLabel" destination="wMc-5Z-3aQ" id="UCZ-X6-h8N"/>
                 <outlet property="stepper" destination="kyq-o6-cff" id="f8H-IS-0nl"/>
             </connections>
@@ -247,7 +247,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="46CDF880-3B0B-4B8B-B878-4B8D64F813C2" width="146" height="182">
+        <image name="C837F1AD-F9CD-453D-8D41-EC0D87DFD6FA" width="146" height="182">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw

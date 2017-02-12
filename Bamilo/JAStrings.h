@@ -24,6 +24,7 @@
 #define STRING_ERROR RILocalizedString(@"string_error", nil)
 
 #define STRING_LOGIN RILocalizedString(@"login_label", nil)
+#define STRING_LOGIN_OR_SIGNUP RILocalizedString(@"login_or_signup_label", nil)
 #define STRING_LOGOUT RILocalizedString(@"action_label_logout", nil)
 #define STRING_HOME RILocalizedString(@"home", nil)
 #define STRING_CATEGORIES RILocalizedString(@"categories", nil)

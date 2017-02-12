@@ -131,7 +131,7 @@
 }
 
 - (IBAction)proceedToCheckout:(id)sender {
-    
+
     [JAAuthenticationViewController goToCheckoutWithBlock:^{
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];

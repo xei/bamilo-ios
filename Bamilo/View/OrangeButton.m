@@ -8,7 +8,8 @@
 
 #import "OrangeButton.h"
 
-#define cCOLOR_ORANGE [UIColor withRGBA:247 green:151 blue:32 alpha:1.0f]
+#define cEXTRA_DARK_GRAY_COLOR [UIColor withRGBA:80 green:80 blue:80 alpha:1.0f]
+#define cORAGNE_COLOR [UIColor withRGBA:247 green:151 blue:32 alpha:1.0f]
 
 @implementation OrangeButton
 
@@ -28,8 +29,8 @@
 -(void)setupButtonAppearance {
     [super setupButtonAppearance];
     
-    [self.titleLabel setFont:[UIFont fontWithName:kFontBoldName size:15]];
-    [self setBackgroundColor:cCOLOR_ORANGE];
+    [self setBackgroundColor:cORAGNE_COLOR];
+    [self.titleLabel applyStyle:kFontBoldName fontSize:15 color: cORAGNE_COLOR];
     [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 }
 

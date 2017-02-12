@@ -10,6 +10,6 @@
 
 @protocol DataServiceProtocol <NSObject>
 
--(void) parse:(id)data forRequestId:(int)rid;
+-(void) bind:(id)data forRequestId:(int)rid;
 
 @end

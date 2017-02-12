@@ -70,7 +70,7 @@
 }
 
 #pragma mark - DataServiceProtocol
--(void)parse:(id)data forRequestId:(int)rid {
+-(void)bind:(id)data forRequestId:(int)rid {
     return;
 }
 

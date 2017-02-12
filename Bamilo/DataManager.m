@@ -8,6 +8,7 @@
 
 #import "DataManager.h"
 #import "Models.pch"
+#import "RIForm.h"
 
 @implementation DataManager
 
@@ -22,7 +23,19 @@ static DataManager *instance;
     return instance;
 }
 
-//### ADDRESS
+//### LOGIN ###
+-(void)loginUser:(id<DataServiceProtocol>)target withUsername:(NSString *)username password:(NSString *)password completion:(DataCompletion)completion {
+    NSDictionary *params = @{
+         @"login[email]": username,
+         @"login[password]": password
+    };
+
+    [RequestManager asyncPOST:target path:RI_API_LOGIN_CUSTOMER params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+        [RIForm parseEntities:data plainPassword:password loginMethod:@"normal"];
+    }];
+}
+
+//### ADDRESS ###
 -(void) getUserAddressList:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
     [RequestManager asyncPOST:target path:RI_API_GET_CUSTOMER_ADDRESS_LIST params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
         [self serialize:data into:[AddressList class] response:response errorMessages:errorMessages completion:completion];
@@ -31,9 +44,9 @@ static DataManager *instance;
 
 -(void) setDefaultAddress:(id<DataServiceProtocol>)target address:(Address *)address isBilling:(BOOL)isBilling completion:(DataCompletion)completion {
     NSDictionary *params = @{
-         @"id": address.uid,
-         @"type": isBilling ? @"billing" : @"shipping"
-    };
+                             @"id": address.uid,
+                             @"type": isBilling ? @"billing" : @"shipping"
+                             };
     
     [RequestManager asyncPUT:target path:RI_API_GET_CUSTOMER_SELECT_DEFAULT params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
         [self serialize:data into:[AddressList class] response:response errorMessages:errorMessages completion:completion];

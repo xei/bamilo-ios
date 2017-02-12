@@ -178,16 +178,16 @@
                     [parameters setObject:customerObject.gender forKey:@"gender"];
                 }
                 
-                [RICustomer loginCustomerByFacebookWithParameters:[parameters copy]
-                                                     successBlock:^(NSDictionary *entities, NSString* nextStep) {
-                                                         dispatch_async(dispatch_get_main_queue(), ^{
-                                                             returnBlock(YES, entities, customerObject.loginMethod);
-                                                         });
-                                                     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject) {
-                                                         dispatch_async(dispatch_get_main_queue(), ^{
-                                                             returnBlock(NO, nil, customerObject.loginMethod);
-                                                         });
-                                                     }];
+//                [RICustomer loginCustomerByFacebookWithParameters:[parameters copy]
+//                                                     successBlock:^(NSDictionary *entities, NSString* nextStep) {
+//                                                         dispatch_async(dispatch_get_main_queue(), ^{
+//                                                             returnBlock(YES, entities, customerObject.loginMethod);
+//                                                         });
+//                                                     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject) {
+//                                                         dispatch_async(dispatch_get_main_queue(), ^{
+//                                                             returnBlock(NO, nil, customerObject.loginMethod);
+//                                                         });
+//                                                     }];
             }
             else if([@"normal" isEqualToString:customerObject.loginMethod])
             {
@@ -286,66 +286,65 @@
 }
 
 
-#pragma mark - Facebook Login
-
-+ (NSString *)loginCustomerByFacebookWithParameters:(NSDictionary *)parameters
-                                       successBlock:(void (^)(NSDictionary *entities, NSString* nextStep))successBlock
-                                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock;
-{
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_FACEBOOK_LOGIN_CUSTOMER]]
-                                                            parameters:parameters
-                                                            httpMethod:HttpVerbPOST
-                                                             cacheType:RIURLCacheNoCache
-                                                             cacheTime:RIURLCacheNoTime
-                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
-                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-                                                              NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
-                                                              if (VALID_NOTEMPTY(metadata, NSDictionary))
-                                                              {
-                                                                  NSDictionary* userObject = [metadata objectForKey:@"customer_entity"];
-                                                                  if (VALID_NOTEMPTY(userObject, NSDictionary))
-                                                                  {
-                                                                      NSString* nextStep = @"";
-                                                                      NSDictionary* nextStepJSON = [metadata objectForKey:@"multistep_entity"];
-                                                                      if (VALID_NOTEMPTY(nextStepJSON, NSDictionary)) {
-                                                                          NSString* nextStepValue = [nextStepJSON objectForKey:@"next_step"];
-                                                                          if (VALID_NOTEMPTY(nextStepValue, NSString)) {
-                                                                              nextStep = nextStepValue;
-                                                                          }
-                                                                      }
-                                                                      RICustomer* customer = [self parseCustomerWithJson:userObject plainPassword:nil loginMethod:@"facebook"];
-                                                                      NSMutableDictionary* entities = [NSMutableDictionary new];
-                                                                      [entities setValue:customer forKey:@"customer"];
-                                                                      successBlock(entities, nextStep);
-                                                                  } else
-                                                                  {
-                                                                      failureBlock(apiResponse, nil);
-                                                                  }
-                                                              } else
-                                                              {
-                                                                  failureBlock(apiResponse, nil);
-                                                              }
-                                                              
-                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
-                                                              if(NOTEMPTY(errorJsonObject))
-                                                              {
-                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
-                                                              } else if(NOTEMPTY(errorObject))
-                                                              {
-                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                  failureBlock(apiResponse, errorArray);
-                                                              } else
-                                                              {
-                                                                  failureBlock(apiResponse, nil);
-                                                              }
-                                                          }];
-}
+//#pragma mark - Facebook Login
+//
+//+ (NSString *)loginCustomerByFacebookWithParameters:(NSDictionary *)parameters
+//                                       successBlock:(void (^)(NSDictionary *entities, NSString* nextStep))successBlock
+//                                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock;
+//{
+//    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_FACEBOOK_LOGIN_CUSTOMER]]
+//                                                            parameters:parameters
+//                                                            httpMethod:HttpVerbPOST
+//                                                             cacheType:RIURLCacheNoCache
+//                                                             cacheTime:RIURLCacheNoTime
+//                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
+//                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+//                                                              NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
+//                                                              if (VALID_NOTEMPTY(metadata, NSDictionary))
+//                                                              {
+//                                                                  NSDictionary* userObject = [metadata objectForKey:@"customer_entity"];
+//                                                                  if (VALID_NOTEMPTY(userObject, NSDictionary))
+//                                                                  {
+//                                                                      NSString* nextStep = @"";
+//                                                                      NSDictionary* nextStepJSON = [metadata objectForKey:@"multistep_entity"];
+//                                                                      if (VALID_NOTEMPTY(nextStepJSON, NSDictionary)) {
+//                                                                          NSString* nextStepValue = [nextStepJSON objectForKey:@"next_step"];
+//                                                                          if (VALID_NOTEMPTY(nextStepValue, NSString)) {
+//                                                                              nextStep = nextStepValue;
+//                                                                          }
+//                                                                      }
+//                                                                      RICustomer* customer = [self parseCustomerWithJson:userObject plainPassword:nil loginMethod:@"facebook"];
+//                                                                      NSMutableDictionary* entities = [NSMutableDictionary new];
+//                                                                      [entities setValue:customer forKey:@"customer"];
+//                                                                      successBlock(entities, nextStep);
+//                                                                  } else
+//                                                                  {
+//                                                                      failureBlock(apiResponse, nil);
+//                                                                  }
+//                                                              } else
+//                                                              {
+//                                                                  failureBlock(apiResponse, nil);
+//                                                              }
+//                                                              
+//                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
+//                                                              if(NOTEMPTY(errorJsonObject))
+//                                                              {
+//                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
+//                                                              } else if(NOTEMPTY(errorObject))
+//                                                              {
+//                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+//                                                                  failureBlock(apiResponse, errorArray);
+//                                                              } else
+//                                                              {
+//                                                                  failureBlock(apiResponse, nil);
+//                                                              }
+//                                                          }];
+//}
 
 #pragma mark - Get customer
 
 + (NSString *)getCustomerWithSuccessBlock:(void (^)(id customer))successBlock
-                          andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
-{
+                          andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock {
     NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
     
     if (customers.count > 0) {
@@ -356,8 +355,8 @@
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_GET_CUSTOMER]]
                                                             parameters:nil
                                                             httpMethod:HttpVerbPOST
-                                                             cacheType:RIURLCacheNoCache
-                                                             cacheTime:RIURLCacheDefaultTime
+                                                            cacheType:RIURLCacheNoCache
+                                                            cacheTime:RIURLCacheDefaultTime
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
@@ -384,8 +383,7 @@
 }
 
 + (NSString*)logoutCustomerWithSuccessBlock:(void (^)())successBlock
-                            andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock
-{
+                            andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_LOGOUT_CUSTOMER]]
                                                             parameters:nil
                                                             httpMethod:HttpVerbPOST
@@ -515,15 +513,13 @@
 
 #pragma mark - Cancel requests
 
-+ (void)cancelRequest:(NSString *)operationID
-{
++ (void)cancelRequest:(NSString *)operationID {
     if(VALID_NOTEMPTY(operationID, NSString))
         [[RICommunicationWrapper sharedInstance] cancelRequest:operationID];
 }
 
 #pragma mark - Parser
-+ (RICustomer *)parseCustomerWithJson:(NSDictionary *)json
-{
++ (RICustomer *)parseCustomerWithJson:(NSDictionary *)json {
     RICustomer *customer = (RICustomer *)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RICustomer class])];
     
     if ([json objectForKey:@"id"]) {
@@ -536,7 +532,7 @@
         
         if (customers.count > 0) {
             customer = [customers lastObject];
-        }else{
+        } else {
             [RICustomer saveCustomer:customer andContext:YES];
         }
     }

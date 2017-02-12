@@ -17,7 +17,6 @@
 #import "JABottomBar.h"
 #import "JATextFieldComponent.h"
 #import "RIPhonePrefix.h"
-#import "JAAuthenticationViewController.h"
 #import "JAAccountServicesView.h"
 
 #define kTopMargin 30.f
@@ -173,7 +172,7 @@ JAAccountServicesProtocol
 - (JABottomBar *)registerButton
 {
     if (!VALID_NOTEMPTY(_registerButton, JABottomBar)) {
-        _registerButton = [[JABottomBar alloc] initWithFrame:CGRectMake(6.f, self.view.height, self.view.width - 2*6.f, kBottomDefaultHeight)];
+        _registerButton = [[JABottomBar alloc] initWithFrame:CGRectMake(6.f, self.view.height, self.view.width - 2 * 6.f, kBottomDefaultHeight)];
         [_registerButton addButton:[STRING_CONTINUE uppercaseString] target:self action:@selector(registerButtonPressed:)];
     }
     return _registerButton;
@@ -254,7 +253,7 @@ JAAccountServicesProtocol
 - (void)setupViews
 {
     CGFloat y = self.mainScrollView.contentOffset.y;
-    [self.mainScrollView setWidth:self.viewBounds.size.width - 2*kLateralMargin];
+    [self.mainScrollView setWidth:self.viewBounds.size.width - 2 * kLateralMargin];
     [self.headerLabel setWidth:self.mainScrollView.width];
     [self.casSubtitleLabel setWidth:self.mainScrollView.width];
     [self.casAccountServicesImagesView setWidth:self.mainScrollView.width];
