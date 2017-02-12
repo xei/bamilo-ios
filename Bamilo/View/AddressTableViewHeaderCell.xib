@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -29,10 +30,10 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Thk-L1-74p">
-                    <rect key="frame" x="10" y="3" width="80" height="35"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Thk-L1-74p">
+                    <rect key="frame" x="10" y="5" width="61" height="30"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="80" id="A7f-9n-s0e"/>
+                        <constraint firstAttribute="height" constant="30" id="u00-EF-50g"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Bamilo-Sans-Bold" family="Bamilo-Sans" pointSize="12"/>
                     <state key="normal" title="آدرس جدید">
@@ -42,12 +43,21 @@
                         <action selector="addAddressButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="1LR-fa-Jtp"/>
                     </connections>
                 </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BluePlusIcon" translatesAutoresizingMaskIntoConstraints="NO" id="rdG-Vu-MMC">
+                    <rect key="frame" x="76" y="5" width="15" height="15"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="15" id="8x2-AR-W52"/>
+                        <constraint firstAttribute="width" secondItem="rdG-Vu-MMC" secondAttribute="height" multiplier="1:1" id="S0k-wa-xXC"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="Thk-L1-74p" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="A5S-RX-SPT"/>
                 <constraint firstAttribute="trailing" secondItem="Lrz-Sn-LUX" secondAttribute="trailing" constant="10" id="Cze-9R-aw5"/>
                 <constraint firstItem="Lrz-Sn-LUX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="K5E-uD-3s7"/>
+                <constraint firstItem="rdG-Vu-MMC" firstAttribute="top" secondItem="Thk-L1-74p" secondAttribute="top" id="Sig-oX-AjT"/>
+                <constraint firstItem="rdG-Vu-MMC" firstAttribute="leading" secondItem="Thk-L1-74p" secondAttribute="trailing" constant="5" id="Tri-Tp-3kP"/>
                 <constraint firstItem="Thk-L1-74p" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="k0f-rS-ZSd"/>
                 <constraint firstItem="Lrz-Sn-LUX" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="zMd-ys-Ekg"/>
             </constraints>
@@ -61,4 +71,7 @@
             </connections>
         </view>
     </objects>
+    <resources>
+        <image name="BluePlusIcon" width="50" height="51"/>
+    </resources>
 </document>

@@ -14,6 +14,7 @@ typedef void(^DataCompletion)(id data, NSError *error);
 @interface DataManager : NSObject
 
 + (instancetype)sharedInstance;
+
 - (void)getUserAddressList:(DataCompletion)completion;
 
 @end

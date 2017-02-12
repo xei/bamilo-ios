@@ -18,7 +18,7 @@
 
 @implementation CheckoutAddressViewController {
 @private
-    NSArray *_addresses;
+    NSMutableArray *_addresses;
 }
 
 - (void)viewDidLoad {
@@ -27,11 +27,22 @@
     [self.tableView registerNib:[UINib nibWithNibName:[AddressTableViewHeaderCell nibName] bundle:nil] forHeaderFooterViewReuseIdentifier:[AddressTableViewHeaderCell nibName]];
     [self.tableView registerNib:[UINib nibWithNibName:[AddressTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[AddressTableViewCell nibName]];
     
-    _addresses = [NSArray new];
+    _addresses = [NSMutableArray array];
     
     [[DataManager sharedInstance] getUserAddressList:^(id data, NSError *error) {
         if(error == nil) {
-            __unused AddressList *addressList = (AddressList *)data;
+            AddressList *addressList = (AddressList *)data;
+            if(addressList) {
+                if(addressList.shipping) {
+                    [_addresses addObject:addressList.shipping];
+                }
+                
+                for(Address *otherAddress in addressList.other) {
+                    [_addresses addObject:otherAddress];
+                }
+                
+                [self.tableView reloadData];
+            }
         }
     }];
 }
@@ -73,11 +84,13 @@
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;//[_addresses count];
+    return [_addresses count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     AddressTableViewCell *addressTableViewCell = [self.tableView dequeueReusableCellWithIdentifier:[AddressTableViewCell nibName] forIndexPath:indexPath];
+    
+    [addressTableViewCell updateWithModel:[_addresses objectAtIndex:indexPath.row]];
     
     return addressTableViewCell;
 }

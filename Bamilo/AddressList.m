@@ -14,7 +14,8 @@
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{
         @"billing": @"billing",
-        @"shipping": @"shipping"
+        @"shipping": @"shipping",
+        @"other": @"other"
     };
 }
 
