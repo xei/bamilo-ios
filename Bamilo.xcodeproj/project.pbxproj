@@ -65,8 +65,8 @@
 		87459CA81E4F1B2F00743120 /* BaseTableViewHeaderFooterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87459CA71E4F1B2F00743120 /* BaseTableViewHeaderFooterCell.m */; };
 		87459CAB1E4F346C00743120 /* OnlinePaymentVariationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87459CAA1E4F346C00743120 /* OnlinePaymentVariationTableViewCell.m */; };
 		87459CAE1E4F347C00743120 /* OnlinePaymentVariationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87459CAD1E4F347C00743120 /* OnlinePaymentVariationTableViewCell.xib */; };
-		87459CB11E4F34BC00743120 /* PayOnDeliveryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87459CB01E4F34BC00743120 /* PayOnDeliveryTableViewCell.xib */; };
-		87459CB41E4F34C500743120 /* PayOnDeliveryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87459CB31E4F34C500743120 /* PayOnDeliveryTableViewCell.m */; };
+		87459CB11E4F34BC00743120 /* PaymentDescTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87459CB01E4F34BC00743120 /* PaymentDescTableViewCell.xib */; };
+		87459CB41E4F34C500743120 /* PaymentDescTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87459CB31E4F34C500743120 /* PaymentDescTableViewCell.m */; };
 		874AAB551E3C764600B3F8FE /* Bamilo-Configs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 874AAB541E3C764600B3F8FE /* Bamilo-Configs.plist */; };
 		874AAB5E1E3C778E00B3F8FE /* ConfigManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB5D1E3C778E00B3F8FE /* ConfigManager.m */; };
 		874AAB651E3CE35B00B3F8FE /* ConfigManager-Consts.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB641E3CE35B00B3F8FE /* ConfigManager-Consts.m */; };
@@ -622,9 +622,9 @@
 		87459CA91E4F346C00743120 /* OnlinePaymentVariationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnlinePaymentVariationTableViewCell.h; sourceTree = "<group>"; };
 		87459CAA1E4F346C00743120 /* OnlinePaymentVariationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnlinePaymentVariationTableViewCell.m; sourceTree = "<group>"; };
 		87459CAD1E4F347C00743120 /* OnlinePaymentVariationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OnlinePaymentVariationTableViewCell.xib; sourceTree = "<group>"; };
-		87459CB01E4F34BC00743120 /* PayOnDeliveryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayOnDeliveryTableViewCell.xib; sourceTree = "<group>"; };
-		87459CB21E4F34C500743120 /* PayOnDeliveryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayOnDeliveryTableViewCell.h; sourceTree = "<group>"; };
-		87459CB31E4F34C500743120 /* PayOnDeliveryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayOnDeliveryTableViewCell.m; sourceTree = "<group>"; };
+		87459CB01E4F34BC00743120 /* PaymentDescTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentDescTableViewCell.xib; sourceTree = "<group>"; };
+		87459CB21E4F34C500743120 /* PaymentDescTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentDescTableViewCell.h; sourceTree = "<group>"; };
+		87459CB31E4F34C500743120 /* PaymentDescTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentDescTableViewCell.m; sourceTree = "<group>"; };
 		874AAB541E3C764600B3F8FE /* Bamilo-Configs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Bamilo-Configs.plist"; sourceTree = "<group>"; };
 		874AAB5D1E3C778E00B3F8FE /* ConfigManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigManager.m; sourceTree = "<group>"; };
 		874AAB621E3CE32C00B3F8FE /* ConfigManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigManager.h; sourceTree = "<group>"; };
@@ -2160,8 +2160,8 @@
 		87459C9F1E4F157600743120 /* PaymentOptions */ = {
 			isa = PBXGroup;
 			children = (
+				87459CAF1E4F34AB00743120 /* PaymentDescTableViewCell */,
 				87459CAC1E4F347000743120 /* OnlinePaymentVariationTableViewCell */,
-				87459CAF1E4F34AB00743120 /* PayOnDeliveryTableViewCell */,
 			);
 			name = PaymentOptions;
 			sourceTree = "<group>";
@@ -2185,14 +2185,14 @@
 			name = OnlinePaymentVariationTableViewCell;
 			sourceTree = "<group>";
 		};
-		87459CAF1E4F34AB00743120 /* PayOnDeliveryTableViewCell */ = {
+		87459CAF1E4F34AB00743120 /* PaymentDescTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
-				87459CB21E4F34C500743120 /* PayOnDeliveryTableViewCell.h */,
-				87459CB31E4F34C500743120 /* PayOnDeliveryTableViewCell.m */,
-				87459CB01E4F34BC00743120 /* PayOnDeliveryTableViewCell.xib */,
+				87459CB21E4F34C500743120 /* PaymentDescTableViewCell.h */,
+				87459CB31E4F34C500743120 /* PaymentDescTableViewCell.m */,
+				87459CB01E4F34BC00743120 /* PaymentDescTableViewCell.xib */,
 			);
-			name = PayOnDeliveryTableViewCell;
+			name = PaymentDescTableViewCell;
 			sourceTree = "<group>";
 		};
 		874AAB5B1E3C775900B3F8FE /* Managers */ = {
@@ -4010,7 +4010,7 @@
 				CEA2A1BB1B25D53B00E5973F /* JANewRatingViewController.xib in Resources */,
 				9A564CC11B38187100F23057 /* JANewSellerRatingViewController~ipad.xib in Resources */,
 				CE9AE09B1AB6D78200D56481 /* JAPaymentCell.xib in Resources */,
-				87459CB11E4F34BC00743120 /* PayOnDeliveryTableViewCell.xib in Resources */,
+				87459CB11E4F34BC00743120 /* PaymentDescTableViewCell.xib in Resources */,
 				CE9AE0A21AB6D78200D56481 /* JASwitchCell.xib in Resources */,
 				CE9AE0A31AB6D78200D56481 /* JAUndefinedSearchView.xib in Resources */,
 				CE9AE0A81AB6D78200D56481 /* JACartListHeaderView.xib in Resources */,
@@ -4224,7 +4224,7 @@
 				9AE766CD1CBCF31400B63D8E /* JACartResumeView.m in Sources */,
 				CE9ADF3E1AB6D78200D56481 /* JAAppDelegate.m in Sources */,
 				CE9ADF3F1AB6D78200D56481 /* JACampaignProductCell.m in Sources */,
-				87459CB41E4F34C500743120 /* PayOnDeliveryTableViewCell.m in Sources */,
+				87459CB41E4F34C500743120 /* PaymentDescTableViewCell.m in Sources */,
 				875AD57C1E38C0C900584ABF /* RICommunicationWrapper.m in Sources */,
 				875AD5641E38C0C900584ABF /* RILocale.m in Sources */,
 				874AAB651E3CE35B00B3F8FE /* ConfigManager-Consts.m in Sources */,

@@ -1,5 +1,5 @@
 //
-//  PayOnDeliveryTableViewCell.h
+//  PaymentDescTableViewCell.h
 //  Bamilo
 //
 //  Created by Narbeh Mirzaei on 2/11/17.
@@ -8,7 +8,7 @@
 
 #import "BaseTableViewCell.h"
 
-@interface PayOnDeliveryTableViewCell : BaseTableViewCell
+@interface PaymentDescTableViewCell : BaseTableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *descLabel;
 

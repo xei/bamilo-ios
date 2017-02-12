@@ -11,9 +11,9 @@
 #import "PlainTableViewHeaderCell.h"
 #import "PaymentTypeTableViewCell.h"
 #import "OnlinePaymentVariationTableViewCell.h"
-#import "PayOnDeliveryTableViewCell.h"
+#import "PaymentDescTableViewCell.h"
 
-typedef NS_OPTIONS(NSUInteger, PaymentMethods) {
+typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
     PAYMENT_METHOD_ONLINE = 1 << 0,
     PAYMENT_METHOD_ON_DELIVERY = 1 << 1
 };
@@ -25,8 +25,9 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethods) {
 @implementation CheckoutPaymentViewController {
 @private
     NSMutableArray *_cellsIndexPaths;
-    PaymentMethods _selectedPaymentMethod;
+    PaymentMethod _selectedPaymentMethod;
     int _indexForOnlineMethodVariation;
+    NSArray *_onlinePaymentVariations;
 }
 
 - (void)viewDidLoad {
@@ -41,22 +42,40 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethods) {
     //OnlinePaymentVariationTableViewCell
     [self.tableView registerNib:[UINib nibWithNibName:[OnlinePaymentVariationTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[OnlinePaymentVariationTableViewCell nibName]];
     
-    //PayOnDeliveryTableViewCell
-    [self.tableView registerNib:[UINib nibWithNibName:[PayOnDeliveryTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[PayOnDeliveryTableViewCell nibName]];
+    //PaymentDescTableViewCell
+    [self.tableView registerNib:[UINib nibWithNibName:[PaymentDescTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[PaymentDescTableViewCell nibName]];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
+    //TEMP
+    OnlinePaymentVariationTableViewCellModel *saman = [OnlinePaymentVariationTableViewCellModel new];
+    saman.imageName = @"SamanBankLogo";
+    saman.isSelected = YES;
+    
+    OnlinePaymentVariationTableViewCellModel *parsian = [OnlinePaymentVariationTableViewCellModel new];
+    parsian.imageName = @"ParsianBankLogo";
+    parsian.isSelected = NO;
+    
+    _onlinePaymentVariations = @[saman, parsian];
+    
     _cellsIndexPaths = [NSMutableArray arrayWithObjects:
-                        //Online Payment
-                        [NSIndexPath indexPathForRow:0 inSection:0],
-                        //[NSIndexPath indexPathForRow:1 inSection:0],
-                        //Pay On Delivery
-                        [NSIndexPath indexPathForRow:2 inSection:0],
-                        [NSIndexPath indexPathForRow:3 inSection:0], nil];
+    //Online Payment
+    [NSMutableArray arrayWithObjects:
+        [NSIndexPath indexPathForRow:0 inSection:0],
+        [NSIndexPath indexPathForRow:1 inSection:0], nil],
+    //Online Payment Variations
+    [NSMutableArray arrayWithObjects:
+        [NSIndexPath indexPathForRow:0 inSection:1],
+        [NSIndexPath indexPathForRow:1 inSection:1], nil],
+    //Pay On Delivery
+    [NSMutableArray arrayWithObjects:
+        [NSIndexPath indexPathForRow:0 inSection:2],
+        [NSIndexPath indexPathForRow:1 inSection:2], nil],
+    nil];
     
     //Select Online Payment and Saman By Default
     _selectedPaymentMethod = PAYMENT_METHOD_ONLINE;
-    _indexForOnlineMethodVariation = 0; //0=Saman, 1=Parsian
+    _indexForOnlineMethodVariation = 0;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -72,52 +91,67 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethods) {
 
 #pragma mark - UITableViewDataSource
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [_cellsIndexPaths count];
 }
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [[_cellsIndexPaths objectAtIndex:section] count];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSIndexPath *_cellIndexPath = [_cellsIndexPaths objectAtIndex:indexPath.row];
+    NSIndexPath *_cellIndexPath = [[_cellsIndexPaths objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
                     
-    switch (_cellIndexPath.row) {
-        case 0: {
-            PaymentTypeTableViewCell *onlinePaymentTableViewCell = [tableView dequeueReusableCellWithIdentifier:[PaymentTypeTableViewCell nibName] forIndexPath:indexPath];
-            onlinePaymentTableViewCell.tag = PAYMENT_METHOD_ONLINE;
-            onlinePaymentTableViewCell.delegate = self;
-            
-            PaymentTypeTableViewCellModel *model = [[PaymentTypeTableViewCellModel alloc] init];
-            model.title = STRING_ONLINE_PAYMENT;
-            model.isSelected = (_selectedPaymentMethod == PAYMENT_METHOD_ONLINE);
-            [onlinePaymentTableViewCell updateWithModel:model];
-            
-            return onlinePaymentTableViewCell;
+    switch (_cellIndexPath.section) {
+        case 0 : {
+            switch (_cellIndexPath.row) {
+                case 0: {
+                    PaymentTypeTableViewCell *onlinePaymentTableViewCell = [tableView dequeueReusableCellWithIdentifier:[PaymentTypeTableViewCell nibName] forIndexPath:indexPath];
+                    onlinePaymentTableViewCell.tag = PAYMENT_METHOD_ONLINE;
+                    onlinePaymentTableViewCell.delegate = self;
+                    
+                    PaymentTypeTableViewCellModel *model = [[PaymentTypeTableViewCellModel alloc] init];
+                    model.title = STRING_ONLINE_PAYMENT;
+                    model.isSelected = (_selectedPaymentMethod == PAYMENT_METHOD_ONLINE);
+                    [onlinePaymentTableViewCell updateWithModel:model];
+                    
+                    return onlinePaymentTableViewCell;
+                }
+                    
+                case 1: {
+                    PaymentDescTableViewCell *onlinePaymentDescTableViewCell = [tableView dequeueReusableCellWithIdentifier:[PaymentDescTableViewCell nibName] forIndexPath:indexPath];
+                    onlinePaymentDescTableViewCell.descLabel.text = @"پرداخت آنلاین، پردازش سفارش شما را تسریع داده و باعث می شود سفارش شما با اولویت بالاتری ارسال گردد.";
+                    return onlinePaymentDescTableViewCell;
+                }
+            }
         }
             
         case 1: {
-            OnlinePaymentVariationTableViewCell *onlinePaymentVariationTableViewCell = [tableView dequeueReusableCellWithIdentifier:[OnlinePaymentVariationTableViewCell nibName] forIndexPath:indexPath];
-            return onlinePaymentVariationTableViewCell;
+            OnlinePaymentVariationTableViewCell *onlinePaymentVariation = [tableView dequeueReusableCellWithIdentifier:[OnlinePaymentVariationTableViewCell nibName] forIndexPath:indexPath];
+            [onlinePaymentVariation updateWithModel:[_onlinePaymentVariations objectAtIndex:indexPath.row]];
+            return onlinePaymentVariation;
         }
-        
+            
         case 2: {
-            PaymentTypeTableViewCell *payOnDeliveryTableViewCell = [tableView dequeueReusableCellWithIdentifier:[PaymentTypeTableViewCell nibName] forIndexPath:indexPath];
-            payOnDeliveryTableViewCell.tag = PAYMENT_METHOD_ON_DELIVERY;
-            payOnDeliveryTableViewCell.delegate = self;
-            
-            PaymentTypeTableViewCellModel *model = [[PaymentTypeTableViewCellModel alloc] init];
-            model.title = STRING_PAY_ON_DELIVERY;
-            model.isSelected = (_selectedPaymentMethod == PAYMENT_METHOD_ON_DELIVERY);
-            [payOnDeliveryTableViewCell updateWithModel:model];
-            
-            return payOnDeliveryTableViewCell;
-        }
-            
-        case 3: {
-            PayOnDeliveryTableViewCell *payOnDeliveryTableViewCell = [tableView dequeueReusableCellWithIdentifier:[PayOnDeliveryTableViewCell nibName] forIndexPath:indexPath];
-            payOnDeliveryTableViewCell.descLabel.text = @"مبلغ سفارش را به صورت نقدی و با با کارت بانکی به پیک بامیلو پرداخت نمایید.";
-            return payOnDeliveryTableViewCell;
+            switch (_cellIndexPath.row) {
+                case 0: {
+                    PaymentTypeTableViewCell *payOnDeliveryTableViewCell = [tableView dequeueReusableCellWithIdentifier:[PaymentTypeTableViewCell nibName] forIndexPath:indexPath];
+                    payOnDeliveryTableViewCell.tag = PAYMENT_METHOD_ON_DELIVERY;
+                    payOnDeliveryTableViewCell.delegate = self;
+                    
+                    PaymentTypeTableViewCellModel *model = [[PaymentTypeTableViewCellModel alloc] init];
+                    model.title = STRING_PAY_ON_DELIVERY;
+                    model.isSelected = (_selectedPaymentMethod == PAYMENT_METHOD_ON_DELIVERY);
+                    [payOnDeliveryTableViewCell updateWithModel:model];
+                    
+                    return payOnDeliveryTableViewCell;
+                }
+                    
+                case 1: {
+                    PaymentDescTableViewCell *payOnDeliveryTableViewCell = [tableView dequeueReusableCellWithIdentifier:[PaymentDescTableViewCell nibName] forIndexPath:indexPath];
+                    payOnDeliveryTableViewCell.descLabel.text = @"مبلغ سفارش را به صورت نقدی و با با کارت بانکی به پیک بامیلو پرداخت نمایید.";
+                    return payOnDeliveryTableViewCell;
+                }
+            }
         }
     }
     
@@ -126,27 +160,53 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethods) {
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return [PlainTableViewHeaderCell cellHeight];
+    switch (section) {
+        case 0: return [PlainTableViewHeaderCell cellHeight];
+    }
+    
+    return 0.0f;
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    PlainTableViewHeaderCell *plainTableViewHeaderCell = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:[PlainTableViewHeaderCell nibName]];
-    plainTableViewHeaderCell.title = STRING_PAYMENT_OPTION;
-    return plainTableViewHeaderCell;
+    switch (section) {
+        case 1: {
+            PlainTableViewHeaderCell *plainTableViewHeaderCell = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:[PlainTableViewHeaderCell nibName]];
+            plainTableViewHeaderCell.title = STRING_PAYMENT_OPTION;
+            return plainTableViewHeaderCell;
+        }
+    }
+    
+    return nil;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch (indexPath.section) {
+        case 1: return [OnlinePaymentVariationTableViewCell cellHeight];
+    }
     return UITableViewAutomaticDimension;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 200;
+    return 100;
 }
 
 #pragma mark - RadioButtonViewControlDelegate
 -(void)didSelectRadioButton:(id)sender {
     PaymentTypeTableViewCell *radioButtonPaymentTypeTableViewCell = (PaymentTypeTableViewCell *)sender;
-    _selectedPaymentMethod = (PaymentMethods)radioButtonPaymentTypeTableViewCell.tag;
+    _selectedPaymentMethod = (PaymentMethod)radioButtonPaymentTypeTableViewCell.tag;
+    
+    switch (_selectedPaymentMethod) {
+        case PAYMENT_METHOD_ONLINE:
+            [_cellsIndexPaths setObject:[NSMutableArray arrayWithObjects:
+                                         [NSIndexPath indexPathForRow:0 inSection:1],
+                                         [NSIndexPath indexPathForRow:1 inSection:1], nil] atIndexedSubscript:1];
+        break;
+            
+        case PAYMENT_METHOD_ON_DELIVERY:
+            [_cellsIndexPaths setObject:@[] atIndexedSubscript:1];
+        break;
+    }
+    
     [self.tableView reloadData];
 }
 

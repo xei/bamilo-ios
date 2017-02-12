@@ -6,9 +6,9 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import "PayOnDeliveryTableViewCell.h"
+#import "PaymentDescTableViewCell.h"
 
-@implementation PayOnDeliveryTableViewCell
+@implementation PaymentDescTableViewCell
 
 -(void)awakeFromNib {
     [super awakeFromNib];
@@ -20,7 +20,7 @@
 
 #pragma mark - Overrides
 + (NSString *)nibName {
-    return @"PayOnDeliveryTableViewCell";
+    return @"PaymentDescTableViewCell";
 }
 
 @end
