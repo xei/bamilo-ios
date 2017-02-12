@@ -23,12 +23,15 @@
 -(void)awakeFromNib {
     [super awakeFromNib];
     
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     self.contentView.backgroundColor = [UIColor whiteColor];
     
     self.paymentOptionContainerView.layer.cornerRadius = 5.0f;
     self.paymentOptionContainerView.layer.masksToBounds = YES;
     
     self.paymentOptionButton.backgroundColor = [UIColor whiteColor];
+    self.paymentOptionButton.adjustsImageWhenHighlighted = NO;
 }
 
 #pragma mark - Overrides
@@ -43,9 +46,23 @@
 -(void)updateWithModel:(id)model {
     OnlinePaymentVariationTableViewCellModel *cellModel = (OnlinePaymentVariationTableViewCellModel *)model;
     if(cellModel) {
-        self.paymentOptionContainerView.backgroundColor = cellModel.isSelected ? cCOLOR_ORANGE : cLIGHT_GRAY_COLOR;
         [self.paymentOptionButton setImage:[UIImage imageNamed:cellModel.imageName] forState:UIControlStateNormal];
+        [self updateButtonAppearance:cellModel.isSelected];
     }
+}
+
+- (IBAction)optionButtonTapped:(id)sender {
+    [self.delegate didSelectRadioButton:self];
+}
+
+#pragma mark - RadioButtonViewProtocol
+-(void)update:(BOOL)isSelected {
+    [self updateButtonAppearance:isSelected];
+}
+
+#pragma mark - Helpers
+-(void) updateButtonAppearance:(BOOL)isSelected {
+    self.paymentOptionContainerView.backgroundColor = isSelected ? cCOLOR_ORANGE : cEXTRA_LIGHT_GRAY_COLOR;
 }
 
 @end

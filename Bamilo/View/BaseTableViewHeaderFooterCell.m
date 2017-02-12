@@ -10,6 +10,12 @@
 
 @implementation BaseTableViewHeaderFooterCell
 
+-(void)awakeFromNib {
+    [super awakeFromNib];
+    
+    self.contentView.backgroundColor = [UIColor clearColor];
+}
+
 #pragma mark - Public Methods
 +(CGFloat)cellHeight {
     return 0;

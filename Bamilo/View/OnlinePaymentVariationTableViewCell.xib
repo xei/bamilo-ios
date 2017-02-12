@@ -21,6 +21,9 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l1u-O1-94r" userLabel="PaymentOptionButton">
                             <rect key="frame" x="2" y="2" width="291" height="36"/>
                             <color key="backgroundColor" red="0.090531297028064728" green="0.52686542272567749" blue="0.11270476132631302" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="optionButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="t1P-7D-RUh"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>

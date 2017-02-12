@@ -1,12 +1,11 @@
 //
 //  PlainTableViewHeaderCell.h
-//  Jumia
+//  Bamilo
 //
-//  Created by aliunco on 1/16/17.
+//  Created by Narbeh Mirzaei on 2/12/17.
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "BaseTableViewHeaderFooterCell.h"
 
 @interface PlainTableViewHeaderCell : BaseTableViewHeaderFooterCell

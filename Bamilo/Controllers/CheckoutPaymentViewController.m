@@ -26,7 +26,7 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
 @private
     NSMutableArray *_cellsIndexPaths;
     PaymentMethod _selectedPaymentMethod;
-    int _indexForOnlineMethodVariation;
+    NSInteger _indexForOnlineMethodVariation;
     NSArray *_onlinePaymentVariations;
 }
 
@@ -70,7 +70,7 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
     //Pay On Delivery
     [NSMutableArray arrayWithObjects:
         [NSIndexPath indexPathForRow:0 inSection:2],
-        [NSIndexPath indexPathForRow:1 inSection:2], nil],
+        /*[NSIndexPath indexPathForRow:1 inSection:2],*/ nil],
     nil];
     
     //Select Online Payment and Saman By Default
@@ -126,9 +126,14 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
         }
             
         case 1: {
-            OnlinePaymentVariationTableViewCell *onlinePaymentVariation = [tableView dequeueReusableCellWithIdentifier:[OnlinePaymentVariationTableViewCell nibName] forIndexPath:indexPath];
-            [onlinePaymentVariation updateWithModel:[_onlinePaymentVariations objectAtIndex:indexPath.row]];
-            return onlinePaymentVariation;
+            OnlinePaymentVariationTableViewCell *onlinePaymentVariationCell = [tableView dequeueReusableCellWithIdentifier:[OnlinePaymentVariationTableViewCell nibName] forIndexPath:indexPath];
+            onlinePaymentVariationCell.tag = indexPath.row;
+            onlinePaymentVariationCell.delegate = self;
+            
+            OnlinePaymentVariationTableViewCellModel *model = [_onlinePaymentVariations objectAtIndex:indexPath.row];
+            model.isSelected = (_indexForOnlineMethodVariation == indexPath.row);
+            [onlinePaymentVariationCell updateWithModel:model];
+            return onlinePaymentVariationCell;
         }
             
         case 2: {
@@ -169,7 +174,7 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     switch (section) {
-        case 1: {
+        case 0: {
             PlainTableViewHeaderCell *plainTableViewHeaderCell = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:[PlainTableViewHeaderCell nibName]];
             plainTableViewHeaderCell.title = STRING_PAYMENT_OPTION;
             return plainTableViewHeaderCell;
@@ -192,22 +197,29 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
 
 #pragma mark - RadioButtonViewControlDelegate
 -(void)didSelectRadioButton:(id)sender {
-    PaymentTypeTableViewCell *radioButtonPaymentTypeTableViewCell = (PaymentTypeTableViewCell *)sender;
-    _selectedPaymentMethod = (PaymentMethod)radioButtonPaymentTypeTableViewCell.tag;
-    
-    switch (_selectedPaymentMethod) {
-        case PAYMENT_METHOD_ONLINE:
-            [_cellsIndexPaths setObject:[NSMutableArray arrayWithObjects:
-                                         [NSIndexPath indexPathForRow:0 inSection:1],
-                                         [NSIndexPath indexPathForRow:1 inSection:1], nil] atIndexedSubscript:1];
-        break;
-            
-        case PAYMENT_METHOD_ON_DELIVERY:
-            [_cellsIndexPaths setObject:@[] atIndexedSubscript:1];
-        break;
+    if ([sender isKindOfClass:[PaymentTypeTableViewCell class]]) {
+        PaymentTypeTableViewCell *radioButtonPaymentTypeTableViewCell = (PaymentTypeTableViewCell *)sender;
+        _selectedPaymentMethod = (PaymentMethod)radioButtonPaymentTypeTableViewCell.tag;
+        
+        switch (_selectedPaymentMethod) {
+            case PAYMENT_METHOD_ONLINE:
+                [_cellsIndexPaths setObject:[NSMutableArray indexPathArrayOfLength:2 forSection:1] atIndexedSubscript:1];
+                [[_cellsIndexPaths objectAtIndex:0] addObject:[NSIndexPath indexPathForRow:1 inSection:0]];
+                [[_cellsIndexPaths objectAtIndex:2] removeObjectAtIndex:1];
+            break;
+                
+            case PAYMENT_METHOD_ON_DELIVERY:
+                [_cellsIndexPaths setObject:@[] atIndexedSubscript:1];
+                [[_cellsIndexPaths objectAtIndex:0] removeObjectAtIndex:1];
+                [[_cellsIndexPaths objectAtIndex:2] addObject:[NSIndexPath indexPathForRow:1 inSection:2]];
+            break;
+        }
+        [self.tableView reloadData];
+    } else if([sender isKindOfClass:[OnlinePaymentVariationTableViewCell class]]) {
+        OnlinePaymentVariationTableViewCell *onlinePaymentVariationTableViewCell = (OnlinePaymentVariationTableViewCell *)sender;
+        _indexForOnlineMethodVariation = onlinePaymentVariationTableViewCell.tag;
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
     }
-    
-    [self.tableView reloadData];
 }
 
 #pragma mark - CheckoutProgressViewDelegate
