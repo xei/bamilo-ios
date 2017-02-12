@@ -2701,6 +2701,7 @@
 		879F87F61E5069ED0033FE87 /* Local */ = {
 			isa = PBXGroup;
 			children = (
+				617AAA401E503A71004D9430 /* Form */,
 			);
 			name = Local;
 			sourceTree = "<group>";
@@ -2749,6 +2750,24 @@
 				613FF2B01E4B281A008660CF /* SignInViewController */,
 			);
 			name = Controllers;
+			sourceTree = "<group>";
+		};
+		879F88061E50B8320033FE87 /* Address */ = {
+			isa = PBXGroup;
+			children = (
+				8714E05B1E472CDC004C9B1D /* Address.h */,
+				8714E05C1E472CDC004C9B1D /* Address.m */,
+			);
+			name = Address;
+			sourceTree = "<group>";
+		};
+		879F88071E50B8380033FE87 /* AddressList */ = {
+			isa = PBXGroup;
+			children = (
+				8714E0641E476DF8004C9B1D /* AddressList.h */,
+				8714E0651E476DF8004C9B1D /* AddressList.m */,
+			);
+			name = AddressList;
 			sourceTree = "<group>";
 		};
 		87A6814B1E40DC2000D252AC /* ViewControllerManager */ = {
@@ -3000,6 +3019,8 @@
 		87B685191E4B746B0042C09F /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				879F88061E50B8320033FE87 /* Address */,
+				879F88071E50B8380033FE87 /* AddressList */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -3264,14 +3285,9 @@
 		9AEF73D41CD20DA200A5D574 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				8714E0621E47483B004C9B1D /* Base */,
 				879F87F61E5069ED0033FE87 /* Local */,
 				87B685191E4B746B0042C09F /* Service */,
-				617AAA401E503A71004D9430 /* Form */,
-				8714E0621E47483B004C9B1D /* Base */,
-				8714E05B1E472CDC004C9B1D /* Address.h */,
-				8714E05C1E472CDC004C9B1D /* Address.m */,
-				8714E0641E476DF8004C9B1D /* AddressList.h */,
-				8714E0651E476DF8004C9B1D /* AddressList.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
