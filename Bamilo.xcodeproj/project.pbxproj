@@ -41,6 +41,11 @@
 		61CBA0391E51A72A005673F7 /* ForgetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA0381E51A72A005673F7 /* ForgetPasswordViewController.m */; };
 		61CBA03D1E51A75C005673F7 /* ContinueWitoutLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA03C1E51A75C005673F7 /* ContinueWitoutLoginViewController.m */; };
 		61CBA0421E51BA33005673F7 /* FormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA0411E51BA33005673F7 /* FormViewController.m */; };
+		61CBA04A1E51D18F005673F7 /* FormTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA0481E51D18F005673F7 /* FormTableViewCell.m */; };
+		61CBA04B1E51D18F005673F7 /* FormTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61CBA0491E51D18F005673F7 /* FormTableViewCell.xib */; };
+		61CBA0511E51E26B005673F7 /* FormValidationType.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA0501E51E26B005673F7 /* FormValidationType.m */; };
+		61CBA0561E51FF2F005673F7 /* ButtonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA0541E51FF2F005673F7 /* ButtonTableViewCell.m */; };
+		61CBA0571E51FF2F005673F7 /* ButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61CBA0551E51FF2F005673F7 /* ButtonTableViewCell.xib */; };
 		61DBCCB61E46128300BA8251 /* IconButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 61DBCCB51E46128300BA8251 /* IconButton.m */; };
 		61E099641E3E0E21004ED14E /* IconTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E099621E3E0E21004ED14E /* IconTableViewCell.m */; };
 		61E099651E3E0E21004ED14E /* IconTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E099631E3E0E21004ED14E /* IconTableViewCell.xib */; };
@@ -594,6 +599,15 @@
 		61CBA03C1E51A75C005673F7 /* ContinueWitoutLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContinueWitoutLoginViewController.m; sourceTree = "<group>"; };
 		61CBA0401E51BA33005673F7 /* FormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormViewController.h; sourceTree = "<group>"; };
 		61CBA0411E51BA33005673F7 /* FormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormViewController.m; sourceTree = "<group>"; };
+		61CBA0471E51D18F005673F7 /* FormTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormTableViewCell.h; sourceTree = "<group>"; };
+		61CBA0481E51D18F005673F7 /* FormTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormTableViewCell.m; sourceTree = "<group>"; };
+		61CBA0491E51D18F005673F7 /* FormTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FormTableViewCell.xib; sourceTree = "<group>"; };
+		61CBA04F1E51E26B005673F7 /* FormValidationType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormValidationType.h; sourceTree = "<group>"; };
+		61CBA0501E51E26B005673F7 /* FormValidationType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormValidationType.m; sourceTree = "<group>"; };
+		61CBA0531E51FF2F005673F7 /* ButtonTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonTableViewCell.h; sourceTree = "<group>"; };
+		61CBA0541E51FF2F005673F7 /* ButtonTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonTableViewCell.m; sourceTree = "<group>"; };
+		61CBA0551E51FF2F005673F7 /* ButtonTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ButtonTableViewCell.xib; sourceTree = "<group>"; };
+		61CBA0581E5204D8005673F7 /* ButtonTableViewCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonTableViewCellDelegate.h; sourceTree = "<group>"; };
 		61DBCCB41E46128300BA8251 /* IconButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconButton.h; sourceTree = "<group>"; };
 		61DBCCB51E46128300BA8251 /* IconButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconButton.m; sourceTree = "<group>"; };
 		61E099611E3E0E21004ED14E /* IconTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconTableViewCell.h; sourceTree = "<group>"; };
@@ -1867,6 +1881,7 @@
 		617AAA401E503A71004D9430 /* Form */ = {
 			isa = PBXGroup;
 			children = (
+				61CBA04E1E51E245005673F7 /* FormValidationType */,
 				617AAA411E503A86004D9430 /* FormItemModel */,
 				6125535C1E4F50DF00975C6F /* FormItemValidation */,
 			);
@@ -1903,10 +1918,57 @@
 		61CBA03F1E51BA1D005673F7 /* FormViewController */ = {
 			isa = PBXGroup;
 			children = (
+				61CBA0461E51D169005673F7 /* TableViewCell */,
+				61CBA0451E51D14B005673F7 /* ViewController */,
+			);
+			name = FormViewController;
+			sourceTree = "<group>";
+		};
+		61CBA0451E51D14B005673F7 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
 				61CBA0401E51BA33005673F7 /* FormViewController.h */,
 				61CBA0411E51BA33005673F7 /* FormViewController.m */,
 			);
-			name = FormViewController;
+			name = ViewController;
+			sourceTree = "<group>";
+		};
+		61CBA0461E51D169005673F7 /* TableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				61CBA04C1E51D563005673F7 /* FormItem */,
+			);
+			name = TableViewCell;
+			sourceTree = "<group>";
+		};
+		61CBA04C1E51D563005673F7 /* FormItem */ = {
+			isa = PBXGroup;
+			children = (
+				61CBA0471E51D18F005673F7 /* FormTableViewCell.h */,
+				61CBA0481E51D18F005673F7 /* FormTableViewCell.m */,
+				61CBA0491E51D18F005673F7 /* FormTableViewCell.xib */,
+			);
+			name = FormItem;
+			sourceTree = "<group>";
+		};
+		61CBA04E1E51E245005673F7 /* FormValidationType */ = {
+			isa = PBXGroup;
+			children = (
+				61CBA04F1E51E26B005673F7 /* FormValidationType.h */,
+				61CBA0501E51E26B005673F7 /* FormValidationType.m */,
+			);
+			name = FormValidationType;
+			sourceTree = "<group>";
+		};
+		61CBA0521E51FEFA005673F7 /* ButtonTableviewCell */ = {
+			isa = PBXGroup;
+			children = (
+				61CBA0531E51FF2F005673F7 /* ButtonTableViewCell.h */,
+				61CBA0541E51FF2F005673F7 /* ButtonTableViewCell.m */,
+				61CBA0551E51FF2F005673F7 /* ButtonTableViewCell.xib */,
+				61CBA0581E5204D8005673F7 /* ButtonTableViewCellDelegate.h */,
+			);
+			name = ButtonTableviewCell;
 			sourceTree = "<group>";
 		};
 		61DBCCB31E46127600BA8251 /* IconButton */ = {
@@ -1921,6 +1983,7 @@
 		61E099661E3E10F0004ED14E /* TableViewCells */ = {
 			isa = PBXGroup;
 			children = (
+				61CBA0521E51FEFA005673F7 /* ButtonTableviewCell */,
 				8714E0801E48C3B1004C9B1D /* Base */,
 				612FDC331E45E08500A9D0BD /* CartTableViewCell */,
 				87A681721E42003100D252AC /* AddressTableViewCell */,
@@ -4286,6 +4349,7 @@
 				CE9AE0431AB6D78200D56481 /* JAMaintenancePage.xib in Resources */,
 				CE9AE0441AB6D78200D56481 /* JAGenericFiltersView.xib in Resources */,
 				6CF4AE821ADEAA290024EC34 /* JACatalogBannerCell.xib in Resources */,
+				61CBA04B1E51D18F005673F7 /* FormTableViewCell.xib in Resources */,
 				87459C9C1E4F0DCD00743120 /* RadioButtonView.xib in Resources */,
 				9A564CBB1B34273800F23057 /* JASellerRatingsViewController~ipad.xib in Resources */,
 				879F87F21E5057F10033FE87 /* PlainTableViewHeaderCell.xib in Resources */,
@@ -4303,6 +4367,7 @@
 				9A564CC11B38187100F23057 /* JANewSellerRatingViewController~ipad.xib in Resources */,
 				CE9AE09B1AB6D78200D56481 /* JAPaymentCell.xib in Resources */,
 				87459CB11E4F34BC00743120 /* PaymentDescTableViewCell.xib in Resources */,
+				61CBA0571E51FF2F005673F7 /* ButtonTableViewCell.xib in Resources */,
 				CE9AE0A21AB6D78200D56481 /* JASwitchCell.xib in Resources */,
 				CE9AE0A31AB6D78200D56481 /* JAUndefinedSearchView.xib in Resources */,
 				CE9AE0A81AB6D78200D56481 /* JACartListHeaderView.xib in Resources */,
@@ -4535,6 +4600,7 @@
 				CE9ADF471AB6D78200D56481 /* JAOfferCollectionViewCell.m in Sources */,
 				875AD55D1E38C0C900584ABF /* RICatalogSorting.m in Sources */,
 				875AD54B1E38C0C900584ABF /* RIFormIndex.m in Sources */,
+				61CBA0561E51FF2F005673F7 /* ButtonTableViewCell.m in Sources */,
 				9A7A77291B2B45F1002F530F /* JAPagedView.m in Sources */,
 				875AD5441E38C0C900584ABF /* RICustomer.m in Sources */,
 				8714E07E1E48C1C5004C9B1D /* UIView+Extensions.m in Sources */,
@@ -4573,6 +4639,7 @@
 				CE9ADF5C1AB6D78200D56481 /* JAEmailNotificationsViewController.m in Sources */,
 				CE9ADF601AB6D78200D56481 /* JANoConnectionView.m in Sources */,
 				617AAA441E503AB9004D9430 /* FormItemModel.m in Sources */,
+				61CBA04A1E51D18F005673F7 /* FormTableViewCell.m in Sources */,
 				8714E0771E479C00004C9B1D /* CheckoutProgressViewButtonModel.m in Sources */,
 				9A189E6F1BB31AF70039BC14 /* JAProductInfoSingleLine.m in Sources */,
 				875AD5701E38C0C900584ABF /* RISeller.m in Sources */,
@@ -4693,6 +4760,7 @@
 				FFB1B0951CE61D96000F60AD /* JARadioExpandableComponent.m in Sources */,
 				CE28A7A31BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */,
 				875AD5731E38C0C900584ABF /* RIShippingMethod.m in Sources */,
+				61CBA0511E51E26B005673F7 /* FormValidationType.m in Sources */,
 				9AEA3B291B15DD9C00771EEA /* UIView+Frame.m in Sources */,
 				87A6ACF21E38919C00C0E7DC /* NSString+HTML.m in Sources */,
 				CEA106F11BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m in Sources */,

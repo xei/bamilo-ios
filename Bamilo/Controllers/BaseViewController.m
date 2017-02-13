@@ -16,9 +16,14 @@
     self.navigationController.navigationBar.translucent = NO;
     self.navigationItem.hidesBackButton = YES;
     self.title = nil;
-    
     self.view.backgroundColor = JABackgroundGrey;
-    self.navBarLayout = [[JANavigationBarLayout alloc] init];
+}
+
+- (JANavigationBarLayout *)navBarLayout {
+    if (!_navBarLayout) {
+        _navBarLayout = [[JANavigationBarLayout alloc] init];
+    }
+    return _navBarLayout;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -42,7 +47,7 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kTurnOnMenuSwipePanelNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kAppWillEnterForeground object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kAppDidEnterBackground object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kAppDidEnterBackground object:nil]; //???? what ?????
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {

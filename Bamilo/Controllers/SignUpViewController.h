@@ -7,7 +7,8 @@
 //
 
 #import "AuthenticationBaseViewController.h"
+#import "FormViewController.h"
 
-@interface SignUpViewController : UIViewController
+@interface SignUpViewController : FormViewController <UITextFieldDelegate>
 
 @end

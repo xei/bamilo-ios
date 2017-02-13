@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FormItemModel.h"
+#import "BaseViewController.h"
+#import "ButtonTableViewCell.h"
 
-@interface FormViewController : UIViewController
+@interface FormViewController :BaseViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, ButtonTableViewCellDelegate>
+@property (nonatomic, strong) NSArray<FormItemModel *> *formItemListModel;
+@property (nonatomic, copy) NSString *formMessage;
+@property (nonatomic, copy) NSString *submitTitle;
 
+- (Boolean)isFormValid;
 @end

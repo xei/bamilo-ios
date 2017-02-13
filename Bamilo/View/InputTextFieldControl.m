@@ -97,42 +97,9 @@
 }
 
 - (Boolean)isValid {
-    if (!self.validation) {
-        return YES;
-    }
-    self.errorMsg = nil;
-    
-    NSUInteger lengthOfInputText = self.input.textField.text.length;
-    
-    if (self.validation.isRequired && !lengthOfInputText) {
-        self.errorMsg = [self.validation getErrorMsgOfType:FormItemValidationErrorIsRequired];
-        return NO;
-    }
-    
-    if (self.validation.max && lengthOfInputText > self.validation.max) {
-        self.errorMsg = [self.validation getErrorMsgOfType:FormItemValidationErrorMax];
-        return NO;
-    }
-    
-    if (self.validation.min && lengthOfInputText < self.validation.min) {
-        self.errorMsg = [self.validation getErrorMsgOfType:FormItemValidationErrorMin];
-        return NO;
-    }
-    
-    
-    if (self.validation.regxPattern) {
-        NSError *error = NULL;
-        NSString *inputTextValue = [self getStringValue];
-        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:self.validation.regxPattern options:NSRegularExpressionCaseInsensitive error:&error];
-        NSTextCheckingResult *match = [regex firstMatchInString:inputTextValue options:0 range:NSMakeRange(0, [inputTextValue length])];
-        
-        if (!match) {
-            self.errorMsg = [self.validation getErrorMsgOfType:FormItemValidationErrorRegx];
-            return NO;
-        }
-    }
-    
-    return YES;
+    FormValidationType *validationResult = [self.validation checkValiditionOfString:[self getStringValue]];
+    self.errorMsg = validationResult.errorMsg;
+    return validationResult.boolValue;
 }
 
 @end
