@@ -229,10 +229,10 @@
                                                  name:kShowSignUpScreenNotification
                                                object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showForgotPasswordScreen:)
-                                                 name:kShowForgotPasswordScreenNotification
-                                               object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(showForgotPasswordScreen:)
+//                                                 name:kShowForgotPasswordScreenNotification
+//                                               object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showCheckoutForgotPasswordScreen)
@@ -766,7 +766,7 @@
     if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"continue_button"], NSNumber)) {
         checkout = [[notification.userInfo objectForKey:@"continue_button"] boolValue];
     }
-    authenticationViewController.checkout = checkout;
+    authenticationViewController.showContinueWithoutLogin = checkout;
     
     if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY(notification.userInfo, NSDictionary)) {
         [authenticationViewController setUserInfo:notification.userInfo];
@@ -895,20 +895,20 @@
 }
 
 #pragma mark Forgot Password Screen
-- (void)showForgotPasswordScreen:(NSNotification *)notification {
-    UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAForgotPasswordViewController class]] && ![RICustomer checkIfUserIsLogged]) {
-        JAForgotPasswordViewController *forgotVC = [[JAForgotPasswordViewController alloc] init];
-        
-        if (notification && [[notification.userInfo objectForKey:@"email"] length]) {
-            forgotVC.loginEmail = [notification.userInfo objectForKey:@"email"];
-        }
-        
-        [forgotVC.navBarLayout setShowBackButton:YES];
-        
-        [self pushViewController:forgotVC animated:YES];
-    }
-}
+//- (void)showForgotPasswordScreen:(NSNotification *)notification {
+//    UIViewController *topViewController = [self topViewController];
+//    if (![topViewController isKindOfClass:[JAForgotPasswordViewController class]] && ![RICustomer checkIfUserIsLogged]) {
+//        JAForgotPasswordViewController *forgotVC = [[JAForgotPasswordViewController alloc] init];
+//        
+//        if (notification && [[notification.userInfo objectForKey:@"email"] length]) {
+//            forgotVC.loginEmail = [notification.userInfo objectForKey:@"email"];
+//        }
+//        
+//        [forgotVC.navBarLayout setShowBackButton:YES];
+//        
+//        [self pushViewController:forgotVC animated:YES];
+//    }
+//}
 
 #pragma mark Recently Viewed Screen
 - (void)showRecentlyViewedController {

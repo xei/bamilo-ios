@@ -38,6 +38,9 @@
 		613FF2BF1E4B2871008660CF /* AuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 613FF2BE1E4B2871008660CF /* AuthenticationViewController.m */; };
 		613FF2C11E4B3D1B008660CF /* Authentication.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 613FF2C01E4B3D1B008660CF /* Authentication.storyboard */; };
 		617AAA441E503AB9004D9430 /* FormItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 617AAA431E503AB9004D9430 /* FormItemModel.m */; };
+		61CBA0391E51A72A005673F7 /* ForgetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA0381E51A72A005673F7 /* ForgetPasswordViewController.m */; };
+		61CBA03D1E51A75C005673F7 /* ContinueWitoutLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA03C1E51A75C005673F7 /* ContinueWitoutLoginViewController.m */; };
+		61CBA0421E51BA33005673F7 /* FormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA0411E51BA33005673F7 /* FormViewController.m */; };
 		61DBCCB61E46128300BA8251 /* IconButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 61DBCCB51E46128300BA8251 /* IconButton.m */; };
 		61E099641E3E0E21004ED14E /* IconTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E099621E3E0E21004ED14E /* IconTableViewCell.m */; };
 		61E099651E3E0E21004ED14E /* IconTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E099631E3E0E21004ED14E /* IconTableViewCell.xib */; };
@@ -585,6 +588,12 @@
 		617AAA431E503AB9004D9430 /* FormItemModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormItemModel.m; sourceTree = "<group>"; };
 		61C407C31E476486004ACEE8 /* StepperViewControlDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepperViewControlDelegate.h; sourceTree = "<group>"; };
 		61C407C41E476939004ACEE8 /* CartTableViewCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartTableViewCellDelegate.h; sourceTree = "<group>"; };
+		61CBA0371E51A72A005673F7 /* ForgetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetPasswordViewController.h; sourceTree = "<group>"; };
+		61CBA0381E51A72A005673F7 /* ForgetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgetPasswordViewController.m; sourceTree = "<group>"; };
+		61CBA03B1E51A75C005673F7 /* ContinueWitoutLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContinueWitoutLoginViewController.h; sourceTree = "<group>"; };
+		61CBA03C1E51A75C005673F7 /* ContinueWitoutLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContinueWitoutLoginViewController.m; sourceTree = "<group>"; };
+		61CBA0401E51BA33005673F7 /* FormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormViewController.h; sourceTree = "<group>"; };
+		61CBA0411E51BA33005673F7 /* FormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormViewController.m; sourceTree = "<group>"; };
 		61DBCCB41E46128300BA8251 /* IconButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconButton.h; sourceTree = "<group>"; };
 		61DBCCB51E46128300BA8251 /* IconButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconButton.m; sourceTree = "<group>"; };
 		61E099611E3E0E21004ED14E /* IconTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconTableViewCell.h; sourceTree = "<group>"; };
@@ -1873,6 +1882,33 @@
 			name = FormItemModel;
 			sourceTree = "<group>";
 		};
+		61CBA03A1E51A72E005673F7 /* ForgetPasswordViewController */ = {
+			isa = PBXGroup;
+			children = (
+				61CBA0371E51A72A005673F7 /* ForgetPasswordViewController.h */,
+				61CBA0381E51A72A005673F7 /* ForgetPasswordViewController.m */,
+			);
+			name = ForgetPasswordViewController;
+			sourceTree = "<group>";
+		};
+		61CBA03E1E51A765005673F7 /* ContinueWitoutLoginViewController */ = {
+			isa = PBXGroup;
+			children = (
+				61CBA03B1E51A75C005673F7 /* ContinueWitoutLoginViewController.h */,
+				61CBA03C1E51A75C005673F7 /* ContinueWitoutLoginViewController.m */,
+			);
+			name = ContinueWitoutLoginViewController;
+			sourceTree = "<group>";
+		};
+		61CBA03F1E51BA1D005673F7 /* FormViewController */ = {
+			isa = PBXGroup;
+			children = (
+				61CBA0401E51BA33005673F7 /* FormViewController.h */,
+				61CBA0411E51BA33005673F7 /* FormViewController.m */,
+			);
+			name = FormViewController;
+			sourceTree = "<group>";
+		};
 		61DBCCB31E46127600BA8251 /* IconButton */ = {
 			isa = PBXGroup;
 			children = (
@@ -2744,6 +2780,8 @@
 		879F88021E50B2550033FE87 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				61CBA03E1E51A765005673F7 /* ContinueWitoutLoginViewController */,
+				61CBA03A1E51A72E005673F7 /* ForgetPasswordViewController */,
 				879F88011E50B24C0033FE87 /* BaseViewController */,
 				613FF2BC1E4B285C008660CF /* AuthenticationViewController */,
 				613FF2B11E4B2825008660CF /* SignUpViewController */,
@@ -3085,6 +3123,7 @@
 		87D07D821E40B4B100C00AC6 /* BML */ = {
 			isa = PBXGroup;
 			children = (
+				61CBA03F1E51BA1D005673F7 /* FormViewController */,
 				87A681591E40F99300D252AC /* BaseViewController */,
 				879F88001E50B23C0033FE87 /* Authentication */,
 				87A6815E1E41B84000D252AC /* SearchBaseViewController */,
@@ -4679,6 +4718,7 @@
 				CE9ADFD11AB6D78200D56481 /* JAOrderSummaryView.m in Sources */,
 				87A6815C1E40F9C000D252AC /* BaseViewController.m in Sources */,
 				CE9ADFD21AB6D78200D56481 /* JAPriceView.m in Sources */,
+				61CBA0391E51A72A005673F7 /* ForgetPasswordViewController.m in Sources */,
 				9A59E7F61C3A8D5100F37D3F /* JASavedListViewController.m in Sources */,
 				875AD5771E38C0C900584ABF /* RISpecification.m in Sources */,
 				CE9ADFD61AB6D78200D56481 /* JAFilteredNoResultsView.m in Sources */,
@@ -4738,6 +4778,7 @@
 				87459C8D1E4F04AD00743120 /* RadioButtonViewControl.m in Sources */,
 				9AC4D6991B45A51A00036F1C /* JACatalogListCollectionViewCell.m in Sources */,
 				9AEF73F91CD20E1C00A5D574 /* JAReturnStepByStepModel.m in Sources */,
+				61CBA0421E51BA33005673F7 /* FormViewController.m in Sources */,
 				CE9ADFF71AB6D78200D56481 /* JASidePanelController.m in Sources */,
 				9AC4D6A01B46A50000036F1C /* JACatalogCollectionViewCell.m in Sources */,
 				893AADD11C1F1A54006314FB /* JAMyOrderDetailViewController.m in Sources */,
@@ -4774,6 +4815,7 @@
 				87459C981E4F090F00743120 /* RadioButtonView.m in Sources */,
 				CE9AE0081AB6D78200D56481 /* JAMaintenancePage.m in Sources */,
 				87D07D781E4097FF00C00AC6 /* CheckoutAddressViewController.m in Sources */,
+				61CBA03D1E51A75C005673F7 /* ContinueWitoutLoginViewController.m in Sources */,
 				87D07D801E4099E800C00AC6 /* CheckoutPaymentViewController.m in Sources */,
 				875AD5551E38C0C900584ABF /* Model.xcdatamodeld in Sources */,
 				CE9AE00C1AB6D78200D56481 /* JAWizardView.m in Sources */,

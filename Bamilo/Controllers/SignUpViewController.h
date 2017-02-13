@@ -8,6 +8,6 @@
 
 #import "AuthenticationBaseViewController.h"
 
-@interface SignUpViewController : AuthenticationBaseViewController
+@interface SignUpViewController : UIViewController
 
 @end

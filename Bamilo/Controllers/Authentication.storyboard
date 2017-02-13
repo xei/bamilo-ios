@@ -22,10 +22,50 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <segue destination="Qs9-EQ-nXT" kind="show" identifier="showContinueWithoutLoginViewCtrl" id="Nlg-Cy-d4W"/>
+                        <segue destination="ft6-Zm-StB" kind="show" identifier="showForgetPasswordViewCtrl" id="Z7X-lY-13w"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cdC-45-A1Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-938" y="-88"/>
+            <point key="canvasLocation" x="-1463" y="-119"/>
+        </scene>
+        <!--Forget Password View Controller-->
+        <scene sceneID="8fv-h4-QLR">
+            <objects>
+                <viewController id="ft6-Zm-StB" customClass="ForgetPasswordViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="6Ch-Be-D1X"/>
+                        <viewControllerLayoutGuide type="bottom" id="ORQ-Dt-1TX"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="vef-ce-f3P">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TuT-t6-1Jj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1463" y="620"/>
+        </scene>
+        <!--Continue Witout Login View Controller-->
+        <scene sceneID="vyl-fT-bpm">
+            <objects>
+                <viewController id="Qs9-EQ-nXT" customClass="ContinueWitoutLoginViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ziK-en-6xD"/>
+                        <viewControllerLayoutGuide type="bottom" id="Lfl-LF-ihf"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ggk-mI-9TX">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4xF-ub-R1r" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-668" y="-119"/>
         </scene>
     </scenes>
 </document>

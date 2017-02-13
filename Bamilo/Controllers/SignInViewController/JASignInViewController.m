@@ -327,7 +327,7 @@
 
 - (void)forgotPasswordButtonPressed:(id)sender {
     [self hideKeyboard];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShowForgotPasswordScreenNotification object:nil userInfo:@{@"email" : self.authenticationEmail}];
+    //[[NSNotificationCenter defaultCenter] postNotificationName:kShowForgotPasswordScreenNotification object:nil userInfo:@{@"email" : self.authenticationEmail}];
 }
 
 - (void)loginButtonPressed:(id)sender {
@@ -342,9 +342,10 @@
     [RIForm sendForm:[self.dynamicForm form]
           parameters:[self.dynamicForm getValues]
         successBlock:^(id object, NSArray* successMessages) {
-         [RICustomer resetCustomerAsGuest];
-         [self.dynamicForm resetValues];
          
+         [self.dynamicForm resetValues];
+            
+         [RICustomer resetCustomerAsGuest];
          if ([object isKindOfClass:[NSDictionary class]]) {
              NSDictionary* responseDictionary = (NSDictionary*)object;
              

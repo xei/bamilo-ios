@@ -31,7 +31,12 @@ static DataManager *instance;
     };
 
     [RequestManager asyncPOST:target path:RI_API_LOGIN_CUSTOMER params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+        if(response == RIApiResponseSuccess && data) {
         [RIForm parseEntities:data plainPassword:password loginMethod:@"normal"];
+            completion(data, nil);
+        } else {
+            completion(nil, [NSError errorWithDomain:@"com.bamilo.ios" code:response userInfo:(errorMessages ? @{ @"errorMessages" : errorMessages } : nil)]);
+        }
     }];
 }
 

@@ -14,6 +14,7 @@
 @property (strong, nonatomic) NSArray *errorCodes; //!< Array with error codes returned by the request
 @property (strong, nonatomic) NSArray *errorMessagesArray; //!< Array filled with error messages, if the API field "validate" is an array
 @property (strong, nonatomic) NSDictionary *errorMessagesDictionary; //!< Dictionary filled with error messages, if the API field "validate" is a dictionary
+@property (strong, nonnull) NSArray *errorMessgaeFiledArray;
 
 @end
 
@@ -56,6 +57,17 @@
         }
     }
     
+    return errorMessages;
+}
+
++ (NSArray *) getPerfectErrorMessages:(NSDictionary *)errorJsonObject {
+    NSArray *errorMessages = nil;
+    RIError *error = [RIError parseErrorMessages:errorJsonObject];
+    if (error.errorMessgaeFiledArray) {
+        errorMessages = error.errorMessgaeFiledArray;
+    } else {
+        errorMessages = [self getErrorMessages: errorJsonObject];
+    }
     return errorMessages;
 }
 
@@ -124,12 +136,16 @@
             else if (VALID_NOTEMPTY(errorMessagesObject, NSArray))
             {
                 NSMutableArray *errorMessagesArray = [[NSMutableArray alloc] init];
+                
                 if (VALID_NOTEMPTY([errorMessagesObject valueForKey:@"message"], NSArray)) {
                     NSArray *errorMessage = [errorMessagesObject valueForKey:@"message"];
                     for (NSString *errorMessageString in errorMessage) {
                         [errorMessagesArray addObject:errorMessageString];
+                        
                     }
                 }
+                
+                error.errorMessgaeFiledArray = errorMessagesObject;
                 error.errorMessagesArray = [errorMessagesArray copy];
             }
         }

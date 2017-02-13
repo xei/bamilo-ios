@@ -18,8 +18,8 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconVisibleConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconHiddenConstraint;
 @property (weak, nonatomic) IBOutlet UILabel *errorMsg;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *errorMsgTopConstraint;
 @property (weak, nonatomic) IBOutlet UIView *seperatorBorderView;
-
 @end
 
 
@@ -36,7 +36,7 @@
     //setDefault style
     NSAttributedString *attributedPlaceholder = [[NSAttributedString alloc] initWithString:self.textField.placeholder attributes: @{NSForegroundColorAttributeName: cPlACEHOLDER_COLOR}];
     self.textField.attributedPlaceholder = attributedPlaceholder;
-    self.textField.tintColor = cINPUT_TINT_COLOR;
+    self.textField.textColor = cINPUT_TINT_COLOR;
     self.textField.font = [UIFont fontWithName:kFontRegularName size:12];
     
     [self clearError];
@@ -74,11 +74,18 @@
     
     self.errorMsg.text = errorMsg;
     self.seperatorBorderView.backgroundColor = cRed_error_color;
+    self.textField.textColor = cRed_error_color;
+    [UIView animateWithDuration:0.15 animations:^{
+        self.errorMsgTopConstraint.constant = 0;
+        [self layoutIfNeeded];
+    }];
 }
 
 - (void)clearError {
     self.errorMsg.text = nil;
     self.seperatorBorderView.backgroundColor = cDARK_GRAY_COLOR;
+    self.textField.textColor = cINPUT_TINT_COLOR;
+    self.errorMsgTopConstraint.constant = -15;
 }
 
 @end
