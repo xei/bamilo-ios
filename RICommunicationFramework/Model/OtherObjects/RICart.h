@@ -7,11 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "JSONVerboseModel.h"
 
 @class RIShippingMethodForm, RIPaymentMethodForm, RIPaymentInformation,
     RIAddress, RIForm, RISellerDelivery, RICustomer;
 
-@interface RICart : NSObject
+@interface RICart : NSObject <JSONVerboseModel>
 
 @property (strong, nonatomic) NSNumber *totalNumberOfOrders;
 @property (strong, nonatomic) NSArray  *cartItems;

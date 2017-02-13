@@ -8,7 +8,9 @@
 
 #import "DataManager.h"
 #import "Models.pch"
+#import "RICart.h"
 #import "RIForm.h"
+#import "RICountry.h"
 
 @implementation DataManager
 
@@ -44,32 +46,52 @@ static DataManager *instance;
 
 -(void) setDefaultAddress:(id<DataServiceProtocol>)target address:(Address *)address isBilling:(BOOL)isBilling completion:(DataCompletion)completion {
     NSDictionary *params = @{
-                             @"id": address.uid,
-                             @"type": isBilling ? @"billing" : @"shipping"
-                             };
+         @"id": address.uid,
+         @"type": isBilling ? @"billing" : @"shipping"
+    };
     
     [RequestManager asyncPUT:target path:RI_API_GET_CUSTOMER_SELECT_DEFAULT params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
         [self serialize:data into:[AddressList class] response:response errorMessages:errorMessages completion:completion];
     }];
 }
 
+//### CART ###
+-(void)getUserCart:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
+    [RequestManager asyncPOST:target path:RI_API_GET_CART_DATA params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+        [self serialize:data into:[RICart class] response:response errorMessages:errorMessages completion:completion];
+    }];
+}
+
 #pragma mark - Private Methods
 - (void)serialize:(id)data into:(Class)aClass response:(RIApiResponse)response errorMessages:(NSArray *)errorMessages completion:(DataCompletion)completion {
     if(response == RIApiResponseSuccess && data) {
-        NSError *error;
+        id dataModel;
         
-        id dataModel = [[aClass alloc] init];
-        
-        [dataModel mergeFromDictionary:data useKeyMapping:YES error:&error];
-
-        if(error == nil) {
-            completion(dataModel, nil);
+        if([aClass conformsToProtocol:@protocol(JSONVerboseModel)]) {
+            [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+                completion([aClass parseToDataModelWithObjects:@[ data, configuration ]], nil);
+            } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+                completion(nil, [self getErrorFrom:apiResponse errorMessages:errorMessages]);
+            }];
         } else {
-            completion(nil, error);
+            NSError *error;
+            dataModel = [[aClass alloc] init];
+            [dataModel mergeFromDictionary:data useKeyMapping:YES error:&error];
+            
+            if(error == nil) {
+                completion(dataModel, nil);
+            } else {
+                completion(nil, error);
+            }
         }
     } else {
-        completion(nil, [NSError errorWithDomain:@"com.bamilo.ios" code:response userInfo:(errorMessages ? @{ @"errorMessages" : errorMessages } : nil)]);
+        completion(nil, [self getErrorFrom:response errorMessages:errorMessages]);
     }
+}
+
+#pragma mark - Helpers
+-(NSError *) getErrorFrom:(RIApiResponse)response errorMessages:(NSArray *)errorMessages {
+    return [NSError errorWithDomain:@"com.bamilo.ios" code:response userInfo:(errorMessages ? @{ @"errorMessages" : errorMessages } : nil)];
 }
 
 @end

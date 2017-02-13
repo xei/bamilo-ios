@@ -89,7 +89,7 @@
     
 }
 
-
+/*
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self loadingCart];
@@ -112,7 +112,7 @@
         [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadingCart) objects:nil];
         [self hideLoading];
     }];
-}
+}*/
 
 - (void)viewWillLayoutSubviews {
 
@@ -194,7 +194,6 @@
     alert.delegate = self;
     [alert show];
 }
-
 
 - (void)removeCartItem:(RICartItem *)cartItem {
     [self showLoading];

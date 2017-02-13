@@ -168,6 +168,7 @@
 		879F87F91E507FD10033FE87 /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F87F81E507FD10033FE87 /* BaseModel.m */; };
 		879F87FF1E5095E00033FE87 /* LoadingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F87FE1E5095E00033FE87 /* LoadingManager.m */; };
 		879F88051E50B2940033FE87 /* AuthenticationBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F88041E50B2940033FE87 /* AuthenticationBaseViewController.m */; };
+		879F88111E50BB050033FE87 /* CartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F88101E50BB050033FE87 /* CartViewController.m */; };
 		87A6814E1E40DC3C00D252AC /* ViewControllerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A6814D1E40DC3C00D252AC /* ViewControllerManager.m */; };
 		87A681521E40ED9200D252AC /* OrangeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A681511E40ED9200D252AC /* OrangeButton.m */; };
 		87A681581E40F21B00D252AC /* BaseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A681571E40F21B00D252AC /* BaseButton.m */; };
@@ -852,6 +853,9 @@
 		879F87FE1E5095E00033FE87 /* LoadingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingManager.m; sourceTree = "<group>"; };
 		879F88031E50B2940033FE87 /* AuthenticationBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthenticationBaseViewController.h; sourceTree = "<group>"; };
 		879F88041E50B2940033FE87 /* AuthenticationBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthenticationBaseViewController.m; sourceTree = "<group>"; };
+		879F880F1E50BB050033FE87 /* CartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartViewController.h; sourceTree = "<group>"; };
+		879F88101E50BB050033FE87 /* CartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartViewController.m; sourceTree = "<group>"; };
+		879F88251E519C570033FE87 /* JSONVerboseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONVerboseModel.h; sourceTree = "<group>"; };
 		87A6814C1E40DC3C00D252AC /* ViewControllerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewControllerManager.h; sourceTree = "<group>"; };
 		87A6814D1E40DC3C00D252AC /* ViewControllerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewControllerManager.m; sourceTree = "<group>"; };
 		87A681501E40ED9200D252AC /* OrangeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrangeButton.h; sourceTree = "<group>"; };
@@ -2135,8 +2139,9 @@
 		8714E0621E47483B004C9B1D /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				8714E0631E47484B004C9B1D /* Models.pch */,
 				879F87FA1E507FD90033FE87 /* BaseModel */,
+				879F88251E519C570033FE87 /* JSONVerboseModel.h */,
+				8714E0631E47484B004C9B1D /* Models.pch */,
 			);
 			name = Base;
 			sourceTree = "<group>";
@@ -2770,6 +2775,15 @@
 			name = AddressList;
 			sourceTree = "<group>";
 		};
+		879F880C1E50BAC10033FE87 /* CartViewController */ = {
+			isa = PBXGroup;
+			children = (
+				879F880F1E50BB050033FE87 /* CartViewController.h */,
+				879F88101E50BB050033FE87 /* CartViewController.m */,
+			);
+			name = CartViewController;
+			sourceTree = "<group>";
+		};
 		87A6814B1E40DC2000D252AC /* ViewControllerManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -3019,8 +3033,9 @@
 		87B685191E4B746B0042C09F /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				879F88061E50B8320033FE87 /* Address */,
+				8714E0621E47483B004C9B1D /* Base */,
 				879F88071E50B8380033FE87 /* AddressList */,
+				879F88061E50B8320033FE87 /* Address */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -3086,10 +3101,11 @@
 			isa = PBXGroup;
 			children = (
 				87A681591E40F99300D252AC /* BaseViewController */,
-				879F88001E50B23C0033FE87 /* Authentication */,
 				87A6815E1E41B84000D252AC /* SearchBaseViewController */,
-				8708A16F1E406BF600ABA7D8 /* ContactUsViewController */,
+				879F88001E50B23C0033FE87 /* Authentication */,
+				879F880C1E50BAC10033FE87 /* CartViewController */,
 				87D07D711E4097CC00C00AC6 /* Checkout */,
+				8708A16F1E406BF600ABA7D8 /* ContactUsViewController */,
 			);
 			name = BML;
 			sourceTree = "<group>";
@@ -3285,7 +3301,6 @@
 		9AEF73D41CD20DA200A5D574 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				8714E0621E47483B004C9B1D /* Base */,
 				879F87F61E5069ED0033FE87 /* Local */,
 				87B685191E4B746B0042C09F /* Service */,
 			);
@@ -4497,6 +4512,7 @@
 				875AD55D1E38C0C900584ABF /* RICatalogSorting.m in Sources */,
 				875AD54B1E38C0C900584ABF /* RIFormIndex.m in Sources */,
 				9A7A77291B2B45F1002F530F /* JAPagedView.m in Sources */,
+				879F88111E50BB050033FE87 /* CartViewController.m in Sources */,
 				875AD5441E38C0C900584ABF /* RICustomer.m in Sources */,
 				8714E07E1E48C1C5004C9B1D /* UIView+Extensions.m in Sources */,
 				875AD5601E38C0C900584ABF /* RIFeaturedBoxTeaserGrouping.m in Sources */,

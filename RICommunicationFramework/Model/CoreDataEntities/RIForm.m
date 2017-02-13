@@ -23,21 +23,11 @@
 @dynamic fields;
 @dynamic formIndex;
 
-+ (NSString *)getForm:(NSString *)formIndexType
-         successBlock:(void (^)(RIForm *))successBlock
-         failureBlock:(void (^)(RIApiResponse, NSArray *))failureBlock
-{
-    return [self getForm:formIndexType
-            forceRequest:NO
-            successBlock:successBlock
-            failureBlock:failureBlock];
++ (NSString *)getForm:(NSString *)formIndexType successBlock:(void (^)(RIForm *))successBlock failureBlock:(void (^)(RIApiResponse, NSArray *))failureBlock {
+    return [self getForm:formIndexType forceRequest:NO successBlock:successBlock failureBlock:failureBlock];
 }
 
-+ (NSString*)getForm:(NSString*)formIndexType
-        forceRequest:(BOOL)forceRequest
-        successBlock:(void (^)(RIForm *))successBlock
-        failureBlock:(void (^)(RIApiResponse, NSArray *))failureBlock;
-{
++ (NSString*)getForm:(NSString*)formIndexType forceRequest:(BOOL)forceRequest successBlock:(void (^)(RIForm *))successBlock failureBlock:(void (^)(RIApiResponse, NSArray *))failureBlock {
     //get form for index
     
     return [RIFormIndex getFormWithType:formIndexType successBlock:^(RIFormIndex* formIndex) {
@@ -115,11 +105,7 @@
     }];
 }
 
-
-+ (NSString *)getFormWithUrl:(NSString *)urlString
-                successBlock:(void (^)(RIForm *))successBlock
-                failureBlock:(void (^)(RIApiResponse, NSArray *))failureBlock
-{
++ (NSString *)getFormWithUrl:(NSString *)urlString successBlock:(void (^)(RIForm *))successBlock failureBlock:(void (^)(RIApiResponse, NSArray *))failureBlock {
     urlString = [NSString stringWithFormat:@"%@%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_FORMS_GET, urlString];
     
     NSURL *url = [NSURL URLWithString:urlString];
@@ -169,10 +155,7 @@
 }
 
 
-+ (RIForm*)parseFormEntity:(NSDictionary*)formEntityJSON
-                 formIndex:(RIFormIndex*)formIndex
-             formIndexType:(NSString*)formIndexType
-{
++ (RIForm*)parseFormEntity:(NSDictionary*)formEntityJSON formIndex:(RIFormIndex*)formIndex formIndexType:(NSString*)formIndexType {
     RIForm* newForm = [RIForm parseForm:formEntityJSON];
     
     if (VALID_NOTEMPTY(formIndex, RIFormIndex)) {
@@ -186,10 +169,7 @@
     return newForm;
 }
 
-+ (NSString*)sendForm:(RIForm*)form
-         successBlock:(void (^)(id object, NSArray* successMessages))successBlock
-      andFailureBlock:(void (^)(RIApiResponse apiResponse, id errorObject))failureBlock
-{
++ (NSString*)sendForm:(RIForm*)form successBlock:(void (^)(id object, NSArray* successMessages))successBlock andFailureBlock:(void (^)(RIApiResponse apiResponse, id errorObject))failureBlock {
     return [RIForm sendForm:form
              extraArguments:nil
                  parameters:[RIForm getParametersForForm:form]
@@ -197,11 +177,7 @@
             andFailureBlock:failureBlock];
 }
 
-+ (NSString*)sendForm:(RIForm*)form
-           parameters:(NSDictionary *)parameters
-         successBlock:(void (^)(id object, NSArray* successMessages))successBlock
-      andFailureBlock:(void (^)(RIApiResponse apiResponse, id errorObject))failureBlock
-{
++ (NSString*)sendForm:(RIForm*)form parameters:(NSDictionary *)parameters successBlock:(void (^)(id object, NSArray* successMessages))successBlock andFailureBlock:(void (^)(RIApiResponse apiResponse, id errorObject))failureBlock {
     return [RIForm sendForm:form
              extraArguments:nil
                  parameters:parameters
@@ -209,11 +185,7 @@
             andFailureBlock:failureBlock];
 }
 
-+ (NSString*)sendForm:(RIForm*)form
-       extraArguments:(NSDictionary *)extraArguments
-           parameters:(NSDictionary*)parameters
-         successBlock:(void (^)(id object, NSArray* successMessages))successBlock
-      andFailureBlock:(void (^)(RIApiResponse apiResponse, id errorObject))failureBlock {
++ (NSString*)sendForm:(RIForm*)form extraArguments:(NSDictionary *)extraArguments parameters:(NSDictionary*)parameters successBlock:(void (^)(id object, NSArray* successMessages))successBlock andFailureBlock:(void (^)(RIApiResponse apiResponse, id errorObject))failureBlock {
     //BOOL isPostRequest = [@"post" isEqualToString:[form.method lowercaseString]];
     //TODO: DELELE
     
@@ -315,14 +287,10 @@
                                                           }];
 }
 
-+ (NSDictionary*)parseEntities:(NSDictionary*)entitiesJSON
-                 plainPassword:(NSString*)plainPassword
-                   loginMethod:(NSString*)loginMethod
-{
++ (NSDictionary*)parseEntities:(NSDictionary*)entitiesJSON plainPassword:(NSString*)plainPassword loginMethod:(NSString*)loginMethod {
     NSMutableDictionary* newEntities = [NSMutableDictionary new];
     
     if ([entitiesJSON objectForKey:@"customer_entity"]) {
-        
         RICustomer *newCustomer = [RICustomer parseCustomerWithJson:[entitiesJSON objectForKey:@"customer_entity"]
                                                       plainPassword:plainPassword
                                                         loginMethod:loginMethod];
@@ -330,13 +298,11 @@
     }
     
     if ([entitiesJSON objectForKey:@"cart_entity"]) {
-        
         RICart *newCart = [RICart parseCart:entitiesJSON country:nil];
         [newEntities setObject:newCart forKey:@"cart"];
     }
     
     if ([entitiesJSON objectForKey:@"multistep_entity"]) {
-        
         NSDictionary* nextStep = [entitiesJSON objectForKey:@"multistep_entity"];
         if (VALID_NOTEMPTY(nextStep, NSDictionary)) {
             [newEntities addEntriesFromDictionary:nextStep];
@@ -346,41 +312,8 @@
     return [newEntities copy];
 }
 
-+ (RIForm *)parseForm:(NSDictionary *)formDict;
-{
-    RIForm* newForm = (RIForm*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RIForm class])];
-    
-    if (VALID_NOTEMPTY(formDict, NSDictionary)) {
-        
-        if ([formDict objectForKey:@"type"]) {
-            newForm.type = [formDict objectForKey:@"type"];
-        }
-        if ([formDict objectForKey:@"action"]) {
-            newForm.action = [formDict objectForKey:@"action"];
-        }
-        if ([formDict objectForKey:@"method"]) {
-            newForm.method = [formDict objectForKey:@"method"];
-        }
-        
-        NSArray* fields = [formDict objectForKey:@"fields"];
-        
-        if (VALID_NOTEMPTY(fields, NSArray)) {
-            
-            for (NSDictionary* fieldJSON in fields) {
-                RIField* newField = [RIField parseField:fieldJSON];
-                newField.form = newForm;
-                [newForm addFieldsObject:newField];
-            }
-        }
-    }
-    
-    return newForm;
-}
-
-+ (void)saveForm:(RIForm *)form andContext:(BOOL)save;
-{
++ (void)saveForm:(RIForm *)form andContext:(BOOL)save {
     for (RIField* field in form.fields) {
-        
         for (RIFieldDataSetComponent *component in field.dataSet) {
             [RIFieldDataSetComponent saveFieldDataSetComponent:component andContext:NO];
         }
@@ -397,17 +330,14 @@
     if (save) {
         [[RIDataBaseWrapper sharedInstance] saveContext];
     }
-    
 }
 
-+ (void)removeForm:(RIForm *)form
-{
++ (void)removeForm:(RIForm *)form {
     [[RIDataBaseWrapper sharedInstance] deleteObject:form];
     [[RIDataBaseWrapper sharedInstance] saveContext];
 }
 
-+ (NSDictionary *) getParametersForForm:(RIForm *)form
-{
++ (NSDictionary *) getParametersForForm:(RIForm *)form {
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     for(RIField *field in form.fields)
     {
@@ -420,15 +350,12 @@
 }
 
 #pragma mark - Cancel requests
-
-+ (void)cancelRequest:(NSString *)operationID
-{
++ (void)cancelRequest:(NSString *)operationID {
     if(VALID_NOTEMPTY(operationID, NSString))
         [[RICommunicationWrapper sharedInstance] cancelRequest:operationID];
 }
 
 #pragma mark - Auxiliar functions
-
 + (HttpVerb)getHttpResponseMethodFromForm:(RIForm *) form {
     NSString* formMethod = [form.method lowercaseString];
     if([@"post" isEqualToString:formMethod]){
@@ -443,6 +370,43 @@
     else{
         return HttpVerbDELETE;
     }
+}
+
++ (RIForm *)parseForm:(NSDictionary *)formDict {
+    return [self parseToDataModelWithObjects:@[ formDict ]];
+}
+
+#pragma mark - JSONVerboseModel
++(instancetype)parseToDataModelWithObjects:(NSArray *)objects {
+    NSDictionary *dict = objects[0];
+    
+    RIForm *form = (RIForm*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RIForm class])];
+    
+    if (VALID_NOTEMPTY(dict, NSDictionary)) {
+        
+        if ([dict objectForKey:@"type"]) {
+            form.type = [dict objectForKey:@"type"];
+        }
+        if ([dict objectForKey:@"action"]) {
+            form.action = [dict objectForKey:@"action"];
+        }
+        if ([dict objectForKey:@"method"]) {
+            form.method = [dict objectForKey:@"method"];
+        }
+        
+        NSArray* fields = [dict objectForKey:@"fields"];
+        
+        if (VALID_NOTEMPTY(fields, NSArray)) {
+            
+            for (NSDictionary* fieldJSON in fields) {
+                RIField* newField = [RIField parseField:fieldJSON];
+                newField.form = form;
+                [form addFieldsObject:newField];
+            }
+        }
+    }
+    
+    return form;
 }
 
 @end

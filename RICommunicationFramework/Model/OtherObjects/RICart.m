@@ -550,283 +550,6 @@
     return cart;
 }
 
-+ (RICart *)parseCart:(NSDictionary *)entitiesJSON country:(RICountryConfiguration*)country {
-    RICart *cart = [[RICart alloc] init];
-    
-    cart.cartUnreducedValue = nil;
-    cart.cartUnreducedValueFormatted = nil;
-    
-    //Parse stuff outside of cart_entity
-    
-    if (VALID_NOTEMPTY([entitiesJSON objectForKey:@"addresses"], NSDictionary)) {
-        RIForm* address = [RIForm parseForm:[entitiesJSON objectForKey:@"addresses"]];
-        cart.addressForm = address;
-    }
-    
-    if (VALID_NOTEMPTY([entitiesJSON objectForKey:@"shippingMethodForm"], NSDictionary)) {
-        RIShippingMethodForm* shippingMethodForm = [RIShippingMethodForm parseForm:[entitiesJSON objectForKey:@"shippingMethodForm"]];
-        cart.shippingMethodForm = shippingMethodForm;
-    }
-    
-    if(VALID_NOTEMPTY([entitiesJSON objectForKey:@"paymentMethodForm"], NSDictionary)) {
-        RIPaymentMethodForm* paymentMethodForm = [RIPaymentMethodForm parseForm:[entitiesJSON objectForKey:@"paymentMethodForm"]];
-        cart.paymentMethodForm = paymentMethodForm;
-    }
-    
-    if (VALID_NOTEMPTY([entitiesJSON objectForKey:@"multistep_entity"], NSDictionary) ) {
-        NSDictionary* nextStep = [entitiesJSON objectForKey:@"multistep_entity"];
-        cart.nextStep = [nextStep objectForKey:@"next_step"];
-    }
-    
-    
-    //From here on out we're parsing stuff inside cart_entity
-    
-    if (VALID([entitiesJSON objectForKey:@"cart_entity"], NSDictionary)) {
-        NSDictionary* cartEntityJSON = [entitiesJSON objectForKey:@"cart_entity"];
-        
-        BOOL showUnreducedPrice = NO;
-        CGFloat cartUnreducedValue = 0.0f;
-        if ([cartEntityJSON objectForKey:@"products"]) {
-            NSArray *cartItemObjects = [cartEntityJSON objectForKey:@"products"];
-            if (VALID_NOTEMPTY(cartItemObjects, NSArray)) {
-                NSMutableArray *cartItems = [[NSMutableArray alloc] init];
-                for(NSDictionary *cartItemObject in cartItemObjects) {
-                    RICartItem *cartItem = [RICartItem parseCartItem:cartItemObject country:country];
-                    [cartItems addObject:cartItem];
-                    
-                    cartUnreducedValue += ([cartItem.price floatValue] * [cartItem.quantity integerValue]);
-                    if(!showUnreducedPrice && VALID_NOTEMPTY(cartItem.specialPrice , NSNumber) && 0.0f < [cartItem.specialPrice floatValue] && [cartItem.price floatValue] != [cartItem.specialPrice floatValue]) {
-                        showUnreducedPrice = YES;
-                    }
-                }
-                
-                cart.cartItems = [cartItems copy];
-                
-                if(showUnreducedPrice) {
-                    cart.cartUnreducedValue = [NSNumber numberWithFloat:cartUnreducedValue];
-                    cart.cartUnreducedValueFormatted = [RICountryConfiguration formatPrice:cart.cartUnreducedValue country:country];
-                }
-            }
-        }
-        
-        if([cartEntityJSON objectForKey:@"sub_total_undiscounted"]) {
-            cart.cartUnreducedValue = [cartEntityJSON objectForKey:@"sub_total_undiscounted"];
-            cart.cartUnreducedValueFormatted = [RICountryConfiguration formatPrice:cart.cartUnreducedValue country:country];
-        }
-        
-        if([cartEntityJSON objectForKey:@"sub_total"]){
-            if(![[cartEntityJSON objectForKey:@"sub_total"] isKindOfClass:[NSNull class]]){
-                cart.subTotal = [cartEntityJSON objectForKey:@"sub_total"];
-                cart.subTotalFormatted = [RICountryConfiguration formatPrice:cart.subTotal country:country];
-            }
-        }
-        
-        if ([cartEntityJSON objectForKey:@"total_products"]) {
-            if (![[cartEntityJSON objectForKey:@"total_products"] isKindOfClass:[NSNull class]]) {
-                cart.cartCount = [cartEntityJSON objectForKey:@"total_products"];
-            }
-        }
-        
-        if ([cartEntityJSON objectForKey:@"total"]) {
-            if (![[cartEntityJSON objectForKey:@"total"] isKindOfClass:[NSNull class]]) {
-                cart.cartValue = [cartEntityJSON objectForKey:@"total"];
-                cart.cartValueFormatted = [RICountryConfiguration formatPrice:cart.cartValue country:country];
-            }
-        }
-        
-        if (cart.cartValue && cart.cartUnreducedValue) {
-            NSNumber *discountValue = [NSNumber numberWithInt: cart.cartUnreducedValue.intValue - cart.cartValue.intValue];
-            cart.discountedValueFormated = [RICountryConfiguration formatPrice:discountValue country:country];
-        }
-        
-        if ([cartEntityJSON objectForKey:@"total_converted"]) {
-            if (![[cartEntityJSON objectForKey:@"total_converted"] isKindOfClass:[NSNull class]]) {
-                cart.cartValueEuroConverted = [cartEntityJSON objectForKey:@"total_converted"];
-            }
-        }
-        
-        if (VALID_NOTEMPTY([cartEntityJSON objectForKey:@"delivery"], NSDictionary)) {
-            NSDictionary *deliveryDic = [cartEntityJSON objectForKey:@"delivery"];
-            if (VALID_NOTEMPTY([deliveryDic objectForKey:@"amount"], NSNumber)) {
-                cart.shippingValue = [deliveryDic objectForKey:@"amount"];
-                cart.shippingValueFormatted = [RICountryConfiguration formatPrice:cart.shippingValue country:country];
-            }
-            if (VALID_NOTEMPTY([deliveryDic objectForKey:@"amount_converted"], NSNumber)) {
-                cart.shippingValueEuroConverted = [cartEntityJSON objectForKey:@"amount_converted"];
-            }
-            if (VALID_NOTEMPTY([deliveryDic objectForKey:@"discount_amount"], NSNumber)) {
-                cart.deliveryDiscountAmount = [cartEntityJSON objectForKey:@"discount_amount"];
-            }
-            if (VALID_NOTEMPTY([deliveryDic objectForKey:@"discount_amount_converted"], NSNumber)) {
-                cart.deliveryDiscountAmountConverted = [cartEntityJSON objectForKey:@"discount_amount_converted"];
-            }
-            if (VALID_NOTEMPTY([deliveryDic objectForKey:@"discount_cart_rule_discount"], NSNumber)) {
-                cart.deliveryDiscountCartRuleDiscount = [cartEntityJSON objectForKey:@"discount_cart_rule_discount"];
-            }
-            if (VALID_NOTEMPTY([deliveryDic objectForKey:@"discount_cart_rule_discount_converted"], NSNumber)) {
-                cart.deliveryDiscountCartRuleDiscountConverted = [cartEntityJSON objectForKey:@"discount_cart_rule_discount_converted"];
-            }
-            if (VALID_NOTEMPTY([deliveryDic objectForKey:@"discount_coupon_money_value"], NSNumber)) {
-                cart.deliveryDiscountCouponMoneyValue = [cartEntityJSON objectForKey:@"discount_coupon_money_value"];
-            }
-            if (VALID_NOTEMPTY([deliveryDic objectForKey:@"discount_coupon_money_value_converted"], NSNumber)) {
-                cart.deliveryDiscountCouponMoneyValueConverted = [cartEntityJSON objectForKey:@"discount_coupon_money_value_converted"];
-            }
-        }
-        
-        if ([cartEntityJSON objectForKey:@"extra_costs"]) {
-            if (![[cartEntityJSON objectForKey:@"extra_costs"] isKindOfClass:[NSNull class]]) {
-                cart.extraCosts = [cartEntityJSON objectForKey:@"extra_costs"];
-                cart.extraCostsFormatted = [RICountryConfiguration formatPrice:cart.extraCosts country:country];
-            }
-        }
-        
-        if ([cartEntityJSON objectForKey:@"extra_costs_converted"]) {
-            if (![[cartEntityJSON objectForKey:@"extra_costs_converted"] isKindOfClass:[NSNull class]]) {
-                cart.extraCostsEuroConverted = [cartEntityJSON objectForKey:@"extra_costs_converted"];
-            }
-        }
-        
-        if ([cartEntityJSON objectForKey:@"vat"]) {
-            if (VALID_NOTEMPTY([cartEntityJSON objectForKey:@"vat"], NSDictionary)) {
-                NSDictionary *vatDict = [cartEntityJSON objectForKey:@"vat"];
-                if (VALID_NOTEMPTY([vatDict objectForKey:@"label"], NSString)) {
-                    cart.vatLabel = [vatDict objectForKey:@"label"];
-                }
-                if (VALID_NOTEMPTY([vatDict objectForKey:@"label_configuration"], NSNumber)) {
-                    cart.vatLabelEnabled = [vatDict objectForKey:@"label_configuration"];
-                }
-                if (VALID_NOTEMPTY([vatDict objectForKey:@"value"], NSNumber)) {
-                    cart.vatValue = [vatDict objectForKey:@"value"];
-                    cart.vatValueFormatted = [RICountryConfiguration formatPrice:cart.vatValue country:country];
-                }
-                if (VALID_NOTEMPTY([vatDict objectForKey:@"value_converted"], NSNumber)) {
-                    cart.vatValueEuroConverted = [vatDict objectForKey:@"value_converted"];
-                }
-            }
-        }
-        
-        if ([cartEntityJSON objectForKey:@"sub_total"]) {
-            if (![[cartEntityJSON objectForKey:@"sub_total"] isKindOfClass:[NSNull class]]) {
-                cart.sumCosts = [cartEntityJSON objectForKey:@"sub_total"];
-            }
-        }
-        
-        if ([cartEntityJSON objectForKey:@"sub_total_converted"]) {
-            if (![[cartEntityJSON objectForKey:@"sub_total_converted"] isKindOfClass:[NSNull class]]) {
-                cart.sumCostsEuroConverted = [cartEntityJSON objectForKey:@"sub_total_converted"];
-            }
-        }
-        
-        if ([cartEntityJSON objectForKey:@"sum_costs_value"]) {
-            if (![[cartEntityJSON objectForKey:@"sum_costs_value"] isKindOfClass:[NSNull class]]) {
-                cart.sumCostsValue = [cartEntityJSON objectForKey:@"sum_costs_value"];
-            }
-        }
-        
-        if ([cartEntityJSON objectForKey:@"sum_costs_value_converted"]) {
-            if (![[cartEntityJSON objectForKey:@"sum_costs_value_converted"] isKindOfClass:[NSNull class]]) {
-                cart.sumCostsValueEuroConverted = [cartEntityJSON objectForKey:@"sum_costs_value_converted"];
-            }
-        }
-        
-        if ([cartEntityJSON objectForKey:@"price_rules"]) {
-            if (![[cartEntityJSON objectForKey:@"price_rules"] isKindOfClass:[NSNull class]]) {
-                NSArray *priceRulesObject = [cartEntityJSON objectForKey:@"price_rules"];
-                if(VALID_NOTEMPTY(priceRulesObject, NSArray)) {
-                    NSMutableDictionary *priceRules = [[NSMutableDictionary alloc] init];
-                    for(NSDictionary *priceRulesDictionary in priceRulesObject) {
-                        if(VALID_NOTEMPTY(priceRulesDictionary, NSDictionary)) {
-                            if ([priceRulesDictionary objectForKey:@"label"] && ![[priceRulesDictionary objectForKey:@"label"] isKindOfClass:[NSNull class]]) {
-                                if ([priceRulesDictionary objectForKey:@"value"] && ![[priceRulesDictionary objectForKey:@"value"] isKindOfClass:[NSNull class]]) {
-                                    if(VALID_NOTEMPTY([priceRulesDictionary objectForKey:@"value"], NSNumber)) {
-                                        //since it's a rule to create a discount, add the minus signal to the string
-                                        [priceRules setValue:[@"- " stringByAppendingString:[RICountryConfiguration formatPrice:[priceRulesDictionary objectForKey:@"value"] country:country]] forKey:[priceRulesDictionary objectForKey:@"label"]];
-                                    } else {
-                                        [priceRules setValue:[priceRulesDictionary objectForKey:@"value"] forKey: [priceRulesDictionary objectForKey:@"label"]];
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    cart.priceRules = [priceRules copy];
-                }
-            }
-        }
-        
-        if (VALID_NOTEMPTY([cartEntityJSON objectForKey:@"coupon"], NSDictionary)) {
-            NSDictionary *couponDic = [cartEntityJSON objectForKey:@"coupon"];
-            if (VALID_NOTEMPTY([couponDic objectForKey:@"code"], NSString)) {
-                cart.couponCode = [couponDic objectForKey:@"code"];
-            }
-            if (VALID_NOTEMPTY([couponDic objectForKey:@"value"], NSNumber)) {
-                cart.couponMoneyValue = [couponDic objectForKey:@"value"];
-                cart.couponMoneyValueFormatted = [RICountryConfiguration formatPrice:cart.couponMoneyValue country:country];
-            }
-            if (VALID_NOTEMPTY([couponDic objectForKey:@"value_converted"], NSNumber)) {
-                cart.couponMoneyValueEuroConverted = [couponDic objectForKey:@"value_converted"];
-            }
-        }
-        
-        if (VALID_NOTEMPTY([cartEntityJSON objectForKey:@"shipping_method"], NSDictionary)) {
-            NSDictionary* shipMethodDic = [cartEntityJSON objectForKey:@"shipping_method"];
-            if (VALID_NOTEMPTY([shipMethodDic objectForKey:@"method"], NSString)) {
-                cart.shippingMethod = [shipMethodDic objectForKey:@"method"];
-            }
-        }
-        
-        if (VALID_NOTEMPTY([cartEntityJSON objectForKey:@"payment_method"], NSDictionary)) {
-            NSDictionary* payMethodDic = [cartEntityJSON objectForKey:@"payment_method"];
-            if (VALID_NOTEMPTY([payMethodDic objectForKey:@"label"], NSString)) {
-                cart.paymentMethod = [payMethodDic objectForKey:@"label"];
-            }
-        }
-        
-        if (VALID_NOTEMPTY([cartEntityJSON objectForKey:@"billing_address"], NSDictionary)) {
-            NSDictionary* billingAddressJSON = [cartEntityJSON objectForKey:@"billing_address"];
-            RIAddress* billingAddress = [RIAddress parseAddress:billingAddressJSON];
-            if (VALID_NOTEMPTY(billingAddress, RIAddress)) {
-                cart.billingAddress = billingAddress;
-            }
-        }
-        
-        if (VALID_NOTEMPTY([cartEntityJSON objectForKey:@"shipping_address"], NSDictionary)) {
-            NSDictionary* shippingAddressJSON = [cartEntityJSON objectForKey:@"shipping_address"];
-            RIAddress* shippingAddress = [RIAddress parseAddress:shippingAddressJSON];
-            if (VALID_NOTEMPTY(shippingAddress, RIAddress)) {
-                cart.shippingAddress = shippingAddress;
-            }
-        }
-        
-        if (VALID_NOTEMPTY([cartEntityJSON objectForKey:@"fulfillment"], NSArray)) {
-            NSArray* fulfillment = [cartEntityJSON objectForKey:@"fulfillment"];
-            NSMutableArray* sellers = [[NSMutableArray alloc] init];
-            
-            for (NSDictionary* seller in fulfillment) {
-                RISellerDelivery* sellerDelivery = [RISellerDelivery parseSellerDelivery:[seller objectForKey:@"seller_entity"]];
-                NSMutableArray* products = [[NSMutableArray alloc] init];
-                
-                for (NSDictionary* prod in [seller objectForKey:@"products"]) {
-                    NSString* simpleSku = [prod objectForKey:@"simple_sku"];
-                    
-                    for (RICartItem* cartItem in cart.cartItems) {
-                        if ([cartItem.simpleSku isEqual:simpleSku]) {
-                            [products addObject:cartItem];
-                            break;
-                        }
-                    }
-                }
-                sellerDelivery.products = [products copy];
-                [sellers addObject:sellerDelivery];
-            }
-            cart.sellerDelivery = sellers;
-        }
-    }
-    
-    return cart;
-}
-
-
 #pragma mark - Checkout multistep methods
 
 +(void)parseNextStepFromJSONResponse:(NSDictionary*)jsonResponse
@@ -1111,5 +834,285 @@
                                                           }];
 }
 
++ (RICart *)parseCart:(NSDictionary *)json country:(RICountryConfiguration*)country {
+    return [RICart parseToDataModelWithObjects:@[json, country]];
+}
+
+#pragma mark - JSONVerboseModel
++(instancetype)parseToDataModelWithObjects:(NSArray *)objects {
+    NSDictionary *dict = objects[0];
+    RICountryConfiguration *country = objects[1];
+    
+    RICart *cart = [[RICart alloc] init];
+    
+    cart.cartUnreducedValue = nil;
+    cart.cartUnreducedValueFormatted = nil;
+    
+    //Parse stuff outside of cart_entity
+    if (VALID_NOTEMPTY([dict objectForKey:@"addresses"], NSDictionary)) {
+        RIForm* address = [RIForm parseForm:[dict objectForKey:@"addresses"]];
+        cart.addressForm = address;
+    }
+    
+    if (VALID_NOTEMPTY([dict objectForKey:@"shippingMethodForm"], NSDictionary)) {
+        RIShippingMethodForm* shippingMethodForm = [RIShippingMethodForm parseForm:[dict objectForKey:@"shippingMethodForm"]];
+        cart.shippingMethodForm = shippingMethodForm;
+    }
+    
+    if(VALID_NOTEMPTY([dict objectForKey:@"paymentMethodForm"], NSDictionary)) {
+        RIPaymentMethodForm* paymentMethodForm = [RIPaymentMethodForm parseForm:[dict objectForKey:@"paymentMethodForm"]];
+        cart.paymentMethodForm = paymentMethodForm;
+    }
+    
+    if (VALID_NOTEMPTY([dict objectForKey:@"multistep_entity"], NSDictionary) ) {
+        NSDictionary* nextStep = [dict objectForKey:@"multistep_entity"];
+        cart.nextStep = [nextStep objectForKey:@"next_step"];
+    }
+    
+    //From here on out we're parsing stuff inside cart_entity
+    if (VALID([dict objectForKey:@"cart_entity"], NSDictionary)) {
+        NSDictionary* cartEntityJSON = [dict objectForKey:@"cart_entity"];
+        
+        BOOL showUnreducedPrice = NO;
+        CGFloat cartUnreducedValue = 0.0f;
+        if ([cartEntityJSON objectForKey:@"products"]) {
+            NSArray *cartItemObjects = [cartEntityJSON objectForKey:@"products"];
+            if (VALID_NOTEMPTY(cartItemObjects, NSArray)) {
+                NSMutableArray *cartItems = [[NSMutableArray alloc] init];
+                for(NSDictionary *cartItemObject in cartItemObjects) {
+                    RICartItem *cartItem = [RICartItem parseCartItem:cartItemObject country:country];
+                    [cartItems addObject:cartItem];
+                    
+                    cartUnreducedValue += ([cartItem.price floatValue] * [cartItem.quantity integerValue]);
+                    if(!showUnreducedPrice && VALID_NOTEMPTY(cartItem.specialPrice , NSNumber) && 0.0f < [cartItem.specialPrice floatValue] && [cartItem.price floatValue] != [cartItem.specialPrice floatValue]) {
+                        showUnreducedPrice = YES;
+                    }
+                }
+                
+                cart.cartItems = [cartItems copy];
+                
+                if(showUnreducedPrice) {
+                    cart.cartUnreducedValue = [NSNumber numberWithFloat:cartUnreducedValue];
+                    cart.cartUnreducedValueFormatted = [RICountryConfiguration formatPrice:cart.cartUnreducedValue country:country];
+                }
+            }
+        }
+        
+        if([cartEntityJSON objectForKey:@"sub_total_undiscounted"]) {
+            cart.cartUnreducedValue = [cartEntityJSON objectForKey:@"sub_total_undiscounted"];
+            cart.cartUnreducedValueFormatted = [RICountryConfiguration formatPrice:cart.cartUnreducedValue country:country];
+        }
+        
+        if([cartEntityJSON objectForKey:@"sub_total"]){
+            if(![[cartEntityJSON objectForKey:@"sub_total"] isKindOfClass:[NSNull class]]){
+                cart.subTotal = [cartEntityJSON objectForKey:@"sub_total"];
+                cart.subTotalFormatted = [RICountryConfiguration formatPrice:cart.subTotal country:country];
+            }
+        }
+        
+        if ([cartEntityJSON objectForKey:@"total_products"]) {
+            if (![[cartEntityJSON objectForKey:@"total_products"] isKindOfClass:[NSNull class]]) {
+                cart.cartCount = [cartEntityJSON objectForKey:@"total_products"];
+            }
+        }
+        
+        if ([cartEntityJSON objectForKey:@"total"]) {
+            if (![[cartEntityJSON objectForKey:@"total"] isKindOfClass:[NSNull class]]) {
+                cart.cartValue = [cartEntityJSON objectForKey:@"total"];
+                cart.cartValueFormatted = [RICountryConfiguration formatPrice:cart.cartValue country:country];
+            }
+        }
+        
+        if (cart.cartValue && cart.cartUnreducedValue) {
+            NSNumber *discountValue = [NSNumber numberWithInt: cart.cartUnreducedValue.intValue - cart.cartValue.intValue];
+            cart.discountedValueFormated = [RICountryConfiguration formatPrice:discountValue country:country];
+        }
+        
+        if ([cartEntityJSON objectForKey:@"total_converted"]) {
+            if (![[cartEntityJSON objectForKey:@"total_converted"] isKindOfClass:[NSNull class]]) {
+                cart.cartValueEuroConverted = [cartEntityJSON objectForKey:@"total_converted"];
+            }
+        }
+        
+        if (VALID_NOTEMPTY([cartEntityJSON objectForKey:@"delivery"], NSDictionary)) {
+            NSDictionary *deliveryDic = [cartEntityJSON objectForKey:@"delivery"];
+            if (VALID_NOTEMPTY([deliveryDic objectForKey:@"amount"], NSNumber)) {
+                cart.shippingValue = [deliveryDic objectForKey:@"amount"];
+                cart.shippingValueFormatted = [RICountryConfiguration formatPrice:cart.shippingValue country:country];
+            }
+            if (VALID_NOTEMPTY([deliveryDic objectForKey:@"amount_converted"], NSNumber)) {
+                cart.shippingValueEuroConverted = [cartEntityJSON objectForKey:@"amount_converted"];
+            }
+            if (VALID_NOTEMPTY([deliveryDic objectForKey:@"discount_amount"], NSNumber)) {
+                cart.deliveryDiscountAmount = [cartEntityJSON objectForKey:@"discount_amount"];
+            }
+            if (VALID_NOTEMPTY([deliveryDic objectForKey:@"discount_amount_converted"], NSNumber)) {
+                cart.deliveryDiscountAmountConverted = [cartEntityJSON objectForKey:@"discount_amount_converted"];
+            }
+            if (VALID_NOTEMPTY([deliveryDic objectForKey:@"discount_cart_rule_discount"], NSNumber)) {
+                cart.deliveryDiscountCartRuleDiscount = [cartEntityJSON objectForKey:@"discount_cart_rule_discount"];
+            }
+            if (VALID_NOTEMPTY([deliveryDic objectForKey:@"discount_cart_rule_discount_converted"], NSNumber)) {
+                cart.deliveryDiscountCartRuleDiscountConverted = [cartEntityJSON objectForKey:@"discount_cart_rule_discount_converted"];
+            }
+            if (VALID_NOTEMPTY([deliveryDic objectForKey:@"discount_coupon_money_value"], NSNumber)) {
+                cart.deliveryDiscountCouponMoneyValue = [cartEntityJSON objectForKey:@"discount_coupon_money_value"];
+            }
+            if (VALID_NOTEMPTY([deliveryDic objectForKey:@"discount_coupon_money_value_converted"], NSNumber)) {
+                cart.deliveryDiscountCouponMoneyValueConverted = [cartEntityJSON objectForKey:@"discount_coupon_money_value_converted"];
+            }
+        }
+        
+        if ([cartEntityJSON objectForKey:@"extra_costs"]) {
+            if (![[cartEntityJSON objectForKey:@"extra_costs"] isKindOfClass:[NSNull class]]) {
+                cart.extraCosts = [cartEntityJSON objectForKey:@"extra_costs"];
+                cart.extraCostsFormatted = [RICountryConfiguration formatPrice:cart.extraCosts country:country];
+            }
+        }
+        
+        if ([cartEntityJSON objectForKey:@"extra_costs_converted"]) {
+            if (![[cartEntityJSON objectForKey:@"extra_costs_converted"] isKindOfClass:[NSNull class]]) {
+                cart.extraCostsEuroConverted = [cartEntityJSON objectForKey:@"extra_costs_converted"];
+            }
+        }
+        
+        if ([cartEntityJSON objectForKey:@"vat"]) {
+            if (VALID_NOTEMPTY([cartEntityJSON objectForKey:@"vat"], NSDictionary)) {
+                NSDictionary *vatDict = [cartEntityJSON objectForKey:@"vat"];
+                if (VALID_NOTEMPTY([vatDict objectForKey:@"label"], NSString)) {
+                    cart.vatLabel = [vatDict objectForKey:@"label"];
+                }
+                if (VALID_NOTEMPTY([vatDict objectForKey:@"label_configuration"], NSNumber)) {
+                    cart.vatLabelEnabled = [vatDict objectForKey:@"label_configuration"];
+                }
+                if (VALID_NOTEMPTY([vatDict objectForKey:@"value"], NSNumber)) {
+                    cart.vatValue = [vatDict objectForKey:@"value"];
+                    cart.vatValueFormatted = [RICountryConfiguration formatPrice:cart.vatValue country:country];
+                }
+                if (VALID_NOTEMPTY([vatDict objectForKey:@"value_converted"], NSNumber)) {
+                    cart.vatValueEuroConverted = [vatDict objectForKey:@"value_converted"];
+                }
+            }
+        }
+        
+        if ([cartEntityJSON objectForKey:@"sub_total"]) {
+            if (![[cartEntityJSON objectForKey:@"sub_total"] isKindOfClass:[NSNull class]]) {
+                cart.sumCosts = [cartEntityJSON objectForKey:@"sub_total"];
+            }
+        }
+        
+        if ([cartEntityJSON objectForKey:@"sub_total_converted"]) {
+            if (![[cartEntityJSON objectForKey:@"sub_total_converted"] isKindOfClass:[NSNull class]]) {
+                cart.sumCostsEuroConverted = [cartEntityJSON objectForKey:@"sub_total_converted"];
+            }
+        }
+        
+        if ([cartEntityJSON objectForKey:@"sum_costs_value"]) {
+            if (![[cartEntityJSON objectForKey:@"sum_costs_value"] isKindOfClass:[NSNull class]]) {
+                cart.sumCostsValue = [cartEntityJSON objectForKey:@"sum_costs_value"];
+            }
+        }
+        
+        if ([cartEntityJSON objectForKey:@"sum_costs_value_converted"]) {
+            if (![[cartEntityJSON objectForKey:@"sum_costs_value_converted"] isKindOfClass:[NSNull class]]) {
+                cart.sumCostsValueEuroConverted = [cartEntityJSON objectForKey:@"sum_costs_value_converted"];
+            }
+        }
+        
+        if ([cartEntityJSON objectForKey:@"price_rules"]) {
+            if (![[cartEntityJSON objectForKey:@"price_rules"] isKindOfClass:[NSNull class]]) {
+                NSArray *priceRulesObject = [cartEntityJSON objectForKey:@"price_rules"];
+                if(VALID_NOTEMPTY(priceRulesObject, NSArray)) {
+                    NSMutableDictionary *priceRules = [[NSMutableDictionary alloc] init];
+                    for(NSDictionary *priceRulesDictionary in priceRulesObject) {
+                        if(VALID_NOTEMPTY(priceRulesDictionary, NSDictionary)) {
+                            if ([priceRulesDictionary objectForKey:@"label"] && ![[priceRulesDictionary objectForKey:@"label"] isKindOfClass:[NSNull class]]) {
+                                if ([priceRulesDictionary objectForKey:@"value"] && ![[priceRulesDictionary objectForKey:@"value"] isKindOfClass:[NSNull class]]) {
+                                    if(VALID_NOTEMPTY([priceRulesDictionary objectForKey:@"value"], NSNumber)) {
+                                        //since it's a rule to create a discount, add the minus signal to the string
+                                        [priceRules setValue:[@"- " stringByAppendingString:[RICountryConfiguration formatPrice:[priceRulesDictionary objectForKey:@"value"] country:country]] forKey:[priceRulesDictionary objectForKey:@"label"]];
+                                    } else {
+                                        [priceRules setValue:[priceRulesDictionary objectForKey:@"value"] forKey: [priceRulesDictionary objectForKey:@"label"]];
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    cart.priceRules = [priceRules copy];
+                }
+            }
+        }
+        
+        if (VALID_NOTEMPTY([cartEntityJSON objectForKey:@"coupon"], NSDictionary)) {
+            NSDictionary *couponDic = [cartEntityJSON objectForKey:@"coupon"];
+            if (VALID_NOTEMPTY([couponDic objectForKey:@"code"], NSString)) {
+                cart.couponCode = [couponDic objectForKey:@"code"];
+            }
+            if (VALID_NOTEMPTY([couponDic objectForKey:@"value"], NSNumber)) {
+                cart.couponMoneyValue = [couponDic objectForKey:@"value"];
+                cart.couponMoneyValueFormatted = [RICountryConfiguration formatPrice:cart.couponMoneyValue country:country];
+            }
+            if (VALID_NOTEMPTY([couponDic objectForKey:@"value_converted"], NSNumber)) {
+                cart.couponMoneyValueEuroConverted = [couponDic objectForKey:@"value_converted"];
+            }
+        }
+        
+        if (VALID_NOTEMPTY([cartEntityJSON objectForKey:@"shipping_method"], NSDictionary)) {
+            NSDictionary* shipMethodDic = [cartEntityJSON objectForKey:@"shipping_method"];
+            if (VALID_NOTEMPTY([shipMethodDic objectForKey:@"method"], NSString)) {
+                cart.shippingMethod = [shipMethodDic objectForKey:@"method"];
+            }
+        }
+        
+        if (VALID_NOTEMPTY([cartEntityJSON objectForKey:@"payment_method"], NSDictionary)) {
+            NSDictionary* payMethodDic = [cartEntityJSON objectForKey:@"payment_method"];
+            if (VALID_NOTEMPTY([payMethodDic objectForKey:@"label"], NSString)) {
+                cart.paymentMethod = [payMethodDic objectForKey:@"label"];
+            }
+        }
+        
+        if (VALID_NOTEMPTY([cartEntityJSON objectForKey:@"billing_address"], NSDictionary)) {
+            NSDictionary* billingAddressJSON = [cartEntityJSON objectForKey:@"billing_address"];
+            RIAddress* billingAddress = [RIAddress parseAddress:billingAddressJSON];
+            if (VALID_NOTEMPTY(billingAddress, RIAddress)) {
+                cart.billingAddress = billingAddress;
+            }
+        }
+        
+        if (VALID_NOTEMPTY([cartEntityJSON objectForKey:@"shipping_address"], NSDictionary)) {
+            NSDictionary* shippingAddressJSON = [cartEntityJSON objectForKey:@"shipping_address"];
+            RIAddress* shippingAddress = [RIAddress parseAddress:shippingAddressJSON];
+            if (VALID_NOTEMPTY(shippingAddress, RIAddress)) {
+                cart.shippingAddress = shippingAddress;
+            }
+        }
+        
+        if (VALID_NOTEMPTY([cartEntityJSON objectForKey:@"fulfillment"], NSArray)) {
+            NSArray* fulfillment = [cartEntityJSON objectForKey:@"fulfillment"];
+            NSMutableArray* sellers = [[NSMutableArray alloc] init];
+            
+            for (NSDictionary* seller in fulfillment) {
+                RISellerDelivery* sellerDelivery = [RISellerDelivery parseSellerDelivery:[seller objectForKey:@"seller_entity"]];
+                NSMutableArray* products = [[NSMutableArray alloc] init];
+                
+                for (NSDictionary* prod in [seller objectForKey:@"products"]) {
+                    NSString* simpleSku = [prod objectForKey:@"simple_sku"];
+                    
+                    for (RICartItem* cartItem in cart.cartItems) {
+                        if ([cartItem.simpleSku isEqual:simpleSku]) {
+                            [products addObject:cartItem];
+                            break;
+                        }
+                    }
+                }
+                sellerDelivery.products = [products copy];
+                [sellers addObject:sellerDelivery];
+            }
+            cart.sellerDelivery = sellers;
+        }
+    }
+    
+    return cart;
+}
 
 @end

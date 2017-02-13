@@ -74,6 +74,7 @@
 #import "ViewControllerManager.h"
 #import "ContactUsViewController.h"
 #import "CheckoutAddressViewController.h"
+#import "CartViewController.h"
 
 @interface JACenterNavigationController ()
 
@@ -1990,6 +1991,18 @@
     }
     
     typedef void (^GoToCartBlock)(void);
+        GoToCartBlock goToCartBlock = ^void {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification object:nil];
+            if (![[self topViewController] isKindOfClass:[CartViewController class]]) {
+            CartViewController *cartViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"CartViewController"];
+            [cartViewController setCart:self.cart];
+            [self popToRootViewControllerAnimated:NO];
+            [self.tabBarView selectButtonAtIndex:2];
+            [self pushViewController:cartViewController animated:NO];
+        }
+    };
+    
+    /*typedef void (^GoToCartBlock)(void);
     GoToCartBlock goToCartBlock = ^void {
         [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification object:nil];
         if (![[self topViewController] isKindOfClass:[JACartViewController class]]) {
@@ -1999,7 +2012,7 @@
             [self.tabBarView selectButtonAtIndex:2];
             [self pushViewController:cartViewController animated:NO];
         }
-    };
+    };*/
     
     if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY(notification.object, NSString)) {
         [RICart addMultipleProducts:[notification.object componentsSeparatedByString:@"_"] withSuccessBlock:^(RICart *cart, NSArray *productsNotAdded) {

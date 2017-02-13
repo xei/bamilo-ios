@@ -9,10 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 #import "RIFormIndex.h"
+#import "JSONVerboseModel.h"
 
 @class RIField;
 
-@interface RIForm : NSManagedObject
+@interface RIForm : NSManagedObject <JSONVerboseModel>
 
 @property (nonatomic, retain) NSString * type;
 @property (nonatomic, retain) NSString * method;
@@ -121,4 +122,5 @@
 - (void)removeFieldsObject:(RIField *)value;
 - (void)addFields:(NSOrderedSet *)values;
 - (void)removeFields:(NSOrderedSet *)values;
+
 @end

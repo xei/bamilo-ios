@@ -16,8 +16,14 @@ typedef void(^DataCompletion)(id data, NSError *error);
 
 +(instancetype) sharedInstance;
 
+//### LOGIN ###
+-(void) loginUser:(id<DataServiceProtocol>)target withUsername:(NSString *)username password:(NSString *)password completion:(DataCompletion)completion;
+
+//### ADDRESS ###
 -(void) getUserAddressList:(id<DataServiceProtocol>)target completion:(DataCompletion)completion;
 -(void) setDefaultAddress:(id<DataServiceProtocol>)target address:(Address *)address isBilling:(BOOL)isBilling completion:(DataCompletion)completion;
--(void) loginUser:(id<DataServiceProtocol>)target withUsername:(NSString *)username password:(NSString *)password completion:(DataCompletion)completion;
+
+//### CART ###
+-(void) getUserCart:(id<DataServiceProtocol>)target completion:(DataCompletion)completion;
 
 @end
