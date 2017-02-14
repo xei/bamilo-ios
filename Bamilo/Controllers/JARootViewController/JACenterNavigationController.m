@@ -725,25 +725,13 @@
 
 #pragma mark Sign In Screen
 - (void)showAuthenticationScreen:(NSNotification *)notification {
-    //JAAuthenticationViewController *authenticationViewController = [[JAAuthenticationViewController alloc] init];
-//    AuthenticationViewController *authenticationViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"AuthenticationViewController"];
-    
     AuthenticationViewController *authenticationViewController = (AuthenticationViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Authentication" nibName:@"AuthenticationViewController" resetCache:YES];
 
     if (VALID_NOTEMPTY(notification, NSNotification) && notification.object) {
         [authenticationViewController setNextStepBlock:notification.object];
     }
     
-//    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"shows_back_button"], NSNumber)) {
-//        NSNumber* showsBack = [notification.userInfo objectForKey:@"shows_back_button"];
-//        authenticationViewController.navBarLayout.showBackButton = [showsBack boolValue];
-//        if (![showsBack boolValue]) {
-////            authenticationViewController.tabBarIsVisible = YES;
-//            [self popToRootViewControllerAnimated:NO];
-//        }
-//    } else {
     authenticationViewController.navBarLayout.showBackButton = YES;
-//    }
     
     authenticationViewController.fromSideMenu = NO;
     if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"from_side_menu"], NSNumber)) {
@@ -752,8 +740,6 @@
     }
     BOOL animated = YES;
     if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"tabbar_is_visible"], NSNumber)) {
-      //  NSNumber* tabbarIsVisible = [notification.userInfo objectForKey:@"tabbar_is_visible"];
-//        authenticationViewController.tabBarIsVisible = [tabbarIsVisible boolValue];
         [self popToRootViewControllerAnimated:NO];
         animated = NO;
     }
@@ -762,21 +748,16 @@
         animated = [animatedNumber boolValue];
     }
     
-    BOOL checkout = NO;
+    BOOL isFromCheckout = NO;
     if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"continue_button"], NSNumber)) {
-        checkout = [[notification.userInfo objectForKey:@"continue_button"] boolValue];
+        isFromCheckout = [[notification.userInfo objectForKey:@"continue_button"] boolValue];
     }
-    authenticationViewController.showContinueWithoutLogin = checkout;
+    authenticationViewController.showContinueWithoutLogin = isFromCheckout;
     
     if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY(notification.userInfo, NSDictionary)) {
         [authenticationViewController setUserInfo:notification.userInfo];
     }
-    
-    if (checkout) {
-        [self goToStep:authenticationViewController forStepByStepViewController:self.checkoutStepByStepViewController];
-    } else {
-        [self pushViewController:authenticationViewController animated:YES];
-    }
+    [self pushViewController:authenticationViewController animated:YES];
 }
 
 - (void)runBlockAfterAuthentication:(NSNotification *)notification {
@@ -797,6 +778,7 @@
             {
                 UIViewController *viewController = [self.viewControllers objectAtIndex:count-2];
                 UIViewController *viewControllerToPop = [self.viewControllers objectAtIndex:count-3];
+                
                 if ([viewController isKindOfClass:[JAAuthenticationViewController class]]) {
                     [self popToViewController:viewControllerToPop animated:NO];
                 }else{

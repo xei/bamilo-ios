@@ -7,17 +7,24 @@
 //
 
 #import "FormViewController.h"
-#import "FormTableViewCell.h"
 #import "BasicTableViewCell.h"
 
 @interface FormViewController ()
 @property (nonatomic, weak) IBOutlet UITableView *tableview;
 @property (nonatomic, strong) UITextField *activeField;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, InputTextFieldControl*> *inputControlsDictionary;
 @property (nonatomic) NSUInteger numberOfRowsOfTableView;
 
 @end
 
 @implementation FormViewController
+
+- (NSMutableDictionary<NSString *,InputTextFieldControl *> *)inputControlsDictionary {
+    if (!_inputControlsDictionary) {
+        _inputControlsDictionary = [[NSMutableDictionary<NSString *,InputTextFieldControl *> alloc] init];
+    }
+    return _inputControlsDictionary;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -30,6 +37,8 @@
          forCellReuseIdentifier:[BasicTableViewCell nibName]];
     [self.tableview registerNib:[UINib nibWithNibName:[ButtonTableViewCell nibName] bundle:nil]
          forCellReuseIdentifier:[ButtonTableViewCell nibName]];
+    
+    self.tableview.multipleTouchEnabled = NO;
 }
 
 
@@ -52,7 +61,11 @@
     
     FormTableViewCell *cell = [self.tableview dequeueReusableCellWithIdentifier:[FormTableViewCell nibName] forIndexPath:indexPath];
     cell.formItemControl.input.textField.delegate = self; 
-    cell.formItemControl.model = self.formMessage ? self.formItemListModel[indexPath.row - 1] : self.formItemListModel[indexPath.row];
+    NSString *fieldName = self.formMessage ? self.formItemListModel.allKeys[indexPath.row - 1] : self.formItemListModel.allKeys[indexPath.row];
+    cell.formItemControl.model = self.formItemListModel[fieldName];
+    cell.formItemControl.fieldName = fieldName;
+    self.inputControlsDictionary[fieldName] = cell.formItemControl;
+    cell.formItemControl.delegate = self;
     return cell;
 }
 
@@ -129,18 +142,28 @@
 - (Boolean)isFormValid {
     __block Boolean result = YES;
     
-    [self.formItemListModel enumerateObjectsUsingBlock:^(FormItemModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (![obj.validation checkValiditionOfString:obj.titleString].boolValue) {
+    [self.formItemListModel enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, FormItemModel * _Nonnull obj, BOOL * _Nonnull stop) {
+        if(![obj.validation checkValiditionOfString:obj.titleString].boolValue) {
             result = NO;
             *stop = YES;
         }
     }];
-    
     return result;
 }
 
 #pragma mark - form submission abstract method
 - (void)buttonTapped:(id)cell {
+    [self.view endEditing:YES];
     return;
 }
+
+#pragma mark - InputTextFieldControlDelegate
+- (void)inputVlueHasBeenChanged:(id)inputTextFieldControl byNewValue:(NSString *)value inFieldName:(NSString *)fieldname {
+    self.formItemListModel[fieldname].titleString = value;
+}
+
+- (void)showErrorMessgaeForField:(NSString *)fieldName errorMsg:(NSString *)string {
+    [self.inputControlsDictionary[fieldName] showErrorMsg:string];
+}
+
 @end

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "RequestManager.h"
 #import "Address.h"
+#import "FormItemModel.h"
 
 typedef void(^DataCompletion)(id data, NSError *error);
 
@@ -16,8 +17,8 @@ typedef void(^DataCompletion)(id data, NSError *error);
 
 +(instancetype) sharedInstance;
 
--(void) getUserAddressList:(id<DataServiceProtocol>)target completion:(DataCompletion)completion;
--(void) setDefaultAddress:(id<DataServiceProtocol>)target address:(Address *)address isBilling:(BOOL)isBilling completion:(DataCompletion)completion;
--(void) loginUser:(id<DataServiceProtocol>)target withUsername:(NSString *)username password:(NSString *)password completion:(DataCompletion)completion;
-
+- (void)getUserAddressList:(id<DataServiceProtocol>)target completion:(DataCompletion)completion;
+- (void)setDefaultAddress:(id<DataServiceProtocol>)target address:(Address *)address isBilling:(BOOL)isBilling completion:(DataCompletion)completion;
+- (void)loginUser:(id<DataServiceProtocol>)target withUsername:(NSString *)username password:(NSString *)password completion:(DataCompletion)completion;
+- (void)signupUser:(id<DataServiceProtocol>)target withFieldsDictionary:(NSDictionary<NSString *,FormItemModel *> *)newUserDictionary completion:(DataCompletion)completion;
 @end

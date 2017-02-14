@@ -14,7 +14,7 @@
 - (void)wantsToShowForgetPassword;
 @end
 
-@interface SignInViewController : UIViewController <DataServiceProtocol, UIScrollViewDelegate, UITextFieldDelegate>
+@interface SignInViewController : AuthenticationBaseViewController <DataServiceProtocol, UIScrollViewDelegate, UITextFieldDelegate>
 @property (weak, nonatomic) id<SignInViewControllerDelegate> delegate;
 @property (nonatomic, assign) BOOL fromSideMenu;
 @property (nonatomic, strong) void(^nextStepBlock)(void);

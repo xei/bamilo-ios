@@ -11,8 +11,13 @@
 #import "FormItemValidation.h"
 #import "FormItemModel.h"
 
+@protocol InputTextFieldControlDelegate<NSObject>
+- (void)inputVlueHasBeenChanged:(id)inputTextFieldControl byNewValue:(NSString *)value inFieldName:(NSString *)fieldname;
+@end
 
 @interface InputTextFieldControl : UIView
+@property (nonatomic, strong) NSString *fieldName;
+@property (nonatomic, weak) id<InputTextFieldControlDelegate> delegate;
 @property (nonatomic, strong) InputTextField *input;
 @property (nonatomic, strong) FormItemValidation *validation;
 @property (assign, nonatomic) InputTextFieldControlType type;

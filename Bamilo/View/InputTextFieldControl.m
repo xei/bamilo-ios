@@ -59,6 +59,7 @@
 
 - (void)updateModel {
     self.model.titleString = [self getStringValue];
+    [self.delegate inputVlueHasBeenChanged:self byNewValue:[self getStringValue] inFieldName: self.fieldName];
 }
 
 - (void)setModel:(FormItemModel *)model {

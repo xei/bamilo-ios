@@ -20,7 +20,6 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setTranslucent:NO];
     self.navigationItem.hidesBackButton = YES;
-    self.title = @"";
 }
 
 @end
