@@ -31,13 +31,12 @@ static DataManager *instance;
          @"login[email]": username,
          @"login[password]": password
     };
-
     [RequestManager asyncPOST:target path:RI_API_LOGIN_CUSTOMER params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
         if(response == RIApiResponseSuccess && data) {
             [RICustomer parseCustomerWithJson:[data objectForKey:@"customer_entity"] plainPassword:password loginMethod:@"normal"];
             completion(data, nil);
         } else {
-            completion(nil, [NSError errorWithDomain:@"com.bamilo.ios" code:response userInfo:(errorMessages ? @{ @"errorMessages" : errorMessages } : nil)]);
+            completion(nil, [self getErrorFrom:response errorMessages:errorMessages]);
         }
     }];
 }
@@ -53,13 +52,12 @@ static DataManager *instance;
     
     //must be remove from server side!
     params[@"customer[phone_prefix]"] = @"100";
-    
     [RequestManager asyncPOST:target path:RI_API_REGISTER_CUSTOMER params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
         if(response == RIApiResponseSuccess && data) {
             [RICustomer parseCustomerWithJson:[data objectForKey:@"customer_entity"] plainPassword:newUserDictionary[@"customer[password]"].titleString loginMethod:@"normal"];
             completion(data, nil);
         } else {
-            completion(nil, [NSError errorWithDomain:@"com.bamilo.ios" code:response userInfo:(errorMessages ? @{ @"errorMessages" : errorMessages } : nil)]);
+            completion(nil, [self getErrorFrom:response errorMessages:errorMessages]);
         }
     }];
 }
@@ -83,14 +81,14 @@ static DataManager *instance;
 }
 
 //### CART ###
--(void)getUserCart:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
+- (void)getUserCart:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
     [RequestManager asyncPOST:target path:RI_API_GET_CART_DATA params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
         [self serialize:data into:[RICart class] response:response errorMessages:errorMessages completion:completion];
     }];
 }
 
 //### PAYMENT ###
--(void) getMultistepPayment:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
+- (void) getMultistepPayment:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
     [RequestManager asyncGET:target path:RI_API_MULTISTEP_GET_PAYMENT params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
         [self serialize:data into:[CartForm class] response:response errorMessages:errorMessages completion:completion];
     }];
@@ -125,7 +123,7 @@ static DataManager *instance;
 }
 
 #pragma mark - Helpers
--(NSError *) getErrorFrom:(RIApiResponse)response errorMessages:(NSArray *)errorMessages {
+- (NSError *)getErrorFrom:(RIApiResponse)response errorMessages:(NSArray *)errorMessages {
     return [NSError errorWithDomain:@"com.bamilo.ios" code:response userInfo:(errorMessages ? @{ @"errorMessages" : errorMessages } : nil)];
 }
 

@@ -18,8 +18,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray* tableViewListItems;
-
-
+@property (nonatomic) Boolean viewDidApearedOnceOrMore;
 @end
 
 @implementation JAMyAccountViewController
@@ -42,63 +41,75 @@
     
     [self.tableView registerNib:[UINib nibWithNibName:[IconTableViewCell nibName] bundle:nil] forCellReuseIdentifier: [IconTableViewCell nibName]];
     [self.tableView registerNib:[UINib nibWithNibName:[NotificationTableViewCell nibName] bundle:nil] forCellReuseIdentifier: [NotificationTableViewCell nibName]];
+    
+    [self updateTableViewListItemsModel];
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+}
 
+- (void)viewDidAppear:(BOOL)animated {
+    if (self.viewDidApearedOnceOrMore) {
+        [self updateTableViewListItemsModel];
+        [self.tableView reloadData];
+    }
+    self.viewDidApearedOnceOrMore = YES;
+}
+
+- (void)updateTableViewListItemsModel {
     self.tableViewListItems = [NSMutableArray arrayWithArray: @[
-                                @{
-                                    @"title": STRING_PROFILE,
-                                    @"icon": @"user-information-icons",
-                                    @"cellType": IconTableViewCell.nibName,
-                                    @"notification" : kShowUserDataScreenNotification,
-                                    @"animated" : @YES
-                                    },
-                                @{
-                                    @"title": STRING_MY_ADDRESSES,
-                                    @"icon": @"my-address-icon",
-                                    @"cellType": IconTableViewCell.nibName,
-                                    @"notification": kShowCheckoutAddressesScreenNotification,
-                                    @"animated" : @NO
-                                    },
-                                @{
-                                    @"title": STRING_TRACK_MY_ORDER,
-                                    @"icon": @"OrderTracking",
-                                    @"cellType": IconTableViewCell.nibName,
-                                    @"notification" : kShowMyOrdersScreenNotification,
-                                    @"animated": @YES,
-                                    },
-                                @{
-                                    @"title": STRING_RECENTLY_VIEWED,
-                                    @"icon": @"LastViews",
-                                    @"cellType": IconTableViewCell.nibName,
-                                    @"notification" : kShowRecentlyViewedScreenNotification,
-                                    @"animated": @YES,
-                                    },
-                                @{
-                                    @"title": STRING_NOTIFICATIONS,
-                                    @"icon": @"announcements-icon",
-                                    @"cellType": NotificationTableViewCell.nibName
-                                    },
-                                @{
-                                    @"title": STRING_NEWSLETTER,
-                                    @"icon": @"newsletter-icons",
-                                    @"cellType": IconTableViewCell.nibName,
-                                    @"notification": kShowEmailNotificationsScreenNotification,
-                                    @"animated": @YES
-                                    },
-                                ]];
+                                                                @{
+                                                                    @"title": STRING_PROFILE,
+                                                                    @"icon": @"user-information-icons",
+                                                                    @"cellType": IconTableViewCell.nibName,
+                                                                    @"notification" : kShowUserDataScreenNotification,
+                                                                    @"animated" : @YES
+                                                                    },
+                                                                @{
+                                                                    @"title": STRING_MY_ADDRESSES,
+                                                                    @"icon": @"my-address-icon",
+                                                                    @"cellType": IconTableViewCell.nibName,
+                                                                    @"notification": kShowCheckoutAddressesScreenNotification,
+                                                                    @"animated" : @NO
+                                                                    },
+                                                                @{
+                                                                    @"title": STRING_TRACK_MY_ORDER,
+                                                                    @"icon": @"OrderTracking",
+                                                                    @"cellType": IconTableViewCell.nibName,
+                                                                    @"notification" : kShowMyOrdersScreenNotification,
+                                                                    @"animated": @YES,
+                                                                    },
+                                                                @{
+                                                                    @"title": STRING_RECENTLY_VIEWED,
+                                                                    @"icon": @"LastViews",
+                                                                    @"cellType": IconTableViewCell.nibName,
+                                                                    @"notification" : kShowRecentlyViewedScreenNotification,
+                                                                    @"animated": @YES,
+                                                                    },
+                                                                @{
+                                                                    @"title": STRING_NOTIFICATIONS,
+                                                                    @"icon": @"announcements-icon",
+                                                                    @"cellType": NotificationTableViewCell.nibName
+                                                                    },
+                                                                @{
+                                                                    @"title": STRING_NEWSLETTER,
+                                                                    @"icon": @"newsletter-icons",
+                                                                    @"cellType": IconTableViewCell.nibName,
+                                                                    @"notification": kShowEmailNotificationsScreenNotification,
+                                                                    @"animated": @YES
+                                                                    },
+                                                                ]];
     
     NSObject * loginOrLoginCell = @{
-          @"title":[RICustomer checkIfUserIsLogged] ? STRING_LOGOUT : STRING_LOGIN_OR_SIGNUP,
-          @"icon": [RICustomer checkIfUserIsLogged] ? @"Logout" : @"HappyFace",
-          @"cellType": IconTableViewCell.nibName,
-          @"selector": [NSValue valueWithPointer:@selector(loginOrLogoutBtnTouchUpInside)]
-          };
+                                    @"title":[RICustomer checkIfUserIsLogged] ? STRING_LOGOUT : STRING_LOGIN_OR_SIGNUP,
+                                    @"icon": [RICustomer checkIfUserIsLogged] ? @"Logout" : @"HappyFace",
+                                    @"cellType": IconTableViewCell.nibName,
+                                    @"selector": [NSValue valueWithPointer:@selector(loginOrLogoutBtnTouchUpInside)]
+                                    };
     
     [self.tableViewListItems insertObject: loginOrLoginCell atIndex:[RICustomer checkIfUserIsLogged] ? self.tableViewListItems.count : 0];
     
-    self.tableView.dataSource = self;
-    self.tableView.delegate = self;
-    
 }
+
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];

@@ -20,8 +20,11 @@
 }
 
 + (NSString *)emailRegxPattern {
-//    @"[a-zA-Z0-9äöüÄÖÜ_+.-]+@[a-zA-Z0-9äöüÄÖÜ][a-zA-Z0-9-äöüÄÖÜ.]+\\.([a-zA-Z]{2,6})"
     return @"^.+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2}[A-Za-z]*$";
+}
+
++ (NSString *)mobileRegxPattern {
+    return @"(0|+98)?([ ]|-|[()]){0,2}9[1|2|3|4]([ ]|-|[()]){0,2}(?:[0-9]([ ]|-|[()]){0,2}){8}";
 }
 
 - (NSString *)wrapWithMaxSize:(int)maxSize {
