@@ -10,6 +10,7 @@
 #import "Models.pch"
 #import "RICart.h"
 #import "RIForm.h"
+#import "RICustomer.h"
 
 @implementation DataManager
 
@@ -25,25 +26,52 @@ static DataManager *instance;
 }
 
 //### LOGIN ###
--(void)loginUser:(id<DataServiceProtocol>)target withUsername:(NSString *)username password:(NSString *)password completion:(DataCompletion)completion {
+- (void)loginUser:(id<DataServiceProtocol>)target withUsername:(NSString *)username password:(NSString *)password completion:(DataCompletion)completion {
     NSDictionary *params = @{
          @"login[email]": username,
          @"login[password]": password
     };
 
     [RequestManager asyncPOST:target path:RI_API_LOGIN_CUSTOMER params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
-        [RIForm parseEntities:data plainPassword:password loginMethod:@"normal"];
+        if(response == RIApiResponseSuccess && data) {
+            [RICustomer parseCustomerWithJson:[data objectForKey:@"customer_entity"] plainPassword:password loginMethod:@"normal"];
+            completion(data, nil);
+        } else {
+            completion(nil, [NSError errorWithDomain:@"com.bamilo.ios" code:response userInfo:(errorMessages ? @{ @"errorMessages" : errorMessages } : nil)]);
+        }
+    }];
+}
+
+//### LOGIN ###
+- (void)signupUser:(id<DataServiceProtocol>)target withFieldsDictionary:(NSDictionary<NSString *,FormItemModel *> *)newUserDictionary completion:(DataCompletion)completion {
+
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    
+    [newUserDictionary enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, FormItemModel * _Nonnull obj, BOOL * _Nonnull stop) {
+        params[key] = obj.titleString;
+    }];
+    
+    //must be remove from server side!
+    params[@"customer[phone_prefix]"] = @"100";
+    
+    [RequestManager asyncPOST:target path:RI_API_REGISTER_CUSTOMER params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+        if(response == RIApiResponseSuccess && data) {
+            [RICustomer parseCustomerWithJson:[data objectForKey:@"customer_entity"] plainPassword:newUserDictionary[@"customer[password]"].titleString loginMethod:@"normal"];
+            completion(data, nil);
+        } else {
+            completion(nil, [NSError errorWithDomain:@"com.bamilo.ios" code:response userInfo:(errorMessages ? @{ @"errorMessages" : errorMessages } : nil)]);
+        }
     }];
 }
 
 //### ADDRESS ###
--(void) getUserAddressList:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
+- (void)getUserAddressList:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
     [RequestManager asyncPOST:target path:RI_API_GET_CUSTOMER_ADDRESS_LIST params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
         [self serialize:data into:[AddressList class] response:response errorMessages:errorMessages completion:completion];
     }];
 }
 
--(void) setDefaultAddress:(id<DataServiceProtocol>)target address:(Address *)address isBilling:(BOOL)isBilling completion:(DataCompletion)completion {
+- (void)setDefaultAddress:(id<DataServiceProtocol>)target address:(Address *)address isBilling:(BOOL)isBilling completion:(DataCompletion)completion {
     NSDictionary *params = @{
          @"id": address.uid,
          @"type": isBilling ? @"billing" : @"shipping"

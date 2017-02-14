@@ -17,7 +17,7 @@
 #define cLIGHT_GRAY_COLOR [UIColor withRGBA:146 green:146 blue:146 alpha:1.0f]
 #define cEXTRA_ORAGNE_COLOR [UIColor withRGBA:247 green:151 blue:32 alpha:1.0f]
 
-@interface AuthenticationViewController()
+@interface AuthenticationViewController() <SignInViewControllerDelegate>
 @property (nonatomic) CAPSPageMenu *pagemenu;
 @end
 
@@ -26,20 +26,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.screenName = @"Authentication";
-    self.navBarLayout.title = STRING_LOGIN;
+    //self.screenName = @"Authentication";
+    self.navBarLayout.title = STRING_LOGIN_OR_SIGNUP;
     self.navBarLayout.showCartButton = NO;
+    self.navBarLayout.showBackButton = YES;
     
-    //Page Menu Regsiteration 
+    //Page Menu Regsiteration
     NSMutableArray *controllerArray = [NSMutableArray array];
-    UIViewController *controller =   [[SignUpViewController alloc] initWithNibName: @"SignUpViewController" bundle: nil];
-    controller.title = @"عضویت";
-    [controllerArray addObject:controller];
+    SignInViewController *signInCtrl = [[SignInViewController alloc] initWithNibName:@"SignInViewController" bundle:nil];
+    signInCtrl.title = STRING_LOGIN;
+    signInCtrl.nextStepBlock = self.nextStepBlock;
+    signInCtrl.fromSideMenu = self.fromSideMenu;
+    signInCtrl.delegate = self;
+    signInCtrl.showContinueWithoutLogin = self.showContinueWithoutLogin;
+    [controllerArray addObject:signInCtrl];
     
     
-    controller = [[SignInViewController alloc] initWithNibName:@"SignInViewController" bundle:nil];
-    controller.title = @"ورود";
-    [controllerArray addObject:controller];
+    
+    SignUpViewController *signUpCtrl =   [[SignUpViewController alloc] initWithNibName: @"SignUpViewController" bundle: nil];
+    signUpCtrl.title = STRING_SIGNUP;
+    [controllerArray addObject:signUpCtrl];
     
     NSDictionary *parameters = @{CAPSPageMenuOptionUseMenuLikeSegmentedControl: @(YES),
                                  CAPSPageMenuOptionMenuItemFont: [UIFont fontWithName:kFontRegularName size: 14],
@@ -74,6 +80,23 @@
         [userInfo setObject:[NSNumber numberWithBool:continueButton] forKey:@"continue_button"];
         [userInfo setObject:[NSNumber numberWithBool:backButton] forKey:@"shows_back_button"];
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowAuthenticationScreenNotification object:authenticatedBlock userInfo:userInfo];
+    }
+}
+
+
+#pragma mark - SignInViewControllerDelegate
+- (void)wantsToContinueWithoutLogin {
+    [self performSegueWithIdentifier:@"showContinueWithoutLoginViewCtrl" sender:nil];
+}
+
+- (void)wantsToShowForgetPassword {
+    [self performSegueWithIdentifier:@"showForgetPasswordViewCtrl" sender:nil];
+}
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    NSString * segueName = segue.identifier;
+    if ([segueName isEqualToString: @"showContinueWithoutLoginViewCtrl"]) {
     }
 }
 

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "FormValidationType.h"
 
 typedef enum : NSUInteger {
     FormItemValidationErrorIsRequired,
@@ -21,6 +22,7 @@ typedef enum : NSUInteger {
 @property (nonatomic) Boolean isRequired;
 @property (nonatomic, strong) NSString *regxPattern;
 
-- (NSString *)getErrorMsgOfType:(FormItemValidationError)errorType;
 - (instancetype)initWithRequired:(Boolean)isRequired max:(NSUInteger)maxValue min:(NSUInteger)minValue withRegxPatter:(NSString *)regxPattern;
+- (NSString *)getErrorMsgOfType:(FormItemValidationError)errorType;
+- (FormValidationType *)checkValiditionOfString:(NSString *)inputString;
 @end

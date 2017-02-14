@@ -10,13 +10,14 @@
 
 @implementation FormItemModel
 
-- (instancetype)initWithTitle:(NSString *)title andIcon:(UIImage *)image placeholder:(NSString *)placeholder validation:(FormItemValidation *)validation {
+- (instancetype)initWithTitle:(NSString *)title andIcon:(UIImage *)image placeholder:(NSString *)placeholder type:(InputTextFieldControlType)type validation:(FormItemValidation *)validation {
     self = [super init];
     if (self) {
         self.titleString = title;
         self.icon = image;
         self.placeholder = placeholder;
         self.validation = validation;
+        self.type = type;
     }
     return self;
 }

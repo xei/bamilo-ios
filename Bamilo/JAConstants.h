@@ -57,7 +57,7 @@
 #define kRunBlockAfterAuthenticationNotification @"NOTIFICATION_RUN_BLOCK_AFTER_AUTHENTICATION"
 #define kShowSignInScreenNotification @"NOTIFICATION_SHOW_SIGN_IN_SCREEN"
 #define kShowSignUpScreenNotification @"NOTIFICATION_SHOW_SIGN_UP_SCREEN"
-#define kShowForgotPasswordScreenNotification @"NOTIFICATION_SHOW_FORGOT_PASSWORD_SCREEN"
+//#define kShowForgotPasswordScreenNotification @"NOTIFICATION_SHOW_FORGOT_PASSWORD_SCREEN"
 #define kShowSavedListScreenNotification @"NOTIFICATION_SHOW_SAVEDLIST_SCREEN"
 #define kShowMoreMenuScreenNotification @"NOTIFICATION_MORE_MENU_SCREEN"
 #define kShowRecentSearchesScreenNotification @"NOTIFICATION_SHOW_RECENT_SEARCHES_SCREEN"

@@ -17,10 +17,19 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" restorationIdentifier="InputTextField" id="iN0-l3-epB" customClass="InputTextField">
+        <view clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="InputTextField" id="iN0-l3-epB" customClass="InputTextField">
             <rect key="frame" x="0.0" y="0.0" width="318" height="77"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="پیغام خطا در اینجا قرار میگیرد" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d2O-YV-59p">
+                    <rect key="frame" x="189" y="47" width="120.5" height="15"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="15" id="vXM-yg-lBe"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="9"/>
+                    <color key="textColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Fa-Ht-d6l" userLabel="input container">
                     <rect key="frame" x="0.0" y="0.0" width="318" height="62"/>
                     <subviews>
@@ -31,7 +40,7 @@
                             <rect key="frame" x="0.0" y="61" width="318" height="1"/>
                             <color key="backgroundColor" red="0.61960784310000006" green="0.61960784310000006" blue="0.61960784310000006" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="1" id="kZO-LK-odJ"/>
+                                <constraint firstAttribute="height" constant="0.5" id="kZO-LK-odJ"/>
                             </constraints>
                         </view>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="متن خالی" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZZk-q2-461">
@@ -58,18 +67,11 @@
                         <constraint firstItem="KsS-gh-5m4" firstAttribute="left" secondItem="ZZk-q2-461" secondAttribute="right" priority="750" constant="8" id="ubK-Vl-Vrz"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="پیغام خطا در اینجا قرار میگیرد" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d2O-YV-59p">
-                    <rect key="frame" x="202" y="62" width="108" height="15"/>
-                    <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="8"/>
-                    <color key="textColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="6Fa-Ht-d6l" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="BFS-N1-yfA"/>
-                <constraint firstAttribute="bottom" secondItem="d2O-YV-59p" secondAttribute="bottom" id="Th0-Of-haj"/>
-                <constraint firstItem="d2O-YV-59p" firstAttribute="top" secondItem="6Fa-Ht-d6l" secondAttribute="bottom" id="W8b-tV-9pC"/>
+                <constraint firstItem="d2O-YV-59p" firstAttribute="top" secondItem="6Fa-Ht-d6l" secondAttribute="bottom" constant="-15" id="W8b-tV-9pC"/>
                 <constraint firstAttribute="trailing" secondItem="6Fa-Ht-d6l" secondAttribute="trailing" id="co1-pp-TQK"/>
                 <constraint firstAttribute="bottom" secondItem="6Fa-Ht-d6l" secondAttribute="bottom" constant="15" id="ikf-Gf-9r6"/>
                 <constraint firstItem="6Fa-Ht-d6l" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="lPd-09-f9F"/>
@@ -81,6 +83,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="errorMsg" destination="d2O-YV-59p" id="MOp-B3-7RI"/>
+                <outlet property="errorMsgTopConstraint" destination="W8b-tV-9pC" id="5Xx-up-B2N"/>
                 <outlet property="icon" destination="KsS-gh-5m4" id="HYy-x2-oR2"/>
                 <outlet property="iconHiddenConstraint" destination="Lgr-Vs-6dq" id="Fts-Vz-JFQ"/>
                 <outlet property="iconVisibleConstraint" destination="ubK-Vl-Vrz" id="sfb-t6-Sxr"/>

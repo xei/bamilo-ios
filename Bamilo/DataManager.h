@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "RequestManager.h"
 #import "Address.h"
+#import "FormItemModel.h"
 
 typedef void(^DataCompletion)(id data, NSError *error);
 
@@ -18,6 +19,9 @@ typedef void(^DataCompletion)(id data, NSError *error);
 
 //### LOGIN ###
 -(void) loginUser:(id<DataServiceProtocol>)target withUsername:(NSString *)username password:(NSString *)password completion:(DataCompletion)completion;
+
+//### SGINUP ###
+- (void)signupUser:(id<DataServiceProtocol>)target withFieldsDictionary:(NSDictionary<NSString *,FormItemModel *> *)newUserDictionary completion:(DataCompletion)completion;
 
 //### ADDRESS ###
 -(void) getUserAddressList:(id<DataServiceProtocol>)target completion:(DataCompletion)completion;

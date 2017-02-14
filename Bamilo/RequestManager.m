@@ -59,7 +59,7 @@
          
     } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
         if(errorJsonObject && errorJsonObject.allKeys.count) {
-            completion(apiResponse, nil, [RIError getErrorMessages:errorJsonObject]);
+            completion(apiResponse, nil, [RIError getPerfectErrorMessages:errorJsonObject]);
         } else if(errorObject) {
             NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
             completion(apiResponse, nil, errorArray);

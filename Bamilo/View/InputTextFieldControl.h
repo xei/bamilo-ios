@@ -11,21 +11,20 @@
 #import "FormItemValidation.h"
 #import "FormItemModel.h"
 
-typedef enum : NSUInteger {
-    InputTextFieldControlTypePassword,
-    InputTextFieldControlTypeNumerical,
-    InputTextFieldControlTypeEmail,
-    InputTextFieldControlTypeString,
-} InputTextFieldControlType;
-
+@protocol InputTextFieldControlDelegate<NSObject>
+- (void)inputVlueHasBeenChanged:(id)inputTextFieldControl byNewValue:(NSString *)value inFieldName:(NSString *)fieldname;
+@end
 
 @interface InputTextFieldControl : UIView
+@property (nonatomic, strong) NSString *fieldName;
+@property (nonatomic, weak) id<InputTextFieldControlDelegate> delegate;
 @property (nonatomic, strong) InputTextField *input;
 @property (nonatomic, strong) FormItemValidation *validation;
 @property (assign, nonatomic) InputTextFieldControlType type;
+@property (nonatomic, strong) FormItemModel *model;
 
 - (NSString *)getStringValue;
 - (Boolean)isValid;
-- (void)setModel:(FormItemModel *)model;
+- (void)showErrorMsg:(NSString *)msg;
 
 @end

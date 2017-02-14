@@ -11,7 +11,7 @@
 typedef void(^AuthenticationBlock)(void);
 
 @interface AuthenticationViewController: AuthenticationBaseViewController
-@property (nonatomic) BOOL checkout;
+@property (nonatomic) BOOL showContinueWithoutLogin;
 @property (nonatomic, assign) BOOL fromSideMenu;
 @property (nonatomic, strong) void(^nextStepBlock)(void);
 @property (nonatomic) NSDictionary *userInfo;

@@ -8,6 +8,6 @@
 
 #import "BaseViewController.h"
 
-@interface AuthenticationBaseViewController : JABaseViewController
+@interface AuthenticationBaseViewController : BaseViewController
 
 @end

@@ -18,6 +18,7 @@
  * Returning nil means that the error should be handled by the view controller with the default error message.
  */
 + (NSArray *)getErrorMessages:(NSDictionary *)errorJsonObject;
++ (NSArray *) getPerfectErrorMessages:(NSDictionary *)errorJsonObject;
 
 /**
  * Method to get a dictionary with errors.

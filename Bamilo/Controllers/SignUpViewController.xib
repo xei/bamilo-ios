@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SignUpViewController">
             <connections>
+                <outlet property="tableview" destination="exJ-Qj-uQn" id="TYg-qt-CpR"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -19,17 +20,16 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sign up" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iOK-sN-IY4">
-                    <rect key="frame" x="159" y="323" width="56" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="exJ-Qj-uQn">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
             </subviews>
-            <color key="backgroundColor" red="0.47450980390000003" green="0.71372549019999998" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="iOK-sN-IY4" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="ShJ-Rl-WaO"/>
-                <constraint firstItem="iOK-sN-IY4" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="xTd-sW-7pA"/>
+                <constraint firstItem="exJ-Qj-uQn" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="3Hv-Df-2nM"/>
+                <constraint firstAttribute="bottom" secondItem="exJ-Qj-uQn" secondAttribute="bottom" id="JdG-0g-Jbe"/>
+                <constraint firstItem="exJ-Qj-uQn" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Wam-FN-tcd"/>
+                <constraint firstAttribute="trailing" secondItem="exJ-Qj-uQn" secondAttribute="trailing" id="oUN-Dp-UzW"/>
             </constraints>
         </view>
     </objects>

@@ -8,7 +8,9 @@
 
 #import "FormItemValidation.h"
 
+
 @implementation FormItemValidation
+
 
 - (instancetype)initWithRequired:(Boolean)isRequired max:(NSUInteger)maxValue min:(NSUInteger)minValue withRegxPatter:(NSString *)regxPattern {
     self = [super init];
@@ -31,6 +33,47 @@
     else if (errorType == FormItemValidationErrorRegx)
         return @"لطفا مقدار معتبر وارد نمایید";
     return nil;
+}
+
+- (FormValidationType *)checkValiditionOfString:(NSString *)inputString {
+    
+    NSUInteger lengthOfInputText = inputString.length;
+    FormValidationType *validation = [[FormValidationType alloc] init];
+    
+    if (self.isRequired && !lengthOfInputText) {
+        validation.errorMsg = [self getErrorMsgOfType:FormItemValidationErrorIsRequired];
+        validation.boolValue = NO;
+        return validation;
+    }
+    
+    if (self.max && lengthOfInputText > self.max) {
+        validation.errorMsg = [self getErrorMsgOfType:FormItemValidationErrorMax];
+        validation.boolValue = NO;
+        return validation;
+    }
+    
+    if (self.min && lengthOfInputText < self.min) {
+        validation.errorMsg = [self getErrorMsgOfType:FormItemValidationErrorMin];
+        validation.boolValue = NO;
+        return validation;
+    }
+    
+    
+    if (self.regxPattern) {
+        NSError *error = NULL;
+        NSString *inputTextValue = inputString;
+        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:self.regxPattern options:NSRegularExpressionCaseInsensitive error:&error];
+        NSTextCheckingResult *match = [regex firstMatchInString:inputTextValue options:0 range:NSMakeRange(0, [inputTextValue length])];
+        
+        if (!match) {
+            validation.errorMsg = [self getErrorMsgOfType:FormItemValidationErrorRegx];
+            validation.boolValue = NO;
+            return validation;
+        }
+    }
+    
+    validation.boolValue = YES;
+    return validation;
 }
 
 @end
