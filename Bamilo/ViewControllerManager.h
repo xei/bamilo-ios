@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "JARootViewController.h"
+#import "JACenterNavigationController.h"
 
 @interface ViewControllerManager : NSObject
 
@@ -15,5 +17,12 @@
 -(UIViewController *) loadViewController:(NSString *)nibName;
 -(UIViewController *) loadViewController:(NSString *)nibName resetCache:(BOOL)resetCache;
 -(UIViewController *) loadViewController:(NSString *)storyboard nibName:(NSString *)nibName resetCache:(BOOL)resetCache;
+
+@end
+
+@interface ViewControllerManager()
++(JARootViewController *) rootViewController;
++(JACenterNavigationController *) centerViewController;
++(id) topViewController;
 
 @end

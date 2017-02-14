@@ -11,6 +11,7 @@
 #import "JAClickableView.h"
 #import "JACenterNavigationController.h"
 #import "RITarget.h"
+#import "ViewControllerManager.h"
 
 @interface JASearchView()
 {
@@ -216,7 +217,7 @@
                                       isRecentSearch:YES
                                           andContext:YES];
     }
-    [[JACenterNavigationController sharedInstance] openTargetString:suggestion.targetString];
+    [[ViewControllerManager centerViewController] openTargetString:suggestion.targetString];
     [self setHidden:YES];
 }
 

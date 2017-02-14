@@ -12,6 +12,7 @@
 #import "JATopSellersTeaserView.h"
 #import "JAScreenTarget.h"
 #import "JACenterNavigationController.h"
+#import "ViewControllerManager.h"
 
 @interface JAShopWebViewController ()
 
@@ -131,7 +132,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
 {
     RITarget *target = [RITarget parseTarget:[request.URL absoluteString]];
     JAScreenTarget *screenTarget = [[JAScreenTarget alloc] initWithTarget:target];
-    return ![[JACenterNavigationController sharedInstance] openScreenTarget:screenTarget];
+    return ![[ViewControllerManager centerViewController] openScreenTarget:screenTarget];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView

@@ -10,6 +10,7 @@
 #import "JAProductInfoHeaderLine.h"
 #import "JACenterNavigationController.h"
 #import "JABottomSubmitView.h"
+#import "ViewControllerManager.h"
 
 #define kLateralMargin 8.f
 #define kSpaceBetweenTitleAndBody 2.f
@@ -76,7 +77,7 @@
 
 - (void)goToNext
 {
-    [[JACenterNavigationController sharedInstance] goToOnlineReturnsReasonsScreenForItems:self.items order:self.order];
+    [[ViewControllerManager centerViewController] goToOnlineReturnsReasonsScreenForItems:self.items order:self.order];
 }
 
 -(void)viewWillLayoutSubviews

@@ -10,6 +10,9 @@
 
 @interface JARootViewController : JASidePanelController
 
-@property (nonatomic, assign) NSDictionary *notification;
+@property (strong, nonatomic) NSDictionary *notification;
+
+-(void) toggleSideMenu;
+-(void) updateSideMenu:(BOOL)isEnabled;
 
 @end

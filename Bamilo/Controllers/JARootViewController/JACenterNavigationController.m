@@ -90,15 +90,6 @@
 
 @implementation JACenterNavigationController
 
-+ (instancetype)sharedInstance {
-    static id defaultInstance = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        defaultInstance = [self new];
-    });
-    return defaultInstance;
-}
-
 - (JAStepByStepTabViewController *)checkoutStepByStepViewController {
     if (!_checkoutStepByStepViewController) {
         _checkoutStepByStepViewController = [self getNewCheckoutStepByStepViewController];
@@ -1747,7 +1738,7 @@
             [screenTarget.navBarLayout setShowMenuButton:NO];
             [screenTarget.navBarLayout setShowCartButton:NO];
             [screenTarget.navBarLayout setShowSearchButton:NO];
-            [[JACenterNavigationController sharedInstance] openScreenTarget:screenTarget];
+            [[ViewControllerManager centerViewController] openScreenTarget:screenTarget];
             return;
         }
     }

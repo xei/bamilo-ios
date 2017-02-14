@@ -8,6 +8,7 @@
 
 #import "SearchBaseViewController.h"
 #import "JACenterNavigationController.h"
+#import "ViewControllerManager.h"
 
 #define kSearchViewBarHeight 44.0f
 
@@ -104,7 +105,7 @@
 
 #pragma mark - UISearchBarDelegate
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
-    [[JACenterNavigationController sharedInstance] showSearchView];
+    [[ViewControllerManager centerViewController] showSearchView];
     return NO;
 }
 

@@ -1,4 +1,4 @@
-    //
+//
 //  JARootViewController.m
 //  Jumia
 //
@@ -10,6 +10,7 @@
 #import "JACenterNavigationController.h"
 #import "JACategoriesSideMenuViewController.h"
 #import "RICustomer.h"
+#import "ViewControllerManager.h"
 
 @interface JARootViewController ()
 
@@ -30,9 +31,9 @@
     {
         self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         /*
-        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-            self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
-        }*/
+         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+         self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
+         }*/
     }
     return self;
 }
@@ -44,9 +45,9 @@
     {
         self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         /*
-        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-            self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
-        }*/
+         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+         self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
+         }*/
     }
     
     self.shouldResizeLeftPanel = YES;
@@ -130,15 +131,15 @@
 {
     self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     /*if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
-    }*/
+     self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
+     }*/
     
     if (RI_IS_RTL) {
         [self setRightPanel:[self.mainStoryboard instantiateViewControllerWithIdentifier:@"menuViewController"]];
     }else{
         [self setLeftPanel:[self.mainStoryboard instantiateViewControllerWithIdentifier:@"menuViewController"]];
     }
-    [self setCenterPanel:[JACenterNavigationController sharedInstance]];
+    [self setCenterPanel:[ViewControllerManager centerViewController]];
     [super awakeFromNib];
 }
 
@@ -151,7 +152,7 @@
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"first_screen"]];
-
+    
     if(VALID_NOTEMPTY(notification.userInfo, NSDictionary) && VALID_NOTEMPTY([RIApi getCountryIsoInUse], NSString))
     {
         [[RITrackingWrapper sharedInstance] handlePushNotifcation:[notification.userInfo copy]];
@@ -187,9 +188,9 @@
     }
     
     if (RI_IS_RTL) {
-        [self showRightPanelAnimated:YES userInfo:notification.userInfo];
+        [self showRightPanelAnimated:YES userInfo:nil];
     } else {
-        [self showLeftPanelAnimated:YES userInfo:notification.userInfo];
+        [self showLeftPanelAnimated:YES userInfo:nil];
     }
 }
 

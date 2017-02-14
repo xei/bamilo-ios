@@ -29,6 +29,7 @@
 #import "JACollectionSeparator.h"
 #import "JACenterNavigationController.h"
 #import "RICatalogSorting.h"
+#import "ViewControllerManager.h"
 
 #define JACatalogGridSelected @"CATALOG_GRID_IS_SELECTED"
 #define JACatalogViewControllerMaxProducts 36
@@ -812,7 +813,7 @@ typedef void (^ProcessActionBlock)(void);
         if (self.banner.title.length) {
             [screenTarget.navBarLayout setTitle:self.banner.title];
         }
-        [[JACenterNavigationController sharedInstance] openScreenTarget:screenTarget];
+        [[ViewControllerManager centerViewController] openScreenTarget:screenTarget];
     }
 }
 

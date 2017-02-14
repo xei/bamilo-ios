@@ -38,6 +38,7 @@
 #import "RISeller.h"
 #import "JACenterNavigationController.h"
 #import "JATabBarButton.h"
+#import "ViewControllerManager.h"
 
 typedef void (^ProcessActionBlock)(void);
 
@@ -1099,7 +1100,7 @@ typedef void (^ProcessActionBlock)(void);
 
 - (void)goToSisScreen
 {
-    [[JACenterNavigationController sharedInstance] openTargetString:self.product.brandTarget];
+    [[ViewControllerManager centerViewController] openTargetString:self.product.brandTarget];
 }
 
 - (void)goToOtherSellersScreen
@@ -1705,7 +1706,7 @@ typedef void (^ProcessActionBlock)(void);
 
 - (void)trackingEventAddToCart:(RICart *)cart
 {
-    CGRect addToCartEventCoachMark = CGRectMake([JACenterNavigationController sharedInstance].navigationBarView.cartButton.frame.origin.x, [JACenterNavigationController sharedInstance].navigationBarView.cartButton.frame.origin.y+20,35, 35);
+    CGRect addToCartEventCoachMark = CGRectMake([ViewControllerManager centerViewController].navigationBarView.cartButton.frame.origin.x, [ViewControllerManager centerViewController].navigationBarView.cartButton.frame.origin.y+20,35, 35);
     
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"FirtTimeAddToCart"])
     {

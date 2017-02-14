@@ -18,6 +18,7 @@
 #import "RIProduct.h"
 #import "RITarget.h"
 #import "JACenterNavigationController.h"
+#import "ViewControllerManager.h"
 
 #define kAd4PushIDFAIdKey                                   @"idfa"
 #define kAd4PushProfileShopCountryKey                       @"shopCountry"
@@ -867,7 +868,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
             }
             else if ([key isEqualToString:@"camp"] && VALID_NOTEMPTY(arguments, NSString))
             {
-                [[JACenterNavigationController sharedInstance] openTargetString:[RITarget getTargetString:CAMPAIGN node:arguments]];
+                [[ViewControllerManager centerViewController] openTargetString:[RITarget getTargetString:CAMPAIGN node:arguments]];
             }
             else if ([key isEqualToString:@"ss"])
             {
@@ -875,7 +876,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 {
                     NSString* shopID = [urlComponents objectAtIndex:2];
                     if (VALID_NOTEMPTY(shopID, NSString)) {
-                        [[JACenterNavigationController sharedInstance] openTargetString:[RITarget getTargetString:STATIC_PAGE node:shopID]];
+                        [[ViewControllerManager centerViewController] openTargetString:[RITarget getTargetString:STATIC_PAGE node:shopID]];
                     }
                 }
             }

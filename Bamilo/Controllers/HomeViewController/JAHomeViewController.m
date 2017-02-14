@@ -21,6 +21,7 @@
 #import "JANewsletterTeaserView.h"
 #import "JACenterNavigationController.h"
 #import "JATabBarButton.h"
+#import "ViewControllerManager.h"
 
 @interface JAHomeViewController () <JAPickerDelegate, JANewsletterGenderProtocol>
 @property (strong, nonatomic) JATeaserPageView* teaserPageView;
@@ -103,10 +104,10 @@
     
     CGRect searchButtonFrame = self.searchIconImageView.frame; //search button
     
-    JATabBarButton* moreButton = [[JACenterNavigationController sharedInstance].tabBarView.tabButtonsArray objectAtIndex:4];//morbutton in tab
+    JATabBarButton* moreButton = [[ViewControllerManager centerViewController].tabBarView.tabButtonsArray objectAtIndex:4];//morbutton in tab
     CGRect moreButtonFrame = moreButton.frame;
     
-    CGRect menuButtonFrame = [[JACenterNavigationController sharedInstance].navigationBarView.leftButton frame];//menu button
+    CGRect menuButtonFrame = [[ViewControllerManager centerViewController].navigationBarView.leftButton frame];//menu button
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")){
         searchButtonFrame.origin.y = searchButtonFrame.origin.y + 64.0f;
         moreButtonFrame.origin.y = self.bounds.size.height + 64.0f;

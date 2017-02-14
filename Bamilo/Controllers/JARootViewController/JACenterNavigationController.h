@@ -22,8 +22,6 @@
 
 @property (nonatomic, assign)BOOL searchViewAlwaysHidden;
 
-+ (instancetype)sharedInstance;
-
 - (void)openTargetString:(NSString *)targetString;
 - (BOOL)openScreenTarget:(JAScreenTarget *)target;
 - (void)showSearchView;

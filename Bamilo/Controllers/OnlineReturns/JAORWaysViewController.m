@@ -14,6 +14,7 @@
 #import "JACenterNavigationController.h"
 #import "JABottomSubmitView.h"
 #import "JAORProductView.h"
+#import "ViewControllerManager.h"
 
 @interface JAORWaysViewController () <JADynamicFormDelegate>
 
@@ -288,7 +289,7 @@
             [self.stateInfoLabels addEntriesFromDictionary:[self.dynamicForm getFieldLabelsReplacePlaceHolder:@"__NAME__" forString:item.sku]];
         }
     }
-    [[JACenterNavigationController sharedInstance] goToOnlineReturnsPaymentScreenForItems:self.items order:self.order];
+    [[ViewControllerManager centerViewController] goToOnlineReturnsPaymentScreenForItems:self.items order:self.order];
 }
 
 
@@ -311,7 +312,7 @@
 
 - (void)openCMSBlock:(NSString *)cmsBlock
 {
-    [[JACenterNavigationController sharedInstance] goToPickupStationWebViewControllerWithCMS:cmsBlock];
+    [[ViewControllerManager centerViewController] goToPickupStationWebViewControllerWithCMS:cmsBlock];
 }
 
 @end

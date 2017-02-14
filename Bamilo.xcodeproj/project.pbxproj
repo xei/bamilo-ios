@@ -172,6 +172,7 @@
 		879F88291E51CF140033FE87 /* CartEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F88281E51CF140033FE87 /* CartEntity.m */; };
 		879F88311E51D55A0033FE87 /* FormEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F88301E51D55A0033FE87 /* FormEntity.m */; };
 		879F88351E51DFB90033FE87 /* CartForm.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F88341E51DFB90033FE87 /* CartForm.m */; };
+		879F883A1E52EA9F0033FE87 /* ProtectedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F88391E52EA9F0033FE87 /* ProtectedViewController.m */; };
 		87A6814E1E40DC3C00D252AC /* ViewControllerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A6814D1E40DC3C00D252AC /* ViewControllerManager.m */; };
 		87A681521E40ED9200D252AC /* OrangeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A681511E40ED9200D252AC /* OrangeButton.m */; };
 		87A681581E40F21B00D252AC /* BaseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A681571E40F21B00D252AC /* BaseButton.m */; };
@@ -865,6 +866,8 @@
 		879F88301E51D55A0033FE87 /* FormEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormEntity.m; sourceTree = "<group>"; };
 		879F88331E51DFB90033FE87 /* CartForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartForm.h; sourceTree = "<group>"; };
 		879F88341E51DFB90033FE87 /* CartForm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartForm.m; sourceTree = "<group>"; };
+		879F88381E52EA9F0033FE87 /* ProtectedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtectedViewController.h; sourceTree = "<group>"; };
+		879F88391E52EA9F0033FE87 /* ProtectedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProtectedViewController.m; sourceTree = "<group>"; };
 		87A6814C1E40DC3C00D252AC /* ViewControllerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewControllerManager.h; sourceTree = "<group>"; };
 		87A6814D1E40DC3C00D252AC /* ViewControllerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewControllerManager.m; sourceTree = "<group>"; };
 		87A681501E40ED9200D252AC /* OrangeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrangeButton.h; sourceTree = "<group>"; };
@@ -2820,6 +2823,24 @@
 			name = CartForm;
 			sourceTree = "<group>";
 		};
+		879F88361E52EA690033FE87 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				87A681591E40F99300D252AC /* BaseViewController */,
+				879F88371E52EA750033FE87 /* ProtectedViewController */,
+			);
+			name = Base;
+			sourceTree = "<group>";
+		};
+		879F88371E52EA750033FE87 /* ProtectedViewController */ = {
+			isa = PBXGroup;
+			children = (
+				879F88381E52EA9F0033FE87 /* ProtectedViewController.h */,
+				879F88391E52EA9F0033FE87 /* ProtectedViewController.m */,
+			);
+			name = ProtectedViewController;
+			sourceTree = "<group>";
+		};
 		87A6814B1E40DC2000D252AC /* ViewControllerManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -3139,7 +3160,7 @@
 		87D07D821E40B4B100C00AC6 /* BML */ = {
 			isa = PBXGroup;
 			children = (
-				87A681591E40F99300D252AC /* BaseViewController */,
+				879F88361E52EA690033FE87 /* Base */,
 				87A6815E1E41B84000D252AC /* SearchBaseViewController */,
 				879F88001E50B23C0033FE87 /* Authentication */,
 				879F880C1E50BAC10033FE87 /* CartViewController */,
@@ -4760,6 +4781,7 @@
 				8714E06D1E47949D004C9B1D /* CheckoutProgressViewControl.m in Sources */,
 				879F88311E51D55A0033FE87 /* FormEntity.m in Sources */,
 				875AD5421E38C0C900584ABF /* RICategory.m in Sources */,
+				879F883A1E52EA9F0033FE87 /* ProtectedViewController.m in Sources */,
 				9A40773A1CE24DF800313D20 /* JAORCallToReturnViewController.m in Sources */,
 				875AD5401E38C0C800584ABF /* RIAddress.m in Sources */,
 				CE9ADFE01AB6D78200D56481 /* JATextField.m in Sources */,

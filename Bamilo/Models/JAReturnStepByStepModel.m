@@ -12,6 +12,7 @@
 #import "JAORReasonsViewController.h"
 #import "JAORWaysViewController.h"
 #import "JAORPaymentViewController.h"
+#import "ViewControllerManager.h"
 
 @implementation JAReturnStepByStepModel
 
@@ -56,13 +57,13 @@
     Class classKind = [self.viewControllersArray objectAtIndex:index];
     
     if (classKind == [JAORReasonsViewController class]) {
-        [[JACenterNavigationController sharedInstance] goToOnlineReturnsReasonsScreenForItems:self.items order:self.order];
+        [[ViewControllerManager centerViewController] goToOnlineReturnsReasonsScreenForItems:self.items order:self.order];
     } else if (classKind == [JAORWaysViewController class]) {
-        [[JACenterNavigationController sharedInstance] goToOnlineReturnsWaysScreenForItems:self.items order:self.order];
+        [[ViewControllerManager centerViewController] goToOnlineReturnsWaysScreenForItems:self.items order:self.order];
     } else if (classKind == [JAORPaymentViewController class]) {
-        [[JACenterNavigationController sharedInstance] goToOnlineReturnsPaymentScreenForItems:self.items order:self.order];
+        [[ViewControllerManager centerViewController] goToOnlineReturnsPaymentScreenForItems:self.items order:self.order];
     } else if (classKind == [JAORConfirmationScreenViewController class]) {
-        [[JACenterNavigationController sharedInstance] goToOnlineReturnsConfirmScreenForItems:self.items order:self.order];
+        [[ViewControllerManager centerViewController] goToOnlineReturnsConfirmScreenForItems:self.items order:self.order];
     }
 }
 

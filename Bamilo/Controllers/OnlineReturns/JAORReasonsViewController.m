@@ -18,6 +18,7 @@
 #import "JACenterNavigationController.h"
 #import "JABottomSubmitView.h"
 #import "JAORProductView.h"
+#import "ViewControllerManager.h"
 
 @interface JAORReasonsViewController () <JADynamicFormDelegate, JAPickerDelegate>
 
@@ -290,7 +291,8 @@
             [self.stateInfoLabels addEntriesFromDictionary:[dynamicForm getFieldLabelsReplacePlaceHolder:@"__NAME__" forString:item.sku]];
         }
     }
-    [[JACenterNavigationController sharedInstance] goToOnlineReturnsWaysScreenForItems:self.items order:self.order];
+    
+    [[ViewControllerManager centerViewController] goToOnlineReturnsWaysScreenForItems:self.items order:self.order];
 }
 
 #pragma mark - PICKER

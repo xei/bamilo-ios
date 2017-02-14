@@ -14,6 +14,7 @@
 #import "JAORProductView.h"
 #import "JAMyOrdersViewController.h"
 #import "JAMyOrderDetailViewController.h"
+#import "ViewControllerManager.h"
 
 #define kLateralMargin 16.f
 
@@ -241,9 +242,9 @@
                                                        }
                                                        [self onSuccessResponse:apiResponse messages:successMessage showMessage:YES];
                                                        [self hideLoading];
-                                                       BOOL done = [[JACenterNavigationController sharedInstance] closeScreensToStackClass:[JAMyOrderDetailViewController class] animated:YES];
+                                                       BOOL done = [[ViewControllerManager centerViewController] closeScreensToStackClass:[JAMyOrderDetailViewController class] animated:YES];
                                                        if (!done) {
-                                                           done = [[JACenterNavigationController sharedInstance] closeScreensToStackClass:[JAMyOrdersViewController class] animated:YES];
+                                                           done = [[ViewControllerManager centerViewController] closeScreensToStackClass:[JAMyOrdersViewController class] animated:YES];
                                                        }
                                                    } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObject) {
                                                        NSArray *errorMessages = @[];
@@ -260,17 +261,17 @@
 
 - (void)goToReasonStep
 {
-    [[JACenterNavigationController sharedInstance] goToOnlineReturnsReasonsScreenForItems:self.items order:self.order];
+    [[ViewControllerManager centerViewController] goToOnlineReturnsReasonsScreenForItems:self.items order:self.order];
 }
 
 - (void)goToMethodStep
 {
-    [[JACenterNavigationController sharedInstance] goToOnlineReturnsWaysScreenForItems:self.items order:self.order];
+    [[ViewControllerManager centerViewController] goToOnlineReturnsWaysScreenForItems:self.items order:self.order];
 }
 
 - (void)goToPaymentMethodStep
 {
-    [[JACenterNavigationController sharedInstance] goToOnlineReturnsPaymentScreenForItems:self.items order:self.order];
+    [[ViewControllerManager centerViewController] goToOnlineReturnsPaymentScreenForItems:self.items order:self.order];
 }
 
 @end

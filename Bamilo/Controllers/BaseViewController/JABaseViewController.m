@@ -15,6 +15,7 @@
 #import "RICustomer.h"
 #import "JAAuthenticationViewController.h"
 #import "JACenterNavigationController.h"
+#import "ViewControllerManager.h"
 
 #define kSearchViewBarHeight 44.0f
 
@@ -372,7 +373,7 @@
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar;
 {
-    [[JACenterNavigationController sharedInstance] showSearchView];
+    [[ViewControllerManager centerViewController] showSearchView];
     return NO;
 }
 

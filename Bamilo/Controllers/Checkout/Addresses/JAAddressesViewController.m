@@ -23,6 +23,7 @@
 #import "JACheckoutBottomView.h"
 #import "JAProductInfoHeaderLine.h"
 #import "JACenterNavigationController.h"
+#import "ViewControllerManager.h"
 
 @interface JAAddressesViewController ()
 <UITableViewDataSource,
@@ -112,7 +113,7 @@ UITableViewDelegate>
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     
-    [self setCart:[JACenterNavigationController sharedInstance].cart];
+    [self setCart:[ViewControllerManager centerViewController].cart];
     [_bottomView setTotalValue:self.cart.cartEntity.cartValueFormatted];
     if (self.fromCheckout) {
         if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
