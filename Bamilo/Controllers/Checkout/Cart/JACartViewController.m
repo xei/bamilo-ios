@@ -55,16 +55,16 @@
 - (void)setCart:(RICart *)cart {
     _cart = cart;
     
-    if (cart.cartItems.count) {
+    if (cart.cartEntity.cartItems.count) {
         [self setCartEmpty:NO];
     } else {
         [self setCartEmpty:YES];
     }
     
-    self.totalPrice.text = cart.cartUnreducedValueFormatted;
-    self.totalPaymentPrice.text = cart.cartValueFormatted;
-    self.totalDiscountedPrice.text = cart.discountedValueFormated;
-    self.totalPaymentTitleLabel.text = [[NSString stringWithFormat:@"جمع نهایی‌(%d کالا)", cart.cartCount.intValue] numbersToPersian];
+    self.totalPrice.text = cart.cartEntity.cartUnreducedValueFormatted;
+    self.totalPaymentPrice.text = cart.cartEntity.cartValueFormatted;
+    self.totalDiscountedPrice.text = cart.cartEntity.discountedValueFormated;
+    self.totalPaymentTitleLabel.text = [[NSString stringWithFormat:@"جمع نهایی‌(%d کالا)", cart.cartEntity.cartCount.intValue] numbersToPersian];
 }
 
 - (void)setCartEmpty:(BOOL)empty {
@@ -137,10 +137,10 @@
         [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
         [trackingDictionary setValue:@"Started" forKey:kRIEventActionKey];
         [trackingDictionary setValue:@"Checkout" forKey:kRIEventCategoryKey];
-        [trackingDictionary setValue:[NSNumber numberWithInteger:[[self.cart cartItems] count]] forKey:kRIEventQuantityKey];
-        [trackingDictionary setValue:[self.cart cartValueEuroConverted] forKey:kRIEventTotalCartKey];
+        [trackingDictionary setValue:[NSNumber numberWithInteger:[[self.cart.cartEntity cartItems] count]] forKey:kRIEventQuantityKey];
+        [trackingDictionary setValue:[self.cart.cartEntity cartValueEuroConverted] forKey:kRIEventTotalCartKey];
         NSMutableString* attributeSetID = [NSMutableString new];
-        for (RICartItem* pd in [self.cart cartItems]) {
+        for (RICartItem* pd in [self.cart.cartEntity cartItems]) {
             [attributeSetID appendFormat:@"%@;",[pd attributeSetID]];
         }
         [trackingDictionary setValue:[attributeSetID copy] forKey:kRIEventAttributeSetIDCartKey];
@@ -155,11 +155,11 @@
             [trackingDictionary setValue:@"Started" forKey:kRIEventActionKey];
             [trackingDictionary setValue:@"Checkout" forKey:kRIEventCategoryKey];
             
-            [trackingDictionary setValue:[NSNumber numberWithInteger:[[self.cart cartItems] count]] forKey:kRIEventQuantityKey];
-            [trackingDictionary setValue:[self.cart cartValueEuroConverted] forKey:kRIEventTotalCartKey];
+            [trackingDictionary setValue:[NSNumber numberWithInteger:[[self.cart.cartEntity cartItems] count]] forKey:kRIEventQuantityKey];
+            [trackingDictionary setValue:[self.cart.cartEntity cartValueEuroConverted] forKey:kRIEventTotalCartKey];
             
             NSMutableString* attributeSetID = [NSMutableString new];
-            for (RICartItem* pd in [self.cart cartItems]) {
+            for (RICartItem* pd in [self.cart.cartEntity cartItems]) {
                 [attributeSetID appendFormat:@"%@;",[pd attributeSetID]];
             }
             [trackingDictionary setValue:[attributeSetID copy] forKey:kRIEventAttributeSetIDCartKey];
@@ -219,15 +219,15 @@
                     [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
                     
                     [trackingDictionary setValue:cartItem.sku forKey:kRIEventSkuKey];
-                    [trackingDictionary setValue:[cart.cartCount stringValue] forKey:kRIEventQuantityKey];
-                    [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+                    [trackingDictionary setValue:[cart.cartEntity.cartCount stringValue] forKey:kRIEventQuantityKey];
+                    [trackingDictionary setValue:cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
                     
                     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromCart]
                                                               data:[trackingDictionary copy]];
                     
                     NSMutableDictionary *tracking = [NSMutableDictionary new];
-                    [tracking setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
-                    [tracking setValue:cart.cartCount forKey:kRIEventQuantityKey];
+                    [tracking setValue:cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+                    [tracking setValue:cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
                     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
                                                               data:[tracking copy]];
                     
@@ -265,7 +265,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CartTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:[CartTableViewCell nibName] forIndexPath:indexPath];
-    cell.cartItem = self.cart.cartItems[indexPath.row];
+    cell.cartItem = self.cart.cartEntity.cartItems[indexPath.row];
     cell.delegate = self;
     return cell;
 }
@@ -275,7 +275,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.cart.cartItems.count;
+    return self.cart.cartEntity.cartItems.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -298,8 +298,8 @@
     [self hideLoading];
     
     NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
-    [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
-    [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
+    [trackingDictionary setValue:cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+    [trackingDictionary setValue:cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart] data:[trackingDictionary copy]];
     NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
     [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];

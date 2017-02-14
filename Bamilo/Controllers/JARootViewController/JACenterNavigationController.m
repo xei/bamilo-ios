@@ -1940,8 +1940,8 @@
         }
         
         if(self.cart) {
-            [self.navigationBarView updateCartProductCount:self.cart.cartCount];
-            [self.tabBarView updateCartNumber:[self.cart.cartCount integerValue]];
+            [self.navigationBarView updateCartProductCount:self.cart.cartEntity.cartCount];
+            [self.tabBarView updateCartNumber:[self.cart.cartEntity.cartCount integerValue]];
         } else {
             [userInfo removeObjectForKey:kUpdateCartNotificationValue];
             [self.navigationBarView updateCartProductCount:0];

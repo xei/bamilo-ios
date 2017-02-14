@@ -14,4 +14,8 @@
     return YES;
 }
 
++(JSONKeyMapper *)keyMapper {
+    return [JSONKeyMapper mapperForSnakeCase];
+}
+
 @end

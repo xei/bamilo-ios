@@ -105,7 +105,7 @@ UITableViewDelegate>
     [self.view addSubview:self.contentScrollView];
     
     _bottomView = [[JACheckoutBottomView alloc] initWithFrame:CGRectMake(0.f, self.view.frame.size.height - 56, self.view.frame.size.width, 56) orientation:[[UIApplication sharedApplication] statusBarOrientation]];
-    [_bottomView setTotalValue:self.cart.cartValueFormatted];
+    [_bottomView setTotalValue:self.cart.cartEntity.cartValueFormatted];
     [self.view addSubview:_bottomView];
 }
 
@@ -113,7 +113,7 @@ UITableViewDelegate>
     [super viewWillLayoutSubviews];
     
     [self setCart:[JACenterNavigationController sharedInstance].cart];
-    [_bottomView setTotalValue:self.cart.cartValueFormatted];
+    [_bottomView setTotalValue:self.cart.cartEntity.cartValueFormatted];
     if (self.fromCheckout) {
         if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
             [_bottomView setNoTotal:YES];

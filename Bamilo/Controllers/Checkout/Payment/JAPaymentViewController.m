@@ -138,12 +138,12 @@ UITextFieldDelegate>
         NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
         [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
         
-        self.paymentMethodForm = cart.paymentMethodForm;
+        self.paymentMethodForm = cart.formEntity.paymentMethodForm;
         
         // LIST OF AVAILABLE PAYMENT METHODS
-        self.paymentMethods = [RIPaymentMethodForm getPaymentMethodsInForm:cart.paymentMethodForm];
+        self.paymentMethods = [RIPaymentMethodForm getPaymentMethodsInForm:cart.formEntity.paymentMethodForm];
         
-        self.checkoutFormForPaymentMethod = [[JACheckoutForms alloc] initWithPaymentMethodForm:cart.paymentMethodForm width:(self.tableView.frame.size.width - [JAPaymentCell xPositionAfterCheckmark] - 6.0f)];
+        self.checkoutFormForPaymentMethod = [[JACheckoutForms alloc] initWithPaymentMethodForm:cart.formEntity.paymentMethodForm width:(self.tableView.frame.size.width - [JAPaymentCell xPositionAfterCheckmark] - 6.0f)];
         [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         [self setupViews:self.view.width toInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
         [self finishedLoadingPaymentMethods];
@@ -259,7 +259,7 @@ UITextFieldDelegate>
         }
     }
     
-    self.checkoutFormForPaymentMethod = [[JACheckoutForms alloc] initWithPaymentMethodForm:self.cart.paymentMethodForm width:(self.tableView.frame.size.width - [JAPaymentCell xPositionAfterCheckmark] - 6.0f)];
+    self.checkoutFormForPaymentMethod = [[JACheckoutForms alloc] initWithPaymentMethodForm:self.cart.formEntity.paymentMethodForm width:(self.tableView.frame.size.width - [JAPaymentCell xPositionAfterCheckmark] - 6.0f)];
     
     [self.couponView setFrame:CGRectMake(self.couponView.frame.origin.x,
                                          CGRectGetMaxY(self.tableView.frame),
@@ -292,8 +292,8 @@ UITextFieldDelegate>
                                                      self.useCouponClickableView.frame.size.width,
                                                      self.useCouponClickableView.frame.size.height)];
     
-    if (VALID(self.cart.couponMoneyValue, NSNumber)) {
-        self.couponTextField.text = self.cart.couponCode;
+    if (VALID(self.cart.cartEntity.couponMoneyValue, NSNumber)) {
+        self.couponTextField.text = self.cart.cartEntity.couponCode;
         [self.useCouponClickableView setTitle:[STRING_REMOVE uppercaseString] forState:UIControlStateNormal];
         [self.couponTextField setEnabled:NO];
     }
@@ -302,9 +302,9 @@ UITextFieldDelegate>
                                      self.view.frame.size.height - 56,
                                      width,
                                      56)];
-    [_bottomView setTotalValue:self.cart.cartValueFormatted];
+    [_bottomView setTotalValue:self.cart.cartEntity.cartValueFormatted];
     [_bottomView setButtonText:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
-    if (!VALID_NOTEMPTY(self.paymentMethods,NSArray) && self.cart.cartValue.integerValue > 0) {
+    if (!VALID_NOTEMPTY(self.paymentMethods,NSArray) && self.cart.cartEntity.cartValue.integerValue > 0) {
         [_bottomView disableButton];
     }
     
@@ -320,9 +320,9 @@ UITextFieldDelegate>
 
 -(void)finishedLoadingPaymentMethods
 {
-    if(VALID_NOTEMPTY(self.cart.couponCode, NSString))
+    if(VALID_NOTEMPTY(self.cart.cartEntity.couponCode, NSString))
     {
-        [self.couponTextField setText:self.cart.couponCode];
+        [self.couponTextField setText:self.cart.cartEntity.couponCode];
         [self.couponTextField setEnabled:NO];
         [self.useCouponClickableView setTitle:[STRING_REMOVE uppercaseString] forState:UIControlStateNormal];
     }
@@ -367,7 +367,7 @@ UITextFieldDelegate>
         } else {
             if ([self.checkoutFormForPaymentMethod getPaymentMethodViewHeight:nil]) {
                 tableViewHeight += [self.checkoutFormForPaymentMethod getPaymentMethodViewHeight:nil];
-            } else
+            } else 
                 tableViewHeight += 44.0f;
         }
             
@@ -405,15 +405,15 @@ UITextFieldDelegate>
     [self showLoading];
     NSString *voucherCode = [self.couponTextField text];
     
-    if(VALID([[self cart] couponMoneyValue], NSNumber))
+    if(VALID([[self cart].cartEntity couponMoneyValue], NSNumber))
     {
         [RICart removeVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
             self.cart = cart;
             NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
             [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
             NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
-            [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
-            [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
+            [trackingDictionary setValue:cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+            [trackingDictionary setValue:cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
                                                       data:[trackingDictionary copy]];
             
@@ -438,8 +438,8 @@ UITextFieldDelegate>
             NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
             [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
             NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
-            [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
-            [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
+            [trackingDictionary setValue:cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+            [trackingDictionary setValue:cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
                                                       data:[trackingDictionary copy]];
             
@@ -460,7 +460,7 @@ UITextFieldDelegate>
 
 -(void)nextStepButtonPressed
 {
-    if (!self.selectedPaymentMethod && self.cart.cartValue.integerValue > 0) {
+    if (!self.selectedPaymentMethod && self.cart.cartEntity.cartValue.integerValue > 0) {
         return;
     }
     [self showLoading];
@@ -486,7 +486,7 @@ UITextFieldDelegate>
                        
                        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
                        [trackingDictionary setValue:self.selectedPaymentMethod.label forKey:kRIEventPaymentMethodKey];
-                       [trackingDictionary setValue:self.cart.cartValueEuroConverted forKey:kRIEventTotalTransactionKey];
+                       [trackingDictionary setValue:self.cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalTransactionKey];
                        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentFail]
                                                                  data:[trackingDictionary copy]];
                        

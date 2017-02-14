@@ -10,7 +10,6 @@
 #import "Models.pch"
 #import "RICart.h"
 #import "RIForm.h"
-#import "RICountry.h"
 
 @implementation DataManager
 
@@ -62,6 +61,13 @@ static DataManager *instance;
     }];
 }
 
+//### PAYMENT ###
+-(void) getMultistepPayment:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
+    [RequestManager asyncGET:target path:RI_API_MULTISTEP_GET_PAYMENT params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+        [self serialize:data into:[CartForm class] response:response errorMessages:errorMessages completion:completion];
+    }];
+}
+
 #pragma mark - Private Methods
 - (void)serialize:(id)data into:(Class)aClass response:(RIApiResponse)response errorMessages:(NSArray *)errorMessages completion:(DataCompletion)completion {
     if(response == RIApiResponseSuccess && data) {
@@ -84,6 +90,7 @@ static DataManager *instance;
                 completion(nil, error);
             }
         }
+        
     } else {
         completion(nil, [self getErrorFrom:response errorMessages:errorMessages]);
     }

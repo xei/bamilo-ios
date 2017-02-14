@@ -6,12 +6,14 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
+#import "DataManager.h"
 #import "CheckoutPaymentViewController.h"
 #import "CheckoutProgressViewButtonModel.h"
 #import "PlainTableViewHeaderCell.h"
 #import "PaymentTypeTableViewCell.h"
 #import "OnlinePaymentVariationTableViewCell.h"
 #import "PaymentDescTableViewCell.h"
+#import "RIPaymentMethodForm.h"
 
 typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
     PAYMENT_METHOD_ONLINE = 1 << 0,
@@ -48,7 +50,7 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     //TEMP
-    OnlinePaymentVariationTableViewCellModel *saman = [OnlinePaymentVariationTableViewCellModel new];
+    /*OnlinePaymentVariationTableViewCellModel *saman = [OnlinePaymentVariationTableViewCellModel new];
     saman.imageName = @"SamanBankLogo";
     saman.isSelected = YES;
     
@@ -70,8 +72,10 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
     //Pay On Delivery
     [NSMutableArray arrayWithObjects:
         [NSIndexPath indexPathForRow:0 inSection:2],
-        /*[NSIndexPath indexPathForRow:1 inSection:2],*/ nil],
+        //[NSIndexPath indexPathForRow:1 inSection:2],
+    nil],
     nil];
+    */
     
     //Select Online Payment and Saman By Default
     _selectedPaymentMethod = PAYMENT_METHOD_ONLINE;
@@ -80,6 +84,16 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    [[DataManager sharedInstance] getMultistepPayment:self completion:^(id data, NSError *error) {
+        if(error == nil) {
+            [self bind:data forRequestId:0];
+            //NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
+            //[[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
+            
+            _onlinePaymentVariations = [RIPaymentMethodForm getPaymentMethodsInForm:self.cart.formEntity.paymentMethodForm];
+        }
+    }];
 }
 
 #pragma mark - Overrides
@@ -229,6 +243,15 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
         [CheckoutProgressViewButtonModel buttonWith:2 state:CHECKOUT_PROGRESSVIEW_BUTTON_STATE_DONE],
         [CheckoutProgressViewButtonModel buttonWith:3 state:CHECKOUT_PROGRESSVIEW_BUTTON_STATE_ACTIVE]
     ];
+}
+
+#pragma mark - DataServiceProtocol
+-(void)bind:(id)data forRequestId:(int)rid {
+    switch (rid) {
+        case 0:
+            self.cart = (RICart *)data;
+        break;
+    }
 }
 
 @end

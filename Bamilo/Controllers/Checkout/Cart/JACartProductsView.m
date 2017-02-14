@@ -71,7 +71,7 @@
     NSInteger numberOfItemsInSection = 0;
     if(VALID_NOTEMPTY(self.cart, RICart))
     {
-        numberOfItemsInSection = self.cart.cartItems.count;
+        numberOfItemsInSection = self.cart.cartEntity.cartItems.count;
     }
     
     return numberOfItemsInSection;
@@ -79,8 +79,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     JACartTableViewCell *cell =  [tableView dequeueReusableCellWithIdentifier:@"JACartTableViewCell"];
-    RICartItem *cartItem = [self.cart.cartItems objectAtIndex:indexPath.row];
-    if (indexPath.row+1 == self.cart.cartItems.count) {
+    RICartItem *cartItem = [self.cart.cartEntity.cartItems objectAtIndex:indexPath.row];
+    if (indexPath.row+1 == self.cart.cartEntity.cartItems.count) {
         [cell.separatorView setHidden:YES];
     }else{
         [cell.separatorView setHidden:NO];
@@ -104,9 +104,9 @@
 
 - (void)clickableViewPressedInCell:(UIButton *)button
 {
-    if(VALID_NOTEMPTY(self.cart, RICart) && VALID_NOTEMPTY(self.cart.cartItems, NSArray) && button.tag < [self.cart.cartCount integerValue])
+    if(VALID_NOTEMPTY(self.cart, RICart) && VALID_NOTEMPTY(self.cart.cartEntity.cartItems, NSArray) && button.tag < [self.cart.cartEntity.cartCount integerValue])
     {
-        RICartItem *product = [self.cart.cartItems objectAtIndex:button.tag];
+        RICartItem *product = [self.cart.cartEntity.cartItems objectAtIndex:button.tag];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                             object:nil
@@ -121,9 +121,9 @@
 
 - (void)removeFromCartPressed:(UIButton *)button
 {
-    if(VALID_NOTEMPTY(self.cart, RICart) && VALID_NOTEMPTY(self.cart.cartItems, NSArray) && button.tag < [self.cart.cartCount integerValue])
+    if(VALID_NOTEMPTY(self.cart, RICart) && VALID_NOTEMPTY(self.cart.cartEntity.cartItems, NSArray) && button.tag < [self.cart.cartEntity.cartCount integerValue])
     {
-        RICartItem *product = [self.cart.cartItems objectAtIndex:button.tag];
+        RICartItem *product = [self.cart.cartEntity.cartItems objectAtIndex:button.tag];
         if (self.delegate) {
             [self.delegate removeCartItem:product];
         }
@@ -132,9 +132,9 @@
 
 - (void)quantityPressed:(UIButton *)button
 {
-    if(VALID_NOTEMPTY(self.cart, RICart) && VALID_NOTEMPTY(self.cart.cartItems, NSArray) && button.tag < [self.cart.cartCount integerValue])
+    if(VALID_NOTEMPTY(self.cart, RICart) && VALID_NOTEMPTY(self.cart.cartEntity.cartItems, NSArray) && button.tag < [self.cart.cartEntity.cartCount integerValue])
     {
-        RICartItem *product = [self.cart.cartItems objectAtIndex:button.tag];
+        RICartItem *product = [self.cart.cartEntity.cartItems objectAtIndex:button.tag];
         if (self.delegate) {
             [self.delegate quantitySelection:product];
         }

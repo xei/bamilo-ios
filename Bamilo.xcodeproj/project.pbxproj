@@ -169,6 +169,9 @@
 		879F87FF1E5095E00033FE87 /* LoadingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F87FE1E5095E00033FE87 /* LoadingManager.m */; };
 		879F88051E50B2940033FE87 /* AuthenticationBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F88041E50B2940033FE87 /* AuthenticationBaseViewController.m */; };
 		879F88111E50BB050033FE87 /* CartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F88101E50BB050033FE87 /* CartViewController.m */; };
+		879F88291E51CF140033FE87 /* CartEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F88281E51CF140033FE87 /* CartEntity.m */; };
+		879F88311E51D55A0033FE87 /* FormEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F88301E51D55A0033FE87 /* FormEntity.m */; };
+		879F88351E51DFB90033FE87 /* CartForm.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F88341E51DFB90033FE87 /* CartForm.m */; };
 		87A6814E1E40DC3C00D252AC /* ViewControllerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A6814D1E40DC3C00D252AC /* ViewControllerManager.m */; };
 		87A681521E40ED9200D252AC /* OrangeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A681511E40ED9200D252AC /* OrangeButton.m */; };
 		87A681581E40F21B00D252AC /* BaseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A681571E40F21B00D252AC /* BaseButton.m */; };
@@ -856,6 +859,12 @@
 		879F880F1E50BB050033FE87 /* CartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartViewController.h; sourceTree = "<group>"; };
 		879F88101E50BB050033FE87 /* CartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartViewController.m; sourceTree = "<group>"; };
 		879F88251E519C570033FE87 /* JSONVerboseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONVerboseModel.h; sourceTree = "<group>"; };
+		879F88271E51CF140033FE87 /* CartEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartEntity.h; sourceTree = "<group>"; };
+		879F88281E51CF140033FE87 /* CartEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartEntity.m; sourceTree = "<group>"; };
+		879F882F1E51D55A0033FE87 /* FormEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormEntity.h; sourceTree = "<group>"; };
+		879F88301E51D55A0033FE87 /* FormEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormEntity.m; sourceTree = "<group>"; };
+		879F88331E51DFB90033FE87 /* CartForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartForm.h; sourceTree = "<group>"; };
+		879F88341E51DFB90033FE87 /* CartForm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartForm.m; sourceTree = "<group>"; };
 		87A6814C1E40DC3C00D252AC /* ViewControllerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewControllerManager.h; sourceTree = "<group>"; };
 		87A6814D1E40DC3C00D252AC /* ViewControllerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewControllerManager.m; sourceTree = "<group>"; };
 		87A681501E40ED9200D252AC /* OrangeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrangeButton.h; sourceTree = "<group>"; };
@@ -2139,9 +2148,9 @@
 		8714E0621E47483B004C9B1D /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				879F87FA1E507FD90033FE87 /* BaseModel */,
-				879F88251E519C570033FE87 /* JSONVerboseModel.h */,
 				8714E0631E47484B004C9B1D /* Models.pch */,
+				879F88251E519C570033FE87 /* JSONVerboseModel.h */,
+				879F87FA1E507FD90033FE87 /* BaseModel */,
 			);
 			name = Base;
 			sourceTree = "<group>";
@@ -2784,6 +2793,33 @@
 			name = CartViewController;
 			sourceTree = "<group>";
 		};
+		879F88261E51CEFC0033FE87 /* CartEntity */ = {
+			isa = PBXGroup;
+			children = (
+				879F88271E51CF140033FE87 /* CartEntity.h */,
+				879F88281E51CF140033FE87 /* CartEntity.m */,
+			);
+			name = CartEntity;
+			sourceTree = "<group>";
+		};
+		879F882E1E51D5460033FE87 /* FormEntity */ = {
+			isa = PBXGroup;
+			children = (
+				879F882F1E51D55A0033FE87 /* FormEntity.h */,
+				879F88301E51D55A0033FE87 /* FormEntity.m */,
+			);
+			name = FormEntity;
+			sourceTree = "<group>";
+		};
+		879F88321E51DFAA0033FE87 /* CartForm */ = {
+			isa = PBXGroup;
+			children = (
+				879F88331E51DFB90033FE87 /* CartForm.h */,
+				879F88341E51DFB90033FE87 /* CartForm.m */,
+			);
+			name = CartForm;
+			sourceTree = "<group>";
+		};
 		87A6814B1E40DC2000D252AC /* ViewControllerManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -3036,6 +3072,9 @@
 				8714E0621E47483B004C9B1D /* Base */,
 				879F88071E50B8380033FE87 /* AddressList */,
 				879F88061E50B8320033FE87 /* Address */,
+				879F88321E51DFAA0033FE87 /* CartForm */,
+				879F88261E51CEFC0033FE87 /* CartEntity */,
+				879F882E1E51D5460033FE87 /* FormEntity */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -4520,6 +4559,7 @@
 				CE8C92B01B8B555600C77706 /* JAMainFilterCell.m in Sources */,
 				87B684F51E4A04030042C09F /* ReceiptItemModel.m in Sources */,
 				CE9ADF491AB6D78200D56481 /* JAForgotPasswordViewController.m in Sources */,
+				879F88291E51CF140033FE87 /* CartEntity.m in Sources */,
 				61E099641E3E0E21004ED14E /* IconTableViewCell.m in Sources */,
 				CE59BEFA1AE7EF0B0057F4E2 /* JAShopTeaserView.m in Sources */,
 				9A86F80A1C281F8F001A91D5 /* JARecentlyViewedViewController.m in Sources */,
@@ -4539,6 +4579,7 @@
 				87A681581E40F21B00D252AC /* BaseButton.m in Sources */,
 				87459C821E4EF37200743120 /* CartListItemTableViewCell.m in Sources */,
 				875AD5691E38C0C900584ABF /* RIPaymentMethodFormOption.m in Sources */,
+				879F88351E51DFB90033FE87 /* CartForm.m in Sources */,
 				FF4383F11C71DCE1003BA957 /* JANewsletterSubscriptionViewController.m in Sources */,
 				CE9ADF571AB6D78200D56481 /* JACampaignBannerCell.m in Sources */,
 				CE59BF011AE801DA0057F4E2 /* JABrandTeaserView.m in Sources */,
@@ -4717,6 +4758,7 @@
 				875AD5431E38C0C900584ABF /* RICountryConfiguration.m in Sources */,
 				CE9ADFDF1AB6D78200D56481 /* JAMyOrderCell.m in Sources */,
 				8714E06D1E47949D004C9B1D /* CheckoutProgressViewControl.m in Sources */,
+				879F88311E51D55A0033FE87 /* FormEntity.m in Sources */,
 				875AD5421E38C0C900584ABF /* RICategory.m in Sources */,
 				9A40773A1CE24DF800313D20 /* JAORCallToReturnViewController.m in Sources */,
 				875AD5401E38C0C800584ABF /* RIAddress.m in Sources */,

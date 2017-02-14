@@ -8,70 +8,23 @@
 
 #import <Foundation/Foundation.h>
 #import "JSONVerboseModel.h"
-
-@class RIShippingMethodForm, RIPaymentMethodForm, RIPaymentInformation,
-    RIAddress, RIForm, RISellerDelivery, RICustomer;
+#import "CartEntity.h"
+#import "FormEntity.h"
 
 @interface RICart : NSObject <JSONVerboseModel>
 
-@property (strong, nonatomic) NSNumber *totalNumberOfOrders;
-@property (strong, nonatomic) NSArray  *cartItems;
-@property (strong, nonatomic) NSNumber *cartCount;
-@property (strong, nonatomic) NSNumber *cartValue;
-@property (strong, nonatomic) NSString *cartValueFormatted;
-@property (strong, nonatomic) NSString *discountedValueFormated;
-@property (strong, nonatomic) NSNumber *cartValueEuroConverted;
-@property (strong, nonatomic) NSNumber *cartUnreducedValue;
-@property (strong, nonatomic) NSString *cartUnreducedValueFormatted;
-@property (strong, nonatomic) NSString *couponCode;
-@property (strong, nonatomic) NSNumber *couponMoneyValue;
-@property (strong, nonatomic) NSString *couponMoneyValueFormatted;
-@property (strong, nonatomic) NSNumber *couponMoneyValueEuroConverted;
-@property (strong, nonatomic) NSNumber *extraCosts;
-@property (strong, nonatomic) NSString *extraCostsFormatted;
-@property (strong, nonatomic) NSNumber *extraCostsEuroConverted;
-@property (strong, nonatomic) NSNumber *shippingValue;
-@property (strong, nonatomic) NSString *shippingValueFormatted;
-@property (strong, nonatomic) NSNumber *shippingValueEuroConverted;
-@property (strong, nonatomic) NSNumber *vatValue;
-@property (strong, nonatomic) NSString *vatValueFormatted;
-@property (strong, nonatomic) NSNumber *vatValueEuroConverted;
-@property (strong, nonatomic) NSNumber *vatLabelEnabled;
-@property (strong, nonatomic) NSString *vatLabel;
-@property (strong, nonatomic) NSNumber *sumCosts;
-@property (strong, nonatomic) NSNumber *sumCostsEuroConverted;
-@property (strong, nonatomic) NSNumber *sumCostsValue;
-@property (strong, nonatomic) NSNumber *sumCostsValueEuroConverted;
-@property (strong, nonatomic) NSDictionary *priceRules;
-@property (strong, nonatomic) NSNumber *subTotal;
-@property (strong, nonatomic) NSString *subTotalFormatted;
+@property (strong, nonatomic) CartEntity *cartEntity;
+@property (strong, nonatomic) FormEntity *formEntity;
 
+@property (strong, nonatomic) NSNumber *totalNumberOfOrders;
 @property (nonatomic, strong) NSString *nextStep;
 @property (nonatomic, strong) RIForm *addressForm;
-@property (nonatomic, strong) RIShippingMethodForm *shippingMethodForm;
-@property (nonatomic, strong) NSString *shippingMethod;
-@property (nonatomic, strong) RIPaymentMethodForm *paymentMethodForm;
-@property (nonatomic, strong) NSString *paymentMethod;
-@property (nonatomic, strong) RIAddress *shippingAddress;
-@property (nonatomic, strong) RIAddress *billingAddress;
-@property (strong, nonatomic) NSArray* sellerDelivery;
 
 //CHECKOUT FINISH
 @property (nonatomic, strong) NSString *orderNr;
 @property (nonatomic, strong) NSString *customerFirstMame;
 @property (nonatomic, strong) NSString *customerLastName;
 @property (nonatomic, strong) RIPaymentInformation *paymentInformation;
-
-/**
- * new params (NOT USED)
- */
-@property (strong, nonatomic) NSNumber *deliveryDiscountAmount;
-@property (strong, nonatomic) NSNumber *deliveryDiscountAmountConverted;
-@property (strong, nonatomic) NSNumber *deliveryDiscountCartRuleDiscount;
-@property (strong, nonatomic) NSNumber *deliveryDiscountCartRuleDiscountConverted;
-@property (strong, nonatomic) NSNumber *deliveryDiscountCouponMoneyValue;
-@property (strong, nonatomic) NSNumber *deliveryDiscountCouponMoneyValueConverted;
-
 
 /**
  *  Method to add a product to the cart

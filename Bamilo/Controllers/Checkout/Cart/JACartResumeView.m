@@ -159,13 +159,13 @@
     
     JAProductInfoPriceDescriptionLine *itemsNumLine = [self newPriceDescriptionLineWithHeight:partialHeight];
     [itemsNumLine setTopSeparatorVisibility:NO];
-    if ([[[self cart] cartCount] integerValue] == 1) {
+    if ([[[self cart].cartEntity cartCount] integerValue] == 1) {
         [itemsNumLine setTitle:STRING_ITEM_CART];
     } else {
-        [itemsNumLine setTitle:[NSString stringWithFormat:STRING_ITEMS_CART, [[[self cart] cartCount] integerValue]]];
+        [itemsNumLine setTitle:[NSString stringWithFormat:STRING_ITEMS_CART, [[[self cart].cartEntity cartCount] integerValue]]];
     }
     
-    [itemsNumLine setPrice:[[self cart] subTotalFormatted] andOldPrice:[[self cart] cartUnreducedValueFormatted]];
+    [itemsNumLine setPrice:[[self cart].cartEntity subTotalFormatted] andOldPrice:[[self cart].cartEntity cartUnreducedValueFormatted]];
     [self.subtotalView addSubview:itemsNumLine];
     
     /*
@@ -175,9 +175,9 @@
     JAProductInfoPriceDescriptionLine *vatLine = [self newPriceDescriptionLineWithHeight:partialHeight];
     [vatLine setTopSeparatorVisibility:NO];
     [vatLine setY:CGRectGetMaxY(itemsNumLine.frame)];
-    [vatLine setTitle:[self.cart vatLabel]];
-    if ([self.cart vatLabelEnabled].boolValue) {
-        [vatLine setPrice:[self.cart vatValueFormatted] andOldPrice:nil];
+    [vatLine setTitle:[self.cart.cartEntity vatLabel]];
+    if ([self.cart.cartEntity vatLabelEnabled].boolValue) {
+        [vatLine setPrice:[self.cart.cartEntity vatValueFormatted] andOldPrice:nil];
     }
     [self.subtotalView addSubview:vatLine];
     
@@ -189,14 +189,14 @@
     
     NSString *priceRuleKeysString = @"";
     NSString *priceRuleValuesString = @"";
-    if(VALID_NOTEMPTY([[self cart] priceRules], NSDictionary))
+    if(VALID_NOTEMPTY([[self cart].cartEntity priceRules], NSDictionary))
     {
-        NSArray *priceRuleKeys = [[[self cart] priceRules] allKeys];
+        NSArray *priceRuleKeys = [[[self cart].cartEntity priceRules] allKeys];
         
         for (NSString *priceRuleKey in priceRuleKeys)
         {
             priceRuleKeysString = priceRuleKey;
-            priceRuleValuesString = [[[self cart] priceRules] objectForKey:priceRuleKey];
+            priceRuleValuesString = [[[self cart].cartEntity priceRules] objectForKey:priceRuleKey];
             JAProductInfoPriceDescriptionLine *ruleLine = [self newPriceDescriptionLineWithHeight:partialHeight];
             [ruleLine setTopSeparatorVisibility:NO];
             [ruleLine setY:heigth];
@@ -211,12 +211,12 @@
      * shipping value
      */
     
-    if (VALID_NOTEMPTY(self.cart.shippingValue, NSNumber) && self.cart.shippingValue.floatValue != 0.f) {
+    if (VALID_NOTEMPTY(self.cart.cartEntity.shippingValue, NSNumber) && self.cart.cartEntity.shippingValue.floatValue != 0.f) {
         JAProductInfoPriceDescriptionLine *shippingLine = [self newPriceDescriptionLineWithHeight:partialHeight];
         [shippingLine setTopSeparatorVisibility:NO];
         [shippingLine setY:heigth];
         [shippingLine setTitle:STRING_SHIPPING_FEE];
-        [shippingLine setPrice:self.cart.shippingValueFormatted andOldPrice:nil];
+        [shippingLine setPrice:self.cart.cartEntity.shippingValueFormatted andOldPrice:nil];
         [self.subtotalView addSubview:shippingLine];
         heigth = CGRectGetMaxY(shippingLine.frame);
     }
@@ -225,12 +225,12 @@
      * extra costs
      */
     
-    if([self.cart.extraCosts integerValue] != 0) {
+    if([self.cart.cartEntity.extraCosts integerValue] != 0) {
         JAProductInfoPriceDescriptionLine *extraCostsLine = [self newPriceDescriptionLineWithHeight:partialHeight];
         [extraCostsLine setTopSeparatorVisibility:NO];
         [extraCostsLine setY:heigth];
         [extraCostsLine setTitle:STRING_EXTRA_COSTS];
-        [extraCostsLine setPrice:[[self cart] extraCostsFormatted] andOldPrice:nil];
+        [extraCostsLine setPrice:[[self cart].cartEntity extraCostsFormatted] andOldPrice:nil];
         [self.subtotalView addSubview:extraCostsLine];
         heigth = CGRectGetMaxY(extraCostsLine.frame);
     }
@@ -239,16 +239,16 @@
      * coupon value
      */
     
-    if(VALID([[self cart] couponMoneyValue], NSNumber))
+    if(VALID([[self cart].cartEntity couponMoneyValue], NSNumber))
     {
         JAProductInfoPriceDescriptionLine *couponValueLine = [self newPriceDescriptionLineWithHeight:partialHeight];    // missing coupon text color
         [couponValueLine setTopSeparatorVisibility:NO];
         [couponValueLine setY:heigth];
         [couponValueLine setTitle:STRING_VOUCHER];
-        [couponValueLine setPrice:[NSString stringWithFormat:@"- %@", [[self cart] couponMoneyValueFormatted]] andOldPrice:nil];
+        [couponValueLine setPrice:[NSString stringWithFormat:@"- %@", [[self cart].cartEntity couponMoneyValueFormatted]] andOldPrice:nil];
         [self.subtotalView addSubview:couponValueLine];
         heigth = CGRectGetMaxY(couponValueLine.frame);
-        [self.couponTextField setText:[self.cart couponCode]];
+        [self.couponTextField setText:[self.cart.cartEntity couponCode]];
         [self setCouponValid:YES];
     }else{
         [self removeVoucher];
@@ -262,7 +262,7 @@
     [subtotalLine setSize:JAPriceSizeTitle];
     [subtotalLine setY:heigth];
     [subtotalLine setTitle:STRING_TOTAL];
-    [subtotalLine setPrice:[[self cart] cartValueFormatted] andOldPrice:nil];
+    [subtotalLine setPrice:[[self cart].cartEntity cartValueFormatted] andOldPrice:nil];
     [self.subtotalView addSubview:subtotalLine];
     
     /*
@@ -271,7 +271,7 @@
     
     heigth = CGRectGetMaxY(subtotalLine.frame);
     BOOL freeShippingPossible = NO;
-    for (RICartItem* cartItem in self.cart.cartItems) {
+    for (RICartItem* cartItem in self.cart.cartEntity.cartItems) {
         if (cartItem.freeShippingPossible) {
             freeShippingPossible = YES;
             break;

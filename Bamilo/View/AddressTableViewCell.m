@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressPhoneLabel;
 @property (weak, nonatomic) IBOutlet UIButton *addressEditButton;
+@property (weak, nonatomic) IBOutlet UIImageView *addressEditPencilIcon;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *checkmarkIconTrailingConstraint;
 @end
 
@@ -42,10 +43,10 @@
 
 -(void)setIsReadOnly:(BOOL)isReadOnly {
     if(isReadOnly) {
-        self.addressEditButton.hidden = YES;
+        self.addressEditPencilIcon.hidden = self.addressEditButton.hidden = YES;
         self.checkmarkIconTrailingConstraint.constant = -1 * self.checkmarkIconImageView.frame.size.width;
     } else {
-        self.addressEditButton.hidden = NO;
+        self.addressEditPencilIcon.hidden = self.addressEditButton.hidden = NO;
         self.checkmarkIconTrailingConstraint.constant = 10;
     }
     

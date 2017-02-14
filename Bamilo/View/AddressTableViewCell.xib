@@ -101,6 +101,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="addressEditButton" destination="HWJ-Ix-ALr" id="5Tj-us-Sk2"/>
+                <outlet property="addressEditPencilIcon" destination="a8A-Yd-096" id="ENZ-OX-fKE"/>
                 <outlet property="addressLabel" destination="42A-p9-Ncc" id="ACU-fv-rEq"/>
                 <outlet property="addressPhoneLabel" destination="kl6-R4-pkZ" id="Rmy-5G-X2R"/>
                 <outlet property="addressTitleLabel" destination="qvy-0u-gkK" id="9no-FO-EBD"/>

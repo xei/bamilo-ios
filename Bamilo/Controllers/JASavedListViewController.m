@@ -490,8 +490,8 @@
                       [trackingDictionary setValue:product.brandUrlKey forKey:kRIEventBrandKey];
                       [trackingDictionary setValue:product.name forKey:kRIEventProductNameKey];
                       [trackingDictionary setValue:productSimple.sku forKey:kRIEventSkuKey];
-                      [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
-                      [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+                      [trackingDictionary setValue:cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
+                      [trackingDictionary setValue:cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
                       [trackingDictionary setValue:@"Wishlist" forKey:kRIEventLocationKey];
                       
                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart] data:[trackingDictionary copy]];
@@ -511,8 +511,8 @@
                       
                       
                       tracking = [NSMutableDictionary new];
-                      [tracking setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
-                      [tracking setValue:cart.cartCount forKey:kRIEventQuantityKey];
+                      [tracking setValue:cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+                      [tracking setValue:cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
                                                                 data:[tracking copy]];
                       

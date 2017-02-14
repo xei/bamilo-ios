@@ -46,7 +46,7 @@
     
     CGFloat topMargin = 0.0f;
     
-    if (VALID_NOTEMPTY(cart, RICart) && VALID_NOTEMPTY(cart.cartItems, NSArray)) {
+    if (VALID_NOTEMPTY(cart, RICart) && VALID_NOTEMPTY(cart.cartEntity.cartItems, NSArray)) {
         
         self.cartView = [[UIView alloc] initWithFrame:CGRectMake(self.scrollView.bounds.origin.x,
                                                                  self.scrollView.bounds.origin.y + topMargin,
@@ -72,7 +72,7 @@
         
         currentY += productsTitleLabel.frame.size.height + 10.0f;
         
-        for (RICartItem* cartItem in cart.cartItems) {
+        for (RICartItem* cartItem in cart.cartEntity.cartItems) {
             if (VALID_NOTEMPTY(cartItem, RICartItem)) {
                 
                 NSString* priceString = cartItem.priceFormatted;
@@ -88,43 +88,43 @@
         }
         
         NSString *shippingFeeValue = nil;
-        if (0 == [cart.shippingValue integerValue])
+        if (0 == [cart.cartEntity.shippingValue integerValue])
         {
             shippingFeeValue = STRING_FREE;
         }
         else
         {
-            shippingFeeValue = cart.shippingValueFormatted;
+            shippingFeeValue = cart.cartEntity.shippingValueFormatted;
         }
         
         NSString *extraCostsValue = nil;
-        if (0 == [cart.extraCosts integerValue])
+        if (0 == [cart.cartEntity.extraCosts integerValue])
         {
             extraCostsValue = STRING_FREE;
         }
         else
         {
-            extraCostsValue = cart.extraCostsFormatted;
+            extraCostsValue = cart.cartEntity.extraCostsFormatted;
         }
         
         NSString *voucherCostsValue = nil;
-        if (0 == [cart.couponMoneyValue integerValue])
+        if (0 == [cart.cartEntity.couponMoneyValue integerValue])
         {
             voucherCostsValue = STRING_FREE;
         }
         else
         {
-            voucherCostsValue = cart.couponMoneyValueFormatted;
+            voucherCostsValue = cart.cartEntity.couponMoneyValueFormatted;
         }
         
         currentY = [self loadTotalSectionInPositionY:currentY
-                                            subtotal:cart.cartValueFormatted
-                                          priceRules:cart.priceRules
+                                            subtotal:cart.cartEntity.cartValueFormatted
+                                          priceRules:cart.cartEntity.priceRules
                                                extra:extraCostsValue
                                          shippingFee:shippingFeeValue
                                              voucher:voucherCostsValue];
         
-        self.extraCosts = cart.extraCostsFormatted;
+        self.extraCosts = cart.cartEntity.extraCostsFormatted;
         
         [self.cartView setFrame:CGRectMake(self.cartView.frame.origin.x,
                                            self.cartView.frame.origin.y,
@@ -142,10 +142,10 @@
     {
         [self loadWithCart:cart];
         
-        [self loadWithShippingAddress:cart.shippingAddress billingAddress:cart.billingAddress];
+        [self loadWithShippingAddress:cart.cartEntity.shippingAddress billingAddress:cart.cartEntity.billingAddress];
         
         if (shippingMethod) {
-            [self loadWithShippingMethod:cart.shippingMethod];
+            [self loadWithShippingMethod:cart.cartEntity.shippingMethod];
         }        
     }
 }

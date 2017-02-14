@@ -26,4 +26,7 @@ typedef void(^DataCompletion)(id data, NSError *error);
 //### CART ###
 -(void) getUserCart:(id<DataServiceProtocol>)target completion:(DataCompletion)completion;
 
+//### PAYMENT ###
+-(void) getMultistepPayment:(id<DataServiceProtocol>)target completion:(DataCompletion)completion;
+
 @end

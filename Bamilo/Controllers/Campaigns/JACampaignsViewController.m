@@ -515,8 +515,8 @@ withCampaignTargetString:(NSString*)campaignTargetString
                           discountPercentage = [self.backupCampaignProduct.maxSavingPercentage stringValue];
                       }
                       [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
-                      [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
-                      [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+                      [trackingDictionary setValue:cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
+                      [trackingDictionary setValue:cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
                       
                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
                                                                 data:[trackingDictionary copy]];
@@ -528,8 +528,8 @@ withCampaignTargetString:(NSString*)campaignTargetString
                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLastAddedToCart] data:tracking];
                       
                       trackingDictionary = [NSMutableDictionary new];
-                      [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
-                      [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
+                      [trackingDictionary setValue:cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+                      [trackingDictionary setValue:cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
                                                                 data:[trackingDictionary copy]];
                       

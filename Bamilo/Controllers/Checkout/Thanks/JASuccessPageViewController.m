@@ -190,7 +190,7 @@
     [trackingDictionary setValue:[NSNumber numberWithInteger:[self.cart.orderNr integerValue]] forKey:kRIEventValueKey];
     
     NSMutableString* attributeSetID = [NSMutableString new];
-    for( RICartItem* pd in [self.cart cartItems]) {
+    for( RICartItem* pd in [self.cart.cartEntity cartItems]) {
         [attributeSetID appendFormat:@"%@;",[pd attributeSetID]];
     }
     [trackingDictionary setValue:[attributeSetID copy] forKey:kRIEventAttributeSetIDCartKey];
@@ -199,7 +199,7 @@
         [trackingDictionary setObject:self.cart.totalNumberOfOrders forKey:kRIEventAmountTransactions];
     }
     [trackingDictionary setObject:self.cart.orderNr forKey:kRIEventOrderNumber];
-    RICartItem* lastCartItem = [self.cart.cartItems lastObject];
+    RICartItem* lastCartItem = [self.cart.cartEntity.cartItems lastObject];
     if (VALID_NOTEMPTY(lastCartItem, RICartItem)) {
         [trackingDictionary setObject:lastCartItem.name forKey:kRIEventProductNameKey];
         [trackingDictionary setObject:lastCartItem.simpleSku forKey:kRIEventSkuKey];
@@ -224,8 +224,8 @@
     NSNumber *priceSum = [NSNumber numberWithFloat:0.0f];
     NSMutableArray *skusArray = [NSMutableArray new];
     
-    for (int i = 0; i < self.cart.cartItems.count; i++) {
-        RICartItem *cartItem = [self.cart.cartItems objectAtIndex:i];
+    for (int i = 0; i < self.cart.cartEntity.cartItems.count; i++) {
+        RICartItem *cartItem = [self.cart.cartEntity.cartItems objectAtIndex:i];
         
         BOOL isConverted = YES;
         NSString *discount = @"false";
@@ -335,9 +335,9 @@
     [ecommerceDictionary setValue:self.cart.orderNr forKey:kRIEcommerceTransactionIdKey];
     [ecommerceDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEcommerceCurrencyKey];
     [ecommerceDictionary setValue:self.cart.totalNumberOfOrders forKey:kRIEventAmountTransactions];
-    [ecommerceDictionary setValue:self.cart.paymentMethod forKey:kRIEcommercePaymentMethodKey];
+    [ecommerceDictionary setValue:self.cart.cartEntity.paymentMethod forKey:kRIEcommercePaymentMethodKey];
     
-    NSArray *products = self.cart.cartItems;
+    NSArray *products = self.cart.cartEntity.cartItems;
     
     NSMutableArray *ecommerceSkusArray = [NSMutableArray new];
     NSMutableArray *ecommerceProductsArray = [NSMutableArray new];
@@ -393,36 +393,36 @@
     [ecommerceDictionary setValue:[ecommerceSkusArray copy] forKey:kRIEcommerceSkusKey];
     [ecommerceDictionary setValue:[NSNumber numberWithFloat:averageValue] forKey:kRIEcommerceCartAverageValueKey];
     
-    if(VALID_NOTEMPTY(self.cart.couponCode, NSString))
+    if(VALID_NOTEMPTY(self.cart.cartEntity.couponCode, NSString))
     {
-        [ecommerceDictionary setValue:self.cart.couponCode forKey:kRIEcommerceCouponKey];
+        [ecommerceDictionary setValue:self.cart.cartEntity.couponCode forKey:kRIEcommerceCouponKey];
     }
     
-    if(VALID_NOTEMPTY(self.cart.couponMoneyValueEuroConverted, NSNumber))
+    if(VALID_NOTEMPTY(self.cart.cartEntity.couponMoneyValueEuroConverted, NSNumber))
     {
-        [ecommerceDictionary setValue:self.cart.couponMoneyValueEuroConverted forKey:kRIEcommerceCouponValue];
+        [ecommerceDictionary setValue:self.cart.cartEntity.couponMoneyValueEuroConverted forKey:kRIEcommerceCouponValue];
     }
     
-    [ecommerceDictionary setValue:self.cart.shippingValue forKey:kRIEcommerceShippingKey];
-    [ecommerceDictionary setValue:self.cart.vatValue forKey:kRIEcommerceTaxKey];
+    [ecommerceDictionary setValue:self.cart.cartEntity.shippingValue forKey:kRIEcommerceShippingKey];
+    [ecommerceDictionary setValue:self.cart.cartEntity.vatValue forKey:kRIEcommerceTaxKey];
     
-    NSNumber *total = self.cart.cartValue;
+    NSNumber *total = self.cart.cartEntity.cartValue;
     
     NSNumber *convertedTotal = [NSNumber numberWithFloat:0.0f];
-    if(VALID_NOTEMPTY(self.cart.cartValueEuroConverted, NSNumber))
+    if(VALID_NOTEMPTY(self.cart.cartEntity.cartValueEuroConverted, NSNumber))
     {
-        convertedTotal = self.cart.cartValueEuroConverted;
+        convertedTotal = self.cart.cartEntity.cartValueEuroConverted;
     }
     
     [ecommerceDictionary setValue:total forKey:kRIEcommerceTotalValueKey];
     [ecommerceDictionary setValue:convertedTotal forKey:kRIEcommerceConvertedTotalValueKey];
     
-    NSNumber *grandTotal = self.cart.cartValue;
+    NSNumber *grandTotal = self.cart.cartEntity.cartValue;
     
     NSNumber *convertedGrandTotal = [NSNumber numberWithFloat:0.0f];
-    if(VALID_NOTEMPTY(self.cart.cartValueEuroConverted, NSNumber))
+    if(VALID_NOTEMPTY(self.cart.cartEntity.cartValueEuroConverted, NSNumber))
     {
-        convertedGrandTotal = self.cart.cartValueEuroConverted;
+        convertedGrandTotal = self.cart.cartEntity.cartValueEuroConverted;
     }
     
     [ecommerceDictionary setValue:grandTotal forKey:kRIEcommerceGrandTotalValueKey];

@@ -106,8 +106,8 @@
         {
             NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
             NSMutableArray *cartItemsSkus = [[NSMutableArray alloc]init];
-            for (int i = 0; i < self.cart.cartItems.count; i++) {
-                RICartItem* cartItem = [self.cart.cartItems objectAtIndex:i];
+            for (int i = 0; i < self.cart.cartEntity.cartItems.count; i++) {
+                RICartItem* cartItem = [self.cart.cartEntity.cartItems objectAtIndex:i];
                 [cartItemsSkus addObject:cartItem.simpleSku];
             }
             NSString * labelString = [cartItemsSkus componentsJoinedByString:@", "];
@@ -244,8 +244,8 @@
 {
     UIView* orderContentView = [self placeContentViewWithTitle:STRING_MY_ORDER_LABEL atYPosition:yPosition scrollView:scrollView];
     
-    for (int i = 0; i < self.cart.cartItems.count; i++) {
-        RICartItem* cartItem = [self.cart.cartItems objectAtIndex:i];
+    for (int i = 0; i < self.cart.cartEntity.cartItems.count; i++) {
+        RICartItem* cartItem = [self.cart.cartEntity.cartItems objectAtIndex:i];
         if (0 != i) {
             [self placeGreySeparatorInContentView:orderContentView];
         }
@@ -405,13 +405,13 @@
                                                                                                                                   scrollView.frame.size.width,
                                                                                                                                   48.0f)];
     [priceDescriptionLine setTopSeparatorVisibility:NO];
-    if ([[[self cart] cartCount] integerValue] == 1) {
+    if ([[[self cart].cartEntity cartCount] integerValue] == 1) {
         [priceDescriptionLine setTitle:STRING_ITEM_CART];
     }else{
-        [priceDescriptionLine setTitle:[NSString stringWithFormat:STRING_ITEMS_CART, [[[self cart] cartCount] integerValue]]];
+        [priceDescriptionLine setTitle:[NSString stringWithFormat:STRING_ITEMS_CART, [[[self cart].cartEntity cartCount] integerValue]]];
     }
     
-    [priceDescriptionLine setPrice:[[self cart] subTotalFormatted] andOldPrice:[[self cart] cartUnreducedValueFormatted]];
+    [priceDescriptionLine setPrice:[[self cart].cartEntity subTotalFormatted] andOldPrice:[[self cart].cartEntity cartUnreducedValueFormatted]];
     [subtotalContentView addSubview:priceDescriptionLine];
     
     CGFloat startingX = 16.0f;
@@ -420,21 +420,21 @@
     
     NSString *priceRuleKeysString = @"";
     NSString *priceRuleValuesString = @"";
-    if(VALID_NOTEMPTY(self.cart.priceRules, NSDictionary))
+    if(VALID_NOTEMPTY(self.cart.cartEntity.priceRules, NSDictionary))
     {
-        NSArray *priceRuleKeys = [self.cart.priceRules allKeys];
+        NSArray *priceRuleKeys = [self.cart.cartEntity.priceRules allKeys];
         
         for (NSString *priceRuleKey in priceRuleKeys)
         {
             if(ISEMPTY(priceRuleKeysString))
             {
                 priceRuleKeysString = priceRuleKey;
-                priceRuleValuesString = [self.cart.priceRules objectForKey:priceRuleKey];
+                priceRuleValuesString = [self.cart.cartEntity.priceRules objectForKey:priceRuleKey];
             }
             else
             {
                 priceRuleKeysString = [NSString stringWithFormat:@"%@\n%@", priceRuleKeysString, priceRuleKey];
-                priceRuleValuesString = [NSString stringWithFormat:@"%@\n%@", priceRuleValuesString, [self.cart.priceRules objectForKey:priceRuleKey]];
+                priceRuleValuesString = [NSString stringWithFormat:@"%@\n%@", priceRuleValuesString, [self.cart.cartEntity.priceRules objectForKey:priceRuleKey]];
             }
         }
     }
@@ -443,7 +443,7 @@
     vatLabel.textAlignment = NSTextAlignmentLeft;
     vatLabel.font = JABodyFont;
     vatLabel.textColor = JABlack800Color;
-    [vatLabel setText:self.cart.vatLabel];
+    [vatLabel setText:self.cart.cartEntity.vatLabel];
     [vatLabel sizeToFit];
     vatLabel.frame = CGRectMake(startingX,
                                 CGRectGetMaxY(priceDescriptionLine.frame) - 16.0f,
@@ -454,8 +454,8 @@
     cartVatValue.textAlignment = NSTextAlignmentLeft;
     [cartVatValue setFont:JABodyFont];
     [cartVatValue setTextColor:JABlack800Color];
-    if ([[self.cart vatLabelEnabled] boolValue]) {
-        [cartVatValue setText:[self.cart vatValueFormatted]];
+    if ([[self.cart.cartEntity vatLabelEnabled] boolValue]) {
+        [cartVatValue setText:[self.cart.cartEntity vatValueFormatted]];
         [subtotalContentView addSubview:cartVatValue];
     }
     [cartVatValue sizeToFit];
@@ -508,7 +508,7 @@
         vatPositionY = CGRectGetMaxY(priceRulesLabel.frame);
     }
     
-    if (self.cart.shippingValue.floatValue) {
+    if (self.cart.cartEntity.shippingValue.floatValue) {
         UILabel* shippingLabel = [UILabel new];
         shippingLabel.textAlignment = NSTextAlignmentLeft;
         shippingLabel.font = JABodyFont;
@@ -525,8 +525,8 @@
         shippingValueLabel.textAlignment = NSTextAlignmentRight;
         shippingValueLabel.font = JABodyFont;
         shippingValueLabel.textColor = JABlackColor;
-        shippingValueLabel.text = self.cart.shippingValueFormatted;
-        if (0 == [self.cart.shippingValue integerValue]) {
+        shippingValueLabel.text = self.cart.cartEntity.shippingValueFormatted;
+        if (0 == [self.cart.cartEntity.shippingValue integerValue]) {
             shippingValueLabel.text = STRING_FREE;
         }
         [shippingValueLabel sizeToFit];
@@ -538,7 +538,7 @@
         nextYPos = CGRectGetMaxY(shippingLabel.frame) + 10.0f;
     }
     
-    if (self.cart.extraCosts.floatValue) {
+    if (self.cart.cartEntity.extraCosts.floatValue) {
         UILabel* extraCostsLabel = [UILabel new];
         extraCostsLabel.textAlignment = NSTextAlignmentLeft;
         extraCostsLabel.font = JABodyFont;
@@ -555,7 +555,7 @@
         extraCostsValueLabel.textAlignment = NSTextAlignmentRight;
         extraCostsValueLabel.font = JABodyFont;
         extraCostsValueLabel.textColor = JABlackColor;
-        extraCostsValueLabel.text = self.cart.extraCostsFormatted;
+        extraCostsValueLabel.text = self.cart.cartEntity.extraCostsFormatted;
         [extraCostsValueLabel sizeToFit];
         extraCostsValueLabel.frame = CGRectMake(endingX - extraCostsValueLabel.frame.size.width,
                                                 extraCostsLabel.frame.origin.y,
@@ -565,7 +565,7 @@
         nextYPos = CGRectGetMaxY(extraCostsLabel.frame) + 10.0f;
     }
     
-    if (self.cart.couponMoneyValue != nil) {
+    if (self.cart.cartEntity.couponMoneyValue != nil) {
         UILabel *couponLabel = [UILabel new];
         couponLabel.textAlignment = NSTextAlignmentLeft;
         [couponLabel setFont:JABodyFont];
@@ -580,7 +580,7 @@
         couponValueLabel.textAlignment = NSTextAlignmentLeft;
         [couponValueLabel setFont:JABodyFont];
         [couponValueLabel setTextColor:JABlackColor];
-        [couponValueLabel setText:[NSString stringWithFormat:@"- %@", self.cart.couponMoneyValueFormatted]];
+        [couponValueLabel setText:[NSString stringWithFormat:@"- %@", self.cart.cartEntity.couponMoneyValueFormatted]];
         [couponValueLabel sizeToFit];
         [couponValueLabel setX:CGRectGetMaxX(subtotalContentView.frame) - couponValueLabel.width - 16.f];
         [couponValueLabel setY:nextYPos];
@@ -620,7 +620,7 @@
     finalTotalValueLabel.textAlignment = NSTextAlignmentRight;
     finalTotalValueLabel.font = JATitleFont;
     finalTotalValueLabel.textColor = JABlackColor;
-    finalTotalValueLabel.text = self.cart.cartValueFormatted;
+    finalTotalValueLabel.text = self.cart.cartEntity.cartValueFormatted;
     [finalTotalValueLabel sizeToFit];
     finalTotalValueLabel.frame = CGRectMake(endingX - finalTotalValueLabel.frame.size.width,
                                             finalTotalLabel.frame.origin.y,
@@ -638,18 +638,18 @@
 
 - (CGFloat)setupShippingAddressView:(UIScrollView*)scrollView atYPostion:(CGFloat)yPosition
 {
-    NSString* shippingAddress = [self getAddressStringFromAddress:self.cart.shippingAddress];
-    NSString* shippingName = [self getNameStringFromAddress:self.cart.shippingAddress];
-    NSString* shippingPhone = [self getPhoneStringFromAddress:self.cart.shippingAddress];
+    NSString* shippingAddress = [self getAddressStringFromAddress:self.cart.cartEntity.shippingAddress];
+    NSString* shippingName = [self getNameStringFromAddress:self.cart.cartEntity.shippingAddress];
+    NSString* shippingPhone = [self getPhoneStringFromAddress:self.cart.cartEntity.shippingAddress];
     return [self setupGenericAddressViewWithTitle:STRING_SHIPPING_ADDRESSES address:shippingAddress name:shippingName phone:shippingPhone editButtonSelector:@selector(editButtonForShippingAddress) scrollView:scrollView atYPostion:yPosition];
 }
 
 - (CGFloat)setupBillingAddressView:(UIScrollView*)scrollView atYPostion:(CGFloat)yPosition
 {
-    NSString* billingAddress = [self getAddressStringFromAddress:self.cart.billingAddress];
-    NSString* billingName = [self getNameStringFromAddress:self.cart.billingAddress];
-    NSString* billingPhone = [self getPhoneStringFromAddress:self.cart.billingAddress];
-    if ([self.cart.billingAddress.uid isEqualToString:self.cart.shippingAddress.uid]) {
+    NSString* billingAddress = [self getAddressStringFromAddress:self.cart.cartEntity.billingAddress];
+    NSString* billingName = [self getNameStringFromAddress:self.cart.cartEntity.billingAddress];
+    NSString* billingPhone = [self getPhoneStringFromAddress:self.cart.cartEntity.billingAddress];
+    if ([self.cart.cartEntity.billingAddress.uid isEqualToString:self.cart.cartEntity.shippingAddress.uid]) {
         billingName = STRING_BILLING_SAME_ADDRESSES;
         billingAddress = nil;
         billingPhone = nil;
@@ -824,7 +824,7 @@
     shippingMethodLabel.textAlignment = NSTextAlignmentLeft;
     shippingMethodLabel.font = JAListFont;
     shippingMethodLabel.textColor = JABlackColor;
-    shippingMethodLabel.text = self.cart.shippingMethod;
+    shippingMethodLabel.text = self.cart.cartEntity.shippingMethod;
     shippingMethodLabel.numberOfLines = 0;
     [shippingMethodLabel sizeToFit];
     shippingMethodLabel.frame = CGRectMake(shippingContentView.bounds.origin.x + 16.0f,
@@ -851,7 +851,7 @@
     paymentTitleLabel.textAlignment = NSTextAlignmentLeft;
     paymentTitleLabel.font = JAListFont;
     paymentTitleLabel.textColor = JABlackColor;
-    paymentTitleLabel.text = self.cart.paymentMethod;
+    paymentTitleLabel.text = self.cart.cartEntity.paymentMethod;
     paymentTitleLabel.numberOfLines = 0;
     [paymentTitleLabel sizeToFit];
     paymentTitleLabel.frame = CGRectMake(paymentContentView.bounds.origin.x + 16.0f,
@@ -865,7 +865,7 @@
                                           paymentContentView.frame.size.width,
                                           CGRectGetMaxY(paymentTitleLabel.frame));
     
-    if (VALID_NOTEMPTY(self.cart.couponCode, NSString)) {
+    if (VALID_NOTEMPTY(self.cart.cartEntity.couponCode, NSString)) {
         
         UILabel* couponTitleLabel = [UILabel new];
         couponTitleLabel.textAlignment = NSTextAlignmentLeft;
@@ -884,7 +884,7 @@
         couponCodeLabel.textAlignment = NSTextAlignmentLeft;
         couponCodeLabel.font = JABodyFont;
         couponCodeLabel.textColor = JABlack800Color;
-        couponCodeLabel.text = self.cart.couponCode;
+        couponCodeLabel.text = self.cart.cartEntity.couponCode;
         couponCodeLabel.numberOfLines = 0;
         [couponCodeLabel sizeToFit];
         couponCodeLabel.frame = CGRectMake(paymentContentView.bounds.origin.x + 16.0f,

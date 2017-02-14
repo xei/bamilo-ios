@@ -11,8 +11,7 @@
 
 @implementation RIPaymentMethodForm
 
-+ (RIPaymentMethodForm *)parseForm:(NSDictionary *)formJSON
-{
++ (RIPaymentMethodForm *)parseForm:(NSDictionary *)formJSON {
     RIPaymentMethodForm *newForm = [[RIPaymentMethodForm alloc] init];
     
     if (VALID_NOTEMPTY(formJSON, NSDictionary)) {
@@ -41,8 +40,7 @@
     return newForm;
 }
 
-+ (NSDictionary *) getParametersForForm:(RIPaymentMethodForm *)form
-{
++ (NSDictionary *) getParametersForForm:(RIPaymentMethodForm *)form {
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     for(RIPaymentMethodFormField *field in form.fields)
     {
@@ -58,14 +56,11 @@
     return [parameters copy];
 }
 
-+ (NSArray *) getPaymentMethodsInForm:(RIPaymentMethodForm*)form
-{
++ (NSArray *) getPaymentMethodsInForm:(RIPaymentMethodForm*)form {
     NSArray *paymentMethods = nil;
     
-    for (RIPaymentMethodFormField *field in [form fields])
-    {
-        if([@"payment_method[payment_method]" isEqualToString:[field name]])
-        {
+    for (RIPaymentMethodFormField *field in [form fields]) {
+        if([@"payment_method[payment_method]" isEqualToString:[field name]]) {
             paymentMethods = [field.options copy];
             break;
         }

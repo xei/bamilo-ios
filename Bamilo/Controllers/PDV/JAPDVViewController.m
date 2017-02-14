@@ -1761,7 +1761,7 @@ typedef void (^ProcessActionBlock)(void);
     }
     [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
     [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
-    [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
+    [trackingDictionary setValue:cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
     [trackingDictionary setValue:@"Product Detail screen" forKey:kRIEventLocationKey];
     
     NSString *categoryName = @"";
@@ -1820,7 +1820,7 @@ typedef void (^ProcessActionBlock)(void);
     }
     
     [trackingDictionary setValue:self.product.name forKey:kRIEventProductNameKey];
-    [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+    [trackingDictionary setValue:cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
                                               data:[trackingDictionary copy]];
@@ -1844,8 +1844,8 @@ typedef void (^ProcessActionBlock)(void);
 
 - (void)trackingEventCart:(RICart *)cart {
     NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
-    [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
-    [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
+    [trackingDictionary setValue:cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+    [trackingDictionary setValue:cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
                                               data:[trackingDictionary copy]];
     

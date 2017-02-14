@@ -160,10 +160,10 @@ UITableViewDelegate
             
             [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
             self.cart = cart;
-            self.shippingMethodForm = cart.shippingMethodForm;
+            self.shippingMethodForm = cart.formEntity.shippingMethodForm;
             
             // LIST OF AVAILABLE SHIPPING METHODS
-            self.shippingMethods = [RIShippingMethodForm getShippingMethods:cart.shippingMethodForm];
+            self.shippingMethods = [RIShippingMethodForm getShippingMethods:cart.formEntity.shippingMethodForm];
             
             [self finishedLoadingShippingMethods];
         } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
@@ -194,7 +194,7 @@ UITableViewDelegate
     [self.view addSubview:self.scrollView];
     
     _bottomView = [[JACheckoutBottomView alloc] initWithFrame:CGRectMake(0.f, self.view.frame.size.height - 56, self.view.frame.size.width, 56) orientation:[[UIApplication sharedApplication] statusBarOrientation]];
-    [_bottomView setTotalValue:self.cart.cartValueFormatted];
+    [_bottomView setTotalValue:self.cart.cartEntity.cartValueFormatted];
     [self.view addSubview:_bottomView];
 }
 
@@ -202,7 +202,7 @@ UITableViewDelegate
 {
     if(VALID_NOTEMPTY(self.shippingMethods, NSArray))
     {
-        self.selectedShippingMethod = self.cart.shippingMethod;
+        self.selectedShippingMethod = self.cart.cartEntity.shippingMethod;
         
         if(VALID_NOTEMPTY(self.selectedShippingMethod, NSString))
         {
@@ -245,8 +245,8 @@ UITableViewDelegate
 {
     if (VALID_ISEMPTY(self.sellerDeliveryViews, NSMutableArray)) {
         NSInteger index = 1;
-        NSInteger max = [self.cart.sellerDelivery count];
-        for (RISellerDelivery* sell in self.cart.sellerDelivery) {
+        NSInteger max = [self.cart.cartEntity.sellerDelivery count];
+        for (RISellerDelivery* sell in self.cart.cartEntity.sellerDelivery) {
             JASellerDeliveryView* sellerDeliveryView = [[JASellerDeliveryView alloc] init];
             [sellerDeliveryView setupWithSellerDelivery:sell index:index++ ofMax:max width:width];
             [self.scrollView addSubview:sellerDeliveryView];
@@ -291,7 +291,7 @@ UITableViewDelegate
                                      width,
                                      56)];
     [_bottomView setButtonText:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
-    [_bottomView setTotalValue:self.cart.cartValueFormatted];
+    [_bottomView setTotalValue:self.cart.cartEntity.cartValueFormatted];
     
     [self.scrollView setFrame:CGRectMake(0.0f,
                                          0.f,

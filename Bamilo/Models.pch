@@ -11,5 +11,8 @@
 
 #import "Address.h"
 #import "AddressList.h"
+#import "CartForm.h"
+#import "CartEntity.h"
+#import "FormEntity.h"
 
 #endif /* Models_pch */
