@@ -12,11 +12,6 @@
 #import "CAPSPageMenu.h"
 #import "RICustomer.h"
 
-#define cEXTRA_DARK_GRAY_COLOR [UIColor withRGBA:80 green:80 blue:80 alpha:1.0f]
-#define cDARK_GRAY_COLOR [UIColor withRGBA:115 green:115 blue:115 alpha:1.0f]
-#define cLIGHT_GRAY_COLOR [UIColor withRGBA:146 green:146 blue:146 alpha:1.0f]
-#define cEXTRA_ORAGNE_COLOR [UIColor withRGBA:247 green:151 blue:32 alpha:1.0f]
-
 @interface AuthenticationViewController() <SignInViewControllerDelegate>
 @property (nonatomic) CAPSPageMenu *pagemenu;
 @end
