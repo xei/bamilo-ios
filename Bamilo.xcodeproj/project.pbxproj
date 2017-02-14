@@ -40,7 +40,7 @@
 		617AAA441E503AB9004D9430 /* FormItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 617AAA431E503AB9004D9430 /* FormItemModel.m */; };
 		61CBA0391E51A72A005673F7 /* ForgetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA0381E51A72A005673F7 /* ForgetPasswordViewController.m */; };
 		61CBA03D1E51A75C005673F7 /* ContinueWitoutLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA03C1E51A75C005673F7 /* ContinueWitoutLoginViewController.m */; };
-		61CBA0421E51BA33005673F7 /* FormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA0411E51BA33005673F7 /* FormViewController.m */; };
+		61CBA0421E51BA33005673F7 /* FormViewControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA0411E51BA33005673F7 /* FormViewControl.m */; };
 		61CBA04A1E51D18F005673F7 /* FormTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA0481E51D18F005673F7 /* FormTableViewCell.m */; };
 		61CBA04B1E51D18F005673F7 /* FormTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61CBA0491E51D18F005673F7 /* FormTableViewCell.xib */; };
 		61CBA0511E51E26B005673F7 /* FormValidationType.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA0501E51E26B005673F7 /* FormValidationType.m */; };
@@ -602,8 +602,8 @@
 		61CBA0381E51A72A005673F7 /* ForgetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgetPasswordViewController.m; sourceTree = "<group>"; };
 		61CBA03B1E51A75C005673F7 /* ContinueWitoutLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContinueWitoutLoginViewController.h; sourceTree = "<group>"; };
 		61CBA03C1E51A75C005673F7 /* ContinueWitoutLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContinueWitoutLoginViewController.m; sourceTree = "<group>"; };
-		61CBA0401E51BA33005673F7 /* FormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormViewController.h; sourceTree = "<group>"; };
-		61CBA0411E51BA33005673F7 /* FormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormViewController.m; sourceTree = "<group>"; };
+		61CBA0401E51BA33005673F7 /* FormViewControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormViewControl.h; sourceTree = "<group>"; };
+		61CBA0411E51BA33005673F7 /* FormViewControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormViewControl.m; sourceTree = "<group>"; };
 		61CBA0471E51D18F005673F7 /* FormTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormTableViewCell.h; sourceTree = "<group>"; };
 		61CBA0481E51D18F005673F7 /* FormTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormTableViewCell.m; sourceTree = "<group>"; };
 		61CBA0491E51D18F005673F7 /* FormTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FormTableViewCell.xib; sourceTree = "<group>"; };
@@ -1943,8 +1943,8 @@
 		61CBA0451E51D14B005673F7 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				61CBA0401E51BA33005673F7 /* FormViewController.h */,
-				61CBA0411E51BA33005673F7 /* FormViewController.m */,
+				61CBA0401E51BA33005673F7 /* FormViewControl.h */,
+				61CBA0411E51BA33005673F7 /* FormViewControl.m */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -2927,7 +2927,6 @@
 		879F88361E52EA690033FE87 /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				87A681591E40F99300D252AC /* BaseViewController */,
 				879F88371E52EA750033FE87 /* ProtectedViewController */,
 			);
 			name = Base;
@@ -3264,7 +3263,6 @@
 				879F88361E52EA690033FE87 /* Base */,
 				61CBA03F1E51BA1D005673F7 /* FormViewController */,
 				87A681591E40F99300D252AC /* BaseViewController */,
-				879F88001E50B23C0033FE87 /* Authentication */,
 				87A6815E1E41B84000D252AC /* SearchBaseViewController */,
 				879F88001E50B23C0033FE87 /* Authentication */,
 				879F880C1E50BAC10033FE87 /* CartViewController */,
@@ -4928,7 +4926,7 @@
 				87459C8D1E4F04AD00743120 /* RadioButtonViewControl.m in Sources */,
 				9AC4D6991B45A51A00036F1C /* JACatalogListCollectionViewCell.m in Sources */,
 				9AEF73F91CD20E1C00A5D574 /* JAReturnStepByStepModel.m in Sources */,
-				61CBA0421E51BA33005673F7 /* FormViewController.m in Sources */,
+				61CBA0421E51BA33005673F7 /* FormViewControl.m in Sources */,
 				CE9ADFF71AB6D78200D56481 /* JASidePanelController.m in Sources */,
 				9AC4D6A01B46A50000036F1C /* JACatalogCollectionViewCell.m in Sources */,
 				893AADD11C1F1A54006314FB /* JAMyOrderDetailViewController.m in Sources */,

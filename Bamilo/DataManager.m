@@ -41,15 +41,29 @@ static DataManager *instance;
     }];
 }
 
-//### LOGIN ###
-- (void)signupUser:(id<DataServiceProtocol>)target withFieldsDictionary:(NSDictionary<NSString *,FormItemModel *> *)newUserDictionary completion:(DataCompletion)completion {
-
+//### FORGET PASSWORD ###
+- (void)forgetPassword:(id<DataServiceProtocol>)target withFields:(NSDictionary<NSString *,FormItemModel *> *)fields completion:(DataCompletion)completion {
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    [fields enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, FormItemModel * _Nonnull obj, BOOL * _Nonnull stop) {
+        params[key] = obj.titleString;
+    }];
+    [RequestManager asyncPOST:target path:RI_API_FORGET_PASS_CUSTOMER params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+        if(response == RIApiResponseSuccess && data) {
+            completion(data, nil);
+        } else {
+            completion(nil, [self getErrorFrom:response errorMessages:errorMessages]);
+        }
+    }];
+}
+
+
+//### SGINUP ###
+- (void)signupUser:(id<DataServiceProtocol>)target withFieldsDictionary:(NSDictionary<NSString *,FormItemModel *> *)newUserDictionary completion:(DataCompletion)completion {
     
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     [newUserDictionary enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, FormItemModel * _Nonnull obj, BOOL * _Nonnull stop) {
         params[key] = obj.titleString;
     }];
-    
     //must be remove from server side!
     params[@"customer[phone_prefix]"] = @"100";
     [RequestManager asyncPOST:target path:RI_API_REGISTER_CUSTOMER params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {

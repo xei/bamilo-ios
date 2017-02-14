@@ -6,7 +6,13 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
+#import "JAAppDelegate.h"
+#import "JAMessageView.h"
 #import "BaseViewController.h"
+
+@interface BaseViewController()
+@property (strong, nonatomic) JAMessageView *messageView;
+@end
 
 @implementation BaseViewController
 
@@ -76,6 +82,27 @@
 #pragma mark - TabBarProtocol
 - (BOOL)getTabBarVisible {
     return NO;
+}
+
+# pragma mark Message View
+
+- (void)showMessage:(NSString *)message success:(BOOL)success {
+    UIViewController *rootViewController = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController;
+    if (!VALID_NOTEMPTY(self.messageView, JAMessageView)) {
+        self.messageView = [[JAMessageView alloc] initWithFrame:CGRectMake(0, 64, self.view.bounds.size.width, kMessageViewHeight)];
+        [self.messageView setupView];
+    } else {
+        [self.messageView setFrame:CGRectMake(0, 64, self.view.bounds.size.width, kMessageViewHeight)];
+    }
+    
+    if (!VALID_NOTEMPTY([self.messageView superview], UIView)) {
+        [rootViewController.view addSubview:self.messageView];
+    }
+    [self.messageView setTitle:message success:success];
+}
+
+- (void)removeMessageView {
+    [self.messageView removeFromSuperview];
 }
 
 @end

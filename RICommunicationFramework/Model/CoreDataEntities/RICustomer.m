@@ -454,25 +454,6 @@
     }
 }
 
-+ (BOOL)checkIfUserIsLoggedByFacebook
-{
-    NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
-    
-    if (VALID_NOTEMPTY(customers, NSArray))
-    {
-        RICustomer* customer = [customers firstObject];
-        
-        if ([customer.loginMethod isEqualToString:@"facebook"]) {
-            return YES;
-        } else
-            return NO;
-    }
-    else
-    {
-        return NO;
-    }
-}
-
 + (void)setCustomerAsGuest
 {
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kUserIsGuestFlagKey];

@@ -7,10 +7,10 @@
 //
 
 #import "AuthenticationBaseViewController.h"
-#import "FormViewController.h"
+#import "FormViewControl.h"
 #import "DataManager.h"
 
-@interface SignUpViewController : FormViewController <DataServiceProtocol, UITextFieldDelegate>
+@interface SignUpViewController : AuthenticationBaseViewController <DataServiceProtocol, FormViewControlDelegate>
 @property (nonatomic, assign) BOOL fromSideMenu;
 @property (nonatomic, strong) void(^nextStepBlock)(void);
 @end

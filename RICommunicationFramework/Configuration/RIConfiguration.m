@@ -98,6 +98,7 @@ NSString *const RI_API_REGISTER_CUSTOMER = @"customer/create/";
 NSString *const RI_API_LOGIN_CUSTOMER = @"customer/login/";
 NSString *const RI_API_FACEBOOK_LOGIN_CUSTOMER = @"customer/facebooklogin/";
 NSString *const RI_API_LOGOUT_CUSTOMER = @"customer/logout/";
+NSString *const RI_API_FORGET_PASS_CUSTOMER = @"customer/forgotpassword/";
 NSString *const RI_API_GET_CUSTOMER_ADDRESS_LIST = @"customer/getaddresslist/";
 NSString *const RI_API_GET_CUSTOMER_SELECT_DEFAULT = @"customer/makedefaultaddress/";
 
