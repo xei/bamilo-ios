@@ -38,6 +38,9 @@
 		613FF2BF1E4B2871008660CF /* AuthenticationContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 613FF2BE1E4B2871008660CF /* AuthenticationContainerViewController.m */; };
 		613FF2C11E4B3D1B008660CF /* Authentication.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 613FF2C01E4B3D1B008660CF /* Authentication.storyboard */; };
 		617AAA441E503AB9004D9430 /* FormItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 617AAA431E503AB9004D9430 /* FormItemModel.m */; };
+		61C5C40D1E545C6200F22130 /* CartEntitySummeryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61C5C40C1E545C6200F22130 /* CartEntitySummeryView.m */; };
+		61C5C40F1E545C7500F22130 /* CartEntitySummeryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61C5C40E1E545C7400F22130 /* CartEntitySummeryView.xib */; };
+		61C5C4141E54674600F22130 /* CartEntitySummeryViewControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 61C5C4131E54674600F22130 /* CartEntitySummeryViewControl.m */; };
 		61CBA0391E51A72A005673F7 /* ForgetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA0381E51A72A005673F7 /* ForgetPasswordViewController.m */; };
 		61CBA03D1E51A75C005673F7 /* ContinueWitoutLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA03C1E51A75C005673F7 /* ContinueWitoutLoginViewController.m */; };
 		61CBA0421E51BA33005673F7 /* FormViewControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA0411E51BA33005673F7 /* FormViewControl.m */; };
@@ -601,6 +604,11 @@
 		61C407C31E476486004ACEE8 /* StepperViewControlDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepperViewControlDelegate.h; sourceTree = "<group>"; };
 		61C407C41E476939004ACEE8 /* CartTableViewCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartTableViewCellDelegate.h; sourceTree = "<group>"; };
 		61C5C4081E54479100F22130 /* ProtectedViewControllerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtectedViewControllerProtocol.h; sourceTree = "<group>"; };
+		61C5C40B1E545C6200F22130 /* CartEntitySummeryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartEntitySummeryView.h; sourceTree = "<group>"; };
+		61C5C40C1E545C6200F22130 /* CartEntitySummeryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartEntitySummeryView.m; sourceTree = "<group>"; };
+		61C5C40E1E545C7400F22130 /* CartEntitySummeryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartEntitySummeryView.xib; sourceTree = "<group>"; };
+		61C5C4121E54674600F22130 /* CartEntitySummeryViewControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartEntitySummeryViewControl.h; sourceTree = "<group>"; };
+		61C5C4131E54674600F22130 /* CartEntitySummeryViewControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartEntitySummeryViewControl.m; sourceTree = "<group>"; };
 		61CBA0371E51A72A005673F7 /* ForgetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetPasswordViewController.h; sourceTree = "<group>"; };
 		61CBA0381E51A72A005673F7 /* ForgetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgetPasswordViewController.m; sourceTree = "<group>"; };
 		61CBA03B1E51A75C005673F7 /* ContinueWitoutLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContinueWitoutLoginViewController.h; sourceTree = "<group>"; };
@@ -1920,6 +1928,34 @@
 			name = FormItemModel;
 			sourceTree = "<group>";
 		};
+		61C5C40A1E545C0C00F22130 /* CartEntitySummery */ = {
+			isa = PBXGroup;
+			children = (
+				61C5C4111E54669200F22130 /* Control */,
+				61C5C4101E54668600F22130 /* view */,
+			);
+			name = CartEntitySummery;
+			sourceTree = "<group>";
+		};
+		61C5C4101E54668600F22130 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				61C5C40B1E545C6200F22130 /* CartEntitySummeryView.h */,
+				61C5C40C1E545C6200F22130 /* CartEntitySummeryView.m */,
+				61C5C40E1E545C7400F22130 /* CartEntitySummeryView.xib */,
+			);
+			name = view;
+			sourceTree = "<group>";
+		};
+		61C5C4111E54669200F22130 /* Control */ = {
+			isa = PBXGroup;
+			children = (
+				61C5C4121E54674600F22130 /* CartEntitySummeryViewControl.h */,
+				61C5C4131E54674600F22130 /* CartEntitySummeryViewControl.m */,
+			);
+			name = Control;
+			sourceTree = "<group>";
+		};
 		61CBA03A1E51A72E005673F7 /* ForgetPasswordViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -2286,6 +2322,7 @@
 		8714E06E1E479763004C9B1D /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				61C5C40A1E545C0C00F22130 /* CartEntitySummery */,
 				8714E06F1E47976E004C9B1D /* Base */,
 				612553421E4EE4FD00975C6F /* inputTextField */,
 				61148E001E47226200E2540B /* Stepper */,
@@ -4471,6 +4508,7 @@
 				87459CA11E4F159E00743120 /* PaymentTypeTableViewCell.xib in Resources */,
 				CE9AE03C1AB6D78200D56481 /* JANewsletterComponent~iPad.xib in Resources */,
 				9A564CAF1B332FB200F23057 /* JASellerRatingsViewController.xib in Resources */,
+				61C5C40F1E545C7500F22130 /* CartEntitySummeryView.xib in Resources */,
 				61E099651E3E0E21004ED14E /* IconTableViewCell.xib in Resources */,
 				87459C841E4EF37D00743120 /* CartListItemTableViewCell.xib in Resources */,
 				CE9AE0431AB6D78200D56481 /* JAMaintenancePage.xib in Resources */,
@@ -4836,6 +4874,7 @@
 				875AD56B1E38C0C900584ABF /* RIProduct.m in Sources */,
 				CEA107011BD78CE500EF88B1 /* JATabBarView.m in Sources */,
 				CE28A7AA1BDE987400B1FADA /* JATabBarButton.m in Sources */,
+				61C5C4141E54674600F22130 /* CartEntitySummeryViewControl.m in Sources */,
 				CE9ADF9E1AB6D78200D56481 /* JAOtherOffersView.m in Sources */,
 				CE9ADF9F1AB6D78200D56481 /* JACampaignsViewController.m in Sources */,
 				FFC9C0C71C984E7900DD5851 /* JATopTabsView.m in Sources */,
@@ -5027,6 +5066,7 @@
 				9A38766B1BCD121A0088B186 /* JATabButton.m in Sources */,
 				9A4077501CE61D1300313D20 /* JAOptionResumeView.m in Sources */,
 				CED620551BEA5EFC00FA8403 /* JAProductCollectionViewFlowLayout.m in Sources */,
+				61C5C40D1E545C6200F22130 /* CartEntitySummeryView.m in Sources */,
 				CE9AE00E1AB6D78200D56481 /* JACampaignPageView.m in Sources */,
 				6125535B1E4F382100975C6F /* UIScrollView+Extension.m in Sources */,
 				8714E0901E48CD41004C9B1D /* DiscountSwitcherView.m in Sources */,

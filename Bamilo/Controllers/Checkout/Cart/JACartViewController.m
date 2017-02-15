@@ -7,36 +7,27 @@
 //
 
 #import "JACartViewController.h"
-//#import "JACartProductsView.h"
 #import "JAEmptyCartView.h"
 #import "RICustomer.h"
 #import "JAUtils.h"
-//#import "JAButton.h"
-//#import "JACartResumeView.h"
 #import "RICartItem.h"
 #import "CartTableViewCell.h"
 #import "JAAuthenticationViewController.h"
 #import "NSString+Extensions.h"
 #import "RIAddress.h"
-//#import "JAPicker.h"
+#import "CartEntitySummeryViewControl.h"
 
-@interface JACartViewController ()  <CartTableViewCellDelegate> /*<JACartProductsProtocol , JAPickerDelegate> */
+@interface JACartViewController ()  <CartTableViewCellDelegate>
 
-//@property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) JAEmptyCartView *emptyCartView;
-//@property (nonatomic, strong) JACartProductsView *cartProductsView;
-//@property (nonatomic, strong) JACartResumeView *resumeView;
-
-//@property (nonatomic, strong) JAPicker *picker;
 @property (nonatomic, strong) RICartItem *currentItem;
 @property (nonatomic, weak) IBOutlet UIView *contentWrapper;
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIView *cartSummeryView;
 @property (weak, nonatomic) IBOutlet UILabel *totalPrice;
 @property (weak, nonatomic) IBOutlet UILabel *totalDiscountedPrice;
-@property (weak, nonatomic) IBOutlet UILabel *totalPaymentPrice;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *costSummeryContainerTopToWholeCostTopConstraint;
-@property (weak, nonatomic) IBOutlet UILabel *totalPaymentTitleLabel;
+@property (weak, nonatomic) IBOutlet CartEntitySummeryViewControl *summeryView;
 
 @end
 
@@ -62,9 +53,11 @@
     }
     
     self.totalPrice.text = cart.cartEntity.cartUnreducedValueFormatted;
-    self.totalPaymentPrice.text = cart.cartEntity.cartValueFormatted;
+//    self.totalPaymentPrice.text = cart.cartEntity.cartValueFormatted;
     self.totalDiscountedPrice.text = cart.cartEntity.discountedValueFormated;
-    self.totalPaymentTitleLabel.text = [[NSString stringWithFormat:@"جمع نهایی‌(%d کالا)", cart.cartEntity.cartCount.intValue] numbersToPersian];
+//    self.totalPaymentTitleLabel.text = [[NSString stringWithFormat:@"جمع نهایی‌(%d کالا)", cart.cartEntity.cartCount.intValue] numbersToPersian];
+    
+    [self.summeryView updateWithModel:self.cart.cartEntity];
 }
 
 - (void)setCartEmpty:(BOOL)empty {
