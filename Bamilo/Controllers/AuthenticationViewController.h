@@ -7,14 +7,20 @@
 //
 
 #import "AuthenticationBaseViewController.h"
+#import "SignInViewController.h"
+#import "SignUpViewController.h"
 
 typedef void(^AuthenticationBlock)(void);
 
-@interface AuthenticationViewController: AuthenticationBaseViewController
+@interface AuthenticationViewController: BaseViewController
+
 @property (nonatomic) BOOL showContinueWithoutLogin;
 @property (nonatomic, assign) BOOL fromSideMenu;
-@property (nonatomic, strong) void(^nextStepBlock)(void);
+//@property (nonatomic, strong) void(^nextStepBlock)(void);
 @property (nonatomic) NSDictionary *userInfo;
+
+@property (strong, nonatomic) SignInViewController *signInViewController;
+@property (strong, nonatomic) SignUpViewController *signUpViewController;
 
 + (void)goToCheckoutWithBlock:(AuthenticationBlock)authenticatedBlock;
 + (void)authenticateAndExecuteBlock:(AuthenticationBlock)authenticatedBlock showBackButtonForAuthentication:(BOOL)backButton;

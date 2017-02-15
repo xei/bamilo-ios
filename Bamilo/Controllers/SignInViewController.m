@@ -27,7 +27,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [self setupView];
+    
     self.scrollView.delegate = self;
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showCartButton = NO;
@@ -35,7 +37,6 @@
 }
 
 - (void)setupView {
-    
     FormItemValidation *emailValidation = [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter: [NSString emailRegxPattern]];
     FormItemModel *emailControlModel = [[FormItemModel alloc]
                                         initWithTitle:nil
@@ -62,7 +63,6 @@
     self.passwordControl.input.textField.delegate = self;
 }
 
-
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:YES];
 }
@@ -72,7 +72,6 @@
 }
 
 #pragma mark - TextFieldDelegate
-
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [self submitLogin:nil];
     return YES;
@@ -80,7 +79,6 @@
 
 #pragma mark - submission form
 - (IBAction)submitLogin:(id)sender {
-    
     [self.view endEditing:YES];
     
     if (![self.emailControl isValid] || ![self.passwordControl isValid]) {
@@ -105,7 +103,6 @@
 
 #pragma mark - DataServiceProtocol
 - (void)bind:(id)data forRequestId:(int)rid {
-    
     // Legacy actions after login
     [RICustomer resetCustomerAsGuest];
     if ([data isKindOfClass:[NSDictionary class]]) {
@@ -156,7 +153,10 @@
         if (self.fromSideMenu) {
             [userInfo setObject:@YES forKey:@"from_side_menu"];
         }
-        [[NSNotificationCenter defaultCenter] postNotificationName:kRunBlockAfterAuthenticationNotification object:self.nextStepBlock userInfo:userInfo];
+        
+        self.completion(AUTHENTICATION_FINISHED_WITH_LOGIN);
+        
+        //[[NSNotificationCenter defaultCenter] postNotificationName:kRunBlockAfterAuthenticationNotification object:self.nextStepBlock userInfo:userInfo];
     }
 }
 

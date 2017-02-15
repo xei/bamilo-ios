@@ -17,10 +17,13 @@ typedef void(^DataCompletion)(id data, NSError *error);
 
 +(instancetype) sharedInstance;
 
+//### FORGETPASS ###
+- (void)forgetPassword:(id<DataServiceProtocol>)target withFields:(NSDictionary<NSString *,FormItemModel *> *)fields completion:(DataCompletion)completion;
+
 //### LOGIN ###
 -(void) loginUser:(id<DataServiceProtocol>)target withUsername:(NSString *)username password:(NSString *)password completion:(DataCompletion)completion;
 
-//### SGINUP ###
+//### SIGNUP ###
 - (void)signupUser:(id<DataServiceProtocol>)target withFieldsDictionary:(NSDictionary<NSString *,FormItemModel *> *)newUserDictionary completion:(DataCompletion)completion;
 
 //### ADDRESS ###

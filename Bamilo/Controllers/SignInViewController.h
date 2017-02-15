@@ -15,9 +15,9 @@
 @end
 
 @interface SignInViewController : AuthenticationBaseViewController <DataServiceProtocol, UIScrollViewDelegate, UITextFieldDelegate>
+
 @property (weak, nonatomic) id<SignInViewControllerDelegate> delegate;
 @property (nonatomic, assign) BOOL fromSideMenu;
-@property (nonatomic, strong) void(^nextStepBlock)(void);
 @property (nonatomic) Boolean showContinueWithoutLogin;
 
 @end

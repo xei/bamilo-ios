@@ -9,12 +9,13 @@
 #import <Foundation/Foundation.h>
 
 @interface NSString (Extensions)
-+ (NSString *) emailRegxPattern;
-- (NSString *) wrapWithMaxSize:(int) maxSize;
-- (NSString *) numbersToPersian;
-- (NSString *) numbersToEnglish;
-- (NSString *) formatTheNumbers;
-- (NSString *) struckThroughText;
++ (NSString *)emailRegxPattern;
++ (NSString *)mobileRegxPattern;
+- (NSString *)wrapWithMaxSize:(int) maxSize;
+- (NSString *)numbersToPersian;
+- (NSString *)numbersToEnglish;
+- (NSString *)formatTheNumbers;
+- (NSString *)struckThroughText;
 - (BOOL)isValidEmail;
 
 @end
