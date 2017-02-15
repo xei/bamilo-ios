@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ProtectedViewController.h"
+#import "ProtectedViewControllerProtocol.h"
 #import "DataServiceProtocol.h"
+#import "BaseViewController.h"
 
-@interface AddressViewController : ProtectedViewController <DataServiceProtocol>
+@interface AddressViewController : BaseViewController <DataServiceProtocol, ProtectedViewControllerProtocol>
 
 @property (copy, nonatomic) NSString *titleHeaderText;
 

@@ -600,6 +600,7 @@
 		617AAA431E503AB9004D9430 /* FormItemModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormItemModel.m; sourceTree = "<group>"; };
 		61C407C31E476486004ACEE8 /* StepperViewControlDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepperViewControlDelegate.h; sourceTree = "<group>"; };
 		61C407C41E476939004ACEE8 /* CartTableViewCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartTableViewCellDelegate.h; sourceTree = "<group>"; };
+		61C5C4081E54479100F22130 /* ProtectedViewControllerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtectedViewControllerProtocol.h; sourceTree = "<group>"; };
 		61CBA0371E51A72A005673F7 /* ForgetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetPasswordViewController.h; sourceTree = "<group>"; };
 		61CBA0381E51A72A005673F7 /* ForgetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgetPasswordViewController.m; sourceTree = "<group>"; };
 		61CBA03B1E51A75C005673F7 /* ContinueWitoutLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContinueWitoutLoginViewController.h; sourceTree = "<group>"; };
@@ -2977,6 +2978,7 @@
 			isa = PBXGroup;
 			children = (
 				879F88371E52EA750033FE87 /* ProtectedViewController */,
+				61C5C4081E54479100F22130 /* ProtectedViewControllerProtocol.h */,
 			);
 			name = Base;
 			sourceTree = "<group>";

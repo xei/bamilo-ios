@@ -151,9 +151,9 @@
             [userInfo setObject:@YES forKey:@"from_side_menu"];
         }
         
-        self.completion(AUTHENTICATION_FINISHED_WITH_LOGIN);
-        
-        //[[NSNotificationCenter defaultCenter] postNotificationName:kRunBlockAfterAuthenticationNotification object:self.nextStepBlock userInfo:userInfo];
+        if (self.completion) {
+            self.completion(AUTHENTICATION_FINISHED_WITH_LOGIN);
+        }
     }
 }
 

@@ -125,10 +125,9 @@
     if (self.fromSideMenu) {
         [userInfo setObject:@YES forKey:@"from_side_menu"];
     }
-    
-    self.completion(AUTHENTICATION_FINISHED_WITH_REGISTER);
-    
-    //[[NSNotificationCenter defaultCenter] postNotificationName:kRunBlockAfterAuthenticationNotification object:self.nextStepBlock userInfo:userInfo];
+    if(self.completion) {
+        self.completion(AUTHENTICATION_FINISHED_WITH_REGISTER);
+    }
 }
 
 #pragma mark - formControlDelegate
