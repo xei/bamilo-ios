@@ -20,7 +20,6 @@
 #import "JAMyOrderDetailViewController.h"
 #import "JASignInViewController.h"
 #import "JARegisterViewController.h"
-#import "JAForgotPasswordViewController.h"
 #import "JAAddressesViewController.h"
 #import "JAAddNewAddressViewController.h"
 #import "JAEditAddressViewController.h"
@@ -30,7 +29,6 @@
 #import "JACatalogViewController.h"
 #import "JAPDVViewController.h"
 #import "JACartViewController.h"
-#import "JAForgotPasswordViewController.h"
 #import "JAExternalPaymentsViewController.h"
 #import "JASuccessPageViewController.h"
 #import "RIProduct.h"
@@ -871,22 +869,6 @@
     }
 }
 
-#pragma mark Forgot Password Screen
-//- (void)showForgotPasswordScreen:(NSNotification *)notification {
-//    UIViewController *topViewController = [self topViewController];
-//    if (![topViewController isKindOfClass:[JAForgotPasswordViewController class]] && ![RICustomer checkIfUserIsLogged]) {
-//        JAForgotPasswordViewController *forgotVC = [[JAForgotPasswordViewController alloc] init];
-//        
-//        if (notification && [[notification.userInfo objectForKey:@"email"] length]) {
-//            forgotVC.loginEmail = [notification.userInfo objectForKey:@"email"];
-//        }
-//        
-//        [forgotVC.navBarLayout setShowBackButton:YES];
-//        
-//        [self pushViewController:forgotVC animated:YES];
-//    }
-//}
-
 #pragma mark Recently Viewed Screen
 - (void)showRecentlyViewedController {
     UIViewController *topViewController = [self topViewController];
@@ -1040,21 +1022,6 @@
         }
         
         [self pushViewController:vc animated:YES];
-    }
-}
-
-#pragma mark - Checkout Forgot Password Screen
-- (void)showCheckoutForgotPasswordScreen
-{
-    UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAForgotPasswordViewController class]] && ![RICustomer checkIfUserIsLogged])
-    {
-        
-        JAForgotPasswordViewController *forgotVC = [[JAForgotPasswordViewController alloc] init];
-        
-        [forgotVC.navBarLayout setShowBackButton:YES];
-        
-        [self pushViewController:forgotVC animated:YES];
     }
 }
 

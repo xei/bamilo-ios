@@ -12,10 +12,21 @@
 #import "RICustomer.h"
 #import "JAUtils.h"
 
+@interface SignUpViewController()
+@property (nonatomic, weak) IBOutlet UITableView* tableView;
+@property (nonatomic, strong) FormViewControl *formController;
+@end
+
 @implementation SignUpViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    self.formController = [[FormViewControl alloc] init];
+    self.formController.delegate = self;
+    self.formController.tableView = self.tableView;
+
     
     FormItemModel *melliCode = [[FormItemModel alloc]
                                 initWithTitle:nil
@@ -64,10 +75,10 @@
 
     
     
-    self.submitTitle = @"تایید";
-    self.formMessage = @"ظاهرا مشتری جدید بامیلو هستید،خواهشمندیم اطلاعات بیشتری برای ساخت حساب کاربری خود ارایه دهید ";
+    self.formController.submitTitle = @"ثبت نام";
+    self.formController.formMessage = @"ظاهرا مشتری جدید بامیلو هستید،خواهشمندیم اطلاعات بیشتری برای ساخت حساب کاربری خود ارایه دهید ";
     self.title = STRING_SIGNUP;
-    self.formItemListModel = @{
+    self.formController.formItemListModel = @{
                                @"customer[national_id]": melliCode,
                                @"customer[first_name]" : name,
                                @"customer[last_name]"  : lastname,
@@ -75,26 +86,16 @@
                                @"customer[password]"   : password,
                                @"customer[phone]"      : phone
                                };
+    
+    [self.formController registerDelegationsAndDataSourceForTableview];
 }
 
-#pragma mark - Override
-- (void)buttonTapped:(id)cell {
-    [super buttonTapped:cell];
-    
-    if (![self isFormValid]) {
-        return;
-    }
-    
-    [[DataManager sharedInstance] signupUser:self withFieldsDictionary:self.formItemListModel completion:^(id data, NSError *error) {
-        if(error == nil) {
-            [self bind:data forRequestId:0];
-        } else {
-            for(NSDictionary* errorField in [error.userInfo objectForKey:@"errorMessages"]) {
-                NSString *fieldName = [NSString stringWithFormat:@"customer[%@]", errorField[@"field"]];
-                [self showErrorMessgaeForField:fieldName errorMsg:errorField[@"message"]];
-            }
-        }
-    }];
+- (void)viewDidAppear:(BOOL)animated {
+    [self.formController registerForKeyboardNotifications];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [self.formController unregisterForKeyboardNotifications];
 }
 
 #pragma mark - Overrides
@@ -103,6 +104,8 @@
     
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showCartButton = NO;
+    self.navBarLayout.showLogo = NO;
+    self.navBarLayout.showTitleLabel = YES;
 }
 
 #pragma mark - DataServiceProtocol
@@ -136,4 +139,28 @@
     }
     //[[NSNotificationCenter defaultCenter] postNotificationName:kRunBlockAfterAuthenticationNotification object:self.nextStepBlock userInfo:userInfo];
 }
+
+#pragma mark - formControlDelegate
+- (void)submitBtnTapped {
+    if (![self.formController isFormValid]) {
+        return;
+    }
+    
+    [[DataManager sharedInstance] signupUser:self withFieldsDictionary:self.formController.formItemListModel completion:^(id data, NSError *error) {
+        if(error == nil) {
+            [self bind:data forRequestId:0];
+        } else {
+            for(NSDictionary* errorField in [error.userInfo objectForKey:@"errorMessages"]) {
+                NSString *fieldName = [NSString stringWithFormat:@"customer[%@]", errorField[@"field"]];
+                
+                [self.formController showErrorMessgaeForField:fieldName errorMsg:errorField[@"message"]];
+            }
+        }
+    }];
+}
+
+- (void)viewNeedsToEndEditing {
+    [self.view endEditing:YES];
+}
+
 @end

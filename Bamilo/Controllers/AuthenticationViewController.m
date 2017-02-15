@@ -28,11 +28,11 @@
     self.signInViewController.fromSideMenu = self.fromSideMenu;
     self.signInViewController.showContinueWithoutLogin = self.showContinueWithoutLogin;
     self.signInViewController.delegate = self;
-    
+
     //Sign Up View Controller
     self.signUpViewController = [SignUpViewController new];
     self.signUpViewController.title = STRING_SIGNUP;
-    
+
     NSDictionary *parameters = @{CAPSPageMenuOptionUseMenuLikeSegmentedControl: @(YES),
                                  CAPSPageMenuOptionMenuItemFont: [UIFont fontWithName:kFontRegularName size: 14],
                                  CAPSPageMenuOptionSelectionIndicatorColor: cEXTRA_ORAGNE_COLOR,
@@ -44,7 +44,7 @@
                                  CAPSPageMenuOptionSelectedMenuItemLabelColor: cEXTRA_DARK_GRAY_COLOR,
                                  CAPSPageMenuOptionScrollAnimationDurationOnMenuItemTap: @(150)
                                  };
-    
+
     self.pagemenu = [[CAPSPageMenu alloc] initWithViewControllers:@[ self.signInViewController, self.signUpViewController ] frame:CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height) options:parameters];
     [self.view addSubview:_pagemenu.view];
 }
@@ -52,7 +52,7 @@
 #pragma mark - Overrides
 -(void)updateNavBar {
     [super updateNavBar];
-    
+
     self.navBarLayout.title = STRING_LOGIN_OR_SIGNUP;
     self.navBarLayout.showCartButton = NO;
     self.navBarLayout.showBackButton = YES;

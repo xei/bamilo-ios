@@ -6,8 +6,14 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Bamilosans Reg.ttf">
+            <string>Bamilo-Sans</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Authentication View Controller-->
         <scene sceneID="rAQ-tj-tHl">
@@ -34,7 +40,7 @@
         <!--Forget Password View Controller-->
         <scene sceneID="8fv-h4-QLR">
             <objects>
-                <viewController id="ft6-Zm-StB" customClass="ForgetPasswordViewController" sceneMemberID="viewController">
+                <viewController modalTransitionStyle="flipHorizontal" id="ft6-Zm-StB" customClass="ForgetPasswordViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="6Ch-Be-D1X"/>
                         <viewControllerLayoutGuide type="bottom" id="ORQ-Dt-1TX"/>
@@ -42,12 +48,59 @@
                     <view key="view" contentMode="scaleToFill" id="vef-ce-f3P">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kkh-UA-ocK" userLabel="top Seperator view">
+                                <rect key="frame" x="0.0" y="85" width="375" height="1"/>
+                                <color key="backgroundColor" red="0.5725490196078431" green="0.5725490196078431" blue="0.5725490196078431" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="0.5" id="cMd-hA-YpF"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="فراموشی رمز" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oAQ-an-H3x">
+                                <rect key="frame" x="280.5" y="40" width="64.5" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="iax-Qt-RV1"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="14"/>
+                                <color key="textColor" red="0.45098039215686275" green="0.45098039215686275" blue="0.45098039215686275" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IwQ-6G-1pU" userLabel="top title label bottom border">
+                                <rect key="frame" x="264.5" y="83" width="96.5" height="3"/>
+                                <color key="backgroundColor" red="0.96862745098039216" green="0.59215686274509804" blue="0.12549019607843137" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="3" id="Qf2-4T-Bat"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="A6b-Ry-wvy">
+                                <rect key="frame" x="0.0" y="86" width="375" height="581"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="oAQ-an-H3x" firstAttribute="top" secondItem="6Ch-Be-D1X" secondAttribute="bottom" constant="20" id="1to-BV-KF2"/>
+                            <constraint firstItem="IwQ-6G-1pU" firstAttribute="width" secondItem="oAQ-an-H3x" secondAttribute="width" multiplier="1.5:1" id="Blz-HC-XjX"/>
+                            <constraint firstItem="ORQ-Dt-1TX" firstAttribute="top" secondItem="A6b-Ry-wvy" secondAttribute="bottom" id="DFL-Rw-iSM"/>
+                            <constraint firstAttribute="trailing" secondItem="A6b-Ry-wvy" secondAttribute="trailing" id="DuN-g1-8c2"/>
+                            <constraint firstAttribute="trailing" secondItem="kkh-UA-ocK" secondAttribute="trailing" id="MSg-zY-p2O"/>
+                            <constraint firstItem="A6b-Ry-wvy" firstAttribute="leading" secondItem="vef-ce-f3P" secondAttribute="leading" id="PZo-kP-9d7"/>
+                            <constraint firstItem="IwQ-6G-1pU" firstAttribute="bottom" secondItem="kkh-UA-ocK" secondAttribute="bottom" id="VYg-Fe-Rru"/>
+                            <constraint firstItem="IwQ-6G-1pU" firstAttribute="centerX" secondItem="oAQ-an-H3x" secondAttribute="centerX" id="XMW-Go-OLw"/>
+                            <constraint firstItem="kkh-UA-ocK" firstAttribute="leading" secondItem="vef-ce-f3P" secondAttribute="leading" id="bu1-pi-76z"/>
+                            <constraint firstAttribute="trailing" secondItem="oAQ-an-H3x" secondAttribute="trailing" constant="30" id="fgA-Vx-ppV"/>
+                            <constraint firstItem="A6b-Ry-wvy" firstAttribute="top" secondItem="IwQ-6G-1pU" secondAttribute="bottom" id="hYg-IM-0EW"/>
+                            <constraint firstItem="kkh-UA-ocK" firstAttribute="top" secondItem="oAQ-an-H3x" secondAttribute="bottom" constant="5" id="jj7-fE-RPs"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="A6b-Ry-wvy" id="Huo-yc-Tal"/>
+                        <outlet property="topSeperatorView" destination="kkh-UA-ocK" id="xKh-P0-cno"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TuT-t6-1Jj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1463" y="620"/>
+            <point key="canvasLocation" x="-1463.2" y="619.34032983508246"/>
         </scene>
         <!--Continue Witout Login View Controller-->
         <scene sceneID="vyl-fT-bpm">

@@ -7,8 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "FormViewControl.h"
 #import "AuthenticationBaseViewController.h"
+#import "DataManager.h"
 
-@interface ForgetPasswordViewController : AuthenticationBaseViewController
+@interface ForgetPasswordViewController:AuthenticationBaseViewController <DataServiceProtocol, FormViewControlDelegate>
 
 @end
