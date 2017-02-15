@@ -17,7 +17,7 @@ typedef NS_ENUM(NSUInteger, AuthenticationStatus) {
 
 typedef void(^AuthenticationCompletion)(AuthenticationStatus status);
 
-@interface AuthenticationBaseViewController : BaseViewController
+@interface AuthenticationBaseViewController : UIViewController
 
 @property (copy, nonatomic) AuthenticationCompletion completion;
 

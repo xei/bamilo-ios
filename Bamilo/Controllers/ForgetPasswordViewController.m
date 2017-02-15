@@ -49,8 +49,6 @@
     [self.formController unregisterForKeyboardNotifications];
 }
 
-
-
 #pragma mark - Overrides
 -(void)updateNavBar {
     [super updateNavBar];
@@ -59,7 +57,6 @@
     self.navBarLayout.showLogo = NO;
     self.navBarLayout.showCartButton = NO;
 }
-
 
 #pragma mark - FormControlDelegate
 - (void)submitBtnTapped {

@@ -14,6 +14,7 @@
 
 +(instancetype) sharedInstance;
 
+-(UIViewController *) loadNib:(NSString *)nibName resetCache:(BOOL)resetCache;
 -(UIViewController *) loadViewController:(NSString *)nibName;
 -(UIViewController *) loadViewController:(NSString *)nibName resetCache:(BOOL)resetCache;
 -(UIViewController *) loadViewController:(NSString *)storyboard nibName:(NSString *)nibName resetCache:(BOOL)resetCache;

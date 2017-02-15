@@ -12,6 +12,7 @@
 @private
     NSMutableDictionary *_storyboardCache;
     NSMutableDictionary *_viewControllerCache;
+    NSMutableDictionary *_nibCache;
 }
 
 //EXTENSION
@@ -34,6 +35,7 @@ static ViewControllerManager *instance;
     if (self = [super init]) {
         _storyboardCache = [NSMutableDictionary new];
         _viewControllerCache = [NSMutableDictionary new];
+        _nibCache = [NSMutableDictionary new];
     }
     return self;
 }
@@ -45,6 +47,18 @@ static ViewControllerManager *instance;
     });
     
     return instance;
+}
+
+-(UIViewController *)loadNib:(NSString *)nibName resetCache:(BOOL)resetCache {
+    id nib = [_nibCache objectForKey:nibName];
+    
+    if(resetCache || nib == nil) {
+        nib = [(UIViewController *)[NSClassFromString(nibName) alloc] initWithNibName:nibName bundle:nil];
+        [_nibCache removeObjectForKey:nibName];
+        [_nibCache setObject:nib forKey:nibName];
+    }
+    
+    return nib;
 }
 
 - (UIViewController *) loadViewController:(NSString *)nibName {

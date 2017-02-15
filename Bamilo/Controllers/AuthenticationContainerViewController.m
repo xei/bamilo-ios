@@ -6,32 +6,37 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import "AuthenticationViewController.h"
+#import "AuthenticationContainerViewController.h"
 #import "CAPSPageMenu.h"
 #import "RICustomer.h"
 #import "ViewControllerManager.h"
 
 #define cEXTRA_ORAGNE_COLOR [UIColor withRGBA:247 green:151 blue:32 alpha:1.0f]
 
-@interface AuthenticationViewController() <SignInViewControllerDelegate>
+@interface AuthenticationContainerViewController() <SignInViewControllerDelegate>
 @property (nonatomic) CAPSPageMenu *pagemenu;
 @end
 
-@implementation AuthenticationViewController
+@implementation AuthenticationContainerViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-
+-(void)awakeFromNib {
+    [super awakeFromNib];
+    
     //Sign In View Controller
-    self.signInViewController = [SignInViewController new];
+    self.signInViewController = (SignInViewController *)[[ViewControllerManager sharedInstance] loadNib:@"SignInViewController" resetCache:YES];
     self.signInViewController.title = STRING_LOGIN;
     self.signInViewController.fromSideMenu = self.fromSideMenu;
     self.signInViewController.showContinueWithoutLogin = self.showContinueWithoutLogin;
     self.signInViewController.delegate = self;
-
+    
     //Sign Up View Controller
-    self.signUpViewController = [SignUpViewController new];
+    self.signUpViewController = (SignUpViewController *)[[ViewControllerManager sharedInstance] loadNib:@"SignUpViewController" resetCache:YES];
+    
     self.signUpViewController.title = STRING_SIGNUP;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
 
     NSDictionary *parameters = @{CAPSPageMenuOptionUseMenuLikeSegmentedControl: @(YES),
                                  CAPSPageMenuOptionMenuItemFont: [UIFont fontWithName:kFontRegularName size: 14],
@@ -44,7 +49,7 @@
                                  CAPSPageMenuOptionSelectedMenuItemLabelColor: cEXTRA_DARK_GRAY_COLOR,
                                  CAPSPageMenuOptionScrollAnimationDurationOnMenuItemTap: @(150)
                                  };
-
+    
     self.pagemenu = [[CAPSPageMenu alloc] initWithViewControllers:@[ self.signInViewController, self.signUpViewController ] frame:CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height) options:parameters];
     [self.view addSubview:_pagemenu.view];
 }
@@ -56,6 +61,7 @@
     self.navBarLayout.title = STRING_LOGIN_OR_SIGNUP;
     self.navBarLayout.showCartButton = NO;
     self.navBarLayout.showBackButton = YES;
+    self.navBarLayout.showLogo = NO;
 }
 
 #pragma mark - Legacy codes

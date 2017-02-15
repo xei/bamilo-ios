@@ -12,7 +12,7 @@
 
 typedef void(^AuthenticationBlock)(void);
 
-@interface AuthenticationViewController: BaseViewController
+@interface AuthenticationContainerViewController: BaseViewController
 
 @property (nonatomic) BOOL showContinueWithoutLogin;
 @property (nonatomic, assign) BOOL fromSideMenu;

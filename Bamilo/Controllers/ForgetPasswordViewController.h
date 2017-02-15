@@ -11,6 +11,6 @@
 #import "AuthenticationBaseViewController.h"
 #import "DataManager.h"
 
-@interface ForgetPasswordViewController:AuthenticationBaseViewController <DataServiceProtocol, FormViewControlDelegate>
+@interface ForgetPasswordViewController : BaseViewController <DataServiceProtocol, FormViewControlDelegate>
 
 @end

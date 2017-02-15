@@ -68,7 +68,8 @@
                                                                     @"icon": @"my-address-icon",
                                                                     @"cellType": IconTableViewCell.nibName,
                                                                     @"notification": kShowCheckoutAddressesScreenNotification,
-                                                                    @"animated" : @NO
+                                                                    @"animated" : @NO,
+                                                                    @"CVC": @"AddressViewController"
                                                                     },
                                                                 @{
                                                                     @"title": STRING_TRACK_MY_ORDER,
@@ -178,7 +179,6 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return IconTableViewCell.heightSize;
 }
-
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:true];

@@ -31,9 +31,6 @@
     [self setupView];
     
     self.scrollView.delegate = self;
-    self.navBarLayout.showBackButton = YES;
-    self.navBarLayout.showCartButton = NO;
-    self.title = STRING_LOGIN;
 }
 
 - (void)setupView {
@@ -160,7 +157,6 @@
     }
 }
 
-
 - (IBAction)forgotPasswordButtonPressed:(id)sender {
     [self.delegate wantsToShowForgetPassword];
 }
@@ -168,4 +164,5 @@
 - (IBAction)continueWithoutLoginBtnTapped:(id)sender {
     [self.delegate wantsToContinueWithoutLogin];
 }
+
 @end

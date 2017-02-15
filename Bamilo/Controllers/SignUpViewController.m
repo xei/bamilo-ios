@@ -21,13 +21,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
     
     self.formController = [[FormViewControl alloc] init];
     self.formController.delegate = self;
     self.formController.tableView = self.tableView;
 
-    
     FormItemModel *melliCode = [[FormItemModel alloc]
                                 initWithTitle:nil
                                 andIcon:nil
@@ -98,16 +96,6 @@
     [self.formController unregisterForKeyboardNotifications];
 }
 
-#pragma mark - Overrides
-- (void)updateNavBar {
-    [super updateNavBar];
-    
-    self.navBarLayout.showBackButton = YES;
-    self.navBarLayout.showCartButton = NO;
-    self.navBarLayout.showLogo = NO;
-    self.navBarLayout.showTitleLabel = YES;
-}
-
 #pragma mark - DataServiceProtocol
 - (void)bind:(id)data forRequestId:(int)rid {
     RICustomer *customerObject = [(NSDictionary*)data objectForKey:@"customer"];
@@ -137,6 +125,9 @@
     if (self.fromSideMenu) {
         [userInfo setObject:@YES forKey:@"from_side_menu"];
     }
+    
+    self.completion(AUTHENTICATION_FINISHED_WITH_REGISTER);
+    
     //[[NSNotificationCenter defaultCenter] postNotificationName:kRunBlockAfterAuthenticationNotification object:self.nextStepBlock userInfo:userInfo];
 }
 

@@ -35,7 +35,7 @@
 		613FF2B61E4B283F008660CF /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 613FF2B41E4B283F008660CF /* SignInViewController.xib */; };
 		613FF2BA1E4B2858008660CF /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 613FF2B81E4B2858008660CF /* SignUpViewController.m */; };
 		613FF2BB1E4B2858008660CF /* SignUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 613FF2B91E4B2858008660CF /* SignUpViewController.xib */; };
-		613FF2BF1E4B2871008660CF /* AuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 613FF2BE1E4B2871008660CF /* AuthenticationViewController.m */; };
+		613FF2BF1E4B2871008660CF /* AuthenticationContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 613FF2BE1E4B2871008660CF /* AuthenticationContainerViewController.m */; };
 		613FF2C11E4B3D1B008660CF /* Authentication.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 613FF2C01E4B3D1B008660CF /* Authentication.storyboard */; };
 		617AAA441E503AB9004D9430 /* FormItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 617AAA431E503AB9004D9430 /* FormItemModel.m */; };
 		61CBA0391E51A72A005673F7 /* ForgetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA0381E51A72A005673F7 /* ForgetPasswordViewController.m */; };
@@ -593,8 +593,8 @@
 		613FF2B71E4B2858008660CF /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
 		613FF2B81E4B2858008660CF /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
 		613FF2B91E4B2858008660CF /* SignUpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignUpViewController.xib; sourceTree = "<group>"; };
-		613FF2BD1E4B2871008660CF /* AuthenticationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthenticationViewController.h; sourceTree = "<group>"; };
-		613FF2BE1E4B2871008660CF /* AuthenticationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthenticationViewController.m; sourceTree = "<group>"; };
+		613FF2BD1E4B2871008660CF /* AuthenticationContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthenticationContainerViewController.h; sourceTree = "<group>"; };
+		613FF2BE1E4B2871008660CF /* AuthenticationContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthenticationContainerViewController.m; sourceTree = "<group>"; };
 		613FF2C01E4B3D1B008660CF /* Authentication.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Authentication.storyboard; path = Bamilo/Controllers/Authentication.storyboard; sourceTree = SOURCE_ROOT; };
 		617AAA421E503AB9004D9430 /* FormItemModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormItemModel.h; sourceTree = "<group>"; };
 		617AAA431E503AB9004D9430 /* FormItemModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormItemModel.m; sourceTree = "<group>"; };
@@ -1891,13 +1891,13 @@
 			name = SignUpViewController;
 			sourceTree = "<group>";
 		};
-		613FF2BC1E4B285C008660CF /* AuthenticationViewController */ = {
+		613FF2BC1E4B285C008660CF /* AuthenticationContainerViewController */ = {
 			isa = PBXGroup;
 			children = (
-				613FF2BD1E4B2871008660CF /* AuthenticationViewController.h */,
-				613FF2BE1E4B2871008660CF /* AuthenticationViewController.m */,
+				613FF2BD1E4B2871008660CF /* AuthenticationContainerViewController.h */,
+				613FF2BE1E4B2871008660CF /* AuthenticationContainerViewController.m */,
 			);
-			name = AuthenticationViewController;
+			name = AuthenticationContainerViewController;
 			sourceTree = "<group>";
 		};
 		617AAA401E503A71004D9430 /* Form */ = {
@@ -2897,24 +2897,24 @@
 			name = Authentication;
 			sourceTree = "<group>";
 		};
-		879F88011E50B24C0033FE87 /* BaseViewController */ = {
+		879F88011E50B24C0033FE87 /* AuthenticationBaseViewController */ = {
 			isa = PBXGroup;
 			children = (
 				879F88031E50B2940033FE87 /* AuthenticationBaseViewController.h */,
 				879F88041E50B2940033FE87 /* AuthenticationBaseViewController.m */,
 			);
-			name = BaseViewController;
+			name = AuthenticationBaseViewController;
 			sourceTree = "<group>";
 		};
 		879F88021E50B2550033FE87 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				613FF2BC1E4B285C008660CF /* AuthenticationContainerViewController */,
+				879F88011E50B24C0033FE87 /* AuthenticationBaseViewController */,
+				613FF2B01E4B281A008660CF /* SignInViewController */,
+				613FF2B11E4B2825008660CF /* SignUpViewController */,
 				61CBA03E1E51A765005673F7 /* ContinueWitoutLoginViewController */,
 				61CBA03A1E51A72E005673F7 /* ForgetPasswordViewController */,
-				879F88011E50B24C0033FE87 /* BaseViewController */,
-				613FF2BC1E4B285C008660CF /* AuthenticationViewController */,
-				613FF2B11E4B2825008660CF /* SignUpViewController */,
-				613FF2B01E4B281A008660CF /* SignInViewController */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -4740,7 +4740,7 @@
 				CE59BEFA1AE7EF0B0057F4E2 /* JAShopTeaserView.m in Sources */,
 				9A86F80A1C281F8F001A91D5 /* JARecentlyViewedViewController.m in Sources */,
 				879F87F91E507FD10033FE87 /* BaseModel.m in Sources */,
-				613FF2BF1E4B2871008660CF /* AuthenticationViewController.m in Sources */,
+				613FF2BF1E4B2871008660CF /* AuthenticationContainerViewController.m in Sources */,
 				CE9ADF4C1AB6D78200D56481 /* UIImageView+JA.m in Sources */,
 				875AD5891E38C0C900584ABF /* RIGTMTracker.m in Sources */,
 				613FF2AF1E4B24DC008660CF /* CAPSPageMenu.m in Sources */,

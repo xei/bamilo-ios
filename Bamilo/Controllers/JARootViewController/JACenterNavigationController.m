@@ -7,7 +7,7 @@
 //
 
 #import "JACenterNavigationController.h"
-#import "AuthenticationViewController.h"
+#import "AuthenticationContainerViewController.h"
 #import "JAChooseCountryViewController.h"
 #import "JAHomeViewController.h"
 #import "JALoadCountryViewController.h"
@@ -74,7 +74,7 @@
 #import "CheckoutAddressViewController.h"
 #import "CartViewController.h"
 #import "ProtectedViewController.h"
-#import "AuthenticationViewController.h"
+#import "AuthenticationContainerViewController.h"
 
 @interface JACenterNavigationController ()
 
@@ -683,7 +683,7 @@
 
 #pragma mark Favorites Screen
 - (void)showSavedListViewController:(NSNotification*)notification {
-        [AuthenticationViewController authenticateAndExecuteBlock:^{
+        [AuthenticationContainerViewController authenticateAndExecuteBlock:^{
         UIViewController *topViewController = [self topViewController];
         if (![topViewController isKindOfClass:[JASavedListViewController class]])
         {
@@ -717,7 +717,7 @@
 
 #pragma mark Sign In Screen
 - (void)showAuthenticationScreen:(NSNotification *)notification {
-    AuthenticationViewController *authenticationViewController = (AuthenticationViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Authentication" nibName:@"AuthenticationViewController" resetCache:YES];
+    AuthenticationContainerViewController *authenticationViewController = (AuthenticationContainerViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Authentication" nibName:@"AuthenticationContainerViewController" resetCache:YES];
 
     if (VALID_NOTEMPTY(notification, NSNotification) && notification.object) {
         //TODO: Call the completion block
@@ -2033,12 +2033,12 @@
                 }
             };
             
-            AuthenticationViewController *authViewController = (AuthenticationViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Authentication" nibName:@"AuthenticationViewController" resetCache:YES];
+            AuthenticationContainerViewController *authViewController = (AuthenticationContainerViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Authentication" nibName:@"AuthenticationContainerViewController" resetCache:YES];
             authViewController.fromSideMenu = NO;
             authViewController.signInViewController.completion = _authenticationCompletion;
-            //authViewController.signUpViewController.completion = _authenticationCompletion;
+            authViewController.signUpViewController.completion = _authenticationCompletion;
             
-            [self pushViewController:authViewController animated:NO];
+            [self pushViewController:authViewController animated:YES];
         } else {
             [self pushViewController:destViewController animated:YES];
         }

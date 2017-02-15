@@ -15,10 +15,10 @@
         </array>
     </customFonts>
     <scenes>
-        <!--Authentication View Controller-->
+        <!--Authentication Container View Controller-->
         <scene sceneID="rAQ-tj-tHl">
             <objects>
-                <viewController storyboardIdentifier="AuthenticationViewController" id="3BH-rN-hyO" customClass="AuthenticationViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AuthenticationContainerViewController" id="3BH-rN-hyO" customClass="AuthenticationContainerViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="H5u-sf-4zE"/>
                         <viewControllerLayoutGuide type="bottom" id="qJm-B0-GaN"/>
@@ -57,7 +57,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="فراموشی رمز" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oAQ-an-H3x">
-                                <rect key="frame" x="280.5" y="40" width="64.5" height="40"/>
+                                <rect key="frame" x="268" y="40" width="77" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="iax-Qt-RV1"/>
                                 </constraints>
@@ -66,7 +66,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IwQ-6G-1pU" userLabel="top title label bottom border">
-                                <rect key="frame" x="264.5" y="83" width="96.5" height="3"/>
+                                <rect key="frame" x="249" y="83" width="115" height="3"/>
                                 <color key="backgroundColor" red="0.96862745098039216" green="0.59215686274509804" blue="0.12549019607843137" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="3" id="Qf2-4T-Bat"/>
