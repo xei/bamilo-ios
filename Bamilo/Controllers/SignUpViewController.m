@@ -97,12 +97,13 @@
     }];
 }
 
-#pragma mark - override function from BaseViewController
+#pragma mark - Overrides
 - (void)updateNavBar {
+    [super updateNavBar];
+    
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showCartButton = NO;
 }
-
 
 #pragma mark - DataServiceProtocol
 - (void)bind:(id)data forRequestId:(int)rid {
@@ -133,6 +134,6 @@
     if (self.fromSideMenu) {
         [userInfo setObject:@YES forKey:@"from_side_menu"];
     }
-    [[NSNotificationCenter defaultCenter] postNotificationName:kRunBlockAfterAuthenticationNotification object:self.nextStepBlock userInfo:userInfo];
+    //[[NSNotificationCenter defaultCenter] postNotificationName:kRunBlockAfterAuthenticationNotification object:self.nextStepBlock userInfo:userInfo];
 }
 @end

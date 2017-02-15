@@ -12,13 +12,12 @@
 #import "IconTableViewCell.h"
 #import "NotificationTableViewCell.h"
 #import "RICustomer.h"
+#import "ViewControllerManager.h"
 
 @interface JAMyAccountViewController ()
 
-
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray* tableViewListItems;
-
 
 @end
 
@@ -56,7 +55,8 @@
                                     @"icon": @"my-address-icon",
                                     @"cellType": IconTableViewCell.nibName,
                                     @"notification": kShowCheckoutAddressesScreenNotification,
-                                    @"animated" : @NO
+                                    @"animated" : @NO,
+                                    @"CVC": @"AddressViewController"
                                     },
                                 @{
                                     @"title": STRING_TRACK_MY_ORDER,
@@ -176,17 +176,23 @@
     
     NSDictionary *selectedObjItem = self.tableViewListItems[indexPath.row];
     
-    if ([[selectedObjItem objectForKey:@"selector"] pointerValue]) {
-        SEL customSelector = [[selectedObjItem objectForKey:@"selector"] pointerValue];
-        //[self performSelector:customSelector withObject: 0];
-        [self performSelector:customSelector];
-        return;
-    }
+    NSString *cvc = [selectedObjItem objectForKey:@"CVC"];
     
-    if ([selectedObjItem objectForKey:@"notification"]) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:[selectedObjItem objectForKey:@"notification"]
-                                                            object:@{@"animated":[selectedObjItem objectForKey:@"animated"]}
-                                                          userInfo:@{@"from_checkout":@NO}];
+    if(cvc) {
+        [[ViewControllerManager centerViewController] requestNavigateTo:cvc args:nil];
+    } else {
+        if ([[selectedObjItem objectForKey:@"selector"] pointerValue]) {
+            SEL customSelector = [[selectedObjItem objectForKey:@"selector"] pointerValue];
+            //[self performSelector:customSelector withObject: 0];
+            [self performSelector:customSelector];
+            return;
+        }
+        
+        if ([selectedObjItem objectForKey:@"notification"]) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:[selectedObjItem objectForKey:@"notification"]
+                                                                object:@{@"animated":[selectedObjItem objectForKey:@"animated"]}
+                                                              userInfo:@{@"from_checkout":@NO}];
+        }
     }
 }
 

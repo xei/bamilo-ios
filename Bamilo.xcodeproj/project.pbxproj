@@ -95,6 +95,8 @@
 		874AAB691E3CEA0700B3F8FE /* AppManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB681E3CEA0700B3F8FE /* AppManager.m */; };
 		874AAB6D1E3DCEDB00B3F8FE /* SessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB6C1E3DCEDB00B3F8FE /* SessionManager.m */; };
 		874AAB771E3DD31600B3F8FE /* URLUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB761E3DD31600B3F8FE /* URLUtility.m */; };
+		875081B31E532E400031ECBF /* AddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 875081B21E532E400031ECBF /* AddressViewController.m */; };
+		875081B91E53309A0031ECBF /* AddressEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 875081B81E53309A0031ECBF /* AddressEditViewController.m */; };
 		875AD53F1E38C0C800584ABF /* RIConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD48C1E38C0C800584ABF /* RIConfiguration.m */; };
 		875AD5401E38C0C800584ABF /* RIAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD4901E38C0C800584ABF /* RIAddress.m */; };
 		875AD5411E38C0C900584ABF /* RIApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD4921E38C0C800584ABF /* RIApi.m */; };
@@ -704,6 +706,10 @@
 		874AAB6C1E3DCEDB00B3F8FE /* SessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionManager.m; sourceTree = "<group>"; };
 		874AAB751E3DD31600B3F8FE /* URLUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLUtility.h; sourceTree = "<group>"; };
 		874AAB761E3DD31600B3F8FE /* URLUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLUtility.m; sourceTree = "<group>"; };
+		875081B11E532E400031ECBF /* AddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressViewController.h; sourceTree = "<group>"; };
+		875081B21E532E400031ECBF /* AddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressViewController.m; sourceTree = "<group>"; };
+		875081B71E53309A0031ECBF /* AddressEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressEditViewController.h; sourceTree = "<group>"; };
+		875081B81E53309A0031ECBF /* AddressEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressEditViewController.m; sourceTree = "<group>"; };
 		875AD48B1E38C0C800584ABF /* RIConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIConfiguration.h; sourceTree = "<group>"; };
 		875AD48C1E38C0C800584ABF /* RIConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIConfiguration.m; sourceTree = "<group>"; };
 		875AD48F1E38C0C800584ABF /* RIAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIAddress.h; sourceTree = "<group>"; };
@@ -2544,6 +2550,49 @@
 			name = URLUtility;
 			sourceTree = "<group>";
 		};
+		875081AE1E532DEC0031ECBF /* More */ = {
+			isa = PBXGroup;
+			children = (
+				8708A16F1E406BF600ABA7D8 /* ContactUsViewController */,
+			);
+			name = More;
+			sourceTree = "<group>";
+		};
+		875081AF1E532E020031ECBF /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				875081B41E5330580031ECBF /* Address */,
+			);
+			name = Account;
+			sourceTree = "<group>";
+		};
+		875081B01E532E1D0031ECBF /* AddressViewController */ = {
+			isa = PBXGroup;
+			children = (
+				875081B11E532E400031ECBF /* AddressViewController.h */,
+				875081B21E532E400031ECBF /* AddressViewController.m */,
+			);
+			name = AddressViewController;
+			sourceTree = "<group>";
+		};
+		875081B41E5330580031ECBF /* Address */ = {
+			isa = PBXGroup;
+			children = (
+				875081B01E532E1D0031ECBF /* AddressViewController */,
+				875081B61E5330710031ECBF /* AddressEditViewController */,
+			);
+			name = Address;
+			sourceTree = "<group>";
+		};
+		875081B61E5330710031ECBF /* AddressEditViewController */ = {
+			isa = PBXGroup;
+			children = (
+				875081B71E53309A0031ECBF /* AddressEditViewController.h */,
+				875081B81E53309A0031ECBF /* AddressEditViewController.m */,
+			);
+			name = AddressEditViewController;
+			sourceTree = "<group>";
+		};
 		875AD4891E38C0C800584ABF /* RICommunicationFramework */ = {
 			isa = PBXGroup;
 			children = (
@@ -3262,14 +3311,13 @@
 			isa = PBXGroup;
 			children = (
 				879F88361E52EA690033FE87 /* Base */,
+				875081AF1E532E020031ECBF /* Account */,
 				61CBA03F1E51BA1D005673F7 /* FormViewController */,
-				87A681591E40F99300D252AC /* BaseViewController */,
-				879F88001E50B23C0033FE87 /* Authentication */,
 				87A6815E1E41B84000D252AC /* SearchBaseViewController */,
 				879F88001E50B23C0033FE87 /* Authentication */,
 				879F880C1E50BAC10033FE87 /* CartViewController */,
 				87D07D711E4097CC00C00AC6 /* Checkout */,
-				8708A16F1E406BF600ABA7D8 /* ContactUsViewController */,
+				875081AE1E532DEC0031ECBF /* More */,
 			);
 			name = BML;
 			sourceTree = "<group>";
@@ -4726,6 +4774,7 @@
 				89C177BF1BC2EC17006D3B19 /* JAPDVProductInfoSellerInfo.m in Sources */,
 				879F88051E50B2940033FE87 /* AuthenticationBaseViewController.m in Sources */,
 				CE9ADF621AB6D78200D56481 /* JASellerRatingsViewController.m in Sources */,
+				875081B31E532E400031ECBF /* AddressViewController.m in Sources */,
 				875AD58B1E38C0C900584ABF /* RIURLCacheWrapper.m in Sources */,
 				87C69DAB1E38B78E0026018F /* NSString+Extensions.m in Sources */,
 				CE9ADF631AB6D78200D56481 /* JASignInViewController.m in Sources */,
@@ -4762,6 +4811,7 @@
 				8976FB321C0F3F4300483651 /* JATextFilterCell.m in Sources */,
 				875AD5521E38C0C900584ABF /* RITeaserComponent.m in Sources */,
 				875AD5661E38C0C900584ABF /* RIPaymentInformation.m in Sources */,
+				875081B91E53309A0031ECBF /* AddressEditViewController.m in Sources */,
 				CEE558661AFCC2FB00FC87D4 /* JARadioRelatedComponent.m in Sources */,
 				CE9ADF941AB6D78200D56481 /* JAPicker.m in Sources */,
 				8714E0591E471E2F004C9B1D /* DataManager.m in Sources */,

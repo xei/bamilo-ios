@@ -8,6 +8,16 @@
 
 #import "BaseViewController.h"
 
+typedef NS_ENUM(NSUInteger, AuthenticationStatus) {
+    AUTHENTICATION_CANCELLED,
+    AUTHENTICATION_FINISHED_WITH_LOGIN,
+    AUTHENTICATION_FINISHED_WITH_REGISTER
+};
+
+typedef void(^AuthenticationCompletion)(AuthenticationStatus status);
+
 @interface AuthenticationBaseViewController : BaseViewController
+
+@property (copy, nonatomic) AuthenticationCompletion completion;
 
 @end

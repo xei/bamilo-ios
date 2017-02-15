@@ -75,6 +75,8 @@
 #import "ContactUsViewController.h"
 #import "CheckoutAddressViewController.h"
 #import "CartViewController.h"
+#import "ProtectedViewController.h"
+#import "AuthenticationViewController.h"
 
 @interface JACenterNavigationController ()
 
@@ -720,7 +722,8 @@
     AuthenticationViewController *authenticationViewController = (AuthenticationViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Authentication" nibName:@"AuthenticationViewController" resetCache:YES];
 
     if (VALID_NOTEMPTY(notification, NSNotification) && notification.object) {
-        [authenticationViewController setNextStepBlock:notification.object];
+        //TODO: Call the completion block
+        //[authenticationViewController setNextStepBlock:notification.object];
     }
     
     authenticationViewController.navBarLayout.showBackButton = YES;
@@ -2038,6 +2041,40 @@
 - (void)showSearchView {
     if (!self.searchViewAlwaysHidden) {
         [self.searchView setHidden:NO];
+    }
+}
+
+//#####################################################################################################################
+-(void) requestNavigateTo:(NSString *)destination args:(NSDictionary *)args {
+    [self requestNavigateTo:destination ofStoryboard:@"Main" useCache:NO args:args];
+}
+
+-(void) requestNavigateTo:(NSString *)destination ofStoryboard:(NSString *)storyboard useCache:(BOOL)useCache args:(NSDictionary *)args {
+    UIViewController *destViewController = [[ViewControllerManager sharedInstance] loadViewController:storyboard nibName:destination resetCache:!useCache];
+    if(destViewController) {
+        if([destViewController isKindOfClass:[ProtectedViewController class]] && ![RICustomer checkIfUserIsLogged]) {
+            AuthenticationCompletion _authenticationCompletion = ^(AuthenticationStatus status) {
+                switch (status) {
+                    case AUTHENTICATION_FINISHED_WITH_LOGIN:
+                    case AUTHENTICATION_FINISHED_WITH_REGISTER:
+                        [self popViewControllerAnimated:NO];
+                        [self pushViewController:destViewController animated:YES];
+                    break;
+                        
+                    default:
+                        break;
+                }
+            };
+            
+            AuthenticationViewController *authViewController = (AuthenticationViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Authentication" nibName:@"AuthenticationViewController" resetCache:YES];
+            authViewController.fromSideMenu = NO;
+            authViewController.signInViewController.completion = _authenticationCompletion;
+            //authViewController.signUpViewController.completion = _authenticationCompletion;
+            
+            [self pushViewController:authViewController animated:NO];
+        } else {
+            [self pushViewController:destViewController animated:YES];
+        }
     }
 }
 
