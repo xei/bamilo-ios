@@ -27,18 +27,9 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۹۹۹،۰۰۰،۵۵۵" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rNz-Fd-cuV" userLabel="ItemPriceLabel">
-                    <rect key="frame" x="65" y="4" width="246" height="22"/>
+                    <rect key="frame" x="10" y="4.5" width="301" height="21.5"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="1DZ-Zt-2MS"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
-                    <color key="textColor" red="0.37891709800000001" green="0.37922787670000002" blue="0.37896519899999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ریال" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dhq-nt-q2q" userLabel="ItemCurrencyLabel">
-                    <rect key="frame" x="20" y="4" width="45" height="22"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="45" id="JLS-ks-HCg"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                     <color key="textColor" red="0.37891709800000001" green="0.37922787670000002" blue="0.37896519899999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -47,12 +38,10 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="dhq-nt-q2q" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="NP4-3W-wZY"/>
+                <constraint firstItem="rNz-Fd-cuV" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="M9n-yx-cJD"/>
                 <constraint firstItem="gbF-qq-eMQ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="4" id="ZjM-M6-fEN"/>
                 <constraint firstAttribute="trailing" secondItem="gbF-qq-eMQ" secondAttribute="trailing" constant="20" id="bfD-MM-HHq"/>
-                <constraint firstItem="rNz-Fd-cuV" firstAttribute="centerY" secondItem="dhq-nt-q2q" secondAttribute="centerY" id="fdy-LN-iTO"/>
-                <constraint firstItem="rNz-Fd-cuV" firstAttribute="leading" secondItem="dhq-nt-q2q" secondAttribute="trailing" id="kMM-Vg-ICV"/>
-                <constraint firstItem="dhq-nt-q2q" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="kPF-e9-IRV"/>
+                <constraint firstItem="rNz-Fd-cuV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="dkv-mp-n5G"/>
                 <constraint firstAttribute="bottom" secondItem="gbF-qq-eMQ" secondAttribute="bottom" constant="4" id="ofO-p4-lDo"/>
                 <constraint firstItem="gbF-qq-eMQ" firstAttribute="leading" secondItem="rNz-Fd-cuV" secondAttribute="trailing" priority="750" id="x7M-6W-jTo"/>
             </constraints>
@@ -61,7 +50,6 @@
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="itemCurrencyLabel" destination="dhq-nt-q2q" id="ucI-5V-78Z"/>
                 <outlet property="itemNameLabel" destination="gbF-qq-eMQ" id="GOg-Bi-D3K"/>
                 <outlet property="itemPriceLabel" destination="rNz-Fd-cuV" id="Alp-6x-wRu"/>
             </connections>

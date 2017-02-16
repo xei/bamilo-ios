@@ -41,14 +41,14 @@
     [self.layer setShadowOpacity:shadowOpacity];
 }
 
--(void)anchorMatch:(UIView *)view {
+- (void)anchorMatch:(UIView *)view {
     NSDictionary *views = NSDictionaryOfVariableBindings(view);
     
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|" options:0 metrics:nil views:views]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[view]|"options:0 metrics:nil views:views]];
 }
 
--(CGSize) sizeToFitSubviews {
+- (CGSize)sizeToFitSubviews {
     float width = 0, height = 0;
     
     for (UIView *view in self.subviews) {

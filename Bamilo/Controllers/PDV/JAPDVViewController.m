@@ -1477,8 +1477,7 @@ typedef void (^ProcessActionBlock)(void);
     return YES;
 }
 
-- (void)addToWishList:(UIButton *)button
-{
+- (void)addToWishList:(UIButton *)button {
     [self showLoading];
     
     __weak typeof (self) weakSelf = self;

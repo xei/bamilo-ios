@@ -8,6 +8,7 @@
 
 #import "BaseTableViewCell.h"
 #import "ReceiptItemModel.h"
+#import "ReceiptItemView.h"
 
 @interface ReceiptView : BaseTableViewCell
 

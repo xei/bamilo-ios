@@ -17,7 +17,6 @@
 
 @implementation CartEntitySummeryView
 
-
 - (void)awakeFromNib {
     [super awakeFromNib];
     self.backgroundColor = cGRAY_COLOR;

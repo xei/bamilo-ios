@@ -11,6 +11,6 @@
 
 @interface ReceiptItemView : BaseTableViewCell
 
--(void) applyColor:(UIColor *)color;
+- (void)applyColor:(UIColor *)color;
 
 @end

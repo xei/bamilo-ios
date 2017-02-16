@@ -38,10 +38,20 @@
                         <action selector="viewTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="IKF-bg-EjZ"/>
                     </connections>
                 </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z5K-gI-5sT" userLabel="topBorder">
+                    <rect key="frame" x="0.0" y="0.0" width="405" height="1"/>
+                    <color key="backgroundColor" red="0.85098039215686272" green="0.85098039215686272" blue="0.85098039215686272" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="V3c-Na-WN4"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="0.85098039219999999" green="0.85098039219999999" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="Z5K-gI-5sT" secondAttribute="trailing" id="5rm-ZT-NeT"/>
+                <constraint firstItem="Z5K-gI-5sT" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="DYJ-aO-uAk"/>
                 <constraint firstAttribute="trailing" secondItem="jhS-Sk-MvV" secondAttribute="trailing" constant="30" id="Oxm-N2-hXS"/>
+                <constraint firstItem="Z5K-gI-5sT" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="dDi-cS-VcB"/>
                 <constraint firstItem="DaZ-wR-8kZ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="30" id="gAH-bC-1Fd"/>
                 <constraint firstItem="jhS-Sk-MvV" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="mHh-DT-7b4"/>
                 <constraint firstItem="vg9-ZU-JBr" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="obv-Ju-ekj"/>
@@ -59,7 +69,7 @@
                 <outlet property="priceLabel" destination="DaZ-wR-8kZ" id="8wj-CD-c9D"/>
                 <outlet property="titleLabel" destination="jhS-Sk-MvV" id="yvD-Vm-yI2"/>
             </connections>
-            <point key="canvasLocation" x="-217" y="-19"/>
+            <point key="canvasLocation" x="-217.5" y="-19.5"/>
         </view>
     </objects>
 </document>
