@@ -6,8 +6,9 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import "ProtectedViewController.h"
+#import "BaseViewController.h"
+#import "ProtectedViewControllerProtocol.h"
 
-@interface AddressEditViewController : ProtectedViewController
+@interface AddressEditViewController : BaseViewController <ProtectedViewControllerProtocol>
 
 @end

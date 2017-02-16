@@ -50,15 +50,15 @@ static ViewControllerManager *instance;
 }
 
 -(UIViewController *)loadNib:(NSString *)nibName resetCache:(BOOL)resetCache {
-    id nib = [_nibCache objectForKey:nibName];
+    UIViewController *destViewController = [_nibCache objectForKey:nibName];
     
-    if(resetCache || nib == nil) {
-        nib = [(UIViewController *)[NSClassFromString(nibName) alloc] initWithNibName:nibName bundle:nil];
+    if(resetCache || destViewController == nil) {
+        destViewController = [(UIViewController *)[NSClassFromString(nibName) alloc] initWithNibName:nibName bundle:nil];
         [_nibCache removeObjectForKey:nibName];
-        [_nibCache setObject:nib forKey:nibName];
+        [_nibCache setObject:destViewController forKey:nibName];
     }
     
-    return nib;
+    return destViewController;
 }
 
 - (UIViewController *) loadViewController:(NSString *)nibName {

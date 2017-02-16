@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ProtectedViewController.h"
+#import "BaseViewController.h"
+#import "ProtectedViewControllerProtocol.h"
 #import "DataServiceProtocol.h"
 #import "AddressTableViewCell.h"
 
-@interface AddressViewController : ProtectedViewController <DataServiceProtocol>
+@interface AddressViewController : BaseViewController <DataServiceProtocol, ProtectedViewControllerProtocol>
 
 @property (assign, nonatomic) AddressCellOptions options;
 @property (copy, nonatomic) NSString *titleHeaderText;

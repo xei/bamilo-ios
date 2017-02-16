@@ -47,7 +47,8 @@
 - (BOOL)closeScreensToStackClass:(Class)classKind animated:(BOOL)animated;
 
 //#####################################################################################################################
--(void) requestNavigateTo:(NSString *)destination args:(NSDictionary *)args;
--(void) requestNavigateTo:(NSString *)destination ofStoryboard:(NSString *)storyboard useCache:(BOOL)useCache args:(NSDictionary *)args;
+-(void) requestNavigateToNib:(NSString *)destNib args:(NSDictionary *)args;
+-(void) requestNavigateToNib:(NSString *)destNib ofStoryboard:(NSString *)storyboard useCache:(BOOL)useCache args:(NSDictionary *)args;
+-(void) requestNavigateToClass:(NSString *)destClass args:(NSDictionary *)args;
 
 @end

@@ -258,7 +258,7 @@
 
 - (void)requestChangePasswordForm
 {
-    if (!([RICustomer checkIfUserIsLoggedByFacebook] || [RICustomer checkIfUserIsLoggedAsGuest])) {
+    if (!([RICustomer checkIfUserIsLoggedAsGuest])) {
         
         [RIForm getForm:@"change_password" successBlock:^(RIForm *form)
          {
