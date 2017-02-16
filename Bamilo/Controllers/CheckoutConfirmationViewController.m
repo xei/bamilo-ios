@@ -153,7 +153,7 @@
         //Recipient Address Section
         case 2: {
             AddressTableViewCell *customerAddressTableViewCell = [tableView dequeueReusableCellWithIdentifier:[AddressTableViewCell nibName] forIndexPath:indexPath];
-            customerAddressTableViewCell.isReadOnly = YES;
+            customerAddressTableViewCell.options = ADDRESS_CELL_NONE;
             
             return customerAddressTableViewCell;
         }

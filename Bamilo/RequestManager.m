@@ -34,7 +34,7 @@
 +(void)asyncRequest:(HttpVerb)method path:(NSString *)path params:(NSDictionary *)params type:(RequestExecutionType)type target:(id<DataServiceProtocol>)target completion:(RequestCompletion)completion {
     switch (type) {
         case REQUEST_EXEC_IN_FOREGROUND:
-            [[LoadingManager sharedInstance] showLoadingOn:target];
+            [[LoadingManager sharedInstance] showLoading];
         break;
             
         default:

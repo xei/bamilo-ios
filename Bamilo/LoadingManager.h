@@ -12,6 +12,7 @@
 
 +(instancetype) sharedInstance;
 
+-(void) showLoading;
 -(void) showLoadingOn:(id)viewcontroller;
 -(void) hideLoading;
 

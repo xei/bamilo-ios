@@ -7,6 +7,7 @@
 //
 
 #import "LoadingManager.h"
+#import "JAAppDelegate.h"
 
 @interface LoadingManager()
 @property (strong, nonatomic) UIView *loadingView;
@@ -58,6 +59,10 @@ static LoadingManager *instance;
     });
     
     return instance;
+}
+
+-(void)showLoading {
+    [self showLoadingOn:[UIApplication sharedApplication].keyWindow.rootViewController];
 }
 
 -(void)showLoadingOn:(id)viewcontroller {

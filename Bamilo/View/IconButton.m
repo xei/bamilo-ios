@@ -31,14 +31,14 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    const CGFloat spaceBtwIconAndLabel = 3;
+    const CGFloat spaceBtwIconAndLabel = 5;
     
     CGRect labelFrame = self.titleLabel.frame;
     CGRect imageFrame = self.imageView.frame;
     
     labelFrame.size = [self.titleLabel.text sizeForFont:self.titleLabel.font withMaxWidth:self.size.width];
     
-    imageFrame.size.height = self.size.height - 15;
+    imageFrame.size.height = self.size.height * 0.5;
     imageFrame.size.width = imageFrame.size.height;
     labelFrame.origin.x = (self.size.width / 2)  - ((imageFrame.size.width + labelFrame.size.width + spaceBtwIconAndLabel) / 2);
     imageFrame.origin.x = labelFrame.origin.x + labelFrame.size.width + spaceBtwIconAndLabel;

@@ -9,6 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "RIForm.h"
 
+@interface PaymentMethodIcon : NSObject
+@property (copy, nonatomic) NSString *imageUrlForDisabled;
+@property (copy, nonatomic) NSString *imageUrlForEnabled;
+@end
+
 @interface RIPaymentMethodFormOption : NSObject
 
 @property (nonatomic, strong) NSString *text;
@@ -18,6 +23,9 @@
 @property (nonatomic, strong) NSString *label;
 @property (nonatomic, strong) NSString *value;
 @property (nonatomic, strong) RIForm *form;
+
+@property (copy, nonatomic) NSString *displayName;
+@property (strong, nonatomic) PaymentMethodIcon *icon;
 
 /**
  * Method to parse a payment method form option

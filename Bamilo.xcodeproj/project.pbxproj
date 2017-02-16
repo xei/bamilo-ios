@@ -85,10 +85,6 @@
 		87459CA11E4F159E00743120 /* PaymentTypeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87459CA01E4F159E00743120 /* PaymentTypeTableViewCell.xib */; };
 		87459CA41E4F15AF00743120 /* PaymentTypeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87459CA31E4F15AF00743120 /* PaymentTypeTableViewCell.m */; };
 		87459CA81E4F1B2F00743120 /* BaseTableViewHeaderFooterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87459CA71E4F1B2F00743120 /* BaseTableViewHeaderFooterCell.m */; };
-		87459CAB1E4F346C00743120 /* OnlinePaymentVariationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87459CAA1E4F346C00743120 /* OnlinePaymentVariationTableViewCell.m */; };
-		87459CAE1E4F347C00743120 /* OnlinePaymentVariationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87459CAD1E4F347C00743120 /* OnlinePaymentVariationTableViewCell.xib */; };
-		87459CB11E4F34BC00743120 /* PaymentDescTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87459CB01E4F34BC00743120 /* PaymentDescTableViewCell.xib */; };
-		87459CB41E4F34C500743120 /* PaymentDescTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87459CB31E4F34C500743120 /* PaymentDescTableViewCell.m */; };
 		874AAB551E3C764600B3F8FE /* Bamilo-Configs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 874AAB541E3C764600B3F8FE /* Bamilo-Configs.plist */; };
 		874AAB5E1E3C778E00B3F8FE /* ConfigManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB5D1E3C778E00B3F8FE /* ConfigManager.m */; };
 		874AAB651E3CE35B00B3F8FE /* ConfigManager-Consts.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB641E3CE35B00B3F8FE /* ConfigManager-Consts.m */; };
@@ -209,6 +205,8 @@
 		87D07D781E4097FF00C00AC6 /* CheckoutAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D07D771E4097FF00C00AC6 /* CheckoutAddressViewController.m */; };
 		87D07D7C1E4099C300C00AC6 /* CheckoutConfirmationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D07D7B1E4099C300C00AC6 /* CheckoutConfirmationViewController.m */; };
 		87D07D801E4099E800C00AC6 /* CheckoutPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D07D7F1E4099E800C00AC6 /* CheckoutPaymentViewController.m */; };
+		87DAABE31E54430D00445EBB /* PaymentOptionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DAABE21E54430D00445EBB /* PaymentOptionTableViewCell.m */; };
+		87DAABE51E54431A00445EBB /* PaymentOptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87DAABE41E54431A00445EBB /* PaymentOptionTableViewCell.xib */; };
 		893AADD11C1F1A54006314FB /* JAMyOrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 893AADCD1C1F1A54006314FB /* JAMyOrderDetailViewController.m */; };
 		8968FE731C3AE33E00B28207 /* JAUserDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4431E91C242BA8005A8B4A /* JAUserDataViewController.m */; };
 		897460DE1C19DDFD00A38073 /* JACollectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 897460DA1C19DDFD00A38073 /* JACollectionHeaderView.m */; };
@@ -689,12 +687,6 @@
 		87459CA31E4F15AF00743120 /* PaymentTypeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentTypeTableViewCell.m; sourceTree = "<group>"; };
 		87459CA61E4F1B2F00743120 /* BaseTableViewHeaderFooterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTableViewHeaderFooterCell.h; sourceTree = "<group>"; };
 		87459CA71E4F1B2F00743120 /* BaseTableViewHeaderFooterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTableViewHeaderFooterCell.m; sourceTree = "<group>"; };
-		87459CA91E4F346C00743120 /* OnlinePaymentVariationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnlinePaymentVariationTableViewCell.h; sourceTree = "<group>"; };
-		87459CAA1E4F346C00743120 /* OnlinePaymentVariationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnlinePaymentVariationTableViewCell.m; sourceTree = "<group>"; };
-		87459CAD1E4F347C00743120 /* OnlinePaymentVariationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OnlinePaymentVariationTableViewCell.xib; sourceTree = "<group>"; };
-		87459CB01E4F34BC00743120 /* PaymentDescTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentDescTableViewCell.xib; sourceTree = "<group>"; };
-		87459CB21E4F34C500743120 /* PaymentDescTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentDescTableViewCell.h; sourceTree = "<group>"; };
-		87459CB31E4F34C500743120 /* PaymentDescTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentDescTableViewCell.m; sourceTree = "<group>"; };
 		874AAB541E3C764600B3F8FE /* Bamilo-Configs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Bamilo-Configs.plist"; sourceTree = "<group>"; };
 		874AAB5D1E3C778E00B3F8FE /* ConfigManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigManager.m; sourceTree = "<group>"; };
 		874AAB621E3CE32C00B3F8FE /* ConfigManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigManager.h; sourceTree = "<group>"; };
@@ -947,6 +939,9 @@
 		87D07D7B1E4099C300C00AC6 /* CheckoutConfirmationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckoutConfirmationViewController.m; sourceTree = "<group>"; };
 		87D07D7E1E4099E800C00AC6 /* CheckoutPaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckoutPaymentViewController.h; sourceTree = "<group>"; };
 		87D07D7F1E4099E800C00AC6 /* CheckoutPaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckoutPaymentViewController.m; sourceTree = "<group>"; };
+		87DAABE11E54430D00445EBB /* PaymentOptionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentOptionTableViewCell.h; sourceTree = "<group>"; };
+		87DAABE21E54430D00445EBB /* PaymentOptionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentOptionTableViewCell.m; sourceTree = "<group>"; };
+		87DAABE41E54431A00445EBB /* PaymentOptionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentOptionTableViewCell.xib; sourceTree = "<group>"; };
 		893AADCC1C1F1A54006314FB /* JAMyOrderDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMyOrderDetailViewController.h; sourceTree = "<group>"; };
 		893AADCD1C1F1A54006314FB /* JAMyOrderDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMyOrderDetailViewController.m; sourceTree = "<group>"; };
 		897460D91C19DDFD00A38073 /* JACollectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACollectionHeaderView.h; path = Bamilo/View/Headers/JACollectionHeaderView.h; sourceTree = SOURCE_ROOT; };
@@ -2005,8 +2000,8 @@
 		61E099661E3E10F0004ED14E /* TableViewCells */ = {
 			isa = PBXGroup;
 			children = (
-				61CBA0521E51FEFA005673F7 /* ButtonTableviewCell */,
 				8714E0801E48C3B1004C9B1D /* Base */,
+				61CBA0521E51FEFA005673F7 /* ButtonTableviewCell */,
 				612FDC331E45E08500A9D0BD /* CartTableViewCell */,
 				87A681721E42003100D252AC /* AddressTableViewCell */,
 				61E099681E3E114E004ED14E /* IconTableViewCell */,
@@ -2419,7 +2414,7 @@
 			isa = PBXGroup;
 			children = (
 				87459C9E1E4F156A00743120 /* PaymentTypeTableViewCell */,
-				87459C9F1E4F157600743120 /* PaymentOptions */,
+				87DAABE01E5442EF00445EBB /* PaymentOptionTableViewCell */,
 			);
 			name = Payment;
 			sourceTree = "<group>";
@@ -2434,15 +2429,6 @@
 			name = PaymentTypeTableViewCell;
 			sourceTree = "<group>";
 		};
-		87459C9F1E4F157600743120 /* PaymentOptions */ = {
-			isa = PBXGroup;
-			children = (
-				87459CAF1E4F34AB00743120 /* PaymentDescTableViewCell */,
-				87459CAC1E4F347000743120 /* OnlinePaymentVariationTableViewCell */,
-			);
-			name = PaymentOptions;
-			sourceTree = "<group>";
-		};
 		87459CA51E4F1B0100743120 /* BaseTableViewHeaderFooterCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -2450,26 +2436,6 @@
 				87459CA71E4F1B2F00743120 /* BaseTableViewHeaderFooterCell.m */,
 			);
 			name = BaseTableViewHeaderFooterCell;
-			sourceTree = "<group>";
-		};
-		87459CAC1E4F347000743120 /* OnlinePaymentVariationTableViewCell */ = {
-			isa = PBXGroup;
-			children = (
-				87459CA91E4F346C00743120 /* OnlinePaymentVariationTableViewCell.h */,
-				87459CAA1E4F346C00743120 /* OnlinePaymentVariationTableViewCell.m */,
-				87459CAD1E4F347C00743120 /* OnlinePaymentVariationTableViewCell.xib */,
-			);
-			name = OnlinePaymentVariationTableViewCell;
-			sourceTree = "<group>";
-		};
-		87459CAF1E4F34AB00743120 /* PaymentDescTableViewCell */ = {
-			isa = PBXGroup;
-			children = (
-				87459CB21E4F34C500743120 /* PaymentDescTableViewCell.h */,
-				87459CB31E4F34C500743120 /* PaymentDescTableViewCell.m */,
-				87459CB01E4F34BC00743120 /* PaymentDescTableViewCell.xib */,
-			);
-			name = PaymentDescTableViewCell;
 			sourceTree = "<group>";
 		};
 		874AAB5B1E3C775900B3F8FE /* Managers */ = {
@@ -3341,6 +3307,16 @@
 				87A681731E4200B900D252AC /* AddressTableViewHeaderCell */,
 			);
 			name = TableViewHeaderFooters;
+			sourceTree = "<group>";
+		};
+		87DAABE01E5442EF00445EBB /* PaymentOptionTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				87DAABE11E54430D00445EBB /* PaymentOptionTableViewCell.h */,
+				87DAABE21E54430D00445EBB /* PaymentOptionTableViewCell.m */,
+				87DAABE41E54431A00445EBB /* PaymentOptionTableViewCell.xib */,
+			);
+			name = PaymentOptionTableViewCell;
 			sourceTree = "<group>";
 		};
 		8C38E17F19CF164A0007F6F9 /* ErrorViews */ = {
@@ -4491,7 +4467,6 @@
 				CEA2A1BB1B25D53B00E5973F /* JANewRatingViewController.xib in Resources */,
 				9A564CC11B38187100F23057 /* JANewSellerRatingViewController~ipad.xib in Resources */,
 				CE9AE09B1AB6D78200D56481 /* JAPaymentCell.xib in Resources */,
-				87459CB11E4F34BC00743120 /* PaymentDescTableViewCell.xib in Resources */,
 				61CBA0571E51FF2F005673F7 /* ButtonTableViewCell.xib in Resources */,
 				CE9AE0A21AB6D78200D56481 /* JASwitchCell.xib in Resources */,
 				CE9AE0A31AB6D78200D56481 /* JAUndefinedSearchView.xib in Resources */,
@@ -4503,7 +4478,7 @@
 				CE9AE0B51AB6D78200D56481 /* JACheckBoxComponent.xib in Resources */,
 				CE9AE0B81AB6D78200D56481 /* JAPDVVariations~iPad.xib in Resources */,
 				CEDBF8791B0CEC570073971A /* JACheckBoxComponent_RTL.xib in Resources */,
-				87459CAE1E4F347C00743120 /* OnlinePaymentVariationTableViewCell.xib in Resources */,
+				87DAABE51E54431A00445EBB /* PaymentOptionTableViewCell.xib in Resources */,
 				CE9AE0C21AB6D78200D56481 /* JACatalogTopView_ipad.xib in Resources */,
 				CE9AE0C41AB6D78200D56481 /* JAPriceFiltersView.xib in Resources */,
 				CE9AE0CA1AB6D78200D56481 /* JAPDVProductInfo.xib in Resources */,
@@ -4695,6 +4670,7 @@
 				CE9ADF371AB6D78200D56481 /* JAPDVSingleRelatedItem.m in Sources */,
 				9A189E761BB31B1F0039BC14 /* JAProductInfoBaseLine.m in Sources */,
 				9ABCAEFA1B0F8FEF00A69271 /* UIView+Mirror.m in Sources */,
+				87DAABE31E54430D00445EBB /* PaymentOptionTableViewCell.m in Sources */,
 				87D07D751E4097EE00C00AC6 /* CheckoutBaseViewController.m in Sources */,
 				FFF9006B1C6A31A700DDF538 /* JANewsletterViewController.m in Sources */,
 				9A6BC07C1C40132100DD9492 /* JAOrderItemCollectionViewCell.m in Sources */,
@@ -4710,7 +4686,6 @@
 				9AE766CD1CBCF31400B63D8E /* JACartResumeView.m in Sources */,
 				CE9ADF3E1AB6D78200D56481 /* JAAppDelegate.m in Sources */,
 				CE9ADF3F1AB6D78200D56481 /* JACampaignProductCell.m in Sources */,
-				87459CB41E4F34C500743120 /* PaymentDescTableViewCell.m in Sources */,
 				875AD57C1E38C0C900584ABF /* RICommunicationWrapper.m in Sources */,
 				875AD5641E38C0C900584ABF /* RILocale.m in Sources */,
 				874AAB651E3CE35B00B3F8FE /* ConfigManager-Consts.m in Sources */,
@@ -4974,7 +4949,6 @@
 				CE9ADFF41AB6D78200D56481 /* JAActivityViewController.m in Sources */,
 				CE9ADFF51AB6D78200D56481 /* JAOrderViewController.m in Sources */,
 				CE9ADFF61AB6D78200D56481 /* JAShippingInfoCell.m in Sources */,
-				87459CAB1E4F346C00743120 /* OnlinePaymentVariationTableViewCell.m in Sources */,
 				87459C8D1E4F04AD00743120 /* RadioButtonViewControl.m in Sources */,
 				9AC4D6991B45A51A00036F1C /* JACatalogListCollectionViewCell.m in Sources */,
 				9AEF73F91CD20E1C00A5D574 /* JAReturnStepByStepModel.m in Sources */,

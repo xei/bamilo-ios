@@ -7,6 +7,7 @@
 //
 
 #import "AddressTableViewCell.h"
+#import "IconButton.h"
 #import "Address.h"
 
 @interface AddressTableViewCell()
@@ -14,9 +15,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *addressTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressPhoneLabel;
-@property (weak, nonatomic) IBOutlet UIButton *addressEditButton;
-@property (weak, nonatomic) IBOutlet UIImageView *addressEditPencilIcon;
+@property (weak, nonatomic) IBOutlet IconButton *addressEditButton;
+@property (weak, nonatomic) IBOutlet IconButton *addressDeleteButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *checkmarkIconTrailingConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *deleteButtonWidthConstraint;
 @end
 
 @implementation AddressTableViewCell
@@ -25,7 +27,6 @@
     [super awakeFromNib];
     
     self.contentView.backgroundColor = [UIColor whiteColor];
-    self.selectionStyle = UITableViewCellSelectionStyleGray;
     
     //Address Title Label Setup
     [self.addressTitleLabel applyStyle:kFontBoldName fontSize:12 color:cEXTRA_DARK_GRAY_COLOR];
@@ -39,18 +40,34 @@
     //Address Edit Button Setup
     [self.addressEditButton applyStyle:kFontRegularName fontSize:11 color:cLIGHT_GRAY_COLOR];
     self.addressEditButton.titleLabel.text = STRING_EDIT;
+    
+    //Address Remove Button Setup
+    [self.addressDeleteButton applyStyle:kFontRegularName fontSize:11 color:cLIGHT_GRAY_COLOR];
+    self.addressDeleteButton.titleLabel.text = STRING_REMOVE;
+    
+    [self updateAppearanceToInitialState];
 }
 
--(void)setIsReadOnly:(BOOL)isReadOnly {
-    if(isReadOnly) {
-        self.addressEditPencilIcon.hidden = self.addressEditButton.hidden = YES;
-        self.checkmarkIconTrailingConstraint.constant = -1 * self.checkmarkIconImageView.frame.size.width;
-    } else {
-        self.addressEditPencilIcon.hidden = self.addressEditButton.hidden = NO;
-        self.checkmarkIconTrailingConstraint.constant = 10;
+-(void)setOptions:(AddressCellOptions)options {
+    [self updateAppearanceToInitialState];
+    
+    if((options & ADDRESS_CELL_NONE) == ADDRESS_CELL_NONE) {
+        return;
     }
     
-    _isReadOnly = isReadOnly;
+    if((options & ADDRESS_CELL_EDIT) == ADDRESS_CELL_EDIT) {
+        self.addressEditButton.hidden = NO;
+    }
+    
+    if((options & ADDRESS_CELL_DELETE) == ADDRESS_CELL_DELETE) {
+        self.deleteButtonWidthConstraint.constant = 45;
+        self.addressDeleteButton.hidden = NO;
+    }
+    
+    if((options & ADDRESS_CELL_SELECT) == ADDRESS_CELL_SELECT) {
+        self.checkmarkIconTrailingConstraint.constant = 10;
+        self.selectionStyle = UITableViewCellSelectionStyleGray;
+    }
 }
 
 #pragma mark - Overrides
@@ -94,6 +111,15 @@
 
 #pragma mark - IBActions
 - (IBAction)addressEditButtonTapped:(id)sender {
+}
+
+#pragma mark - Helpers
+-(void) updateAppearanceToInitialState {
+    self.checkmarkIconTrailingConstraint.constant = -1 * self.checkmarkIconImageView.frame.size.width;
+    self.addressEditButton.hidden = YES;
+    self.addressDeleteButton.hidden = YES;
+    self.deleteButtonWidthConstraint.constant = 0;
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
 @end

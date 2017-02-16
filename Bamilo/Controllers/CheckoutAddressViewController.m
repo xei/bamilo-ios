@@ -22,9 +22,10 @@
     
     AddressViewController *addressViewController = (AddressViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"AddressViewController"];
     [self addChildViewController:addressViewController];
-    addressViewController.view.frame = self.addressView.frame;
     addressViewController.titleHeaderText = STRING_PLEASE_CHOOSE_YOUR_ADDRESS;
-    self.addressView = addressViewController.view;
+    addressViewController.options = (ADDRESS_CELL_EDIT | ADDRESS_CELL_SELECT);
+    [addressViewController.view setFrame:CGRectMake(0, 0, self.addressView.width, self.addressView.height)];
+    [self.addressView addSubview:addressViewController.view];
     [addressViewController didMoveToParentViewController:self];
 }
 

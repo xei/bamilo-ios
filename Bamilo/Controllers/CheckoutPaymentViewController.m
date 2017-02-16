@@ -11,8 +11,7 @@
 #import "CheckoutProgressViewButtonModel.h"
 #import "PlainTableViewHeaderCell.h"
 #import "PaymentTypeTableViewCell.h"
-#import "OnlinePaymentVariationTableViewCell.h"
-#import "PaymentDescTableViewCell.h"
+#import "PaymentOptionTableViewCell.h"
 #import "RIPaymentMethodForm.h"
 
 typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
@@ -26,10 +25,8 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
 
 @implementation CheckoutPaymentViewController {
 @private
-    NSMutableArray *_cellsIndexPaths;
-    PaymentMethod _selectedPaymentMethod;
-    NSInteger _indexForOnlineMethodVariation;
-    NSArray *_onlinePaymentVariations;
+    NSArray *_paymentMethods;
+    int _selectedPaymentMethodIndex;
 }
 
 - (void)viewDidLoad {
@@ -41,11 +38,8 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
     //PaymentTypeTableViewCell
     [self.tableView registerNib:[UINib nibWithNibName:[PaymentTypeTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[PaymentTypeTableViewCell nibName]];
     
-    //OnlinePaymentVariationTableViewCell
-    [self.tableView registerNib:[UINib nibWithNibName:[OnlinePaymentVariationTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[OnlinePaymentVariationTableViewCell nibName]];
-    
-    //PaymentDescTableViewCell
-    [self.tableView registerNib:[UINib nibWithNibName:[PaymentDescTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[PaymentDescTableViewCell nibName]];
+    //PaymentOptionTableViewCell
+    [self.tableView registerNib:[UINib nibWithNibName:[PaymentOptionTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[PaymentOptionTableViewCell nibName]];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
@@ -76,10 +70,6 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
     nil],
     nil];
     */
-    
-    //Select Online Payment and Saman By Default
-    _selectedPaymentMethod = PAYMENT_METHOD_ONLINE;
-    _indexForOnlineMethodVariation = 0;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -88,10 +78,13 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
     [[DataManager sharedInstance] getMultistepPayment:self completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
-            //NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
-            //[[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
             
-            _onlinePaymentVariations = [RIPaymentMethodForm getPaymentMethodsInForm:self.cart.formEntity.paymentMethodForm];
+            NSDictionary* userInfo = [NSDictionary dictionaryWithObject:self.cart forKey:kUpdateCartNotificationValue];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
+            
+            _paymentMethods = [RIPaymentMethodForm getPaymentMethodsInForm:self.cart.formEntity.paymentMethodForm];
+            
+            [self.tableView reloadData];
         }
     }];
 }
@@ -105,15 +98,44 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
 
 #pragma mark - UITableViewDataSource
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [_cellsIndexPaths count];
+    return [_paymentMethods count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[_cellsIndexPaths objectAtIndex:section] count];
+    return 2; //PaymentType and PaymentOption
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSIndexPath *_cellIndexPath = [[_cellsIndexPaths objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    RIPaymentMethodFormOption *paymentMethod = [_paymentMethods objectAtIndex:indexPath.section];
+    
+    switch (indexPath.row) {
+        case 0: {
+            PaymentTypeTableViewCell *onlinePaymentTableViewCell = [tableView dequeueReusableCellWithIdentifier:[PaymentTypeTableViewCell nibName] forIndexPath:indexPath];
+            onlinePaymentTableViewCell.tag = indexPath.section;
+            onlinePaymentTableViewCell.delegate = self;
+            
+            PaymentTypeTableViewCellModel *model = [PaymentTypeTableViewCellModel new];
+            model.title = paymentMethod.displayName;
+            model.isSelected = (_selectedPaymentMethodIndex == indexPath.section);
+            [onlinePaymentTableViewCell updateWithModel:model];
+            
+            return onlinePaymentTableViewCell;
+        }
+        
+        case 1: {
+            PaymentOptionTableViewCell *paymentOptionTableViewCell = [tableView dequeueReusableCellWithIdentifier:[PaymentOptionTableViewCell nibName] forIndexPath:indexPath];
+            
+            PaymentOptionTableViewCellModel *model = [PaymentOptionTableViewCellModel new];
+            model.descText = paymentMethod.text;
+            model.logoImageUrl = paymentMethod.icon.imageUrlForEnabled;
+            model.isSelected = (_selectedPaymentMethodIndex == indexPath.section);
+            [paymentOptionTableViewCell updateWithModel:model];
+            
+            return paymentOptionTableViewCell;
+        }
+    }
+    
+    /*NSIndexPath *_cellIndexPath = [_paymentMethods objectAtIndex:indexPath.section]
                     
     switch (_cellIndexPath.section) {
         case 0 : {
@@ -171,18 +193,19 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
                     return payOnDeliveryTableViewCell;
                 }
             }
-        }
+        }b
     }
-    
+    */
     return nil;
 }
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     switch (section) {
-        case 0: return [PlainTableViewHeaderCell cellHeight];
+        case 0:
+            return [PlainTableViewHeaderCell cellHeight];
     }
-    
+
     return 0.0f;
 }
 
@@ -199,9 +222,6 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    switch (indexPath.section) {
-        case 1: return [OnlinePaymentVariationTableViewCell cellHeight];
-    }
     return UITableViewAutomaticDimension;
 }
 
@@ -211,28 +231,11 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
 
 #pragma mark - RadioButtonViewControlDelegate
 -(void)didSelectRadioButton:(id)sender {
-    if ([sender isKindOfClass:[PaymentTypeTableViewCell class]]) {
+    if([sender isKindOfClass:[PaymentTypeTableViewCell class]]) {
         PaymentTypeTableViewCell *radioButtonPaymentTypeTableViewCell = (PaymentTypeTableViewCell *)sender;
-        _selectedPaymentMethod = (PaymentMethod)radioButtonPaymentTypeTableViewCell.tag;
+        _selectedPaymentMethodIndex = (int)radioButtonPaymentTypeTableViewCell.tag;
         
-        switch (_selectedPaymentMethod) {
-            case PAYMENT_METHOD_ONLINE:
-                [_cellsIndexPaths setObject:[NSMutableArray indexPathArrayOfLength:2 forSection:1] atIndexedSubscript:1];
-                [[_cellsIndexPaths objectAtIndex:0] addObject:[NSIndexPath indexPathForRow:1 inSection:0]];
-                [[_cellsIndexPaths objectAtIndex:2] removeObjectAtIndex:1];
-            break;
-                
-            case PAYMENT_METHOD_ON_DELIVERY:
-                [_cellsIndexPaths setObject:@[] atIndexedSubscript:1];
-                [[_cellsIndexPaths objectAtIndex:0] removeObjectAtIndex:1];
-                [[_cellsIndexPaths objectAtIndex:2] addObject:[NSIndexPath indexPathForRow:1 inSection:2]];
-            break;
-        }
         [self.tableView reloadData];
-    } else if([sender isKindOfClass:[OnlinePaymentVariationTableViewCell class]]) {
-        OnlinePaymentVariationTableViewCell *onlinePaymentVariationTableViewCell = (OnlinePaymentVariationTableViewCell *)sender;
-        _indexForOnlineMethodVariation = onlinePaymentVariationTableViewCell.tag;
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
     }
 }
 

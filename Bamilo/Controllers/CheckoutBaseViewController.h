@@ -6,12 +6,12 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import "JABaseViewController.h"
-#import "BaseViewController.h"
+
+#import "ProtectedViewController.h"
 #import "CheckoutProgressViewControl.h"
 #import "DataServiceProtocol.h"
 
-@interface CheckoutBaseViewController : BaseViewController <DataServiceProtocol, CheckoutProgressViewDelegate>
+@interface CheckoutBaseViewController : ProtectedViewController <DataServiceProtocol, CheckoutProgressViewDelegate>
 
 -(NSString *)getNextStepViewControllerSegueIdentifier;
 

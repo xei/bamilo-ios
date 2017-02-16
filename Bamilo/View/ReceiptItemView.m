@@ -9,8 +9,6 @@
 #import "ReceiptItemView.h"
 #import "ReceiptItemModel.h"
 
-#define cDARK_GRAY_COLOR [UIColor withRGBA:115 green:115 blue:115 alpha:1.0f]
-
 @interface ReceiptItemView()
 @property (weak, nonatomic) IBOutlet UILabel *itemNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *itemPriceLabel;

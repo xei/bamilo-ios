@@ -19,6 +19,7 @@
 #import "NSString+Extensions.h"
 #import "RIAddress.h"
 //#import "JAPicker.h"
+#import "ViewControllerManager.h"
 
 @interface JACartViewController ()  <CartTableViewCellDelegate> /*<JACartProductsProtocol , JAPickerDelegate> */
 
@@ -131,7 +132,23 @@
 }
 
 - (IBAction)proceedToCheckout:(id)sender {
-
+    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+    [trackingDictionary setValue:@"Started" forKey:kRIEventActionKey];
+    [trackingDictionary setValue:@"Checkout" forKey:kRIEventCategoryKey];
+    [trackingDictionary setValue:[NSNumber numberWithInteger:[[self.cart.cartEntity cartItems] count]] forKey:kRIEventQuantityKey];
+    [trackingDictionary setValue:[self.cart.cartEntity cartValueEuroConverted] forKey:kRIEventTotalCartKey];
+    NSMutableString* attributeSetID = [NSMutableString new];
+    for (RICartItem* pd in [self.cart.cartEntity cartItems]) {
+        [attributeSetID appendFormat:@"%@;",[pd attributeSetID]];
+    }
+    [trackingDictionary setValue:[attributeSetID copy] forKey:kRIEventAttributeSetIDCartKey];
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutStart] data:[trackingDictionary copy]];
+    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"CheckoutAddress"];
+    
+    [[ViewControllerManager centerViewController] requestNavigateTo:@"CheckoutAddressViewController" ofStoryboard:@"Checkout" useCache:NO args:nil];
+    
+    /*
     [JAAuthenticationViewController goToCheckoutWithBlock:^{
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
@@ -186,7 +203,7 @@
             
             [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:nil objects:nil];
         }];
-    }];
+    }];*/
 }
 
 - (void) proceedToCall {

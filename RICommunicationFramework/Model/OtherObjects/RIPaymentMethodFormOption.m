@@ -8,6 +8,9 @@
 
 #import "RIPaymentMethodFormOption.h"
 
+@implementation PaymentMethodIcon
+@end
+
 @implementation RIPaymentMethodFormOption
 
 + (RIPaymentMethodFormOption *)parseField:(NSDictionary *)fieldJSON
@@ -32,6 +35,18 @@
         if (VALID_NOTEMPTY([descriptionObject objectForKey:@"images"], NSArray)) {
             NSArray *images = [descriptionObject objectForKey:@"images"];
             newOption.images = [images copy];
+        }
+        
+        //###########################
+        if (VALID_NOTEMPTY([descriptionObject objectForKey:@"icons"], NSDictionary)) {
+            NSDictionary *icons = [descriptionObject objectForKey:@"icons"];
+            newOption.icon = [PaymentMethodIcon new];
+            newOption.icon.imageUrlForEnabled = [[icons objectForKey:@"enable"] objectAtIndex:0];
+            newOption.icon.imageUrlForDisabled = [[icons objectForKey:@"disable"] objectAtIndex:0];
+        }
+        
+        if (VALID_NOTEMPTY([descriptionObject objectForKey:@"display_name"], NSString)) {
+            newOption.displayName = [descriptionObject objectForKey:@"display_name"];
         }
     }
     

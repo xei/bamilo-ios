@@ -108,7 +108,7 @@
 #define STRING_RECOMMENDED_FOR_YOU RILocalizedString(@"recommended_for_you", nil)
 #define STRING_COUPON RILocalizedString(@"my_order_coupon_label", nil)
 #define STRING_USE RILocalizedString(@"voucher_use", nil)
-#define STRING_REMOVE RILocalizedString(@"voucher_remove", nil)
+#define STRING_VOUCHER_REMOVE RILocalizedString(@"voucher_remove", nil)
 #define STRING_ENTER_COUPON RILocalizedString(@"voucher_message_hint", nil)
 #define STRING_CALL_TO_ORDER RILocalizedString(@"call_to_order", nil)
 #define STRING_ARTICLE RILocalizedString(@"string_article", nil)
@@ -474,5 +474,6 @@
 #define STRING_PAYMENT_OPTION RILocalizedString(@"payment_option", nil)
 #define STRING_ONLINE_PAYMENT RILocalizedString(@"online_payment", nil)
 #define STRING_PAY_ON_DELIVERY RILocalizedString(@"pay_on_delivery", nil)
+#define STRING_REMOVE RILocalizedString(@"string_remove", nil)
 
 #endif

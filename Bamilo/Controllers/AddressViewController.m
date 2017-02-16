@@ -8,11 +8,10 @@
 
 #import "AddressViewController.h"
 #import "AddressTableViewHeaderCell.h"
-#import "AddressTableViewCell.h"
 #import "AddressList.h"
 #import "DataManager.h"
 
-@interface AddressViewController()
+@interface AddressViewController() <UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @end
 
@@ -26,15 +25,25 @@
     return STRING_PLEASE_CHOOSE_YOUR_ADDRESS;
 }
 
+-(void)awakeFromNib {
+    [super awakeFromNib];
+    
+    self.options = (ADDRESS_CELL_EDIT | ADDRESS_CELL_DELETE | ADDRESS_CELL_SELECT);
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     [self.tableView registerNib:[UINib nibWithNibName:[AddressTableViewHeaderCell nibName] bundle:nil] forHeaderFooterViewReuseIdentifier:[AddressTableViewHeaderCell nibName]];
     [self.tableView registerNib:[UINib nibWithNibName:[AddressTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[AddressTableViewCell nibName]];
     
     self.tableView.separatorInset = UIEdgeInsetsZero;
     
     _addresses = [NSMutableArray array];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     
     [[DataManager sharedInstance] getUserAddressList:self completion:^(id data, NSError *error) {
         if(error == nil) {
@@ -97,6 +106,7 @@
     AddressTableViewCell *addressTableViewCell = [self.tableView dequeueReusableCellWithIdentifier:[AddressTableViewCell nibName] forIndexPath:indexPath];
     
     [addressTableViewCell updateWithModel:[_addresses objectAtIndex:indexPath.row]];
+    addressTableViewCell.options = self.options;
     
     return addressTableViewCell;
 }
