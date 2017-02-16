@@ -17,4 +17,8 @@
     self.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
+- (void)updateWithModel:(id)model {
+    return;
+}
+
 @end

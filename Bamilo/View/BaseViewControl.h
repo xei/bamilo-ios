@@ -10,4 +10,5 @@
 
 @interface BaseViewControl : UIView
 
+- (void)updateWithModel:(id)model;
 @end

@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ProtectedViewControllerProtocol.h"
 
-@interface JAUserDataViewController : JABaseViewController
+@interface JAUserDataViewController : JABaseViewController <ProtectedViewControllerProtocol>
 
 @end

@@ -134,7 +134,7 @@
  *
  * @return success case user is logged by facebook
  */
-+ (BOOL)checkIfUserIsLoggedByFacebook;
+//+ (BOOL)checkIfUserIsLoggedByFacebook;
 
 /**
  * Method to check if the user is logged as guest

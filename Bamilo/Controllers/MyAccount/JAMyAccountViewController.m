@@ -61,7 +61,8 @@
                                                                     @"icon": @"user-information-icons",
                                                                     @"cellType": IconTableViewCell.nibName,
                                                                     @"notification" : kShowUserDataScreenNotification,
-                                                                    @"animated" : @YES
+                                                                    @"animated" : @YES,
+                                                                    @"CLASS": @"JAUserDataViewController"
                                                                     },
                                                                 @{
                                                                     @"title": STRING_MY_ADDRESSES,
@@ -69,7 +70,7 @@
                                                                     @"cellType": IconTableViewCell.nibName,
                                                                     @"notification": kShowCheckoutAddressesScreenNotification,
                                                                     @"animated" : @NO,
-                                                                    @"CVC": @"AddressViewController"
+                                                                    @"NIB": @"AddressViewController"
                                                                     },
                                                                 @{
                                                                     @"title": STRING_TRACK_MY_ORDER,
@@ -185,10 +186,13 @@
 
     NSDictionary *selectedObjItem = self.tableViewListItems[indexPath.row];
 
-    NSString *cvc = [selectedObjItem objectForKey:@"CVC"];
+    NSString *nib = [selectedObjItem objectForKey:@"NIB"];
+    NSString *class = [selectedObjItem objectForKey:@"CLASS"];
 
-    if(cvc) {
-        [[ViewControllerManager centerViewController] requestNavigateTo:cvc args:nil];
+    if(nib) {
+        [[ViewControllerManager centerViewController] requestNavigateToNib:nib args:nil];
+    } else if(class) {
+        [[ViewControllerManager centerViewController] requestNavigateToClass:class args:nil];
     } else {
         if ([[selectedObjItem objectForKey:@"selector"] pointerValue]) {
             SEL customSelector = [[selectedObjItem objectForKey:@"selector"] pointerValue];

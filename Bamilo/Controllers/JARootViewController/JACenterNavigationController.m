@@ -73,8 +73,8 @@
 #import "ContactUsViewController.h"
 #import "CheckoutAddressViewController.h"
 #import "CartViewController.h"
-#import "ProtectedViewController.h"
 #import "AuthenticationContainerViewController.h"
+#import "ProtectedViewControllerProtocol.h"
 
 @interface JACenterNavigationController ()
 
@@ -422,13 +422,11 @@
                                                object:nil];
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
-- (void)loadNavigationViews
-{
+- (void)loadNavigationViews {
     [self.navigationBarView removeFromSuperview];
     [self.tabBarView removeFromSuperview];
     
@@ -437,8 +435,7 @@
 }
 
 
-- (void)openTargetString:(NSString *)targetString
-{
+- (void)openTargetString:(NSString *)targetString {
     JAScreenTarget *screenTarget = [JAScreenTarget new];
     screenTarget.target = [RITarget parseTarget:targetString];
     [self openScreenTarget:screenTarget];
@@ -509,8 +506,7 @@
     }
 }
 
-- (void)loadScreenTarget:(JAScreenTarget *)screenTarget forBaseViewController:(JABaseViewController *)viewController
-{
+- (void)loadScreenTarget:(JAScreenTarget *)screenTarget forBaseViewController:(JABaseViewController *)viewController {
     if (VALID(screenTarget.navBarLayout, JANavigationBarLayout)) {
         [viewController setNavBarLayout:screenTarget.navBarLayout];
     }
@@ -518,8 +514,7 @@
 }
 
 #pragma mark Home Screen
-- (void)showHomeScreen:(NSNotification*)notification
-{
+- (void)showHomeScreen:(NSNotification*)notification {
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAHomeViewController class]])
     {
@@ -942,8 +937,7 @@
     if ([topViewController isKindOfClass:[JAMyOrdersViewController class]]) {
         
         NSDictionary *userInfo = notification.userInfo;
-        if(VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"order"], RITrackOrder))
-        {
+        if(VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"order"], RITrackOrder)) {
             JAMyOrderDetailViewController *myOrderVC = [JAMyOrderDetailViewController new];
             myOrderVC.trackingOrder = [userInfo objectForKey:@"order"];
             
@@ -966,11 +960,8 @@
             
             [self pushViewController:userData animated:animated];
         }
-    }
-    else
-    {
-        if (![topViewController isKindOfClass:[JAAuthenticationViewController class]])
-        {
+    } else {
+        if (![topViewController isKindOfClass:[JAAuthenticationViewController class]]) {
             JAAuthenticationViewController *auth = [[JAAuthenticationViewController alloc] init];
             
             auth.navBarLayout.showBackButton = YES;
@@ -2012,21 +2003,39 @@
 }
 
 //#####################################################################################################################
--(void) requestNavigateTo:(NSString *)destination args:(NSDictionary *)args {
-    [self requestNavigateTo:destination ofStoryboard:@"Main" useCache:NO args:args];
+-(void) requestNavigateToNib:(NSString *)destNib args:(NSDictionary *)args {
+    [self requestNavigateToNib:destNib ofStoryboard:@"Main" useCache:YES args:args];
 }
 
--(void) requestNavigateTo:(NSString *)destination ofStoryboard:(NSString *)storyboard useCache:(BOOL)useCache args:(NSDictionary *)args {
-    UIViewController *destViewController = [[ViewControllerManager sharedInstance] loadViewController:storyboard nibName:destination resetCache:!useCache];
-    if(destViewController) {
-        if([destViewController isKindOfClass:[ProtectedViewController class]] && ![RICustomer checkIfUserIsLogged]) {
+-(void) requestNavigateToNib:(NSString *)destNib ofStoryboard:(NSString *)storyboard useCache:(BOOL)useCache args:(NSDictionary *)args {
+    UIViewController *destViewController;
+    
+    if(storyboard == nil) {
+        destViewController = [[ViewControllerManager sharedInstance] loadNib:destNib resetCache:!useCache];
+    } else {
+        destViewController = [[ViewControllerManager sharedInstance] loadViewController:storyboard nibName:destNib resetCache:!useCache];
+    }
+    
+    [self requestNavigateToViewController:destViewController args:args];
+}
+
+-(void) requestNavigateToClass:(NSString *)destClass args:(NSDictionary *)args {
+    UIViewController *destViewController = (UIViewController *)[NSClassFromString(destClass) new];
+    
+    [self requestNavigateToViewController:destViewController args:args];
+}
+
+#pragma mark - Helpers
+-(void) requestNavigateToViewController:(UIViewController *)viewController args:(NSDictionary *)args {
+    if(viewController) {
+        if([viewController conformsToProtocol:@protocol(ProtectedViewControllerProtocol)] && ![RICustomer checkIfUserIsLogged]) {
             AuthenticationCompletion _authenticationCompletion = ^(AuthenticationStatus status) {
                 switch (status) {
                     case AUTHENTICATION_FINISHED_WITH_LOGIN:
                     case AUTHENTICATION_FINISHED_WITH_REGISTER:
                         [self popViewControllerAnimated:NO];
-                        [self pushViewController:destViewController animated:YES];
-                    break;
+                        [self pushViewController:viewController animated:YES];
+                        break;
                         
                     default:
                         break;
@@ -2040,7 +2049,7 @@
             
             [self pushViewController:authViewController animated:YES];
         } else {
-            [self pushViewController:destViewController animated:YES];
+            [self pushViewController:viewController animated:YES];
         }
     }
 }
