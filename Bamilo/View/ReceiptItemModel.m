@@ -10,11 +10,10 @@
 
 @implementation ReceiptItemModel
 
-+(instancetype) with:(NSString *)name price:(NSString *)price currency:(NSString *)currency {
++ (instancetype)withName:(NSString *)name value:(NSString *)value {
     ReceiptItemModel *model = [[ReceiptItemModel alloc] init];
     model.itemName = name;
-    model.itemPrice = price;
-    model.itemCurrency = currency;
+    model.itemValue = value;
 
     return model;
 }

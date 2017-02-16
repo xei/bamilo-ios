@@ -7,7 +7,6 @@
 //
 
 #import "ReceiptView.h"
-#import "ReceiptItemView.h"
 
 @interface ReceiptView() <UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -31,30 +30,30 @@
 }
 
 #pragma mark - Overrides
-+(NSString *)nibName {
++ (NSString *)nibName {
     return @"ReceiptView";
 }
 
--(void)updateWithModel:(id)model {
+- (void)updateWithModel:(id)model {
     _items = (NSArray *)model;
     [self.tableView reloadData];
 }
 
 #pragma mark - UITableViewDelegate
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [ReceiptItemView cellHeight];
 }
 
 #pragma mark - UITableViewDataSource
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return _items.count;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ReceiptItemView *receiptItemView = [self.tableView dequeueReusableCellWithIdentifier:[ReceiptItemView nibName] forIndexPath:indexPath];
     [receiptItemView updateWithModel:[_items objectAtIndex:indexPath.row]];
     return receiptItemView;

@@ -51,7 +51,9 @@
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [super touchesBegan:touches withEvent:event];
     [self.imageView.layer addAnimation: self.bounceAnim forKey:nil];
+    [self.nextResponder touchesBegan:touches withEvent:event];
 }
 
 @end

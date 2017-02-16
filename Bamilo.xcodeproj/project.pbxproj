@@ -41,6 +41,8 @@
 		61C5C40D1E545C6200F22130 /* CartEntitySummeryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61C5C40C1E545C6200F22130 /* CartEntitySummeryView.m */; };
 		61C5C40F1E545C7500F22130 /* CartEntitySummeryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61C5C40E1E545C7400F22130 /* CartEntitySummeryView.xib */; };
 		61C5C4141E54674600F22130 /* CartEntitySummeryViewControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 61C5C4131E54674600F22130 /* CartEntitySummeryViewControl.m */; };
+		61C5C4191E54796A00F22130 /* RecieptViewCartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61C5C4171E54796A00F22130 /* RecieptViewCartTableViewCell.m */; };
+		61C5C41A1E54796A00F22130 /* RecieptViewCartTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61C5C4181E54796A00F22130 /* RecieptViewCartTableViewCell.xib */; };
 		61CBA0391E51A72A005673F7 /* ForgetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA0381E51A72A005673F7 /* ForgetPasswordViewController.m */; };
 		61CBA03D1E51A75C005673F7 /* ContinueWitoutLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA03C1E51A75C005673F7 /* ContinueWitoutLoginViewController.m */; };
 		61CBA0421E51BA33005673F7 /* FormViewControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA0411E51BA33005673F7 /* FormViewControl.m */; };
@@ -607,6 +609,9 @@
 		61C5C40E1E545C7400F22130 /* CartEntitySummeryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartEntitySummeryView.xib; sourceTree = "<group>"; };
 		61C5C4121E54674600F22130 /* CartEntitySummeryViewControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartEntitySummeryViewControl.h; sourceTree = "<group>"; };
 		61C5C4131E54674600F22130 /* CartEntitySummeryViewControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartEntitySummeryViewControl.m; sourceTree = "<group>"; };
+		61C5C4161E54796A00F22130 /* RecieptViewCartTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecieptViewCartTableViewCell.h; sourceTree = "<group>"; };
+		61C5C4171E54796A00F22130 /* RecieptViewCartTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecieptViewCartTableViewCell.m; sourceTree = "<group>"; };
+		61C5C4181E54796A00F22130 /* RecieptViewCartTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecieptViewCartTableViewCell.xib; sourceTree = "<group>"; };
 		61CBA0371E51A72A005673F7 /* ForgetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetPasswordViewController.h; sourceTree = "<group>"; };
 		61CBA0381E51A72A005673F7 /* ForgetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgetPasswordViewController.m; sourceTree = "<group>"; };
 		61CBA03B1E51A75C005673F7 /* ContinueWitoutLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContinueWitoutLoginViewController.h; sourceTree = "<group>"; };
@@ -1951,6 +1956,16 @@
 			name = Control;
 			sourceTree = "<group>";
 		};
+		61C5C4151E54791900F22130 /* RecieptViewCartTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				61C5C4161E54796A00F22130 /* RecieptViewCartTableViewCell.h */,
+				61C5C4171E54796A00F22130 /* RecieptViewCartTableViewCell.m */,
+				61C5C4181E54796A00F22130 /* RecieptViewCartTableViewCell.xib */,
+			);
+			name = RecieptViewCartTableViewCell;
+			sourceTree = "<group>";
+		};
 		61CBA03A1E51A72E005673F7 /* ForgetPasswordViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -3205,6 +3220,7 @@
 		87B684E01E49F2FD0042C09F /* Receipt */ = {
 			isa = PBXGroup;
 			children = (
+				61C5C4151E54791900F22130 /* RecieptViewCartTableViewCell */,
 				87B684F21E4A03E90042C09F /* Model */,
 				87B684E71E49FDEB0042C09F /* ReceiptItemView */,
 				87B684FF1E4AFA720042C09F /* ReceiptView */,
@@ -4517,6 +4533,7 @@
 				9A564CB51B3411AD00F23057 /* JANewSellerRatingViewController.xib in Resources */,
 				CE9AE0B51AB6D78200D56481 /* JACheckBoxComponent.xib in Resources */,
 				CE9AE0B81AB6D78200D56481 /* JAPDVVariations~iPad.xib in Resources */,
+				61C5C41A1E54796A00F22130 /* RecieptViewCartTableViewCell.xib in Resources */,
 				CEDBF8791B0CEC570073971A /* JACheckBoxComponent_RTL.xib in Resources */,
 				87DAABE51E54431A00445EBB /* PaymentOptionTableViewCell.xib in Resources */,
 				CE9AE0C21AB6D78200D56481 /* JACatalogTopView_ipad.xib in Resources */,
@@ -4809,6 +4826,7 @@
 				875AD56E1E38C0C900584ABF /* RIProductSimple.m in Sources */,
 				875AD5801E38C0C900584ABF /* RITrackingWrapper.m in Sources */,
 				CE9ADF7D1AB6D78200D56481 /* JAPDVImageSection.m in Sources */,
+				61C5C4191E54796A00F22130 /* RecieptViewCartTableViewCell.m in Sources */,
 				CE9ADF831AB6D78200D56481 /* JAHomeViewController.m in Sources */,
 				875AD5791E38C0C900584ABF /* RISuccess.m in Sources */,
 				CE9ADF861AB6D78200D56481 /* JAColorFilterCell.m in Sources */,

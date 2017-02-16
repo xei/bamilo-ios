@@ -12,13 +12,10 @@
 #import "JAUtils.h"
 #import "RICartItem.h"
 #import "CartTableViewCell.h"
+#import "RecieptViewCartTableViewCell.h"
 #import "JAAuthenticationViewController.h"
 #import "NSString+Extensions.h"
 #import "RIAddress.h"
-//#import "JAPicker.h"
-#import "ViewControllerManager.h"
-#import "CartEntitySummeryViewControl.h"
-//#import "JAPicker.h"
 #import "ViewControllerManager.h"
 #import "CartEntitySummeryViewControl.h"
 
@@ -33,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *totalDiscountedPrice;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *costSummeryContainerTopToWholeCostTopConstraint;
 @property (weak, nonatomic) IBOutlet CartEntitySummeryViewControl *summeryView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *summeryViewToBottomConstraint;
 
 @end
 
@@ -58,10 +56,7 @@
     }
     
     self.totalPrice.text = cart.cartEntity.cartUnreducedValueFormatted;
-//    self.totalPaymentPrice.text = cart.cartEntity.cartValueFormatted;
     self.totalDiscountedPrice.text = cart.cartEntity.discountedValueFormated;
-//    self.totalPaymentTitleLabel.text = [[NSString stringWithFormat:@"جمع نهایی‌(%d کالا)", cart.cartEntity.cartCount.intValue] numbersToPersian];
-    
     [self.summeryView updateWithModel:self.cart.cartEntity];
 }
 
@@ -84,36 +79,11 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.tableView registerNib:[UINib nibWithNibName: [CartTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[CartTableViewCell nibName]];
-    
+    [self.tableView registerNib:[UINib nibWithNibName: [RecieptViewCartTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[RecieptViewCartTableViewCell nibName]];
+    self.summeryView.delegate = self;
 }
-
-/*
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self loadingCart];
-    if (self.firstLoading) {
-        NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
-        NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
-        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:[NSString stringWithFormat:@"%@", [skusFromTeaserInCart allKeys]]];
-        self.firstLoading = NO;
-    }
-}
-
-- (void)loadingCart {
-    [self showLoading];
-    [RICart getCartWithSuccessBlock:^(RICart *cartData) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo: @{kUpdateCartNotificationValue: cartData}];
-        self.cart = cartData;
-        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
-        [self hideLoading];
-    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
-        [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadingCart) objects:nil];
-        [self hideLoading];
-    }];
-}*/
 
 - (void)viewWillLayoutSubviews {
-
     [super viewWillLayoutSubviews];
     self.contentWrapper.frame = self.viewBounds;
 }
@@ -203,16 +173,9 @@
     }];*/
 }
 
-- (void) proceedToCall {
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"تماس با تیم خدمات مشتریان بامیلو" delegate:nil cancelButtonTitle:@"لغو" otherButtonTitles:@"تایید", nil];
-    alert.delegate = self;
-    [alert show];
-}
-
 - (void)removeCartItem:(RICartItem *)cartItem {
     [self showLoading];
-    [RICart removeProductWithSku:cartItem.simpleSku
-                withSuccessBlock:^(RICart *cart) {
+    [RICart removeProductWithSku:cartItem.simpleSku withSuccessBlock:^(RICart *cart) {
                     
                     NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
                     [skusFromTeaserInCart removeObjectForKey:cartItem.sku];
@@ -252,20 +215,15 @@
                     [self hideLoading];
                     
                     self.cart = cart;
-                    [self.tableView reloadData];
+        
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.tableView reloadData];
+                    });
                     
                 } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                     [self onErrorResponse:apiResponse messages:@[STRING_NO_NETWORK_DETAILS] showAsMessage:YES selector:@selector(removeCartItem:) objects:@[cartItem]];
                     [self hideLoading];
                 }];
-}
-
-- (IBAction)totalPaymentViewTapped :(id)sender{
-    if (self.costSummeryContainerTopToWholeCostTopConstraint.constant == 0) {
-        [self changeTheSummeryTopConstraintByAnimationTo:75];
-    } else {
-        [self changeTheSummeryTopConstraintByAnimationTo:0];
-    }
 }
 
 - (void) changeTheSummeryTopConstraintByAnimationTo:(CGFloat)constant {
@@ -275,9 +233,22 @@
     } completion:nil];
 }
 
+- (void) changeTheSummeryBottomConstraintByAnimationTo:(CGFloat)constant {
+    [UIView animateWithDuration:0.15 animations:^{
+        self.summeryViewToBottomConstraint.constant = constant;
+        [self.view layoutIfNeeded];
+    } completion:nil];
+}
+
 #pragma mark - tableView dataSource & delegates
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == self.cart.cartEntity.cartItems.count) {
+        RecieptViewCartTableViewCell *receiptView = [tableView dequeueReusableCellWithIdentifier:[RecieptViewCartTableViewCell nibName] forIndexPath:indexPath];
+        [receiptView updateWithModel:self.cart.cartEntity];
+        return receiptView;
+    }
+    
     CartTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:[CartTableViewCell nibName] forIndexPath:indexPath];
     cell.cartItem = self.cart.cartEntity.cartItems[indexPath.row];
     cell.delegate = self;
@@ -289,16 +260,38 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.cart.cartEntity.cartItems.count;
+    return self.cart.cartEntity.cartItems.count + 1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == self.cart.cartEntity.cartItems.count) {
+        return [RecieptViewCartTableViewCell cellHeightByModel:self.cart.cartEntity];
+    }
     return UITableViewAutomaticDimension;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (self.costSummeryContainerTopToWholeCostTopConstraint.constant == 75) {
         [self changeTheSummeryTopConstraintByAnimationTo:0];
+    }
+    
+    
+    // ------ if we are approching the end of tableview ------
+    CGPoint offset = self.tableView.contentOffset;
+    CGRect bounds = self.tableView.bounds;
+    CGSize size = self.tableView.contentSize;
+    UIEdgeInsets inset = self.tableView.contentInset;
+    float y = offset.y + bounds.size.height - inset.bottom;
+    float h = size.height;
+    float reload_distance = 30;
+    if(y + reload_distance > h) {
+        if (self.summeryViewToBottomConstraint.constant != -45) {
+            [self changeTheSummeryBottomConstraintByAnimationTo:-45];
+        }
+    } else {
+        if (self.summeryViewToBottomConstraint.constant != 0) {
+            [self changeTheSummeryBottomConstraintByAnimationTo:0];
+        }
     }
 }
 
@@ -333,8 +326,25 @@
     }
 }
 
+#pragma mark - CartTableViewCellDelegate
+
+- (void)wantsToLikeCartItem:(RICartItem *)cartItem byCell:(id)cartCell {
+    
+}
+
 - (void)wantsToRemoveCartItem:(RICartItem *)cartItem byCell:(id)cartCell {
     [self removeCartItem:cartItem];
 }
+
+#pragma mark - CartEntitySummeryViewControlDelegate
+- (void)cartEntityTapped:(id)cartEntityControl {
+    if (self.costSummeryContainerTopToWholeCostTopConstraint.constant == 0) {
+        [self changeTheSummeryTopConstraintByAnimationTo:75];
+    } else {
+        [self changeTheSummeryTopConstraintByAnimationTo:0];
+    }
+}
+
+
 
 @end

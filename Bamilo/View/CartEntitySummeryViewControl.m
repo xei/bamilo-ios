@@ -7,7 +7,6 @@
 //
 
 #import "CartEntitySummeryViewControl.h"
-#import "CartEntitySummeryView.h"
 
 @interface CartEntitySummeryViewControl()
 @property (nonatomic, strong) CartEntitySummeryView *summeryView;
@@ -19,8 +18,13 @@
     [super awakeFromNib];
     
     self.summeryView = [[[NSBundle mainBundle] loadNibNamed:@"CartEntitySummeryView" owner:self options:nil] lastObject];
+    self.summeryView.delegate = self;
     [self addSubview:self.summeryView];
     self.summeryView.frame = self.bounds;
+}
+
+- (void)setBackgroundColor:(UIColor *)backgroundColor {
+    [self.summeryView setBackgroundColor:backgroundColor];
 }
 
 - (void)updateWithModel:(id)model {
@@ -29,5 +33,10 @@
     }
     
     [self.summeryView setCartEntity:model]; 
+}
+
+#pragma mark - CartEntitySummeryViewDelegate
+- (void)cartEntitySummeryTapped:(id)view {
+    [self.delegate cartEntityTapped:self];
 }
 @end

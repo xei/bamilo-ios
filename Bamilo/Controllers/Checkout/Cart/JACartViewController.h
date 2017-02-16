@@ -8,9 +8,8 @@
 
 #import "JABaseViewController.h"
 #import "RICart.h"
+#import "CartEntitySummeryViewControl.h"
 
-@interface JACartViewController : JABaseViewController <UITableViewDataSource, UIScrollViewDelegate, UITableViewDelegate>
-
+@interface JACartViewController : JABaseViewController <UITableViewDataSource, UIScrollViewDelegate, UITableViewDelegate, CartEntitySummeryDelegate>
 @property (strong, nonatomic) RICart *cart;
-
 @end

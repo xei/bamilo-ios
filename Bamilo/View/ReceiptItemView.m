@@ -46,8 +46,7 @@
     ReceiptItemModel *receiptItemModel = (ReceiptItemModel *)model;
     
     self.itemNameLabel.text = receiptItemModel.itemName;
-    self.itemPriceLabel.text = receiptItemModel.itemPrice;
-    self.itemCurrencyLabel.text = receiptItemModel.itemCurrency;
+    self.itemPriceLabel.text = receiptItemModel.itemValue;
 }
 
 @end

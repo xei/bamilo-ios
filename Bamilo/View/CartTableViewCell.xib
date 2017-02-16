@@ -36,7 +36,7 @@
                             <view contentMode="scaleToFill" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="w6C-5U-LQK" userLabel="right side container view">
                                 <rect key="frame" x="235" y="44" width="130" height="202"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" image="C837F1AD-F9CD-453D-8D41-EC0D87DFD6FA" translatesAutoresizingMaskIntoConstraints="NO" id="RW7-NT-MKZ">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" image="F6E26047-207D-4823-9ACA-AD185A6472FE" translatesAutoresizingMaskIntoConstraints="NO" id="RW7-NT-MKZ">
                                         <rect key="frame" x="0.0" y="0.0" width="130" height="165"/>
                                         <gestureRecognizers/>
                                         <constraints>
@@ -69,6 +69,9 @@
                                                 <color key="value" red="0.92549019610000005" green="0.92549019610000005" blue="0.92549019610000005" alpha="1" colorSpace="calibratedRGB"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="likeBtnTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="D2X-CT-KTl"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sYJ-1V-WIX" userLabel="touchable cartImage wrapper">
                                         <rect key="frame" x="0.0" y="0.0" width="130" height="165"/>
@@ -156,15 +159,15 @@
                                     <action selector="gotoCartItemProduct:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="LlT-3A-0E2"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cfT-pD-aoq">
-                                <rect key="frame" x="10" y="7.5" width="25" height="25"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cfT-pD-aoq" customClass="IconButton">
+                                <rect key="frame" x="10" y="8" width="25" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="6On-wk-RGK"/>
                                     <constraint firstAttribute="width" constant="25" id="EMg-7F-ZsA"/>
                                 </constraints>
-                                <state key="normal" image="editAddress"/>
+                                <state key="normal" image="GrayClose"/>
                                 <connections>
-                                    <action selector="removeBtnTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="BWt-up-ZOp"/>
+                                    <action selector="removeBtnTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="63M-F6-Dl3"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -247,7 +250,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="C837F1AD-F9CD-453D-8D41-EC0D87DFD6FA" width="146" height="182">
+        <image name="F6E26047-207D-4823-9ACA-AD185A6472FE" width="146" height="182">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -2072,7 +2075,7 @@ AAGpQAABqUIAAalEAAGpSQABqVEAAalUAAGpWQABqWEAAalkAAGpdgABqXkAAal+AAAAAAAABAEAAAAA
 AAAAQQAAAAAAAAAAAAAAAAABqYA
 </mutableData>
         </image>
-        <image name="FavButton" width="20" height="18"/>
-        <image name="editAddress" width="21" height="18"/>
+        <image name="FavButton" width="15" height="13"/>
+        <image name="GrayClose" width="12" height="12"/>
     </resources>
 </document>

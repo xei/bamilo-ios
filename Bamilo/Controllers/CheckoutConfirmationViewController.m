@@ -116,9 +116,9 @@
                 case 2: {
                     ReceiptView *receiptView = [tableView dequeueReusableCellWithIdentifier:[ReceiptView nibName] forIndexPath:indexPath];
                     receiptViewItems = @[
-                         [ReceiptItemModel with:@"جمع کل" price:@"۹۹۹،۰۰۰،۵۵۵" currency:@"ریال"],
-                         [ReceiptItemModel with:@"مجموع تخفیفها" price:@"۱،۵۰۰،۰۰۰" currency:@"ریال"],
-                         [ReceiptItemModel with:@"هزینه حمل" price:@"۵۰۰،۰۰۰" currency:@"ریال"]
+                         [ReceiptItemModel withName:@"جمع کل" value:@"۹۹۹،۰۰۰،۵۵۵ ریال"],
+                         [ReceiptItemModel withName:@"مجموع تخفیفها" value:@"۱،۵۰۰،۰۰۰ ریال"],
+                         [ReceiptItemModel withName:@"هزینه حمل" value:@"۵۰۰،۰۰۰ ریال"]
                     ];
                     
                     [receiptView updateWithModel:receiptViewItems];
@@ -128,7 +128,7 @@
                 //Receipt Total View Cell
                 case 3: {
                     ReceiptItemView *receiptItemView = [tableView dequeueReusableCellWithIdentifier:[ReceiptItemView nibName] forIndexPath:indexPath];
-                    [receiptItemView updateWithModel:[ReceiptItemModel with:@"جمع نهایی :" price:@"۹۹۹،۰۰۰،۵۵۵" currency:@"ریال"]];
+                    [receiptItemView updateWithModel:[ReceiptItemModel withName:@"جمع نهایی :" value:@"۹۹۹،۰۰۰،۵۵۵ ریال"]];
                     [receiptItemView applyColor:cGREEN_COLOR];
                     return receiptItemView;
                 }

@@ -39,8 +39,8 @@
     [self.itemImage sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
     self.stepper.quantity = cartItem.quantity.intValue;
     self.stepper.maxQuantity = cartItem.maxQuantity.intValue;
-    NSString *realPrice = [[[NSString stringWithFormat:@"%d", cartItem.price.intValue] formatTheNumbers] numbersToPersian];
-    NSString *specialPrice = [[[NSString stringWithFormat:@"%d", cartItem.specialPrice.intValue] formatTheNumbers] numbersToPersian];
+    NSString *realPrice = cartItem.priceFormatted;
+    NSString *specialPrice = cartItem.specialPriceFormatted;
     self.priceLabel.text = specialPrice ?: realPrice;
     self.discountLabel.text = specialPrice ? realPrice : nil;
     self.discountValue.attributedText = [self.discountValue.text struckThroughText];
@@ -96,6 +96,9 @@
     [self.delegate wantsToRemoveCartItem:self.cartItem byCell:self];
 }
 
+- (IBAction)likeBtnTapped:(id)sender {
+    [self.delegate wantsToLikeCartItem:self.cartItem byCell:self];
+}
 
 #pragma StepperViewController Delegate
 - (void)valueHasBeenChanged:(id)stepperViewControl withNewValue:(int)value {

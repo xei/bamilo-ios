@@ -11,9 +11,8 @@
 @interface ReceiptItemModel : NSObject
 
 @property (copy, nonatomic) NSString *itemName;
-@property (copy, nonatomic) NSString *itemPrice;
-@property (copy, nonatomic) NSString *itemCurrency;
+@property (copy, nonatomic) NSString *itemValue;
 
-+(instancetype) with:(NSString *)name price:(NSString *)price currency:(NSString *)currency;
++ (instancetype)withName:(NSString *)name value:(NSString *)value;
 
 @end
