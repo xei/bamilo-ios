@@ -38,9 +38,9 @@
 		613FF2BF1E4B2871008660CF /* AuthenticationContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 613FF2BE1E4B2871008660CF /* AuthenticationContainerViewController.m */; };
 		613FF2C11E4B3D1B008660CF /* Authentication.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 613FF2C01E4B3D1B008660CF /* Authentication.storyboard */; };
 		617AAA441E503AB9004D9430 /* FormItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 617AAA431E503AB9004D9430 /* FormItemModel.m */; };
-		61C5C40D1E545C6200F22130 /* CartEntitySummeryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61C5C40C1E545C6200F22130 /* CartEntitySummeryView.m */; };
-		61C5C40F1E545C7500F22130 /* CartEntitySummeryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61C5C40E1E545C7400F22130 /* CartEntitySummeryView.xib */; };
-		61C5C4141E54674600F22130 /* CartEntitySummeryViewControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 61C5C4131E54674600F22130 /* CartEntitySummeryViewControl.m */; };
+		61C5C40D1E545C6200F22130 /* CartEntitySummaryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61C5C40C1E545C6200F22130 /* CartEntitySummaryView.m */; };
+		61C5C40F1E545C7500F22130 /* CartEntitySummaryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61C5C40E1E545C7400F22130 /* CartEntitySummaryView.xib */; };
+		61C5C4141E54674600F22130 /* CartEntitySummaryViewControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 61C5C4131E54674600F22130 /* CartEntitySummaryViewControl.m */; };
 		61C5C4191E54796A00F22130 /* RecieptViewCartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61C5C4171E54796A00F22130 /* RecieptViewCartTableViewCell.m */; };
 		61C5C41A1E54796A00F22130 /* RecieptViewCartTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61C5C4181E54796A00F22130 /* RecieptViewCartTableViewCell.xib */; };
 		61CBA0391E51A72A005673F7 /* ForgetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA0381E51A72A005673F7 /* ForgetPasswordViewController.m */; };
@@ -210,8 +210,10 @@
 		87D07D781E4097FF00C00AC6 /* CheckoutAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D07D771E4097FF00C00AC6 /* CheckoutAddressViewController.m */; };
 		87D07D7C1E4099C300C00AC6 /* CheckoutConfirmationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D07D7B1E4099C300C00AC6 /* CheckoutConfirmationViewController.m */; };
 		87D07D801E4099E800C00AC6 /* CheckoutPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D07D7F1E4099E800C00AC6 /* CheckoutPaymentViewController.m */; };
-		87DAABE31E54430D00445EBB /* PaymentOptionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DAABE21E54430D00445EBB /* PaymentOptionTableViewCell.m */; };
-		87DAABE51E54431A00445EBB /* PaymentOptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87DAABE41E54431A00445EBB /* PaymentOptionTableViewCell.xib */; };
+		87DAABE31E54430D00445EBB /* PaymentOptionWithLogoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DAABE21E54430D00445EBB /* PaymentOptionWithLogoTableViewCell.m */; };
+		87DAABE51E54431A00445EBB /* PaymentOptionWithLogoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87DAABE41E54431A00445EBB /* PaymentOptionWithLogoTableViewCell.xib */; };
+		87DAABE91E55A1C400445EBB /* PaymentOptionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DAABE81E55A1C400445EBB /* PaymentOptionTableViewCell.m */; };
+		87DAABEB1E55A2C100445EBB /* PaymentOptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87DAABEA1E55A2C100445EBB /* PaymentOptionTableViewCell.xib */; };
 		893AADD11C1F1A54006314FB /* JAMyOrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 893AADCD1C1F1A54006314FB /* JAMyOrderDetailViewController.m */; };
 		8968FE731C3AE33E00B28207 /* JAUserDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4431E91C242BA8005A8B4A /* JAUserDataViewController.m */; };
 		897460DE1C19DDFD00A38073 /* JACollectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 897460DA1C19DDFD00A38073 /* JACollectionHeaderView.m */; };
@@ -604,11 +606,11 @@
 		61C407C31E476486004ACEE8 /* StepperViewControlDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepperViewControlDelegate.h; sourceTree = "<group>"; };
 		61C407C41E476939004ACEE8 /* CartTableViewCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartTableViewCellDelegate.h; sourceTree = "<group>"; };
 		61C5C4081E54479100F22130 /* ProtectedViewControllerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtectedViewControllerProtocol.h; sourceTree = "<group>"; };
-		61C5C40B1E545C6200F22130 /* CartEntitySummeryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartEntitySummeryView.h; sourceTree = "<group>"; };
-		61C5C40C1E545C6200F22130 /* CartEntitySummeryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartEntitySummeryView.m; sourceTree = "<group>"; };
-		61C5C40E1E545C7400F22130 /* CartEntitySummeryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartEntitySummeryView.xib; sourceTree = "<group>"; };
-		61C5C4121E54674600F22130 /* CartEntitySummeryViewControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartEntitySummeryViewControl.h; sourceTree = "<group>"; };
-		61C5C4131E54674600F22130 /* CartEntitySummeryViewControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartEntitySummeryViewControl.m; sourceTree = "<group>"; };
+		61C5C40B1E545C6200F22130 /* CartEntitySummaryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartEntitySummaryView.h; sourceTree = "<group>"; };
+		61C5C40C1E545C6200F22130 /* CartEntitySummaryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartEntitySummaryView.m; sourceTree = "<group>"; };
+		61C5C40E1E545C7400F22130 /* CartEntitySummaryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartEntitySummaryView.xib; sourceTree = "<group>"; };
+		61C5C4121E54674600F22130 /* CartEntitySummaryViewControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartEntitySummaryViewControl.h; sourceTree = "<group>"; };
+		61C5C4131E54674600F22130 /* CartEntitySummaryViewControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartEntitySummaryViewControl.m; sourceTree = "<group>"; };
 		61C5C4161E54796A00F22130 /* RecieptViewCartTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecieptViewCartTableViewCell.h; sourceTree = "<group>"; };
 		61C5C4171E54796A00F22130 /* RecieptViewCartTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecieptViewCartTableViewCell.m; sourceTree = "<group>"; };
 		61C5C4181E54796A00F22130 /* RecieptViewCartTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecieptViewCartTableViewCell.xib; sourceTree = "<group>"; };
@@ -953,9 +955,12 @@
 		87D07D7B1E4099C300C00AC6 /* CheckoutConfirmationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckoutConfirmationViewController.m; sourceTree = "<group>"; };
 		87D07D7E1E4099E800C00AC6 /* CheckoutPaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckoutPaymentViewController.h; sourceTree = "<group>"; };
 		87D07D7F1E4099E800C00AC6 /* CheckoutPaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckoutPaymentViewController.m; sourceTree = "<group>"; };
-		87DAABE11E54430D00445EBB /* PaymentOptionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentOptionTableViewCell.h; sourceTree = "<group>"; };
-		87DAABE21E54430D00445EBB /* PaymentOptionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentOptionTableViewCell.m; sourceTree = "<group>"; };
-		87DAABE41E54431A00445EBB /* PaymentOptionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentOptionTableViewCell.xib; sourceTree = "<group>"; };
+		87DAABE11E54430D00445EBB /* PaymentOptionWithLogoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentOptionWithLogoTableViewCell.h; sourceTree = "<group>"; };
+		87DAABE21E54430D00445EBB /* PaymentOptionWithLogoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentOptionWithLogoTableViewCell.m; sourceTree = "<group>"; };
+		87DAABE41E54431A00445EBB /* PaymentOptionWithLogoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentOptionWithLogoTableViewCell.xib; sourceTree = "<group>"; };
+		87DAABE71E55A1C400445EBB /* PaymentOptionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentOptionTableViewCell.h; sourceTree = "<group>"; };
+		87DAABE81E55A1C400445EBB /* PaymentOptionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentOptionTableViewCell.m; sourceTree = "<group>"; };
+		87DAABEA1E55A2C100445EBB /* PaymentOptionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentOptionTableViewCell.xib; sourceTree = "<group>"; };
 		893AADCC1C1F1A54006314FB /* JAMyOrderDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMyOrderDetailViewController.h; sourceTree = "<group>"; };
 		893AADCD1C1F1A54006314FB /* JAMyOrderDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMyOrderDetailViewController.m; sourceTree = "<group>"; };
 		897460D91C19DDFD00A38073 /* JACollectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACollectionHeaderView.h; path = Bamilo/View/Headers/JACollectionHeaderView.h; sourceTree = SOURCE_ROOT; };
@@ -1940,9 +1945,9 @@
 		61C5C4101E54668600F22130 /* view */ = {
 			isa = PBXGroup;
 			children = (
-				61C5C40B1E545C6200F22130 /* CartEntitySummeryView.h */,
-				61C5C40C1E545C6200F22130 /* CartEntitySummeryView.m */,
-				61C5C40E1E545C7400F22130 /* CartEntitySummeryView.xib */,
+				61C5C40B1E545C6200F22130 /* CartEntitySummaryView.h */,
+				61C5C40C1E545C6200F22130 /* CartEntitySummaryView.m */,
+				61C5C40E1E545C7400F22130 /* CartEntitySummaryView.xib */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -1950,8 +1955,8 @@
 		61C5C4111E54669200F22130 /* Control */ = {
 			isa = PBXGroup;
 			children = (
-				61C5C4121E54674600F22130 /* CartEntitySummeryViewControl.h */,
-				61C5C4131E54674600F22130 /* CartEntitySummeryViewControl.m */,
+				61C5C4121E54674600F22130 /* CartEntitySummaryViewControl.h */,
+				61C5C4131E54674600F22130 /* CartEntitySummaryViewControl.m */,
 			);
 			name = Control;
 			sourceTree = "<group>";
@@ -2467,7 +2472,8 @@
 			isa = PBXGroup;
 			children = (
 				87459C9E1E4F156A00743120 /* PaymentTypeTableViewCell */,
-				87DAABE01E5442EF00445EBB /* PaymentOptionTableViewCell */,
+				87DAABE61E55A05800445EBB /* PaymentOptionTableViewCell */,
+				87DAABE01E5442EF00445EBB /* PaymentOptionWithLogoTableViewCell */,
 			);
 			name = Payment;
 			sourceTree = "<group>";
@@ -3364,12 +3370,22 @@
 			name = TableViewHeaderFooters;
 			sourceTree = "<group>";
 		};
-		87DAABE01E5442EF00445EBB /* PaymentOptionTableViewCell */ = {
+		87DAABE01E5442EF00445EBB /* PaymentOptionWithLogoTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
-				87DAABE11E54430D00445EBB /* PaymentOptionTableViewCell.h */,
-				87DAABE21E54430D00445EBB /* PaymentOptionTableViewCell.m */,
-				87DAABE41E54431A00445EBB /* PaymentOptionTableViewCell.xib */,
+				87DAABE11E54430D00445EBB /* PaymentOptionWithLogoTableViewCell.h */,
+				87DAABE21E54430D00445EBB /* PaymentOptionWithLogoTableViewCell.m */,
+				87DAABE41E54431A00445EBB /* PaymentOptionWithLogoTableViewCell.xib */,
+			);
+			name = PaymentOptionWithLogoTableViewCell;
+			sourceTree = "<group>";
+		};
+		87DAABE61E55A05800445EBB /* PaymentOptionTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				87DAABE71E55A1C400445EBB /* PaymentOptionTableViewCell.h */,
+				87DAABE81E55A1C400445EBB /* PaymentOptionTableViewCell.m */,
+				87DAABEA1E55A2C100445EBB /* PaymentOptionTableViewCell.xib */,
 			);
 			name = PaymentOptionTableViewCell;
 			sourceTree = "<group>";
@@ -4500,7 +4516,7 @@
 				87459CA11E4F159E00743120 /* PaymentTypeTableViewCell.xib in Resources */,
 				CE9AE03C1AB6D78200D56481 /* JANewsletterComponent~iPad.xib in Resources */,
 				9A564CAF1B332FB200F23057 /* JASellerRatingsViewController.xib in Resources */,
-				61C5C40F1E545C7500F22130 /* CartEntitySummeryView.xib in Resources */,
+				61C5C40F1E545C7500F22130 /* CartEntitySummaryView.xib in Resources */,
 				61E099651E3E0E21004ED14E /* IconTableViewCell.xib in Resources */,
 				87459C841E4EF37D00743120 /* CartListItemTableViewCell.xib in Resources */,
 				CE9AE0431AB6D78200D56481 /* JAMaintenancePage.xib in Resources */,
@@ -4535,9 +4551,10 @@
 				CE9AE0B81AB6D78200D56481 /* JAPDVVariations~iPad.xib in Resources */,
 				61C5C41A1E54796A00F22130 /* RecieptViewCartTableViewCell.xib in Resources */,
 				CEDBF8791B0CEC570073971A /* JACheckBoxComponent_RTL.xib in Resources */,
-				87DAABE51E54431A00445EBB /* PaymentOptionTableViewCell.xib in Resources */,
+				87DAABE51E54431A00445EBB /* PaymentOptionWithLogoTableViewCell.xib in Resources */,
 				CE9AE0C21AB6D78200D56481 /* JACatalogTopView_ipad.xib in Resources */,
 				CE9AE0C41AB6D78200D56481 /* JAPriceFiltersView.xib in Resources */,
+				87DAABEB1E55A2C100445EBB /* PaymentOptionTableViewCell.xib in Resources */,
 				CE9AE0CA1AB6D78200D56481 /* JAPDVProductInfo.xib in Resources */,
 				CE9AE0CD1AB6D78200D56481 /* JAOrangeButtonCell.xib in Resources */,
 				CE9AE0D51AB6D78200D56481 /* JAPDVBundleSingleItem.xib in Resources */,
@@ -4727,7 +4744,7 @@
 				CE9ADF371AB6D78200D56481 /* JAPDVSingleRelatedItem.m in Sources */,
 				9A189E761BB31B1F0039BC14 /* JAProductInfoBaseLine.m in Sources */,
 				9ABCAEFA1B0F8FEF00A69271 /* UIView+Mirror.m in Sources */,
-				87DAABE31E54430D00445EBB /* PaymentOptionTableViewCell.m in Sources */,
+				87DAABE31E54430D00445EBB /* PaymentOptionWithLogoTableViewCell.m in Sources */,
 				87D07D751E4097EE00C00AC6 /* CheckoutBaseViewController.m in Sources */,
 				FFF9006B1C6A31A700DDF538 /* JANewsletterViewController.m in Sources */,
 				9A6BC07C1C40132100DD9492 /* JAOrderItemCollectionViewCell.m in Sources */,
@@ -4784,6 +4801,7 @@
 				CE9ADF541AB6D78200D56481 /* JAClickableView.m in Sources */,
 				CE9ADF551AB6D78200D56481 /* JACampaignsTeaserView.m in Sources */,
 				CE9ADF561AB6D78200D56481 /* JASwitchCell.m in Sources */,
+				87DAABE91E55A1C400445EBB /* PaymentOptionTableViewCell.m in Sources */,
 				87A681581E40F21B00D252AC /* BaseButton.m in Sources */,
 				87459C821E4EF37200743120 /* CartListItemTableViewCell.m in Sources */,
 				875AD5691E38C0C900584ABF /* RIPaymentMethodFormOption.m in Sources */,
@@ -4867,7 +4885,7 @@
 				875AD56B1E38C0C900584ABF /* RIProduct.m in Sources */,
 				CEA107011BD78CE500EF88B1 /* JATabBarView.m in Sources */,
 				CE28A7AA1BDE987400B1FADA /* JATabBarButton.m in Sources */,
-				61C5C4141E54674600F22130 /* CartEntitySummeryViewControl.m in Sources */,
+				61C5C4141E54674600F22130 /* CartEntitySummaryViewControl.m in Sources */,
 				CE9ADF9E1AB6D78200D56481 /* JAOtherOffersView.m in Sources */,
 				CE9ADF9F1AB6D78200D56481 /* JACampaignsViewController.m in Sources */,
 				FFC9C0C71C984E7900DD5851 /* JATopTabsView.m in Sources */,
@@ -5058,7 +5076,7 @@
 				9A38766B1BCD121A0088B186 /* JATabButton.m in Sources */,
 				9A4077501CE61D1300313D20 /* JAOptionResumeView.m in Sources */,
 				CED620551BEA5EFC00FA8403 /* JAProductCollectionViewFlowLayout.m in Sources */,
-				61C5C40D1E545C6200F22130 /* CartEntitySummeryView.m in Sources */,
+				61C5C40D1E545C6200F22130 /* CartEntitySummaryView.m in Sources */,
 				CE9AE00E1AB6D78200D56481 /* JACampaignPageView.m in Sources */,
 				6125535B1E4F382100975C6F /* UIScrollView+Extension.m in Sources */,
 				8714E0901E48CD41004C9B1D /* DiscountSwitcherView.m in Sources */,

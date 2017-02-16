@@ -1,5 +1,5 @@
 //
-//  CartEntitySummeryView.h
+//  CartEntitySummaryView.h
 //  Bamilo
 //
 //  Created by Ali saiedifar on 2/15/17.
@@ -9,11 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "CartEntity.h"
 
-@protocol CartEntitySummeryViewDelegate <NSObject>
+@protocol CartEntitySummaryViewDelegate <NSObject>
 @optional - (void)cartEntitySummeryTapped:(id)view;
 @end
 
-@interface CartEntitySummeryView: UIView
+@interface CartEntitySummaryView: UIView
 @property (nonatomic, strong) CartEntity *cartEntity;
-@property (nonatomic, weak) id<CartEntitySummeryViewDelegate> delegate;
+@property (nonatomic, weak) id<CartEntitySummaryViewDelegate> delegate;
 @end

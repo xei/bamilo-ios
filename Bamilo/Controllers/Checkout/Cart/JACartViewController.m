@@ -17,7 +17,7 @@
 #import "NSString+Extensions.h"
 #import "RIAddress.h"
 #import "ViewControllerManager.h"
-#import "CartEntitySummeryViewControl.h"
+#import "CartEntitySummaryViewControl.h"
 
 @interface JACartViewController ()  <CartTableViewCellDelegate>
 
@@ -29,7 +29,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *totalPrice;
 @property (weak, nonatomic) IBOutlet UILabel *totalDiscountedPrice;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *costSummeryContainerTopToWholeCostTopConstraint;
-@property (weak, nonatomic) IBOutlet CartEntitySummeryViewControl *summeryView;
+@property (weak, nonatomic) IBOutlet CartEntitySummaryViewControl *summeryView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *summeryViewToBottomConstraint;
 
 @end
@@ -336,7 +336,7 @@
     [self removeCartItem:cartItem];
 }
 
-#pragma mark - CartEntitySummeryViewControlDelegate
+#pragma mark - CartEntitySummaryViewControlDelegate
 - (void)cartEntityTapped:(id)cartEntityControl {
     if (self.costSummeryContainerTopToWholeCostTopConstraint.constant == 0) {
         [self changeTheSummeryTopConstraintByAnimationTo:75];

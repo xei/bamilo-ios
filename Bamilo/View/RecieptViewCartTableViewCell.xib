@@ -25,7 +25,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="431" height="66.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J2v-1M-3CC" customClass="CartEntitySummeryViewControl">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J2v-1M-3CC" customClass="CartEntitySummaryViewControl">
                                 <rect key="frame" x="0.0" y="66.5" width="431" height="40"/>
                                 <color key="backgroundColor" red="0.96862745100000003" green="0.59215686270000001" blue="0.12549019610000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>

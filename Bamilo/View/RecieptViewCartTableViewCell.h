@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ReceiptView.h"
-#import "CartEntitySummeryViewControl.h"
+#import "CartEntitySummaryViewControl.h"
 
 @interface RecieptViewCartTableViewCell : ReceiptView
 + (CGFloat)cellHeightByModel:(CartEntity *)cartEntity;

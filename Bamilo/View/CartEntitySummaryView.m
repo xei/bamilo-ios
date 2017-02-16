@@ -1,21 +1,21 @@
 //
-//  CartEntitySummeryView.m
+//  CartEntitySummaryView.m
 //  Bamilo
 //
 //  Created by Ali saiedifar on 2/15/17.
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import "CartEntitySummeryView.h"
+#import "CartEntitySummaryView.h"
 #define cGRAY_COLOR [UIColor withRepeatingRGBA:217 alpha:1.0f]
 
-@interface CartEntitySummeryView()
+@interface CartEntitySummaryView()
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 
 @end
 
-@implementation CartEntitySummeryView
+@implementation CartEntitySummaryView
 
 - (void)awakeFromNib {
     [super awakeFromNib];

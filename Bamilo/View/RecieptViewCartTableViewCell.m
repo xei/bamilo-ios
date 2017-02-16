@@ -9,7 +9,7 @@
 #import "RecieptViewCartTableViewCell.h"
 
 @interface RecieptViewCartTableViewCell()
-@property (weak, nonatomic) IBOutlet CartEntitySummeryViewControl *summeryView;
+@property (weak, nonatomic) IBOutlet CartEntitySummaryViewControl *summeryView;
 @end
 
 @implementation RecieptViewCartTableViewCell

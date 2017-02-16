@@ -11,8 +11,9 @@
 #import "CheckoutProgressViewButtonModel.h"
 #import "PlainTableViewHeaderCell.h"
 #import "PaymentTypeTableViewCell.h"
-#import "PaymentOptionTableViewCell.h"
+#import "PaymentOptionWithLogoTableViewCell.h"
 #import "RIPaymentMethodForm.h"
+#import "CartEntitySummaryViewControl.h"
 
 typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
     PAYMENT_METHOD_ONLINE = 1 << 0,
@@ -21,6 +22,7 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
 
 @interface CheckoutPaymentViewController () <RadioButtonViewControlDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet CartEntitySummaryViewControl *cartEntitySummaryViewControl;
 @end
 
 @implementation CheckoutPaymentViewController {
@@ -37,6 +39,9 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
     
     //PaymentTypeTableViewCell
     [self.tableView registerNib:[UINib nibWithNibName:[PaymentTypeTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[PaymentTypeTableViewCell nibName]];
+    
+    //PaymentOptionWithLogoTableViewCell
+    [self.tableView registerNib:[UINib nibWithNibName:[PaymentOptionWithLogoTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[PaymentOptionWithLogoTableViewCell nibName]];
     
     //PaymentOptionTableViewCell
     [self.tableView registerNib:[UINib nibWithNibName:[PaymentOptionTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[PaymentOptionTableViewCell nibName]];
@@ -82,6 +87,8 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
             NSDictionary* userInfo = [NSDictionary dictionaryWithObject:self.cart forKey:kUpdateCartNotificationValue];
             [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
             
+            [self.cartEntitySummaryViewControl updateWithModel:self.cart.cartEntity];
+            
             _paymentMethods = [RIPaymentMethodForm getPaymentMethodsInForm:self.cart.formEntity.paymentMethodForm];
             
             [self.tableView reloadData];
@@ -123,15 +130,26 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
         }
         
         case 1: {
-            PaymentOptionTableViewCell *paymentOptionTableViewCell = [tableView dequeueReusableCellWithIdentifier:[PaymentOptionTableViewCell nibName] forIndexPath:indexPath];
-            
-            PaymentOptionTableViewCellModel *model = [PaymentOptionTableViewCellModel new];
-            model.descText = paymentMethod.text;
-            model.logoImageUrl = paymentMethod.icon.imageUrlForEnabled;
-            model.isSelected = (_selectedPaymentMethodIndex == indexPath.section);
-            [paymentOptionTableViewCell updateWithModel:model];
-            
-            return paymentOptionTableViewCell;
+            if([paymentMethod.displayName containsString:STRING_PAY_ON_DELIVERY]) {
+                PaymentOptionTableViewCell *paymentOptionTableViewCell = [tableView dequeueReusableCellWithIdentifier:[PaymentOptionTableViewCell nibName] forIndexPath:indexPath];
+                
+                PaymentOptionTableViewCellModel *model = [PaymentOptionTableViewCellModel new];
+                model.descText = paymentMethod.text;
+                model.isSelected = (_selectedPaymentMethodIndex == indexPath.section);
+                [paymentOptionTableViewCell updateWithModel:model];
+                
+                return paymentOptionTableViewCell;
+            } else {
+                PaymentOptionWithLogoTableViewCell *paymentOptionWithLogoTableViewCell = [tableView dequeueReusableCellWithIdentifier:[PaymentOptionWithLogoTableViewCell nibName] forIndexPath:indexPath];
+                
+                PaymentOptionWithLogoTableViewCellModel *model = [PaymentOptionWithLogoTableViewCellModel new];
+                model.descText = paymentMethod.text;
+                model.logoImageUrl = paymentMethod.icon.imageUrlForEnabled;
+                model.isSelected = (_selectedPaymentMethodIndex == indexPath.section);
+                [paymentOptionWithLogoTableViewCell updateWithModel:model];
+                
+                return paymentOptionWithLogoTableViewCell;
+            }
         }
     }
     

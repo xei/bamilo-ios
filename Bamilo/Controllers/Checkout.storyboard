@@ -22,7 +22,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Sh-o6-mCT" customClass="OrangeButton">
-                                <rect key="frame" x="10" y="607" width="355" height="50"/>
+                                <rect key="frame" x="0.0" y="617" width="375" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="8JA-hL-lNi"/>
                                 </constraints>
@@ -41,20 +41,20 @@
                                 </constraints>
                             </containerView>
                             <containerView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RQv-Qa-EDH">
-                                <rect key="frame" x="0.0" y="60" width="375" height="547"/>
+                                <rect key="frame" x="0.0" y="60" width="375" height="552"/>
                             </containerView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="2Sh-o6-mCT" secondAttribute="trailing" constant="10" id="0G7-rF-27w"/>
+                            <constraint firstAttribute="trailing" secondItem="2Sh-o6-mCT" secondAttribute="trailing" id="0G7-rF-27w"/>
                             <constraint firstItem="RQv-Qa-EDH" firstAttribute="leading" secondItem="IvS-Li-N4L" secondAttribute="leading" id="2Af-XO-E8F"/>
                             <constraint firstAttribute="trailing" secondItem="RaY-Nc-0ZR" secondAttribute="trailing" id="RKW-31-9NM"/>
                             <constraint firstAttribute="trailing" secondItem="RQv-Qa-EDH" secondAttribute="trailing" id="gL7-1C-40P"/>
-                            <constraint firstItem="2Sh-o6-mCT" firstAttribute="top" secondItem="RQv-Qa-EDH" secondAttribute="bottom" id="i0K-c2-8vR"/>
+                            <constraint firstItem="2Sh-o6-mCT" firstAttribute="top" secondItem="RQv-Qa-EDH" secondAttribute="bottom" constant="5" id="i0K-c2-8vR"/>
                             <constraint firstItem="RQv-Qa-EDH" firstAttribute="top" secondItem="RaY-Nc-0ZR" secondAttribute="bottom" id="k1A-pb-RLM"/>
                             <constraint firstItem="RaY-Nc-0ZR" firstAttribute="leading" secondItem="IvS-Li-N4L" secondAttribute="leading" id="kDc-MZ-7fJ"/>
-                            <constraint firstItem="nKf-T7-VCI" firstAttribute="top" secondItem="2Sh-o6-mCT" secondAttribute="bottom" constant="10" id="oP3-qF-Hv6"/>
-                            <constraint firstItem="2Sh-o6-mCT" firstAttribute="leading" secondItem="IvS-Li-N4L" secondAttribute="leading" constant="10" id="rm1-HV-W9t"/>
+                            <constraint firstItem="nKf-T7-VCI" firstAttribute="top" secondItem="2Sh-o6-mCT" secondAttribute="bottom" id="oP3-qF-Hv6"/>
+                            <constraint firstItem="2Sh-o6-mCT" firstAttribute="leading" secondItem="IvS-Li-N4L" secondAttribute="leading" id="rm1-HV-W9t"/>
                             <constraint firstItem="RaY-Nc-0ZR" firstAttribute="top" secondItem="cB1-xR-npY" secondAttribute="bottom" id="udI-JP-9IQ"/>
                         </constraints>
                     </view>
@@ -91,7 +91,7 @@
                                 </constraints>
                             </containerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a6b-JE-wIw" customClass="OrangeButton">
-                                <rect key="frame" x="10" y="607" width="355" height="50"/>
+                                <rect key="frame" x="0.0" y="617" width="375" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="Npj-Ll-dJh"/>
                                 </constraints>
@@ -103,7 +103,7 @@
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" delaysContentTouches="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dCv-DP-nKy">
-                                <rect key="frame" x="0.0" y="60" width="375" height="547"/>
+                                <rect key="frame" x="0.0" y="60" width="375" height="552"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="dataSource" destination="RR0-PB-qTp" id="ZJK-AX-9du"/>
@@ -115,13 +115,13 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="dCv-DP-nKy" secondAttribute="trailing" id="1Nr-CW-Q2X"/>
                             <constraint firstItem="22G-Q0-TRN" firstAttribute="leading" secondItem="htM-qu-iwa" secondAttribute="leading" id="71R-3o-6kr"/>
-                            <constraint firstItem="a6b-JE-wIw" firstAttribute="top" secondItem="dCv-DP-nKy" secondAttribute="bottom" id="75i-aM-qU3"/>
+                            <constraint firstItem="a6b-JE-wIw" firstAttribute="top" secondItem="dCv-DP-nKy" secondAttribute="bottom" constant="5" id="75i-aM-qU3"/>
                             <constraint firstAttribute="trailing" secondItem="22G-Q0-TRN" secondAttribute="trailing" id="F1N-Sr-GKb"/>
                             <constraint firstItem="22G-Q0-TRN" firstAttribute="top" secondItem="qVA-Rv-cap" secondAttribute="bottom" id="Fwk-T5-fOP"/>
                             <constraint firstItem="dCv-DP-nKy" firstAttribute="top" secondItem="22G-Q0-TRN" secondAttribute="bottom" id="GsR-NS-7c0"/>
-                            <constraint firstItem="a6b-JE-wIw" firstAttribute="leading" secondItem="htM-qu-iwa" secondAttribute="leading" constant="10" id="Ldw-aW-VvZ"/>
-                            <constraint firstItem="jbe-49-at3" firstAttribute="top" secondItem="a6b-JE-wIw" secondAttribute="bottom" constant="10" id="Spf-8c-S8P"/>
-                            <constraint firstAttribute="trailing" secondItem="a6b-JE-wIw" secondAttribute="trailing" constant="10" id="fxL-XE-i6j"/>
+                            <constraint firstItem="a6b-JE-wIw" firstAttribute="leading" secondItem="htM-qu-iwa" secondAttribute="leading" id="Ldw-aW-VvZ"/>
+                            <constraint firstItem="jbe-49-at3" firstAttribute="top" secondItem="a6b-JE-wIw" secondAttribute="bottom" id="Spf-8c-S8P"/>
+                            <constraint firstAttribute="trailing" secondItem="a6b-JE-wIw" secondAttribute="trailing" id="fxL-XE-i6j"/>
                             <constraint firstItem="dCv-DP-nKy" firstAttribute="leading" secondItem="htM-qu-iwa" secondAttribute="leading" id="lcu-2q-VKV"/>
                         </constraints>
                     </view>
@@ -155,15 +155,36 @@
                                 </constraints>
                             </containerView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" delaysContentTouches="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="zc7-Vb-nIS">
-                                <rect key="frame" x="0.0" y="60" width="375" height="547"/>
+                                <rect key="frame" x="0.0" y="60" width="375" height="507"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="dataSource" destination="YAa-kj-ypS" id="4cQ-iA-kbV"/>
                                     <outlet property="delegate" destination="YAa-kj-ypS" id="4kE-BC-auj"/>
                                 </connections>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FE1-oX-yO3" userLabel="Cart Entity Summary View" customClass="CartEntitySummaryViewControl">
+                                <rect key="frame" x="0.0" y="572" width="375" height="45"/>
+                                <color key="backgroundColor" red="0.090531297028064728" green="0.52686542272567749" blue="0.11270476132631302" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="mz0-2q-Y9s"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                        <color key="value" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                        <real key="value" value="0.59999999999999998"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
+                                        <size key="value" width="0.0" height="-2"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                        <real key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dAO-l3-ogF" customClass="OrangeButton">
-                                <rect key="frame" x="10" y="607" width="355" height="50"/>
+                                <rect key="frame" x="0.0" y="617" width="375" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="SIc-FD-Oua"/>
                                 </constraints>
@@ -177,19 +198,23 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.57953985223996241" blue="0.58901249803895506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="dAO-l3-ogF" firstAttribute="leading" secondItem="hA3-mv-iin" secondAttribute="leading" constant="10" id="8c4-09-UwQ"/>
+                            <constraint firstItem="FE1-oX-yO3" firstAttribute="leading" secondItem="hA3-mv-iin" secondAttribute="leading" id="1Zr-gH-Nw9"/>
+                            <constraint firstItem="FE1-oX-yO3" firstAttribute="top" secondItem="zc7-Vb-nIS" secondAttribute="bottom" constant="5" id="2sn-Im-H1w"/>
+                            <constraint firstItem="dAO-l3-ogF" firstAttribute="leading" secondItem="hA3-mv-iin" secondAttribute="leading" id="8c4-09-UwQ"/>
                             <constraint firstItem="zc7-Vb-nIS" firstAttribute="leading" secondItem="hA3-mv-iin" secondAttribute="leading" id="B5w-oo-f6K"/>
                             <constraint firstAttribute="trailing" secondItem="zc7-Vb-nIS" secondAttribute="trailing" id="Gmq-KJ-Ngb"/>
+                            <constraint firstAttribute="trailing" secondItem="FE1-oX-yO3" secondAttribute="trailing" id="Gvo-30-ygt"/>
                             <constraint firstItem="7Bg-pG-uxa" firstAttribute="leading" secondItem="hA3-mv-iin" secondAttribute="leading" id="Q1F-uK-rx7"/>
-                            <constraint firstItem="ll1-YN-aeW" firstAttribute="top" secondItem="dAO-l3-ogF" secondAttribute="bottom" constant="10" id="SVx-nL-sf5"/>
+                            <constraint firstItem="ll1-YN-aeW" firstAttribute="top" secondItem="dAO-l3-ogF" secondAttribute="bottom" id="SVx-nL-sf5"/>
                             <constraint firstAttribute="trailing" secondItem="7Bg-pG-uxa" secondAttribute="trailing" id="T6W-xc-0fk"/>
                             <constraint firstItem="zc7-Vb-nIS" firstAttribute="top" secondItem="7Bg-pG-uxa" secondAttribute="bottom" id="VoH-5k-HXv"/>
-                            <constraint firstAttribute="trailing" secondItem="dAO-l3-ogF" secondAttribute="trailing" constant="10" id="b4t-Pp-xhU"/>
+                            <constraint firstItem="dAO-l3-ogF" firstAttribute="top" secondItem="FE1-oX-yO3" secondAttribute="bottom" id="WCz-bc-rHe"/>
+                            <constraint firstAttribute="trailing" secondItem="dAO-l3-ogF" secondAttribute="trailing" id="b4t-Pp-xhU"/>
                             <constraint firstItem="7Bg-pG-uxa" firstAttribute="top" secondItem="Rb1-m2-ocz" secondAttribute="bottom" id="d8f-Zr-zbO"/>
-                            <constraint firstItem="dAO-l3-ogF" firstAttribute="top" secondItem="zc7-Vb-nIS" secondAttribute="bottom" id="hyV-vz-BGr"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="cartEntitySummaryViewControl" destination="FE1-oX-yO3" id="8Th-0M-DjB"/>
                         <outlet property="checkoutProgressViewControl" destination="7Bg-pG-uxa" id="9Vi-Co-9mf"/>
                         <outlet property="continueButton" destination="dAO-l3-ogF" id="Iyt-m0-eWg"/>
                         <outlet property="tableView" destination="zc7-Vb-nIS" id="ghJ-n9-PSq"/>
