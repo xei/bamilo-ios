@@ -262,6 +262,13 @@
         cartEntity.sellerDelivery = sellers;
     }
     
+//#############################################################################
+    if (VALID_NOTEMPTY([dict objectForKey:@"shipping_address"], NSDictionary)) {
+        NSDictionary* shippingAddressJSON = [dict objectForKey:@"shipping_address"];
+        cartEntity.address = [[Address alloc] init];
+        [cartEntity.address mergeFromDictionary:shippingAddressJSON useKeyMapping:YES error:nil];
+    }
+    
     return cartEntity;
 }
 

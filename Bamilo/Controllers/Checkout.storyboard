@@ -62,10 +62,10 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="addressView" destination="RQv-Qa-EDH" id="0BW-CE-tEk"/>
+                        <outlet property="addressListContainerView" destination="RQv-Qa-EDH" id="ppo-Rb-8sh"/>
                         <outlet property="checkoutProgressViewControl" destination="RaY-Nc-0ZR" id="zW7-UC-yur"/>
                         <outlet property="continueButton" destination="2Sh-o6-mCT" id="Gah-em-65h"/>
-                        <segue destination="RR0-PB-qTp" kind="show" identifier="pushAddressToReview" id="Vuf-MV-Cbd"/>
+                        <segue destination="RR0-PB-qTp" kind="show" identifier="pushAddressToConfirmation" id="Vuf-MV-Cbd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qrc-mW-Y1H" userLabel="First Responder" sceneMemberID="firstResponder"/>

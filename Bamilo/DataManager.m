@@ -101,7 +101,27 @@ static DataManager *instance;
     }];
 }
 
-//### PAYMENT ###
+//### ORDER ###
+-(void)getMultistepAddressList:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
+    [RequestManager asyncGET:target path:RI_API_MULTISTEP_GET_ADDRESSES params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+    }];
+}
+
+-(void)setMultistepAddress:(id<DataServiceProtocol>)target forShipping:(NSString *)shippingAddressId billing:(NSString *)billingAddressId completion:(DataCompletion)completion {
+    NSDictionary *params = @{
+        @"addresses[shipping_id]": shippingAddressId,
+        @"addresses[billing_id]": billingAddressId
+    };
+    [RequestManager asyncPOST:target path:RI_API_MULTISTEP_SUBMIT_ADDRESSES params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+    }];
+}
+
+-(void)getMultistepConfirmation:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
+    [RequestManager asyncGET:target path:RI_API_MULTISTEP_GET_FINISH params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+        [self serialize:data into:[RICart class] response:response errorMessages:errorMessages completion:completion];
+    }];
+}
+
 - (void) getMultistepPayment:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
     [RequestManager asyncGET:target path:RI_API_MULTISTEP_GET_PAYMENT params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
         [self serialize:data into:[CartForm class] response:response errorMessages:errorMessages completion:completion];

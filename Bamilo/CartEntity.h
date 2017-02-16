@@ -8,6 +8,7 @@
 
 #import "BaseModel.h"
 #import "JSONVerboseModel.h"
+#import "Address.h"
 
 @class RIPaymentInformation, RIAddress, RIForm, RISellerDelivery, RICustomer;
 
@@ -64,5 +65,8 @@
 @property (strong, nonatomic) NSNumber *deliveryDiscountCartRuleDiscountConverted;
 @property (strong, nonatomic) NSNumber *deliveryDiscountCouponMoneyValue;
 @property (strong, nonatomic) NSNumber *deliveryDiscountCouponMoneyValueConverted;
+
+//#############################################################################
+@property (strong, nonatomic) Address *address;
 
 @end

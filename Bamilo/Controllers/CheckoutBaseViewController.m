@@ -43,6 +43,12 @@
     return nil;
 }
 
+-(void)performPreDepartureAction:(CheckoutActionCompletion)completion {
+    if(completion) {
+        completion();
+    }
+}
+
 #pragma mark - Overrides
 -(void)updateNavBar {
     [super updateNavBar];
@@ -63,10 +69,14 @@
 }
 
 - (IBAction)continueButtonTapped:(id)sender {
-    NSString *nextStepViewControllerSegueIdentifier = [self getNextStepViewControllerSegueIdentifier];
-    if(nextStepViewControllerSegueIdentifier) {
-        [self performSegueWithIdentifier:nextStepViewControllerSegueIdentifier sender:self];
-    }
+    [self performPreDepartureAction:^{
+        NSString *nextStepViewControllerSegueIdentifier = [self getNextStepViewControllerSegueIdentifier];
+        if(nextStepViewControllerSegueIdentifier) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+            [self performSegueWithIdentifier:nextStepViewControllerSegueIdentifier sender:self];
+            });
+        }
+    }];
 }
 
 #pragma mark - DataServiceProtocol

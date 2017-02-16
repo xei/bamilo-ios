@@ -16,6 +16,7 @@
 #import "ReceiptView.h"
 #import "ReceiptItemView.h"
 #import "CartListItemTableViewCell.h"
+#import "DataManager.h"
 
 @interface CheckoutConfirmationViewController() <DiscountSwitcherViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -25,6 +26,7 @@
 @private
     NSArray<ReceiptItemModel *> *receiptViewItems;
     NSMutableArray *_cellsIndexPaths;
+    Address *_shippingAddress;
 }
 
 - (void)viewDidLoad {
@@ -66,10 +68,25 @@
                             //Cart Items
                             [NSMutableArray arrayWithObjects:
                                 [NSIndexPath indexPathForRow:0 inSection:1], nil],
-                            //Delivery Address
+                            //Shipping Address
                             [NSMutableArray arrayWithObjects:
                                 [NSIndexPath indexPathForRow:0 inSection:2], nil],
                         nil];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [[DataManager sharedInstance] getMultistepConfirmation:self completion:^(id data, NSError *error) {
+        if(error == nil) {
+            [self bind:data forRequestId:0];
+            
+            //Shipping Address
+            _shippingAddress = self.cart.cartEntity.address;
+            
+            [self.tableView reloadData];
+        }
+    }];
 }
 
 #pragma mark - Overrides
@@ -154,6 +171,7 @@
         case 2: {
             AddressTableViewCell *customerAddressTableViewCell = [tableView dequeueReusableCellWithIdentifier:[AddressTableViewCell nibName] forIndexPath:indexPath];
             customerAddressTableViewCell.options = ADDRESS_CELL_NONE;
+            [customerAddressTableViewCell updateWithModel:_shippingAddress];
             
             return customerAddressTableViewCell;
         }

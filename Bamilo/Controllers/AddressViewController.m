@@ -7,38 +7,30 @@
 //
 
 #import "AddressViewController.h"
-#import "AddressTableViewHeaderCell.h"
 #import "AddressList.h"
 #import "DataManager.h"
+#import "AddressTableViewController.h"
+#import "ViewControllerManager.h"
 
-@interface AddressViewController() <UITableViewDelegate, UITableViewDataSource>
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@interface AddressViewController() <AddressTableViewControllerDelegate>
+@property (weak, nonatomic) IBOutlet UIView *addressListContainerView;
 @end
 
 @implementation AddressViewController {
 @private
     NSMutableArray *_addresses;
-}
-
-#pragma mark - AddressViewControllerDelegate
--(NSString *)getAddressHeaderViewTitle {
-    return STRING_PLEASE_CHOOSE_YOUR_ADDRESS;
-}
-
--(void)awakeFromNib {
-    [super awakeFromNib];
-    
-    self.options = (ADDRESS_CELL_EDIT | ADDRESS_CELL_DELETE | ADDRESS_CELL_SELECT);
+    AddressTableViewController *_addressTableViewController;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    _addressTableViewController = (AddressTableViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"AddressTableViewController"];
+    _addressTableViewController.titleHeaderText = nil;
+    _addressTableViewController.options = (ADDRESS_CELL_EDIT | ADDRESS_CELL_DELETE | ADDRESS_CELL_SELECT);
+    _addressTableViewController.delegate = self;
+    [_addressTableViewController addInto:self ofView:self.addressListContainerView];
 
-    [self.tableView registerNib:[UINib nibWithNibName:[AddressTableViewHeaderCell nibName] bundle:nil] forHeaderFooterViewReuseIdentifier:[AddressTableViewHeaderCell nibName]];
-    [self.tableView registerNib:[UINib nibWithNibName:[AddressTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[AddressTableViewCell nibName]];
-    
-    self.tableView.separatorInset = UIEdgeInsetsZero;
-    
     _addresses = [NSMutableArray array];
 }
 
@@ -60,73 +52,41 @@
     self.navBarLayout.showBackButton = YES;
 }
 
-#pragma mark - UITableViewDelegate
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 40.0f;
-}
-
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    AddressTableViewHeaderCell *addressTableViewHeaderCell = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:[AddressTableViewHeaderCell nibName]];
-    addressTableViewHeaderCell.title = self.titleHeaderText;
-    return addressTableViewHeaderCell;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 160.0f;
-}
-
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    NSIndexPath *selectedAddressIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    
-    //Trying to reselect the selected address. Ignore.
-    if(indexPath.row == selectedAddressIndexPath.row) {
-        return;
-    }
-    
-    /*[tableView beginUpdates];
-     [tableView deleteRowsAtIndexPaths:@[ selectedAddressIndexPath ] withRowAnimation:UITableViewRowAnimationLeft];
-     [tableView insertRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationLeft];
-     [tableView endUpdates];*/
-    
-    [[DataManager sharedInstance] setDefaultAddress:self address:[_addresses objectAtIndex:indexPath.row] isBilling:NO completion:^(id data, NSError *error) {
+#pragma mark - AddressTableViewControllerDelegate
+-(BOOL)addressSelected:(Address *)address {
+    //TODO: Alert user if they really want to change their default address and then do the call
+    [[DataManager sharedInstance] setDefaultAddress:self address:address isBilling:NO completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:1];
         }
     }];
-}
-
-#pragma mark - UITableViewDataSource
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [_addresses count];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    AddressTableViewCell *addressTableViewCell = [self.tableView dequeueReusableCellWithIdentifier:[AddressTableViewCell nibName] forIndexPath:indexPath];
     
-    [addressTableViewCell updateWithModel:[_addresses objectAtIndex:indexPath.row]];
-    addressTableViewCell.options = self.options;
-    
-    return addressTableViewCell;
+    return YES;
 }
 
 #pragma mark - DataServiceProtocol
 -(void)bind:(id)data forRequestId:(int)rid {
-    [_addresses removeAllObjects];
-    
-    AddressList *addressList = (AddressList *)data;
-    
-    if(addressList) {
-        if(addressList.shipping) {
-            [_addresses addObject:addressList.shipping];
+    switch (rid) {
+        case 0:
+        case 1: {
+            [_addresses removeAllObjects];
+            
+            AddressList *addressList = (AddressList *)data;
+            
+            if(addressList) {
+                if(addressList.shipping) {
+                    [_addresses addObject:addressList.shipping];
+                }
+                
+                for(Address *otherAddress in addressList.other) {
+                    [_addresses addObject:otherAddress];
+                }
+                
+                [_addressTableViewController updateWithModel:_addresses];
+            }
         }
-        
-        for(Address *otherAddress in addressList.other) {
-            [_addresses addObject:otherAddress];
-        }
-        
-        [self.tableView reloadData];
+            
+        break;
     }
 }
 

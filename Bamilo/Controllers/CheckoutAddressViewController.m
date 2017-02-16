@@ -10,34 +10,59 @@
 #import "CheckoutAddressViewController.h"
 #import "CheckoutProgressViewButtonModel.h"
 #import "ViewControllerManager.h"
-#import "AddressViewController.h"
+#import "AddressTableViewController.h"
+#import "AddressList.h"
 
-@interface CheckoutAddressViewController()
-@property (weak, nonatomic) IBOutlet UIView *addressView;
+@interface CheckoutAddressViewController() <AddressTableViewControllerDelegate>
+@property (weak, nonatomic) IBOutlet UIView *addressListContainerView;
 @end
 
-@implementation CheckoutAddressViewController
+@implementation CheckoutAddressViewController {
+@private
+    NSMutableArray *_addresses;
+    AddressTableViewController *_addressTableViewController;
+}
+
 -(void)viewDidLoad {
     [super viewDidLoad];
     
-    AddressViewController *addressViewController = (AddressViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"AddressViewController"];
-    [self addChildViewController:addressViewController];
-    addressViewController.titleHeaderText = STRING_PLEASE_CHOOSE_YOUR_ADDRESS;
-    addressViewController.options = (ADDRESS_CELL_EDIT | ADDRESS_CELL_SELECT);
-    [addressViewController.view setFrame:CGRectMake(0, 0, self.addressView.width, self.addressView.height)];
-    [self.addressView addSubview:addressViewController.view];
-    [addressViewController didMoveToParentViewController:self];
+    _addressTableViewController = (AddressTableViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"AddressTableViewController"];
+    _addressTableViewController.titleHeaderText = STRING_PLEASE_CHOOSE_YOUR_ADDRESS;
+    _addressTableViewController.options = (ADDRESS_CELL_EDIT | ADDRESS_CELL_SELECT);
+    _addressTableViewController.delegate = self;
+    [_addressTableViewController addInto:self ofView:self.addressListContainerView];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [[DataManager sharedInstance] getMultistepAddressList:self completion:^(id data, NSError *error) {
+        if(error == nil) {
+            [self bind:data forRequestId:0];
+        }
+    }];
 }
 
 #pragma mark - Overrides
 -(NSString *)getNextStepViewControllerSegueIdentifier {
-    return @"pushAddressToReview";
+    return @"pushAddressToConfirmation";
 }
 
 -(void)updateNavBar {
     [super updateNavBar];
 
     self.navBarLayout.title = STRING_CHOOSE_ADDRESS;
+}
+
+-(void)performPreDepartureAction:(CheckoutActionCompletion)completion {
+    Address *selectedAddress = [_addresses objectAtIndex:0];
+    Address *billingAddress = selectedAddress;
+    
+    [[DataManager sharedInstance] setMultistepAddress:self forShipping:selectedAddress.uid billing:billingAddress.uid completion:^(id data, NSError *error) {
+        if(error == nil && completion != nil) {
+            completion();
+        }
+    }];
 }
 
 #pragma mark - CheckoutProgressViewDelegate
@@ -47,6 +72,43 @@
         [CheckoutProgressViewButtonModel buttonWith:2 state:CHECKOUT_PROGRESSVIEW_BUTTON_STATE_PENDING],
         [CheckoutProgressViewButtonModel buttonWith:3 state:CHECKOUT_PROGRESSVIEW_BUTTON_STATE_PENDING]
     ];
+}
+
+#pragma mark - AddressTableViewControllerDelegate
+-(BOOL)addressSelected:(Address *)address {
+    [[DataManager sharedInstance] setDefaultAddress:self address:address isBilling:NO completion:^(id data, NSError *error) {
+        if(error == nil) {
+            [self bind:data forRequestId:1];
+        }
+    }];
+    
+    return YES;
+}
+
+#pragma mark - DataServiceProtocol
+-(void)bind:(id)data forRequestId:(int)rid {
+    switch (rid) {
+        case 0:
+        case 1: {
+            [_addresses removeAllObjects];
+            
+            AddressList *addressList = (AddressList *)data;
+            
+            if(addressList) {
+                if(addressList.shipping) {
+                    [_addresses addObject:addressList.shipping];
+                }
+                
+                for(Address *otherAddress in addressList.other) {
+                    [_addresses addObject:otherAddress];
+                }
+                
+                [_addressTableViewController updateWithModel:_addresses];
+            }
+        }
+    
+        break;
+    }
 }
 
 @end

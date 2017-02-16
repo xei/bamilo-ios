@@ -33,7 +33,10 @@ typedef void(^DataCompletion)(id data, NSError *error);
 //### CART ###
 -(void) getUserCart:(id<DataServiceProtocol>)target completion:(DataCompletion)completion;
 
-//### PAYMENT ###
+//### ORDER ###
+-(void) getMultistepAddressList:(id<DataServiceProtocol>)target completion:(DataCompletion)completion;
+-(void) setMultistepAddress:(id<DataServiceProtocol>)target forShipping:(NSString *)shippingAddressId billing:(NSString*)billingAddressId completion:(DataCompletion)completion;
+-(void) getMultistepConfirmation:(id<DataServiceProtocol>)target completion:(DataCompletion)completion;
 -(void) getMultistepPayment:(id<DataServiceProtocol>)target completion:(DataCompletion)completion;
 
 @end

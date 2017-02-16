@@ -7,11 +7,8 @@
 //
 
 #import "CheckoutBaseViewController.h"
-#import "RICart.h"
 #import "DataServiceProtocol.h"
 
 @interface CheckoutPaymentViewController : CheckoutBaseViewController <DataServiceProtocol, UITableViewDelegate, UITableViewDataSource>
-
-@property (strong, nonatomic) RICart *cart;
 
 @end
