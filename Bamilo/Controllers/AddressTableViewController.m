@@ -62,16 +62,14 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    NSIndexPath *selectedAddressIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    
+
     //Trying to reselect the selected address. Ignore.
-    if(indexPath.row == selectedAddressIndexPath.row) {
+    if(indexPath.row == 0) {
         return;
     }
     
     if([self.delegate respondsToSelector:@selector(addressSelected:)]) {
-        [self.delegate addressSelected:[_addresses objectAtIndex:selectedAddressIndexPath.row]];
+        [self.delegate addressSelected:[_addresses objectAtIndex:indexPath.row]];
     }
 }
 

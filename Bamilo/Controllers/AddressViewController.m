@@ -11,6 +11,7 @@
 #import "DataManager.h"
 #import "AddressTableViewController.h"
 #import "ViewControllerManager.h"
+#import "AlertManager.h"
 
 @interface AddressViewController() <AddressTableViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *addressListContainerView;
@@ -54,13 +55,16 @@
 
 #pragma mark - AddressTableViewControllerDelegate
 -(BOOL)addressSelected:(Address *)address {
-    //TODO: Alert user if they really want to change their default address and then do the call
-    [[DataManager sharedInstance] setDefaultAddress:self address:address isBilling:NO completion:^(id data, NSError *error) {
-        if(error == nil) {
-            [self bind:data forRequestId:1];
+    [[AlertManager sharedInstance] confirmAlert:@"تغییر آدرس" text:@"از تغییر آدرس پیش فرض خود اطمینان دارید؟" confirm:@"بله" cancel:@"خیر" completion:^(BOOL OK) {
+        if(OK) {
+            [[DataManager sharedInstance] setDefaultAddress:self address:address isBilling:NO completion:^(id data, NSError *error) {
+                if(error == nil) {
+                    [self bind:data forRequestId:1];
+                }
+            }];
         }
     }];
-    
+        
     return YES;
 }
 

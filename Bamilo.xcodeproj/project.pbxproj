@@ -215,6 +215,8 @@
 		87DAABE91E55A1C400445EBB /* PaymentOptionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DAABE81E55A1C400445EBB /* PaymentOptionTableViewCell.m */; };
 		87DAABEB1E55A2C100445EBB /* PaymentOptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87DAABEA1E55A2C100445EBB /* PaymentOptionTableViewCell.xib */; };
 		87DAABEF1E55BD9D00445EBB /* AddressTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DAABEE1E55BD9D00445EBB /* AddressTableViewController.m */; };
+		87DAABF31E55DDF400445EBB /* AlertManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DAABF21E55DDF400445EBB /* AlertManager.m */; };
+		87DAABF71E55EA9200445EBB /* BMLAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DAABF61E55EA9200445EBB /* BMLAlertView.m */; };
 		893AADD11C1F1A54006314FB /* JAMyOrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 893AADCD1C1F1A54006314FB /* JAMyOrderDetailViewController.m */; };
 		8968FE731C3AE33E00B28207 /* JAUserDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4431E91C242BA8005A8B4A /* JAUserDataViewController.m */; };
 		897460DE1C19DDFD00A38073 /* JACollectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 897460DA1C19DDFD00A38073 /* JACollectionHeaderView.m */; };
@@ -964,6 +966,10 @@
 		87DAABEA1E55A2C100445EBB /* PaymentOptionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentOptionTableViewCell.xib; sourceTree = "<group>"; };
 		87DAABED1E55BD9D00445EBB /* AddressTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressTableViewController.h; sourceTree = "<group>"; };
 		87DAABEE1E55BD9D00445EBB /* AddressTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressTableViewController.m; sourceTree = "<group>"; };
+		87DAABF11E55DDF400445EBB /* AlertManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertManager.h; sourceTree = "<group>"; };
+		87DAABF21E55DDF400445EBB /* AlertManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertManager.m; sourceTree = "<group>"; };
+		87DAABF51E55EA9200445EBB /* BMLAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMLAlertView.h; sourceTree = "<group>"; };
+		87DAABF61E55EA9200445EBB /* BMLAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMLAlertView.m; sourceTree = "<group>"; };
 		893AADCC1C1F1A54006314FB /* JAMyOrderDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMyOrderDetailViewController.h; sourceTree = "<group>"; };
 		893AADCD1C1F1A54006314FB /* JAMyOrderDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMyOrderDetailViewController.m; sourceTree = "<group>"; };
 		897460D91C19DDFD00A38073 /* JACollectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACollectionHeaderView.h; path = Bamilo/View/Headers/JACollectionHeaderView.h; sourceTree = SOURCE_ROOT; };
@@ -2503,6 +2509,7 @@
 		874AAB5B1E3C775900B3F8FE /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				87DAABF01E55DDE300445EBB /* AlertManager */,
 				8714E05E1E474015004C9B1D /* RequestManager */,
 				8714E0521E471DDB004C9B1D /* DataManager */,
 				874AAB661E3CE9F400B3F8FE /* AppManager */,
@@ -3401,6 +3408,25 @@
 				87DAABEE1E55BD9D00445EBB /* AddressTableViewController.m */,
 			);
 			name = AddressTableViewController;
+			sourceTree = "<group>";
+		};
+		87DAABF01E55DDE300445EBB /* AlertManager */ = {
+			isa = PBXGroup;
+			children = (
+				87DAABF41E55EA6300445EBB /* BMLAlertView */,
+				87DAABF11E55DDF400445EBB /* AlertManager.h */,
+				87DAABF21E55DDF400445EBB /* AlertManager.m */,
+			);
+			name = AlertManager;
+			sourceTree = "<group>";
+		};
+		87DAABF41E55EA6300445EBB /* BMLAlertView */ = {
+			isa = PBXGroup;
+			children = (
+				87DAABF51E55EA9200445EBB /* BMLAlertView.h */,
+				87DAABF61E55EA9200445EBB /* BMLAlertView.m */,
+			);
+			name = BMLAlertView;
 			sourceTree = "<group>";
 		};
 		8C38E17F19CF164A0007F6F9 /* ErrorViews */ = {
@@ -4867,6 +4893,7 @@
 				611195821E3CB14B00D06690 /* PlainTableViewCell.m in Sources */,
 				CE9ADF8E1AB6D78200D56481 /* JACatalogTopView.m in Sources */,
 				CE9ADF8F1AB6D78200D56481 /* JAPDVBundles.m in Sources */,
+				87DAABF71E55EA9200445EBB /* BMLAlertView.m in Sources */,
 				CE9ADF911AB6D78200D56481 /* JAPDVRelatedItem.m in Sources */,
 				875AD5861E38C0C900584ABF /* RIAdjustTracker.m in Sources */,
 				CE9ADF931AB6D78200D56481 /* JAPaymentViewController.m in Sources */,
@@ -5055,6 +5082,7 @@
 				87459CA81E4F1B2F00743120 /* BaseTableViewHeaderFooterCell.m in Sources */,
 				CEDBF8651B0A01B60073971A /* UIImage+Mirror.m in Sources */,
 				9A55A6991BC2E8AA008EF4A6 /* JABundlesViewController.m in Sources */,
+				87DAABF31E55DDF400445EBB /* AlertManager.m in Sources */,
 				8714E0491E45FDF9004C9B1D /* NSMutableString+Extensions.m in Sources */,
 				CE9ADFFD1AB6D78200D56481 /* JATeaserPageView.m in Sources */,
 				9AEF73F41CD20E1C00A5D574 /* JACheckoutStepByStepModel.m in Sources */,

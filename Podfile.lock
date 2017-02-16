@@ -37,7 +37,12 @@ PODS:
     - GoogleAnalytics (= 3.14.0)
   - JBWhatsAppActivity (1.0)
   - JSONModel (1.7.0)
+  - Masonry (1.0.2)
   - NewRelicAgent (5.10.0)
+  - RAlertView (0.1.1):
+    - Masonry
+    - RGB
+  - RGB (0.0.2)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
@@ -57,6 +62,7 @@ DEPENDENCIES:
   - JBWhatsAppActivity (~> 1.0)
   - JSONModel
   - NewRelicAgent (~> 5.10.0)
+  - RAlertView
   - SDWebImage (~> 3.8)
   - TTRangeSlider (~> 1.0.5)
 
@@ -74,10 +80,13 @@ SPEC CHECKSUMS:
   GoogleTagManager: 39e4af1e9250e7817d328f690768e26afe560da0
   JBWhatsAppActivity: e1b4dcf1b967aaf714cc784b42fb49a110972e4a
   JSONModel: 840bc0fcffb24b8454d2c026bf26fea454b8e98d
+  Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   NewRelicAgent: 7ec88dea6b66aec073bbb5913062724369bf6aff
+  RAlertView: b9996eb63ceb64c7d1879a1d1846af5e386a1808
+  RGB: 21cf4b60ef3501c6b7cbb268a30045905dd90995
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   TTRangeSlider: 2f2ce4a33b32bb323c6575b9f5161c4664459c58
 
-PODFILE CHECKSUM: fd939b8fd09012040f392306bc6a79a709c8de7a
+PODFILE CHECKSUM: 18a7dd7139721aee0bdb38f908ce6f6d38a08ded
 
 COCOAPODS: 1.1.1
