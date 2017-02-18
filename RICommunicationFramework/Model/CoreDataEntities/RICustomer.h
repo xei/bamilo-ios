@@ -8,10 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import "JSONVerboseModel.h"
+#import "AddressList.h"
 
 @class RIAddress;
 
-@interface RICustomer : NSManagedObject
+@interface RICustomer : NSManagedObject <JSONVerboseModel>
 
 @property (nonatomic, retain) NSNumber * customerId;
 @property (nonatomic, retain) NSString * email;
@@ -27,6 +29,7 @@
 @property (nonatomic, retain) NSNumber *newsletterSubscribed;
 
 @property (nonatomic, retain) NSArray *wishlistProducts;
+@property (strong, nonatomic) AddressList *addressList;
 
 + (NSString *)signUpAccount:(NSString *)email
                successBlock:(void (^)(id object))successBlock

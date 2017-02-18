@@ -14,5 +14,6 @@
 #import "CartForm.h"
 #import "CartEntity.h"
 #import "FormEntity.h"
+#import "MultistepEntity.h"
 
 #endif /* Models_pch */

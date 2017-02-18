@@ -785,9 +785,7 @@
 }
 
 //TODO: Remove this and replace with CartForm serialization when no function is using it anymore
-+(void)parseCartEntityFromJSONResponse:(NSDictionary*)jsonResponse
-                          successBlock:(void (^)(RICart* cart))successBlock
-                       andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
++(void)parseCartEntityFromJSONResponse:(NSDictionary*)jsonResponse successBlock:(void (^)(RICart* cart))successBlock andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
 {
     NSDictionary* metadata = [jsonResponse objectForKey:@"metadata"];
     if (VALID_NOTEMPTY(metadata, NSDictionary)) {
@@ -845,22 +843,34 @@
     
     RICart *cart = [[RICart alloc] init];
     
-    //Parse stuff outside of cart_entity
     if (VALID_NOTEMPTY([dict objectForKey:@"addresses"], NSDictionary)) {
         RIForm* address = [RIForm parseForm:[dict objectForKey:@"addresses"]];
         cart.addressForm = address;
     }
     
-    cart.formEntity = [[FormEntity alloc] init];
-    
+    NSDictionary *_formEntity = [dict objectForKey:@"form_entity"];
+    if(_formEntity) {
+        cart.formEntity = [FormEntity parseToDataModelWithObjects:@[ _formEntity ]];
+    }
+
     if (VALID_NOTEMPTY([dict objectForKey:@"shippingMethodForm"], NSDictionary)) {
-        RIShippingMethodForm* shippingMethodForm = [RIShippingMethodForm parseForm:[dict objectForKey:@"shippingMethodForm"]];
+        RIShippingMethodForm *shippingMethodForm = [RIShippingMethodForm parseForm:[dict objectForKey:@"shippingMethodForm"]];
         cart.formEntity.shippingMethodForm = shippingMethodForm;
     }
     
     if(VALID_NOTEMPTY([dict objectForKey:@"paymentMethodForm"], NSDictionary)) {
-        RIPaymentMethodForm* paymentMethodForm = [RIPaymentMethodForm parseForm:[dict objectForKey:@"paymentMethodForm"]];
+        RIPaymentMethodForm *paymentMethodForm = [RIPaymentMethodForm parseForm:[dict objectForKey:@"paymentMethodForm"]];
         cart.formEntity.paymentMethodForm = paymentMethodForm;
+    }
+    
+    NSDictionary *_cartEntity = [dict objectForKey:@"cart_entity"];
+    if(_cartEntity) {
+        cart.cartEntity = [CartEntity parseToDataModelWithObjects:@[ _cartEntity, country ]];
+    }
+    
+    NSDictionary *_customerEntity = [dict objectForKey:@"customer_entity"];
+    if(_customerEntity) {
+        cart.customerEntity = [RICustomer parseToDataModelWithObjects:@[ _customerEntity ]];
     }
     
     if (VALID_NOTEMPTY([dict objectForKey:@"multistep_entity"], NSDictionary) ) {
@@ -868,8 +878,6 @@
         cart.nextStep = [nextStep objectForKey:@"next_step"];
     }
     
-    cart.cartEntity = [CartEntity parseToDataModelWithObjects:@[ [dict objectForKey:@"cart_entity"], country ]];
-        
     return cart;
 }
 

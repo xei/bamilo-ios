@@ -7,7 +7,7 @@
 //
 
 #import "FormEntity.h"
-#import "RIShippingMethodForm.h"
+//#import "RIShippingMethodForm.h"
 #import "RIPaymentMethodForm.h"
 
 @implementation FormEntity
@@ -24,7 +24,8 @@
             if ([type isEqualToString:@"multistep_payment_method"]) {
                 formEntity.paymentMethodForm = [RIPaymentMethodForm parseForm:dict];
             } else if ([type isEqualToString:@"multistep_shipping_method"]) {
-                formEntity.shippingMethodForm = [RIShippingMethodForm parseForm:dict];
+                formEntity.shippingMethodForm = [ShippingMethodForm new];
+                [formEntity.shippingMethodForm mergeFromDictionary:dict useKeyMapping:YES error:nil];
             }
         }
     }

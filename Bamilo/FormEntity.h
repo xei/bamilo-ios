@@ -8,12 +8,13 @@
 
 #import "BaseModel.h"
 #import "JSONVerboseModel.h"
+#import "ShippingMethodForm.h"
 
-@class RIShippingMethodForm, RIPaymentMethodForm;
+@class RIPaymentMethodForm;
 
 @interface FormEntity : BaseModel <JSONVerboseModel>
 
-@property (nonatomic, strong) RIShippingMethodForm *shippingMethodForm;
+@property (nonatomic, strong) ShippingMethodForm *shippingMethodForm;
 @property (nonatomic, strong) RIPaymentMethodForm *paymentMethodForm;
 
 @end

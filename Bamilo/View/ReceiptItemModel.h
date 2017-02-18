@@ -12,7 +12,9 @@
 
 @property (copy, nonatomic) NSString *itemName;
 @property (copy, nonatomic) NSString *itemValue;
+@property (strong, nonatomic) UIColor *color;
 
++ (instancetype)withName:(NSString *)name value:(NSString *)value color:(UIColor *)color;
 + (instancetype)withName:(NSString *)name value:(NSString *)value;
 
 @end

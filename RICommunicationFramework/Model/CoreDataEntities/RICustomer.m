@@ -34,6 +34,7 @@
 @dynamic addresses;
 @dynamic newsletterSubscribed;
 @synthesize costumerRequestID, wishlistProducts;
+@synthesize addressList;
 
 + (NSString *)signUpAccount:(NSString *)email
                successBlock:(void (^)(id object))successBlock
@@ -499,82 +500,6 @@
         [[RICommunicationWrapper sharedInstance] cancelRequest:operationID];
 }
 
-#pragma mark - Parser
-+ (RICustomer *)parseCustomerWithJson:(NSDictionary *)json {
-    RICustomer *customer = (RICustomer *)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RICustomer class])];
-    
-    if ([json objectForKey:@"id"]) {
-        customer.customerId = [json objectForKey:@"id"];
-    }
-    if ([json objectForKey:@"email"]) {
-        customer.email = [json objectForKey:@"email"];
-        
-        NSArray *customers = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RICustomer class]) withPropertyName:@"email" andPropertyValue:[json objectForKey:@"email"]];
-        
-        if (customers.count > 0) {
-            customer = [customers lastObject];
-        } else {
-            [RICustomer saveCustomer:customer andContext:YES];
-        }
-    }
-    
-    if ([json objectForKey:@"first_name"]) {
-        customer.firstName = [json objectForKey:@"first_name"];
-    }
-    
-    if ([json objectForKey:@"last_name"]) {
-        customer.lastName = [json objectForKey:@"last_name"];
-    }
-    
-    if ([json objectForKey:@"birthday"]) {
-        customer.birthday = [json objectForKey:@"birthday"];
-    }
-    
-    if ([json objectForKey:@"gender"]) {
-        customer.gender = [json objectForKey:@"gender"];
-    }
-    
-    if ([json objectForKey:@"password"]) {
-        customer.password = [json objectForKey:@"password"];
-    }
-    
-    if ([json objectForKey:@"created_at"]) {
-        customer.createdAt = [json objectForKey:@"created_at"];
-    }
-    
-    if (VALID_NOTEMPTY([json objectForKey:@"wishlist_products"], NSArray)) {
-        NSMutableArray *wishlist = [NSMutableArray new];
-        for (NSDictionary *dictionary in [json objectForKey:@"wishlist_products"]) {
-            if (VALID_NOTEMPTY([dictionary objectForKey:@"sku"], NSString)) {
-                [wishlist addObject:[dictionary objectForKey:@"sku"]];
-            }
-        }
-        customer.wishlistProducts = [wishlist copy];
-    }
-    
-    return customer;
-}
-
-+ (RICustomer *)parseCustomerWithJson:(NSDictionary *)json plainPassword:(NSString*)plainPassword loginMethod:(NSString*)loginMethod
-{
-    RICustomer *customer = [RICustomer parseCustomerWithJson:json];
-    
-    if(VALID_NOTEMPTY(loginMethod, NSString))
-    {
-        customer.loginMethod = loginMethod;
-    }
-    
-    customer.plainPassword = nil;
-    if([@"normal" isEqualToString:loginMethod] && VALID_NOTEMPTY(plainPassword, NSString))
-    {
-        customer.plainPassword = plainPassword;
-    }
-    
-    [RICustomer saveCustomer:customer andContext:YES];
-    
-    return customer;
-}
-
 + (void)saveCustomer:(RICustomer *)customer andContext:(BOOL)save
 {
     for (RIAddress *address in customer.addresses) {
@@ -620,6 +545,95 @@
     [json setValue:addresses forKey:@"address_list"];
     
     return json;
+}
+
+#pragma mark - Parser
++ (RICustomer *)parseCustomerWithJson:(NSDictionary *)json {
+    return [RICustomer parseToDataModelWithObjects:@[ json ]];
+}
+
++ (RICustomer *)parseCustomerWithJson:(NSDictionary *)json plainPassword:(NSString*)plainPassword loginMethod:(NSString*)loginMethod {
+    RICustomer *customer = [RICustomer parseToDataModelWithObjects:@[ json ]];
+    
+    if(VALID_NOTEMPTY(loginMethod, NSString))
+    {
+        customer.loginMethod = loginMethod;
+    }
+    
+    customer.plainPassword = nil;
+    if([@"normal" isEqualToString:loginMethod] && VALID_NOTEMPTY(plainPassword, NSString))
+    {
+        customer.plainPassword = plainPassword;
+    }
+    
+    [RICustomer saveCustomer:customer andContext:YES];
+    
+    return customer;
+}
+
+#pragma mark - JSONVerboseModel
++(instancetype)parseToDataModelWithObjects:(NSArray *)objects {
+    NSDictionary *dict = objects[0];
+    
+    RICustomer *customer = (RICustomer *)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RICustomer class])];
+    
+    if ([dict objectForKey:@"id"]) {
+        customer.customerId = [dict objectForKey:@"id"];
+    }
+    if ([dict objectForKey:@"email"]) {
+        customer.email = [dict objectForKey:@"email"];
+        
+        NSArray *customers = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RICustomer class]) withPropertyName:@"email" andPropertyValue:[dict objectForKey:@"email"]];
+        
+        if (customers.count > 0) {
+            customer = [customers lastObject];
+        } else {
+            [RICustomer saveCustomer:customer andContext:YES];
+        }
+    }
+    
+    if ([dict objectForKey:@"first_name"]) {
+        customer.firstName = [dict objectForKey:@"first_name"];
+    }
+    
+    if ([dict objectForKey:@"last_name"]) {
+        customer.lastName = [dict objectForKey:@"last_name"];
+    }
+    
+    if ([dict objectForKey:@"birthday"]) {
+        customer.birthday = [dict objectForKey:@"birthday"];
+    }
+    
+    if ([dict objectForKey:@"gender"]) {
+        customer.gender = [dict objectForKey:@"gender"];
+    }
+    
+    if ([dict objectForKey:@"password"]) {
+        customer.password = [dict objectForKey:@"password"];
+    }
+    
+    if ([dict objectForKey:@"created_at"]) {
+        customer.createdAt = [dict objectForKey:@"created_at"];
+    }
+    
+    if (VALID_NOTEMPTY([dict objectForKey:@"wishlist_products"], NSArray)) {
+        NSMutableArray *wishlist = [NSMutableArray new];
+        for (NSDictionary *dictionary in [dict objectForKey:@"wishlist_products"]) {
+            if (VALID_NOTEMPTY([dictionary objectForKey:@"sku"], NSString)) {
+                [wishlist addObject:[dictionary objectForKey:@"sku"]];
+            }
+        }
+        customer.wishlistProducts = [wishlist copy];
+    }
+//#############################################################################################################
+    
+    NSDictionary *_addressListDict = [dict objectForKey:@"address_list"];
+    if (_addressListDict) {
+        customer.addressList = [[AddressList alloc] init];
+        [customer.addressList mergeFromDictionary:_addressListDict useKeyMapping:YES error:nil];
+    }
+    
+    return customer;
 }
 
 @end

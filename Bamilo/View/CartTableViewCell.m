@@ -9,7 +9,7 @@
 #import "CartTableViewCell.h"
 #import "NSString+Extensions.h"
 #import "StepperViewControl.h"
-#import "UIImageView+WebCache.h"
+#import "ImageManager.h"
 
 
 @interface CartTableViewCell () <StepperViewControlDelegate>
@@ -32,11 +32,7 @@
     self.brandLabelButton.titleLabel.text = cartItem.brand;
     self.nameLabel.text = cartItem.name;
     
-    //-------- this code must be implemented in server side not here! (refactor)
-    NSString *imageUrl = [cartItem.imageUrl stringByReplacingOccurrencesOfString:@"cart" withString:@"catalog_grid_3"];
-    
-    
-    [self.itemImage sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
+    [self.itemImage sd_setImageWithURL:[ImageManager getCorrectedUrlForCartItemImageUrl:cartItem.imageUrl] placeholderImage:[ImageManager defaultPlaceholder]];
     self.stepper.quantity = cartItem.quantity.intValue;
     self.stepper.maxQuantity = cartItem.maxQuantity.intValue;
     NSString *realPrice = cartItem.priceFormatted;

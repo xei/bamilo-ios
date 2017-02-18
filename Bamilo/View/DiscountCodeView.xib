@@ -23,7 +23,7 @@
                 <view contentMode="scaleToFill" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="QFZ-Cn-mfg" userLabel="TextFieldContainterView">
                     <rect key="frame" x="20" y="10" width="335" height="37"/>
                     <subviews>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="کد تخفیف خود را وارد کنید" textAlignment="right" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="9GN-Ut-Spd" userLabel="DiscountCodeTextField">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="کد تخفیف خود را وارد کنید" textAlignment="right" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="9GN-Ut-Spd" userLabel="DiscountCodeTextField">
                             <rect key="frame" x="5" y="5" width="325" height="27"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -49,22 +49,40 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kIV-If-VIx" userLabel="DiscountApplyButton">
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kIV-If-VIx" userLabel="DiscountApplyButton">
                     <rect key="frame" x="20" y="57" width="335" height="35"/>
                     <color key="backgroundColor" red="0.80975550413131714" green="0.81037485599517822" blue="0.80985146760940552" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
                     <state key="normal" title="ثبت کد تخفیف">
                         <color key="titleColor" red="0.47951453919999998" green="0.47989743950000002" blue="0.47957384590000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
+                    <connections>
+                        <action selector="applyDiscountButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="8bo-zh-LvH"/>
+                    </connections>
+                </button>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wjz-DY-px1" userLabel="DiscountRemoveButton">
+                    <rect key="frame" x="20" y="57" width="335" height="35"/>
+                    <color key="backgroundColor" red="0.80975550409999997" green="0.81037485600000003" blue="0.80985146760000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
+                    <state key="normal" title="حذف کد تخفیف">
+                        <color key="titleColor" red="0.47951453919999998" green="0.47989743950000002" blue="0.47957384590000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="removeDiscountButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="mdo-p3-k0z"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="Wjz-DY-px1" firstAttribute="trailing" secondItem="kIV-If-VIx" secondAttribute="trailing" id="5GL-gb-maM"/>
+                <constraint firstItem="Wjz-DY-px1" firstAttribute="leading" secondItem="kIV-If-VIx" secondAttribute="leading" id="8Yo-k2-576"/>
                 <constraint firstItem="QFZ-Cn-mfg" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="C9w-Ed-m7p"/>
                 <constraint firstItem="QFZ-Cn-mfg" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" priority="750" constant="10" id="SZH-x8-mFo"/>
+                <constraint firstItem="Wjz-DY-px1" firstAttribute="top" secondItem="kIV-If-VIx" secondAttribute="top" id="WmA-h1-UWW"/>
                 <constraint firstItem="kIV-If-VIx" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="ZbK-Ys-dKM"/>
                 <constraint firstAttribute="trailing" secondItem="kIV-If-VIx" secondAttribute="trailing" constant="20" id="bz5-aD-fyq"/>
                 <constraint firstAttribute="trailing" secondItem="QFZ-Cn-mfg" secondAttribute="trailing" constant="20" id="fhi-3T-hzH"/>
+                <constraint firstItem="Wjz-DY-px1" firstAttribute="bottom" secondItem="kIV-If-VIx" secondAttribute="bottom" id="j1j-MT-NJD"/>
                 <constraint firstAttribute="bottom" secondItem="kIV-If-VIx" secondAttribute="bottom" priority="750" constant="18" id="ly4-sa-BjJ"/>
                 <constraint firstItem="kIV-If-VIx" firstAttribute="top" secondItem="QFZ-Cn-mfg" secondAttribute="bottom" priority="750" constant="10" id="vTc-Qg-ZKU"/>
             </constraints>
@@ -76,6 +94,7 @@
                 <outlet property="discountApplyButton" destination="kIV-If-VIx" id="LrM-FN-hYN"/>
                 <outlet property="discountCodeTextField" destination="9GN-Ut-Spd" id="1DT-6d-5VI"/>
                 <outlet property="discountCodeTextFieldContainerView" destination="QFZ-Cn-mfg" id="a2T-pX-v5w"/>
+                <outlet property="discountRemoveButton" destination="Wjz-DY-px1" id="W7F-6L-Ju8"/>
             </connections>
             <point key="canvasLocation" x="24.5" y="52"/>
         </view>

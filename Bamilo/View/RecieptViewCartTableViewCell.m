@@ -21,7 +21,7 @@
     [self.summeryView updateWithModel:model];
     NSMutableArray *receiptViewItems = [NSMutableArray arrayWithArray:@[
                                                                         [ReceiptItemModel withName:@"جمع کل:" value: ((CartEntity *)model).cartUnreducedValueFormatted ],
-                                                                        [ReceiptItemModel withName:@"تخفیف کالاها:" value: ((CartEntity *)model).discountedValueFormated]
+                                                                        [ReceiptItemModel withName:@"تخفیف کالاها:" value: ((CartEntity *)model).discountValueFormated]
                                                                         ]];
 
     [((CartEntity *)model).priceRules enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {

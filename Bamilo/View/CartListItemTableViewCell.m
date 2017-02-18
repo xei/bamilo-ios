@@ -7,6 +7,8 @@
 //
 
 #import "CartListItemTableViewCell.h"
+#import "RICartItem.h"
+#import "ImageManager.h"
 
 @interface CartListItemTableViewCell()
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -39,7 +41,13 @@
 }
 
 - (void)updateWithModel:(id)model {
-    return;
+    RICartItem *cartItem = (RICartItem *)model;
+    
+    self.nameLabel.text = cartItem.name;
+    self.quantityLabel.text = [NSString stringWithFormat:STRING_QUANTITY, [cartItem.quantity.stringValue numbersToPersian]];
+    self.priceLabel.text = cartItem.specialPriceFormatted ?: cartItem.priceFormatted;
+    self.brandLabel.text = cartItem.brand;
+    [self.itemImage sd_setImageWithURL:[ImageManager getCorrectedUrlForCartItemImageUrl:cartItem.imageUrl] placeholderImage:[ImageManager defaultPlaceholder]];
 }
 
 @end

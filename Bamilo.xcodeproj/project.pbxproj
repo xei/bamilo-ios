@@ -82,6 +82,11 @@
 		8714E0901E48CD41004C9B1D /* DiscountSwitcherView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8714E08F1E48CD41004C9B1D /* DiscountSwitcherView.m */; };
 		8714E0921E48CD57004C9B1D /* DiscountSwitcherView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8714E0911E48CD57004C9B1D /* DiscountSwitcherView.xib */; };
 		8716987D1E38A94C0027B34A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8716987A1E38A94C0027B34A /* Main.storyboard */; };
+		873369BA1E582D0100B0B5E5 /* MultistepEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 873369B91E582D0100B0B5E5 /* MultistepEntity.m */; };
+		873369BE1E58376900B0B5E5 /* ImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 873369BD1E58376900B0B5E5 /* ImageManager.m */; };
+		873369C21E589FEC00B0B5E5 /* ShippingMethodForm.m in Sources */ = {isa = PBXBuildFile; fileRef = 873369C11E589FEC00B0B5E5 /* ShippingMethodForm.m */; };
+		873369C61E58A12E00B0B5E5 /* ShippingMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 873369C51E58A12E00B0B5E5 /* ShippingMethod.m */; };
+		873369CA1E58A1D200B0B5E5 /* ShippingMethodOption.m in Sources */ = {isa = PBXBuildFile; fileRef = 873369C91E58A1D200B0B5E5 /* ShippingMethodOption.m */; };
 		87459C821E4EF37200743120 /* CartListItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87459C811E4EF37200743120 /* CartListItemTableViewCell.m */; };
 		87459C841E4EF37D00743120 /* CartListItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87459C831E4EF37D00743120 /* CartListItemTableViewCell.xib */; };
 		87459C8D1E4F04AD00743120 /* RadioButtonViewControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 87459C8C1E4F04AD00743120 /* RadioButtonViewControl.m */; };
@@ -691,6 +696,16 @@
 		8714E0911E48CD57004C9B1D /* DiscountSwitcherView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiscountSwitcherView.xib; sourceTree = "<group>"; };
 		8714E0941E48CE9F004C9B1D /* DiscountSwitcherViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscountSwitcherViewDelegate.h; sourceTree = "<group>"; };
 		8716987B1E38A94C0027B34A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Bamilo/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
+		873369B81E582D0100B0B5E5 /* MultistepEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultistepEntity.h; sourceTree = "<group>"; };
+		873369B91E582D0100B0B5E5 /* MultistepEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultistepEntity.m; sourceTree = "<group>"; };
+		873369BC1E58376900B0B5E5 /* ImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageManager.h; sourceTree = "<group>"; };
+		873369BD1E58376900B0B5E5 /* ImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageManager.m; sourceTree = "<group>"; };
+		873369C01E589FEC00B0B5E5 /* ShippingMethodForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShippingMethodForm.h; sourceTree = "<group>"; };
+		873369C11E589FEC00B0B5E5 /* ShippingMethodForm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShippingMethodForm.m; sourceTree = "<group>"; };
+		873369C41E58A12E00B0B5E5 /* ShippingMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShippingMethod.h; sourceTree = "<group>"; };
+		873369C51E58A12E00B0B5E5 /* ShippingMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShippingMethod.m; sourceTree = "<group>"; };
+		873369C81E58A1D200B0B5E5 /* ShippingMethodOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShippingMethodOption.h; sourceTree = "<group>"; };
+		873369C91E58A1D200B0B5E5 /* ShippingMethodOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShippingMethodOption.m; sourceTree = "<group>"; };
 		87459C801E4EF37200743120 /* CartListItemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartListItemTableViewCell.h; sourceTree = "<group>"; };
 		87459C811E4EF37200743120 /* CartListItemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartListItemTableViewCell.m; sourceTree = "<group>"; };
 		87459C831E4EF37D00743120 /* CartListItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartListItemTableViewCell.xib; sourceTree = "<group>"; };
@@ -2437,6 +2452,51 @@
 			name = Discount;
 			sourceTree = "<group>";
 		};
+		873369B71E582CE200B0B5E5 /* MultistepEntity */ = {
+			isa = PBXGroup;
+			children = (
+				873369B81E582D0100B0B5E5 /* MultistepEntity.h */,
+				873369B91E582D0100B0B5E5 /* MultistepEntity.m */,
+			);
+			name = MultistepEntity;
+			sourceTree = "<group>";
+		};
+		873369BB1E58375900B0B5E5 /* ImageManager */ = {
+			isa = PBXGroup;
+			children = (
+				873369BC1E58376900B0B5E5 /* ImageManager.h */,
+				873369BD1E58376900B0B5E5 /* ImageManager.m */,
+			);
+			name = ImageManager;
+			sourceTree = "<group>";
+		};
+		873369BF1E589FCF00B0B5E5 /* ShippingMethodForm */ = {
+			isa = PBXGroup;
+			children = (
+				873369C01E589FEC00B0B5E5 /* ShippingMethodForm.h */,
+				873369C11E589FEC00B0B5E5 /* ShippingMethodForm.m */,
+			);
+			name = ShippingMethodForm;
+			sourceTree = "<group>";
+		};
+		873369C31E58A11600B0B5E5 /* ShippingMethod */ = {
+			isa = PBXGroup;
+			children = (
+				873369C41E58A12E00B0B5E5 /* ShippingMethod.h */,
+				873369C51E58A12E00B0B5E5 /* ShippingMethod.m */,
+			);
+			name = ShippingMethod;
+			sourceTree = "<group>";
+		};
+		873369C71E58A1C200B0B5E5 /* ShippingMethodOption */ = {
+			isa = PBXGroup;
+			children = (
+				873369C81E58A1D200B0B5E5 /* ShippingMethodOption.h */,
+				873369C91E58A1D200B0B5E5 /* ShippingMethodOption.m */,
+			);
+			name = ShippingMethodOption;
+			sourceTree = "<group>";
+		};
 		87459C7F1E4EF2AD00743120 /* CartListItemTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -2509,6 +2569,7 @@
 		874AAB5B1E3C775900B3F8FE /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				873369BB1E58375900B0B5E5 /* ImageManager */,
 				87DAABF01E55DDE300445EBB /* AlertManager */,
 				8714E05E1E474015004C9B1D /* RequestManager */,
 				8714E0521E471DDB004C9B1D /* DataManager */,
@@ -3283,6 +3344,10 @@
 				879F88321E51DFAA0033FE87 /* CartForm */,
 				879F88261E51CEFC0033FE87 /* CartEntity */,
 				879F882E1E51D5460033FE87 /* FormEntity */,
+				873369B71E582CE200B0B5E5 /* MultistepEntity */,
+				873369C71E58A1C200B0B5E5 /* ShippingMethodOption */,
+				873369C31E58A11600B0B5E5 /* ShippingMethod */,
+				873369BF1E589FCF00B0B5E5 /* ShippingMethodForm */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -4755,6 +4820,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A08B1131CC7C377003282CB /* JAActionWebViewController.m in Sources */,
+				873369CA1E58A1D200B0B5E5 /* ShippingMethodOption.m in Sources */,
 				9A189E611BB31AC70039BC14 /* JAProductInfoHeaderLine.m in Sources */,
 				8714E0661E476DF8004C9B1D /* AddressList.m in Sources */,
 				9A6BC08A1C4907BB00DD9492 /* JAMessageView.m in Sources */,
@@ -4781,6 +4847,7 @@
 				FF44651B1CEB4FD7003A65EA /* JAORProductView.m in Sources */,
 				875AD5741E38C0C900584ABF /* RIShippingMethodForm.m in Sources */,
 				CE9ADF371AB6D78200D56481 /* JAPDVSingleRelatedItem.m in Sources */,
+				873369BE1E58376900B0B5E5 /* ImageManager.m in Sources */,
 				9A189E761BB31B1F0039BC14 /* JAProductInfoBaseLine.m in Sources */,
 				9ABCAEFA1B0F8FEF00A69271 /* UIView+Mirror.m in Sources */,
 				87DAABE31E54430D00445EBB /* PaymentOptionWithLogoTableViewCell.m in Sources */,
@@ -4955,6 +5022,7 @@
 				CED620511BEA5EE800FA8403 /* JACollectionSeparator.m in Sources */,
 				61DBCCB61E46128300BA8251 /* IconButton.m in Sources */,
 				CE9ADFBA1AB6D78200D56481 /* JAUtils.m in Sources */,
+				873369C61E58A12E00B0B5E5 /* ShippingMethod.m in Sources */,
 				875AD5811E38C0C900584ABF /* RIOpenURLHandler.m in Sources */,
 				9A3876641BCD0DFD0088B186 /* JAProductReviewsView.m in Sources */,
 				9A189E6A1BB31AF70039BC14 /* JAProductInfoRatingLine.m in Sources */,
@@ -5015,6 +5083,7 @@
 				CE9ADFD61AB6D78200D56481 /* JAFilteredNoResultsView.m in Sources */,
 				CE9ADFD71AB6D78200D56481 /* JAProductListFlowLayout.m in Sources */,
 				9AEADDCD1C0EF9370074034A /* JARegisterViewController.m in Sources */,
+				873369C21E589FEC00B0B5E5 /* ShippingMethodForm.m in Sources */,
 				875AD55A1E38C0C900584ABF /* RICart.m in Sources */,
 				CE9ADFD91AB6D78200D56481 /* JAPromotionPopUp.m in Sources */,
 				9A55A68B1BBECB09008EF4A6 /* JABottomBar.m in Sources */,
@@ -5056,6 +5125,7 @@
 				CE9ADFEA1AB6D78200D56481 /* main.m in Sources */,
 				CE9ADFEC1AB6D78200D56481 /* JARatingsViewMedium.m in Sources */,
 				841E81AA1D1680F300A35AAF /* MPCoachMarks.m in Sources */,
+				873369BA1E582D0100B0B5E5 /* MultistepEntity.m in Sources */,
 				612FDC371E45E0A900A9D0BD /* CartTableViewCell.m in Sources */,
 				CE9ADFEF1AB6D78200D56481 /* JAPickerScrollView.m in Sources */,
 				875AD5411E38C0C900584ABF /* RIApi.m in Sources */,

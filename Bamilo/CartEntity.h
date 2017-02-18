@@ -22,7 +22,7 @@
 @property (strong, nonatomic) NSNumber *cartCount;
 @property (strong, nonatomic) NSNumber *cartValue;
 @property (strong, nonatomic) NSString *cartValueFormatted;
-@property (strong, nonatomic) NSString *discountedValueFormated;
+@property (strong, nonatomic) NSString *discountValueFormated;
 @property (strong, nonatomic) NSNumber *cartValueEuroConverted;
 @property (strong, nonatomic) NSNumber *shippingValue;
 @property (strong, nonatomic) NSString *shippingValueFormatted;

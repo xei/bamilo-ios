@@ -95,8 +95,8 @@
     
     [addressText smartAppend:addressObj.address];
     [addressText smartAppend:addressObj.address1];
-    [addressText smartAppend:addressObj.city];
-    [addressText smartAppend:addressObj.postcode];
+    //[addressText smartAppend:addressObj.city];
+    //[addressText smartAppend:addressObj.postcode];
     
     self.addressLabel.text = addressText;
     

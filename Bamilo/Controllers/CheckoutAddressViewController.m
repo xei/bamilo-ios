@@ -31,20 +31,18 @@
     _addressTableViewController.options = (ADDRESS_CELL_EDIT | ADDRESS_CELL_SELECT);
     _addressTableViewController.delegate = self;
     [_addressTableViewController addInto:self ofView:self.addressListContainerView];
+    
+    _addresses = [NSMutableArray new];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[DataManager sharedInstance] getMultistepAddressList:self completion:^(id data, NSError *error) {
-        if(error == nil) {
-            [self bind:data forRequestId:0];
-        }
-    }];
+    [self asyncGetMultistepAddressList];
 }
 
 #pragma mark - Overrides
--(NSString *)getNextStepViewControllerSegueIdentifier {
+-(NSString *)getNextStepViewControllerSegueIdentifier:(NSString *)serviceIdentifier {
     return @"pushAddressToConfirmation";
 }
 
@@ -60,7 +58,8 @@
     
     [[DataManager sharedInstance] setMultistepAddress:self forShipping:selectedAddress.uid billing:billingAddress.uid completion:^(id data, NSError *error) {
         if(error == nil && completion != nil) {
-            completion();
+            MultistepEntity *multistepEntity = (MultistepEntity *)data;
+            completion(multistepEntity.nextStep);
         }
     }];
 }
@@ -88,26 +87,44 @@
 #pragma mark - DataServiceProtocol
 -(void)bind:(id)data forRequestId:(int)rid {
     switch (rid) {
-        case 0:
-        case 1: {
-            [_addresses removeAllObjects];
+        //GET ADDRESS LIST
+        case 0: {
+            self.cart = (RICart *)data;
             
-            AddressList *addressList = (AddressList *)data;
-            
-            if(addressList) {
-                if(addressList.shipping) {
-                    [_addresses addObject:addressList.shipping];
-                }
-                
-                for(Address *otherAddress in addressList.other) {
-                    [_addresses addObject:otherAddress];
-                }
-                
-                [_addressTableViewController updateWithModel:_addresses];
-            }
+            [self bindAddresses:self.cart.customerEntity.addressList];
         }
-    
         break;
+            
+        //CHANGED DEFAULT ADDRESS
+        case 1: {
+            [self asyncGetMultistepAddressList];
+        }
+        break;
+    }
+}
+
+#pragma mark - Helpers
+-(void) asyncGetMultistepAddressList {
+    [[DataManager sharedInstance] getMultistepAddressList:self completion:^(id data, NSError *error) {
+        if(error == nil) {
+            [self bind:data forRequestId:0];
+        }
+    }];
+}
+
+-(void) bindAddresses:(AddressList *)addressList {
+    [_addresses removeAllObjects];
+    
+    if(addressList) {
+        if(addressList.shipping) {
+            [_addresses addObject:addressList.shipping];
+        }
+        
+        for(Address *otherAddress in addressList.other) {
+            [_addresses addObject:otherAddress];
+        }
+        
+        [_addressTableViewController updateWithModel:_addresses];
     }
 }
 

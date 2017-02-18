@@ -56,7 +56,6 @@ static DataManager *instance;
     }];
 }
 
-
 //### SGINUP ###
 - (void)signupUser:(id<DataServiceProtocol>)target withFieldsDictionary:(NSDictionary<NSString *,FormItemModel *> *)newUserDictionary completion:(DataCompletion)completion {
     
@@ -104,6 +103,7 @@ static DataManager *instance;
 //### ORDER ###
 -(void)getMultistepAddressList:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
     [RequestManager asyncGET:target path:RI_API_MULTISTEP_GET_ADDRESSES params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+        [self serialize:data into:[RICart class] response:response errorMessages:errorMessages completion:completion];
     }];
 }
 
@@ -112,7 +112,9 @@ static DataManager *instance;
         @"addresses[shipping_id]": shippingAddressId,
         @"addresses[billing_id]": billingAddressId
     };
+    
     [RequestManager asyncPOST:target path:RI_API_MULTISTEP_SUBMIT_ADDRESSES params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+        [self serialize:data into:[MultistepEntity class] response:response errorMessages:errorMessages completion:completion];
     }];
 }
 
@@ -122,9 +124,46 @@ static DataManager *instance;
     }];
 }
 
+-(void) getMultistepShipping:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
+    [RequestManager asyncGET:target path:RI_API_MULTISTEP_GET_SHIPPING params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+        [self serialize:data into:[RICart class] response:response errorMessages:errorMessages completion:completion];
+    }];
+}
+
+-(void) setMultistepShipping:(id<DataServiceProtocol>)target forShippingMethod:(NSString*)shippingMethod pickupStation:(NSString*)pickupStation region:(NSString*)region completion:(DataCompletion)completion {
+    NSDictionary *params = @{
+         @"shipping_method[shipping_method]": shippingMethod,
+         @"shipping_method[pickup_station]": pickupStation,
+         @"shipping_method[pickup_station_customer_address_region]": region
+    };
+    
+    [RequestManager asyncPOST:target path:RI_API_MULTISTEP_SUBMIT_SHIPPING params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+        [self serialize:data into:[RICart class] response:response errorMessages:errorMessages completion:completion];
+    }];
+}
+
 - (void) getMultistepPayment:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
     [RequestManager asyncGET:target path:RI_API_MULTISTEP_GET_PAYMENT params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
         [self serialize:data into:[CartForm class] response:response errorMessages:errorMessages completion:completion];
+    }];
+}
+
+//### COUPON ###
+-(void) applyVoucher:(id<DataServiceProtocol>)target voucherCode:(NSString *)voucherCode completion:(DataCompletion)completion {
+    NSDictionary *params = @{
+         @"couponcode": voucherCode
+    };
+    [RequestManager asyncPOST:target path:RI_API_ADD_VOUCHER_TO_CART params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+        [self serialize:data into:[RICart class] response:response errorMessages:errorMessages completion:completion];
+    }];
+}
+
+-(void) removeVoucher:(id<DataServiceProtocol>)target voucherCode:(NSString *)voucherCode completion:(DataCompletion)completion {
+    NSDictionary *params = @{
+        @"couponcode": voucherCode
+    };
+    [RequestManager asyncDELETE:target path:RI_API_REMOVE_VOUCHER_FROM_CART params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+        [self serialize:data into:[RICart class] response:response errorMessages:errorMessages completion:completion];
     }];
 }
 

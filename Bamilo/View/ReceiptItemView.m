@@ -47,6 +47,10 @@
     
     self.itemNameLabel.text = receiptItemModel.itemName;
     self.itemPriceLabel.text = receiptItemModel.itemValue;
+    
+    if(receiptItemModel.color) {
+        [self applyColor:receiptItemModel.color];
+    }
 }
 
 @end

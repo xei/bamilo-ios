@@ -16,17 +16,22 @@
 #import "ReceiptView.h"
 #import "ReceiptItemView.h"
 #import "CartListItemTableViewCell.h"
+#import "RIShippingMethodForm.h"
+#import "RIShippingMethod.h"
 #import "DataManager.h"
 
-@interface CheckoutConfirmationViewController() <DiscountSwitcherViewDelegate>
+@interface CheckoutConfirmationViewController() <DiscountCodeViewDelegate, DiscountSwitcherViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @end
 
 @implementation CheckoutConfirmationViewController {
 @private
-    NSArray<ReceiptItemModel *> *receiptViewItems;
     NSMutableArray *_cellsIndexPaths;
+    
     Address *_shippingAddress;
+    NSArray *_products;
+    NSMutableArray *_receiptViewItems;
+    NSString *_deliveryTime;
 }
 
 - (void)viewDidLoad {
@@ -64,14 +69,16 @@
                                 [NSIndexPath indexPathForRow:0 inSection:0],
                                 //[NSIndexPath indexPathForRow:1 inSection:0],
                                 [NSIndexPath indexPathForRow:2 inSection:0],
-                                [NSIndexPath indexPathForRow:3 inSection:0], nil],
+                                [NSIndexPath indexPathForRow:3 inSection:0],
+                                [NSIndexPath indexPathForRow:4 inSection:0], nil],
                             //Cart Items
-                            [NSMutableArray arrayWithObjects:
-                                [NSIndexPath indexPathForRow:0 inSection:1], nil],
+                            @[],
                             //Shipping Address
                             [NSMutableArray arrayWithObjects:
                                 [NSIndexPath indexPathForRow:0 inSection:2], nil],
                         nil];
+    
+    _receiptViewItems = [NSMutableArray new];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -81,8 +88,24 @@
         if(error == nil) {
             [self bind:data forRequestId:0];
             
+            //Discount Code
+            [self updateDiscountViewAppearanceForValue:(self.cart.cartEntity.couponCode != nil) animated:NO];
+            
+            //Delivery Time
+            [[DataManager sharedInstance] getMultistepShipping:self completion:^(id data, NSError *error) {
+                if(error == nil) {
+                    [self bind:data forRequestId:1];
+    
+                    [self.tableView reloadData];
+                }
+            }];
+
             //Shipping Address
             _shippingAddress = self.cart.cartEntity.address;
+            
+            //Products
+            _products = self.cart.cartEntity.cartItems;
+            [_cellsIndexPaths setObject:[NSMutableArray indexPathArrayOfLength:(int)_products.count forSection:1] atIndexedSubscript:1];
             
             [self.tableView reloadData];
         }
@@ -90,7 +113,7 @@
 }
 
 #pragma mark - Overrides
--(NSString *)getNextStepViewControllerSegueIdentifier {
+-(NSString *)getNextStepViewControllerSegueIdentifier:(NSString *)serviceIdentifier {
     return @"pushReviewToPayment";
 }
 
@@ -120,40 +143,61 @@
                 case 0: {
                     DiscountSwitcherView *discountSwitcherView = [tableView dequeueReusableCellWithIdentifier:[DiscountSwitcherView nibName]];
                     discountSwitcherView.delegate = self;
+                    [discountSwitcherView updateWithModel:@(self.cart.cartEntity.couponCode != nil)];
                     return discountSwitcherView;
                 }
                     
                 //Discount Code View Cell
                 case 1: {
                     DiscountCodeView *discountCodeView = [tableView dequeueReusableCellWithIdentifier:[DiscountCodeView nibName]];
+                    discountCodeView.delegate = self;
+                    [discountCodeView updateWithModel:self.cart.cartEntity.couponCode];
                     return discountCodeView;
                 }
                     
                 //Receipt View Cell
                 case 2: {
                     ReceiptView *receiptView = [tableView dequeueReusableCellWithIdentifier:[ReceiptView nibName] forIndexPath:indexPath];
-                    receiptViewItems = @[
-                         [ReceiptItemModel withName:@"جمع کل" value:@"۹۹۹،۰۰۰،۵۵۵ ریال"],
-                         [ReceiptItemModel withName:@"مجموع تخفیفها" value:@"۱،۵۰۰،۰۰۰ ریال"],
-                         [ReceiptItemModel withName:@"هزینه حمل" value:@"۵۰۰،۰۰۰ ریال"]
-                    ];
+                    [_receiptViewItems removeAllObjects];
                     
-                    [receiptView updateWithModel:receiptViewItems];
+                    //Initial Undiscounted Sum
+                    [_receiptViewItems addObject:[ReceiptItemModel withName:STRING_SUM_OF_PRODUCTS value:self.cart.cartEntity.cartUnreducedValueFormatted]];
+                    
+                    //Sum of Discounts
+                    [_receiptViewItems addObject:[ReceiptItemModel withName:STRING_SUM_OF_DISCOUNTS value:self.cart.cartEntity.discountValueFormated]];
+                    
+                    //Discount Code (If user inserted)
+                    if(self.cart.cartEntity.couponCode) {
+                        [_receiptViewItems addObject:[ReceiptItemModel withName:STRING_COUPON value:self.cart.cartEntity.couponCode]];
+                    }
+                    
+                    //Shipping Cost
+                    if(self.cart.cartEntity.shippingValue.intValue > 0) {
+                        [_receiptViewItems addObject:[ReceiptItemModel withName:STRING_SHIPPING_COST value:self.cart.cartEntity.shippingValueFormatted]];
+                    } else {
+                        [_receiptViewItems addObject:[ReceiptItemModel withName:STRING_SHIPPING_COST value:STRING_FREE color:cGREEN_COLOR]];
+                    }
+
+                    [receiptView updateWithModel:_receiptViewItems];
                     return receiptView;
                 }
                     
                 //Receipt Total View Cell
                 case 3: {
                     ReceiptItemView *receiptItemView = [tableView dequeueReusableCellWithIdentifier:[ReceiptItemView nibName] forIndexPath:indexPath];
-                    [receiptItemView updateWithModel:[ReceiptItemModel withName:@"جمع نهایی :" value:@"۹۹۹،۰۰۰،۵۵۵ ریال"]];
+                    
+                    [receiptItemView updateWithModel:[ReceiptItemModel withName:STRING_SUM_OF_TOTAL value:self.cart.cartEntity.cartValueFormatted]];
                     [receiptItemView applyColor:cGREEN_COLOR];
+                    
                     return receiptItemView;
                 }
                     
                 //Delivery Time Cell
                 case 4: {
                     BasicTableViewCell *deliveryTimeTableViewCell = [tableView dequeueReusableCellWithIdentifier:[BasicTableViewCell nibName] forIndexPath:indexPath];
-                    deliveryTimeTableViewCell.titleLabel.text = @"زمان تحویل: ۶ - ۳ روز";
+                    NSMutableString *deliveryTimeString = [NSMutableString stringWithFormat:@"%@: ", STRING_DELIVERY_TIME];
+                    [deliveryTimeString smartAppend:_deliveryTime replacer:@"-"];
+                    deliveryTimeTableViewCell.titleLabel.text = [deliveryTimeString numbersToPersian];
                     return deliveryTimeTableViewCell;
                 }
             }
@@ -163,6 +207,7 @@
         //Purchase Summary Section
         case 1: {
             CartListItemTableViewCell *cartListItemTableViewCell = [tableView dequeueReusableCellWithIdentifier:[CartListItemTableViewCell nibName] forIndexPath:indexPath];
+            [cartListItemTableViewCell updateWithModel:[_products objectAtIndex:indexPath.row]];
             return cartListItemTableViewCell;
         }
         break;
@@ -212,7 +257,7 @@
     switch (_cellIndexPath.section) {
         case 0: {
             switch (_cellIndexPath.row) {
-                case 2: return receiptViewItems.count * [ReceiptItemView cellHeight]; //Receipt Items View
+                case 2: return _receiptViewItems.count * [ReceiptItemView cellHeight]; //Receipt Items View
                 case 3: return 40.0f; //Receipt Total View
                 case 4: return 50.0f; //Delivery Time Cell
             }
@@ -228,23 +273,41 @@
     return 150;
 }
 
+#pragma mark - DiscountCodeViewDelegate
+-(void)discountCodeViewDidFinish:(id)sender withCode:(NSString *)discountCode {
+    if(self.cart.cartEntity.couponCode == nil && discountCode && discountCode.length) {
+        [[DataManager sharedInstance] applyVoucher:self voucherCode:discountCode completion:^(id data, NSError *error) {
+            if(error == nil) {
+                [self bind:data forRequestId:2];
+                
+                ((DiscountCodeView *)sender).state = DISCOUNT_CODE_VIEW_STATE_CONTAINS_CODE;
+                
+                NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
+                [trackingDictionary setValue:self.cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+                [trackingDictionary setValue:self.cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
+                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart] data:[trackingDictionary copy]];
+                
+                [self.tableView reloadData];
+            } else {
+                if (error.code != RIApiResponseNoInternetConnection) {
+                    //[self.resumeView setCouponValid:NO];
+                }
+            }
+        }];
+    }
+}
+
+-(void)discountCodeViewRemoveCodeButtonTapped:(id)sender {
+    [self requestRemovalOfVoucherCode];
+}
+
 #pragma mark - DiscountSwitcherViewDelegate
 -(void)discountSwitcherViewDidToggle:(BOOL)isOn {
-    NSIndexPath *discountCodeViewIndexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+    [self updateDiscountViewAppearanceForValue:isOn animated:YES];
     
-    if(isOn) {
-        [[_cellsIndexPaths objectAtIndex:discountCodeViewIndexPath.section] insertObject:discountCodeViewIndexPath atIndex:discountCodeViewIndexPath.row];
-    } else {
-        [[_cellsIndexPaths objectAtIndex:discountCodeViewIndexPath.section] removeObjectAtIndex:discountCodeViewIndexPath.row];
+    if(isOn == NO && self.cart.cartEntity.couponCode) {
+        [self requestRemovalOfVoucherCode];
     }
-    
-    [self.tableView beginUpdates];
-    if(isOn) {
-        [self.tableView insertRowsAtIndexPaths:@[discountCodeViewIndexPath] withRowAnimation:UITableViewRowAnimationBottom];
-    } else {
-        [self.tableView deleteRowsAtIndexPaths:@[discountCodeViewIndexPath] withRowAnimation:UITableViewRowAnimationTop];
-    }
-    [self.tableView endUpdates];
 }
 
 #pragma mark - CheckoutProgressViewDelegate
@@ -255,5 +318,124 @@
         [CheckoutProgressViewButtonModel buttonWith:3 state:CHECKOUT_PROGRESSVIEW_BUTTON_STATE_PENDING]
     ];
 }
+
+#pragma mark - DataServiceProtocol
+-(void)bind:(id)data forRequestId:(int)rid {
+    switch (rid) {
+        case 0: {
+            self.cart = (RICart *)data;
+        }
+        break;
+            
+        case 1: {
+            RICart *_tmpCartWithShippingInfo = (RICart *)data;
+            if(_tmpCartWithShippingInfo.formEntity.shippingMethodForm.fields.count > 0) {
+                ShippingMethod *defaultShippingMethod = _tmpCartWithShippingInfo.formEntity.shippingMethodForm.fields[0];
+                if(defaultShippingMethod.options.count > 0) {
+                    ShippingMethodOption *defaultShippingMethodOption = defaultShippingMethod.options[0];
+                    _deliveryTime = defaultShippingMethodOption.deliveryTime;
+                }
+            }
+        }
+        break;
+        
+        case 2:
+        case 3: {
+            self.cart = (RICart *)data;
+        }
+        break;
+    }
+}
+
+#pragma mark - Helpers
+-(void) updateDiscountViewAppearanceForValue:(BOOL)isOn animated:(BOOL)animated {
+    NSIndexPath *discountCodeViewIndexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+    
+    if(isOn) {
+        [[_cellsIndexPaths objectAtIndex:discountCodeViewIndexPath.section] insertObject:discountCodeViewIndexPath atIndex:discountCodeViewIndexPath.row];
+    } else {
+        [[_cellsIndexPaths objectAtIndex:discountCodeViewIndexPath.section] removeObjectAtIndex:discountCodeViewIndexPath.row];
+    }
+    
+    if(animated) {
+        [self.tableView beginUpdates];
+        if(isOn) {
+            [self.tableView insertRowsAtIndexPaths:@[discountCodeViewIndexPath] withRowAnimation:UITableViewRowAnimationBottom];
+        } else {
+            [self.tableView deleteRowsAtIndexPaths:@[discountCodeViewIndexPath] withRowAnimation:UITableViewRowAnimationTop];
+        }
+        [self.tableView endUpdates];
+    } else {
+        [self.tableView reloadData];
+    }
+}
+
+-(void) requestRemovalOfVoucherCode {
+    [[DataManager sharedInstance] removeVoucher:self voucherCode:self.cart.cartEntity.couponCode completion:^(id data, NSError *error) {
+        if(error == nil) {
+            [self bind:data forRequestId:3];
+            
+            NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
+            [trackingDictionary setValue:self.cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+            [trackingDictionary setValue:self.cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart] data:[trackingDictionary copy]];
+            
+            [self.tableView reloadData];
+        }
+    }];
+}
+
+/*
+- (void)useCoupon {
+    NSString *voucherCode = self.resumeView.couponTextField.text;
+    if (!VALID_NOTEMPTY(voucherCode, NSString)) {
+        [self onErrorResponse:RIApiResponseUnknownError messages:@[STRING_VOUCHER_ERROR] showAsMessage:YES target:nil selector:nil objects:nil];
+        return;
+    }
+    
+    [self showLoading];
+    
+    if(VALID([[self cart] couponMoneyValue], NSNumber)) {
+        [RICart removeVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
+            [self.resumeView removeVoucher];
+            self.cart = cart;
+            
+            NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
+            
+            NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
+            [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+            [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
+                                                      data:[trackingDictionary copy]];
+            [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
+            [self hideLoading];
+        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+            [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:@selector(useCoupon) objects:nil];
+            [self hideLoading];
+        }];
+    } else {
+        [RICart addVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
+            self.cart = cart;
+            
+            NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
+            
+            NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
+            [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+            [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
+                                                      data:[trackingDictionary copy]];
+            [self hideLoading];
+        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+            [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:@selector(useCoupon) objects:nil];
+            [self hideLoading];
+            if (apiResponse != RIApiResponseNoInternetConnection) {
+                [self.resumeView setCouponValid:NO];
+            }
+        }];
+    }
+}
+ */
 
 @end

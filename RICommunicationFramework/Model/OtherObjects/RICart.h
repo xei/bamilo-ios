@@ -10,11 +10,13 @@
 #import "JSONVerboseModel.h"
 #import "CartEntity.h"
 #import "FormEntity.h"
+#import "RICustomer.h"
 
 @interface RICart : NSObject <JSONVerboseModel>
 
 @property (strong, nonatomic) CartEntity *cartEntity;
 @property (strong, nonatomic) FormEntity *formEntity;
+@property (strong, nonatomic) RICustomer *customerEntity;
 
 @property (strong, nonatomic) NSNumber *totalNumberOfOrders;
 @property (nonatomic, strong) NSString *nextStep;

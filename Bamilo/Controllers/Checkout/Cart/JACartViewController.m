@@ -56,7 +56,7 @@
     }
     
     self.totalPrice.text = cart.cartEntity.cartUnreducedValueFormatted;
-    self.totalDiscountedPrice.text = cart.cartEntity.discountedValueFormated;
+    self.totalDiscountedPrice.text = cart.cartEntity.discountValueFormated;
     [self.summeryView updateWithModel:self.cart.cartEntity];
 }
 

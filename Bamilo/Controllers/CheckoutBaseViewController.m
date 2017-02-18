@@ -39,13 +39,13 @@
 }
 
 #pragma mark - Public Methods
--(NSString *)getNextStepViewControllerSegueIdentifier {
+-(NSString *)getNextStepViewControllerSegueIdentifier:(NSString *)serviceIdentifier {
     return nil;
 }
 
 -(void)performPreDepartureAction:(CheckoutActionCompletion)completion {
     if(completion) {
-        completion();
+        completion(nil);
     }
 }
 
@@ -69,11 +69,11 @@
 }
 
 - (IBAction)continueButtonTapped:(id)sender {
-    [self performPreDepartureAction:^{
-        NSString *nextStepViewControllerSegueIdentifier = [self getNextStepViewControllerSegueIdentifier];
+    [self performPreDepartureAction:^(NSString *nextStep) {
+        NSString *nextStepViewControllerSegueIdentifier = [self getNextStepViewControllerSegueIdentifier:nextStep];
         if(nextStepViewControllerSegueIdentifier) {
             dispatch_async(dispatch_get_main_queue(), ^{
-            [self performSegueWithIdentifier:nextStepViewControllerSegueIdentifier sender:self];
+                [self performSegueWithIdentifier:nextStepViewControllerSegueIdentifier sender:self];
             });
         }
     }];

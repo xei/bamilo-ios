@@ -21,7 +21,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="95"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="75" placeholderIntrinsicHeight="75" image="placeholder_gallery" translatesAutoresizingMaskIntoConstraints="NO" id="oWQ-kM-YQu">
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="75" placeholderIntrinsicHeight="75" image="placeholder_gallery" translatesAutoresizingMaskIntoConstraints="NO" id="oWQ-kM-YQu">
                     <rect key="frame" x="285" y="10" width="75" height="75"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="oWQ-kM-YQu" secondAttribute="height" id="uf1-AJ-mNF"/>
@@ -46,7 +46,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lansur" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h19-ZZ-ffi">
-                    <rect key="frame" x="122" y="60" width="153" height="25"/>
+                    <rect key="frame" x="122" y="56" width="153" height="25"/>
                     <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="13"/>
                     <color key="textColor" red="0.74202448129653931" green="0.74259525537490845" blue="0.74211281538009644" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
@@ -56,11 +56,11 @@
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="oWQ-kM-YQu" secondAttribute="bottom" constant="10" id="8ZO-OR-QkN"/>
                 <constraint firstItem="oWQ-kM-YQu" firstAttribute="leading" secondItem="KF9-Z3-FC2" secondAttribute="trailing" constant="10" id="BTA-36-AZ2"/>
+                <constraint firstItem="h19-ZZ-ffi" firstAttribute="top" secondItem="KF9-Z3-FC2" secondAttribute="bottom" id="Fod-N4-bvk"/>
                 <constraint firstItem="oWQ-kM-YQu" firstAttribute="top" secondItem="KF9-Z3-FC2" secondAttribute="top" id="JaN-vc-TEO"/>
                 <constraint firstItem="KpW-o6-xDl" firstAttribute="top" secondItem="BvR-e0-tr3" secondAttribute="bottom" constant="-5" id="Lcj-e8-dmY"/>
                 <constraint firstItem="KF9-Z3-FC2" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="PCa-Fj-lQI"/>
                 <constraint firstItem="oWQ-kM-YQu" firstAttribute="leading" secondItem="h19-ZZ-ffi" secondAttribute="trailing" constant="10" id="STS-dn-ZoH"/>
-                <constraint firstItem="oWQ-kM-YQu" firstAttribute="bottom" secondItem="h19-ZZ-ffi" secondAttribute="bottom" id="XqP-MK-t3c"/>
                 <constraint firstAttribute="trailing" secondItem="oWQ-kM-YQu" secondAttribute="trailing" constant="15" id="YQE-vr-7dK"/>
                 <constraint firstItem="KpW-o6-xDl" firstAttribute="trailing" secondItem="BvR-e0-tr3" secondAttribute="trailing" id="aK7-zL-EKq"/>
                 <constraint firstItem="h19-ZZ-ffi" firstAttribute="leading" secondItem="KpW-o6-xDl" secondAttribute="trailing" id="jeP-cK-PdP"/>

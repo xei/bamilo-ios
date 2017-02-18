@@ -75,7 +75,7 @@
     
     if (cartEntity.cartValue && cartEntity.cartUnreducedValue) {
         NSNumber *discountValue = [NSNumber numberWithInt: cartEntity.cartUnreducedValue.intValue - cartEntity.cartValue.intValue];
-        cartEntity.discountedValueFormated = [RICountryConfiguration formatPrice:discountValue country:country];
+        cartEntity.discountValueFormated = [RICountryConfiguration formatPrice:discountValue country:country];
     }
     
     if ([dict objectForKey:@"total_converted"]) {

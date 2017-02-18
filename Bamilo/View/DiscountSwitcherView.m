@@ -30,13 +30,22 @@
     self.descriptionLabel.text = STRING_COUPON;
 }
 
-- (IBAction)switcherValueToggled:(id)sender {
+- (IBAction)switcherValueToggled:(id)sender {    
     [self.delegate discountSwitcherViewDidToggle:[sender isOn]];
 }
 
 #pragma mark - Overrides
 +(NSString *)nibName {
     return @"DiscountSwitcherView";
+}
+
+-(void)updateWithModel:(id)model {
+    BOOL toOn = [model boolValue];
+    
+    //Only automatically on the switcher. Don't turn it off with update model.
+    if(toOn == YES) {
+        [self.switcherView setOn:toOn];
+    }
 }
 
 @end

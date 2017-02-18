@@ -84,8 +84,8 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
         if(error == nil) {
             [self bind:data forRequestId:0];
             
-            NSDictionary* userInfo = [NSDictionary dictionaryWithObject:self.cart forKey:kUpdateCartNotificationValue];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
+            //NSDictionary* userInfo = [NSDictionary dictionaryWithObject:self.cart forKey:kUpdateCartNotificationValue];
+            //[[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
             
             [self.cartEntitySummaryViewControl updateWithModel:self.cart.cartEntity];
             

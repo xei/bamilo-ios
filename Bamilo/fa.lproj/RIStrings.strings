@@ -779,6 +779,8 @@
 
 "apply_discount_code" = "ثبت کد تخفیف";
 
+"remove_discount_code" = "حذف کد تخفیف";
+
 "payment_option" = "نحوه پرداخت";
 
 "online_payment" = "پرداخت اینترنتی";
@@ -786,3 +788,13 @@
 "pay_on_delivery" = "پرداخت در محل";
 
 "string_remove" = "حذف";
+
+"sum_of_products" = "مجموع کالاها";
+
+"sum_of_dicsounts" = "مجموع تخفیف ها";
+
+"shipping_cost" = "هزینه ارسال";
+
+"sum_of_total" = "جمع نهایی";
+
+"discount_code" = "کد تخفیف";

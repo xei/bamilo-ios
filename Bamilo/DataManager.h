@@ -37,6 +37,12 @@ typedef void(^DataCompletion)(id data, NSError *error);
 -(void) getMultistepAddressList:(id<DataServiceProtocol>)target completion:(DataCompletion)completion;
 -(void) setMultistepAddress:(id<DataServiceProtocol>)target forShipping:(NSString *)shippingAddressId billing:(NSString*)billingAddressId completion:(DataCompletion)completion;
 -(void) getMultistepConfirmation:(id<DataServiceProtocol>)target completion:(DataCompletion)completion;
+-(void) getMultistepShipping:(id<DataServiceProtocol>)target completion:(DataCompletion)completion;
+-(void) setMultistepShipping:(id<DataServiceProtocol>)target forShippingMethod:(NSString*)shippingMethod pickupStation:(NSString*)pickupStation region:(NSString*)region completion:(DataCompletion)completion;
 -(void) getMultistepPayment:(id<DataServiceProtocol>)target completion:(DataCompletion)completion;
+
+//### COUPON ###
+-(void) applyVoucher:(id<DataServiceProtocol>)target voucherCode:(NSString *)voucherCode completion:(DataCompletion)completion;
+-(void) removeVoucher:(id<DataServiceProtocol>)target voucherCode:(NSString *)voucherCode completion:(DataCompletion)completion;
 
 @end
