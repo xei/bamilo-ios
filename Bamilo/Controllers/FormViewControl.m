@@ -42,26 +42,26 @@
     self.tableViewRegistered = YES;
 }
 
-- (void)setFormItemListModel:(NSMutableDictionary<NSString *,FormItemModel *> *)formItemListModel {
-    _formItemListModel = formItemListModel;
-    [self relaodViewIfItsPossible];
+- (void)setFormListModel:(NSMutableArray<FormItemModel *> *)formListModel {
+    _formListModel = formListModel;
+    [self reloadViewIfItsPossible];
 }
 
-- (void)updateFieldName:(NSString *)name WithModel:(FormItemModel *)model {
-    self.formItemListModel[name] = model;
-    [self relaodViewIfItsPossible];
+- (void)updateFieldIndex:(NSUInteger)name WithModel:(FormItemModel *)model {
+    self.formListModel[name] = model;
+    [self reloadViewIfItsPossible];
 }
 
 - (NSMutableDictionary *)getMutableDictionaryOfForm {
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-    [self.formItemListModel enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, FormItemModel * _Nonnull obj, BOOL * _Nonnull stop) {
-        params[key] = [obj getValue];
+    [self.formListModel enumerateObjectsUsingBlock:^(FormItemModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        params[obj.fieldName] = [obj getValue];
     }];
     return params;
 }
 
 
-- (void)relaodViewIfItsPossible {
+- (void)reloadViewIfItsPossible {
     if (self.tableViewRegistered) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];
@@ -86,16 +86,16 @@
     
     FormTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:[FormTableViewCell nibName] forIndexPath:indexPath];
     cell.formItemControl.input.textField.delegate = self; 
-    NSString *fieldName = self.formMessage ? self.formItemListModel.allKeys[indexPath.row - 1] : self.formItemListModel.allKeys[indexPath.row];
-    cell.formItemControl.model = self.formItemListModel[fieldName];
-    cell.formItemControl.fieldName = fieldName;
-    self.inputControlsDictionary[fieldName] = cell.formItemControl;
+    NSUInteger fieldIndex = self.formMessage ? indexPath.row - 1 : indexPath.row;
+    cell.formItemControl.model = self.formListModel[fieldIndex];
+    cell.formItemControl.fieldIndex = fieldIndex;
+    self.inputControlsDictionary[self.formListModel[fieldIndex].fieldName] = cell.formItemControl;
     cell.formItemControl.delegate = self;
     return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    self.numberOfRowsOfTableView = self.formMessage ? self.formItemListModel.count + 2 : self.formItemListModel.count + 1;
+    self.numberOfRowsOfTableView = self.formMessage ? self.formListModel.count + 2 : self.formListModel.count + 1;
     return self.numberOfRowsOfTableView;
 }
 
@@ -156,7 +156,7 @@
 #pragma mark - helper functions
 - (Boolean)isFormValid {
     __block Boolean result = YES;
-    [self.formItemListModel enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, FormItemModel * _Nonnull obj, BOOL * _Nonnull stop) {
+    [self.formListModel enumerateObjectsUsingBlock:^(FormItemModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if(![obj.validation checkValiditionOfString:obj.titleString].boolValue) {
             result = NO;
             *stop = YES;
@@ -173,16 +173,18 @@
 }
 
 #pragma mark - InputTextFieldControlDelegate
-- (void)inputValueHasBeenChanged:(id)inputTextFieldControl byNewValue:(NSString *)value inFieldName:(NSString *)fieldname {
-    self.formItemListModel[fieldname].titleString = value;
+- (void)inputValueHasBeenChanged:(id)inputTextFieldControl byNewValue:(NSString *)value inFieldIndex:(NSUInteger)fieldIndex {
     
-    if ([self.formItemListModel[fieldname].validation checkValiditionOfString:self.formItemListModel[fieldname].titleString].boolValue) {
-        [self.delegate fieldHasBeenUpdatedByNewValidValue:value inFieldName:fieldname];
+    self.formListModel[fieldIndex].titleString = value;
+    
+    if ([self.formListModel[fieldIndex].validation checkValiditionOfString:self.formListModel[fieldIndex].titleString].boolValue) {
+        [self.delegate fieldHasBeenUpdatedByNewValidValue:value inFieldIndex:fieldIndex];
     }
 }
 
 - (void)showErrorMessgaeForField:(NSString *)fieldName errorMsg:(NSString *)string {
     [self.inputControlsDictionary[fieldName] showErrorMsg:string];
 }
+
 
 @end

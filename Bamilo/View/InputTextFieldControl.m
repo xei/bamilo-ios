@@ -80,6 +80,7 @@
             self.input.textField.keyboardType = UIKeyboardTypeEmailAddress;
             break;
         default:
+            self.input.textField.keyboardType = UIKeyboardTypeDefault;
             break;
     }
     _type = type;
@@ -88,7 +89,7 @@
 
 - (void)updateModel {
     self.model.titleString = [self getStringValue];
-    [self.delegate inputValueHasBeenChanged:self byNewValue:[self getStringValue] inFieldName: self.fieldName];
+    [self.delegate inputValueHasBeenChanged:self byNewValue:[self getStringValue] inFieldIndex:self.fieldIndex];
 }
 
 - (void)setModel:(FormItemModel *)model {
@@ -151,6 +152,12 @@
         self.input.textField.text = self.model.selectOption.allKeys[0];
     }
     [self.input.textField resignFirstResponder];
+}
+
+- (void)resetView {
+    self.model = nil;
+    self.input.textField.text = nil;
+    [self.input clearError];
 }
 
 #pragma mark - textFieldTargetActions

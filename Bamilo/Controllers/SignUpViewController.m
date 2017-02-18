@@ -28,6 +28,7 @@
 
     FormItemModel *melliCode = [[FormItemModel alloc]
                                 initWithTitle:nil
+                                fieldName: @"customer[national_id]"
                                 andIcon:nil
                                 placeholder:@"کد ملی"
                                 type:InputTextFieldControlTypeNumerical
@@ -37,6 +38,7 @@
     
     FormItemModel *email = [[FormItemModel alloc]
                                 initWithTitle:nil
+                            fieldName: @"customer[email]"
                                 andIcon:nil
                                 placeholder:@"ایمیل"
                                 type:InputTextFieldControlTypeEmail
@@ -45,6 +47,7 @@
     
     FormItemModel *name = [[FormItemModel alloc]
                             initWithTitle:nil
+                           fieldName: @"customer[first_name]"
                             andIcon:nil
                             placeholder:@"نام"
                             type:InputTextFieldControlTypeString
@@ -54,6 +57,7 @@
     
     FormItemModel *lastname = [[FormItemModel alloc]
                               initWithTitle:nil
+                               fieldName: @"customer[last_name]"
                               andIcon:nil
                               placeholder:@"نام خانوادگی"
                               type:InputTextFieldControlTypeString
@@ -63,6 +67,7 @@
     
     FormItemModel *password = [[FormItemModel alloc]
                                initWithTitle:nil
+                               fieldName: @"customer[password]"
                                andIcon:nil
                                placeholder:@"رمز عبور"
                                type:InputTextFieldControlTypePassword
@@ -71,6 +76,7 @@
     
     FormItemModel *phone = [[FormItemModel alloc]
                                initWithTitle:nil
+                            fieldName: @"customer[phone]"
                                andIcon:nil
                                placeholder:@"تلفن همراه"
                                type:InputTextFieldControlTypeNumerical
@@ -82,14 +88,7 @@
     self.formController.submitTitle = @"ثبت نام";
     self.formController.formMessage = @"ظاهرا مشتری جدید بامیلو هستید،خواهشمندیم اطلاعات بیشتری برای ساخت حساب کاربری خود ارایه دهید ";
     self.title = STRING_SIGNUP;
-    self.formController.formItemListModel = [NSMutableDictionary dictionaryWithDictionary: @{
-                               @"customer[national_id]": melliCode,
-                               @"customer[first_name]" : name,
-                               @"customer[last_name]"  : lastname,
-                               @"customer[email]"      : email,
-                               @"customer[password]"   : password,
-                               @"customer[phone]"      : phone
-                               }];
+    self.formController.formListModel = [NSMutableArray arrayWithArray:@[melliCode, name, lastname, email, password, phone]];
     
     [self.formController setupTableView];
 }

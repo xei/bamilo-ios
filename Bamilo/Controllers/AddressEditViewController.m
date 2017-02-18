@@ -32,6 +32,7 @@
     
     FormItemModel *name = [[FormItemModel alloc]
                                 initWithTitle:nil
+                                fieldName: @"address_form[first_name]"
                                 andIcon:nil
                                 placeholder:@"نام"
                                 type:InputTextFieldControlTypeString
@@ -40,6 +41,7 @@
     
     FormItemModel *lastname = [[FormItemModel alloc]
                            initWithTitle:nil
+                           fieldName: @"address_form[last_name]"
                            andIcon:nil
                            placeholder:@"نام خانوادگی"
                            type:InputTextFieldControlTypeString
@@ -48,6 +50,7 @@
     
     FormItemModel *phone = [[FormItemModel alloc]
                                initWithTitle:nil
+                                fieldName: @"address_form[phone]"
                                andIcon:nil
                                placeholder:@"تلفن همراه"
                                type:InputTextFieldControlTypeNumerical
@@ -57,6 +60,7 @@
     
     FormItemModel *address = [[FormItemModel alloc]
                                initWithTitle:nil
+                              fieldName: @"address_form[address1]"
                                andIcon:nil
                                placeholder:@"نشانی به فارسی"
                                type:InputTextFieldControlTypeString
@@ -65,6 +69,7 @@
     
     FormItemModel *postalCode = [[FormItemModel alloc]
                               initWithTitle:nil
+                                 fieldName: @"address_form[address2]"
                               andIcon:nil
                               placeholder:@"کد پستی"
                               type:InputTextFieldControlTypeNumerical
@@ -73,14 +78,17 @@
     
     FormItemModel *region = [[FormItemModel alloc]
                              initWithTitle:@"تهران"
+                             fieldName: @"address_form[region]"
                              andIcon:nil
                              placeholder:@"استان"
                              type:InputTextFieldControlTypeOptions
                              validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil]
                              selectOptions:nil];
     
+    
     FormItemModel *city = [[FormItemModel alloc]
                              initWithTitle:nil
+                           fieldName: @"address_form[city]"
                              andIcon:nil
                              placeholder:@"شهر"
                              type:InputTextFieldControlTypeOptions
@@ -89,22 +97,14 @@
     
     FormItemModel *vicinity = [[FormItemModel alloc]
                              initWithTitle:nil
+                               fieldName: @"address_form[postcode]"
                              andIcon:nil
                              placeholder:@"محله"
                              type:InputTextFieldControlTypeOptions
                              validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil]
                              selectOptions:nil];
     
-    self.formController.formItemListModel = [NSMutableDictionary dictionaryWithDictionary: @{
-                                                                                             @"address_form[first_name]": name,
-                                                                                             @"address_form[last_name]" : lastname,
-                                                                                             @"address_form[phone]"     : phone,
-                                                                                             @"address_form[address2]"  : postalCode,
-                                                                                             @"address_form[region]"    : region,
-                                                                                             @"address_form[city]"      : city,
-                                                                                             @"address_form[postcode]"  : vicinity,
-                                                                                             @"address_form[address1]"  : address
-                                                                                             }];
+    self.formController.formListModel = [NSMutableArray arrayWithArray:@[name, lastname, phone, postalCode, region, city, vicinity, address]];
     
     [self.formController setupTableView];
     
@@ -145,13 +145,15 @@
 }
 
 #pragma mark - FormViewControlDelegate
-- (void)fieledHasBeenUpdatedByNewValidValue:(NSString *)value inFieldName:(NSString *)fieldname {
-    if([fieldname isEqualToString:@"address_form[region]"]) {
-        [[DataManager sharedInstance] getCities:self forRegion:[self.formController.formItemListModel[fieldname] getValue] completion:^(id data, NSError *error) {
+
+- (void)fieldHasBeenUpdatedByNewValidValue:(NSString *)value inFieldIndex:(NSUInteger)fieldIndex {
+    FormItemModel *targetModel = self.formController.formListModel[fieldIndex];
+    if([targetModel.fieldName isEqualToString:@"address_form[region]"]) {
+        [[DataManager sharedInstance] getCities:self forRegion:[targetModel getValue] completion:^(id data, NSError *error) {
             if (!error) [self bind:data forRequestId:1];
         }];
-    } else if ([fieldname isEqualToString:@"address_form[city]"]) {
-        [[DataManager sharedInstance] getVicinity:self forCity:[self.formController.formItemListModel[fieldname] getValue] completion:^(id data, NSError *error) {
+    } else if ([targetModel.fieldName isEqualToString:@"address_form[city]"]) {
+        [[DataManager sharedInstance] getVicinity:self forCity:[targetModel getValue] completion:^(id data, NSError *error) {
             if (!error) [self bind:data forRequestId:2];
         }];
     }
@@ -161,13 +163,13 @@
 - (void)bind:(id)data forRequestId:(int)rid {
     switch (rid) {
         case 0:
-            [self updateSelectOptionModelForFieldName:@"address_form[region]" withData:data];
+            [self updateSelectOptionModelForFieldIndex:4 withData:data];
             break;
         case 1:
-            [self updateSelectOptionModelForFieldName:@"address_form[city]" withData:data];
+            [self updateSelectOptionModelForFieldIndex:5 withData:data];
             break;
         case 2:
-            [self updateSelectOptionModelForFieldName:@"address_form[postcode]" withData:data];
+            [self updateSelectOptionModelForFieldIndex:6 withData:data];
             break;
         default:
             break;
@@ -175,14 +177,17 @@
 }
 
 
-- (void)updateSelectOptionModelForFieldName:(NSString *)fieldName withData:(id)data {
-    [self.formController updateFieldName:fieldName
-                               WithModel:[[FormItemModel alloc] initWithTitle:self.formController.formItemListModel[fieldName].titleString
-                                                                andIcon:nil
-                                                                placeholder:self.formController.formItemListModel[fieldName].placeholder
-                                                                type:InputTextFieldControlTypeOptions
-                                                                validation: self.formController.formItemListModel[fieldName].validation
-                                                                selectOptions:data]];
+- (void)updateSelectOptionModelForFieldIndex:(NSUInteger)fieldIndex withData:(id)data {
+    
+    FormItemModel *previousModelForIndex = self.formController.formListModel[fieldIndex];
+    
+    [self.formController updateFieldIndex:fieldIndex WithModel:[[FormItemModel alloc] initWithTitle: previousModelForIndex.titleString
+                                                                                        fieldName: previousModelForIndex.fieldName
+                                                                                        andIcon: previousModelForIndex.icon
+                                                                                        placeholder: previousModelForIndex.placeholder
+                                                                                        type: InputTextFieldControlTypeOptions
+                                                                                        validation: previousModelForIndex.validation
+                                                                                        selectOptions:data]];
 }
 
 @end

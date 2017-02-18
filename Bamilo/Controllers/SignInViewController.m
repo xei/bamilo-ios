@@ -37,6 +37,7 @@
     FormItemValidation *emailValidation = [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter: [NSString emailRegxPattern]];
     FormItemModel *emailControlModel = [[FormItemModel alloc]
                                         initWithTitle:nil
+                                        fieldName: @"login[email]"
                                         andIcon:[UIImage imageNamed:@"Email"]
                                         placeholder:@"ایمیل"
                                         type:InputTextFieldControlTypeEmail
@@ -48,6 +49,7 @@
     FormItemValidation *passValidation = [[FormItemValidation alloc] initWithRequired:YES max:50 min:6 withRegxPatter:nil];
     FormItemModel *passwordControlModel = [[FormItemModel alloc]
                                            initWithTitle:nil
+                                           fieldName: @"login[password]"
                                            andIcon:[UIImage imageNamed:@"Password"]
                                            placeholder:@"کلمه عبور"
                                            type:InputTextFieldControlTypePassword
