@@ -56,7 +56,7 @@ static DataManager *instance;
     }];
 }
 
-//### SGINUP ###
+//### SIGNUP ###
 - (void)signupUser:(id<DataServiceProtocol>)target withFieldsDictionary:(NSDictionary<NSString *,FormItemModel *> *)newUserDictionary completion:(DataCompletion)completion {
     
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
@@ -65,6 +65,7 @@ static DataManager *instance;
     }];
     //must be remove from server side!
     params[@"customer[phone_prefix]"] = @"100";
+    
     [RequestManager asyncPOST:target path:RI_API_REGISTER_CUSTOMER params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
         if(response == RIApiResponseSuccess && data) {
             [RICustomer parseCustomerWithJson:[data objectForKey:@"customer_entity"] plainPassword:newUserDictionary[@"customer[password]"].titleString loginMethod:@"normal"];

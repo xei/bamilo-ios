@@ -35,7 +35,7 @@
     _addresses = [NSMutableArray array];
 }
 
--(void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     [[DataManager sharedInstance] getUserAddressList:self completion:^(id data, NSError *error) {
@@ -46,7 +46,7 @@
 }
 
 #pragma mark - Overrides
--(void)updateNavBar {
+- (void)updateNavBar {
     [super updateNavBar];
     
     self.navBarLayout.title = STRING_MY_ADDRESSES;
@@ -54,7 +54,7 @@
 }
 
 #pragma mark - AddressTableViewControllerDelegate
--(BOOL)addressSelected:(Address *)address {
+- (BOOL)addressSelected:(Address *)address {
     [[AlertManager sharedInstance] confirmAlert:@"تغییر آدرس" text:@"از تغییر آدرس پیش فرض خود اطمینان دارید؟" confirm:@"بله" cancel:@"خیر" completion:^(BOOL OK) {
         if(OK) {
             [[DataManager sharedInstance] setDefaultAddress:self address:address isBilling:NO completion:^(id data, NSError *error) {
@@ -68,8 +68,12 @@
     return YES;
 }
 
+- (void)addAddressTapped {
+    [self performSegueWithIdentifier:@"pushAddressListToAddressEdit" sender:nil];
+}
+
 #pragma mark - DataServiceProtocol
--(void)bind:(id)data forRequestId:(int)rid {
+- (void)bind:(id)data forRequestId:(int)rid {
     switch (rid) {
         case 0:
         case 1: {
@@ -89,9 +93,9 @@
                 [_addressTableViewController updateWithModel:_addresses];
             }
         }
-            
         break;
     }
 }
+
 
 @end

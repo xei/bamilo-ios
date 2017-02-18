@@ -8,6 +8,10 @@
 
 #import "PlainTableViewHeaderCell.h"
 
-@interface AddressTableViewHeaderCell : PlainTableViewHeaderCell
+@protocol AddressTableViewHeaderCellDelegate <NSObject>
+- (void)wantsToAddNewAddress:(id)addressTableViewHeader;
+@end
 
+@interface AddressTableViewHeaderCell : PlainTableViewHeaderCell
+@property (nonatomic, weak) id<AddressTableViewHeaderCellDelegate> delegate;
 @end

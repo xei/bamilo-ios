@@ -29,6 +29,7 @@
 
 #pragma mark - IBActions
 - (IBAction)addAddressButtonTapped:(id)sender {
+    [self.delegate wantsToAddNewAddress:self];
 }
 
 @end

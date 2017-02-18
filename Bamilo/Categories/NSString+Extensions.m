@@ -24,7 +24,7 @@
 }
 
 + (NSString *)mobileRegxPattern {
-    return @"(0|+98)?([ ]|-|[()]){0,2}9[1|2|3|4]([ ]|-|[()]){0,2}(?:[0-9]([ ]|-|[()]){0,2}){8}";
+    return @"(0|\\+98)?([ ]|,|-|[()]){0,2}9[1|2|3|4]([ ]|,|-|[()]){0,2}(?:[0-9]([ ]|,|-|[()]){0,2}){8}";
 }
 
 - (NSString *)wrapWithMaxSize:(int)maxSize {
@@ -51,17 +51,24 @@
 }
 
 - (NSString *) numbersToEnglish {
-    return [self changeNumberToLocalId:@"en"] ?: @"0";
+    return [self changeNumberToLocalId:@"en_US"] ?: @"0";
 }
 
 - (NSString *)changeNumberToLocalId:(NSString *) identifier {
     NSNumberFormatter *formatter = [NSNumberFormatter new];
-    formatter.locale = [NSLocale localeWithLocaleIdentifier:identifier];
     NSString *result = self;
-    for (NSInteger i = 0; i < 10; i++) {
-        NSNumber *num = @(i);
-        result = [result stringByReplacingOccurrencesOfString:num.stringValue withString:[formatter stringFromNumber:num]];
+    for (NSInteger i = 0; i < 10; i++) {        
+        NSString *occurance = @"";
+        if ([identifier isEqualToString:@"en_US"]) {
+            formatter.locale = [NSLocale localeWithLocaleIdentifier:@"ar"];
+            occurance = [formatter stringFromNumber: @(i)];
+        } else {
+            occurance = @(i).stringValue;
+        }
+        formatter.locale = [NSLocale localeWithLocaleIdentifier:identifier];
+        result = [result stringByReplacingOccurrencesOfString:occurance withString:[formatter stringFromNumber:@(i)]];
     }
+    
     return result;
 }
 
