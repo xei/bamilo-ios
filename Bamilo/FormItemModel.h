@@ -14,14 +14,21 @@ typedef enum : NSUInteger {
     InputTextFieldControlTypeNumerical,
     InputTextFieldControlTypeEmail,
     InputTextFieldControlTypeString,
+    InputTextFieldControlTypeOptions
 } InputTextFieldControlType;
 
 @interface FormItemModel : NSObject
 @property (nonatomic, copy) NSString *placeholder;
 @property (nonatomic, copy) UIImage *icon;
 @property (nonatomic, copy) NSString *titleString;
+@property (nonatomic, copy) NSDictionary *selectOption;
 @property (nonatomic, strong) FormItemValidation *validation;
 @property (assign, nonatomic) InputTextFieldControlType type;
 
-- (instancetype)initWithTitle:(NSString *)title andIcon:(UIImage *)image placeholder:(NSString *)placeholder type:(InputTextFieldControlType)type validation:(FormItemValidation *)validation;
+- (instancetype)initWithTitle:(NSString *)title
+                            andIcon:(UIImage *)image
+                            placeholder:(NSString *)placeholder
+                            type:(InputTextFieldControlType)type
+                            validation:(FormItemValidation *)validation
+                            selectOptions:(NSDictionary *)options;
 @end

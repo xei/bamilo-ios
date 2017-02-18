@@ -31,7 +31,8 @@
                                 andIcon:nil
                                 placeholder:@"کد ملی"
                                 type:InputTextFieldControlTypeNumerical
-                                validation: [[FormItemValidation alloc] initWithRequired:YES max:10 min:10 withRegxPatter:nil]];
+                                validation: [[FormItemValidation alloc] initWithRequired:YES max:10 min:10 withRegxPatter:nil]
+                                selectOptions:nil];
     
     
     FormItemModel *email = [[FormItemModel alloc]
@@ -39,14 +40,16 @@
                                 andIcon:nil
                                 placeholder:@"ایمیل"
                                 type:InputTextFieldControlTypeEmail
-                                validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:[NSString emailRegxPattern]]];
+                                validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:[NSString emailRegxPattern]]
+                                selectOptions:nil];
     
     FormItemModel *name = [[FormItemModel alloc]
                             initWithTitle:nil
                             andIcon:nil
                             placeholder:@"نام"
                             type:InputTextFieldControlTypeString
-                            validation: [[FormItemValidation alloc] initWithRequired:YES max:50 min:2 withRegxPatter:nil]];
+                            validation: [[FormItemValidation alloc] initWithRequired:YES max:50 min:2 withRegxPatter:nil]
+                            selectOptions:nil];
 
     
     FormItemModel *lastname = [[FormItemModel alloc]
@@ -54,7 +57,8 @@
                               andIcon:nil
                               placeholder:@"نام خانوادگی"
                               type:InputTextFieldControlTypeString
-                              validation: [[FormItemValidation alloc] initWithRequired:YES max:50 min:2 withRegxPatter:nil]];
+                              validation: [[FormItemValidation alloc] initWithRequired:YES max:50 min:2 withRegxPatter:nil]
+                              selectOptions:nil];
 
     
     FormItemModel *password = [[FormItemModel alloc]
@@ -62,14 +66,16 @@
                                andIcon:nil
                                placeholder:@"رمز عبور"
                                type:InputTextFieldControlTypePassword
-                               validation: [[FormItemValidation alloc] initWithRequired:YES max:50 min:6 withRegxPatter:nil]];
+                               validation: [[FormItemValidation alloc] initWithRequired:YES max:50 min:6 withRegxPatter:nil]
+                               selectOptions:nil];
     
     FormItemModel *phone = [[FormItemModel alloc]
                                initWithTitle:nil
                                andIcon:nil
                                placeholder:@"تلفن همراه"
                                type:InputTextFieldControlTypeNumerical
-                               validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil]];
+                               validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil]
+                               selectOptions:nil];
 
     
     
@@ -98,6 +104,8 @@
 
 #pragma mark - DataServiceProtocol
 - (void)bind:(id)data forRequestId:(int)rid {
+    
+    // --------------- Legacy actions --------------
     RICustomer *customerObject = [(NSDictionary*)data objectForKey:@"customer"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
@@ -125,7 +133,7 @@
     if (self.fromSideMenu) {
         [userInfo setObject:@YES forKey:@"from_side_menu"];
     }
-    if(self.completion) {
+    if (self.completion) {
         self.completion(AUTHENTICATION_FINISHED_WITH_REGISTER);
     }
 }

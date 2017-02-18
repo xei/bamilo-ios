@@ -8,7 +8,8 @@
 
 #import "BaseViewController.h"
 #import "ProtectedViewControllerProtocol.h"
+#import "FormViewControl.h"
 
-@interface AddressEditViewController : BaseViewController <ProtectedViewControllerProtocol>
+@interface AddressEditViewController : BaseViewController <ProtectedViewControllerProtocol, FormViewControlDelegate>
 
 @end

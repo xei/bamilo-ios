@@ -11,7 +11,7 @@
 #import "AddressList.h"
 #import "DataManager.h"
 
-@interface AddressViewController() <UITableViewDelegate, UITableViewDataSource>
+@interface AddressViewController() <UITableViewDelegate, UITableViewDataSource, AddressTableViewHeaderCellDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @end
 
@@ -21,13 +21,12 @@
 }
 
 #pragma mark - AddressViewControllerDelegate
--(NSString *)getAddressHeaderViewTitle {
+- (NSString *)getAddressHeaderViewTitle {
     return STRING_PLEASE_CHOOSE_YOUR_ADDRESS;
 }
 
--(void)awakeFromNib {
+- (void)awakeFromNib {
     [super awakeFromNib];
-    
     self.options = (ADDRESS_CELL_EDIT | ADDRESS_CELL_DELETE | ADDRESS_CELL_SELECT);
 }
 
@@ -36,13 +35,12 @@
 
     [self.tableView registerNib:[UINib nibWithNibName:[AddressTableViewHeaderCell nibName] bundle:nil] forHeaderFooterViewReuseIdentifier:[AddressTableViewHeaderCell nibName]];
     [self.tableView registerNib:[UINib nibWithNibName:[AddressTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[AddressTableViewCell nibName]];
-    
     self.tableView.separatorInset = UIEdgeInsetsZero;
     
     _addresses = [NSMutableArray array];
 }
 
--(void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     [[DataManager sharedInstance] getUserAddressList:self completion:^(id data, NSError *error) {
@@ -53,7 +51,7 @@
 }
 
 #pragma mark - Overrides
--(void)updateNavBar {
+- (void)updateNavBar {
     [super updateNavBar];
     
     self.navBarLayout.title = STRING_MY_ADDRESSES;
@@ -65,9 +63,10 @@
     return 40.0f;
 }
 
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     AddressTableViewHeaderCell *addressTableViewHeaderCell = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:[AddressTableViewHeaderCell nibName]];
     addressTableViewHeaderCell.title = self.titleHeaderText;
+    addressTableViewHeaderCell.delegate = self;
     return addressTableViewHeaderCell;
 }
 
@@ -75,7 +74,7 @@
     return 160.0f;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     NSIndexPath *selectedAddressIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
@@ -121,13 +120,17 @@
         if(addressList.shipping) {
             [_addresses addObject:addressList.shipping];
         }
-        
         for(Address *otherAddress in addressList.other) {
             [_addresses addObject:otherAddress];
         }
-        
         [self.tableView reloadData];
     }
+}
+
+#pragma mark - AddressTableViewHeaderCellDelegate
+
+- (void)wantsToAddNewAddress:(id)addressTableViewHeader {
+    [self performSegueWithIdentifier:@"pushAddressListToAddressEdit" sender:nil];
 }
 
 @end
