@@ -15,6 +15,7 @@
 @protocol FormViewControlDelegate<NSObject>
 - (void)submitBtnTapped;
 - (void)viewNeedsToEndEditing;
+@optional - (void)fieldHasBeenUpdatedByNewValidValue:(NSString *)value inFieldName:(NSString *)fieldname;
 @end
 
 @interface FormViewControl :NSObject <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, ButtonTableViewCellDelegate, InputTextFieldControlDelegate>
@@ -22,13 +23,14 @@
 @property (nonatomic, weak) UITableView *tableView;
 @property (nonatomic, copy) NSString *formMessage;
 @property (nonatomic, copy) NSString *submitTitle;
-@property (nonatomic, strong) NSDictionary<NSString *,FormItemModel *> *formItemListModel;
+@property (nonatomic, strong) NSMutableDictionary<NSString *,FormItemModel *> *formItemListModel;
 @property (nonatomic, weak) id<FormViewControlDelegate> delegate;
 
-- (void)registerDelegationsAndDataSourceForTableview;
+- (void)setupTableView;
 - (void)registerForKeyboardNotifications;
 - (void)unregisterForKeyboardNotifications;
-
-- (Boolean)isFormValid;
+- (void)updateFieldName:(NSString *)name WithModel:(FormItemModel *)model;
 - (void)showErrorMessgaeForField:(NSString *)fieldName errorMsg:(NSString *)string;
+- (NSMutableDictionary *)getMutableDictionaryOfForm;
+- (Boolean)isFormValid;
 @end

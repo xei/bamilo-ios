@@ -133,11 +133,9 @@
             }
         }
     }
-    
     if (VALID_NOTEMPTY(otherAddressesArray, NSMutableArray)) {
         [newAddressList setObject:[otherAddressesArray copy] forKey:@"other"];
     }
-    
     return [newAddressList copy];
 }
 

@@ -13,7 +13,7 @@
 @property (nonatomic, strong) UITextField *activeField;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, InputTextFieldControl*> *inputControlsDictionary;
 @property (nonatomic) NSUInteger numberOfRowsOfTableView;
-
+@property (nonatomic) Boolean tableViewRegistered;
 @end
 
 @implementation FormViewControl
@@ -27,7 +27,7 @@
 }
 
 
-- (void)registerDelegationsAndDataSourceForTableview {
+- (void)setupTableView {
     //Tableview registrations
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -37,11 +37,37 @@
          forCellReuseIdentifier:[BasicTableViewCell nibName]];
     [self.tableView registerNib:[UINib nibWithNibName:[ButtonTableViewCell nibName] bundle:nil]
          forCellReuseIdentifier:[ButtonTableViewCell nibName]];
-    
     self.tableView.multipleTouchEnabled = NO;
+    
+    self.tableViewRegistered = YES;
+}
+
+- (void)setFormItemListModel:(NSMutableDictionary<NSString *,FormItemModel *> *)formItemListModel {
+    _formItemListModel = formItemListModel;
+    [self relaodViewIfItsPossible];
+}
+
+- (void)updateFieldName:(NSString *)name WithModel:(FormItemModel *)model {
+    self.formItemListModel[name] = model;
+    [self relaodViewIfItsPossible];
+}
+
+- (NSMutableDictionary *)getMutableDictionaryOfForm {
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    [self.formItemListModel enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, FormItemModel * _Nonnull obj, BOOL * _Nonnull stop) {
+        params[key] = [obj getValue];
+    }];
+    return params;
 }
 
 
+- (void)relaodViewIfItsPossible {
+    if (self.tableViewRegistered) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+        });
+    }
+}
 
 #pragma mark - tableviewDelegates
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -53,7 +79,7 @@
     
     if (indexPath.row == self.numberOfRowsOfTableView - 1) {
         ButtonTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:[ButtonTableViewCell nibName] forIndexPath:indexPath];
-        cell.button.titleLabel.text = self.submitTitle;
+        [cell.button setTitle:self.submitTitle forState:UIControlStateNormal];
         cell.delegate = self;
         return cell;
     }
@@ -92,7 +118,6 @@
 }
 
 #pragma mark - keyboard notifications
-
 // Called when the UIKeyboardDidShowNotification is sent.
 - (void)keyboardWasShown:(NSNotification*)aNotification {
     NSDictionary* info = [aNotification userInfo];
@@ -129,7 +154,6 @@
 }
 
 #pragma mark - helper functions
-
 - (Boolean)isFormValid {
     __block Boolean result = YES;
     [self.formItemListModel enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, FormItemModel * _Nonnull obj, BOOL * _Nonnull stop) {
@@ -151,6 +175,10 @@
 #pragma mark - InputTextFieldControlDelegate
 - (void)inputValueHasBeenChanged:(id)inputTextFieldControl byNewValue:(NSString *)value inFieldName:(NSString *)fieldname {
     self.formItemListModel[fieldname].titleString = value;
+    
+    if ([self.formItemListModel[fieldname].validation checkValiditionOfString:self.formItemListModel[fieldname].titleString].boolValue) {
+        [self.delegate fieldHasBeenUpdatedByNewValidValue:value inFieldName:fieldname];
+    }
 }
 
 - (void)showErrorMessgaeForField:(NSString *)fieldName errorMsg:(NSString *)string {

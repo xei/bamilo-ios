@@ -23,4 +23,15 @@
     return self;
 }
 
+- (NSString *)getValue {
+    if (self.type == InputTextFieldControlTypeNumerical) {
+        return [self.titleString numbersToEnglish];
+    } else if (self.type == InputTextFieldControlTypeOptions){
+        return self.selectOption[self.titleString];
+    } else {
+        return self.titleString;
+    }
+}
+
+
 @end

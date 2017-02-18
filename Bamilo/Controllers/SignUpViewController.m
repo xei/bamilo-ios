@@ -82,16 +82,16 @@
     self.formController.submitTitle = @"ثبت نام";
     self.formController.formMessage = @"ظاهرا مشتری جدید بامیلو هستید،خواهشمندیم اطلاعات بیشتری برای ساخت حساب کاربری خود ارایه دهید ";
     self.title = STRING_SIGNUP;
-    self.formController.formItemListModel = @{
+    self.formController.formItemListModel = [NSMutableDictionary dictionaryWithDictionary: @{
                                @"customer[national_id]": melliCode,
                                @"customer[first_name]" : name,
                                @"customer[last_name]"  : lastname,
                                @"customer[email]"      : email,
                                @"customer[password]"   : password,
                                @"customer[phone]"      : phone
-                               };
+                               }];
     
-    [self.formController registerDelegationsAndDataSourceForTableview];
+    [self.formController setupTableView];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -144,7 +144,7 @@
         return;
     }
     
-    [[DataManager sharedInstance] signupUser:self withFieldsDictionary:self.formController.formItemListModel completion:^(id data, NSError *error) {
+    [[DataManager sharedInstance] signupUser:self withFieldsDictionary:[self.formController getMutableDictionaryOfForm] completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
         } else {

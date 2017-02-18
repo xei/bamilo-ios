@@ -31,4 +31,6 @@ typedef enum : NSUInteger {
                             type:(InputTextFieldControlType)type
                             validation:(FormItemValidation *)validation
                             selectOptions:(NSDictionary *)options;
+
+- (NSString *)getValue;
 @end
