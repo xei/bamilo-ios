@@ -16,9 +16,10 @@ typedef void(^AddressTableViewControllerDelegateActionCompletion)(Address *addre
 @protocol AddressTableViewControllerDelegate <NSObject>
 
 @optional
--(BOOL) addressSelected:(Address *)address;
--(void) addressEditButtonTapped:(id)sender completion:(AddressTableViewControllerDelegateActionCompletion)completion;
--(void) addressDeleteButtonTapped:(id)sender completion:(AddressTableViewControllerDelegateActionCompletion)completion;
+- (BOOL)addressSelected:(Address *)address;
+- (void)addressEditButtonTapped:(id)sender completion:(AddressTableViewControllerDelegateActionCompletion)completion;
+- (void)addressDeleteButtonTapped:(id)sender completion:(AddressTableViewControllerDelegateActionCompletion)completion;
+- (void)addAddressTapped;
 
 @end
 
@@ -28,7 +29,7 @@ typedef void(^AddressTableViewControllerDelegateActionCompletion)(Address *addre
 @property (copy, nonatomic) NSString *titleHeaderText;
 @property (weak, nonatomic) id<AddressTableViewControllerDelegate> delegate;
 
--(void) updateWithModel:(NSArray *)addresses;
--(void) addInto:(UIViewController *)viewController ofView:(UIView *)containerView;
+- (void)updateWithModel:(NSArray *)addresses;
+- (void)addInto:(UIViewController *)viewController ofView:(UIView *)containerView;
 
 @end

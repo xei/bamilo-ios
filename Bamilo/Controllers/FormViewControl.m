@@ -132,7 +132,6 @@
 
 - (Boolean)isFormValid {
     __block Boolean result = YES;
-    
     [self.formItemListModel enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, FormItemModel * _Nonnull obj, BOOL * _Nonnull stop) {
         if(![obj.validation checkValiditionOfString:obj.titleString].boolValue) {
             result = NO;
@@ -144,6 +143,7 @@
 
 #pragma mark - form submission abstract method
 - (void)buttonTapped:(id)cell {
+    [self.activeField resignFirstResponder];
     [self.delegate viewNeedsToEndEditing];
     [self.delegate submitBtnTapped];
 }

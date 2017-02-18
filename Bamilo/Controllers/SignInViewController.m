@@ -40,7 +40,8 @@
                                         andIcon:[UIImage imageNamed:@"Email"]
                                         placeholder:@"ایمیل"
                                         type:InputTextFieldControlTypeEmail
-                                        validation:emailValidation];
+                                        validation:emailValidation
+                                        selectOptions:nil];
     
     [self.emailControl setModel: emailControlModel];
     
@@ -50,7 +51,8 @@
                                            andIcon:[UIImage imageNamed:@"Password"]
                                            placeholder:@"کلمه عبور"
                                            type:InputTextFieldControlTypePassword
-                                           validation:passValidation];
+                                           validation:passValidation
+                                           selectOptions:nil];
     
     [self.passwordControl setModel: passwordControlModel];
     

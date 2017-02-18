@@ -32,7 +32,8 @@
                                                         andIcon:[UIImage imageNamed:@"Email"]
                                                         placeholder:@"ایمیل"
                                                         type:InputTextFieldControlTypeEmail
-                                                        validation:emailValidation];
+                                                        validation:emailValidation
+                                                        selectOptions:nil];
     
     self.formController.formItemListModel = @{@"forgot_password[email]": email};
     self.formController.submitTitle = STRING_CONTINUE;

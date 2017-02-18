@@ -9,7 +9,7 @@
 #import "AddressTableViewController.h"
 #import "AddressTableViewHeaderCell.h"
 
-@interface AddressTableViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface AddressTableViewController () <UITableViewDelegate, UITableViewDataSource, AddressTableViewHeaderCellDelegate>
 
 @end
 
@@ -53,6 +53,7 @@
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     AddressTableViewHeaderCell *addressTableViewHeaderCell = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:[AddressTableViewHeaderCell nibName]];
     addressTableViewHeaderCell.title = self.titleHeaderText;
+    addressTableViewHeaderCell.delegate = self;
     return addressTableViewHeaderCell;
 }
 
@@ -85,6 +86,12 @@
     addressTableViewCell.options = self.options;
     
     return addressTableViewCell;
+}
+
+#pragma mark - AddressTableViewHeaderCellDelegate 
+
+- (void)wantsToAddNewAddress:(id)addressTableViewHeader {
+    [self.delegate addAddressTapped];
 }
 
 @end

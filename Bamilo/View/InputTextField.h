@@ -15,4 +15,5 @@
 
 - (void)showErrorMsg:(NSString *)errorMsg;
 - (void)clearError;
+
 @end
