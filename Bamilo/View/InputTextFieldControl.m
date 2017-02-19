@@ -67,7 +67,7 @@
 
 - (void)setType:(InputTextFieldControlType) type {
     self.input.textField.secureTextEntry = NO;
-    
+    [self.input hideDropDownIcon];
     switch (type) {
         case InputTextFieldControlTypePassword:
             self.input.textField.keyboardType = UIKeyboardTypeDefault;
@@ -79,6 +79,9 @@
         case InputTextFieldControlTypeEmail:
             self.input.textField.keyboardType = UIKeyboardTypeEmailAddress;
             break;
+        case InputTextFieldControlTypeOptions:
+            [self.input showDropDownIcon];
+            break;
         default:
             self.input.textField.keyboardType = UIKeyboardTypeDefault;
             break;
@@ -88,8 +91,10 @@
 
 
 - (void)updateModel {
-    self.model.titleString = [self getStringValue];
-    [self.delegate inputValueHasBeenChanged:self byNewValue:[self getStringValue] inFieldIndex:self.fieldIndex];
+    if (![self.model.titleString isEqualToString:[self getStringValue]]) {
+        self.model.titleString = [self getStringValue];
+        [self.delegate inputValueHasBeenChanged:self byNewValue:[self getStringValue] inFieldIndex:self.fieldIndex];
+    }
 }
 
 - (void)setModel:(FormItemModel *)model {
@@ -154,8 +159,7 @@
     [self.input.textField resignFirstResponder];
 }
 
-- (void)resetView {
-    self.model = nil;
+- (void)resetAndClear {
     self.input.textField.text = nil;
     [self.input clearError];
 }

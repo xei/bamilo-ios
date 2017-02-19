@@ -14,7 +14,6 @@
 
 @protocol FormViewControlDelegate<NSObject>
 - (void)submitBtnTapped;
-- (void)viewNeedsToEndEditing;
 @optional - (void)fieldHasBeenUpdatedByNewValidValue:(NSString *)value inFieldIndex:(NSUInteger)fieldIndex;
 @end
 
@@ -33,4 +32,6 @@
 - (void)showErrorMessgaeForField:(NSString *)fieldName errorMsg:(NSString *)string;
 - (NSMutableDictionary *)getMutableDictionaryOfForm;
 - (Boolean)isFormValid;
+- (void)showAnyErrorInForm;
+
 @end

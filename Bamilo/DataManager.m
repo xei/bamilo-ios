@@ -38,16 +38,6 @@ static DataManager *instance;
 - (void)getRegions:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
     [self getAreaZone:target type:REQUEST_EXEC_IN_BACKGROUND path:RI_API_GET_CUSTOMER_REGIONS completion:completion];
 }
-- (void)submitAddress:(id<DataServiceProtocol>)target params:(NSDictionary *)params withID:(NSString *)uid completion:(DataCompletion)completion {
-    NSString *path = uid ? uid : RI_API_POST_CUSTOMER_ADDDRESS_CREATE;
-    [RequestManager asyncPOST:target path:path params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
-        if(response == RIApiResponseSuccess && data) {
-            completion(data, nil);
-        } else {
-            completion(nil, [self getErrorFrom:response errorMessages:errorMessages]);
-        }
-    }];
-}
 - (void)getAreaZone:(id<DataServiceProtocol>)target type:(RequestExecutionType)type path:(NSString *)path completion:(DataCompletion)completion {
     [RequestManager asyncGET:target path:path params:nil type:type completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
         if(response == RIApiResponseSuccess && data) {
@@ -62,6 +52,17 @@ static DataManager *instance;
         }
     }];
 }
+- (void)submitAddress:(id<DataServiceProtocol>)target params:(NSDictionary *)params withID:(NSString *)uid completion:(DataCompletion)completion {
+    NSString *path = uid ? uid : RI_API_POST_CUSTOMER_ADDDRESS_CREATE;
+    [RequestManager asyncPOST:target path:path params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+        if(response == RIApiResponseSuccess && data) {
+            completion(data, nil);
+        } else {
+            completion(nil, [self getErrorFrom:response errorMessages:errorMessages]);
+        }
+    }];
+}
+
 
 //### LOGIN ###
 - (void)loginUser:(id<DataServiceProtocol>)target withUsername:(NSString *)username password:(NSString *)password completion:(DataCompletion)completion {

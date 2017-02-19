@@ -35,5 +35,13 @@ typedef enum : NSUInteger {
                             validation:(FormItemValidation *)validation
                             selectOptions:(NSDictionary *)options;
 
++ (FormItemModel *)nameFieldWithFiedName:(NSString *)fieldName;
++ (FormItemModel *)lastNameWithFieldName:(NSString *)fieldName;
++ (FormItemModel *)phoneWithFieldName:(NSString *)fieldName;
++ (FormItemModel *)addressWithFieldName:(NSString *)fieldName;
++ (FormItemModel *)postalCodeWithFieldName:(NSString *)fieldName;
++ (FormItemModel *)emailWithFieldName: (NSString *)fieldName;
++ (FormItemModel *)passWordWithFieldName: (NSString *)fieldName;
+
 - (NSString *)getValue;
 @end

@@ -27,14 +27,8 @@
     
     self.topSeperatorView.backgroundColor = cLIGHT_GRAY_COLOR;
     
-    FormItemValidation *emailValidation = [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:[NSString emailRegxPattern]];
-    FormItemModel *email = [[FormItemModel alloc] initWithTitle:nil
-                                                      fieldName: @"forgot_password[email]"
-                                                        andIcon:[UIImage imageNamed:@"Email"]
-                                                        placeholder:@"ایمیل"
-                                                        type:InputTextFieldControlTypeEmail
-                                                        validation:emailValidation
-                                                        selectOptions:nil];
+    FormItemModel *email = [FormItemModel emailWithFieldName:@"forgot_password[email]"];
+    email.icon = [UIImage imageNamed:@"Email"];
     
     self.formController.formListModel = [NSMutableArray arrayWithArray:@[email]];
     self.formController.submitTitle = STRING_CONTINUE;
@@ -63,6 +57,7 @@
 #pragma mark - FormControlDelegate
 - (void)submitBtnTapped {
     if (![self.formController isFormValid]) {
+        [self.formController showAnyErrorInForm];
         return;
     }
     [[DataManager sharedInstance] forgetPassword:self withFields:[self.formController getMutableDictionaryOfForm] completion:^(id data, NSError *error) {
@@ -76,10 +71,6 @@
         }
     }]; 
 }
-- (void)viewNeedsToEndEditing {
-    [self.view endEditing:YES];
-}
-
 
 #pragma mark - DataServiceProtocol
 - (void)bind:(id)data forRequestId:(int)rid {

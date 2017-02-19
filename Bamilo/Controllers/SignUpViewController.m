@@ -36,52 +36,11 @@
                                 selectOptions:nil];
     
     
-    FormItemModel *email = [[FormItemModel alloc]
-                                initWithTitle:nil
-                            fieldName: @"customer[email]"
-                                andIcon:nil
-                                placeholder:@"ایمیل"
-                                type:InputTextFieldControlTypeEmail
-                                validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:[NSString emailRegxPattern]]
-                                selectOptions:nil];
-    
-    FormItemModel *name = [[FormItemModel alloc]
-                            initWithTitle:nil
-                           fieldName: @"customer[first_name]"
-                            andIcon:nil
-                            placeholder:@"نام"
-                            type:InputTextFieldControlTypeString
-                            validation: [[FormItemValidation alloc] initWithRequired:YES max:50 min:2 withRegxPatter:nil]
-                            selectOptions:nil];
-
-    
-    FormItemModel *lastname = [[FormItemModel alloc]
-                              initWithTitle:nil
-                               fieldName: @"customer[last_name]"
-                              andIcon:nil
-                              placeholder:@"نام خانوادگی"
-                              type:InputTextFieldControlTypeString
-                              validation: [[FormItemValidation alloc] initWithRequired:YES max:50 min:2 withRegxPatter:nil]
-                              selectOptions:nil];
-
-    
-    FormItemModel *password = [[FormItemModel alloc]
-                               initWithTitle:nil
-                               fieldName: @"customer[password]"
-                               andIcon:nil
-                               placeholder:@"رمز عبور"
-                               type:InputTextFieldControlTypePassword
-                               validation: [[FormItemValidation alloc] initWithRequired:YES max:50 min:6 withRegxPatter:nil]
-                               selectOptions:nil];
-    
-    FormItemModel *phone = [[FormItemModel alloc]
-                               initWithTitle:nil
-                            fieldName: @"customer[phone]"
-                               andIcon:nil
-                               placeholder:@"تلفن همراه"
-                               type:InputTextFieldControlTypeNumerical
-                               validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil]
-                               selectOptions:nil];
+    FormItemModel *email = [FormItemModel emailWithFieldName:@"customer[email]"];
+    FormItemModel *name = [FormItemModel nameFieldWithFiedName:@"customer[first_name]"];
+    FormItemModel *lastname = [FormItemModel lastNameWithFieldName:@"customer[last_name]"];
+    FormItemModel *phone = [FormItemModel phoneWithFieldName:@"customer[phone]"];
+    FormItemModel *password = [FormItemModel passWordWithFieldName:@"customer[password]"];
 
     
     
@@ -140,6 +99,7 @@
 #pragma mark - formControlDelegate
 - (void)submitBtnTapped {
     if (![self.formController isFormValid]) {
+        [self.formController showAnyErrorInForm];
         return;
     }
     
@@ -154,10 +114,6 @@
             }
         }
     }];
-}
-
-- (void)viewNeedsToEndEditing {
-    [self.view endEditing:YES];
 }
 
 @end

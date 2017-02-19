@@ -15,5 +15,7 @@
 
 - (void)showErrorMsg:(NSString *)errorMsg;
 - (void)clearError;
+- (void)showDropDownIcon;
+- (void)hideDropDownIcon;
 
 @end

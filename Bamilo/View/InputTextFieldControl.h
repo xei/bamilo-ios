@@ -26,6 +26,7 @@
 - (NSString *)getStringValue;
 - (Boolean)isValid;
 - (void)showErrorMsg:(NSString *)msg;
-- (void)resetView;
+- (void)resetAndClear;
+- (void)checkValidation;
 
 @end

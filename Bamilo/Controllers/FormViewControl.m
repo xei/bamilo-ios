@@ -168,7 +168,6 @@
 #pragma mark - form submission abstract method
 - (void)buttonTapped:(id)cell {
     [self.activeField resignFirstResponder];
-    [self.delegate viewNeedsToEndEditing];
     [self.delegate submitBtnTapped];
 }
 
@@ -189,5 +188,10 @@
     [self.inputControlsDictionary[fieldName] showErrorMsg:string];
 }
 
+- (void)showAnyErrorInForm {
+    [self.inputControlsDictionary enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, InputTextFieldControl * _Nonnull obj, BOOL * _Nonnull stop) {
+        [obj checkValidation];
+    }];
+}
 
 @end

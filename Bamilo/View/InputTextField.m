@@ -16,6 +16,7 @@
 
 @interface InputTextField()
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconVisibleConstraint;
+@property (weak, nonatomic) IBOutlet UIImageView *dropDownIcon;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconHiddenConstraint;
 @property (weak, nonatomic) IBOutlet UILabel *errorMsg;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *errorMsgTopConstraint;
@@ -41,6 +42,7 @@
     self.textField.attributedPlaceholder = attributedPlaceholder;
     self.textField.textColor = cINPUT_TINT_COLOR;
     self.textField.font = [UIFont fontWithName:kFontRegularName size:12];
+    [self.dropDownIcon setHidden:YES];
     
     [self clearError];
     self.hasIcon = NO;
@@ -55,6 +57,13 @@
     [self hideIcon];
 }
 
+- (void)showDropDownIcon {
+    [self.dropDownIcon setHidden:NO];
+}
+
+- (void)hideDropDownIcon {
+    [self.dropDownIcon setHidden:YES];
+}
 
 - (void)showIcon {
     dispatch_async(dispatch_get_main_queue(), ^{
