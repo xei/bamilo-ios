@@ -9,6 +9,7 @@
 #import "JAAppDelegate.h"
 #import "JAMessageView.h"
 #import "BaseViewController.h"
+#import "ViewControllerManager.h"
 
 @interface BaseViewController()
 @property (strong, nonatomic) JAMessageView *messageView;
@@ -84,10 +85,10 @@
     return NO;
 }
 
-# pragma mark Message View
-
-- (void)showMessage:(NSString *)message success:(BOOL)success {
-    UIViewController *rootViewController = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController;
+# pragma mark - Message View
+- (void)showNotificationBar:(NSString *)message isSuccess:(BOOL)success {
+    UIViewController *rootViewController = [ViewControllerManager rootViewController];
+    
     if (!VALID_NOTEMPTY(self.messageView, JAMessageView)) {
         self.messageView = [[JAMessageView alloc] initWithFrame:CGRectMake(0, 64, self.view.bounds.size.width, kMessageViewHeight)];
         [self.messageView setupView];

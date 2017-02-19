@@ -67,7 +67,7 @@
                             //Total Sum
                             [NSMutableArray arrayWithObjects:
                                 [NSIndexPath indexPathForRow:0 inSection:0],
-                                //[NSIndexPath indexPathForRow:1 inSection:0],
+                                //[NSIndexPath indexPathForRow:1 inSection:0], //Code View is initially hidden
                                 [NSIndexPath indexPathForRow:2 inSection:0],
                                 [NSIndexPath indexPathForRow:3 inSection:0],
                                 [NSIndexPath indexPathForRow:4 inSection:0], nil],
@@ -89,7 +89,9 @@
             [self bind:data forRequestId:0];
             
             //Discount Code
-            [self updateDiscountViewAppearanceForValue:(self.cart.cartEntity.couponCode != nil) animated:NO];
+            if(self.cart.cartEntity.couponCode != nil) {
+                [self updateDiscountViewAppearanceForValue:YES animated:NO];
+            }
             
             //Delivery Time
             [[DataManager sharedInstance] getMultistepShipping:self completion:^(id data, NSError *error) {

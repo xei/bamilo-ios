@@ -82,7 +82,7 @@
 
 #pragma mark - DataServiceProtocol
 - (void)bind:(id)data forRequestId:(int)rid {
-    [self showMessage:STRING_EMAIL_SENT success:YES];
+    [self showNotificationBar:STRING_EMAIL_SENT isSuccess:YES];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
