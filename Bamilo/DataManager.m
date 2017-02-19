@@ -28,11 +28,11 @@ static DataManager *instance;
 
 //### AREA_INFORMATION
 - (void)getVicinity:(id<DataServiceProtocol>)target forCity:(NSString *)cityCode completion:(DataCompletion)completion {
-    NSString *path = [NSString stringWithFormat:@"%@/city_id/%@", RI_API_GET_CUSTOMER_POSTCODES, cityCode];
+    NSString *path = [NSString stringWithFormat:@"%@city_id/%@", RI_API_GET_CUSTOMER_POSTCODES, cityCode];
     [self getAreaZone:target type:REQUEST_EXEC_IN_FOREGROUND path:path completion:completion];
 }
 - (void)getCities:(id<DataServiceProtocol>)target forRegion:(NSString *)regionCode completion:(DataCompletion)completion {
-    NSString *path = [NSString stringWithFormat:@"%@/region/%@", RI_API_GET_CUSTOMER_CITIES, regionCode];
+    NSString *path = [NSString stringWithFormat:@"%@region/%@", RI_API_GET_CUSTOMER_CITIES, regionCode];
     [self getAreaZone:target type:REQUEST_EXEC_IN_FOREGROUND path:path completion:completion];
 }
 - (void)getRegions:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {

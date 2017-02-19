@@ -7,6 +7,7 @@
 //
 
 #import "RICartItem.h"
+#import "RICustomer.h"
 
 @implementation RICartItem
 
@@ -100,6 +101,13 @@
     } else {
         cartItem.freeShippingPossible = NO;
     }
+    
+    [[RICustomer getCurrentCustomer].wishlistProducts enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([(NSString *)obj isEqualToString:cartItem.sku]) {
+            cartItem.isWishList = YES;
+            *stop = YES;
+        }
+    }];
     
     return cartItem;
 }

@@ -68,6 +68,8 @@
     [self.view endEditing:YES];
     
     if (![self.emailControl isValid] || ![self.passwordControl isValid]) {
+        [self.emailControl checkValidation];
+        [self.passwordControl checkValidation];
         return;
     }
     

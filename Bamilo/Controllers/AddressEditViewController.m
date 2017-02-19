@@ -25,8 +25,6 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = STRING_ADDRESS;
     [self setupView];
-    
-    [self getRegions];
 }
 
 - (void)setupView {
@@ -42,36 +40,42 @@
     FormItemModel *postalCode = [FormItemModel postalCodeWithFieldName:@"address_form[address2]"];
     postalCode.validation.isRequired = NO;
     
-    FormItemModel *region = [[FormItemModel alloc]
-                             initWithTitle:@"تهران"
-                             fieldName: @"address_form[region]"
-                             andIcon:nil
-                             placeholder:@"استان"
-                             type:InputTextFieldControlTypeOptions
-                             validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil]
-                             selectOptions:nil];
+    FormItemModel *region = [[FormItemModel alloc] initWithTitle: @"تهران"
+                                                       fieldName: @"address_form[region]"
+                                                         andIcon: nil
+                                                     placeholder: @"استان"
+                                                            type: InputTextFieldControlTypeOptions
+                                                      validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil]
+                                                   selectOptions: @{@"تهران": @"336"}];
     
     
-    FormItemModel *city = [[FormItemModel alloc]
-                           initWithTitle:nil
-                           fieldName: @"address_form[city]"
-                           andIcon:nil
-                           placeholder:@"شهر"
-                           type:InputTextFieldControlTypeOptions
-                           validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil]
-                           selectOptions:nil];
+    FormItemModel *city = [[FormItemModel alloc] initWithTitle: nil
+                                                     fieldName: @"address_form[city]"
+                                                       andIcon: nil
+                                                   placeholder: @"شهر"
+                                                          type: InputTextFieldControlTypeOptions
+                                                    validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil]
+                                                 selectOptions: nil];
     
-    FormItemModel *vicinity = [[FormItemModel alloc]
-                               initWithTitle:nil
-                               fieldName: @"address_form[postcode]"
-                               andIcon:nil
-                               placeholder:@"محله"
-                               type:InputTextFieldControlTypeOptions
-                               validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil]
-                               selectOptions:nil];
+    FormItemModel *vicinity = [[FormItemModel alloc] initWithTitle: nil
+                                                         fieldName: @"address_form[postcode]"
+                                                           andIcon: nil
+                                                       placeholder: @"محله"
+                                                              type: InputTextFieldControlTypeOptions
+                                                        validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil]
+                                                     selectOptions: nil];
     
     self.formController.formListModel = [NSMutableArray arrayWithArray:@[name, lastname, phone, postalCode, region, city, vicinity, address]];
     [self.formController setupTableView];
+    
+    [self getRegions];
+    //Check if additional data is required
+    if (region.titleString) {
+        [self getCitiesForRegionName:[region getValue]];
+    }
+    if (city.titleString) {
+        [self getVicinitiesForCityName:[city getValue]];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -139,16 +143,14 @@
 
 #pragma mark - helper function
 - (void)updateSelectOptionModelForFieldIndex:(NSUInteger)fieldIndex withData:(id)data {
-    
     FormItemModel *previousModelForIndex = self.formController.formListModel[fieldIndex];
-    
     [self.formController updateFieldIndex:fieldIndex WithModel:[[FormItemModel alloc] initWithTitle: previousModelForIndex.titleString
-                                                                                        fieldName: previousModelForIndex.fieldName
-                                                                                        andIcon: previousModelForIndex.icon
+                                                                                          fieldName: previousModelForIndex.fieldName
+                                                                                            andIcon: previousModelForIndex.icon
                                                                                         placeholder: previousModelForIndex.placeholder
-                                                                                        type: InputTextFieldControlTypeOptions
-                                                                                        validation: previousModelForIndex.validation
-                                                                                        selectOptions:data]];
+                                                                                               type: InputTextFieldControlTypeOptions
+                                                                                         validation: previousModelForIndex.validation
+                                                                                      selectOptions: data]];
 }
 
 - (void)getRegions {

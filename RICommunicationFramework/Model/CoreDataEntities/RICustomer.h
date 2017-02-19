@@ -87,6 +87,8 @@
  */
 + (NSString *)getCustomerId;
 
++ (RICustomer *)getCurrentCustomer;
+
 /**
  * Method to get the current user gender
  *

@@ -242,29 +242,28 @@
     return operationID;
 }
 
-+ (NSString *)getCustomerId
-{
++ (RICustomer *)getCurrentCustomer {
     NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
-    
-    if (customers.count > 0)
-    {
+    if (customers.count) {
         RICustomer *customer = (RICustomer *)[customers lastObject];
-                                
-        return [customer.customerId stringValue];
+        return customer;
     }
-    else
-    {
+    return nil;
+}
+
++ (NSString *)getCustomerId {
+    RICustomer *customer = [RICustomer getCurrentCustomer];
+    if (customer) {
+        return [customer.customerId stringValue];
+    } else {
         return @"0";
     }
 }
 
-+ (NSString *)getCustomerGender
-{
++ (NSString *)getCustomerGender {
     NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
-    
     NSString *gender = nil;
-    if (customers.count > 0)
-    {
+    if (customers.count > 0) {
         RICustomer *customer = (RICustomer *)[customers lastObject];
         gender = customer.gender;
     }
@@ -272,8 +271,7 @@
     return gender;
 }
 
-+ (BOOL)wasSignup
-{
++ (BOOL)wasSignup {
     BOOL wasSignup = NO;
     NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
     

@@ -17,7 +17,7 @@
 @implementation CartEntity
 
 #pragma mark - JSONVerboseModel
-+(instancetype)parseToDataModelWithObjects:(NSArray *)objects {
++ (instancetype)parseToDataModelWithObjects:(NSArray *)objects {
     NSDictionary *dict = objects[0];
     RICountryConfiguration *country = objects[1];
     
@@ -32,7 +32,6 @@
             for(NSDictionary *cartItemObject in cartItemObjects) {
                 RICartItem *cartItem = [RICartItem parseCartItem:cartItemObject country:country];
                 [cartItems addObject:cartItem];
-                
                 cartUnreducedValue += ([cartItem.price floatValue] * [cartItem.quantity integerValue]);
                 if(!showUnreducedPrice && VALID_NOTEMPTY(cartItem.specialPrice , NSNumber) && 0.0f < [cartItem.specialPrice floatValue] && [cartItem.price floatValue] != [cartItem.specialPrice floatValue]) {
                     showUnreducedPrice = YES;
