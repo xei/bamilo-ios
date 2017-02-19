@@ -14,6 +14,8 @@
 #import "PaymentOptionWithLogoTableViewCell.h"
 #import "RIPaymentMethodForm.h"
 #import "CartEntitySummaryViewControl.h"
+#import "RIPaymentInformation.h"
+#import "JACheckoutForms.h"
 
 typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
     PAYMENT_METHOD_ONLINE = 1 << 0,
@@ -97,10 +99,62 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
 }
 
 #pragma mark - Overrides
+-(NSString *)getNextStepViewControllerSegueIdentifier:(NSString *)serviceIdentifier {
+    return nil;
+}
+
 -(void)updateNavBar {
     [super updateNavBar];
     
     self.navBarLayout.title = STRING_PAYMENT_OPTION;
+}
+
+-(void)performPreDepartureAction:(CheckoutActionCompletion)completion {
+    RIPaymentMethodFormOption *selectedPaymentMethod = [_paymentMethods objectAtIndex:_selectedPaymentMethodIndex];
+    RIPaymentMethodFormField *field = [self.cart.formEntity.paymentMethodForm.fields firstObject];
+    if (VALID_NOTEMPTY(field, RIPaymentMethodFormField)) {
+        field.value = selectedPaymentMethod.value;
+    }
+    
+    if (selectedPaymentMethod && self.cart.cartEntity.cartValue) {
+         NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithDictionary:[RIPaymentMethodForm getParametersForForm:self.cart.formEntity.paymentMethodForm]];
+        JACheckoutForms *checkoutFormForPaymentMethod = [[JACheckoutForms alloc] initWithPaymentMethodForm:self.cart.formEntity.paymentMethodForm width:0.0];
+        [params addEntriesFromDictionary:[checkoutFormForPaymentMethod getValuesForPaymentMethod:selectedPaymentMethod]];
+        
+        [[DataManager sharedInstance] setMultistepPayment:self params:params completion:^(id data, NSError *error) {
+            if(error == nil && completion != nil) {
+                NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                [trackingDictionary setValue:selectedPaymentMethod.label forKey:kRIEventPaymentMethodKey];
+                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentSuccess] data:[trackingDictionary copy]];
+                
+                MultistepEntity *multistepEntity = (MultistepEntity *)data;
+                if([multistepEntity.nextStep isEqualToString:@"finish"]) {
+                    [[DataManager sharedInstance] setMultistepConfirmation:self cart:self.cart completion:^(id data, NSError *error) {
+                        if(error == nil) {
+                            [self bind:data forRequestId:1];
+                            
+                            NSDictionary *userInfo = @{ @"cart" : self.cart };
+                            
+                            if(self.cart.paymentInformation.type == RIPaymentInformationCheckoutEnded) {
+                                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutThanksScreenNotification object:nil userInfo:userInfo];
+                            } else {
+                                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutExternalPaymentsScreenNotification object:nil userInfo:userInfo];
+                            }
+                            
+                            completion(multistepEntity.nextStep);
+                        }
+                    }];
+                }
+            } else {
+                NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                [trackingDictionary setValue:selectedPaymentMethod.label forKey:kRIEventPaymentMethodKey];
+                [trackingDictionary setValue:self.cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalTransactionKey];
+                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentFail] data:[trackingDictionary copy]];
+                
+                [self showNotificationBar:STRING_ERROR_SETTING_PAYMENT_METHOD isSuccess:NO];
+            }
+        }];
+    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -114,7 +168,7 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     RIPaymentMethodFormOption *paymentMethod = [_paymentMethods objectAtIndex:indexPath.section];
-    
+ 
     switch (indexPath.row) {
         case 0: {
             PaymentTypeTableViewCell *onlinePaymentTableViewCell = [tableView dequeueReusableCellWithIdentifier:[PaymentTypeTableViewCell nibName] forIndexPath:indexPath];
@@ -270,6 +324,7 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
 -(void)bind:(id)data forRequestId:(int)rid {
     switch (rid) {
         case 0:
+        case 1:
             self.cart = (RICart *)data;
         break;
     }

@@ -37,7 +37,7 @@
             newOption.images = [images copy];
         }
         
-        //###########################
+//############################################################################################################
         if (VALID_NOTEMPTY([descriptionObject objectForKey:@"icons"], NSDictionary)) {
             NSDictionary *icons = [descriptionObject objectForKey:@"icons"];
             newOption.icon = [PaymentMethodIcon new];

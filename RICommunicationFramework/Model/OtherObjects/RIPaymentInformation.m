@@ -10,39 +10,37 @@
 
 @implementation RIPaymentInformation
 
-+ (RIPaymentInformation*) parsePaymentInfo:(NSDictionary*)jsonObject
-{
++ (RIPaymentInformation*) parsePaymentInfo:(NSDictionary*)jsonObject {
+    return [self parseToDataModelWithObjects:@[ jsonObject ]];
+}
+
++(instancetype) parseToDataModelWithObjects:(NSArray *)objects {
+    NSDictionary *dict = objects[0];
+    
     RIPaymentInformation *paymentInfo = [[RIPaymentInformation alloc] init];
     
-    if(VALID_NOTEMPTY(jsonObject, NSDictionary))
-    {
-        if (VALID_NOTEMPTY([jsonObject objectForKey:@"type"], NSString)) {
-            
-            NSString *type = [jsonObject objectForKey:@"type"];
-            if([@"submit-external" isEqualToString:type] || [@"auto-submit-external" isEqualToString:type] || [@"render-internal" isEqualToString:type])
-            {
+    if(VALID_NOTEMPTY(dict, NSDictionary)) {
+        if (VALID_NOTEMPTY([dict objectForKey:@"type"], NSString)) {
+            NSString *type = [dict objectForKey:@"type"];
+            if([@"submit-external" isEqualToString:type] || [@"auto-submit-external" isEqualToString:type] || [@"render-internal" isEqualToString:type]) {
                 paymentInfo.type = RIPaymentInformationCheckoutShowWebviewWithForm;
-            }
-            else if([@"auto-redirect-external" isEqualToString:type])
-            {
+            } else if([@"auto-redirect-external" isEqualToString:type]) {
                 paymentInfo.type = RIPaymentInformationCheckoutShowWebviewWithUrl;
             }
         }
         
-        if (VALID_NOTEMPTY([jsonObject objectForKey:@"method"], NSString)) {
-            paymentInfo.method = [jsonObject objectForKey:@"method"];
+        if (VALID_NOTEMPTY([dict objectForKey:@"method"], NSString)) {
+            paymentInfo.method = [dict objectForKey:@"method"];
         }
         
-        if (VALID_NOTEMPTY([jsonObject objectForKey:@"url"], NSString)) {
-            paymentInfo.url = [jsonObject objectForKey:@"url"];
+        if (VALID_NOTEMPTY([dict objectForKey:@"url"], NSString)) {
+            paymentInfo.url = [dict objectForKey:@"url"];
         }
         
-        if (VALID_NOTEMPTY([jsonObject objectForKey:@"form"], NSDictionary)) {
-            paymentInfo.form = [RIForm parseForm:[jsonObject objectForKey:@"form"]];
+        if (VALID_NOTEMPTY([dict objectForKey:@"form"], NSDictionary)) {
+            paymentInfo.form = [RIForm parseForm:[dict objectForKey:@"form"]];
         }
-    }
-    else
-    {
+    } else {
         paymentInfo.type = RIPaymentInformationCheckoutEnded;
     }
     

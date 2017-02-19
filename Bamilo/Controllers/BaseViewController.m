@@ -87,7 +87,7 @@
 
 # pragma mark - Message View
 - (void)showNotificationBar:(NSString *)message isSuccess:(BOOL)success {
-    UIViewController *rootViewController = [ViewControllerManager rootViewController];
+    UIViewController *rootViewController = [ViewControllerManager topViewController];
     
     if (!VALID_NOTEMPTY(self.messageView, JAMessageView)) {
         self.messageView = [[JAMessageView alloc] initWithFrame:CGRectMake(0, 64, self.view.bounds.size.width, kMessageViewHeight)];

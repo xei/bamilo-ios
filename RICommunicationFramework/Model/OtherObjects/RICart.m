@@ -518,10 +518,7 @@
 }
 
 #pragma mark - Parsers
-
-+ (RICart *)parseCheckoutFinish:(NSDictionary*)json
-                        forCart:(RICart*)cart
-{
++ (RICart *)parseCheckoutFinish:(NSDictionary*)json forCart:(RICart*)cart {
     if (VALID_NOTEMPTY([json objectForKey:@"orders_count"], NSString)) {
         NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
         f.numberStyle = NSNumberFormatterDecimalStyle;
@@ -550,7 +547,6 @@
 }
 
 #pragma mark - Checkout multistep methods
-
 +(void)parseNextStepFromJSONResponse:(NSDictionary*)jsonResponse
                     successBlock:(void (^)(NSString* nextStep))successBlock
                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
@@ -809,8 +805,8 @@
                                         RIPaymentMethodForm* paymentMethodForm = [RIPaymentMethodForm parseForm:[metadata objectForKey:@"form_entity"]];
                                         cart.formEntity.paymentMethodForm = paymentMethodForm;
                                     } else if ([type isEqualToString:@"multistep_shipping_method"]) {
-                                        RIShippingMethodForm* shippingMethodForm = [RIShippingMethodForm parseForm:[metadata objectForKey:@"form_entity"]];
-                                        cart.formEntity.shippingMethodForm = shippingMethodForm;
+                                        cart.formEntity.shippingMethodForm = [ShippingMethodForm new];
+                                        [cart.formEntity.shippingMethodForm mergeFromDictionary:[metadata objectForKey:@"form_entity"] useKeyMapping:YES error:nil];
                                     }
                                 }
                             }
@@ -841,38 +837,50 @@
     NSDictionary *dict = objects[0];
     RICountryConfiguration *country = objects[1];
     
-    RICart *cart = [[RICart alloc] init];
+    RICart *cart;
+    if(objects.count >= 3) {
+        cart = (RICart *)[objects objectAtIndex:2];
+    } else {
+        cart = [RICart new];
+    }
     
+    //ADDRESSES
     if (VALID_NOTEMPTY([dict objectForKey:@"addresses"], NSDictionary)) {
         RIForm* address = [RIForm parseForm:[dict objectForKey:@"addresses"]];
         cart.addressForm = address;
     }
     
+    //FORM ENTITY
     NSDictionary *_formEntity = [dict objectForKey:@"form_entity"];
     if(_formEntity) {
         cart.formEntity = [FormEntity parseToDataModelWithObjects:@[ _formEntity ]];
     }
-
-    if (VALID_NOTEMPTY([dict objectForKey:@"shippingMethodForm"], NSDictionary)) {
-        RIShippingMethodForm *shippingMethodForm = [RIShippingMethodForm parseForm:[dict objectForKey:@"shippingMethodForm"]];
-        cart.formEntity.shippingMethodForm = shippingMethodForm;
-    }
     
-    if(VALID_NOTEMPTY([dict objectForKey:@"paymentMethodForm"], NSDictionary)) {
-        RIPaymentMethodForm *paymentMethodForm = [RIPaymentMethodForm parseForm:[dict objectForKey:@"paymentMethodForm"]];
-        cart.formEntity.paymentMethodForm = paymentMethodForm;
-    }
-    
+    //CART ENTITY
     NSDictionary *_cartEntity = [dict objectForKey:@"cart_entity"];
     if(_cartEntity) {
         cart.cartEntity = [CartEntity parseToDataModelWithObjects:@[ _cartEntity, country ]];
     }
     
+    //CUSTOMER ENTITY
     NSDictionary *_customerEntity = [dict objectForKey:@"customer_entity"];
     if(_customerEntity) {
         cart.customerEntity = [RICustomer parseToDataModelWithObjects:@[ _customerEntity ]];
     }
     
+    //SHIPPING METHOD FORM
+    /*if (VALID_NOTEMPTY([dict objectForKey:@"shippingMethodForm"], NSDictionary)) {
+        cart.formEntity.shippingMethodForm = [ShippingMethodForm new];
+        [cart.formEntity.shippingMethodForm mergeFromDictionary:[dict objectForKey:@"shippingMethodForm"] useKeyMapping:YES error:nil];
+    }
+    
+    //PAYMENT METHOD FORM
+    if(VALID_NOTEMPTY([dict objectForKey:@"paymentMethodForm"], NSDictionary)) {
+        RIPaymentMethodForm *paymentMethodForm = [RIPaymentMethodForm parseForm:[dict objectForKey:@"paymentMethodForm"]];
+        cart.formEntity.paymentMethodForm = paymentMethodForm;
+    }*/
+    
+    //MULTI-STEP ENTITY
     if (VALID_NOTEMPTY([dict objectForKey:@"multistep_entity"], NSDictionary) ) {
         NSDictionary* nextStep = [dict objectForKey:@"multistep_entity"];
         cart.nextStep = [nextStep objectForKey:@"next_step"];

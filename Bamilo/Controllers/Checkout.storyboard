@@ -129,7 +129,7 @@
                         <outlet property="checkoutProgressViewControl" destination="22G-Q0-TRN" id="SJw-3T-MTK"/>
                         <outlet property="continueButton" destination="a6b-JE-wIw" id="xw9-Qc-5YA"/>
                         <outlet property="tableView" destination="dCv-DP-nKy" id="rj7-oJ-fIb"/>
-                        <segue destination="YAa-kj-ypS" kind="show" identifier="pushReviewToPayment" id="8lA-ov-Vmp"/>
+                        <segue destination="YAa-kj-ypS" kind="show" identifier="pushConfirmationToPayment" id="8lA-ov-Vmp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c6o-Zu-FYQ" userLabel="First Responder" sceneMemberID="firstResponder"/>

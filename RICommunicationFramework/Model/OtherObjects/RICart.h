@@ -179,4 +179,7 @@
                      withSuccessBlock:(void (^)(RICart* cart, NSString *rrStringTarget))successBlock
                       andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
+//##########################################################################################
++ (RICart *)parseCheckoutFinish:(NSDictionary*)json forCart:(RICart*)cart;
+
 @end

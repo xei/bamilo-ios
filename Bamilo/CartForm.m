@@ -15,7 +15,7 @@
     NSDictionary *dict = objects[0];
     RICountryConfiguration *country = objects[1];
     
-    CartForm *cartForm = [[CartForm alloc] init];
+    CartForm *cartForm = [CartForm new];
     
     cartForm.cartEntity = [CartEntity parseToDataModelWithObjects:@[ [dict objectForKey:@"cart_entity"], country ]];
     cartForm.formEntity = [FormEntity parseToDataModelWithObjects:@[ [dict objectForKey:@"form_entity"] ]];

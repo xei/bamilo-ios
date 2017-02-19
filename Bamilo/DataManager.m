@@ -131,7 +131,7 @@ static DataManager *instance;
     }];
 }
 
--(void) setMultistepShipping:(id<DataServiceProtocol>)target forShippingMethod:(NSString*)shippingMethod pickupStation:(NSString*)pickupStation region:(NSString*)region completion:(DataCompletion)completion {
+/*-(void) setMultistepShipping:(id<DataServiceProtocol>)target forShippingMethod:(NSString*)shippingMethod pickupStation:(NSString*)pickupStation region:(NSString*)region completion:(DataCompletion)completion {
     NSDictionary *params = @{
          @"shipping_method[shipping_method]": shippingMethod,
          @"shipping_method[pickup_station]": pickupStation,
@@ -141,11 +141,30 @@ static DataManager *instance;
     [RequestManager asyncPOST:target path:RI_API_MULTISTEP_SUBMIT_SHIPPING params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
         [self serialize:data into:[RICart class] response:response errorMessages:errorMessages completion:completion];
     }];
-}
+}*/
 
 - (void) getMultistepPayment:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
     [RequestManager asyncGET:target path:RI_API_MULTISTEP_GET_PAYMENT params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
-        [self serialize:data into:[CartForm class] response:response errorMessages:errorMessages completion:completion];
+        [self serialize:data into:[RICart class] response:response errorMessages:errorMessages completion:completion];
+    }];
+}
+
+-(void)setMultistepPayment:(id<DataServiceProtocol>)target params:(NSDictionary *)params completion:(DataCompletion)completion {
+    [RequestManager asyncPOST:target path:RI_API_MULTISTEP_SUBMIT_PAYMENT params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+        [self serialize:data into:[MultistepEntity class] response:response errorMessages:errorMessages completion:completion];
+    }];
+}
+
+-(void) setMultistepConfirmation:(id<DataServiceProtocol>)target cart:(RICart *)cart completion:(DataCompletion)completion {
+    NSDictionary *params = @{
+        @"app": @"ios",
+        @"customer_device": UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() ? @"tablet" : @"mobile"
+    };
+    
+    [RequestManager asyncPOST:target path:RI_API_MULTISTEP_SUBMIT_FINISH params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+        if(completion != nil) {
+            completion([RICart parseCheckoutFinish:data forCart:cart], nil);
+        }
     }];
 }
 
@@ -198,7 +217,7 @@ static DataManager *instance;
 
 #pragma mark - Helpers
 - (NSError *)getErrorFrom:(RIApiResponse)response errorMessages:(NSArray *)errorMessages {
-    return [NSError errorWithDomain:@"com.bamilo.ios" code:response userInfo:(errorMessages ? @{ @"errorMessages" : errorMessages } : nil)];
+    return [NSError errorWithDomain:@"com.bamilo.ios" code:response userInfo:(errorMessages ? @{ kErrorMessages: errorMessages } : nil)];
 }
 
 @end

@@ -15,5 +15,8 @@
 #import "CartEntity.h"
 #import "FormEntity.h"
 #import "MultistepEntity.h"
+#import "ShippingMethodOption.h"
+#import "ShippingMethod.h"
+#import "ShippingMethodForm.h"
 
 #endif /* Models_pch */

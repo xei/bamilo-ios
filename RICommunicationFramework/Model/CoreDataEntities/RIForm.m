@@ -97,11 +97,8 @@
         
         return;
         
-        
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
-        
         [RIForm getFormWithUrl:formIndexType successBlock:successBlock failureBlock:failureBlock];
-        
     }];
 }
 

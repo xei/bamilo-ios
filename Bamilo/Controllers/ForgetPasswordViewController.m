@@ -68,7 +68,7 @@
         if(error == nil) {
             [self bind:data forRequestId:0];
         } else {
-            for(NSDictionary* errorField in [error.userInfo objectForKey:@"errorMessages"]) {
+            for(NSDictionary* errorField in [error.userInfo objectForKey:kErrorMessages]) {
                 NSString *fieldName = [NSString stringWithFormat:@"forgot_password[%@]", errorField[@"field"]];
                 [self.formController showErrorMessgaeForField:fieldName errorMsg:errorField[@"message"]];
             }

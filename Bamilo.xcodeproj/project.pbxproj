@@ -2497,6 +2497,24 @@
 			name = ShippingMethodOption;
 			sourceTree = "<group>";
 		};
+		873369D31E598FF200B0B5E5 /* Shipping */ = {
+			isa = PBXGroup;
+			children = (
+				873369C71E58A1C200B0B5E5 /* ShippingMethodOption */,
+				873369C31E58A11600B0B5E5 /* ShippingMethod */,
+				873369BF1E589FCF00B0B5E5 /* ShippingMethodForm */,
+			);
+			name = Shipping;
+			sourceTree = "<group>";
+		};
+		873369D41E59901700B0B5E5 /* Checkout */ = {
+			isa = PBXGroup;
+			children = (
+				873369D31E598FF200B0B5E5 /* Shipping */,
+			);
+			name = Checkout;
+			sourceTree = "<group>";
+		};
 		87459C7F1E4EF2AD00743120 /* CartListItemTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -3345,9 +3363,7 @@
 				879F88261E51CEFC0033FE87 /* CartEntity */,
 				879F882E1E51D5460033FE87 /* FormEntity */,
 				873369B71E582CE200B0B5E5 /* MultistepEntity */,
-				873369C71E58A1C200B0B5E5 /* ShippingMethodOption */,
-				873369C31E58A11600B0B5E5 /* ShippingMethod */,
-				873369BF1E589FCF00B0B5E5 /* ShippingMethodForm */,
+				873369D41E59901700B0B5E5 /* Checkout */,
 			);
 			name = Service;
 			sourceTree = "<group>";

@@ -116,13 +116,19 @@
 
 #pragma mark - Overrides
 -(NSString *)getNextStepViewControllerSegueIdentifier:(NSString *)serviceIdentifier {
-    return @"pushReviewToPayment";
+    return @"pushConfirmationToPayment";
 }
 
 -(void)updateNavBar {
     [super updateNavBar];
     
     self.navBarLayout.title = STRING_FINAL_REVIEW;
+}
+
+-(void)performPreDepartureAction:(CheckoutActionCompletion)completion {
+    if(completion != nil) {
+        completion(nil);
+    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -292,7 +298,7 @@
                 [self.tableView reloadData];
             } else {
                 if (error.code != RIApiResponseNoInternetConnection) {
-                    //[self.resumeView setCouponValid:NO];
+                    [self showNotificationBar:[error.userInfo[kErrorMessages] firstObject] isSuccess:NO];
                 }
             }
         }];

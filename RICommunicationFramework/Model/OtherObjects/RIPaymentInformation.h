@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "RIForm.h"
+#import <JSONModel/JSONModel.h>
 
 typedef NS_ENUM(NSUInteger, RIPaymentInformationType) {
     //!< This means that the checkout has ended with some method that does not need extra payment information like cash on delivery.
@@ -21,7 +22,7 @@ typedef NS_ENUM(NSUInteger, RIPaymentInformationType) {
     RIPaymentInformationCheckoutShowWebviewWithForm = 2
 };
 
-@interface RIPaymentInformation : NSObject
+@interface RIPaymentInformation : NSObject <JSONVerboseModel>
 
 @property (nonatomic, assign) RIPaymentInformationType type;
 @property (nonatomic, strong) NSString *method;
