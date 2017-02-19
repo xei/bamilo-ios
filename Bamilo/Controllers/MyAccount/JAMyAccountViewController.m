@@ -18,7 +18,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray* tableViewListItems;
-@property (assign, nonatomic) BOOL viewDidApearedOnceOrMore;
+@property (assign, nonatomic) BOOL viewWillApearedOnceOrMore;
 @end
 
 @implementation JAMyAccountViewController
@@ -46,12 +46,13 @@
     self.tableView.delegate = self;
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    if (self.viewDidApearedOnceOrMore) {
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (self.viewWillApearedOnceOrMore) {
         [self updateTableViewListItemsModel];
         [self.tableView reloadData];
     }
-    self.viewDidApearedOnceOrMore = YES;
+    self.viewWillApearedOnceOrMore = YES;
 }
 
 - (void)updateTableViewListItemsModel {
