@@ -11,6 +11,7 @@
 @protocol StepperViewControlDelegate
 
 - (void)valueHasBeenChanged:(id) stepperViewControl withNewValue:(int) value;
-
+- (void)wantsToBeMoreThanMax:(id) stepperViewControl;
+- (void)wantsToBeLessThanMin:(id) stepperViewControl;
 @end
 

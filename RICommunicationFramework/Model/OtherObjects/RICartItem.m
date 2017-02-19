@@ -11,9 +11,7 @@
 
 @implementation RICartItem
 
-+ (RICartItem*)parseCartItem:(NSDictionary*)info
-                                  country:(RICountryConfiguration *)country
-{
++ (RICartItem*)parseCartItem:(NSDictionary*)info country:(RICountryConfiguration *)country {
     RICartItem *cartItem = [[RICartItem alloc] init];
     
     if (VALID_NOTEMPTY([info objectForKey:@"simple_sku"], NSString)) {

@@ -35,6 +35,7 @@
     [self.itemImage sd_setImageWithURL:[ImageManager getCorrectedUrlForCartItemImageUrl:cartItem.imageUrl] placeholderImage:[ImageManager defaultPlaceholder]];
     self.stepper.quantity = cartItem.quantity.intValue;
     self.stepper.maxQuantity = cartItem.maxQuantity.intValue;
+    self.stepper.minQuantity = 1;
     NSString *realPrice = cartItem.priceFormatted;
     NSString *specialPrice = cartItem.specialPriceFormatted;
     self.priceLabel.text = specialPrice ?: realPrice;
@@ -109,6 +110,16 @@
 #pragma StepperViewController Delegate
 - (void)valueHasBeenChanged:(id)stepperViewControl withNewValue:(int)value {
     [self quantityChangeTo:value];
+}
+
+- (void)wantsToBeMoreThanMax:(id)stepperViewControl {
+    if ([self.delegate respondsToSelector:@selector(wantToIncreaseCartItemCountMoreThanMax:byCell:)]) {
+        [self.delegate wantToIncreaseCartItemCountMoreThanMax:self.cartItem byCell:self];
+    }
+}
+
+- (void)wantsToBeLessThanMin:(id)stepperViewControl {
+    
 }
 
 @end

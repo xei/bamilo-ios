@@ -276,6 +276,10 @@
     
 }
 
+- (void)wantToIncreaseCartItemCountMoreThanMax:(RICartItem *)cartItem byCell:(id)cartCell {
+    [self showMessage:[[NSString stringWithFormat:@"سقف خرید %@ عدد می باشد", cartItem.maxQuantity] numbersToPersian] success:NO];
+}
+
 - (void)wantsToRemoveCartItem:(RICartItem *)cartItem byCell:(id)cartCell {
     [[AlertManager sharedInstance] confirmAlert:@"حذف محصول" text:@"آیا از حذف این محصول از سبد خرید خود اطمینان دارید؟" confirm:@"بله" cancel:@"خیر" completion:^(BOOL OK) {
         if(OK) [self removeCartItem:cartItem];
