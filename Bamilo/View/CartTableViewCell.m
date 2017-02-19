@@ -29,7 +29,7 @@
 
 - (void)setCartItem:(RICartItem *)cartItem {
     _cartItem = cartItem;
-    self.brandLabelButton.titleLabel.text = cartItem.brand;
+    [self.brandLabelButton setTitle:cartItem.brand forState:UIControlStateNormal];
     self.nameLabel.text = cartItem.name;
     
     [self.itemImage sd_setImageWithURL:[ImageManager getCorrectedUrlForCartItemImageUrl:cartItem.imageUrl] placeholderImage:[ImageManager defaultPlaceholder]];
@@ -57,12 +57,18 @@
     NSMutableDictionary *quantitiesToChange = [[NSMutableDictionary alloc] init];
     [quantitiesToChange setValue:[NSString stringWithFormat:@"%d", newQuantity] forKey:@"quantity"];
     [quantitiesToChange setValue:[self.cartItem simpleSku] forKey:@"sku"];
-    [self.delegate quantityWillChangeTo:newQuantity withCell:self];
+    if ([self.delegate respondsToSelector:@selector(quantityWillChangeTo:withCell:)]) {
+        [self.delegate quantityWillChangeTo:newQuantity withCell:self];
+    }
     [RICart changeQuantityInProducts:quantitiesToChange
                     withSuccessBlock:^(RICart *cart) {
-                        [self.delegate quantityHasBeenChangedTo:newQuantity withNewCart:cart withCell:self];
+                        if ([self.delegate respondsToSelector:@selector(quantityHasBeenChangedTo:withNewCart:withCell:)]) {
+                            [self.delegate quantityHasBeenChangedTo:newQuantity withNewCart:cart withCell:self];
+                        }
                     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-                        [self.delegate quantityHasBeenChangedTo:newQuantity withErrorMessages:errorMessages withCell:self];
+                        if ([self.delegate respondsToSelector:@selector(quantityHasBeenChangedTo:withErrorMessages:withCell:)]) {
+                            [self.delegate quantityHasBeenChangedTo:newQuantity withErrorMessages:errorMessages withCell:self];
+                        }
                     }];
 }
 
@@ -78,7 +84,7 @@
 }
 
 - (void)prepareForReuse {
-    self.brandLabelButton.titleLabel.text = nil;
+    [self.brandLabelButton setTitle:nil forState:UIControlStateNormal];
     self.nameLabel.text = nil;
     self.itemImage.image = nil;
     self.stepper.quantity = 0;
@@ -89,11 +95,15 @@
 }
 
 - (IBAction)removeBtnTapped:(id)sender {
-    [self.delegate wantsToRemoveCartItem:self.cartItem byCell:self];
+    if ([self.delegate respondsToSelector:@selector(wantsToRemoveCartItem:byCell:)]) {
+        [self.delegate wantsToRemoveCartItem:self.cartItem byCell:self];
+    }
 }
 
 - (IBAction)likeBtnTapped:(id)sender {
-    [self.delegate wantsToLikeCartItem:self.cartItem byCell:self];
+    if ([self.delegate respondsToSelector:@selector(wantsToLikeCartItem:byCell:)]) {
+        [self.delegate wantsToLikeCartItem:self.cartItem byCell:self];
+    }
 }
 
 #pragma StepperViewController Delegate

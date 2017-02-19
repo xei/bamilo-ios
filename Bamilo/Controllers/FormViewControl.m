@@ -178,7 +178,10 @@
     self.formListModel[fieldIndex].titleString = value;
     
     if ([self.formListModel[fieldIndex].validation checkValiditionOfString:self.formListModel[fieldIndex].titleString].boolValue) {
-        [self.delegate fieldHasBeenUpdatedByNewValidValue:value inFieldIndex:fieldIndex];
+        
+        if ([self.delegate respondsToSelector:@selector(fieldHasBeenUpdatedByNewValidValue:inFieldIndex:)]){
+            [self.delegate fieldHasBeenUpdatedByNewValidValue:value inFieldIndex:fieldIndex];
+        }
     }
 }
 

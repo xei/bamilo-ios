@@ -105,7 +105,6 @@
                              selectOptions:nil];
     
     self.formController.formListModel = [NSMutableArray arrayWithArray:@[name, lastname, phone, postalCode, region, city, vicinity, address]];
-    
     [self.formController setupTableView];
     
     [[DataManager sharedInstance] getRegions:self completion:^(id data, NSError *error) {
@@ -137,7 +136,16 @@
     if (![self.formController isFormValid]) {
         return;
     }
-    
+    [[DataManager sharedInstance] submitAddress:self params:[self.formController getMutableDictionaryOfForm] withID:nil completion:^(id data, NSError *error) {
+        if (error == nil) {
+            [self.navigationController popViewControllerAnimated:YES];
+        } else {
+            for(NSDictionary* errorField in [error.userInfo objectForKey:@"errorMessages"]) {
+                NSString *fieldName = [NSString stringWithFormat:@"address_form[%@]", errorField[@"field"]];
+                [self.formController showErrorMessgaeForField:fieldName errorMsg:errorField[@"message"]];
+            }
+        }
+    }];
 }
 
 - (void)viewNeedsToEndEditing {

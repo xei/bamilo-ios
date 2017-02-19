@@ -32,7 +32,9 @@
 }
 
 - (IBAction)viewTapped:(id)sender {
-    [self.delegate cartEntitySummeryTapped:self];
+    if ([self.delegate respondsToSelector:@selector(cartEntitySummeryTapped:)]) {
+        [self.delegate cartEntitySummeryTapped:self];
+    }
 }
 
 @end

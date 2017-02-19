@@ -21,6 +21,7 @@ typedef void(^DataCompletion)(id data, NSError *error);
 - (void)getRegions:(id<DataServiceProtocol>)target completion:(DataCompletion)completion;
 - (void)getCities:(id<DataServiceProtocol>)target forRegion:(NSString *)regionCode completion:(DataCompletion)completion;
 - (void)getVicinity:(id<DataServiceProtocol>)target forCity:(NSString *)cityCode completion:(DataCompletion)completion;
+- (void)submitAddress:(id<DataServiceProtocol>)target params:(NSDictionary *)params withID:(NSString *)uid completion:(DataCompletion)completion;
 
 //### Authentications ###
 - (void)forgetPassword:(id<DataServiceProtocol>)target withFields:(NSDictionary<NSString *,FormItemModel *> *)fields completion:(DataCompletion)completion;

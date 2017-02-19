@@ -26,24 +26,31 @@ static DataManager *instance;
 }
 
 
-//### GET_VICINITY
+//### AREA_INFORMATION
 - (void)getVicinity:(id<DataServiceProtocol>)target forCity:(NSString *)cityCode completion:(DataCompletion)completion {
     NSString *path = [NSString stringWithFormat:@"%@/city_id/%@", RI_API_GET_CUSTOMER_POSTCODES, cityCode];
     [self getAreaZone:target type:REQUEST_EXEC_IN_FOREGROUND path:path completion:completion];
 }
-//### GETCITIES
 - (void)getCities:(id<DataServiceProtocol>)target forRegion:(NSString *)regionCode completion:(DataCompletion)completion {
     NSString *path = [NSString stringWithFormat:@"%@/region/%@", RI_API_GET_CUSTOMER_CITIES, regionCode];
     [self getAreaZone:target type:REQUEST_EXEC_IN_FOREGROUND path:path completion:completion];
 }
-//### GETREGIONS
 - (void)getRegions:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
     [self getAreaZone:target type:REQUEST_EXEC_IN_BACKGROUND path:RI_API_GET_CUSTOMER_REGIONS completion:completion];
+}
+- (void)submitAddress:(id<DataServiceProtocol>)target params:(NSDictionary *)params withID:(NSString *)uid completion:(DataCompletion)completion {
+    NSString *path = uid ? uid : RI_API_POST_CUSTOMER_ADDDRESS_CREATE;
+    [RequestManager asyncPOST:target path:path params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+        if(response == RIApiResponseSuccess && data) {
+            completion(data, nil);
+        } else {
+            completion(nil, [self getErrorFrom:response errorMessages:errorMessages]);
+        }
+    }];
 }
 - (void)getAreaZone:(id<DataServiceProtocol>)target type:(RequestExecutionType)type path:(NSString *)path completion:(DataCompletion)completion {
     [RequestManager asyncGET:target path:path params:nil type:type completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
         if(response == RIApiResponseSuccess && data) {
-            
             //Please skip this tof for now! @Narbeh
             NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
             for (NSDictionary *region in  data[@"data"]) {
