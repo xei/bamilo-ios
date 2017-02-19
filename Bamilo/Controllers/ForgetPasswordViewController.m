@@ -29,17 +29,18 @@
     
     FormItemValidation *emailValidation = [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:[NSString emailRegxPattern]];
     FormItemModel *email = [[FormItemModel alloc] initWithTitle:nil
+                                                      fieldName: @"forgot_password[email]"
                                                         andIcon:[UIImage imageNamed:@"Email"]
                                                         placeholder:@"ایمیل"
                                                         type:InputTextFieldControlTypeEmail
                                                         validation:emailValidation
                                                         selectOptions:nil];
     
-    self.formController.formItemListModel = @{@"forgot_password[email]": email};
+    self.formController.formListModel = [NSMutableArray arrayWithArray:@[email]];
     self.formController.submitTitle = STRING_CONTINUE;
     self.formController.formMessage = @"آدرس ایمیل خود را وارد کنید";
     
-    [self.formController registerDelegationsAndDataSourceForTableview];
+    [self.formController setupTableView];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -64,7 +65,7 @@
     if (![self.formController isFormValid]) {
         return;
     }
-    [[DataManager sharedInstance] forgetPassword:self withFields:self.formController.formItemListModel completion:^(id data, NSError *error) {
+    [[DataManager sharedInstance] forgetPassword:self withFields:[self.formController getMutableDictionaryOfForm] completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
         } else {

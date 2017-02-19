@@ -25,6 +25,37 @@ static DataManager *instance;
     return instance;
 }
 
+
+//### GET_VICINITY
+- (void)getVicinity:(id<DataServiceProtocol>)target forCity:(NSString *)cityCode completion:(DataCompletion)completion {
+    NSString *path = [NSString stringWithFormat:@"%@/city_id/%@", RI_API_GET_CUSTOMER_POSTCODES, cityCode];
+    [self getAreaZone:target type:REQUEST_EXEC_IN_FOREGROUND path:path completion:completion];
+}
+//### GETCITIES
+- (void)getCities:(id<DataServiceProtocol>)target forRegion:(NSString *)regionCode completion:(DataCompletion)completion {
+    NSString *path = [NSString stringWithFormat:@"%@/region/%@", RI_API_GET_CUSTOMER_CITIES, regionCode];
+    [self getAreaZone:target type:REQUEST_EXEC_IN_FOREGROUND path:path completion:completion];
+}
+//### GETREGIONS
+- (void)getRegions:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
+    [self getAreaZone:target type:REQUEST_EXEC_IN_BACKGROUND path:RI_API_GET_CUSTOMER_REGIONS completion:completion];
+}
+- (void)getAreaZone:(id<DataServiceProtocol>)target type:(RequestExecutionType)type path:(NSString *)path completion:(DataCompletion)completion {
+    [RequestManager asyncGET:target path:path params:nil type:type completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+        if(response == RIApiResponseSuccess && data) {
+            
+            //Please skip this tof for now! @Narbeh
+            NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
+            for (NSDictionary *region in  data[@"data"]) {
+                dictionary[region[@"label"]] = [NSString stringWithFormat:@"%@", region[@"value"]];
+            }
+            completion(dictionary, nil);
+        } else {
+            completion(nil, [self getErrorFrom:response errorMessages:errorMessages]);
+        }
+    }];
+}
+
 //### LOGIN ###
 - (void)loginUser:(id<DataServiceProtocol>)target withUsername:(NSString *)username password:(NSString *)password completion:(DataCompletion)completion {
     NSDictionary *params = @{
@@ -42,12 +73,8 @@ static DataManager *instance;
 }
 
 //### FORGET PASSWORD ###
-- (void)forgetPassword:(id<DataServiceProtocol>)target withFields:(NSDictionary<NSString *,FormItemModel *> *)fields completion:(DataCompletion)completion {
-    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-    [fields enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, FormItemModel * _Nonnull obj, BOOL * _Nonnull stop) {
-        params[key] = obj.titleString;
-    }];
-    [RequestManager asyncPOST:target path:RI_API_FORGET_PASS_CUSTOMER params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+- (void)forgetPassword:(id<DataServiceProtocol>)target withFields:(NSDictionary *)fields completion:(DataCompletion)completion {
+    [RequestManager asyncPOST:target path:RI_API_FORGET_PASS_CUSTOMER params:fields type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
         if(response == RIApiResponseSuccess && data) {
             completion(data, nil);
         } else {
@@ -57,18 +84,12 @@ static DataManager *instance;
 }
 
 //### SIGNUP ###
-- (void)signupUser:(id<DataServiceProtocol>)target withFieldsDictionary:(NSDictionary<NSString *,FormItemModel *> *)newUserDictionary completion:(DataCompletion)completion {
-    
-    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-    [newUserDictionary enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, FormItemModel * _Nonnull obj, BOOL * _Nonnull stop) {
-        params[key] = obj.titleString;
-    }];
+- (void)signupUser:(id<DataServiceProtocol>)target withFieldsDictionary:(NSMutableDictionary *)fields completion:(DataCompletion)completion {
     //must be remove from server side!
-    params[@"customer[phone_prefix]"] = @"100";
-    
-    [RequestManager asyncPOST:target path:RI_API_REGISTER_CUSTOMER params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+    fields[@"customer[phone_prefix]"] = @"100";
+    [RequestManager asyncPOST:target path:RI_API_REGISTER_CUSTOMER params:fields type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
         if(response == RIApiResponseSuccess && data) {
-            [RICustomer parseCustomerWithJson:[data objectForKey:@"customer_entity"] plainPassword:newUserDictionary[@"customer[password]"].titleString loginMethod:@"normal"];
+            [RICustomer parseCustomerWithJson:[data objectForKey:@"customer_entity"] plainPassword:fields[@"customer[password]"] loginMethod:@"normal"];
             completion(data, nil);
         } else {
             completion(nil, [self getErrorFrom:response errorMessages:errorMessages]);

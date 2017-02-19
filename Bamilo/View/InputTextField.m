@@ -29,6 +29,9 @@
     [super awakeFromNib];
     [self setUpView];
     self.errorMsg.text = nil;
+    self.textField.spellCheckingType =  UITextSpellCheckingTypeNo;
+    self.textField.autocorrectionType = UITextAutocorrectionTypeNo;
+    self.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
 }
 
 - (void)setUpView {

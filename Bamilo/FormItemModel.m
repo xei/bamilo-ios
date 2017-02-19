@@ -10,7 +10,7 @@
 
 @implementation FormItemModel
 
-- (instancetype)initWithTitle:(NSString *)title andIcon:(UIImage *)image placeholder:(NSString *)placeholder type:(InputTextFieldControlType)type validation:(FormItemValidation *)validation selectOptions:(NSDictionary *)options {
+- (instancetype)initWithTitle:(NSString *)title fieldName:(NSString *)fieldName andIcon:(UIImage *)image placeholder:(NSString *)placeholder type:(InputTextFieldControlType)type validation:(FormItemValidation *)validation selectOptions:(NSDictionary *)options {
     self = [super init];
     if (self) {
         self.titleString = title;
@@ -19,8 +19,20 @@
         self.validation = validation;
         self.type = type;
         self.selectOption = options;
+        self.fieldName = fieldName;
     }
     return self;
 }
+
+- (NSString *)getValue {
+    if (self.type == InputTextFieldControlTypeNumerical) {
+        return [self.titleString numbersToEnglish];
+    } else if (self.type == InputTextFieldControlTypeOptions){
+        return self.selectOption[self.titleString];
+    } else {
+        return self.titleString;
+    }
+}
+
 
 @end
