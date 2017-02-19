@@ -28,7 +28,6 @@
 #import "JAOrderViewController.h"
 #import "JACatalogViewController.h"
 #import "JAPDVViewController.h"
-#import "JACartViewController.h"
 #import "JAExternalPaymentsViewController.h"
 #import "JASuccessPageViewController.h"
 #import "RIProduct.h"

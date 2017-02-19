@@ -12,11 +12,11 @@
 #import "FormItemModel.h"
 
 @protocol InputTextFieldControlDelegate<NSObject>
-- (void)inputValueHasBeenChanged:(id)inputTextFieldControl byNewValue:(NSString *)value inFieldName:(NSString *)fieldname;
+- (void)inputValueHasBeenChanged:(id)inputTextFieldControl byNewValue:(NSString *)value inFieldIndex:(NSUInteger)fieldIndex;
 @end
 
 @interface InputTextFieldControl : UIView
-@property (nonatomic, strong) NSString *fieldName;
+@property (nonatomic) NSUInteger fieldIndex;
 @property (nonatomic, weak) id<InputTextFieldControlDelegate> delegate;
 @property (nonatomic, strong) InputTextField *input;
 @property (nonatomic, strong) FormItemValidation *validation;
@@ -26,5 +26,7 @@
 - (NSString *)getStringValue;
 - (Boolean)isValid;
 - (void)showErrorMsg:(NSString *)msg;
+- (void)resetAndClear;
+- (void)checkValidation;
 
 @end

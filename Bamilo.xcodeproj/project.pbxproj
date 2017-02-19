@@ -289,7 +289,6 @@
 		9AE03A971C0CB225003CBEF1 /* JAAuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE03A8A1C076CE1003CBEF1 /* JAAuthenticationViewController.m */; };
 		9AE766A21CB3CF5300B63D8E /* JAAccountServicesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE7669D1CB3CF5300B63D8E /* JAAccountServicesView.m */; };
 		9AE766B11CBBB28E00B63D8E /* JACartProductsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766AC1CBBB28E00B63D8E /* JACartProductsView.m */; };
-		9AE766B81CBBB9AF00B63D8E /* JACartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766B31CBBB9AF00B63D8E /* JACartViewController.m */; };
 		9AE766BF1CBBF01C00B63D8E /* JAEmptyCartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766BA1CBBF01C00B63D8E /* JAEmptyCartView.m */; };
 		9AE766CD1CBCF31400B63D8E /* JACartResumeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766C81CBCF31400B63D8E /* JACartResumeView.m */; };
 		9AE766D41CBD2E0300B63D8E /* JAProductInfoPriceDescriptionLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766CF1CBD2E0300B63D8E /* JAProductInfoPriceDescriptionLine.m */; };
@@ -1116,8 +1115,6 @@
 		9AE7669D1CB3CF5300B63D8E /* JAAccountServicesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAAccountServicesView.m; sourceTree = "<group>"; };
 		9AE766AB1CBBB28E00B63D8E /* JACartProductsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACartProductsView.h; path = ../Controllers/Checkout/Cart/JACartProductsView.h; sourceTree = "<group>"; };
 		9AE766AC1CBBB28E00B63D8E /* JACartProductsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACartProductsView.m; path = ../Controllers/Checkout/Cart/JACartProductsView.m; sourceTree = "<group>"; };
-		9AE766B21CBBB9AF00B63D8E /* JACartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACartViewController.h; sourceTree = "<group>"; };
-		9AE766B31CBBB9AF00B63D8E /* JACartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACartViewController.m; sourceTree = "<group>"; };
 		9AE766B91CBBF01C00B63D8E /* JAEmptyCartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAEmptyCartView.h; path = ../Controllers/Checkout/Cart/JAEmptyCartView.h; sourceTree = "<group>"; };
 		9AE766BA1CBBF01C00B63D8E /* JAEmptyCartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAEmptyCartView.m; path = ../Controllers/Checkout/Cart/JAEmptyCartView.m; sourceTree = "<group>"; };
 		9AE766C71CBCF31400B63D8E /* JACartResumeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACartResumeView.h; path = ../Controllers/Checkout/Cart/JACartResumeView.h; sourceTree = "<group>"; };
@@ -3816,7 +3813,6 @@
 				B59D196419C333E2004843C3 /* Thanks */,
 				B5225E291989475E00C18F1E /* Account */,
 				B5225E2A1989475E00C18F1E /* Addresses */,
-				B5225E2B1989475E00C18F1E /* Cart */,
 				B59D195C19C33122004843C3 /* Order */,
 				B5225E2C1989475E00C18F1E /* Payment */,
 				B5225E2D1989475E00C18F1E /* Shipping */,
@@ -3842,15 +3838,6 @@
 				B57DC97D19B90AB10080C818 /* JAEditAddressViewController.m */,
 			);
 			path = Addresses;
-			sourceTree = "<group>";
-		};
-		B5225E2B1989475E00C18F1E /* Cart */ = {
-			isa = PBXGroup;
-			children = (
-				9AE766B21CBBB9AF00B63D8E /* JACartViewController.h */,
-				9AE766B31CBBB9AF00B63D8E /* JACartViewController.m */,
-			);
-			path = Cart;
 			sourceTree = "<group>";
 		};
 		B5225E2C1989475E00C18F1E /* Payment */ = {
@@ -5123,7 +5110,6 @@
 				9A40773A1CE24DF800313D20 /* JAORCallToReturnViewController.m in Sources */,
 				875AD5401E38C0C800584ABF /* RIAddress.m in Sources */,
 				CE9ADFE01AB6D78200D56481 /* JATextField.m in Sources */,
-				9AE766B81CBBB9AF00B63D8E /* JACartViewController.m in Sources */,
 				CE9ADFE11AB6D78200D56481 /* JASortingView.m in Sources */,
 				875AD5581E38C0C900584ABF /* RIBanner.m in Sources */,
 				875AD57A1E38C0C900584ABF /* RITarget.m in Sources */,

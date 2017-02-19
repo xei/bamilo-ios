@@ -101,6 +101,10 @@ NSString *const RI_API_LOGOUT_CUSTOMER = @"customer/logout/";
 NSString *const RI_API_FORGET_PASS_CUSTOMER = @"customer/forgotpassword/";
 NSString *const RI_API_GET_CUSTOMER_ADDRESS_LIST = @"customer/getaddresslist/";
 NSString *const RI_API_GET_CUSTOMER_SELECT_DEFAULT = @"customer/makedefaultaddress/";
+NSString *const RI_API_GET_CUSTOMER_REGIONS = @"customer/getaddressregions/";
+NSString *const RI_API_GET_CUSTOMER_CITIES = @"customer/getaddresscities/";
+NSString *const RI_API_GET_CUSTOMER_POSTCODES = @"customer/getaddresspostcodes/";
+NSString *const RI_API_POST_CUSTOMER_ADDDRESS_CREATE = @"customer/addresscreate/";
 
 NSString *const RI_API_BUNDLE = @"catalog/bundle/sku/";
 

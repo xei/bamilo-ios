@@ -46,7 +46,7 @@
 - (UIBarButtonItem *)doneBtn {
     if (!_doneBtn){
         _doneBtn = [[UIBarButtonItem alloc] initWithTitle:@"تایید" style:UIBarButtonItemStylePlain target:self action:@selector(donePicker)];
-    [_doneBtn setTitleTextAttributes:@{
+        [_doneBtn setTitleTextAttributes:@{
                              NSFontAttributeName: JAListFont,
                              NSForegroundColorAttributeName: [UIColor blackColor]
                              } forState:UIControlStateNormal];
@@ -66,9 +66,8 @@
 }
 
 - (void)setType:(InputTextFieldControlType) type {
-    
     self.input.textField.secureTextEntry = NO;
-    
+    [self.input hideDropDownIcon];
     switch (type) {
         case InputTextFieldControlTypePassword:
             self.input.textField.keyboardType = UIKeyboardTypeDefault;
@@ -80,7 +79,11 @@
         case InputTextFieldControlTypeEmail:
             self.input.textField.keyboardType = UIKeyboardTypeEmailAddress;
             break;
+        case InputTextFieldControlTypeOptions:
+            [self.input showDropDownIcon];
+            break;
         default:
+            self.input.textField.keyboardType = UIKeyboardTypeDefault;
             break;
     }
     _type = type;
@@ -88,8 +91,10 @@
 
 
 - (void)updateModel {
-    self.model.titleString = [self getStringValue];
-    [self.delegate inputValueHasBeenChanged:self byNewValue:[self getStringValue] inFieldName: self.fieldName];
+    if (![self.model.titleString isEqualToString:[self getStringValue]]) {
+        self.model.titleString = [self getStringValue];
+        [self.delegate inputValueHasBeenChanged:self byNewValue:[self getStringValue] inFieldIndex:self.fieldIndex];
+    }
 }
 
 - (void)setModel:(FormItemModel *)model {
@@ -97,6 +102,7 @@
     self.input.textField.placeholder = model.placeholder;
     self.validation = model.validation;
     [self setType: model.type];
+    self.input.textField.enabled = YES;
     
     if (model.icon) {
         self.input.hasIcon = YES;
@@ -108,8 +114,12 @@
         self.input.textField.text = model.titleString;
         [self checkValidation];
     }
+    
     if (model.selectOption) {
         self.type = InputTextFieldControlTypeOptions;
+    } else if (self.type == InputTextFieldControlTypeOptions) {
+        //When we have no selectOption model but it's `Option` type
+        self.input.textField.enabled = NO;
     }
     _model = model;
 }
@@ -122,11 +132,10 @@
     }
 }
 
+
 - (NSString *)getStringValue {
     if (self.type == InputTextFieldControlTypeNumerical) {
         return [self.input.textField.text numbersToEnglish];
-    } else if (self.type == InputTextFieldControlTypeOptions){
-        return self.model.selectOption[self.input.textField.text];
     } else {
         return self.input.textField.text;
     }
@@ -144,10 +153,18 @@
 
 
 - (void)donePicker {
+    if ((self.input.textField.text == nil || [self.input.textField.text isEqualToString:@""]) && self.model.selectOption.allKeys.count) {
+        self.input.textField.text = self.model.selectOption.allKeys[0];
+    }
     [self.input.textField resignFirstResponder];
 }
 
-#pragma mark - textFieldDelegate
+- (void)resetAndClear {
+    self.input.textField.text = nil;
+    [self.input clearError];
+}
+
+#pragma mark - textFieldTargetActions
 - (void)textFieldEditingDidEndOnExit:(UITextField *)textField {
     [self checkValidation];
     [self updateModel];
@@ -158,12 +175,14 @@
     if (self.type == InputTextFieldControlTypeOptions) {
         textField.inputView = self.pickerView;
         textField.inputAccessoryView = self.toolBar;
+        if (self.model.titleString && [self.model.selectOption.allKeys containsObject:self.model.titleString]) {
+            [self.pickerView selectRow:[self.model.selectOption.allKeys indexOfObject:self.model.titleString] inComponent:0 animated:NO];
+        }
     }
 }
 
 
 #pragma mark - UIPickerViewDataSource and Delegate
-
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     self.input.textField.text = self.model.selectOption.allKeys[row];
 }

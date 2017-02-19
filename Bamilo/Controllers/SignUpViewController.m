@@ -28,6 +28,7 @@
 
     FormItemModel *melliCode = [[FormItemModel alloc]
                                 initWithTitle:nil
+                                fieldName: @"customer[national_id]"
                                 andIcon:nil
                                 placeholder:@"کد ملی"
                                 type:InputTextFieldControlTypeNumerical
@@ -35,63 +36,20 @@
                                 selectOptions:nil];
     
     
-    FormItemModel *email = [[FormItemModel alloc]
-                                initWithTitle:nil
-                                andIcon:nil
-                                placeholder:@"ایمیل"
-                                type:InputTextFieldControlTypeEmail
-                                validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:[NSString emailRegxPattern]]
-                                selectOptions:nil];
-    
-    FormItemModel *name = [[FormItemModel alloc]
-                            initWithTitle:nil
-                            andIcon:nil
-                            placeholder:@"نام"
-                            type:InputTextFieldControlTypeString
-                            validation: [[FormItemValidation alloc] initWithRequired:YES max:50 min:2 withRegxPatter:nil]
-                            selectOptions:nil];
-
-    
-    FormItemModel *lastname = [[FormItemModel alloc]
-                              initWithTitle:nil
-                              andIcon:nil
-                              placeholder:@"نام خانوادگی"
-                              type:InputTextFieldControlTypeString
-                              validation: [[FormItemValidation alloc] initWithRequired:YES max:50 min:2 withRegxPatter:nil]
-                              selectOptions:nil];
-
-    
-    FormItemModel *password = [[FormItemModel alloc]
-                               initWithTitle:nil
-                               andIcon:nil
-                               placeholder:@"رمز عبور"
-                               type:InputTextFieldControlTypePassword
-                               validation: [[FormItemValidation alloc] initWithRequired:YES max:50 min:6 withRegxPatter:nil]
-                               selectOptions:nil];
-    
-    FormItemModel *phone = [[FormItemModel alloc]
-                               initWithTitle:nil
-                               andIcon:nil
-                               placeholder:@"تلفن همراه"
-                               type:InputTextFieldControlTypeNumerical
-                               validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil]
-                               selectOptions:nil];
+    FormItemModel *email = [FormItemModel emailWithFieldName:@"customer[email]"];
+    FormItemModel *name = [FormItemModel nameFieldWithFiedName:@"customer[first_name]"];
+    FormItemModel *lastname = [FormItemModel lastNameWithFieldName:@"customer[last_name]"];
+    FormItemModel *phone = [FormItemModel phoneWithFieldName:@"customer[phone]"];
+    FormItemModel *password = [FormItemModel passWordWithFieldName:@"customer[password]"];
 
     
     
     self.formController.submitTitle = @"ثبت نام";
     self.formController.formMessage = @"ظاهرا مشتری جدید بامیلو هستید،خواهشمندیم اطلاعات بیشتری برای ساخت حساب کاربری خود ارایه دهید ";
     self.title = STRING_SIGNUP;
-    self.formController.formItemListModel = @{
-                               @"customer[national_id]": melliCode,
-                               @"customer[first_name]" : name,
-                               @"customer[last_name]"  : lastname,
-                               @"customer[email]"      : email,
-                               @"customer[password]"   : password,
-                               @"customer[phone]"      : phone
-                               };
+    self.formController.formListModel = [NSMutableArray arrayWithArray:@[melliCode, name, lastname, email, password, phone]];
     
-    [self.formController registerDelegationsAndDataSourceForTableview];
+    [self.formController setupTableView];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -141,10 +99,11 @@
 #pragma mark - formControlDelegate
 - (void)submitBtnTapped {
     if (![self.formController isFormValid]) {
+        [self.formController showAnyErrorInForm];
         return;
     }
     
-    [[DataManager sharedInstance] signupUser:self withFieldsDictionary:self.formController.formItemListModel completion:^(id data, NSError *error) {
+    [[DataManager sharedInstance] signupUser:self withFieldsDictionary:[self.formController getMutableDictionaryOfForm] completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
         } else {
@@ -155,10 +114,6 @@
             }
         }
     }];
-}
-
-- (void)viewNeedsToEndEditing {
-    [self.view endEditing:YES];
 }
 
 @end

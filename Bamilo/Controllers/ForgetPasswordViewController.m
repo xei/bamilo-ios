@@ -27,19 +27,14 @@
     
     self.topSeperatorView.backgroundColor = cLIGHT_GRAY_COLOR;
     
-    FormItemValidation *emailValidation = [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:[NSString emailRegxPattern]];
-    FormItemModel *email = [[FormItemModel alloc] initWithTitle:nil
-                                                        andIcon:[UIImage imageNamed:@"Email"]
-                                                        placeholder:@"ایمیل"
-                                                        type:InputTextFieldControlTypeEmail
-                                                        validation:emailValidation
-                                                        selectOptions:nil];
+    FormItemModel *email = [FormItemModel emailWithFieldName:@"forgot_password[email]"];
+    email.icon = [UIImage imageNamed:@"Email"];
     
-    self.formController.formItemListModel = @{@"forgot_password[email]": email};
+    self.formController.formListModel = [NSMutableArray arrayWithArray:@[email]];
     self.formController.submitTitle = STRING_CONTINUE;
     self.formController.formMessage = @"آدرس ایمیل خود را وارد کنید";
     
-    [self.formController registerDelegationsAndDataSourceForTableview];
+    [self.formController setupTableView];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -62,9 +57,10 @@
 #pragma mark - FormControlDelegate
 - (void)submitBtnTapped {
     if (![self.formController isFormValid]) {
+        [self.formController showAnyErrorInForm];
         return;
     }
-    [[DataManager sharedInstance] forgetPassword:self withFields:self.formController.formItemListModel completion:^(id data, NSError *error) {
+    [[DataManager sharedInstance] forgetPassword:self withFields:[self.formController getMutableDictionaryOfForm] completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
         } else {
@@ -75,10 +71,6 @@
         }
     }]; 
 }
-- (void)viewNeedsToEndEditing {
-    [self.view endEditing:YES];
-}
-
 
 #pragma mark - DataServiceProtocol
 - (void)bind:(id)data forRequestId:(int)rid {

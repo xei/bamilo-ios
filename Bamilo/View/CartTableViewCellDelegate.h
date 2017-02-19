@@ -15,4 +15,5 @@
 @optional - (void)quantityHasBeenChangedTo:(int)newValue withErrorMessages:(NSArray *)errorMsgs withCell:(id)cartCell;
 @optional - (void)wantsToRemoveCartItem:(RICartItem *)cartItem byCell:(id)cartCell;
 @optional - (void)wantsToLikeCartItem:(RICartItem *)cartItem byCell:(id)cartCell;
+@optional - (void)wantToIncreaseCartItemCountMoreThanMax:(RICartItem *)cartItem byCell:(id)cartCell;
 @end

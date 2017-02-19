@@ -6,9 +6,10 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import "JACartViewController.h"
 #import "DataServiceProtocol.h"
+#import "RICart.h"
+#import "CartEntitySummaryViewControl.h"
 
-@interface CartViewController : JACartViewController <DataServiceProtocol>
-
+@interface CartViewController : JABaseViewController <DataServiceProtocol, UITableViewDataSource, UIScrollViewDelegate, UITableViewDelegate, CartEntitySummaryDelegate>
+@property (strong, nonatomic) RICart *cart;
 @end

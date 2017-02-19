@@ -12,4 +12,7 @@
 + (NSString *)nibName {
     return @"FormTableViewCell";
 }
+- (void)prepareForReuse {
+    [self.formItemControl resetAndClear];
+}
 @end

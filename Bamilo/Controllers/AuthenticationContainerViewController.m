@@ -31,7 +31,6 @@
     
     //Sign Up View Controller
     self.signUpViewController = (SignUpViewController *)[[ViewControllerManager sharedInstance] loadNib:@"SignUpViewController" resetCache:YES];
-    
     self.signUpViewController.title = STRING_SIGNUP;
 }
 
@@ -50,12 +49,13 @@
                                  CAPSPageMenuOptionScrollAnimationDurationOnMenuItemTap: @(150)
                                  };
     
-    self.pagemenu = [[CAPSPageMenu alloc] initWithViewControllers:@[ self.signInViewController, self.signUpViewController ] frame:CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height) options:parameters];
+    self.pagemenu = [[CAPSPageMenu alloc] initWithViewControllers:@[ self.signUpViewController, self.signInViewController ] frame:CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height) options:parameters];
+    [self.pagemenu moveToPage:1];
     [self.view addSubview:_pagemenu.view];
 }
 
 #pragma mark - Overrides
--(void)updateNavBar {
+- (void)updateNavBar {
     [super updateNavBar];
 
     self.navBarLayout.title = STRING_LOGIN_OR_SIGNUP;

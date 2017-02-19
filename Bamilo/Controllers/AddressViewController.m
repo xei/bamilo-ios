@@ -64,7 +64,6 @@
             }];
         }
     }];
-        
     return YES;
 }
 
@@ -78,18 +77,14 @@
         case 0:
         case 1: {
             [_addresses removeAllObjects];
-            
             AddressList *addressList = (AddressList *)data;
-            
             if(addressList) {
                 if(addressList.shipping) {
                     [_addresses addObject:addressList.shipping];
                 }
-                
                 for(Address *otherAddress in addressList.other) {
                     [_addresses addObject:otherAddress];
                 }
-                
                 [_addressTableViewController updateWithModel:_addresses];
             }
         }

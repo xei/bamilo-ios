@@ -9,7 +9,8 @@
 #import "BaseViewController.h"
 #import "ProtectedViewControllerProtocol.h"
 #import "FormViewControl.h"
+#import "Address.h"
 
 @interface AddressEditViewController : BaseViewController <ProtectedViewControllerProtocol, FormViewControlDelegate>
-
+@property (nonatomic, copy) NSString *addressUID;
 @end

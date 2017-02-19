@@ -34,26 +34,13 @@
 }
 
 - (void)setupView {
-    FormItemValidation *emailValidation = [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter: [NSString emailRegxPattern]];
-    FormItemModel *emailControlModel = [[FormItemModel alloc]
-                                        initWithTitle:nil
-                                        andIcon:[UIImage imageNamed:@"Email"]
-                                        placeholder:@"ایمیل"
-                                        type:InputTextFieldControlTypeEmail
-                                        validation:emailValidation
-                                        selectOptions:nil];
-    
+
+    FormItemModel *emailControlModel = [FormItemModel emailWithFieldName:@"login[email]"];
+    emailControlModel.icon = [UIImage imageNamed:@"Email"];
     [self.emailControl setModel: emailControlModel];
     
-    FormItemValidation *passValidation = [[FormItemValidation alloc] initWithRequired:YES max:50 min:6 withRegxPatter:nil];
-    FormItemModel *passwordControlModel = [[FormItemModel alloc]
-                                           initWithTitle:nil
-                                           andIcon:[UIImage imageNamed:@"Password"]
-                                           placeholder:@"کلمه عبور"
-                                           type:InputTextFieldControlTypePassword
-                                           validation:passValidation
-                                           selectOptions:nil];
-    
+    FormItemModel *passwordControlModel = [FormItemModel passWordWithFieldName:@"login[password]"];
+    passwordControlModel.icon = [UIImage imageNamed:@"Password"];
     [self.passwordControl setModel: passwordControlModel];
     
     [self.continueWithoutLoginBtn setHidden: !self.showContinueWithoutLogin];
@@ -81,6 +68,8 @@
     [self.view endEditing:YES];
     
     if (![self.emailControl isValid] || ![self.passwordControl isValid]) {
+        [self.emailControl checkValidation];
+        [self.passwordControl checkValidation];
         return;
     }
     

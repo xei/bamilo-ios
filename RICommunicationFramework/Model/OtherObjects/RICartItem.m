@@ -7,12 +7,11 @@
 //
 
 #import "RICartItem.h"
+#import "RICustomer.h"
 
 @implementation RICartItem
 
-+ (RICartItem*)parseCartItem:(NSDictionary*)info
-                                  country:(RICountryConfiguration *)country
-{
++ (RICartItem*)parseCartItem:(NSDictionary*)info country:(RICountryConfiguration *)country {
     RICartItem *cartItem = [[RICartItem alloc] init];
     
     if (VALID_NOTEMPTY([info objectForKey:@"simple_sku"], NSString)) {
@@ -100,6 +99,13 @@
     } else {
         cartItem.freeShippingPossible = NO;
     }
+    
+    [[RICustomer getCurrentCustomer].wishlistProducts enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([(NSString *)obj isEqualToString:cartItem.sku]) {
+            cartItem.isWishList = YES;
+            *stop = YES;
+        }
+    }];
     
     return cartItem;
 }

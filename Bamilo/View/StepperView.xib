@@ -104,6 +104,8 @@
             </userDefinedRuntimeAttributes>
             <connections>
                 <outlet property="label" destination="vHl-ND-FAQ" id="kPl-F0-SEg"/>
+                <outlet property="minusBtn" destination="k36-K5-e4c" id="Khd-2Y-qGv"/>
+                <outlet property="plusBtn" destination="6A2-Zl-aLJ" id="vaG-ZY-9pd"/>
             </connections>
             <point key="canvasLocation" x="-160.5" y="51.5"/>
         </view>

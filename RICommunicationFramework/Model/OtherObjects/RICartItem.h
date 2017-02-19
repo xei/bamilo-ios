@@ -33,7 +33,8 @@
 @property (nonatomic, strong) NSString *specialPriceFormatted;
 @property (nonatomic, strong) NSNumber *specialPriceEuroConverted;
 @property (nonatomic, strong) NSNumber *savingPercentage;
-@property (nonatomic) BOOL freeShippingPossible;
+@property (nonatomic) Boolean isWishList;
+@property (nonatomic) Boolean freeShippingPossible;
 
 + (RICartItem*)parseCartItem:(NSDictionary*)info
                      country:(RICountryConfiguration *)country;
