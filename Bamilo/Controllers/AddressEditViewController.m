@@ -87,7 +87,9 @@ const int VicinityFieldIndex = 6;
 - (void)viewDidAppear:(BOOL)animated {
     [self.formController registerForKeyboardNotifications];
     
-    [self publishScreenLoadTime];
+    if(self.addressUID == nil) {
+        [self publishScreenLoadTime];
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -152,7 +154,7 @@ const int VicinityFieldIndex = 6;
     }
 }
 
-#pragma mark - helper functions
+#pragma mark - Helpers
 - (void)updateSelectOptionModelForFieldIndex:(NSUInteger)fieldIndex withData:(id)data {
     [self.formController updateFieldIndex:fieldIndex WithUpdateModelBlock:^FormItemModel *(FormItemModel *model) {
         model.selectOption = data;
