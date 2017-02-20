@@ -15,7 +15,7 @@
 @property (strong, nonatomic) JANavigationBarLayout *navBarLayout;
 
 - (void)updateNavBar;
-- (void)showNotificationBar:(id)message isSuccess:(BOOL)success;
-- (void)showNotificationBarMessage:(NSString *)message isSuccess:(BOOL)success;
+- (BOOL)showNotificationBar:(id)message isSuccess:(BOOL)success;
+- (BOOL)showNotificationBarMessage:(NSString *)message isSuccess:(BOOL)success;
 
 @end

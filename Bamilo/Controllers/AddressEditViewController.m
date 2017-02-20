@@ -118,11 +118,12 @@ const int VicinityFieldIndex = 6;
         if (error == nil) {
             [self.navigationController popViewControllerAnimated:YES];
         } else {
-            [self showNotificationBar:error isSuccess:NO];
-            /*for(NSDictionary* errorField in [error.userInfo objectForKey:@"errorMessages"]) {
-                NSString *fieldName = [NSString stringWithFormat:@"address_form[%@]", errorField[@"field"]];
-                [self.formController showErrorMessgaeForField:fieldName errorMsg:errorField[@"message"]];
-            }*/
+            if(![self showNotificationBar:error isSuccess:NO]) {
+                for(NSDictionary* errorField in [error.userInfo objectForKey:@"errorMessages"]) {
+                    NSString *fieldName = [NSString stringWithFormat:@"address_form[%@]", errorField[@"field"]];
+                    [self.formController showErrorMessgaeForField:fieldName errorMsg:errorField[@"message"]];
+                }
+            }
         }
     }];
 }

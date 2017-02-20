@@ -93,16 +93,18 @@
 }
 
 # pragma mark - Message View
-- (void) showNotificationBar:(id)message isSuccess:(BOOL)success {
+- (BOOL) showNotificationBar:(id)message isSuccess:(BOOL)success {
     if(success == NO) {
         if([message isKindOfClass:[NSError class]]) {
             NSError *error = (NSError *)message;
-            [self showNotificationBarMessage:[error.userInfo[kErrorMessages] firstObject] isSuccess:NO];
+            return [self showNotificationBarMessage:[error.userInfo[kErrorMessages] firstObject] isSuccess:NO];
         }
     }
+    
+    return NO;
 }
 
-- (void)showNotificationBarMessage:(NSString *)message isSuccess:(BOOL)success {
+- (BOOL)showNotificationBarMessage:(NSString *)message isSuccess:(BOOL)success {
     UIViewController *rootViewController = [ViewControllerManager topViewController];
     
     float messageViewY = 64;
@@ -122,6 +124,8 @@
     }
     
     [self.messageView setTitle:message success:success];
+    
+    return YES;
 }
 
 - (void)removeMessageView {

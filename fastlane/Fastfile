@@ -23,7 +23,7 @@ platform :ios do
   ############################## Build Alpha (Crashlytics) ##############################
   lane :alpha do |values|
     gym(workspace: "Bamilo.xcworkspace", scheme: "Bamilo (Staging)", export_method: "ad-hoc", clean: true)
-    
+
     skip_testing = values[:skip_testing] ? values[:skip_testing] : false
     if skip_testing == false
        scan(scheme: "Bamilo (Staging)", devices: ["iPhone SE"], clean: false, skip_build: true)
@@ -31,13 +31,14 @@ platform :ios do
 
     emails = values[:emails] ? values[:emails] : nil
     groups = values[:groups] ? values[:groups] : nil
-    notify = values[:notify] ? values[:notify] : true  
-  
+    notify = values[:notify] ? values[:notify] : true
+    changelog = prompt(text: "Enter the change log: ", multi_line_end_keyword: "END")
+
     crashlytics(api_token: 'ddde4ad6ad210575fdac10a908040d1a93e74833',
       build_secret: 'c37b1e5c603fb0fd9b71f1bf627d92f87718c6efd4aada50d724ab8ad126fe35',
       emails: emails,
       groups: groups,
-      notes: changelog_from_git_commits,
+      notes: changelog ? changelog : changelog_from_git_commits,
       notifications: notify)
 
       post_to_slack(scheme: "alpha", destination: "Crashlytics")
