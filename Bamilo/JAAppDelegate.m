@@ -44,7 +44,6 @@
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITracking_Bamilo" ofType:@"plist"];
 #else
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITrackingDebug_Bamilo" ofType:@"plist"];
-    [Fabric with:@[[Crashlytics class]]];
 #endif
     
     [[RITrackingWrapper sharedInstance] startWithConfigurationFromPropertyListAtPath:plistPath launchOptions:launchOptions delegate:self];
@@ -91,12 +90,25 @@
     NSString *newRelicApiKey = [configManager getConfigurationForKey:@"NewRelic" variation:kConfManagerEnvLive];
 #else
     NSString *newRelicApiKey = [configManager getConfigurationForKey:@"NewRelic" variation:kConfManagerEnvStaging];
+    NSString *crashlyticsApiKey = [configManager getConfigurationForKey:@"Crashlytics" variation:kConfManagerEnvStaging];
 #endif
     
     if (newRelicApiKey) {
-        //[NewRelicAgent setApplicationVersion:[[AppManager sharedInstance] getAppVersionNumber]];
-        //[NewRelicAgent setApplicationBuild:[[AppManager sharedInstance] getAppBuildNumber]];
         [NewRelicAgent startWithApplicationToken:newRelicApiKey];
+        
+        #ifdef IS_RELEASE
+            [NewRelicAgent enableCrashReporting:YES];
+        #else
+             [NewRelicAgent disableFeatures:NRFeatureFlag_CrashReporting];
+        #endif
+    }
+    
+    if(crashlyticsApiKey) {
+        #ifdef IS_RELEASE
+        #else
+            [Crashlytics startWithAPIKey:crashlyticsApiKey];
+            [Fabric with:@[[Crashlytics class]]];
+        #endif
     }
     
     return YES;

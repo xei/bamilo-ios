@@ -97,7 +97,10 @@
     if(success == NO) {
         if([message isKindOfClass:[NSError class]]) {
             NSError *error = (NSError *)message;
-            return [self showNotificationBarMessage:[error.userInfo[kErrorMessages] firstObject] isSuccess:NO];
+            id errorMessage = [error.userInfo[kErrorMessages] firstObject];
+            if([errorMessage isKindOfClass:[NSString class]]) {
+                return [self showNotificationBarMessage:errorMessage isSuccess:NO];
+            }
         }
     }
     
