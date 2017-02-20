@@ -80,6 +80,8 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [self.formController registerForKeyboardNotifications];
+    
+    [self publishScreenLoadTime];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -169,6 +171,15 @@
     [[DataManager sharedInstance] getVicinity:self forCity:city completion:^(id data, NSError *error) {
         if (!error) [self bind:data forRequestId:2];
     }];
+}
+
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    if(self.addressUID) {
+        return @"EditAddress";
+    } else {
+        return @"AddAddress";
+    }
 }
 
 @end

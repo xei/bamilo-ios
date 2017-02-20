@@ -38,7 +38,9 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-  [self.formController registerForKeyboardNotifications];
+    [self.formController registerForKeyboardNotifications];
+    
+    [self publishScreenLoadTime];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -76,6 +78,11 @@
 - (void)bind:(id)data forRequestId:(int)rid {
     [self showNotificationBar:STRING_EMAIL_SENT isSuccess:YES];
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    return @"ForgetPassword";
 }
 
 @end

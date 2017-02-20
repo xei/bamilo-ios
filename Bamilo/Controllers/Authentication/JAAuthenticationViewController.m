@@ -206,8 +206,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.screenName = @"Authentication";
-    
     self.navBarLayout.title = STRING_LOGIN;
     self.navBarLayout.showCartButton = NO;
     
@@ -462,6 +460,11 @@
     [self.orView setYBottomOf:self.continueToLoginButton at:kContinueLogin2OrMess];
     //[self.facebookButton setYBottomOf:self.orView at:kOrMess2FacebookButton];
     //[self.continueWithoutLoginButton setYBottomOf:self.facebookButton at:kFacebookButton2ContinueWithout];
+}
+
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    return @"Authentication";
 }
 
 @end

@@ -83,24 +83,15 @@
                           
                           [self setupViews];
                           
-                          if(self.firstLoading)
-                          {
-                              NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
-                              [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:@""];
-                              self.firstLoading = NO;
-                          }
+                          [self publishScreenLoadTime];
+                          
                           [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
                           [self hideLoading];
                           
                       } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                           self.apiResponse = apiResponse;
                           
-                          if(self.firstLoading)
-                          {
-                              NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
-                              [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:@""];
-                              self.firstLoading = NO;
-                          }
+                          [self publishScreenLoadTime];
                           
                           [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadOrderDetails:) objects:@[orderNumber]];
                           [self hideLoading];
@@ -125,6 +116,15 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:kShowMyOrdersScreenNotification object:self.orderNumber];
         }
     }
+}
+
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    return @"OrderDetails";
+}
+
+-(NSString *)getPerformanceTrackerLabel {
+    return self.orderNumber;
 }
 
 @end

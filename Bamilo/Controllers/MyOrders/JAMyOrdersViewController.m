@@ -184,9 +184,7 @@ UICollectionViewDelegateFlowLayout>
     self.navBarLayout.title = STRING_MY_ORDERS;
     self.navBarLayout.showBackButton = YES;
     
-    self.screenName = @"MyOrders";
-    
-    [[RITrackingWrapper sharedInstance] trackScreenWithName:self.screenName];
+    [self publishScreenLoadTime];
     
     [self.ordersCollectionView registerClass:[JAMyOrderCell class] forCellWithReuseIdentifier:@"myOrderCell"];
 }
@@ -228,12 +226,7 @@ UICollectionViewDelegateFlowLayout>
                   [self loadOrderDetails];
               }
               else{
-                  if(self.firstLoading)
-                  {
-                      NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
-                      [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:@""];
-                      self.firstLoading = NO;
-                  }
+                  [self publishScreenLoadTime];
               }
               [self hideLoading];
               [self.ordersCollectionView reloadData];
@@ -241,12 +234,7 @@ UICollectionViewDelegateFlowLayout>
            andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
                self.apiResponse = apiResponse;
                self.isLoadingOrders = NO;
-               if(self.firstLoading)
-               {
-                   NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
-                   [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:@""];
-                   self.firstLoading = NO;
-               }
+               [self publishScreenLoadTime];
                [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadOrders) objects:nil];
                [self hideLoading];
            }];
@@ -266,12 +254,7 @@ UICollectionViewDelegateFlowLayout>
                           
                           [self setupViews];
                           
-                          if(self.firstLoading)
-                          {
-                              NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
-                              [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:@""];
-                              self.firstLoading = NO;
-                          }
+                          [self publishScreenLoadTime];
                           [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
                           [self hideLoading];
                           
@@ -283,12 +266,7 @@ UICollectionViewDelegateFlowLayout>
                           self.apiResponse = apiResponse;
                           self.trackingOrder = nil;
                           
-                          if(self.firstLoading)
-                          {
-                              NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
-                              [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:@""];
-                              self.firstLoading = NO;
-                          }
+                          [self publishScreenLoadTime];
                           
                           [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadOrderDetails) objects:nil];
                           [self hideLoading];
@@ -470,6 +448,9 @@ UICollectionViewDelegateFlowLayout>
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowMyOrderDetailScreenNotification object:nil userInfo:userInfo];
 }
 
-
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    return @"MyOrders";
+}
 
 @end

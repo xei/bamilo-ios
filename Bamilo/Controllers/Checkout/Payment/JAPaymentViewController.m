@@ -67,8 +67,6 @@ UITextFieldDelegate>
 {
     [super viewDidLoad];
     
-    self.screenName = @"Payment";
-    
     self.view.backgroundColor = JAWhiteColor;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -343,12 +341,7 @@ UITextFieldDelegate>
     
     [self setupViews:newWidth toInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
     
-    if(self.firstLoading)
-    {
-        NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
-        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:@""];
-        self.firstLoading = NO;
-    }
+    [self publishScreenLoadTime];
     
     [self hideLoading];
 }
@@ -683,6 +676,11 @@ UITextFieldDelegate>
                                                self.orderSummary.frame.size.width,
                                                self.orderSummaryOriginalHeight)];
     }];
+}
+
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    return @"Payment";
 }
 
 @end

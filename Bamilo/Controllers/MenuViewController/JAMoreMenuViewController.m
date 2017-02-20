@@ -155,7 +155,6 @@
     }
 }
 
-
 - (void)onOrientationChanged {
     [super onOrientationChanged];
     if(self.currentPopoverController) {

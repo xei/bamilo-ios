@@ -45,9 +45,9 @@
     
     
     self.formController.submitTitle = @"ثبت نام";
-    self.formController.formMessage = @"ظاهرا مشتری جدید بامیلو هستید،خواهشمندیم اطلاعات بیشتری برای ساخت حساب کاربری خود ارایه دهید ";
+    self.formController.formMessage = @""; //@"ظاهرا مشتری جدید بامیلو هستید،خواهشمندیم اطلاعات بیشتری برای ساخت حساب کاربری خود ارایه دهید ";
     self.title = STRING_SIGNUP;
-    self.formController.formListModel = [NSMutableArray arrayWithArray:@[melliCode, name, lastname, email, password, phone]];
+    self.formController.formListModel = [NSMutableArray arrayWithArray:@[ melliCode, name, lastname, email, password, phone ]];
     
     [self.formController setupTableView];
 }
@@ -58,6 +58,32 @@
 
 - (void)viewDidDisappear:(BOOL)animated {
     [self.formController unregisterForKeyboardNotifications];
+}
+
+#pragma mark - formControlDelegate
+- (void)submitBtnTapped {
+    if (![self.formController isFormValid]) {
+        [self.formController showAnyErrorInForm];
+        return;
+    }
+    
+    [[DataManager sharedInstance] signupUser:self withFieldsDictionary:[self.formController getMutableDictionaryOfForm] completion:^(id data, NSError *error) {
+        if(error == nil) {
+            [self bind:data forRequestId:0];
+            
+            if (self.completion) {
+                self.completion(AUTHENTICATION_FINISHED_WITH_REGISTER);
+            } else {
+                [((UIViewController *)self.delegate).navigationController popViewControllerAnimated:YES];
+            }
+        } else {
+            for(NSDictionary* errorField in [error.userInfo objectForKey:@"errorMessages"]) {
+                NSString *fieldName = [NSString stringWithFormat:@"customer[%@]", errorField[@"field"]];
+                
+                [self.formController showErrorMessgaeForField:fieldName errorMsg:errorField[@"message"]];
+            }
+        }
+    }];
 }
 
 #pragma mark - DataServiceProtocol
@@ -91,29 +117,11 @@
     if (self.fromSideMenu) {
         [userInfo setObject:@YES forKey:@"from_side_menu"];
     }
-    if (self.completion) {
-        self.completion(AUTHENTICATION_FINISHED_WITH_REGISTER);
-    }
 }
 
-#pragma mark - formControlDelegate
-- (void)submitBtnTapped {
-    if (![self.formController isFormValid]) {
-        [self.formController showAnyErrorInForm];
-        return;
-    }
-    
-    [[DataManager sharedInstance] signupUser:self withFieldsDictionary:[self.formController getMutableDictionaryOfForm] completion:^(id data, NSError *error) {
-        if(error == nil) {
-            [self bind:data forRequestId:0];
-        } else {
-            for(NSDictionary* errorField in [error.userInfo objectForKey:@"errorMessages"]) {
-                NSString *fieldName = [NSString stringWithFormat:@"customer[%@]", errorField[@"field"]];
-                
-                [self.formController showErrorMessgaeForField:fieldName errorMsg:errorField[@"message"]];
-            }
-        }
-    }];
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    return @"SignUp";
 }
 
 @end

@@ -2024,33 +2024,51 @@
     [self requestNavigateToViewController:destViewController args:args];
 }
 
+-(void)performProtectedBlock:(ProtectedBlock)block {
+    if(block && ![RICustomer checkIfUserIsLogged]) {
+        [self pushAuthenticationViewController:^{
+            block(NO);
+        }];
+    } else {
+        block(YES);
+    }
+}
+
 #pragma mark - Helpers
 -(void) requestNavigateToViewController:(UIViewController *)viewController args:(NSDictionary *)args {
     if(viewController) {
         if([viewController conformsToProtocol:@protocol(ProtectedViewControllerProtocol)] && ![RICustomer checkIfUserIsLogged]) {
-            AuthenticationCompletion _authenticationCompletion = ^(AuthenticationStatus status) {
-                switch (status) {
-                    case AUTHENTICATION_FINISHED_WITH_LOGIN:
-                    case AUTHENTICATION_FINISHED_WITH_REGISTER:
-                        [self popViewControllerAnimated:NO];
-                        [self pushViewController:viewController animated:YES];
-                        break;
-                        
-                    default:
-                        break;
-                }
-            };
-            
-            AuthenticationContainerViewController *authViewController = (AuthenticationContainerViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Authentication" nibName:@"AuthenticationContainerViewController" resetCache:YES];
-            authViewController.fromSideMenu = NO;
-            authViewController.signInViewController.completion = _authenticationCompletion;
-            authViewController.signUpViewController.completion = _authenticationCompletion;
-            
-            [self pushViewController:authViewController animated:YES];
+            [self pushAuthenticationViewController:^{
+                [self pushViewController:viewController animated:YES];
+            }];
         } else {
             [self pushViewController:viewController animated:YES];
         }
     }
+}
+
+-(void) pushAuthenticationViewController:(void (^)(void))completion {
+    AuthenticationCompletion _authenticationCompletion = ^(AuthenticationStatus status) {
+        switch (status) {
+            case AUTHENTICATION_FINISHED_WITH_LOGIN:
+            case AUTHENTICATION_FINISHED_WITH_REGISTER:
+                [self popViewControllerAnimated:NO];
+                if(completion) {
+                    completion();
+                }
+                break;
+                
+            default:
+                break;
+        }
+    };
+    
+    AuthenticationContainerViewController *authViewController = (AuthenticationContainerViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Authentication" nibName:@"AuthenticationContainerViewController" resetCache:YES];
+    authViewController.fromSideMenu = NO;
+    authViewController.signInViewController.completion = _authenticationCompletion;
+    authViewController.signUpViewController.completion = _authenticationCompletion;
+    
+    [self pushViewController:authViewController animated:YES];
 }
 
 @end

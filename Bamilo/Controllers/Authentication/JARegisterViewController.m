@@ -196,7 +196,6 @@ JAAccountServicesProtocol
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardChanged:) name:UIKeyboardDidChangeFrameNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideKeyboard) name:kOpenMenuNotification object:nil];
     self.apiResponse = RIApiResponseSuccess;
-    self.screenName = @"Register";
     self.isOpeningPicker = NO;
     self.A4SViewControllerAlias = @"ACCOUNT";
     self.navBarLayout.title = STRING_CREATE_ACCOUNT;
@@ -315,12 +314,7 @@ JAAccountServicesProtocol
 {
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInteger:RIEventRegisterStart] data:nil];
     
-    if(self.firstLoading)
-    {
-        NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
-        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:self.authenticationEmail ?: @""];
-        self.firstLoading = NO;
-    }
+    [self publishScreenLoadTime];
     
     // notify the InAppNotification SDK that this the active view controller
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
@@ -717,6 +711,11 @@ JAAccountServicesProtocol
 {
     [self.topMessageLabel setYBottomOf:self.casAccountServicesImagesView at:kHeaderToTopMess];
     [self setupViews];
+}
+
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    return @"Register";
 }
 
 @end

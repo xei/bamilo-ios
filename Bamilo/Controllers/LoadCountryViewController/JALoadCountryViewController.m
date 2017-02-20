@@ -50,9 +50,6 @@
     
     self.apiResponse = RIApiResponseSuccess;
     
-    // Do any additional setup after loading the view.
-    self.screenName = @"SplashScreen";
-    
     self.navBarLayout.showCartButton = NO;
     
     self.coverView = [[UIView alloc] initWithFrame:self.view.bounds];
@@ -262,10 +259,10 @@
         }
     }
     
-    CGFloat duration = fabs([self.startLoadingTime timeIntervalSinceNow] * 1000);
+    //CGFloat duration = fabs([self.startLoadingTime timeIntervalSinceNow] * 1000);
     
     NSMutableDictionary *launchData = [[NSMutableDictionary alloc] init];
-    [launchData setValue:[NSString stringWithFormat:@"%f", duration] forKey:kRILaunchEventDurationDataKey];
+    //[launchData setValue:[NSString stringWithFormat:@"%f", duration] forKey:kRILaunchEventDurationDataKey];
     
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     [launchData setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
@@ -295,7 +292,8 @@
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventChangeCountry] data:[trackingDictionary copy]];
     [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCountryNotification object:nil userInfo:self.pushNotification];
-
+    
+    [self publishScreenLoadTime];
 }
 
 #pragma mark UIAlertView
@@ -325,6 +323,11 @@
             }
         }
     }
+}
+
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    return @"SplashScreen";
 }
 
 @end

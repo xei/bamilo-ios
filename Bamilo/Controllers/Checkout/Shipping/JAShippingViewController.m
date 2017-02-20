@@ -71,8 +71,6 @@ UITableViewDelegate
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.screenName = @"Shipping";
 
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
@@ -231,12 +229,7 @@ UITableViewDelegate
         [self tableView:self.tableView didSelectRowAtIndexPath:self.tableViewIndexSelected];
     }
     
-    if(self.firstLoading)
-    {
-        NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
-        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:@""];
-        self.firstLoading = NO;
-    }
+    [self publishScreenLoadTime];
     
     [self hideLoading];
 }
@@ -779,6 +772,11 @@ UITableViewDelegate
             self.selectedPickupStationIndexPath = indexPath;
         }
     }
+}
+
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    return @"Shipping";
 }
 
 @end

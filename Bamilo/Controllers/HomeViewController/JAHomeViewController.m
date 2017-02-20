@@ -46,7 +46,6 @@
     
     [super viewDidLoad];
     
-    self.screenName = @"Home";
     self.A4SViewControllerAlias = @"HOME";
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(campaignTimerEnded) name:kCampaignMainTeaserTimerEndedNotification object:nil];
@@ -231,11 +230,7 @@
         [self.teaserPageView loadTeasersForFrame:[self viewBounds]];
         [self.view addSubview:self.teaserPageView];
         
-        if(self.firstLoading) {
-            NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
-            [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:@""];
-            self.firstLoading = NO;
-        }
+        [self publishScreenLoadTime];
         
         // notify the InAppNotification SDK that this the active view controller
         [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
@@ -245,11 +240,7 @@
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
         //if this is the failure came from richBlock, fail gracefully
         if (!self.isLoaded) {
-            if(self.firstLoading) {
-                NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
-                [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:@""];
-                self.firstLoading = NO;
-            }
+            [self publishScreenLoadTime];
             
             if(RIApiResponseMaintenancePage == apiResponse || RIApiResponseKickoutView == apiResponse || RIApiResponseNoInternetConnection == apiResponse) {
                 [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(requestTeasers) objects:nil];
@@ -370,6 +361,11 @@
         }
         [self hideLoading];
     }];
+}
+
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    return @"Home";
 }
 
 @end

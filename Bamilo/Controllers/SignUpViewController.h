@@ -9,9 +9,11 @@
 #import "AuthenticationBaseViewController.h"
 #import "FormViewControl.h"
 #import "DataManager.h"
+#import "AuthenticationDelegate.h"
 
 @interface SignUpViewController : AuthenticationBaseViewController <DataServiceProtocol, FormViewControlDelegate>
 
 @property (nonatomic, assign) BOOL fromSideMenu;
+@property (weak, nonatomic) id<AuthenticationDelegate> delegate;
 
 @end

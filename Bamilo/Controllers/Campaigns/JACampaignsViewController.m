@@ -90,7 +90,6 @@
     rightSwipeGesture.direction = (UISwipeGestureRecognizerDirectionRight);
     [self.view addGestureRecognizer:leftSwipeGesture];
     [self.view addGestureRecognizer:rightSwipeGesture];
-    self.screenName = @"Campaignpage";
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -239,13 +238,6 @@
     [self.topTabsView setupWithTabNames:optionList];
     
     self.isLoaded = YES;
-    if(self.firstLoading)
-    {
-        NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
-        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:@""];
-        self.firstLoading = NO;
-    }
-
 }
 
 - (JACampaignPageView*)createCampaignPageAtX:(CGFloat)xPosition
@@ -599,6 +591,16 @@ withCampaignTargetString:(NSString*)campaignTargetString
                          [self.picker removeFromSuperview];
                          self.picker = nil;
                      }];
+}
+
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    return @"Campaignpage";
+}
+
+-(NSString *)getPerformanceTrackerLabel {
+    NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
+    return [NSString stringWithFormat:@"%@", [skusFromTeaserInCart allKeys]];
 }
 
 @end

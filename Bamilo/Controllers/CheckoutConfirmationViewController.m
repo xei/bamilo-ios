@@ -110,6 +110,8 @@
             [_cellsIndexPaths setObject:[NSMutableArray indexPathArrayOfLength:(int)_products.count forSection:1] atIndexedSubscript:1];
             
             [self.tableView reloadData];
+            
+            [self publishScreenLoadTime];
         }
     }];
 }
@@ -393,57 +395,9 @@
     }];
 }
 
-/*
-- (void)useCoupon {
-    NSString *voucherCode = self.resumeView.couponTextField.text;
-    if (!VALID_NOTEMPTY(voucherCode, NSString)) {
-        [self onErrorResponse:RIApiResponseUnknownError messages:@[STRING_VOUCHER_ERROR] showAsMessage:YES target:nil selector:nil objects:nil];
-        return;
-    }
-    
-    [self showLoading];
-    
-    if(VALID([[self cart] couponMoneyValue], NSNumber)) {
-        [RICart removeVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
-            [self.resumeView removeVoucher];
-            self.cart = cart;
-            
-            NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
-            
-            NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
-            [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
-            [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
-                                                      data:[trackingDictionary copy]];
-            [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
-            [self hideLoading];
-        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-            [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:@selector(useCoupon) objects:nil];
-            [self hideLoading];
-        }];
-    } else {
-        [RICart addVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
-            self.cart = cart;
-            
-            NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
-            
-            NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
-            [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
-            [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
-                                                      data:[trackingDictionary copy]];
-            [self hideLoading];
-        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-            [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:@selector(useCoupon) objects:nil];
-            [self hideLoading];
-            if (apiResponse != RIApiResponseNoInternetConnection) {
-                [self.resumeView setCouponValid:NO];
-            }
-        }];
-    }
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    return @"CheckoutConfirmation";
 }
- */
 
 @end

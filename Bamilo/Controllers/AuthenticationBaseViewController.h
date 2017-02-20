@@ -8,6 +8,7 @@
 #define cEXTRA_ORAGNE_COLOR [UIColor withRGBA:247 green:151 blue:32 alpha:1.0f]
 
 #import "BaseViewController.h"
+#import "PerformanceTrackerProtocol.h"
 
 typedef NS_ENUM(NSUInteger, AuthenticationStatus) {
     AUTHENTICATION_CANCELLED,

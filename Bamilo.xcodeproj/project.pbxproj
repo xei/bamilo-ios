@@ -705,6 +705,9 @@
 		873369C51E58A12E00B0B5E5 /* ShippingMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShippingMethod.m; sourceTree = "<group>"; };
 		873369C81E58A1D200B0B5E5 /* ShippingMethodOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShippingMethodOption.h; sourceTree = "<group>"; };
 		873369C91E58A1D200B0B5E5 /* ShippingMethodOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShippingMethodOption.m; sourceTree = "<group>"; };
+		873369D91E59F7BF00B0B5E5 /* AuthenticationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthenticationDelegate.h; sourceTree = "<group>"; };
+		873369DA1E5A015400B0B5E5 /* PerformanceTrackerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceTrackerProtocol.h; sourceTree = "<group>"; };
+		873369DC1E5AE00300B0B5E5 /* AddressTableViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressTableViewControllerDelegate.h; sourceTree = "<group>"; };
 		87459C801E4EF37200743120 /* CartListItemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartListItemTableViewCell.h; sourceTree = "<group>"; };
 		87459C811E4EF37200743120 /* CartListItemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartListItemTableViewCell.m; sourceTree = "<group>"; };
 		87459C831E4EF37D00743120 /* CartListItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartListItemTableViewCell.xib; sourceTree = "<group>"; };
@@ -1929,6 +1932,7 @@
 		613FF2BC1E4B285C008660CF /* AuthenticationContainerViewController */ = {
 			isa = PBXGroup;
 			children = (
+				873369D91E59F7BF00B0B5E5 /* AuthenticationDelegate.h */,
 				613FF2BD1E4B2871008660CF /* AuthenticationContainerViewController.h */,
 				613FF2BE1E4B2871008660CF /* AuthenticationContainerViewController.m */,
 			);
@@ -2512,6 +2516,14 @@
 			name = Checkout;
 			sourceTree = "<group>";
 		};
+		873369DB1E5ADFFA00B0B5E5 /* AddressTableViewControllerDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				873369DC1E5AE00300B0B5E5 /* AddressTableViewControllerDelegate.h */,
+			);
+			name = AddressTableViewControllerDelegate;
+			sourceTree = "<group>";
+		};
 		87459C7F1E4EF2AD00743120 /* CartListItemTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -3088,6 +3100,7 @@
 		879F88361E52EA690033FE87 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				87A681591E40F99300D252AC /* BaseViewController */,
 				879F88371E52EA750033FE87 /* ProtectedViewController */,
 				61C5C4081E54479100F22130 /* ProtectedViewControllerProtocol.h */,
 			);
@@ -3155,6 +3168,7 @@
 				879F87FB1E5088E30033FE87 /* DataServiceProtocol.h */,
 				87A681651E41DD1800D252AC /* SideMenuProtocol.h */,
 				87A681631E41C8BC00D252AC /* TabBarProtocol.h */,
+				873369DA1E5A015400B0B5E5 /* PerformanceTrackerProtocol.h */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -3428,7 +3442,6 @@
 				879F88361E52EA690033FE87 /* Base */,
 				875081AF1E532E020031ECBF /* Account */,
 				61CBA03F1E51BA1D005673F7 /* FormViewController */,
-				87A681591E40F99300D252AC /* BaseViewController */,
 				87A6815E1E41B84000D252AC /* SearchBaseViewController */,
 				879F88001E50B23C0033FE87 /* Authentication */,
 				879F880C1E50BAC10033FE87 /* CartViewController */,
@@ -3482,6 +3495,7 @@
 		87DAABEC1E55BD8700445EBB /* AddressTableViewController */ = {
 			isa = PBXGroup;
 			children = (
+				873369DB1E5ADFFA00B0B5E5 /* AddressTableViewControllerDelegate */,
 				87DAABED1E55BD9D00445EBB /* AddressTableViewController.h */,
 				87DAABEE1E55BD9D00445EBB /* AddressTableViewController.m */,
 			);

@@ -9,10 +9,11 @@
 #import "AuthenticationBaseViewController.h"
 #import "SignInViewController.h"
 #import "SignUpViewController.h"
+#import "AuthenticationDelegate.h"
 
 typedef void(^AuthenticationBlock)(void);
 
-@interface AuthenticationContainerViewController: BaseViewController
+@interface AuthenticationContainerViewController: BaseViewController <AuthenticationDelegate>
 
 @property (nonatomic) BOOL showContinueWithoutLogin;
 @property (nonatomic, assign) BOOL fromSideMenu;

@@ -16,8 +16,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.screenName = STRING_CONTACT_US;
-    
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.title = STRING_CONTACT_US;
     self.addresslabel.text = @"تهران، میدان ونک، بزرگراه حقانی \n نرسیده به چهارراه جهان کودک \n پلاک ۶۳، طبقه اول و دوم";
@@ -108,6 +106,11 @@
         [self presentViewController:mc animated:YES completion:nil];
         
     }
+}
+
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    return STRING_CONTACT_US;
 }
 
 @end

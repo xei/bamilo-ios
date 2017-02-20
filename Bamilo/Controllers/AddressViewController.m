@@ -12,6 +12,7 @@
 #import "AddressTableViewController.h"
 #import "ViewControllerManager.h"
 #import "AlertManager.h"
+#import "AddressEditViewController.h"
 
 @interface AddressViewController() <AddressTableViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *addressListContainerView;
@@ -21,6 +22,7 @@
 @private
     NSMutableArray *_addresses;
     AddressTableViewController *_addressTableViewController;
+    Address *_workingAddress;
 }
 
 - (void)viewDidLoad {
@@ -41,6 +43,8 @@
     [[DataManager sharedInstance] getUserAddressList:self completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
+            
+            [self publishScreenLoadTime];
         }
     }];
 }
@@ -55,6 +59,8 @@
 
 #pragma mark - AddressTableViewControllerDelegate
 - (BOOL)addressSelected:(Address *)address {
+    _workingAddress = address;
+    
     [[AlertManager sharedInstance] confirmAlert:@"تغییر آدرس" text:@"از تغییر آدرس پیش فرض خود اطمینان دارید؟" confirm:@"بله" cancel:@"خیر" completion:^(BOOL OK) {
         if(OK) {
             [[DataManager sharedInstance] setDefaultAddress:self address:address isBilling:NO completion:^(id data, NSError *error) {
@@ -64,11 +70,38 @@
             }];
         }
     }];
+    
     return YES;
 }
 
-- (void)addAddressTapped {
+-(void)addressEditButtonTapped:(id)sender {
+    _workingAddress = (Address *)sender;
+    
     [self performSegueWithIdentifier:@"pushAddressListToAddressEdit" sender:nil];
+}
+
+-(void)addressDeleteButtonTapped:(id)sender {
+    _workingAddress = (Address *)sender;
+    
+    [[AlertManager sharedInstance] confirmAlert:@"حذف آدرس" text:@"از حذف آدرس خود اطمینان دارید؟" confirm:@"بله" cancel:@"خیر" completion:^(BOOL OK) {
+        if(OK) {
+        }
+    }];
+}
+
+- (void)addAddressTapped {
+    _workingAddress = nil;
+    
+    [self performSegueWithIdentifier:@"pushAddressListToAddressEdit" sender:nil];
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([segue.identifier isEqualToString:@"pushAddressListToAddressEdit"]) {
+        AddressEditViewController *addressEditViewController = (AddressEditViewController *)segue.destinationViewController;
+        if(_workingAddress) {
+            addressEditViewController.addressUID = _workingAddress.uid;
+        }
+    }
 }
 
 #pragma mark - DataServiceProtocol
@@ -92,5 +125,13 @@
     }
 }
 
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    return @"MyAddresses";
+}
+
+-(NSString *)getPerformanceTrackerLabel {
+    return [RICustomer getCustomerId];
+}
 
 @end

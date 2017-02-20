@@ -138,8 +138,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.screenName = @"CheckoutFinish";
-    
     self.navBarLayout.title = STRING_CHECKOUT;
     self.navBarLayout.showCartButton = NO;
     self.tabBarIsVisible = YES;
@@ -456,8 +454,7 @@
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:kDidFirstBuyKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
-    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:@""];
+    [self publishScreenLoadTime];
 }
 
 - (void)setRrProducts:(NSSet *)rrProducts
@@ -597,6 +594,11 @@
 - (void)goToTrackOrders
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowMyOrdersScreenNotification object:self.cart.orderNr];
+}
+
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    return @"CheckoutFinish";
 }
 
 @end

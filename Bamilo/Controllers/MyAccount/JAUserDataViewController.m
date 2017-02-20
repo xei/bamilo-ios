@@ -171,7 +171,6 @@
                                                object:nil];
     
     self.apiResponse = RIApiResponseSuccess;
-    self.screenName = STRING_PROFILE;
     self.navBarLayout.title = STRING_PROFILE;
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showCartButton = YES;
@@ -184,11 +183,7 @@
     //requests change pass form
     [self requestUserEditForm];
     
-    if (self.firstLoading) {
-        NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
-        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:@""];
-        self.firstLoading = NO;
-    }
+    [self publishScreenLoadTime];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -750,6 +745,11 @@
             }
         }
     }
+}
+
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    return STRING_PROFILE;
 }
 
 @end

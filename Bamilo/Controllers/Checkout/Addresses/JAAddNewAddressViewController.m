@@ -69,7 +69,6 @@ JAPickerDelegate>
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.screenName = @"NewAddress";
     self.navBarLayout.showBackButton = YES;
     
     if (self.fromCheckout) {
@@ -263,12 +262,7 @@ JAPickerDelegate>
     
     [self hideLoading];
     
-    if(self.firstLoading)
-    {
-        NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
-        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:@""];
-        self.firstLoading = NO;
-    }
+    [self publishScreenLoadTime];
 }
 
 - (void) setupViews:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
@@ -705,6 +699,11 @@ JAPickerDelegate>
                                                    self.orderSummaryOriginalHeight)];
         }
     }];
+}
+
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    return @"NewAddress";
 }
 
 @end

@@ -157,28 +157,6 @@ typedef void (^ProcessActionBlock)(void);
     }
     
     
-    if (self.searchString.length) {
-        self.screenName = @"SearchSuggester";
-        self.labelName = [self.searchString stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-    } else {
-        NSString* urlToUse = [RITarget getURLStringforTargetString:self.targetString];
-        if (self.categoryName.length) {
-            urlToUse = [NSString stringWithFormat:@"%@%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_CATALOG_CATEGORY, self.categoryName];
-        } else if (self.category && self.category.targetString.length) {
-            urlToUse = [RITarget getURLStringforTargetString:self.category.targetString];
-        } else if (self.filterCategory && self.filterCategory.targetString.length) {
-            urlToUse = [RITarget getURLStringforTargetString:self.filterCategory.targetString];
-        }
-        
-        if(self.category) {
-            self.screenName = [NSString stringWithFormat:@"Catalog / %@", self.category.label];
-            self.labelName = urlToUse;
-        } else {
-            self.screenName = @"Catalog";
-            self.labelName = urlToUse;
-        }
-    }
-    
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         self.maxProducts = JACatalogViewControllerMaxProducts_ipad;
     } else {
@@ -1286,8 +1264,7 @@ typedef void (^ProcessActionBlock)(void);
 }
 
 - (void)trackingEventLoadingTime {
-    NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
-    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:_labelName];
+    [self publishScreenLoadTime];
 }
 
 - (void)trackingEventScreenName:(NSString *)screenName {
@@ -1521,6 +1498,32 @@ typedef void (^ProcessActionBlock)(void);
     }
 }
 
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    if (self.searchString.length) {
+        return @"SearchSuggester";
+    } else if(self.category) {
+        return [NSString stringWithFormat:@"Catalog / %@", self.category.label];
+    } else {
+        return @"Catalog";
+    }
+}
 
+-(NSString *)getPerformanceTrackerLabel {
+    if (self.searchString.length) {
+        return [self.searchString stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+    } else {
+        NSString* urlToUse = [RITarget getURLStringforTargetString:self.targetString];
+        if (self.categoryName.length) {
+            urlToUse = [NSString stringWithFormat:@"%@%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_CATALOG_CATEGORY, self.categoryName];
+        } else if (self.category && self.category.targetString.length) {
+            urlToUse = [RITarget getURLStringforTargetString:self.category.targetString];
+        } else if (self.filterCategory && self.filterCategory.targetString.length) {
+            urlToUse = [RITarget getURLStringforTargetString:self.filterCategory.targetString];
+        }
+        
+        return urlToUse;
+    }
+}
 
 @end

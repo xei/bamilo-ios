@@ -13,7 +13,7 @@
 
 #define cEXTRA_ORAGNE_COLOR [UIColor withRGBA:247 green:151 blue:32 alpha:1.0f]
 
-@interface AuthenticationContainerViewController() <SignInViewControllerDelegate>
+@interface AuthenticationContainerViewController() <CAPSPageMenuDelegate>
 @property (nonatomic) CAPSPageMenu *pagemenu;
 @end
 
@@ -50,8 +50,14 @@
                                  };
     
     self.pagemenu = [[CAPSPageMenu alloc] initWithViewControllers:@[ self.signUpViewController, self.signInViewController ] frame:CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height) options:parameters];
+    self.pagemenu.delegate = self;
     [self.pagemenu moveToPage:1];
     [self.view addSubview:_pagemenu.view];
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self publishScreenLoadTime];
 }
 
 #pragma mark - Overrides
@@ -84,7 +90,7 @@
     }
 }
 
-#pragma mark - SignInViewControllerDelegate
+#pragma mark - AuthenticationDelegate
 - (void)wantsToContinueWithoutLogin {
     [self performSegueWithIdentifier:@"showContinueWithoutLoginViewCtrl" sender:nil];
 }
@@ -93,11 +99,28 @@
     [self performSegueWithIdentifier:@"showForgetPasswordViewCtrl" sender:nil];
 }
 
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     NSString * segueName = segue.identifier;
     if ([segueName isEqualToString: @"showContinueWithoutLoginViewCtrl"]) {
     }
+}
+
+#pragma mark - CAPSPageMenuDelegate
+- (void)didMoveToPage:(UIViewController *)controller index:(NSInteger)index {
+    [self publishScreenLoadTime];
+}
+
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    if(self.pagemenu.currentPageIndex == 0) {
+        return @"SignUp";
+    } else {
+        return @"SignIn";
+    }
+}
+
+-(BOOL)forcePublishScreenLoadTime {
+    return YES;
 }
 
 @end

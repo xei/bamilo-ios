@@ -194,7 +194,6 @@
     
     self.apiResponse = RIApiResponseSuccess;
     
-    self.screenName = @"Login";
     self.A4SViewControllerAlias = @"ACCOUNT";
     
     self.navBarLayout.title = STRING_LOGIN;
@@ -310,12 +309,7 @@
     [self.loginButton setXCenterAligned];
     [self.forgotPasswordButton setX:CGRectGetMaxX(self.loginButton.frame) - self.forgotPasswordButton.width];
     
-    if(self.firstLoading)
-    {
-        NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
-        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:_authenticationEmail];
-        self.firstLoading = NO;
-    }
+    [self publishScreenLoadTime];
     
     // notify the InAppNotification SDK that this the active view controller
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
@@ -512,6 +506,15 @@
 {
     [self.subTitleLabel setYBottomOf:self.casAccountServicesImagesView at:kBeforeDynamicFormMargin];
     [self setupViewsVertically];
+}
+
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    return @"Login";
+}
+
+-(NSString *)getPerformanceTrackerLabel {
+    return self.authenticationEmail;
 }
 
 @end

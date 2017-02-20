@@ -21,7 +21,10 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *deleteButtonWidthConstraint;
 @end
 
-@implementation AddressTableViewCell
+@implementation AddressTableViewCell {
+@private
+    Address *_model;
+}
 
 -(void)awakeFromNib {
     [super awakeFromNib];
@@ -107,10 +110,21 @@
     self.addressPhoneLabel.text = phoneText;
     
     self.checkmarkIconImageView.image = addressObj.isDefaultShipping ? [UIImage imageNamed:@"BlueTick"] : nil;
+    
+    _model = model;
 }
 
 #pragma mark - IBActions
 - (IBAction)addressEditButtonTapped:(id)sender {
+    if([self.delegate respondsToSelector:@selector(addressEditButtonTapped:)]) {
+        [self.delegate addressEditButtonTapped:_model];
+    }
+}
+
+- (IBAction)addressDeleteButtonTapped:(id)sender {
+    if([self.delegate respondsToSelector:@selector(addressDeleteButtonTapped:)]) {
+        [self.delegate addressDeleteButtonTapped:_model];
+    }
 }
 
 #pragma mark - Helpers

@@ -7,6 +7,7 @@
 //
 
 #import "BaseTableViewCell.h"
+#import "AddressTableViewControllerDelegate.h"
 
 typedef NS_OPTIONS(NSUInteger, AddressCellOptions) {
     ADDRESS_CELL_NONE = 1 << 0,
@@ -18,5 +19,6 @@ typedef NS_OPTIONS(NSUInteger, AddressCellOptions) {
 @interface AddressTableViewCell : BaseTableViewCell
 
 @property (assign, nonatomic) AddressCellOptions options;
+@property (weak, nonatomic) id<AddressTableViewControllerDelegate> delegate;
 
 @end

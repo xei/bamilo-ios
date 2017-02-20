@@ -68,15 +68,6 @@ UIAlertViewDelegate
 {
     [super viewDidLoad];
     
-    if(VALID_NOTEMPTY(self.product.sku, NSString))
-    {
-        self.screenName = [NSString stringWithFormat:@"WriteSellerRatingScreen / %@", self.product.sku];
-    }
-    else
-    {
-        self.screenName = @"WriteSellerRatingScreen";
-    }
-    
     self.apiResponse = RIApiResponseSuccess;
     
     self.navBarLayout.showBackButton = YES;
@@ -530,5 +521,15 @@ UIAlertViewDelegate
 {
     [self.reviewsDynamicForm resignResponder];
 }
+
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    if(VALID_NOTEMPTY(self.product.sku, NSString)) {
+        return [NSString stringWithFormat:@"WriteSellerRatingScreen / %@", self.product.sku];
+    } else {
+        return @"WriteSellerRatingScreen";
+    }
+}
+
 @end
 

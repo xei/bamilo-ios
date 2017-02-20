@@ -39,7 +39,11 @@
 
 @end
 
-@implementation JABaseViewController
+@implementation JABaseViewController {
+@private
+    NSDate *_startLoadingTime;
+    BOOL _hasAppeared;
+}
 
 - (CGRect)viewBounds {
     CGFloat topOffset = 0.0f;
@@ -101,12 +105,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    //PerformanceTrackerProtocol
+    [self recordStartLoadTime];
+    
     self.orientation = [[UIApplication sharedApplication] statusBarOrientation];
-    self.firstLoading = YES;
-    
-    self.screenName = @"";
-    
-    self.startLoadingTime = [NSDate date];
     
     [self.navigationController.navigationBar setTranslucent:NO];
     self.navigationItem.hidesBackButton = YES;
@@ -144,7 +146,6 @@
     self.loadingAnimation.center = self.loadingView.center;
     
     self.loadingView.alpha = 0.0f;
-    
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
@@ -377,8 +378,7 @@
     return NO;
 }
 
-# pragma mark Loading View
-
+# pragma mark - Loading View
 - (void)showLoading {
     self.requestNumber++;
     
@@ -693,6 +693,31 @@
         [self reloadSearchBar];
     }
     self.orientation = [[UIApplication sharedApplication] statusBarOrientation];
+}
+
+//##################################################################################################
+#pragma mark - PerformanceTrackerProtocol
+-(void) recordStartLoadTime {
+    _startLoadingTime = [NSDate date];
+}
+
+-(void) publishScreenLoadTime {
+    if(_hasAppeared == NO) {
+        NSTimeInterval executionTime = [[NSDate date] timeIntervalSinceDate:_startLoadingTime];
+        NSString *screenName = [self getPerformanceTrackerScreenName];
+        if(screenName) {
+            [[RITrackingWrapper sharedInstance] trackTimingInMillis:[NSNumber numberWithDouble:executionTime] reference:screenName label:[self getPerformanceTrackerLabel] ?: @""];
+        }
+        _hasAppeared = YES;
+    }
+}
+
+-(NSString *) getPerformanceTrackerScreenName {
+    return nil;
+}
+
+-(NSString *)getPerformanceTrackerLabel {
+    return nil;
 }
 
 @end

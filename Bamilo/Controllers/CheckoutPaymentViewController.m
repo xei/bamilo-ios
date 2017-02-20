@@ -49,34 +49,6 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
     [self.tableView registerNib:[UINib nibWithNibName:[PaymentOptionTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[PaymentOptionTableViewCell nibName]];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
-    //TEMP
-    /*OnlinePaymentVariationTableViewCellModel *saman = [OnlinePaymentVariationTableViewCellModel new];
-    saman.imageName = @"SamanBankLogo";
-    saman.isSelected = YES;
-    
-    OnlinePaymentVariationTableViewCellModel *parsian = [OnlinePaymentVariationTableViewCellModel new];
-    parsian.imageName = @"ParsianBankLogo";
-    parsian.isSelected = NO;
-    
-    _onlinePaymentVariations = @[saman, parsian];
-    
-    _cellsIndexPaths = [NSMutableArray arrayWithObjects:
-    //Online Payment
-    [NSMutableArray arrayWithObjects:
-        [NSIndexPath indexPathForRow:0 inSection:0],
-        [NSIndexPath indexPathForRow:1 inSection:0], nil],
-    //Online Payment Variations
-    [NSMutableArray arrayWithObjects:
-        [NSIndexPath indexPathForRow:0 inSection:1],
-        [NSIndexPath indexPathForRow:1 inSection:1], nil],
-    //Pay On Delivery
-    [NSMutableArray arrayWithObjects:
-        [NSIndexPath indexPathForRow:0 inSection:2],
-        //[NSIndexPath indexPathForRow:1 inSection:2],
-    nil],
-    nil];
-    */
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -85,15 +57,11 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
     [[DataManager sharedInstance] getMultistepPayment:self completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
-            
-            //NSDictionary* userInfo = [NSDictionary dictionaryWithObject:self.cart forKey:kUpdateCartNotificationValue];
-            //[[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
-            
             [self.cartEntitySummaryViewControl updateWithModel:self.cart.cartEntity];
-            
             _paymentMethods = [RIPaymentMethodForm getPaymentMethodsInForm:self.cart.formEntity.paymentMethodForm];
-            
             [self.tableView reloadData];
+            
+            [self publishScreenLoadTime];
         }
     }];
 }
@@ -207,67 +175,6 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
         }
     }
     
-    /*NSIndexPath *_cellIndexPath = [_paymentMethods objectAtIndex:indexPath.section]
-                    
-    switch (_cellIndexPath.section) {
-        case 0 : {
-            switch (_cellIndexPath.row) {
-                case 0: {
-                    PaymentTypeTableViewCell *onlinePaymentTableViewCell = [tableView dequeueReusableCellWithIdentifier:[PaymentTypeTableViewCell nibName] forIndexPath:indexPath];
-                    onlinePaymentTableViewCell.tag = PAYMENT_METHOD_ONLINE;
-                    onlinePaymentTableViewCell.delegate = self;
-                    
-                    PaymentTypeTableViewCellModel *model = [[PaymentTypeTableViewCellModel alloc] init];
-                    model.title = STRING_ONLINE_PAYMENT;
-                    model.isSelected = (_selectedPaymentMethod == PAYMENT_METHOD_ONLINE);
-                    [onlinePaymentTableViewCell updateWithModel:model];
-                    
-                    return onlinePaymentTableViewCell;
-                }
-                    
-                case 1: {
-                    PaymentDescTableViewCell *onlinePaymentDescTableViewCell = [tableView dequeueReusableCellWithIdentifier:[PaymentDescTableViewCell nibName] forIndexPath:indexPath];
-                    onlinePaymentDescTableViewCell.descLabel.text = @"پرداخت آنلاین، پردازش سفارش شما را تسریع داده و باعث می شود سفارش شما با اولویت بالاتری ارسال گردد.";
-                    return onlinePaymentDescTableViewCell;
-                }
-            }
-        }
-            
-        case 1: {
-            OnlinePaymentVariationTableViewCell *onlinePaymentVariationCell = [tableView dequeueReusableCellWithIdentifier:[OnlinePaymentVariationTableViewCell nibName] forIndexPath:indexPath];
-            onlinePaymentVariationCell.tag = indexPath.row;
-            onlinePaymentVariationCell.delegate = self;
-            
-            OnlinePaymentVariationTableViewCellModel *model = [_onlinePaymentVariations objectAtIndex:indexPath.row];
-            model.isSelected = (_indexForOnlineMethodVariation == indexPath.row);
-            [onlinePaymentVariationCell updateWithModel:model];
-            return onlinePaymentVariationCell;
-        }
-            
-        case 2: {
-            switch (_cellIndexPath.row) {
-                case 0: {
-                    PaymentTypeTableViewCell *payOnDeliveryTableViewCell = [tableView dequeueReusableCellWithIdentifier:[PaymentTypeTableViewCell nibName] forIndexPath:indexPath];
-                    payOnDeliveryTableViewCell.tag = PAYMENT_METHOD_ON_DELIVERY;
-                    payOnDeliveryTableViewCell.delegate = self;
-                    
-                    PaymentTypeTableViewCellModel *model = [[PaymentTypeTableViewCellModel alloc] init];
-                    model.title = STRING_PAY_ON_DELIVERY;
-                    model.isSelected = (_selectedPaymentMethod == PAYMENT_METHOD_ON_DELIVERY);
-                    [payOnDeliveryTableViewCell updateWithModel:model];
-                    
-                    return payOnDeliveryTableViewCell;
-                }
-                    
-                case 1: {
-                    PaymentDescTableViewCell *payOnDeliveryTableViewCell = [tableView dequeueReusableCellWithIdentifier:[PaymentDescTableViewCell nibName] forIndexPath:indexPath];
-                    payOnDeliveryTableViewCell.descLabel.text = @"مبلغ سفارش را به صورت نقدی و با با کارت بانکی به پیک بامیلو پرداخت نمایید.";
-                    return payOnDeliveryTableViewCell;
-                }
-            }
-        }b
-    }
-    */
     return nil;
 }
 
@@ -328,6 +235,11 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
             self.cart = (RICart *)data;
         break;
     }
+}
+
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    return @"CheckoutPayment";
 }
 
 @end

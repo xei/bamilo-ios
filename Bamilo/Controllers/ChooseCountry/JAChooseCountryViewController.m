@@ -49,7 +49,6 @@ JAPickerDelegate
 {
     [super viewDidLoad];
     self.apiResponse = RIApiResponseSuccess;
-    self.screenName = @"ChooseCountry";
     
     self.navBarLayout.title = STRING_CHOOSE_COUNTRY;
     self.navBarLayout.doneButtonTitle = STRING_APPLY;
@@ -132,8 +131,7 @@ JAPickerDelegate
         
         NSIndexPath *tempIndex;
         
-        if (VALID_NOTEMPTY(countryUrl, NSString))
-        {
+        if (VALID_NOTEMPTY(countryUrl, NSString)) {
             NSInteger index = 0;
             
             for (RICountry *country in countries) {
@@ -145,16 +143,10 @@ JAPickerDelegate
                 index++;
             }
             
-            if(self.firstLoading)
-            {
-                NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
-                [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:@""];
-                self.firstLoading = NO;
-            }
+            [self publishScreenLoadTime];
         }
         
         if (VALID_NOTEMPTY(tempIndex, NSIndexPath)) {
-            
             self.selectedIndex = tempIndex;
         }
         
@@ -162,14 +154,8 @@ JAPickerDelegate
         
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
         self.apiResponse = apiResponse;
-        if (VALID_NOTEMPTY(countryUrl, NSString))
-        {
-            if(self.firstLoading)
-            {
-                NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
-                [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:@""];
-                self.firstLoading = NO;
-            }
+        if (VALID_NOTEMPTY(countryUrl, NSString)) {
+            [self publishScreenLoadTime];
         }
         
         [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadData) objects:nil];
@@ -302,5 +288,9 @@ JAPickerDelegate
     [self removePickerView];
 }
 
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    return @"ChooseCountry";
+}
 
 @end

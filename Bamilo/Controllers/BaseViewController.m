@@ -15,10 +15,17 @@
 @property (strong, nonatomic) JAMessageView *messageView;
 @end
 
-@implementation BaseViewController
+@implementation BaseViewController {
+@private
+    NSDate *_startLoadingTime;
+    BOOL _hasAppeared;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    //PerformanceTrackerProtocol
+    [self recordStartLoadTime];
     
     self.navigationController.navigationBar.translucent = NO;
     self.navigationItem.hidesBackButton = YES;
@@ -45,16 +52,16 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOnMenuSwipePanelNotification object:nil];
     }
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillEnterForeground) name:kAppWillEnterForeground object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground) name:kAppDidEnterBackground object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillEnterForeground) name:kAppWillEnterForeground object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground) name:kAppDidEnterBackground object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kTurnOnMenuSwipePanelNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kAppWillEnterForeground object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kAppDidEnterBackground object:nil]; //???? what ?????
+    //[[NSNotificationCenter defaultCenter] removeObserver:self name:kAppWillEnterForeground object:nil];
+    //[[NSNotificationCenter defaultCenter] removeObserver:self name:kAppDidEnterBackground object:nil];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -104,6 +111,31 @@
 
 - (void)removeMessageView {
     [self.messageView removeFromSuperview];
+}
+
+#pragma mark - PerformanceTrackerProtocol
+-(void) recordStartLoadTime {
+    _startLoadingTime = [NSDate date];
+}
+
+-(void) publishScreenLoadTime {
+    //Publish the load time if it's the first load OR it's been forced
+    if(_hasAppeared == NO || ([self respondsToSelector:@selector(forcePublishScreenLoadTime)] && [self forcePublishScreenLoadTime])) {
+        NSTimeInterval executionTime = [[NSDate date] timeIntervalSinceDate:_startLoadingTime];
+        NSString *screenName = [self getPerformanceTrackerScreenName];
+        if(screenName) {
+            [[RITrackingWrapper sharedInstance] trackTimingInMillis:[NSNumber numberWithDouble:executionTime] reference:screenName label:[self getPerformanceTrackerLabel] ?: @""];
+        }
+        _hasAppeared = YES;
+    }
+}
+
+-(NSString *) getPerformanceTrackerScreenName {
+    return nil;
+}
+
+-(NSString *)getPerformanceTrackerLabel {
+    return nil;
 }
 
 @end

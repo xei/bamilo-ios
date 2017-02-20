@@ -7,18 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BMA4SViewController.h"
 #import "JANavigationBarLayout.h"
 #import "JATabBarView.h"
-#import "BMA4SViewController.h"
 #import "JAScreenTarget.h"
+#import "PerformanceTrackerProtocol.h"
 
-@interface JABaseViewController : BMA4SViewController <UISearchBarDelegate>
+@interface JABaseViewController : BMA4SViewController <PerformanceTrackerProtocol, UISearchBarDelegate>
 
 @property (nonatomic, strong)JANavigationBarLayout* navBarLayout;
 
-@property (nonatomic, strong)NSString *screenName;
-@property (nonatomic, strong)NSDate *startLoadingTime;
-@property (nonatomic, assign)BOOL firstLoading;
+//@property (nonatomic, strong)NSString *screenName;
+//@property (nonatomic, strong)NSDate *startLoadingTime;
+//@property (nonatomic, assign)BOOL firstLoading;
 @property (nonatomic, assign)BOOL searchBarIsVisible;
 @property (nonatomic, assign)BOOL tabBarIsVisible;
 

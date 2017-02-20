@@ -35,7 +35,6 @@ JADynamicFormDelegate
 {
     [super viewDidLoad];
     self.apiResponse = RIApiResponseSuccess;
-    self.screenName = @"CustomerEmailNotifications";
     
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showLogo = NO;
@@ -79,12 +78,7 @@ JADynamicFormDelegate
            
            self.form = form;
            
-           if(self.firstLoading)
-           {
-               NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
-               [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:@""];
-               self.firstLoading = NO;
-           }
+           [self publishScreenLoadTime];
            
            [self setupView];
            [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
@@ -92,12 +86,8 @@ JADynamicFormDelegate
            
        } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
            self.apiResponse = apiResponse;
-           if(self.firstLoading)
-           {
-               NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
-               [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:@""];
-               self.firstLoading = NO;
-           }
+           
+           [self publishScreenLoadTime];
            
            [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(getForm) objects:nil];
            
@@ -296,6 +286,11 @@ JADynamicFormDelegate
     [self hideLoading];
     
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+}
+
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    return @"CustomerEmailNotifications";
 }
 
 @end

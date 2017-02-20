@@ -23,8 +23,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.screenName = @"ExternalPayment";
-    
     self.navBarLayout.showCartButton = NO;
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.title = STRING_CHECKOUT;
@@ -43,8 +41,7 @@
     
     [self loadPaymentMethodRequest];
     
-    NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
-    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:@""];
+    [self publishScreenLoadTime];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -226,6 +223,11 @@
     [self hideLoading];
     
     [self checkAppObject];
+}
+
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    return @"ExternalPayment";
 }
 
 @end

@@ -61,8 +61,6 @@ JAPickerDelegate>
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.screenName = @"EditAddress";    
-    
     self.navBarLayout.showBackButton = YES;
     
     if (self.fromCheckout) {
@@ -339,12 +337,7 @@ JAPickerDelegate>
     
     [self hideLoading];
     
-    if(self.firstLoading)
-    {
-        NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
-        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:@""];
-        self.firstLoading = NO;
-    }
+    [self publishScreenLoadTime];
 }
 
 -(void)saveChangesButtonPressed
@@ -775,6 +768,11 @@ JAPickerDelegate>
                                                    self.orderSummaryOriginalHeight)];
         }
     }];
+}
+
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    return @"EditAddress";
 }
 
 @end

@@ -13,6 +13,8 @@
 #import "RIOrder.h"
 #import "RICart.h"
 
+typedef void(^ProtectedBlock)(BOOL userHadSession);
+
 @interface JACenterNavigationController : UINavigationController
 
 @property (strong, nonatomic) RICart *cart;
@@ -50,5 +52,6 @@
 -(void) requestNavigateToNib:(NSString *)destNib args:(NSDictionary *)args;
 -(void) requestNavigateToNib:(NSString *)destNib ofStoryboard:(NSString *)storyboard useCache:(BOOL)useCache args:(NSDictionary *)args;
 -(void) requestNavigateToClass:(NSString *)destClass args:(NSDictionary *)args;
+-(void) performProtectedBlock:(ProtectedBlock)block;
 
 @end

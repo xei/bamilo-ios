@@ -78,15 +78,6 @@ UIAlertViewDelegate
 {
     [super viewDidLoad];
     
-    if(VALID_NOTEMPTY(self.product.sku, NSString))
-    {
-        self.screenName = [NSString stringWithFormat:@"WriteRatingScreen / %@", self.product.sku];
-    }
-    else
-    {
-        self.screenName = @"WriteRatingScreen";
-    }
-    
     self.apiResponse = RIApiResponseSuccess;
     
     self.navBarLayout.showBackButton = YES;
@@ -222,29 +213,21 @@ UIAlertViewDelegate
     [self.scrollView setHidden:YES];
 }
 
--(void)finishedRequests
-{
-    NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
-    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:@""];
+-(void)finishedRequests {
+    [self publishScreenLoadTime];
     
-    if(RIApiResponseSuccess == self.apiResponse)
-    {
+    if(RIApiResponseSuccess == self.apiResponse) {
         if (VALID_NOTEMPTY(self.ratingsForm, RIForm)) {
             self.isShowingRating = YES;
         } else {
             self.isShowingRating = NO;
         }
         [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
-    }
-    else
-    {
+    } else {
         if(VALID_NOTEMPTY(self.ratingsDynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.ratingsDynamicForm.formViews, NSMutableArray) &&
-           VALID_NOTEMPTY(self.reviewsDynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.reviewsDynamicForm.formViews, NSMutableArray))
-        {
+           VALID_NOTEMPTY(self.reviewsDynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.reviewsDynamicForm.formViews, NSMutableArray)) {
             [self onErrorResponse:self.apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:@selector(ratingsRequests) objects:nil];
-        }
-        else
-        {
+        } else {
             [self onErrorResponse:self.apiResponse messages:nil showAsMessage:NO selector:@selector(ratingsRequests) objects:nil];
         }
     }
@@ -252,8 +235,7 @@ UIAlertViewDelegate
     [self hideLoading];
 }
 
--(void)setupTopView
-{
+-(void)setupTopView {
     [self.brandLabel setFrame:CGRectMake(12.0f,
                                          6.0f,
                                          self.view.frame.size.width - 24.0f,
@@ -266,8 +248,7 @@ UIAlertViewDelegate
     [self.nameLabel sizeToFit];
     
     
-    if(VALID(self.priceLine, JAProductInfoPriceLine))
-    {
+    if(VALID(self.priceLine, JAProductInfoPriceLine)) {
         [self.priceLine removeFromSuperview];
     }
     
@@ -289,8 +270,7 @@ UIAlertViewDelegate
     }
     
     CGFloat topViewMinHeight = CGRectGetMaxY(self.priceLine.frame);
-    if(topViewMinHeight < 38.0f)
-    {
+    if(topViewMinHeight < 38.0f) {
         topViewMinHeight = 38.0f;
     }
     topViewMinHeight += 6.0f;
@@ -302,16 +282,14 @@ UIAlertViewDelegate
     [self.topView setHidden:NO];
 }
 
--(void)setupViews
-{
+-(void)setupViews {
     [self setupTopView];
     
     CGFloat verticalMargin = 6.0f;
     CGFloat horizontalMargin = 6.0f;
     
     BOOL isiPad = NO;
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
-    {
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
         isiPad = YES;
     }
     CGFloat scrollViewWidth = self.view.frame.size.width;
@@ -331,13 +309,11 @@ UIAlertViewDelegate
     
     CGFloat centerViewWidth = scrollViewWidth - (2 * horizontalMargin);
     CGFloat dynamicFormHorizontalMargin = 6.0f;
-    if(isiPad)
-    {
+    if(isiPad) {
         dynamicFormHorizontalMargin = 200.0f;
     }
     
-    if(!VALID_NOTEMPTY(self.fixedLabel, UILabel))
-    {
+    if(!VALID_NOTEMPTY(self.fixedLabel, UILabel)) {
         self.fixedLabel = [[UILabel alloc] initWithFrame:CGRectMake(dynamicFormHorizontalMargin,
                                                                     verticalMargin,
                                                                     centerViewWidth - (2 * dynamicFormHorizontalMargin),
@@ -346,7 +322,7 @@ UIAlertViewDelegate
         self.fixedLabel.text = STRING_RATE_PRODUCT;
         self.fixedLabel.textColor = JAGreyColor;
         [self.centerView addSubview:self.fixedLabel];
-    }else{
+    } else {
         [self.fixedLabel setFrame:CGRectMake(dynamicFormHorizontalMargin,
                                             verticalMargin,
                                             centerViewWidth - (2 * dynamicFormHorizontalMargin),
@@ -373,8 +349,8 @@ UIAlertViewDelegate
             
             _dynamicRatingsViewsFrames = [NSMutableArray new];
         }
-        for (UIView *view in self.ratingsDynamicForm.formViews)
-        {
+        
+        for (UIView *view in self.ratingsDynamicForm.formViews) {
             view.tag = count;
             
             CGRect frame = view.frame;
@@ -823,4 +799,14 @@ UIAlertViewDelegate
 {
     [self.reviewsDynamicForm resignResponder];
 }
+
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    if(VALID_NOTEMPTY(self.product.sku, NSString)) {
+        return [NSString stringWithFormat:@"WriteRatingScreen / %@", self.product.sku];
+    } else {
+        return @"WriteRatingScreen";
+    }
+}
+
 @end

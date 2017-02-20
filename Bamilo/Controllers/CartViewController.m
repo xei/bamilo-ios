@@ -68,7 +68,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.A4SViewControllerAlias = @"CART";
-    self.screenName = @"Cart";
     self.navBarLayout.title = STRING_CART;
     self.navBarLayout.showBackButton = NO;
     self.navBarLayout.showCartButton = NO;
@@ -295,8 +294,6 @@
     }
 }
 
-
-
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
@@ -305,13 +302,12 @@
             [self bind:data forRequestId:0];
         }
     }];
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     
-    if (self.firstLoading) {
-        NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
-        NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
-        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:[NSString stringWithFormat:@"%@", [skusFromTeaserInCart allKeys]]];
-        self.firstLoading = NO;
-    }
+    [self publishScreenLoadTime];
 }
 
 #pragma mark - DataServiceProtocol
@@ -320,6 +316,16 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo: @{kUpdateCartNotificationValue: cart}];
     self.cart = cart;
+}
+
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    return @"Cart";
+}
+
+-(NSString *)getPerformanceTrackerLabel {
+     NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
+    return [NSString stringWithFormat:@"%@", [skusFromTeaserInCart allKeys]];
 }
 
 @end

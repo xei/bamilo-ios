@@ -229,12 +229,7 @@
             
             [self.collectionView reloadData];
             
-            if(self.firstLoading)
-            {
-                NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
-                [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:@""];
-                self.firstLoading = NO;
-            }
+            [self publishScreenLoadTime];
 
         } else {
             self.productsDictionary = nil;
@@ -243,20 +238,14 @@
         [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
         
-        if(self.firstLoading)
-        {
-            NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
-            [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:@""];
-            self.firstLoading = NO;
-        }
+        [self publishScreenLoadTime];
         
         [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadProducts) objects:nil];
         [self hideLoading];
     }];
 }
 
-- (RIProduct *)getProductFromIndex:(NSInteger)index
-{
+- (RIProduct *)getProductFromIndex:(NSInteger)index {
     NSString *sku = [self.productsArray objectAtIndex:index];
     if (VALID_NOTEMPTY(sku, NSString)) {
         return [self.productsDictionary objectForKey:sku];
@@ -266,8 +255,7 @@
 
 #pragma mark - collectionView methods
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     RIProduct *product = [self getProductFromIndex:indexPath.row];
     
     JARecentlyViewedCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"CellWithLines" forIndexPath:indexPath];
@@ -576,6 +564,11 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowSizeGuideNotification object:nil userInfo:dic];
         [self closePicker];
     }
+}
+
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    return @"RecentlyViewed";
 }
 
 @end

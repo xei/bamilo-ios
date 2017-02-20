@@ -84,15 +84,6 @@ UITableViewDataSource
     
     self.maxReviews = 15;
     
-    if(VALID_NOTEMPTY(self.product.seller.name, NSString))
-    {
-        self.screenName = [NSString stringWithFormat:@"SellerReviewsScreen / %@", self.product.seller.name];
-    }
-    else
-    {
-        self.screenName = @"SellerReviewsScreen";
-    }
-    
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showLogo = NO;
     
@@ -837,6 +828,15 @@ UITableViewDataSource
 -(void)hideKeyboards
 {
     [self.reviewsDynamicForm resignResponder];
+}
+
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    if(VALID_NOTEMPTY(self.product.seller.name, NSString)) {
+        return [NSString stringWithFormat:@"SellerReviewsScreen / %@", self.product.seller.name];
+    } else {
+        return @"SellerReviewsScreen";
+    }
 }
 
 @end

@@ -33,11 +33,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kDidPressSearchButtonNotification object:nil];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - Private Methods
 - (void)showSearchBar {
    _searchBarBackground = [[UIView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, kSearchViewBarHeight)];

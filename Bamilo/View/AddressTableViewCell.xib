@@ -68,6 +68,9 @@
                     <state key="normal" title="حذف" image="DeleteBinIcon">
                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <connections>
+                        <action selector="addressDeleteButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="Yfj-Lz-mOD"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HWJ-Ix-ALr" customClass="IconButton">
                     <rect key="frame" x="65" y="130" width="55" height="25"/>

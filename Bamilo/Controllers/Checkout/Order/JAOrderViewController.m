@@ -70,8 +70,6 @@
 {
     [super viewDidLoad];
     
-    self.screenName = @"CheckoutConfirmation";
-    
     self.navBarLayout.title = STRING_CHECKOUT;
     self.navBarLayout.showCartButton = NO;
     self.navBarLayout.showBackButton = YES;
@@ -102,19 +100,7 @@
     
     [RICart getMultistepFinishWithSuccessBlock:^(RICart *cart) {
         self.cart = cart;
-        if(self.firstLoading)
-        {
-            NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
-            NSMutableArray *cartItemsSkus = [[NSMutableArray alloc]init];
-            for (int i = 0; i < self.cart.cartEntity.cartItems.count; i++) {
-                RICartItem* cartItem = [self.cart.cartEntity.cartItems objectAtIndex:i];
-                [cartItemsSkus addObject:cartItem.simpleSku];
-            }
-            NSString * labelString = [cartItemsSkus componentsJoinedByString:@", "];
-            
-            [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:labelString];
-            self.firstLoading = NO;
-        }
+        [self publishScreenLoadTime];
         [self setupViews];
         [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
@@ -1065,6 +1051,21 @@
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];
     [alert show];
+}
+
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    return @"CheckoutConfirmation";
+}
+
+-(NSString *)getPerformanceTrackerLabel {
+    NSMutableArray *cartItemsSkus = [[NSMutableArray alloc]init];
+    for (int i = 0; i < self.cart.cartEntity.cartItems.count; i++) {
+        RICartItem* cartItem = [self.cart.cartEntity.cartItems objectAtIndex:i];
+        [cartItemsSkus addObject:cartItem.simpleSku];
+    }
+    
+    return [cartItemsSkus componentsJoinedByString:@", "];
 }
 
 @end

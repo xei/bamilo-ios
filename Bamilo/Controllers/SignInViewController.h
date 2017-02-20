@@ -8,15 +8,11 @@
 
 #import "AuthenticationBaseViewController.h"
 #import "DataServiceProtocol.h"
-
-@protocol SignInViewControllerDelegate
-- (void)wantsToContinueWithoutLogin;
-- (void)wantsToShowForgetPassword;
-@end
+#import "AuthenticationDelegate.h"
 
 @interface SignInViewController : AuthenticationBaseViewController <DataServiceProtocol, UIScrollViewDelegate, UITextFieldDelegate>
 
-@property (weak, nonatomic) id<SignInViewControllerDelegate> delegate;
+@property (weak, nonatomic) id<AuthenticationDelegate> delegate;
 @property (nonatomic, assign) BOOL fromSideMenu;
 @property (nonatomic) Boolean showContinueWithoutLogin;
 

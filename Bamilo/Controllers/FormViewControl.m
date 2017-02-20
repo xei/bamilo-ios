@@ -26,7 +26,6 @@
     return _inputControlsDictionary;
 }
 
-
 - (void)setupTableView {
     //Tableview registrations
     self.tableView.delegate = self;
@@ -95,7 +94,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    self.numberOfRowsOfTableView = self.formMessage ? self.formListModel.count + 2 : self.formListModel.count + 1;
+    self.numberOfRowsOfTableView = self.formListModel.count + 1 + (self.formMessage != nil);
     return self.numberOfRowsOfTableView;
 }
 

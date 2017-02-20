@@ -90,7 +90,6 @@
         //GET ADDRESS LIST
         case 0: {
             self.cart = (RICart *)data;
-            
             [self bindAddresses:self.cart.customerEntity.addressList];
         }
         break;
@@ -108,6 +107,7 @@
     [[DataManager sharedInstance] getMultistepAddressList:self completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
+            [self publishScreenLoadTime];
         }
     }];
 }
@@ -126,6 +126,11 @@
         
         [_addressTableViewController updateWithModel:_addresses];
     }
+}
+
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    return @"CheckoutAddresses";
 }
 
 @end

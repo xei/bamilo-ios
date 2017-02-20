@@ -8,9 +8,9 @@
 
 #import "AddressTableViewController.h"
 #import "AddressTableViewHeaderCell.h"
+#import "AddressTableViewControllerDelegate.h"
 
-@interface AddressTableViewController () <UITableViewDelegate, UITableViewDataSource, AddressTableViewHeaderCellDelegate>
-
+@interface AddressTableViewController () <UITableViewDelegate, UITableViewDataSource, AddressTableViewHeaderCellDelegate, AddressTableViewControllerDelegate>
 @end
 
 @implementation AddressTableViewController {
@@ -84,14 +84,29 @@
     
     [addressTableViewCell updateWithModel:[_addresses objectAtIndex:indexPath.row]];
     addressTableViewCell.options = self.options;
+    addressTableViewCell.delegate = self;
     
     return addressTableViewCell;
 }
 
 #pragma mark - AddressTableViewHeaderCellDelegate 
-
 - (void)wantsToAddNewAddress:(id)addressTableViewHeader {
-    [self.delegate addAddressTapped];
+    if([self.delegate respondsToSelector:@selector(addAddressTapped)]) {
+        [self.delegate addAddressTapped];
+    }
+}
+
+#pragma mark - AddressTableViewControllerDelegate
+- (void)addressEditButtonTapped:(id)sender {
+    if([self.delegate respondsToSelector:@selector(addressEditButtonTapped:)]) {
+        [self.delegate addressEditButtonTapped:(Address *)sender];
+    }
+}
+
+- (void)addressDeleteButtonTapped:(id)sender {
+    if([self.delegate respondsToSelector:@selector(addressDeleteButtonTapped:)]) {
+        [self.delegate addressDeleteButtonTapped:(Address *)sender];
+    }
 }
 
 @end

@@ -255,12 +255,7 @@
             
             self.currentPage = [NSNumber numberWithInteger:self.currentPage.integerValue+1];
             
-            if(self.firstLoading)
-            {
-                NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
-                [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:@""];
-                self.firstLoading = NO;
-            }
+            [self publishScreenLoadTime];
         } else {
             self.productsDictionary = nil;
             [self reloadData];
@@ -271,12 +266,7 @@
         
         [self onErrorResponse:apiResponse messages:error showAsMessage:NO selector:@selector(loadProducts) objects:nil];
         
-        if(self.firstLoading)
-        {
-            NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
-            [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:@""];
-            self.firstLoading = NO;
-        }
+        [self publishScreenLoadTime];
         
         [self hideLoading];
     }];
@@ -706,6 +696,11 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowSizeGuideNotification object:nil userInfo:dic];
         [self closePicker];
     }
+}
+
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    return @"SavedList";
 }
 
 @end

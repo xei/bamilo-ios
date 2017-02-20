@@ -118,7 +118,6 @@
     
     self.apiResponse = RIApiResponseSuccess;
     
-    self.screenName = @"ForgotPassword";
     self.navBarLayout.showLogo = NO;
     self.navBarLayout.title = STRING_PASSWORD_RECOVERY;
     
@@ -192,13 +191,8 @@
     }];
 }
 
-- (void)finishedFormLoading
-{
-    if (self.firstLoading) {
-        NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
-        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:@""];
-        self.firstLoading = NO;
-    }
+- (void)finishedFormLoading {
+    [self publishScreenLoadTime];
 }
 
 - (void)forgotPasswordButtonPressed:(id)sender
@@ -335,6 +329,11 @@
                                                     self.mainScrollView.frame.size.width,
                                                     self.contentScrollOriginalHeight)];
     }];
+}
+
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    return @"ForgotPassword";
 }
 
 @end

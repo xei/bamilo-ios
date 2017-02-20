@@ -59,7 +59,6 @@ UITableViewDelegate>
     [super viewDidLoad];
     
     self.apiResponse = RIApiResponseSuccess;
-    self.firstLoading = YES;
     
     self.shouldForceAddAddress = YES;
     
@@ -71,8 +70,6 @@ UITableViewDelegate>
     } else {
         self.navBarLayout.title = STRING_MY_ADDRESSES;
     }
-    
-    self.screenName = @"Addresses";
     
     self.view.backgroundColor = JAWhiteColor;
     
@@ -292,13 +289,7 @@ UITableViewDelegate>
     }
     [self setupViews:newWidth toInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
     
-#warning temporarily disabled until we migrate to new GA Google Analytics
-    /*if(self.firstLoading)
-    {
-        NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
-        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:_billingAddress.uid];
-        self.firstLoading = NO;
-    }*/
+    [self publishScreenLoadTime];
 }
 
 -(BOOL)checkIfAddressIsAdded:(RIAddress*)addressToAdd addresses:(NSArray*)addresses {
@@ -504,6 +495,15 @@ UITableViewDelegate>
                                       [self hideLoading];
                                   }];
     }
+}
+
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    return @"Addresses";
+}
+
+-(NSString *)getPerformanceTrackerLabel {
+    return [RICustomer getCustomerId];
 }
 
 @end

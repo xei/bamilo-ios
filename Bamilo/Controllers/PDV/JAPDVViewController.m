@@ -102,11 +102,6 @@ typedef void (^ProcessActionBlock)(void);
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     self.apiResponse = RIApiResponseSuccess;
-    if (self.product.sku.length) {
-        self.screenName = [NSString stringWithFormat:@"PDS / %@", self.product.sku];
-    } else {
-        self.screenName = @"PDV";
-    }
     
     self.A4SViewControllerAlias = @"PRODUCT";
     
@@ -149,10 +144,7 @@ typedef void (^ProcessActionBlock)(void);
         if (self.targetString.length || self.productSku.length) {
             [self loadCompleteProduct];
         } else {
-            if(self.firstLoading) {
-                [self trackingEventLoadingTime];
-                self.firstLoading = NO;
-            }
+            [self trackingEventLoadingTime];
         }
     }
     if (_needAddToFavBlock) {
@@ -478,10 +470,7 @@ typedef void (^ProcessActionBlock)(void);
                                              [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
                                          } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
                                              self.apiResponse = apiResponse;
-                                             if(self.firstLoading) {
                                                  [self trackingEventLoadingTime];
-                                                 self.firstLoading = NO;
-                                             }
                                              [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadCompleteProduct) objects:nil];
                                              [self hideLoading];
                                          }];
@@ -494,11 +483,7 @@ typedef void (^ProcessActionBlock)(void);
                                     [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
                                 } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
                                     self.apiResponse = apiResponse;
-                                    if(self.firstLoading)
-                                    {
-                                        [self trackingEventLoadingTime];
-                                        self.firstLoading = NO;
-                                    }
+                                    [self trackingEventLoadingTime];
                                     
                                     [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadCompleteProduct) objects:nil];
                                     
@@ -524,11 +509,7 @@ typedef void (^ProcessActionBlock)(void);
     
     [self trackingEventViewProduct:product];
     
-    if(self.firstLoading)
-    {
-        [self trackingEventLoadingTime];
-        self.firstLoading = NO;
-    }
+    [self trackingEventLoadingTime];
     
     [RIRecentlyViewedProductSku addToRecentlyViewed:product successBlock:^{
         [self requestBundles];
@@ -2123,15 +2104,25 @@ typedef void (^ProcessActionBlock)(void);
     }
 }
 
-- (void)trackingEventScreenName:(NSString *)screenName
-{
+- (void)trackingEventScreenName:(NSString *)screenName {
     [[RITrackingWrapper sharedInstance] trackScreenWithName:screenName];
 }
 
-- (void)trackingEventLoadingTime
-{
-    NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
-    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:self.productSku];
+- (void)trackingEventLoadingTime {
+    [self publishScreenLoadTime];
+}
+
+#pragma mark - PerformanceTrackerProtocol
+-(NSString *)getPerformanceTrackerScreenName {
+    if (self.product.sku.length) {
+        return [NSString stringWithFormat:@"PDS / %@", self.product.sku];
+    } else {
+        return @"PDV";
+    }
+}
+
+-(NSString *)getPerformanceTrackerLabel {
+    return self.productSku;
 }
 
 @end

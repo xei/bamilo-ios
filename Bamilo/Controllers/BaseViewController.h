@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SideMenuProtocol.h"
+#import "SideMenuProtocol.h" 
 #import "TabBarProtocol.h"
 
-@interface BaseViewController : BMA4SViewController <SideMenuProtocol, TabBarProtocol>
+@interface BaseViewController : BMA4SViewController <SideMenuProtocol, TabBarProtocol, PerformanceTrackerProtocol>
 
 @property (strong, nonatomic) JANavigationBarLayout *navBarLayout;
 

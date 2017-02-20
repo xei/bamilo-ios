@@ -127,8 +127,7 @@
     return YES;
 }
 
-- (void)applicationDidEnterBackground:(UIApplication *)application
-{
+- (void)applicationDidEnterBackground:(UIApplication *)application {
     UINavigationController *rootViewController = (UINavigationController*) self.window.rootViewController;
     JARootViewController* mainController = (JARootViewController*) [rootViewController topViewController];
     if(VALID_NOTEMPTY(mainController, JARootViewController))
@@ -140,7 +139,7 @@
             if(VALID_NOTEMPTY(viewControllers, NSArray))
             {
                 JABaseViewController *rootViewController = (JABaseViewController *) OBJECT_AT_INDEX(viewControllers, [viewControllers count] - 1);
-                NSString *screenName = rootViewController.screenName;
+                NSString *screenName = [rootViewController getPerformanceTrackerScreenName];
                 if(VALID_NOTEMPTY(screenName, NSString))
                 {
                     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCloseApp] data:[NSDictionary dictionaryWithObject:screenName forKey:kRIEventScreenNameKey]];
@@ -200,8 +199,7 @@
 -(void)applicationDidBecomeActive:(UIApplication *)application {
 }
 
-- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
-{
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
     NSUInteger supportedInterfaceOrientationsForWindow = -1;
     
     UINavigationController *rootViewController = (UINavigationController*)self.window.rootViewController;

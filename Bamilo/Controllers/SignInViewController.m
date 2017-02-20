@@ -76,6 +76,12 @@
     [[DataManager sharedInstance] loginUser:self withUsername:[self.emailControl getStringValue] password:[self.passwordControl getStringValue] completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
+            
+            if (self.completion) {
+                self.completion(AUTHENTICATION_FINISHED_WITH_LOGIN);
+            } else {
+                [((UIViewController *)self.delegate).navigationController popViewControllerAnimated:YES];
+            }
         } else {
             for(NSDictionary* errorField in [error.userInfo objectForKey:@"errorMessages"]) {
                 NSString *fieldName = errorField[@"field"];
@@ -141,19 +147,19 @@
         if (self.fromSideMenu) {
             [userInfo setObject:@YES forKey:@"from_side_menu"];
         }
-        
-        if (self.completion) {
-            self.completion(AUTHENTICATION_FINISHED_WITH_LOGIN);
-        }
     }
 }
 
 - (IBAction)forgotPasswordButtonPressed:(id)sender {
-    [self.delegate wantsToShowForgetPassword];
+    if([self.delegate respondsToSelector:@selector(wantsToShowForgetPassword)]) {
+        [self.delegate wantsToShowForgetPassword];
+    }
 }
 
 - (IBAction)continueWithoutLoginBtnTapped:(id)sender {
-    [self.delegate wantsToContinueWithoutLogin];
+    if([self.delegate respondsToSelector:@selector(wantsToContinueWithoutLogin)]) {
+        [self.delegate wantsToContinueWithoutLogin];
+    }
 }
 
 @end
