@@ -18,7 +18,13 @@
 @property (nonatomic, strong) NSDictionary *vicinityOptionsDictionary;
 @end
 
+
+
 @implementation AddressEditViewController
+
+const int RegionFieldIndex = 4;
+const int CityFieldIndex = 5;
+const int VicinityFieldIndex = 6;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -40,13 +46,13 @@
     FormItemModel *postalCode = [FormItemModel postalCodeWithFieldName:@"address_form[address2]"];
     postalCode.validation.isRequired = NO;
     
-    FormItemModel *region = [[FormItemModel alloc] initWithTitle: @"تهران"
+    FormItemModel *region = [[FormItemModel alloc] initWithTitle: nil
                                                        fieldName: @"address_form[region]"
                                                          andIcon: nil
                                                      placeholder: @"استان"
                                                             type: InputTextFieldControlTypeOptions
                                                       validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil]
-                                                   selectOptions: @{@"تهران": @"336"}];
+                                                   selectOptions: nil];
     
     
     FormItemModel *city = [[FormItemModel alloc] initWithTitle: nil
@@ -56,6 +62,7 @@
                                                           type: InputTextFieldControlTypeOptions
                                                     validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil]
                                                  selectOptions: nil];
+
     
     FormItemModel *vicinity = [[FormItemModel alloc] initWithTitle: nil
                                                          fieldName: @"address_form[postcode]"
@@ -65,17 +72,16 @@
                                                         validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil]
                                                      selectOptions: nil];
     
-    self.formController.formListModel = [NSMutableArray arrayWithArray:@[name, lastname, phone, postalCode, region, city, vicinity, address]];
+    
+    [self getRegionsByCompletion:nil];
+    self.formController.formListModel = [NSMutableArray arrayWithArray:@[name, lastname, phone, postalCode, address]];
+    
+    [self.formController.formListModel insertObject:region atIndex:RegionFieldIndex];
+    [self.formController.formListModel insertObject:city atIndex:CityFieldIndex];
+    [self.formController.formListModel insertObject:vicinity atIndex:VicinityFieldIndex];
+    
     [self.formController setupTableView];
     
-    [self getRegions];
-    //Check if additional data is required
-    if (region.titleString) {
-        [self getCitiesForRegionName:[region getValue]];
-    }
-    if (city.titleString) {
-        [self getVicinitiesForCityName:[city getValue]];
-    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -102,7 +108,7 @@
         [self.formController showAnyErrorInForm];
         return;
     }
-    [[DataManager sharedInstance] submitAddress:self params:[self.formController getMutableDictionaryOfForm] withID:nil completion:^(id data, NSError *error) {
+    [[DataManager sharedInstance] submitAddress:self params:[self.formController getMutableDictionaryOfForm] withID:self.addressUID completion:^(id data, NSError *error) {
         if (error == nil) {
             [self.navigationController popViewControllerAnimated:YES];
         } else {
@@ -118,56 +124,94 @@
 - (void)fieldHasBeenUpdatedByNewValidValue:(NSString *)value inFieldIndex:(NSUInteger)fieldIndex {
     FormItemModel *targetModel = self.formController.formListModel[fieldIndex];
     if([targetModel.fieldName isEqualToString:@"address_form[region]"]) {
-        [self getCitiesForRegionName:[targetModel getValue]];
+        [self getCitiesForRegionId:[targetModel getValue] completion:nil];
     } else if ([targetModel.fieldName isEqualToString:@"address_form[city]"]) {
-        [self getVicinitiesForCityName:[targetModel getValue]];
+        [self getVicinitiesForCityId:[targetModel getValue] completion:nil];
     }
 }
 
 #pragma mark - DataServiceProtocol
 - (void)bind:(id)data forRequestId:(int)rid {
     switch (rid) {
-        case 0:
-            [self updateSelectOptionModelForFieldIndex:4 withData:data];
+        case 0: //all regions have been received
+            [self updateSelectOptionModelForFieldIndex:RegionFieldIndex withData:data];
             break;
-        case 1:
-            [self updateSelectOptionModelForFieldIndex:5 withData:data];
+        case 1: //all cities of `region` have been receive
+            [self updateSelectOptionModelForFieldIndex:CityFieldIndex withData:data];
             break;
-        case 2:
-            [self updateSelectOptionModelForFieldIndex:6 withData:data];
+        case 2: //all vicinities of `city` have been receive
+            [self updateSelectOptionModelForFieldIndex:VicinityFieldIndex withData:data];
             break;
+        case 3: //address object have been received for editing
+            [self updateFormValuesWithAddress:data];
         default:
             break;
     }
 }
 
-#pragma mark - helper function
+#pragma mark - helper functions
 - (void)updateSelectOptionModelForFieldIndex:(NSUInteger)fieldIndex withData:(id)data {
-    FormItemModel *previousModelForIndex = self.formController.formListModel[fieldIndex];
-    [self.formController updateFieldIndex:fieldIndex WithModel:[[FormItemModel alloc] initWithTitle: previousModelForIndex.titleString
-                                                                                          fieldName: previousModelForIndex.fieldName
-                                                                                            andIcon: previousModelForIndex.icon
-                                                                                        placeholder: previousModelForIndex.placeholder
-                                                                                               type: InputTextFieldControlTypeOptions
-                                                                                         validation: previousModelForIndex.validation
-                                                                                      selectOptions: data]];
+    [self.formController updateFieldIndex:fieldIndex WithUpdateModelBlock:^FormItemModel *(FormItemModel *model) {
+        model.selectOption = data;
+        return model;
+    }];
+    [self.formController refreshView];
 }
 
-- (void)getRegions {
+- (void)updateFormValuesWithAddress:(Address *)address {
+    NSDictionary <NSString*, NSString*> *addressFieldMapValues = @{
+                                      @"address_form[first_name]"   : address.firstName,
+                                      @"address_form[last_name]"    : address.firstName,
+                                      @"address_form[phone]"        : address.phone,
+                                      @"address_form[address1]"     : address.address,
+                                      @"address_form[address2]"     : address.address1,
+                                      @"address_form[region]"       : address.region,
+                                      @"address_form[city]"         : address.city,
+                                      @"address_form[postcode]"     : address.postcode
+                                    };
+    [self.formController.formListModel enumerateObjectsUsingBlock:^(FormItemModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [self.formController updateFieldIndex:idx WithUpdateModelBlock:^FormItemModel *(FormItemModel *model) {
+            model.titleString = addressFieldMapValues[model.fieldName];
+            return model;
+        }];
+    }];
+    
+    if (addressFieldMapValues[@"address_form[region]"].length) {
+        [self getCitiesForRegionId:[self.formController.formListModel[RegionFieldIndex] getValue]  completion:^{
+            if (addressFieldMapValues[@"address_form[city]"]) {
+                [self getVicinitiesForCityId:[self.formController.formListModel[CityFieldIndex] getValue] completion:nil];
+            }
+        }];
+    }
+    [self.formController refreshView];
+}
+
+
+
+- (void)getRegionsByCompletion:(void (^)(void))completion {
     [[DataManager sharedInstance] getRegions:self completion:^(id data, NSError *error) {
-        if (!error) [self bind:data forRequestId:0];
+        if (!error)  {
+            [self bind:data forRequestId:0];
+            if(completion) completion();
+        }
     }];
 }
 
-- (void)getCitiesForRegionName:(NSString *)region {
-    [[DataManager sharedInstance] getCities:self forRegion:region completion:^(id data, NSError *error) {
-        if (!error) [self bind:data forRequestId:1];
+- (void)getCitiesForRegionId:(NSString *)regionId completion:(void (^)(void))completion {
+    [[DataManager sharedInstance] getCities:self forRegionId:regionId completion:^(id data, NSError *error) {
+        if (!error) {
+            [self bind:data forRequestId:1];
+            if (completion) completion();
+        }
     }];
 }
 
-- (void)getVicinitiesForCityName:(NSString *)city {
-    [[DataManager sharedInstance] getVicinity:self forCity:city completion:^(id data, NSError *error) {
-        if (!error) [self bind:data forRequestId:2];
+- (void)getVicinitiesForCityId:(NSString *)cityId completion:(void (^)(void))completion {
+    [[DataManager sharedInstance] getVicinity:self forCityId:cityId completion:^(id data, NSError *error) {
+        if (!error) {
+            [self bind:data forRequestId:2];
+            if (completion) completion();
+        }
     }];
 }
 

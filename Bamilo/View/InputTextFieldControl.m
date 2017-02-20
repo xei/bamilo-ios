@@ -134,11 +134,7 @@
 
 
 - (NSString *)getStringValue {
-    if (self.type == InputTextFieldControlTypeNumerical) {
-        return [self.input.textField.text numbersToEnglish];
-    } else {
         return self.input.textField.text;
-    }
 }
 
 - (void)showErrorMsg:(NSString *)msg {
@@ -161,6 +157,8 @@
 
 - (void)resetAndClear {
     self.input.textField.text = nil;
+    self.input.textField.inputView = nil;
+    [self.input.textField reloadInputViews];
     [self.input clearError];
 }
 
