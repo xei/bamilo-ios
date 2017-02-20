@@ -25,13 +25,16 @@
 @property (nonatomic, strong) NSMutableArray<FormItemModel *>* formListModel;
 @property (nonatomic, weak) id<FormViewControlDelegate> delegate;
 
+typedef FormItemModel *(^updateModelWithPreviousModel)(FormItemModel *model);
+
 - (void)setupTableView;
 - (void)registerForKeyboardNotifications;
 - (void)unregisterForKeyboardNotifications;
-- (void)updateFieldIndex:(NSUInteger)name WithModel:(FormItemModel *)model;
+- (void)updateFieldIndex:(NSUInteger)index WithUpdateModelBlock:(updateModelWithPreviousModel)block;
 - (void)showErrorMessgaeForField:(NSString *)fieldName errorMsg:(NSString *)string;
 - (NSMutableDictionary *)getMutableDictionaryOfForm;
 - (Boolean)isFormValid;
 - (void)showAnyErrorInForm;
+- (void)refreshView;
 
 @end

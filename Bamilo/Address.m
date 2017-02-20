@@ -19,6 +19,7 @@
       @"address": @"address1",
       @"address1": @"address2",
       @"city": @"city",
+      @"region": @"region",
       @"postcode": @"postcode",
       @"phone": @"phone",
       @"isDefaultBilling": @"is_default_billing",

@@ -46,9 +46,8 @@
     [self reloadViewIfItsPossible];
 }
 
-- (void)updateFieldIndex:(NSUInteger)name WithModel:(FormItemModel *)model {
-    self.formListModel[name] = model;
-    [self reloadViewIfItsPossible];
+- (void)updateFieldIndex:(NSUInteger)index WithUpdateModelBlock:(updateModelWithPreviousModel)block {
+    self.formListModel[index] = block(self.formListModel[index]);
 }
 
 - (NSMutableDictionary *)getMutableDictionaryOfForm {
@@ -59,6 +58,9 @@
     return params;
 }
 
+- (void)refreshView {
+    [self reloadViewIfItsPossible];
+}
 
 - (void)reloadViewIfItsPossible {
     if (self.tableViewRegistered) {
@@ -156,7 +158,7 @@
 - (Boolean)isFormValid {
     __block Boolean result = YES;
     [self.formListModel enumerateObjectsUsingBlock:^(FormItemModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if(![obj.validation checkValiditionOfString:obj.titleString].boolValue) {
+        if(![obj.validation checkValiditionOfString:[obj getValue]].boolValue) {
             result = NO;
             *stop = YES;
         }
@@ -175,7 +177,7 @@
     
     self.formListModel[fieldIndex].titleString = value;
     
-    if ([self.formListModel[fieldIndex].validation checkValiditionOfString:self.formListModel[fieldIndex].titleString].boolValue) {
+    if ([self.formListModel[fieldIndex].validation checkValiditionOfString:[self.formListModel[fieldIndex] getValue]].boolValue) {
         
         if ([self.delegate respondsToSelector:@selector(fieldHasBeenUpdatedByNewValidValue:inFieldIndex:)]){
             [self.delegate fieldHasBeenUpdatedByNewValidValue:value inFieldIndex:fieldIndex];

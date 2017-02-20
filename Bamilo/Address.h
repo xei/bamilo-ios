@@ -17,6 +17,7 @@
 @property (copy, nonatomic) NSString *lastName;
 @property (copy, nonatomic) NSString *address;
 @property (copy, nonatomic) NSString *address1;
+@property (copy, nonatomic) NSString *region;
 @property (copy, nonatomic) NSString *city;
 @property (copy, nonatomic) NSString *postcode;
 @property (copy, nonatomic) NSString *phone;
