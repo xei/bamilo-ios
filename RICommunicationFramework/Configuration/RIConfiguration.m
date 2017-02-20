@@ -106,7 +106,7 @@ NSString *const RI_API_GET_CUSTOMER_CITIES = @"customer/getaddresscities/";
 NSString *const RI_API_GET_CUSTOMER_POSTCODES = @"customer/getaddresspostcodes/";
 NSString *const RI_API_POST_CUSTOMER_ADDDRESS_CREATE = @"customer/addresscreate/";
 NSString *const RI_API_POST_CUSTOMER_ADDDRESS_EDIT = @"customer/addressedit/";
-NSString *const RI_API_GET_CUSTOMER_ADDDRESS = @"customer/address/";
+NSString *const RI_API_GET_CUSTOMER_ADDDRESS = @"customer/getAddressByID/";
 
 NSString *const RI_API_BUNDLE = @"catalog/bundle/sku/";
 

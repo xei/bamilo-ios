@@ -89,6 +89,8 @@ const int VicinityFieldIndex = 6;
     
     if(self.addressUID == nil) {
         [self publishScreenLoadTime];
+    } else {
+//        [self getAddressByID:self.addressUID];
     }
 }
 
@@ -155,6 +157,16 @@ const int VicinityFieldIndex = 6;
 }
 
 #pragma mark - Helpers
+
+- (void)getAddressByID: (NSString *)uid {
+    [[DataManager sharedInstance] getAddress:self byId:uid completion:^(id data, NSError *error) {
+        if (error != nil) {
+            [self bind:data forRequestId:3];
+            [self publishScreenLoadTime];
+        }
+    }];
+}
+
 - (void)updateSelectOptionModelForFieldIndex:(NSUInteger)fieldIndex withData:(id)data {
     [self.formController updateFieldIndex:fieldIndex WithUpdateModelBlock:^FormItemModel *(FormItemModel *model) {
         model.selectOption = data;
