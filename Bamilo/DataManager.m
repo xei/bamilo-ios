@@ -123,6 +123,16 @@ static DataManager *instance;
     }];
 }
 
+-(void)deleteAddress:(id<DataServiceProtocol>)target address:(Address *)address completion:(DataCompletion)completion {
+    NSDictionary *params = @{
+        @"id": address.uid
+    };
+    
+    [RequestManager asyncDELETE:target path:RI_API_DELETE_ADDRESS_REMOVE params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+        [self processResponse:response forData:data errorMessages:errorMessages completion:completion];
+    }];
+}
+
 //### CART ###
 - (void)getUserCart:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
     [RequestManager asyncPOST:target path:RI_API_GET_CART_DATA params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
@@ -218,29 +228,40 @@ static DataManager *instance;
 
 #pragma mark - Private Methods
 - (void)serialize:(id)data into:(Class)aClass response:(RIApiResponse)response errorMessages:(NSArray *)errorMessages completion:(DataCompletion)completion {
-    if(response == RIApiResponseSuccess && data) {
-        id dataModel;
-        
-        if([aClass conformsToProtocol:@protocol(JSONVerboseModel)]) {
-            [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
-                completion([aClass parseToDataModelWithObjects:@[ data, configuration ]], nil);
-            } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
-                completion(nil, [self getErrorFrom:apiResponse errorMessages:errorMessages]);
-            }];
-        } else {
-            NSError *error;
-            dataModel = [[aClass alloc] init];
-            [dataModel mergeFromDictionary:data useKeyMapping:YES error:&error];
+    [self processResponse:response forData:data errorMessages:errorMessages completion:^(id data, NSError *error) {
+        if(error == nil && data) {
+            id dataModel;
             
-            if(error == nil) {
-                completion(dataModel, nil);
+            if([aClass conformsToProtocol:@protocol(JSONVerboseModel)]) {
+                [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+                    completion([aClass parseToDataModelWithObjects:@[ data, configuration ]], nil);
+                } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+                    completion(nil, [self getErrorFrom:apiResponse errorMessages:errorMessages]);
+                }];
             } else {
-                completion(nil, error);
+                NSError *error;
+                dataModel = [[aClass alloc] init];
+                [dataModel mergeFromDictionary:data useKeyMapping:YES error:&error];
+                
+                if(error == nil) {
+                    completion(dataModel, nil);
+                } else {
+                    completion(nil, error);
+                }
             }
+        } else {
+            completion(nil, error);
         }
-        
-    } else {
-        completion(nil, [self getErrorFrom:response errorMessages:errorMessages]);
+    }];
+}
+
+-(void) processResponse:(RIApiResponse)response forData:(id)data errorMessages:(NSArray *)errorMessages completion:(DataCompletion)completion {
+    if(completion) {
+        if(response == RIApiResponseSuccess && data) {
+            completion(data, nil);
+        } else {
+            completion(nil, [self getErrorFrom:response errorMessages:errorMessages]);
+        }
     }
 }
 

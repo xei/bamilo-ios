@@ -93,19 +93,34 @@
 }
 
 # pragma mark - Message View
-- (void)showNotificationBar:(NSString *)message isSuccess:(BOOL)success {
+- (void) showNotificationBar:(id)message isSuccess:(BOOL)success {
+    if(success == NO) {
+        if([message isKindOfClass:[NSError class]]) {
+            NSError *error = (NSError *)message;
+            [self showNotificationBarMessage:[error.userInfo[kErrorMessages] firstObject] isSuccess:NO];
+        }
+    }
+}
+
+- (void)showNotificationBarMessage:(NSString *)message isSuccess:(BOOL)success {
     UIViewController *rootViewController = [ViewControllerManager topViewController];
     
-    if (!VALID_NOTEMPTY(self.messageView, JAMessageView)) {
-        self.messageView = [[JAMessageView alloc] initWithFrame:CGRectMake(0, 64, self.view.bounds.size.width, kMessageViewHeight)];
+    float messageViewY = 64;
+    
+    if(self.messageView == nil) {
+        self.messageView = [[JAMessageView alloc] initWithFrame:CGRectMake(0, messageViewY, self.view.bounds.size.width, kMessageViewHeight)];
         [self.messageView setupView];
-    } else {
-        [self.messageView setFrame:CGRectMake(0, 64, self.view.bounds.size.width, kMessageViewHeight)];
     }
+    
+    if(self.navigationController && self.navigationController.navigationBar) {
+        messageViewY = self.navigationController.navigationBar.frame.size.height;
+    }
+    [self.messageView setFrame:CGRectMake(0, messageViewY, self.view.bounds.size.width, kMessageViewHeight)];
     
     if (!VALID_NOTEMPTY([self.messageView superview], UIView)) {
         [rootViewController.view addSubview:self.messageView];
     }
+    
     [self.messageView setTitle:message success:success];
 }
 

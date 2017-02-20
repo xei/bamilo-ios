@@ -22,7 +22,7 @@
 @private
     NSMutableArray *_addresses;
     AddressTableViewController *_addressTableViewController;
-    Address *_workingAddress;
+    Address *_currentAddress;
 }
 
 - (void)viewDidLoad {
@@ -40,13 +40,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[DataManager sharedInstance] getUserAddressList:self completion:^(id data, NSError *error) {
-        if(error == nil) {
-            [self bind:data forRequestId:0];
-            
-            [self publishScreenLoadTime];
-        }
-    }];
+    [self fetchAddressList];
 }
 
 #pragma mark - Overrides
@@ -59,7 +53,7 @@
 
 #pragma mark - AddressTableViewControllerDelegate
 - (BOOL)addressSelected:(Address *)address {
-    _workingAddress = address;
+    _currentAddress = address;
     
     [[AlertManager sharedInstance] confirmAlert:@"تغییر آدرس" text:@"از تغییر آدرس پیش فرض خود اطمینان دارید؟" confirm:@"بله" cancel:@"خیر" completion:^(BOOL OK) {
         if(OK) {
@@ -75,22 +69,27 @@
 }
 
 -(void)addressEditButtonTapped:(id)sender {
-    _workingAddress = (Address *)sender;
+    _currentAddress = (Address *)sender;
     
     [self performSegueWithIdentifier:@"pushAddressListToAddressEdit" sender:nil];
 }
 
 -(void)addressDeleteButtonTapped:(id)sender {
-    _workingAddress = (Address *)sender;
+    _currentAddress = (Address *)sender;
     
     [[AlertManager sharedInstance] confirmAlert:@"حذف آدرس" text:@"از حذف آدرس خود اطمینان دارید؟" confirm:@"بله" cancel:@"خیر" completion:^(BOOL OK) {
         if(OK) {
+            [[DataManager sharedInstance] deleteAddress:self address:_currentAddress completion:^(id data, NSError *error) {
+                if(error == nil) {
+                    [self fetchAddressList];
+                }
+            }];
         }
     }];
 }
 
 - (void)addAddressTapped {
-    _workingAddress = nil;
+    _currentAddress = nil;
     
     [self performSegueWithIdentifier:@"pushAddressListToAddressEdit" sender:nil];
 }
@@ -98,10 +97,20 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:@"pushAddressListToAddressEdit"]) {
         AddressEditViewController *addressEditViewController = (AddressEditViewController *)segue.destinationViewController;
-        if(_workingAddress) {
-            addressEditViewController.addressUID = _workingAddress.uid;
+        if(_currentAddress) {
+            addressEditViewController.addressUID = _currentAddress.uid;
         }
     }
+}
+
+#pragma mark - Helpers
+-(void) fetchAddressList {
+    [[DataManager sharedInstance] getUserAddressList:self completion:^(id data, NSError *error) {
+        if(error == nil) {
+            [self bind:data forRequestId:0];
+            [self publishScreenLoadTime];
+        }
+    }];
 }
 
 #pragma mark - DataServiceProtocol

@@ -12,8 +12,6 @@
 #import "RICart.h"
 #import "FormItemModel.h"
 
-#define kErrorMessages @"errorMessages"
-
 typedef void(^DataCompletion)(id data, NSError *error);
 
 @interface DataManager : NSObject
@@ -34,6 +32,7 @@ typedef void(^DataCompletion)(id data, NSError *error);
 //### ADDRESS ###
 - (void)getUserAddressList:(id<DataServiceProtocol>)target completion:(DataCompletion)completion;
 - (void)setDefaultAddress:(id<DataServiceProtocol>)target address:(Address *)address isBilling:(BOOL)isBilling completion:(DataCompletion)completion;
+-(void)deleteAddress:(id<DataServiceProtocol>)target address:(Address *)address completion:(DataCompletion)completion;
 
 //### CART ###
 - (void)getUserCart:(id<DataServiceProtocol>)target completion:(DataCompletion)completion;

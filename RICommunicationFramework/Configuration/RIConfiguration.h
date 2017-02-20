@@ -136,3 +136,8 @@ FOUNDATION_EXPORT NSString *const RI_API_GET_PHONE_PREFIXES;
 FOUNDATION_EXPORT NSString *const RI_API_EXTERNAL_LINKS;
 
 FOUNDATION_EXPORT NSString *const RI_API_RETURN_FINISH;
+
+//################################################################################################
+FOUNDATION_EXPORT NSString *const RI_API_DELETE_ADDRESS_REMOVE;
+
+

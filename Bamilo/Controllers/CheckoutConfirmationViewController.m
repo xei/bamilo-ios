@@ -300,7 +300,7 @@
                 [self.tableView reloadData];
             } else {
                 if (error.code != RIApiResponseNoInternetConnection) {
-                    [self showNotificationBar:[error.userInfo[kErrorMessages] firstObject] isSuccess:NO];
+                    [self showNotificationBar:error isSuccess:NO];
                 }
             }
         }];

@@ -87,6 +87,7 @@
 		873369C21E589FEC00B0B5E5 /* ShippingMethodForm.m in Sources */ = {isa = PBXBuildFile; fileRef = 873369C11E589FEC00B0B5E5 /* ShippingMethodForm.m */; };
 		873369C61E58A12E00B0B5E5 /* ShippingMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 873369C51E58A12E00B0B5E5 /* ShippingMethod.m */; };
 		873369CA1E58A1D200B0B5E5 /* ShippingMethodOption.m in Sources */ = {isa = PBXBuildFile; fileRef = 873369C91E58A1D200B0B5E5 /* ShippingMethodOption.m */; };
+		873369DF1E5AF48500B0B5E5 /* AppConsts.m in Sources */ = {isa = PBXBuildFile; fileRef = 873369DE1E5AF48500B0B5E5 /* AppConsts.m */; };
 		87459C821E4EF37200743120 /* CartListItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87459C811E4EF37200743120 /* CartListItemTableViewCell.m */; };
 		87459C841E4EF37D00743120 /* CartListItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87459C831E4EF37D00743120 /* CartListItemTableViewCell.xib */; };
 		87459C8D1E4F04AD00743120 /* RadioButtonViewControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 87459C8C1E4F04AD00743120 /* RadioButtonViewControl.m */; };
@@ -708,6 +709,8 @@
 		873369D91E59F7BF00B0B5E5 /* AuthenticationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthenticationDelegate.h; sourceTree = "<group>"; };
 		873369DA1E5A015400B0B5E5 /* PerformanceTrackerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceTrackerProtocol.h; sourceTree = "<group>"; };
 		873369DC1E5AE00300B0B5E5 /* AddressTableViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressTableViewControllerDelegate.h; sourceTree = "<group>"; };
+		873369DD1E5AF48500B0B5E5 /* AppConsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConsts.h; sourceTree = "<group>"; };
+		873369DE1E5AF48500B0B5E5 /* AppConsts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppConsts.m; sourceTree = "<group>"; };
 		87459C801E4EF37200743120 /* CartListItemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartListItemTableViewCell.h; sourceTree = "<group>"; };
 		87459C811E4EF37200743120 /* CartListItemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartListItemTableViewCell.m; sourceTree = "<group>"; };
 		87459C831E4EF37D00743120 /* CartListItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartListItemTableViewCell.xib; sourceTree = "<group>"; };
@@ -2188,6 +2191,7 @@
 		870F8CCD1E3354E10021F87B /* Consts */ = {
 			isa = PBXGroup;
 			children = (
+				873369E01E5AF49600B0B5E5 /* AppConsts */,
 				9AB5179F1C91D068007E1327 /* JAColors.h */,
 				B5210E8A19C48F1700FDB0D1 /* JAStrings.h */,
 				4A3921191988E27A00B70A9C /* JAConstants.h */,
@@ -2522,6 +2526,15 @@
 				873369DC1E5AE00300B0B5E5 /* AddressTableViewControllerDelegate.h */,
 			);
 			name = AddressTableViewControllerDelegate;
+			sourceTree = "<group>";
+		};
+		873369E01E5AF49600B0B5E5 /* AppConsts */ = {
+			isa = PBXGroup;
+			children = (
+				873369DD1E5AF48500B0B5E5 /* AppConsts.h */,
+				873369DE1E5AF48500B0B5E5 /* AppConsts.m */,
+			);
+			name = AppConsts;
 			sourceTree = "<group>";
 		};
 		87459C7F1E4EF2AD00743120 /* CartListItemTableViewCell */ = {
@@ -5173,6 +5186,7 @@
 				CE9ADFFD1AB6D78200D56481 /* JATeaserPageView.m in Sources */,
 				9AEF73F41CD20E1C00A5D574 /* JACheckoutStepByStepModel.m in Sources */,
 				87B685071E4AFB6B0042C09F /* ReceiptView.m in Sources */,
+				873369DF1E5AF48500B0B5E5 /* AppConsts.m in Sources */,
 				61148E081E47250A00E2540B /* StepperViewControl.m in Sources */,
 				61E099711E3E18F0004ED14E /* NotificationTableViewCell.m in Sources */,
 				9A189E8F1BB5630C0039BC14 /* JAProductInfoSubLine.m in Sources */,

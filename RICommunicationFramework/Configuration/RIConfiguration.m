@@ -142,3 +142,8 @@ NSString *const RI_API_GET_PHONE_PREFIXES = @"main/getphoneprefixes/";
 NSString *const RI_API_EXTERNAL_LINKS = @"main/getexternallinks/";
 
 NSString *const RI_API_RETURN_FINISH = @"return/finishreturn/";
+
+//################################################################################################
+NSString *const RI_API_DELETE_ADDRESS_REMOVE = @"customer/addressremove/";
+
+

@@ -104,14 +104,16 @@
         [self.formController showAnyErrorInForm];
         return;
     }
+    
     [[DataManager sharedInstance] submitAddress:self params:[self.formController getMutableDictionaryOfForm] withID:nil completion:^(id data, NSError *error) {
         if (error == nil) {
             [self.navigationController popViewControllerAnimated:YES];
         } else {
-            for(NSDictionary* errorField in [error.userInfo objectForKey:@"errorMessages"]) {
+            [self showNotificationBar:error isSuccess:NO];
+            /*for(NSDictionary* errorField in [error.userInfo objectForKey:@"errorMessages"]) {
                 NSString *fieldName = [NSString stringWithFormat:@"address_form[%@]", errorField[@"field"]];
                 [self.formController showErrorMessgaeForField:fieldName errorMsg:errorField[@"message"]];
-            }
+            }*/
         }
     }];
 }

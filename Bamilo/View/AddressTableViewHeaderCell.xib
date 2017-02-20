@@ -30,7 +30,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Thk-L1-74p" customClass="IconButton">
-                    <rect key="frame" x="10" y="5.5" width="106" height="30"/>
+                    <rect key="frame" x="0.0" y="5.5" width="106" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="u00-EF-50g"/>
                     </constraints>
@@ -45,7 +45,7 @@
             </subviews>
             <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="Thk-L1-74p" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="A5S-RX-SPT"/>
+                <constraint firstItem="Thk-L1-74p" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="A5S-RX-SPT"/>
                 <constraint firstAttribute="trailing" secondItem="Lrz-Sn-LUX" secondAttribute="trailing" constant="10" id="Cze-9R-aw5"/>
                 <constraint firstItem="Lrz-Sn-LUX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="K5E-uD-3s7"/>
                 <constraint firstItem="Thk-L1-74p" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="k0f-rS-ZSd"/>

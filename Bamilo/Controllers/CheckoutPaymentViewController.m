@@ -119,7 +119,7 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
                 [trackingDictionary setValue:self.cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalTransactionKey];
                 [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentFail] data:[trackingDictionary copy]];
                 
-                [self showNotificationBar:STRING_ERROR_SETTING_PAYMENT_METHOD isSuccess:NO];
+                [self showNotificationBarMessage:STRING_ERROR_SETTING_PAYMENT_METHOD isSuccess:NO];
             }
         }];
     }

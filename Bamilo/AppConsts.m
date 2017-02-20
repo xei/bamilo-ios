@@ -1,0 +1,15 @@
+//
+//  Consts.m
+//  Bamilo
+//
+//  Created by Narbeh Mirzaei on 2/20/17.
+//  Copyright © 2017 Rocket Internet. All rights reserved.
+//
+
+#import "AppConsts.h"
+
+@implementation AppConsts
+
+NSString *const kErrorMessages = @"errorMessages";
+
+@end
