@@ -73,7 +73,7 @@ const int VicinityFieldIndex = 6;
                                                      selectOptions: nil];
     
     
-    [self getRegionsByCompletion:nil];
+    
     self.formController.formListModel = [NSMutableArray arrayWithArray:@[name, lastname, phone, postalCode, address]];
     
     [self.formController.formListModel insertObject:region atIndex:RegionFieldIndex];
@@ -82,21 +82,31 @@ const int VicinityFieldIndex = 6;
     
     [self.formController setupTableView];
     
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [self.formController registerForKeyboardNotifications];
-    
-    if(self.addressUID == nil) {
-        [self publishScreenLoadTime];
-    } else {
-//        [self getAddressByID:self.addressUID];
+    if (!self.addressUID) {
+        [self getRegionsByCompletion:nil];
     }
 }
 
-- (void)viewDidDisappear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.formController registerForKeyboardNotifications];
+    if(self.addressUID == nil) {
+        [self publishScreenLoadTime];
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (self.addressUID) {
+        [self getAddressByID:self.addressUID];
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
     [self.formController unregisterForKeyboardNotifications];
 }
+
 
 #pragma mark - Overrides
 - (void)updateNavBar {
@@ -114,7 +124,9 @@ const int VicinityFieldIndex = 6;
         [self.formController showAnyErrorInForm];
         return;
     }
-    [[DataManager sharedInstance] submitAddress:self params:[self.formController getMutableDictionaryOfForm] withID:self.addressUID completion:^(id data, NSError *error) {
+    NSMutableDictionary *params = [self.formController getMutableDictionaryOfForm];
+    params[@"address_form[id]"] = self.addressUID;
+    [[DataManager sharedInstance] submitAddress:self params:params withID:self.addressUID completion:^(id data, NSError *error) {
         if (error == nil) {
             [self.navigationController popViewControllerAnimated:YES];
         } else {
@@ -161,7 +173,7 @@ const int VicinityFieldIndex = 6;
 
 - (void)getAddressByID: (NSString *)uid {
     [[DataManager sharedInstance] getAddress:self byId:uid completion:^(id data, NSError *error) {
-        if (error != nil) {
+        if (error == nil) {
             [self bind:data forRequestId:3];
             [self publishScreenLoadTime];
         }
@@ -179,7 +191,7 @@ const int VicinityFieldIndex = 6;
 - (void)updateFormValuesWithAddress:(Address *)address {
     NSDictionary <NSString*, NSString*> *addressFieldMapValues = @{
                                       @"address_form[first_name]"   : address.firstName,
-                                      @"address_form[last_name]"    : address.firstName,
+                                      @"address_form[last_name]"    : address.lastName,
                                       @"address_form[phone]"        : address.phone,
                                       @"address_form[address1]"     : address.address,
                                       @"address_form[address2]"     : address.address1,
@@ -193,15 +205,16 @@ const int VicinityFieldIndex = 6;
             return model;
         }];
     }];
-    
-    if (addressFieldMapValues[@"address_form[region]"].length) {
-        [self getCitiesForRegionId:[self.formController.formListModel[RegionFieldIndex] getValue]  completion:^{
-            if (addressFieldMapValues[@"address_form[city]"]) {
-                [self getVicinitiesForCityId:[self.formController.formListModel[CityFieldIndex] getValue] completion:nil];
-            }
-        }];
-    }
     [self.formController refreshView];
+    [self getRegionsByCompletion:^{
+        if (addressFieldMapValues[@"address_form[region]"].length) {
+            [self getCitiesForRegionId:[self.formController.formListModel[RegionFieldIndex] getValue]  completion:^{
+                if (addressFieldMapValues[@"address_form[city]"]) {
+                    [self getVicinitiesForCityId:[self.formController.formListModel[CityFieldIndex] getValue] completion:nil];
+                }
+            }];
+        }
+    }];
 }
 
 

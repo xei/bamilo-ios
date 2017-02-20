@@ -98,6 +98,7 @@
 }
 
 - (void)setModel:(FormItemModel *)model {
+    _model = model;
     self.input.icon.image = model.icon;
     self.input.textField.placeholder = model.placeholder;
     self.validation = model.validation;
@@ -121,7 +122,6 @@
         //When we have no selectOption model but it's `Option` type
         self.input.textField.enabled = NO;
     }
-    _model = model;
 }
     
 - (void)checkValidation {
@@ -142,7 +142,7 @@
 }
 
 - (Boolean)isValid {
-    FormValidationType *validationResult = [self.validation checkValiditionOfString:[self getStringValue]];
+    FormValidationType *validationResult = [self.validation checkValiditionOfString:[[self getStringValue] numbersToEnglish]];
     self.errorMsg = validationResult.errorMsg;
     return validationResult.boolValue;
 }
@@ -164,8 +164,8 @@
 
 #pragma mark - textFieldTargetActions
 - (void)textFieldEditingDidEndOnExit:(UITextField *)textField {
-    [self checkValidation];
     [self updateModel];
+    [self checkValidation];
 }
 
 - (void)textFieldEditingDidEnditingBegan:(UITextField *)textField {
