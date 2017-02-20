@@ -7,9 +7,7 @@
 	<key>kGTMToken</key>
 	<string>GTM-KT3X23</string>
 	<key>RIGoogleAnalyticsTrackingID</key>
-	<string></string>
-	<key>RIBugsenseAPIKey</key>
-	<string></string>
+	<string>UA-89467232-1</string>
 	<key>kRIAdd4PushDeviceToken</key>
 	<string></string>
 	<key>kRIAdd4PushUserID</key>

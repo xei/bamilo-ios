@@ -14,5 +14,6 @@
 
 -(NSString *) getAppVersionNumber;
 -(NSString *) getAppBuildNumber;
+-(NSString *) getAppFullFormattedVersion;
 
 @end

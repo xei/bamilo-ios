@@ -29,4 +29,8 @@ static AppManager *instance;
     return [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
 }
 
+-(NSString *)getAppFullFormattedVersion {
+    return [NSString stringWithFormat:@"%@ (%@)", [self getAppVersionNumber], [self getAppBuildNumber]];
+}
+
 @end

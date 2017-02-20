@@ -21,6 +21,7 @@
 #import "GAIFields.h"
 #import "GAILogger.h"
 #import "RICountryConfiguration.h"
+#import "AppManager.h"
 
 NSString * const kRIGoogleAnalyticsTrackingID = @"RIGoogleAnalyticsTrackingID";
 
@@ -41,12 +42,10 @@ NSString * const kRIGoogleAnalyticsTrackingID = @"RIGoogleAnalyticsTrackingID";
 
 static RIGoogleAnalyticsTracker *sharedInstance;
 
-- (id)init
-{
+- (id)init {
     RIDebugLog(@"Initializing Google Analytics tracker");
     
-    if ((self = [super init]))
-    {
+    if ((self = [super init])) {
         self.campaignData = @"";
         
         self.queue = [[NSOperationQueue alloc] init];
@@ -99,11 +98,10 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     return self;
 }
 
-+ (void)initGATrackerWithId:(NSString*)trackingId
-{
++ (void)initGATrackerWithId:(NSString*)trackingId {
     if (!trackingId) {
         RIRaiseError(@"Missing Google Analytics Tracking ID in tracking properties");
-        return;
+        //return;
     }
     
     // Automatically send uncaught exceptions to Google Analytics.
@@ -115,10 +113,14 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     [[GAI sharedInstance].logger setLogLevel:kGAILogLevelNone];// kGAILogLevelVerbose];
     
     // Create tracker instance.
-    [[GAI sharedInstance] trackerWithTrackingId:@"UA-76304035-1"];
+#ifdef IS_RELEASE
+    [[GAI sharedInstance] trackerWithTrackingId:trackingId ?: [RITrackingConfiguration valueForKey:kRIGoogleAnalyticsTrackingID]];
+#else
+    [[GAI sharedInstance] trackerWithTrackingId:[RITrackingConfiguration valueForKey:kRIGoogleAnalyticsTrackingID]];
+#endif
             
     // Setup the app version
-    NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
+    NSString *version = [[AppManager sharedInstance] getAppFullFormattedVersion] ?: @"?";
     [[GAI sharedInstance].defaultTracker set:kGAIAppVersion value:version];
     
     [[GAI sharedInstance].defaultTracker setAllowIDFACollection:YES];
@@ -126,13 +128,10 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     NSLog(@"Initialized Google Analytics %d", [GAI sharedInstance].trackUncaughtExceptions);
 }
 
-- (void)applicationDidLaunchWithOptions:(NSDictionary *)options
-{
-
+- (void)applicationDidLaunchWithOptions:(NSDictionary *)options {
 }
 
-- (void)applicationDidEnterBackground:(UIApplication *)application
-{
+- (void)applicationDidEnterBackground:(UIApplication *)application {
     self.okToWait = YES;
     __weak RIGoogleAnalyticsTracker *weakSelf = self;
     __block UIBackgroundTaskIdentifier backgroundTaskId =
@@ -157,9 +156,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
 }
 
 #pragma mark - Track campaign
-
-- (void)trackCampaignWithName:(NSString *)campaignName
-{
+- (void)trackCampaignWithName:(NSString *)campaignName {
     RIDebugLog(@"Google Analytics tracker tracks campaign");
     
     id tracker = [[GAI sharedInstance] defaultTracker];
@@ -208,44 +205,33 @@ static RIGoogleAnalyticsTracker *sharedInstance;
             [finalStr appendString:[params componentsJoinedByString:@"&"]];
             self.campaignData = [finalStr copy];
         }
-    }
-    else
-    {
+    } else {
         RIDebugLog(@"Missing default Google Analytics tracker");
     }
 }
 
 #pragma mark - RIExceptionTracking protocol
-
-- (void)trackExceptionWithName:(NSString *)name
-{
+- (void)trackExceptionWithName:(NSString *)name {
     RIDebugLog(@"Google Analytics tracker tracks exception with name '%@'", name);
     
     id tracker = [[GAI sharedInstance] defaultTracker];
     
-    if (!ISEMPTY(tracker))
-    {
-        NSDictionary *dict = [[GAIDictionaryBuilder createExceptionWithDescription:name
-                                                                         withFatal:[NSNumber numberWithBool:NO]] build];
+    if (!ISEMPTY(tracker)) {
+        NSDictionary *dict = [[GAIDictionaryBuilder createExceptionWithDescription:name withFatal:[NSNumber numberWithBool:NO]] build];
         
         [tracker send:dict];
-    }
-    else
-    {
+    } else {
         RIDebugLog(@"Missing default Google Analytics tracker");
     }
 }
 
 #pragma mark - RIScreenTracking
-
--(void)trackScreenWithName:(NSString *)name
-{
+-(void)trackScreenWithName:(NSString *)name {
     RIDebugLog(@"Google Analytics - Tracking screen with name: %@", name);
     
     id tracker = [[GAI sharedInstance] defaultTracker];
     
-    if (!ISEMPTY(tracker))
-    {
+    if (!ISEMPTY(tracker)) {
         [tracker set:kGAIScreenName value:name];
         
         GAIDictionaryBuilder* params = [GAIDictionaryBuilder createScreenView];
@@ -253,27 +239,20 @@ static RIGoogleAnalyticsTracker *sharedInstance;
             [params setCampaignParametersFromUrl:self.campaignData];
         }
         [tracker send:[params build]];
-    }
-    else
-    {
+    } else {
         RIDebugLog(@"Missing default Google Analytics tracker");
     }
 }
 
 #pragma mark - RIEventTracking
-
--(void)trackEvent:(NSNumber*)eventType data:(NSDictionary *)data
-{
+-(void)trackEvent:(NSNumber*)eventType data:(NSDictionary *)data {
     RIDebugLog(@"Google Analytics - Tracking event: %@", eventType);
     
-    if([self.registeredEvents containsObject:eventType])
-    {
+    if([self.registeredEvents containsObject:eventType]) {
         id tracker = [[GAI sharedInstance] defaultTracker];
         
-        if (!ISEMPTY(tracker))
-        {
-            if(ISEMPTY(data))
-            {
+        if (!ISEMPTY(tracker)) {
+            if(ISEMPTY(data)) {
                 RIRaiseError(@"Missing event data");
                 return;
             }
@@ -292,24 +271,19 @@ static RIGoogleAnalyticsTracker *sharedInstance;
 
             }
             [tracker send:[params build]];
-        }
-        else
-        {
+        } else {
             RIDebugLog(@"Missing default Google Analytics tracker");
         }
     }
 }
 
 #pragma mark - RIEcommerceEventTracking
-
--(void)trackCheckout:(NSDictionary *)data
-{
+-(void)trackCheckout:(NSDictionary *)data {
     RIDebugLog(@"Google Analytics - Tracking checkout with transaction id: %@", data);
     
     id tracker = [[GAI sharedInstance] defaultTracker];
     
-    if (!ISEMPTY(tracker))
-    {
+    if (!ISEMPTY(tracker)) {
         NSString *transactionId = [data objectForKey:kRIEcommerceTransactionIdKey];
         NSNumber *tax = [data objectForKey:kRIEcommerceTaxKey];
         NSNumber *shipping = [data objectForKey:kRIEcommerceShippingKey];
@@ -340,23 +314,18 @@ static RIGoogleAnalyticsTracker *sharedInstance;
                 [tracker send:[[productDict setCampaignParametersFromUrl:self.campaignData] build]];
             }
         }
-    }
-    else
-    {
+    } else {
         RIDebugLog(@"Missing default Google Analytics tracker");
     }
 }
 
 #pragma mark - RITrackingTiming implementation
-
--(void)trackTimingInMillis:(NSNumber*)millis reference:(NSString *)reference label:(NSString*)label
-{
+-(void)trackTimingInMillis:(NSNumber*)millis reference:(NSString *)reference label:(NSString*)label {
     RIDebugLog(@"Google Analytics - Tracking timing: %lu %@ %@", (unsigned long)millis, reference, label);
     
     id tracker = [[GAI sharedInstance] defaultTracker];
     
-    if (!ISEMPTY(tracker))
-    {
+    if (!ISEMPTY(tracker)) {
 //        NSDictionary *dict = [[[GAIDictionaryBuilder createTimingWithCategory:reference
 //                                                                     interval:millis
 //                                                                         name:nil
@@ -364,9 +333,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
 //                               setCampaignParametersFromUrl:self.campaignData] build];
         
         [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:reference interval:millis name:reference label:label] build]];
-    }
-    else
-    {
+    } else {
         RIDebugLog(@"Missing default Google Analytics tracker");
     }
 }

@@ -32,7 +32,7 @@ platform :ios do
     emails = values[:emails] ? values[:emails] : nil
     groups = values[:groups] ? values[:groups] : nil
     notify = values[:notify] ? values[:notify] : true
-    changelog = prompt(text: "Enter the change log: ", multi_line_end_keyword: "END")
+    changelog = values[:changelog] ? values[:changelog] : changelog prompt(text: "Enter the change log: ", multi_line_end_keyword: "END")
 
     crashlytics(api_token: 'ddde4ad6ad210575fdac10a908040d1a93e74833',
       build_secret: 'c37b1e5c603fb0fd9b71f1bf627d92f87718c6efd4aada50d724ab8ad126fe35',

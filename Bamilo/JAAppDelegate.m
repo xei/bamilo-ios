@@ -103,14 +103,14 @@
         #endif
     }
     
-    if(crashlyticsApiKey) {
-        #ifdef IS_RELEASE
-        #else
+    #ifdef IS_RELEASE
+    #else
+        if(crashlyticsApiKey) {
             [Crashlytics startWithAPIKey:crashlyticsApiKey];
             [Fabric with:@[[Crashlytics class]]];
-        #endif
-    }
-    
+        }
+    #endif
+
     return YES;
 }
 

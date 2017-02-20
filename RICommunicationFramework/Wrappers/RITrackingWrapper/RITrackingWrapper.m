@@ -70,7 +70,7 @@ static dispatch_once_t sharedInstanceToken;
     RIGoogleAnalyticsTracker *googleAnalyticsTracker = [[RIGoogleAnalyticsTracker alloc] init];
     
     //Bug Sense Tracker
-    RIBugSenseTracker *bugsenseTracker = [[RIBugSenseTracker alloc] init];
+    //RIBugSenseTracker *bugsenseTracker = [[RIBugSenseTracker alloc] init];
     
     //Ad4Push Tracker
     RIAd4PushTracker *ad4PushTracker = [[RIAd4PushTracker alloc] init];
@@ -82,7 +82,7 @@ static dispatch_once_t sharedInstanceToken;
     //Google Tag Manager Tracker
     RIGTMTracker *gtmTracker = [RIGTMTracker sharedInstance];
     
-    self.trackers = [NSMutableArray arrayWithObjects:googleAnalyticsTracker, bugsenseTracker, ad4PushTracker, adjustTracker, gtmTracker, nil];
+    self.trackers = [NSMutableArray arrayWithObjects:googleAnalyticsTracker, /*bugsenseTracker,*/ ad4PushTracker, adjustTracker, gtmTracker, nil];
     
     if(VALID_NOTEMPTY(launchOptions, NSDictionary)) {
         [self RI_callTrackersConformToProtocol:@protocol(RITracker)
