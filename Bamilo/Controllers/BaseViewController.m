@@ -113,7 +113,7 @@
     }
     
     if(self.navigationController && self.navigationController.navigationBar) {
-        messageViewY = self.navigationController.navigationBar.frame.size.height;
+        messageViewY = 0;
     }
     [self.messageView setFrame:CGRectMake(0, messageViewY, self.view.bounds.size.width, kMessageViewHeight)];
     
