@@ -21,7 +21,7 @@
             <rect key="frame" x="0.0" y="0.0" width="370" height="72"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="370" height="71"/>
+                <rect key="frame" x="0.0" y="0.0" width="370" height="71.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ایتم منو" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kKY-Mc-Ce9">
@@ -41,7 +41,7 @@
                         <rect key="frame" x="0.0" y="70" width="354" height="1"/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="0.5" id="IOI-T5-5aa"/>
+                            <constraint firstAttribute="height" constant="1" id="IOI-T5-5aa"/>
                         </constraints>
                     </view>
                 </subviews>
