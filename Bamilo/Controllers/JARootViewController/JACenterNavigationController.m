@@ -74,6 +74,7 @@
 #import "CartViewController.h"
 #import "AuthenticationContainerViewController.h"
 #import "ProtectedViewControllerProtocol.h"
+#import "ArgsReceiverProtocol.h"
 
 @interface JACenterNavigationController ()
 
@@ -2038,12 +2039,20 @@
     if(viewController) {
         if([viewController conformsToProtocol:@protocol(ProtectedViewControllerProtocol)] && ![RICustomer checkIfUserIsLogged]) {
             [self pushAuthenticationViewController:^{
-                [self pushViewController:viewController animated:YES];
+                [self pushViewController:[self setArgsForViewController:viewController args:args] animated:YES];
             }];
         } else {
-            [self pushViewController:viewController animated:YES];
+            [self pushViewController:[self setArgsForViewController:viewController args:args] animated:YES];
         }
     }
+}
+
+-(UIViewController *) setArgsForViewController:(UIViewController *)viewController args:(NSDictionary *)args {
+    if([viewController conformsToProtocol:@protocol(ArgsReceiverProtocol)]) {
+        [viewController performSelectorOnMainThread:@selector(updateWithArgs:) withObject:args waitUntilDone:YES];
+    }
+    
+    return viewController;
 }
 
 -(void) pushAuthenticationViewController:(void (^)(void))completion {

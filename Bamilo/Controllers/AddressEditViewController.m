@@ -18,8 +18,6 @@
 @property (nonatomic, strong) NSDictionary *vicinityOptionsDictionary;
 @end
 
-
-
 @implementation AddressEditViewController
 
 const int RegionFieldIndex = 4;
@@ -28,8 +26,10 @@ const int VicinityFieldIndex = 6;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = STRING_ADDRESS;
+    
     [self setupView];
 }
 
@@ -72,8 +72,6 @@ const int VicinityFieldIndex = 6;
                                                         validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil]
                                                      selectOptions: nil];
     
-    
-    
     self.formController.formListModel = [NSMutableArray arrayWithArray:@[name, lastname, phone, postalCode, address]];
     
     [self.formController.formListModel insertObject:region atIndex:RegionFieldIndex];
@@ -89,6 +87,7 @@ const int VicinityFieldIndex = 6;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
     [self.formController registerForKeyboardNotifications];
     if(self.addressUID == nil) {
         [self publishScreenLoadTime];
@@ -97,6 +96,7 @@ const int VicinityFieldIndex = 6;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
     if (self.addressUID) {
         [self getAddressByID:self.addressUID];
     }
@@ -104,9 +104,9 @@ const int VicinityFieldIndex = 6;
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    
     [self.formController unregisterForKeyboardNotifications];
 }
-
 
 #pragma mark - Overrides
 - (void)updateNavBar {
@@ -169,8 +169,16 @@ const int VicinityFieldIndex = 6;
     }
 }
 
-#pragma mark - Helpers
+#pragma ArgsReceiverProtocol
+-(void)updateWithArgs:(NSDictionary *)args {
+    Address *address = [args objectForKey:kAddress];
+    
+    if(address) {
+        self.addressUID = address.uid;
+    }
+}
 
+#pragma mark - Helpers
 - (void)getAddressByID: (NSString *)uid {
     [[DataManager sharedInstance] getAddress:self byId:uid completion:^(id data, NSError *error) {
         if (error == nil) {

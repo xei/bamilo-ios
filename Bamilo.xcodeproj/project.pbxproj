@@ -189,7 +189,6 @@
 		879F88291E51CF140033FE87 /* CartEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F88281E51CF140033FE87 /* CartEntity.m */; };
 		879F88311E51D55A0033FE87 /* FormEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F88301E51D55A0033FE87 /* FormEntity.m */; };
 		879F88351E51DFB90033FE87 /* CartForm.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F88341E51DFB90033FE87 /* CartForm.m */; };
-		879F883A1E52EA9F0033FE87 /* ProtectedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F88391E52EA9F0033FE87 /* ProtectedViewController.m */; };
 		87A6814E1E40DC3C00D252AC /* ViewControllerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A6814D1E40DC3C00D252AC /* ViewControllerManager.m */; };
 		87A681521E40ED9200D252AC /* OrangeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A681511E40ED9200D252AC /* OrangeButton.m */; };
 		87A681581E40F21B00D252AC /* BaseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A681571E40F21B00D252AC /* BaseButton.m */; };
@@ -711,6 +710,7 @@
 		873369DC1E5AE00300B0B5E5 /* AddressTableViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressTableViewControllerDelegate.h; sourceTree = "<group>"; };
 		873369DD1E5AF48500B0B5E5 /* AppConsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConsts.h; sourceTree = "<group>"; };
 		873369DE1E5AF48500B0B5E5 /* AppConsts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppConsts.m; sourceTree = "<group>"; };
+		873369E21E5C4A4700B0B5E5 /* ArgsReceiverProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArgsReceiverProtocol.h; sourceTree = "<group>"; };
 		87459C801E4EF37200743120 /* CartListItemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartListItemTableViewCell.h; sourceTree = "<group>"; };
 		87459C811E4EF37200743120 /* CartListItemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartListItemTableViewCell.m; sourceTree = "<group>"; };
 		87459C831E4EF37D00743120 /* CartListItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartListItemTableViewCell.xib; sourceTree = "<group>"; };
@@ -926,8 +926,6 @@
 		879F88301E51D55A0033FE87 /* FormEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormEntity.m; sourceTree = "<group>"; };
 		879F88331E51DFB90033FE87 /* CartForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartForm.h; sourceTree = "<group>"; };
 		879F88341E51DFB90033FE87 /* CartForm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartForm.m; sourceTree = "<group>"; };
-		879F88381E52EA9F0033FE87 /* ProtectedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtectedViewController.h; sourceTree = "<group>"; };
-		879F88391E52EA9F0033FE87 /* ProtectedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProtectedViewController.m; sourceTree = "<group>"; };
 		87A6814C1E40DC3C00D252AC /* ViewControllerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewControllerManager.h; sourceTree = "<group>"; };
 		87A6814D1E40DC3C00D252AC /* ViewControllerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewControllerManager.m; sourceTree = "<group>"; };
 		87A681501E40ED9200D252AC /* OrangeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrangeButton.h; sourceTree = "<group>"; };
@@ -3114,19 +3112,10 @@
 			isa = PBXGroup;
 			children = (
 				87A681591E40F99300D252AC /* BaseViewController */,
-				879F88371E52EA750033FE87 /* ProtectedViewController */,
 				61C5C4081E54479100F22130 /* ProtectedViewControllerProtocol.h */,
+				873369E21E5C4A4700B0B5E5 /* ArgsReceiverProtocol.h */,
 			);
 			name = Base;
-			sourceTree = "<group>";
-		};
-		879F88371E52EA750033FE87 /* ProtectedViewController */ = {
-			isa = PBXGroup;
-			children = (
-				879F88381E52EA9F0033FE87 /* ProtectedViewController.h */,
-				879F88391E52EA9F0033FE87 /* ProtectedViewController.m */,
-			);
-			name = ProtectedViewController;
 			sourceTree = "<group>";
 		};
 		87A6814B1E40DC2000D252AC /* ViewControllerManager */ = {
@@ -5147,7 +5136,6 @@
 				8714E06D1E47949D004C9B1D /* CheckoutProgressViewControl.m in Sources */,
 				879F88311E51D55A0033FE87 /* FormEntity.m in Sources */,
 				875AD5421E38C0C900584ABF /* RICategory.m in Sources */,
-				879F883A1E52EA9F0033FE87 /* ProtectedViewController.m in Sources */,
 				9A40773A1CE24DF800313D20 /* JAORCallToReturnViewController.m in Sources */,
 				875AD5401E38C0C800584ABF /* RIAddress.m in Sources */,
 				CE9ADFE01AB6D78200D56481 /* JATextField.m in Sources */,
