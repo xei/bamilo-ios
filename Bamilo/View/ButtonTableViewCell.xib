@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -20,7 +19,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WdB-Ho-b3r" customClass="BlueButton">
-                        <rect key="frame" x="18" y="28" width="330" height="40"/>
+                        <rect key="frame" x="30" y="28" width="306" height="40"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="40" id="vaH-eK-UNF"/>
                         </constraints>
@@ -31,10 +30,10 @@
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailingMargin" secondItem="WdB-Ho-b3r" secondAttribute="trailing" constant="10" id="HEH-99-XFq"/>
+                    <constraint firstAttribute="trailing" secondItem="WdB-Ho-b3r" secondAttribute="trailing" constant="30" id="HEH-99-XFq"/>
                     <constraint firstItem="WdB-Ho-b3r" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="hKu-eB-T8P"/>
                     <constraint firstItem="WdB-Ho-b3r" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="jXW-8S-mcU"/>
-                    <constraint firstItem="WdB-Ho-b3r" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="pJc-6W-FtG"/>
+                    <constraint firstItem="WdB-Ho-b3r" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="30" id="pJc-6W-FtG"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
