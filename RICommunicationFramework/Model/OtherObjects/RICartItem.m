@@ -61,7 +61,9 @@
     if (VALID_NOTEMPTY([info objectForKey:@"category_url_key"], NSString)) {
         cartItem.categoryUrlKey = [info objectForKey:@"category_url_key"];
     }
-    
+    if (VALID_NOTEMPTY([info objectForKey:@"variation_name"], NSString)) {
+        cartItem.variationName = [info objectForKey:@"variation_name"];
+    }
     if (VALID_NOTEMPTY([info objectForKey:@"variation"], NSString)) {
         cartItem.variation = [info objectForKey:@"variation"];
     }

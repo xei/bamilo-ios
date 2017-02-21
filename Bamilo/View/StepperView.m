@@ -10,6 +10,7 @@
 #import "NSString+Extensions.h"
 
 #define cDARK_GRAY_COLOR [UIColor withRepeatingRGBA:115 alpha:1.0f]
+#define cBlue_Color [UIColor withHexString:@"4A90E2"]
 #define cEXTRA_LIGHT_GRAY_COLOR [UIColor withRepeatingRGBA:186 alpha:1.0f]
 
 @interface StepperView()
@@ -23,6 +24,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     self.label.text = @"۰";
+    [self.label setTextColor:cBlue_Color];
 }
 
 - (IBAction)IncrementBtnTapped:(id)sender {
@@ -72,8 +74,8 @@
 }
 
 - (void)resetBtnsColor {
-    [self.minusBtn setTitleColor:cDARK_GRAY_COLOR forState:UIControlStateNormal];
-    [self.plusBtn setTitleColor:cDARK_GRAY_COLOR forState:UIControlStateNormal];
+    [self.minusBtn setTitleColor:cBlue_Color forState:UIControlStateNormal];
+    [self.plusBtn setTitleColor:cBlue_Color forState:UIControlStateNormal];
     
     if (self.quantity == self.maxQuantity) {
         [self.plusBtn setTitleColor:cEXTRA_LIGHT_GRAY_COLOR forState:UIControlStateNormal];
