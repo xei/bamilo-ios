@@ -8,6 +8,8 @@
 
 #import "BaseModel.h"
 
+#define kAddress @"Address"
+
 @class RICustomer;
 
 @interface Address : BaseModel

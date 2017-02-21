@@ -64,6 +64,8 @@
         if(error == nil && completion != nil) {
             MultistepEntity *multistepEntity = (MultistepEntity *)data;
             completion(multistepEntity.nextStep);
+        } else {
+            [self showNotificationBar:error isSuccess:NO];
         }
     }];
 }
@@ -78,6 +80,10 @@
 }
 
 #pragma mark - AddressTableViewControllerDelegate
+-(void)addressEditButtonTapped:(id)sender {
+    [[ViewControllerManager centerViewController] requestNavigateToNib:@"AddressEditViewController" ofStoryboard:@"Main" useCache:NO args:@{ kAddress: (Address *)sender }];
+}
+
 -(BOOL)addressSelected:(Address *)address {
     [[DataManager sharedInstance] setDefaultAddress:self address:address isBilling:NO completion:^(id data, NSError *error) {
         if(error == nil) {
