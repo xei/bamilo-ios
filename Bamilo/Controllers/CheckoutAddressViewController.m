@@ -42,6 +42,10 @@
 }
 
 #pragma mark - Overrides
+-(NSString *)getTitleForContinueButton {
+    return STRING_CONTINUE_SHOPPING;
+}
+
 -(NSString *)getNextStepViewControllerSegueIdentifier:(NSString *)serviceIdentifier {
     return @"pushAddressToConfirmation";
 }

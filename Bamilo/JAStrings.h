@@ -480,5 +480,7 @@
 #define STRING_SUM_OF_DISCOUNTS RILocalizedString(@"sum_of_dicsounts", nil)
 #define STRING_SHIPPING_COST RILocalizedString(@"shipping_cost", nil)
 #define STRING_SUM_OF_TOTAL RILocalizedString(@"sum_of_total", nil)
+#define STRING_CONFIRM_AND_CONTINUE RILocalizedString(@"confirm_and_continue", nil)
+#define STRING_CONFIRM_AND_PAY RILocalizedString(@"confirm_and_pay", nil)
 
 #endif

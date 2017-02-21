@@ -19,6 +19,7 @@ typedef void(^CheckoutActionCompletion)(NSString *nextStep);
 
 @property (strong, nonatomic) RICart *cart;
 
+-(NSString *) getTitleForContinueButton;
 -(NSString *)getNextStepViewControllerSegueIdentifier:(NSString *)serviceIdentifier;
 -(void) performPreDepartureAction:(CheckoutActionCompletion)completion;
 
