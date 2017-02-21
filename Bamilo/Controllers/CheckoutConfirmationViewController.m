@@ -117,6 +117,10 @@
 }
 
 #pragma mark - Overrides
+-(NSString *)getTitleForContinueButton {
+    return STRING_CONFIRM_AND_CONTINUE;
+}
+
 -(NSString *)getNextStepViewControllerSegueIdentifier:(NSString *)serviceIdentifier {
     return @"pushConfirmationToPayment";
 }

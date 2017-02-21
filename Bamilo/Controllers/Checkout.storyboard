@@ -21,12 +21,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Sh-o6-mCT" customClass="OrangeButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Sh-o6-mCT" customClass="OrangeButton">
                                 <rect key="frame" x="0.0" y="617" width="375" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="8JA-hL-lNi"/>
                                 </constraints>
-                                <state key="normal" title="ادامه">
+                                <state key="normal" title="ادامه خرید">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -95,7 +95,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="Npj-Ll-dJh"/>
                                 </constraints>
-                                <state key="normal" title="ثبت سفارش">
+                                <state key="normal" title="تایید و ادامه ">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -188,7 +188,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="SIc-FD-Oua"/>
                                 </constraints>
-                                <state key="normal" title="پرداخت">
+                                <state key="normal" title="ادامه و پرداخت">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>

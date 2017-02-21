@@ -31,14 +31,14 @@
     [super viewWillAppear:animated];
     
     [self.checkoutProgressViewControl requestUpdate];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [self.continueButton setTitle:[self getTitleForContinueButton] forState:UIControlStateNormal];
 }
 
 #pragma mark - Public Methods
+-(NSString *)getTitleForContinueButton {
+    return nil;
+}
+
 -(NSString *)getNextStepViewControllerSegueIdentifier:(NSString *)serviceIdentifier {
     return nil;
 }

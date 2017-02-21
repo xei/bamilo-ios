@@ -67,6 +67,10 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
 }
 
 #pragma mark - Overrides
+-(NSString *)getTitleForContinueButton {
+    return STRING_CONFIRM_AND_PAY;
+}
+
 -(NSString *)getNextStepViewControllerSegueIdentifier:(NSString *)serviceIdentifier {
     return nil;
 }
