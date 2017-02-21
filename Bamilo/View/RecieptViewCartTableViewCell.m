@@ -14,18 +14,25 @@
 
 @implementation RecieptViewCartTableViewCell
 
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    [self.contentView setBackgroundColor:[UIColor withHexString:@"EEF2F6"]];
+}
+
 - (void)updateWithModel:(id)model {
     if(![model isKindOfClass:CartEntity.class]) {
         return;
     }
     [self.summeryView updateWithModel:model];
     NSMutableArray *receiptViewItems = [NSMutableArray arrayWithArray:@[
-                                                                        [ReceiptItemModel withName:@"جمع کل:" value: ((CartEntity *)model).cartUnreducedValueFormatted ],
-                                                                        [ReceiptItemModel withName:@"تخفیف کالاها:" value: ((CartEntity *)model).discountValueFormated]
+                                                                        [ReceiptItemModel withName:@"جمع کل:"
+                                                                                             value: [((CartEntity *)model).cartUnreducedValueFormatted numbersToPersian]],
+                                                                        [ReceiptItemModel withName:@"تخفیف کالاها:"
+                                                                                             value:[((CartEntity *)model).discountValueFormated numbersToPersian]]
                                                                         ]];
 
     [((CartEntity *)model).priceRules enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-        [receiptViewItems insertObject:[ReceiptItemModel withName:(NSString *)key value:(NSString *)obj] atIndex: receiptViewItems.count];
+        [receiptViewItems insertObject:[ReceiptItemModel withName:(NSString *)key value:[(NSString *)obj numbersToPersian]] atIndex: receiptViewItems.count];
     }];
     [super updateWithModel:receiptViewItems];
 }

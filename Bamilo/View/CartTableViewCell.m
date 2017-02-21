@@ -22,10 +22,18 @@
 @property (nonatomic, weak) IBOutlet StepperViewControl *stepper;
 @property (nonatomic, weak) IBOutlet UILabel *priceLabel;
 @property (nonatomic, weak) IBOutlet UILabel *discountLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *sizeLabelHeightConstraint;
 @property (nonatomic, weak) IBOutlet UIImageView *itemImage;
 @end
 
 @implementation CartTableViewCell
+
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    [self.contentView setBackgroundColor: [UIColor withHexString:@"EEF2F6"]];
+    self.stepper.delegate = self;
+}
 
 - (void)setCartItem:(RICartItem *)cartItem {
     _cartItem = cartItem;
@@ -41,11 +49,18 @@
     self.priceLabel.text = specialPrice ?: realPrice;
     self.discountLabel.text = specialPrice ? realPrice : nil;
     self.discountValue.attributedText = [self.discountValue.text struckThroughText];
-}
-
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    self.stepper.delegate = self;
+    
+    
+    if (cartItem.variation && [cartItem.variationName isEqualToString:@"size"]) {
+        self.sizeLabel.text = [[NSString stringWithFormat:@"اندازه:‌%@", cartItem.variation] numbersToPersian];
+        self.sizeLabelHeightConstraint.constant = 10;
+    } else {
+        self.sizeLabel.text = nil;
+        self.sizeLabelHeightConstraint.constant = 0;
+    }
+    
+    self.productColorLabel.text = nil;
+    self.colorLabelDismessConstraint.priority = UILayoutPriorityRequired;
 }
 
 + (NSString *)nibName {

@@ -23,6 +23,7 @@
 @property (nonatomic, strong) NSString *brandUrlKey;
 @property (nonatomic, strong) NSString *category;
 @property (nonatomic, strong) NSString *categoryUrlKey;
+@property (nonatomic, strong) NSString *variationName;
 @property (nonatomic, strong) NSString *variation;
 @property (nonatomic, strong) NSNumber *price;
 @property (nonatomic, strong) NSString *priceFormatted;

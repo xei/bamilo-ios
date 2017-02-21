@@ -441,7 +441,7 @@
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ig0-vW-kqW">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="549"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" red="0.93333333330000001" green="0.94901960780000005" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableView>
                                     <view alpha="0.93999999999999995" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fm5-0g-qnq" userLabel="Cart Summery View">
                                         <rect key="frame" x="0.0" y="429" width="375" height="75"/>
@@ -490,13 +490,13 @@
                                                 <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                                <real key="value" value="0.39000000000000001"/>
+                                                <real key="value" value="0.20000000000000001"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
                                                 <size key="value" width="0.0" height="-2"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
-                                                <real key="value" value="4"/>
+                                                <real key="value" value="1"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
@@ -863,7 +863,7 @@
             <objects>
                 <navigationController storyboardIdentifier="menuViewController" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="tA5-pZ-pB4" userLabel="Side Menu Navigation Controller" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="UvQ-KB-VPd">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="UvQ-KB-VPd">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -881,7 +881,7 @@
             <objects>
                 <navigationController storyboardIdentifier="JACenterNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="t6o-pS-UXi" customClass="JACenterNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="tCF-5Z-jLJ">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="tCF-5Z-jLJ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.91764705882352937" green="0.91764705882352937" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1167,7 +1167,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="0V7-j2-mJV" userLabel="Application Navigation Controller" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="S2r-Lu-SWl">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="S2r-Lu-SWl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

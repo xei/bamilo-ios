@@ -161,26 +161,13 @@
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];
+            [self checkIfSummeryViewsMustBeVisibleOrNot];
         });
         
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
         [self onErrorResponse:apiResponse messages:@[STRING_NO_NETWORK_DETAILS] showAsMessage:YES selector:@selector(removeCartItem:) objects:@[cartItem]];
         [self hideLoading];
     }];
-}
-
-- (void) changeTheSummeryTopConstraintByAnimationTo:(CGFloat)constant {
-    [UIView animateWithDuration:0.15 animations:^{
-        self.costSummeryContainerTopToWholeCostTopConstraint.constant = constant;
-        [self.view layoutIfNeeded];
-    } completion:nil];
-}
-
-- (void) changeTheSummeryBottomConstraintByAnimationTo:(CGFloat)constant {
-    [UIView animateWithDuration:0.15 animations:^{
-        self.summeryViewToBottomConstraint.constant = constant;
-        [self.view layoutIfNeeded];
-    } completion:nil];
 }
 
 #pragma mark - tableView dataSource & delegates
@@ -214,9 +201,7 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if (self.costSummeryContainerTopToWholeCostTopConstraint.constant == 75) {
-        [self changeTheSummeryTopConstraintByAnimationTo:0];
-    }
+    [self showDetailSummeryView:NO];
     
     
     // ------ if we are approching the end of tableview ------
@@ -228,13 +213,9 @@
     float h = size.height;
     float reload_distance = 30;
     if(y + reload_distance > h) {
-        if (self.summeryViewToBottomConstraint.constant != -45) {
-            [self changeTheSummeryBottomConstraintByAnimationTo:-45];
-        }
+        [self showSummeryView:NO];
     } else {
-        if (self.summeryViewToBottomConstraint.constant != 0) {
-            [self changeTheSummeryBottomConstraintByAnimationTo:0];
-        }
+        [self showSummeryView:YES];
     }
 }
 
@@ -256,6 +237,7 @@
     
     self.cart = cart;
     [self.tableView reloadData];
+    [self checkIfSummeryViewsMustBeVisibleOrNot];
 }
 
 - (void)quantityHasBeenChangedTo:(int)newValue withErrorMessages:(NSArray *)errorMsgs withCell:(id)cartCell {
@@ -288,9 +270,9 @@
 #pragma mark - CartEntitySummaryViewControlDelegate
 - (void)cartEntityTapped:(id)cartEntityControl {
     if (self.costSummeryContainerTopToWholeCostTopConstraint.constant == 0) {
-        [self changeTheSummeryTopConstraintByAnimationTo:75];
+        [self showDetailSummeryView:YES];
     } else {
-        [self changeTheSummeryTopConstraintByAnimationTo:0];
+        [self showDetailSummeryView:NO];
     }
 }
 
@@ -306,7 +288,6 @@
 
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
     [self publishScreenLoadTime];
 }
 
@@ -316,6 +297,8 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo: @{kUpdateCartNotificationValue: cart}];
     self.cart = cart;
+    [self.tableView reloadData];
+    [self checkIfSummeryViewsMustBeVisibleOrNot];
 }
 
 #pragma mark - PerformanceTrackerProtocol
@@ -326,6 +309,56 @@
 -(NSString *)getPerformanceTrackerLabel {
      NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
     return [NSString stringWithFormat:@"%@", [skusFromTeaserInCart allKeys]];
+}
+
+
+#pragma mark - helpers
+
+- (void)checkIfSummeryViewsMustBeVisibleOrNot {
+    [self.tableView layoutIfNeeded];
+    if (self.tableView.contentSize.height < self.tableView.frame.size.height) {
+        [self showSummeryView:NO];
+        [self showDetailSummeryView:NO];
+    }
+}
+
+- (void)showSummeryView:(Boolean)show {
+    if (show) {
+        if (self.summeryViewToBottomConstraint.constant != 0) {
+            [self changeTheSummeryBottomConstraintByAnimationTo:0];
+        }
+        return;
+    }
+    if (self.summeryViewToBottomConstraint.constant != -45) {
+        [self changeTheSummeryBottomConstraintByAnimationTo:-45];
+    }
+}
+
+- (void)showDetailSummeryView:(Boolean)show {
+    if (show){
+        if (self.costSummeryContainerTopToWholeCostTopConstraint.constant != 75) {
+            [self changeTheSummeryTopConstraintByAnimationTo:75];
+            return;
+        }
+    }
+    if (self.costSummeryContainerTopToWholeCostTopConstraint.constant != 0) {
+        [self changeTheSummeryTopConstraintByAnimationTo:0];
+    }
+}
+
+
+- (void) changeTheSummeryTopConstraintByAnimationTo:(CGFloat)constant {
+    [UIView animateWithDuration:0.15 animations:^{
+        self.costSummeryContainerTopToWholeCostTopConstraint.constant = constant;
+        [self.view layoutIfNeeded];
+    } completion:nil];
+}
+
+- (void) changeTheSummeryBottomConstraintByAnimationTo:(CGFloat)constant {
+    [UIView animateWithDuration:0.15 animations:^{
+        self.summeryViewToBottomConstraint.constant = constant;
+        [self.view layoutIfNeeded];
+    } completion:nil];
 }
 
 @end
