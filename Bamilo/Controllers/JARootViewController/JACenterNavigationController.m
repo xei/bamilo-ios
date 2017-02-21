@@ -108,8 +108,7 @@
     return checkoutStepByStepViewController;
 }
 
-- (JAStepByStepTabViewController *)returnsStepByStepViewController
-{
+- (JAStepByStepTabViewController *)returnsStepByStepViewController {
     if (!VALID(_returnsStepByStepViewController, JAStepByStepTabViewController)) {
         _returnsStepByStepViewController = [self getNewReturnsStepByStepViewController];
     }
@@ -118,6 +117,7 @@
 
 - (JAStepByStepTabViewController *)getNewReturnsStepByStepViewController {
     JAStepByStepTabViewController *returnsStepByStepViewController = [JAStepByStepTabViewController new];
+    
     [returnsStepByStepViewController setStepByStepModel:[JAReturnStepByStepModel new]];
     returnsStepByStepViewController.navBarLayout.showCartButton = NO;
     [returnsStepByStepViewController.navBarLayout setShowBackButton:YES];
@@ -206,10 +206,10 @@
                                                  name:kShowAuthenticationScreenNotification
                                                object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
+    /*[[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(runBlockAfterAuthentication:)
                                                  name:kRunBlockAfterAuthenticationNotification
-                                               object:nil];
+                                               object:nil];*/
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showSignInScreen:)
@@ -226,10 +226,10 @@
 //                                                 name:kShowForgotPasswordScreenNotification
 //                                               object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
+    /*[[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showCheckoutForgotPasswordScreen)
                                                  name:kShowCheckoutForgotPasswordScreenNotification
-                                               object:nil];
+                                               object:nil];*/
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showCheckoutAddressesScreen:)
@@ -422,10 +422,6 @@
                                                object:nil];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-}
-
 - (void)loadNavigationViews {
     [self.navigationBarView removeFromSuperview];
     [self.tabBarView removeFromSuperview];
@@ -433,7 +429,6 @@
     [self customizeNavigationBar];
     [self customizeTabBar];
 }
-
 
 - (void)openTargetString:(NSString *)targetString {
     JAScreenTarget *screenTarget = [JAScreenTarget new];
@@ -516,6 +511,7 @@
 #pragma mark Home Screen
 - (void)showHomeScreen:(NSNotification*)notification {
     UIViewController *topViewController = [self topViewController];
+    
     if (![topViewController isKindOfClass:[JAHomeViewController class]])
     {
         if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification object], NSDictionary)){
@@ -535,8 +531,7 @@
     [self setViewControllers:@[rootViewController]];
 }
 
-- (void)showChooseCountry:(NSNotification*)notification
-{
+- (void)showChooseCountry:(NSNotification*)notification {
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAChooseCountryViewController class]])
     {
@@ -624,47 +619,26 @@
     
 }
 
-- (void)changeCenterPanel:(NSString *)newScreenName notification:(NSNotification *)notification
-{
-    if ([newScreenName isEqualToString:STRING_HOME])
-    {
+- (void)changeCenterPanel:(NSString *)newScreenName notification:(NSNotification *)notification {
+    if ([newScreenName isEqualToString:STRING_HOME]) {
         [self showHomeScreen:nil];
-    }
-    else if ([newScreenName isEqualToString:STRING_MY_FAVOURITES])
-    {
+    } else if ([newScreenName isEqualToString:STRING_MY_FAVOURITES]) {
         [self showSavedListViewController:nil];
-    }
-    else if ([newScreenName isEqualToString:STRING_CHOOSE_COUNTRY])
-    {
-        [self showChooseCountry:[NSNotification notificationWithName:kShowChooseCountryScreenNotification
-                                                              object:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"show_menu_button"]]];
-    }
-    else if ([newScreenName isEqualToString:STRING_RECENT_SEARCHES])
-    {
+    } else if ([newScreenName isEqualToString:STRING_CHOOSE_COUNTRY]) {
+        [self showChooseCountry:[NSNotification notificationWithName:kShowChooseCountryScreenNotification object:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"show_menu_button"]]];
+    } else if ([newScreenName isEqualToString:STRING_RECENT_SEARCHES]) {
         [self showRecentSearchesController:nil];
-    }
-    else if ([newScreenName isEqualToString:STRING_LOGIN])
-    {
+    } else if ([newScreenName isEqualToString:STRING_LOGIN]) {
         [self showSignInScreen:nil];
-    }
-    else if ([newScreenName isEqualToString:STRING_RECENTLY_VIEWED])
-    {
+    } else if ([newScreenName isEqualToString:STRING_RECENTLY_VIEWED]) {
         [self showRecentlyViewedController];
-    }
-    else if([newScreenName isEqualToString:STRING_MY_ACCOUNT])
-    {
+    } else if([newScreenName isEqualToString:STRING_MY_ACCOUNT]) {
         [self showMyAccountController];
-    }
-    else if ([newScreenName isEqualToString:STRING_MY_ORDERS])
-    {
+    } else if ([newScreenName isEqualToString:STRING_MY_ORDERS]) {
         [self showMyOrdersViewController:nil];
-    }
-    else if ([newScreenName isEqualToString:STRING_USER_DATA])
-    {
+    } else if ([newScreenName isEqualToString:STRING_USER_DATA]) {
         [self showUserData:nil];
-    }
-    else if ([newScreenName isEqualToString:STRING_USER_EMAIL_NOTIFICATIONS])
-    {
+    } else if ([newScreenName isEqualToString:STRING_USER_EMAIL_NOTIFICATIONS]) {
         [self showEmailNotificaitons:nil];
     }
     
@@ -678,6 +652,8 @@
 
 #pragma mark Favorites Screen
 - (void)showSavedListViewController:(NSNotification*)notification {
+    [self requestNavigateToClass:@"JASavedListViewController" args:nil];
+    /*
         [AuthenticationContainerViewController authenticateAndExecuteBlock:^{
         UIViewController *topViewController = [self topViewController];
         if (![topViewController isKindOfClass:[JASavedListViewController class]])
@@ -686,7 +662,7 @@
             
             [self pushViewController:savedListViewController animated:NO];
         }
-    } showBackButtonForAuthentication:NO];
+    } showBackButtonForAuthentication:NO];*/
 }
 
 #pragma mark MoreMenu
@@ -714,10 +690,10 @@
 - (void)showAuthenticationScreen:(NSNotification *)notification {
     AuthenticationContainerViewController *authenticationViewController = (AuthenticationContainerViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Authentication" nibName:@"AuthenticationContainerViewController" resetCache:YES];
 
-    if (VALID_NOTEMPTY(notification, NSNotification) && notification.object) {
+    /*if (VALID_NOTEMPTY(notification, NSNotification) && notification.object) {
         //TODO: Call the completion block
         //[authenticationViewController setNextStepBlock:notification.object];
-    }
+    }*/
     
     authenticationViewController.navBarLayout.showBackButton = YES;
     

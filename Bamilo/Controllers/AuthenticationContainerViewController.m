@@ -71,6 +71,7 @@
 }
 
 #pragma mark - Legacy codes
+/*
 + (void)goToCheckoutWithBlock:(AuthenticationBlock)authenticatedBlock {
     [self authenticateAndExecuteBlock:authenticatedBlock showBackButtonForAuthentication:YES showContinueWithoutLogin:YES];
 }
@@ -88,7 +89,7 @@
         [userInfo setObject:[NSNumber numberWithBool:backButton] forKey:@"shows_back_button"];
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowAuthenticationScreenNotification object:authenticatedBlock userInfo:userInfo];
     }
-}
+}*/
 
 #pragma mark - AuthenticationDelegate
 - (void)wantsToContinueWithoutLogin {

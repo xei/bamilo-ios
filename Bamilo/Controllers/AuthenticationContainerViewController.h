@@ -23,7 +23,7 @@ typedef void(^AuthenticationBlock)(void);
 @property (strong, nonatomic) SignInViewController *signInViewController;
 @property (strong, nonatomic) SignUpViewController *signUpViewController;
 
-+ (void)goToCheckoutWithBlock:(AuthenticationBlock)authenticatedBlock;
-+ (void)authenticateAndExecuteBlock:(AuthenticationBlock)authenticatedBlock showBackButtonForAuthentication:(BOOL)backButton;
+//+ (void)goToCheckoutWithBlock:(AuthenticationBlock)authenticatedBlock;
+//+ (void)authenticateAndExecuteBlock:(AuthenticationBlock)authenticatedBlock showBackButtonForAuthentication:(BOOL)backButton;
 
 @end

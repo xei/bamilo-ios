@@ -8,7 +8,8 @@
 
 #import "JABaseViewController.h"
 #import "JAPicker.h"
+#import "ProtectedViewControllerProtocol.h"
 
-@interface JASavedListViewController : JABaseViewController
+@interface JASavedListViewController : JABaseViewController <ProtectedViewControllerProtocol>
 
 @end
