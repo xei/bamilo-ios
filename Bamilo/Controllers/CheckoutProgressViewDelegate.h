@@ -10,6 +10,7 @@
 
 @protocol CheckoutProgressViewDelegate <NSObject>
 
+-(void) checkoutProgressViewButtonTapped:(id)sender;
 -(NSArray *) getButtonsForCheckoutProgressView;
 
 @end

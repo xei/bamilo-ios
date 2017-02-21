@@ -21,6 +21,7 @@
     self.checkoutProgressView = [[[NSBundle mainBundle] loadNibNamed:@"CheckoutProgressView" owner:self options:nil] lastObject];
     
     if(self.checkoutProgressView) {
+        self.checkoutProgressView.delegate = self;
         [self addSubview:self.checkoutProgressView];
         [self anchorMatch:self.checkoutProgressView];
     }
@@ -34,6 +35,15 @@
             [self.checkoutProgressView updateButton:model.uid toModel:model];
         }
      }
+}
+
+#pragma mark - CheckoutProgressViewDelegate
+-(void) checkoutProgressViewButtonTapped:(id)sender {
+    [self.delegate checkoutProgressViewButtonTapped:sender];
+}
+
+-(NSArray *) getButtonsForCheckoutProgressView {
+    return [self.delegate getButtonsForCheckoutProgressView];
 }
 
 @end

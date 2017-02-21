@@ -78,6 +78,10 @@
     }
 }
 
+- (IBAction)stepButtonTapped:(id)sender {
+    [self.delegate checkoutProgressViewButtonTapped:sender];
+}
+
 #pragma mark - Private Methods
 -(void) updateButton:(UIButton *)button forModel:(CheckoutProgressViewButtonModel *)model {
     

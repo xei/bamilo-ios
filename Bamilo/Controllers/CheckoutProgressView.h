@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "CheckoutProgressViewButtonModel.h"
+#import "CheckoutProgressViewDelegate.h"
 
 @interface CheckoutProgressView : UIView
+
+@property (weak, nonatomic) id<CheckoutProgressViewDelegate> delegate;
 
 -(void) updateButton:(int)tag toModel:(CheckoutProgressViewButtonModel *)model;
 

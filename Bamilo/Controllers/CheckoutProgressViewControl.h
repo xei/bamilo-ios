@@ -10,7 +10,7 @@
 #import "BaseViewControl.h"
 #import "CheckoutProgressViewDelegate.h"
 
-@interface CheckoutProgressViewControl : BaseViewControl
+@interface CheckoutProgressViewControl : BaseViewControl <CheckoutProgressViewDelegate>
 
 @property (weak, nonatomic) id<CheckoutProgressViewDelegate> delegate;
 

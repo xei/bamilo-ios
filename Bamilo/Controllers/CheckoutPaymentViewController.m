@@ -113,7 +113,7 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
                                  [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutExternalPaymentsScreenNotification object:nil userInfo:userInfo];
                             }
                             
-                            completion(multistepEntity.nextStep);
+                            completion(multistepEntity.nextStep, YES);
                         }
                     }];
                 }
@@ -124,6 +124,8 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
                 [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentFail] data:[trackingDictionary copy]];
                 
                 [self showNotificationBarMessage:STRING_ERROR_SETTING_PAYMENT_METHOD isSuccess:NO];
+                
+                completion(nil, NO);
             }
         }];
     }

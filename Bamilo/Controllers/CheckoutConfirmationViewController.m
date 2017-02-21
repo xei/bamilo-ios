@@ -132,9 +132,7 @@
 }
 
 -(void)performPreDepartureAction:(CheckoutActionCompletion)completion {
-    if(completion != nil) {
-        completion(nil);
-    }
+    completion(nil, YES);
 }
 
 #pragma mark - UITableViewDataSource

@@ -45,7 +45,7 @@
 
 -(void)performPreDepartureAction:(CheckoutActionCompletion)completion {
     if(completion) {
-        completion(nil);
+        completion(nil, NO);
     }
 }
 
@@ -68,13 +68,20 @@
     return nil;
 }
 
+-(void)checkoutProgressViewButtonTapped:(id)sender {
+    UIButton *checkoutProgressViewButton = (UIButton *)sender;
+    [self popToCheckoutViewControllerAtStep:(int)checkoutProgressViewButton.tag];
+}
+
 - (IBAction)continueButtonTapped:(id)sender {
-    [self performPreDepartureAction:^(NSString *nextStep) {
-        NSString *nextStepViewControllerSegueIdentifier = [self getNextStepViewControllerSegueIdentifier:nextStep];
-        if(nextStepViewControllerSegueIdentifier) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self performSegueWithIdentifier:nextStepViewControllerSegueIdentifier sender:self];
-            });
+    [self performPreDepartureAction:^(NSString *nextStep, BOOL success) {
+        if(success == YES) {
+            NSString *nextStepViewControllerSegueIdentifier = [self getNextStepViewControllerSegueIdentifier:nextStep];
+            if(nextStepViewControllerSegueIdentifier) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self performSegueWithIdentifier:nextStepViewControllerSegueIdentifier sender:self];
+                });
+            }
         }
     }];
 }
@@ -82,6 +89,13 @@
 #pragma mark - DataServiceProtocol
 -(void)bind:(id)data forRequestId:(int)rid {
     return;
+}
+
+#pragma mark - Helpers
+-(void) popToCheckoutViewControllerAtStep:(int)step {
+    if(step < self.navigationController.viewControllers.count) {
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:step + 1] animated:YES];
+    }
 }
 
 @end

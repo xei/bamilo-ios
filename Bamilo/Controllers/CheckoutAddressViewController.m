@@ -57,17 +57,22 @@
 }
 
 -(void)performPreDepartureAction:(CheckoutActionCompletion)completion {
-    Address *selectedAddress = [_addresses objectAtIndex:0];
-    Address *billingAddress = selectedAddress;
-    
-    [[DataManager sharedInstance] setMultistepAddress:self forShipping:selectedAddress.uid billing:billingAddress.uid completion:^(id data, NSError *error) {
-        if(error == nil && completion != nil) {
-            MultistepEntity *multistepEntity = (MultistepEntity *)data;
-            completion(multistepEntity.nextStep);
-        } else {
-            [self showNotificationBar:error isSuccess:NO];
-        }
-    }];
+    if(_addresses.count == 0) {
+        completion(nil, NO);
+    } else {
+        Address *selectedAddress = [_addresses objectAtIndex:0];
+        Address *billingAddress = selectedAddress;
+        
+        [[DataManager sharedInstance] setMultistepAddress:self forShipping:selectedAddress.uid billing:billingAddress.uid completion:^(id data, NSError *error) {
+            if(error == nil && completion != nil) {
+                MultistepEntity *multistepEntity = (MultistepEntity *)data;
+                completion(multistepEntity.nextStep, YES);
+            } else {
+                [self showNotificationBar:error isSuccess:NO];
+                completion(nil, YES);
+            }
+        }];
+    }
 }
 
 #pragma mark - CheckoutProgressViewDelegate

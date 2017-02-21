@@ -13,7 +13,7 @@
 #import "RICart.h"
 #import "MultistepEntity.h"
 
-typedef void(^CheckoutActionCompletion)(NSString *nextStep);
+typedef void(^CheckoutActionCompletion)(NSString *nextStep, BOOL success);
 
 @interface CheckoutBaseViewController : BaseViewController <DataServiceProtocol, ProtectedViewControllerProtocol, CheckoutProgressViewDelegate>
 

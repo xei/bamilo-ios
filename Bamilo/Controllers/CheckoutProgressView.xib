@@ -45,6 +45,9 @@
                         <constraint firstAttribute="width" secondItem="M5A-cf-tRK" secondAttribute="height" multiplier="1:1" id="irj-e0-kXs"/>
                         <constraint firstAttribute="width" constant="30" id="yeQ-mi-lsi"/>
                     </constraints>
+                    <connections>
+                        <action selector="stepButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="qRL-NE-wGg"/>
+                    </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" tag="11" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="آدرس" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uWD-gQ-fhc">
                     <rect key="frame" x="249" y="22.5" width="28" height="15.5"/>
@@ -71,6 +74,9 @@
                         <constraint firstAttribute="width" constant="30" id="Oxw-mu-JkG"/>
                         <constraint firstAttribute="width" secondItem="bgL-uu-7bS" secondAttribute="height" multiplier="1:1" id="oA2-hu-0ew"/>
                     </constraints>
+                    <connections>
+                        <action selector="stepButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="Vc8-BX-s53"/>
+                    </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" tag="12" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="بررسی" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b5X-U9-H7d">
                     <rect key="frame" x="136" y="22.5" width="28" height="15.5"/>
@@ -94,6 +100,9 @@
                         <constraint firstAttribute="width" constant="30" id="MHN-A5-RLV"/>
                         <constraint firstAttribute="width" secondItem="7lj-Hc-zIZ" secondAttribute="height" multiplier="1:1" id="jug-3a-YUZ"/>
                     </constraints>
+                    <connections>
+                        <action selector="stepButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="ipR-Z2-B6K"/>
+                    </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" tag="13" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="پرداخت" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1fD-Q1-ZWD">
                     <rect key="frame" x="24" y="22.5" width="28" height="15.5"/>

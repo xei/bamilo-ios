@@ -21,6 +21,10 @@
 #import "SessionManager.h"
 #import "URLUtility.h"
 
+//#######################################################################################
+#import "ViewControllerManager.h"
+#import "BaseViewController.h"
+
 @interface JAAppDelegate () <RIAdjustTrackerDelegate>
 
 @property (nonatomic, strong)NSDate *startLoadingTime;
@@ -51,33 +55,24 @@
     
     [[UINavigationBar appearance] setBarTintColor:JABlack300Color];
     
-    [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil]
-     setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                             JABackgroundGrey, NSForegroundColorAttributeName,
-                             [UIFont fontWithName:kFontLightName size:18.0f], NSFontAttributeName,nil] forState:UIControlStateNormal];
+    [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:JABackgroundGrey, NSForegroundColorAttributeName, [UIFont fontWithName:kFontLightName size:18.0f], NSFontAttributeName,nil] forState:UIControlStateNormal];
     
-    [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil]
-     setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                             [UIColor orangeColor], NSForegroundColorAttributeName,
-                             [UIFont fontWithName:kFontLightName size:18.0f], NSFontAttributeName,nil] forState:UIControlStateSelected];
-    
+    [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor orangeColor], NSForegroundColorAttributeName, [UIFont fontWithName:kFontLightName size:18.0f], NSFontAttributeName,nil] forState:UIControlStateSelected];
     
     NSString* phpSessIDCookie = [NSString stringWithFormat:@"%@%@",kPHPSESSIDCookie,[RIApi getCountryIsoInUse]];
     NSDictionary *cookieProperties = [[NSUserDefaults standardUserDefaults] objectForKey:phpSessIDCookie];
-    if(VALID_NOTEMPTY(cookieProperties, NSDictionary))
-    {
+    if(VALID_NOTEMPTY(cookieProperties, NSDictionary)) {
         NSHTTPCookie *cookie = [NSHTTPCookie cookieWithProperties:cookieProperties];
         [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
     }
 
-    if ([launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey] != nil)
-    {
+    if ([launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey] != nil) {
         UINavigationController *rootViewController = (UINavigationController*)self.window.rootViewController;
         JARootViewController* mainController = (JARootViewController*) [rootViewController topViewController];
-        if(VALID_NOTEMPTY(mainController, JARootViewController))
-        {
+        if(VALID_NOTEMPTY(mainController, JARootViewController)) {
             mainController.notification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
         }
+        
         [[RITrackingWrapper sharedInstance] applicationDidReceiveRemoteNotification:[launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey]];
     }
     
@@ -138,25 +133,33 @@
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
+    id topViewController = [ViewControllerManager topViewController];
+    NSString *screenName;
+    
+    if([topViewController conformsToProtocol:@protocol(PerformanceTrackerProtocol)]) {
+        screenName = [topViewController getPerformanceTrackerScreenName];
+    }
+    
+    if(screenName) {
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCloseApp] data:[NSDictionary dictionaryWithObject:screenName forKey:kRIEventScreenNameKey]];
+    }
+    
+    /*
     UINavigationController *rootViewController = (UINavigationController*) self.window.rootViewController;
     JARootViewController* mainController = (JARootViewController*) [rootViewController topViewController];
-    if(VALID_NOTEMPTY(mainController, JARootViewController))
-    {
+    if(VALID_NOTEMPTY(mainController, JARootViewController)) {
         UINavigationController* centerPanel = (UINavigationController*) [mainController centerPanel];
-        if(VALID_NOTEMPTY(centerPanel, UINavigationController))
-        {
+        if(VALID_NOTEMPTY(centerPanel, UINavigationController)) {
             NSArray *viewControllers = centerPanel.viewControllers;
-            if(VALID_NOTEMPTY(viewControllers, NSArray))
-            {
+            if(VALID_NOTEMPTY(viewControllers, NSArray)) {
                 JABaseViewController *rootViewController = (JABaseViewController *) OBJECT_AT_INDEX(viewControllers, [viewControllers count] - 1);
                 NSString *screenName = [rootViewController getPerformanceTrackerScreenName];
-                if(VALID_NOTEMPTY(screenName, NSString))
-                {
-                    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCloseApp] data:[NSDictionary dictionaryWithObject:screenName forKey:kRIEventScreenNameKey]];
+                if(VALID_NOTEMPTY(screenName, NSString)) {
+
                 }
             }
         }
-    }
+    }*/
     
     [[RITrackingWrapper sharedInstance] applicationDidEnterBackground:application];
     
@@ -214,14 +217,11 @@
     
     UINavigationController *rootViewController = (UINavigationController*)self.window.rootViewController;
     JARootViewController* mainController = (JARootViewController*) [rootViewController topViewController];
-    if(VALID_NOTEMPTY(mainController, JARootViewController))
-    {
+    if(VALID_NOTEMPTY(mainController, JARootViewController)) {
         UINavigationController* centerPanel = (UINavigationController*) [mainController centerPanel];
-        if(VALID_NOTEMPTY(centerPanel, UINavigationController))
-        {
+        if(VALID_NOTEMPTY(centerPanel, UINavigationController)) {
             NSArray *viewControllers = centerPanel.viewControllers;
-            if(VALID_NOTEMPTY(viewControllers, NSArray))
-            {
+            if(VALID_NOTEMPTY(viewControllers, NSArray)) {
                 JABaseViewController *rootViewController = (JABaseViewController *) OBJECT_AT_INDEX(viewControllers, [viewControllers count] - 1);
                 supportedInterfaceOrientationsForWindow = [rootViewController supportedInterfaceOrientations];
             }
@@ -229,8 +229,7 @@
     }
 
     // This should not happen.
-    if(-1 == supportedInterfaceOrientationsForWindow)
-    {
+    if(-1 == supportedInterfaceOrientationsForWindow) {
         supportedInterfaceOrientationsForWindow = UIInterfaceOrientationMaskPortrait;
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
         {
@@ -246,8 +245,7 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    if(!VALID_NOTEMPTY(application, UIApplication) || UIApplicationStateActive != application.applicationState)
-    {
+    if(!VALID_NOTEMPTY(application, UIApplication) || UIApplicationStateActive != application.applicationState) {
         [[RITrackingWrapper sharedInstance] applicationDidReceiveRemoteNotification:userInfo];
     }
 }
