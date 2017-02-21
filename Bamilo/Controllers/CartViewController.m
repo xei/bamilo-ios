@@ -319,6 +319,9 @@
     if (self.tableView.contentSize.height < self.tableView.frame.size.height) {
         [self showSummeryView:NO];
         [self showDetailSummeryView:NO];
+    } else {
+        [self showSummeryView:YES];
+        [self showDetailSummeryView:YES];
     }
 }
 

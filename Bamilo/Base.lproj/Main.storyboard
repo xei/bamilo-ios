@@ -444,7 +444,7 @@
                                         <color key="backgroundColor" red="0.93333333330000001" green="0.94901960780000005" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableView>
                                     <view alpha="0.93999999999999995" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fm5-0g-qnq" userLabel="Cart Summery View">
-                                        <rect key="frame" x="0.0" y="429" width="375" height="75"/>
+                                        <rect key="frame" x="0.0" y="549" width="375" height="75"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="مجموع خرید:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iiG-ZB-Lk2">
                                                 <rect key="frame" x="277" y="10" width="68" height="22"/>
@@ -501,7 +501,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R5o-k2-OAi" userLabel="cart entity summery view" customClass="CartEntitySummaryViewControl">
-                                        <rect key="frame" x="0.0" y="504" width="375" height="45"/>
+                                        <rect key="frame" x="0.0" y="549" width="375" height="45"/>
                                         <color key="backgroundColor" red="0.96862745100000003" green="0.59215686270000001" blue="0.12549019610000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="45" id="JYW-zf-s8H"/>
@@ -527,10 +527,10 @@
                                     <constraint firstAttribute="trailing" secondItem="Fm5-0g-qnq" secondAttribute="trailing" id="MhF-KG-bfK"/>
                                     <constraint firstItem="R5o-k2-OAi" firstAttribute="leading" secondItem="qMZ-Vq-mnw" secondAttribute="leading" id="Snz-ea-lP3"/>
                                     <constraint firstAttribute="bottom" secondItem="f8h-QL-QyM" secondAttribute="bottom" id="Wg7-fO-RXM"/>
-                                    <constraint firstItem="R5o-k2-OAi" firstAttribute="top" secondItem="Fm5-0g-qnq" secondAttribute="top" constant="75" id="X0X-t0-0Fo"/>
+                                    <constraint firstItem="R5o-k2-OAi" firstAttribute="top" secondItem="Fm5-0g-qnq" secondAttribute="top" id="X0X-t0-0Fo"/>
                                     <constraint firstItem="f8h-QL-QyM" firstAttribute="top" secondItem="ig0-vW-kqW" secondAttribute="bottom" id="YMd-KB-IjR"/>
                                     <constraint firstAttribute="trailing" secondItem="R5o-k2-OAi" secondAttribute="trailing" id="lor-Iy-sop"/>
-                                    <constraint firstItem="f8h-QL-QyM" firstAttribute="top" secondItem="R5o-k2-OAi" secondAttribute="bottom" id="rSD-k0-cZW"/>
+                                    <constraint firstItem="f8h-QL-QyM" firstAttribute="top" secondItem="R5o-k2-OAi" secondAttribute="bottom" constant="-45" id="rSD-k0-cZW"/>
                                     <constraint firstItem="Fm5-0g-qnq" firstAttribute="leading" secondItem="qMZ-Vq-mnw" secondAttribute="leading" id="uIf-kq-CEM"/>
                                     <constraint firstItem="f8h-QL-QyM" firstAttribute="leading" secondItem="qMZ-Vq-mnw" secondAttribute="leading" id="x3I-Ed-hU9"/>
                                     <constraint firstItem="ig0-vW-kqW" firstAttribute="top" secondItem="qMZ-Vq-mnw" secondAttribute="top" id="y7A-sY-3qT"/>
@@ -881,7 +881,7 @@
             <objects>
                 <navigationController storyboardIdentifier="JACenterNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="t6o-pS-UXi" customClass="JACenterNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="tCF-5Z-jLJ">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="tCF-5Z-jLJ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.91764705882352937" green="0.91764705882352937" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

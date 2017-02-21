@@ -196,7 +196,7 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
     switch (section) {
         case 0: {
             PlainTableViewHeaderCell *plainTableViewHeaderCell = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:[PlainTableViewHeaderCell nibName]];
-            plainTableViewHeaderCell.title = STRING_PAYMENT_OPTION;
+            plainTableViewHeaderCell.titleString = STRING_PAYMENT_OPTION;
             return plainTableViewHeaderCell;
         }
     }
