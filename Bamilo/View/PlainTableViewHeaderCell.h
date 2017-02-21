@@ -10,6 +10,6 @@
 
 @interface PlainTableViewHeaderCell : BaseTableViewHeaderFooterCell
 
-@property (copy, nonatomic) NSString *title;
+@property (copy, nonatomic) NSString *titleString;
 
 @end

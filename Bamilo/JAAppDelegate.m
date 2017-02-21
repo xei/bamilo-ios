@@ -12,7 +12,6 @@
 #import <Crashlytics/Crashlytics.h>
 #import <NewRelicAgent/NewRelic.h>
 #import <GoogleAppIndexing/GoogleAppIndexing.h>
-
 #import "JARootViewController.h"
 #import "JAUtils.h"
 #import "RIAdjustTracker.h"
@@ -31,9 +30,7 @@
 @implementation JAAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-//    [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RIProduct class])];
     self.startLoadingTime = [NSDate date];
-    
     [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans" forKey:kFontRegularNameKey];
     [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans-Light" forKey:kFontLightNameKey];
     [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans-Bold" forKey:kFontBoldNameKey];

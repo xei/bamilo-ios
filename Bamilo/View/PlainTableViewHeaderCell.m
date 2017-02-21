@@ -24,8 +24,9 @@
     [self.titleLabel applyStyle:kFontBoldName fontSize:12 color:[UIColor withRepeatingRGBA:80 alpha:1.0f]];
 }
 
--(void)setTitle:(NSString *)title {
-    self.titleLabel.text = title;
+- (void)setTitleString:(NSString *)titleString {
+    self.titleLabel.text = titleString;
+    _titleString = titleString;
 }
 
 #pragma mark - Overrides

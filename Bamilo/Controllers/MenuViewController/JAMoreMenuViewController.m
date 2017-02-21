@@ -181,7 +181,7 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     PlainTableViewHeaderCell * headerCell = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:[PlainTableViewHeaderCell nibName]];
-    headerCell.title = STRING_MORE;
+    headerCell.titleString = STRING_MORE;
     return headerCell;
 }
 

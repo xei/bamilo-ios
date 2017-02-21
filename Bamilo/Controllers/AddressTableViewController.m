@@ -52,7 +52,7 @@
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     AddressTableViewHeaderCell *addressTableViewHeaderCell = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:[AddressTableViewHeaderCell nibName]];
-    addressTableViewHeaderCell.title = self.titleHeaderText;
+    addressTableViewHeaderCell.titleString = self.titleHeaderText;
     addressTableViewHeaderCell.delegate = self;
     return addressTableViewHeaderCell;
 }

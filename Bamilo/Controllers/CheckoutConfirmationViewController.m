@@ -250,15 +250,15 @@
     
     switch (section) {
         case 0:
-            plainTableViewHeaderCell.title = STRING_TOTAL_SUM;
+            plainTableViewHeaderCell.titleString = STRING_TOTAL_SUM;
         break;
             
         case 1:
-            plainTableViewHeaderCell.title = STRING_PURCHASE_SUMMARY;
+            plainTableViewHeaderCell.titleString = STRING_PURCHASE_SUMMARY;
         break;
             
         case 2:
-            plainTableViewHeaderCell.title = STRING_RECIPIENT_ADDRESS;
+            plainTableViewHeaderCell.titleString = STRING_RECIPIENT_ADDRESS;
         break;
     }
     
