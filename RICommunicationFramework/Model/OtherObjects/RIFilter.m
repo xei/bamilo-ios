@@ -80,11 +80,11 @@
 @implementation RIFilter
 
 + (NSString *)urlWithFiltersArray:(NSArray*)filtersArray {
-    NSString* urlString = nil;
+    NSString* urlString = @"";
     for (RIFilter* filter in filtersArray) {
         NSString* stringForFilter = [RIFilter urlWithFilter:filter];
         if (stringForFilter.length) {
-            urlString = stringForFilter;
+            urlString = [NSString stringWithFormat:@"%@/%@", urlString, stringForFilter];
         }
     }
     return urlString;

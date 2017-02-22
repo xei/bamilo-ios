@@ -97,7 +97,7 @@ const CGFloat tableViewHeaderSectionHeight = 35;
     if (searchQuery) {
         
         searchQuery = [searchQuery wrapWithMaxSize:7];
-        msgToShow = [NSString stringWithFormat:@"متاسفانه برای %@ شما نتیجه یافت نشد", searchQuery];
+        msgToShow = [NSString stringWithFormat:@"متاسفانه برای %@ نتیجه یافت نشد", searchQuery];
         
     } else { //if there is no searchQuery (e.g. comes from empty category
         msgToShow = @"متاسفانه موردی یافت نشد";
