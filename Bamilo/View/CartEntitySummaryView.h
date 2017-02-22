@@ -16,4 +16,6 @@
 @interface CartEntitySummaryView: UIView
 @property (nonatomic, strong) CartEntity *cartEntity;
 @property (nonatomic, weak) id<CartEntitySummaryViewDelegate> delegate;
+
+- (void)applyColor:(UIColor *)color;
 @end

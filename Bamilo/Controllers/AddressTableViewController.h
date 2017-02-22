@@ -19,5 +19,6 @@
 
 - (void)updateWithModel:(NSArray *)addresses;
 - (void)addInto:(UIViewController *)viewController ofView:(UIView *)containerView;
+- (void)scrollToTop;
 
 @end
