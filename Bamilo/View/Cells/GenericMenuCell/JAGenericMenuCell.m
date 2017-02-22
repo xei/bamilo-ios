@@ -20,6 +20,9 @@
 #define kLeftAndRightMargin 16.f
 #define kSeparatorHeight 1.f
 
+#define kCellLevelTwoMargin 80.f
+#define kCellLevelTwoIPadMargin 88.f
+
 @interface JAGenericMenuCell()
 
 @property (nonatomic, strong) UILabel* mainLabel;
@@ -31,9 +34,9 @@
 
 @implementation JAGenericMenuCell
 
-- (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier
-{
+- (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
+    
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
@@ -58,13 +61,8 @@
     return self;
 }
 
-- (void)setupWithStyle:(JAGenericMenuCellStyle)style
-                 width:(CGFloat)width
-              cellText:(NSString*)cellText
-          iconImageURL:(NSString*)iconImageUrl
-    accessoryImageName:(NSString*)accessoryImageName
-          hasSeparator:(BOOL)hasSeparator;
-{
+- (void)setupWithStyle:(JAGenericMenuCellStyle)style width:(CGFloat)width cellText:(NSString*)cellText iconImageURL:(NSString*)iconImageUrl accessoryImageName:(NSString*)accessoryImageName hasSeparator:(BOOL)hasSeparator {
+    
     //SETUP DEFAULT VARIABLES
     CGFloat height = [JAGenericMenuCell heightForStyle:style];
     UIColor* backgroundColor = [UIColor whiteColor];
@@ -85,12 +83,10 @@
     CGFloat iconImageWidth = 0.0f;
     CGFloat iconImageRightMargin = 0.0f;
     if (VALID_NOTEMPTY(iconImageUrl, NSString)) {
-        
         iconImageWidth = kIconImageWidthAndHeight;
         iconImageRightMargin = kIconImageRightMargin;
         
-        [self.iconImageView setImageWithURL:[NSURL URLWithString:iconImageUrl]
-                           placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
+        [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:iconImageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
     }
     
     CGFloat separatorHeight = 0.0f;
@@ -112,47 +108,38 @@
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
             leftMargin = kLeftIPadMargin;
         }
-    } else if (JAGenericMenuCellStyleLevelOne == style) {
+    } else if (style == JAGenericMenuCellStyleLevelOne) {
         leftMargin = kCellLevelOneMargin;
         
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
             leftMargin = kCellLevelOneIPadMargin;
         }
+    } else if(style == JAGenericMenuCellStyleLevelTwo) {
+        leftMargin = kCellLevelTwoMargin;
+        
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            leftMargin = kCellLevelTwoIPadMargin;
+        }
     }
     
     //SET VIEWS USING VARIABLES
     self.backgroundClickableView.backgroundColor = backgroundColor;
-    [self.backgroundClickableView setFrame:CGRectMake(self.bounds.origin.x,
-                                                      self.bounds.origin.y,
-                                                      width,
-                                                      height)];
+    [self.backgroundClickableView setFrame:CGRectMake(self.bounds.origin.x, self.bounds.origin.y, width, height)];
     self.backgroundClickableView.enabled = clickableViewIsEnabled;
     
-    
     self.iconImageView.contentMode = UIViewContentModeScaleAspectFit;
-    [self.iconImageView setFrame:CGRectMake(leftMargin,
-                                            (height - iconImageWidth)/2,
-                                            iconImageWidth,
-                                            iconImageWidth)];
+    [self.iconImageView setFrame:CGRectMake(leftMargin, (height - iconImageWidth)/2, iconImageWidth, iconImageWidth)];
     
-    [self.mainLabel setFrame:CGRectMake(leftMargin + iconImageWidth + iconImageRightMargin,
-                                        self.backgroundClickableView.bounds.origin.y + textTopOffset,
-                                        self.backgroundClickableView.bounds.size.width - leftMargin - accessoryImageWidth - accessoryImageMargin - iconImageWidth - iconImageRightMargin - rightMargin,
-                                        height)];
+    [self.mainLabel setFrame:CGRectMake(leftMargin + iconImageWidth + iconImageRightMargin, self.backgroundClickableView.bounds.origin.y + textTopOffset, self.backgroundClickableView.bounds.size.width - leftMargin - accessoryImageWidth - accessoryImageMargin - iconImageWidth - iconImageRightMargin - rightMargin, height)];
+    
     [self.mainLabel setText:text];
     [self.mainLabel setFont:font];
     [self.mainLabel setTextColor:textColor];
     [self.mainLabel setTextAlignment:NSTextAlignmentLeft];
     
-    [self.accessoryImageView setFrame:CGRectMake(self.backgroundClickableView.bounds.size.width - accessoryImageWidth - rightMargin,
-                                                 (height - accessoryImageWidth)/2,//image is square so width=height
-                                                 accessoryImageWidth,
-                                                 accessoryImageWidth)];
+    [self.accessoryImageView setFrame:CGRectMake(self.backgroundClickableView.bounds.size.width - accessoryImageWidth - rightMargin, (height - accessoryImageWidth)/2, accessoryImageWidth, accessoryImageWidth)]; //image is square so width=height
     
-    [self.separatorView setFrame:CGRectMake(leftMargin,
-                                            height-separatorHeight,
-                                            self.backgroundClickableView.bounds.size.width - leftMargin,
-                                            separatorHeight)];
+    [self.separatorView setFrame:CGRectMake(leftMargin, height-separatorHeight, self.backgroundClickableView.bounds.size.width - leftMargin, separatorHeight)];
     
     if (RI_IS_RTL) {
         [self.backgroundClickableView flipAllSubviews];
@@ -160,8 +147,7 @@
     }
 }
 
-+ (CGFloat)heightForStyle:(JAGenericMenuCellStyle)style
-{
++ (CGFloat)heightForStyle:(JAGenericMenuCellStyle)style {
     CGFloat height = kCellHeight;
     if (JAGenericMenuCellStyleHeader == style) {
         height = kHeaderHeight;
@@ -169,8 +155,7 @@
     return height;
 }
 
-- (void)clickableViewWasPressed
-{
+- (void)clickableViewWasPressed {
 //VIRTUAL, SHOULD BE IMPLEMENTED IN THE SUBCLASSES
 }
 

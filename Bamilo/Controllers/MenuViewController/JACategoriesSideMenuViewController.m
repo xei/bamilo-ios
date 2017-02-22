@@ -33,8 +33,7 @@
 
 @implementation JACategoriesSideMenuViewController
 
-- (JAMessageView *)messageView
-{
+- (JAMessageView *)messageView {
     if (!VALID_NOTEMPTY(_messageView, JAMessageView)) {
         _messageView = [[JAMessageView alloc] initWithFrame:CGRectMake(0, 64, self.view.bounds.size.width, kMessageViewHeight)];
         [_messageView setupView];
@@ -45,16 +44,14 @@
 # pragma mark Loading View
 //THIS IS NOT A BASE VIEW CONTROLLER SO IT NEEDS ITS OWN LOADING VIEW
 
-- (NSLock *)reloadLock
-{
+- (NSLock *)reloadLock {
     if (!VALID(_reloadLock, NSLock)) {
         _reloadLock = [NSLock new];
     }
     return _reloadLock;
 }
 
-- (void)initLoading
-{
+- (void)initLoading {
     self.loadingView = [[UIImageView alloc] initWithFrame:((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame];
     self.loadingView.backgroundColor = [UIColor blackColor];
     self.loadingView.alpha = 0.0f;
@@ -82,7 +79,6 @@
 }
 
 - (void)showLoading {
-    
     if (NO == VALID_NOTEMPTY(self.loadingView, UIView)) {
         [self initLoading];
     }
@@ -100,7 +96,6 @@
 }
 
 - (void)hideLoading {
-    
     [UIView animateWithDuration:0.4f
                      animations: ^{
                          self.loadingView.alpha = 0.0f;
@@ -133,18 +128,16 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCategories) name:kSideMenuShouldReload object:nil];
     
     [self reloadData];
-
 }
 
-- (void)reloadData
-{
+- (void)reloadData {
     [self reloadCategories];
     [self reloadExternalLinks];
 }
 
-- (void)reloadCategories
-{
+- (void)reloadCategories {
     [self showLoading];
+    
     [RICategory getCategoriesWithSuccessBlock:^(id categories) {
         self.categoriesLoadingError = NO;
         self.categoriesArray = [NSArray arrayWithArray:(NSArray *)categories];
@@ -157,22 +150,21 @@
     }];
 }
 
-- (void)reloadExternalLinks
-{
+- (void)reloadExternalLinks {
     [self showLoading];
+    
     [RIExternalCategory getExternalCategoryWithSuccessBlock:^(RIExternalCategory *externalCategory) {
         self.externalCategory = externalCategory;
         [self categoriesLoaded];
         [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
-        
         [self hideLoading];
     }];
 }
 
-- (void)categoriesLoaded
-{
+- (void)categoriesLoaded {
     [self.reloadLock lock];
+    
     NSInteger externalIndex = -1;
     if (VALID_VALUE(self.externalCategory, RIExternalCategory)) {
         externalIndex = self.externalCategory.position.integerValue;
@@ -196,36 +188,32 @@
         for (RICategory* levelOneCategory in category.children) {
             [self.tableViewCategoriesArray addObject:levelOneCategory];
         }
-    }
-    if (externalIndex != -1) {
+    } if (externalIndex != -1) {
         [self.tableViewCategoriesArray addObject:self.externalCategory];
         for (RIExternalCategory *external in self.externalCategory.children) {
             [self.tableViewCategoriesArray addObject:external];
             externalIndex++;
         }
     }
+    
     [self.tableView reloadData];
     [self.reloadLock unlock];
 }
 
-- (void)popToRoot
-{
+- (void)popToRoot {
     [self.navigationController popToRootViewControllerAnimated:NO];
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)viewDidDisappear:(BOOL)animated
-{
+- (void)viewDidDisappear:(BOOL)animated {
     // notify the InAppNotification SDK that this view controller in no more active
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     //manually add the status bar height into the calculations
@@ -236,40 +224,34 @@
                                         self.view.bounds.size.height - statusBarHeight)];
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
     //manually add the status bar height into the calculations
     CGFloat statusBarHeight = 20.0f;
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    [self.tableView setFrame:CGRectMake(self.view.bounds.origin.x,
-                                        self.view.bounds.origin.y + statusBarHeight,
-                                        self.view.bounds.size.width,
-                                        self.view.bounds.size.height - statusBarHeight)];
+    [self.tableView setFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y + statusBarHeight, self.view.bounds.size.width, self.view.bounds.size.height - statusBarHeight)];
 }
 
 #pragma mark - UITableView
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if ((self.categoriesLoadingError && indexPath.row > self.tableViewCategoriesArray.count-1) || self.tableViewCategoriesArray.count == 0) {
         return [JACategoriesSideMenuCell heightForCategory:nil];
     }
+    
     id category = [self.tableViewCategoriesArray objectAtIndex:indexPath.row];
+    
     return [JACategoriesSideMenuCell heightForCategory:category];
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (self.categoriesLoadingError) {
-        return self.tableViewCategoriesArray.count+1;
+        return self.tableViewCategoriesArray.count + 1;
     }
+    
     return self.tableViewCategoriesArray.count;
 }
 
-- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    if ((self.categoriesLoadingError && indexPath.row > self.tableViewCategoriesArray.count-1) || self.tableViewCategoriesArray.count == 0) {
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ((self.categoriesLoadingError && indexPath.row > self.tableViewCategoriesArray.count - 1) || self.tableViewCategoriesArray.count == 0) {
         UITableViewCell *tableViewCell = [tableView dequeueReusableCellWithIdentifier:@""];
         if (!tableViewCell) {
             tableViewCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"retryCell"];
@@ -299,7 +281,7 @@
     
     BOOL isOpen = NO;
     BOOL hasSeparator = NO;
-    if (self.tableViewCategoriesArray.count -1 != indexPath.row) {
+    if (self.tableViewCategoriesArray.count - 1 != indexPath.row) {
         //not the last cell
         //check the next cell's category
         id nextCategory = [self.tableViewCategoriesArray objectAtIndex:indexPath.row + 1];
@@ -323,25 +305,23 @@
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.categoriesLoadingError && indexPath.row > self.tableViewCategoriesArray.count-1) {
         [self reloadData];
     }
 }
 
-- (void)categoryWasSelected:(id)category;
-{
+- (void)categoryWasSelected:(id)category {
     NSNumber *level = nil;
     NSOrderedSet *children = nil;
     
     if ([category isKindOfClass:[RICategory class]]) {
         level = [(RICategory *)category level];
         children = [(RICategory *)category children];
-    }else if ([category isKindOfClass:[RIExternalCategory class]]) {
+    } else if ([category isKindOfClass:[RIExternalCategory class]]) {
         level = [(RIExternalCategory *)category level];
         children = [(RIExternalCategory *)category children];
-    }else{
+    } else {
         return;
     }
     
@@ -354,6 +334,7 @@
     
     //based on category, find the index
     NSInteger index = 0;
+    
     for (int i = 0; i < self.tableViewCategoriesArray.count; i++) {
         id tableCategory = [self.tableViewCategoriesArray objectAtIndex:i];
         if (tableCategory == category) {
@@ -363,11 +344,10 @@
         }
     }
     
-    if (1 == [level integerValue] && VALID_NOTEMPTY(children, NSOrderedSet)) {
-        
+    if (VALID_NOTEMPTY(children, NSOrderedSet)) {
         //this level 1 has children, find out if we're supposed to open or close
-        
         BOOL isOpen = NO;
+        
         if (self.tableViewCategoriesArray.count -1 != index) {
             //not the last cell
             //check the next cell's category
@@ -416,7 +396,6 @@
             [self.tableView endUpdates];
         }
     } else {
-        
         //not a level 1 with children means we just have to open the category
         if ([category isKindOfClass:[RICategory class]]) {
             [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification
@@ -436,9 +415,7 @@
 }
 
 
-- (void)showMessage:(NSString *)message success:(BOOL)success
-{
-    
+- (void)showMessage:(NSString *)message success:(BOOL)success {
     if (!VALID(self.messageView.superview, JAMessageView)) {
         UIViewController *rootViewController = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController;
         [rootViewController.view addSubview:self.messageView];

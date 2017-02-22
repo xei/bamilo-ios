@@ -25,10 +25,7 @@
 //@property (nonatomic, strong) RIExternalCategory *externalCategory;
 @property (nonatomic, assign) id<JACategoriesSideMenuCellDelegate> delegate;
 
-- (void)setupWithCategory:(id)category
-                    width:(CGFloat)width
-             hasSeparator:(BOOL)hasSeparator
-                   isOpen:(BOOL)isOpen;
+- (void)setupWithCategory:(id)category width:(CGFloat)width hasSeparator:(BOOL)hasSeparator isOpen:(BOOL)isOpen;
 
 + (CGFloat)heightForCategory:(id)category;
 
