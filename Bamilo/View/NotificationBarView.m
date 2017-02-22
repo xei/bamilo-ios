@@ -75,8 +75,8 @@ static NotificationBarView *instance;
     }
     
     [viewController.view addSubview:self];
-    [self setWidth:viewController.view.size.width];
-    [self setHeight:[self.textLabel sizeForLabel].height + cVERTICAL_PADDING];
+    [self.textLabel sizeToFit];
+    [self setFrame:CGRectMake(0, 0, viewController.view.size.width, self.textLabel.height + cVERTICAL_PADDING)];
     [self setY: -self.height];
     [self setHidden:NO];
     
