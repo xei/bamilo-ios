@@ -1,4 +1,4 @@
-//
+    //
 //  PlainTableViewHeaderCell.m
 //  Bamilo
 //
@@ -30,11 +30,11 @@
 }
 
 #pragma mark - Overrides
-+(CGFloat)cellHeight {
++ (CGFloat)cellHeight {
     return 40.0f;
 }
 
-+(NSString *)nibName {
++ (NSString *)nibName {
     return @"PlainTableViewHeaderCell";
 }
 
