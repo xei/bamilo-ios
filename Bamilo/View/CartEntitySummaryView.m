@@ -37,4 +37,9 @@
     }
 }
 
+- (void)applyColor:(UIColor *)color {
+    self.titleLabel.textColor = color;
+    self.priceLabel.textColor = color;
+}
+
 @end

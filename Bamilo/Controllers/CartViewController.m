@@ -260,7 +260,7 @@
 }
 
 - (void)wantsToRemoveCartItem:(RICartItem *)cartItem byCell:(id)cartCell {
-    [[AlertManager sharedInstance] confirmAlert:@"حذف محصول" text:@"آیا از حذف این محصول از سبد خرید خود اطمینان دارید؟" confirm:@"بله" cancel:@"خیر" completion:^(BOOL OK) {
+    [[AlertManager sharedInstance] confirmAlert:@"حذف کالا" text:@"از حذف کالا از سبد خریدتان اطمینان دارید؟" confirm:@"بله" cancel:@"خیر" completion:^(BOOL OK) {
         if(OK) [self removeCartItem:cartItem];
     }];
 }

@@ -31,7 +31,6 @@
     if(![model isKindOfClass:CartEntity.class]) {
         return;
     }
-    
     [self.summeryView setCartEntity:model]; 
 }
 
@@ -39,4 +38,9 @@
 - (void)cartEntitySummeryTapped:(id)view {
     [self.delegate cartEntityTapped:self];
 }
+
+- (void)applyColor:(UIColor *)color {
+    [self.summeryView applyColor:color];
+}
+
 @end

@@ -48,6 +48,7 @@
 
 - (void)layoutSubviews {
     self.summeryView.backgroundColor = [UIColor whiteColor];
+    [self.summeryView applyColor:[UIColor withHexString:@"31a830"]];
 }
 
 @end

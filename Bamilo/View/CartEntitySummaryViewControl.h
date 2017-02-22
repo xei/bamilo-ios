@@ -16,4 +16,6 @@
 
 @interface CartEntitySummaryViewControl : BaseViewControl <CartEntitySummaryViewDelegate>
 @property (nonatomic, weak) id<CartEntitySummaryDelegate> delegate;
+
+- (void)applyColor:(UIColor *)color;
 @end
