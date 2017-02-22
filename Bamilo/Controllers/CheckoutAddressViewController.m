@@ -69,7 +69,7 @@
                 completion(multistepEntity.nextStep, YES);
             } else {
                 [self showNotificationBar:error isSuccess:NO];
-                completion(nil, YES);
+                completion(nil, NO);
             }
         }];
     }
