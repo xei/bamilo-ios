@@ -11,7 +11,8 @@
 
 typedef NS_ENUM(NSInteger, JAGenericMenuCellStyle) {
     JAGenericMenuCellStyleDefault,
-    JAGenericMenuCellStyleLevelOne,
+    JAGenericMenuCellStyleLevelOne, //Level 2
+    JAGenericMenuCellStyleLevelTwo, //Level 3
     JAGenericMenuCellStyleHeader
 };
 
@@ -21,12 +22,7 @@ typedef NS_ENUM(NSInteger, JAGenericMenuCellStyle) {
 
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier;
 
-- (void)setupWithStyle:(JAGenericMenuCellStyle)style
-                 width:(CGFloat)width
-              cellText:(NSString*)cellText
-          iconImageURL:(NSString*)iconImageUrl
-    accessoryImageName:(NSString*)accessoryImageName
-          hasSeparator:(BOOL)hasSeparator;
+- (void)setupWithStyle:(JAGenericMenuCellStyle)style width:(CGFloat)width cellText:(NSString*)cellText iconImageURL:(NSString*)iconImageUrl accessoryImageName:(NSString*)accessoryImageName hasSeparator:(BOOL)hasSeparator;
 
 + (CGFloat)heightForStyle:(JAGenericMenuCellStyle)style;
 
