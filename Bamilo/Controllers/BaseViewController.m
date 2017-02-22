@@ -10,6 +10,7 @@
 #import "JAMessageView.h"
 #import "BaseViewController.h"
 #import "ViewControllerManager.h"
+#import "NotificationBarView.h"
 
 @interface BaseViewController()
 @property (strong, nonatomic) JAMessageView *messageView;
@@ -110,6 +111,13 @@
 - (BOOL)showNotificationBarMessage:(NSString *)message isSuccess:(BOOL)success {
     UIViewController *rootViewController = [ViewControllerManager topViewController];
     
+    [[NotificationBarView sharedInstance] show:rootViewController text:message isSuccess:success];
+    
+    return YES;
+    
+    /*
+    UIViewController *rootViewController = [ViewControllerManager topViewController];
+     
     float messageViewY = 64;
     
     if(self.messageView == nil) {
@@ -129,10 +137,15 @@
     [self.messageView setTitle:message success:success];
     
     return YES;
+     */
 }
 
 - (void)removeMessageView {
+    [[NotificationBarView sharedInstance] dismiss];
+    
+    /*
     [self.messageView removeFromSuperview];
+     */
 }
 
 #pragma mark - PerformanceTrackerProtocol

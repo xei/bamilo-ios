@@ -28,7 +28,9 @@ static AlertManager *instance;
 
 -(void)confirmAlert:(NSString *)title text:(NSString *)text confirm:(NSString *)confirm cancel:(NSString *)cancel completion:(AlertCompletion)completion {
     BMLAlertView *alertView = [[BMLAlertView alloc] initWithStyle:CancelAndConfirmAlert width:0.8];
+    alertView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
     [self configure:alertView];
+    
     alertView.isClickBackgroundCloseWindow = NO;
     alertView.headerTitleLabel.text = title;
     alertView.contentTextLabel.text = text;

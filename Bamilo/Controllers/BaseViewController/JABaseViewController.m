@@ -16,6 +16,7 @@
 #import "JAAuthenticationViewController.h"
 #import "JACenterNavigationController.h"
 #import "ViewControllerManager.h"
+#import "NotificationBarView.h"
 
 #define kSearchViewBarHeight 44.0f
 
@@ -421,8 +422,12 @@
 }
 
 # pragma mark Message View
-
 - (void)showMessage:(NSString *)message success:(BOOL)success {
+    UIViewController *rootViewController = [ViewControllerManager topViewController];
+    
+    [[NotificationBarView sharedInstance] show:rootViewController text:message isSuccess:success];
+    
+    /*
     UIViewController *rootViewController = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController;
     if (!VALID_NOTEMPTY(self.messageView, JAMessageView)) {
         self.messageView = [[JAMessageView alloc] initWithFrame:CGRectMake(0, 64, self.bounds.size.width, kMessageViewHeight)];
@@ -434,15 +439,18 @@
     if (!VALID_NOTEMPTY([self.messageView superview], UIView)) {
         [rootViewController.view addSubview:self.messageView];
     }
-    [self.messageView setTitle:message success:success];
+    [self.messageView setTitle:message success:success];*/
+    
 }
 
 - (void)removeMessageView {
-    [self.messageView removeFromSuperview];
+    [[NotificationBarView sharedInstance] dismiss];
+
+    /*[self.messageView removeFromSuperview];*/
+    
 }
 
 # pragma mark Error Views
-
 - (void)onSuccessResponse:(RIApiResponse)apiResponse messages:(NSArray *)successMessages showMessage:(BOOL)showMessage {
     [self removeErrorView];
     if (showMessage) {
