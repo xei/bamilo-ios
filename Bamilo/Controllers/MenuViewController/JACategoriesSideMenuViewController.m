@@ -31,7 +31,9 @@
 
 @end
 
-@implementation JACategoriesSideMenuViewController
+@implementation JACategoriesSideMenuViewController {
+    UITableViewRowAnimation animationInsert, animationDelete;
+}
 
 - (JAMessageView *)messageView {
     if (!VALID_NOTEMPTY(_messageView, JAMessageView)) {
@@ -127,6 +129,14 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCategories) name:kSideMenuShouldReload object:nil];
     
+    animationInsert = UITableViewRowAnimationLeft;
+    animationDelete = UITableViewRowAnimationRight;
+    
+    if (RI_IS_RTL) {
+        animationInsert = UITableViewRowAnimationRight;
+        animationDelete = UITableViewRowAnimationLeft;
+    }
+
     [self reloadData];
 }
 
@@ -312,91 +322,14 @@
 }
 
 - (void)categoryWasSelected:(id)category {
-    NSNumber *level = nil;
-    NSOrderedSet *children = nil;
-    
-    if ([category isKindOfClass:[RICategory class]]) {
-        level = [(RICategory *)category level];
-        children = [(RICategory *)category children];
-    } else if ([category isKindOfClass:[RIExternalCategory class]]) {
-        level = [(RIExternalCategory *)category level];
-        children = [(RIExternalCategory *)category children];
-    } else {
-        return;
-    }
-    
-    UITableViewRowAnimation animationInsert = UITableViewRowAnimationLeft;
-    UITableViewRowAnimation animationDelete = UITableViewRowAnimationRight;
-    if (RI_IS_RTL) {
-        animationInsert = UITableViewRowAnimationRight;
-        animationDelete = UITableViewRowAnimationLeft;
-    }
-    
-    //based on category, find the index
-    NSInteger index = 0;
-    
-    for (int i = 0; i < self.tableViewCategoriesArray.count; i++) {
-        id tableCategory = [self.tableViewCategoriesArray objectAtIndex:i];
-        if (tableCategory == category) {
-            //found it
-            index = i;
-            break;
-        }
-    }
+    NSNumber *level = [self getLevelForCategory:category];
+    NSOrderedSet *children = [self getChildrenForCategory:category];
+    NSInteger index = [self getIndexOfTheCategory:category];
     
     if (VALID_NOTEMPTY(children, NSOrderedSet)) {
-        //this level 1 has children, find out if we're supposed to open or close
-        BOOL isOpen = NO;
-        
-        if (self.tableViewCategoriesArray.count -1 != index) {
-            //not the last cell
-            //check the next cell's category
-            id nextCategory = [self.tableViewCategoriesArray objectAtIndex:index + 1];
-            NSNumber *nextLevel = nil;
-            
-            if ([nextCategory isKindOfClass:[RICategory class]]) {
-                nextLevel = [(RICategory *)nextCategory level];
-            }else if ([nextCategory isKindOfClass:[RIExternalCategory class]]) {
-                nextLevel = [(RIExternalCategory *)nextCategory level];
-            }
-            if ([nextLevel integerValue] > [level integerValue]) {
-                isOpen = YES;
-            }
-        }
-        
-        if (isOpen) {
-            //close
-            NSMutableArray* deleteIndexPaths = [NSMutableArray new];
-            for (NSInteger i = index+[children count]; i > index; i--) {
-                //this for goes backwards so that we can remove the items from the arrays without the index problems
-                
-                [self.tableViewCategoriesArray removeObjectAtIndex:i];
-                
-                [deleteIndexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
-            }
-            [self.tableView beginUpdates];
-            [self.tableView deleteRowsAtIndexPaths:deleteIndexPaths withRowAnimation:animationDelete];
-            [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
-            [self.tableView endUpdates];
-            
-        } else {
-            //open
-            NSMutableArray* insertIndexPaths = [NSMutableArray new];
-            for (int i = 0; i < [children count]; i++) {
-                id child = [children objectAtIndex:i];
-                
-                NSInteger newIndex = index + i + 1;
-                [self.tableViewCategoriesArray insertObject:child atIndex:newIndex];
-
-                [insertIndexPaths addObject:[NSIndexPath indexPathForRow:newIndex inSection:0]];
-            }
-            [self.tableView beginUpdates];
-            [self.tableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:animationInsert];
-            [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
-            [self.tableView endUpdates];
-        }
+        [self updateCategory:category children:children index:index level:level toClose:[self getIfToClose:index level:level]];
     } else {
-        //not a level 1 with children means we just have to open the category
+        //This does not have children so just open up the category
         if ([category isKindOfClass:[RICategory class]]) {
             [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification
                                                                 object:@{@"category":category}];
@@ -414,7 +347,6 @@
     }
 }
 
-
 - (void)showMessage:(NSString *)message success:(BOOL)success {
     if (!VALID(self.messageView.superview, JAMessageView)) {
         UIViewController *rootViewController = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController;
@@ -425,4 +357,138 @@
     [self.messageView setTitle:message success:success];
 }
 
+#pragma mark - Helpers
+-(NSNumber *)getLevelForCategory:(id)category {
+    if ([category isKindOfClass:[RICategory class]]) {
+        return [(RICategory *)category level];
+    } else if ([category isKindOfClass:[RIExternalCategory class]]) {
+        return [(RIExternalCategory *)category level];
+    }
+    
+    return nil;
+}
+
+-(NSOrderedSet *)getChildrenForCategory:(id)category {
+    if ([category isKindOfClass:[RICategory class]]) {
+        return [(RICategory *)category children];
+    } else if ([category isKindOfClass:[RIExternalCategory class]]) {
+        return [(RIExternalCategory *)category children];
+    }
+    
+    return nil;
+}
+
+-(void) updateCategory:(id)category children:(NSOrderedSet *)children index:(NSInteger)index level:(NSNumber *)level toClose:(BOOL)toClose {
+    if (toClose) {
+        //Close Down
+        if(children.count > 0) {
+            for(id sCategory in children) {
+                NSNumber *sLevel = [self getLevelForCategory:sCategory];
+                NSOrderedSet *sChildren = [self getChildrenForCategory:sCategory];
+                NSInteger sIndex = [self getIndexOfTheCategory:sCategory];
+                
+                if([self getIfToClose:sIndex level:sLevel]) {
+                    [self updateCategory:sCategory children:sChildren index:sIndex level:sLevel toClose:toClose];
+                }
+                
+                [self removeChildFromTableView:sIndex];
+            }
+        } else {
+            [self removeChildFromTableView:index];
+        }
+    } else {
+        //Open Up
+        [self addChildrenToTableView:children index:index];
+    }
+    
+    [self updateRowInTableView:index];
+}
+
+-(NSInteger) getIndexOfTheCategory:(id)category {
+    //based on category, find the index
+    NSInteger index = 0;
+    
+    for (int i = 0; i < self.tableViewCategoriesArray.count; i++) {
+        id tableCategory = [self.tableViewCategoriesArray objectAtIndex:i];
+        if (tableCategory == category) {
+            //found it
+            index = i;
+            break;
+        }
+    }
+    
+    return index;
+}
+
+-(BOOL) getIfToClose:(NSInteger)index level:(NSNumber *)level {
+    BOOL isOpen = NO;
+    
+    if (self.tableViewCategoriesArray.count - 1 != index) {
+        id nextCategory = [self.tableViewCategoriesArray objectAtIndex:index + 1];
+        NSNumber *nextLevel = nil;
+        
+        if ([nextCategory isKindOfClass:[RICategory class]]) {
+            nextLevel = [(RICategory *)nextCategory level];
+        } else if ([nextCategory isKindOfClass:[RIExternalCategory class]]) {
+            nextLevel = [(RIExternalCategory *)nextCategory level];
+        }
+        
+        if ([nextLevel integerValue] > [level integerValue]) {
+            isOpen = YES;
+        }
+    }
+    
+    return isOpen;
+}
+
+-(void) updateRowInTableView:(NSInteger)index {
+    [self.tableView beginUpdates];
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView endUpdates];
+}
+
+-(void) removeChildFromTableView:(NSInteger)index {
+    [self.tableViewCategoriesArray removeObjectAtIndex:index];
+    
+    [self.tableView beginUpdates];
+    [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:animationDelete];
+    [self.tableView endUpdates];
+}
+
+-(void) addChildrenToTableView:(NSOrderedSet *)children index:(NSInteger)index {
+    //Open Up
+    NSMutableArray* insertIndexPaths = [NSMutableArray new];
+    for (int i = 0; i < [children count]; i++) {
+        id child = [children objectAtIndex:i];
+        
+        NSInteger newIndex = index + i + 1;
+        [self.tableViewCategoriesArray insertObject:child atIndex:newIndex];
+        
+        [insertIndexPaths addObject:[NSIndexPath indexPathForRow:newIndex inSection:0]];
+    }
+    [self.tableView beginUpdates];
+    [self.tableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:animationInsert];
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView endUpdates];
+}
+
+/*
+-(void) updateChildrenInTableView:(NSOrderedSet *)children index:(NSInteger)index toClose:(BOOL)toClose {
+    if(toClose) {
+        //Close Down
+        NSMutableArray* deleteIndexPaths = [NSMutableArray new];
+        for (NSInteger i = index+[children count]; i > index; i--) {
+            //this for goes backwards so that we can remove the items from the arrays without the index problems
+            
+            [self.tableViewCategoriesArray removeObjectAtIndex:i];
+            
+            [deleteIndexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
+        }
+        [self.tableView beginUpdates];
+        [self.tableView deleteRowsAtIndexPaths:deleteIndexPaths withRowAnimation:animationDelete];
+        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.tableView endUpdates];
+    } else {
+            }
+}*/
 @end
