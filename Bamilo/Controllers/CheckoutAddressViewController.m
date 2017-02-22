@@ -99,6 +99,10 @@
     return YES;
 }
 
+- (void)addAddressTapped {
+    [[ViewControllerManager centerViewController] requestNavigateToNib:@"AddressEditViewController" ofStoryboard:@"Main" useCache:NO args:nil];
+}
+
 #pragma mark - DataServiceProtocol
 -(void)bind:(id)data forRequestId:(int)rid {
     switch (rid) {

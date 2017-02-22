@@ -9,6 +9,8 @@
 #import "NotificationBarView.h"
 #import "NSString+Size.h"
 
+#define cVERTICAL_PADDING 10
+
 @implementation NotificationBarView {
 @private
     NSTimer *_timer;
@@ -73,7 +75,7 @@ static NotificationBarView *instance;
     }
     [viewController.view addSubview:self];
     [self setWidth:viewController.view.size.width];
-    [self setHeight: [text sizeForFont:self.textLabel.font withMaxWidth: viewController.view.size.width].height + 25];
+    [self setHeight: [text sizeForFont:self.textLabel.font withMaxWidth:viewController.view.size.width].height + cVERTICAL_PADDING];
     [self setY: -self.height];
     [self setHidden:NO];
     [UIView animateWithDuration:.3 animations:^{
