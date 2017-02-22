@@ -15,4 +15,10 @@
     self.textColor = color;
 }
 
+- (CGSize)sizeForLabel {
+    CGRect labelRect = [self.text boundingRectWithSize:self.size options:NSStringDrawingUsesLineFragmentOrigin attributes:@{ NSFontAttributeName : self.font } context:nil];
+    
+    return labelRect.size;
+}
+
 @end

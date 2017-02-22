@@ -65,22 +65,25 @@ static NotificationBarView *instance;
 
 #pragma mark - Helpers
 - (BOOL)showOnViewController:(UIViewController *)viewController text:(NSString *)text isSuccess:(BOOL)isSuccess {
-    
     self.textLabel.text = text;
     self.iconImage.hidden = isSuccess;
+    
     if (isSuccess) {
         self.backgroundColor = JAMessageViewSuccessColor;
     } else {
         self.backgroundColor = JAMessageViewErrorColor;
     }
+    
     [viewController.view addSubview:self];
     [self setWidth:viewController.view.size.width];
-    [self setHeight: [text sizeForFont:self.textLabel.font withMaxWidth:viewController.view.size.width].height + cVERTICAL_PADDING];
+    [self setHeight:[self.textLabel sizeForLabel].height + cVERTICAL_PADDING];
     [self setY: -self.height];
     [self setHidden:NO];
+    
     [UIView animateWithDuration:.3 animations:^{
         [self setY:0.f];
     }];
+    
     [_timer invalidate];
     _timer = [NSTimer scheduledTimerWithTimeInterval:4.0f target:self selector:@selector(dismiss) userInfo:nil repeats:NO];
     

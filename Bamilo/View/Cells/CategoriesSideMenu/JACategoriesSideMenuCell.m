@@ -26,20 +26,17 @@
     JAGenericMenuCellStyle style = JAGenericMenuCellStyleDefault;
     NSString* accessoryImageName;
     
-    if([self.level integerValue] == 0) {
-        style = JAGenericMenuCellStyleHeader;
-    } else {
-        if ([self.children count] == 0) {
-            style = JAGenericMenuCellStyleLevelTwo;
-            accessoryImageName = @"sideMenuCell_arrow";
+    int level = [self.level intValue];
+    style = (JAGenericMenuCellStyle)level;
+    
+    if ([self.children count] > 0) {
+        if (isOpen) {
+            accessoryImageName = @"sideMenuCell_minus";
         } else {
-            style = JAGenericMenuCellStyleLevelOne;
-            if (isOpen) {
-                accessoryImageName = @"sideMenuCell_minus";
-            } else {
-                accessoryImageName = @"sideMenuCell_plus";
-            }
+            accessoryImageName = @"sideMenuCell_plus";
         }
+    } else {
+        accessoryImageName = @"sideMenuCell_arrow";
     }
     
     [self setupWithStyle:style width:width cellText:self.label iconImageURL:self.imageUrl accessoryImageName:accessoryImageName hasSeparator:hasSeparator];

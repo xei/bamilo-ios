@@ -10,10 +10,10 @@
 #import "JAClickableView.h"
 
 typedef NS_ENUM(NSInteger, JAGenericMenuCellStyle) {
-    JAGenericMenuCellStyleDefault,
-    JAGenericMenuCellStyleLevelOne, //Level 2
-    JAGenericMenuCellStyleLevelTwo, //Level 3
-    JAGenericMenuCellStyleHeader
+    JAGenericMenuCellStyleHeader   = 0,
+    JAGenericMenuCellStyleDefault  = 1,
+    JAGenericMenuCellStyleLevelOne = 2, //Level 2
+    JAGenericMenuCellStyleLevelTwo = 3, //Level 3
 };
 
 @interface JAGenericMenuCell : UITableViewCell
