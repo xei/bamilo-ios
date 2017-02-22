@@ -60,6 +60,7 @@
             [[DataManager sharedInstance] setDefaultAddress:self address:address isBilling:NO completion:^(id data, NSError *error) {
                 if(error == nil) {
                     [self bind:data forRequestId:1];
+                    [_addressTableViewController scrollToTop];
                 }
             }];
         }
@@ -128,7 +129,6 @@
                     [_addresses addObject:otherAddress];
                 }
                 [_addressTableViewController updateWithModel:_addresses];
-                [_addressTableViewController scrollToTop];
             }
         }
         break;

@@ -169,7 +169,7 @@
 #pragma mark - form submission abstract method
 - (void)buttonTapped:(id)cell {
     [self.activeField resignFirstResponder];
-    [self.delegate submitBtnTapped];
+    [self.delegate formSubmitButtonTapped];
 }
 
 #pragma mark - InputTextFieldControlDelegate

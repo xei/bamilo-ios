@@ -13,8 +13,12 @@
 #import "FormTableViewCell.h"
 
 @protocol FormViewControlDelegate<NSObject>
-- (void)submitBtnTapped;
-@optional - (void)fieldHasBeenUpdatedByNewValidValue:(NSString *)value inFieldIndex:(NSUInteger)fieldIndex;
+
+- (void)formSubmitButtonTapped;
+
+@optional
+- (void)fieldHasBeenUpdatedByNewValidValue:(NSString *)value inFieldIndex:(NSUInteger)fieldIndex;
+
 @end
 
 @interface FormViewControl :NSObject <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, ButtonTableViewCellDelegate, InputTextFieldControlDelegate>

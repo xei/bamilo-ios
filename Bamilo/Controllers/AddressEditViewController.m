@@ -119,11 +119,12 @@ const int VicinityFieldIndex = 6;
 }
 
 #pragma mark - FormViewControlDelegate
-- (void)submitBtnTapped {
+- (void)formSubmitButtonTapped {
     if (![self.formController isFormValid]) {
         [self.formController showAnyErrorInForm];
         return;
     }
+    
     NSMutableDictionary *params = [self.formController getMutableDictionaryOfForm];
     params[@"address_form[id]"] = self.addressUID;
     [[DataManager sharedInstance] submitAddress:self params:params withID:self.addressUID completion:^(id data, NSError *error) {

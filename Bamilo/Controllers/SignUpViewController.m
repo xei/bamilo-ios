@@ -61,7 +61,7 @@
 }
 
 #pragma mark - formControlDelegate
-- (void)submitBtnTapped {
+- (void)formSubmitButtonTapped {
     if (![self.formController isFormValid]) {
         [self.formController showAnyErrorInForm];
         return;
