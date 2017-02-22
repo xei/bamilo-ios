@@ -82,8 +82,13 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     AddressTableViewCell *addressTableViewCell = [self.tableView dequeueReusableCellWithIdentifier:[AddressTableViewCell nibName] forIndexPath:indexPath];
     
-    [addressTableViewCell updateWithModel:[_addresses objectAtIndex:indexPath.row]];
-    addressTableViewCell.options = self.options;
+    Address *address = [_addresses objectAtIndex:indexPath.row];
+    [addressTableViewCell updateWithModel:address];
+    if(address.isDefaultShipping || address.isDefaultBilling) {
+        addressTableViewCell.options = self.options & ~ADDRESS_CELL_DELETE; //Removing Delete if the Address is Default
+    } else {
+        addressTableViewCell.options = self.options;
+    }
     addressTableViewCell.delegate = self;
     
     return addressTableViewCell;
