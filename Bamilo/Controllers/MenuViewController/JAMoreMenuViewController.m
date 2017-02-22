@@ -197,7 +197,7 @@
 - (void)fAQBtnTouchUpInside {
     NSDictionary *userInfo = @{
                  @"title"                   : @"راهنما",
-                 @"targetString"            : @"shop_in_shop::help",
+                 @"targetString"            : @"shop_in_shop::help-ios",
                  @"show_back_button_title"  : @""
                  };
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithShopUrlNofication object:nil userInfo: userInfo];

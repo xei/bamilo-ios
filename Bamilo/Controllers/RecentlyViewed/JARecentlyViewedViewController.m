@@ -176,7 +176,7 @@
     [self.collectionView setBackgroundColor:[UIColor whiteColor]];
     self.navBarLayout.showBackButton = YES;
     [self.collectionView registerClass:[JARecentlyViewedCell class] forCellWithReuseIdentifier:@"CellWithLines"];
-    self.navBarLayout.title = STRING_RECENTLY_VIEWED;
+    self.navBarLayout.title = STRING_RECENTLY_VIEWED_TITLE;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
