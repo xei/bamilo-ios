@@ -11,5 +11,7 @@
 #import "CartEntitySummaryViewControl.h"
 
 @interface RecieptViewCartTableViewCell : ReceiptView
+
 + (CGFloat)cellHeightByModel:(CartEntity *)cartEntity;
+
 @end

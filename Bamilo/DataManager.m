@@ -61,8 +61,12 @@ static DataManager *instance;
                       [self serialize:data into:[Address class] response:response errorMessages:errorMessages completion:completion];
                   }];
 }
-- (void)submitAddress:(id<DataServiceProtocol>)target params:(NSDictionary *)params withID:(NSString *)uid completion:(DataCompletion)completion {
+- (void)submitAddress:(id<DataServiceProtocol>)target params:(NSMutableDictionary *)params withID:(NSString *)uid completion:(DataCompletion)completion {
     NSString *path = uid ? [NSString stringWithFormat:@"%@%@", RI_API_POST_CUSTOMER_ADDDRESS_EDIT, uid] : RI_API_POST_CUSTOMER_ADDDRESS_CREATE;
+    
+    params[@"is_default_billing"] = @YES;
+    params[@"is_default_shipping"] = @YES;
+    
     [RequestManager asyncPOST:target path:path params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
         if(response == RIApiResponseSuccess && data) {
             completion(data, nil);
