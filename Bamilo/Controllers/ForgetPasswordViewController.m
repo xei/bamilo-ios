@@ -50,7 +50,7 @@
 #pragma mark - Overrides
 -(void)updateNavBar {
     [super updateNavBar];
-    self.navBarLayout.title = @"فراموشی رمز";
+    self.navBarLayout.title = @"بازیابی کلمه عبور";
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showLogo = NO;
     self.navBarLayout.showCartButton = NO;
