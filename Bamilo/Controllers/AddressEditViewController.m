@@ -192,6 +192,11 @@ const int VicinityFieldIndex = 6;
 - (void)updateSelectOptionModelForFieldIndex:(NSUInteger)fieldIndex withData:(id)data {
     [self.formController updateFieldIndex:fieldIndex WithUpdateModelBlock:^FormItemModel *(FormItemModel *model) {
         model.selectOption = data;
+        
+        if ([model getValue] == nil) {
+            model.titleString = nil;
+        }
+        
         return model;
     }];
     [self.formController refreshView];
