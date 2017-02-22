@@ -116,6 +116,7 @@
         //CHANGED DEFAULT ADDRESS
         case 1: {
             [self asyncGetMultistepAddressList];
+            [_addressTableViewController scrollToTop];
         }
         break;
     }
