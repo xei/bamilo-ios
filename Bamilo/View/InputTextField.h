@@ -11,11 +11,10 @@
 @interface InputTextField : UIView
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UIImageView *icon;
-@property (nonatomic) Boolean hasIcon;
+@property (assign, nonatomic) BOOL hasIcon;
 
-- (void)showErrorMsg:(NSString *)errorMsg;
-- (void)clearError;
-- (void)showDropDownIcon;
-- (void)hideDropDownIcon;
+-(void) showErrorMsg:(NSString *)errorMsg;
+-(void) clearError;
+-(void) updateDropDownAppearance:(BOOL)isHidden;
 
 @end

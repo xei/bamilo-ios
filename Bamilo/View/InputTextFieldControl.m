@@ -67,7 +67,7 @@
 
 - (void)setType:(InputTextFieldControlType) type {
     self.input.textField.secureTextEntry = NO;
-    [self.input hideDropDownIcon];
+    [self.input updateDropDownAppearance:YES];
     switch (type) {
         case InputTextFieldControlTypePassword:
             self.input.textField.keyboardType = UIKeyboardTypeDefault;
@@ -80,7 +80,7 @@
             self.input.textField.keyboardType = UIKeyboardTypeEmailAddress;
             break;
         case InputTextFieldControlTypeOptions:
-            [self.input showDropDownIcon];
+            [self.input updateDropDownAppearance:NO];
             break;
         default:
             self.input.textField.keyboardType = UIKeyboardTypeDefault;

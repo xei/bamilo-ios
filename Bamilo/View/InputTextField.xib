@@ -34,7 +34,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="318" height="62"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Email" translatesAutoresizingMaskIntoConstraints="NO" id="KsS-gh-5m4">
-                            <rect key="frame" x="279" y="15.5" width="31" height="31"/>
+                            <rect key="frame" x="318" y="15.5" width="31" height="31"/>
                         </imageView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GiY-9V-qjX" userLabel="bottom seperator">
                             <rect key="frame" x="0.0" y="61" width="318" height="1"/>
@@ -44,7 +44,7 @@
                             </constraints>
                         </view>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="متن خالی" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZZk-q2-461">
-                            <rect key="frame" x="0.0" y="0.0" width="271" height="61"/>
+                            <rect key="frame" x="0.0" y="0.0" width="310" height="61"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <color key="textColor" red="0.23921568630000001" green="0.23921568630000001" blue="0.23921568630000001" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
@@ -58,7 +58,6 @@
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="GiY-9V-qjX" secondAttribute="bottom" id="8Cy-wi-Rmd"/>
                         <constraint firstItem="ZZk-q2-461" firstAttribute="top" secondItem="6Fa-Ht-d6l" secondAttribute="top" id="AEm-xi-88P"/>
-                        <constraint firstAttribute="trailing" secondItem="ZZk-q2-461" secondAttribute="trailing" priority="250" constant="8" id="Lgr-Vs-6dq"/>
                         <constraint firstItem="KsS-gh-5m4" firstAttribute="width" secondItem="KsS-gh-5m4" secondAttribute="height" multiplier="1:1" id="LjN-7g-Rxb"/>
                         <constraint firstAttribute="trailing" secondItem="GiY-9V-qjX" secondAttribute="trailing" id="NC3-yf-8Ga"/>
                         <constraint firstItem="KsS-gh-5m4" firstAttribute="centerY" secondItem="ZZk-q2-461" secondAttribute="centerY" id="U6P-za-nU8"/>
@@ -67,9 +66,9 @@
                         <constraint firstItem="ZZk-q2-461" firstAttribute="leading" secondItem="6Fa-Ht-d6l" secondAttribute="leading" id="Y8k-6p-3gO"/>
                         <constraint firstItem="KsS-gh-5m4" firstAttribute="width" secondItem="6Fa-Ht-d6l" secondAttribute="height" multiplier="1:2" id="d8h-XS-LdZ"/>
                         <constraint firstItem="bPy-SO-qhD" firstAttribute="centerY" secondItem="ZZk-q2-461" secondAttribute="centerY" id="fd9-8z-24M"/>
-                        <constraint firstAttribute="trailing" secondItem="KsS-gh-5m4" secondAttribute="trailing" constant="8" id="lFj-GL-qVW"/>
+                        <constraint firstAttribute="trailing" secondItem="KsS-gh-5m4" secondAttribute="trailing" constant="-31" id="lFj-GL-qVW"/>
                         <constraint firstItem="GiY-9V-qjX" firstAttribute="top" secondItem="ZZk-q2-461" secondAttribute="bottom" id="tFR-C9-8Na"/>
-                        <constraint firstItem="KsS-gh-5m4" firstAttribute="left" secondItem="ZZk-q2-461" secondAttribute="right" priority="750" constant="8" id="ubK-Vl-Vrz"/>
+                        <constraint firstItem="KsS-gh-5m4" firstAttribute="left" secondItem="ZZk-q2-461" secondAttribute="right" constant="8" id="ubK-Vl-Vrz"/>
                     </constraints>
                 </view>
             </subviews>
@@ -91,7 +90,7 @@
                 <outlet property="errorMsg" destination="d2O-YV-59p" id="MOp-B3-7RI"/>
                 <outlet property="errorMsgTopConstraint" destination="W8b-tV-9pC" id="5Xx-up-B2N"/>
                 <outlet property="icon" destination="KsS-gh-5m4" id="HYy-x2-oR2"/>
-                <outlet property="iconHiddenConstraint" destination="Lgr-Vs-6dq" id="Fts-Vz-JFQ"/>
+                <outlet property="iconTrailingConstraint" destination="lFj-GL-qVW" id="dHP-9Q-cUJ"/>
                 <outlet property="iconVisibleConstraint" destination="ubK-Vl-Vrz" id="sfb-t6-Sxr"/>
                 <outlet property="seperatorBorderView" destination="GiY-9V-qjX" id="vfD-bi-gSl"/>
                 <outlet property="textField" destination="ZZk-q2-461" id="W3q-Hj-1x0"/>
