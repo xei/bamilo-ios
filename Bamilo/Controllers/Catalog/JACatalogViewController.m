@@ -14,6 +14,7 @@
 #import "RIFilter.h"
 #import "JAClickableView.h"
 #import "JAUndefinedSearchView.h"
+#import "JAFilteredNoResultsView.h"
 #import "CatalogNoResultViewController.h"
 #import "JAAppDelegate.h"
 #import "UIImageView+JA.h"
@@ -37,7 +38,7 @@
 
 typedef void (^ProcessActionBlock)(void);
 
-@interface JACatalogViewController () {
+@interface JACatalogViewController () <JAFilteredNoResulsViewDelegate> {
     BOOL _needAddToFavBlock;
     ProcessActionBlock _processActionBlock;
     BOOL _hasBanner;
@@ -47,7 +48,7 @@ typedef void (^ProcessActionBlock)(void);
 
 //$WIZ$
 //@property (nonatomic, strong) JACatalogWizardView* wizardView;
-//@property (nonatomic, strong) JAFilteredNoResultsView *filteredNoResultsView;
+@property (nonatomic, strong) JAFilteredNoResultsView *filteredNoResultsView;
 @property (nonatomic, strong) JACatalogTopView* catalogTopView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIView *containerView;
@@ -123,6 +124,19 @@ typedef void (^ProcessActionBlock)(void);
 
 -(void)showNoResultsView:(CGFloat)withVerticalPadding undefinedSearchTerm:(RIUndefinedSearchTerm*)undefinedSearchTerm {
     
+    if(self.filtersArray.count) {
+        self.filteredNoResultsView.delegate = nil;
+        [self.filteredNoResultsView removeFromSuperview];
+        self.filteredNoResultsView = [[JAFilteredNoResultsView alloc] initWithFrame:[self viewBounds]];
+        self.filteredNoResultsView.tag = 1001;
+        self.filteredNoResultsView.delegate = self;
+        
+        self.catalogTopView.hidden = YES;
+        [self.collectionView setHidden:YES];
+        [self.filteredNoResultsView setupView:[self viewBounds]];
+        [self.view addSubview:self.filteredNoResultsView];
+    }
+    
     self.containerViewController.searchQuery = self.searchString ? self.searchString : self.categoryName;
     [self.catalogTopView setHidden:YES];
     [self.collectionView setHidden:YES];
@@ -130,6 +144,12 @@ typedef void (^ProcessActionBlock)(void);
     
 }
 
+#pragma mark - filteredNoResultsViewDelegate
+-(void)pressedEditFiltersButton:(JAFilteredNoResultsView *)view {
+    [self.collectionView setHidden:NO];
+    self.catalogTopView.hidden = NO;
+    [self filterButtonPressed];
+}
 
 - (void)showLoading {
     [super showLoading];

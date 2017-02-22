@@ -161,7 +161,6 @@
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];
-            [self checkIfSummeryViewsMustBeVisibleOrNot];
         });
         
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
@@ -237,7 +236,6 @@
     
     self.cart = cart;
     [self.tableView reloadData];
-    [self checkIfSummeryViewsMustBeVisibleOrNot];
 }
 
 - (void)quantityHasBeenChangedTo:(int)newValue withErrorMessages:(NSArray *)errorMsgs withCell:(id)cartCell {
