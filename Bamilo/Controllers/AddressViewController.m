@@ -128,6 +128,7 @@
                     [_addresses addObject:otherAddress];
                 }
                 [_addressTableViewController updateWithModel:_addresses];
+                [_addressTableViewController scrollToTop];
             }
         }
         break;

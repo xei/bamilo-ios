@@ -109,4 +109,10 @@
     }
 }
 
+#pragma mark - helpers
+
+- (void)scrollToTop {
+    [self.tableView setContentOffset:CGPointZero animated:YES];
+}
+
 @end
