@@ -7,6 +7,7 @@
 //
 
 #import "NotificationBarView.h"
+#import "NSString+Size.h"
 
 @implementation NotificationBarView {
 @private
@@ -20,11 +21,10 @@ static NotificationBarView *instance;
     dispatch_once(&onceToken, ^{
         instance = [[[NSBundle mainBundle] loadNibNamed:@"NotificationBarView" owner:self options:nil] objectAtIndex:0];
     });
-    
     return instance;
 }
 
--(void)awakeFromNib {
+- (void)awakeFromNib {
     [super awakeFromNib];
     
     self.textLabel.font = JABodyFont;
@@ -38,20 +38,19 @@ static NotificationBarView *instance;
     [self.iconImage setImage:[UIImage imageNamed:@"ico_error_notificationbar"]];
 }
 
--(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self dismiss];
 }
 
 #pragma mark - Public Methods
--(void) show:(UIViewController *)viewController text:(NSString *)text isSuccess:(BOOL)isSuccess {
+- (void)show:(UIViewController *)viewController text:(NSString *)text isSuccess:(BOOL)isSuccess {
     if(self.hidden == NO) {
         [self setY:-1 * self.frame.size.height];
     }
-    
-    [self showOnViewController:viewController text:text isSuccess:isSuccess];
+    [self showOnViewController:viewController text:[@"\u200F" stringByAppendingString:text] isSuccess:isSuccess];
 }
 
--(void)dismiss {
+- (void)dismiss {
     if(self.hidden == NO) {
         [UIView animateWithDuration:0.3f animations:^{
             [self setY:-1 * self.frame.size.height];
@@ -63,28 +62,23 @@ static NotificationBarView *instance;
 }
 
 #pragma mark - Helpers
--(BOOL) showOnViewController:(UIViewController *)viewController text:(NSString *)text isSuccess:(BOOL)isSuccess {
+- (BOOL)showOnViewController:(UIViewController *)viewController text:(NSString *)text isSuccess:(BOOL)isSuccess {
+    
     self.textLabel.text = text;
-    
     self.iconImage.hidden = isSuccess;
-    
     if (isSuccess) {
         self.backgroundColor = JAMessageViewSuccessColor;
     } else {
         self.backgroundColor = JAMessageViewErrorColor;
     }
-    
     [viewController.view addSubview:self];
-    [self setWidth:viewController.view.bounds.size.width];
-    
-    [self setY:-self.height];
-    
+    [self setWidth:viewController.view.size.width];
+    [self setHeight: [text sizeForFont:self.textLabel.font withMaxWidth: viewController.view.size.width].height + 25];
+    [self setY: -self.height];
     [self setHidden:NO];
-    
     [UIView animateWithDuration:.3 animations:^{
         [self setY:0.f];
     }];
-    
     [_timer invalidate];
     _timer = [NSTimer scheduledTimerWithTimeInterval:4.0f target:self selector:@selector(dismiss) userInfo:nil repeats:NO];
     
