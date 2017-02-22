@@ -198,14 +198,14 @@ const int VicinityFieldIndex = 6;
 
 - (void)updateFormValuesWithAddress:(Address *)address {
     NSDictionary <NSString*, NSString*> *addressFieldMapValues = @{
-                                      @"address_form[first_name]"   : address.firstName,
-                                      @"address_form[last_name]"    : address.lastName,
-                                      @"address_form[phone]"        : address.phone,
-                                      @"address_form[address1]"     : address.address,
-                                      @"address_form[address2]"     : address.address1,
-                                      @"address_form[region]"       : address.region,
-                                      @"address_form[city]"         : address.city,
-                                      @"address_form[postcode]"     : address.postcode
+                                      @"address_form[first_name]"   : address.firstName ?: @"",
+                                      @"address_form[last_name]"    : address.lastName ?: @"",
+                                      @"address_form[phone]"        : address.phone ?: @"",
+                                      @"address_form[address1]"     : address.address ?: @"",
+                                      @"address_form[address2]"     : address.address1 ?: @"",
+                                      @"address_form[region]"       : address.region ?: @"",
+                                      @"address_form[city]"         : address.city ?: @"",
+                                      @"address_form[postcode]"     : address.postcode ?: @""
                                     };
     [self.formController.formListModel enumerateObjectsUsingBlock:^(FormItemModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [self.formController updateFieldIndex:idx WithUpdateModelBlock:^FormItemModel *(FormItemModel *model) {

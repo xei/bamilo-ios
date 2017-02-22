@@ -63,20 +63,7 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.separatorInset = UIEdgeInsetsZero;
     
-    _cellsIndexPaths = [NSMutableArray arrayWithObjects:
-                            //Total Sum
-                            [NSMutableArray arrayWithObjects:
-                                [NSIndexPath indexPathForRow:0 inSection:0],
-                                //[NSIndexPath indexPathForRow:1 inSection:0], //Code View is initially hidden
-                                [NSIndexPath indexPathForRow:2 inSection:0],
-                                [NSIndexPath indexPathForRow:3 inSection:0],
-                                [NSIndexPath indexPathForRow:4 inSection:0], nil],
-                            //Cart Items
-                            @[],
-                            //Shipping Address
-                            [NSMutableArray arrayWithObjects:
-                                [NSIndexPath indexPathForRow:0 inSection:2], nil],
-                        nil];
+    [self setInitialCellPathState];
     
     _receiptViewItems = [NSMutableArray new];
 }
@@ -84,36 +71,40 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[DataManager sharedInstance] getMultistepConfirmation:self completion:^(id data, NSError *error) {
-        if(error == nil) {
-            [self bind:data forRequestId:0];
-            
-            //Discount Code
-            if(self.cart.cartEntity.couponCode != nil) {
-                [self updateDiscountViewAppearanceForValue:YES animated:NO];
-            }
-            
-            //Delivery Time
-            [[DataManager sharedInstance] getMultistepShipping:self completion:^(id data, NSError *error) {
-                if(error == nil) {
-                    [self bind:data forRequestId:1];
-    
-                    [self.tableView reloadData];
+    if(self.isCompleteFetch == NO) {
+        [[DataManager sharedInstance] getMultistepConfirmation:self completion:^(id data, NSError *error) {
+            if(error == nil) {
+                [self bind:data forRequestId:0];
+                
+                //Discount Code
+                if(self.cart.cartEntity.couponCode != nil) {
+                    [self updateDiscountViewAppearanceForValue:YES animated:NO];
                 }
-            }];
-
-            //Shipping Address
-            _shippingAddress = self.cart.cartEntity.address;
-            
-            //Products
-            _products = self.cart.cartEntity.cartItems;
-            [_cellsIndexPaths setObject:[NSMutableArray indexPathArrayOfLength:(int)_products.count forSection:1] atIndexedSubscript:1];
-            
-            [self.tableView reloadData];
-            
-            [self publishScreenLoadTime];
-        }
-    }];
+                
+                //Delivery Time
+                [[DataManager sharedInstance] getMultistepShipping:self completion:^(id data, NSError *error) {
+                    if(error == nil) {
+                        [self bind:data forRequestId:1];
+                        
+                        self.isCompleteFetch = YES;
+                        
+                        [self.tableView reloadData];
+                    }
+                }];
+                
+                //Shipping Address
+                _shippingAddress = self.cart.cartEntity.address;
+                
+                //Products
+                _products = self.cart.cartEntity.cartItems;
+                [_cellsIndexPaths setObject:[NSMutableArray indexPathArrayOfLength:(int)_products.count forSection:1] atIndexedSubscript:1];
+                
+                [self.tableView reloadData];
+                
+                [self publishScreenLoadTime];
+            }
+        }];
+    }
 }
 
 #pragma mark - Overrides
@@ -360,6 +351,23 @@
 }
 
 #pragma mark - Helpers
+-(void) setInitialCellPathState {
+    _cellsIndexPaths = [NSMutableArray arrayWithObjects:
+                        //Total Sum
+                        [NSMutableArray arrayWithObjects:
+                         [NSIndexPath indexPathForRow:0 inSection:0],
+                         //[NSIndexPath indexPathForRow:1 inSection:0], //Code View is initially hidden
+                         [NSIndexPath indexPathForRow:2 inSection:0],
+                         [NSIndexPath indexPathForRow:3 inSection:0],
+                         [NSIndexPath indexPathForRow:4 inSection:0], nil],
+                        //Cart Items
+                        @[],
+                        //Shipping Address
+                        [NSMutableArray arrayWithObjects:
+                         [NSIndexPath indexPathForRow:0 inSection:2], nil],
+                        nil];
+}
+
 -(void) updateDiscountViewAppearanceForValue:(BOOL)isOn animated:(BOOL)animated {
     NSIndexPath *discountCodeViewIndexPath = [NSIndexPath indexPathForRow:1 inSection:0];
     

@@ -18,6 +18,7 @@ typedef void(^CheckoutActionCompletion)(NSString *nextStep, BOOL success);
 @interface CheckoutBaseViewController : BaseViewController <DataServiceProtocol, ProtectedViewControllerProtocol, CheckoutProgressViewDelegate>
 
 @property (strong, nonatomic) RICart *cart;
+@property (assign, nonatomic) BOOL isCompleteFetch;
 
 -(NSString *) getTitleForContinueButton;
 -(NSString *)getNextStepViewControllerSegueIdentifier:(NSString *)serviceIdentifier;

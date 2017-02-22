@@ -111,7 +111,7 @@
         self.input.hasIcon = NO;
     }
     
-    if (model.titleString) {
+    if (model.titleString.length) {
         self.input.textField.text = model.titleString;
         [self checkValidation];
     }
