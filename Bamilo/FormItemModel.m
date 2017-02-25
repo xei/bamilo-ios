@@ -80,7 +80,7 @@
                                         andIcon:nil
                                     placeholder:@"کد پستی"
                                            type:InputTextFieldControlTypeNumerical
-                                     validation: [[FormItemValidation alloc] initWithRequired:YES max:10 min:10 withRegxPatter:nil]
+                                     validation: [[FormItemValidation alloc] initWithRequired:NO max:10 min:10 withRegxPatter:nil]
                                   selectOptions:nil];
 }
 

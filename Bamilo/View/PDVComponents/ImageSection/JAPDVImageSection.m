@@ -53,7 +53,7 @@
 
 - (UIButton *)wishListButton
 {
-    CGRect frame = CGRectMake(16.f, 0, 25, 25);
+    CGRect frame = CGRectMake(16.f, 0, 25, 22);
     if (!_wishListButton) {
         _wishListButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_wishListButton setFrame:frame];
