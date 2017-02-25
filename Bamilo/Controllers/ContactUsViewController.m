@@ -18,7 +18,7 @@
     
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.title = STRING_CONTACT_US;
-    self.addresslabel.text = @"تهران، میدان ونک، بزرگراه حقانی \n نرسیده به چهارراه جهان کودک \n پلاک ۶۳، طبقه اول و دوم";
+    self.addresslabel.text = @"تهران، بلوار نلسون ماندلا (آفریقا)، خیابان عاطفی غربی، کوچه مهرداد، پلاک ۱، طبقه اول";
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
@@ -26,8 +26,10 @@
         [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
             
             [self trackingEventCallToOrder];
-            NSString *phoneNumber = [@"tel://" stringByAppendingString:[JAUtils convertToEnglishNumber:configuration.phoneNumber]];//tessa
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
+            // Unfortunatly data in country configuration updates only once (in app initialization) .
+            // then if someone who updates the application, will not receive new configs (e.g. telephone!)
+            // so we hard code the telephone number here for now!
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://02172516"]];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
         }];
     }
