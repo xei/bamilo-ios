@@ -9,7 +9,7 @@
 #import "OrangeButton.h"
 
 #define cEXTRA_DARK_GRAY_COLOR [UIColor withRGBA:80 green:80 blue:80 alpha:1.0f]
-#define cORAGNE_COLOR [UIColor withRGBA:247 green:151 blue:32 alpha:1.0f]
+#define cORAGNE_COLOR [UIColor withRGBA:255 green:153 blue:0 alpha:1.0f]
 
 @implementation OrangeButton
 

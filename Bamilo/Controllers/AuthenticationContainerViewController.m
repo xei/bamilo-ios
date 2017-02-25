@@ -11,8 +11,6 @@
 #import "RICustomer.h"
 #import "ViewControllerManager.h"
 
-#define cEXTRA_ORAGNE_COLOR [UIColor withRGBA:247 green:151 blue:32 alpha:1.0f]
-
 @interface AuthenticationContainerViewController() <CAPSPageMenuDelegate>
 @property (nonatomic) CAPSPageMenu *pagemenu;
 @end
@@ -38,8 +36,9 @@
     [super viewDidLoad];
 
     NSDictionary *parameters = @{CAPSPageMenuOptionUseMenuLikeSegmentedControl: @(YES),
+                                 CAPSPageMenuOptionSelectionIndicatorHeight: @2,
                                  CAPSPageMenuOptionMenuItemFont: [UIFont fontWithName:kFontRegularName size: 14],
-                                 CAPSPageMenuOptionSelectionIndicatorColor: cEXTRA_ORAGNE_COLOR,
+                                 CAPSPageMenuOptionSelectionIndicatorColor: cORAGNE_COLOR,
                                  CAPSPageMenuOptionScrollMenuBackgroundColor: [UIColor whiteColor],
                                  CAPSPageMenuOptionMenuHeight: @40,
                                  CAPSPageMenuOptionBottomMenuHairlineColor:cLIGHT_GRAY_COLOR,

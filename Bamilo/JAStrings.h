@@ -150,6 +150,7 @@
 #define STRING_CREATE_ACCOUNT RILocalizedString(@"register_title", nil)
 #define STRING_ACCOUNT_DATA RILocalizedString(@"register_sectiontitle", nil)
 #define STRING_REGISTER RILocalizedString(@"registration_text", nil)
+#define STRING_SEND RILocalizedString(@"send", nil)
 #define STRING_CONTINUE RILocalizedString(@"continue", nil)
 #define STRING_CONTINUE_WITHOUT_LOGIN RILocalizedString(@"continue_without_login", nil)
 

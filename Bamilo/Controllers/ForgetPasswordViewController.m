@@ -12,6 +12,7 @@
 @interface ForgetPasswordViewController()
 @property (weak, nonatomic) IBOutlet UIView *topSeperatorView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIView *topHeaderUnderButtonView;
 @property (strong, nonatomic) FormViewControl *formController;
 @end
 
@@ -31,10 +32,11 @@
     email.icon = [UIImage imageNamed:@"Email"];
     
     self.formController.formListModel = [NSMutableArray arrayWithArray:@[email]];
-    self.formController.submitTitle = STRING_CONTINUE;
+    self.formController.submitTitle = STRING_SEND;
     self.formController.formMessage = @"آدرس ایمیل خود را وارد کنید";
     
     [self.formController setupTableView];
+    [self.topHeaderUnderButtonView setBackgroundColor:cORAGNE_COLOR];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
