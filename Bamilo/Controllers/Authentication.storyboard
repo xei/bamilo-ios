@@ -70,10 +70,10 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IwQ-6G-1pU" userLabel="top title label bottom border">
-                                <rect key="frame" x="218" y="59" width="153" height="3"/>
+                                <rect key="frame" x="218" y="60" width="153" height="2"/>
                                 <color key="backgroundColor" red="0.96862745098039216" green="0.59215686274509804" blue="0.12549019607843137" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="3" id="Qf2-4T-Bat"/>
+                                    <constraint firstAttribute="height" constant="2" id="Qf2-4T-Bat"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -95,6 +95,7 @@
                     </view>
                     <connections>
                         <outlet property="tableView" destination="A6b-Ry-wvy" id="Huo-yc-Tal"/>
+                        <outlet property="topHeaderUnderButtonView" destination="IwQ-6G-1pU" id="s3l-rm-Ucs"/>
                         <outlet property="topSeperatorView" destination="kkh-UA-ocK" id="xKh-P0-cno"/>
                     </connections>
                 </viewController>
