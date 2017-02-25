@@ -19,8 +19,8 @@
 
 @implementation CheckoutAddressViewController {
 @private
-    NSMutableArray *_addresses;
     AddressTableViewController *_addressTableViewController;
+    NSMutableArray *_addresses;
 }
 
 -(void)viewDidLoad {
@@ -31,8 +31,6 @@
     _addressTableViewController.options = (ADDRESS_CELL_EDIT | ADDRESS_CELL_SELECT);
     _addressTableViewController.delegate = self;
     [_addressTableViewController addInto:self ofView:self.addressListContainerView];
-    
-    _addresses = [NSMutableArray new];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -110,13 +108,16 @@
         //GET ADDRESS LIST
         case 0: {
             self.cart = (RICart *)data;
-            [self bindAddresses:self.cart.customerEntity.addressList];
+            _addresses = [AddressTableViewController bindAddresses:self.cart.customerEntity.addressList];
+            [_addressTableViewController updateWithModel:_addresses];
         }
         break;
-            
-        //CHANGED DEFAULT ADDRESS
+        
+        //UPDATED DEFAULT ADDRESS
         case 1: {
-            [self asyncGetMultistepAddressList];
+            AddressList *_addressList = (AddressList *)data;
+            _addresses = [AddressTableViewController bindAddresses:_addressList];
+            [_addressTableViewController updateWithModel:_addresses];
         }
         break;
     }
@@ -130,22 +131,6 @@
             [self publishScreenLoadTime];
         }
     }];
-}
-
--(void) bindAddresses:(AddressList *)addressList {
-    [_addresses removeAllObjects];
-    
-    if(addressList) {
-        if(addressList.shipping) {
-            [_addresses addObject:addressList.shipping];
-        }
-        
-        for(Address *otherAddress in addressList.other) {
-            [_addresses addObject:otherAddress];
-        }
-        
-        [_addressTableViewController updateWithModel:_addresses];
-    }
 }
 
 #pragma mark - PerformanceTrackerProtocol

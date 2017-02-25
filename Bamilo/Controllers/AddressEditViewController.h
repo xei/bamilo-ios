@@ -14,6 +14,6 @@
 
 @interface AddressEditViewController : BaseViewController <ProtectedViewControllerProtocol, ArgsReceiverProtocol, FormViewControlDelegate>
 
-@property (nonatomic, copy) NSString *addressUID;
+@property (strong, nonatomic) Address *address;
 
 @end

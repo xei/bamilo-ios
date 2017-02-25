@@ -54,18 +54,15 @@ static DataManager *instance;
 }
 - (void)getAddress:(id<DataServiceProtocol>)target byId:(NSString *)uid completion:(DataCompletion)completion {
     [RequestManager asyncGET:target
-                        path:[NSString stringWithFormat:@"%@?id=%@", RI_API_GET_CUSTOMER_ADDDRESS,uid]
+                        path:[NSString stringWithFormat:@"%@?id=%@", RI_API_GET_CUSTOMER_ADDDRESS, uid]
                       params:nil
                         type:REQUEST_EXEC_IN_FOREGROUND
                   completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
                       [self serialize:data into:[Address class] response:response errorMessages:errorMessages completion:completion];
                   }];
 }
-- (void)submitAddress:(id<DataServiceProtocol>)target params:(NSMutableDictionary *)params withID:(NSString *)uid completion:(DataCompletion)completion {
+- (void)updateAddress:(id<DataServiceProtocol>)target params:(NSMutableDictionary *)params withID:(NSString *)uid completion:(DataCompletion)completion {
     NSString *path = uid ? [NSString stringWithFormat:@"%@%@", RI_API_POST_CUSTOMER_ADDDRESS_EDIT, uid] : RI_API_POST_CUSTOMER_ADDDRESS_CREATE;
-    
-    params[@"is_default_billing"] = @YES;
-    params[@"is_default_shipping"] = @YES;
     
     [RequestManager asyncPOST:target path:path params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
         if(response == RIApiResponseSuccess && data) {

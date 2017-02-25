@@ -171,7 +171,7 @@
                     
                     //Discount Code (If user inserted)
                     if(self.cart.cartEntity.couponCode) {
-                        [_receiptViewItems addObject:[ReceiptItemModel withName:STRING_COUPON value:self.cart.cartEntity.couponCode]];
+                        [_receiptViewItems addObject:[ReceiptItemModel withName:STRING_COUPON value:[[self.cart.cartEntity.couponMoneyValue stringValue] numbersToPersian]]];
                     }
                     
                     //Shipping Cost

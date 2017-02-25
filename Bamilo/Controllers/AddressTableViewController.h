@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AddressList.h"
 #import "Address.h"
 #import "AddressTableViewCell.h"
 #import "AddressTableViewControllerDelegate.h"
@@ -16,6 +17,8 @@
 @property (assign, nonatomic) AddressCellOptions options;
 @property (copy, nonatomic) NSString *titleHeaderText;
 @property (weak, nonatomic) id<AddressTableViewControllerDelegate> delegate;
+
++(NSMutableArray *) bindAddresses:(AddressList *)addressList;
 
 - (void)updateWithModel:(NSArray *)addresses;
 - (void)addInto:(UIViewController *)viewController ofView:(UIView *)containerView;

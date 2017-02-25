@@ -80,7 +80,7 @@ const int VicinityFieldIndex = 6;
     
     [self.formController setupTableView];
     
-    if (!self.addressUID) {
+    if (!self.address.uid) {
         [self getRegionsByCompletion:nil];
     }
 }
@@ -89,7 +89,7 @@ const int VicinityFieldIndex = 6;
     [super viewDidAppear:animated];
     
     [self.formController registerForKeyboardNotifications];
-    if(self.addressUID == nil) {
+    if(self.address.uid == nil) {
         [self publishScreenLoadTime];
     }
 }
@@ -97,8 +97,8 @@ const int VicinityFieldIndex = 6;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    if (self.addressUID) {
-        [self getAddressByID:self.addressUID];
+    if (self.address.uid) {
+        [self getAddressByID:self.address.uid];
     }
 }
 
@@ -126,8 +126,16 @@ const int VicinityFieldIndex = 6;
     }
     
     NSMutableDictionary *params = [self.formController getMutableDictionaryOfForm];
-    params[@"address_form[id]"] = self.addressUID;
-    [[DataManager sharedInstance] submitAddress:self params:params withID:self.addressUID completion:^(id data, NSError *error) {
+    if(self.address.uid) {
+        params[@"address_form[id]"] = self.address.uid;
+        params[@"address_form[is_default_shipping]"] = @(self.address.isDefaultShipping);
+        params[@"address_form[is_default_billing]"] = @(self.address.isDefaultBilling);
+    } else {
+        params[@"address_form[is_default_shipping]"] = @YES;
+        params[@"address_form[is_default_billing]"] = @YES;
+    }
+    
+    [[DataManager sharedInstance] updateAddress:self params:params withID:self.address.uid completion:^(id data, NSError *error) {
         if (error == nil) {
             [self.navigationController popViewControllerAnimated:YES];
         } else {
@@ -175,7 +183,7 @@ const int VicinityFieldIndex = 6;
     Address *address = [args objectForKey:kAddress];
     
     if(address) {
-        self.addressUID = address.uid;
+        self.address = address;
     }
 }
 
@@ -262,7 +270,7 @@ const int VicinityFieldIndex = 6;
 
 #pragma mark - PerformanceTrackerProtocol
 -(NSString *)getPerformanceTrackerScreenName {
-    if(self.addressUID) {
+    if(self.address.uid) {
         return @"EditAddress";
     } else {
         return @"AddAddress";

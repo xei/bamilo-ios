@@ -20,7 +20,6 @@
 
 @implementation AddressViewController {
 @private
-    NSMutableArray *_addresses;
     AddressTableViewController *_addressTableViewController;
     Address *_currentAddress;
 }
@@ -33,8 +32,6 @@
     _addressTableViewController.options = (ADDRESS_CELL_EDIT | ADDRESS_CELL_DELETE | ADDRESS_CELL_SELECT);
     _addressTableViewController.delegate = self;
     [_addressTableViewController addInto:self ofView:self.addressListContainerView];
-
-    _addresses = [NSMutableArray array];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -99,7 +96,7 @@
     if([segue.identifier isEqualToString:@"pushAddressListToAddressEdit"]) {
         AddressEditViewController *addressEditViewController = (AddressEditViewController *)segue.destinationViewController;
         if(_currentAddress) {
-            addressEditViewController.addressUID = _currentAddress.uid;
+            addressEditViewController.address = _currentAddress;
         }
     }
 }
@@ -119,17 +116,8 @@
     switch (rid) {
         case 0:
         case 1: {
-            [_addresses removeAllObjects];
             AddressList *addressList = (AddressList *)data;
-            if(addressList) {
-                if(addressList.shipping) {
-                    [_addresses addObject:addressList.shipping];
-                }
-                for(Address *otherAddress in addressList.other) {
-                    [_addresses addObject:otherAddress];
-                }
-                [_addressTableViewController updateWithModel:_addresses];
-            }
+            [_addressTableViewController updateWithModel:[AddressTableViewController bindAddresses:addressList]];
         }
         break;
     }
