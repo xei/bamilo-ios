@@ -126,22 +126,40 @@ const int VicinityFieldIndex = 6;
     }
     
     NSMutableDictionary *params = [self.formController getMutableDictionaryOfForm];
-    params[@"address_form[id]"] = self.address.uid;
-    params[@"address_form[is_default_shipping]"] = @(self.address.isDefaultShipping);
-    params[@"address_form[is_default_billing]"] = @(self.address.isDefaultBilling);
     
-    [[DataManager sharedInstance] updateAddress:self params:params withID:self.address.uid completion:^(id data, NSError *error) {
-        if (error == nil) {
-            [self.navigationController popViewControllerAnimated:YES];
-        } else {
-            if(![self showNotificationBar:error isSuccess:NO]) {
-                for(NSDictionary* errorField in [error.userInfo objectForKey:@"errorMessages"]) {
-                    NSString *fieldName = [NSString stringWithFormat:@"address_form[%@]", errorField[@"field"]];
-                    [self.formController showErrorMessgaeForField:fieldName errorMsg:errorField[@"message"]];
+    if(self.address.uid) {
+        //EDIT / UPDATE ADDRESS
+        params[@"address_form[id]"] = self.address.uid;
+        
+        [[DataManager sharedInstance] updateAddress:self params:params withID:self.address.uid completion:^(id data, NSError *error) {
+            if (error == nil) {
+                [self.navigationController popViewControllerAnimated:YES];
+            } else {
+                if(![self showNotificationBar:error isSuccess:NO]) {
+                    for(NSDictionary* errorField in [error.userInfo objectForKey:@"errorMessages"]) {
+                        NSString *fieldName = [NSString stringWithFormat:@"address_form[%@]", errorField[@"field"]];
+                        [self.formController showErrorMessgaeForField:fieldName errorMsg:errorField[@"message"]];
+                    }
                 }
             }
-        }
-    }];
+        }];
+    } else {
+        //ADD NEW ADDRESS
+        params[@"address_form[id]"] = @"";
+        
+        [[DataManager sharedInstance] addAddress:self params:params completion:^(id data, NSError *error) {
+            if (error == nil) {
+                [self.navigationController popViewControllerAnimated:YES];
+            } else {
+                if(![self showNotificationBar:error isSuccess:NO]) {
+                    for(NSDictionary* errorField in [error.userInfo objectForKey:@"errorMessages"]) {
+                        NSString *fieldName = [NSString stringWithFormat:@"address_form[%@]", errorField[@"field"]];
+                        [self.formController showErrorMessgaeForField:fieldName errorMsg:errorField[@"message"]];
+                    }
+                }
+            }
+        }];
+    }
 }
 
 #pragma mark - FormViewControlDelegate

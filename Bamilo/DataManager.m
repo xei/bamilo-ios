@@ -25,19 +25,21 @@ static DataManager *instance;
     return instance;
 }
 
-
 //### AREA_INFORMATION
 - (void)getVicinity:(id<DataServiceProtocol>)target forCityId:(NSString *)uid completion:(DataCompletion)completion {
     NSString *path = [NSString stringWithFormat:@"%@city_id/%@", RI_API_GET_CUSTOMER_POSTCODES, uid];
     [self getAreaZone:target type:REQUEST_EXEC_IN_BACKGROUND path:path completion:completion];
 }
+
 - (void)getCities:(id<DataServiceProtocol>)target forRegionId:(NSString *)uid completion:(DataCompletion)completion {
     NSString *path = [NSString stringWithFormat:@"%@region/%@", RI_API_GET_CUSTOMER_CITIES, uid];
     [self getAreaZone:target type:REQUEST_EXEC_IN_BACKGROUND path:path completion:completion];
 }
+
 - (void)getRegions:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
     [self getAreaZone:target type:REQUEST_EXEC_IN_BACKGROUND path:RI_API_GET_CUSTOMER_REGIONS completion:completion];
 }
+
 - (void)getAreaZone:(id<DataServiceProtocol>)target type:(RequestExecutionType)type path:(NSString *)path completion:(DataCompletion)completion {
     [RequestManager asyncGET:target path:path params:nil type:type completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
         if(response == RIApiResponseSuccess && data) {
@@ -52,6 +54,7 @@ static DataManager *instance;
         }
     }];
 }
+
 - (void)getAddress:(id<DataServiceProtocol>)target byId:(NSString *)uid completion:(DataCompletion)completion {
     [RequestManager asyncGET:target
                         path:[NSString stringWithFormat:@"%@?id=%@", RI_API_GET_CUSTOMER_ADDDRESS, uid]
@@ -61,10 +64,19 @@ static DataManager *instance;
                       [self serialize:data into:[Address class] response:response errorMessages:errorMessages completion:completion];
                   }];
 }
+
+-(void)addAddress:(id<DataServiceProtocol>)target params:(NSDictionary *)params completion:(DataCompletion)completion {
+    [RequestManager asyncPOST:target path:RI_API_POST_CUSTOMER_ADDDRESS_CREATE params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+        if(response == RIApiResponseSuccess && data) {
+            completion(data, nil);
+        } else {
+            completion(nil, [self getErrorFrom:response errorMessages:errorMessages]);
+        }
+    }];
+}
+
 - (void)updateAddress:(id<DataServiceProtocol>)target params:(NSMutableDictionary *)params withID:(NSString *)uid completion:(DataCompletion)completion {
-    NSString *path = uid ? [NSString stringWithFormat:@"%@%@", RI_API_POST_CUSTOMER_ADDDRESS_EDIT, uid] : RI_API_POST_CUSTOMER_ADDDRESS_CREATE;
-    
-    [RequestManager asyncPOST:target path:path params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+    [RequestManager asyncPOST:target path:[NSString stringWithFormat:@"%@%@", RI_API_POST_CUSTOMER_ADDDRESS_EDIT, uid] params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
         if(response == RIApiResponseSuccess && data) {
             completion(data, nil);
         } else {
