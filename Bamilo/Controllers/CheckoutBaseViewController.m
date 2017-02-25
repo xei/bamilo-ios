@@ -17,6 +17,11 @@
 
 @implementation CheckoutBaseViewController
 
+-(void)setIsStepValid:(BOOL)isStepValid {
+    [self.continueButton setEnabled:isStepValid];
+    _isStepValid = isStepValid;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -32,6 +37,8 @@
     
     [self.checkoutProgressViewControl requestUpdate];
     [self.continueButton setTitle:[self getTitleForContinueButton] forState:UIControlStateNormal];
+    
+    [self setIsStepValid:YES];
 }
 
 #pragma mark - Public Methods

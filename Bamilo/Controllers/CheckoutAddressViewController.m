@@ -36,16 +36,15 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    if(self.isCompleteFetch == NO) {
-        [[DataManager sharedInstance] getMultistepAddressList:self completion:^(id data, NSError *error) {
-            if(error == nil) {
-                [self bind:data forRequestId:0];
-                [self publishScreenLoadTime];
-                
-                self.isCompleteFetch = YES;
-            }
-        }];
-    }
+    [[DataManager sharedInstance] getMultistepAddressList:self completion:^(id data, NSError *error) {
+        if(error == nil) {
+            [self bind:data forRequestId:0];
+            [_addressTableViewController updateWithModel:_addresses];
+            [self setIsStepValid:_addresses.count];
+            
+            [self publishScreenLoadTime];
+        }
+    }];
 }
 
 #pragma mark - Overrides
@@ -111,7 +110,6 @@
         case 0: {
             self.cart = (RICart *)data;
             _addresses = [AddressTableViewController bindAddresses:self.cart.customerEntity.addressList];
-            [_addressTableViewController updateWithModel:_addresses];
         }
         break;
     }
