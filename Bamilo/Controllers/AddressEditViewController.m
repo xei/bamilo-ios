@@ -46,7 +46,7 @@ const int VicinityFieldIndex = 6;
     FormItemModel *postalCode = [FormItemModel postalCodeWithFieldName:@"address_form[address2]"];
     postalCode.validation.isRequired = NO;
     
-    FormItemModel *region = [[FormItemModel alloc] initWithTitle: nil
+    FormItemModel *region = [[FormItemModel alloc] initWithTitle: (self.address.uid) ? @"": @"تهران"
                                                        fieldName: @"address_form[region]"
                                                          andIcon: nil
                                                      placeholder: @"استان"
@@ -81,7 +81,11 @@ const int VicinityFieldIndex = 6;
     [self.formController setupTableView];
     
     if (!self.address.uid) {
-        [self getRegionsByCompletion:nil];
+        [self getRegionsByCompletion:^{
+            if (region.titleString) {
+                [self getCitiesForRegionId:[self.formController.formListModel[RegionFieldIndex] getValue]  completion: nil];
+            }
+        }];
     }
 }
 
