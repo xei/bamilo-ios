@@ -36,7 +36,12 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self asyncGetMultistepAddressList];
+    [[DataManager sharedInstance] getMultistepAddressList:self completion:^(id data, NSError *error) {
+        if(error == nil) {
+            [self bind:data forRequestId:0];
+            [self publishScreenLoadTime];
+        }
+    }];
 }
 
 #pragma mark - Overrides
@@ -121,16 +126,6 @@
         }
         break;
     }
-}
-
-#pragma mark - Helpers
--(void) asyncGetMultistepAddressList {
-    [[DataManager sharedInstance] getMultistepAddressList:self completion:^(id data, NSError *error) {
-        if(error == nil) {
-            [self bind:data forRequestId:0];
-            [self publishScreenLoadTime];
-        }
-    }];
 }
 
 #pragma mark - PerformanceTrackerProtocol
