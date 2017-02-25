@@ -212,6 +212,8 @@
 		87B685091E4AFB740042C09F /* ReceiptView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87B685081E4AFB740042C09F /* ReceiptView.xib */; };
 		87C69DAB1E38B78E0026018F /* NSString+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 87C69DAA1E38B78E0026018F /* NSString+Extensions.m */; };
 		87C69DAE1E38B7A50026018F /* UIColor+Format.m in Sources */ = {isa = PBXBuildFile; fileRef = 87C69DAD1E38B7A50026018F /* UIColor+Format.m */; };
+		87CE1DCA1E6191FD000A2C9E /* DeliveryTimeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87CE1DC91E6191FD000A2C9E /* DeliveryTimeTableViewCell.m */; };
+		87CE1DCC1E619204000A2C9E /* DeliveryTimeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87CE1DCB1E619204000A2C9E /* DeliveryTimeTableViewCell.xib */; };
 		87D07D6F1E40939100C00AC6 /* Checkout.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87D07D6E1E40939100C00AC6 /* Checkout.storyboard */; };
 		87D07D751E4097EE00C00AC6 /* CheckoutBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D07D741E4097EE00C00AC6 /* CheckoutBaseViewController.m */; };
 		87D07D781E4097FF00C00AC6 /* CheckoutAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D07D771E4097FF00C00AC6 /* CheckoutAddressViewController.m */; };
@@ -972,6 +974,9 @@
 		87C69DAA1E38B78E0026018F /* NSString+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Extensions.m"; path = "Categories/NSString+Extensions.m"; sourceTree = "<group>"; };
 		87C69DAC1E38B7A50026018F /* UIColor+Format.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+Format.h"; path = "Categories/UIColor+Format.h"; sourceTree = "<group>"; };
 		87C69DAD1E38B7A50026018F /* UIColor+Format.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+Format.m"; path = "Categories/UIColor+Format.m"; sourceTree = "<group>"; };
+		87CE1DC81E6191FD000A2C9E /* DeliveryTimeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeliveryTimeTableViewCell.h; sourceTree = "<group>"; };
+		87CE1DC91E6191FD000A2C9E /* DeliveryTimeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeliveryTimeTableViewCell.m; sourceTree = "<group>"; };
+		87CE1DCB1E619204000A2C9E /* DeliveryTimeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeliveryTimeTableViewCell.xib; sourceTree = "<group>"; };
 		87D07D6E1E40939100C00AC6 /* Checkout.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Checkout.storyboard; path = Bamilo/Controllers/Checkout.storyboard; sourceTree = SOURCE_ROOT; };
 		87D07D731E4097EE00C00AC6 /* CheckoutBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckoutBaseViewController.h; sourceTree = "<group>"; };
 		87D07D741E4097EE00C00AC6 /* CheckoutBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckoutBaseViewController.m; sourceTree = "<group>"; };
@@ -2096,6 +2101,7 @@
 				61E0996D1E3E18B7004ED14E /* NotificationTableViewCell */,
 				61E099731E3E19CF004ED14E /* VersionTableViewCell */,
 				87459C7F1E4EF2AD00743120 /* CartListItemTableViewCell */,
+				87CE1DC71E619197000A2C9E /* DeliveryTimeTableViewCell */,
 			);
 			name = TableViewCells;
 			sourceTree = "<group>";
@@ -2369,8 +2375,8 @@
 		8714E06E1E479763004C9B1D /* Controls */ = {
 			isa = PBXGroup;
 			children = (
-				61C5C40A1E545C0C00F22130 /* CartEntitySummery */,
 				8714E06F1E47976E004C9B1D /* Base */,
+				61C5C40A1E545C0C00F22130 /* CartEntitySummery */,
 				612553421E4EE4FD00975C6F /* inputTextField */,
 				61148E001E47226200E2540B /* Stepper */,
 				87459C901E4F05D700743120 /* RadioButton */,
@@ -3395,6 +3401,16 @@
 				873369D41E59901700B0B5E5 /* Checkout */,
 			);
 			name = Service;
+			sourceTree = "<group>";
+		};
+		87CE1DC71E619197000A2C9E /* DeliveryTimeTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				87CE1DC81E6191FD000A2C9E /* DeliveryTimeTableViewCell.h */,
+				87CE1DC91E6191FD000A2C9E /* DeliveryTimeTableViewCell.m */,
+				87CE1DCB1E619204000A2C9E /* DeliveryTimeTableViewCell.xib */,
+			);
+			name = DeliveryTimeTableViewCell;
 			sourceTree = "<group>";
 		};
 		87D07D701E40978100C00AC6 /* AddressViewController */ = {
@@ -4668,6 +4684,7 @@
 				879F87F21E5057F10033FE87 /* PlainTableViewHeaderCell.xib in Resources */,
 				87B684EB1E49FE0B0042C09F /* ReceiptItemView.xib in Resources */,
 				876869A91E5C9805004B4333 /* NotificationBarView.xib in Resources */,
+				87CE1DCC1E619204000A2C9E /* DeliveryTimeTableViewCell.xib in Resources */,
 				CE9AE0581AB6D78200D56481 /* JAPDVVariations.xib in Resources */,
 				CE9AE0611AB6D78200D56481 /* JAOrangeButtonCell_ipad_portrait.xib in Resources */,
 				CE9AE0691AB6D78200D56481 /* JAOrangeButtonCell_ipad_landscape.xib in Resources */,
@@ -4881,6 +4898,7 @@
 				612553471E4EE5B500975C6F /* InputTextField.m in Sources */,
 				CE9ADF301AB6D78200D56481 /* JAShippingViewController.m in Sources */,
 				CE59BF241AE906180057F4E2 /* JATopSellersTeaserView.m in Sources */,
+				87CE1DCA1E6191FD000A2C9E /* DeliveryTimeTableViewCell.m in Sources */,
 				875AD56A1E38C0C900584ABF /* RIPhonePrefix.m in Sources */,
 				875AD56D1E38C0C900584ABF /* RIProductRatings.m in Sources */,
 				87B684D51E49AB890042C09F /* DiscountCodeView.m in Sources */,

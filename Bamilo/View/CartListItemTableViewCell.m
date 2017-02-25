@@ -28,7 +28,7 @@
     [self.nameLabel applyStyle:kFontRegularName fontSize:12.0f color:cDARK_GRAY_COLOR];
     [self.quantityLabel applyStyle:kFontRegularName fontSize:11.0f color:cDARK_GRAY_COLOR];
     [self.priceLabel applyStyle:kFontRegularName fontSize:11.0f color:cDARK_GRAY_COLOR];
-    [self.brandLabel applyStyle:kFontRegularName fontSize:13.0f color:cLIGHT_GRAY_COLOR];
+    [self.brandLabel applyStyle:kFontRegularName fontSize:12.0f color:cLIGHT_GRAY_COLOR];
 }
 
 #pragma mark - Overrides

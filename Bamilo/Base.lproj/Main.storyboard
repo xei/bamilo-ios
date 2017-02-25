@@ -213,7 +213,7 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9pj-z6-1RN">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="644"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="643.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="با ما در ارتباط باشید " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cWS-gt-HOD" userLabel="ContactUsLabel">
                                                 <rect key="frame" x="10" y="15" width="355" height="50"/>
@@ -237,13 +237,13 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="banner" translatesAutoresizingMaskIntoConstraints="NO" id="HEN-1E-yIl" userLabel="ContactUsBanner">
-                                                <rect key="frame" x="10" y="136" width="355" height="178"/>
+                                                <rect key="frame" x="10" y="136" width="355" height="177.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="HEN-1E-yIl" secondAttribute="height" multiplier="2:1" id="vE7-cE-Ozm"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="نشانی" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VL6-Fv-9jX" userLabel="AddressTitleLabel">
-                                                <rect key="frame" x="10" y="342" width="355" height="40"/>
+                                                <rect key="frame" x="10" y="341.5" width="355" height="40"/>
                                                 <color key="backgroundColor" red="0.8967582583" green="0.8967582583" blue="0.8967582583" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="ScV-Ue-ufP"/>
@@ -253,7 +253,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SRv-W2-fPK" userLabel="AddressLabel">
-                                                <rect key="frame" x="10" y="392" width="355" height="106"/>
+                                                <rect key="frame" x="10" y="391.5" width="355" height="106"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="106" id="HtQ-Mc-wTL"/>
                                                 </constraints>
@@ -262,7 +262,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NF1-Gu-L9D" userLabel="ContactUsButtonView">
-                                                <rect key="frame" x="38" y="526" width="300" height="44"/>
+                                                <rect key="frame" x="38" y="525.5" width="300" height="44"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vWl-gU-ciC" userLabel="ContactUsButton">
                                                         <rect key="frame" x="0.0" y="0.0" width="300" height="44"/>
@@ -317,7 +317,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o1u-H1-J6t" userLabel="ReportBugButtonView">
-                                                <rect key="frame" x="38" y="585" width="300" height="44"/>
+                                                <rect key="frame" x="38" y="584.5" width="300" height="44"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xpw-Yz-NpH" userLabel="ReportBugButton">
                                                         <rect key="frame" x="0.0" y="0.0" width="300" height="44"/>
@@ -447,25 +447,25 @@
                                         <rect key="frame" x="0.0" y="549" width="375" height="75"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="مجموع خرید:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iiG-ZB-Lk2">
-                                                <rect key="frame" x="277" y="10" width="68" height="22"/>
+                                                <rect key="frame" x="287.5" y="10" width="67.5" height="21.5"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <color key="textColor" red="0.33725490196078434" green="0.33725490196078434" blue="0.33725490196078434" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="مجموع تخفیف:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QIn-JG-WlR">
-                                                <rect key="frame" x="267" y="43" width="78" height="22"/>
+                                                <rect key="frame" x="277" y="43.5" width="78" height="21.5"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="در حال محاسبه" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vgt-Lp-1Ci" userLabel="total price">
-                                                <rect key="frame" x="30" y="10" width="237" height="22"/>
+                                                <rect key="frame" x="20" y="10" width="257.5" height="21.5"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="در حال محاسبه" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Co6-Dd-SGv" userLabel="total discounted Price">
-                                                <rect key="frame" x="30" y="43" width="227" height="22"/>
+                                                <rect key="frame" x="20" y="43.5" width="247" height="21.5"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -474,15 +474,15 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="QIn-JG-WlR" firstAttribute="leading" secondItem="Co6-Dd-SGv" secondAttribute="trailing" constant="10" id="1VT-qk-bqR"/>
-                                            <constraint firstAttribute="trailing" secondItem="QIn-JG-WlR" secondAttribute="trailing" constant="30" id="3Aa-kJ-ykb"/>
-                                            <constraint firstAttribute="trailing" secondItem="iiG-ZB-Lk2" secondAttribute="trailing" constant="30" id="8cj-GQ-7Cg"/>
+                                            <constraint firstAttribute="trailing" secondItem="QIn-JG-WlR" secondAttribute="trailing" constant="20" id="3Aa-kJ-ykb"/>
+                                            <constraint firstAttribute="trailing" secondItem="iiG-ZB-Lk2" secondAttribute="trailing" constant="20" id="8cj-GQ-7Cg"/>
                                             <constraint firstItem="Co6-Dd-SGv" firstAttribute="centerY" secondItem="QIn-JG-WlR" secondAttribute="centerY" id="HAJ-1L-HeC"/>
                                             <constraint firstAttribute="height" constant="75" id="MPR-Po-5gq"/>
-                                            <constraint firstItem="Co6-Dd-SGv" firstAttribute="leading" secondItem="Fm5-0g-qnq" secondAttribute="leading" constant="30" id="NwG-ng-j5w"/>
+                                            <constraint firstItem="Co6-Dd-SGv" firstAttribute="leading" secondItem="Fm5-0g-qnq" secondAttribute="leading" constant="20" id="NwG-ng-j5w"/>
                                             <constraint firstItem="Vgt-Lp-1Ci" firstAttribute="centerY" secondItem="iiG-ZB-Lk2" secondAttribute="centerY" id="ZZy-3Y-bS1"/>
                                             <constraint firstItem="iiG-ZB-Lk2" firstAttribute="top" secondItem="Fm5-0g-qnq" secondAttribute="top" constant="10" id="g5a-T3-sps"/>
                                             <constraint firstAttribute="bottom" secondItem="QIn-JG-WlR" secondAttribute="bottom" constant="10" id="iZL-uH-RlE"/>
-                                            <constraint firstItem="Vgt-Lp-1Ci" firstAttribute="left" secondItem="Fm5-0g-qnq" secondAttribute="left" constant="30" id="jK7-SJ-Lcz"/>
+                                            <constraint firstItem="Vgt-Lp-1Ci" firstAttribute="left" secondItem="Fm5-0g-qnq" secondAttribute="left" constant="20" id="jK7-SJ-Lcz"/>
                                             <constraint firstItem="iiG-ZB-Lk2" firstAttribute="left" secondItem="Vgt-Lp-1Ci" secondAttribute="right" constant="10" id="m6s-Zm-KBy"/>
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
@@ -500,7 +500,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R5o-k2-OAi" userLabel="cart entity summery view" customClass="CartEntitySummaryViewControl">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R5o-k2-OAi" userLabel="Cart Entity Summary View" customClass="CartEntitySummaryViewControl">
                                         <rect key="frame" x="0.0" y="549" width="375" height="45"/>
                                         <color key="backgroundColor" red="0.96862745100000003" green="0.59215686270000001" blue="0.12549019610000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>

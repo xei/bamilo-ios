@@ -26,6 +26,14 @@
                     <constraints>
                         <constraint firstAttribute="width" secondItem="oWQ-kM-YQu" secondAttribute="height" id="uf1-AJ-mNF"/>
                     </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                            <real key="value" value="1"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                            <color key="value" red="0.63233095407485962" green="0.63282322883605957" blue="0.63240724802017212" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="نشر چشمه جهان تازه داستانی (برف و سمفونی ابر)" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KF9-Z3-FC2">
                     <rect key="frame" x="15" y="10" width="260" height="46"/>
@@ -34,20 +42,20 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="تعداد : ۱" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BvR-e0-tr3">
-                    <rect key="frame" x="15" y="46" width="107" height="22"/>
+                    <rect key="frame" x="15" y="47" width="107" height="21.5"/>
                     <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                     <color key="textColor" red="0.49520188570000001" green="0.49559599160000001" blue="0.49526298050000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" ۵۵۵،۵۵۵،۵۵۵ ریال" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KpW-o6-xDl">
-                    <rect key="frame" x="15" y="63" width="107" height="22"/>
+                    <rect key="frame" x="15" y="63.5" width="107" height="21.5"/>
                     <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                     <color key="textColor" red="0.49520188570000001" green="0.49559599160000001" blue="0.49526298050000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lansur" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h19-ZZ-ffi">
-                    <rect key="frame" x="122" y="56" width="153" height="25"/>
-                    <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="13"/>
+                    <rect key="frame" x="122" y="56" width="153" height="23"/>
+                    <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
                     <color key="textColor" red="0.74202448129653931" green="0.74259525537490845" blue="0.74211281538009644" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>

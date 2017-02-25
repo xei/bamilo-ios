@@ -126,14 +126,9 @@ const int VicinityFieldIndex = 6;
     }
     
     NSMutableDictionary *params = [self.formController getMutableDictionaryOfForm];
-    if(self.address.uid) {
-        params[@"address_form[id]"] = self.address.uid;
-        params[@"address_form[is_default_shipping]"] = @(self.address.isDefaultShipping);
-        params[@"address_form[is_default_billing]"] = @(self.address.isDefaultBilling);
-    } else {
-        params[@"address_form[is_default_shipping]"] = @YES;
-        params[@"address_form[is_default_billing]"] = @YES;
-    }
+    params[@"address_form[id]"] = self.address.uid;
+    params[@"address_form[is_default_shipping]"] = @(self.address.isDefaultShipping);
+    params[@"address_form[is_default_billing]"] = @(self.address.isDefaultBilling);
     
     [[DataManager sharedInstance] updateAddress:self params:params withID:self.address.uid completion:^(id data, NSError *error) {
         if (error == nil) {

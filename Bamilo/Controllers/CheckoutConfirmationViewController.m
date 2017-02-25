@@ -18,6 +18,7 @@
 #import "CartListItemTableViewCell.h"
 #import "RIShippingMethodForm.h"
 #import "RIShippingMethod.h"
+#import "DeliveryTimeTableViewCell.h"
 #import "DataManager.h"
 
 @interface CheckoutConfirmationViewController() <DiscountCodeViewDelegate, DiscountSwitcherViewDelegate>
@@ -58,6 +59,9 @@
     //Address TableView Cell
     [self.tableView registerNib:[UINib nibWithNibName:[BasicTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[BasicTableViewCell nibName]];
     [self.tableView registerNib:[UINib nibWithNibName:[AddressTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[AddressTableViewCell nibName]];
+    
+    //Delivery Time Cell
+    [self.tableView registerNib:[UINib nibWithNibName:[DeliveryTimeTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[DeliveryTimeTableViewCell nibName]];
     
     self.tableView.separatorColor = [UIColor withRepeatingRGBA:243 alpha:1.0f];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
@@ -197,7 +201,7 @@
                     
                 //Delivery Time Cell
                 case 4: {
-                    BasicTableViewCell *deliveryTimeTableViewCell = [tableView dequeueReusableCellWithIdentifier:[BasicTableViewCell nibName] forIndexPath:indexPath];
+                    DeliveryTimeTableViewCell *deliveryTimeTableViewCell = [tableView dequeueReusableCellWithIdentifier:[DeliveryTimeTableViewCell nibName] forIndexPath:indexPath];
                     NSMutableString *deliveryTimeString = [NSMutableString stringWithFormat:@"%@: ", STRING_DELIVERY_TIME];
                     [deliveryTimeString smartAppend:_deliveryTime replacer:@"-"];
                     deliveryTimeTableViewCell.titleLabel.text = [deliveryTimeString numbersToPersian];

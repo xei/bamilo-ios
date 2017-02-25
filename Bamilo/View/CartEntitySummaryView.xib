@@ -21,13 +21,13 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="جمع نهایی " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jhS-Sk-MvV">
-                    <rect key="frame" x="317" y="26" width="58" height="23"/>
+                    <rect key="frame" x="327" y="26" width="58" height="23"/>
                     <fontDescription key="fontDescription" name="Bamilo-Sans-Bold" family="Bamilo-Sans" pointSize="12"/>
                     <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="در حال محاسبه" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DaZ-wR-8kZ">
-                    <rect key="frame" x="30" y="26" width="277" height="23"/>
+                    <rect key="frame" x="20" y="26" width="297" height="23"/>
                     <fontDescription key="fontDescription" name="Bamilo-Sans-Bold" family="Bamilo-Sans" pointSize="12"/>
                     <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -50,9 +50,9 @@
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="Z5K-gI-5sT" secondAttribute="trailing" id="5rm-ZT-NeT"/>
                 <constraint firstItem="Z5K-gI-5sT" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="DYJ-aO-uAk"/>
-                <constraint firstAttribute="trailing" secondItem="jhS-Sk-MvV" secondAttribute="trailing" constant="30" id="Oxm-N2-hXS"/>
+                <constraint firstAttribute="trailing" secondItem="jhS-Sk-MvV" secondAttribute="trailing" constant="20" id="Oxm-N2-hXS"/>
                 <constraint firstItem="Z5K-gI-5sT" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="dDi-cS-VcB"/>
-                <constraint firstItem="DaZ-wR-8kZ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="30" id="gAH-bC-1Fd"/>
+                <constraint firstItem="DaZ-wR-8kZ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="gAH-bC-1Fd"/>
                 <constraint firstItem="jhS-Sk-MvV" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="mHh-DT-7b4"/>
                 <constraint firstItem="vg9-ZU-JBr" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="obv-Ju-ekj"/>
                 <constraint firstItem="jhS-Sk-MvV" firstAttribute="leading" secondItem="DaZ-wR-8kZ" secondAttribute="trailing" constant="10" id="qJ0-jN-r0s"/>
