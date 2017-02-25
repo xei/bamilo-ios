@@ -1370,30 +1370,17 @@
     }
 }
 
-- (void)showSellerCatalog: (NSNotification *)notification {
+-(void)showSellerCatalog: (NSNotification *)notification
+{
     NSString* targetString = [notification.userInfo objectForKey:@"targetString"];
     NSString* title = [notification.userInfo objectForKey:@"name"];
-
-    NSNumber* sorting;
-    NSString* filterPush;
     
-    NSDictionary *selectedItem = [notification object];
-    if (selectedItem) {
-        NSString* categoryUrlKey = [selectedItem objectForKey:@"category_url_key"];
-        if (categoryUrlKey.length) {
-            targetString = [NSString stringWithFormat:@"catalog_seller::%@",categoryUrlKey];
-        }
-        sorting = [selectedItem objectForKey:@"sorting"];
-        filterPush = [selectedItem objectForKey:@"filter"];
-    }
-    
-    if(targetString.length) {
+    if(VALID_NOTEMPTY(targetString, NSString))
+    {
         JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
         catalog.targetString = targetString;
         catalog.navBarLayout.title = title;
         catalog.navBarLayout.showBackButton = YES;
-        catalog.filterPush = filterPush;
-        catalog.sortingMethodFromPush = sorting;
         
         [self pushViewController:catalog animated:YES];
     }

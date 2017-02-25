@@ -980,19 +980,15 @@ typedef void (^ProcessActionBlock)(void);
                                  animated:YES];
 }
 
-- (void)goToSellerCatalog
-{
+- (void)goToSellerCatalog {
     NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];
     
-    if(VALID_NOTEMPTY(self.product.seller, RISeller))
-    {
+    if(self.product.seller) {
         [userInfo setObject:self.product.seller.name forKey:@"name"];
-        
         [userInfo setObject:self.product.seller.targetString forKey:@"targetString"];
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:self.product.seller userInfo:userInfo];
-    
     [[RITrackingWrapper sharedInstance] trackScreenWithName:@"SellerPage"];
 }
 
