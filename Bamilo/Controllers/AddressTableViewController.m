@@ -38,6 +38,12 @@
     [self.tableView reloadData];
 }
 
+-(void)updateAppearanceForCellAtIndexPath:(NSArray<NSIndexPath *> *)indexPaths {
+    [self.tableView beginUpdates];
+    [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
+    [self.tableView endUpdates];
+}
+
 -(void)addInto:(UIViewController *)viewController ofView:(UIView *)containerView {
     [viewController addChildViewController:self];
     [self.view setFrame:CGRectMake(0, 0, containerView.width, containerView.height)];
@@ -83,9 +89,9 @@
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 
     //Trying to reselect the selected address. Ignore.
-    if(indexPath.row == 0) {
-        return;
-    }
+    //if(indexPath.row == [self.tableView indexPathForSelectedRow].row) {
+        //return;
+    //}
     
     if([self.delegate respondsToSelector:@selector(addressSelected:)]) {
         [self.delegate addressSelected:[_addresses objectAtIndex:indexPath.row]];

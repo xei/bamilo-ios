@@ -69,7 +69,7 @@
     
     if((options & ADDRESS_CELL_SELECT) == ADDRESS_CELL_SELECT) {
         self.checkmarkIconTrailingConstraint.constant = 10;
-        self.selectionStyle = UITableViewCellSelectionStyleGray;
+        //self.selectionStyle = UITableViewCellSelectionStyleGray;
     }
 }
 
@@ -91,7 +91,7 @@
     [addressTitleText smartAppend:addressObj.firstName];
     [addressTitleText smartAppend:addressObj.lastName];
     
-    self.addressTitleLabel.text = addressTitleText;
+    self.addressTitleLabel.text = [addressTitleText numbersToPersian];
     
     //Address Setup
     NSMutableString *addressText = [NSMutableString new];
@@ -101,7 +101,7 @@
     //[addressText smartAppend:addressObj.city];
     //[addressText smartAppend:addressObj.postcode];
     
-    self.addressLabel.text = addressText;
+    self.addressLabel.text = [addressText numbersToPersian];
     
     //Phone Setup
     NSMutableString *phoneText = [NSMutableString stringWithFormat:@"%@:", STRING_PHONE];

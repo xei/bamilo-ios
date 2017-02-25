@@ -231,7 +231,7 @@
                                                  name:kShowCheckoutForgotPasswordScreenNotification
                                                object:nil];*/
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
+    /*[[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showCheckoutAddressesScreen:)
                                                  name:kShowCheckoutAddressesScreenNotification
                                                object:nil];
@@ -244,7 +244,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showCheckoutEditAddressScreen:)
                                                  name:kShowCheckoutEditAddressScreenNotification
-                                               object:nil];
+                                               object:nil];*/
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showCheckoutShippingScreen)
@@ -1087,56 +1087,56 @@
 //    }
 //}
 
-//#pragma mark Checkout Shipping Screen
-//- (void)showCheckoutShippingScreen {
-//    JAShippingViewController *viewController = [[JAShippingViewController alloc] init];
-//    [self goToStep:viewController forStepByStepViewController:self.checkoutStepByStepViewController];
-//}
-//
+#pragma mark Checkout Shipping Screen
+- (void)showCheckoutShippingScreen {
+    JAShippingViewController *viewController = [[JAShippingViewController alloc] init];
+    [self goToStep:viewController forStepByStepViewController:self.checkoutStepByStepViewController];
+}
+
 //#pragma mark Checkout Payment Screen
-//- (void)showCheckoutPaymentScreen {
-//    JAPaymentViewController *viewController = [[JAPaymentViewController alloc] init];
-//    [self goToStep:viewController forStepByStepViewController:self.checkoutStepByStepViewController];
-//}
-//
+- (void)showCheckoutPaymentScreen {
+    JAPaymentViewController *viewController = [[JAPaymentViewController alloc] init];
+    [self goToStep:viewController forStepByStepViewController:self.checkoutStepByStepViewController];
+}
+
 //#pragma mark Checkout Finish Screen
-//- (void)showCheckoutFinishScreen:(NSNotification*)notification {
-//    UIViewController *topViewController = [self topViewController];
-//    if (![topViewController isKindOfClass:[JAOrderViewController class]] && [RICustomer checkIfUserIsLogged]) {
-//        JAOrderViewController *orderVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"orderViewController"];
-//        
-//        [self pushViewController:orderVC animated:YES];
-//    }
-//}
+- (void)showCheckoutFinishScreen:(NSNotification*)notification {
+    UIViewController *topViewController = [self topViewController];
+    if (![topViewController isKindOfClass:[JAOrderViewController class]] && [RICustomer checkIfUserIsLogged]) {
+        JAOrderViewController *orderVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"orderViewController"];
+        
+        [self pushViewController:orderVC animated:YES];
+    }
+}
 
 //#pragma mark Checkout External Payments Screen
-//- (void)showCheckoutExternalPaymentsScreen:(NSNotification *)notification {
-//    UIViewController *topViewController = [self topViewController];
-//    if (![topViewController isKindOfClass:[JAExternalPaymentsViewController class]] && [RICustomer checkIfUserIsLogged]) {
-//        self.neeedsExternalPaymentMethod = YES;
-//        
-//        JAExternalPaymentsViewController *externalPaymentsVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"externalPaymentsViewController"];
-//        
-//        externalPaymentsVC.cart = [notification.userInfo objectForKey:@"cart"];
-//        
-//        [self pushViewController:externalPaymentsVC animated:YES];
-//    }
-//}
+- (void)showCheckoutExternalPaymentsScreen:(NSNotification *)notification {
+    UIViewController *topViewController = [self topViewController];
+    if (![topViewController isKindOfClass:[JAExternalPaymentsViewController class]] && [RICustomer checkIfUserIsLogged]) {
+        self.neeedsExternalPaymentMethod = YES;
+        
+        JAExternalPaymentsViewController *externalPaymentsVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"externalPaymentsViewController"];
+        
+        externalPaymentsVC.cart = [notification.userInfo objectForKey:@"cart"];
+        
+        [self pushViewController:externalPaymentsVC animated:YES];
+    }
+}
 
 //#pragma mark Checkout Thanks Screen
-//- (void)showCheckoutThanksScreen:(NSNotification *)notification {
-//    UIViewController *topViewController = [self topViewController];
-//    if (![topViewController isKindOfClass:[JASuccessPageViewController class]] && [RICustomer checkIfUserIsLogged]) {
-//        self.neeedsExternalPaymentMethod = NO;
-//        
-//        JASuccessPageViewController *thanksVC = [[JASuccessPageViewController alloc] init];
-//        
-//        thanksVC.cart = [notification.userInfo objectForKey:@"cart"];
-//        thanksVC.targetString = [notification.userInfo objectForKey:@"rrTargetString"];
-//        
-//        [self pushViewController:thanksVC animated:YES];
-//    }
-//}
+- (void)showCheckoutThanksScreen:(NSNotification *)notification {
+    UIViewController *topViewController = [self topViewController];
+    if (![topViewController isKindOfClass:[JASuccessPageViewController class]] && [RICustomer checkIfUserIsLogged]) {
+        self.neeedsExternalPaymentMethod = NO;
+    
+        JASuccessPageViewController *thanksVC = [[JASuccessPageViewController alloc] init];
+    
+        thanksVC.cart = [notification.userInfo objectForKey:@"cart"];
+        thanksVC.targetString = [notification.userInfo objectForKey:@"rrTargetString"];
+    
+        [self pushViewController:thanksVC animated:YES];
+    }
+}
 
 //- (void)deactivateExternalPayment {
 //    self.neeedsExternalPaymentMethod = NO;
