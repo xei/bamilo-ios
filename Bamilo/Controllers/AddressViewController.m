@@ -29,7 +29,7 @@
     
     _addressTableViewController = (AddressTableViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"AddressTableViewController"];
     _addressTableViewController.titleHeaderText = nil;
-    _addressTableViewController.options = (ADDRESS_CELL_EDIT | ADDRESS_CELL_DELETE | ADDRESS_CELL_SELECT);
+    _addressTableViewController.options = (ADDRESS_CELL_EDIT | ADDRESS_CELL_DELETE /*| ADDRESS_CELL_SELECT*/);
     _addressTableViewController.delegate = self;
     [_addressTableViewController addInto:self ofView:self.addressListContainerView];
 }
@@ -50,6 +50,13 @@
 
 #pragma mark - AddressTableViewControllerDelegate
 - (BOOL)addressSelected:(Address *)address {
+    return NO;
+    
+//TEMPORARILY DISABLED ADDRESS SELECTION
+    if(_currentAddress.uid == address.uid) {
+        return NO;
+    }
+    
     _currentAddress = address;
     
     [[AlertManager sharedInstance] confirmAlert:@"تغییر آدرس" text:@"از تغییر آدرس پیش فرض خود اطمینان دارید؟" confirm:@"بله" cancel:@"خیر" completion:^(BOOL OK) {

@@ -36,12 +36,16 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[DataManager sharedInstance] getMultistepAddressList:self completion:^(id data, NSError *error) {
-        if(error == nil) {
-            [self bind:data forRequestId:0];
-            [self publishScreenLoadTime];
-        }
-    }];
+    if(self.isCompleteFetch == NO) {
+        [[DataManager sharedInstance] getMultistepAddressList:self completion:^(id data, NSError *error) {
+            if(error == nil) {
+                [self bind:data forRequestId:0];
+                [self publishScreenLoadTime];
+                
+                self.isCompleteFetch = YES;
+            }
+        }];
+    }
 }
 
 #pragma mark - Overrides
@@ -63,10 +67,8 @@
     if(_addresses.count == 0) {
         completion(nil, NO);
     } else {
-        Address *selectedAddress = [_addresses objectAtIndex:0];
-        Address *billingAddress = selectedAddress;
-        
-        [[DataManager sharedInstance] setMultistepAddress:self forShipping:selectedAddress.uid billing:billingAddress.uid completion:^(id data, NSError *error) {
+        Address *_selectedAddress = [self getSelectedAddress];
+        [[DataManager sharedInstance] setMultistepAddress:self forShipping:_selectedAddress.uid billing:_selectedAddress.uid completion:^(id data, NSError *error) {
             if(error == nil && completion != nil) {
                 MultistepEntity *multistepEntity = (MultistepEntity *)data;
                 completion(multistepEntity.nextStep, YES);
@@ -93,12 +95,7 @@
 }
 
 -(BOOL)addressSelected:(Address *)address {
-    [[DataManager sharedInstance] setDefaultAddress:self address:address isBilling:NO completion:^(id data, NSError *error) {
-        if(error == nil) {
-            [self bind:data forRequestId:1];
-            [_addressTableViewController scrollToTop];
-        }
-    }];
+    [self updateSelectedAddress:address];
     
     return YES;
 }
@@ -117,20 +114,39 @@
             [_addressTableViewController updateWithModel:_addresses];
         }
         break;
-        
-        //UPDATED DEFAULT ADDRESS
-        case 1: {
-            AddressList *_addressList = (AddressList *)data;
-            _addresses = [AddressTableViewController bindAddresses:_addressList];
-            [_addressTableViewController updateWithModel:_addresses];
-        }
-        break;
     }
 }
 
 #pragma mark - PerformanceTrackerProtocol
 -(NSString *)getPerformanceTrackerScreenName {
     return @"CheckoutAddresses";
+}
+
+#pragma mark - Helpers
+-(Address *)getSelectedAddress {
+    NSArray *_filteredAddress = [_addresses filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.isDefaultShipping == YES"]];
+    if(_filteredAddress && _filteredAddress.count == 1) {
+        return [_filteredAddress lastObject];
+    }
+    
+    return nil;
+}
+
+-(void)updateSelectedAddress:(Address *)selectedAddress {
+    Address *prevSelectedAddress = [self getSelectedAddress];
+    NSUInteger indexOfPrevSelectedAddress = [_addresses indexOfObject:prevSelectedAddress];
+    [prevSelectedAddress setIsDefaultShipping:0];
+    [prevSelectedAddress setIsDefaultBilling:0];
+
+    NSUInteger indexOfAddressToSelect = [_addresses indexOfObject:selectedAddress];
+    Address *selectedAddressObj = (Address *)[_addresses objectAtIndex:indexOfAddressToSelect];
+    [selectedAddressObj setIsDefaultBilling:1];
+    [selectedAddressObj setIsDefaultShipping:1];
+    
+    [_addressTableViewController updateAppearanceForCellAtIndexPath:@[
+        [NSIndexPath indexPathForRow:indexOfPrevSelectedAddress inSection:0],
+        [NSIndexPath indexPathForRow:indexOfAddressToSelect inSection:0]
+    ]];
 }
 
 @end

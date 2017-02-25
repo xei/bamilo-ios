@@ -21,6 +21,7 @@
 +(NSMutableArray *) bindAddresses:(AddressList *)addressList;
 
 - (void)updateWithModel:(NSArray *)addresses;
+- (void)updateAppearanceForCellAtIndexPath:(NSArray<NSIndexPath *> *)indexPaths;
 - (void)addInto:(UIViewController *)viewController ofView:(UIView *)containerView;
 - (void)scrollToTop;
 
