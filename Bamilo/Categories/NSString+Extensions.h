@@ -14,7 +14,7 @@
 - (NSString *)wrapWithMaxSize:(int) maxSize;
 - (NSString *)numbersToPersian;
 - (NSString *)numbersToEnglish;
-- (NSString *)formatTheNumbers;
+- (NSString *)formatPrice;
 - (NSString *)struckThroughText;
 - (BOOL)isValidEmail;
 

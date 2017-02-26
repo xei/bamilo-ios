@@ -18,7 +18,6 @@
 @property (nonatomic, weak) IBOutlet UILabel *nameLabel;
 @property (nonatomic, weak) IBOutlet UILabel *sizeLabel;
 @property (nonatomic, weak) IBOutlet UILabel *productColorLabel;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *colorLabelDismessConstraint;
 @property (nonatomic, weak) IBOutlet StepperViewControl *stepper;
 @property (nonatomic, weak) IBOutlet UILabel *priceLabel;
 @property (nonatomic, weak) IBOutlet UILabel *discountLabel;
@@ -60,7 +59,6 @@
     }
     
     self.productColorLabel.text = nil;
-    self.colorLabelDismessConstraint.priority = UILayoutPriorityRequired;
 }
 
 + (NSString *)nibName {

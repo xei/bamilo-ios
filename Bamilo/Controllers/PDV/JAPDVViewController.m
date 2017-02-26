@@ -423,13 +423,12 @@ typedef void (^ProcessActionBlock)(void);
         }
     }
     
-    if(self.ctaView) {
+    if (self.ctaView) {
         [self.ctaView removeFromSuperview];
     }
 }
 
 #pragma mark - Product methods
-
 - (void)updatedProduct:(NSNotification*)notification {
     if (VALID_NOTEMPTY(notification.object, NSArray)) {
         for (id object in notification.object) {
@@ -493,8 +492,7 @@ typedef void (^ProcessActionBlock)(void);
 }
 
 
-- (void)loadedProduct:(RIProduct*) product
-{
+- (void)loadedProduct:(RIProduct*) product {
     // notify the InAppNotification SDK that this the active view controller
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
     
@@ -529,8 +527,7 @@ typedef void (^ProcessActionBlock)(void);
 
 #pragma mark - Product loaded
 
-- (void)productLoaded
-{
+- (void)productLoaded {
     [self removeSuperviews];
     
     self.hasLoaddedProduct = YES;
@@ -538,8 +535,7 @@ typedef void (^ProcessActionBlock)(void);
     [self.mainScrollView setFrame:[self viewBounds]];
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-        if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation)
-        {
+        if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation) {
             CGRect bounds = [self viewBounds];
             CGFloat scrollViewsWidth = bounds.size.width / 2;
             [self.mainScrollView setFrame:CGRectMake(scrollViewsWidth,
@@ -553,15 +549,11 @@ typedef void (^ProcessActionBlock)(void);
                                                           scrollViewsWidth,
                                                           bounds.size.height)];
             [self.landscapeScrollView setHidden:NO];
-        }
-        else
-        {
+        } else {
             [self.mainScrollView setHidden:NO];
             [self.landscapeScrollView setHidden:YES];
         }
-    }
-    else
-    {
+    } else {
         [self.mainScrollView setHidden:NO];
         [self.landscapeScrollView setHidden:YES];
     }
@@ -573,11 +565,9 @@ typedef void (^ProcessActionBlock)(void);
     self.ctaView = [[JABottomBar alloc] initWithFrame:CGRectMake(0, self.view.height, self.view.width, kBottomDefaultHeight)];
     
     BOOL isiPadInLandscape = NO;
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-    {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-        if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation)
-        {
+        if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation) {
             isiPadInLandscape = YES;
         }
     }
@@ -593,8 +583,7 @@ typedef void (^ProcessActionBlock)(void);
     
     [self.ctaView addSmallButton:[UIImage imageNamed:@"btn_share"] target:self action:@selector(shareProduct)];
     UIDevice *device = [UIDevice currentDevice];
-    if ([[device model] isEqualToString:@"iPhone"] || [[device model] isEqualToString:@"iPhone Simulator"])
-    {
+    if ([[device model] isEqualToString:@"iPhone"] || [[device model] isEqualToString:@"iPhone Simulator"]) {
         [self.ctaView addSmallButton:[UIImage imageNamed:@"ic_calltoorder"] target:self action:@selector(callToOrder)];
     }
     
@@ -602,9 +591,9 @@ typedef void (^ProcessActionBlock)(void);
     {
         JAButton *saveButton = [self.ctaView addAlternativeButton:STRING_SAVE_ITEM target:self action:@selector(addToWishList)];
         [saveButton setTitleColor:JAOrange1Color forState:UIControlStateNormal];
-    }else if (self.product.preOrder) {
+    } else if (self.product.preOrder) {
         [self.ctaView addButton:STRING_PRE_ORDER target:self action:@selector(addToCart)];
-    }else {
+    } else {
         [self.ctaView addButton:STRING_BUY_NOW target:self action:@selector(addToCart)];
     }
     
@@ -614,8 +603,7 @@ typedef void (^ProcessActionBlock)(void);
     [self.view bringSubviewToFront:self.picker];
 }
 
-- (void)requestBundles
-{
+- (void)requestBundles {
     //fill the views
     [RIProduct getBundleWithSku:self.product.sku
                    successBlock:^(RIBundle* bundle) {
@@ -802,7 +790,7 @@ typedef void (^ProcessActionBlock)(void);
         
         if (self.product.fashion) {
             [self.bundleLayout setHeaderText:[STRING_BUY_THE_LOOK uppercaseString]];
-        }else{
+        } else {
             [self.bundleLayout setHeaderText:[STRING_COMBOS uppercaseString]];
         }
         
@@ -861,7 +849,7 @@ typedef void (^ProcessActionBlock)(void);
             if (!isiPadInLandscape) {
                 numberOfCols = 4;
                 singleItemHeight = 285;
-            }else{
+            } else {
                 singleItemHeight = 355;
             }
         }
@@ -932,8 +920,7 @@ typedef void (^ProcessActionBlock)(void);
     }
 }
 
-- (JAPDVRelatedItem *)relatedItemsView
-{
+- (JAPDVRelatedItem *)relatedItemsView {
     if (!VALID_NOTEMPTY(_relatedItemsView, JAPDVRelatedItem) || !_relatedItemsView.superview) {
         _relatedItemsView = [[JAPDVRelatedItem alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.productInfoSection.frame), self.mainScrollView.width, 300)];
         [self.mainScrollView addSubview:_relatedItemsView];
@@ -943,8 +930,7 @@ typedef void (^ProcessActionBlock)(void);
 
 #pragma mark - Actions
 
-- (void)goToSelectedRelatedItem:(UIControl*)sender
-{
+- (void)goToSelectedRelatedItem:(UIControl*)sender {
     NSArray* relatedProducts = [self.product.relatedProducts allObjects];
     RIProduct *tempProduct = [relatedProducts objectAtIndex:sender.tag];
     
@@ -969,13 +955,11 @@ typedef void (^ProcessActionBlock)(void);
     [self trackingEventScreenName:[NSString stringWithFormat:@"related_item_%@",tempProduct.name]];
 }
 
-- (void)goToDescription
-{
+- (void)goToDescription {
     [self goToDetails:@"description"];
 }
 
-- (void)showSeller
-{
+- (void)showSeller {
     [self.mainScrollView setContentOffset:CGPointMake(0, self.productInfoSection.frame.origin.y + [self.productInfoSection getSellerInfoYPosition])
                                  animated:YES];
 }
