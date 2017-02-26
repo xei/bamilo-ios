@@ -10,10 +10,12 @@
 #import "NSString+Size.h"
 
 #define cVERTICAL_PADDING 10
+#define cLINE_HEIGHT 23
 
 @implementation NotificationBarView {
 @private
     NSTimer *_timer;
+    float basicSpaceOfOneLine, basicNumberOfCharsPerLine;
 }
 
 static NotificationBarView *instance;
@@ -38,6 +40,9 @@ static NotificationBarView *instance;
     [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss)]];
     
     [self.iconImage setImage:[UIImage imageNamed:@"ico_error_notificationbar"]];
+    
+    basicSpaceOfOneLine = self.frame.size.width * 0.7;
+    basicNumberOfCharsPerLine = 30.0f;
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -75,8 +80,11 @@ static NotificationBarView *instance;
     }
     
     [viewController.view addSubview:self];
-    [self.textLabel sizeToFit];
-    [self setFrame:CGRectMake(0, 0, viewController.view.size.width, self.textLabel.height + cVERTICAL_PADDING)];
+
+    float spaceForCurrentView = floor(viewController.view.size.width / basicSpaceOfOneLine);
+    int actualNumberOfLines = ceilf(self.textLabel.text.length / (spaceForCurrentView * basicNumberOfCharsPerLine));
+    
+    [self setFrame:CGRectMake(0, 0, viewController.view.size.width, actualNumberOfLines * cLINE_HEIGHT + cVERTICAL_PADDING)];
     [self setY: -self.height];
     [self setHidden:NO];
     
