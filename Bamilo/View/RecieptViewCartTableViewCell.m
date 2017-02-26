@@ -42,12 +42,17 @@ const CGFloat summeryViewHeight = 45;
         [receiptViewItems addObject:[ReceiptItemModel withName:STRING_COUPON value:((CartEntity *)model).couponMoneyValueFormatted]];
     }
     
+    if(((CartEntity *)model).shippingValue.intValue > 0) {
+        [receiptViewItems addObject:[ReceiptItemModel withName:STRING_SHIPPING_COST value:((CartEntity *)model).shippingValueFormatted]];
+    }
+    
     [super updateWithModel:receiptViewItems];
 }
 
 
 + (CGFloat)cellHeightByModel:(CartEntity *)cartEntity {
-    return ([ReceiptItemView cellHeight] * ((cartEntity.priceRules.allKeys.count) + (cartEntity.couponCode ? 1 : 0) + 2)) + summeryViewHeight + cellBottomPadding;
+    int reciptItemViewCount = ((cartEntity.priceRules.allKeys.count) + (cartEntity.couponCode ? 1 : 0) + (cartEntity.shippingValue.intValue > 0 ? 1 : 0) + 2);
+    return ([ReceiptItemView cellHeight] * reciptItemViewCount) + summeryViewHeight + cellBottomPadding;
 }
 
 + (NSString *)nibName {

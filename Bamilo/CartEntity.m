@@ -80,10 +80,6 @@
         }
     }
     
-    if (cartEntity.cartValue && cartEntity.cartUnreducedValue) {
-        NSNumber *discountValue = [NSNumber numberWithInt: cartEntity.cartUnreducedValue.intValue - cartEntity.cartValue.intValue];
-        cartEntity.discountValueFormated = [RICountryConfiguration formatPrice:discountValue country:country];
-    }
     
     if ([dict objectForKey:@"total_converted"]) {
         if (![[dict objectForKey:@"total_converted"] isKindOfClass:[NSNull class]]) {
@@ -118,6 +114,11 @@
         if (VALID_NOTEMPTY([deliveryDic objectForKey:@"discount_coupon_money_value_converted"], NSNumber)) {
             cartEntity.deliveryDiscountCouponMoneyValueConverted = [dict objectForKey:@"discount_coupon_money_value_converted"];
         }
+    }
+    
+    if (cartEntity.cartValue && cartEntity.cartUnreducedValue) {
+        NSNumber *discountValue = [NSNumber numberWithInt: cartEntity.cartUnreducedValue.intValue - cartEntity.cartValue.intValue + cartEntity.shippingValue.intValue];
+        cartEntity.discountValueFormated = [RICountryConfiguration formatPrice:discountValue country:country];
     }
     
     if ([dict objectForKey:@"extra_costs"]) {

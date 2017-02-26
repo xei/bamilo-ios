@@ -55,7 +55,6 @@
     } else {
         [self setCartEmpty:YES];
     }
-    
     self.totalPrice.text = cart.cartEntity.cartUnreducedValueFormatted;
     self.totalDiscountedPrice.text = cart.cartEntity.discountValueFormated;
     [self.summeryView updateWithModel:self.cart.cartEntity];
