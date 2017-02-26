@@ -28,11 +28,12 @@
                                                                         [ReceiptItemModel withName:@"جمع کل:"
                                                                                              value: [((CartEntity *)model).cartUnreducedValueFormatted numbersToPersian]],
                                                                         [ReceiptItemModel withName:@"تخفیف کالاها:"
-                                                                                             value:[((CartEntity *)model).discountValueFormated numbersToPersian]]
+                                                                                             value:[((CartEntity *)model).onlyProductsDiscountFormated numbersToPersian]]
                                                                         ]];
 
     [((CartEntity *)model).priceRules enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-        [receiptViewItems insertObject:[ReceiptItemModel withName:(NSString *)key value:[(NSString *)obj numbersToPersian]] atIndex: receiptViewItems.count];
+        [receiptViewItems insertObject:[ReceiptItemModel withName:[(NSString *)key numbersToPersian]
+                                                            value:[(NSString *)obj numbersToPersian]] atIndex: receiptViewItems.count];
     }];
     [super updateWithModel:receiptViewItems];
 }

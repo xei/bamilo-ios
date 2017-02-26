@@ -274,7 +274,7 @@
     }
 }
 
--(void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     [[DataManager sharedInstance] getUserCart:self completion:^(id data, NSError *error) {
@@ -284,13 +284,13 @@
     }];
 }
 
--(void)viewDidAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self publishScreenLoadTime];
 }
 
 #pragma mark - DataServiceProtocol
--(void)bind:(id)data forRequestId:(int)rid {
+- (void)bind:(id)data forRequestId:(int)rid {
     RICart *cart = (RICart *)data;
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo: @{kUpdateCartNotificationValue: cart}];
@@ -300,11 +300,11 @@
 }
 
 #pragma mark - PerformanceTrackerProtocol
--(NSString *)getPerformanceTrackerScreenName {
+- (NSString *)getPerformanceTrackerScreenName {
     return @"Cart";
 }
 
--(NSString *)getPerformanceTrackerLabel {
+- (NSString *)getPerformanceTrackerLabel {
      NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
     return [NSString stringWithFormat:@"%@", [skusFromTeaserInCart allKeys]];
 }
@@ -348,14 +348,14 @@
 }
 
 
-- (void) changeTheSummeryTopConstraintByAnimationTo:(CGFloat)constant {
+- (void)changeTheSummeryTopConstraintByAnimationTo:(CGFloat)constant {
     [UIView animateWithDuration:0.15 animations:^{
         self.costSummeryContainerTopToWholeCostTopConstraint.constant = constant;
         [self.view layoutIfNeeded];
     } completion:nil];
 }
 
-- (void) changeTheSummeryBottomConstraintByAnimationTo:(CGFloat)constant {
+- (void)changeTheSummeryBottomConstraintByAnimationTo:(CGFloat)constant {
     [UIView animateWithDuration:0.15 animations:^{
         self.summeryViewToBottomConstraint.constant = constant;
         [self.view layoutIfNeeded];

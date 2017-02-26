@@ -46,8 +46,7 @@
     NSString *realPrice = cartItem.priceFormatted;
     NSString *specialPrice = cartItem.specialPriceFormatted;
     self.priceLabel.text = specialPrice ?: realPrice;
-    self.discountLabel.text = specialPrice ? realPrice : nil;
-    self.discountValue.attributedText = [self.discountValue.text struckThroughText];
+    self.discountValue.attributedText = [(specialPrice ? realPrice : nil) struckThroughText];
     
     
     if (cartItem.variation && [cartItem.variationName isEqualToString:@"size"]) {
