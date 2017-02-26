@@ -34,7 +34,9 @@
                 RICartItem *cartItem = [RICartItem parseCartItem:cartItemObject country:country];
                 [cartItems addObject:cartItem];
                 cartUnreducedValue += ([cartItem.price floatValue] * [cartItem.quantity integerValue]);
-                onlyProductDiscount += (([cartItem.price floatValue] - [cartItem.specialPrice floatValue]) * [cartItem.quantity integerValue]);
+                if (cartItem.specialPrice) {
+                    onlyProductDiscount += (([cartItem.price floatValue] - [cartItem.specialPrice floatValue]) * [cartItem.quantity integerValue]);
+                }
                 if(!showUnreducedPrice && VALID_NOTEMPTY(cartItem.specialPrice , NSNumber) && 0.0f < [cartItem.specialPrice floatValue] && [cartItem.price floatValue] != [cartItem.specialPrice floatValue]) {
                     showUnreducedPrice = YES;
                 }
