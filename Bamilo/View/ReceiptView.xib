@@ -11,31 +11,31 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="bYh-wR-z8n" customClass="ReceiptView">
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="30" id="Nml-2i-u1k" customClass="ReceiptView">
             <rect key="frame" x="0.0" y="0.0" width="375" height="30"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="oqj-dQ-jYh">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="30"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                </tableView>
-            </subviews>
-            <color key="backgroundColor" red="0.090531297028064728" green="0.52686542272567749" blue="0.11270476132631302" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-            <constraints>
-                <constraint firstAttribute="bottom" secondItem="oqj-dQ-jYh" secondAttribute="bottom" id="3xn-pk-tUJ"/>
-                <constraint firstAttribute="trailing" secondItem="oqj-dQ-jYh" secondAttribute="trailing" id="DI1-Is-sW4"/>
-                <constraint firstItem="oqj-dQ-jYh" firstAttribute="top" secondItem="bYh-wR-z8n" secondAttribute="top" id="T9P-Re-OGg"/>
-                <constraint firstItem="oqj-dQ-jYh" firstAttribute="leading" secondItem="bYh-wR-z8n" secondAttribute="leading" id="pRG-6P-LWh"/>
-            </constraints>
-            <nil key="simulatedStatusBarMetrics"/>
-            <nil key="simulatedTopBarMetrics"/>
-            <nil key="simulatedBottomBarMetrics"/>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Nml-2i-u1k" id="bYh-wR-z8n">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="29"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="oqj-dQ-jYh">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="30"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </tableView>
+                </subviews>
+                <color key="backgroundColor" red="0.090531297028064728" green="0.52686542272567749" blue="0.11270476132631302" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="oqj-dQ-jYh" secondAttribute="bottom" id="3xn-pk-tUJ"/>
+                    <constraint firstAttribute="trailing" secondItem="oqj-dQ-jYh" secondAttribute="trailing" id="DI1-Is-sW4"/>
+                    <constraint firstItem="oqj-dQ-jYh" firstAttribute="top" secondItem="bYh-wR-z8n" secondAttribute="top" id="T9P-Re-OGg"/>
+                    <constraint firstItem="oqj-dQ-jYh" firstAttribute="leading" secondItem="bYh-wR-z8n" secondAttribute="leading" id="pRG-6P-LWh"/>
+                </constraints>
+            </tableViewCellContentView>
             <connections>
-                <outlet property="tableView" destination="oqj-dQ-jYh" id="3Vn-gp-b6H"/>
+                <outlet property="tableView" destination="oqj-dQ-jYh" id="pJn-kS-XFt"/>
             </connections>
-            <point key="canvasLocation" x="-17.5" y="130"/>
-        </view>
+            <point key="canvasLocation" x="-31" y="65"/>
+        </tableViewCell>
     </objects>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

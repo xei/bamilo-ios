@@ -16,45 +16,45 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ReceiptItemView">
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="30" id="cIL-vz-lFL" customClass="ReceiptItemView">
             <rect key="frame" x="0.0" y="0.0" width="375" height="30"/>
-            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="جمع کل " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gbF-qq-eMQ" userLabel="ItemNameLabel">
-                    <rect key="frame" x="311" y="4" width="44" height="22"/>
-                    <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
-                    <color key="textColor" red="0.37891709804534912" green="0.37922787666320801" blue="0.37896519899368286" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۹۹۹،۰۰۰،۵۵۵" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rNz-Fd-cuV" userLabel="ItemPriceLabel">
-                    <rect key="frame" x="20" y="4.5" width="291" height="21.5"/>
-                    <constraints>
-                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="1DZ-Zt-2MS"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
-                    <color key="textColor" red="0.37891709800000001" green="0.37922787670000002" blue="0.37896519899999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-            </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-            <constraints>
-                <constraint firstItem="rNz-Fd-cuV" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="M9n-yx-cJD"/>
-                <constraint firstItem="gbF-qq-eMQ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="4" id="ZjM-M6-fEN"/>
-                <constraint firstAttribute="trailing" secondItem="gbF-qq-eMQ" secondAttribute="trailing" constant="20" id="bfD-MM-HHq"/>
-                <constraint firstItem="rNz-Fd-cuV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="dkv-mp-n5G"/>
-                <constraint firstAttribute="bottom" secondItem="gbF-qq-eMQ" secondAttribute="bottom" constant="4" id="ofO-p4-lDo"/>
-                <constraint firstItem="gbF-qq-eMQ" firstAttribute="leading" secondItem="rNz-Fd-cuV" secondAttribute="trailing" priority="750" id="x7M-6W-jTo"/>
-            </constraints>
-            <nil key="simulatedStatusBarMetrics"/>
-            <nil key="simulatedTopBarMetrics"/>
-            <nil key="simulatedBottomBarMetrics"/>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cIL-vz-lFL" id="iN0-l3-epB">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="29"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="جمع کل " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gbF-qq-eMQ" userLabel="ItemNameLabel">
+                        <rect key="frame" x="311" y="4" width="44" height="22"/>
+                        <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
+                        <color key="textColor" red="0.37891709804534912" green="0.37922787666320801" blue="0.37896519899368286" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۹۹۹،۰۰۰،۵۵۵" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rNz-Fd-cuV" userLabel="ItemPriceLabel">
+                        <rect key="frame" x="20" y="4.5" width="291" height="21.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="1DZ-Zt-2MS"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
+                        <color key="textColor" red="0.37891709800000001" green="0.37922787670000002" blue="0.37896519899999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <constraints>
+                    <constraint firstItem="rNz-Fd-cuV" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="M9n-yx-cJD"/>
+                    <constraint firstItem="gbF-qq-eMQ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="4" id="ZjM-M6-fEN"/>
+                    <constraint firstAttribute="trailing" secondItem="gbF-qq-eMQ" secondAttribute="trailing" constant="20" id="bfD-MM-HHq"/>
+                    <constraint firstItem="rNz-Fd-cuV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="dkv-mp-n5G"/>
+                    <constraint firstAttribute="bottom" secondItem="gbF-qq-eMQ" secondAttribute="bottom" constant="4" id="ofO-p4-lDo"/>
+                    <constraint firstItem="gbF-qq-eMQ" firstAttribute="leading" secondItem="rNz-Fd-cuV" secondAttribute="trailing" priority="750" id="x7M-6W-jTo"/>
+                </constraints>
+            </tableViewCellContentView>
             <connections>
-                <outlet property="itemNameLabel" destination="gbF-qq-eMQ" id="GOg-Bi-D3K"/>
-                <outlet property="itemPriceLabel" destination="rNz-Fd-cuV" id="Alp-6x-wRu"/>
+                <outlet property="itemNameLabel" destination="gbF-qq-eMQ" id="jre-Yu-v6L"/>
+                <outlet property="itemPriceLabel" destination="rNz-Fd-cuV" id="Nuo-II-5X1"/>
             </connections>
-            <point key="canvasLocation" x="-25" y="56"/>
-        </view>
+            <point key="canvasLocation" x="-26" y="158"/>
+        </tableViewCell>
     </objects>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
