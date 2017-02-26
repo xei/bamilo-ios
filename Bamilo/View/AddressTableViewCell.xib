@@ -28,7 +28,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="نغمه حیامنش" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qvy-0u-gkK">
-                        <rect key="frame" x="15" y="6" width="320" height="23"/>
+                        <rect key="frame" x="15" y="6.5" width="320" height="23"/>
                         <constraints>
                             <constraint firstAttribute="height" priority="250" constant="22" id="VVa-dC-QXh"/>
                         </constraints>
@@ -44,7 +44,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="میدان ونک ،حقانی ، نرسیده به حهان کودک ، نرسیده به جهان کودک، پلاک" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="42A-p9-Ncc">
-                        <rect key="frame" x="15" y="34" width="320" height="49"/>
+                        <rect key="frame" x="15" y="34.5" width="320" height="47.5"/>
                         <constraints>
                             <constraint firstAttribute="height" priority="250" constant="44" id="6Nb-g7-J6p"/>
                         </constraints>
@@ -53,7 +53,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="تلفن: ۰۹۱۲۲۰۹۵۷۷۸۹" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kl6-R4-pkZ">
-                        <rect key="frame" x="15" y="93" width="320" height="22"/>
+                        <rect key="frame" x="15" y="92" width="320" height="22"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="22" id="2gW-YO-fKo"/>
                         </constraints>
@@ -62,7 +62,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="STm-Hv-b7h" userLabel="Address Delete Button" customClass="IconButton">
-                        <rect key="frame" x="15" y="130" width="45" height="25"/>
+                        <rect key="frame" x="15" y="129" width="45" height="25"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="25" id="NlF-x3-axy"/>
                             <constraint firstAttribute="width" constant="45" id="xbp-oP-e3n"/>
@@ -76,7 +76,7 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HWJ-Ix-ALr" customClass="IconButton">
-                        <rect key="frame" x="65" y="130" width="55" height="25"/>
+                        <rect key="frame" x="65" y="129" width="55" height="25"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="55" id="osN-8F-Q4t"/>
                             <constraint firstAttribute="height" constant="25" id="rF1-a2-fAn"/>

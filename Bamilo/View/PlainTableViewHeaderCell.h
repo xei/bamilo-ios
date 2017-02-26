@@ -6,9 +6,9 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import "BaseTableViewHeaderFooterCell.h"
+#import "BaseTableViewCell.h"
 
-@interface PlainTableViewHeaderCell : BaseTableViewHeaderFooterCell
+@interface PlainTableViewHeaderCell : BaseTableViewCell
 
 @property (copy, nonatomic) NSString *titleString;
 

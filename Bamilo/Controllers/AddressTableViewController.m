@@ -27,7 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.tableView registerNib:[UINib nibWithNibName:[AddressTableViewHeaderCell nibName] bundle:nil] forHeaderFooterViewReuseIdentifier:[AddressTableViewHeaderCell nibName]];
+    [self.tableView registerNib:[UINib nibWithNibName:[AddressTableViewHeaderCell nibName] bundle:nil] forCellReuseIdentifier:[AddressTableViewHeaderCell nibName]];
     [self.tableView registerNib:[UINib nibWithNibName:[AddressTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[AddressTableViewCell nibName]];
     
     self.tableView.separatorInset = UIEdgeInsetsZero;
@@ -75,7 +75,7 @@
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    AddressTableViewHeaderCell *addressTableViewHeaderCell = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:[AddressTableViewHeaderCell nibName]];
+    AddressTableViewHeaderCell *addressTableViewHeaderCell = [self.tableView dequeueReusableCellWithIdentifier:[AddressTableViewHeaderCell nibName]];
     addressTableViewHeaderCell.titleString = self.titleHeaderText;
     addressTableViewHeaderCell.delegate = self;
     return addressTableViewHeaderCell;

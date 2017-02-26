@@ -196,7 +196,7 @@
     if (VALID_NOTEMPTY(self.cart.totalNumberOfOrders, NSNumber)) {
         [trackingDictionary setObject:self.cart.totalNumberOfOrders forKey:kRIEventAmountTransactions];
     }
-    [trackingDictionary setObject:self.cart.orderNr forKey:kRIEventOrderNumber];
+    [trackingDictionary setObject:self.cart.orderNr ?: @"" forKey:kRIEventOrderNumber];
     RICartItem* lastCartItem = [self.cart.cartEntity.cartItems lastObject];
     if (VALID_NOTEMPTY(lastCartItem, RICartItem)) {
         [trackingDictionary setObject:lastCartItem.name forKey:kRIEventProductNameKey];

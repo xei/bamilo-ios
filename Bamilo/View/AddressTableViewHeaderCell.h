@@ -13,5 +13,7 @@
 @end
 
 @interface AddressTableViewHeaderCell : PlainTableViewHeaderCell
+
 @property (nonatomic, weak) id<AddressTableViewHeaderCellDelegate> delegate;
+
 @end

@@ -39,7 +39,7 @@
     [super viewDidLoad];
     
     //Header And Footer Cells
-    [self.tableView registerNib:[UINib nibWithNibName:[PlainTableViewHeaderCell nibName] bundle:nil] forHeaderFooterViewReuseIdentifier:[PlainTableViewHeaderCell nibName]];
+    [self.tableView registerNib:[UINib nibWithNibName:[PlainTableViewHeaderCell nibName] bundle:nil]  forCellReuseIdentifier:[PlainTableViewHeaderCell nibName]];
     
     //DiscountSwitcherView
     [self.tableView registerNib:[UINib nibWithNibName:[DiscountSwitcherView nibName] bundle:nil]  forCellReuseIdentifier:[DiscountSwitcherView nibName]];
@@ -239,7 +239,7 @@
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    PlainTableViewHeaderCell *plainTableViewHeaderCell = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:[PlainTableViewHeaderCell nibName]];
+    PlainTableViewHeaderCell *plainTableViewHeaderCell = [self.tableView dequeueReusableCellWithIdentifier:[PlainTableViewHeaderCell nibName]];
     
     switch (section) {
         case 0:

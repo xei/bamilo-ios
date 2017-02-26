@@ -37,7 +37,7 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
     [super viewDidLoad];
     
     //Header And Footer Cells
-    [self.tableView registerNib:[UINib nibWithNibName:[PlainTableViewHeaderCell nibName] bundle:nil] forHeaderFooterViewReuseIdentifier:[PlainTableViewHeaderCell nibName]];
+    [self.tableView registerNib:[UINib nibWithNibName:[PaymentTypeTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[PaymentTypeTableViewCell nibName]];
     
     //PaymentTypeTableViewCell
     [self.tableView registerNib:[UINib nibWithNibName:[PaymentTypeTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[PaymentTypeTableViewCell nibName]];
@@ -197,7 +197,7 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     switch (section) {
         case 0: {
-            PlainTableViewHeaderCell *plainTableViewHeaderCell = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:[PlainTableViewHeaderCell nibName]];
+            PlainTableViewHeaderCell *plainTableViewHeaderCell = [self.tableView dequeueReusableCellWithIdentifier:[PlainTableViewHeaderCell nibName]];
             plainTableViewHeaderCell.titleString = STRING_PAYMENT_OPTION;
             return plainTableViewHeaderCell;
         }

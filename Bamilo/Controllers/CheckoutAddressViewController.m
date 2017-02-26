@@ -42,6 +42,13 @@
             [_addressTableViewController updateWithModel:_addresses];
             [self setIsStepValid:_addresses.count];
             
+            if(self.cart.cartEntity.shippingAddress) {
+                Address *_addressToSelect = [self getAddressById:self.cart.cartEntity.shippingAddress.uid];
+                if(_addressToSelect) {
+                    [self updateSelectedAddress:_addressToSelect];
+                }
+            }
+            
             [self publishScreenLoadTime];
         }
     }];
@@ -145,6 +152,17 @@
         [NSIndexPath indexPathForRow:indexOfPrevSelectedAddress inSection:0],
         [NSIndexPath indexPathForRow:indexOfAddressToSelect inSection:0]
     ]];
+}
+
+-(Address *)getAddressById:(NSString *)uid {
+    if(uid && uid.length) {
+        NSArray *_filteredAddress = [_addresses filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.uid == %@", uid]];
+        if(_filteredAddress && _filteredAddress.count == 1) {
+            return [_filteredAddress lastObject];
+        }
+    }
+    
+    return nil;
 }
 
 @end

@@ -48,6 +48,8 @@
     [self.addressDeleteButton applyStyle:kFontRegularName fontSize:11 color:cLIGHT_GRAY_COLOR];
     self.addressDeleteButton.titleLabel.text = STRING_REMOVE;
     
+    [self setSeparatorInset:UIEdgeInsetsZero];
+    
     [self updateAppearanceToInitialState];
 }
 

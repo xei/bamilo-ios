@@ -55,12 +55,11 @@
                     <constraint firstItem="Lrz-Sn-LUX" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="zMd-ys-Ekg"/>
                 </constraints>
             </tableViewCellContentView>
-            <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
                 <outlet property="addAddressButton" destination="Thk-L1-74p" id="1Js-Ud-3eg"/>
                 <outlet property="titleLabel" destination="Lrz-Sn-LUX" id="aL0-SZ-aeq"/>
             </connections>
-            <point key="canvasLocation" x="-123" y="19"/>
+            <point key="canvasLocation" x="-123.5" y="19"/>
         </tableViewCell>
     </objects>
     <resources>
