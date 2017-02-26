@@ -14,6 +14,9 @@
 
 @implementation RecieptViewCartTableViewCell
 
+const CGFloat cellBottomPadding = 10;
+const CGFloat summeryViewHeight = 45;
+
 - (void)awakeFromNib {
     [super awakeFromNib];
     [self.contentView setBackgroundColor:[UIColor withHexString:@"EEF2F6"]];
@@ -32,15 +35,19 @@
                                                                         ]];
 
     [((CartEntity *)model).priceRules enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-        [receiptViewItems insertObject:[ReceiptItemModel withName:[(NSString *)key numbersToPersian]
-                                                            value:[(NSString *)obj numbersToPersian]] atIndex: receiptViewItems.count];
+        [receiptViewItems addObject:[ReceiptItemModel withName:[(NSString *)key numbersToPersian] value:[(NSString *)obj numbersToPersian]]];
     }];
+    
+    if (((CartEntity *)model).couponCode) {
+        [receiptViewItems addObject:[ReceiptItemModel withName:STRING_COUPON value:((CartEntity *)model).couponMoneyValueFormatted]];
+    }
+    
     [super updateWithModel:receiptViewItems];
 }
 
 
 + (CGFloat)cellHeightByModel:(CartEntity *)cartEntity {
-    return ([ReceiptItemView cellHeight] * ((cartEntity.priceRules.allKeys.count) + 2)) + 45 + 10;
+    return ([ReceiptItemView cellHeight] * ((cartEntity.priceRules.allKeys.count) + (cartEntity.couponCode ? 1 : 0) + 2)) + summeryViewHeight + cellBottomPadding;
 }
 
 + (NSString *)nibName {

@@ -39,15 +39,14 @@
     [[DataManager sharedInstance] getMultistepAddressList:self completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
-            [_addressTableViewController updateWithModel:_addresses];
             [self setIsStepValid:_addresses.count];
             
             if(self.cart.cartEntity.shippingAddress) {
                 Address *_addressToSelect = [self getAddressById:self.cart.cartEntity.shippingAddress.uid];
-                if(_addressToSelect) {
-                    [self updateSelectedAddress:_addressToSelect];
-                }
+                [self updateSelectedAddress:_addressToSelect];
             }
+            
+            [_addressTableViewController updateWithModel:_addresses];
             
             [self publishScreenLoadTime];
         }
@@ -101,7 +100,10 @@
 }
 
 -(BOOL)addressSelected:(Address *)address {
-    [self updateSelectedAddress:address];
+    NSArray<NSIndexPath *> *_indexPathsToRefresh = [self updateSelectedAddress:address];
+    if(_indexPathsToRefresh) {
+        [self updateSelectedAddressAppearance:_indexPathsToRefresh];
+    }
     
     return YES;
 }
@@ -137,7 +139,7 @@
     return nil;
 }
 
--(void)updateSelectedAddress:(Address *)selectedAddress {
+-(NSArray *)updateSelectedAddress:(Address *)selectedAddress {
     Address *prevSelectedAddress = [self getSelectedAddress];
     NSUInteger indexOfPrevSelectedAddress = [_addresses indexOfObject:prevSelectedAddress];
     [prevSelectedAddress setIsDefaultShipping:0];
@@ -148,10 +150,11 @@
     [selectedAddressObj setIsDefaultBilling:1];
     [selectedAddressObj setIsDefaultShipping:1];
     
-    [_addressTableViewController updateAppearanceForCellAtIndexPath:@[
-        [NSIndexPath indexPathForRow:indexOfPrevSelectedAddress inSection:0],
-        [NSIndexPath indexPathForRow:indexOfAddressToSelect inSection:0]
-    ]];
+    return @[ [NSIndexPath indexPathForRow:indexOfPrevSelectedAddress inSection:0], [NSIndexPath indexPathForRow:indexOfAddressToSelect inSection:0] ];
+}
+
+-(void)updateSelectedAddressAppearance:(NSArray *)indexPathsToRefresh {
+    [_addressTableViewController updateAppearanceForCellAtIndexPath:indexPathsToRefresh];
 }
 
 -(Address *)getAddressById:(NSString *)uid {
