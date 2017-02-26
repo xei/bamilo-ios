@@ -25,6 +25,7 @@
     
     BOOL showUnreducedPrice = NO;
     CGFloat cartUnreducedValue = 0.0f;
+    CGFloat onlyProductDiscount = 0.0f;
     if ([dict objectForKey:@"products"]) {
         NSArray *cartItemObjects = [dict objectForKey:@"products"];
         if (VALID_NOTEMPTY(cartItemObjects, NSArray)) {
@@ -33,6 +34,9 @@
                 RICartItem *cartItem = [RICartItem parseCartItem:cartItemObject country:country];
                 [cartItems addObject:cartItem];
                 cartUnreducedValue += ([cartItem.price floatValue] * [cartItem.quantity integerValue]);
+                if (cartItem.specialPrice) {
+                    onlyProductDiscount += (([cartItem.price floatValue] - [cartItem.specialPrice floatValue]) * [cartItem.quantity integerValue]);
+                }
                 if(!showUnreducedPrice && VALID_NOTEMPTY(cartItem.specialPrice , NSNumber) && 0.0f < [cartItem.specialPrice floatValue] && [cartItem.price floatValue] != [cartItem.specialPrice floatValue]) {
                     showUnreducedPrice = YES;
                 }
@@ -41,11 +45,15 @@
             cartEntity.cartItems = [cartItems copy];
             
             if(showUnreducedPrice) {
-                cartEntity.cartUnreducedValue = [NSNumber numberWithFloat:cartUnreducedValue];
+                cartEntity.cartUnreducedValue = [NSNumber numberWithFloat:onlyProductDiscount];
                 cartEntity.cartUnreducedValueFormatted = [RICountryConfiguration formatPrice:cartEntity.cartUnreducedValue country:country];
             }
         }
     }
+    
+    cartEntity.onlyProductsDiscount = [NSNumber numberWithFloat:cartUnreducedValue];;
+    cartEntity.onlyProductsDiscountFormated = [RICountryConfiguration formatPrice:cartEntity.cartUnreducedValue country:country];
+    
     
     if([dict objectForKey:@"sub_total_undiscounted"]) {
         cartEntity.cartUnreducedValue = [dict objectForKey:@"sub_total_undiscounted"];
@@ -179,7 +187,7 @@
                             if ([priceRulesDictionary objectForKey:@"value"] && ![[priceRulesDictionary objectForKey:@"value"] isKindOfClass:[NSNull class]]) {
                                 if(VALID_NOTEMPTY([priceRulesDictionary objectForKey:@"value"], NSNumber)) {
                                     //since it's a rule to create a discount, add the minus signal to the string
-                                    [priceRules setValue:[@"- " stringByAppendingString:[RICountryConfiguration formatPrice:[priceRulesDictionary objectForKey:@"value"] country:country]] forKey:[priceRulesDictionary objectForKey:@"label"]];
+                                    [priceRules setValue:[RICountryConfiguration formatPrice:[priceRulesDictionary objectForKey:@"value"] country:country] forKey:[priceRulesDictionary objectForKey:@"label"]];
                                 } else {
                                     [priceRules setValue:[priceRulesDictionary objectForKey:@"value"] forKey: [priceRulesDictionary objectForKey:@"label"]];
                                 }

@@ -16,26 +16,28 @@
 
 @property (strong, nonatomic) NSArray *cartItems;
 @property (strong, nonatomic) NSNumber *cartUnreducedValue;
-@property (strong, nonatomic) NSString *cartUnreducedValueFormatted;
+@property (copy  , nonatomic) NSString *cartUnreducedValueFormatted;
 @property (strong, nonatomic) NSNumber *subTotal;
-@property (strong, nonatomic) NSString *subTotalFormatted;
+@property (copy  , nonatomic) NSString *subTotalFormatted;
 @property (strong, nonatomic) NSNumber *cartCount;
+@property (strong, nonatomic) NSNumber *onlyProductsDiscount;
+@property (copy  , nonatomic) NSString *onlyProductsDiscountFormated;
 @property (strong, nonatomic) NSNumber *cartValue;
-@property (strong, nonatomic) NSString *cartValueFormatted;
-@property (strong, nonatomic) NSString *discountValueFormated;
+@property (copy  , nonatomic) NSString *cartValueFormatted;
+@property (copy  , nonatomic) NSString *discountValueFormated;
 @property (strong, nonatomic) NSNumber *cartValueEuroConverted;
 @property (strong, nonatomic) NSNumber *shippingValue;
-@property (strong, nonatomic) NSString *shippingValueFormatted;
+@property (copy  , nonatomic) NSString *shippingValueFormatted;
 @property (strong, nonatomic) NSNumber *shippingValueEuroConverted;
 @property (strong, nonatomic) NSNumber *extraCosts;
-@property (strong, nonatomic) NSString *extraCostsFormatted;
+@property (copy  , nonatomic) NSString *extraCostsFormatted;
 @property (strong, nonatomic) NSNumber *extraCostsEuroConverted;
 //VAT
 @property (strong, nonatomic) NSNumber *vatValue;
-@property (strong, nonatomic) NSString *vatValueFormatted;
+@property (copy  , nonatomic) NSString *vatValueFormatted;
 @property (strong, nonatomic) NSNumber *vatValueEuroConverted;
 @property (strong, nonatomic) NSNumber *vatLabelEnabled;
-@property (strong, nonatomic) NSString *vatLabel;
+@property (copy  , nonatomic) NSString *vatLabel;
 //SUM
 @property (strong, nonatomic) NSNumber *sumCosts;
 @property (strong, nonatomic) NSNumber *sumCostsEuroConverted;
@@ -44,15 +46,15 @@
 //PRICE RULES
 @property (strong, nonatomic) NSDictionary *priceRules;
 //COUPON
-@property (strong, nonatomic) NSString *couponCode;
+@property (copy  , nonatomic) NSString *couponCode;
 @property (strong, nonatomic) NSNumber *couponMoneyValue;
-@property (strong, nonatomic) NSString *couponMoneyValueFormatted;
+@property (copy  , nonatomic) NSString *couponMoneyValueFormatted;
 @property (strong, nonatomic) NSNumber *couponMoneyValueEuroConverted;
 //PAYMENT
 @property (nonatomic, strong) RIAddress *shippingAddress;
 @property (nonatomic, strong) RIAddress *billingAddress;
-@property (nonatomic, strong) NSString *paymentMethod;
-@property (nonatomic, strong) NSString *shippingMethod;
+@property (nonatomic, copy  ) NSString *paymentMethod;
+@property (nonatomic, copy  ) NSString *shippingMethod;
 
 @property (strong, nonatomic) NSArray* sellerDelivery;
 

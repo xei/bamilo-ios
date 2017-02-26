@@ -21,7 +21,6 @@
     [super awakeFromNib];
     
     self.backgroundColor = [UIColor whiteColor];
-    
     [self.tableView registerNib:[UINib nibWithNibName:[ReceiptItemView nibName] bundle:nil] forCellReuseIdentifier:[ReceiptItemView nibName]];
     
     self.tableView.delegate = self;
