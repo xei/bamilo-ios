@@ -203,18 +203,18 @@
 }
 
 + (NSString*)formatPrice:(NSNumber*)price country:(RICountryConfiguration*)country {
-    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-    [formatter setMaximumFractionDigits:[[country noDecimals] integerValue]];
-    [formatter setMinimumFractionDigits:[[country noDecimals] integerValue]];
-    [formatter setRoundingMode: NSNumberFormatterRoundHalfUp];
-    [formatter setDecimalSeparator:[country decimalsSep]];
-    [formatter setGroupingSeparator:[country thousandsSep]];
-    [formatter setUsesGroupingSeparator:YES];
+//    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+//    [formatter setMaximumFractionDigits:[[country noDecimals] integerValue]];
+//    [formatter setMinimumFractionDigits:[[country noDecimals] integerValue]];
+//    [formatter setRoundingMode: NSNumberFormatterRoundHalfUp];
+//    [formatter setDecimalSeparator:[country decimalsSep]];
+//    [formatter setGroupingSeparator:[country thousandsSep]];
+//    [formatter setUsesGroupingSeparator:YES];
     
     if(!VALID_NOTEMPTY([country currencyPosition], NSNumber) || ![[country currencyPosition] boolValue]) {
-        return [NSString stringWithFormat:@"%@ %@", [country currencySymbol], [formatter stringFromNumber:price]];
+        return [NSString stringWithFormat:@"%@ %@", [country currencySymbol], price];
     } else {
-        return [NSString stringWithFormat:@"%@ %@", [[[formatter stringFromNumber:price] formatTheNumbers] numbersToPersian], [country currencySymbol]];
+        return [NSString stringWithFormat:@"%@ %@", [[[NSString stringWithFormat:@"%@", price] formatPrice] numbersToPersian], [country currencySymbol]];
     }
 }
 

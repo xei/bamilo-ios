@@ -49,9 +49,9 @@
         label.font = [UIFont fontWithName:kFontRegularName size: 12];
     }
     
-    self.upperSelectedPriceUITextField.text = [[[NSString stringWithFormat:@"%.0ld", (long)self.priceFilterOption.upperValue] formatTheNumbers] numbersToPersian];
+    self.upperSelectedPriceUITextField.text = [[[NSString stringWithFormat:@"%.0ld", (long)self.priceFilterOption.upperValue] formatPrice] numbersToPersian];
     
-    NSString *lowerValue = [[[NSString stringWithFormat:@"%.0ld", (long)self.priceFilterOption.lowerValue] formatTheNumbers] numbersToPersian];
+    NSString *lowerValue = [[[NSString stringWithFormat:@"%.0ld", (long)self.priceFilterOption.lowerValue] formatPrice] numbersToPersian];
     self.lowerSelectedPriceUITextField.text = lowerValue.length ? lowerValue : @"۰";
     
     self.upperSelectedPriceUITextField.delegate = self;
@@ -81,19 +81,19 @@
         self.priceRangeSlider.selectedMinimum = valueToBeSet;
     }
     
-    sender.text = [[[NSString stringWithFormat:@"%.0f", valueToBeSet] formatTheNumbers] numbersToPersian];
+    sender.text = [[[NSString stringWithFormat:@"%.0f", valueToBeSet] formatPrice] numbersToPersian];
     
 }
 
 - (IBAction)textFieldEditingDidChanged:(UITextField *)sender {
     NSString *senderValueString = [sender.text stringByReplacingOccurrencesOfString:@"," withString:@""];
-    sender.text = [[senderValueString formatTheNumbers] numbersToPersian];
+    sender.text = [[senderValueString formatPrice] numbersToPersian];
 }
 
 - (void)rangeSlider:(TTRangeSlider *)sender didChangeSelectedMinimumValue:(float)selectedMinimum andMaximumValue:(float)selectedMaximum {
     if (sender == self.priceRangeSlider) {
-        self.lowerSelectedPriceUITextField.text = [[[NSString stringWithFormat:@"%.0f", selectedMinimum] formatTheNumbers] numbersToPersian];
-        self.upperSelectedPriceUITextField.text = [[[NSString stringWithFormat:@"%.0f", selectedMaximum] formatTheNumbers] numbersToPersian];
+        self.lowerSelectedPriceUITextField.text = [[[NSString stringWithFormat:@"%.0f", selectedMinimum] formatPrice] numbersToPersian];
+        self.upperSelectedPriceUITextField.text = [[[NSString stringWithFormat:@"%.0f", selectedMaximum] formatPrice] numbersToPersian];
     }
     [self saveOptions];
 }

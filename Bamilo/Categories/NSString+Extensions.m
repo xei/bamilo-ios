@@ -12,6 +12,7 @@
 
 + (NSNumberFormatter*) numberFormatter {
     static NSNumberFormatter *_numberFormatter;
+    [_numberFormatter setLocale:[NSLocale localeWithLocaleIdentifier:@"ar"]];
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _numberFormatter = [[NSNumberFormatter alloc] init];
@@ -72,9 +73,9 @@
     return result;
 }
 
-- (NSString *)formatTheNumbers {
+- (NSString *)formatPrice {
     if (!self.floatValue) {
-        return @"0";
+        return self;
     }
     [NSString numberFormatter].numberStyle = NSNumberFormatterDecimalStyle;
     NSNumber * numberFromString = [[NSString numberFormatter] numberFromString:self];

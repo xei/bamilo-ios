@@ -77,10 +77,11 @@ const int VicinityFieldIndex = 6;
     [self.formController.formListModel insertObject:region atIndex:RegionFieldIndex];
     [self.formController.formListModel insertObject:city atIndex:CityFieldIndex];
     [self.formController.formListModel insertObject:vicinity atIndex:VicinityFieldIndex];
-    
     [self.formController setupTableView];
     
+    
     if (!self.address.uid) {
+        // Get regions and citiies for region defualt value (if exists)
         [self getRegionsByCompletion:^{
             if (region.titleString) {
                 [self getCitiesForRegionId:[self.formController.formListModel[RegionFieldIndex] getValue]  completion: nil];
@@ -130,7 +131,6 @@ const int VicinityFieldIndex = 6;
     }
     
     NSMutableDictionary *params = [self.formController getMutableDictionaryOfForm];
-    
     if(self.address.uid) {
         //EDIT / UPDATE ADDRESS
         params[@"address_form[id]"] = self.address.uid;
@@ -150,7 +150,6 @@ const int VicinityFieldIndex = 6;
     } else {
         //ADD NEW ADDRESS
         params[@"address_form[id]"] = @"";
-        
         [[DataManager sharedInstance] addAddress:self params:params completion:^(id data, NSError *error) {
             if (error == nil) {
                 [self.navigationController popViewControllerAnimated:YES];
@@ -254,6 +253,7 @@ const int VicinityFieldIndex = 6;
             }];
         }
     }];
+    self.address = address;
 }
 
 
