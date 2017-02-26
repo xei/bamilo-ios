@@ -20,108 +20,108 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="AddressTableViewCell">
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="160" id="uy4-87-4XC" customClass="AddressTableViewCell">
             <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
-            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="نغمه حیامنش" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qvy-0u-gkK">
-                    <rect key="frame" x="15" y="6" width="320" height="23"/>
-                    <constraints>
-                        <constraint firstAttribute="height" priority="250" constant="22" id="VVa-dC-QXh"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="Bamilo-Sans-Bold" family="Bamilo-Sans" pointSize="12"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iSG-39-dvH" userLabel="CheckmarkImage">
-                    <rect key="frame" x="350" y="10" width="15" height="15"/>
-                    <constraints>
-                        <constraint firstAttribute="width" secondItem="iSG-39-dvH" secondAttribute="height" multiplier="1:1" id="k4P-tt-cIk"/>
-                        <constraint firstAttribute="height" constant="15" id="kme-wg-Ral"/>
-                    </constraints>
-                </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="میدان ونک ،حقانی ، نرسیده به حهان کودک ، نرسیده به جهان کودک، پلاک" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="42A-p9-Ncc">
-                    <rect key="frame" x="15" y="34" width="320" height="49"/>
-                    <constraints>
-                        <constraint firstAttribute="height" priority="250" constant="44" id="6Nb-g7-J6p"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
-                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="تلفن: ۰۹۱۲۲۰۹۵۷۷۸۹" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kl6-R4-pkZ">
-                    <rect key="frame" x="15" y="93" width="320" height="22"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="22" id="2gW-YO-fKo"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="STm-Hv-b7h" userLabel="Address Delete Button" customClass="IconButton">
-                    <rect key="frame" x="15" y="130" width="45" height="25"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="25" id="NlF-x3-axy"/>
-                        <constraint firstAttribute="width" constant="45" id="xbp-oP-e3n"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
-                    <state key="normal" title="حذف" image="DeleteBinIcon">
-                        <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="addressDeleteButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="Yfj-Lz-mOD"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HWJ-Ix-ALr" customClass="IconButton">
-                    <rect key="frame" x="65" y="130" width="55" height="25"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="55" id="osN-8F-Q4t"/>
-                        <constraint firstAttribute="height" constant="25" id="rF1-a2-fAn"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
-                    <state key="normal" title="ویرایش" image="EditPencilIcon">
-                        <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="addressEditButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="8Zb-PB-K4U"/>
-                    </connections>
-                </button>
-            </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-            <constraints>
-                <constraint firstItem="42A-p9-Ncc" firstAttribute="trailing" secondItem="qvy-0u-gkK" secondAttribute="trailing" id="3KJ-KR-H5t"/>
-                <constraint firstItem="kl6-R4-pkZ" firstAttribute="top" secondItem="42A-p9-Ncc" secondAttribute="bottom" constant="10" id="8kh-M5-0EI"/>
-                <constraint firstAttribute="bottom" secondItem="kl6-R4-pkZ" secondAttribute="bottom" constant="45" id="9yP-iJ-KTs"/>
-                <constraint firstAttribute="bottom" secondItem="HWJ-Ix-ALr" secondAttribute="bottom" constant="5" id="IyC-Yn-O1B"/>
-                <constraint firstItem="STm-Hv-b7h" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="SEw-BE-rrM"/>
-                <constraint firstAttribute="trailing" secondItem="iSG-39-dvH" secondAttribute="trailing" constant="10" id="SaP-gb-Z7m"/>
-                <constraint firstItem="iSG-39-dvH" firstAttribute="centerY" secondItem="qvy-0u-gkK" secondAttribute="centerY" id="aTV-6F-Urb"/>
-                <constraint firstAttribute="bottom" secondItem="STm-Hv-b7h" secondAttribute="bottom" constant="5" id="aYi-v6-ssb"/>
-                <constraint firstItem="qvy-0u-gkK" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="cNv-Jk-huo"/>
-                <constraint firstItem="HWJ-Ix-ALr" firstAttribute="leading" secondItem="STm-Hv-b7h" secondAttribute="trailing" constant="5" id="fhb-B4-hr6"/>
-                <constraint firstItem="kl6-R4-pkZ" firstAttribute="trailing" secondItem="42A-p9-Ncc" secondAttribute="trailing" id="jfm-JO-HnC"/>
-                <constraint firstItem="42A-p9-Ncc" firstAttribute="leading" secondItem="qvy-0u-gkK" secondAttribute="leading" id="kPk-Hl-Pmz"/>
-                <constraint firstItem="iSG-39-dvH" firstAttribute="leading" secondItem="qvy-0u-gkK" secondAttribute="trailing" constant="15" id="kj4-PB-bJX"/>
-                <constraint firstItem="kl6-R4-pkZ" firstAttribute="leading" secondItem="42A-p9-Ncc" secondAttribute="leading" id="qRJ-YB-StZ"/>
-                <constraint firstItem="42A-p9-Ncc" firstAttribute="top" secondItem="qvy-0u-gkK" secondAttribute="bottom" constant="5" id="sJ8-dr-TT7"/>
-                <constraint firstItem="iSG-39-dvH" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="vsF-WZ-G5D"/>
-            </constraints>
-            <nil key="simulatedStatusBarMetrics"/>
-            <nil key="simulatedTopBarMetrics"/>
-            <nil key="simulatedBottomBarMetrics"/>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uy4-87-4XC" id="iN0-l3-epB">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="159"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="نغمه حیامنش" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qvy-0u-gkK">
+                        <rect key="frame" x="15" y="6" width="320" height="23"/>
+                        <constraints>
+                            <constraint firstAttribute="height" priority="250" constant="22" id="VVa-dC-QXh"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Bamilo-Sans-Bold" family="Bamilo-Sans" pointSize="12"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iSG-39-dvH" userLabel="CheckmarkImage">
+                        <rect key="frame" x="350" y="10" width="15" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="iSG-39-dvH" secondAttribute="height" multiplier="1:1" id="k4P-tt-cIk"/>
+                            <constraint firstAttribute="height" constant="15" id="kme-wg-Ral"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="میدان ونک ،حقانی ، نرسیده به حهان کودک ، نرسیده به جهان کودک، پلاک" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="42A-p9-Ncc">
+                        <rect key="frame" x="15" y="34" width="320" height="49"/>
+                        <constraints>
+                            <constraint firstAttribute="height" priority="250" constant="44" id="6Nb-g7-J6p"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
+                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="تلفن: ۰۹۱۲۲۰۹۵۷۷۸۹" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kl6-R4-pkZ">
+                        <rect key="frame" x="15" y="93" width="320" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="2gW-YO-fKo"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="STm-Hv-b7h" userLabel="Address Delete Button" customClass="IconButton">
+                        <rect key="frame" x="15" y="130" width="45" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="25" id="NlF-x3-axy"/>
+                            <constraint firstAttribute="width" constant="45" id="xbp-oP-e3n"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
+                        <state key="normal" title="حذف" image="DeleteBinIcon">
+                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="addressDeleteButtonTapped:" destination="uy4-87-4XC" eventType="touchUpInside" id="blk-Qo-2ZH"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HWJ-Ix-ALr" customClass="IconButton">
+                        <rect key="frame" x="65" y="130" width="55" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="55" id="osN-8F-Q4t"/>
+                            <constraint firstAttribute="height" constant="25" id="rF1-a2-fAn"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
+                        <state key="normal" title="ویرایش" image="EditPencilIcon">
+                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="addressEditButtonTapped:" destination="uy4-87-4XC" eventType="touchUpInside" id="abu-bI-ccx"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <constraints>
+                    <constraint firstItem="42A-p9-Ncc" firstAttribute="trailing" secondItem="qvy-0u-gkK" secondAttribute="trailing" id="3KJ-KR-H5t"/>
+                    <constraint firstItem="kl6-R4-pkZ" firstAttribute="top" secondItem="42A-p9-Ncc" secondAttribute="bottom" constant="10" id="8kh-M5-0EI"/>
+                    <constraint firstAttribute="bottom" secondItem="kl6-R4-pkZ" secondAttribute="bottom" constant="45" id="9yP-iJ-KTs"/>
+                    <constraint firstAttribute="bottom" secondItem="HWJ-Ix-ALr" secondAttribute="bottom" constant="5" id="IyC-Yn-O1B"/>
+                    <constraint firstItem="STm-Hv-b7h" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="SEw-BE-rrM"/>
+                    <constraint firstAttribute="trailing" secondItem="iSG-39-dvH" secondAttribute="trailing" constant="10" id="SaP-gb-Z7m"/>
+                    <constraint firstItem="iSG-39-dvH" firstAttribute="centerY" secondItem="qvy-0u-gkK" secondAttribute="centerY" id="aTV-6F-Urb"/>
+                    <constraint firstAttribute="bottom" secondItem="STm-Hv-b7h" secondAttribute="bottom" constant="5" id="aYi-v6-ssb"/>
+                    <constraint firstItem="qvy-0u-gkK" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="cNv-Jk-huo"/>
+                    <constraint firstItem="HWJ-Ix-ALr" firstAttribute="leading" secondItem="STm-Hv-b7h" secondAttribute="trailing" constant="5" id="fhb-B4-hr6"/>
+                    <constraint firstItem="kl6-R4-pkZ" firstAttribute="trailing" secondItem="42A-p9-Ncc" secondAttribute="trailing" id="jfm-JO-HnC"/>
+                    <constraint firstItem="42A-p9-Ncc" firstAttribute="leading" secondItem="qvy-0u-gkK" secondAttribute="leading" id="kPk-Hl-Pmz"/>
+                    <constraint firstItem="iSG-39-dvH" firstAttribute="leading" secondItem="qvy-0u-gkK" secondAttribute="trailing" constant="15" id="kj4-PB-bJX"/>
+                    <constraint firstItem="kl6-R4-pkZ" firstAttribute="leading" secondItem="42A-p9-Ncc" secondAttribute="leading" id="qRJ-YB-StZ"/>
+                    <constraint firstItem="42A-p9-Ncc" firstAttribute="top" secondItem="qvy-0u-gkK" secondAttribute="bottom" constant="5" id="sJ8-dr-TT7"/>
+                    <constraint firstItem="iSG-39-dvH" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="vsF-WZ-G5D"/>
+                </constraints>
+            </tableViewCellContentView>
             <connections>
-                <outlet property="addressDeleteButton" destination="STm-Hv-b7h" id="iU4-2y-dEK"/>
-                <outlet property="addressEditButton" destination="HWJ-Ix-ALr" id="5Tj-us-Sk2"/>
-                <outlet property="addressLabel" destination="42A-p9-Ncc" id="ACU-fv-rEq"/>
-                <outlet property="addressPhoneLabel" destination="kl6-R4-pkZ" id="Rmy-5G-X2R"/>
-                <outlet property="addressTitleLabel" destination="qvy-0u-gkK" id="9no-FO-EBD"/>
-                <outlet property="checkmarkIconImageView" destination="iSG-39-dvH" id="x4n-eo-afH"/>
-                <outlet property="checkmarkIconTrailingConstraint" destination="SaP-gb-Z7m" id="EUs-rO-k8o"/>
-                <outlet property="deleteButtonWidthConstraint" destination="xbp-oP-e3n" id="Oev-ZV-tgR"/>
+                <outlet property="addressDeleteButton" destination="STm-Hv-b7h" id="Rva-Nx-eL6"/>
+                <outlet property="addressEditButton" destination="HWJ-Ix-ALr" id="mtg-bI-Yjw"/>
+                <outlet property="addressLabel" destination="42A-p9-Ncc" id="1iC-SV-Tn5"/>
+                <outlet property="addressPhoneLabel" destination="kl6-R4-pkZ" id="xOF-9n-p5l"/>
+                <outlet property="addressTitleLabel" destination="qvy-0u-gkK" id="q69-6n-63p"/>
+                <outlet property="checkmarkIconImageView" destination="iSG-39-dvH" id="eo6-Lx-Ud4"/>
+                <outlet property="checkmarkIconTrailingConstraint" destination="SaP-gb-Z7m" id="Yp4-zP-O19"/>
+                <outlet property="deleteButtonWidthConstraint" destination="xbp-oP-e3n" id="f8O-yx-UUa"/>
             </connections>
-            <point key="canvasLocation" x="14.5" y="67"/>
-        </view>
+            <point key="canvasLocation" x="-140" y="-120"/>
+        </tableViewCell>
     </objects>
     <resources>
         <image name="DeleteBinIcon" width="14" height="14"/>
