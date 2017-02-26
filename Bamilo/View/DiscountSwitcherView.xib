@@ -16,40 +16,42 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="DiscountSwitcherView">
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="50" id="hY9-ah-hQR" customClass="DiscountSwitcherView">
             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
-            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="کد تخفیف" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qyx-ev-mr6">
-                    <rect key="frame" x="299.5" y="14" width="55.5" height="23"/>
-                    <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="x8B-ww-aOi">
-                    <rect key="frame" x="20" y="10" width="51" height="31"/>
-                    <color key="onTintColor" red="0.090531297028064728" green="0.52686542272567749" blue="0.11270476132631302" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <connections>
-                        <action selector="switcherValueToggled:" destination="iN0-l3-epB" eventType="valueChanged" id="C7b-Hc-Qpv"/>
-                    </connections>
-                </switch>
-            </subviews>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hY9-ah-hQR" id="iN0-l3-epB">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="کد تخفیف" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qyx-ev-mr6">
+                        <rect key="frame" x="299.5" y="14" width="55.5" height="23"/>
+                        <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="x8B-ww-aOi">
+                        <rect key="frame" x="20" y="10" width="51" height="31"/>
+                        <color key="onTintColor" red="0.090531297028064728" green="0.52686542272567749" blue="0.11270476132631302" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <connections>
+                            <action selector="switcherValueToggled:" destination="hY9-ah-hQR" eventType="valueChanged" id="9OV-ts-xHY"/>
+                        </connections>
+                    </switch>
+                </subviews>
+                <color key="backgroundColor" red="1" green="0.57953985220000004" blue="0.589012498" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <constraints>
+                    <constraint firstItem="Qyx-ev-mr6" firstAttribute="centerY" secondItem="x8B-ww-aOi" secondAttribute="centerY" id="BXj-Sl-ZyS"/>
+                    <constraint firstItem="x8B-ww-aOi" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="F9s-0j-0IS"/>
+                    <constraint firstAttribute="trailing" secondItem="Qyx-ev-mr6" secondAttribute="trailing" constant="20" id="Z6J-FI-LfD"/>
+                    <constraint firstItem="Qyx-ev-mr6" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="eLp-k8-Xn2"/>
+                </constraints>
+            </tableViewCellContentView>
             <color key="backgroundColor" red="1" green="0.57953985220000004" blue="0.589012498" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-            <constraints>
-                <constraint firstItem="Qyx-ev-mr6" firstAttribute="centerY" secondItem="x8B-ww-aOi" secondAttribute="centerY" id="BXj-Sl-ZyS"/>
-                <constraint firstItem="x8B-ww-aOi" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="F9s-0j-0IS"/>
-                <constraint firstAttribute="trailing" secondItem="Qyx-ev-mr6" secondAttribute="trailing" constant="20" id="Z6J-FI-LfD"/>
-                <constraint firstItem="Qyx-ev-mr6" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="eLp-k8-Xn2"/>
-            </constraints>
-            <nil key="simulatedStatusBarMetrics"/>
-            <nil key="simulatedTopBarMetrics"/>
-            <nil key="simulatedBottomBarMetrics"/>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="descriptionLabel" destination="Qyx-ev-mr6" id="XBq-qv-FFd"/>
-                <outlet property="switcherView" destination="x8B-ww-aOi" id="Nt3-rI-OLh"/>
+                <outlet property="descriptionLabel" destination="Qyx-ev-mr6" id="BSR-pN-Y7o"/>
+                <outlet property="switcherView" destination="x8B-ww-aOi" id="bL1-Na-5WW"/>
             </connections>
-        </view>
+            <point key="canvasLocation" x="25" y="166"/>
+        </tableViewCell>
     </objects>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

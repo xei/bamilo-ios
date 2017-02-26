@@ -16,33 +16,33 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="PaymentOptionTableViewCell">
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="80" id="kSs-Qt-hZW" customClass="PaymentOptionTableViewCell">
             <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
-            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text=" مبلغ را به پیک تحویل دهیدمبلغ را به پیک تحویل دهیدمبلغ را به پیک تحویل دهیدمبلغ را به پیک تحویل دهید" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WeM-Z5-fXw">
-                    <rect key="frame" x="40" y="5" width="295" height="65"/>
-                    <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
-                    <color key="textColor" red="0.49520188570000001" green="0.49559599160000001" blue="0.49526298050000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-            </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-            <constraints>
-                <constraint firstAttribute="bottom" secondItem="WeM-Z5-fXw" secondAttribute="bottom" constant="10" id="6Pi-ON-ze5"/>
-                <constraint firstAttribute="trailing" secondItem="WeM-Z5-fXw" secondAttribute="trailing" constant="40" id="cfc-be-v1y"/>
-                <constraint firstItem="WeM-Z5-fXw" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="mDB-vz-CEm"/>
-                <constraint firstItem="WeM-Z5-fXw" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="40" id="qDT-1w-OkJ"/>
-            </constraints>
-            <nil key="simulatedStatusBarMetrics"/>
-            <nil key="simulatedTopBarMetrics"/>
-            <nil key="simulatedBottomBarMetrics"/>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kSs-Qt-hZW" id="iN0-l3-epB">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="79"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text=" مبلغ را به پیک تحویل دهیدمبلغ را به پیک تحویل دهیدمبلغ را به پیک تحویل دهیدمبلغ را به پیک تحویل دهید" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WeM-Z5-fXw">
+                        <rect key="frame" x="40" y="5" width="295" height="65"/>
+                        <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
+                        <color key="textColor" red="0.49520188570000001" green="0.49559599160000001" blue="0.49526298050000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="WeM-Z5-fXw" secondAttribute="bottom" constant="10" id="6Pi-ON-ze5"/>
+                    <constraint firstAttribute="trailing" secondItem="WeM-Z5-fXw" secondAttribute="trailing" constant="40" id="cfc-be-v1y"/>
+                    <constraint firstItem="WeM-Z5-fXw" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="mDB-vz-CEm"/>
+                    <constraint firstItem="WeM-Z5-fXw" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="40" id="qDT-1w-OkJ"/>
+                </constraints>
+            </tableViewCellContentView>
             <connections>
-                <outlet property="paymentDescLabel" destination="WeM-Z5-fXw" id="meL-I8-Bhx"/>
+                <outlet property="paymentDescLabel" destination="WeM-Z5-fXw" id="zl2-xf-hc9"/>
             </connections>
-            <point key="canvasLocation" x="25" y="52"/>
-        </view>
+            <point key="canvasLocation" x="25" y="209"/>
+        </tableViewCell>
     </objects>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
