@@ -45,9 +45,11 @@
     
     
     self.formController.submitTitle = @"ثبت نام";
-    self.formController.formMessage = @""; //@"ظاهرا مشتری جدید بامیلو هستید،خواهشمندیم اطلاعات بیشتری برای ساخت حساب کاربری خود ارایه دهید ";
+    self.formController.formMessage = nil; //@"ظاهرا مشتری جدید بامیلو هستید،خواهشمندیم اطلاعات بیشتری برای ساخت حساب کاربری خود ارایه دهید ";
     self.title = STRING_SIGNUP;
     self.formController.formListModel = [NSMutableArray arrayWithArray:@[ melliCode, name, lastname, email, password, phone ]];
+    self.formController.tableViewInitialInsets = UIEdgeInsetsMake(28, 0, 0, 0);
+    
     
     [self.formController setupTableView];
 }

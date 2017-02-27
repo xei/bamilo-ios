@@ -30,6 +30,7 @@
     //Sign Up View Controller
     self.signUpViewController = (SignUpViewController *)[[ViewControllerManager sharedInstance] loadNib:@"SignUpViewController" resetCache:YES];
     self.signUpViewController.title = STRING_SIGNUP;
+    self.signUpViewController.delegate = self;
 }
 
 - (void)viewDidLoad {

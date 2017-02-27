@@ -37,7 +37,7 @@
     [self.tableView registerNib:[UINib nibWithNibName:[ButtonTableViewCell nibName] bundle:nil]
          forCellReuseIdentifier:[ButtonTableViewCell nibName]];
     self.tableView.multipleTouchEnabled = NO;
-    
+    [self.tableView setContentInset: self.tableViewInitialInsets];
     self.tableViewRegistered = YES;
 }
 
@@ -123,8 +123,8 @@
 - (void)keyboardWasShown:(NSNotification*)aNotification {
     NSDictionary* info = [aNotification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-    
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(self.tableViewInitialInsets.top, self.tableViewInitialInsets.left, kbSize.height, self.tableViewInitialInsets.right);
     self.tableView.contentInset = contentInsets;
     self.tableView.scrollIndicatorInsets = contentInsets;
     
@@ -139,7 +139,7 @@
 
 // Called when the UIKeyboardWillHideNotification is sent
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification {
-    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+    UIEdgeInsets contentInsets = self.tableViewInitialInsets;
     self.tableView.contentInset = contentInsets;
     self.tableView.scrollIndicatorInsets = contentInsets;
 }
