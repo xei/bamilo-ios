@@ -214,7 +214,8 @@
     if(!VALID_NOTEMPTY([country currencyPosition], NSNumber) || ![[country currencyPosition] boolValue]) {
         return [NSString stringWithFormat:@"%@ %@", [country currencySymbol], price];
     } else {
-        return [NSString stringWithFormat:@"%@ %@", [[[NSString stringWithFormat:@"%@", price] formatPrice] numbersToPersian], [country currencySymbol]];
+        NSString *priceString = [NSString stringWithFormat:@"%@", price ?: @"0"];
+        return [NSString stringWithFormat:@"%@ %@", [[priceString formatPrice] numbersToPersian], [country currencySymbol]];
     }
 }
 

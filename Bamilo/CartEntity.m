@@ -45,14 +45,14 @@
             cartEntity.cartItems = [cartItems copy];
             
             if(showUnreducedPrice) {
-                cartEntity.cartUnreducedValue = [NSNumber numberWithFloat:onlyProductDiscount];
+                cartEntity.cartUnreducedValue = [NSNumber numberWithFloat:cartUnreducedValue];
                 cartEntity.cartUnreducedValueFormatted = [RICountryConfiguration formatPrice:cartEntity.cartUnreducedValue country:country];
             }
         }
     }
     
-    cartEntity.onlyProductsDiscount = [NSNumber numberWithFloat:cartUnreducedValue];;
-    cartEntity.onlyProductsDiscountFormated = [RICountryConfiguration formatPrice:cartEntity.cartUnreducedValue country:country];
+    cartEntity.onlyProductsDiscount = [NSNumber numberWithFloat:onlyProductDiscount];;
+    cartEntity.onlyProductsDiscountFormated = [RICountryConfiguration formatPrice:cartEntity.onlyProductsDiscount country:country];
     
     
     if([dict objectForKey:@"sub_total_undiscounted"]) {
