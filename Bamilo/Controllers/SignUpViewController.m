@@ -24,6 +24,8 @@
     
     self.formController = [[FormViewControl alloc] init];
     self.formController.delegate = self;
+    
+    [self.tableView setContentInset: UIEdgeInsetsMake(28, 0, 0, 0)];
     self.formController.tableView = self.tableView;
 
     FormItemModel *melliCode = [[FormItemModel alloc]
@@ -48,8 +50,6 @@
     self.formController.formMessage = nil; //@"ظاهرا مشتری جدید بامیلو هستید،خواهشمندیم اطلاعات بیشتری برای ساخت حساب کاربری خود ارایه دهید ";
     self.title = STRING_SIGNUP;
     self.formController.formListModel = [NSMutableArray arrayWithArray:@[ melliCode, name, lastname, email, password, phone ]];
-    self.formController.tableViewInitialInsets = UIEdgeInsetsMake(28, 0, 0, 0);
-    
     
     [self.formController setupTableView];
 }

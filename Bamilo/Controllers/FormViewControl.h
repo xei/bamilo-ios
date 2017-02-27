@@ -28,7 +28,6 @@
 @property (nonatomic, copy) NSString *submitTitle;
 @property (nonatomic, strong) NSMutableArray<FormItemModel *>* formListModel;
 @property (nonatomic, weak) id<FormViewControlDelegate> delegate;
-@property (nonatomic) UIEdgeInsets tableViewInitialInsets;
 
 typedef FormItemModel *(^updateModelWithPreviousModel)(FormItemModel *model);
 

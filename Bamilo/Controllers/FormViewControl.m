@@ -16,7 +16,9 @@
 @property (nonatomic) Boolean tableViewRegistered;
 @end
 
-@implementation FormViewControl
+@implementation FormViewControl {
+    @private UIEdgeInsets tableViewInitialInsets;
+}
 
 //Lazy initialization for inputControlsDictionary
 - (NSMutableDictionary<NSString *,InputTextFieldControl *> *)inputControlsDictionary {
@@ -37,7 +39,7 @@
     [self.tableView registerNib:[UINib nibWithNibName:[ButtonTableViewCell nibName] bundle:nil]
          forCellReuseIdentifier:[ButtonTableViewCell nibName]];
     self.tableView.multipleTouchEnabled = NO;
-    [self.tableView setContentInset: self.tableViewInitialInsets];
+    tableViewInitialInsets = self.tableView.contentInset;
     self.tableViewRegistered = YES;
 }
 
@@ -124,7 +126,7 @@
     NSDictionary* info = [aNotification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
 
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(self.tableViewInitialInsets.top, self.tableViewInitialInsets.left, kbSize.height, self.tableViewInitialInsets.right);
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(tableViewInitialInsets.top, tableViewInitialInsets.left, kbSize.height, tableViewInitialInsets.right);
     self.tableView.contentInset = contentInsets;
     self.tableView.scrollIndicatorInsets = contentInsets;
     
@@ -139,7 +141,7 @@
 
 // Called when the UIKeyboardWillHideNotification is sent
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification {
-    UIEdgeInsets contentInsets = self.tableViewInitialInsets;
+    UIEdgeInsets contentInsets = tableViewInitialInsets;
     self.tableView.contentInset = contentInsets;
     self.tableView.scrollIndicatorInsets = contentInsets;
 }
