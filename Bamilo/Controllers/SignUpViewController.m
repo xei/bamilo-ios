@@ -45,11 +45,10 @@
     FormItemModel *password = [FormItemModel passWordWithFieldName:@"customer[password]"];
 
     
-    
     self.formController.submitTitle = @"ثبت نام";
     self.formController.formMessage = nil; //@"ظاهرا مشتری جدید بامیلو هستید،خواهشمندیم اطلاعات بیشتری برای ساخت حساب کاربری خود ارایه دهید ";
     self.title = STRING_SIGNUP;
-    self.formController.formListModel = [NSMutableArray arrayWithArray:@[ melliCode, name, lastname, email, password, phone ]];
+    self.formController.formListModel = [NSMutableArray arrayWithArray:@[ melliCode, name, lastname, email, password, phone]];
     
     [self.formController setupTableView];
 }

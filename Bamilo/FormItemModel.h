@@ -42,6 +42,7 @@ typedef enum : NSUInteger {
 + (FormItemModel *)postalCodeWithFieldName:(NSString *)fieldName;
 + (FormItemModel *)emailWithFieldName: (NSString *)fieldName;
 + (FormItemModel *)passWordWithFieldName: (NSString *)fieldName;
++ (FormItemModel *)genderWithFieldName: (NSString *)fieldName;
 
 - (NSString *)getValue;
 @end

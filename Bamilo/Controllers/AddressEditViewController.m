@@ -28,8 +28,7 @@ const int VicinityFieldIndex = 6;
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
-    self.title = STRING_ADDRESS;
-    
+    self.title = STRING_ADDRESS;    
     [self setupView];
 }
 
@@ -73,6 +72,12 @@ const int VicinityFieldIndex = 6;
                                                      selectOptions: nil];
     
     self.formController.formListModel = [NSMutableArray arrayWithArray:@[name, lastname, phone, postalCode, address]];
+    
+    
+    if (![RICustomer getCustomerGender]) {
+        FormItemModel *gender = [FormItemModel genderWithFieldName:@"address_form[gender]"];
+        [self.formController.formListModel insertObject:gender atIndex:2];
+    }
     
     [self.formController.formListModel insertObject:region atIndex:RegionFieldIndex];
     [self.formController.formListModel insertObject:city atIndex:CityFieldIndex];

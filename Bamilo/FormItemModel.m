@@ -103,4 +103,15 @@
                                      validation:[[FormItemValidation alloc] initWithRequired:YES max:50 min:6 withRegxPatter:nil]
                                   selectOptions:nil];
 }
+
++ (FormItemModel *)genderWithFieldName: (NSString *)fieldName {
+    return [[FormItemModel alloc] initWithTitle:nil
+                                      fieldName: fieldName
+                                        andIcon: nil
+                                    placeholder:@"جنسیت"
+                                           type:InputTextFieldControlTypeOptions
+                                     validation:[[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil]
+                                  selectOptions:@{@"مرد": @"male", @"زن":@"female"}];
+}
+
 @end
