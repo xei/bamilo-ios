@@ -16,6 +16,7 @@
 
 - (void)updateNavBar;
 - (BOOL)showNotificationBar:(id)message isSuccess:(BOOL)success;
+- (BOOL)showNotificationBarFromMessageDictionary:(NSDictionary *)messageDict isSuccess:(BOOL)success;
 - (BOOL)showNotificationBarMessage:(NSString *)message isSuccess:(BOOL)success;
 
 @end

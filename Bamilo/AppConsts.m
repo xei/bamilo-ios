@@ -11,5 +11,6 @@
 @implementation AppConsts
 
 NSString *const kErrorMessages = @"errorMessages";
+NSString *const kMessage = @"message";
 
 @end

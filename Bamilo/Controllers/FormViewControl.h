@@ -36,7 +36,7 @@ typedef FormItemModel *(^updateModelWithPreviousModel)(FormItemModel *model);
 - (void)registerForKeyboardNotifications;
 - (void)unregisterForKeyboardNotifications;
 - (void)updateFieldIndex:(NSUInteger)index WithUpdateModelBlock:(updateModelWithPreviousModel)block;
-- (void)showErrorMessgaeForField:(NSString *)fieldName errorMsg:(NSString *)string;
+- (BOOL)showErrorMessageForField:(NSString *)fieldName errorMsg:(NSString *)string;
 - (NSMutableDictionary *)getMutableDictionaryOfForm;
 - (Boolean)isFormValid;
 - (void)showAnyErrorInForm;

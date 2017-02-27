@@ -142,7 +142,7 @@ const int VicinityFieldIndex = 6;
                 if(![self showNotificationBar:error isSuccess:NO]) {
                     for(NSDictionary* errorField in [error.userInfo objectForKey:@"errorMessages"]) {
                         NSString *fieldName = [NSString stringWithFormat:@"address_form[%@]", errorField[@"field"]];
-                        [self.formController showErrorMessgaeForField:fieldName errorMsg:errorField[@"message"]];
+                        [self.formController showErrorMessageForField:fieldName errorMsg:errorField[@"message"]];
                     }
                 }
             }
@@ -155,9 +155,9 @@ const int VicinityFieldIndex = 6;
                 [self.navigationController popViewControllerAnimated:YES];
             } else {
                 if(![self showNotificationBar:error isSuccess:NO]) {
-                    for(NSDictionary* errorField in [error.userInfo objectForKey:@"errorMessages"]) {
+                    for(NSDictionary* errorField in [error.userInfo objectForKey:kErrorMessages]) {
                         NSString *fieldName = [NSString stringWithFormat:@"address_form[%@]", errorField[@"field"]];
-                        [self.formController showErrorMessgaeForField:fieldName errorMsg:errorField[@"message"]];
+                        [self.formController showErrorMessageForField:fieldName errorMsg:errorField[kMessage]];
                     }
                 }
             }

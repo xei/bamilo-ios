@@ -79,10 +79,11 @@
                 [((UIViewController *)self.delegate).navigationController popViewControllerAnimated:YES];
             }
         } else {
-            if(![(BaseViewController *)self.delegate showNotificationBar:error isSuccess:NO]) {
-                for(NSDictionary* errorField in [error.userInfo objectForKey:@"errorMessages"]) {
+            BaseViewController *baseViewController = (BaseViewController *)self.delegate;
+            if(![baseViewController showNotificationBar:error isSuccess:NO]) {
+                for(NSDictionary* errorField in [error.userInfo objectForKey:kErrorMessages]) {
                     NSString *fieldName = [NSString stringWithFormat:@"customer[%@]", errorField[@"field"]];
-                    [self.formController showErrorMessgaeForField:fieldName errorMsg:errorField[@"message"]];
+                    [self.formController showErrorMessageForField:fieldName errorMsg:errorField[kMessage]];
                 }
             }
         }

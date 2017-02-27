@@ -185,8 +185,14 @@
     }
 }
 
-- (void)showErrorMessgaeForField:(NSString *)fieldName errorMsg:(NSString *)string {
-    [self.inputControlsDictionary[fieldName] showErrorMsg:string];
+- (BOOL)showErrorMessageForField:(NSString *)fieldName errorMsg:(NSString *)string {
+    InputTextFieldControl *inputTextFieldControl = [self.inputControlsDictionary objectForKey:fieldName];
+    if(inputTextFieldControl) {
+        [self.inputControlsDictionary[fieldName] showErrorMsg:string];
+        return YES;
+    }
+    
+    return NO;
 }
 
 - (void)showAnyErrorInForm {

@@ -72,7 +72,7 @@
             if(![self showNotificationBar:error isSuccess:NO]) {
                 for(NSDictionary* errorField in [error.userInfo objectForKey:kErrorMessages]) {
                     NSString *fieldName = [NSString stringWithFormat:@"forgot_password[%@]", errorField[@"field"]];
-                    [self.formController showErrorMessgaeForField:fieldName errorMsg:errorField[@"message"]];
+                    [self.formController showErrorMessageForField:fieldName errorMsg:errorField[kMessage]];
                 }
             }
         }

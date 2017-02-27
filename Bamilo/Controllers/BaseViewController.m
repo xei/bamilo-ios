@@ -108,6 +108,17 @@
     return NO;
 }
 
+- (BOOL)showNotificationBarFromMessageDictionary:(NSDictionary *)messageDict isSuccess:(BOOL)success {
+    if(messageDict.count) {
+        NSString *errorMessage = [messageDict objectForKey:kMessage];
+        if(errorMessage && errorMessage.length) {
+            return [self showNotificationBarMessage:errorMessage isSuccess:success];
+        }
+    }
+    
+    return NO;
+}
+
 - (BOOL)showNotificationBarMessage:(NSString *)message isSuccess:(BOOL)success {
     UIViewController *rootViewController = [ViewControllerManager topViewController];
     
