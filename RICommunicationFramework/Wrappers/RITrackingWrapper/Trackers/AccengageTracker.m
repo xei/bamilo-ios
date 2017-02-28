@@ -9,7 +9,9 @@
 #import "AccengageTracker.h"
 #import <AdSupport/AdSupport.h>
 #import <Accengage/Accengage.h>
+#import "ViewControllerManager.h"
 #import "SettingsManager.h"
+#import "ThreadManager.h"
 
 #define kACCENGAGE_TRACKER_ALIAS @"Accengage"
 #define kACCENGAGE_TRACKER_CONFIG_KEY @"Accengage"
@@ -70,6 +72,9 @@
 
 @implementation AccengageTracker
 
+@synthesize queue;
+@synthesize registeredEvents;
+
 NSString * const kAccengagePartnerID = @"AccengagePartnerID";
 NSString * const kAccengagePrivateKey = @"AccengagePrivateKey";
 NSString * const kAccengageDeviceToken = @"AccengageDeviceToken";
@@ -89,6 +94,9 @@ static AccengageTracker *instance;
     RIDebugLog(@"Initializing %@ tracker", kACCENGAGE_TRACKER_ALIAS);
     
     if (self = [super init]) {
+        self.queue = [[NSOperationQueue alloc] init];
+        self.queue.maxConcurrentOperationCount = 1;
+        
         NSMutableArray *events = [NSMutableArray new];
         
         [events addObject:[NSNumber numberWithInt:RIEventViewProduct]];
@@ -146,7 +154,9 @@ static AccengageTracker *instance;
         [Accengage setLoggingEnabled:YES];
     #endif
     
-    [Accengage startWithConfig:config];
+    [ThreadManager executeOnMainThread:^{
+        [Accengage startWithConfig:config];
+    }];
     
 // SETUP DEVICE INFO
     NSMutableDictionary *deviceInfo = [NSMutableDictionary new];
@@ -196,6 +206,190 @@ static AccengageTracker *instance;
     RIDebugLog(@"%@ - Handle action with identifier : %@", kACCENGAGE_TRACKER_ALIAS, identifier);
     
     [[Accengage push] handleActionWithIdentifier:identifier forRemoteNotification:userInfo];
+}
+
+- (void)handlePushNotifcation:(NSDictionary *)info {
+    if(VALID_NOTEMPTY(info, NSDictionary)) {
+        if(VALID_NOTEMPTY([info objectForKey:@"UTM"], NSString)) {
+            [[RITrackingWrapper sharedInstance] trackCampaignWithName:[info objectForKey:@"UTM"]];
+        }
+        
+        if(VALID_NOTEMPTY([info objectForKey:@"u"], NSString)) {
+            NSString *urlString = [info objectForKey:@"u"];
+            NSArray *urlComponents = [[urlString componentsSeparatedByString:@"/"] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"length > 0"]];
+            
+            NSString *key = @"";
+            NSString *arguments = @"";
+            NSString *filter = @"";
+            NSString *parameterKey = @"";
+            NSString *parameterValue = @"";
+            NSArray *argumentsComponents = [NSArray new];
+            
+            if(VALID_NOTEMPTY(urlComponents, NSArray) && 1 < [urlComponents count]) {
+                key = [urlComponents objectAtIndex:1];
+                if(2 < [urlComponents count] && VALID_NOTEMPTY([urlComponents objectAtIndex:2], NSString)) {
+                    arguments = [urlComponents objectAtIndex:2];
+                    argumentsComponents = [arguments componentsSeparatedByString:@"&"];
+                    if(VALID_NOTEMPTY(argumentsComponents, NSArray) && 1 < [argumentsComponents count]) {
+                        arguments = [argumentsComponents objectAtIndex:0];
+                        filter = [argumentsComponents objectAtIndex:1];
+                        filter = [filter stringByReplacingOccurrencesOfString:@"=" withString:@"/"];
+                    }
+                }
+            }
+            
+            NSMutableDictionary* categoryDictionary = [NSMutableDictionary new];
+            if (VALID_NOTEMPTY(arguments, NSString)) {
+                [categoryDictionary setObject:arguments forKey:@"category_url_key"];
+            }
+            
+            if (VALID_NOTEMPTY(filter, NSString)) {
+                [categoryDictionary setObject:filter forKey:@"filter"];
+            }
+            
+            if ([key isEqualToString:@""]) {
+                // Home
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
+            } else if ([key isEqualToString:@"c"] && VALID_NOTEMPTY(arguments, NSString)) {
+                // Catalog view - category url
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:categoryDictionary];
+            } else if ([key isEqualToString:@"cbr"] && VALID_NOTEMPTY(arguments, NSString)) {
+                // Catalog view sorted by best rating - category name
+                [categoryDictionary setObject:[NSNumber numberWithInteger:0] forKey:@"sorting"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:categoryDictionary];
+            } else if ([key isEqualToString:@"cp"] && VALID_NOTEMPTY(arguments, NSString)) {
+                // Catalog view sorted by popularity - category name
+                [categoryDictionary setObject:[NSNumber numberWithInteger:1] forKey:@"sorting"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:categoryDictionary];
+            } else if ([key isEqualToString:@"cin"] && VALID_NOTEMPTY(arguments, NSString)) {
+                // Catalog view sorted by new in - category name
+                [categoryDictionary setObject:[NSNumber numberWithInteger:2] forKey:@"sorting"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:categoryDictionary];
+            } else if ([key isEqualToString:@"cpu"] && VALID_NOTEMPTY(arguments, NSString)) {
+                // Catalog view sorted by price up - category name
+                [categoryDictionary setObject:[NSNumber numberWithInteger:3] forKey:@"sorting"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:categoryDictionary];
+            } else if ([key isEqualToString:@"cpd"] && VALID_NOTEMPTY(arguments, NSString)) {
+                // Catalog view sorted by price down - category name
+                [categoryDictionary setObject:[NSNumber numberWithInteger:4] forKey:@"sorting"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:categoryDictionary];
+            } else if ([key isEqualToString:@"cb"] && VALID_NOTEMPTY(arguments, NSString)) {
+                // Catalog view sorted by brand - category name
+                [categoryDictionary setObject:[NSNumber numberWithInteger:6] forKey:@"sorting"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:categoryDictionary];
+            } else if ([key isEqualToString:@"cn"] && VALID_NOTEMPTY(arguments, NSString)) {
+                // Catalog view sorted by name - category name
+                [categoryDictionary setObject:[NSNumber numberWithInteger:5] forKey:@"sorting"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:categoryDictionary];
+            } else if ([key isEqualToString:@"b"] && VALID_NOTEMPTY(arguments, NSString)) {
+                // Catalog view - brand id
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"targetString":[RITarget getTargetString:CATALOG_BRAND node:arguments]}];
+            } else if ([key isEqualToString:@"n"] && VALID_NOTEMPTY(arguments, NSString)) {
+                // Catalog view - category id
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_id":arguments}];
+            } else if ([key isEqualToString:@"scbr"] && VALID_NOTEMPTY(arguments, NSString)) {
+                // Catalog view sorted by best rating - seller name
+                [categoryDictionary setObject:[NSNumber numberWithInteger:0] forKey:@"sorting"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:categoryDictionary];
+            } else if ([key isEqualToString:@"scp"] && VALID_NOTEMPTY(arguments, NSString)) {
+                // Catalog view sorted by popularity - seller name
+                [categoryDictionary setObject:[NSNumber numberWithInteger:1] forKey:@"sorting"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:categoryDictionary];
+            } else if ([key isEqualToString:@"scin"] && VALID_NOTEMPTY(arguments, NSString)) {
+                // Catalog view sorted by new in - seller name
+                [categoryDictionary setObject:[NSNumber numberWithInteger:2] forKey:@"sorting"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:categoryDictionary];
+            } else if ([key isEqualToString:@"scpu"] && VALID_NOTEMPTY(arguments, NSString)) {
+                // Catalog view sorted by price up - seller name
+                [categoryDictionary setObject:[NSNumber numberWithInteger:3] forKey:@"sorting"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:categoryDictionary];
+            } else if ([key isEqualToString:@"scpd"] && VALID_NOTEMPTY(arguments, NSString)) {
+                // Catalog view sorted by price down - seller name
+                [categoryDictionary setObject:[NSNumber numberWithInteger:4] forKey:@"sorting"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:categoryDictionary];
+            } else if ([key isEqualToString:@"scn"] && VALID_NOTEMPTY(arguments, NSString)) {
+                // Catalog view sorted by name - seller name
+                [categoryDictionary setObject:[NSNumber numberWithInteger:5] forKey:@"sorting"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:categoryDictionary];
+            } else if ([key isEqualToString:@"scb"] && VALID_NOTEMPTY(arguments, NSString)) {
+                // Catalog view sorted by brand - seller name
+                [categoryDictionary setObject:[NSNumber numberWithInteger:6] forKey:@"sorting"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:categoryDictionary];
+            } else if ([key isEqualToString:@"s"] && VALID_NOTEMPTY(arguments, NSString)) {
+                // Catalog view - search term
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
+                                                                    object:@{@"index": @(99),
+                                                                             @"name": STRING_SEARCH,
+                                                                             @"text": arguments }];
+            } else if ([key isEqualToString:@"d"] && VALID_NOTEMPTY(arguments, NSString)) {
+                // PDV - jumia://ng/d/BL683ELACCDPNGAMZ?size=1
+                if (1 < argumentsComponents.count) {
+                    NSString *parameter = [argumentsComponents objectAtIndex:1];
+                    if(VALID_NOTEMPTY(parameter, NSString)) {
+                        NSArray *parameterComponents = [parameter componentsSeparatedByString:@"="];
+                        if(VALID_NOTEMPTY(parameterComponents, NSArray) && 1 < [parameterComponents count]) {
+                            parameterKey = [parameterComponents objectAtIndex:0];
+                            parameterValue = [parameterComponents objectAtIndex:1];
+                        }
+                    }
+                }
+                // Check if there is field size
+                NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+                [userInfo setObject:arguments forKey:@"sku"];
+                [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"show_back_button"];
+                
+                if(VALID_NOTEMPTY(parameterKey, NSString) && [@"size" isEqualToString:[parameterKey lowercaseString]] && VALID_NOTEMPTY(parameterValue, NSString)) {
+                    [userInfo setObject:parameterValue forKey:@"size"];
+                }
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
+                                                                    object:nil
+                                                                  userInfo:userInfo];
+            } else if ([key isEqualToString:@"cart"]) {
+                // Cart
+                [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCartNotification
+                                                                    object:arguments];
+            } else if ([key isEqualToString:@"w"]) {
+                // Wishlist
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowSavedListScreenNotification
+                                                                    object:nil];
+            } else if ([key isEqualToString:@"o"]) {
+                // Order overview
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowMyOrdersScreenNotification
+                                                                    object:nil];
+            } else if ([key isEqualToString:@"l"]) {
+                // Login
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowAuthenticationScreenNotification
+                                                                    object:nil];
+            } else if ([key isEqualToString:@"r"]) {
+                // Register
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignUpScreenNotification
+                                                                    object:nil];
+            } else if ([key isEqualToString:@"rv"]) {
+                // Recently viewed
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowRecentlyViewedScreenNotification
+                                                                    object:nil];
+            } else if ([key isEqualToString:@"rc"]) {
+                // Recent Searches
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowRecentSearchesScreenNotification
+                                                                    object:nil];
+            } else if ([key isEqualToString:@"news"]) {
+                // Email notifications
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowEmailNotificationsScreenNotification
+                                                                    object:nil];
+            } else if ([key isEqualToString:@"camp"] && VALID_NOTEMPTY(arguments, NSString)) {
+                [[ViewControllerManager centerViewController] openTargetString:[RITarget getTargetString:CAMPAIGN node:arguments]];
+            } else if ([key isEqualToString:@"ss"]) {
+                if(VALID_NOTEMPTY(urlComponents, NSArray) && 3 == urlComponents.count) {
+                    NSString* shopID = [urlComponents objectAtIndex:2];
+                    if (VALID_NOTEMPTY(shopID, NSString)) {
+                        [[ViewControllerManager centerViewController] openTargetString:[RITarget getTargetString:STATIC_PAGE node:shopID]];
+                    }
+                }
+            }
+        }
+    }
 }
 
 #pragma mark - RIOpenURLTracking

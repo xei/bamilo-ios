@@ -16,7 +16,7 @@
 		1CCD52A01E2BA42F008BAEE4 /* PopularTeaserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCD529E1E2BA42F008BAEE4 /* PopularTeaserTableViewCell.m */; };
 		1CCD52A11E2BA42F008BAEE4 /* PopularTeaserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CCD529F1E2BA42F008BAEE4 /* PopularTeaserTableViewCell.xib */; };
 		48AD8FE22FD2C5FDC1CEBFF8 /* libPods-BamiloUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18BD9C21DAEE905E1607A899 /* libPods-BamiloUITests.a */; };
-		503C9D52C4AD9778E8C113A7 /* libPods-Bamilo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D245C5FE6A656AA98164739 /* libPods-Bamilo.a */; };
+		503C9D52C4AD9778E8C113A7 /* libPods-Bamilo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D245C5FE6A656AA98164739 /* libPods-Bamilo.a */; settings = {ATTRIBUTES = (Required, ); }; };
 		611195821E3CB14B00D06690 /* PlainTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 611195801E3CB14B00D06690 /* PlainTableViewCell.m */; };
 		611195831E3CB14B00D06690 /* PlainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 611195811E3CB14B00D06690 /* PlainTableViewCell.xib */; };
 		61148E051E4724FC00E2540B /* StepperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61148E041E4724FC00E2540B /* StepperView.m */; };
@@ -62,6 +62,7 @@
 		6CF4AE821ADEAA290024EC34 /* JACatalogBannerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CF4AE7E1ADEAA290024EC34 /* JACatalogBannerCell.xib */; };
 		6CF4AE881ADEABBB0024EC34 /* JACatalogBannerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CF4AE841ADEABBB0024EC34 /* JACatalogBannerCell.m */; };
 		841E81AA1D1680F300A35AAF /* MPCoachMarks.m in Sources */ = {isa = PBXBuildFile; fileRef = 841E81A81D1680F300A35AAF /* MPCoachMarks.m */; };
+		870127361E65D8C800F9A8BE /* ThreadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 870127351E65D8C800F9A8BE /* ThreadManager.m */; };
 		870680B81E62DF20000368D5 /* AddressTableViewHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 870680B71E62DF20000368D5 /* AddressTableViewHeaderCell.m */; };
 		870680B91E62E1FA000368D5 /* AddressTableViewHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87A6817A1E4201F400D252AC /* AddressTableViewHeaderCell.xib */; };
 		8708A1721E406C1100ABA7D8 /* ContactUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8708A1711E406C1100ABA7D8 /* ContactUsViewController.m */; };
@@ -86,6 +87,8 @@
 		871A04461E657A0F007E20B6 /* AccengageTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 871A04451E657A0F007E20B6 /* AccengageTracker.m */; };
 		871A044A1E6580BB007E20B6 /* CAPSPageMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 871A04491E6580BB007E20B6 /* CAPSPageMenu.m */; };
 		871A044E1E659B3F007E20B6 /* SettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 871A044D1E659B3F007E20B6 /* SettingsManager.m */; };
+		871A04511E65C90F007E20B6 /* Accengage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 871A04501E65C90F007E20B6 /* Accengage.framework */; };
+		871A04531E65C97C007E20B6 /* Accengage.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 871A04501E65C90F007E20B6 /* Accengage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		873369BA1E582D0100B0B5E5 /* MultistepEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 873369B91E582D0100B0B5E5 /* MultistepEntity.m */; };
 		873369BE1E58376900B0B5E5 /* ImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 873369BD1E58376900B0B5E5 /* ImageManager.m */; };
 		873369C21E589FEC00B0B5E5 /* ShippingMethodForm.m in Sources */ = {isa = PBXBuildFile; fileRef = 873369C11E589FEC00B0B5E5 /* ShippingMethodForm.m */; };
@@ -511,6 +514,19 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		871A04521E65C94A007E20B6 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				871A04531E65C97C007E20B6 /* Accengage.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		1123BA1ABA81805B2A214BA9 /* Pods-Bamilo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bamilo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bamilo/Pods-Bamilo.release.xcconfig"; sourceTree = "<group>"; };
 		18BD9C21DAEE905E1607A899 /* libPods-BamiloUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BamiloUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -658,6 +674,8 @@
 		6CF4AE841ADEABBB0024EC34 /* JACatalogBannerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACatalogBannerCell.m; sourceTree = "<group>"; };
 		841E81A71D1680F300A35AAF /* MPCoachMarks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPCoachMarks.h; path = ../MPCoachMarks.h; sourceTree = "<group>"; };
 		841E81A81D1680F300A35AAF /* MPCoachMarks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPCoachMarks.m; path = ../MPCoachMarks.m; sourceTree = "<group>"; };
+		870127341E65D8C800F9A8BE /* ThreadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadManager.h; sourceTree = "<group>"; };
+		870127351E65D8C800F9A8BE /* ThreadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThreadManager.m; sourceTree = "<group>"; };
 		870680B61E62DF20000368D5 /* AddressTableViewHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressTableViewHeaderCell.h; sourceTree = "<group>"; };
 		870680B71E62DF20000368D5 /* AddressTableViewHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressTableViewHeaderCell.m; sourceTree = "<group>"; };
 		8708A1701E406C1100ABA7D8 /* ContactUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactUsViewController.h; sourceTree = "<group>"; };
@@ -706,6 +724,7 @@
 		871A044C1E659B3F007E20B6 /* SettingsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsManager.h; sourceTree = "<group>"; };
 		871A044D1E659B3F007E20B6 /* SettingsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsManager.m; sourceTree = "<group>"; };
 		871A044F1E65C125007E20B6 /* DataTrackerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataTrackerProtocol.h; sourceTree = "<group>"; };
+		871A04501E65C90F007E20B6 /* Accengage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accengage.framework; path = ../Accengage.framework; sourceTree = "<group>"; };
 		873369B81E582D0100B0B5E5 /* MultistepEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultistepEntity.h; sourceTree = "<group>"; };
 		873369B91E582D0100B0B5E5 /* MultistepEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultistepEntity.m; sourceTree = "<group>"; };
 		873369BC1E58376900B0B5E5 /* ImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageManager.h; sourceTree = "<group>"; };
@@ -1465,6 +1484,7 @@
 				9A0F9BAF1B5E803300569DF2 /* StoreKit.framework in Frameworks */,
 				9A0F9BAE1B5E802000569DF2 /* CoreMedia.framework in Frameworks */,
 				9A0F9BAD1B5E801800569DF2 /* CoreMotion.framework in Frameworks */,
+				871A04511E65C90F007E20B6 /* Accengage.framework in Frameworks */,
 				9A0F9BAC1B5E800700569DF2 /* AVFoundation.framework in Frameworks */,
 				CE9AE0181AB6D78200D56481 /* iAd.framework in Frameworks */,
 				CE9AE01A1AB6D78200D56481 /* AdSupport.framework in Frameworks */,
@@ -2169,6 +2189,15 @@
 			name = OnBoardingView;
 			sourceTree = "<group>";
 		};
+		870127331E65D8AB00F9A8BE /* ThreadManager */ = {
+			isa = PBXGroup;
+			children = (
+				870127341E65D8C800F9A8BE /* ThreadManager.h */,
+				870127351E65D8C800F9A8BE /* ThreadManager.m */,
+			);
+			name = ThreadManager;
+			sourceTree = "<group>";
+		};
 		8708A16F1E406BF600ABA7D8 /* ContactUsViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -2252,6 +2281,7 @@
 			isa = PBXGroup;
 			children = (
 				871A04471E6580B4007E20B6 /* CAPSPageMenu */,
+				871A04501E65C90F007E20B6 /* Accengage.framework */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -2647,8 +2677,9 @@
 				874AAB5F1E3C790300B3F8FE /* ConfigManager */,
 				874AAB6A1E3DCECD00B3F8FE /* SessionManager */,
 				87A6814B1E40DC2000D252AC /* ViewControllerManager */,
-				871A044B1E659B1A007E20B6 /* SettingsManager */,
 				879F87FC1E5095CF0033FE87 /* LoadingManager */,
+				871A044B1E659B1A007E20B6 /* SettingsManager */,
+				870127331E65D8AB00F9A8BE /* ThreadManager */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -4610,6 +4641,8 @@
 				A496F8EDC748088D90A309BD /* [CP] Embed Pods Frameworks */,
 				AF99C33FE560E007DC18281B /* [CP] Copy Pods Resources */,
 				873369E11E5B295F00B0B5E5 /* ShellScript */,
+				871A04521E65C94A007E20B6 /* CopyFiles */,
+				871A04541E65C9A5007E20B6 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -4787,6 +4820,19 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
+		};
+		871A04541E65C9A5007E20B6 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "FRAMEWORKS_DIRECTORY=\"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}\"\nACCENGAGE_FRAMEWORKS=`find $FRAMEWORKS_DIRECTORY -type d -name \"Accengage*.framework\"`\n\nfor framework in $ACCENGAGE_FRAMEWORKS; do\nframework_name=`basename $framework`\nframework_binary_path=$framework\"/${framework_name%.*}\"\n\narchs=\"$(lipo -info \"${framework_binary_path}\" | rev | cut -d ':' -f1 | rev)\"\nstripped=\"\"\nfor arch in $archs; do\nif ! [[ \"${VALID_ARCHS}\" == *\"$arch\"* ]]; then\nlipo -remove \"$arch\" -output \"$framework_binary_path\" \"$framework_binary_path\" || exit 1\nstripped=\"$stripped $arch\"\nfi\ndone\nif [[ \"$stripped\" != \"\" ]]; then\necho \"Stripped $framework_binary_path of architectures:$stripped\"\nif [ \"${CODE_SIGNING_REQUIRED}\" == \"YES\" ]; then\n/usr/bin/codesign --force --sign ${EXPANDED_CODE_SIGN_IDENTITY} --preserve-metadata=identifier,entitlements \"${framework_binary_path}\"\nfi\nfi\ndone";
 		};
 		873369E11E5B295F00B0B5E5 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -4969,6 +5015,7 @@
 				9A7A77291B2B45F1002F530F /* JAPagedView.m in Sources */,
 				879F88111E50BB050033FE87 /* CartViewController.m in Sources */,
 				875AD5441E38C0C900584ABF /* RICustomer.m in Sources */,
+				870127361E65D8C800F9A8BE /* ThreadManager.m in Sources */,
 				8714E07E1E48C1C5004C9B1D /* UIView+Extensions.m in Sources */,
 				875AD5601E38C0C900584ABF /* RIFeaturedBoxTeaserGrouping.m in Sources */,
 				CE59BF1D1AE8097C0057F4E2 /* JAFeatureStoresTeaserView.m in Sources */,
@@ -5382,9 +5429,14 @@
 				CODE_SIGN_ENTITLEMENTS = Bamilo/Bamilo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
 				CURRENT_PROJECT_VERSION = 26;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bamilo/Bamilo-Prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
 				PRODUCT_NAME = Bamilo;
 				PROVISIONING_PROFILE_SPECIFIER = "BML AdHoc";
@@ -5556,9 +5608,14 @@
 				CODE_SIGN_ENTITLEMENTS = Bamilo/Bamilo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: ramtin monazahian (39SHTXEZ68)";
 				CURRENT_PROJECT_VERSION = 26;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bamilo/Bamilo-Prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
 				PRODUCT_NAME = Bamilo;
 				PROVISIONING_PROFILE_SPECIFIER = "BML Development";
@@ -5579,9 +5636,14 @@
 				CODE_SIGN_ENTITLEMENTS = Bamilo/Bamilo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
 				CURRENT_PROJECT_VERSION = 26;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bamilo/Bamilo-Prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
 				PRODUCT_NAME = Bamilo;
 				PROVISIONING_PROFILE_SPECIFIER = "BML AppStore";

@@ -12,7 +12,7 @@ target 'Bamilo' do
   # use_frameworks!
 
   # Pods for Bamilo
-  pod 'Accengage-iOS-SDK', '~> 6.0'
+  # pod 'Accengage-iOS-SDK', '~> 6.0'
   pod 'Adjust', '~> 4.11.0'
   pod 'AlgoliaSearch-Client', '~> 3.5'
   pod 'BugSense', '~> 3.6'
