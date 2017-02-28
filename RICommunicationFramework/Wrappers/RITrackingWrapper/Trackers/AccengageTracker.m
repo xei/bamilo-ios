@@ -458,7 +458,7 @@ static AccengageTracker *instance;
                 
                 NSString* cartTotal = [data objectForKey:kRIEventTotalCartKey];
                 if (cartTotal) {
-                    [deviceInfo setObject:cartCount forKey:kAccengageCartStatus];
+                    [deviceInfo setObject:cartTotal forKey:kAccengageCartStatus];
                 }
                 
                 NSNumber *amountTransactions = [data objectForKey:kRIEventAmountTransactions];
@@ -540,7 +540,7 @@ static AccengageTracker *instance;
     NSString *transactionId = [data objectForKey:kRIEcommerceTransactionIdKey];
     NSString *currency = [data objectForKey:kRIEcommerceCurrencyKey];
     
-    [Accengage trackPurchase:transactionId currency:currency items:@[] amount:[total doubleValue]];
+    [Accengage trackPurchase:transactionId currency:currency items:@[] amount:total];
 }
 
 #pragma mark - Helpers

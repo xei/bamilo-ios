@@ -126,18 +126,14 @@
     self.loadingView.alpha = 0.0f;
     self.loadingView.userInteractionEnabled = YES;
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                          action:@selector(cancelLoading)];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancelLoading)];
     [self.loadingView addGestureRecognizer:tap];
     
     UIImage *image = [UIImage imageNamed:@"loadingAnimationFrame1"];
     
     int lastFrame = 8;
   
-    self.loadingAnimation = [[UIImageView alloc] initWithFrame:CGRectMake(0,
-                                                                          0,
-                                                                          image.size.width,
-                                                                          image.size.height)];
+    self.loadingAnimation = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, image.size.width, image.size.height)];
     self.loadingAnimation.animationDuration = 1.0f;
     NSMutableArray *animationFrames = [NSMutableArray new];
     for (int i = 1; i <= lastFrame; i++) {
@@ -149,6 +145,20 @@
     self.loadingAnimation.center = self.loadingView.center;
     
     self.loadingView.alpha = 0.0f;
+    
+    self.accengageAlias = [self getDataTrackerAlias];
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [Accengage trackScreenDisplay:[self getPerformanceTrackerScreenName] ?: @""];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [Accengage trackScreenDismiss:[self getPerformanceTrackerScreenName] ?: @""];
+    
+    [super viewDidDisappear:animated];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
@@ -727,6 +737,11 @@
 }
 
 -(NSString *)getPerformanceTrackerLabel {
+    return nil;
+}
+
+#pragma mark - DataTrackerProtocol
+-(NSString *)getDataTrackerAlias {
     return nil;
 }
 

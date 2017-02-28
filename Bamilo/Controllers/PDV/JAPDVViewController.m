@@ -92,7 +92,7 @@ typedef void (^ProcessActionBlock)(void);
         _productImageSection.delegate = self;
         [_productImageSection.wishListButton addTarget:self action:@selector(wishListButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
-    _productImageSection.wishListButton.selected = self.product.favoriteAddDate;
+    _productImageSection.wishListButton.selected = (self.product.favoriteAddDate != nil);
     return _productImageSection;
 }
 
@@ -103,8 +103,7 @@ typedef void (^ProcessActionBlock)(void);
     [self.view setBackgroundColor:[UIColor whiteColor]];
     self.apiResponse = RIApiResponseSuccess;
     
-    self.A4SViewControllerAlias = @"PRODUCT";
-    
+    //self.A4SViewControllerAlias = @"PRODUCT";
     
     self.navBarLayout.showBackButton = YES;
     
@@ -2103,6 +2102,11 @@ typedef void (^ProcessActionBlock)(void);
 
 -(NSString *)getPerformanceTrackerLabel {
     return self.productSku;
+}
+
+#pragma mark - DataTrackerProtocol
+-(NSString *)getDataTrackerAlias {
+    return @"PRODUCT";
 }
 
 @end

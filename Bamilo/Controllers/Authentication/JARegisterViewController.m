@@ -197,7 +197,7 @@ JAAccountServicesProtocol
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideKeyboard) name:kOpenMenuNotification object:nil];
     self.apiResponse = RIApiResponseSuccess;
     self.isOpeningPicker = NO;
-    self.A4SViewControllerAlias = @"ACCOUNT";
+    //self.A4SViewControllerAlias = @"ACCOUNT";
     self.navBarLayout.title = STRING_CREATE_ACCOUNT;
     
     [self.view addSubview:self.mainScrollView];
@@ -716,6 +716,11 @@ JAAccountServicesProtocol
 #pragma mark - PerformanceTrackerProtocol
 -(NSString *)getPerformanceTrackerScreenName {
     return @"Register";
+}
+
+#pragma mark - DataTrackerProtocol
+-(NSString *)getDataTrackerAlias {
+    return @"ACCOUNT";
 }
 
 @end
