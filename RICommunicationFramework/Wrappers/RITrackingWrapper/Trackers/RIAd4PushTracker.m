@@ -7,10 +7,10 @@
 //
 
 #import "RIAd4PushTracker.h"
-#import "BMA4SInAppNotification.h"
-#import "BMA4SNotification.h"
-#import "BMA4STracker+Analytics.h"
-#import "BMA4STracker.h"
+//#import "BMA4SInAppNotification.h"
+//#import "BMA4SNotification.h"
+//#import "BMA4STracker+Analytics.h"
+//#import "BMA4STracker.h"
 #import "GAIFields.h"
 #import "RIGoogleAnalyticsTracker.h"
 #import "RICategory.h"
@@ -173,12 +173,10 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
         NSSet *categories = [[BMA4SNotification sharedBMA4S] notificationCategories];
         if (checkNotificationsSwitch && checkSoundSwitch) {
             if(IS_IOS_8_OR_LATER) {
-                UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes: (UIUserNotificationTypeSound
-                                                                                                      |UIUserNotificationTypeAlert) categories:categories];
+                UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes: (UIUserNotificationTypeSound |UIUserNotificationTypeAlert) categories:categories];
                 [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
             } else {
-                [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIUserNotificationTypeSound |
-                                                                                        UIUserNotificationTypeAlert )];
+                [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIUserNotificationTypeSound | UIUserNotificationTypeAlert )];
             }
         } else if(checkNotificationsSwitch && !checkNotificationsSwitch) {
             if(IS_IOS_8_OR_LATER) {

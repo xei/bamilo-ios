@@ -7,13 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "BMA4SViewController.h"
 #import "JANavigationBarLayout.h"
 #import "JATabBarView.h"
 #import "JAScreenTarget.h"
 #import "PerformanceTrackerProtocol.h"
 
-@interface JABaseViewController : BMA4SViewController <PerformanceTrackerProtocol, UISearchBarDelegate>
+@interface JABaseViewController : UIViewController <PerformanceTrackerProtocol, UISearchBarDelegate>
 
 @property (nonatomic, strong)JANavigationBarLayout* navBarLayout;
 

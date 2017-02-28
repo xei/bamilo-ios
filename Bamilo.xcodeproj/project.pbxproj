@@ -30,7 +30,6 @@
 		612553611E4F514100975C6F /* FormItemValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = 612553601E4F514100975C6F /* FormItemValidation.m */; };
 		612FDC371E45E0A900A9D0BD /* CartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 612FDC351E45E0A900A9D0BD /* CartTableViewCell.m */; };
 		612FDC381E45E0A900A9D0BD /* CartTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 612FDC361E45E0A900A9D0BD /* CartTableViewCell.xib */; };
-		613FF2AF1E4B24DC008660CF /* CAPSPageMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 613FF2AE1E4B24DC008660CF /* CAPSPageMenu.m */; };
 		613FF2B51E4B283F008660CF /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 613FF2B31E4B283F008660CF /* SignInViewController.m */; };
 		613FF2B61E4B283F008660CF /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 613FF2B41E4B283F008660CF /* SignInViewController.xib */; };
 		613FF2BA1E4B2858008660CF /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 613FF2B81E4B2858008660CF /* SignUpViewController.m */; };
@@ -84,6 +83,9 @@
 		8714E0901E48CD41004C9B1D /* DiscountSwitcherView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8714E08F1E48CD41004C9B1D /* DiscountSwitcherView.m */; };
 		8714E0921E48CD57004C9B1D /* DiscountSwitcherView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8714E0911E48CD57004C9B1D /* DiscountSwitcherView.xib */; };
 		8716987D1E38A94C0027B34A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8716987A1E38A94C0027B34A /* Main.storyboard */; };
+		871A04461E657A0F007E20B6 /* AccengageTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 871A04451E657A0F007E20B6 /* AccengageTracker.m */; };
+		871A044A1E6580BB007E20B6 /* CAPSPageMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 871A04491E6580BB007E20B6 /* CAPSPageMenu.m */; };
+		871A044E1E659B3F007E20B6 /* SettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 871A044D1E659B3F007E20B6 /* SettingsManager.m */; };
 		873369BA1E582D0100B0B5E5 /* MultistepEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 873369B91E582D0100B0B5E5 /* MultistepEntity.m */; };
 		873369BE1E58376900B0B5E5 /* ImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 873369BD1E58376900B0B5E5 /* ImageManager.m */; };
 		873369C21E589FEC00B0B5E5 /* ShippingMethodForm.m in Sources */ = {isa = PBXBuildFile; fileRef = 873369C11E589FEC00B0B5E5 /* ShippingMethodForm.m */; };
@@ -600,8 +602,6 @@
 		612FDC341E45E0A900A9D0BD /* CartTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartTableViewCell.h; sourceTree = "<group>"; };
 		612FDC351E45E0A900A9D0BD /* CartTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartTableViewCell.m; sourceTree = "<group>"; };
 		612FDC361E45E0A900A9D0BD /* CartTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartTableViewCell.xib; sourceTree = "<group>"; };
-		613FF2AD1E4B24DC008660CF /* CAPSPageMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAPSPageMenu.h; sourceTree = SOURCE_ROOT; };
-		613FF2AE1E4B24DC008660CF /* CAPSPageMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAPSPageMenu.m; sourceTree = SOURCE_ROOT; };
 		613FF2B21E4B283F008660CF /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
 		613FF2B31E4B283F008660CF /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
 		613FF2B41E4B283F008660CF /* SignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignInViewController.xib; sourceTree = "<group>"; };
@@ -700,6 +700,12 @@
 		8714E0911E48CD57004C9B1D /* DiscountSwitcherView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiscountSwitcherView.xib; sourceTree = "<group>"; };
 		8714E0941E48CE9F004C9B1D /* DiscountSwitcherViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscountSwitcherViewDelegate.h; sourceTree = "<group>"; };
 		8716987B1E38A94C0027B34A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Bamilo/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
+		871A04441E657A0F007E20B6 /* AccengageTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccengageTracker.h; sourceTree = "<group>"; };
+		871A04451E657A0F007E20B6 /* AccengageTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccengageTracker.m; sourceTree = "<group>"; };
+		871A04481E6580BB007E20B6 /* CAPSPageMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAPSPageMenu.h; sourceTree = "<group>"; };
+		871A04491E6580BB007E20B6 /* CAPSPageMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAPSPageMenu.m; sourceTree = "<group>"; };
+		871A044C1E659B3F007E20B6 /* SettingsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsManager.h; sourceTree = "<group>"; };
+		871A044D1E659B3F007E20B6 /* SettingsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsManager.m; sourceTree = "<group>"; };
 		873369B81E582D0100B0B5E5 /* MultistepEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultistepEntity.h; sourceTree = "<group>"; };
 		873369B91E582D0100B0B5E5 /* MultistepEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultistepEntity.m; sourceTree = "<group>"; };
 		873369BC1E58376900B0B5E5 /* ImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageManager.h; sourceTree = "<group>"; };
@@ -1908,15 +1914,6 @@
 			name = CartTableViewCell;
 			sourceTree = "<group>";
 		};
-		613FF2AC1E4B24CD008660CF /* CAPSPageMenu */ = {
-			isa = PBXGroup;
-			children = (
-				613FF2AD1E4B24DC008660CF /* CAPSPageMenu.h */,
-				613FF2AE1E4B24DC008660CF /* CAPSPageMenu.m */,
-			);
-			name = CAPSPageMenu;
-			sourceTree = "<group>";
-		};
 		613FF2B01E4B281A008660CF /* SignInViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -2256,6 +2253,7 @@
 		870F8CD41E3357D40021F87B /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				871A04471E6580B4007E20B6 /* CAPSPageMenu */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -2465,6 +2463,41 @@
 			name = Discount;
 			sourceTree = "<group>";
 		};
+		871A04421E65798D007E20B6 /* BML */ = {
+			isa = PBXGroup;
+			children = (
+				871A04431E6579FE007E20B6 /* AccengageTracker */,
+			);
+			name = BML;
+			sourceTree = "<group>";
+		};
+		871A04431E6579FE007E20B6 /* AccengageTracker */ = {
+			isa = PBXGroup;
+			children = (
+				871A04441E657A0F007E20B6 /* AccengageTracker.h */,
+				871A04451E657A0F007E20B6 /* AccengageTracker.m */,
+			);
+			name = AccengageTracker;
+			sourceTree = "<group>";
+		};
+		871A04471E6580B4007E20B6 /* CAPSPageMenu */ = {
+			isa = PBXGroup;
+			children = (
+				871A04481E6580BB007E20B6 /* CAPSPageMenu.h */,
+				871A04491E6580BB007E20B6 /* CAPSPageMenu.m */,
+			);
+			name = CAPSPageMenu;
+			sourceTree = "<group>";
+		};
+		871A044B1E659B1A007E20B6 /* SettingsManager */ = {
+			isa = PBXGroup;
+			children = (
+				871A044C1E659B3F007E20B6 /* SettingsManager.h */,
+				871A044D1E659B3F007E20B6 /* SettingsManager.m */,
+			);
+			name = SettingsManager;
+			sourceTree = "<group>";
+		};
 		873369B71E582CE200B0B5E5 /* MultistepEntity */ = {
 			isa = PBXGroup;
 			children = (
@@ -2616,6 +2649,7 @@
 				874AAB5F1E3C790300B3F8FE /* ConfigManager */,
 				874AAB6A1E3DCECD00B3F8FE /* SessionManager */,
 				87A6814B1E40DC2000D252AC /* ViewControllerManager */,
+				871A044B1E659B1A007E20B6 /* SettingsManager */,
 				879F87FC1E5095CF0033FE87 /* LoadingManager */,
 			);
 			name = Managers;
@@ -2957,6 +2991,7 @@
 		875AD52E1E38C0C800584ABF /* Trackers */ = {
 			isa = PBXGroup;
 			children = (
+				871A04421E65798D007E20B6 /* BML */,
 				875AD52F1E38C0C800584ABF /* RIAd4PushTracker.h */,
 				875AD5301E38C0C800584ABF /* RIAd4PushTracker.m */,
 				875AD5311E38C0C800584ABF /* RIAdjustTracker.h */,
@@ -4103,7 +4138,6 @@
 		B5A301D219811E8900F71726 /* ExternalFrameworks */ = {
 			isa = PBXGroup;
 			children = (
-				613FF2AC1E4B24CD008660CF /* CAPSPageMenu */,
 				87A6ACE41E38919C00C0E7DC /* GTMNSString-HTML */,
 			);
 			name = ExternalFrameworks;
@@ -4953,7 +4987,6 @@
 				613FF2BF1E4B2871008660CF /* AuthenticationContainerViewController.m in Sources */,
 				CE9ADF4C1AB6D78200D56481 /* UIImageView+JA.m in Sources */,
 				875AD5891E38C0C900584ABF /* RIGTMTracker.m in Sources */,
-				613FF2AF1E4B24DC008660CF /* CAPSPageMenu.m in Sources */,
 				CED6205C1BEB526B00FA8403 /* JAFiltersViewController.m in Sources */,
 				875AD57E1E38C0C900584ABF /* RIDataBaseWrapper.m in Sources */,
 				875AD5761E38C0C900584ABF /* RIShippingMethodPickupStationOption.m in Sources */,
@@ -4972,6 +5005,7 @@
 				CE59BF011AE801DA0057F4E2 /* JABrandTeaserView.m in Sources */,
 				9A3D21881CA4057A00FE41B6 /* JAChooseCountryTableViewCell.m in Sources */,
 				CE9ADF581AB6D78200D56481 /* JAEditAddressViewController.m in Sources */,
+				871A044A1E6580BB007E20B6 /* CAPSPageMenu.m in Sources */,
 				CE9ADF5A1AB6D78200D56481 /* JANewRatingViewController.m in Sources */,
 				CE9ADF5B1AB6D78200D56481 /* JAGenericFiltersView.m in Sources */,
 				875AD5591E38C0C900584ABF /* RICampaign.m in Sources */,
@@ -5050,6 +5084,7 @@
 				CE9ADF9E1AB6D78200D56481 /* JAOtherOffersView.m in Sources */,
 				CE9ADF9F1AB6D78200D56481 /* JACampaignsViewController.m in Sources */,
 				FFC9C0C71C984E7900DD5851 /* JATopTabsView.m in Sources */,
+				871A044E1E659B3F007E20B6 /* SettingsManager.m in Sources */,
 				CE9ADFA11AB6D78200D56481 /* JACatalogWizardView.m in Sources */,
 				875AD5461E38C0C900584ABF /* RIField.m in Sources */,
 				CE9ADFA31AB6D78200D56481 /* JAExternalPaymentsViewController.m in Sources */,
@@ -5104,6 +5139,7 @@
 				9AE766D41CBD2E0300B63D8E /* JAProductInfoPriceDescriptionLine.m in Sources */,
 				9AE766B11CBBB28E00B63D8E /* JACartProductsView.m in Sources */,
 				FFB1B0951CE61D96000F60AD /* JARadioExpandableComponent.m in Sources */,
+				871A04461E657A0F007E20B6 /* AccengageTracker.m in Sources */,
 				CE28A7A31BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */,
 				875AD5731E38C0C900584ABF /* RIShippingMethod.m in Sources */,
 				61CBA0511E51E26B005673F7 /* FormValidationType.m in Sources */,
