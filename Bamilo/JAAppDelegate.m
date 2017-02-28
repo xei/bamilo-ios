@@ -102,7 +102,7 @@
     #else
         if(crashlyticsApiKey) {
             [Crashlytics startWithAPIKey:crashlyticsApiKey];
-            [Fabric with:@[[Crashlytics class]]];
+            //[Fabric with:@[[Crashlytics class]]];
         }
     #endif
 
