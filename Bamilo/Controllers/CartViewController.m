@@ -66,13 +66,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.A4SViewControllerAlias = @"CART";
+    
+    //self.A4SViewControllerAlias = @"CART";
+    
     self.navBarLayout.title = STRING_CART;
     self.navBarLayout.showBackButton = NO;
     self.navBarLayout.showCartButton = NO;
     self.tabBarIsVisible = YES;
     [self.view setBackgroundColor:JAWhiteColor];
-    
     
     //TableView registerations
     self.tableView.delegate = self;
@@ -308,9 +309,12 @@
     return [NSString stringWithFormat:@"%@", [skusFromTeaserInCart allKeys]];
 }
 
+#pragma mark - DataTrackerProtocol
+-(NSString *)getDataTrackerAlias {
+    return @"CART";
+}
 
-#pragma mark - helpers
-
+#pragma mark - Helpers
 - (void)checkIfSummeryViewsMustBeVisibleOrNot {
     [self.tableView layoutIfNeeded];
     if (self.tableView.contentSize.height < self.tableView.frame.size.height) {
@@ -345,7 +349,6 @@
         [self changeTheSummeryTopConstraintByAnimationTo:0];
     }
 }
-
 
 - (void)changeTheSummeryTopConstraintByAnimationTo:(CGFloat)constant {
     [UIView animateWithDuration:0.15 animations:^{

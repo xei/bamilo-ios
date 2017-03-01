@@ -46,7 +46,7 @@
     
     [super viewDidLoad];
     
-    self.A4SViewControllerAlias = @"HOME";
+    //self.A4SViewControllerAlias = @"HOME";
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(campaignTimerEnded) name:kCampaignMainTeaserTimerEndedNotification object:nil];
     
@@ -366,6 +366,11 @@
 #pragma mark - PerformanceTrackerProtocol
 -(NSString *)getPerformanceTrackerScreenName {
     return @"Home";
+}
+
+#pragma mark - DataTrackerProtocol
+-(NSString *)getDataTrackerAlias {
+    return @"HOME";
 }
 
 @end

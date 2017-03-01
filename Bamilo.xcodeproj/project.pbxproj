@@ -16,7 +16,7 @@
 		1CCD52A01E2BA42F008BAEE4 /* PopularTeaserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCD529E1E2BA42F008BAEE4 /* PopularTeaserTableViewCell.m */; };
 		1CCD52A11E2BA42F008BAEE4 /* PopularTeaserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CCD529F1E2BA42F008BAEE4 /* PopularTeaserTableViewCell.xib */; };
 		48AD8FE22FD2C5FDC1CEBFF8 /* libPods-BamiloUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18BD9C21DAEE905E1607A899 /* libPods-BamiloUITests.a */; };
-		503C9D52C4AD9778E8C113A7 /* libPods-Bamilo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D245C5FE6A656AA98164739 /* libPods-Bamilo.a */; };
+		503C9D52C4AD9778E8C113A7 /* libPods-Bamilo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D245C5FE6A656AA98164739 /* libPods-Bamilo.a */; settings = {ATTRIBUTES = (Required, ); }; };
 		611195821E3CB14B00D06690 /* PlainTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 611195801E3CB14B00D06690 /* PlainTableViewCell.m */; };
 		611195831E3CB14B00D06690 /* PlainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 611195811E3CB14B00D06690 /* PlainTableViewCell.xib */; };
 		61148E051E4724FC00E2540B /* StepperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61148E041E4724FC00E2540B /* StepperView.m */; };
@@ -30,7 +30,6 @@
 		612553611E4F514100975C6F /* FormItemValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = 612553601E4F514100975C6F /* FormItemValidation.m */; };
 		612FDC371E45E0A900A9D0BD /* CartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 612FDC351E45E0A900A9D0BD /* CartTableViewCell.m */; };
 		612FDC381E45E0A900A9D0BD /* CartTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 612FDC361E45E0A900A9D0BD /* CartTableViewCell.xib */; };
-		613FF2AF1E4B24DC008660CF /* CAPSPageMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 613FF2AE1E4B24DC008660CF /* CAPSPageMenu.m */; };
 		613FF2B51E4B283F008660CF /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 613FF2B31E4B283F008660CF /* SignInViewController.m */; };
 		613FF2B61E4B283F008660CF /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 613FF2B41E4B283F008660CF /* SignInViewController.xib */; };
 		613FF2BA1E4B2858008660CF /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 613FF2B81E4B2858008660CF /* SignUpViewController.m */; };
@@ -63,6 +62,7 @@
 		6CF4AE821ADEAA290024EC34 /* JACatalogBannerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CF4AE7E1ADEAA290024EC34 /* JACatalogBannerCell.xib */; };
 		6CF4AE881ADEABBB0024EC34 /* JACatalogBannerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CF4AE841ADEABBB0024EC34 /* JACatalogBannerCell.m */; };
 		841E81AA1D1680F300A35AAF /* MPCoachMarks.m in Sources */ = {isa = PBXBuildFile; fileRef = 841E81A81D1680F300A35AAF /* MPCoachMarks.m */; };
+		870127361E65D8C800F9A8BE /* ThreadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 870127351E65D8C800F9A8BE /* ThreadManager.m */; };
 		870680B81E62DF20000368D5 /* AddressTableViewHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 870680B71E62DF20000368D5 /* AddressTableViewHeaderCell.m */; };
 		870680B91E62E1FA000368D5 /* AddressTableViewHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87A6817A1E4201F400D252AC /* AddressTableViewHeaderCell.xib */; };
 		8708A1721E406C1100ABA7D8 /* ContactUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8708A1711E406C1100ABA7D8 /* ContactUsViewController.m */; };
@@ -84,6 +84,11 @@
 		8714E0901E48CD41004C9B1D /* DiscountSwitcherView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8714E08F1E48CD41004C9B1D /* DiscountSwitcherView.m */; };
 		8714E0921E48CD57004C9B1D /* DiscountSwitcherView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8714E0911E48CD57004C9B1D /* DiscountSwitcherView.xib */; };
 		8716987D1E38A94C0027B34A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8716987A1E38A94C0027B34A /* Main.storyboard */; };
+		871A04461E657A0F007E20B6 /* AccengageTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 871A04451E657A0F007E20B6 /* AccengageTracker.m */; };
+		871A044A1E6580BB007E20B6 /* CAPSPageMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 871A04491E6580BB007E20B6 /* CAPSPageMenu.m */; };
+		871A044E1E659B3F007E20B6 /* SettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 871A044D1E659B3F007E20B6 /* SettingsManager.m */; };
+		871A04511E65C90F007E20B6 /* Accengage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 871A04501E65C90F007E20B6 /* Accengage.framework */; };
+		871A04531E65C97C007E20B6 /* Accengage.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 871A04501E65C90F007E20B6 /* Accengage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		873369BA1E582D0100B0B5E5 /* MultistepEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 873369B91E582D0100B0B5E5 /* MultistepEntity.m */; };
 		873369BE1E58376900B0B5E5 /* ImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 873369BD1E58376900B0B5E5 /* ImageManager.m */; };
 		873369C21E589FEC00B0B5E5 /* ShippingMethodForm.m in Sources */ = {isa = PBXBuildFile; fileRef = 873369C11E589FEC00B0B5E5 /* ShippingMethodForm.m */; };
@@ -174,7 +179,6 @@
 		875AD5821E38C0C900584ABF /* RITracking_Bamilo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 875AD52A1E38C0C800584ABF /* RITracking_Bamilo.plist */; };
 		875AD5831E38C0C900584ABF /* RITrackingConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD52C1E38C0C800584ABF /* RITrackingConfiguration.m */; };
 		875AD5841E38C0C900584ABF /* RITrackingDebug_Bamilo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 875AD52D1E38C0C800584ABF /* RITrackingDebug_Bamilo.plist */; };
-		875AD5851E38C0C900584ABF /* RIAd4PushTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD5301E38C0C800584ABF /* RIAd4PushTracker.m */; };
 		875AD5861E38C0C900584ABF /* RIAdjustTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD5321E38C0C800584ABF /* RIAdjustTracker.m */; };
 		875AD5871E38C0C900584ABF /* RIBugSenseTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD5341E38C0C800584ABF /* RIBugSenseTracker.m */; };
 		875AD5881E38C0C900584ABF /* RIGoogleAnalyticsTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD5361E38C0C800584ABF /* RIGoogleAnalyticsTracker.m */; };
@@ -510,6 +514,19 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		871A04521E65C94A007E20B6 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				871A04531E65C97C007E20B6 /* Accengage.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		1123BA1ABA81805B2A214BA9 /* Pods-Bamilo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bamilo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bamilo/Pods-Bamilo.release.xcconfig"; sourceTree = "<group>"; };
 		18BD9C21DAEE905E1607A899 /* libPods-BamiloUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BamiloUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -600,8 +617,6 @@
 		612FDC341E45E0A900A9D0BD /* CartTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartTableViewCell.h; sourceTree = "<group>"; };
 		612FDC351E45E0A900A9D0BD /* CartTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartTableViewCell.m; sourceTree = "<group>"; };
 		612FDC361E45E0A900A9D0BD /* CartTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartTableViewCell.xib; sourceTree = "<group>"; };
-		613FF2AD1E4B24DC008660CF /* CAPSPageMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAPSPageMenu.h; sourceTree = SOURCE_ROOT; };
-		613FF2AE1E4B24DC008660CF /* CAPSPageMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAPSPageMenu.m; sourceTree = SOURCE_ROOT; };
 		613FF2B21E4B283F008660CF /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
 		613FF2B31E4B283F008660CF /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
 		613FF2B41E4B283F008660CF /* SignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignInViewController.xib; sourceTree = "<group>"; };
@@ -659,6 +674,8 @@
 		6CF4AE841ADEABBB0024EC34 /* JACatalogBannerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACatalogBannerCell.m; sourceTree = "<group>"; };
 		841E81A71D1680F300A35AAF /* MPCoachMarks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPCoachMarks.h; path = ../MPCoachMarks.h; sourceTree = "<group>"; };
 		841E81A81D1680F300A35AAF /* MPCoachMarks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPCoachMarks.m; path = ../MPCoachMarks.m; sourceTree = "<group>"; };
+		870127341E65D8C800F9A8BE /* ThreadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadManager.h; sourceTree = "<group>"; };
+		870127351E65D8C800F9A8BE /* ThreadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThreadManager.m; sourceTree = "<group>"; };
 		870680B61E62DF20000368D5 /* AddressTableViewHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressTableViewHeaderCell.h; sourceTree = "<group>"; };
 		870680B71E62DF20000368D5 /* AddressTableViewHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressTableViewHeaderCell.m; sourceTree = "<group>"; };
 		8708A1701E406C1100ABA7D8 /* ContactUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactUsViewController.h; sourceTree = "<group>"; };
@@ -700,6 +717,14 @@
 		8714E0911E48CD57004C9B1D /* DiscountSwitcherView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiscountSwitcherView.xib; sourceTree = "<group>"; };
 		8714E0941E48CE9F004C9B1D /* DiscountSwitcherViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscountSwitcherViewDelegate.h; sourceTree = "<group>"; };
 		8716987B1E38A94C0027B34A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Bamilo/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
+		871A04441E657A0F007E20B6 /* AccengageTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccengageTracker.h; sourceTree = "<group>"; };
+		871A04451E657A0F007E20B6 /* AccengageTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccengageTracker.m; sourceTree = "<group>"; };
+		871A04481E6580BB007E20B6 /* CAPSPageMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAPSPageMenu.h; sourceTree = "<group>"; };
+		871A04491E6580BB007E20B6 /* CAPSPageMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAPSPageMenu.m; sourceTree = "<group>"; };
+		871A044C1E659B3F007E20B6 /* SettingsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsManager.h; sourceTree = "<group>"; };
+		871A044D1E659B3F007E20B6 /* SettingsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsManager.m; sourceTree = "<group>"; };
+		871A044F1E65C125007E20B6 /* DataTrackerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataTrackerProtocol.h; sourceTree = "<group>"; };
+		871A04501E65C90F007E20B6 /* Accengage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accengage.framework; path = ../Accengage.framework; sourceTree = "<group>"; };
 		873369B81E582D0100B0B5E5 /* MultistepEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultistepEntity.h; sourceTree = "<group>"; };
 		873369B91E582D0100B0B5E5 /* MultistepEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultistepEntity.m; sourceTree = "<group>"; };
 		873369BC1E58376900B0B5E5 /* ImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageManager.h; sourceTree = "<group>"; };
@@ -895,8 +920,6 @@
 		875AD52B1E38C0C800584ABF /* RITrackingConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RITrackingConfiguration.h; sourceTree = "<group>"; };
 		875AD52C1E38C0C800584ABF /* RITrackingConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RITrackingConfiguration.m; sourceTree = "<group>"; };
 		875AD52D1E38C0C800584ABF /* RITrackingDebug_Bamilo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RITrackingDebug_Bamilo.plist; sourceTree = "<group>"; };
-		875AD52F1E38C0C800584ABF /* RIAd4PushTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIAd4PushTracker.h; sourceTree = "<group>"; };
-		875AD5301E38C0C800584ABF /* RIAd4PushTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIAd4PushTracker.m; sourceTree = "<group>"; };
 		875AD5311E38C0C800584ABF /* RIAdjustTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIAdjustTracker.h; sourceTree = "<group>"; };
 		875AD5321E38C0C800584ABF /* RIAdjustTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIAdjustTracker.m; sourceTree = "<group>"; };
 		875AD5331E38C0C800584ABF /* RIBugSenseTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIBugSenseTracker.h; sourceTree = "<group>"; };
@@ -1461,6 +1484,7 @@
 				9A0F9BAF1B5E803300569DF2 /* StoreKit.framework in Frameworks */,
 				9A0F9BAE1B5E802000569DF2 /* CoreMedia.framework in Frameworks */,
 				9A0F9BAD1B5E801800569DF2 /* CoreMotion.framework in Frameworks */,
+				871A04511E65C90F007E20B6 /* Accengage.framework in Frameworks */,
 				9A0F9BAC1B5E800700569DF2 /* AVFoundation.framework in Frameworks */,
 				CE9AE0181AB6D78200D56481 /* iAd.framework in Frameworks */,
 				CE9AE01A1AB6D78200D56481 /* AdSupport.framework in Frameworks */,
@@ -1908,15 +1932,6 @@
 			name = CartTableViewCell;
 			sourceTree = "<group>";
 		};
-		613FF2AC1E4B24CD008660CF /* CAPSPageMenu */ = {
-			isa = PBXGroup;
-			children = (
-				613FF2AD1E4B24DC008660CF /* CAPSPageMenu.h */,
-				613FF2AE1E4B24DC008660CF /* CAPSPageMenu.m */,
-			);
-			name = CAPSPageMenu;
-			sourceTree = "<group>";
-		};
 		613FF2B01E4B281A008660CF /* SignInViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -2174,6 +2189,15 @@
 			name = OnBoardingView;
 			sourceTree = "<group>";
 		};
+		870127331E65D8AB00F9A8BE /* ThreadManager */ = {
+			isa = PBXGroup;
+			children = (
+				870127341E65D8C800F9A8BE /* ThreadManager.h */,
+				870127351E65D8C800F9A8BE /* ThreadManager.m */,
+			);
+			name = ThreadManager;
+			sourceTree = "<group>";
+		};
 		8708A16F1E406BF600ABA7D8 /* ContactUsViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -2256,6 +2280,8 @@
 		870F8CD41E3357D40021F87B /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				871A04471E6580B4007E20B6 /* CAPSPageMenu */,
+				871A04501E65C90F007E20B6 /* Accengage.framework */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -2465,6 +2491,41 @@
 			name = Discount;
 			sourceTree = "<group>";
 		};
+		871A04421E65798D007E20B6 /* BML */ = {
+			isa = PBXGroup;
+			children = (
+				871A04431E6579FE007E20B6 /* AccengageTracker */,
+			);
+			name = BML;
+			sourceTree = "<group>";
+		};
+		871A04431E6579FE007E20B6 /* AccengageTracker */ = {
+			isa = PBXGroup;
+			children = (
+				871A04441E657A0F007E20B6 /* AccengageTracker.h */,
+				871A04451E657A0F007E20B6 /* AccengageTracker.m */,
+			);
+			name = AccengageTracker;
+			sourceTree = "<group>";
+		};
+		871A04471E6580B4007E20B6 /* CAPSPageMenu */ = {
+			isa = PBXGroup;
+			children = (
+				871A04481E6580BB007E20B6 /* CAPSPageMenu.h */,
+				871A04491E6580BB007E20B6 /* CAPSPageMenu.m */,
+			);
+			name = CAPSPageMenu;
+			sourceTree = "<group>";
+		};
+		871A044B1E659B1A007E20B6 /* SettingsManager */ = {
+			isa = PBXGroup;
+			children = (
+				871A044C1E659B3F007E20B6 /* SettingsManager.h */,
+				871A044D1E659B3F007E20B6 /* SettingsManager.m */,
+			);
+			name = SettingsManager;
+			sourceTree = "<group>";
+		};
 		873369B71E582CE200B0B5E5 /* MultistepEntity */ = {
 			isa = PBXGroup;
 			children = (
@@ -2617,6 +2678,8 @@
 				874AAB6A1E3DCECD00B3F8FE /* SessionManager */,
 				87A6814B1E40DC2000D252AC /* ViewControllerManager */,
 				879F87FC1E5095CF0033FE87 /* LoadingManager */,
+				871A044B1E659B1A007E20B6 /* SettingsManager */,
+				870127331E65D8AB00F9A8BE /* ThreadManager */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -2957,8 +3020,7 @@
 		875AD52E1E38C0C800584ABF /* Trackers */ = {
 			isa = PBXGroup;
 			children = (
-				875AD52F1E38C0C800584ABF /* RIAd4PushTracker.h */,
-				875AD5301E38C0C800584ABF /* RIAd4PushTracker.m */,
+				871A04421E65798D007E20B6 /* BML */,
 				875AD5311E38C0C800584ABF /* RIAdjustTracker.h */,
 				875AD5321E38C0C800584ABF /* RIAdjustTracker.m */,
 				875AD5331E38C0C800584ABF /* RIBugSenseTracker.h */,
@@ -3182,6 +3244,7 @@
 				87A681651E41DD1800D252AC /* SideMenuProtocol.h */,
 				87A681631E41C8BC00D252AC /* TabBarProtocol.h */,
 				873369DA1E5A015400B0B5E5 /* PerformanceTrackerProtocol.h */,
+				871A044F1E65C125007E20B6 /* DataTrackerProtocol.h */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -4103,7 +4166,6 @@
 		B5A301D219811E8900F71726 /* ExternalFrameworks */ = {
 			isa = PBXGroup;
 			children = (
-				613FF2AC1E4B24CD008660CF /* CAPSPageMenu */,
 				87A6ACE41E38919C00C0E7DC /* GTMNSString-HTML */,
 			);
 			name = ExternalFrameworks;
@@ -4579,6 +4641,8 @@
 				A496F8EDC748088D90A309BD /* [CP] Embed Pods Frameworks */,
 				AF99C33FE560E007DC18281B /* [CP] Copy Pods Resources */,
 				873369E11E5B295F00B0B5E5 /* ShellScript */,
+				871A04521E65C94A007E20B6 /* CopyFiles */,
+				871A04541E65C9A5007E20B6 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -4757,6 +4821,19 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		871A04541E65C9A5007E20B6 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "FRAMEWORKS_DIRECTORY=\"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}\"\nACCENGAGE_FRAMEWORKS=`find $FRAMEWORKS_DIRECTORY -type d -name \"Accengage*.framework\"`\n\nfor framework in $ACCENGAGE_FRAMEWORKS; do\nframework_name=`basename $framework`\nframework_binary_path=$framework\"/${framework_name%.*}\"\n\narchs=\"$(lipo -info \"${framework_binary_path}\" | rev | cut -d ':' -f1 | rev)\"\nstripped=\"\"\nfor arch in $archs; do\nif ! [[ \"${VALID_ARCHS}\" == *\"$arch\"* ]]; then\nlipo -remove \"$arch\" -output \"$framework_binary_path\" \"$framework_binary_path\" || exit 1\nstripped=\"$stripped $arch\"\nfi\ndone\nif [[ \"$stripped\" != \"\" ]]; then\necho \"Stripped $framework_binary_path of architectures:$stripped\"\nif [ \"${CODE_SIGNING_REQUIRED}\" == \"YES\" ]; then\n/usr/bin/codesign --force --sign ${EXPANDED_CODE_SIGN_IDENTITY} --preserve-metadata=identifier,entitlements \"${framework_binary_path}\"\nfi\nfi\ndone";
+		};
 		873369E11E5B295F00B0B5E5 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -4891,7 +4968,6 @@
 				87B684D51E49AB890042C09F /* DiscountCodeView.m in Sources */,
 				CE9ADF311AB6D78200D56481 /* JACheckBoxComponent.m in Sources */,
 				87C69DAE1E38B7A50026018F /* UIColor+Format.m in Sources */,
-				875AD5851E38C0C900584ABF /* RIAd4PushTracker.m in Sources */,
 				875AD5781E38C0C900584ABF /* RISpecificationAttribute.m in Sources */,
 				61E0996C1E3E117F004ED14E /* BaseTableViewCell.m in Sources */,
 				9A38765D1BCD0DE00088B186 /* JAProductSpecificationView.m in Sources */,
@@ -4939,6 +5015,7 @@
 				9A7A77291B2B45F1002F530F /* JAPagedView.m in Sources */,
 				879F88111E50BB050033FE87 /* CartViewController.m in Sources */,
 				875AD5441E38C0C900584ABF /* RICustomer.m in Sources */,
+				870127361E65D8C800F9A8BE /* ThreadManager.m in Sources */,
 				8714E07E1E48C1C5004C9B1D /* UIView+Extensions.m in Sources */,
 				875AD5601E38C0C900584ABF /* RIFeaturedBoxTeaserGrouping.m in Sources */,
 				CE59BF1D1AE8097C0057F4E2 /* JAFeatureStoresTeaserView.m in Sources */,
@@ -4953,7 +5030,6 @@
 				613FF2BF1E4B2871008660CF /* AuthenticationContainerViewController.m in Sources */,
 				CE9ADF4C1AB6D78200D56481 /* UIImageView+JA.m in Sources */,
 				875AD5891E38C0C900584ABF /* RIGTMTracker.m in Sources */,
-				613FF2AF1E4B24DC008660CF /* CAPSPageMenu.m in Sources */,
 				CED6205C1BEB526B00FA8403 /* JAFiltersViewController.m in Sources */,
 				875AD57E1E38C0C900584ABF /* RIDataBaseWrapper.m in Sources */,
 				875AD5761E38C0C900584ABF /* RIShippingMethodPickupStationOption.m in Sources */,
@@ -4972,6 +5048,7 @@
 				CE59BF011AE801DA0057F4E2 /* JABrandTeaserView.m in Sources */,
 				9A3D21881CA4057A00FE41B6 /* JAChooseCountryTableViewCell.m in Sources */,
 				CE9ADF581AB6D78200D56481 /* JAEditAddressViewController.m in Sources */,
+				871A044A1E6580BB007E20B6 /* CAPSPageMenu.m in Sources */,
 				CE9ADF5A1AB6D78200D56481 /* JANewRatingViewController.m in Sources */,
 				CE9ADF5B1AB6D78200D56481 /* JAGenericFiltersView.m in Sources */,
 				875AD5591E38C0C900584ABF /* RICampaign.m in Sources */,
@@ -5050,6 +5127,7 @@
 				CE9ADF9E1AB6D78200D56481 /* JAOtherOffersView.m in Sources */,
 				CE9ADF9F1AB6D78200D56481 /* JACampaignsViewController.m in Sources */,
 				FFC9C0C71C984E7900DD5851 /* JATopTabsView.m in Sources */,
+				871A044E1E659B3F007E20B6 /* SettingsManager.m in Sources */,
 				CE9ADFA11AB6D78200D56481 /* JACatalogWizardView.m in Sources */,
 				875AD5461E38C0C900584ABF /* RIField.m in Sources */,
 				CE9ADFA31AB6D78200D56481 /* JAExternalPaymentsViewController.m in Sources */,
@@ -5104,6 +5182,7 @@
 				9AE766D41CBD2E0300B63D8E /* JAProductInfoPriceDescriptionLine.m in Sources */,
 				9AE766B11CBBB28E00B63D8E /* JACartProductsView.m in Sources */,
 				FFB1B0951CE61D96000F60AD /* JARadioExpandableComponent.m in Sources */,
+				871A04461E657A0F007E20B6 /* AccengageTracker.m in Sources */,
 				CE28A7A31BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */,
 				875AD5731E38C0C900584ABF /* RIShippingMethod.m in Sources */,
 				61CBA0511E51E26B005673F7 /* FormValidationType.m in Sources */,
@@ -5350,9 +5429,14 @@
 				CODE_SIGN_ENTITLEMENTS = Bamilo/Bamilo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
 				CURRENT_PROJECT_VERSION = 26;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bamilo/Bamilo-Prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
 				PRODUCT_NAME = Bamilo;
 				PROVISIONING_PROFILE_SPECIFIER = "BML AdHoc";
@@ -5524,9 +5608,14 @@
 				CODE_SIGN_ENTITLEMENTS = Bamilo/Bamilo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: ramtin monazahian (39SHTXEZ68)";
 				CURRENT_PROJECT_VERSION = 26;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bamilo/Bamilo-Prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
 				PRODUCT_NAME = Bamilo;
 				PROVISIONING_PROFILE_SPECIFIER = "BML Development";
@@ -5547,9 +5636,14 @@
 				CODE_SIGN_ENTITLEMENTS = Bamilo/Bamilo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
 				CURRENT_PROJECT_VERSION = 26;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bamilo/Bamilo-Prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
 				PRODUCT_NAME = Bamilo;
 				PROVISIONING_PROFILE_SPECIFIER = "BML AppStore";

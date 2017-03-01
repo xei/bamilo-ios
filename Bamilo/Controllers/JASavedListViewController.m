@@ -189,7 +189,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.A4SViewControllerAlias = @"MYFAVOURITES";
+    
+    //self.A4SViewControllerAlias = @"MYFAVOURITES";
     self.navBarLayout.title = STRING_MY_FAVOURITES;
     self.navBarLayout.showCartButton = NO;
     self.navBarLayout.showSeparatorView = NO;
@@ -701,6 +702,11 @@
 #pragma mark - PerformanceTrackerProtocol
 -(NSString *)getPerformanceTrackerScreenName {
     return @"SavedList";
+}
+
+#pragma mark - DataTrackerProtocol
+-(NSString *)getDataTrackerAlias {
+    return @"MYFAVOURITES";
 }
 
 @end

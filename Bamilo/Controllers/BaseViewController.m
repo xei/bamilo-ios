@@ -32,6 +32,8 @@
     self.navigationItem.hidesBackButton = YES;
     self.title = nil;
     self.view.backgroundColor = JABackgroundGrey;
+    
+    self.accengageAlias = [self getDataTrackerAlias];
 }
 
 - (JANavigationBarLayout *)navBarLayout {
@@ -57,12 +59,24 @@
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground) name:kAppDidEnterBackground object:nil];
 }
 
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [Accengage trackScreenDisplay:[self getPerformanceTrackerScreenName] ?: @""];
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kTurnOnMenuSwipePanelNotification object:nil];
     //[[NSNotificationCenter defaultCenter] removeObserver:self name:kAppWillEnterForeground object:nil];
     //[[NSNotificationCenter defaultCenter] removeObserver:self name:kAppDidEnterBackground object:nil];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [Accengage trackScreenDismiss:[self getPerformanceTrackerScreenName] ?: @""];
+    
+    [super viewDidDisappear:animated];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -181,6 +195,11 @@
 }
 
 -(NSString *)getPerformanceTrackerLabel {
+    return nil;
+}
+
+#pragma mark - DataTrackerProtocol
+-(NSString *)getDataTrackerAlias {
     return nil;
 }
 

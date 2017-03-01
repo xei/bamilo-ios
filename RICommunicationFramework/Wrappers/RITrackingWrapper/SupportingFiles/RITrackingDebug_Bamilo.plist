@@ -2,6 +2,15 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Accengage</key>
+	<dict>
+		<key>AccengagePartnerID</key>
+		<string>bamilo6f7e9b89b2edfe5</string>
+		<key>AccengagePrivateKey</key>
+		<string>159692ac5bd09b91c5ac09ecb9b614ab008b0d53</string>
+		<key>AccengageDeviceToken</key>
+		<string></string>
+	</dict>
 	<key>kRIAdjustToken</key>
 	<string>pttex2kff47v</string>
 	<key>kGTMToken</key>
