@@ -29,7 +29,8 @@
             // Unfortunatly data in country configuration updates only once (in app initialization) .
             // then if someone who updates the application, will not receive new configs (e.g. telephone!)
             // so we hard code the telephone number here for now!
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://02172516"]];
+            //[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://02172516"]];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel:%@", configuration.phoneNumber]]];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
         }];
     }
