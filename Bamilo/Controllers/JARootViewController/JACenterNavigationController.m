@@ -66,6 +66,7 @@
 #import "JAORWaysViewController.h"
 #import "JAORPaymentViewController.h"
 #import "JAORPickupStationWebViewController.h"
+#import "OrderListViewController.h"
 
 //###################################################
 #import "ViewControllerManager.h"
@@ -863,35 +864,38 @@
 - (void)showMyOrdersViewController:(NSNotification*)notification {
     UIViewController *topViewController = [self topViewController];
     if([RICustomer checkIfUserIsLogged]) {
-        if (VALID_NOTEMPTY(notification.object, NSString)) {
-            if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-                if(UIDeviceOrientationLandscapeLeft == [UIDevice currentDevice].orientation || UIDeviceOrientationLandscapeRight == [UIDevice currentDevice].orientation) {
-                    if (![topViewController isKindOfClass:[JAMyOrdersViewController class]])
-                    {
-                        JAMyOrdersViewController *myOrderVC = [JAMyOrdersViewController new];
-                        [myOrderVC setOrderNumber:notification.object];
-                        [self pushViewController:myOrderVC animated:YES];
-                    }
-                }else if (![topViewController isKindOfClass:[JAMyOrderDetailViewController class]])
-                {
-                    JAMyOrderDetailViewController *myOrderVC = [JAMyOrderDetailViewController new];
-                    [myOrderVC setOrderNumber:notification.object];
-                    [self pushViewController:myOrderVC animated:YES];
-                }
-            } else {
-                
-                if (![topViewController isKindOfClass:[JAMyOrderDetailViewController class]]) {
-                    JAMyOrderDetailViewController *myOrderVC = [JAMyOrderDetailViewController new];
-                    [myOrderVC setOrderNumber:notification.object];
-                    [self pushViewController:myOrderVC animated:YES];
-                }
-            }
-        }else{
-            if (![topViewController isKindOfClass:[JAMyOrdersViewController class]]) {
-                JAMyOrdersViewController *myOrderVC = [JAMyOrdersViewController new];
-                [self pushViewController:myOrderVC animated:YES];
-            }
-        }
+//        if (VALID_NOTEMPTY(notification.object, NSString)) {
+//            if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+//                if(UIDeviceOrientationLandscapeLeft == [UIDevice currentDevice].orientation || UIDeviceOrientationLandscapeRight == [UIDevice currentDevice].orientation) {
+//                    if (![topViewController isKindOfClass:[JAMyOrdersViewController class]])
+//                    {
+//                        JAMyOrdersViewController *myOrderVC = [JAMyOrdersViewController new];
+//                        [myOrderVC setOrderNumber:notification.object];
+//                        [self pushViewController:myOrderVC animated:YES];
+//                    }
+//                }else if (![topViewController isKindOfClass:[JAMyOrderDetailViewController class]])
+//                {
+//                    JAMyOrderDetailViewController *myOrderVC = [JAMyOrderDetailViewController new];
+//                    [myOrderVC setOrderNumber:notification.object];
+//                    [self pushViewController:myOrderVC animated:YES];
+//                }
+//            } else {
+//                
+//                if (![topViewController isKindOfClass:[JAMyOrderDetailViewController class]]) {
+//                    JAMyOrderDetailViewController *myOrderVC = [JAMyOrderDetailViewController new];
+//                    [myOrderVC setOrderNumber:notification.object];
+//                    [self pushViewController:myOrderVC animated:YES];
+//                }
+//            }
+//        }else{
+//            if (![topViewController isKindOfClass:[JAMyOrdersViewController class]]) {
+//                JAMyOrdersViewController *myOrderVC = [JAMyOrdersViewController new];
+//                [self pushViewController:myOrderVC animated:YES];
+//            }
+//        }
+        
+        OrderListViewController *myOrderViewCtrl = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"OrderListViewController"];
+        [self pushViewController:myOrderViewCtrl animated:YES];
     } else {
             [self performProtectedBlock:^(BOOL userHadSession) {
                 [[NSNotificationCenter defaultCenter] postNotification:notification];

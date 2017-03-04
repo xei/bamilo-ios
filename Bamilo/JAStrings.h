@@ -484,5 +484,6 @@
 #define STRING_SUM_OF_TOTAL RILocalizedString(@"sum_of_total", nil)
 #define STRING_CONFIRM_AND_CONTINUE RILocalizedString(@"confirm_and_continue", nil)
 #define STRING_CONFIRM_AND_PAY RILocalizedString(@"confirm_and_pay", nil)
-
+#define STRING_CURRENCY RILocalizedString(@"currency", nil)
+#define STRING_TOTAL_COST RILocalizedString(@"total_order_cost", nil)
 #endif

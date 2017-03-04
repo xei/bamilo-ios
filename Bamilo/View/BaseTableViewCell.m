@@ -29,7 +29,7 @@
 }
 
 + (NSString *)nibName {
-    return nil;
+    return NSStringFromClass(self);
 }
 
 - (void)updateWithModel:(id)model {

@@ -247,8 +247,7 @@ UICollectionViewDelegateFlowLayout>
     RITrackOrder *  order = [self.orders objectAtIndex:[self.selectedOrderIndexPath row]];
     
     
-    [RIOrder trackOrderWithOrderNumber:order.orderId
-                      WithSuccessBlock:^(RITrackOrder *trackingOrder) {
+    [RIOrder trackOrderWithOrderNumber:order.orderId WithSuccessBlock:^(RITrackOrder *trackingOrder) {
                           
                           self.trackingOrder = trackingOrder;
                           
@@ -380,13 +379,11 @@ UICollectionViewDelegateFlowLayout>
 
 #pragma mark UICollectionViewDataSource
 
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-{
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     NSInteger numberOfItemsInSection = 0;
     if(VALID_NOTEMPTY(self.orders, NSArray))
     {
@@ -424,9 +421,8 @@ UICollectionViewDelegateFlowLayout>
 
 #pragma mark Actions
 
-- (void)selectedOrder:(UIButton *)sender
-{
-    if (sender.tag == _selectedCellIndex && (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
+- (void)selectedOrder:(UIButton *)sender {
+    if (sender.tag == _selectedCellIndex && (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
         return;
     }
     _selectedCellIndex = sender.tag;

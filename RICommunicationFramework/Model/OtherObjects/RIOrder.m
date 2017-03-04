@@ -455,8 +455,7 @@
 {
     NSMutableArray *ordersList = [[NSMutableArray alloc] init];
     
-    for(NSDictionary *orderObject in ordersListObject)
-    {
+    for(NSDictionary *orderObject in ordersListObject) {
         RITrackOrder *trackOrder = [RITrackOrder parseTrackOrder:orderObject country:country];
         [ordersList addObject:trackOrder];
     }

@@ -806,3 +806,7 @@
 "confirm_and_continue" = "تایید و ادامه";
 
 "confirm_and_pay" = "ادامه و پرداخت";
+
+"currency" = "ریال";
+
+"total_order_cost" = "مبلغ کل سفارش";

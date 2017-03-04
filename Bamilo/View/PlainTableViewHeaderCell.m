@@ -29,13 +29,20 @@
     _titleString = titleString;
 }
 
+- (void)setTitleAtributedString:(NSAttributedString *)titleAtributedString {
+    self.titleLabel.attributedText = titleAtributedString;
+    _titleAtributedString = titleAtributedString;
+}
+
 #pragma mark - Overrides
 + (CGFloat)cellHeight {
     return 40.0f;
 }
 
-+ (NSString *)nibName {
-    return @"PlainTableViewHeaderCell";
+- (void)prepareForReuse {
+    [super prepareForReuse];
+    self.titleLabel.text = nil;
+    self.titleLabel.attributedText = nil;
 }
 
 @end
