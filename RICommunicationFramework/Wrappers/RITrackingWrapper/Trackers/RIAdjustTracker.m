@@ -178,7 +178,8 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
         NSString *keyRIEventFacebookViewListing;
         NSString *keyRIEventFacebookViewTransaction;
         NSString *keyRIEventFacebookAddToCart;
-        
+//##################################################
+        NSString *kEventInstall;
         
             
         keyRIEventFacebookAddToCart = @"";
@@ -206,8 +207,9 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
         keyRIEventFacebookViewProduct = @"l2fxva";
         keyRIEventFacebookViewTransaction = @"ys7sle";
         keyRIEventOpenApp = @"3qdwyi";
-
-
+//##################################################
+        kEventInstall = @"6z3etd";
+        
         
         BOOL amountOfTransactions = YES;
         NSString *eventKey = @"";
@@ -289,6 +291,11 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
                 eventKey = keyRIEventOpenApp;
                 amountOfTransactions = NO;
                 break;
+//##########################################################
+            case RIEventInstallViaAdjust:
+                eventKey = kEventInstall;
+            break;
+                
             default:
                 break;
         }

@@ -353,7 +353,7 @@
         [dictionary setObject:creative forKey:kRIEventCreativeKey];
     }
     
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventInstallViaAdjust] data:dictionary];
+    [[RITrackingWrapper sharedInstance] trackEvent:@(RIEventInstallViaAdjust) data:dictionary];
 }
 
 @end
