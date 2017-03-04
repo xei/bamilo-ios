@@ -16,8 +16,8 @@ target 'Bamilo' do
   pod 'Adjust', '~> 4.11.0'
   pod 'AlgoliaSearch-Client', '~> 3.5'
   pod 'BugSense', '~> 3.6'
-  pod 'Crashlytics', '~> 3.8.3'
-  pod 'Fabric', '~> 1.6.11'
+  pod 'Fabric'
+  pod 'Crashlytics', '~> 3.8'
   pod 'FXBlurView','~> 1.6.4'
   # pod 'GoogleTagManager', '~> 5.0.8'
   pod 'GoogleTagManager', '3.15.0' # ********** Legacy

@@ -4829,7 +4829,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Pods/Fabric/Fabric.framework/run ddde4ad6ad210575fdac10a908040d1a93e74833";
+			shellScript = "if [[ \"$CONFIGURATION\" == \"Release\" ]]\nthen\n    ./Pods/Fabric/Fabric.framework/run 93ef3db21e524147cf9702fd4dc34e7169e372d1\nelse\n    ./Pods/Fabric/Fabric.framework/run ddde4ad6ad210575fdac10a908040d1a93e74833\nfi";
 		};
 		875AD58C1E38C62A00584ABF /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;

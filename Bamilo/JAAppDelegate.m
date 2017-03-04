@@ -82,12 +82,14 @@
 //#########################################################################################################
     ConfigManager *configManager = [[ConfigManager alloc] initWithConfigurationFile:@"Bamilo-Configs"];
 #ifdef IS_RELEASE
-    NSString *newRelicApiKey = [configManager getConfigurationForKey:@"NewRelic" variation:kConfManagerEnvLive];
+    //NSString *newRelicApiKey = [configManager getConfigurationForKey:@"NewRelic" variation:kConfManagerEnvLive];
+    NSString *crashlyticsApiKey = [configManager getConfigurationForKey:@"Crashlytics" variation:kConfManagerEnvLive];
 #else
-    NSString *newRelicApiKey = [configManager getConfigurationForKey:@"NewRelic" variation:kConfManagerEnvStaging];
+    //NSString *newRelicApiKey = [configManager getConfigurationForKey:@"NewRelic" variation:kConfManagerEnvStaging];
     NSString *crashlyticsApiKey = [configManager getConfigurationForKey:@"Crashlytics" variation:kConfManagerEnvStaging];
 #endif
     
+    /*
     if (newRelicApiKey) {
         [NewRelicAgent startWithApplicationToken:newRelicApiKey];
         
@@ -96,16 +98,12 @@
         #else
              [NewRelicAgent disableFeatures:NRFeatureFlag_CrashReporting];
         #endif
+    }*/
+    
+    if(crashlyticsApiKey) {
+        [Crashlytics startWithAPIKey:crashlyticsApiKey];
     }
     
-    #ifdef IS_RELEASE
-    #else
-        if(crashlyticsApiKey) {
-            [Crashlytics startWithAPIKey:crashlyticsApiKey];
-            //[Fabric with:@[[Crashlytics class]]];
-        }
-    #endif
-
     return YES;
 }
 
