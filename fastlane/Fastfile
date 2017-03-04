@@ -47,7 +47,10 @@ platform :ios do
   ############################# Build Beta (TestFlight) ##############################
   lane :beta do |values|
     gym(workspace: "Bamilo.xcworkspace", scheme: "Bamilo", codesigning_identity: "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)", clean: true)
-    scan(scheme: "Bamilo", devices: ["iPhone SE"], clean: false, skip_build: true)
+    skip_testing = values[:skip_testing] ? values[:skip_testing] : false
+    if skip_testing == false
+       scan(scheme: "Bamilo", devices: ["iPhone SE"], clean: false, skip_build: true)
+    end
     pilot(skip_submission: true, distribute_external: false, skip_waiting_for_build_processing: true, username: "narbeh.mirzaei@bamilo.com")
     post_to_slack(scheme: "beta", destination: "TestFlight")
   end
