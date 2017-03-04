@@ -53,7 +53,7 @@
         return validation;
     }
     
-    if (self.min && lengthOfInputText < self.min) {
+    if (self.min && lengthOfInputText < self.min && inputString.length) {
         validation.errorMsg = [self getErrorMsgOfType:FormItemValidationErrorMin];
         validation.boolValue = NO;
         return validation;

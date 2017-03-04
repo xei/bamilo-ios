@@ -50,9 +50,9 @@
 
 #pragma mark - AddressTableViewControllerDelegate
 - (BOOL)addressSelected:(Address *)address {
+    //TEMPORARILY DISABLED ADDRESS SELECTION
     return NO;
     
-//TEMPORARILY DISABLED ADDRESS SELECTION
     if(_currentAddress.uid == address.uid) {
         return NO;
     }

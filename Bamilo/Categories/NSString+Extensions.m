@@ -78,7 +78,7 @@
         return self;
     }
     [NSString numberFormatter].numberStyle = NSNumberFormatterDecimalStyle;
-    NSNumber * numberFromString = [[NSString numberFormatter] numberFromString:self];
+    NSNumber * numberFromString = @(self.floatValue); //[[NSString numberFormatter] numberFromString:self];
     NSString * formattedNumberString = [[NSString numberFormatter] stringFromNumber:numberFromString];
     return formattedNumberString;
 }
