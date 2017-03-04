@@ -1,0 +1,22 @@
+//
+//  Models.pch
+//  Bamilo
+//
+//  Created by Narbeh Mirzaei on 2/5/17.
+//  Copyright © 2017 Rocket Internet. All rights reserved.
+//
+
+#ifndef Models_pch
+#define Models_pch
+
+#import "Address.h"
+#import "AddressList.h"
+#import "CartForm.h"
+#import "CartEntity.h"
+#import "FormEntity.h"
+#import "MultistepEntity.h"
+#import "ShippingMethodOption.h"
+#import "ShippingMethod.h"
+#import "ShippingMethodForm.h"
+
+#endif /* Models_pch */

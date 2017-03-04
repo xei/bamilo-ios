@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="117" id="KGk-i7-Jjw" customClass="RecieptViewCartTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="431" height="117"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="431" height="116"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="foy-oN-Gf9" userLabel="container">
+                        <rect key="frame" x="0.0" y="0.0" width="431" height="107"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="seV-hv-I49">
+                                <rect key="frame" x="0.0" y="0.0" width="431" height="67"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J2v-1M-3CC" customClass="CartEntitySummaryViewControl">
+                                <rect key="frame" x="0.0" y="67" width="431" height="40"/>
+                                <color key="backgroundColor" red="0.96862745100000003" green="0.59215686270000001" blue="0.12549019610000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="lL7-eF-KhG"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="J2v-1M-3CC" firstAttribute="leading" secondItem="foy-oN-Gf9" secondAttribute="leading" id="6m4-a1-CCo"/>
+                            <constraint firstItem="seV-hv-I49" firstAttribute="leading" secondItem="foy-oN-Gf9" secondAttribute="leading" id="Vk4-0O-sCW"/>
+                            <constraint firstItem="seV-hv-I49" firstAttribute="top" secondItem="foy-oN-Gf9" secondAttribute="top" id="fuu-Bn-9xN"/>
+                            <constraint firstAttribute="bottom" secondItem="J2v-1M-3CC" secondAttribute="bottom" id="psz-Ct-ddW"/>
+                            <constraint firstItem="J2v-1M-3CC" firstAttribute="top" secondItem="seV-hv-I49" secondAttribute="bottom" id="s1P-yM-dme"/>
+                            <constraint firstAttribute="trailing" secondItem="seV-hv-I49" secondAttribute="trailing" id="wRH-g2-imb"/>
+                            <constraint firstAttribute="trailing" secondItem="J2v-1M-3CC" secondAttribute="trailing" id="yc9-fI-IRd"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                <real key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                <color key="value" red="0.90980392160000001" green="0.90980392160000001" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
+                                <size key="value" width="0.0" height="2"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                <real key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                <real key="value" value="0.20000000000000001"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="foy-oN-Gf9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="0e7-GL-Zcr"/>
+                    <constraint firstItem="foy-oN-Gf9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="DJN-5o-dLR"/>
+                    <constraint firstAttribute="bottom" secondItem="foy-oN-Gf9" secondAttribute="bottom" constant="10" id="cjg-7R-QfS"/>
+                    <constraint firstAttribute="trailing" secondItem="foy-oN-Gf9" secondAttribute="trailing" id="lOc-9N-9fe"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="summeryView" destination="J2v-1M-3CC" id="KNu-bG-ZV1"/>
+                <outlet property="tableView" destination="seV-hv-I49" id="iMq-SS-BvW"/>
+            </connections>
+            <point key="canvasLocation" x="-207.5" y="248.5"/>
+        </tableViewCell>
+    </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
+    </simulatedMetricsContainer>
+</document>

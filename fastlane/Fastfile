@@ -1,0 +1,80 @@
+fastlane_version "2.9.0"
+
+default_platform :ios
+
+platform :ios do
+  #
+  # Learn more here: https://github.com/fastlane/setups/blob/master/samples-ios/distribute-beta-build.md 🚀
+  #
+
+  ############################## PRE ##############################
+  before_all do
+    # ensure_git_status_clean
+    # ensure_git_branch(branch: 'develop')
+    sh 'bash ./scripts/xcrun_simctl_erase_all.sh'
+    cocoapods
+  end
+
+  ############################## Test Only ##############################
+  lane :test do |values|
+    scan(scheme: values[:scheme], devices: ["iPhone SE"])
+  end
+
+  ############################## Build Alpha (Crashlytics) ##############################
+  lane :alpha do |values|
+    gym(workspace: "Bamilo.xcworkspace", scheme: "Bamilo (Staging)", export_method: "ad-hoc", clean: true)
+
+    skip_testing = values[:skip_testing] ? values[:skip_testing] : false
+    if skip_testing == false
+       scan(scheme: "Bamilo (Staging)", devices: ["iPhone SE"], clean: false, skip_build: true)
+    end
+
+    emails = values[:emails] ? values[:emails] : nil
+    groups = values[:groups] ? values[:groups] : nil
+    notify = values[:notify] ? values[:notify] : true
+    changelog = values[:changelog] ? values[:changelog] : prompt(text: "Enter the change log: ", multi_line_end_keyword: "END")
+
+    crashlytics(api_token: 'ddde4ad6ad210575fdac10a908040d1a93e74833',
+      build_secret: 'c37b1e5c603fb0fd9b71f1bf627d92f87718c6efd4aada50d724ab8ad126fe35',
+      emails: emails,
+      groups: groups,
+      notes: changelog ? changelog : changelog_from_git_commits,
+      notifications: notify)
+
+      post_to_slack(scheme: "alpha", destination: "Crashlytics")
+  end
+
+  ############################# Build Beta (TestFlight) ##############################
+  lane :beta do |values|
+    gym(workspace: "Bamilo.xcworkspace", scheme: "Bamilo", codesigning_identity: "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)", clean: true)
+    skip_testing = values[:skip_testing] ? values[:skip_testing] : false
+    if skip_testing == false
+       scan(scheme: "Bamilo", devices: ["iPhone SE"], clean: false, skip_build: true)
+    end
+    pilot(skip_submission: true, distribute_external: false, skip_waiting_for_build_processing: true, username: "narbeh.mirzaei@bamilo.com")
+    post_to_slack(scheme: "beta", destination: "TestFlight")
+  end
+
+  ############################# UTIL ##############################
+  private_lane :post_to_slack do |options|
+    scheme      = options[:scheme]
+    environment = scheme.upcase
+    destination = options[:destination]
+
+    slack(
+      slack_url: "https://hooks.slack.com/services/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",
+      channel: "mobile-alerts",
+      message: "Hey guys! A new iOS *#{get_version_number}* (#{get_build_number}) running `#{environment}` has been submitted to *#{destination}*  :rocket:",
+    )
+  end
+
+  ############################# POST ##############################
+  after_all do |lane|
+    clean_build_artifacts
+    notification(subtitle: "Build Success :-)", message: "Fastlane finished '#{lane}' successfully")
+  end
+
+  error do |lane, exception|
+    notification(subtitle: "Build Failed!", message: "Fastlane '#{lane}' errored - Exception #{exception}")
+  end
+end

@@ -1,0 +1,75 @@
+//
+//  Jumia-Prefix.pch
+//  Jumia
+//
+//  Created by Pedro Lopes on 24/07/14.
+//  Copyright (c) 2014 Rocket Internet. All rights reserved.
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_3_0
+#warning "This project uses features only available in iOS SDK 3.0 and later."
+#endif
+
+#ifndef NOT_NIL
+#define NOT_NIL(__OBJECT) (nil != __OBJECT)
+#endif
+
+#ifndef VALID
+#define VALID(__OBJECT, __CLASSNAME) (nil != __OBJECT && [__OBJECT isKindOfClass:[__CLASSNAME class]])
+#endif
+
+#ifndef VALID_ISEMPTY
+#define VALID_ISEMPTY(__OBJECT, __CLASSNAME) (VALID(__OBJECT, __CLASSNAME) == YES && ISEMPTY(__OBJECT) == YES)
+#endif
+
+#ifndef VALID_NOTEMPTY
+#define VALID_NOTEMPTY(__OBJECT, __CLASSNAME) (VALID(__OBJECT, __CLASSNAME) == YES && ISEMPTY(__OBJECT) == NO)
+#endif
+
+#ifndef VALID_NOTEMPTY_VALUE
+#define VALID_NOTEMPTY_VALUE(__OBJECT, __CLASSNAME) (VALID(__OBJECT, __CLASSNAME) == YES && ISEMPTY(__OBJECT) == NO)?__OBJECT:nil
+#endif
+
+#ifndef VALID_VALUE
+#define VALID_VALUE(__OBJECT, __CLASSNAME) (nil != __OBJECT && [__OBJECT isKindOfClass:[__CLASSNAME class]])?__OBJECT:nil
+#endif
+
+
+#ifndef SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+#endif
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+    #import <CoreData/CoreData.h>
+    #import "RIWrapperConfiguration.h"
+    #import "RICommunicationWrapper.h"
+    #import "RIDataBaseWrapper.h"
+    #import "RITrackingWrapper.h"
+
+    #import "RIConfiguration.h"
+    #import "JAConstants.h"
+    #import "JABaseViewController.h"
+    #import "JADynamicForm.h"
+    #import "RIApi.h"
+    #import "RILocalizationWrapper.h"
+    #import "JAStrings.h"
+    #import "JAFont.h"
+    #import "JAColors.h"
+
+    #import "JAMessageView.h"
+    #import "Reachability.h"
+
+    #import "UIView+Mirror.h"
+    #import "UIImage+Mirror.h"
+    #import "UIView+Frame.h"
+    #import "UILabel+Size.h"
+    #import "UIButton+Size.h"
+//####################################################################################################################
+    #import "AppConsts.h"
+    #import "Categories.pch"
+
+#endif

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="‌Bamilosans Bold.ttf">
+            <string>Bamilo-Sans-Bold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" restorationIdentifier="CartEntitySummaryView" id="iN0-l3-epB" customClass="CartEntitySummaryView">
+            <rect key="frame" x="0.0" y="0.0" width="405" height="75"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="جمع نهایی " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jhS-Sk-MvV">
+                    <rect key="frame" x="327" y="26" width="58" height="23"/>
+                    <fontDescription key="fontDescription" name="Bamilo-Sans-Bold" family="Bamilo-Sans" pointSize="12"/>
+                    <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="در حال محاسبه" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DaZ-wR-8kZ">
+                    <rect key="frame" x="20" y="26" width="297" height="23"/>
+                    <fontDescription key="fontDescription" name="Bamilo-Sans-Bold" family="Bamilo-Sans" pointSize="12"/>
+                    <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vg9-ZU-JBr">
+                    <rect key="frame" x="0.0" y="0.0" width="405" height="75"/>
+                    <connections>
+                        <action selector="viewTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="IKF-bg-EjZ"/>
+                    </connections>
+                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z5K-gI-5sT" userLabel="topBorder">
+                    <rect key="frame" x="0.0" y="0.0" width="405" height="1"/>
+                    <color key="backgroundColor" red="0.85098039215686272" green="0.85098039215686272" blue="0.85098039215686272" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="V3c-Na-WN4"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.85098039219999999" green="0.85098039219999999" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="Z5K-gI-5sT" secondAttribute="trailing" id="5rm-ZT-NeT"/>
+                <constraint firstItem="Z5K-gI-5sT" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="DYJ-aO-uAk"/>
+                <constraint firstAttribute="trailing" secondItem="jhS-Sk-MvV" secondAttribute="trailing" constant="20" id="Oxm-N2-hXS"/>
+                <constraint firstItem="Z5K-gI-5sT" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="dDi-cS-VcB"/>
+                <constraint firstItem="DaZ-wR-8kZ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="gAH-bC-1Fd"/>
+                <constraint firstItem="jhS-Sk-MvV" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="mHh-DT-7b4"/>
+                <constraint firstItem="vg9-ZU-JBr" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="obv-Ju-ekj"/>
+                <constraint firstItem="jhS-Sk-MvV" firstAttribute="leading" secondItem="DaZ-wR-8kZ" secondAttribute="trailing" constant="10" id="qJ0-jN-r0s"/>
+                <constraint firstItem="vg9-ZU-JBr" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="uHL-ol-T8e"/>
+                <constraint firstItem="DaZ-wR-8kZ" firstAttribute="centerY" secondItem="jhS-Sk-MvV" secondAttribute="centerY" id="uis-WX-22W"/>
+                <constraint firstAttribute="bottom" secondItem="vg9-ZU-JBr" secondAttribute="bottom" id="ujA-ou-3bK"/>
+                <constraint firstAttribute="trailing" secondItem="vg9-ZU-JBr" secondAttribute="trailing" id="ztA-gi-5wa"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="priceLabel" destination="DaZ-wR-8kZ" id="8wj-CD-c9D"/>
+                <outlet property="titleLabel" destination="jhS-Sk-MvV" id="yvD-Vm-yI2"/>
+            </connections>
+            <point key="canvasLocation" x="-217.5" y="-19.5"/>
+        </view>
+    </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
+    </simulatedMetricsContainer>
+</document>
