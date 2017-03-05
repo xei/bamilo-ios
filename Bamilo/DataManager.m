@@ -1,4 +1,4 @@
-//
+ //
 //  DataManager.m
 //  Bamilo
 //
@@ -11,6 +11,7 @@
 #import "RICart.h"
 #import "RIForm.h"
 #import "RICustomer.h"
+#import "OrderList.h"
 
 @implementation DataManager
 
@@ -40,7 +41,7 @@ static DataManager *instance;
     [self getAreaZone:target type:REQUEST_EXEC_IN_BACKGROUND path:RI_API_GET_CUSTOMER_REGIONS completion:completion];
 }
 
-//Helper function
+//Area Helper function
 - (void)getAreaZone:(id<DataServiceProtocol>)target type:(RequestExecutionType)type path:(NSString *)path completion:(DataCompletion)completion {
     [RequestManager asyncGET:target path:path params:nil type:type completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
         if(response == RIApiResponseSuccess && data) {
@@ -83,6 +84,25 @@ static DataManager *instance;
         } else {
             completion(nil, [self getErrorFrom:response errorMessages:errorMessages]);
         }
+    }];
+}
+
+
+//### ORDER ####
+- (void)getOrders:(id<DataServiceProtocol>)target forPageNumber:(int)page perPageCount:(int)perPageCount completion:(DataCompletion)completion {
+    NSDictionary *params = @{
+         @"per_page": @(perPageCount),
+         @"page"    : @(page)
+    };
+    [RequestManager asyncPOST:target path:RI_API_GET_ORDERS params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+        [self serialize:data into:[OrderList class] response:response errorMessages:errorMessages completion:completion];
+    }];
+}
+
+- (void)getOrder:(id<DataServiceProtocol>)target forOrderId:(NSString *)orderId  completion:(DataCompletion)completion {
+    NSString *path = [NSString stringWithFormat:RI_API_TRACK_ORDER, orderId];
+    [RequestManager asyncPOST:target path:path params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+        [self serialize:data into:[Order class] response:response errorMessages:errorMessages completion:completion];
     }];
 }
 

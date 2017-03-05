@@ -11,5 +11,6 @@
 @interface PlainTableViewHeaderCell : BaseTableViewCell
 
 @property (copy, nonatomic) NSString *titleString;
+@property (copy, nonatomic) NSAttributedString *titleAtributedString;
 
 @end
