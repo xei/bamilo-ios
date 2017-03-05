@@ -25,7 +25,6 @@ PODS:
     - AFNetworking/NSURLSession
   - AlgoliaSearch-Client (3.7.0):
     - AFNetworking (~> 2.2)
-  - BugSense (3.6)
   - Crashlytics (3.8.4):
     - Fabric (~> 1.6.3)
   - Fabric (1.6.11)
@@ -50,7 +49,6 @@ PODS:
 DEPENDENCIES:
   - Adjust (~> 4.11.0)
   - AlgoliaSearch-Client (~> 3.5)
-  - BugSense (~> 3.6)
   - Crashlytics (~> 3.8)
   - Fabric
   - FXBlurView (~> 1.6.4)
@@ -68,7 +66,6 @@ SPEC CHECKSUMS:
   Adjust: 87b3f066ea103f1dabfaa8e428a75b992bf7712e
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
   AlgoliaSearch-Client: 8a937017f9faad0eef7a2d43fdb695f7620de140
-  BugSense: 778c28028810e114f21faade24d074ede7f9b467
   Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
   FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
@@ -84,6 +81,6 @@ SPEC CHECKSUMS:
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   TTRangeSlider: 2f2ce4a33b32bb323c6575b9f5161c4664459c58
 
-PODFILE CHECKSUM: 50f55c81eaf2491a7cf6a34b872e5c6d55603da5
+PODFILE CHECKSUM: 7c7ea44ec9b853b788116c867c4f40d4f06d9391
 
 COCOAPODS: 1.1.1

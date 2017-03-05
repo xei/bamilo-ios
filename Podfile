@@ -15,7 +15,6 @@ target 'Bamilo' do
   # pod 'Accengage-iOS-SDK', '~> 6.0'
   pod 'Adjust', '~> 4.11.0'
   pod 'AlgoliaSearch-Client', '~> 3.5'
-  pod 'BugSense', '~> 3.6'
   pod 'Fabric'
   pod 'Crashlytics', '~> 3.8'
   pod 'FXBlurView','~> 1.6.4'
@@ -28,7 +27,6 @@ target 'Bamilo' do
   pod 'NewRelicAgent', '~> 5.10.0'
   pod 'SDWebImage', '~> 3.8'  
   pod 'TTRangeSlider', '~> 1.0.5'
-  # pod 'Mantle'
   pod 'JSONModel'
   pod 'RAlertView'
 

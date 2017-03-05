@@ -193,7 +193,6 @@
 		875AD5831E38C0C900584ABF /* RITrackingConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD52C1E38C0C800584ABF /* RITrackingConfiguration.m */; };
 		875AD5841E38C0C900584ABF /* RITrackingDebug_Bamilo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 875AD52D1E38C0C800584ABF /* RITrackingDebug_Bamilo.plist */; };
 		875AD5861E38C0C900584ABF /* RIAdjustTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD5321E38C0C800584ABF /* RIAdjustTracker.m */; };
-		875AD5871E38C0C900584ABF /* RIBugSenseTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD5341E38C0C800584ABF /* RIBugSenseTracker.m */; };
 		875AD5881E38C0C900584ABF /* RIGoogleAnalyticsTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD5361E38C0C800584ABF /* RIGoogleAnalyticsTracker.m */; };
 		875AD5891E38C0C900584ABF /* RIGTMTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD5381E38C0C800584ABF /* RIGTMTracker.m */; };
 		875AD58B1E38C0C900584ABF /* RIURLCacheWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD53D1E38C0C800584ABF /* RIURLCacheWrapper.m */; };
@@ -957,8 +956,6 @@
 		875AD52D1E38C0C800584ABF /* RITrackingDebug_Bamilo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RITrackingDebug_Bamilo.plist; sourceTree = "<group>"; };
 		875AD5311E38C0C800584ABF /* RIAdjustTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIAdjustTracker.h; sourceTree = "<group>"; };
 		875AD5321E38C0C800584ABF /* RIAdjustTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIAdjustTracker.m; sourceTree = "<group>"; };
-		875AD5331E38C0C800584ABF /* RIBugSenseTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIBugSenseTracker.h; sourceTree = "<group>"; };
-		875AD5341E38C0C800584ABF /* RIBugSenseTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIBugSenseTracker.m; sourceTree = "<group>"; };
 		875AD5351E38C0C800584ABF /* RIGoogleAnalyticsTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIGoogleAnalyticsTracker.h; sourceTree = "<group>"; };
 		875AD5361E38C0C800584ABF /* RIGoogleAnalyticsTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIGoogleAnalyticsTracker.m; sourceTree = "<group>"; };
 		875AD5371E38C0C800584ABF /* RIGTMTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIGTMTracker.h; sourceTree = "<group>"; };
@@ -3155,8 +3152,6 @@
 				872230E21E6A9815000748E9 /* AccengageTracker.m */,
 				875AD5311E38C0C800584ABF /* RIAdjustTracker.h */,
 				875AD5321E38C0C800584ABF /* RIAdjustTracker.m */,
-				875AD5331E38C0C800584ABF /* RIBugSenseTracker.h */,
-				875AD5341E38C0C800584ABF /* RIBugSenseTracker.m */,
 				875AD5351E38C0C800584ABF /* RIGoogleAnalyticsTracker.h */,
 				875AD5361E38C0C800584ABF /* RIGoogleAnalyticsTracker.m */,
 				875AD5371E38C0C800584ABF /* RIGTMTracker.h */,
@@ -5429,7 +5424,6 @@
 				61036B5A1E6599FC006E12A9 /* OrderListTableViewCell.m in Sources */,
 				8968FE731C3AE33E00B28207 /* JAUserDataViewController.m in Sources */,
 				87B684F11E4A00C30042C09F /* ReceiptItemView.m in Sources */,
-				875AD5871E38C0C900584ABF /* RIBugSenseTracker.m in Sources */,
 				9A007C791C203355007D99FC /* JAMyAccountViewController.m in Sources */,
 				CEDBF8651B0A01B60073971A /* UIImage+Mirror.m in Sources */,
 				9A55A6991BC2E8AA008EF4A6 /* JABundlesViewController.m in Sources */,
