@@ -486,4 +486,6 @@
 #define STRING_CONFIRM_AND_PAY RILocalizedString(@"confirm_and_pay", nil)
 #define STRING_CURRENCY RILocalizedString(@"currency", nil)
 #define STRING_TOTAL_COST RILocalizedString(@"total_order_cost", nil)
+#define STRING_HELLO RILocalizedString(@"hello", nil)
+
 #endif

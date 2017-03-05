@@ -13,7 +13,7 @@
 -(void)awakeFromNib {
     [super awakeFromNib];
     
-    [self.titleLabel applyStyle:kFontRegularName fontSize:11.0f color:[UIColor blackColor]];
+    [self.titleLabel applyStyle:kFontRegularName fontSize:11.0f color:[UIColor withRepeatingRGBA:80 alpha:1.0f]];
 }
 
 + (CGFloat)heightSize {

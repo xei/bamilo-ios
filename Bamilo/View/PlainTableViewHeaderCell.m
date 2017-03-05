@@ -35,6 +35,10 @@
 }
 
 #pragma mark - Overrides
++ (NSString *)nibName {
+    return @"PlainTableViewHeaderCell";
+}
+
 + (CGFloat)cellHeight {
     return 40.0f;
 }
