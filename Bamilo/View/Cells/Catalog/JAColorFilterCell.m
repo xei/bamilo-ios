@@ -7,7 +7,7 @@
 //
 
 #import "JAColorFilterCell.h"
-#import "RIFilter.h"
+#import "SearchFilterItemOption.h"
 
 @implementation JAColorFilterCell
 
@@ -97,10 +97,9 @@
     }
 }
 
-- (void)setFilterOption:(RIFilterOption*)filterOption {
+- (void)setFilterOption:(SearchFilterItemOption*)filterOption {
     
-    self.colorTitleLabel.text = [[NSString stringWithFormat:@"%@ (%ld)",filterOption.name, [filterOption.totalProducts longValue]] numbersToPersian];
-    
+    self.colorTitleLabel.text = [[NSString stringWithFormat:@"%@ (%ld)",filterOption.name, [filterOption.productsCount longValue]] numbersToPersian];
     if (filterOption.colorHexValue) {
         [self.colorView setColorWithHexString:filterOption.colorHexValue];
     }

@@ -246,7 +246,7 @@
                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error, RIUndefinedSearchTerm *undefSearchTerm))failureBlock
 {
     NSString* fullUrl = @"";
-    NSString *filtersString = [RIFilter urlWithFiltersArray:filters];
+    NSString *filtersString = [BaseSearchFilterItem urlWithFiltersArray:filters];
     
     
     //sometimes the url of the product already has ? in it. yeah...

@@ -115,9 +115,9 @@
 
 }
 
--(void)setFilterOption:(RIFilterOption *)filterOption {
+-(void)setFilterOption:(SearchFilterItemOption *)filterOption {
     self.nameLabel.text = filterOption.name;
-    self.quantityLabel.text = [[NSString stringWithFormat:@"(%ld)",[filterOption.totalProducts longValue]] numbersToPersian];
+    self.quantityLabel.text = [[NSString stringWithFormat:@"(%ld)",[filterOption.productsCount longValue]] numbersToPersian];
     [self.customAccessoryView setHighlighted:filterOption.selected];
 }
 

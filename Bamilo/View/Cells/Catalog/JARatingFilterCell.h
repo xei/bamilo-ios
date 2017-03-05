@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "JAProductInfoRatingLine.h"
-#import "RIFilter.h"
+#import "SearchFilterItemOption.h"
 
 @interface JARatingFilterCell : UITableViewCell
 
@@ -19,7 +19,7 @@
                             isLandscape:(BOOL)isLandscape
                                   frame:(CGRect)frame;
 
-- (void)setFilterOption:(RIFilterOption*)option;
+- (void)setFilterOption:(SearchFilterItemOption*)option;
 
 - (void)setupIsLandscape:(BOOL)landscape;
 

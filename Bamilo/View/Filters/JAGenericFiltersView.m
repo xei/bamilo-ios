@@ -17,7 +17,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong)NSMutableArray* selectedIndexes;
-@property (nonatomic, strong)RIFilter* filter;
+@property (nonatomic, strong)SearchFilterItem* filter;
 @property (nonatomic, assign)BOOL isLandscape;
 
 @end
@@ -25,7 +25,7 @@
 @implementation JAGenericFiltersView
 
 
-- (void)initializeWithFilter:(RIFilter*)filter isLandscape:(BOOL)isLandscape; {
+- (void)initializeWithFilter:(SearchFilterItem*)filter isLandscape:(BOOL)isLandscape; {
     self.filter = filter;
     self.isLandscape = isLandscape;
     
@@ -42,7 +42,7 @@
     //without saving this selection states into the real filter options, which only happens once the DONE
     // button is pressed.
     self.selectedIndexes = [NSMutableArray new];
-    for (RIFilterOption* filterOption in self.filter.options) {
+    for (SearchFilterItemOption *filterOption in self.filter.options) {
         [self.selectedIndexes addObject:[NSNumber numberWithBool:filterOption.selected]];
     }
 }
@@ -52,7 +52,7 @@
     for (int i = 0; i < self.selectedIndexes.count; i++) {
         
         NSNumber *selectionNumber = [self.selectedIndexes objectAtIndex:i];
-        RIFilterOption* filterOption = [self.filter.options objectAtIndex:i];
+        SearchFilterItemOption* filterOption = [self.filter.options objectAtIndex:i];
         filterOption.selected = [selectionNumber boolValue];
     }
     
@@ -105,7 +105,7 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         
-        RIFilterOption* filterOption = [self.filter.options objectAtIndex:indexPath.row];
+        SearchFilterItemOption* filterOption = [self.filter.options objectAtIndex:indexPath.row];
         [(JARatingFilterCell*)cell setFilterOption:filterOption];
         [(JARatingFilterCell*)cell setupIsLandscape:self.isLandscape];
     } else {

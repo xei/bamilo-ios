@@ -205,26 +205,26 @@
 + (NSArray*)copyFiltersArray:(NSArray*)filtersArray {
     NSMutableArray* newFiltersArray = [NSMutableArray new];
     for (RIFilter* filter in filtersArray) {
-        [newFiltersArray addObject:[filter copy]];
+        [newFiltersArray addObject:filter];
     }
     return [newFiltersArray copy];
 }
 
-- (RIFilter*)copy {
-    RIFilter* newFilter = [[RIFilter alloc] init];
-    
-    newFilter.uid = [self.uid copy];
-    newFilter.name = [self.name copy];
-    newFilter.multi = self.multi;
-    newFilter.filterSeparator = [self.filterSeparator copy];
-    NSMutableArray* newOptions = [NSMutableArray new];
-    for (RIFilterOption* option in self.options) {
-        RIFilterOption* newOption = [option copy];
-        [newOptions addObject:newOption];
-    }
-    newFilter.options = [newOptions copy];
-    
-    return newFilter;
-}
+//- (RIFilter*)copy {
+//    RIFilter* newFilter = [[RIFilter alloc] init];
+//    
+//    newFilter.uid = [self.uid copy];
+//    newFilter.name = [self.name copy];
+//    newFilter.multi = self.multi;
+//    newFilter.filterSeparator = [self.filterSeparator copy];
+//    NSMutableArray* newOptions = [NSMutableArray new];
+//    for (RIFilterOption* option in self.options) {
+//        RIFilterOption* newOption = [option copy];
+//        [newOptions addObject:newOption];
+//    }
+//    newFilter.options = [newOptions copy];
+//    
+//    return newFilter;
+//}
 
 @end

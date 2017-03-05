@@ -7,16 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseSearchFilterItem.h"
+#import "BaseViewController.h"
 
 @protocol JAFiltersViewControllerDelegate <NSObject>
 
-- (void)updatedFilters:(NSArray*)updatedFiltersArray;
+- (void)updatedFilters:(NSArray<BaseSearchFilterItem *>*)updatedFiltersArray;
 
 @end
 
-@interface JAFiltersViewController : JABaseViewController
+@interface JAFiltersViewController :BaseViewController
 
-@property (nonatomic, strong)NSArray* filtersArray;
+@property (nonatomic, strong)  NSArray<BaseSearchFilterItem *>* filtersArray;
+@property (nonatomic , assign) int priceFilterIndex;
 @property (nonatomic, assign)id<JAFiltersViewControllerDelegate> delegate;
 
 @end

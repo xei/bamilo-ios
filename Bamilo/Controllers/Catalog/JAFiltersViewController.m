@@ -8,9 +8,10 @@
 
 #import "JAFiltersViewController.h"
 #import "JAFilterCell.h"
-#import "RIFilter.h"
 #import "JAGenericFiltersView.h"
 #import "JAPriceFiltersView.h"
+#import "SearchPriceFilter.h"
+#import "SearchFilterItem.h"
 
 @interface JAFiltersViewController () <UITableViewDataSource, UITableViewDelegate, JAFiltersViewDelegate>
 
@@ -22,10 +23,7 @@
 @property (nonatomic, weak) IBOutlet UILabel* discountOnlyUILabel;
 @property (weak, nonatomic) IBOutlet UISwitch *discountOnlyUISwitch;
 @property (weak, nonatomic) IBOutlet UIView *currentFilterContainerView;
-
 @property (nonatomic, strong) NSIndexPath* selectedIndexPath;
-@property (nonatomic) NSUInteger avaiablePriceFilterIndex;
-
 @end
 
 @implementation JAFiltersViewController
@@ -38,20 +36,9 @@
     [self selectIndex:0];
     [self updateTitle];
     
-    // Get the index of price filter in filterArray
-    [self.filtersArray enumerateObjectsUsingBlock: ^(RIFilter *filter, NSUInteger index, BOOL *stop) {
-        if ([filter.uid isEqualToString:@"price"]) {
-            self.avaiablePriceFilterIndex = index;
-            *stop = YES;
-        }
-     }];
-    
-    if (self.avaiablePriceFilterIndex) {
-        self.discountOnlyUISwitch.enabled = YES;
-        RIFilter *priceFilter = [self.filtersArray objectAtIndex:self.avaiablePriceFilterIndex];
-        RIFilterOption *priceFilterOption = [priceFilter.options firstObject];
-        self.discountOnlyUISwitch.on = priceFilterOption.discountOnly;
-    }
+    self.discountOnlyUISwitch.enabled = YES;
+    SearchPriceFilter *priceFilter = (SearchPriceFilter *)[self.filtersArray objectAtIndex:self.priceFilterIndex];
+    self.discountOnlyUISwitch.on = priceFilter.discountOnly;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -75,14 +62,14 @@
 
 - (void)updateTitle {
     NSInteger totalSelected = 0;
-    for (RIFilter* filter in self.filtersArray) {
-        if ([filter.uid isEqualToString:@"price"]) {
-            RIFilterOption* option = [filter.options firstObject];
-            if (option.lowerValue > option.min || option.upperValue < option.max || YES == option.discountOnly) {
+    for (BaseSearchFilterItem* filter in self.filtersArray) {
+        if ([filter isKindOfClass:[SearchPriceFilter class]]) {
+            SearchPriceFilter *priceFilter = (SearchPriceFilter*)filter;
+            if (priceFilter.lowerValue > priceFilter.minPrice || priceFilter.upperValue < priceFilter.maxPrice || YES == priceFilter.discountOnly) {
                 totalSelected++;
             }
         } else {
-            for (RIFilterOption* option in filter.options) {
+            for (SearchFilterItemOption* option in ((SearchFilterItem*)filter).options) {
                 if (option.selected) {
                     totalSelected++;
                 }
@@ -96,9 +83,10 @@
         newTitle = [[NSString stringWithFormat:@"%@ (%ld)", STRING_FILTERS, (long)totalSelected] numbersToPersian];
     }
     if (![newTitle isEqualToString:self.navBarLayout.title]) {
+        
         //the title changed, force a reload
         self.navBarLayout.title = newTitle;
-        [self reloadNavBar];
+        //[self reloadNavBar];
     }
 }
 
@@ -129,7 +117,7 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
-    RIFilter* filter = [self.filtersArray objectAtIndex:indexPath.row];
+    BaseSearchFilterItem *filter = [self.filtersArray objectAtIndex:indexPath.row];
     
     BOOL cellIsSelected = NO;
     if (indexPath.row == self.selectedIndexPath.row) {
@@ -162,17 +150,15 @@
     
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:oldSelectedIndexPath, self.selectedIndexPath, nil] withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.currentFilterView removeFromSuperview];
-    RIFilter* filter = [self.filtersArray objectAtIndex:index];
+    BaseSearchFilterItem* filter = [self.filtersArray objectAtIndex:index];
     
-    if ([filter.uid isEqualToString:@"price"]) {
-        
+    if ([filter isKindOfClass:[SearchPriceFilter class]]) {
         self.currentFilterView = [[[NSBundle mainBundle] loadNibNamed:@"JAPriceFiltersView" owner:self options:nil] objectAtIndex:0];
-        [(JAPriceFiltersView*)self.currentFilterView initializeWithPriceFilterOption:[filter.options firstObject]];
+        [(JAPriceFiltersView*)self.currentFilterView initializeWithPriceFilterOption:(SearchPriceFilter*)filter];
         
     } else {
-        
         self.currentFilterView = [[[NSBundle mainBundle] loadNibNamed:@"JAGenericFiltersView" owner:self options:nil] objectAtIndex:0];
-        [(JAGenericFiltersView*) self.currentFilterView initializeWithFilter:filter isLandscape:YES];
+        [(JAGenericFiltersView*) self.currentFilterView initializeWithFilter:(SearchFilterItem*)filter isLandscape:YES];
         
     }
     
@@ -190,8 +176,8 @@
 
 - (void)updatedValues {
     UITableViewRowAnimation animation = UITableViewRowAnimationAutomatic;
-    RIFilter* filter = [self.filtersArray objectAtIndex:self.selectedIndexPath.row];
-    if ([filter.uid isEqualToString:@"price"]) {
+    BaseSearchFilterItem *filter = [self.filtersArray objectAtIndex:self.selectedIndexPath.row];
+    if ([filter isKindOfClass:[SearchPriceFilter class]]) {
         animation = UITableViewRowAnimationNone;
     }
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:self.selectedIndexPath] withRowAnimation:animation];
@@ -201,14 +187,13 @@
 #pragma Button Logic
 
 - (IBAction)clearAllFilters {
-    for (RIFilter* filter in self.filtersArray) {
-        if ([filter.uid isEqualToString:@"price"]) {
-            RIFilterOption* option = [filter.options firstObject];
-            option.lowerValue = option.min;
-            option.upperValue = option.max;
-            option.discountOnly = NO;
+    for (BaseSearchFilterItem* filter in self.filtersArray) {
+        if ([filter isKindOfClass:[SearchPriceFilter class]]) {
+            ((SearchPriceFilter*)filter).lowerValue = ((SearchPriceFilter*)filter).minPrice;
+            ((SearchPriceFilter*)filter).upperValue = ((SearchPriceFilter*)filter).maxPrice;
+            ((SearchPriceFilter*)filter).discountOnly = NO;
         } else {
-            for (RIFilterOption* option in filter.options) {
+            for (SearchFilterItemOption* option in ((SearchFilterItem *)filter).options) {
                 option.selected = NO;
             }
         }
@@ -229,8 +214,8 @@
 
 
 - (IBAction)discountOnlySwitch:(UISwitch *)sender {
-    if (self.avaiablePriceFilterIndex && self.filtersArray.count) {
-        ((RIFilterOption *) ([[(RIFilter *) ([self.filtersArray objectAtIndex:self.avaiablePriceFilterIndex]) options] firstObject])).discountOnly = sender.on;
+    if (self.priceFilterIndex && self.filtersArray.count) {
+        ((SearchPriceFilter *)[self.filtersArray objectAtIndex:self.priceFilterIndex]).discountOnly = sender.on;
     }
 }
 

@@ -11,7 +11,8 @@
 #import "JAUtils.h"
 #import "RISearchSuggestion.h"
 #import "RICustomer.h"
-#import "RIFilter.h"
+#import "SearchFilterItem.h"
+#import "SearchPriceFilter.h"
 #import "JAClickableView.h"
 #import "JAUndefinedSearchView.h"
 #import "JAFilteredNoResultsView.h"
@@ -57,7 +58,9 @@ typedef void (^ProcessActionBlock)(void);
 
 @property (nonatomic, strong) JAProductCollectionViewFlowLayout* flowLayout;
 @property (nonatomic, strong) NSMutableArray* productsArray;
-@property (nonatomic, strong) NSArray* filtersArray;
+@property (nonatomic, copy)   NSArray<BaseSearchFilterItem*> *filtersArray;
+@property (nonatomic, assign) int priceFilterIndex;
+
 //@property (nonatomic, strong) NSArray* categoriesArray; _UNS
 @property (nonatomic, strong) RICategory* filterCategory;
 @property (nonatomic, assign) BOOL loadedEverything;
@@ -66,12 +69,12 @@ typedef void (^ProcessActionBlock)(void);
 @property (nonatomic, strong) RIUndefinedSearchTerm *undefinedBackup;
 @property (assign, nonatomic) BOOL isFirstLoadTracking;
 @property (assign, nonatomic) BOOL isLoadingMoreProducts;
-@property (nonatomic, strong) NSString *searchSuggestionOperationID;
-@property (nonatomic, strong) NSString *getProductsOperationID;
+@property (nonatomic, copy) NSString *searchSuggestionOperationID;
+@property (nonatomic, copy) NSString *getProductsOperationID;
 
 @property (strong, nonatomic) UIButton *backupButton; // for the retry
 
-@property (nonatomic, strong) NSString* cellIdentifier;
+@property (nonatomic, copy) NSString *cellIdentifier;
 @property (nonatomic, assign) NSInteger numberOfCellsInScreen;
 @property (nonatomic, assign) NSInteger maxProducts;
 
@@ -80,7 +83,7 @@ typedef void (^ProcessActionBlock)(void);
 @property (nonatomic, strong) JASortingView* sortingView;
 @property (nonatomic, strong) RIBanner *banner;
 @property (nonatomic, strong) UIImageView *bannerImageView;
-@property (nonatomic, strong)NSString *labelName;
+@property (nonatomic, copy) NSString *labelName;
 
 @end
 
@@ -395,7 +398,7 @@ typedef void (^ProcessActionBlock)(void);
 }
 
 - (void)loadMoreProducts {
-    
+    [self.filteredNoResultsView removeFromSuperview];
     [self.containerView setHidden: YES];
     if(!self.isLoadingMoreProducts) {
         self.loadedEverything = NO;
@@ -465,6 +468,7 @@ typedef void (^ProcessActionBlock)(void);
     //To get the filters ((once)) in this viewController
     if (!self.filtersArray.count && catalog.filters.count) {
         self.filtersArray = catalog.filters;
+        self.priceFilterIndex = catalog.priceFilterIndex;
         self.catalogTopView.filterButton.enabled = YES;
     }
     
@@ -479,11 +483,7 @@ typedef void (^ProcessActionBlock)(void);
         [self.collectionView registerClass:[JACampaignBannerCell class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"bannerCell"];
         [self bannerImageView];
     }
-    
-    //_UNS
-    //    if (NOTEMPTY(catalog.categories)) {
-    //        self.categoriesArray = catalog.categories;
-    //    }
+
     
     NSString *categoryName = @"";
     NSString *subCategoryName = @"";
@@ -851,34 +851,31 @@ typedef void (^ProcessActionBlock)(void);
 
 #pragma mark - JAFiltersViewControllerDelegate
 
-- (void)updatedFilters:(NSArray *)updatedFiltersArray {
+- (void)updatedFilters:(NSArray<BaseSearchFilterItem *>*)updatedFiltersArray {
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     
     BOOL filtersSelected = NO;
     if(updatedFiltersArray.count) {
         self.filtersArray = updatedFiltersArray;
-        for(RIFilter *filter in self.filtersArray) {
-            if (filter.uid.length && filter.options.count) {
-                NSLog(@"filter name %@ - uid %@", filter.name, filter.uid);
-                if ([@"price" isEqualToString:filter.uid]) {
-                    RIFilterOption* filterOption = [filter.options firstObject];
-                    if (VALID_NOTEMPTY(filterOption, RIFilterOption))
-                    {
-                        if (filterOption.lowerValue != filterOption.min || filterOption.upperValue != filterOption.max) {
+        for(BaseSearchFilterItem *filter in self.filtersArray) {
+            if (filter.uid.length) {
+                if ([filter isKindOfClass:[SearchPriceFilter class]]) {
+                    SearchPriceFilter* priceFilter = (SearchPriceFilter *)filter;
+                    
+                        if (priceFilter.lowerValue != priceFilter.minPrice || priceFilter.upperValue != priceFilter.maxPrice) {
                             
                             [self trackingEventIndividualFilter:filter.name];
                             
-                            [trackingDictionary setObject:[NSString stringWithFormat:@"%ld-%ld", (long)filterOption.lowerValue, (long)filterOption.upperValue] forKey:kRIEventPriceFilterKey];
+                            [trackingDictionary setObject:[NSString stringWithFormat:@"%ld-%ld", (long)priceFilter.lowerValue, (long)priceFilter.upperValue] forKey:kRIEventPriceFilterKey];
                             
                             filtersSelected = YES;
                         }
-                        if (filterOption.discountOnly) {
+                        if (priceFilter.discountOnly) {
                             [trackingDictionary setObject:@1 forKey:kRIEventSpecialPriceFilterKey];
                             filtersSelected = YES;
                         }
-                    }
                 } else {
-                    for (RIFilterOption* filterOption in filter.options) {
+                    for (SearchFilterItemOption* filterOption in ((SearchFilterItem*)filter).options) {
                         if (filterOption.selected && VALID_NOTEMPTY(filterOption.name, NSString)) {
                             
                             [self trackingEventIndividualFilter:filter.name];
@@ -908,10 +905,6 @@ typedef void (^ProcessActionBlock)(void);
                                 }
                             }
                             
-                            filtersSelected = YES;
-                        }
-                        
-                        if (filterOption.discountOnly) {
                             filtersSelected = YES;
                         }
                     }
@@ -1513,6 +1506,7 @@ typedef void (^ProcessActionBlock)(void);
         
         JAFiltersViewController *destinationViewCtrl =  [segue destinationViewController];
         destinationViewCtrl.filtersArray = self.filtersArray ?: @[];
+        destinationViewCtrl.priceFilterIndex = self.priceFilterIndex;
         destinationViewCtrl.delegate = self;
         
     }
