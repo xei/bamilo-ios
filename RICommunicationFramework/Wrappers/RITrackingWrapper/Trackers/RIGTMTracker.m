@@ -193,7 +193,7 @@ NSString *kGTMToken = @"kGTMToken";
     TAGManager *tagManager = [TAGManager instance];
     
     // Optional: Change the LogLevel to Verbose to enable logging at VERBOSE and higher levels.
-    [tagManager.logger setLogLevel:kTAGLoggerLogLevelNone];// kTAGLoggerLogLevelInfo];
+    [tagManager.logger setLogLevel:kTAGLoggerLogLevelInfo];// kTAGLoggerLogLevelNone;
     
     /*
      * Opens a container and returns a TAGContainerFuture.

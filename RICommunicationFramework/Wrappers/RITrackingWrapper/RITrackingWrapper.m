@@ -10,7 +10,7 @@
 #import "RIGoogleAnalyticsTracker.h"
 #import "RIOpenURLHandler.h"
 #import "RIAdjustTracker.h"
-#import "RIGTMTracker.h"
+//#import "RIGTMTracker.h"
 #import "AccengageTracker.h"
 
 @interface RITrackingWrapper ()
@@ -73,9 +73,9 @@ static dispatch_once_t sharedInstanceToken;
     [adjustTracker setDelegate:delegate];
     
     //Google Tag Manager Tracker
-    RIGTMTracker *gtmTracker = [RIGTMTracker sharedInstance];
+    //RIGTMTracker *gtmTracker = [RIGTMTracker sharedInstance];
     
-    self.trackers = [NSMutableArray arrayWithObjects:googleAnalyticsTracker, adjustTracker, gtmTracker, [AccengageTracker sharedInstance], nil];
+    self.trackers = [NSMutableArray arrayWithObjects:googleAnalyticsTracker, adjustTracker, /*gtmTracker,*/ [AccengageTracker sharedInstance], nil];
     
     if(VALID_NOTEMPTY(launchOptions, NSDictionary)) {
         [self RI_callTrackersConformToProtocol:@protocol(RITracker)
