@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "JAColorView.h"
 #import "JAClickableView.h"
-#import "RIFilter.h"
+#import "SearchFilterItemOption.h"
 
 @interface JAColorFilterCell : UITableViewCell
 
@@ -21,7 +21,7 @@
 
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier isLandscape:(BOOL)isLandscape frame:(CGRect)frame;
 - (void)setupIsLandscape:(BOOL)landscape;
-- (void)setFilterOption:(RIFilterOption*)option;
+- (void)setFilterOption:(SearchFilterItemOption*)option;
 + (CGFloat)height;
 
 @end

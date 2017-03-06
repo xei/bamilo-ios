@@ -12,9 +12,13 @@
 #import "JAPriceFiltersView.h"
 #import "SearchPriceFilter.h"
 #import "SearchFilterItem.h"
+#import "SearchCategoryFilter.h"
+#import "IconButton.h"
+#import "SubCatFilterViewController.h"
 
-@interface JAFiltersViewController () <UITableViewDataSource, UITableViewDelegate, JAFiltersViewDelegate>
+#define cEXTRA_DARK_GRAY_COLOR [UIColor withRepeatingRGBA:80 alpha:1.0f]
 
+@interface JAFiltersViewController () <UITableViewDataSource, UITableViewDelegate, JAFiltersViewDelegate, SubCatFilterViewControllerDelegate>
 
 @property (nonatomic, strong) JAFiltersView* currentFilterView;
 @property (nonatomic, weak) IBOutlet UITableView* tableView;
@@ -24,9 +28,13 @@
 @property (weak, nonatomic) IBOutlet UISwitch *discountOnlyUISwitch;
 @property (weak, nonatomic) IBOutlet UIView *currentFilterContainerView;
 @property (nonatomic, strong) NSIndexPath* selectedIndexPath;
+@property (weak, nonatomic) IBOutlet IconButton *subCatButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *subCatButtonHeightConstraint;
 @end
 
 @implementation JAFiltersViewController
+
+const int subCatButtonVisibleHeight = 40;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -39,6 +47,12 @@
     self.discountOnlyUISwitch.enabled = YES;
     SearchPriceFilter *priceFilter = (SearchPriceFilter *)[self.filtersArray objectAtIndex:self.priceFilterIndex];
     self.discountOnlyUISwitch.on = priceFilter.discountOnly;
+    
+    [self.subCatButton applyStyle:kFontRegularName fontSize:12 color:cEXTRA_DARK_GRAY_COLOR];
+    [self.subCatButton setTitle:STRING_SUBCATEGORIES forState:UIControlStateNormal];
+    if (self.subCatsFilter) {
+        self.subCatButtonHeightConstraint.constant = subCatButtonVisibleHeight;
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -116,9 +130,7 @@
         cell = [[JAFilterCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    
-    BaseSearchFilterItem *filter = [self.filtersArray objectAtIndex:indexPath.row];
-    
+
     BOOL cellIsSelected = NO;
     if (indexPath.row == self.selectedIndexPath.row) {
         cellIsSelected = YES;
@@ -128,7 +140,7 @@
     if (UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
         margin = 32.0f;
     }
-    [cell setupWithFilter:filter cellIsSelected:cellIsSelected width:tableView.frame.size.width margin:margin];
+    [cell setupWithFilter:[self.filtersArray objectAtIndex:indexPath.row] cellIsSelected:cellIsSelected width:tableView.frame.size.width margin:margin];
     cell.clickView.tag = indexPath.row;
     [cell.clickView addTarget:self action:@selector(cellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -171,9 +183,11 @@
     [self.currentFilterContainerView addSubview:self.currentFilterView];
 }
 
+- (IBAction)subCatButtonTapped:(id)sender {
+    [self performSegueWithIdentifier:@"pushFilterToSubCat" sender:sender];
+}
 
 #pragma mark - JAFiltersViewDelegate
-
 - (void)updatedValues {
     UITableViewRowAnimation animation = UITableViewRowAnimationAutomatic;
     BaseSearchFilterItem *filter = [self.filtersArray objectAtIndex:self.selectedIndexPath.row];
@@ -185,7 +199,6 @@
 }
 
 #pragma Button Logic
-
 - (IBAction)clearAllFilters {
     for (BaseSearchFilterItem* filter in self.filtersArray) {
         if ([filter isKindOfClass:[SearchPriceFilter class]]) {
@@ -261,4 +274,21 @@
     
     return height;
 }
+
+#pragma mark - prepareForSegue 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([segue.identifier isEqualToString:@"pushFilterToSubCat"]) {
+        SubCatFilterViewController *subCatViewCtrl = (SubCatFilterViewController *)segue.destinationViewController;
+        subCatViewCtrl.subCatsFilter = self.subCatsFilter;
+        subCatViewCtrl.delegate = self;
+    }
+}
+
+
+#pragma mark - SubCatFilterViewControllerDelegate
+- (void)submitSubCategoryFilterByUrlKey:(NSString *)urlKey {
+    [self.navigationController popViewControllerAnimated:NO];
+    [self.delegate subCategorySelected:urlKey];
+}
+
 @end

@@ -8,13 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "JAClickableView.h"
-
-@class RIFilter;
+#import "BaseSearchFilterItem.h"
 
 @interface JAMainFilterCell : UITableViewCell
 
 @property (nonatomic, strong)JAClickableView* clickView;
 
-- (void)setupWithFilter:(RIFilter*)filter options:(NSString*)options width:(CGFloat)width;
+- (void)setupWithFilter:(BaseSearchFilterItem*)filter options:(NSString*)options width:(CGFloat)width;
 
 @end

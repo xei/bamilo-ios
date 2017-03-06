@@ -78,9 +78,8 @@
  *
  *  @return an array of the parsed categories
  */
-+ (NSArray*)parseCategories:(NSArray*)categories
-                persistData:(BOOL)persistData;
-
++ (NSArray*)parseCategories:(NSArray*)categories persistData:(BOOL)persistData;
++ (RICategory *)parseCategory:(NSDictionary *)category;
 /**
  *  Method to obtain the tree of categories.
  *

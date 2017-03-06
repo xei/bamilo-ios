@@ -12,6 +12,8 @@
 
 @interface JAGenericFiltersView : JAFiltersView <UITableViewDelegate, UITableViewDataSource>
 
+@property (nonatomic, strong)SearchFilterItem* filter;
+
 - (void)initializeWithFilter:(SearchFilterItem*)filter isLandscape:(BOOL)isLandscape;
 - (void)saveOptions;
 

@@ -17,7 +17,6 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong)NSMutableArray* selectedIndexes;
-@property (nonatomic, strong)SearchFilterItem* filter;
 @property (nonatomic, assign)BOOL isLandscape;
 
 @end

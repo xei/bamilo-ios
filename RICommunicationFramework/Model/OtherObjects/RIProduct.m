@@ -10,7 +10,6 @@
 #import "RIImage.h"
 #import "RIProductSimple.h"
 #import "RIVariation.h"
-#import "RIFilter.h"
 #import "RICategory.h"
 #import "RISeller.h"
 #import "RIBanner.h"
@@ -20,8 +19,7 @@
 
 @implementation RIBundle
 
-+ (RIBundle *)parseRIBundle:(NSDictionary *)bundleJSON country:(RICountryConfiguration*)country
-{
++ (RIBundle *)parseRIBundle:(NSDictionary *)bundleJSON country:(RICountryConfiguration*)country {
     RIBundle *newBundle = [[RIBundle alloc] init];
     
     NSDictionary *dataDic = [bundleJSON objectForKey:@"bundle_entity"];

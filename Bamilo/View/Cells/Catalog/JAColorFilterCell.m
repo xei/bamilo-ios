@@ -97,11 +97,11 @@
     }
 }
 
-- (void)setFilterOption:(SearchFilterItemOption*)filterOption {
+- (void)setFilterOption:(SearchFilterItemOption*)option {
     
-    self.colorTitleLabel.text = [[NSString stringWithFormat:@"%@ (%ld)",filterOption.name, [filterOption.productsCount longValue]] numbersToPersian];
-    if (filterOption.colorHexValue) {
-        [self.colorView setColorWithHexString:filterOption.colorHexValue];
+    self.colorTitleLabel.text = [[NSString stringWithFormat:@"%@ (%ld)",option.name, [option.productsCount longValue]] numbersToPersian];
+    if (option.colorHexValue) {
+        [self.colorView setColorWithHexString:option.colorHexValue];
     }
 }
 

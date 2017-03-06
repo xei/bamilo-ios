@@ -18,6 +18,8 @@ typedef void(^DataCompletion)(id data, NSError *error);
 
 + (instancetype)sharedInstance;
 
+- (void)getSubCategoriesFilter:(id<DataServiceProtocol>)target ofCategroyUrlKey:(NSString *)urlKey completion:(DataCompletion)completion;
+
 //### AREA EDIT & CREATE ###
 - (void)getRegions:(id<DataServiceProtocol>)target completion:(DataCompletion)completion;
 - (void)getCities:(id<DataServiceProtocol>)target forRegionId:(NSString *)uid completion:(DataCompletion)completion;

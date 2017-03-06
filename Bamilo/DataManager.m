@@ -10,8 +10,10 @@
 #import "Models.pch"
 #import "RICart.h"
 #import "RIForm.h"
+#import "RICategory.h"
 #import "RICustomer.h"
 #import "OrderList.h"
+#import "SearchCategoryFilter.h"
 
 @implementation DataManager
 
@@ -24,6 +26,25 @@ static DataManager *instance;
     });
     
     return instance;
+}
+
+- (void)getSubCategoriesFilter:(id<DataServiceProtocol>)target ofCategroyUrlKey:(NSString *)urlKey completion:(DataCompletion)completion {
+    
+    NSString *path = [NSString stringWithFormat:@"catalog/categoryByUrlKey/?urlkey=%@", urlKey];
+    [RequestManager asyncGET:target path:path params:nil type:REQUEST_EXEC_IN_BACKGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+        if (((NSArray *)[data objectForKey:@"data"]).count) {
+            //This must be refactored from server side :(
+            NSArray *garbageArray = data[@"data"][0][@"children"];
+            if (garbageArray.count) {
+                [self serialize:garbageArray[0] into:[SearchCategoryFilter class] response:response errorMessages:errorMessages completion:completion];
+            } else {
+                completion(nil, [self getErrorFrom:response errorMessages:@[STRING_ERROR]]);
+            }
+        } else {
+            completion(nil, [self getErrorFrom:response errorMessages:@[STRING_ERROR]]);
+        }
+    }];
+    
 }
 
 //### AREA_INFORMATION
@@ -41,21 +62,6 @@ static DataManager *instance;
     [self getAreaZone:target type:REQUEST_EXEC_IN_BACKGROUND path:RI_API_GET_CUSTOMER_REGIONS completion:completion];
 }
 
-//Area Helper function
-- (void)getAreaZone:(id<DataServiceProtocol>)target type:(RequestExecutionType)type path:(NSString *)path completion:(DataCompletion)completion {
-    [RequestManager asyncGET:target path:path params:nil type:type completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
-        if(response == RIApiResponseSuccess && data) {
-            //Please skip this tof for now! @Narbeh
-            NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
-            for (NSDictionary *region in  data[@"data"]) {
-                dictionary[region[@"label"]] = [NSString stringWithFormat:@"%@", region[@"value"]];
-            }
-            completion(dictionary, nil);
-        } else {
-            completion(nil, [self getErrorFrom:response errorMessages:errorMessages]);
-        }
-    }];
-}
 
 - (void)getAddress:(id<DataServiceProtocol>)target byId:(NSString *)uid completion:(DataCompletion)completion {
     [RequestManager asyncGET:target
@@ -309,8 +315,25 @@ static DataManager *instance;
 }
 
 #pragma mark - Helpers
+
 - (NSError *)getErrorFrom:(RIApiResponse)response errorMessages:(NSArray *)errorMessages {
     return [NSError errorWithDomain:@"com.bamilo.ios" code:response userInfo:(errorMessages ? @{ kErrorMessages: errorMessages } : nil)];
+}
+
+//Area Helper function
+- (void)getAreaZone:(id<DataServiceProtocol>)target type:(RequestExecutionType)type path:(NSString *)path completion:(DataCompletion)completion {
+    [RequestManager asyncGET:target path:path params:nil type:type completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+        if(response == RIApiResponseSuccess && data) {
+            //Please skip this tof for now! @Narbeh
+            NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
+            for (NSDictionary *region in  data[@"data"]) {
+                dictionary[region[@"label"]] = [NSString stringWithFormat:@"%@", region[@"value"]];
+            }
+            completion(dictionary, nil);
+        } else {
+            completion(nil, [self getErrorFrom:response errorMessages:errorMessages]);
+        }
+    }];
 }
 
 @end

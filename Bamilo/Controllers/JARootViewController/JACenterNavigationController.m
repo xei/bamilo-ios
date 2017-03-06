@@ -327,10 +327,10 @@
                                                  name:kDidSelectTeaserWithShopUrlNofication
                                                object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didSelectCategoryFromCenterPanel:)
-                                                 name:kDidSelectCategoryFromCenterPanelNotification
-                                               object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(didSelectCategoryFromCenterPanel:)
+//                                                 name:kDidSelectCategoryFromCenterPanelNotification
+//                                               object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(closeCurrentScreenNotificaion:)
@@ -352,10 +352,10 @@
                                                  name:kChangeNavigationBarNotification
                                                object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(deactivateExternalPayment)
-                                                 name:kDeactivateExternalPaymentNotification
-                                               object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(deactivateExternalPayment)
+//                                                 name:kDeactivateExternalPaymentNotification
+//                                               object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showProductSpecificationScreen:)
@@ -1169,11 +1169,11 @@
 - (void)didSelectLeafCategoryInMenu:(NSNotification *)notification {
     NSDictionary *selectedItem = [notification object];
     RICategory* category = [selectedItem objectForKey:@"category"];
-    NSString* categoryId = [selectedItem objectForKey:@"category_id"];
+//    NSString* categoryId = [selectedItem objectForKey:@"category_id"];
     NSString* categoryUrlKey = [selectedItem objectForKey:@"category_url_key"];
     NSString* filterPush = [selectedItem objectForKey:@"filter"];
     NSNumber* sorting = [selectedItem objectForKey:@"sorting"];
-    NSString* targetString = [selectedItem objectForKey:@"targetString"];
+//    NSString* targetString = [selectedItem objectForKey:@"targetString"];
     
     if (category) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
@@ -1185,13 +1185,15 @@
         catalog.category = category;
         
         [self pushViewController:catalog animated:YES];
-    } else if (categoryId.length) {
-        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
-        
-        catalog.categoryId = categoryId;
-        
-        [self pushViewController:catalog animated:YES];
-    } else if (categoryUrlKey.length) {
+    }
+//    else if (categoryId.length) {
+//        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+//        
+//        catalog.categoryId = categoryId;
+//        
+//        [self pushViewController:catalog animated:YES];
+//    }
+    else if (categoryUrlKey.length) {
         JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
         
         catalog.categoryUrlKey = categoryUrlKey;
@@ -1199,15 +1201,16 @@
         catalog.sortingMethodFromPush = sorting;
         
         [self pushViewController:catalog animated:YES];
-    } else if (targetString.length) {
-        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
-        
-        catalog.targetString = targetString;
-        catalog.filterPush = filterPush;
-        catalog.sortingMethodFromPush = sorting;
-        
-        [self pushViewController:catalog animated:YES];
     }
+//    else if (targetString.length) {
+//        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+//        
+//        catalog.targetString = targetString;
+//        catalog.filterPush = filterPush;
+//        catalog.sortingMethodFromPush = sorting;
+//        
+//        [self pushViewController:catalog animated:YES];
+//    }
 }
 
 #pragma mark - Filters
@@ -1545,28 +1548,28 @@
 
 }
 
-- (void)didSelectCategoryFromCenterPanel:(NSNotification*)notification {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification object:nil];
-    
-    NSDictionary *selectedItem = [notification object];
-    
-    RICategory* category = [selectedItem objectForKey:@"category"];
-    if (VALID_NOTEMPTY(category, RICategory)) {
-        
-        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
-        
-        catalog.category = category;
-        
-        catalog.navBarLayout.title = category.label;
-        catalog.navBarLayout.backButtonTitle = STRING_ALL_CATEGORIES;
-        
-        if ([notification.userInfo objectForKey:@"teaserTrackingInfo"]) {
-            catalog.teaserTrackingInfo = [notification.userInfo objectForKey:@"teaserTrackingInfo"];
-        }
-        
-        [self pushViewController:catalog animated:YES];
-    }
-}
+//- (void)didSelectCategoryFromCenterPanel:(NSNotification*)notification {
+//    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification object:nil];
+//    
+//    NSDictionary *selectedItem = [notification object];
+//    
+//    RICategory* category = [selectedItem objectForKey:@"category"];
+//    if (VALID_NOTEMPTY(category, RICategory)) {
+//        
+//        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+//        
+//        catalog.category = category;
+//        
+//        catalog.navBarLayout.title = category.label;
+//        catalog.navBarLayout.backButtonTitle = STRING_ALL_CATEGORIES;
+//        
+//        if ([notification.userInfo objectForKey:@"teaserTrackingInfo"]) {
+//            catalog.teaserTrackingInfo = [notification.userInfo objectForKey:@"teaserTrackingInfo"];
+//        }
+//        
+//        [self pushViewController:catalog animated:YES];
+//    }
+//}
 
 - (void)closeCurrentScreenNotificaion:(NSNotification*)notification {
     BOOL animated = YES;

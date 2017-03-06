@@ -11,7 +11,6 @@
 #import "SearchFilterItem.h"
 #import "SearchPriceFilter.h"
 
-@class RIFilter;
 
 @interface JAFilterCell : UITableViewCell
 
