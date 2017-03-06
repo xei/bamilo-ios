@@ -487,5 +487,7 @@
 #define STRING_CURRENCY RILocalizedString(@"currency", nil)
 #define STRING_TOTAL_COST RILocalizedString(@"total_order_cost", nil)
 #define STRING_HELLO RILocalizedString(@"hello", nil)
+#define STRING_ENTER_YOUR_ADDRESS RILocalizedString(@"enter_your_address", nil)
+#define STRING_RECIPIENT_INFO RILocalizedString(@"recipient_info", nil)
 
 #endif

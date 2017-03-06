@@ -1,14 +1,14 @@
 //
-//  PlainTableViewHeaderCell.h
+//  FormHeaderTableViewCell.h
 //  Bamilo
 //
-//  Created by Narbeh Mirzaei on 2/12/17.
+//  Created by Narbeh Mirzaei on 3/6/17.
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
 #import "BaseTableViewCell.h"
 
-@interface PlainTableViewHeaderCell : BaseTableViewCell
+@interface FormHeaderTableViewCell : BaseTableViewCell
 
 @property (copy, nonatomic) NSString *titleString;
 

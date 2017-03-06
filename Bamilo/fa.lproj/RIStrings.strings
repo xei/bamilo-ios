@@ -290,7 +290,7 @@
 
 "string_city" = "شهر:";
 
-"string_address" = "نشانی:";
+"string_address" = "نشانی";
 
 "string_opening_hours" = "ساعت های کاری:";
 
@@ -812,3 +812,8 @@
 "total_order_cost" = "مبلغ کل سفارش";
 
 "hello" = "سلام";
+
+"enter_your_address" = "آدرس خود را به فارسی وارد نمایید";
+
+"recipient_info" = "اطلاعات تحویل گیرنده";
+

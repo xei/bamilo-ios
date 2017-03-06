@@ -39,16 +39,14 @@
     
     
     FormItemModel *email = [FormItemModel emailWithFieldName:@"customer[email]"];
-    FormItemModel *name = [FormItemModel nameFieldWithFiedName:@"customer[first_name]"];
-    FormItemModel *lastname = [FormItemModel lastNameWithFieldName:@"customer[last_name]"];
+    FormItemModel *firstName = [FormItemModel firstNameFieldWithFiedName:@"customer[first_name]"];
+    FormItemModel *lastName = [FormItemModel lastNameWithFieldName:@"customer[last_name]"];
     FormItemModel *phone = [FormItemModel phoneWithFieldName:@"customer[phone]"];
     FormItemModel *password = [FormItemModel passWordWithFieldName:@"customer[password]"];
-
     
     self.formController.submitTitle = @"ثبت نام";
-    self.formController.formMessage = nil; //@"ظاهرا مشتری جدید بامیلو هستید،خواهشمندیم اطلاعات بیشتری برای ساخت حساب کاربری خود ارایه دهید ";
     self.title = STRING_SIGNUP;
-    self.formController.formListModel = [NSMutableArray arrayWithArray:@[ melliCode, name, lastname, email, password, phone]];
+    self.formController.formModelList = [NSMutableArray arrayWithArray:@[ melliCode, firstName, lastName, email, password, phone]];
     
     [self.formController setupTableView];
 }

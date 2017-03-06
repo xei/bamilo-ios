@@ -243,6 +243,9 @@
 		87DAABF71E55EA9200445EBB /* BMLAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DAABF61E55EA9200445EBB /* BMLAlertView.m */; };
 		87EA03091E6C695D00B1E062 /* IconTableViewHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87EA03081E6C695D00B1E062 /* IconTableViewHeaderCell.m */; };
 		87EA030B1E6C697F00B1E062 /* IconTableViewHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87EA030A1E6C697F00B1E062 /* IconTableViewHeaderCell.xib */; };
+		87EA03111E6D450300B1E062 /* FormHeaderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 87EA03101E6D450300B1E062 /* FormHeaderModel.m */; };
+		87EA031B1E6D6F9900B1E062 /* FormHeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87EA031A1E6D6F9900B1E062 /* FormHeaderTableViewCell.m */; };
+		87EA031D1E6D706E00B1E062 /* FormHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87EA031C1E6D706E00B1E062 /* FormHeaderTableViewCell.xib */; };
 		893AADD11C1F1A54006314FB /* JAMyOrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 893AADCD1C1F1A54006314FB /* JAMyOrderDetailViewController.m */; };
 		8968FE731C3AE33E00B28207 /* JAUserDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4431E91C242BA8005A8B4A /* JAUserDataViewController.m */; };
 		897460DE1C19DDFD00A38073 /* JACollectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 897460DA1C19DDFD00A38073 /* JACollectionHeaderView.m */; };
@@ -1055,6 +1058,12 @@
 		87EA03071E6C695D00B1E062 /* IconTableViewHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconTableViewHeaderCell.h; sourceTree = "<group>"; };
 		87EA03081E6C695D00B1E062 /* IconTableViewHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconTableViewHeaderCell.m; sourceTree = "<group>"; };
 		87EA030A1E6C697F00B1E062 /* IconTableViewHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IconTableViewHeaderCell.xib; sourceTree = "<group>"; };
+		87EA030E1E6D44EC00B1E062 /* FormElementProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormElementProtocol.h; sourceTree = "<group>"; };
+		87EA030F1E6D450300B1E062 /* FormHeaderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormHeaderModel.h; sourceTree = "<group>"; };
+		87EA03101E6D450300B1E062 /* FormHeaderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormHeaderModel.m; sourceTree = "<group>"; };
+		87EA03191E6D6F9900B1E062 /* FormHeaderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormHeaderTableViewCell.h; sourceTree = "<group>"; };
+		87EA031A1E6D6F9900B1E062 /* FormHeaderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormHeaderTableViewCell.m; sourceTree = "<group>"; };
+		87EA031C1E6D706E00B1E062 /* FormHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FormHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		893AADCC1C1F1A54006314FB /* JAMyOrderDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMyOrderDetailViewController.h; sourceTree = "<group>"; };
 		893AADCD1C1F1A54006314FB /* JAMyOrderDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMyOrderDetailViewController.m; sourceTree = "<group>"; };
 		897460D91C19DDFD00A38073 /* JACollectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACollectionHeaderView.h; path = Bamilo/View/Headers/JACollectionHeaderView.h; sourceTree = SOURCE_ROOT; };
@@ -2104,7 +2113,9 @@
 		617AAA401E503A71004D9430 /* Form */ = {
 			isa = PBXGroup;
 			children = (
+				87EA030D1E6D44CC00B1E062 /* Base */,
 				61CBA04E1E51E245005673F7 /* FormValidationType */,
+				87EA030C1E6D44B200B1E062 /* FormHeaderModel */,
 				617AAA411E503A86004D9430 /* FormItemModel */,
 				6125535C1E4F50DF00975C6F /* FormItemValidation */,
 			);
@@ -2197,6 +2208,7 @@
 		61CBA0461E51D169005673F7 /* TableViewCell */ = {
 			isa = PBXGroup;
 			children = (
+				87EA03181E6D6F8700B1E062 /* FormHeaderTableViewCell */,
 				61CBA04C1E51D563005673F7 /* FormItem */,
 			);
 			name = TableViewCell;
@@ -2263,7 +2275,6 @@
 			isa = PBXGroup;
 			children = (
 				8714E0801E48C3B1004C9B1D /* Base */,
-				87D07D841E40B4DA00C00AC6 /* TableViewHeaderFooters */,
 				616D65E81E670963008B07EA /* OrderProductListTableViewCell */,
 				61036B561E6599DF006E12A9 /* OrderListTableViewCell */,
 				61036B451E6584D6006E12A9 /* OrderListTableViewCell */,
@@ -3647,6 +3658,7 @@
 			isa = PBXGroup;
 			children = (
 				61E099661E3E10F0004ED14E /* TableViewCells */,
+				87D07D841E40B4DA00C00AC6 /* TableViewHeaderFooters */,
 				87D07D831E40B4C800C00AC6 /* Buttons */,
 				8714E06E1E479763004C9B1D /* Controls */,
 				8714E0871E48CC95004C9B1D /* ReusableViews */,
@@ -3749,6 +3761,33 @@
 				87EA030A1E6C697F00B1E062 /* IconTableViewHeaderCell.xib */,
 			);
 			name = IconTableViewHeaderCell;
+			sourceTree = "<group>";
+		};
+		87EA030C1E6D44B200B1E062 /* FormHeaderModel */ = {
+			isa = PBXGroup;
+			children = (
+				87EA030F1E6D450300B1E062 /* FormHeaderModel.h */,
+				87EA03101E6D450300B1E062 /* FormHeaderModel.m */,
+			);
+			name = FormHeaderModel;
+			sourceTree = "<group>";
+		};
+		87EA030D1E6D44CC00B1E062 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				87EA030E1E6D44EC00B1E062 /* FormElementProtocol.h */,
+			);
+			name = Base;
+			sourceTree = "<group>";
+		};
+		87EA03181E6D6F8700B1E062 /* FormHeaderTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				87EA03191E6D6F9900B1E062 /* FormHeaderTableViewCell.h */,
+				87EA031A1E6D6F9900B1E062 /* FormHeaderTableViewCell.m */,
+				87EA031C1E6D706E00B1E062 /* FormHeaderTableViewCell.xib */,
+			);
+			name = FormHeaderTableViewCell;
 			sourceTree = "<group>";
 		};
 		8C38E17F19CF164A0007F6F9 /* ErrorViews */ = {
@@ -4910,6 +4949,7 @@
 				CE9AE0B81AB6D78200D56481 /* JAPDVVariations~iPad.xib in Resources */,
 				61C5C41A1E54796A00F22130 /* RecieptViewCartTableViewCell.xib in Resources */,
 				CEDBF8791B0CEC570073971A /* JACheckBoxComponent_RTL.xib in Resources */,
+				87EA031D1E6D706E00B1E062 /* FormHeaderTableViewCell.xib in Resources */,
 				87DAABE51E54431A00445EBB /* PaymentOptionWithLogoTableViewCell.xib in Resources */,
 				616D65E71E66C201008B07EA /* OrderTableHeaderCell.xib in Resources */,
 				CE9AE0C21AB6D78200D56481 /* JACatalogTopView_ipad.xib in Resources */,
@@ -5227,6 +5267,7 @@
 				CE9ADF6F1AB6D78200D56481 /* JAPDVProductInfo.m in Sources */,
 				612553611E4F514100975C6F /* FormItemValidation.m in Sources */,
 				8714E05D1E472CDC004C9B1D /* Address.m in Sources */,
+				87EA03111E6D450300B1E062 /* FormHeaderModel.m in Sources */,
 				61036B651E65B570006E12A9 /* Order.m in Sources */,
 				CE9ADF731AB6D78200D56481 /* JAPaymentCell.m in Sources */,
 				CE9ADF741AB6D78200D56481 /* JAPDVBundleSingleItem.m in Sources */,
@@ -5294,6 +5335,7 @@
 				9A55A6911BC2E894008EF4A6 /* JAPDVVariationsViewController.m in Sources */,
 				872230EA1E6A989D000748E9 /* SettingsManager.m in Sources */,
 				CE9ADFAB1AB6D78200D56481 /* JANavigationBarLayout.m in Sources */,
+				87EA031B1E6D6F9900B1E062 /* FormHeaderTableViewCell.m in Sources */,
 				8708A1721E406C1100ABA7D8 /* ContactUsViewController.m in Sources */,
 				CE9ADFAD1AB6D78200D56481 /* JASizeGuideWizardView.m in Sources */,
 				9A40772C1CE0CF5200313D20 /* UILabel+Size.m in Sources */,

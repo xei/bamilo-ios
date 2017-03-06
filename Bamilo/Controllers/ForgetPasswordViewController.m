@@ -20,6 +20,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.view.backgroundColor = [UIColor whiteColor];
     
     self.formController = [[FormViewControl alloc] init];
@@ -31,9 +32,9 @@
     FormItemModel *email = [FormItemModel emailWithFieldName:@"forgot_password[email]"];
     email.icon = [UIImage imageNamed:@"Email"];
     
-    self.formController.formListModel = [NSMutableArray arrayWithArray:@[email]];
+    self.formController.formModelList = [NSMutableArray arrayWithArray:@[email]];
     self.formController.submitTitle = STRING_SEND;
-    self.formController.formMessage = @"آدرس ایمیل خود را وارد کنید";
+    //self.formController.formMessage = @"آدرس ایمیل خود را وارد کنید";
     
     [self.formController setupTableView];
     [self.topHeaderUnderButtonView setBackgroundColor:cORAGNE_COLOR];

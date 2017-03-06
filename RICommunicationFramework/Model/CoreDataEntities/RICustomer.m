@@ -35,6 +35,7 @@
 @dynamic newsletterSubscribed;
 @synthesize costumerRequestID, wishlistProducts;
 @synthesize addressList;
+@synthesize phone;
 
 + (NSString *)signUpAccount:(NSString *)email
                successBlock:(void (^)(id object))successBlock
@@ -629,6 +630,11 @@
     if (_addressListDict) {
         customer.addressList = [[AddressList alloc] init];
         [customer.addressList mergeFromDictionary:_addressListDict useKeyMapping:YES error:nil];
+    }
+    
+    NSString *_phone = [dict objectForKey:@"phone"];
+    if(_phone) {
+        customer.phone = _phone;
     }
     
     return customer;

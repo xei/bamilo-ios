@@ -29,11 +29,6 @@
     _titleString = titleString;
 }
 
-- (void)setTitleAtributedString:(NSAttributedString *)titleAtributedString {
-    self.titleLabel.attributedText = titleAtributedString;
-    _titleAtributedString = titleAtributedString;
-}
-
 #pragma mark - Overrides
 + (NSString *)nibName {
     return @"PlainTableViewHeaderCell";
