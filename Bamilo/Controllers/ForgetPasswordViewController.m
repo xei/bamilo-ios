@@ -14,12 +14,14 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIView *topHeaderUnderButtonView;
 @property (strong, nonatomic) FormViewControl *formController;
+@property (weak, nonatomic) IBOutlet UILabel *descLabel;
 @end
 
 @implementation ForgetPasswordViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.view.backgroundColor = [UIColor whiteColor];
     
     self.formController = [[FormViewControl alloc] init];
@@ -31,12 +33,14 @@
     FormItemModel *email = [FormItemModel emailWithFieldName:@"forgot_password[email]"];
     email.icon = [UIImage imageNamed:@"Email"];
     
-    self.formController.formListModel = [NSMutableArray arrayWithArray:@[email]];
+    self.formController.formModelList = [NSMutableArray arrayWithArray:@[email]];
     self.formController.submitTitle = STRING_SEND;
-    self.formController.formMessage = @"آدرس ایمیل خود را وارد کنید";
     
     [self.formController setupTableView];
     [self.topHeaderUnderButtonView setBackgroundColor:cORAGNE_COLOR];
+    
+    [self.descLabel applyStyle:kFontRegularName fontSize:11.0f color:cDARK_GRAY_COLOR];
+    self.descLabel.text = STRING_ENTER_YOUR_EMAIL_ADDRESS;
 }
 
 - (void)viewDidAppear:(BOOL)animated {

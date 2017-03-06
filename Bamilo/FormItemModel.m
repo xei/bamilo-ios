@@ -34,7 +34,7 @@
     }
 }
 
-+ (FormItemModel *)nameFieldWithFiedName:(NSString *)fieldName {
++ (FormItemModel *)firstNameFieldWithFiedName:(NSString *)fieldName {
     return [[FormItemModel alloc] initWithTitle:nil
                                       fieldName:fieldName
                                         andIcon:nil

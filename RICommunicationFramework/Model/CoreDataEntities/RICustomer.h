@@ -30,6 +30,7 @@
 
 @property (nonatomic, retain) NSArray *wishlistProducts;
 @property (strong, nonatomic) AddressList *addressList;
+@property (copy, nonatomic) NSString *phone;
 
 + (NSString *)signUpAccount:(NSString *)email
                successBlock:(void (^)(id object))successBlock
@@ -49,9 +50,7 @@
  * @param the block where the failure response can be processed
  * @return a string with the operationID that can be used to cancel the operation
  */
-+ (NSString *)loginCustomerByFacebookWithParameters:(NSDictionary *)parameters
-                                       successBlock:(void (^)(NSDictionary *entities, NSString* nextStep))successBlock
-                                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock;
+//+ (NSString *)loginCustomerByFacebookWithParameters:(NSDictionary *)parameters successBlock:(void (^)(NSDictionary *entities, NSString* nextStep))successBlock andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock;
 
 /**
  * Method to get current customer information

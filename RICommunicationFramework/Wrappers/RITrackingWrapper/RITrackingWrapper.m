@@ -8,11 +8,9 @@
 
 #import "RITrackingWrapper.h"
 #import "RIGoogleAnalyticsTracker.h"
-#import "RIBugSenseTracker.h"
 #import "RIOpenURLHandler.h"
-//#import "RIAd4PushTracker.h"
 #import "RIAdjustTracker.h"
-#import "RIGTMTracker.h"
+//#import "RIGTMTracker.h"
 #import "AccengageTracker.h"
 
 @interface RITrackingWrapper ()
@@ -70,20 +68,14 @@ static dispatch_once_t sharedInstanceToken;
     //Google Analytics Tracker
     RIGoogleAnalyticsTracker *googleAnalyticsTracker = [[RIGoogleAnalyticsTracker alloc] init];
     
-    //Bug Sense Tracker
-    //RIBugSenseTracker *bugsenseTracker = [[RIBugSenseTracker alloc] init];
-    
-    //Ad4Push Tracker
-    //RIAd4PushTracker *ad4PushTracker = [[RIAd4PushTracker alloc] init];
-    
     //Adjust Tracker
     RIAdjustTracker *adjustTracker = [[RIAdjustTracker alloc] init];
     [adjustTracker setDelegate:delegate];
     
     //Google Tag Manager Tracker
-    RIGTMTracker *gtmTracker = [RIGTMTracker sharedInstance];
+    //RIGTMTracker *gtmTracker = [RIGTMTracker sharedInstance];
     
-    self.trackers = [NSMutableArray arrayWithObjects:googleAnalyticsTracker, /*bugsenseTracker, ad4PushTracker,*/ adjustTracker, gtmTracker, [AccengageTracker sharedInstance], nil];
+    self.trackers = [NSMutableArray arrayWithObjects:googleAnalyticsTracker, adjustTracker, /*gtmTracker,*/ [AccengageTracker sharedInstance], nil];
     
     if(VALID_NOTEMPTY(launchOptions, NSDictionary)) {
         [self RI_callTrackersConformToProtocol:@protocol(RITracker)

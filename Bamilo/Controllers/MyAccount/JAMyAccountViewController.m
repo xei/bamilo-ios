@@ -13,6 +13,7 @@
 #import "NotificationTableViewCell.h"
 #import "RICustomer.h"
 #import "ViewControllerManager.h"
+#import "IconTableViewHeaderCell.h"
 
 @interface JAMyAccountViewController ()
 
@@ -33,11 +34,14 @@
     self.tabBarIsVisible = YES;
     [self.view setBackgroundColor:[UIColor whiteColor]];
 
+    //Table View Headers
+    [self.tableView registerNib:[UINib nibWithNibName:[IconTableViewHeaderCell nibName] bundle:nil]
+         forCellReuseIdentifier:[IconTableViewHeaderCell nibName]];
 
-#pragma mark - nib registration
-
+    //Table View Cells
     [self.tableView registerNib:[UINib nibWithNibName:[IconTableViewCell nibName] bundle:nil] forCellReuseIdentifier: [IconTableViewCell nibName]];
     [self.tableView registerNib:[UINib nibWithNibName:[NotificationTableViewCell nibName] bundle:nil] forCellReuseIdentifier: [NotificationTableViewCell nibName]];
+    
 
     [self updateTableViewListItemsModel];
     self.tableView.dataSource = self;
@@ -160,8 +164,7 @@
 
 }
 
-#pragma mark - TableView delegates
-
+#pragma mark - UITableViewDelegate
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     NSString *cellID = [self.tableViewListItems[indexPath.row] objectForKey:@"cellType"];
@@ -201,11 +204,24 @@
         }
 
         if ([selectedObjItem objectForKey:@"notification"]) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:[selectedObjItem objectForKey:@"notification"]
-                                                                object:@{@"animated":[selectedObjItem objectForKey:@"animated"]}
-                                                              userInfo:@{@"from_checkout":@NO}];
+            [[NSNotificationCenter defaultCenter] postNotificationName:[selectedObjItem objectForKey:@"notification"] object:@{@"animated":[selectedObjItem objectForKey:@"animated"]} userInfo:@{@"from_checkout":@NO}];
         }
     }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if([RICustomer checkIfUserIsLogged]) {
+        return [IconTableViewHeaderCell cellHeight];
+    } else {
+        return 0.0f;
+    }
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    IconTableViewHeaderCell *userGreetingTableViewHeaderCell = [self.tableView dequeueReusableCellWithIdentifier:[IconTableViewHeaderCell nibName]];
+    [userGreetingTableViewHeaderCell setImageName:@"HappyFace"];
+    userGreetingTableViewHeaderCell.titleString = [NSString stringWithFormat:@"%@ %@!", STRING_HELLO, [RICustomer getCurrentCustomer].firstName];
+    return userGreetingTableViewHeaderCell;
 }
 
 #pragma mark - PerformanceTrackerProtocol

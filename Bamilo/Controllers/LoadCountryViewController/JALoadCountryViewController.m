@@ -11,7 +11,7 @@
 #import "RIGoogleAnalyticsTracker.h"
 #import "RICustomer.h"
 #import "RICountry.h"
-#import "RIGTMTracker.h"
+//#import "RIGTMTracker.h"
 
 @interface JALoadCountryViewController ()
 
@@ -210,7 +210,7 @@
                                        {
                                            [RIGoogleAnalyticsTracker initGATrackerWithId:configuration.gaId];
                                            
-                                           [[RIGTMTracker sharedInstance] setGTMTrackerId:configuration.gtmId andGaId:configuration.gaId];
+                                           //[[RIGTMTracker sharedInstance] setGTMTrackerId:configuration.gtmId andGaId:configuration.gaId];
                                             
                                            self.configurationRequestCount--;
                                        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)

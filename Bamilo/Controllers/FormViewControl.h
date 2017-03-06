@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "FormItemModel.h"
 #import "BaseViewController.h"
 #import "ButtonTableViewCell.h"
 #import "FormTableViewCell.h"
+#import "FormItemModel.h"
+#import "FormHeaderModel.h"
+#import "FormElementProtocol.h"
 
 @protocol FormViewControlDelegate<NSObject>
 
@@ -24,9 +26,8 @@
 @interface FormViewControl :NSObject <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, ButtonTableViewCellDelegate, InputTextFieldControlDelegate>
 
 @property (nonatomic, weak) UITableView *tableView;
-@property (nonatomic, copy) NSString *formMessage;
 @property (nonatomic, copy) NSString *submitTitle;
-@property (nonatomic, strong) NSMutableArray<FormItemModel *>* formListModel;
+@property (nonatomic, strong) NSMutableArray *formModelList;
 @property (nonatomic, weak) id<FormViewControlDelegate> delegate;
 
 typedef FormItemModel *(^updateModelWithPreviousModel)(FormItemModel *model);
