@@ -12,17 +12,17 @@
 #pragma mark - JSONModel
 + (JSONKeyMapper *)keyMapper {
     return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{
-                                                                  @"orderId":@"number",
-                                                                  @"creationDate":@"date",
-                                                                  @"price":@"total",
-                                                                  @"formatedPrice":@"total",
-                                                                  @"shippingAddress": @"shipping_address",
-                                                                  @"billingAddress":@"billing_address",
-                                                                  @"products":@"products",
-                                                                  @"paymentReference":@"payment.transaction_reference",
-                                                                  @"paymentDescription":@"payment.transaction_description",
-                                                                  @"paymentMethod":@"payment.title"
-                                                                  }];
+          @"orderId":@"number",
+          @"creationDate":@"date",
+          @"price":@"total",
+          @"formatedPrice":@"total",
+          @"shippingAddress": @"shipping_address",
+          @"billingAddress":@"billing_address",
+          @"products":@"products",
+          @"paymentReference":@"payment.transaction_reference",
+          @"paymentDescription":@"payment.transaction_description",
+          @"paymentMethod":@"payment.title"
+    }];
 }
 
 - (BOOL)mergeFromDictionary:(NSDictionary *)dict useKeyMapping:(BOOL)useKeyMapping error:(NSError *__autoreleasing *)error {

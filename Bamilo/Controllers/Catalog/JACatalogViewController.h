@@ -26,7 +26,7 @@
 
 @property (nonatomic, strong)RICategory* category;
 @property (nonatomic, strong)NSString* categoryUrlKey;
-@property (nonatomic, strong)NSString* categoryId;
+//@property (nonatomic, strong)NSString* categoryId;
 @property (nonatomic, strong)NSString* categoryName;
 @property (nonatomic, strong)NSString* searchString;
 @property (nonatomic, strong)NSString* filterPush;

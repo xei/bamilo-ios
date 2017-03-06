@@ -73,12 +73,16 @@
     return result;
 }
 
+- (NSString *)getPriceStringFromFormatedPrice {
+    return [[[self numbersToEnglish] componentsSeparatedByCharactersInSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]] componentsJoinedByString:@""];
+}
+
 - (NSString *)formatPrice {
     if (!self.floatValue) {
         return self;
     }
     [NSString numberFormatter].numberStyle = NSNumberFormatterDecimalStyle;
-    NSNumber * numberFromString = @(self.floatValue); //[[NSString numberFormatter] numberFromString:self];
+    NSNumber * numberFromString = @(self.floatValue);
     NSString * formattedNumberString = [[NSString numberFormatter] stringFromNumber:numberFromString];
     return formattedNumberString;
 }

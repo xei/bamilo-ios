@@ -7,7 +7,6 @@
 //
 
 #import "BaseModel.h"
-#import "JSONVerboseModel.h"
 
 @interface OrderStatus : BaseModel
 

@@ -47,7 +47,7 @@
 
 + (NSArray*)copyFiltersArray:(NSArray*)filtersArray;
 
-- (RIFilter*)copy;
+//- (RIFilter*)copy;
 
 /**
  *  Method that returns the url component to add to the product request based on an array of RIFilters

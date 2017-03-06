@@ -7,19 +7,34 @@
 //
 
 #import "RICatalog.h"
-#import "RIFilter.h"
 #import "RIProduct.h"
+#import "SearchPriceFilter.h"
+#import "SearchFilterItem.h"
 
 @implementation RICatalog
 
 + (RICatalog *)parseCatalog:(NSDictionary *)catalogDictionary forCountryConfiguration:(RICountryConfiguration *)configuration {
     RICatalog* newCatalog = [[RICatalog alloc] init];
     
-    NSArray* filtersJSON = [catalogDictionary objectForKey:@"filters"];
     
-    if (filtersJSON.count) {
-        newCatalog.filters = [RIFilter parseFilters:filtersJSON];
+    NSArray *filterItemsJSON = [catalogDictionary objectForKey:@"filters"];
+    NSMutableArray *newFilters = [NSMutableArray new];
+    if (filterItemsJSON.count) {
+        [filterItemsJSON enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([[obj objectForKey:@"id"] isEqualToString:@"price"]) {
+                SearchPriceFilter *priceFilter = [SearchPriceFilter new];
+                [priceFilter mergeFromDictionary:obj useKeyMapping:YES error:nil];
+                [newFilters addObject:priceFilter];
+                newCatalog.priceFilterIndex = (int)idx;
+            } else {
+                SearchFilterItem *filterItem = [SearchFilterItem new];
+                [filterItem mergeFromDictionary:obj useKeyMapping:YES error:nil];
+                [newFilters addObject:filterItem];
+            }
+        }];
     }
+    
+    newCatalog.filters = [newFilters copy];
     
     NSDictionary *bannerJSON = [catalogDictionary objectForKey:@"banner"];
     

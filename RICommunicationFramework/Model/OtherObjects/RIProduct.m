@@ -10,7 +10,6 @@
 #import "RIImage.h"
 #import "RIProductSimple.h"
 #import "RIVariation.h"
-#import "RIFilter.h"
 #import "RICategory.h"
 #import "RISeller.h"
 #import "RIBanner.h"
@@ -20,8 +19,7 @@
 
 @implementation RIBundle
 
-+ (RIBundle *)parseRIBundle:(NSDictionary *)bundleJSON country:(RICountryConfiguration*)country
-{
++ (RIBundle *)parseRIBundle:(NSDictionary *)bundleJSON country:(RICountryConfiguration*)country {
     RIBundle *newBundle = [[RIBundle alloc] init];
     
     NSDictionary *dataDic = [bundleJSON objectForKey:@"bundle_entity"];
@@ -246,7 +244,7 @@
                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error, RIUndefinedSearchTerm *undefSearchTerm))failureBlock
 {
     NSString* fullUrl = @"";
-    NSString *filtersString = [RIFilter urlWithFiltersArray:filters];
+    NSString *filtersString = [BaseSearchFilterItem urlWithFiltersArray:filters];
     
     
     //sometimes the url of the product already has ? in it. yeah...

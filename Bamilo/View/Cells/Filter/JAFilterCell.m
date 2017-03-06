@@ -7,15 +7,13 @@
 //
 
 #import "JAFilterCell.h"
-#import "RIFilter.h"
 
 @implementation JAFilterCell
 
-- (void)setupWithFilter:(RIFilter*)filter
+- (void)setupWithFilter:(BaseSearchFilterItem*)filter
          cellIsSelected:(BOOL)cellIsSelected
                   width:(CGFloat)width
-                 margin:(CGFloat)margin;
-{
+                 margin:(CGFloat)margin {
     //remove the clickable view
     for (UIView* view in self.subviews) {
         if ([view isKindOfClass:[JAClickableView class]]) { //remove the clickable view
@@ -43,10 +41,13 @@
     
     //find number of selected options
     NSInteger numberOfSelectedOptions = 0;
-    for (RIFilterOption* option in filter.options) {
-        if (option.selected) {
-            numberOfSelectedOptions++;
-        } else if (option.lowerValue > option.min || option.upperValue < option.max || YES == option.discountOnly) {
+    if ([filter isKindOfClass:[SearchFilterItem class]]) {
+        for (SearchFilterItemOption *option in ((SearchFilterItem *)filter).options) {
+            if (option.selected) numberOfSelectedOptions++;
+        }
+    } else if ([filter isKindOfClass:[SearchPriceFilter class]]) {
+        SearchPriceFilter *priceFilter = (SearchPriceFilter *)filter;
+        if (priceFilter.lowerValue > priceFilter.minPrice || priceFilter.upperValue < priceFilter.maxPrice || YES == priceFilter.discountOnly) {
             numberOfSelectedOptions = 1;
         }
     }

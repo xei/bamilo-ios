@@ -7,7 +7,6 @@
 //
 
 #import "JAMainFilterCell.h"
-#import "RIFilter.h"
 
 @interface JAMainFilterCell()
 
@@ -18,8 +17,7 @@
 
 @implementation JAMainFilterCell
 
-- (void)setupWithFilter:(RIFilter*)filter options:(NSString*)options width:(CGFloat)width
-{
+- (void)setupWithFilter:(BaseSearchFilterItem *)filter options:(NSString*)options width:(CGFloat)width {
     //remove the clickable view
     for (UIView* view in self.subviews) {
         if ([view isKindOfClass:[JAClickableView class]]) { //remove the clickable view

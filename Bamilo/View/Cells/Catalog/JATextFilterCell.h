@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RIFilter.h"
+#import "SearchFilterItemOption.h"
 #import "JAClickableView.h"
 
 @interface JATextFilterCell : UITableViewCell
@@ -22,6 +22,6 @@
 
 - (void)setupIsLandscape:(BOOL)landscape;
 
-- (void)setFilterOption:(RIFilterOption*)option;
+- (void)setFilterOption:(SearchFilterItemOption*)option;
 
 @end
