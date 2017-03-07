@@ -29,7 +29,7 @@
     self.formController.tableView = self.tableView;
 
     FormItemModel *melliCode = [[FormItemModel alloc]
-                                initWithTitle:nil
+                                initWithTextValue:nil
                                 fieldName: @"customer[national_id]"
                                 andIcon:nil
                                 placeholder:@"کد ملی"

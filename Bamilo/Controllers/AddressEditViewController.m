@@ -41,11 +41,11 @@
     
     //ADDRESS - USER ADDRESS SECTION
     FormHeaderModel *addressHeader = [[FormHeaderModel alloc] initWithHeaderTitle:STRING_ADDRESS];
-    region = [[FormItemModel alloc] initWithTitle: (self.address.uid) ? @"": @"تهران" fieldName: @"address_form[region]" andIcon: nil placeholder: @"استان" type: InputTextFieldControlTypeOptions validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil] selectOptions: nil];
+    region = [[FormItemModel alloc] initWithTextValue: (self.address.uid) ? @"": @"تهران" fieldName: @"address_form[region]" andIcon: nil placeholder: @"استان" type: InputTextFieldControlTypeOptions validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil] selectOptions: nil];
     
-    city = [[FormItemModel alloc] initWithTitle:nil fieldName: @"address_form[city]" andIcon:nil placeholder: @"شهر" type: InputTextFieldControlTypeOptions validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil] selectOptions:nil];
+    city = [[FormItemModel alloc] initWithTextValue:nil fieldName: @"address_form[city]" andIcon:nil placeholder: @"شهر" type: InputTextFieldControlTypeOptions validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil] selectOptions:nil];
 
-    vicinity = [[FormItemModel alloc] initWithTitle: nil fieldName: @"address_form[postcode]" andIcon: nil placeholder: @"محله" type: InputTextFieldControlTypeOptions validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil] selectOptions: nil];
+    vicinity = [[FormItemModel alloc] initWithTextValue: nil fieldName: @"address_form[postcode]" andIcon: nil placeholder: @"محله" type: InputTextFieldControlTypeOptions validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil] selectOptions: nil];
     vicinity.validation.isRequired = NO;
     
     FormItemModel *address = [FormItemModel addressWithFieldName:@"address_form[address1]"];
@@ -65,9 +65,9 @@
         //Adding a new address. Try to pre-fill user info
         RICustomer *customer = [RICustomer getCurrentCustomer];
         
-        [firstName setTitleString:customer.firstName];
-        [lastName setTitleString:customer.lastName];
-        [phone setTitleString:customer.phone];
+        [firstName setInputTextValue:customer.firstName];
+        [lastName setInputTextValue:customer.lastName];
+        [phone setInputTextValue:customer.phone];
     }
     
     [self.formController.formModelList addObjectsFromArray:@[ personalInfoHeader, firstName, lastName, phone ]];
@@ -82,7 +82,7 @@
     if (!self.address.uid) {
         // Get regions and citiies for region defualt value (if exists)
         [self getRegionsByCompletion:^{
-            if (region.titleString) {
+            if (region.inputTextValue) {
                 [self getCitiesForRegionId:[region getValue] completion: nil];
             }
         }];
@@ -217,7 +217,7 @@
         model.selectOption = data;
         
         if ([model getValue] == nil) {
-            model.titleString = nil;
+            model.inputTextValue = nil;
         }
         
         return model;
@@ -240,7 +240,7 @@
     [self.formController.formModelList enumerateObjectsUsingBlock:^(id _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if([obj isKindOfClass:[FormItemModel class]]) {
             [self.formController updateFieldIndex:idx WithUpdateModelBlock:^FormItemModel *(FormItemModel *model) {
-                model.titleString = addressFieldMapValues[model.fieldName];
+                model.inputTextValue = addressFieldMapValues[model.fieldName];
                 return model;
             }];
         }

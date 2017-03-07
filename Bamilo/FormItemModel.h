@@ -19,7 +19,7 @@ typedef enum : NSUInteger {
 } InputTextFieldControlType;
 
 @interface FormItemModel : NSObject <FormElementProtocol>
-@property (nonatomic, copy) NSString *titleString;
+@property (nonatomic, copy) NSString *inputTextValue;
 @property (nonatomic, copy) NSString *placeholder;
 @property (nonatomic, copy) NSString *fieldName;
 @property (nonatomic, copy) UIImage *icon;
@@ -27,7 +27,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) FormItemValidation *validation;
 @property (assign, nonatomic) InputTextFieldControlType type;
 
-- (instancetype)initWithTitle:(NSString *)title
+- (instancetype)initWithTextValue:(NSString *)title
                             fieldName: (NSString *)fieldName
                             andIcon:(UIImage *)image
                             placeholder:(NSString *)placeholder

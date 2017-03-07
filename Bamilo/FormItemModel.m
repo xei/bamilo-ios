@@ -10,10 +10,10 @@
 
 @implementation FormItemModel
 
-- (instancetype)initWithTitle:(NSString *)title fieldName:(NSString *)fieldName andIcon:(UIImage *)image placeholder:(NSString *)placeholder type:(InputTextFieldControlType)type validation:(FormItemValidation *)validation selectOptions:(NSDictionary *)options {
+- (instancetype)initWithTextValue:(NSString *)title fieldName:(NSString *)fieldName andIcon:(UIImage *)image placeholder:(NSString *)placeholder type:(InputTextFieldControlType)type validation:(FormItemValidation *)validation selectOptions:(NSDictionary *)options {
     self = [super init];
     if (self) {
-        self.titleString = title;
+        self.inputTextValue = title;
         self.icon = image;
         self.placeholder = placeholder;
         self.validation = validation;
@@ -26,16 +26,16 @@
 
 - (NSString *)getValue {
     if (self.type == InputTextFieldControlTypeNumerical) {
-        return [self.titleString numbersToEnglish];
+        return [self.inputTextValue numbersToEnglish];
     } else if (self.type == InputTextFieldControlTypeOptions){
-        return self.selectOption[self.titleString];
+        return self.selectOption[self.inputTextValue];
     } else {
-        return self.titleString;
+        return self.inputTextValue;
     }
 }
 
 + (FormItemModel *)firstNameFieldWithFiedName:(NSString *)fieldName {
-    return [[FormItemModel alloc] initWithTitle:nil
+    return [[FormItemModel alloc] initWithTextValue:nil
                                       fieldName:fieldName
                                         andIcon:nil
                                     placeholder:@"نام"
@@ -45,7 +45,7 @@
 }
 
 + (FormItemModel *)lastNameWithFieldName:(NSString *)fieldName {
-    return [[FormItemModel alloc] initWithTitle:nil
+    return [[FormItemModel alloc] initWithTextValue:nil
                                       fieldName: fieldName
                                         andIcon:nil
                                     placeholder:@"نام خانوادگی"
@@ -55,7 +55,7 @@
 }
 
 + (FormItemModel *)phoneWithFieldName:(NSString *)fieldName {
-    return [[FormItemModel alloc] initWithTitle:nil
+    return [[FormItemModel alloc] initWithTextValue:nil
                                       fieldName: fieldName
                                         andIcon:nil
                                     placeholder:@"تلفن همراه"
@@ -65,7 +65,7 @@
 }
 
 + (FormItemModel *)addressWithFieldName:(NSString *)fieldName {
-    return [[FormItemModel alloc] initWithTitle:nil
+    return [[FormItemModel alloc] initWithTextValue:nil
                                       fieldName: fieldName
                                         andIcon:nil
                                     placeholder:@"نشانی به فارسی"
@@ -75,7 +75,7 @@
 }
 
 + (FormItemModel *)postalCodeWithFieldName:(NSString *)fieldName {
-    return [[FormItemModel alloc] initWithTitle:nil
+    return [[FormItemModel alloc] initWithTextValue:nil
                                       fieldName: fieldName
                                         andIcon:nil
                                     placeholder:@"کد پستی"
@@ -85,7 +85,7 @@
 }
 
 + (FormItemModel *)emailWithFieldName: (NSString *)fieldName {
-    return [[FormItemModel alloc] initWithTitle:nil
+    return [[FormItemModel alloc] initWithTextValue:nil
                                       fieldName: fieldName
                                         andIcon:nil
                                     placeholder:@"ایمیل"
@@ -95,7 +95,7 @@
 }
 
 + (FormItemModel *)passWordWithFieldName: (NSString *)fieldName {
-    return [[FormItemModel alloc] initWithTitle:nil
+    return [[FormItemModel alloc] initWithTextValue:nil
                                       fieldName: fieldName
                                         andIcon: nil
                                     placeholder:@"کلمه عبور"
@@ -105,7 +105,7 @@
 }
 
 + (FormItemModel *)genderWithFieldName: (NSString *)fieldName {
-    return [[FormItemModel alloc] initWithTitle:nil
+    return [[FormItemModel alloc] initWithTextValue:nil
                                       fieldName: fieldName
                                         andIcon: nil
                                     placeholder:@"جنسیت"

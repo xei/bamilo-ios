@@ -55,6 +55,9 @@
 - (NSMutableDictionary *)getMutableDictionaryOfForm {
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     [self.formModelList enumerateObjectsUsingBlock:^(FormItemModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (![obj isKindOfClass:[FormItemModel class]]) {
+            return;
+        }
         params[obj.fieldName] = [obj getValue];
     }];
     return params;
@@ -165,6 +168,9 @@
 - (Boolean)isFormValid {
     __block Boolean result = YES;
     [self.formModelList enumerateObjectsUsingBlock:^(FormItemModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (![obj isKindOfClass:[FormItemModel class]]) {
+            return;
+        }
         if(![obj.validation checkValiditionOfString:[obj getValue]].boolValue) {
             result = NO;
             *stop = YES;
@@ -183,8 +189,7 @@
 - (void)inputValueHasBeenChanged:(id)inputTextFieldControl byNewValue:(NSString *)value inFieldIndex:(NSUInteger)fieldIndex {
     
     FormItemModel *model = self.formModelList[fieldIndex];
-    
-    model.titleString = value;
+    model.inputTextValue = value;
     
     if ([model.validation checkValiditionOfString:[model getValue]].boolValue) {
         if ([self.delegate respondsToSelector:@selector(fieldHasBeenUpdatedByNewValidValue:inFieldIndex:)]){
