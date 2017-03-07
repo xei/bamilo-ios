@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Bamilosans Reg.ttf">
+            <string>Bamilo-Sans</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ProgressItemView">
+            <rect key="frame" x="0.0" y="0.0" width="75" height="60"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="ثبت سفارش" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DqB-0D-chu">
+                    <rect key="frame" x="0.0" y="39" width="75" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="75" id="7Xg-kI-3Yf"/>
+                        <constraint firstAttribute="height" constant="21" id="sl3-bK-2EZ"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="10"/>
+                    <color key="textColor" red="0.090531297028064728" green="0.52686542272567749" blue="0.11270476132631302" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rdF-VH-zwh" userLabel="Container View">
+                    <rect key="frame" x="15" y="3" width="46" height="40"/>
+                    <subviews>
+                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G0F-DY-v6p" userLabel="Button Outter Container View">
+                            <rect key="frame" x="8" y="5" width="30" height="30"/>
+                            <subviews>
+                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9m6-wG-z0f" userLabel="Button Inner Container View">
+                                    <rect key="frame" x="1" y="1" width="28" height="28"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9D2-6V-tI4" userLabel="Icon Button">
+                                            <rect key="frame" x="7" y="7" width="15" height="15"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="9D2-6V-tI4" secondAttribute="height" multiplier="1:1" id="0ov-9F-aMo"/>
+                                                <constraint firstAttribute="width" constant="15" id="Am2-HY-htI"/>
+                                            </constraints>
+                                            <state key="normal" image="ic_birthday_form"/>
+                                            <connections>
+                                                <action selector="iconButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="q1y-su-OYo"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstItem="9D2-6V-tI4" firstAttribute="centerX" secondItem="9m6-wG-z0f" secondAttribute="centerX" id="QUH-eJ-ZM4"/>
+                                        <constraint firstItem="9D2-6V-tI4" firstAttribute="centerY" secondItem="9m6-wG-z0f" secondAttribute="centerY" id="vpD-Al-GH1"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
+                            <color key="backgroundColor" red="0.0" green="0.62931185960000002" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstItem="9m6-wG-z0f" firstAttribute="leading" secondItem="G0F-DY-v6p" secondAttribute="leading" constant="1" id="Lkt-sP-VyM"/>
+                                <constraint firstAttribute="bottom" secondItem="9m6-wG-z0f" secondAttribute="bottom" constant="1" id="bX3-b8-JmN"/>
+                                <constraint firstItem="9m6-wG-z0f" firstAttribute="top" secondItem="G0F-DY-v6p" secondAttribute="top" constant="1" id="dxk-vj-VhA"/>
+                                <constraint firstAttribute="trailing" secondItem="9m6-wG-z0f" secondAttribute="trailing" constant="1" id="hAH-0O-3mD"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="46" id="8K6-UR-GLE"/>
+                        <constraint firstItem="G0F-DY-v6p" firstAttribute="leading" secondItem="rdF-VH-zwh" secondAttribute="leading" constant="8" id="Lum-xI-Y79"/>
+                        <constraint firstAttribute="bottom" secondItem="G0F-DY-v6p" secondAttribute="bottom" constant="5" id="awA-gG-GWz"/>
+                        <constraint firstItem="G0F-DY-v6p" firstAttribute="top" secondItem="rdF-VH-zwh" secondAttribute="top" constant="5" id="blE-NV-Ojj"/>
+                        <constraint firstAttribute="height" constant="40" id="iM2-Z4-EaR"/>
+                        <constraint firstAttribute="trailing" secondItem="G0F-DY-v6p" secondAttribute="trailing" constant="8" id="ivh-1X-PEJ"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="DqB-0D-chu" firstAttribute="centerX" secondItem="rdF-VH-zwh" secondAttribute="centerX" id="1J7-sw-kXG"/>
+                <constraint firstItem="DqB-0D-chu" firstAttribute="top" secondItem="rdF-VH-zwh" secondAttribute="bottom" constant="-4" id="1j8-8b-5fY"/>
+                <constraint firstAttribute="bottom" secondItem="DqB-0D-chu" secondAttribute="bottom" id="1xu-ui-2Oh"/>
+                <constraint firstItem="DqB-0D-chu" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="jdZ-lL-J4p"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="buttonInnerContainerView" destination="9m6-wG-z0f" id="lsH-Tv-X8o"/>
+                <outlet property="buttonOutterContainerView" destination="G0F-DY-v6p" id="SWI-bE-4ch"/>
+                <outlet property="iconButton" destination="9D2-6V-tI4" id="knt-sB-VJa"/>
+                <outlet property="textLabel" destination="DqB-0D-chu" id="H3l-0x-fcR"/>
+            </connections>
+        </view>
+    </objects>
+    <resources>
+        <image name="ic_birthday_form" width="22" height="19"/>
+    </resources>
+</document>

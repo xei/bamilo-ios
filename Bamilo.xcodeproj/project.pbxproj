@@ -246,6 +246,12 @@
 		87EA03111E6D450300B1E062 /* FormHeaderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 87EA03101E6D450300B1E062 /* FormHeaderModel.m */; };
 		87EA031B1E6D6F9900B1E062 /* FormHeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87EA031A1E6D6F9900B1E062 /* FormHeaderTableViewCell.m */; };
 		87EA031D1E6D706E00B1E062 /* FormHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87EA031C1E6D706E00B1E062 /* FormHeaderTableViewCell.xib */; };
+		87EA03231E6D987400B1E062 /* ProgressViewControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 87EA03221E6D987400B1E062 /* ProgressViewControl.m */; };
+		87EA03261E6D98A900B1E062 /* ProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87EA03251E6D98A900B1E062 /* ProgressView.m */; };
+		87EA032A1E6D990500B1E062 /* ProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87EA03291E6D990500B1E062 /* ProgressView.xib */; };
+		87EA032D1E6D993C00B1E062 /* ProgressItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87EA032C1E6D993C00B1E062 /* ProgressItemView.m */; };
+		87EA032F1E6D994800B1E062 /* ProgressItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87EA032E1E6D994800B1E062 /* ProgressItemView.xib */; };
+		87EA03331E6DA27D00B1E062 /* ProgressItemViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 87EA03321E6DA27D00B1E062 /* ProgressItemViewModel.m */; };
 		893AADD11C1F1A54006314FB /* JAMyOrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 893AADCD1C1F1A54006314FB /* JAMyOrderDetailViewController.m */; };
 		8968FE731C3AE33E00B28207 /* JAUserDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4431E91C242BA8005A8B4A /* JAUserDataViewController.m */; };
 		897460DE1C19DDFD00A38073 /* JACollectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 897460DA1C19DDFD00A38073 /* JACollectionHeaderView.m */; };
@@ -1064,6 +1070,16 @@
 		87EA03191E6D6F9900B1E062 /* FormHeaderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormHeaderTableViewCell.h; sourceTree = "<group>"; };
 		87EA031A1E6D6F9900B1E062 /* FormHeaderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormHeaderTableViewCell.m; sourceTree = "<group>"; };
 		87EA031C1E6D706E00B1E062 /* FormHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FormHeaderTableViewCell.xib; sourceTree = "<group>"; };
+		87EA03211E6D987400B1E062 /* ProgressViewControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressViewControl.h; sourceTree = "<group>"; };
+		87EA03221E6D987400B1E062 /* ProgressViewControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressViewControl.m; sourceTree = "<group>"; };
+		87EA03241E6D98A900B1E062 /* ProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressView.h; sourceTree = "<group>"; };
+		87EA03251E6D98A900B1E062 /* ProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressView.m; sourceTree = "<group>"; };
+		87EA03291E6D990500B1E062 /* ProgressView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProgressView.xib; sourceTree = "<group>"; };
+		87EA032B1E6D993C00B1E062 /* ProgressItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressItemView.h; sourceTree = "<group>"; };
+		87EA032C1E6D993C00B1E062 /* ProgressItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressItemView.m; sourceTree = "<group>"; };
+		87EA032E1E6D994800B1E062 /* ProgressItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProgressItemView.xib; sourceTree = "<group>"; };
+		87EA03311E6DA27D00B1E062 /* ProgressItemViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressItemViewModel.h; sourceTree = "<group>"; };
+		87EA03321E6DA27D00B1E062 /* ProgressItemViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressItemViewModel.m; sourceTree = "<group>"; };
 		893AADCC1C1F1A54006314FB /* JAMyOrderDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMyOrderDetailViewController.h; sourceTree = "<group>"; };
 		893AADCD1C1F1A54006314FB /* JAMyOrderDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMyOrderDetailViewController.m; sourceTree = "<group>"; };
 		897460D91C19DDFD00A38073 /* JACollectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACollectionHeaderView.h; path = Bamilo/View/Headers/JACollectionHeaderView.h; sourceTree = SOURCE_ROOT; };
@@ -1969,58 +1985,58 @@
 		61148E001E47226200E2540B /* Stepper */ = {
 			isa = PBXGroup;
 			children = (
-				61148E011E4724D900E2540B /* View */,
-				61148E021E4724DD00E2540B /* ViewControl */,
+				61148E021E4724DD00E2540B /* Controls */,
+				61148E011E4724D900E2540B /* Views */,
 			);
 			name = Stepper;
 			sourceTree = "<group>";
 		};
-		61148E011E4724D900E2540B /* View */ = {
+		61148E011E4724D900E2540B /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				61148E031E4724FC00E2540B /* StepperView.h */,
 				61148E041E4724FC00E2540B /* StepperView.m */,
 				61148E091E47255F00E2540B /* StepperView.xib */,
 			);
-			name = View;
+			name = Views;
 			sourceTree = "<group>";
 		};
-		61148E021E4724DD00E2540B /* ViewControl */ = {
+		61148E021E4724DD00E2540B /* Controls */ = {
 			isa = PBXGroup;
 			children = (
 				61C407C31E476486004ACEE8 /* StepperViewControlDelegate.h */,
 				61148E061E47250A00E2540B /* StepperViewControl.h */,
 				61148E071E47250A00E2540B /* StepperViewControl.m */,
 			);
-			name = ViewControl;
+			name = Controls;
 			sourceTree = "<group>";
 		};
 		612553421E4EE4FD00975C6F /* inputTextField */ = {
 			isa = PBXGroup;
 			children = (
-				612553431E4EE57300975C6F /* View */,
-				612553441E4EE57D00975C6F /* ViewControl */,
+				612553441E4EE57D00975C6F /* Controls */,
+				612553431E4EE57300975C6F /* Views */,
 			);
 			name = inputTextField;
 			sourceTree = "<group>";
 		};
-		612553431E4EE57300975C6F /* View */ = {
+		612553431E4EE57300975C6F /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				612553451E4EE5B500975C6F /* InputTextField.h */,
 				612553461E4EE5B500975C6F /* InputTextField.m */,
 				612553481E4EE5C600975C6F /* InputTextField.xib */,
 			);
-			name = View;
+			name = Views;
 			sourceTree = "<group>";
 		};
-		612553441E4EE57D00975C6F /* ViewControl */ = {
+		612553441E4EE57D00975C6F /* Controls */ = {
 			isa = PBXGroup;
 			children = (
 				6125534A1E4EF63000975C6F /* InputTextFieldControl.h */,
 				6125534B1E4EF63000975C6F /* InputTextFieldControl.m */,
 			);
-			name = ViewControl;
+			name = Controls;
 			sourceTree = "<group>";
 		};
 		6125534D1E4F18CD00975C6F /* BlueButton */ = {
@@ -2134,29 +2150,29 @@
 		61C5C40A1E545C0C00F22130 /* CartEntitySummery */ = {
 			isa = PBXGroup;
 			children = (
-				61C5C4111E54669200F22130 /* Control */,
-				61C5C4101E54668600F22130 /* view */,
+				61C5C4111E54669200F22130 /* Controls */,
+				61C5C4101E54668600F22130 /* Views */,
 			);
 			name = CartEntitySummery;
 			sourceTree = "<group>";
 		};
-		61C5C4101E54668600F22130 /* view */ = {
+		61C5C4101E54668600F22130 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				61C5C40B1E545C6200F22130 /* CartEntitySummaryView.h */,
 				61C5C40C1E545C6200F22130 /* CartEntitySummaryView.m */,
 				61C5C40E1E545C7400F22130 /* CartEntitySummaryView.xib */,
 			);
-			name = view;
+			name = Views;
 			sourceTree = "<group>";
 		};
-		61C5C4111E54669200F22130 /* Control */ = {
+		61C5C4111E54669200F22130 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
 				61C5C4121E54674600F22130 /* CartEntitySummaryViewControl.h */,
 				61C5C4131E54674600F22130 /* CartEntitySummaryViewControl.m */,
 			);
-			name = Control;
+			name = Controls;
 			sourceTree = "<group>";
 		};
 		61C5C4151E54791900F22130 /* RecieptViewCartTableViewCell */ = {
@@ -2560,6 +2576,7 @@
 			isa = PBXGroup;
 			children = (
 				8714E06F1E47976E004C9B1D /* Base */,
+				87EA031E1E6D983100B1E062 /* Progress */,
 				61C5C40A1E545C0C00F22130 /* CartEntitySummery */,
 				612553421E4EE4FD00975C6F /* inputTextField */,
 				61148E001E47226200E2540B /* Stepper */,
@@ -2759,26 +2776,26 @@
 			name = CartListItemTableViewCell;
 			sourceTree = "<group>";
 		};
-		87459C871E4F045C00743120 /* RadioButtonViewControl */ = {
+		87459C871E4F045C00743120 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
 				87459C8E1E4F057700743120 /* RadioButtonViewControlDelegate.h */,
 				87459C8B1E4F04AD00743120 /* RadioButtonViewControl.h */,
 				87459C8C1E4F04AD00743120 /* RadioButtonViewControl.m */,
 			);
-			name = RadioButtonViewControl;
+			name = Controls;
 			sourceTree = "<group>";
 		};
 		87459C901E4F05D700743120 /* RadioButton */ = {
 			isa = PBXGroup;
 			children = (
-				87459C941E4F084B00743120 /* RadioButtonView */,
-				87459C871E4F045C00743120 /* RadioButtonViewControl */,
+				87459C871E4F045C00743120 /* Controls */,
+				87459C941E4F084B00743120 /* Views */,
 			);
 			name = RadioButton;
 			sourceTree = "<group>";
 		};
-		87459C941E4F084B00743120 /* RadioButtonView */ = {
+		87459C941E4F084B00743120 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				87459C951E4F08EC00743120 /* RadioButtonViewProtocol.h */,
@@ -2786,7 +2803,7 @@
 				87459C971E4F090F00743120 /* RadioButtonView.m */,
 				87459C9B1E4F0DCD00743120 /* RadioButtonView.xib */,
 			);
-			name = RadioButtonView;
+			name = Views;
 			sourceTree = "<group>";
 		};
 		87459C9D1E4F155300743120 /* Payment */ = {
@@ -3788,6 +3805,63 @@
 				87EA031C1E6D706E00B1E062 /* FormHeaderTableViewCell.xib */,
 			);
 			name = FormHeaderTableViewCell;
+			sourceTree = "<group>";
+		};
+		87EA031E1E6D983100B1E062 /* Progress */ = {
+			isa = PBXGroup;
+			children = (
+				87EA031F1E6D985100B1E062 /* Controls */,
+				87EA03201E6D985800B1E062 /* Views */,
+			);
+			name = Progress;
+			sourceTree = "<group>";
+		};
+		87EA031F1E6D985100B1E062 /* Controls */ = {
+			isa = PBXGroup;
+			children = (
+				87EA03211E6D987400B1E062 /* ProgressViewControl.h */,
+				87EA03221E6D987400B1E062 /* ProgressViewControl.m */,
+			);
+			name = Controls;
+			sourceTree = "<group>";
+		};
+		87EA03201E6D985800B1E062 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				87EA03281E6D98F200B1E062 /* ProgressItemView */,
+				87EA03271E6D98B000B1E062 /* ProgressView */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		87EA03271E6D98B000B1E062 /* ProgressView */ = {
+			isa = PBXGroup;
+			children = (
+				87EA03241E6D98A900B1E062 /* ProgressView.h */,
+				87EA03251E6D98A900B1E062 /* ProgressView.m */,
+				87EA03291E6D990500B1E062 /* ProgressView.xib */,
+			);
+			name = ProgressView;
+			sourceTree = "<group>";
+		};
+		87EA03281E6D98F200B1E062 /* ProgressItemView */ = {
+			isa = PBXGroup;
+			children = (
+				87EA03301E6DA25F00B1E062 /* Models */,
+				87EA032B1E6D993C00B1E062 /* ProgressItemView.h */,
+				87EA032C1E6D993C00B1E062 /* ProgressItemView.m */,
+				87EA032E1E6D994800B1E062 /* ProgressItemView.xib */,
+			);
+			name = ProgressItemView;
+			sourceTree = "<group>";
+		};
+		87EA03301E6DA25F00B1E062 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				87EA03311E6DA27D00B1E062 /* ProgressItemViewModel.h */,
+				87EA03321E6DA27D00B1E062 /* ProgressItemViewModel.m */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 		8C38E17F19CF164A0007F6F9 /* ErrorViews */ = {
@@ -4916,6 +4990,7 @@
 				CE9AE0431AB6D78200D56481 /* JAMaintenancePage.xib in Resources */,
 				CE9AE0441AB6D78200D56481 /* JAGenericFiltersView.xib in Resources */,
 				6CF4AE821ADEAA290024EC34 /* JACatalogBannerCell.xib in Resources */,
+				87EA032F1E6D994800B1E062 /* ProgressItemView.xib in Resources */,
 				61CBA04B1E51D18F005673F7 /* FormTableViewCell.xib in Resources */,
 				87459C9C1E4F0DCD00743120 /* RadioButtonView.xib in Resources */,
 				9A564CBB1B34273800F23057 /* JASellerRatingsViewController~ipad.xib in Resources */,
@@ -4931,6 +5006,7 @@
 				CE9AE0811AB6D78200D56481 /* JAGrayButtonCell_ipad_landscape.xib in Resources */,
 				87EA030B1E6C697F00B1E062 /* IconTableViewHeaderCell.xib in Resources */,
 				875AD5841E38C0C900584ABF /* RITrackingDebug_Bamilo.plist in Resources */,
+				87EA032A1E6D990500B1E062 /* ProgressView.xib in Resources */,
 				616D65ED1E670984008B07EA /* OrderProductListTableViewCell.xib in Resources */,
 				CE9AE0931AB6D78200D56481 /* JAGrayButtonCell.xib in Resources */,
 				CEA2A1BB1B25D53B00E5973F /* JANewRatingViewController.xib in Resources */,
@@ -5145,6 +5221,8 @@
 			files = (
 				9A08B1131CC7C377003282CB /* JAActionWebViewController.m in Sources */,
 				873369CA1E58A1D200B0B5E5 /* ShippingMethodOption.m in Sources */,
+				87EA03331E6DA27D00B1E062 /* ProgressItemViewModel.m in Sources */,
+				87EA032D1E6D993C00B1E062 /* ProgressItemView.m in Sources */,
 				9A189E611BB31AC70039BC14 /* JAProductInfoHeaderLine.m in Sources */,
 				8714E0661E476DF8004C9B1D /* AddressList.m in Sources */,
 				9A6BC08A1C4907BB00DD9492 /* JAMessageView.m in Sources */,
@@ -5358,6 +5436,7 @@
 				9A3876641BCD0DFD0088B186 /* JAProductReviewsView.m in Sources */,
 				9A189E6A1BB31AF70039BC14 /* JAProductInfoRatingLine.m in Sources */,
 				872230E31E6A9815000748E9 /* AccengageTracker.m in Sources */,
+				87EA03231E6D987400B1E062 /* ProgressViewControl.m in Sources */,
 				61036B441E658329006E12A9 /* OrderListViewController.m in Sources */,
 				CE9ADFBB1AB6D78200D56481 /* JAPDVViewController.m in Sources */,
 				87DAABEF1E55BD9D00445EBB /* AddressTableViewController.m in Sources */,
@@ -5465,6 +5544,7 @@
 				875AD5411E38C0C900584ABF /* RIApi.m in Sources */,
 				CE9ADFF11AB6D78200D56481 /* JARecentSearchesViewController.m in Sources */,
 				CE28A79B1BD9475100B1FADA /* JAMoreMenuViewController.m in Sources */,
+				87EA03261E6D98A900B1E062 /* ProgressView.m in Sources */,
 				616D65EC1E670984008B07EA /* OrderProductListTableViewCell.m in Sources */,
 				9A4077251CE0CDA600313D20 /* NSString+Size.m in Sources */,
 				879F87F51E5058060033FE87 /* PlainTableViewHeaderCell.m in Sources */,
