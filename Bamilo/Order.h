@@ -10,7 +10,13 @@
 #import "OrderProduct.h"
 #import "Address.h"
 
-@protocol Order;
+typedef NS_ENUM(NSUInteger, OrderStatusType) {
+    ORDER_STATUS_NONE = -1,
+    ORDER_STATUS_NEW_ORDER = 0,
+    ORDER_STATUS_REGISTERED,
+    ORDER_STATUS_IN_PROGRESS,
+    ORDER_STATUS_DELIVERED
+};
 
 @interface Order : BaseModel
 @property (strong, nonatomic) NSString *orderId;
@@ -24,4 +30,5 @@
 @property (strong, nonatomic) NSArray<OrderProduct> *products;
 @property (nonatomic, strong) Address *shippingAddress;
 @property (nonatomic, strong) Address *billingAddress;
+@property (assign, nonatomic) OrderStatusType status;
 @end

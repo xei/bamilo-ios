@@ -23,7 +23,11 @@
 -(void)awakeFromNib {
     [super awakeFromNib];
     
+    self.centerLineView.backgroundColor = [UIColor withRepeatingRGBA:222 alpha:1.0];
+    
     _progressItemViews = [NSMutableArray new];
+    
+    self.centerLineView.alpha = 0;
 }
 
 -(void)updateWithModel:(NSArray<ProgressItemViewModel *> *)items {
@@ -34,6 +38,12 @@
 
 -(void)layoutSubviews {
     [super layoutSubviews];
+    
+    if(_progressItemViews.count) {
+        [UIView animateWithDuration:0.4 animations:^{
+            self.centerLineView.alpha = 1.0f;
+        }];
+    }
     
     float itemMarginX = self.centerLineView.frame.size.width / (_items.count - 1);
     float itemPositionX = self.centerLineView.frame.origin.x;

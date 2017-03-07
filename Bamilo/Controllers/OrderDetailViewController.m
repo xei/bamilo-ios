@@ -17,7 +17,10 @@
 @property (nonatomic, weak) IBOutlet UITableView *tableview;
 @end
 
-@implementation OrderDetailViewController
+@implementation OrderDetailViewController {
+@private
+    ProgressItemImageSet *_orderRegisteredImageSet, *_orderInProgressImageSet, *_orderDeliveredImageSet;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -28,12 +31,9 @@
     [self.tableview registerNib:[UINib nibWithNibName:[PlainTableViewHeaderCell nibName] bundle:nil] forCellReuseIdentifier: [PlainTableViewHeaderCell nibName]];
     [self.tableview registerNib:[UINib nibWithNibName:[OrderProductListTableViewCell nibName] bundle:nil] forCellReuseIdentifier: [OrderProductListTableViewCell nibName]];
     
-    //PROGRESS VIEW
-    ProgressItemViewModel *progressItemOrderRegistered = [ProgressItemViewModel itemWithIcons:[ProgressItemImageSet setWith:@"order-registered-pending" active:@"order-registered-active" done:@"order-registered-done"] title:@"ثبت سفارش" type:PROGRESS_ITEM_DONE isIndicator:YES];
-    ProgressItemViewModel *progressItemOrderInProgress = [ProgressItemViewModel itemWithIcons:[ProgressItemImageSet setWith:@"order-inprogress-pending" active:@"order-inprogress-active" done:@"order-inprogress-done"] title:@"در حال تامین" type:PROGRESS_ITEM_ACTIVE isIndicator:YES];
-    ProgressItemViewModel *progressItemOrderDelivered = [ProgressItemViewModel itemWithIcons:[ProgressItemImageSet setWith:@"order-delivered-pending" active:@"order-delivered-active" done:@"order-delivered-done"] title:@"ارسال شد" type:PROGRESS_ITEM_PENDING isIndicator:YES];
-    
-    [self.progressViewControl updateWithModel:@[ progressItemOrderDelivered, progressItemOrderInProgress, progressItemOrderRegistered ]];
+    _orderRegisteredImageSet = [ProgressItemImageSet setWith:@"order-registered-pending" active:@"order-registered-active" done:@"order-registered-done"];
+    _orderInProgressImageSet = [ProgressItemImageSet setWith:@"order-inprogress-pending" active:@"order-inprogress-active" done:@"order-inprogress-done"];
+    _orderDeliveredImageSet = [ProgressItemImageSet setWith:@"order-delivered-pending" active:@"order-delivered-active" done:@"order-delivered-done"];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -42,6 +42,10 @@
     [[DataManager sharedInstance] getOrder:self forOrderId:self.order.orderId completion:^(id data, NSError *error) {
         if (error == nil) {
             [self bind:data forRequestId:0];
+            NSArray *progressViewContent = [self getProgressViewControlContentForOrder:self.order];
+            if(RI_IS_RTL) {
+                [self.progressViewControl updateWithModel:[[progressViewContent reverseObjectEnumerator] allObjects]];
+            }
         } else {
             if(![self showNotificationBar:error isSuccess:NO]) {
                 //Donno what else should we do here
@@ -52,6 +56,7 @@
 
 - (void)updateNavBar {
     [super updateNavBar];
+    
     self.navBarLayout.showLogo = NO;
     self.navBarLayout.title = STRING_ORDER_STATUS;
     self.navBarLayout.showBackButton = YES;
@@ -114,12 +119,45 @@
 }
 
 #pragma mark - bind data to view
-
 - (void)bind:(id)data forRequestId:(int)rid {
     self.order = data;
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableview reloadData];
     });
+}
+
+#pragma mark - Helpers
+-(NSArray *) getProgressViewControlContentForOrder:(Order *)order {
+    NSArray *progressViewControlContent = @[
+       [ProgressItemViewModel itemWithIcons:_orderRegisteredImageSet title:STRING_REGISTER_ORDER type:PROGRESS_ITEM_PENDING isIndicator:YES],
+       [ProgressItemViewModel itemWithIcons:_orderInProgressImageSet title:STRING_IN_PROGRESS type:PROGRESS_ITEM_PENDING isIndicator:YES],
+       [ProgressItemViewModel itemWithIcons:_orderDeliveredImageSet title:STRING_SENT type:PROGRESS_ITEM_PENDING isIndicator:YES]
+    ];
+    
+    switch (order.status) {
+        case 0 ... 1: {
+            ((ProgressItemViewModel *)progressViewControlContent[0]).type = PROGRESS_ITEM_ACTIVE;
+        }
+        break;
+    
+        case 2: {
+            ((ProgressItemViewModel *)progressViewControlContent[0]).type = PROGRESS_ITEM_DONE;
+            ((ProgressItemViewModel *)progressViewControlContent[1]).type = PROGRESS_ITEM_ACTIVE;
+        }
+        break;
+            
+        case 3: {
+            ((ProgressItemViewModel *)progressViewControlContent[0]).type = PROGRESS_ITEM_DONE;
+            ((ProgressItemViewModel *)progressViewControlContent[1]).type = PROGRESS_ITEM_DONE;
+            ((ProgressItemViewModel *)progressViewControlContent[1]).type = PROGRESS_ITEM_ACTIVE;
+        }
+        break;
+            
+        default:
+            break;
+    }
+    
+    return progressViewControlContent;
 }
 
 @end
