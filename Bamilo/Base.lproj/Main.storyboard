@@ -148,25 +148,36 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mEm-H8-v4G">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="110" width="375" height="557"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ckZ-6C-ygP" customClass="ProgressViewControl">
+                                <rect key="frame" x="0.0" y="20" width="375" height="90"/>
+                                <color key="backgroundColor" red="0.0" green="0.62931185960000002" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="90" id="P1z-gV-RtE"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="mEm-H8-v4G" firstAttribute="top" secondItem="YIT-h9-H01" secondAttribute="bottom" id="Udv-g2-04u"/>
+                            <constraint firstItem="ckZ-6C-ygP" firstAttribute="leading" secondItem="nzR-eO-2GD" secondAttribute="leading" id="KTm-Cm-sk9"/>
                             <constraint firstItem="fMd-d8-qCL" firstAttribute="top" secondItem="mEm-H8-v4G" secondAttribute="bottom" id="WNl-55-3iC"/>
+                            <constraint firstItem="mEm-H8-v4G" firstAttribute="top" secondItem="ckZ-6C-ygP" secondAttribute="bottom" id="dCr-cm-ycd"/>
                             <constraint firstAttribute="trailing" secondItem="mEm-H8-v4G" secondAttribute="trailing" id="jmT-cd-GAA"/>
                             <constraint firstItem="mEm-H8-v4G" firstAttribute="leading" secondItem="nzR-eO-2GD" secondAttribute="leading" id="o3r-qe-On3"/>
+                            <constraint firstItem="ckZ-6C-ygP" firstAttribute="top" secondItem="YIT-h9-H01" secondAttribute="bottom" id="t2C-cT-k94"/>
+                            <constraint firstAttribute="trailing" secondItem="ckZ-6C-ygP" secondAttribute="trailing" id="zpy-lI-CbY"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="progressViewControl" destination="ckZ-6C-ygP" id="vJ2-Z6-gmX"/>
                         <outlet property="tableview" destination="mEm-H8-v4G" id="Pbi-Ul-hgi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jsm-mz-2fa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2580" y="576"/>
+            <point key="canvasLocation" x="-2580" y="575.26236881559225"/>
         </scene>
         <!--Categories Side Menu View Controller-->
         <scene sceneID="YGD-dt-ZjG">
@@ -281,7 +292,7 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9pj-z6-1RN">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="643.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="644"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="با ما در ارتباط باشید " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cWS-gt-HOD" userLabel="ContactUsLabel">
                                                 <rect key="frame" x="10" y="15" width="355" height="50"/>
@@ -305,13 +316,13 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="banner" translatesAutoresizingMaskIntoConstraints="NO" id="HEN-1E-yIl" userLabel="ContactUsBanner">
-                                                <rect key="frame" x="10" y="136" width="355" height="177.5"/>
+                                                <rect key="frame" x="10" y="136" width="355" height="178"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="HEN-1E-yIl" secondAttribute="height" multiplier="2:1" id="vE7-cE-Ozm"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="نشانی" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VL6-Fv-9jX" userLabel="AddressTitleLabel">
-                                                <rect key="frame" x="10" y="341.5" width="355" height="40"/>
+                                                <rect key="frame" x="10" y="342" width="355" height="40"/>
                                                 <color key="backgroundColor" red="0.8967582583" green="0.8967582583" blue="0.8967582583" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="ScV-Ue-ufP"/>
@@ -321,7 +332,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SRv-W2-fPK" userLabel="AddressLabel">
-                                                <rect key="frame" x="10" y="391.5" width="355" height="106"/>
+                                                <rect key="frame" x="10" y="392" width="355" height="106"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="106" id="HtQ-Mc-wTL"/>
                                                 </constraints>
@@ -330,7 +341,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NF1-Gu-L9D" userLabel="ContactUsButtonView">
-                                                <rect key="frame" x="38" y="525.5" width="300" height="44"/>
+                                                <rect key="frame" x="38" y="526" width="300" height="44"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vWl-gU-ciC" userLabel="ContactUsButton">
                                                         <rect key="frame" x="0.0" y="0.0" width="300" height="44"/>
@@ -385,7 +396,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o1u-H1-J6t" userLabel="ReportBugButtonView">
-                                                <rect key="frame" x="38" y="584.5" width="300" height="44"/>
+                                                <rect key="frame" x="38" y="585" width="300" height="44"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xpw-Yz-NpH" userLabel="ReportBugButton">
                                                         <rect key="frame" x="0.0" y="0.0" width="300" height="44"/>
@@ -515,25 +526,25 @@
                                         <rect key="frame" x="0.0" y="549" width="375" height="75"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="مجموع خرید:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iiG-ZB-Lk2">
-                                                <rect key="frame" x="287.5" y="10" width="67.5" height="21.5"/>
+                                                <rect key="frame" x="287" y="10" width="68" height="22"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <color key="textColor" red="0.33725490196078434" green="0.33725490196078434" blue="0.33725490196078434" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="مجموع تخفیف:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QIn-JG-WlR">
-                                                <rect key="frame" x="277" y="43.5" width="78" height="21.5"/>
+                                                <rect key="frame" x="277" y="43" width="78" height="22"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="در حال محاسبه" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vgt-Lp-1Ci" userLabel="total price">
-                                                <rect key="frame" x="20" y="10" width="257.5" height="21.5"/>
+                                                <rect key="frame" x="20" y="10" width="257" height="22"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="در حال محاسبه" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Co6-Dd-SGv" userLabel="total discounted Price">
-                                                <rect key="frame" x="20" y="43.5" width="247" height="21.5"/>
+                                                <rect key="frame" x="20" y="43" width="247" height="22"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -843,7 +854,7 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="متاسفانه برای کلمه شما نتیجه یافت نشد" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lwx-IM-0oN">
-                                                <rect key="frame" x="17.5" y="80" width="254.5" height="27"/>
+                                                <rect key="frame" x="17" y="80" width="255" height="27"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="14"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -911,7 +922,7 @@
             <objects>
                 <navigationController storyboardIdentifier="menuViewController" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="tA5-pZ-pB4" userLabel="Side Menu Navigation Controller" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="UvQ-KB-VPd">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="UvQ-KB-VPd">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -929,7 +940,7 @@
             <objects>
                 <navigationController storyboardIdentifier="JACenterNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="t6o-pS-UXi" customClass="JACenterNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="tCF-5Z-jLJ">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="tCF-5Z-jLJ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.91764705882352937" green="0.91764705882352937" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1056,7 +1067,7 @@
                                                 </connections>
                                             </switch>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="فقط با تخفیف ها" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gEn-nz-ntR">
-                                                <rect key="frame" x="39.5" y="15.5" width="85.5" height="21.5"/>
+                                                <rect key="frame" x="39" y="15" width="86" height="22"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1281,7 +1292,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="0V7-j2-mJV" userLabel="Application Navigation Controller" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="S2r-Lu-SWl">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="S2r-Lu-SWl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
