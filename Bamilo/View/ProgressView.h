@@ -11,6 +11,8 @@
 
 @interface ProgressView : UIView
 
+@property (weak, nonatomic) id<ProgressViewDelegate> delegate;
+
 -(void) updateWithModel:(NSArray<ProgressItemViewModel *> *)items;
 
 @end

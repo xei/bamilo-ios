@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "ProgressItemViewModel.h"
+#import "ProgressViewDelegate.h"
 
 @interface ProgressItemView : UIView
+
+@property (weak, nonatomic) id<ProgressViewDelegate> delegate;
 
 -(void) updateWithModel:(ProgressItemViewModel *)item;
 

@@ -55,6 +55,8 @@
     for(ProgressItemViewModel *model in _items) {
         ProgressItemView *_progressView = [[[NSBundle mainBundle] loadNibNamed:@"ProgressItemView" owner:self options:nil] lastObject];
         [_progressView updateWithModel:model];
+        [_progressView setDelegate:self.delegate];
+        [_progressView setTag:[_items indexOfObject:model] + 1];
         [_progressItemViews addObject:_progressView];
         [self addSubview:_progressView];
     }

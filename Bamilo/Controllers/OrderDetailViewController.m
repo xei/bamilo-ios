@@ -29,9 +29,9 @@
     [self.tableview registerNib:[UINib nibWithNibName:[OrderProductListTableViewCell nibName] bundle:nil] forCellReuseIdentifier: [OrderProductListTableViewCell nibName]];
     
     //PROGRESS VIEW
-    ProgressItemViewModel *progressItemOrderRegistered = [ProgressItemViewModel itemWithIcons:[ProgressItemImageSet setWith:@"order-registered-pending" active:@"order-registered-active" done:@"order-registered-done"] title:@"ثبت سفارش" type:PROGRESS_ITEM_DONE];
-    ProgressItemViewModel *progressItemOrderInProgress = [ProgressItemViewModel itemWithIcons:[ProgressItemImageSet setWith:@"order-inprogress-pending" active:@"order-inprogress-active" done:@"order-inprogress-done"] title:@"در حال تامین" type:PROGRESS_ITEM_ACTIVE];
-    ProgressItemViewModel *progressItemOrderDelivered = [ProgressItemViewModel itemWithIcons:[ProgressItemImageSet setWith:@"order-delivered-pending" active:@"order-delivered-active" done:@"order-delivered-done"] title:@"ارسال شد" type:PROGRESS_ITEM_PENDING];
+    ProgressItemViewModel *progressItemOrderRegistered = [ProgressItemViewModel itemWithIcons:[ProgressItemImageSet setWith:@"order-registered-pending" active:@"order-registered-active" done:@"order-registered-done"] title:@"ثبت سفارش" type:PROGRESS_ITEM_DONE isIndicator:YES];
+    ProgressItemViewModel *progressItemOrderInProgress = [ProgressItemViewModel itemWithIcons:[ProgressItemImageSet setWith:@"order-inprogress-pending" active:@"order-inprogress-active" done:@"order-inprogress-done"] title:@"در حال تامین" type:PROGRESS_ITEM_ACTIVE isIndicator:YES];
+    ProgressItemViewModel *progressItemOrderDelivered = [ProgressItemViewModel itemWithIcons:[ProgressItemImageSet setWith:@"order-delivered-pending" active:@"order-delivered-active" done:@"order-delivered-done"] title:@"ارسال شد" type:PROGRESS_ITEM_PENDING isIndicator:YES];
     
     [self.progressViewControl updateWithModel:@[ progressItemOrderDelivered, progressItemOrderInProgress, progressItemOrderRegistered ]];
 }

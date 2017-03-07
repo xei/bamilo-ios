@@ -23,11 +23,12 @@
 
 @implementation ProgressItemViewModel
 
-+(instancetype) itemWithIcons:(ProgressItemImageSet *)icons title:(NSString *)title type:(ProgressItemType)type {
++(instancetype) itemWithIcons:(ProgressItemImageSet *)icons title:(NSString *)title type:(ProgressItemType)type isIndicator:(BOOL)isIndicator {
     ProgressItemViewModel *progressItemViewModel = [ProgressItemViewModel new];
     progressItemViewModel.icons = icons;
     progressItemViewModel.title = title;
     progressItemViewModel.type = type;
+    progressItemViewModel.isIndicator = isIndicator;
     
     return progressItemViewModel;
 }

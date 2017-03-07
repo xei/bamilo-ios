@@ -28,7 +28,8 @@ typedef NS_ENUM(NSUInteger, ProgressItemType) {
 @property (strong, nonatomic) ProgressItemImageSet *icons;
 @property (copy, nonatomic) NSString *title;
 @property (assign, nonatomic) ProgressItemType type;
+@property (assign, nonatomic) BOOL isIndicator;
 
-+(instancetype) itemWithIcons:(ProgressItemImageSet *)icons title:(NSString *)title type:(ProgressItemType)type;
++(instancetype) itemWithIcons:(ProgressItemImageSet *)icons title:(NSString *)title type:(ProgressItemType)type isIndicator:(BOOL)isIndicator;
 
 @end

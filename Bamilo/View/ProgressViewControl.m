@@ -30,6 +30,7 @@
 
 -(void)updateWithModel:(NSArray<ProgressItemViewModel *> *)items {
     [self.progressView updateWithModel:items];
+    [self.progressView setDelegate:self.delegate];
 }
 
 @end

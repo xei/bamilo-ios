@@ -8,8 +8,11 @@
 
 #import "BaseViewControl.h"
 #import "ProgressItemViewModel.h"
+#import "ProgressViewDelegate.h"
 
 @interface ProgressViewControl : BaseViewControl
+
+@property (weak, nonatomic) id<ProgressViewDelegate> delegate;
 
 -(void) updateWithModel:(NSArray<ProgressItemViewModel *> *)items;
 

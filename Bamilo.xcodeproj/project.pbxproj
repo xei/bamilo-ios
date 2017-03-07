@@ -1051,6 +1051,7 @@
 		87B685051E4AFB6B0042C09F /* ReceiptView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptView.h; sourceTree = "<group>"; };
 		87B685061E4AFB6B0042C09F /* ReceiptView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptView.m; sourceTree = "<group>"; };
 		87B685081E4AFB740042C09F /* ReceiptView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceiptView.xib; sourceTree = "<group>"; };
+		87C304BE1E6EE22200614305 /* ProgressViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressViewDelegate.h; sourceTree = "<group>"; };
 		87C69DA91E38B78E0026018F /* NSString+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Extensions.h"; path = "Categories/NSString+Extensions.h"; sourceTree = "<group>"; };
 		87C69DAA1E38B78E0026018F /* NSString+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Extensions.m"; path = "Categories/NSString+Extensions.m"; sourceTree = "<group>"; };
 		87C69DAC1E38B7A50026018F /* UIColor+Format.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+Format.h"; path = "Categories/UIColor+Format.h"; sourceTree = "<group>"; };
@@ -3949,6 +3950,7 @@
 		87EA03271E6D98B000B1E062 /* ProgressView */ = {
 			isa = PBXGroup;
 			children = (
+				87C304BE1E6EE22200614305 /* ProgressViewDelegate.h */,
 				87EA03241E6D98A900B1E062 /* ProgressView.h */,
 				87EA03251E6D98A900B1E062 /* ProgressView.m */,
 				87EA03291E6D990500B1E062 /* ProgressView.xib */,

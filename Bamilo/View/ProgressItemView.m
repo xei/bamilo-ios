@@ -36,6 +36,7 @@
 }
 
 - (IBAction)iconButtonTapped:(id)sender {
+    [self.delegate progressViewItemTapped:sender];
 }
 
 #pragma mark - Helpers
@@ -50,7 +51,7 @@
         break;
             
         case PROGRESS_ITEM_ACTIVE:
-            [self.iconButton setEnabled:YES];
+            [self.iconButton setEnabled:(model.isIndicator ? NO : YES)];
             [self.iconButton setImage:[UIImage imageNamed:model.icons.active] forState:UIControlStateNormal];
             [self.textLabel applyStyle:kFontRegularName fontSize:12.0f color:cCOLOR_ACTIVE];
             [self.buttonInnerContainerView setBackgroundColor:[UIColor whiteColor]];
@@ -58,7 +59,7 @@
         break;
             
         case PROGRESS_ITEM_DONE:
-            [self.iconButton setEnabled:YES];
+            [self.iconButton setEnabled:(model.isIndicator ? NO : YES)];
             [self.iconButton setImage:[UIImage imageNamed:model.icons.done] forState:UIControlStateNormal];
             [self.textLabel applyStyle:kFontRegularName fontSize:10.0f color:cCOLOR_ACTIVE];
             [self.buttonInnerContainerView setBackgroundColor:cCOLOR_ACTIVE];
