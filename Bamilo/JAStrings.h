@@ -500,5 +500,6 @@
 #define STRING_REGISTER_ORDER RILocalizedString(@"register_order", nil)
 #define STRING_IN_PROGRESS RILocalizedString(@"in_progress", nil)
 #define STRING_SENT RILocalizedString(@"sent", nil)
+#define STRING_CANCELLED RILocalizedString(@"cancelled", nil)
 
 #endif

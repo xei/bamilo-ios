@@ -91,8 +91,10 @@
         return ORDER_STATUS_REGISTERED;
     } else if([statusString containsString:@"ارسال شد"]) { //2
         return ORDER_STATUS_IN_PROGRESS;
-    } else if([statusString containsString:@"تحویل داده شد"]) { //2
+    } else if([statusString containsString:@"تحویل داده شد"]) { //3
         return ORDER_STATUS_DELIVERED;
+    } else if([statusString containsString:@"لغو شده"]) { //4
+        return ORDER_STATUS_CANCELLED;
     }
     
     return -1;

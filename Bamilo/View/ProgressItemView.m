@@ -10,6 +10,8 @@
 
 #define cCOLOR_ACTIVE [UIColor withRGBA:0 green:160 blue:0 alpha:1.0]
 #define cCOLOR_PASSIVE [UIColor withRepeatingRGBA:222 alpha:1.0]
+#define cCOLOR_ERROR [UIColor withHexString:@"#B90F00"]
+#define cCOLOR_ERROR_LIGHT [UIColor withHexString:@"#FEF3F2"]
 
 @interface ProgressItemView()
 @property (weak, nonatomic) IBOutlet UIView *buttonInnerContainerView;
@@ -31,7 +33,6 @@
 }
 
 -(void)updateWithModel:(ProgressItemViewModel *)item {
-    [self.textLabel setText:item.title];
     [self updateAppearanceForModel:item];
 }
 
@@ -41,6 +42,8 @@
 
 #pragma mark - Helpers
 -(void) updateAppearanceForModel:(ProgressItemViewModel *)model {
+    [self.textLabel setText:model.title];
+    
     switch (model.type) {
         case PROGRESS_ITEM_PENDING:
             [self.iconButton setEnabled:NO];
@@ -64,6 +67,15 @@
             [self.textLabel applyStyle:kFontRegularName fontSize:10.0f color:cCOLOR_ACTIVE];
             [self.buttonInnerContainerView setBackgroundColor:cCOLOR_ACTIVE];
             [self.buttonOutterContainerView setBackgroundColor:cCOLOR_ACTIVE];
+        break;
+            
+        case PROGRESS_ITEM_ERROR:
+            [self.iconButton setEnabled:NO];
+            [self.iconButton setImage:[UIImage imageNamed:model.icons.error] forState:UIControlStateNormal];
+            [self.textLabel setText:model.errorTitle];
+            [self.textLabel applyStyle:kFontRegularName fontSize:12.0f color:cCOLOR_ERROR];
+            [self.buttonInnerContainerView setBackgroundColor:cCOLOR_ERROR_LIGHT];
+            [self.buttonOutterContainerView setBackgroundColor:cCOLOR_ERROR];
         break;
     }
 }
