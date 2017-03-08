@@ -834,3 +834,9 @@
 "product_quantity_post" = "عدد";
 
 "order_product_quantity" = "تعداد سفارش";
+
+"register_order" = "ثبت سفارش";
+
+"in_progress" = "در حال تامین";
+
+"sent" = "ارسال شد";

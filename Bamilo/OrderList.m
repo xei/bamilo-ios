@@ -12,18 +12,18 @@
 @implementation OrderList
 + (JSONKeyMapper *)keyMapper {
     return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{
-                                                                  @"orders":@"orders",
-                                                                  @"totalOrdersCount": @"total_orders"
-                                                                  }];
+        @"orders":@"orders",
+        @"totalOrdersCount": @"total_orders"
+    }];
 }
 
 - (BOOL)mergeFromDictionary:(NSDictionary *)dict useKeyMapping:(BOOL)useKeyMapping error:(NSError *__autoreleasing *)error {
     [super mergeFromDictionary:dict useKeyMapping:useKeyMapping error:error];
     
-    
     [self.orders enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [(Order *)obj mergeFromDictionary:[dict objectForKey:@"orders"][idx] useKeyMapping:YES error:nil];
     }];
+    
     return YES;
 }
 @end

@@ -14,13 +14,18 @@
 #import "NSDate+Extensions.h"
 #import "RIProduct.h"
 #import "LoadingManager.h"
+#import "ProgressViewControl.h"
 
 @interface OrderDetailViewController () <OrderProductListTableViewCellDelegate>
+@property (weak, nonatomic) IBOutlet ProgressViewControl *progressViewControl;
 @property (nonatomic, weak) IBOutlet UITableView *tableview;
 @property (nonatomic, strong) NSArray *orderDetailInoArray;
 @end
 
-@implementation OrderDetailViewController
+@implementation OrderDetailViewController {
+@private
+    ProgressItemImageSet *_orderRegisteredImageSet, *_orderInProgressImageSet, *_orderDeliveredImageSet;
+}
 
 - (NSArray *)orderDetailInoArray {
     if (!_orderDetailInoArray) {
@@ -36,7 +41,12 @@
     
     [self.tableview registerNib:[UINib nibWithNibName:[PlainTableViewHeaderCell nibName] bundle:nil] forCellReuseIdentifier: [PlainTableViewHeaderCell nibName]];
     [self.tableview registerNib:[UINib nibWithNibName:[OrderProductListTableViewCell nibName] bundle:nil] forCellReuseIdentifier: [OrderProductListTableViewCell nibName]];
+
     [self.tableview registerNib:[UINib nibWithNibName:[OrderDetailInformationTableViewCell nibName] bundle:nil] forCellReuseIdentifier: [OrderDetailInformationTableViewCell nibName]];
+    
+    _orderRegisteredImageSet = [ProgressItemImageSet setWith:@"order-registered-pending" active:@"order-registered-active" done:@"order-registered-done"];
+    _orderInProgressImageSet = [ProgressItemImageSet setWith:@"order-inprogress-pending" active:@"order-inprogress-active" done:@"order-inprogress-done"];
+    _orderDeliveredImageSet = [ProgressItemImageSet setWith:@"order-delivered-pending" active:@"order-delivered-active" done:@"order-delivered-done"];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -45,6 +55,10 @@
     [[DataManager sharedInstance] getOrder:self forOrderId:self.order.orderId completion:^(id data, NSError *error) {
         if (error == nil) {
             [self bind:data forRequestId:0];
+            NSArray *progressViewContent = [self getProgressViewControlContentForOrder:self.order];
+            if(RI_IS_RTL) {
+                [self.progressViewControl updateWithModel:[[progressViewContent reverseObjectEnumerator] allObjects]];
+            }
         } else {
             if(![self showNotificationBar:error isSuccess:NO]) {
                 //Donno what else should we do here
@@ -55,6 +69,7 @@
 
 - (void)updateNavBar {
     [super updateNavBar];
+    
     self.navBarLayout.showLogo = NO;
     self.navBarLayout.title = STRING_ORDER_STATUS;
     self.navBarLayout.showBackButton = YES;
@@ -115,7 +130,6 @@
 }
 
 #pragma mark - bind data to view
-
 - (void)bind:(id)data forRequestId:(int)rid {
     self.order = data;
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -145,11 +159,52 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowProductSpecificationScreenNotification object:nil userInfo:userInfo];
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
         [[LoadingManager sharedInstance] hideLoading];
-        if ([self showNotificationBarMessage:error[0] isSuccess:NO]) {
+        if (error.count && ![self showNotificationBarMessage:error[0] isSuccess:NO]) {
             
         }
     }];
     
+}
+
+#pragma mark - Helpers
+-(NSArray *) getProgressViewControlContentForOrder:(Order *)order {
+    NSArray *progressViewControlContent = @[
+       [ProgressItemViewModel itemWithIcons:_orderRegisteredImageSet title:STRING_REGISTER_ORDER type:PROGRESS_ITEM_PENDING isIndicator:YES],
+       [ProgressItemViewModel itemWithIcons:_orderInProgressImageSet title:STRING_IN_PROGRESS type:PROGRESS_ITEM_PENDING isIndicator:YES],
+       [ProgressItemViewModel itemWithIcons:_orderDeliveredImageSet title:STRING_SENT type:PROGRESS_ITEM_PENDING isIndicator:YES]
+    ];
+    
+    switch (order.status) {
+        case 0: {
+            ((ProgressItemViewModel *)progressViewControlContent[0]).type = PROGRESS_ITEM_ACTIVE;
+        }
+        break;
+    
+        case 1: {
+            ((ProgressItemViewModel *)progressViewControlContent[0]).type = PROGRESS_ITEM_DONE;
+            ((ProgressItemViewModel *)progressViewControlContent[1]).type = PROGRESS_ITEM_ACTIVE;
+        }
+        break;
+            
+        case 2: {
+            ((ProgressItemViewModel *)progressViewControlContent[0]).type = PROGRESS_ITEM_DONE;
+            ((ProgressItemViewModel *)progressViewControlContent[1]).type = PROGRESS_ITEM_DONE;
+            ((ProgressItemViewModel *)progressViewControlContent[2]).type = PROGRESS_ITEM_ACTIVE;
+        }
+        break;
+            
+        case 3: {
+            ((ProgressItemViewModel *)progressViewControlContent[0]).type = PROGRESS_ITEM_DONE;
+            ((ProgressItemViewModel *)progressViewControlContent[1]).type = PROGRESS_ITEM_DONE;
+            ((ProgressItemViewModel *)progressViewControlContent[2]).type = PROGRESS_ITEM_DONE;
+        }
+        break;
+            
+        default:
+            break;
+    }
+    
+    return progressViewControlContent;
 }
 
 @end

@@ -497,4 +497,8 @@
 #define STRING_TOTAL_COST_INFO RILocalizedString(@"total_cost", nil)
 #define STRING_PRODUCT_QUANTITY_POSTFIX RILocalizedString(@"product_quantity_postfix", nil)
 #define STRING_ORDER_PRODUCT_QUANTITY RILocalizedString(@"order_product_quantity", nil)
+#define STRING_REGISTER_ORDER RILocalizedString(@"register_order", nil)
+#define STRING_IN_PROGRESS RILocalizedString(@"in_progress", nil)
+#define STRING_SENT RILocalizedString(@"sent", nil)
+
 #endif

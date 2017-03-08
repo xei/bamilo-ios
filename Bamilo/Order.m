@@ -67,7 +67,35 @@
         }
     }
     
+    if(self.products.count) {
+        self.status = [self getOrderStatusFromOrderProducts:self.products];
+    }
+    
     return YES;
+}
+
+#pragma mark - Helpers
+-(OrderStatusType) getOrderStatusFromOrderProducts:(NSArray<OrderProduct> *)products {
+    int currentOrderStep = 99;
+    for(OrderProduct *product in products) {
+        currentOrderStep = MIN(currentOrderStep, [self getStatusIndexFromStatusString:product.status.label]);
+    }
+    
+    return (OrderStatusType)currentOrderStep;
+}
+
+-(int) getStatusIndexFromStatusString:(NSString *)statusString {
+    if([statusString containsString:@"سفارش جدید"]) { //0
+        return ORDER_STATUS_NEW_ORDER;
+    } else if([statusString containsString:@"در حال پردازش"]) { //1
+        return ORDER_STATUS_REGISTERED;
+    } else if([statusString containsString:@"ارسال شد"]) { //2
+        return ORDER_STATUS_IN_PROGRESS;
+    } else if([statusString containsString:@"تحویل داده شد"]) { //2
+        return ORDER_STATUS_DELIVERED;
+    }
+    
+    return -1;
 }
 
 @end

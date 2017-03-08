@@ -9,6 +9,8 @@
 #import "BaseModel.h"
 #import "Order.h"
 
+@protocol Order;
+
 @interface OrderList : BaseModel
 @property (nonatomic) NSInteger totalOrdersCount;
 @property (nonatomic, strong) NSArray<Order>* orders;
