@@ -67,8 +67,8 @@
 
 - (IBAction)textFieldEditingDidEnd:(UITextField *)sender {
     NSString *senderValueString = [sender.text getPriceStringFromFormatedPrice];
-    NSString *lowerTextFieldValue = [self.lowerSelectedPriceUITextField.text stringByReplacingOccurrencesOfString:@"," withString:@""];
-    NSString *upperTextFieldValue = [self.upperSelectedPriceUITextField.text stringByReplacingOccurrencesOfString:@"," withString:@""];
+    NSString *lowerTextFieldValue = [self.lowerSelectedPriceUITextField.text getPriceStringFromFormatedPrice];
+    NSString *upperTextFieldValue = [self.upperSelectedPriceUITextField.text getPriceStringFromFormatedPrice];
     
     float validateValue = MAX(self.priceFilter.minPrice, MIN(self.priceFilter.maxPrice, senderValueString.floatValue));
     float valueToBeSet;
@@ -81,6 +81,7 @@
     }
     
     sender.text = [[[NSString stringWithFormat:@"%.0f", valueToBeSet] formatPrice] numbersToPersian];
+    [self saveOptions];
 }
 
 - (IBAction)textFieldEditingDidChanged:(UITextField *)sender {

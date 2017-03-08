@@ -218,6 +218,7 @@ const int subCatButtonVisibleHeight = 40;
 }
 
 - (IBAction) applyButtonPressed {
+    [self.view endEditing:YES];
     if (self.delegate && [self.delegate respondsToSelector:@selector(updatedFilters:)]) {
         [self.navigationController popViewControllerAnimated:true];
         [self.delegate updatedFilters:self.filtersArray];
