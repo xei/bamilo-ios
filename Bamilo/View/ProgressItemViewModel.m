@@ -10,11 +10,12 @@
 
 @implementation ProgressItemImageSet
 
-+(instancetype) setWith:(NSString *)pending active:(NSString *)active done:(NSString *)done {
++(instancetype) setWith:(NSString *)pending active:(NSString *)active done:(NSString *)done error:(NSString *)error {
     ProgressItemImageSet *progressItemImageSet = [ProgressItemImageSet new];
     progressItemImageSet.pending = pending;
     progressItemImageSet.active = active;
     progressItemImageSet.done = done;
+    progressItemImageSet.error = error;
     
     return progressItemImageSet;
 }
@@ -23,11 +24,11 @@
 
 @implementation ProgressItemViewModel
 
-+(instancetype) itemWithIcons:(ProgressItemImageSet *)icons title:(NSString *)title type:(ProgressItemType)type isIndicator:(BOOL)isIndicator {
++(instancetype) itemWithIcons:(ProgressItemImageSet *)icons title:(NSString *)title errorTitle:(NSString *)errorTitle isIndicator:(BOOL)isIndicator {
     ProgressItemViewModel *progressItemViewModel = [ProgressItemViewModel new];
     progressItemViewModel.icons = icons;
     progressItemViewModel.title = title;
-    progressItemViewModel.type = type;
+    progressItemViewModel.errorTitle = errorTitle;
     progressItemViewModel.isIndicator = isIndicator;
     
     return progressItemViewModel;

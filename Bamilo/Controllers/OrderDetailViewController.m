@@ -44,9 +44,9 @@
 
     [self.tableview registerNib:[UINib nibWithNibName:[OrderDetailInformationTableViewCell nibName] bundle:nil] forCellReuseIdentifier: [OrderDetailInformationTableViewCell nibName]];
     
-    _orderRegisteredImageSet = [ProgressItemImageSet setWith:@"order-registered-pending" active:@"order-registered-active" done:@"order-registered-done"];
-    _orderInProgressImageSet = [ProgressItemImageSet setWith:@"order-inprogress-pending" active:@"order-inprogress-active" done:@"order-inprogress-done"];
-    _orderDeliveredImageSet = [ProgressItemImageSet setWith:@"order-delivered-pending" active:@"order-delivered-active" done:@"order-delivered-done"];
+    _orderRegisteredImageSet = [ProgressItemImageSet setWith:@"order-registered-pending" active:@"order-registered-active" done:@"order-registered-done" error:nil];
+    _orderInProgressImageSet = [ProgressItemImageSet setWith:@"order-inprogress-pending" active:@"order-inprogress-active" done:@"order-inprogress-done" error:nil];
+    _orderDeliveredImageSet = [ProgressItemImageSet setWith:@"order-delivered-pending" active:@"order-delivered-active" done:@"order-delivered-done" error:@"order-delivered-error"];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -76,7 +76,6 @@
 }
 
 #pragma mark - UITableViewDataSource & UITableViewDelegate
-
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     NSString *headerTitle = section == 0 ? STRING_ORDER_DETAILS : STRING_ORDER_PRODUCT_DETAIL;
     PlainTableViewHeaderCell *headerCell = [self.tableview dequeueReusableCellWithIdentifier:[PlainTableViewHeaderCell nibName]];
@@ -137,12 +136,12 @@
     });
     
     self.orderDetailInoArray = @[
-                                 @{STRING_ORDER_ID: self.order.orderId ?: @""},
-                                 @{STRING_ORDER_DATE_INFO: [[self.order.creationDate convertToJalali] numbersToPersian] ?: @""},
-                                 @{STRING_TOTAL_COST_INFO: self.order.formattedPrice ?: @""},
-                                 @{STRING_ORDER_PRODUCT_QUANTITY: [NSString stringWithFormat:@"%lu %@", (unsigned long)self.order.products.count, STRING_PRODUCT_QUANTITY_POSTFIX] ?: @""},
-                                 @{STRING_PAYMENT_METHOD: self.order.paymentMethod ?: @""},
-                                 ];
+         @{STRING_ORDER_ID: self.order.orderId ?: @""},
+         @{STRING_ORDER_DATE_INFO: [[self.order.creationDate convertToJalali] numbersToPersian] ?: @""},
+         @{STRING_TOTAL_COST_INFO: self.order.formattedPrice ?: @""},
+         @{STRING_ORDER_PRODUCT_QUANTITY: [NSString stringWithFormat:@"%lu %@", (unsigned long)self.order.products.count, STRING_PRODUCT_QUANTITY_POSTFIX] ?: @""},
+         @{STRING_PAYMENT_METHOD: self.order.paymentMethod ?: @""}
+    ];
 }
 
 #pragma mark - OrderProductListTableViewCellDelegate
@@ -169,34 +168,41 @@
 #pragma mark - Helpers
 -(NSArray *) getProgressViewControlContentForOrder:(Order *)order {
     NSArray *progressViewControlContent = @[
-       [ProgressItemViewModel itemWithIcons:_orderRegisteredImageSet title:STRING_REGISTER_ORDER type:PROGRESS_ITEM_PENDING isIndicator:YES],
-       [ProgressItemViewModel itemWithIcons:_orderInProgressImageSet title:STRING_IN_PROGRESS type:PROGRESS_ITEM_PENDING isIndicator:YES],
-       [ProgressItemViewModel itemWithIcons:_orderDeliveredImageSet title:STRING_SENT type:PROGRESS_ITEM_PENDING isIndicator:YES]
+       [ProgressItemViewModel itemWithIcons:_orderRegisteredImageSet title:STRING_REGISTER_ORDER errorTitle:nil isIndicator:YES],
+       [ProgressItemViewModel itemWithIcons:_orderInProgressImageSet title:STRING_IN_PROGRESS errorTitle:nil isIndicator:YES],
+       [ProgressItemViewModel itemWithIcons:_orderDeliveredImageSet title:STRING_SENT errorTitle:STRING_CANCELLED isIndicator:YES]
     ];
     
     switch (order.status) {
-        case 0: {
+        case ORDER_STATUS_NEW_ORDER: {
             ((ProgressItemViewModel *)progressViewControlContent[0]).type = PROGRESS_ITEM_ACTIVE;
         }
         break;
     
-        case 1: {
+        case ORDER_STATUS_REGISTERED: {
             ((ProgressItemViewModel *)progressViewControlContent[0]).type = PROGRESS_ITEM_DONE;
             ((ProgressItemViewModel *)progressViewControlContent[1]).type = PROGRESS_ITEM_ACTIVE;
         }
         break;
             
-        case 2: {
+        case ORDER_STATUS_IN_PROGRESS: {
             ((ProgressItemViewModel *)progressViewControlContent[0]).type = PROGRESS_ITEM_DONE;
             ((ProgressItemViewModel *)progressViewControlContent[1]).type = PROGRESS_ITEM_DONE;
             ((ProgressItemViewModel *)progressViewControlContent[2]).type = PROGRESS_ITEM_ACTIVE;
         }
         break;
             
-        case 3: {
+        case ORDER_STATUS_DELIVERED: {
             ((ProgressItemViewModel *)progressViewControlContent[0]).type = PROGRESS_ITEM_DONE;
             ((ProgressItemViewModel *)progressViewControlContent[1]).type = PROGRESS_ITEM_DONE;
             ((ProgressItemViewModel *)progressViewControlContent[2]).type = PROGRESS_ITEM_DONE;
+        }
+        break;
+            
+        case ORDER_STATUS_CANCELLED: {
+            ((ProgressItemViewModel *)progressViewControlContent[0]).type = PROGRESS_ITEM_PENDING;
+            ((ProgressItemViewModel *)progressViewControlContent[1]).type = PROGRESS_ITEM_PENDING;
+            ((ProgressItemViewModel *)progressViewControlContent[2]).type = PROGRESS_ITEM_ERROR;
         }
         break;
             
