@@ -47,6 +47,8 @@
     _orderRegisteredImageSet = [ProgressItemImageSet setWith:@"order-registered-pending" active:@"order-registered-active" done:@"order-registered-done"];
     _orderInProgressImageSet = [ProgressItemImageSet setWith:@"order-inprogress-pending" active:@"order-inprogress-active" done:@"order-inprogress-done"];
     _orderDeliveredImageSet = [ProgressItemImageSet setWith:@"order-delivered-pending" active:@"order-delivered-active" done:@"order-delivered-done"];
+    
+    [self.tableview setHidden:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -65,6 +67,8 @@
             }
         }
     }];
+    
+    [self.view setBackgroundColor:[UIColor whiteColor]];
 }
 
 - (void)updateNavBar {
@@ -112,7 +116,10 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    if (self.orderDetailInoArray.count || self.order.products.count) {
+        return 2;
+    }
+    return 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -143,6 +150,7 @@
                                  @{STRING_ORDER_PRODUCT_QUANTITY: [NSString stringWithFormat:@"%lu %@", (unsigned long)self.order.products.count, STRING_PRODUCT_QUANTITY_POSTFIX] ?: @""},
                                  @{STRING_PAYMENT_METHOD: self.order.paymentMethod ?: @""},
                                  ];
+    [self.tableview setHidden:NO];
 }
 
 #pragma mark - OrderProductListTableViewCellDelegate
