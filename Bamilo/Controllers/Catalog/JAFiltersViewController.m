@@ -13,7 +13,6 @@
 #import "SearchPriceFilter.h"
 #import "SearchFilterItem.h"
 #import "SearchCategoryFilter.h"
-#import "IconButton.h"
 #import "SubCatFilterViewController.h"
 
 #define cEXTRA_DARK_GRAY_COLOR [UIColor withRepeatingRGBA:80 alpha:1.0f]
@@ -28,7 +27,7 @@
 @property (weak, nonatomic) IBOutlet UISwitch *discountOnlyUISwitch;
 @property (weak, nonatomic) IBOutlet UIView *currentFilterContainerView;
 @property (nonatomic, strong) NSIndexPath* selectedIndexPath;
-@property (weak, nonatomic) IBOutlet IconButton *subCatButton;
+@property (weak, nonatomic) IBOutlet UIButton *subCatButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *subCatButtonHeightConstraint;
 @end
 

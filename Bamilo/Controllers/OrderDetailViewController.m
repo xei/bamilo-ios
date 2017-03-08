@@ -38,20 +38,22 @@
     [super viewDidLoad];
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
-    
+
     [self.tableview registerNib:[UINib nibWithNibName:[PlainTableViewHeaderCell nibName] bundle:nil] forCellReuseIdentifier: [PlainTableViewHeaderCell nibName]];
     [self.tableview registerNib:[UINib nibWithNibName:[OrderProductListTableViewCell nibName] bundle:nil] forCellReuseIdentifier: [OrderProductListTableViewCell nibName]];
 
     [self.tableview registerNib:[UINib nibWithNibName:[OrderDetailInformationTableViewCell nibName] bundle:nil] forCellReuseIdentifier: [OrderDetailInformationTableViewCell nibName]];
-    
+
     _orderRegisteredImageSet = [ProgressItemImageSet setWith:@"order-registered-pending" active:@"order-registered-active" done:@"order-registered-done" error:nil];
     _orderInProgressImageSet = [ProgressItemImageSet setWith:@"order-inprogress-pending" active:@"order-inprogress-active" done:@"order-inprogress-done" error:nil];
     _orderDeliveredImageSet = [ProgressItemImageSet setWith:@"order-delivered-pending" active:@"order-delivered-active" done:@"order-delivered-done" error:@"order-delivered-error"];
+
+    [self.tableview setHidden:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+
     [[DataManager sharedInstance] getOrder:self forOrderId:self.order.orderId completion:^(id data, NSError *error) {
         if (error == nil) {
             [self bind:data forRequestId:0];
@@ -65,11 +67,13 @@
             }
         }
     }];
+
+    [self.view setBackgroundColor:[UIColor whiteColor]];
 }
 
 - (void)updateNavBar {
     [super updateNavBar];
-    
+
     self.navBarLayout.showLogo = NO;
     self.navBarLayout.title = STRING_ORDER_STATUS;
     self.navBarLayout.showBackButton = YES;
@@ -111,7 +115,10 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    if (self.orderDetailInoArray.count || self.order.products.count) {
+        return 2;
+    }
+    return 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -134,7 +141,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableview reloadData];
     });
-    
+
     self.orderDetailInoArray = @[
          @{STRING_ORDER_ID: self.order.orderId ?: @""},
          @{STRING_ORDER_DATE_INFO: [[self.order.creationDate convertToJalali] numbersToPersian] ?: @""},
@@ -142,6 +149,8 @@
          @{STRING_ORDER_PRODUCT_QUANTITY: [NSString stringWithFormat:@"%lu %@", (unsigned long)self.order.products.count, STRING_PRODUCT_QUANTITY_POSTFIX] ?: @""},
          @{STRING_PAYMENT_METHOD: self.order.paymentMethod ?: @""}
     ];
+
+    [self.tableview setHidden:NO];
 }
 
 #pragma mark - OrderProductListTableViewCellDelegate
@@ -159,10 +168,10 @@
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
         [[LoadingManager sharedInstance] hideLoading];
         if (error.count && ![self showNotificationBarMessage:error[0] isSuccess:NO]) {
-            
+
         }
     }];
-    
+
 }
 
 #pragma mark - Helpers
@@ -172,44 +181,44 @@
        [ProgressItemViewModel itemWithIcons:_orderInProgressImageSet title:STRING_IN_PROGRESS errorTitle:nil isIndicator:YES],
        [ProgressItemViewModel itemWithIcons:_orderDeliveredImageSet title:STRING_SENT errorTitle:STRING_CANCELLED isIndicator:YES]
     ];
-    
+
     switch (order.status) {
         case ORDER_STATUS_NEW_ORDER: {
             ((ProgressItemViewModel *)progressViewControlContent[0]).type = PROGRESS_ITEM_ACTIVE;
         }
         break;
-    
+
         case ORDER_STATUS_REGISTERED: {
             ((ProgressItemViewModel *)progressViewControlContent[0]).type = PROGRESS_ITEM_DONE;
             ((ProgressItemViewModel *)progressViewControlContent[1]).type = PROGRESS_ITEM_ACTIVE;
         }
         break;
-            
+
         case ORDER_STATUS_IN_PROGRESS: {
             ((ProgressItemViewModel *)progressViewControlContent[0]).type = PROGRESS_ITEM_DONE;
             ((ProgressItemViewModel *)progressViewControlContent[1]).type = PROGRESS_ITEM_DONE;
             ((ProgressItemViewModel *)progressViewControlContent[2]).type = PROGRESS_ITEM_ACTIVE;
         }
         break;
-            
+
         case ORDER_STATUS_DELIVERED: {
             ((ProgressItemViewModel *)progressViewControlContent[0]).type = PROGRESS_ITEM_DONE;
             ((ProgressItemViewModel *)progressViewControlContent[1]).type = PROGRESS_ITEM_DONE;
             ((ProgressItemViewModel *)progressViewControlContent[2]).type = PROGRESS_ITEM_DONE;
         }
         break;
-            
+
         case ORDER_STATUS_CANCELLED: {
             ((ProgressItemViewModel *)progressViewControlContent[0]).type = PROGRESS_ITEM_PENDING;
             ((ProgressItemViewModel *)progressViewControlContent[1]).type = PROGRESS_ITEM_PENDING;
             ((ProgressItemViewModel *)progressViewControlContent[2]).type = PROGRESS_ITEM_ERROR;
         }
         break;
-            
+
         default:
             break;
     }
-    
+
     return progressViewControlContent;
 }
 

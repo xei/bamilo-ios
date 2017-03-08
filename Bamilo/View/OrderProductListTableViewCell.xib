@@ -57,16 +57,16 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۲۵۰۰ ریال" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="slS-Kc-FjF">
-                        <rect key="frame" x="138" y="71" width="40" height="10"/>
+                        <rect key="frame" x="138" y="71" width="40" height="15"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="10" id="EDI-9B-TRL"/>
+                            <constraint firstAttribute="height" constant="15" id="EDI-9B-TRL"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="9"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pzv-C1-0oc" customClass="IconButton">
-                        <rect key="frame" x="78" y="144" width="100" height="25"/>
+                        <rect key="frame" x="10" y="144" width="100" height="25"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="100" id="G2V-VU-uhg"/>
                             <constraint firstAttribute="height" constant="25" id="oIQ-Bd-wMo"/>
@@ -79,9 +79,9 @@
                         </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="تعداد:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ThD-LB-ofp">
-                        <rect key="frame" x="154" y="84" width="24" height="10"/>
+                        <rect key="frame" x="154" y="89" width="24" height="15"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="10" id="Hf8-fQ-yHa"/>
+                            <constraint firstAttribute="height" constant="15" id="Hf8-fQ-yHa"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="9"/>
                         <nil key="textColor"/>
@@ -97,6 +97,7 @@
                     <constraint firstItem="BiP-qS-J4S" firstAttribute="top" secondItem="4i5-AP-qxI" secondAttribute="bottom" constant="8" id="Fee-2z-uN7"/>
                     <constraint firstItem="slS-Kc-FjF" firstAttribute="top" secondItem="BiP-qS-J4S" secondAttribute="bottom" constant="3" id="MTM-Er-Lwz"/>
                     <constraint firstItem="4i5-AP-qxI" firstAttribute="top" secondItem="yOx-Z6-S3F" secondAttribute="top" id="Sof-hM-wOg"/>
+                    <constraint firstItem="Pzv-C1-0oc" firstAttribute="leading" secondItem="4i5-AP-qxI" secondAttribute="leading" id="UvI-sb-rvf"/>
                     <constraint firstItem="ThD-LB-ofp" firstAttribute="top" secondItem="slS-Kc-FjF" secondAttribute="bottom" constant="3" id="bIV-Ns-H88"/>
                     <constraint firstItem="Pzv-C1-0oc" firstAttribute="bottom" secondItem="yOx-Z6-S3F" secondAttribute="bottom" id="dDQ-pm-DJP"/>
                     <constraint firstItem="BiP-qS-J4S" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="dkC-S4-oOh"/>
@@ -104,7 +105,6 @@
                     <constraint firstItem="BiP-qS-J4S" firstAttribute="trailing" secondItem="4i5-AP-qxI" secondAttribute="trailing" id="tMn-o2-5k2"/>
                     <constraint firstAttribute="trailing" secondItem="yOx-Z6-S3F" secondAttribute="trailing" constant="15" id="vOw-zP-soo"/>
                     <constraint firstItem="4i5-AP-qxI" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="y4Q-cJ-gmG"/>
-                    <constraint firstItem="Pzv-C1-0oc" firstAttribute="trailing" secondItem="slS-Kc-FjF" secondAttribute="trailing" id="zUz-Gj-ehe"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

@@ -28,10 +28,11 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    [self.priceLabel applyStyle:kFontRegularName fontSize:9 color:cLIGHT_GRAY_COLOR];
-    [self.quantityLabel applyStyle:kFontRegularName fontSize:9 color:cLIGHT_GRAY_COLOR];
-    [self.productTitleLabel applyStyle:kFontRegularName fontSize:9 color:cLIGHT_GRAY_COLOR];
-    [self.commentButton applyStyle:kFontBoldName fontSize:10 color:[UIColor whiteColor]];
+    [self.priceLabel applyStyle:kFontRegularName fontSize:11 color:cLIGHT_GRAY_COLOR];
+    [self.quantityLabel applyStyle:kFontRegularName fontSize:11 color:cLIGHT_GRAY_COLOR];
+    [self.productTitleLabel applyStyle:kFontRegularName fontSize:11 color:cLIGHT_GRAY_COLOR];
+    [self.commentButton applyStyle:kFontBoldName fontSize:11 color:[UIColor whiteColor]];
+    [self.statusLabel applyStyle:kFontBoldName fontSize:11 color:cEXTRA_DARK_GRAY_COLOR];
     [self.commentButton setBackgroundColor:cBLUE_COLOR];
 }
 
