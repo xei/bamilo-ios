@@ -38,6 +38,9 @@
 		612553611E4F514100975C6F /* FormItemValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = 612553601E4F514100975C6F /* FormItemValidation.m */; };
 		612FDC371E45E0A900A9D0BD /* CartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 612FDC351E45E0A900A9D0BD /* CartTableViewCell.m */; };
 		612FDC381E45E0A900A9D0BD /* CartTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 612FDC361E45E0A900A9D0BD /* CartTableViewCell.xib */; };
+		613D37771E6EE19E001B2852 /* NSDate+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 613D37761E6EE19E001B2852 /* NSDate+Extensions.m */; };
+		613D377C1E6F133B001B2852 /* OrderDetailInformationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 613D377A1E6F133B001B2852 /* OrderDetailInformationTableViewCell.m */; };
+		613D377D1E6F133B001B2852 /* OrderDetailInformationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 613D377B1E6F133B001B2852 /* OrderDetailInformationTableViewCell.xib */; };
 		613FF2B51E4B283F008660CF /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 613FF2B31E4B283F008660CF /* SignInViewController.m */; };
 		613FF2B61E4B283F008660CF /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 613FF2B41E4B283F008660CF /* SignInViewController.xib */; };
 		613FF2BA1E4B2858008660CF /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 613FF2B81E4B2858008660CF /* SignUpViewController.m */; };
@@ -46,8 +49,6 @@
 		613FF2C11E4B3D1B008660CF /* Authentication.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 613FF2C01E4B3D1B008660CF /* Authentication.storyboard */; };
 		616058E61E6AD8D50079B2CD /* SearchFilterItemOption.m in Sources */ = {isa = PBXBuildFile; fileRef = 616058E51E6AD8D50079B2CD /* SearchFilterItemOption.m */; };
 		616058E91E6AE2030079B2CD /* SearchFilterItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 616058E81E6AE2030079B2CD /* SearchFilterItem.m */; };
-		616D65E61E66C201008B07EA /* OrderTableHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 616D65E41E66C201008B07EA /* OrderTableHeaderCell.m */; };
-		616D65E71E66C201008B07EA /* OrderTableHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 616D65E51E66C201008B07EA /* OrderTableHeaderCell.xib */; };
 		616D65EC1E670984008B07EA /* OrderProductListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 616D65EA1E670984008B07EA /* OrderProductListTableViewCell.m */; };
 		616D65ED1E670984008B07EA /* OrderProductListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 616D65EB1E670984008B07EA /* OrderProductListTableViewCell.xib */; };
 		617AAA441E503AB9004D9430 /* FormItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 617AAA431E503AB9004D9430 /* FormItemModel.m */; };
@@ -654,6 +655,11 @@
 		612FDC341E45E0A900A9D0BD /* CartTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartTableViewCell.h; sourceTree = "<group>"; };
 		612FDC351E45E0A900A9D0BD /* CartTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartTableViewCell.m; sourceTree = "<group>"; };
 		612FDC361E45E0A900A9D0BD /* CartTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartTableViewCell.xib; sourceTree = "<group>"; };
+		613D37751E6EE19E001B2852 /* NSDate+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extensions.h"; sourceTree = "<group>"; };
+		613D37761E6EE19E001B2852 /* NSDate+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extensions.m"; sourceTree = "<group>"; };
+		613D37791E6F133B001B2852 /* OrderDetailInformationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDetailInformationTableViewCell.h; sourceTree = "<group>"; };
+		613D377A1E6F133B001B2852 /* OrderDetailInformationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDetailInformationTableViewCell.m; sourceTree = "<group>"; };
+		613D377B1E6F133B001B2852 /* OrderDetailInformationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OrderDetailInformationTableViewCell.xib; sourceTree = "<group>"; };
 		613FF2B21E4B283F008660CF /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
 		613FF2B31E4B283F008660CF /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
 		613FF2B41E4B283F008660CF /* SignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignInViewController.xib; sourceTree = "<group>"; };
@@ -667,9 +673,6 @@
 		616058E51E6AD8D50079B2CD /* SearchFilterItemOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchFilterItemOption.m; sourceTree = "<group>"; };
 		616058E71E6AE2030079B2CD /* SearchFilterItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchFilterItem.h; sourceTree = "<group>"; };
 		616058E81E6AE2030079B2CD /* SearchFilterItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchFilterItem.m; sourceTree = "<group>"; };
-		616D65E31E66C201008B07EA /* OrderTableHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderTableHeaderCell.h; sourceTree = "<group>"; };
-		616D65E41E66C201008B07EA /* OrderTableHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderTableHeaderCell.m; sourceTree = "<group>"; };
-		616D65E51E66C201008B07EA /* OrderTableHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OrderTableHeaderCell.xib; sourceTree = "<group>"; };
 		616D65E91E670983008B07EA /* OrderProductListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderProductListTableViewCell.h; sourceTree = "<group>"; };
 		616D65EA1E670984008B07EA /* OrderProductListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderProductListTableViewCell.m; sourceTree = "<group>"; };
 		616D65EB1E670984008B07EA /* OrderProductListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OrderProductListTableViewCell.xib; sourceTree = "<group>"; };
@@ -1910,13 +1913,6 @@
 			name = OrderListViewController;
 			sourceTree = "<group>";
 		};
-		61036B451E6584D6006E12A9 /* OrderListTableViewCell */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = OrderListTableViewCell;
-			sourceTree = "<group>";
-		};
 		61036B4C1E658842006E12A9 /* MutualTitleHeaderCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -1925,16 +1921,6 @@
 				61036B4F1E65897D006E12A9 /* MutualTitleHeaderCell.xib */,
 			);
 			name = MutualTitleHeaderCell;
-			sourceTree = "<group>";
-		};
-		61036B521E658BFA006E12A9 /* OrderTableHeaderCell */ = {
-			isa = PBXGroup;
-			children = (
-				616D65E31E66C201008B07EA /* OrderTableHeaderCell.h */,
-				616D65E41E66C201008B07EA /* OrderTableHeaderCell.m */,
-				616D65E51E66C201008B07EA /* OrderTableHeaderCell.xib */,
-			);
-			name = OrderTableHeaderCell;
 			sourceTree = "<group>";
 		};
 		61036B561E6599DF006E12A9 /* OrderListTableViewCell */ = {
@@ -2077,6 +2063,25 @@
 				61C407C41E476939004ACEE8 /* CartTableViewCellDelegate.h */,
 			);
 			name = CartTableViewCell;
+			sourceTree = "<group>";
+		};
+		613D37741E6EE168001B2852 /* NSDate+Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				613D37751E6EE19E001B2852 /* NSDate+Extensions.h */,
+				613D37761E6EE19E001B2852 /* NSDate+Extensions.m */,
+			);
+			name = "NSDate+Extensions";
+			sourceTree = "<group>";
+		};
+		613D37781E6F1309001B2852 /* OrderDetailInformationTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				613D37791E6F133B001B2852 /* OrderDetailInformationTableViewCell.h */,
+				613D377A1E6F133B001B2852 /* OrderDetailInformationTableViewCell.m */,
+				613D377B1E6F133B001B2852 /* OrderDetailInformationTableViewCell.xib */,
+			);
+			name = OrderDetailInformationTableViewCell;
 			sourceTree = "<group>";
 		};
 		613FF2AC1E4B24CD008660CF /* CAPSPageMenu */ = {
@@ -2359,18 +2364,18 @@
 			isa = PBXGroup;
 			children = (
 				61036B411E65830C006E12A9 /* OrderListViewController */,
-				61D8D8DB1E656FA2006650F5 /* OrderListViewController */,
+				61D8D8DB1E656FA2006650F5 /* OrderDetailViewController */,
 			);
 			name = Order;
 			sourceTree = "<group>";
 		};
-		61D8D8DB1E656FA2006650F5 /* OrderListViewController */ = {
+		61D8D8DB1E656FA2006650F5 /* OrderDetailViewController */ = {
 			isa = PBXGroup;
 			children = (
 				61D8D8DC1E656FE0006650F5 /* OrderDetailViewController.h */,
 				61D8D8DD1E656FE0006650F5 /* OrderDetailViewController.m */,
 			);
-			name = OrderListViewController;
+			name = OrderDetailViewController;
 			sourceTree = "<group>";
 		};
 		61DBCCB31E46127600BA8251 /* IconButton */ = {
@@ -2385,10 +2390,10 @@
 		61E099661E3E10F0004ED14E /* TableViewCells */ = {
 			isa = PBXGroup;
 			children = (
+				613D37781E6F1309001B2852 /* OrderDetailInformationTableViewCell */,
 				8714E0801E48C3B1004C9B1D /* Base */,
 				616D65E81E670963008B07EA /* OrderProductListTableViewCell */,
 				61036B561E6599DF006E12A9 /* OrderListTableViewCell */,
-				61036B451E6584D6006E12A9 /* OrderListTableViewCell */,
 				61CBA0521E51FEFA005673F7 /* ButtonTableviewCell */,
 				612FDC331E45E08500A9D0BD /* CartTableViewCell */,
 				87A681721E42003100D252AC /* AddressTableViewCell */,
@@ -3809,7 +3814,6 @@
 			children = (
 				879F87F01E5057E50033FE87 /* PlainTableViewHeaderCell */,
 				87EA03061E6C693600B1E062 /* IconTableViewHeaderCell */,
-				61036B521E658BFA006E12A9 /* OrderTableHeaderCell */,
 				61036B4C1E658842006E12A9 /* MutualTitleHeaderCell */,
 				87A681731E4200B900D252AC /* AddressTableViewHeaderCell */,
 			);
@@ -4493,6 +4497,7 @@
 		B5C1E33419BA1E3D009C422C /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				613D37741E6EE168001B2852 /* NSDate+Extensions */,
 				612553581E4F37AD00975C6F /* UIScrollView+Extensions */,
 				87A681541E40EF3700D252AC /* Categories.pch */,
 				879F87EC1E5048550033FE87 /* NSMutableArray+Extensions */,
@@ -5061,11 +5066,11 @@
 				CEDBF8791B0CEC570073971A /* JACheckBoxComponent_RTL.xib in Resources */,
 				87EA031D1E6D706E00B1E062 /* FormHeaderTableViewCell.xib in Resources */,
 				87DAABE51E54431A00445EBB /* PaymentOptionWithLogoTableViewCell.xib in Resources */,
-				616D65E71E66C201008B07EA /* OrderTableHeaderCell.xib in Resources */,
 				CE9AE0C21AB6D78200D56481 /* JACatalogTopView_ipad.xib in Resources */,
 				CE9AE0C41AB6D78200D56481 /* JAPriceFiltersView.xib in Resources */,
 				87DAABEB1E55A2C100445EBB /* PaymentOptionTableViewCell.xib in Resources */,
 				CE9AE0CA1AB6D78200D56481 /* JAPDVProductInfo.xib in Resources */,
+				613D377D1E6F133B001B2852 /* OrderDetailInformationTableViewCell.xib in Resources */,
 				CE9AE0CD1AB6D78200D56481 /* JAOrangeButtonCell.xib in Resources */,
 				CE9AE0D51AB6D78200D56481 /* JAPDVBundleSingleItem.xib in Resources */,
 				CE9AE0D91AB6D78200D56481 /* JAOtherOffersView_Landscape~iPad.xib in Resources */,
@@ -5362,6 +5367,7 @@
 				CE9ADF5C1AB6D78200D56481 /* JAEmailNotificationsViewController.m in Sources */,
 				CE9ADF601AB6D78200D56481 /* JANoConnectionView.m in Sources */,
 				617AAA441E503AB9004D9430 /* FormItemModel.m in Sources */,
+				613D37771E6EE19E001B2852 /* NSDate+Extensions.m in Sources */,
 				61CBA04A1E51D18F005673F7 /* FormTableViewCell.m in Sources */,
 				8714E0771E479C00004C9B1D /* CheckoutProgressViewButtonModel.m in Sources */,
 				9A189E6F1BB31AF70039BC14 /* JAProductInfoSingleLine.m in Sources */,
@@ -5540,7 +5546,6 @@
 				874AAB6D1E3DCEDB00B3F8FE /* SessionManager.m in Sources */,
 				6125534C1E4EF63000975C6F /* InputTextFieldControl.m in Sources */,
 				875AD5541E38C0C900584ABF /* RIURLCache.m in Sources */,
-				616D65E61E66C201008B07EA /* OrderTableHeaderCell.m in Sources */,
 				875AD5651E38C0C900584ABF /* RIOrder.m in Sources */,
 				FF4465221CECB806003A65EA /* JAORPaymentViewController.m in Sources */,
 				87B684DF1E49CE740042C09F /* BasicTableViewCell.m in Sources */,
@@ -5562,6 +5567,7 @@
 				875AD5581E38C0C900584ABF /* RIBanner.m in Sources */,
 				875AD57A1E38C0C900584ABF /* RITarget.m in Sources */,
 				CE9ADFE31AB6D78200D56481 /* JACheckBoxWithOptionsComponent.m in Sources */,
+				613D377C1E6F133B001B2852 /* OrderDetailInformationTableViewCell.m in Sources */,
 				875AD57B1E38C0C900584ABF /* RIVariation.m in Sources */,
 				9AEF74251CD8A86900A5D574 /* JAORConfirmConditionsViewController.m in Sources */,
 				6CF4AE881ADEABBB0024EC34 /* JACatalogBannerCell.m in Sources */,

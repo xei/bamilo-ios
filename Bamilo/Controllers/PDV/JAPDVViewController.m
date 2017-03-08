@@ -317,16 +317,7 @@ typedef void (^ProcessActionBlock)(void);
     [self.mainScrollView setHidden:YES];
     [self.landscapeScrollView setHidden:YES];
     [self.ctaView setHidden:YES];
-    
-    //$WIZ$
-    //    if(VALID_NOTEMPTY(self.wizardView, JAPDVWizardView))
-    //    {
-    //        CGRect newFrame = CGRectMake(self.wizardView.frame.origin.x,
-    //                                     self.wizardView.frame.origin.y,
-    //                                     self.view.frame.size.height + self.view.frame.origin.y,
-    //                                     self.view.frame.size.width - self.view.frame.origin.y);
-    //        [self.wizardView reloadForFrame:newFrame];
-    //    }
+
     
     if (self.picker) {
         [self closePicker];
@@ -362,12 +353,6 @@ typedef void (^ProcessActionBlock)(void);
          UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
          // do whatever
          [self fillTheViews];
-         
-         //$WIZ$
-         //    if(VALID_NOTEMPTY(self.wizardView, JAPDVWizardView))
-         //    {
-         //        [self.wizardView reloadForFrame:self.view.bounds];
-         //    }
          
          if(self.galleryPaged) {
              UIView *gallerySuperView = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
@@ -897,7 +882,7 @@ typedef void (^ProcessActionBlock)(void);
     
     if (!self.product.hasStock || (VALID(self.currentSimple, RIProductSimple) && [self.currentSimple.quantity isEqualToString:@"0"])) {
         [self.productImageSection setOutOfStock:NO];
-    }else{
+    } else {
         [self.productImageSection setOutOfStock:YES];
     }
     

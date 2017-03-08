@@ -13,14 +13,14 @@
 @protocol Order;
 
 @interface Order : BaseModel
-@property (strong, nonatomic) NSString *orderId;
-@property (strong, nonatomic) NSString *creationDate;
-@property (strong, nonatomic) NSString *price;
-@property (strong, nonatomic) NSString *formatedPrice;
+@property (copy, nonatomic) NSString *orderId;
+@property (strong, nonatomic) NSDate *creationDate;
+@property (copy, nonatomic) NSString *price;
+@property (copy, nonatomic) NSString *formattedPrice;
 
-@property (strong, nonatomic) NSString *paymentMethod;
-@property (strong, nonatomic) NSString *paymentDescription;
-@property (strong, nonatomic) NSString *paymentReference;
+@property (copy, nonatomic) NSString *paymentMethod;
+@property (copy, nonatomic) NSString *paymentDescription;
+@property (copy, nonatomic) NSString *paymentReference;
 @property (strong, nonatomic) NSArray<OrderProduct> *products;
 @property (nonatomic, strong) Address *shippingAddress;
 @property (nonatomic, strong) Address *billingAddress;

@@ -7,7 +7,6 @@
 //
 
 #import "OrderListViewController.h"
-#import "OrderTableHeaderCell.h"
 #import "OrderListTableViewCell.h"
 #import "DataManager.h"
 #import "OrderDetailViewController.h"
@@ -35,7 +34,7 @@
 
 // --- Legacy views -----
 
--(UIView *)emptyOrderHistoryView {
+- (UIView *)emptyOrderHistoryView {
     if (!VALID_NOTEMPTY(_emptyOrderHistoryView, UIView)) {
         _emptyOrderHistoryView = [[UIView alloc]initWithFrame:CGRectMake(self.view.bounds.origin.x,
                                                                          self.view.bounds.origin.y + kTopSeparatorHight,
@@ -48,7 +47,7 @@
     return _emptyOrderHistoryView;
 }
 
--(UILabel *)emptyOrderHistoryTitleLabel {
+- (UILabel *)emptyOrderHistoryTitleLabel {
     if (!VALID_NOTEMPTY(_emptyOrderHistoryTitleLabel, UILabel)) {
         _emptyOrderHistoryTitleLabel = [UILabel new];
         [_emptyOrderHistoryTitleLabel setFont:JADisplay2Font];
@@ -60,7 +59,7 @@
     return _emptyOrderHistoryTitleLabel;
 }
 
--(UILabel *)emptyOrderHistoryLabel {
+- (UILabel *)emptyOrderHistoryLabel {
     if (!VALID_NOTEMPTY(_emptyOrderHistoryLabel, UILabel)) {
         _emptyOrderHistoryLabel = [UILabel new];
         [_emptyOrderHistoryLabel setFont:JABodyFont];
@@ -72,7 +71,7 @@
     return _emptyOrderHistoryLabel;
 }
 
--(UIImageView *)emptyOrderHistoryImageView {
+- (UIImageView *)emptyOrderHistoryImageView {
     if (!VALID_NOTEMPTY(_emptyOrderHistoryImageView, UIImageView)) {
         _emptyOrderHistoryImageView = [UIImageView new];
         UIImage *img = [UIImage imageNamed:@"noOrdersImage"];
@@ -85,17 +84,12 @@
 }
 
 // --- endof Legacy views
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.tableview.dataSource = self;
     self.tableview.delegate = self;
-    [self.tableview registerNib:[UINib nibWithNibName:[OrderTableHeaderCell nibName] bundle:nil] forCellReuseIdentifier: [OrderTableHeaderCell nibName]];
     [self.tableview registerNib:[UINib nibWithNibName:[OrderListTableViewCell nibName] bundle:nil] forCellReuseIdentifier: [OrderListTableViewCell nibName]];
-
-    self.automaticallyAdjustsScrollViewInsets = NO;
 }
 
 - (void)updateNavBar {
@@ -122,32 +116,18 @@
 
 #pragma mark - UITableViewDataSource & UITableViewDelegate
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    OrderTableHeaderCell *headerCell = [self.tableview dequeueReusableCellWithIdentifier:[OrderTableHeaderCell nibName]];
-    [headerCell updateWithModel: self.list.orders[section]];
-    return headerCell;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return [OrderTableHeaderCell cellHeight];
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     OrderListTableViewCell *cell = [self.tableview dequeueReusableCellWithIdentifier:[OrderListTableViewCell nibName] forIndexPath:indexPath];
-    [cell updateWithModel:self.list.orders[indexPath.section]];
+    [cell updateWithModel:self.list.orders[indexPath.row]];
     return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    return self.list.orders.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return CGFLOAT_MIN;
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return self.list.orders.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -160,7 +140,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableview deselectRowAtIndexPath:indexPath animated:YES];
-    [self performSegueWithIdentifier:NSStringFromClass([OrderDetailViewController class]) sender:self.list.orders[indexPath.section]];
+    [self performSegueWithIdentifier:NSStringFromClass([OrderDetailViewController class]) sender:self.list.orders[indexPath.row]];
 }
 
 #pragma mark - bind to UI
@@ -172,7 +152,7 @@
     });
 }
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:NSStringFromClass([OrderDetailViewController class])]) {
         OrderDetailViewController *orderDetailViewCtrl = (OrderDetailViewController *)segue.destinationViewController;
         orderDetailViewCtrl.order = ((Order *)sender);

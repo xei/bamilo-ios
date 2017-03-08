@@ -30,7 +30,7 @@ static DataManager *instance;
 
 - (void)getSubCategoriesFilter:(id<DataServiceProtocol>)target ofCategroyUrlKey:(NSString *)urlKey completion:(DataCompletion)completion {
     
-    NSString *path = [NSString stringWithFormat:@"catalog/categoryByUrlKey/?urlkey=%@", urlKey];
+    NSString *path = [NSString stringWithFormat:RI_API_GET_CATEGORIES_BY_URLKEY, urlKey];
     [RequestManager asyncGET:target path:path params:nil type:REQUEST_EXEC_IN_BACKGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
         if (((NSArray *)[data objectForKey:@"data"]).count) {
             //This must be refactored from server side :(

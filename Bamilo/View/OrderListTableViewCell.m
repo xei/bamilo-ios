@@ -7,24 +7,51 @@
 //
 
 #import "OrderListTableViewCell.h"
-#import "Order.h"
+#import "NSDate+Extensions.h"
 
 @interface OrderListTableViewCell()
+@property (weak, nonatomic) IBOutlet UILabel *orderNumLabel;
+@property (weak, nonatomic) IBOutlet UILabel *orderDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
+@property (weak, nonatomic) IBOutlet UIButton *statusButton;
+@property (strong, nonatomic) Order *order;
 @end
 
 @implementation OrderListTableViewCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    [self.priceLabel applyStyle:kFontRegularName fontSize:11 color:cLIGHT_GRAY_COLOR];
+    
+    [self.priceLabel applyStyle:kFontRegularName fontSize:11 color:cEXTRA_DARK_GRAY_COLOR];
+    [self.orderNumLabel applyStyle:kFontRegularName fontSize:11 color:cLIGHT_GRAY_COLOR];
+    [self.orderDateLabel applyStyle:kFontRegularName fontSize:11 color:cLIGHT_GRAY_COLOR];
+    
+    [self.statusButton setBackgroundColor:cEXTRA_LIGHT_GRAY_COLOR];
+    [self.statusButton setTitle:STRING_STATUS forState:UIControlStateNormal];
+    [self.statusButton applyStyle:kFontRegularName fontSize:11 color:cEXTRA_DARK_GRAY_COLOR];
 }
 
 - (void)updateWithModel:(id)model {
     if (![model isKindOfClass:[Order class]]) {
         return;
     }
-    self.priceLabel.text = [NSString stringWithFormat:@"%@ %@", STRING_TOTAL_COST, ((Order *)model).formatedPrice];
+    self.priceLabel.text = [NSString stringWithFormat:@"%@ %@", STRING_TOTAL_COST, ((Order *)model).formattedPrice];
+    
+    self.order = model;
+    self.orderNumLabel.text = [[NSString stringWithFormat:@"%@ %@", STRING_ORDER_ID ,self.order.orderId] numbersToPersian];
+    NSString *dateString = [[self.order.creationDate convertToJalali] numbersToPersian];
+    self.orderDateLabel.text = [NSString stringWithFormat:@"%@ %@", STRING_ORDER_DATE, dateString];
+}
+
+- (IBAction)stateButtonTapped:(id)sender {
+    [self.delegate stateButtonTappedForOrder:self.order byCell:self];
+}
+
+
+- (void)prepareForReuse {
+    self.priceLabel.text = nil;
+    self.orderDateLabel.text = nil;
+    self.orderNumLabel.text = nil;
 }
 
 @end

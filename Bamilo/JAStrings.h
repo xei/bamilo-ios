@@ -337,6 +337,7 @@
 #define STRING_MY_ORDER_HISTORY RILocalizedString(@"my_order_history_label", nil)
 #define STRING_ORDER_TRACKING RILocalizedString(@"my_order_tracking_label", nil)
 #define STRING_ORDER_DETAILS RILocalizedString(@"my_order_details_label", nil)
+#define STRING_ORDER_PRODUCT_DETAIL RILocalizedString(@"my_order_product_details_label", nil)
 #define STRING_ORDER_NUMBER RILocalizedString(@"my_order_number_label", nil)
 #define STRING_ORDER_DATE RILocalizedString(@"my_order_date_label", nil)
 #define STRING_ORDER_PAYMENT_REFERENCE RILocalizedString(@"my_order_payment_reference_label", nil)
@@ -491,5 +492,9 @@
 #define STRING_ENTER_YOUR_ADDRESS RILocalizedString(@"enter_your_address", nil)
 #define STRING_RECIPIENT_INFO RILocalizedString(@"recipient_info", nil)
 #define STRING_ENTER_YOUR_EMAIL_ADDRESS RILocalizedString(@"enter_your_email_address", nil)
-
+#define STRING_STATUS RILocalizedString(@"status", nil)
+#define STRING_ORDER_DATE_INFO RILocalizedString(@"order_date", nil)
+#define STRING_TOTAL_COST_INFO RILocalizedString(@"total_cost", nil)
+#define STRING_PRODUCT_QUANTITY_POSTFIX RILocalizedString(@"product_quantity_postfix", nil)
+#define STRING_ORDER_PRODUCT_QUANTITY RILocalizedString(@"order_product_quantity", nil)
 #endif

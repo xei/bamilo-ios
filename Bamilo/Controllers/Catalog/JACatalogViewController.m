@@ -1131,9 +1131,7 @@ typedef void (^ProcessActionBlock)(void);
         [userInfo setObject:STRING_BACK forKey:@"previousCategory"];
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
-                                                        object:nil
-                                                      userInfo:userInfo];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication object:nil userInfo:userInfo];
 }
 
 - (void)didSelectBrandTargetString:(NSString *)brandTargetString brandName:(NSString *)brandName {

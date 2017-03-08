@@ -7,6 +7,7 @@
 //
 
 #import "OrderList.h"
+#import "Order.h"
 
 @implementation OrderList
 + (JSONKeyMapper *)keyMapper {
@@ -18,8 +19,10 @@
 
 - (BOOL)mergeFromDictionary:(NSDictionary *)dict useKeyMapping:(BOOL)useKeyMapping error:(NSError *__autoreleasing *)error {
     [super mergeFromDictionary:dict useKeyMapping:useKeyMapping error:error];
+    
+    
     [self.orders enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [obj mergeFromDictionary:[dict objectForKey:@"orders"][idx] useKeyMapping:YES error:nil];
+        [(Order *)obj mergeFromDictionary:[dict objectForKey:@"orders"][idx] useKeyMapping:YES error:nil];
     }];
     return YES;
 }

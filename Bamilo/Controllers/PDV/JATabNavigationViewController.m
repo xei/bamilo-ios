@@ -26,13 +26,11 @@
 
 @implementation JATabNavigationViewController
 
-- (JATopTabsView *)topTabsView
-{
+- (JATopTabsView *)topTabsView {
     CGRect frame = CGRectMake(0, 0, self.view.width, kTabsHeight);
     if (!VALID_NOTEMPTY(_topTabsView, JATopTabsView)) {
         _topTabsView = [[JATopTabsView alloc] initWithFrame:frame];
         _topTabsView.delegate = self;
-        
         NSArray* content;
         if (RI_IS_RTL) {
             content = @[STRING_REVIEWS_RATINGS, STRING_SPECIFICATIONS, STRING_DESCRIPTION];
@@ -40,10 +38,10 @@
             content = @[STRING_DESCRIPTION, STRING_SPECIFICATIONS, STRING_REVIEWS_RATINGS];
         }
         
-        _topTabsView.startingIndex = RI_IS_RTL?self.tabScreenEnum-2:self.tabScreenEnum;
+        _topTabsView.startingIndex = RI_IS_RTL ? self.tabScreenEnum - 2 : self.tabScreenEnum;
         [_topTabsView setupWithTabNames:content];
 
-    }else{
+    } else {
         if (!CGRectEqualToRect(frame, _topTabsView.frame)) {
             [_topTabsView setFrame:frame];
         }
@@ -52,8 +50,7 @@
     return _topTabsView;
 }
 
-- (UIScrollView *)contentScrollView
-{
+- (UIScrollView *)contentScrollView {
     CGRect frame = CGRectMake(0, CGRectGetMaxY(self.topTabsView.frame), self.view.width, self.view.height - CGRectGetMaxY(self.topTabsView.frame));
     if (!VALID_NOTEMPTY(_contentScrollView, UIScrollView)) {
         _contentScrollView = [[UIScrollView alloc] initWithFrame:frame];

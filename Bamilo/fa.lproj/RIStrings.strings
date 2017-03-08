@@ -564,6 +564,8 @@
 
 "my_order_details_label" = "جزییات سفارش";
 
+"my_order_product_details_label" = "جزییات کالا";
+
 "my_order_number_label" = "شماره";
 
 "my_order_date_label" = "تاریخ:";
@@ -820,3 +822,15 @@
 "recipient_info" = "اطلاعات تحویل گیرنده";
 
 "enter_your_email_address" = "آدرس ایمیل خود را وارد کنید";
+
+"status" = "وضعیت";
+
+"order_date" = "تاریخ سفارش";
+
+"total_cost" = "هزینه کل";
+
+"product_quantity_postfix" = "عدد";
+
+"product_quantity_post" = "عدد";
+
+"order_product_quantity" = "تعداد سفارش";

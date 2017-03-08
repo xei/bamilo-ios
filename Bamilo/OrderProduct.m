@@ -48,13 +48,14 @@
 -(BOOL)mergeFromDictionary:(NSDictionary *)dict useKeyMapping:(BOOL)useKeyMapping error:(NSError *__autoreleasing *)error {
     [super mergeFromDictionary:dict useKeyMapping:useKeyMapping error:error];
     
+    if (self.price) {
+        self.formatedPrice = [NSString stringWithFormat:@"%@ %@", [[self.price formatPrice] numbersToPersian], STRING_CURRENCY];
+    }
+    
     if (VALID_NOTEMPTY([dict objectForKey:@"actions"], NSArray)) {
     
         [self.actions removeAllObjects];
         
-        if (self.price) {
-            self.formatedPrice = [NSString stringWithFormat:@"%@ %@", [[self.price formatPrice] numbersToPersian], STRING_CURRENCY];
-        }
         
         NSArray *actionsArray = [dict objectForKey:@"actions"];
         for (NSDictionary *actionObj in actionsArray) {

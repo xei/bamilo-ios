@@ -7,24 +7,36 @@
 //
 
 #import "OrderDetailViewController.h"
-#import "OrderTableHeaderCell.h"
+#import "PlainTableViewHeaderCell.h"
 #import "DataManager.h"
 #import "OrderProductListTableViewCell.h"
+#import "OrderDetailInformationTableViewCell.h"
+#import "NSDate+Extensions.h"
+#import "RIProduct.h"
+#import "LoadingManager.h"
 
-@interface OrderDetailViewController ()
+@interface OrderDetailViewController () <OrderProductListTableViewCellDelegate>
 @property (nonatomic, weak) IBOutlet UITableView *tableview;
+@property (nonatomic, strong) NSArray *orderDetailInoArray;
 @end
 
 @implementation OrderDetailViewController
+
+- (NSArray *)orderDetailInoArray {
+    if (!_orderDetailInoArray) {
+        _orderDetailInoArray = [[NSArray alloc] init];
+    }
+    return _orderDetailInoArray;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
     
-    [self.tableview registerNib:[UINib nibWithNibName:[OrderTableHeaderCell nibName] bundle:nil] forCellReuseIdentifier: [OrderTableHeaderCell nibName]];
     [self.tableview registerNib:[UINib nibWithNibName:[PlainTableViewHeaderCell nibName] bundle:nil] forCellReuseIdentifier: [PlainTableViewHeaderCell nibName]];
     [self.tableview registerNib:[UINib nibWithNibName:[OrderProductListTableViewCell nibName] bundle:nil] forCellReuseIdentifier: [OrderProductListTableViewCell nibName]];
+    [self.tableview registerNib:[UINib nibWithNibName:[OrderDetailInformationTableViewCell nibName] bundle:nil] forCellReuseIdentifier: [OrderDetailInformationTableViewCell nibName]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -51,38 +63,34 @@
 #pragma mark - UITableViewDataSource & UITableViewDelegate
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    if (section == 0) {
-        OrderTableHeaderCell *headerCell = [self.tableview dequeueReusableCellWithIdentifier:[OrderTableHeaderCell nibName]];
-        [headerCell updateWithModel: self.order];
-        return headerCell;
-    } else {
-        PlainTableViewHeaderCell *headerCell = [self.tableview dequeueReusableCellWithIdentifier:[PlainTableViewHeaderCell nibName]];
-        headerCell.titleString = [[NSString stringWithFormat:@"%@: %lu", STRING_ORDER_QUANTITY, (unsigned long)self.order.products.count] numbersToPersian];
-        return headerCell;
-    }
+    NSString *headerTitle = section == 0 ? STRING_ORDER_DETAILS : STRING_ORDER_PRODUCT_DETAIL;
+    PlainTableViewHeaderCell *headerCell = [self.tableview dequeueReusableCellWithIdentifier:[PlainTableViewHeaderCell nibName]];
+    headerCell.titleString = headerTitle;
+    return headerCell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (section == 0) {
-        return [OrderTableHeaderCell cellHeight];
-    } else {
-        return [PlainTableViewHeaderCell cellHeight] - 10;
-    }
+    return [PlainTableViewHeaderCell cellHeight] - 10;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        return [UITableViewCell new];
+        OrderDetailInformationTableViewCell *cell = [self.tableview dequeueReusableCellWithIdentifier:[OrderDetailInformationTableViewCell nibName] forIndexPath:indexPath];
+        cell.title = ((NSDictionary *)self.orderDetailInoArray[indexPath.row]).allKeys[0];
+        cell.value = [((NSDictionary *)self.orderDetailInoArray[indexPath.row]).allValues[0] numbersToPersian];
+        return cell;
     } else {
         OrderProductListTableViewCell *cell = [self.tableview dequeueReusableCellWithIdentifier:[OrderProductListTableViewCell nibName] forIndexPath:indexPath];
         [cell updateWithModel:self.order.products[indexPath.row]];
+        cell.delegate = self;
         return cell;
     }
 }
 
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
-        return 1;
+        return self.orderDetailInoArray.count;
     } else {
         return self.order.products.count;
     }
@@ -96,12 +104,14 @@
     return UITableViewAutomaticDimension;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 200;
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSDictionary *userInfo = @{@"sku": ((OrderProduct *)self.order.products[indexPath.row]).sku};
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication object:nil userInfo:userInfo];
+    [self.tableview deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self.tableview deselectRowAtIndexPath:indexPath animated:YES];
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 200;
 }
 
 #pragma mark - bind data to view
@@ -111,6 +121,35 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableview reloadData];
     });
+    
+    self.orderDetailInoArray = @[
+                                 @{STRING_ORDER_ID: self.order.orderId ?: @""},
+                                 @{STRING_ORDER_DATE_INFO: [[self.order.creationDate convertToJalali] numbersToPersian] ?: @""},
+                                 @{STRING_TOTAL_COST_INFO: self.order.formattedPrice ?: @""},
+                                 @{STRING_ORDER_PRODUCT_QUANTITY: [NSString stringWithFormat:@"%lu %@", (unsigned long)self.order.products.count, STRING_PRODUCT_QUANTITY_POSTFIX] ?: @""},
+                                 @{STRING_PAYMENT_METHOD: self.order.paymentMethod ?: @""},
+                                 ];
+}
+
+#pragma mark - OrderProductListTableViewCellDelegate
+
+- (void)needsToShowProductReviewForProduct:(OrderProduct *)product {
+    [[LoadingManager sharedInstance] showLoading];
+    [RIProduct getCompleteProductWithSku:product.sku successBlock:^(id product) {
+        [[LoadingManager sharedInstance] hideLoading];
+        NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
+        if(VALID_NOTEMPTY(product, RIProduct)) {
+            [userInfo setObject:product forKey:@"product"];
+        }
+        [userInfo setObject:@"reviews" forKey:@"product.screen"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowProductSpecificationScreenNotification object:nil userInfo:userInfo];
+    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
+        [[LoadingManager sharedInstance] hideLoading];
+        if ([self showNotificationBarMessage:error[0] isSuccess:NO]) {
+            
+        }
+    }];
+    
 }
 
 @end

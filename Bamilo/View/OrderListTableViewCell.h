@@ -8,7 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseTableViewCell.h"
+#import "Order.h"
+
+@protocol OrderListTableViewCellDelegate
+- (void)stateButtonTappedForOrder:(Order *)order byCell:id;
+@end
 
 @interface OrderListTableViewCell : BaseTableViewCell
 
+@property (weak, nonatomic) id<OrderListTableViewCellDelegate> delegate;
 @end
