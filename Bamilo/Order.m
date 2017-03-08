@@ -76,13 +76,13 @@
 }
 
 -(int) getStatusIndexFromStatusString:(NSString *)statusString {
-    if([statusString isEqualToString:@"سفارش جدید"]) {
+    if([statusString containsString:@"سفارش جدید"]) { //0
         return ORDER_STATUS_NEW_ORDER;
-    } else if([statusString isEqualToString:@"در حال پردازش"]) {
+    } else if([statusString containsString:@"در حال پردازش"]) { //1
         return ORDER_STATUS_REGISTERED;
-    } else if([statusString isEqualToString:@"ارسال شد"]) {
+    } else if([statusString containsString:@"ارسال شد"]) { //2
         return ORDER_STATUS_IN_PROGRESS;
-    } else if([statusString isEqualToString:@"تحویل داده شد."]) {
+    } else if([statusString containsString:@"تحویل داده شد"]) { //2
         return ORDER_STATUS_DELIVERED;
     }
     
