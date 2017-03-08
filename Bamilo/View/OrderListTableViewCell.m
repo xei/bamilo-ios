@@ -38,10 +38,6 @@
     self.orderDateLabel.text = [NSString stringWithFormat:@"%@ %@", STRING_ORDER_DATE, dateString];
 }
 
-- (IBAction)stateButtonTapped:(id)sender {
-    [self.delegate stateButtonTappedForOrder:self.order byCell:self];
-}
-
 
 - (void)prepareForReuse {
     self.priceLabel.text = nil;
