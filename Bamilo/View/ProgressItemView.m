@@ -43,9 +43,9 @@
         case PROGRESS_ITEM_PENDING:
             [self.iconButton setEnabled:NO];
             [self.iconButton setImage:[UIImage imageNamed:model.icons.pending] forState:UIControlStateNormal];
-            [self.textLabel applyStyle:kFontRegularName fontSize:10.0f color:[Theme color:kColorExtraLightGray]];
-            [self.buttonInnerContainerView setBackgroundColor:[Theme color:kColorExtraLightGray]];
-            [self.buttonOutterContainerView setBackgroundColor:[Theme color:kColorExtraLightGray]];
+            [self.textLabel applyStyle:kFontRegularName fontSize:10.0f color:[Theme color:kColorExtraExtraLightGray]];
+            [self.buttonInnerContainerView setBackgroundColor:[Theme color:kColorExtraExtraLightGray]];
+            [self.buttonOutterContainerView setBackgroundColor:[Theme color:kColorExtraExtraLightGray]];
         break;
             
         case PROGRESS_ITEM_ACTIVE:

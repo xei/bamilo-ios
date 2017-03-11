@@ -33,6 +33,7 @@ NSString *const kColorDarkGray = @"ColorDarkGray";
 NSString *const kColorGray = @"ColorGray";
 NSString *const kColorLightGray = @"ColorLightGray";
 NSString *const kColorExtraLightGray = @"ColorExtraLightGray";
+NSString *const kColorExtraExtraLightGray = @"ColorExtraExtraLightGray";
 NSString *const kColorRed = @"ColorRed";
 NSString *const kColorExtraLightRed = @"ColorExtraLightRed";
 
