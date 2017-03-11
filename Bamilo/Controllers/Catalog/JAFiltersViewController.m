@@ -33,7 +33,7 @@
 
 @implementation JAFiltersViewController
 
-const int subCatButtonVisibleHeight = 40;
+const int subCatButtonVisibleHeight = 50;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -47,7 +47,7 @@ const int subCatButtonVisibleHeight = 40;
     SearchPriceFilter *priceFilter = (SearchPriceFilter *)[self.filtersArray objectAtIndex:self.priceFilterIndex];
     self.discountOnlyUISwitch.on = priceFilter.discountOnly;
     
-    [self.subCatButton applyStyle:kFontRegularName fontSize:12 color:cEXTRA_DARK_GRAY_COLOR];
+    [self.subCatButton applyStyle:kFontRegularName fontSize:12 color:[UIColor withRepeatingRGBA:78 alpha:1.0f]];
     [self.subCatButton setTitle:STRING_SUBCATEGORIES forState:UIControlStateNormal];
     if (self.subCatsFilter) {
         self.subCatButtonHeightConstraint.constant = subCatButtonVisibleHeight;
