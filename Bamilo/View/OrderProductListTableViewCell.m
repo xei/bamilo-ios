@@ -10,8 +10,6 @@
 #import "ImageManager.h"
 #import "IconButton.h"
 
-#define cBLUE_COLOR [UIColor withHexString:@"4A90E2"]
-
 @interface OrderProductListTableViewCell()
 @property (weak, nonatomic) IBOutlet UIImageView *productImage;
 @property (weak, nonatomic) IBOutlet UILabel *productTitleLabel;
@@ -28,12 +26,14 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    [self.priceLabel applyStyle:kFontRegularName fontSize:11 color:cLIGHT_GRAY_COLOR];
-    [self.quantityLabel applyStyle:kFontRegularName fontSize:11 color:cLIGHT_GRAY_COLOR];
-    [self.productTitleLabel applyStyle:kFontRegularName fontSize:11 color:cLIGHT_GRAY_COLOR];
-    [self.commentButton applyStyle:kFontBoldName fontSize:11 color:[UIColor whiteColor]];
-    [self.statusLabel applyStyle:kFontBoldName fontSize:11 color:cEXTRA_DARK_GRAY_COLOR];
-    [self.commentButton setBackgroundColor:cBLUE_COLOR];
+    
+    [self.priceLabel applyStyle:[Theme font:kFontVariationRegular size:11.0f] color:[Theme color:kColorLightGray]];
+    [self.quantityLabel applyStyle:[Theme font:kFontVariationRegular size:11.0f] color:[Theme color:kColorLightGray]];
+    [self.productTitleLabel applyStyle:[Theme font:kFontVariationRegular size:11.0f] color:[Theme color:kColorLightGray]];
+    [self.commentButton applyStyle:[Theme font:kFontVariationBold size:11.0f] color:[UIColor whiteColor]];
+    [self.statusLabel applyStyle:[Theme font:kFontVariationBold size:11.0f] color:[Theme color:kColorExtraDarkGray]];
+    
+    [self.commentButton setBackgroundColor:[Theme color:kColorBlue]];
 }
 
 - (void)updateWithModel:(id)model {

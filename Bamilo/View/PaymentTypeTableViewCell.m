@@ -23,7 +23,7 @@
     
     self.contentView.backgroundColor = [UIColor whiteColor];
     
-    [self.titleLabel applyStyle:kFontRegularName fontSize:12.0f color:cDARK_GRAY_COLOR];
+    [self.titleLabel applyStyle:[Theme font:kFontVariationRegular size:12.0f] color:[Theme color:kColorDarkGray]];
 }
 
 #pragma mark - Overrides

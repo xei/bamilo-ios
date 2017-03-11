@@ -21,9 +21,9 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    [self.priceLabel applyStyle:kFontRegularName fontSize:11 color:cLIGHT_GRAY_COLOR];
-    [self.orderNumLabel applyStyle:kFontRegularName fontSize:11 color:cLIGHT_GRAY_COLOR];
-    [self.orderDateLabel applyStyle:kFontRegularName fontSize:11 color:cEXTRA_DARK_GRAY_COLOR];
+    [self.priceLabel applyStyle:[Theme font:kFontVariationRegular size:11.0f] color:[Theme color:kColorLightGray]];
+    [self.orderNumLabel applyStyle:[Theme font:kFontVariationRegular size:11.0f] color:[Theme color:kColorLightGray]];
+    [self.orderDateLabel applyStyle:[Theme font:kFontVariationRegular size:11.0f] color:[Theme color:kColorExtraDarkGray]];
 }
 
 - (void)updateWithModel:(id)model {

@@ -8,11 +8,6 @@
 
 #import "ProgressItemView.h"
 
-#define cCOLOR_ACTIVE [UIColor withRGBA:0 green:160 blue:0 alpha:1.0]
-#define cCOLOR_PASSIVE [UIColor withRepeatingRGBA:222 alpha:1.0]
-#define cCOLOR_ERROR [UIColor withHexString:@"#B90F00"]
-#define cCOLOR_ERROR_LIGHT [UIColor withHexString:@"#FEF3F2"]
-
 @interface ProgressItemView()
 @property (weak, nonatomic) IBOutlet UIView *buttonInnerContainerView;
 @property (weak, nonatomic) IBOutlet UIView *buttonOutterContainerView;
@@ -48,34 +43,34 @@
         case PROGRESS_ITEM_PENDING:
             [self.iconButton setEnabled:NO];
             [self.iconButton setImage:[UIImage imageNamed:model.icons.pending] forState:UIControlStateNormal];
-            [self.textLabel applyStyle:kFontRegularName fontSize:10.0f color:cCOLOR_PASSIVE];
-            [self.buttonInnerContainerView setBackgroundColor:cCOLOR_PASSIVE];
-            [self.buttonOutterContainerView setBackgroundColor:cCOLOR_PASSIVE];
+            [self.textLabel applyStyle:kFontRegularName fontSize:10.0f color:[Theme color:kColorExtraLightGray]];
+            [self.buttonInnerContainerView setBackgroundColor:[Theme color:kColorExtraLightGray]];
+            [self.buttonOutterContainerView setBackgroundColor:[Theme color:kColorExtraLightGray]];
         break;
             
         case PROGRESS_ITEM_ACTIVE:
             [self.iconButton setEnabled:(model.isIndicator ? NO : YES)];
             [self.iconButton setImage:[UIImage imageNamed:model.icons.active] forState:UIControlStateNormal];
-            [self.textLabel applyStyle:kFontRegularName fontSize:12.0f color:cCOLOR_ACTIVE];
+            [self.textLabel applyStyle:kFontRegularName fontSize:12.0f color:[Theme color:kColorGreen]];
             [self.buttonInnerContainerView setBackgroundColor:[UIColor whiteColor]];
-            [self.buttonOutterContainerView setBackgroundColor:cCOLOR_ACTIVE];
+            [self.buttonOutterContainerView setBackgroundColor:[Theme color:kColorGreen]];
         break;
             
         case PROGRESS_ITEM_DONE:
             [self.iconButton setEnabled:(model.isIndicator ? NO : YES)];
             [self.iconButton setImage:[UIImage imageNamed:model.icons.done] forState:UIControlStateNormal];
-            [self.textLabel applyStyle:kFontRegularName fontSize:10.0f color:cCOLOR_ACTIVE];
-            [self.buttonInnerContainerView setBackgroundColor:cCOLOR_ACTIVE];
-            [self.buttonOutterContainerView setBackgroundColor:cCOLOR_ACTIVE];
+            [self.textLabel applyStyle:kFontRegularName fontSize:10.0f color:[Theme color:kColorGreen]];
+            [self.buttonInnerContainerView setBackgroundColor:[Theme color:kColorGreen]];
+            [self.buttonOutterContainerView setBackgroundColor:[Theme color:kColorGreen]];
         break;
             
         case PROGRESS_ITEM_ERROR:
             [self.iconButton setEnabled:NO];
             [self.iconButton setImage:[UIImage imageNamed:model.icons.error] forState:UIControlStateNormal];
             [self.textLabel setText:model.errorTitle];
-            [self.textLabel applyStyle:kFontRegularName fontSize:12.0f color:cCOLOR_ERROR];
-            [self.buttonInnerContainerView setBackgroundColor:cCOLOR_ERROR_LIGHT];
-            [self.buttonOutterContainerView setBackgroundColor:cCOLOR_ERROR];
+            [self.textLabel applyStyle:kFontRegularName fontSize:12.0f color:[Theme color:kColorRed]];
+            [self.buttonInnerContainerView setBackgroundColor:[Theme color:kColorExtraLightRed]];
+            [self.buttonOutterContainerView setBackgroundColor:[Theme color:kColorRed]];
         break;
     }
 }

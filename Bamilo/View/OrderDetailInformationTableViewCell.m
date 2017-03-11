@@ -18,8 +18,8 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    [self.titleLabel applyStyle:kFontRegularName fontSize:10 color:cDARK_GRAY_COLOR];
-    [self.valueLabel applyStyle:kFontRegularName fontSize:10 color:cDARK_GRAY_COLOR];
+    [self.titleLabel applyStyle:[Theme font:kFontVariationRegular size:10.0f] color:[Theme color:kColorDarkGray]];
+    [self.valueLabel applyStyle:[Theme font:kFontVariationRegular size:10.0f] color:[Theme color:kColorDarkGray]];
 }
 
 - (void)setTitle:(NSString *)title {

@@ -51,7 +51,7 @@ const CGFloat summeryViewHeight = 45;
 
 
 + (CGFloat)cellHeightByModel:(CartEntity *)cartEntity {
-    int reciptItemViewCount = ((cartEntity.priceRules.allKeys.count) + (cartEntity.couponCode ? 1 : 0) + (cartEntity.shippingValue.intValue > 0 ? 1 : 0) + 2);
+    int reciptItemViewCount = (int)((cartEntity.priceRules.allKeys.count) + (cartEntity.couponCode.length > 0) + (cartEntity.shippingValue.intValue > 0) + 2);
     return ([ReceiptItemView cellHeight] * reciptItemViewCount) + summeryViewHeight + cellBottomPadding;
 }
 
@@ -61,7 +61,7 @@ const CGFloat summeryViewHeight = 45;
 
 - (void)layoutSubviews {
     self.summeryView.backgroundColor = [UIColor whiteColor];
-    [self.summeryView applyColor:cGREEN_COLOR];
+    [self.summeryView applyColor:[Theme color:kColorGreen]];
 }
 
 @end

@@ -16,9 +16,9 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    [self.leftTitleLabel applyStyle:kFontBoldName fontSize:12 color:cEXTRA_DARK_GRAY_COLOR];
+    
+    [self.leftTitleLabel applyStyle:[Theme font:kFontVariationBold size:12.0f] color:[Theme color:kColorExtraDarkGray]];
 }
-
 
 - (void)setLeftTitleString:(NSString *)leftTitleString {
     self.leftTitleLabel.text = leftTitleString;
