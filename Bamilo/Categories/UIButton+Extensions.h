@@ -12,6 +12,7 @@
 
 @property(nonatomic, assign) UIEdgeInsets hitTestEdgeInsets;
 
+-(void) applyStyle:(UIFont *)font color:(UIColor *)color;
 -(void) applyStyle:(NSString *)fontName fontSize:(CGFloat)fontSize color:(UIColor *)color;
 
 @end

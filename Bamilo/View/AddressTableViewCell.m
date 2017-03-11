@@ -32,20 +32,20 @@
     self.contentView.backgroundColor = [UIColor whiteColor];
     
     //Address Title Label Setup
-    [self.addressTitleLabel applyStyle:kFontBoldName fontSize:12 color:cEXTRA_DARK_GRAY_COLOR];
-    
+    [self.addressTitleLabel applyStyle:[Theme font:kFontVariationBold size:12] color:[Theme color:kColorExtraDarkGray]];
+
     //Address Label Setup
-    [self.addressLabel applyStyle:kFontRegularName fontSize:12 color:cDARK_GRAY_COLOR];
+    [self.addressLabel applyStyle:[Theme font:kFontVariationRegular size:12] color:[Theme color:kColorDarkGray]];
     
     //Address Phone Label Setup
-    [self.addressPhoneLabel applyStyle:kFontRegularName fontSize:12 color:cDARK_GRAY_COLOR];
+    [self.addressPhoneLabel applyStyle:[Theme font:kFontVariationRegular size:12] color:[Theme color:kColorDarkGray]];
     
     //Address Edit Button Setup
-    [self.addressEditButton applyStyle:kFontRegularName fontSize:11 color:cLIGHT_GRAY_COLOR];
+    [self.addressEditButton applyStyle:[Theme font:kFontVariationRegular size:11] color:[Theme color:kColorLightGray]];
     self.addressEditButton.titleLabel.text = STRING_EDIT;
     
     //Address Remove Button Setup
-    [self.addressDeleteButton applyStyle:kFontRegularName fontSize:11 color:cLIGHT_GRAY_COLOR];
+    [self.addressDeleteButton applyStyle:[Theme font:kFontVariationRegular size:11] color:[Theme color:kColorLightGray]];
     self.addressDeleteButton.titleLabel.text = STRING_REMOVE;
     
     [self setSeparatorInset:UIEdgeInsetsZero];
