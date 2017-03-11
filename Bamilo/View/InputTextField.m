@@ -7,11 +7,7 @@
 //
 
 #import "InputTextField.h"
-
-#define cPLACEHOLDER_COLOR [UIColor withHexString:@"757575"]
-#define cINPUT_TINT_COLOR [UIColor withHexString:@"3D3D3D"]
-#define cRED_ERROR_COLOR [UIColor withHexString:@"FF6666"]
-#define cDARK_GRAY_COLOR [UIColor withRGBA:115 green:115 blue:115 alpha:1.0f]
+#import "UITextField+Extensions.h"
 
 #define cICON_RIGHT_MARGIN 8
 
@@ -39,14 +35,14 @@
 
 - (void)setUpView {
     //Set Default style
-    NSAttributedString *attributedPlaceholder = [[NSAttributedString alloc] initWithString:self.textField.placeholder attributes: @{NSForegroundColorAttributeName: cPLACEHOLDER_COLOR}];
+    NSAttributedString *attributedPlaceholder = [[NSAttributedString alloc] initWithString:self.textField.placeholder attributes: @{NSForegroundColorAttributeName: [Theme color: kColorDarkGray]}];
     self.textField.attributedPlaceholder = attributedPlaceholder;
-    self.textField.textColor = cINPUT_TINT_COLOR;
-    self.textField.font = [UIFont fontWithName:kFontRegularName size:12];
+    [self.textField applyStyle:[Theme font:kFontVariationRegular size:12] color:[Theme color:kColorExtraDarkGray]];
     [self.dropDownIcon setHidden:YES];
     
     [self clearError];
     [self updateIconAppearance:YES];
+    self.seperatorBorderView.backgroundColor = [Theme color:kColorDarkGray];
 }
 
 -(void)setHasIcon:(BOOL)hasIcon {
@@ -61,8 +57,8 @@
     }
     
     self.errorMsg.text = errorMsg;
-    self.seperatorBorderView.backgroundColor = cRED_ERROR_COLOR;
-    self.textField.textColor = cRED_ERROR_COLOR;
+    self.seperatorBorderView.backgroundColor = [Theme color:kColorRed];
+    self.textField.textColor = [Theme color:kColorRed];
     [UIView animateWithDuration:0.15 animations:^{
         self.errorMsgTopConstraint.constant = 0;
         [self layoutIfNeeded];
@@ -71,8 +67,8 @@
 
 - (void)clearError {
     self.errorMsg.text = nil;
-    self.seperatorBorderView.backgroundColor = cDARK_GRAY_COLOR;
-    self.textField.textColor = cINPUT_TINT_COLOR;
+    self.seperatorBorderView.backgroundColor = [Theme color:kColorDarkGray];
+    self.textField.textColor = [Theme color:kColorExtraDarkGray];
     self.errorMsgTopConstraint.constant = -15;
 }
 

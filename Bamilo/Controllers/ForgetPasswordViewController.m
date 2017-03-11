@@ -28,7 +28,7 @@
     self.formController.delegate = self;
     self.formController.tableView = self.tableView;
     
-    self.topSeperatorView.backgroundColor = cLIGHT_GRAY_COLOR;
+    self.topSeperatorView.backgroundColor = [Theme color:kColorLightGray];
     
     FormItemModel *email = [FormItemModel emailWithFieldName:@"forgot_password[email]"];
     email.icon = [UIImage imageNamed:@"Email"];
@@ -37,9 +37,10 @@
     self.formController.submitTitle = STRING_SEND;
     
     [self.formController setupTableView];
-    [self.topHeaderUnderButtonView setBackgroundColor:cORAGNE_COLOR];
+    [self.topHeaderUnderButtonView setBackgroundColor:[Theme color:kColorOrange]];
     
-    [self.descLabel applyStyle:kFontRegularName fontSize:11.0f color:cDARK_GRAY_COLOR];
+    [self.descLabel applyStyle:[Theme font:kFontVariationRegular size:11] color: [Theme color:kColorDarkGray]];
+    
     self.descLabel.text = STRING_ENTER_YOUR_EMAIL_ADDRESS;
 }
 

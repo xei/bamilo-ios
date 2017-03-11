@@ -39,13 +39,13 @@
     NSDictionary *parameters = @{CAPSPageMenuOptionUseMenuLikeSegmentedControl: @(YES),
                                  CAPSPageMenuOptionSelectionIndicatorHeight: @2,
                                  CAPSPageMenuOptionMenuItemFont: [UIFont fontWithName:kFontRegularName size: 14],
-                                 CAPSPageMenuOptionSelectionIndicatorColor: cORAGNE_COLOR,
+                                 CAPSPageMenuOptionSelectionIndicatorColor: [Theme color:kColorOrange],
                                  CAPSPageMenuOptionScrollMenuBackgroundColor: [UIColor whiteColor],
                                  CAPSPageMenuOptionMenuHeight: @40,
-                                 CAPSPageMenuOptionBottomMenuHairlineColor:cLIGHT_GRAY_COLOR,
+                                 CAPSPageMenuOptionBottomMenuHairlineColor: [Theme color:kColorLightGray],
                                  CAPSPageMenuOptionAddBottomMenuHairline: @(YES),
-                                 CAPSPageMenuOptionUnselectedMenuItemLabelColor: cDARK_GRAY_COLOR,
-                                 CAPSPageMenuOptionSelectedMenuItemLabelColor: cEXTRA_DARK_GRAY_COLOR,
+                                 CAPSPageMenuOptionUnselectedMenuItemLabelColor: [Theme color:kColorDarkGray],
+                                 CAPSPageMenuOptionSelectedMenuItemLabelColor: [Theme color:kColorExtraDarkGray],
                                  CAPSPageMenuOptionScrollAnimationDurationOnMenuItemTap: @(150)
                                  };
     

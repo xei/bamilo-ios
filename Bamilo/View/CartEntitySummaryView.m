@@ -7,7 +7,7 @@
 //
 
 #import "CartEntitySummaryView.h"
-#define cGRAY_COLOR [UIColor withRepeatingRGBA:217 alpha:1.0f]
+
 
 @interface CartEntitySummaryView()
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -20,7 +20,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    self.backgroundColor = cGRAY_COLOR;
+    self.backgroundColor = [Theme color:kColorGray];
 }
 
 - (void)setCartEntity:(CartEntity *)cartEntity {

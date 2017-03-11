@@ -25,6 +25,7 @@
 		61036B651E65B570006E12A9 /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = 61036B641E65B570006E12A9 /* Order.m */; };
 		61036B681E65B5F5006E12A9 /* OrderList.m in Sources */ = {isa = PBXBuildFile; fileRef = 61036B671E65B5F5006E12A9 /* OrderList.m */; };
 		61036B6C1E65B638006E12A9 /* OrderProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 61036B6B1E65B638006E12A9 /* OrderProduct.m */; };
+		610ED5831E742947000D5BEC /* UITextField+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 610ED5821E742947000D5BEC /* UITextField+Extensions.m */; };
 		611195821E3CB14B00D06690 /* PlainTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 611195801E3CB14B00D06690 /* PlainTableViewCell.m */; };
 		611195831E3CB14B00D06690 /* PlainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 611195811E3CB14B00D06690 /* PlainTableViewCell.xib */; };
 		61148E051E4724FC00E2540B /* StepperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61148E041E4724FC00E2540B /* StepperView.m */; };
@@ -643,6 +644,8 @@
 		61036B671E65B5F5006E12A9 /* OrderList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderList.m; sourceTree = "<group>"; };
 		61036B6A1E65B638006E12A9 /* OrderProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderProduct.h; sourceTree = "<group>"; };
 		61036B6B1E65B638006E12A9 /* OrderProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderProduct.m; sourceTree = "<group>"; };
+		610ED5811E742947000D5BEC /* UITextField+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+Extensions.h"; sourceTree = "<group>"; };
+		610ED5821E742947000D5BEC /* UITextField+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+Extensions.m"; sourceTree = "<group>"; };
 		6111957F1E3CB14B00D06690 /* PlainTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlainTableViewCell.h; path = ../Controllers/MenuViewController/PlainTableViewCell.h; sourceTree = "<group>"; };
 		611195801E3CB14B00D06690 /* PlainTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlainTableViewCell.m; path = ../Controllers/MenuViewController/PlainTableViewCell.m; sourceTree = "<group>"; };
 		611195811E3CB14B00D06690 /* PlainTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PlainTableViewCell.xib; path = ../Controllers/MenuViewController/PlainTableViewCell.xib; sourceTree = "<group>"; };
@@ -1997,6 +2000,15 @@
 				61036B611E65B553006E12A9 /* Order */,
 			);
 			name = OrderGroup;
+			sourceTree = "<group>";
+		};
+		610ED5801E742918000D5BEC /* UITextField+Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				610ED5811E742947000D5BEC /* UITextField+Extensions.h */,
+				610ED5821E742947000D5BEC /* UITextField+Extensions.m */,
+			);
+			name = "UITextField+Extensions";
 			sourceTree = "<group>";
 		};
 		61148E001E47226200E2540B /* Stepper */ = {
@@ -4625,6 +4637,7 @@
 		B5C1E33419BA1E3D009C422C /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				610ED5801E742918000D5BEC /* UITextField+Extensions */,
 				613D37741E6EE168001B2852 /* NSDate+Extensions */,
 				612553581E4F37AD00975C6F /* UIScrollView+Extensions */,
 				87A681541E40EF3700D252AC /* Categories.pch */,
@@ -5529,6 +5542,7 @@
 				9A6BC0831C43CBB900DD9492 /* JAMyOrderResumeView.m in Sources */,
 				875AD56E1E38C0C900584ABF /* RIProductSimple.m in Sources */,
 				870BEA851E73F6BC00C5B615 /* ThemeFont.m in Sources */,
+				610ED5831E742947000D5BEC /* UITextField+Extensions.m in Sources */,
 				875AD5801E38C0C900584ABF /* RITrackingWrapper.m in Sources */,
 				CE9ADF7D1AB6D78200D56481 /* JAPDVImageSection.m in Sources */,
 				61C5C4191E54796A00F22130 /* RecieptViewCartTableViewCell.m in Sources */,

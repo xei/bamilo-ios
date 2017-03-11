@@ -15,8 +15,6 @@
 #import "SearchCategoryFilter.h"
 #import "SubCatFilterViewController.h"
 
-#define cEXTRA_DARK_GRAY_COLOR [UIColor withRepeatingRGBA:80 alpha:1.0f]
-
 @interface JAFiltersViewController () <UITableViewDataSource, UITableViewDelegate, JAFiltersViewDelegate, SubCatFilterViewControllerDelegate>
 
 @property (nonatomic, strong) JAFiltersView* currentFilterView;

@@ -8,12 +8,11 @@
 
 #import "ReceiptItemModel.h"
 
-#define cDARK_GRAY_COLOR [UIColor withRepeatingRGBA:115 alpha:1.0f]
 
 @implementation ReceiptItemModel
 
 + (instancetype)withName:(NSString *)name value:(NSString *)value {
-    return [ReceiptItemModel withName:name value:value color:cDARK_GRAY_COLOR];
+    return [ReceiptItemModel withName:name value:value color:[Theme color:kColorDarkGray]];
 }
 
 +(instancetype)withName:(NSString *)name value:(NSString *)value color:(UIColor *)color {

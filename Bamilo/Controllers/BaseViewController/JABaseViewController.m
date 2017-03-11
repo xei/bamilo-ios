@@ -19,7 +19,6 @@
 #import "NotificationBarView.h"
 
 #define kSearchViewBarHeight 44.0f
-#define cORAGNE_COLOR [UIColor withRGBA:255 green:153 blue:0 alpha:1.0f]
 
 
 @interface JABaseViewController () {
@@ -319,7 +318,7 @@
     self.searchBar.placeholder = STRING_SEARCH_PLACEHOLDER;
     self.searchBar.showsCancelButton = NO;
     
-    [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTintColor: cORAGNE_COLOR];
+    [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTintColor: [Theme color:kColorOrange]];
     
     UITextField *textFieldSearch = [self.searchBar valueForKey:@"_searchField"];
     textFieldSearch.font = [UIFont fontWithName:kFontRegularName size:textFieldSearch.font.pointSize];

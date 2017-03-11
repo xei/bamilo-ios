@@ -182,7 +182,7 @@
                     if(self.cart.cartEntity.shippingValue.intValue > 0) {
                         [_receiptViewItems addObject:[ReceiptItemModel withName:STRING_SHIPPING_COST value:self.cart.cartEntity.shippingValueFormatted]];
                     } else {
-                        [_receiptViewItems addObject:[ReceiptItemModel withName:STRING_SHIPPING_COST value:STRING_FREE color:cGREEN_COLOR]];
+                        [_receiptViewItems addObject:[ReceiptItemModel withName:STRING_SHIPPING_COST value:STRING_FREE color:[Theme color:kColorGreen]]];
                     }
 
                     [receiptView updateWithModel:_receiptViewItems];
@@ -194,7 +194,7 @@
                     ReceiptItemView *receiptItemView = [tableView dequeueReusableCellWithIdentifier:[ReceiptItemView nibName] forIndexPath:indexPath];
                     
                     [receiptItemView updateWithModel:[ReceiptItemModel withName:STRING_SUM_OF_TOTAL value:self.cart.cartEntity.cartValueFormatted]];
-                    [receiptItemView applyColor:cGREEN_COLOR];
+                    [receiptItemView applyColor:[Theme color:kColorGreen]];
                     
                     return receiptItemView;
                 }

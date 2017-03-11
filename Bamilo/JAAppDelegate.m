@@ -21,7 +21,6 @@
 #import "SessionManager.h"
 #import "URLUtility.h"
 
-#define cORAGNE_COLOR [UIColor withRGBA:255 green:153 blue:0 alpha:1.0f]
 
 //#######################################################################################
 #import "ViewControllerManager.h"
@@ -82,9 +81,9 @@
     
     [[UINavigationBar appearance] setBarTintColor:JABlack300Color];
     
-    [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:JABackgroundGrey, NSForegroundColorAttributeName, [UIFont fontWithName:kFontLightName size:18.0f], NSFontAttributeName,nil] forState:UIControlStateNormal];
+    [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:JABackgroundGrey, NSForegroundColorAttributeName, [Theme font:kFontVariationLight size:18], NSFontAttributeName,nil] forState:UIControlStateNormal];
     
-    [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:cORAGNE_COLOR, NSForegroundColorAttributeName, [UIFont fontWithName:kFontLightName size:18.0f], NSFontAttributeName,nil] forState:UIControlStateSelected];
+    [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[Theme color:kColorOrange], NSForegroundColorAttributeName, [Theme font:kFontVariationLight size:18], NSFontAttributeName,nil] forState:UIControlStateSelected];
     
     NSString* phpSessIDCookie = [NSString stringWithFormat:@"%@%@",kPHPSESSIDCookie,[RIApi getCountryIsoInUse]];
     NSDictionary *cookieProperties = [[NSUserDefaults standardUserDefaults] objectForKey:phpSessIDCookie];

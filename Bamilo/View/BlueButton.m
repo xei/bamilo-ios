@@ -7,7 +7,6 @@
 //
 
 #import "BlueButton.h"
-#define cBLUE_COLOR [UIColor withHexString:@"4A90E2"]
 
 @implementation BlueButton
 
@@ -25,8 +24,9 @@
 
 -(void)setupButtonAppearance {
     [super setupButtonAppearance];
-    [self setBackgroundColor:cBLUE_COLOR];
-    [self.titleLabel applyStyle:kFontBoldName fontSize:15 color: cBLUE_COLOR];
+    [self setBackgroundColor:[Theme color:kColorBlue]];
+    [self.titleLabel applyStyle:[Theme font:kFontVariationBold size:15] color:[Theme color:kColorBlue]];
+    
     [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 }
 
