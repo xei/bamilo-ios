@@ -43,9 +43,10 @@ static ThemeManager *instance;
 }
 
 -(UIFont *)getFont:(NSString *)font variation:(NSString *)variation size:(CGFloat)size {
-    if(variation.length) {
-        ThemeFont *themeFont = [_fonts objectForKey:variation];
-        return [UIFont fontWithName:[NSString stringWithFormat:@"%@-%@", font, [themeFont.variations objectForKey:variation]] size:size];
+    ThemeFont *themeFont = [_fonts objectForKey:font];
+    NSString *fontVariation = [themeFont.variations objectForKey:variation];
+    if(fontVariation.length) {
+        return [UIFont fontWithName:[NSString stringWithFormat:@"%@-%@", font, fontVariation] size:size];
     } else {
         return [UIFont fontWithName:font size:size];
     }

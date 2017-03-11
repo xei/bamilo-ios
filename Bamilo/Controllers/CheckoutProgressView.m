@@ -87,7 +87,7 @@
         case CHECKOUT_PROGRESSVIEW_BUTTON_STATE_PENDING:
             [button setEnabled:NO];
             [button.layer setBorderColor:[UIColor whiteColor].CGColor];
-            [button.layer setBackgroundColor:[Theme color:kColorLightGray].CGColor];
+            [button.layer setBackgroundColor:[Theme color:kColorExtraLightGray].CGColor];
             [button setImage:nil forState:UIControlStateNormal];
             [button setTitle:[[@(button.tag) stringValue] numbersToPersian] forState:UIControlStateNormal];
             [borderView setBackgroundColor:[Theme color:kColorLightGray]];
