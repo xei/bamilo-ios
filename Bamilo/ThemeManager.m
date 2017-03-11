@@ -70,3 +70,15 @@ static ThemeManager *instance;
 }
 
 @end
+
+@implementation Theme
+
++(UIColor *) color:(NSString *)colorKey {
+    return [[ThemeManager sharedInstance] getColor:colorKey];
+}
+
++(UIFont *) font:(NSString *)fontVariation size:(CGFloat)size {
+    return [[ThemeManager sharedInstance] getFont:fontVariation size:size];
+}
+
+@end

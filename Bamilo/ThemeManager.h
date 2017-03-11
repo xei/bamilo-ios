@@ -27,3 +27,10 @@
 -(UIColor *)getColor:(NSString *)key colorKey:(NSString *)colorKey;
 
 @end
+
+@interface Theme : NSObject
+
++(UIColor *) color:(NSString *)colorKey;
++(UIFont *) font:(NSString *)fontVariation size:(CGFloat)size;
+
+@end
