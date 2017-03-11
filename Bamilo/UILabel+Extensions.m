@@ -11,7 +11,11 @@
 @implementation UILabel (Extensions)
 
 -(void)applyStyle:(NSString *)fontName fontSize:(CGFloat)fontSize color:(UIColor *)color {
-    self.font = [UIFont fontWithName:fontName size:fontSize];
+    [self applyStyle:[UIFont fontWithName:fontName size:fontSize] color:color];
+}
+
+-(void)applyStyle:(UIFont *)font color:(UIColor *)color {
+    self.font = font;
     self.textColor = color;
 }
 
