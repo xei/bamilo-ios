@@ -85,6 +85,10 @@
 		870680B81E62DF20000368D5 /* AddressTableViewHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 870680B71E62DF20000368D5 /* AddressTableViewHeaderCell.m */; };
 		870680B91E62E1FA000368D5 /* AddressTableViewHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87A6817A1E4201F400D252AC /* AddressTableViewHeaderCell.xib */; };
 		8708A1721E406C1100ABA7D8 /* ContactUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8708A1711E406C1100ABA7D8 /* ContactUsViewController.m */; };
+		870BEA7D1E73F4CC00C5B615 /* ThemeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 870BEA7C1E73F4CC00C5B615 /* ThemeManager.m */; };
+		870BEA801E73F5CB00C5B615 /* ThemeKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 870BEA7F1E73F5CB00C5B615 /* ThemeKeys.m */; };
+		870BEA851E73F6BC00C5B615 /* ThemeFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 870BEA841E73F6BC00C5B615 /* ThemeFont.m */; };
+		870BEA8D1E74013F00C5B615 /* ThemeColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 870BEA8C1E74013F00C5B615 /* ThemeColor.m */; };
 		870F8CF61E338D2D0021F87B /* BamiloUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 870F8CF51E338D2D0021F87B /* BamiloUITests.m */; };
 		870F8D061E33975A0021F87B /* IntUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 870F8D051E33975A0021F87B /* IntUtility.m */; };
 		8714E0361E45CC85004C9B1D /* AddressTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8714E0351E45CC85004C9B1D /* AddressTableViewCell.m */; };
@@ -744,6 +748,14 @@
 		870680B71E62DF20000368D5 /* AddressTableViewHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressTableViewHeaderCell.m; sourceTree = "<group>"; };
 		8708A1701E406C1100ABA7D8 /* ContactUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactUsViewController.h; sourceTree = "<group>"; };
 		8708A1711E406C1100ABA7D8 /* ContactUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactUsViewController.m; sourceTree = "<group>"; };
+		870BEA7B1E73F4CC00C5B615 /* ThemeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemeManager.h; sourceTree = "<group>"; };
+		870BEA7C1E73F4CC00C5B615 /* ThemeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemeManager.m; sourceTree = "<group>"; };
+		870BEA7E1E73F5CB00C5B615 /* ThemeKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemeKeys.h; sourceTree = "<group>"; };
+		870BEA7F1E73F5CB00C5B615 /* ThemeKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemeKeys.m; sourceTree = "<group>"; };
+		870BEA831E73F6BC00C5B615 /* ThemeFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemeFont.h; sourceTree = "<group>"; };
+		870BEA841E73F6BC00C5B615 /* ThemeFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemeFont.m; sourceTree = "<group>"; };
+		870BEA8B1E74013F00C5B615 /* ThemeColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemeColor.h; sourceTree = "<group>"; };
+		870BEA8C1E74013F00C5B615 /* ThemeColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemeColor.m; sourceTree = "<group>"; };
 		870F8CCB1E3354700021F87B /* Bamilo.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Bamilo.entitlements; sourceTree = "<group>"; };
 		870F8CF31E338D2C0021F87B /* BamiloUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BamiloUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		870F8CF51E338D2D0021F87B /* BamiloUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BamiloUITests.m; sourceTree = "<group>"; };
@@ -2502,6 +2514,45 @@
 			name = ContactUsViewController;
 			sourceTree = "<group>";
 		};
+		870BEA7A1E73F4B800C5B615 /* ThemeManager */ = {
+			isa = PBXGroup;
+			children = (
+				870BEA811E73F5E600C5B615 /* ThemeKeys */,
+				870BEA8A1E74013300C5B615 /* ThemeColor */,
+				870BEA821E73F6AF00C5B615 /* ThemeFont */,
+				870BEA7B1E73F4CC00C5B615 /* ThemeManager.h */,
+				870BEA7C1E73F4CC00C5B615 /* ThemeManager.m */,
+			);
+			name = ThemeManager;
+			sourceTree = "<group>";
+		};
+		870BEA811E73F5E600C5B615 /* ThemeKeys */ = {
+			isa = PBXGroup;
+			children = (
+				870BEA7E1E73F5CB00C5B615 /* ThemeKeys.h */,
+				870BEA7F1E73F5CB00C5B615 /* ThemeKeys.m */,
+			);
+			name = ThemeKeys;
+			sourceTree = "<group>";
+		};
+		870BEA821E73F6AF00C5B615 /* ThemeFont */ = {
+			isa = PBXGroup;
+			children = (
+				870BEA831E73F6BC00C5B615 /* ThemeFont.h */,
+				870BEA841E73F6BC00C5B615 /* ThemeFont.m */,
+			);
+			name = ThemeFont;
+			sourceTree = "<group>";
+		};
+		870BEA8A1E74013300C5B615 /* ThemeColor */ = {
+			isa = PBXGroup;
+			children = (
+				870BEA8B1E74013F00C5B615 /* ThemeColor.h */,
+				870BEA8C1E74013F00C5B615 /* ThemeColor.m */,
+			);
+			name = ThemeColor;
+			sourceTree = "<group>";
+		};
 		870F8CCC1E33548F0021F87B /* Application */ = {
 			isa = PBXGroup;
 			children = (
@@ -2956,6 +3007,7 @@
 				87A6814B1E40DC2000D252AC /* ViewControllerManager */,
 				879F87FC1E5095CF0033FE87 /* LoadingManager */,
 				872230E71E6A9894000748E9 /* SettingsManager */,
+				870BEA7A1E73F4B800C5B615 /* ThemeManager */,
 				872230EB1E6A98B1000748E9 /* ThreadManager */,
 			);
 			name = Managers;
@@ -5476,6 +5528,7 @@
 				875AD56F1E38C0C900584ABF /* RIPromotion.m in Sources */,
 				9A6BC0831C43CBB900DD9492 /* JAMyOrderResumeView.m in Sources */,
 				875AD56E1E38C0C900584ABF /* RIProductSimple.m in Sources */,
+				870BEA851E73F6BC00C5B615 /* ThemeFont.m in Sources */,
 				875AD5801E38C0C900584ABF /* RITrackingWrapper.m in Sources */,
 				CE9ADF7D1AB6D78200D56481 /* JAPDVImageSection.m in Sources */,
 				61C5C4191E54796A00F22130 /* RecieptViewCartTableViewCell.m in Sources */,
@@ -5551,6 +5604,7 @@
 				9A3C76171C285D9300EB0B11 /* JARecentlyViewedCell.m in Sources */,
 				CED620511BEA5EE800FA8403 /* JACollectionSeparator.m in Sources */,
 				870680B81E62DF20000368D5 /* AddressTableViewHeaderCell.m in Sources */,
+				870BEA7D1E73F4CC00C5B615 /* ThemeManager.m in Sources */,
 				61DBCCB61E46128300BA8251 /* IconButton.m in Sources */,
 				CE9ADFBA1AB6D78200D56481 /* JAUtils.m in Sources */,
 				873369C61E58A12E00B0B5E5 /* ShippingMethod.m in Sources */,
@@ -5609,6 +5663,7 @@
 				9A189E811BB54C2D0039BC14 /* JAScrolledImageGalleryView.m in Sources */,
 				8976FB2C1C0F323700483651 /* JARatingFilterCell.m in Sources */,
 				87A6ACEF1E38919C00C0E7DC /* GTMNSString+HTML.m in Sources */,
+				870BEA8D1E74013F00C5B615 /* ThemeColor.m in Sources */,
 				9AB488891B727B2D00886A44 /* UIImage+WithColor.m in Sources */,
 				CE9ADFD11AB6D78200D56481 /* JAOrderSummaryView.m in Sources */,
 				87A6815C1E40F9C000D252AC /* BaseViewController.m in Sources */,
@@ -5665,6 +5720,7 @@
 				873369BA1E582D0100B0B5E5 /* MultistepEntity.m in Sources */,
 				612FDC371E45E0A900A9D0BD /* CartTableViewCell.m in Sources */,
 				CE9ADFEF1AB6D78200D56481 /* JAPickerScrollView.m in Sources */,
+				870BEA801E73F5CB00C5B615 /* ThemeKeys.m in Sources */,
 				875AD5411E38C0C900584ABF /* RIApi.m in Sources */,
 				CE9ADFF11AB6D78200D56481 /* JARecentSearchesViewController.m in Sources */,
 				CE28A79B1BD9475100B1FADA /* JAMoreMenuViewController.m in Sources */,

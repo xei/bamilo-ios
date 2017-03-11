@@ -21,12 +21,12 @@
 #import "SessionManager.h"
 #import "URLUtility.h"
 
-
 #define cORAGNE_COLOR [UIColor withRGBA:255 green:153 blue:0 alpha:1.0f]
 
 //#######################################################################################
 #import "ViewControllerManager.h"
 #import "BaseViewController.h"
+#import "ThemeManager.h"
 
 @interface JAAppDelegate () <RIAdjustTrackerDelegate>
 
@@ -38,6 +38,22 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.startLoadingTime = [NSDate date];
+    
+    //SETUP THEME
+    ThemeFont *themeFont = [ThemeFont fontWithVariations:@{
+        kFontVariationRegular: cFontVariationNone,
+        kFontVariationBold: @"Bold",
+        kFontVariationBlack: @"Black",
+        kFontVariationMedium: cFontVariationNone,
+        kFontVariationLight: @"Light"
+    }];
+    [[ThemeManager sharedInstance] addThemeFont:cPrimaryFont font:themeFont];
+    
+    ThemeColor *themeColor = [ThemeColor colorWithPalette:@{
+         
+    }];
+    [[ThemeManager sharedInstance] addThemeColor:cPrimaryPalette color:themeColor];
+    
     [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans" forKey:kFontRegularNameKey];
     [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans-Light" forKey:kFontLightNameKey];
     [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans-Bold" forKey:kFontBoldNameKey];
