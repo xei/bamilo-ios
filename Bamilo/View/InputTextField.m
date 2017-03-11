@@ -34,6 +34,7 @@
 }
 
 - (void)setUpView {
+    self.errorMsg.textColor = [Theme color:kColorRed];
     //Set Default style
     NSAttributedString *attributedPlaceholder = [[NSAttributedString alloc] initWithString:self.textField.placeholder attributes: @{NSForegroundColorAttributeName: [Theme color: kColorDarkGray]}];
     self.textField.attributedPlaceholder = attributedPlaceholder;

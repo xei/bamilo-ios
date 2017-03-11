@@ -58,7 +58,7 @@
         kColorLightGray: [UIColor withRepeatingRGBA:146 alpha:1.0f],
         kColorExtraLightGray: [UIColor withRepeatingRGBA:186 alpha:1.0f],
         kColorExtraExtraLightGray: [UIColor withRepeatingRGBA:222 alpha:1.0f],
-        kColorRed: [UIColor withRGBA:185 green:15 blue:0 alpha:1.0f],
+        kColorRed: [UIColor withRGBA:185 green:15 blue:0 alpha:1.0f], 
         kColorExtraLightRed: [UIColor withRGBA:254 green:243 blue:242 alpha:1.0f]
     }];
     [[ThemeManager sharedInstance] addThemeColor:cPrimaryPalette color:themeColor];
