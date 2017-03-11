@@ -74,17 +74,20 @@
 }
 
 - (NSString *)getPriceStringFromFormatedPrice {
-    return [[[self numbersToEnglish] componentsSeparatedByCharactersInSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]] componentsJoinedByString:@""];
+    return [self stringByReplacingOccurrencesOfString:@"," withString:@""];
 }
 
 - (NSString *)formatPrice {
-    if (!self.floatValue) {
-        return self;
+    if (self.length <= 3) return self;
+    
+    NSMutableString *formatedPrice = [NSMutableString stringWithString: self];
+    int cammaIndex = ((int)(self.length % 3) ?: 3);
+    
+    while (cammaIndex < formatedPrice.length) {
+        [formatedPrice insertString: @"," atIndex: cammaIndex];
+        cammaIndex += 4;
     }
-    [NSString numberFormatter].numberStyle = NSNumberFormatterDecimalStyle;
-    NSNumber * numberFromString = @(self.floatValue);
-    NSString * formattedNumberString = [[NSString numberFormatter] stringFromNumber:numberFromString];
-    return formattedNumberString;
+    return [formatedPrice copy];
 }
 
 - (BOOL)isValidEmail {

@@ -70,13 +70,13 @@
     NSString *lowerTextFieldValue = [self.lowerSelectedPriceUITextField.text getPriceStringFromFormatedPrice];
     NSString *upperTextFieldValue = [self.upperSelectedPriceUITextField.text getPriceStringFromFormatedPrice];
     
-    float validateValue = MAX(self.priceFilter.minPrice, MIN(self.priceFilter.maxPrice, senderValueString.floatValue));
+    float validateValue = MAX(self.priceFilter.minPrice, MIN(self.priceFilter.maxPrice, senderValueString.intValue));
     float valueToBeSet;
     if (sender == self.upperSelectedPriceUITextField) {
-        valueToBeSet = MAX(validateValue, lowerTextFieldValue.floatValue);
+        valueToBeSet = MAX(validateValue, lowerTextFieldValue.intValue);
         self.priceRangeSlider.selectedMaximum = valueToBeSet;
     } else  {
-        valueToBeSet = MIN(validateValue, upperTextFieldValue.floatValue);
+        valueToBeSet = MIN(validateValue, upperTextFieldValue.intValue);
         self.priceRangeSlider.selectedMinimum = valueToBeSet;
     }
     
