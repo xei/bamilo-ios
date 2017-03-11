@@ -9,7 +9,6 @@
 #import "BlueButton.h"
 #define cBLUE_COLOR [UIColor withHexString:@"4A90E2"]
 
-
 @implementation BlueButton
 
 -(instancetype)initWithFrame:(CGRect)frame {

@@ -21,12 +21,12 @@
 #import "SessionManager.h"
 #import "URLUtility.h"
 
-
 #define cORAGNE_COLOR [UIColor withRGBA:255 green:153 blue:0 alpha:1.0f]
 
 //#######################################################################################
 #import "ViewControllerManager.h"
 #import "BaseViewController.h"
+#import "ThemeManager.h"
 
 @interface JAAppDelegate () <RIAdjustTrackerDelegate>
 
@@ -38,6 +38,28 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.startLoadingTime = [NSDate date];
+    
+    //SETUP THEME
+    ThemeFont *themeFont = [ThemeFont fontWithVariations:@{
+        kFontVariationRegular: cFontVariationNone,
+        kFontVariationBold: @"Bold",
+        kFontVariationBlack: @"Black",
+        kFontVariationMedium: cFontVariationNone,
+        kFontVariationLight: @"Light"
+    }];
+    [[ThemeManager sharedInstance] addThemeFont:cPrimaryFont font:themeFont];
+    
+    ThemeColor *themeColor = [ThemeColor colorWithPalette:@{
+        kColorBlue: [UIColor withRGBA:74 green:144 blue:226 alpha:1.0f],
+        kColorOrange: [UIColor withRGBA:255 green:153 blue:0 alpha:1.0f],
+        kColorGreen: [UIColor withRGBA:0 green:160 blue:0 alpha:1.0],
+        kColorDarkGray: [UIColor withRepeatingRGBA:115 alpha:1.0f],
+        kColorExtraDarkGray: [UIColor withRepeatingRGBA:80 alpha:1.0f],
+        kColorLightGray: [UIColor withRepeatingRGBA:146 alpha:1.0f],
+        kColorExtraLightGray: [UIColor withRepeatingRGBA:186 alpha:1.0f]
+    }];
+    [[ThemeManager sharedInstance] addThemeColor:cPrimaryPalette color:themeColor];
+    
     [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans" forKey:kFontRegularNameKey];
     [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans-Light" forKey:kFontLightNameKey];
     [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans-Bold" forKey:kFontBoldNameKey];
