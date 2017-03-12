@@ -356,7 +356,7 @@
                          simpleSku:productSimple.sku
                   withSuccessBlock:^(RICart *cart, RIApiResponse apiResponse, NSArray *successMessage){
                       
-                      NSNumber *price = (VALID_NOTEMPTY(product.specialPriceEuroConverted, NSNumber) && [product.specialPriceEuroConverted floatValue] > 0.0f) ? product.specialPriceEuroConverted : product.priceEuroConverted;
+                      NSNumber *price = (VALID_NOTEMPTY(product.specialPriceEuroConverted, NSNumber) && [product.specialPriceEuroConverted longValue] > 0.0f) ? product.specialPriceEuroConverted : product.priceEuroConverted;
                       
                       NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
                       [trackingDictionary setValue:product.sku forKey:kRIEventLabelKey];

@@ -72,10 +72,8 @@
         item.statusDate = status.lastChangeStatus;
     }
     
-    if(VALID_NOTEMPTY([json objectForKey:@"price"], NSString))
-    {
-        float f = [[json objectForKey:@"price"] floatValue];
-        item.total = [NSNumber numberWithFloat:f];
+    if(VALID_NOTEMPTY([json objectForKey:@"price"], NSString)) {
+        item.total = [NSNumber numberWithLong:[[json objectForKey:@"price"] longValue]];
         
         item.totalFormatted = [RICountryConfiguration formatPrice:item.total country:country];
     }
@@ -206,7 +204,7 @@
     {
         trackOrder.total = [json objectForKey:@"grand_total"];
         
-        NSNumber *totalNumber = [NSNumber numberWithFloat:[trackOrder.total floatValue]];
+        NSNumber *totalNumber = [NSNumber numberWithLong:[trackOrder.total longLongValue]];
         trackOrder.totalFormatted = [RICountryConfiguration formatPrice:totalNumber country:country];
     }
     
@@ -242,7 +240,7 @@
     {
         trackOrder.total = [json objectForKey:@"total"];
         
-        NSNumber *totalNumber = [NSNumber numberWithFloat:[trackOrder.total floatValue]];
+        NSNumber *totalNumber = [NSNumber numberWithLong:[trackOrder.total longLongValue]];
         trackOrder.totalFormatted = [RICountryConfiguration formatPrice:totalNumber country:country];
     }
     

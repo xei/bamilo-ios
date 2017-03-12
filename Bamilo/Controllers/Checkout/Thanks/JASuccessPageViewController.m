@@ -228,7 +228,7 @@
         BOOL isConverted = YES;
         NSString *discount = @"false";
         NSNumber *priceNumber = cartItem.priceEuroConverted;
-        if (VALID_NOTEMPTY(cartItem.specialPriceEuroConverted, NSNumber) && [cartItem.specialPriceEuroConverted floatValue] > 0.0f)
+        if (VALID_NOTEMPTY(cartItem.specialPriceEuroConverted, NSNumber) && [cartItem.specialPriceEuroConverted longValue] > 0.0f)
         {
             discount = @"true";
             priceNumber = cartItem.specialPriceEuroConverted;
@@ -238,7 +238,7 @@
         {
             isConverted = NO;
             priceNumber = cartItem.price;
-            if (VALID_NOTEMPTY(cartItem.specialPrice, NSNumber) && [cartItem.specialPrice floatValue] > 0.0f)
+            if (VALID_NOTEMPTY(cartItem.specialPrice, NSNumber) && [cartItem.specialPrice longValue] > 0.0f)
             {
                 discount = @"true";
                 priceNumber = cartItem.specialPrice;
@@ -246,7 +246,7 @@
         }
         
         [skusArray addObject:cartItem.sku];
-        priceSum = [NSNumber numberWithFloat:([priceSum floatValue] + [priceNumber floatValue])];
+        priceSum = [NSNumber numberWithLong:([priceSum longValue] + [priceNumber longValue])];
         
         //check if came from teasers and track that info
         NSString* teaserTrackingInfo = [teaserTrackingInfoDictionary objectForKey:cartItem.sku];
@@ -369,7 +369,7 @@
                 }
             }
             
-            averageValue += [price floatValue];
+            averageValue += [price longValue];
             
             // Since we're sending the converted price, we have to send the currency as EUR.
             // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
@@ -433,11 +433,11 @@
     
     [ecommerceDictionary setValue:[ecommerceProductsArray copy] forKey:kRIEcommerceProducts];
     
-    CGFloat totalOfPurchasesValue = grandTotal.floatValue;
+    CGFloat totalOfPurchasesValue = grandTotal.longValue;
     NSNumber *totalOfPurchases = [[NSUserDefaults standardUserDefaults] objectForKey:kRIEventAmountValueTransactions];
     if(VALID_NOTEMPTY(totalOfPurchases, NSNumber))
     {
-        totalOfPurchasesValue += [totalOfPurchases floatValue];
+        totalOfPurchasesValue += [totalOfPurchases longValue];
     }
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithFloat:totalOfPurchasesValue] forKey:kRIEventAmountValueTransactions];
     [[NSUserDefaults standardUserDefaults] synchronize];

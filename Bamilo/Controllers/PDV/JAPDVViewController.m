@@ -729,7 +729,7 @@ typedef void (^ProcessActionBlock)(void);
             
             if (bundleProduct.images.count) {
                 RIImage *imageTemp = [bundleProduct.images firstObject];
-                [bundleSingleItem.productImageView setImageWithURL:[NSURL URLWithString:imageTemp.url] placeholderImage:[UIImage imageNamed:@"placeholder_scrollable"]];
+                [bundleSingleItem.productImageView sd_setImageWithURL:[NSURL URLWithString:imageTemp.url] placeholderImage:[UIImage imageNamed:@"placeholder_scrollable"]];
             }
             
             bundleSingleItem.productNameLabel.text = bundleProduct.name;

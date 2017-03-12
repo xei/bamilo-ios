@@ -32,14 +32,12 @@
         newVariation.name = [variation objectForKey:@"name"];
     }
     if ([variation objectForKey:@"special_price"]) {
-        float f = [[variation objectForKey:@"special_price"] floatValue];
-        newVariation.specialPrice = [NSNumber numberWithFloat:f];
+        newVariation.specialPrice = [NSNumber numberWithLong:[[variation objectForKey:@"special_price"] longValue]];
     }
     else newVariation.specialPrice = nil;
     
     if (VALID_NOTEMPTY([variation objectForKey:@"price"], NSString)) {
-        float f = [[variation objectForKey:@"price"] floatValue];
-        newVariation.price = [NSNumber numberWithFloat:f];
+        newVariation.price = [NSNumber numberWithLong:[[variation objectForKey:@"price"] longValue]];
     }
     
     if ([variation objectForKey:@"sku"]) {

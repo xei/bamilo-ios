@@ -462,21 +462,21 @@
         }
         
         if ([dataDic objectForKey:@"max_price"]) {
-            newProduct.maxPrice = [NSNumber numberWithFloat:[[dataDic objectForKey:@"max_price"] floatValue]];
+            newProduct.maxPrice = [NSNumber numberWithLong:[[dataDic objectForKey:@"max_price"] longValue]];
             newProduct.maxPriceFormatted = [RICountryConfiguration formatPrice:newProduct.maxPrice country:country];
         }
         
         if ([dataDic objectForKey:@"max_price_converted"]) {
-            newProduct.maxPriceEuroConverted = [NSNumber numberWithFloat:[[dataDic objectForKey:@"max_price_converted"] floatValue]];
+            newProduct.maxPriceEuroConverted = [NSNumber numberWithLong:[[dataDic objectForKey:@"max_price_converted"] longValue]];
         }
         
         if ([dataDic objectForKey:@"price"]) {
-            newProduct.price = [NSNumber numberWithFloat:[[dataDic objectForKey:@"price"] floatValue]];
+            newProduct.price = [NSNumber numberWithLong:[[dataDic objectForKey:@"price"] longValue]];
             newProduct.priceFormatted = [RICountryConfiguration formatPrice:newProduct.price country:country];
         }
         
         if ([dataDic objectForKey:@"price_converted"]) {
-            newProduct.priceEuroConverted = [NSNumber numberWithFloat:[[dataDic objectForKey:@"price_converted"] floatValue]];
+            newProduct.priceEuroConverted = [NSNumber numberWithLong:[[dataDic objectForKey:@"price_converted"] longValue]];
         }
         
         if ([dataDic objectForKey:@"price_range"]) {
@@ -484,21 +484,21 @@
         }
         
         if ([dataDic objectForKey:@"special_price"]) {
-            newProduct.specialPrice = [NSNumber numberWithFloat:[[dataDic objectForKey:@"special_price"] floatValue]];
+            newProduct.specialPrice = [NSNumber numberWithLong:[[dataDic objectForKey:@"special_price"] longValue]];
             newProduct.specialPriceFormatted = [RICountryConfiguration formatPrice:newProduct.specialPrice country:country];
         }
         
         if ([dataDic objectForKey:@"special_price_converted"]) {
-            newProduct.specialPriceEuroConverted = [NSNumber numberWithFloat:[[dataDic objectForKey:@"special_price_converted"] floatValue]];
+            newProduct.specialPriceEuroConverted = [NSNumber numberWithLong:[[dataDic objectForKey:@"special_price_converted"] longValue]];
         }
         
         if ([dataDic objectForKey:@"max_special_price"]) {
-            newProduct.maxSpecialPrice = [NSNumber numberWithFloat:[[dataDic objectForKey:@"max_special_price"] floatValue]];
+            newProduct.maxSpecialPrice = [NSNumber numberWithLong:[[dataDic objectForKey:@"max_special_price"] longValue]];
             newProduct.maxSpecialPriceFormatted = [RICountryConfiguration formatPrice:newProduct.maxSpecialPrice country:country];
         }
         
         if ([dataDic objectForKey:@"max_special_price_converted"]) {
-            newProduct.maxSpecialPriceEuroConverted = [NSNumber numberWithFloat:[[dataDic objectForKey:@"max_special_price_converted"] floatValue]];
+            newProduct.maxSpecialPriceEuroConverted = [NSNumber numberWithLong:[[dataDic objectForKey:@"max_special_price_converted"] longValue]];
         }
         
         if ([dataDic objectForKey:@"max_saving_percentage"]) {
@@ -661,11 +661,11 @@
             NSDictionary* offersJSON = [dataDic objectForKey:@"offers"];
             if (offersJSON) {
                 if ([offersJSON objectForKey:@"min_price"]) {
-                    newProduct.offersMinPrice = [NSNumber numberWithFloat:[[offersJSON objectForKey:@"min_price"] floatValue]];
+                    newProduct.offersMinPrice = [NSNumber numberWithLong:[[offersJSON objectForKey:@"min_price"] longValue]];
                     newProduct.offersMinPriceFormatted = [RICountryConfiguration formatPrice:newProduct.offersMinPrice country:country];
                 }
                 if ([offersJSON objectForKey:@"min_price_converted"]) {
-                    newProduct.offersMinPriceEuroConverted = [NSNumber numberWithFloat:[[offersJSON objectForKey:@"min_price_converted"] floatValue]];
+                    newProduct.offersMinPriceEuroConverted = [NSNumber numberWithLong:[[offersJSON objectForKey:@"min_price_converted"] longValue]];
                 }
                 if ([offersJSON objectForKey:@"total"]) {
                     newProduct.offersTotal = [NSNumber numberWithInteger:[[offersJSON objectForKey:@"total"] integerValue]];

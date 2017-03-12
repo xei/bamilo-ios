@@ -212,9 +212,9 @@
 //    [formatter setUsesGroupingSeparator:YES];
     
     if(!VALID_NOTEMPTY([country currencyPosition], NSNumber) || ![[country currencyPosition] boolValue]) {
-        return [NSString stringWithFormat:@"%@ %@", [country currencySymbol], price];
+        return [NSString stringWithFormat:@"%@ %ld", [country currencySymbol], price.longValue];
     } else {
-        NSString *priceString = [NSString stringWithFormat:@"%@", price ?: @"0"];
+        NSString *priceString = [NSString stringWithFormat:@"%ld", price.longValue ?: 0];
         return [NSString stringWithFormat:@"%@ %@", [[priceString formatPrice] numbersToPersian], [country currencySymbol]];
     }
 }
