@@ -10,6 +10,7 @@
 #import "RIAddress.h"
 #import "RIForm.h"
 #import "RIField.h"
+#import "ViewControllerManager.h"
 
 #define kUserIsGuestFlagKey [NSString stringWithFormat:@"%@_user_is_guest", [RIApi getCountryIsoInUse]]
 
@@ -392,6 +393,7 @@
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               [RICustomer cleanCustomerFromDB];
                                                               successBlock();
+                                                              [[ViewControllerManager sharedInstance] clearCache];
                                                           } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               [RICustomer cleanCustomerFromDB];
                                                               if(NOTEMPTY(errorJsonObject))

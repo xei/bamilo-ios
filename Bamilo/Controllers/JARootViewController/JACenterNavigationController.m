@@ -20,12 +20,12 @@
 #import "JAMyOrderDetailViewController.h"
 #import "JASignInViewController.h"
 #import "JARegisterViewController.h"
-#import "JAAddressesViewController.h"
-#import "JAAddNewAddressViewController.h"
-#import "JAEditAddressViewController.h"
-#import "JAShippingViewController.h"
-#import "JAPaymentViewController.h"
-#import "JAOrderViewController.h"
+//#import "JAAddressesViewController.h"
+//#import "JAAddNewAddressViewController.h"
+//#import "JAEditAddressViewController.h"
+//#import "JAShippingViewController.h"
+//#import "JAPaymentViewController.h"
+//#import "JAOrderViewController.h"
 #import "JACatalogViewController.h"
 #import "JAPDVViewController.h"
 #import "JAExternalPaymentsViewController.h"
@@ -1092,26 +1092,26 @@
 //}
 
 #pragma mark Checkout Shipping Screen
-- (void)showCheckoutShippingScreen {
-    JAShippingViewController *viewController = [[JAShippingViewController alloc] init];
-    [self goToStep:viewController forStepByStepViewController:self.checkoutStepByStepViewController];
-}
-
-//#pragma mark Checkout Payment Screen
-- (void)showCheckoutPaymentScreen {
-    JAPaymentViewController *viewController = [[JAPaymentViewController alloc] init];
-    [self goToStep:viewController forStepByStepViewController:self.checkoutStepByStepViewController];
-}
-
-//#pragma mark Checkout Finish Screen
-- (void)showCheckoutFinishScreen:(NSNotification*)notification {
-    UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAOrderViewController class]] && [RICustomer checkIfUserIsLogged]) {
-        JAOrderViewController *orderVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"orderViewController"];
-        
-        [self pushViewController:orderVC animated:YES];
-    }
-}
+//- (void)showCheckoutShippingScreen {
+//    JAShippingViewController *viewController = [[JAShippingViewController alloc] init];
+//    [self goToStep:viewController forStepByStepViewController:self.checkoutStepByStepViewController];
+//}
+//
+////#pragma mark Checkout Payment Screen
+//- (void)showCheckoutPaymentScreen {
+//    JAPaymentViewController *viewController = [[JAPaymentViewController alloc] init];
+//    [self goToStep:viewController forStepByStepViewController:self.checkoutStepByStepViewController];
+//}
+//
+////#pragma mark Checkout Finish Screen
+//- (void)showCheckoutFinishScreen:(NSNotification*)notification {
+//    UIViewController *topViewController = [self topViewController];
+//    if (![topViewController isKindOfClass:[JAOrderViewController class]] && [RICustomer checkIfUserIsLogged]) {
+//        JAOrderViewController *orderVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"orderViewController"];
+//        
+//        [self pushViewController:orderVC animated:YES];
+//    }
+//}
 
 //#pragma mark Checkout External Payments Screen
 - (void)showCheckoutExternalPaymentsScreen:(NSNotification *)notification {

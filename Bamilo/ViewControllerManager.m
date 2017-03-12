@@ -98,4 +98,13 @@ static ViewControllerManager *instance;
     return [NSString stringWithFormat:@"%@-%@", storyboard, nibName];
 }
 
+
+- (void)clearCache {
+    [_viewControllerCache enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        if (![obj isKindOfClass:[JARootViewController class]] && ![obj isKindOfClass:[JACenterNavigationController class]]) {
+            [_viewControllerCache removeObjectForKey:key];
+        }
+    }];
+}
+
 @end
