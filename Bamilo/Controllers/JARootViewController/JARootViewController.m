@@ -141,6 +141,8 @@
     }
     [self setCenterPanel:[ViewControllerManager centerViewController]];
     [super awakeFromNib];
+    
+    [self turnOffMenuSwipe];
 }
 
 - (void)updateCountry:(NSNotification*)notification
@@ -167,13 +169,13 @@
 
 - (void)turnOnMenuSwipe
 {
-    if (RI_IS_RTL) {
-        self.allowLeftSwipe = NO;
-        self.allowRightSwipe = YES;
-    } else {
-        self.allowLeftSwipe = YES;
-        self.allowRightSwipe = NO;
-    }
+//    if (RI_IS_RTL) {
+//        self.allowLeftSwipe = NO;
+//        self.allowRightSwipe = YES;
+//    } else {
+//        self.allowLeftSwipe = YES;
+//        self.allowRightSwipe = NO;
+//    }
 }
 
 - (void)openMainMenu:(NSNotification *)notification

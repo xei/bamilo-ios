@@ -28,15 +28,14 @@
 
 - (NSString *)formattedPrice {
     if (self.price) {
-        return [NSString stringWithFormat:@"%@ %@", [[self.price formatPrice] numbersToPersian], STRING_CURRENCY];
+        NSString *priceString = [NSString stringWithFormat:@"%ld", self.price];
+        return [NSString stringWithFormat:@"%@ %@", [[priceString formatPrice] numbersToPersian], STRING_CURRENCY];
     }
     return nil;
 }
 
 - (BOOL)mergeFromDictionary:(NSDictionary *)dict useKeyMapping:(BOOL)useKeyMapping error:(NSError *__autoreleasing *)error {
     [super mergeFromDictionary:dict useKeyMapping:useKeyMapping error:error];
-    
-    
     
     [self.products enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
        [obj mergeFromDictionary:[dict objectForKey:@"products"][idx] useKeyMapping:YES error:nil];
@@ -52,7 +51,7 @@
         self.creationDate = [df dateFromString:dateString];
     }
     if ([dict objectForKey:@"grand_total"]) {
-        self.price = [dict objectForKey:@"grand_total"];
+        self.price = [[dict objectForKey:@"grand_total"] longLongValue];
     }
     
     if ([dict objectForKey:@"payment"]) {

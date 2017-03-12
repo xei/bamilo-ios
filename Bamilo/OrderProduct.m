@@ -49,7 +49,8 @@
     [super mergeFromDictionary:dict useKeyMapping:useKeyMapping error:error];
     
     if (self.price) {
-        self.formatedPrice = [NSString stringWithFormat:@"%@ %@", [[self.price formatPrice] numbersToPersian], STRING_CURRENCY];
+        NSString *priceString = [NSString stringWithFormat:@"%ld", self.price];
+        self.formatedPrice = [NSString stringWithFormat:@"%@ %@", [[priceString formatPrice] numbersToPersian], STRING_CURRENCY];
     }
     
     if (VALID_NOTEMPTY([dict objectForKey:@"actions"], NSArray)) {
