@@ -17,7 +17,8 @@
 @end
 
 @implementation FormViewControl {
-    @private UIEdgeInsets tableViewInitialInsets;
+@private UIEdgeInsets tableViewInitialInsets;
+@private BOOL allErrorsHaveBeenShown;
 }
 
 //Lazy initialization for inputControlsDictionary
@@ -91,6 +92,9 @@
             cell.formItemControl.fieldIndex = indexPath.row;
             self.inputControlsDictionary[((FormItemModel *)formElement).fieldName] = cell.formItemControl;
             cell.formItemControl.delegate = self;
+            if (allErrorsHaveBeenShown) {
+                [cell.formItemControl checkValidation];
+            }
             return cell;
         } else if([formElement isKindOfClass:[FormHeaderModel class]]) {
             FormHeaderTableViewCell *formHeaderItemTableViewCell = [self.tableView dequeueReusableCellWithIdentifier:[FormHeaderTableViewCell nibName] forIndexPath:indexPath];
@@ -209,6 +213,7 @@
 }
 
 - (void)showAnyErrorInForm {
+    allErrorsHaveBeenShown = YES;
     [self.inputControlsDictionary enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, InputTextFieldControl * _Nonnull obj, BOOL * _Nonnull stop) {
         [obj checkValidation];
     }];

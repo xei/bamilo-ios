@@ -480,7 +480,7 @@
         }
         
         if ([dataDic objectForKey:@"price_range"]) {
-            newProduct.priceRange = [dataDic objectForKey:@"price_range"];
+            newProduct.priceRange = [[dataDic objectForKey:@"price_range"] numbersToPersian];
         }
         
         if ([dataDic objectForKey:@"special_price"]) {

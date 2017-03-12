@@ -279,8 +279,7 @@
     return addressJSON;
 }
 
-+ (void)saveAddress:(RIAddress *)address andContext:(BOOL)save
-{
++ (void)saveAddress:(RIAddress *)address andContext:(BOOL)save {
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:address];
     if (save) {
         [[RIDataBaseWrapper sharedInstance] saveContext];

@@ -195,7 +195,7 @@
         }
         if ([campaignProductJSON objectForKey:@"price_range"]) {
             if (![[campaignProductJSON objectForKey:@"price_range"] isKindOfClass:[NSNull class]]) {
-                campaignProduct.priceRange = [campaignProductJSON objectForKey:@"price_range"];
+                campaignProduct.priceRange = [[campaignProductJSON objectForKey:@"price_range"] numbersToPersian];
             }
         }
         if ([campaignProductJSON objectForKey:@"brand"]) {
