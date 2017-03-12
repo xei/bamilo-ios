@@ -22,7 +22,7 @@ typedef NS_ENUM(NSUInteger, OrderStatusType) {
 @interface Order : BaseModel
 @property (copy, nonatomic) NSString *orderId;
 @property (strong, nonatomic) NSDate *creationDate;
-@property (copy, nonatomic) NSString *price;
+@property (nonatomic) long int price;
 @property (copy, nonatomic) NSString *formattedPrice;
 
 @property (copy, nonatomic) NSString *paymentMethod;
