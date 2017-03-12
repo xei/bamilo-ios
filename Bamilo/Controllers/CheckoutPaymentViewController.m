@@ -114,6 +114,8 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
                             }
                             
                             completion(multistepEntity.nextStep, YES);
+                        } else {
+                            [self showNotificationBar:error isSuccess:NO];
                         }
                     }];
                 }

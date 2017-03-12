@@ -250,8 +250,10 @@ static DataManager *instance;
     };
     
     [RequestManager asyncPOST:target path:RI_API_MULTISTEP_SUBMIT_FINISH params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
-        if(completion != nil) {
+        if(completion != nil && errorMessages.count == 0) {
             completion([RICart parseCheckoutFinish:data forCart:cart], nil);
+        } else {
+            completion(nil, [self getErrorFrom:response errorMessages:errorMessages]);
         }
     }];
 }
