@@ -105,7 +105,7 @@ country:(RICountryConfiguration*)country {
         }
         
         if ([teaserComponentJSON objectForKey:@"price"]) {
-            newTeaserComponent.price = [NSNumber numberWithLong:[[teaserComponentJSON objectForKey:@"price"] longValue]];
+            newTeaserComponent.price = [NSNumber numberWithLong:[[teaserComponentJSON objectForKey:@"price"] longLongValue]];
             newTeaserComponent.priceFormatted = [RICountryConfiguration formatPrice:newTeaserComponent.price country:country];
         }
         

@@ -73,7 +73,7 @@
     }
     
     if(VALID_NOTEMPTY([json objectForKey:@"price"], NSString)) {
-        item.total = [NSNumber numberWithLong:[[json objectForKey:@"price"] longValue]];
+        item.total = [NSNumber numberWithLong:[[json objectForKey:@"price"] longLongValue]];
         
         item.totalFormatted = [RICountryConfiguration formatPrice:item.total country:country];
     }

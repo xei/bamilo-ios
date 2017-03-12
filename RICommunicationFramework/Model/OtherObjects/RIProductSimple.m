@@ -35,21 +35,21 @@
             newProductSimple.sku = [productSimpleJSON objectForKey:@"sku"];
         }
         if ([productSimpleJSON objectForKey:@"price"]) {
-            newProductSimple.price = [NSNumber numberWithLong:[[productSimpleJSON objectForKey:@"price"] longValue]];
+            newProductSimple.price = [NSNumber numberWithLong:[[productSimpleJSON objectForKey:@"price"] longLongValue]];
             newProductSimple.priceFormatted = [RICountryConfiguration formatPrice:newProductSimple.price country:country];
         }
         
         if ([productSimpleJSON objectForKey:@"price_converted"]) {
-            newProductSimple.priceEuroConverted = [NSNumber numberWithLong:[[productSimpleJSON objectForKey:@"price_converted"] longValue]];
+            newProductSimple.priceEuroConverted = [NSNumber numberWithLong:[[productSimpleJSON objectForKey:@"price_converted"] longLongValue]];
         }
         
         if ([productSimpleJSON objectForKey:@"special_price"]) {
-            newProductSimple.specialPrice = [NSNumber numberWithLong:[[productSimpleJSON objectForKey:@"special_price"] longValue]];
+            newProductSimple.specialPrice = [NSNumber numberWithLong:[[productSimpleJSON objectForKey:@"special_price"] longLongValue]];
             newProductSimple.specialPriceFormatted = [RICountryConfiguration formatPrice:newProductSimple.specialPrice country:country];
         }
         
         if ([productSimpleJSON objectForKey:@"special_price_converted"]) {
-            newProductSimple.specialPriceEuroConverted = [NSNumber numberWithLong:[[productSimpleJSON objectForKey:@"special_price_converted"] longValue]];
+            newProductSimple.specialPriceEuroConverted = [NSNumber numberWithLong:[[productSimpleJSON objectForKey:@"special_price_converted"] longLongValue]];
         }
         
         if ([productSimpleJSON objectForKey:@"quantity"]) {
