@@ -98,8 +98,7 @@
 }
 
 - (void)setFilterOption:(SearchFilterItemOption*)option {
-    
-    self.colorTitleLabel.text = [[NSString stringWithFormat:@"%@ (%ld)",option.name, [option.productsCount longValue]] numbersToPersian];
+    self.colorTitleLabel.text = [[NSString stringWithFormat:@"%@ (%d)", option.name, option.productsCount] numbersToPersian];
     if (option.colorHexValue) {
         [self.colorView setColorWithHexString:option.colorHexValue];
     }

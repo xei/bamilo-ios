@@ -59,8 +59,8 @@
 
 -(void)setFilterOption:(SearchFilterItemOption*)filterOption {
     
-    self.ratingLine.ratingAverage = filterOption.average;
-    self.ratingLine.ratingSum = filterOption.productsCount;
+    self.ratingLine.ratingAverage = @(filterOption.average);
+    self.ratingLine.ratingSum = @(filterOption.productsCount);
     self.ratingLine.imageRatingSize = kImageRatingSizeSmall;
     self.ratingLine.bottomSeparatorVisibility = YES;
     
