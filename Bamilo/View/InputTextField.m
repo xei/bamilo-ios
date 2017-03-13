@@ -56,7 +56,6 @@
     if (!errorMsg){
         return;
     }
-    
     self.errorMsg.text = errorMsg;
     self.seperatorBorderView.backgroundColor = [Theme color:kColorRed];
     self.textField.textColor = [Theme color:kColorRed];

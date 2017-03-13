@@ -61,6 +61,7 @@
     [self addSubview:self.input];
     self.input.frame = self.bounds;
     
+    [self.input.textField addTarget:self action:@selector(textFieldEditingChanged:) forControlEvents:UIControlEventEditingChanged];
     [self.input.textField addTarget:self action:@selector(textFieldEditingDidEndOnExit:) forControlEvents:UIControlEventEditingDidEnd];
     [self.input.textField addTarget:self action:@selector(textFieldEditingDidEnditingBegan:) forControlEvents:UIControlEventEditingDidBegin];
 }
@@ -112,7 +113,7 @@
     }
     
     if (model.inputTextValue.length) {
-        self.input.textField.text = model.inputTextValue;
+        self.input.textField.text = (model.type == InputTextFieldControlTypeNumerical) ? [model.inputTextValue numbersToPersian] : model.inputTextValue;
         [self checkValidation];
     }
     
@@ -176,6 +177,12 @@
         if (self.model.inputTextValue && [self.model.selectOption.allKeys containsObject:self.model.inputTextValue]) {
             [self.pickerView selectRow:[self.model.selectOption.allKeys indexOfObject:self.model.inputTextValue] inComponent:0 animated:NO];
         }
+    }
+}
+
+- (void)textFieldEditingChanged:(UITextField *)textField {
+    if (self.type == InputTextFieldControlTypeNumerical) {
+        textField.text = [textField.text numbersToPersian];
     }
 }
 
