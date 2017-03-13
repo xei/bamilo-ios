@@ -74,6 +74,9 @@
                                     @"selector": [NSValue valueWithPointer:@selector(openAppStore)]
                                     }
                                 ];
+    
+    // This will remove extra separators from tableview
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 
