@@ -90,6 +90,10 @@
     self.tableview.dataSource = self;
     self.tableview.delegate = self;
     [self.tableview registerNib:[UINib nibWithNibName:[OrderListTableViewCell nibName] bundle:nil] forCellReuseIdentifier: [OrderListTableViewCell nibName]];
+    
+    
+    // This will remove extra separators from tableview
+    self.tableview.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)updateNavBar {
@@ -124,10 +128,6 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.list.orders.count;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return CGFLOAT_MIN;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -168,8 +168,7 @@
     _hideShopFirstLogo = hideShopFirstLogo;
 }
 
-- (void)initViews
-{
+- (void)initViews {
     [self addSubview:self.feedbackView];
     [self addSubview:self.productImageView];
     [self addSubview:self.brandLabel];

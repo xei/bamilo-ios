@@ -46,6 +46,9 @@
     [self updateTableViewListItemsModel];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    
+    // This will remove extra separators from tableview
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

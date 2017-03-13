@@ -827,13 +827,13 @@
 
 "order_date" = "تاریخ سفارش";
 
-"total_cost" = "هزینه کل";
+"total_cost" = "هزینه‌ی کل";
 
 "product_quantity_postfix" = "عدد";
 
 "product_quantity_post" = "عدد";
 
-"order_product_quantity" = "تعداد سفارش";
+"order_product_quantity" = "تعداد کالاO";
 
 "register_order" = "ثبت سفارش";
 

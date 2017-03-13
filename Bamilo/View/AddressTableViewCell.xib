@@ -28,7 +28,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="نغمه حیامنش" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qvy-0u-gkK">
-                        <rect key="frame" x="15" y="6.5" width="320" height="23"/>
+                        <rect key="frame" x="15" y="6" width="320" height="23"/>
                         <constraints>
                             <constraint firstAttribute="height" priority="250" constant="22" id="VVa-dC-QXh"/>
                         </constraints>
@@ -43,11 +43,8 @@
                             <constraint firstAttribute="height" constant="15" id="kme-wg-Ral"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="میدان ونک ،حقانی ، نرسیده به حهان کودک ، نرسیده به جهان کودک، پلاک" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="42A-p9-Ncc">
-                        <rect key="frame" x="15" y="34.5" width="320" height="47.5"/>
-                        <constraints>
-                            <constraint firstAttribute="height" priority="250" constant="44" id="6Nb-g7-J6p"/>
-                        </constraints>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="میدان ونک ،حقانی ، نرسیده به حهان کودک ، نرسیده به جهان کودک،  تنمب یستنمب تیسنم بتنمیتسنب تنیتس نت یب پلاک" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="42A-p9-Ncc">
+                        <rect key="frame" x="15" y="34" width="320" height="48"/>
                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>

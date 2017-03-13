@@ -72,7 +72,7 @@
     
     [self.formController.formModelList addObjectsFromArray:@[ personalInfoHeader, firstName, lastName, phone ]];
     
-    if (![RICustomer getCustomerGender]) {
+    if (![RICustomer getCustomerGender] && self.address == nil) {
         FormItemModel *gender = [FormItemModel genderWithFieldName:@"address_form[gender]"];
         [self.formController.formModelList addObject:gender];
     }

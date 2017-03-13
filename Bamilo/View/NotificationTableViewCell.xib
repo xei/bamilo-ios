@@ -38,13 +38,6 @@
                             <action selector="changeSwitch:" destination="KGk-i7-Jjw" eventType="valueChanged" id="zfv-8p-VGu"/>
                         </connections>
                     </switch>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6eC-eB-Cwh" userLabel="bottom seperator">
-                        <rect key="frame" x="0.0" y="80" width="373" height="1"/>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="1" id="A6I-tl-ZFc"/>
-                        </constraints>
-                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="LxS-AV-SoF" firstAttribute="centerY" secondItem="KKq-Z9-Wfe" secondAttribute="centerY" id="4gd-kv-Ecf"/>
@@ -54,9 +47,6 @@
                     <constraint firstItem="noh-Xs-e3O" firstAttribute="left" secondItem="KKq-Z9-Wfe" secondAttribute="right" constant="8" id="LlA-KE-ooV"/>
                     <constraint firstItem="noh-Xs-e3O" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Njq-Xq-Uqq"/>
                     <constraint firstItem="LxS-AV-SoF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="XAU-AK-7np"/>
-                    <constraint firstItem="6eC-eB-Cwh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="ffb-pG-IUH"/>
-                    <constraint firstAttribute="bottom" secondItem="6eC-eB-Cwh" secondAttribute="bottom" id="gGv-K0-hmy"/>
-                    <constraint firstAttribute="trailing" secondItem="6eC-eB-Cwh" secondAttribute="trailing" constant="16" id="jdv-Zd-DaA"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
