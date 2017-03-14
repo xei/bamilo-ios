@@ -112,11 +112,9 @@
 #ifdef IS_RELEASE
     //NSString *newRelicApiKey = [configManager getConfigurationForKey:@"NewRelic" variation:kConfManagerEnvLive];
     NSString *crashlyticsApiKey = [configManager getConfigurationForKey:@"Crashlytics" variation:kConfManagerEnvLive];
-    NSString *pushWooshAppCode = [configManager getConfigurationForKey:@"PushWoosh" variation:kConfManagerEnvLive];
 #else
     //NSString *newRelicApiKey = [configManager getConfigurationForKey:@"NewRelic" variation:kConfManagerEnvStaging];
     NSString *crashlyticsApiKey = [configManager getConfigurationForKey:@"Crashlytics" variation:kConfManagerEnvStaging];
-    NSString *pushWooshAppCode = [configManager getConfigurationForKey:@"PushWoosh" variation:kConfManagerEnvStaging];
 #endif
     
     /*
@@ -135,27 +133,21 @@
     }
     
     //PUSH WOOSH
-    if(pushWooshAppCode) {
-        // set custom delegate for push handling, in our case AppDelegate
-        #ifdef IS_RELEASE
-            PushNotificationManager *pushManager = [[PushNotificationManager alloc] initWithApplicationCode:pushWooshAppCode appName:@"Bamilo"];
-        #else
-            PushNotificationManager *pushManager = [[PushNotificationManager alloc] initWithApplicationCode:pushWooshAppCode appName:@"Bamilo (Staging)"];
-        #endif
-        pushManager.delegate = [PushWooshTracker sharedTracker];
-        
-        // set default Pushwoosh delegate for iOS10 foreground push handling
-        [UNUserNotificationCenter currentNotificationCenter].delegate = [PushNotificationManager pushManager].notificationCenterDelegate;
-        
-        // handling push on app start
-        [[PushNotificationManager pushManager] handlePushReceived:launchOptions];
-        
-        // track application open statistics
-        [[PushNotificationManager pushManager] sendAppOpen];
-        
-        // register for push notifications!
-        [[PushNotificationManager pushManager] registerForPushNotifications];
-    }
+    // set custom delegate for push handling, in our case AppDelegate
+    PushNotificationManager *pushManager = [PushNotificationManager pushManager];
+    pushManager.delegate = [PushWooshTracker sharedTracker];
+    
+    // set default Pushwoosh delegate for iOS10 foreground push handling
+    [UNUserNotificationCenter currentNotificationCenter].delegate = [PushNotificationManager pushManager].notificationCenterDelegate;
+    
+    // handling push on app start
+    [[PushNotificationManager pushManager] handlePushReceived:launchOptions];
+    
+    // track application open statistics
+    [[PushNotificationManager pushManager] sendAppOpen];
+    
+    // register for push notifications!
+    [[PushNotificationManager pushManager] registerForPushNotifications];
     
     return YES;
 }

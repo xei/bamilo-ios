@@ -139,6 +139,7 @@
 		875435121E77E91000B5D6B4 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 875435111E77E91000B5D6B4 /* libz.tbd */; };
 		875435171E77ECD000B5D6B4 /* BaseTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 875435161E77ECD000B5D6B4 /* BaseTracker.m */; };
 		8754351B1E77ECE500B5D6B4 /* PushWooshTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 8754351A1E77ECE500B5D6B4 /* PushWooshTracker.m */; };
+		875435201E780D6B00B5D6B4 /* Bamilo-Staging-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8754351F1E780D6B00B5D6B4 /* Bamilo-Staging-Info.plist */; };
 		875AD53F1E38C0C800584ABF /* RIConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD48C1E38C0C800584ABF /* RIConfiguration.m */; };
 		875AD5401E38C0C800584ABF /* RIAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD4901E38C0C800584ABF /* RIAddress.m */; };
 		875AD5411E38C0C900584ABF /* RIApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD4921E38C0C800584ABF /* RIApi.m */; };
@@ -861,6 +862,7 @@
 		875435191E77ECE500B5D6B4 /* PushWooshTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushWooshTracker.h; sourceTree = "<group>"; };
 		8754351A1E77ECE500B5D6B4 /* PushWooshTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushWooshTracker.m; sourceTree = "<group>"; };
 		8754351D1E77ED1100B5D6B4 /* PushNotificationTrackerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushNotificationTrackerProtocol.h; sourceTree = "<group>"; };
+		8754351F1E780D6B00B5D6B4 /* Bamilo-Staging-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Bamilo-Staging-Info.plist"; sourceTree = "<group>"; };
 		875AD48B1E38C0C800584ABF /* RIConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIConfiguration.h; sourceTree = "<group>"; };
 		875AD48C1E38C0C800584ABF /* RIConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIConfiguration.m; sourceTree = "<group>"; };
 		875AD48F1E38C0C800584ABF /* RIAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIAddress.h; sourceTree = "<group>"; };
@@ -4612,6 +4614,7 @@
 			isa = PBXGroup;
 			children = (
 				CE9AE12C1AB84C2300D56481 /* Bamilo-Info.plist */,
+				8754351F1E780D6B00B5D6B4 /* Bamilo-Staging-Info.plist */,
 				874AAB541E3C764600B3F8FE /* Bamilo-Configs.plist */,
 				870F8CCB1E3354700021F87B /* Bamilo.entitlements */,
 				870F8CCD1E3354E10021F87B /* Consts */,
@@ -5214,6 +5217,7 @@
 			files = (
 				61148E0A1E47255F00E2540B /* StepperView.xib in Resources */,
 				874AAB551E3C764600B3F8FE /* Bamilo-Configs.plist in Resources */,
+				875435201E780D6B00B5D6B4 /* Bamilo-Staging-Info.plist in Resources */,
 				CEDBF8971B0DF5D00073971A /* JANewsletterComponent~iPad_RTL.xib in Resources */,
 				87459CA11E4F159E00743120 /* PaymentTypeTableViewCell.xib in Resources */,
 				CE9AE03C1AB6D78200D56481 /* JANewsletterComponent~iPad.xib in Resources */,
@@ -5967,6 +5971,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bamilo/Bamilo-Prefix.pch";
+				INFOPLIST_FILE = "Bamilo/Bamilo-Staging-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
@@ -6146,6 +6151,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bamilo/Bamilo-Prefix.pch";
+				INFOPLIST_FILE = "Bamilo/Bamilo-Staging-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
