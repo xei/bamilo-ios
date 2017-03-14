@@ -45,8 +45,8 @@
         <attribute name="targetString" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="urlKey" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="vertical" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="children" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RICategory" inverseName="parent" inverseEntity="RICategory" syncable="YES"/>
-        <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RICategory" inverseName="children" inverseEntity="RICategory" syncable="YES"/>
+        <relationship name="children" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RICategory" syncable="YES"/>
+        <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RICategory" syncable="YES"/>
     </entity>
     <entity name="RICountryConfiguration" representedClassName="RICountryConfiguration" syncable="YES">
         <attribute name="algoliaApiKey" optional="YES" attributeType="String" syncable="YES"/>
@@ -240,10 +240,10 @@
     <elements>
         <element name="RIAddress" positionX="144" positionY="726" width="128" height="405"/>
         <element name="RIApi" positionX="-308" positionY="227" width="128" height="180"/>
-        <element name="RICategory" positionX="-261" positionY="27" width="128" height="180"/>
-        <element name="RICountryConfiguration" positionX="-459" positionY="-423" width="128" height="450"/>
+        <element name="RICategory" positionX="-119" positionY="18" width="128" height="180"/>
+        <element name="RICountryConfiguration" positionX="-443" positionY="-405" width="128" height="450"/>
         <element name="RICustomer" positionX="279" positionY="650" width="128" height="240"/>
-        <element name="RIExternalCategory" positionX="-675" positionY="-279" width="128" height="165"/>
+        <element name="RIExternalCategory" positionX="-704" positionY="-21" width="128" height="165"/>
         <element name="RIField" positionX="-299" positionY="681" width="128" height="420"/>
         <element name="RIFieldDataSetComponent" positionX="-63" positionY="837" width="128" height="118"/>
         <element name="RIFieldOption" positionX="-83" positionY="980" width="128" height="195"/>
@@ -251,13 +251,13 @@
         <element name="RIForm" positionX="-504" positionY="362" width="128" height="120"/>
         <element name="RIFormIndex" positionX="-504" positionY="234" width="128" height="90"/>
         <element name="RIImageResolution" positionX="-270" positionY="560" width="128" height="103"/>
-        <element name="RILanguage" positionX="-270" positionY="-207" width="128" height="103"/>
-        <element name="RIRecentlyViewedProductSku" positionX="-522" positionY="18" width="128" height="105"/>
+        <element name="RILanguage" positionX="-254" positionY="-63" width="128" height="103"/>
+        <element name="RIRecentlyViewedProductSku" positionX="-522" positionY="93" width="128" height="105"/>
         <element name="RISearchSuggestion" positionX="-828" positionY="183" width="128" height="135"/>
         <element name="RISection" positionX="-261" positionY="428" width="128" height="103"/>
         <element name="RIStaticBlockIndex" positionX="-90" positionY="-126" width="128" height="90"/>
-        <element name="RITeaserComponent" positionX="-731" positionY="-414" width="128" height="300"/>
-        <element name="RITeaserGrouping" positionX="-873" positionY="-90" width="128" height="90"/>
+        <element name="RITeaserComponent" positionX="-614" positionY="-405" width="128" height="360"/>
+        <element name="RITeaserGrouping" positionX="-801" positionY="-135" width="128" height="90"/>
         <element name="RIURLCache" positionX="-675" positionY="180" width="128" height="90"/>
     </elements>
 </model>

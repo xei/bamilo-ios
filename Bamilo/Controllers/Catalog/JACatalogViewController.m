@@ -160,11 +160,21 @@ typedef void (^ProcessActionBlock)(void);
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(navBarClicked) name:kDidPressNavBar object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getCategories) name:kSideMenuShouldReload object:nil];
     
+    
+    
+    
+    //Here we have a real shit!!!!!!
     if (self.category) {
         self.categoryUrlKey = self.category.urlKey;
     } else if (self.categoryUrlKey) {
         self.targetString = [RITarget getTargetString:CATALOG_CATEGORY node:self.categoryUrlKey];
+    } else if (self.targetString) {
+        RITarget *target = [RITarget parseTarget:self.targetString];
+        if (target.targetType == CATALOG_CATEGORY) {
+            self.categoryUrlKey = target.node;
+        }
     }
+    
     
     if (self.categoryUrlKey) {
         [self getSubcategories];

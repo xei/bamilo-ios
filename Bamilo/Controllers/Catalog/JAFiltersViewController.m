@@ -45,7 +45,7 @@ const int subCatButtonVisibleHeight = 50;
     SearchPriceFilter *priceFilter = (SearchPriceFilter *)[self.filtersArray objectAtIndex:self.priceFilterIndex];
     self.discountOnlyUISwitch.on = priceFilter.discountOnly;
     
-    [self.subCatButton applyStyle:kFontRegularName fontSize:12 color:[UIColor withRepeatingRGBA:78 alpha:1.0f]];
+    [self.subCatButton applyStyle:kFontRegularName fontSize:11 color:[UIColor blackColor]];
     [self.subCatButton setTitle:STRING_SUBCATEGORIES forState:UIControlStateNormal];
     if (self.subCatsFilter && self.subCatsFilter.options.count) {
         self.subCatButtonHeightConstraint.constant = subCatButtonVisibleHeight;

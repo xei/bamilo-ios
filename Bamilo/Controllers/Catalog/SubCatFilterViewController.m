@@ -22,7 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.submitButton setTitle:STRING_SUBMIT forState:UIControlStateNormal];
+    [self.submitButton setTitle:STRING_OK forState:UIControlStateNormal];
     
     filterView = [[[NSBundle mainBundle] loadNibNamed:@"JAGenericFiltersView" owner:self options:nil] objectAtIndex:0];
     [filterView initializeWithFilter:self.subCatsFilter isLandscape:YES];
