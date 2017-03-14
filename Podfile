@@ -29,6 +29,7 @@ target 'Bamilo' do
   pod 'TTRangeSlider', '~> 1.0.5'
   pod 'JSONModel'
   pod 'RAlertView'
+  pod 'Pushwoosh'
 
   target 'BamiloUITests' do
     inherit! :search_paths

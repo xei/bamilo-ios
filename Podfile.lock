@@ -37,6 +37,7 @@ PODS:
   - JSONModel (1.7.0)
   - Masonry (1.0.2)
   - NewRelicAgent (5.10.0)
+  - Pushwoosh (5.1.2)
   - RAlertView (0.1.1):
     - Masonry
     - RGB
@@ -58,6 +59,7 @@ DEPENDENCIES:
   - JBWhatsAppActivity (~> 1.0)
   - JSONModel
   - NewRelicAgent (~> 5.10.0)
+  - Pushwoosh
   - RAlertView
   - SDWebImage (~> 3.8)
   - TTRangeSlider (~> 1.0.5)
@@ -76,11 +78,12 @@ SPEC CHECKSUMS:
   JSONModel: 840bc0fcffb24b8454d2c026bf26fea454b8e98d
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   NewRelicAgent: 7ec88dea6b66aec073bbb5913062724369bf6aff
+  Pushwoosh: c57ac0eb2bf534f2b349fa4f1a24b1dab52993a4
   RAlertView: b9996eb63ceb64c7d1879a1d1846af5e386a1808
   RGB: 21cf4b60ef3501c6b7cbb268a30045905dd90995
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   TTRangeSlider: 2f2ce4a33b32bb323c6575b9f5161c4664459c58
 
-PODFILE CHECKSUM: 7c7ea44ec9b853b788116c867c4f40d4f06d9391
+PODFILE CHECKSUM: e7c8489e5ea50d502aa1d7af1daf4bf34055b7b9
 
 COCOAPODS: 1.1.1

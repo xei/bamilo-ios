@@ -23,9 +23,12 @@
 
 
 //#######################################################################################
+#import <Pushwoosh/PushNotificationManager.h>
+#import <UserNotifications/UserNotifications.h>
 #import "ViewControllerManager.h"
 #import "BaseViewController.h"
 #import "ThemeManager.h"
+#import "PushWooshTracker.h"
 
 @interface JAAppDelegate () <RIAdjustTrackerDelegate>
 
@@ -109,9 +112,11 @@
 #ifdef IS_RELEASE
     //NSString *newRelicApiKey = [configManager getConfigurationForKey:@"NewRelic" variation:kConfManagerEnvLive];
     NSString *crashlyticsApiKey = [configManager getConfigurationForKey:@"Crashlytics" variation:kConfManagerEnvLive];
+    NSString *pushWooshAppCode = [configManager getConfigurationForKey:@"PushWoosh" variation:kConfManagerEnvLive];
 #else
     //NSString *newRelicApiKey = [configManager getConfigurationForKey:@"NewRelic" variation:kConfManagerEnvStaging];
     NSString *crashlyticsApiKey = [configManager getConfigurationForKey:@"Crashlytics" variation:kConfManagerEnvStaging];
+    NSString *pushWooshAppCode = [configManager getConfigurationForKey:@"PushWoosh" variation:kConfManagerEnvStaging];
 #endif
     
     /*
@@ -127,6 +132,29 @@
     
     if(crashlyticsApiKey) {
         [Crashlytics startWithAPIKey:crashlyticsApiKey];
+    }
+    
+    //PUSH WOOSH
+    if(pushWooshAppCode) {
+        // set custom delegate for push handling, in our case AppDelegate
+        #ifdef IS_RELEASE
+            PushNotificationManager *pushManager = [[PushNotificationManager alloc] initWithApplicationCode:pushWooshAppCode appName:@"Bamilo"];
+        #else
+            PushNotificationManager *pushManager = [[PushNotificationManager alloc] initWithApplicationCode:pushWooshAppCode appName:@"Bamilo (Staging)"];
+        #endif
+        pushManager.delegate = [PushWooshTracker sharedTracker];
+        
+        // set default Pushwoosh delegate for iOS10 foreground push handling
+        [UNUserNotificationCenter currentNotificationCenter].delegate = [PushNotificationManager pushManager].notificationCenterDelegate;
+        
+        // handling push on app start
+        [[PushNotificationManager pushManager] handlePushReceived:launchOptions];
+        
+        // track application open statistics
+        [[PushNotificationManager pushManager] sendAppOpen];
+        
+        // register for push notifications!
+        [[PushNotificationManager pushManager] registerForPushNotifications];
     }
     
     return YES;
@@ -268,12 +296,26 @@
 #pragma mark - Push Notification
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     [[RITrackingWrapper sharedInstance] applicationDidRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+    
+    //PUSH WOOSH
+    [[PushNotificationManager pushManager] handlePushRegistration:deviceToken];
 }
 
+// system push notification registration error callback, delegate to pushManager
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    
+    //PUSH WOOSH
+    [[PushNotificationManager pushManager] handlePushRegistrationFailure:error];
+}
+
+// system push notifications callback, delegate to pushManager
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     if(!VALID_NOTEMPTY(application, UIApplication) || UIApplicationStateActive != application.applicationState) {
         [[RITrackingWrapper sharedInstance] applicationDidReceiveRemoteNotification:userInfo];
     }
+    
+    //PUSH WOOSH
+    [[PushNotificationManager pushManager] handlePushReceived:userInfo];
 }
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {

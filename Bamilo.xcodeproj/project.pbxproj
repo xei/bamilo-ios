@@ -135,6 +135,10 @@
 		874AAB771E3DD31600B3F8FE /* URLUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB761E3DD31600B3F8FE /* URLUtility.m */; };
 		875081B31E532E400031ECBF /* AddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 875081B21E532E400031ECBF /* AddressViewController.m */; };
 		875081B91E53309A0031ECBF /* AddressEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 875081B81E53309A0031ECBF /* AddressEditViewController.m */; };
+		875435101E77E8FD00B5D6B4 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8754350F1E77E8FD00B5D6B4 /* libstdc++.tbd */; };
+		875435121E77E91000B5D6B4 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 875435111E77E91000B5D6B4 /* libz.tbd */; };
+		875435171E77ECD000B5D6B4 /* BaseTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 875435161E77ECD000B5D6B4 /* BaseTracker.m */; };
+		8754351B1E77ECE500B5D6B4 /* PushWooshTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 8754351A1E77ECE500B5D6B4 /* PushWooshTracker.m */; };
 		875AD53F1E38C0C800584ABF /* RIConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD48C1E38C0C800584ABF /* RIConfiguration.m */; };
 		875AD5401E38C0C800584ABF /* RIAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD4901E38C0C800584ABF /* RIAddress.m */; };
 		875AD5411E38C0C900584ABF /* RIApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD4921E38C0C800584ABF /* RIApi.m */; };
@@ -850,6 +854,13 @@
 		875081B21E532E400031ECBF /* AddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressViewController.m; sourceTree = "<group>"; };
 		875081B71E53309A0031ECBF /* AddressEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressEditViewController.h; sourceTree = "<group>"; };
 		875081B81E53309A0031ECBF /* AddressEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressEditViewController.m; sourceTree = "<group>"; };
+		8754350F1E77E8FD00B5D6B4 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
+		875435111E77E91000B5D6B4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		875435151E77ECD000B5D6B4 /* BaseTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTracker.h; sourceTree = "<group>"; };
+		875435161E77ECD000B5D6B4 /* BaseTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTracker.m; sourceTree = "<group>"; };
+		875435191E77ECE500B5D6B4 /* PushWooshTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushWooshTracker.h; sourceTree = "<group>"; };
+		8754351A1E77ECE500B5D6B4 /* PushWooshTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushWooshTracker.m; sourceTree = "<group>"; };
+		8754351D1E77ED1100B5D6B4 /* PushNotificationTrackerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushNotificationTrackerProtocol.h; sourceTree = "<group>"; };
 		875AD48B1E38C0C800584ABF /* RIConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIConfiguration.h; sourceTree = "<group>"; };
 		875AD48C1E38C0C800584ABF /* RIConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIConfiguration.m; sourceTree = "<group>"; };
 		875AD48F1E38C0C800584ABF /* RIAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIAddress.h; sourceTree = "<group>"; };
@@ -1601,6 +1612,8 @@
 				CE9AE0281AB6D78200D56481 /* CoreData.framework in Frameworks */,
 				CE9AE02A1AB6D78200D56481 /* libz.dylib in Frameworks */,
 				CE9AE0291AB6D78200D56481 /* libsqlite3.dylib in Frameworks */,
+				875435101E77E8FD00B5D6B4 /* libstdc++.tbd in Frameworks */,
+				875435121E77E91000B5D6B4 /* libz.tbd in Frameworks */,
 				503C9D52C4AD9778E8C113A7 /* libPods-Bamilo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2606,6 +2619,7 @@
 				B50B03A8198A883D002046DF /* Utilities */,
 				874AAB5B1E3C775900B3F8FE /* Managers */,
 				870F8CD41E3357D40021F87B /* Libraries */,
+				875435131E77ECB200B5D6B4 /* Trackers */,
 			);
 			name = Support;
 			sourceTree = "<group>";
@@ -3132,6 +3146,42 @@
 				875081B81E53309A0031ECBF /* AddressEditViewController.m */,
 			);
 			name = AddressEditViewController;
+			sourceTree = "<group>";
+		};
+		875435131E77ECB200B5D6B4 /* Trackers */ = {
+			isa = PBXGroup;
+			children = (
+				875435141E77ECC400B5D6B4 /* Base */,
+				875435181E77ECD200B5D6B4 /* PushWoosh */,
+			);
+			name = Trackers;
+			sourceTree = "<group>";
+		};
+		875435141E77ECC400B5D6B4 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				8754351C1E77ECE900B5D6B4 /* Protocols */,
+				875435151E77ECD000B5D6B4 /* BaseTracker.h */,
+				875435161E77ECD000B5D6B4 /* BaseTracker.m */,
+			);
+			name = Base;
+			sourceTree = "<group>";
+		};
+		875435181E77ECD200B5D6B4 /* PushWoosh */ = {
+			isa = PBXGroup;
+			children = (
+				875435191E77ECE500B5D6B4 /* PushWooshTracker.h */,
+				8754351A1E77ECE500B5D6B4 /* PushWooshTracker.m */,
+			);
+			name = PushWoosh;
+			sourceTree = "<group>";
+		};
+		8754351C1E77ECE900B5D6B4 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				8754351D1E77ED1100B5D6B4 /* PushNotificationTrackerProtocol.h */,
+			);
+			name = Protocols;
 			sourceTree = "<group>";
 		};
 		875AD4891E38C0C800584ABF /* RICommunicationFramework */ = {
@@ -4574,6 +4624,8 @@
 		B5A301D119811E7600F71726 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				875435111E77E91000B5D6B4 /* libz.tbd */,
+				8754350F1E77E8FD00B5D6B4 /* libstdc++.tbd */,
 				89AB5C2D1BC2B01B00BA38E5 /* SafariServices.framework */,
 				9A0F9BAA1B5E7DE600569DF2 /* StoreKit.framework */,
 				9A0F9BA81B5E7DB400569DF2 /* CoreMotion.framework */,
@@ -5458,6 +5510,7 @@
 				61036B6C1E65B638006E12A9 /* OrderProduct.m in Sources */,
 				874AAB651E3CE35B00B3F8FE /* ConfigManager-Consts.m in Sources */,
 				874AAB771E3DD31600B3F8FE /* URLUtility.m in Sources */,
+				8754351B1E77ECE500B5D6B4 /* PushWooshTracker.m in Sources */,
 				9ADEA09F1C9C0E6D00B2A605 /* JAProductInfoSizeLine.m in Sources */,
 				FF4383EA1C6E1F49003BA957 /* JAScreenRadioComponent.m in Sources */,
 				FF6BDCA01CE238F3002BFE11 /* JAORReasonsViewController.m in Sources */,
@@ -5803,6 +5856,7 @@
 				CE9AE00E1AB6D78200D56481 /* JACampaignPageView.m in Sources */,
 				6125535B1E4F382100975C6F /* UIScrollView+Extension.m in Sources */,
 				8714E0901E48CD41004C9B1D /* DiscountSwitcherView.m in Sources */,
+				875435171E77ECD000B5D6B4 /* BaseTracker.m in Sources */,
 				CE9AE0101AB6D78200D56481 /* JABirthDateComponent.m in Sources */,
 				CE9AE0111AB6D78200D56481 /* JANewSellerRatingViewController.m in Sources */,
 				9A4F91181B3D5E7200E34C0B /* JAPDVWizardView.m in Sources */,
