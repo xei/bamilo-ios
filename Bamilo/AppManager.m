@@ -7,6 +7,8 @@
 //
 
 #import "AppManager.h"
+#include <sys/types.h>
+#include <sys/sysctl.h>
 
 @implementation AppManager
 
@@ -31,6 +33,23 @@ static AppManager *instance;
 
 -(NSString *)getAppFullFormattedVersion {
     return [NSString stringWithFormat:@"%@ (%@)", [self getAppVersionNumber], [self getAppBuildNumber]];
+}
+
+-(NSString *)getDeviceModel {
+    size_t size;
+    sysctlbyname("hw.machine", NULL, &size, NULL, 0);
+    
+    char *machine = malloc(size);
+    sysctlbyname("hw.machine", machine, &size, NULL, 0);
+    
+    NSString *platform = [NSString stringWithCString:machine encoding:NSUTF8StringEncoding];
+    if([platform isEqualToString:@"i386"] || [platform isEqualToString:@"x86_64"]) {
+        platform = @"Simulator";
+    }
+    
+    free(machine);
+    
+    return platform;
 }
 
 @end

@@ -582,9 +582,7 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
 }
 
 #pragma mark - RILaunchEventTracker implementation
-
-- (void)sendLaunchEventWithData:(NSDictionary *)dataDictionary;
-{
+- (void)sendLaunchEventWithData:(NSDictionary *)dataDictionary {
     RIDebugLog(@"Adjust - Launch event with data:%@", dataDictionary);
     
     // First Adjust launch event
@@ -604,7 +602,6 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
     ADJEvent *event;
    
     event = [ADJEvent eventWithEventToken:@"tly4ql"];
-   
     
     if ([dataDictionary objectForKey:kRIEventShopCountryKey]) {
         [event addCallbackParameter:kAdjustEventShopCountryKey value:[dataDictionary objectForKey:kRIEventShopCountryKey]];
@@ -627,11 +624,11 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
     [event addPartnerParameter:kAdjustEventDurationDataKey value:[dataDictionary objectForKey:kRILaunchEventDurationDataKey]];
     [event addCallbackParameter:kAdjustEventDeviceModelDataKey value:[dataDictionary objectForKey:kRILaunchEventDeviceModelDataKey]];
     [event addPartnerParameter:kAdjustEventDeviceModelDataKey value:[dataDictionary objectForKey:kRILaunchEventDeviceModelDataKey]];
+    
     [Adjust trackEvent:event];
 }
 
 #pragma mark - RIEcommerceEventTracking implementation
-
 - (void)trackCheckout:(NSDictionary *)data {
     RIDebugLog(@"Adjust - Ecommerce event with data:%@", data);
     
@@ -658,8 +655,7 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
     [event addPartnerParameter:kAdjustEventSkusKey value:[[data objectForKey:kRIEcommerceSkusKey] componentsJoinedByString:@","]];
     
     NSNumber *numberOfPurchases = [NSNumber numberWithInt:0];
-    if(VALID_NOTEMPTY([data objectForKey:kRIEventAmountTransactions], NSNumber))
-    {
+    if(VALID_NOTEMPTY([data objectForKey:kRIEventAmountTransactions], NSNumber)) {
         numberOfPurchases = [data objectForKey:kRIEventAmountTransactions];
     }
     [event addCallbackParameter:kAdjustAmountTransactionsKey value:[numberOfPurchases stringValue]];
@@ -675,6 +671,7 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
         [event addCallbackParameter:kAdjustEventTransactionIdKey value:[data objectForKey:kRIEcommerceTransactionIdKey]];
         [event addPartnerParameter:kAdjustEventTransactionIdKey value:[data objectForKey:kRIEcommerceTransactionIdKey]];
     }
+    
     [Adjust trackEvent:event];
 }
 

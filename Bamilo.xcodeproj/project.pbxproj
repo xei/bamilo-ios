@@ -108,6 +108,9 @@
 		8714E0901E48CD41004C9B1D /* DiscountSwitcherView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8714E08F1E48CD41004C9B1D /* DiscountSwitcherView.m */; };
 		8714E0921E48CD57004C9B1D /* DiscountSwitcherView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8714E0911E48CD57004C9B1D /* DiscountSwitcherView.xib */; };
 		8716987D1E38A94C0027B34A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8716987A1E38A94C0027B34A /* Main.storyboard */; };
+		871BA8561E867F4A007680C5 /* BaseEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BA8551E867F4A007680C5 /* BaseEvent.m */; };
+		871BA8591E867FE0007680C5 /* SearchEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BA8581E867FE0007680C5 /* SearchEvent.m */; };
+		871BA85C1E8680A1007680C5 /* EventConsts.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BA85B1E8680A1007680C5 /* EventConsts.m */; };
 		872230DC1E6A965E000748E9 /* Accengage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 872230DB1E6A965E000748E9 /* Accengage.framework */; };
 		872230DE1E6A969E000748E9 /* Accengage.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 872230DB1E6A965E000748E9 /* Accengage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		872230E31E6A9815000748E9 /* AccengageTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 872230E21E6A9815000748E9 /* AccengageTracker.m */; };
@@ -135,6 +138,11 @@
 		874AAB771E3DD31600B3F8FE /* URLUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB761E3DD31600B3F8FE /* URLUtility.m */; };
 		875081B31E532E400031ECBF /* AddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 875081B21E532E400031ECBF /* AddressViewController.m */; };
 		875081B91E53309A0031ECBF /* AddressEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 875081B81E53309A0031ECBF /* AddressEditViewController.m */; };
+		875435101E77E8FD00B5D6B4 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8754350F1E77E8FD00B5D6B4 /* libstdc++.tbd */; };
+		875435121E77E91000B5D6B4 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 875435111E77E91000B5D6B4 /* libz.tbd */; };
+		875435171E77ECD000B5D6B4 /* BaseTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 875435161E77ECD000B5D6B4 /* BaseTracker.m */; };
+		8754351B1E77ECE500B5D6B4 /* PushWooshTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 8754351A1E77ECE500B5D6B4 /* PushWooshTracker.m */; };
+		875435201E780D6B00B5D6B4 /* Bamilo-Staging-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8754351F1E780D6B00B5D6B4 /* Bamilo-Staging-Info.plist */; };
 		875AD53F1E38C0C800584ABF /* RIConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD48C1E38C0C800584ABF /* RIConfiguration.m */; };
 		875AD5401E38C0C800584ABF /* RIAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD4901E38C0C800584ABF /* RIAddress.m */; };
 		875AD5411E38C0C900584ABF /* RIApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD4921E38C0C800584ABF /* RIApi.m */; };
@@ -796,6 +804,13 @@
 		8714E0911E48CD57004C9B1D /* DiscountSwitcherView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiscountSwitcherView.xib; sourceTree = "<group>"; };
 		8714E0941E48CE9F004C9B1D /* DiscountSwitcherViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscountSwitcherViewDelegate.h; sourceTree = "<group>"; };
 		8716987B1E38A94C0027B34A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Bamilo/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
+		871BA8501E8678DE007680C5 /* EventTrackerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventTrackerProtocol.h; sourceTree = "<group>"; };
+		871BA8541E867F4A007680C5 /* BaseEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseEvent.h; sourceTree = "<group>"; };
+		871BA8551E867F4A007680C5 /* BaseEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseEvent.m; sourceTree = "<group>"; };
+		871BA8571E867FE0007680C5 /* SearchEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchEvent.h; sourceTree = "<group>"; };
+		871BA8581E867FE0007680C5 /* SearchEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchEvent.m; sourceTree = "<group>"; };
+		871BA85A1E8680A1007680C5 /* EventConsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventConsts.h; sourceTree = "<group>"; };
+		871BA85B1E8680A1007680C5 /* EventConsts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventConsts.m; sourceTree = "<group>"; };
 		872230DB1E6A965E000748E9 /* Accengage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Accengage.framework; sourceTree = "<group>"; };
 		872230E01E6A97E0000748E9 /* DataTrackerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataTrackerProtocol.h; sourceTree = "<group>"; };
 		872230E11E6A9815000748E9 /* AccengageTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccengageTracker.h; sourceTree = "<group>"; };
@@ -850,6 +865,14 @@
 		875081B21E532E400031ECBF /* AddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressViewController.m; sourceTree = "<group>"; };
 		875081B71E53309A0031ECBF /* AddressEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressEditViewController.h; sourceTree = "<group>"; };
 		875081B81E53309A0031ECBF /* AddressEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressEditViewController.m; sourceTree = "<group>"; };
+		8754350F1E77E8FD00B5D6B4 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
+		875435111E77E91000B5D6B4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		875435151E77ECD000B5D6B4 /* BaseTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTracker.h; sourceTree = "<group>"; };
+		875435161E77ECD000B5D6B4 /* BaseTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTracker.m; sourceTree = "<group>"; };
+		875435191E77ECE500B5D6B4 /* PushWooshTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushWooshTracker.h; sourceTree = "<group>"; };
+		8754351A1E77ECE500B5D6B4 /* PushWooshTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushWooshTracker.m; sourceTree = "<group>"; };
+		8754351D1E77ED1100B5D6B4 /* PushNotificationTrackerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushNotificationTrackerProtocol.h; sourceTree = "<group>"; };
+		8754351F1E780D6B00B5D6B4 /* Bamilo-Staging-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Bamilo-Staging-Info.plist"; sourceTree = "<group>"; };
 		875AD48B1E38C0C800584ABF /* RIConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIConfiguration.h; sourceTree = "<group>"; };
 		875AD48C1E38C0C800584ABF /* RIConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIConfiguration.m; sourceTree = "<group>"; };
 		875AD48F1E38C0C800584ABF /* RIAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIAddress.h; sourceTree = "<group>"; };
@@ -1601,6 +1624,8 @@
 				CE9AE0281AB6D78200D56481 /* CoreData.framework in Frameworks */,
 				CE9AE02A1AB6D78200D56481 /* libz.dylib in Frameworks */,
 				CE9AE0291AB6D78200D56481 /* libsqlite3.dylib in Frameworks */,
+				875435101E77E8FD00B5D6B4 /* libstdc++.tbd in Frameworks */,
+				875435121E77E91000B5D6B4 /* libz.tbd in Frameworks */,
 				503C9D52C4AD9778E8C113A7 /* libPods-Bamilo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2606,6 +2631,7 @@
 				B50B03A8198A883D002046DF /* Utilities */,
 				874AAB5B1E3C775900B3F8FE /* Managers */,
 				870F8CD41E3357D40021F87B /* Libraries */,
+				875435131E77ECB200B5D6B4 /* Trackers */,
 			);
 			name = Support;
 			sourceTree = "<group>";
@@ -2846,6 +2872,43 @@
 				87B684D21E49AB6D0042C09F /* DiscountCodeView */,
 			);
 			name = Discount;
+			sourceTree = "<group>";
+		};
+		871BA8511E867F1C007680C5 /* Class */ = {
+			isa = PBXGroup;
+			children = (
+				871BA8521E867F29007680C5 /* Events */,
+			);
+			name = Class;
+			sourceTree = "<group>";
+		};
+		871BA8521E867F29007680C5 /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				871BA8531E867F3A007680C5 /* Base */,
+				871BA8571E867FE0007680C5 /* SearchEvent.h */,
+				871BA8581E867FE0007680C5 /* SearchEvent.m */,
+			);
+			name = Events;
+			sourceTree = "<group>";
+		};
+		871BA8531E867F3A007680C5 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				871BA85D1E86810A007680C5 /* Consts */,
+				871BA8541E867F4A007680C5 /* BaseEvent.h */,
+				871BA8551E867F4A007680C5 /* BaseEvent.m */,
+			);
+			name = Base;
+			sourceTree = "<group>";
+		};
+		871BA85D1E86810A007680C5 /* Consts */ = {
+			isa = PBXGroup;
+			children = (
+				871BA85A1E8680A1007680C5 /* EventConsts.h */,
+				871BA85B1E8680A1007680C5 /* EventConsts.m */,
+			);
+			name = Consts;
 			sourceTree = "<group>";
 		};
 		872230E71E6A9894000748E9 /* SettingsManager */ = {
@@ -3132,6 +3195,44 @@
 				875081B81E53309A0031ECBF /* AddressEditViewController.m */,
 			);
 			name = AddressEditViewController;
+			sourceTree = "<group>";
+		};
+		875435131E77ECB200B5D6B4 /* Trackers */ = {
+			isa = PBXGroup;
+			children = (
+				875435141E77ECC400B5D6B4 /* Base */,
+				875435181E77ECD200B5D6B4 /* PushWoosh */,
+			);
+			name = Trackers;
+			sourceTree = "<group>";
+		};
+		875435141E77ECC400B5D6B4 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				871BA8511E867F1C007680C5 /* Class */,
+				8754351C1E77ECE900B5D6B4 /* Protocols */,
+				875435151E77ECD000B5D6B4 /* BaseTracker.h */,
+				875435161E77ECD000B5D6B4 /* BaseTracker.m */,
+			);
+			name = Base;
+			sourceTree = "<group>";
+		};
+		875435181E77ECD200B5D6B4 /* PushWoosh */ = {
+			isa = PBXGroup;
+			children = (
+				875435191E77ECE500B5D6B4 /* PushWooshTracker.h */,
+				8754351A1E77ECE500B5D6B4 /* PushWooshTracker.m */,
+			);
+			name = PushWoosh;
+			sourceTree = "<group>";
+		};
+		8754351C1E77ECE900B5D6B4 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				8754351D1E77ED1100B5D6B4 /* PushNotificationTrackerProtocol.h */,
+				871BA8501E8678DE007680C5 /* EventTrackerProtocol.h */,
+			);
+			name = Protocols;
 			sourceTree = "<group>";
 		};
 		875AD4891E38C0C800584ABF /* RICommunicationFramework */ = {
@@ -4562,6 +4663,7 @@
 			isa = PBXGroup;
 			children = (
 				CE9AE12C1AB84C2300D56481 /* Bamilo-Info.plist */,
+				8754351F1E780D6B00B5D6B4 /* Bamilo-Staging-Info.plist */,
 				874AAB541E3C764600B3F8FE /* Bamilo-Configs.plist */,
 				870F8CCB1E3354700021F87B /* Bamilo.entitlements */,
 				870F8CCD1E3354E10021F87B /* Consts */,
@@ -4574,6 +4676,8 @@
 		B5A301D119811E7600F71726 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				875435111E77E91000B5D6B4 /* libz.tbd */,
+				8754350F1E77E8FD00B5D6B4 /* libstdc++.tbd */,
 				89AB5C2D1BC2B01B00BA38E5 /* SafariServices.framework */,
 				9A0F9BAA1B5E7DE600569DF2 /* StoreKit.framework */,
 				9A0F9BA81B5E7DB400569DF2 /* CoreMotion.framework */,
@@ -5162,6 +5266,7 @@
 			files = (
 				61148E0A1E47255F00E2540B /* StepperView.xib in Resources */,
 				874AAB551E3C764600B3F8FE /* Bamilo-Configs.plist in Resources */,
+				875435201E780D6B00B5D6B4 /* Bamilo-Staging-Info.plist in Resources */,
 				CEDBF8971B0DF5D00073971A /* JANewsletterComponent~iPad_RTL.xib in Resources */,
 				87459CA11E4F159E00743120 /* PaymentTypeTableViewCell.xib in Resources */,
 				CE9AE03C1AB6D78200D56481 /* JANewsletterComponent~iPad.xib in Resources */,
@@ -5458,8 +5563,10 @@
 				61036B6C1E65B638006E12A9 /* OrderProduct.m in Sources */,
 				874AAB651E3CE35B00B3F8FE /* ConfigManager-Consts.m in Sources */,
 				874AAB771E3DD31600B3F8FE /* URLUtility.m in Sources */,
+				8754351B1E77ECE500B5D6B4 /* PushWooshTracker.m in Sources */,
 				9ADEA09F1C9C0E6D00B2A605 /* JAProductInfoSizeLine.m in Sources */,
 				FF4383EA1C6E1F49003BA957 /* JAScreenRadioComponent.m in Sources */,
+				871BA85C1E8680A1007680C5 /* EventConsts.m in Sources */,
 				FF6BDCA01CE238F3002BFE11 /* JAORReasonsViewController.m in Sources */,
 				879F87EF1E5048790033FE87 /* NSMutableArray+Extensions.m in Sources */,
 				875AD54C1E38C0C900584ABF /* RIImageResolution.m in Sources */,
@@ -5512,6 +5619,7 @@
 				CE9ADF5C1AB6D78200D56481 /* JAEmailNotificationsViewController.m in Sources */,
 				CE9ADF601AB6D78200D56481 /* JANoConnectionView.m in Sources */,
 				617AAA441E503AB9004D9430 /* FormItemModel.m in Sources */,
+				871BA8561E867F4A007680C5 /* BaseEvent.m in Sources */,
 				613D37771E6EE19E001B2852 /* NSDate+Extensions.m in Sources */,
 				61CBA04A1E51D18F005673F7 /* FormTableViewCell.m in Sources */,
 				8714E0771E479C00004C9B1D /* CheckoutProgressViewButtonModel.m in Sources */,
@@ -5527,6 +5635,7 @@
 				FFF900801C6A5D2000DDF538 /* JATitleComponent.m in Sources */,
 				CE9ADF681AB6D78200D56481 /* JAShippingCell.m in Sources */,
 				CE9ADF691AB6D78200D56481 /* JAMyOrdersViewController.m in Sources */,
+				871BA8591E867FE0007680C5 /* SearchEvent.m in Sources */,
 				CE9ADF6B1AB6D78200D56481 /* JAFiltersView.m in Sources */,
 				CE9ADF6F1AB6D78200D56481 /* JAPDVProductInfo.m in Sources */,
 				612553611E4F514100975C6F /* FormItemValidation.m in Sources */,
@@ -5803,6 +5912,7 @@
 				CE9AE00E1AB6D78200D56481 /* JACampaignPageView.m in Sources */,
 				6125535B1E4F382100975C6F /* UIScrollView+Extension.m in Sources */,
 				8714E0901E48CD41004C9B1D /* DiscountSwitcherView.m in Sources */,
+				875435171E77ECD000B5D6B4 /* BaseTracker.m in Sources */,
 				CE9AE0101AB6D78200D56481 /* JABirthDateComponent.m in Sources */,
 				CE9AE0111AB6D78200D56481 /* JANewSellerRatingViewController.m in Sources */,
 				9A4F91181B3D5E7200E34C0B /* JAPDVWizardView.m in Sources */,
@@ -5913,6 +6023,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bamilo/Bamilo-Prefix.pch";
+				INFOPLIST_FILE = "Bamilo/Bamilo-Staging-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
@@ -6092,6 +6203,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bamilo/Bamilo-Prefix.pch";
+				INFOPLIST_FILE = "Bamilo/Bamilo-Staging-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
