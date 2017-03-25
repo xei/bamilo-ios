@@ -1169,48 +1169,24 @@
 - (void)didSelectLeafCategoryInMenu:(NSNotification *)notification {
     NSDictionary *selectedItem = [notification object];
     RICategory* category = [selectedItem objectForKey:@"category"];
-//    NSString* categoryId = [selectedItem objectForKey:@"category_id"];
     NSString* categoryUrlKey = [selectedItem objectForKey:@"category_url_key"];
     NSString* filterPush = [selectedItem objectForKey:@"filter"];
     NSNumber* sorting = [selectedItem objectForKey:@"sorting"];
-//    NSString* targetString = [selectedItem objectForKey:@"targetString"];
     
     if (category) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
-                                                            object:nil];
-        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification object:nil];
         JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
-        
         catalog.navBarLayout.title = category.label;
         catalog.category = category;
         
         [self pushViewController:catalog animated:YES];
-    }
-//    else if (categoryId.length) {
-//        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
-//        
-//        catalog.categoryId = categoryId;
-//        
-//        [self pushViewController:catalog animated:YES];
-//    }
-    else if (categoryUrlKey.length) {
+    } else if (categoryUrlKey.length) {
         JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
-        
         catalog.categoryUrlKey = categoryUrlKey;
         catalog.filterPush = filterPush;
         catalog.sortingMethodFromPush = sorting;
-        
         [self pushViewController:catalog animated:YES];
     }
-//    else if (targetString.length) {
-//        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
-//        
-//        catalog.targetString = targetString;
-//        catalog.filterPush = filterPush;
-//        catalog.sortingMethodFromPush = sorting;
-//        
-//        [self pushViewController:catalog animated:YES];
-//    }
 }
 
 #pragma mark - Filters

@@ -12,6 +12,6 @@ typedef void(^ThreadManagerMainRunBlock)(void);
 
 @interface ThreadManager : NSObject
 
-+(void) executeOnMainThread:(ThreadManagerMainRunBlock)executionBlock;
++ (void)executeOnMainThread:(ThreadManagerMainRunBlock)executionBlock;
 
 @end

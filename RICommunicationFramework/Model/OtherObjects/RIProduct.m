@@ -246,8 +246,6 @@
     NSString* fullUrl = @"";
     NSString *filtersString = [BaseSearchFilterItem urlWithFiltersArray:filters];
     
-    
-    //sometimes the url of the product already has ? in it. yeah...
 
     NSString *sortingString = [RICatalogSorting urlComponentForSortingMethod:sortingMethod];
     if (sortingString.length) {
@@ -259,6 +257,11 @@
     } else {
         fullUrl = [NSString stringWithFormat:@"%@/page/%ld/maxitems/%ld%@", url, (long)page, (long)maxItems, sortingString];
     }
+    
+    if (filterPush.length) {
+        fullUrl = [NSString stringWithFormat:@"%@/%@", fullUrl, filterPush];
+    }
+    
     return [RIProduct getProductsWithFullUrl:fullUrl successBlock:successBlock andFailureBlock:failureBlock];
 }
 

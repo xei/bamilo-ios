@@ -10,9 +10,9 @@
 
 @implementation URLUtility
 
-+(NSDictionary *)parseQueryString:(NSURL *)url {
++ (NSDictionary *)parseQueryString:(NSURL *)url {
     NSString *query = [url query];
-    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:16];
+    NSMutableDictionary *dict = [NSMutableDictionary new];
     NSArray *pairs = [query componentsSeparatedByString:@"&"];
     
     for (NSString *pair in pairs) {

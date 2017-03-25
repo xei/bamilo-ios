@@ -207,15 +207,13 @@ static dispatch_once_t sharedInstanceToken;
                                   selector:@selector(applicationDidRegisterForRemoteNotificationsWithDeviceToken:) arguments:@[deviceToken]];
 }
 
-- (void)applicationDidReceiveRemoteNotification:(NSDictionary *)userInfo
-{
+- (void)applicationDidReceiveRemoteNotification:(NSDictionary *)userInfo {
     RIDebugLog(@"Application did receive an remote notification: %@", userInfo);
     
     [self RI_callTrackersConformToProtocol:@protocol(RINotificationTracking)
                                   selector:@selector(applicationDidReceiveRemoteNotification:)
                                  arguments:@[userInfo]];
-    if(VALID_NOTEMPTY(userInfo, NSDictionary))
-    {
+    if(VALID_NOTEMPTY(userInfo, NSDictionary)) {
         [self handlePushNotifcation:[userInfo copy]];
     }
 }

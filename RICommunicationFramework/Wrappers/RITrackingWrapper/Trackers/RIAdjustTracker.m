@@ -129,8 +129,7 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
 
 #pragma mark - RIPushNotificaitonTracking
 
-- (void)handlePushNotifcation:(NSDictionary *)info
-{
+- (void)handlePushNotifcation:(NSDictionary *)info {
     NSString* url = [info objectForKey:@"u"];
     if (VALID_NOTEMPTY(url, NSString)) {
 //        [Adjust appWillOpenUrl:[NSURL URLWithString:[NSString stringWithFormat:@"jumia://?%@",url]]];

@@ -10,7 +10,7 @@
 
 @implementation ThreadManager
 
-+(void)executeOnMainThread:(ThreadManagerMainRunBlock)executionBlock {
++ (void)executeOnMainThread:(ThreadManagerMainRunBlock)executionBlock {
     if(executionBlock != nil) {
         dispatch_async(dispatch_get_main_queue(), ^{
             executionBlock();

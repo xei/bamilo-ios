@@ -26,6 +26,7 @@
 #import "ViewControllerManager.h"
 #import "BaseViewController.h"
 #import "ThemeManager.h"
+#import "DeepLinkManager.h"
 
 @interface JAAppDelegate () <RIAdjustTrackerDelegate>
 
@@ -296,6 +297,10 @@
 
 #pragma mark - Private Methods
 - (void)handleOpenAppWithURL:(NSURL *)url {
+    
+    [DeepLinkManager handleUrl:url];
+    
+    /*
     NSString *urlScheme = [url scheme];
     
     if (urlScheme) {
@@ -320,7 +325,7 @@
         
         [[RITrackingWrapper sharedInstance] handlePushNotifcation:fullUrl];
     }
-    
+    */
     /*
     NSString *urlScheme = [url scheme];
     if (urlScheme) {
