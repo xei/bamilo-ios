@@ -153,12 +153,12 @@
 }
 
 #ifdef __IPHONE_8_0
-- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:   (UIUserNotificationSettings *)notificationSettings {
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
     //register to receive notifications
     [application registerForRemoteNotifications];
 }
 
-- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString   *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler {
+- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler {
     if(!VALID_NOTEMPTY(application, UIApplication) || UIApplicationStateActive != application.applicationState) {
         [[RITrackingWrapper sharedInstance] applicationHandleActionWithIdentifier:identifier forRemoteNotification:userInfo];
     }
@@ -255,9 +255,6 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kAppWillEnterForeground object:nil];
 }
 
--(void)applicationDidBecomeActive:(UIApplication *)application {
-}
-
 - (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
     NSUInteger supportedInterfaceOrientationsForWindow = -1;
     
@@ -295,7 +292,6 @@
 
 // system push notification registration error callback, delegate to pushManager
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-    
     //PUSH WOOSH
     [[PushNotificationManager pushManager] handlePushRegistrationFailure:error];
 }

@@ -7,6 +7,7 @@
 //
 
 #import "PushWooshTracker.h"
+#import <Pushwoosh/PWInAppManager.h>
 
 @implementation PushWooshTracker
 
@@ -19,6 +20,21 @@ static PushWooshTracker *instance;
     });
     
     return instance;
+}
+
+#pragma mark - PushNotificationTrackerProtocol
+-(void)onPushAccepted:(PushNotificationManager *)pushManager withNotification:(NSDictionary *)pushNotification {
+    NSString *customDataString = [pushManager getCustomPushData:pushNotification];
+    
+    NSDictionary *jsonData = nil;
+    if (customDataString) {
+        jsonData = [NSJSONSerialization JSONObjectWithData:[customDataString dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
+    }
+}
+
+#pragma mark - EventTrackerProtocol
+-(void)postEvent:(NSDictionary *)attributes forName:(NSString *)name {
+    [[PWInAppManager sharedManager] postEvent:name withAttributes:attributes];
 }
 
 @end
