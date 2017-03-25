@@ -31,8 +31,11 @@
 #import "JACollectionSeparator.h"
 #import "JACenterNavigationController.h"
 #import "RICatalogSorting.h"
+//##############################
 #import "ViewControllerManager.h"
 #import "DataManager.h"
+#import "PushWooshTracker.h"
+#import "SearchEvent.h"
 
 #define JACatalogGridSelected @"CATALOG_GRID_IS_SELECTED"
 #define JACatalogViewControllerMaxProducts 36
@@ -1416,6 +1419,15 @@ typedef void (^ProcessActionBlock)(void);
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSearch]
                                               data:[trackingDictionary copy]];
+//################################
+    //PUSHWOOSH EVENT
+    NSMutableDictionary *event = [SearchEvent event];
+    
+    [event setObject:numberOfProducts forKey:kEventValue];
+    [event setObject:numberOfProducts forKey:kSearchEventNumberOfProducts];
+    [event setObject:string forKey:kSearchEventKeywords];
+    
+    [[PushWooshTracker sharedTracker] postEvent:event forName:[SearchEvent name]];
 }
 
 - (void)trackingEventGTMListingForCategoryName:(NSString *)categoryName andSubCategoryName:(NSString *)subCategoryName {

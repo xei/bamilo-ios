@@ -23,10 +23,13 @@
 
 
 //#######################################################################################
+#import <Pushwoosh/PushNotificationManager.h>
+#import <UserNotifications/UserNotifications.h>
 #import "ViewControllerManager.h"
 #import "BaseViewController.h"
 #import "ThemeManager.h"
 #import "DeepLinkManager.h"
+#import "PushWooshTracker.h"
 
 @interface JAAppDelegate () <RIAdjustTrackerDelegate>
 
@@ -130,16 +133,33 @@
         [Crashlytics startWithAPIKey:crashlyticsApiKey];
     }
     
+    //PUSH WOOSH
+    // set custom delegate for push handling, in our case AppDelegate
+    PushNotificationManager *pushManager = [PushNotificationManager pushManager];
+    pushManager.delegate = [PushWooshTracker sharedTracker];
+    
+    // set default Pushwoosh delegate for iOS10 foreground push handling
+    [UNUserNotificationCenter currentNotificationCenter].delegate = [PushNotificationManager pushManager].notificationCenterDelegate;
+    
+    // handling push on app start
+    [[PushNotificationManager pushManager] handlePushReceived:launchOptions];
+    
+    // track application open statistics
+    [[PushNotificationManager pushManager] sendAppOpen];
+    
+    // register for push notifications!
+    [[PushNotificationManager pushManager] registerForPushNotifications];
+    
     return YES;
 }
 
 #ifdef __IPHONE_8_0
-- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:   (UIUserNotificationSettings *)notificationSettings {
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
     //register to receive notifications
     [application registerForRemoteNotifications];
 }
 
-- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString   *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler {
+- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler {
     if(!VALID_NOTEMPTY(application, UIApplication) || UIApplicationStateActive != application.applicationState) {
         [[RITrackingWrapper sharedInstance] applicationHandleActionWithIdentifier:identifier forRemoteNotification:userInfo];
     }
@@ -236,9 +256,6 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kAppWillEnterForeground object:nil];
 }
 
--(void)applicationDidBecomeActive:(UIApplication *)application {
-}
-
 - (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
     NSUInteger supportedInterfaceOrientationsForWindow = -1;
     
@@ -269,12 +286,25 @@
 #pragma mark - Push Notification
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     [[RITrackingWrapper sharedInstance] applicationDidRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+    
+    //PUSH WOOSH
+    [[PushNotificationManager pushManager] handlePushRegistration:deviceToken];
 }
 
+// system push notification registration error callback, delegate to pushManager
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    //PUSH WOOSH
+    [[PushNotificationManager pushManager] handlePushRegistrationFailure:error];
+}
+
+// system push notifications callback, delegate to pushManager
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     if(!VALID_NOTEMPTY(application, UIApplication) || UIApplicationStateActive != application.applicationState) {
         [[RITrackingWrapper sharedInstance] applicationDidReceiveRemoteNotification:userInfo];
     }
+    
+    //PUSH WOOSH
+    [[PushNotificationManager pushManager] handlePushReceived:userInfo];
 }
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
