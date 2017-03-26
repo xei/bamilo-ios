@@ -131,6 +131,11 @@
     
     if(crashlyticsApiKey) {
         [Crashlytics startWithAPIKey:crashlyticsApiKey];
+        
+        //Crashlytics Integration
+        //http://docs.pushwoosh.com/docs/crashlytics-integration
+        NSString *userId = [[PushNotificationManager pushManager] getHWID];
+        [[Crashlytics sharedInstance] setUserIdentifier:userId];
     }
     
     //PUSH WOOSH
