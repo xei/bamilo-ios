@@ -586,33 +586,22 @@
 
 #pragma mark - Left Menu Actions
 
-- (void)didSelectItemInMenu:(NSNotification *)notification
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
-                                                        object:nil];
-    
+- (void)didSelectItemInMenu:(NSNotification *)notification {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification object:nil];
     NSDictionary *selectedItem = [notification object];
-    
     if ([selectedItem objectForKey:@"index"]) {
         NSNumber *index = [selectedItem objectForKey:@"index"];
         
-        if ([index isEqual:@(0)])
-        {
+        if ([index isEqual:@(0)]) {
             [self changeCenterPanel:STRING_HOME notification:notification];
-            
         } else {
-            if ([index isEqual:@(99)])
-            {
+            if ([index isEqual:@(99)]) {
                 // It's to perform a search
                 [self pushCatalogToShowSearchResults:[selectedItem objectForKey:@"text"]];
-            }
-            else if ([index isEqual:@(98)])
-            {
+            } else if ([index isEqual:@(98)]) {
                 [self pushCatalogForUndefinedSearchWithBrandTargetString:[selectedItem objectForKey:@"targetString"]
                                                    andBrandName:[selectedItem objectForKey:@"name"]];
-            }
-            else
-            {
+            } else {
                 [self changeCenterPanel:[selectedItem objectForKey:@"name"] notification:notification];
             }
         }

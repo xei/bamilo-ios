@@ -21,8 +21,7 @@
         if ([queryDictionary valueForKey:@"UTM"]) {
             [[RITrackingWrapper sharedInstance] trackCampaignWithName:[[queryDictionary valueForKey:@"UTM"] objectForKey:@"UTM"]];
         }
-        
-        
+            
         NSArray *pathComponents = [[url.path componentsSeparatedByString:@"/"] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"length > 0"]];
         if (!pathComponents.count) {
             [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
@@ -47,38 +46,23 @@
         
         
         // ---- handle some special views with special params ----
-        NSMutableDictionary* categoryDictionary = [NSMutableDictionary new];
-        if (argument.length) {
-            [categoryDictionary setObject:argument forKey:@"category_url_key"];
-        }
-        if (filterString.length) {
-            [categoryDictionary setObject:filterString forKey:@"filter"];
-        }
         
         if ([targetKey isEqualToString:@"d"] && argument.length) {
-            // PDV - jumia://ng/d/BL683ELACCDPNGAMZ?size=1
-           
-            NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
-            [userInfo setObject:argument forKey:@"sku"];
-            [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"show_back_button"];
-            
+            // PDV - bamilo://ir/d/BL683ELACCDPNGAMZ?size=1
+            NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithDictionary:@{@"sku": argument, @"show_back_button" :@(NO)}];
             if([queryDictionary objectForKey:@"size"]) {
                 [userInfo setObject:[queryDictionary objectForKey:@"size"] forKey:@"size"];
             }
-            
             [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication object:nil userInfo:userInfo];
         } else if ([targetKey isEqualToString:@"s"] && argument.length) {
             // Catalog view - search term
-            [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification object:@{
-                                                                                                                 @"index": @(99),
+            [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification object:@{@"index": @(99),
                                                                                                                  @"name": STRING_SEARCH,
                                                                                                                  @"text": argument
                                                                                                                  }];
         } else if ([targetKey isEqualToString:@"camp"] && argument.length) {
-            
             [[ViewControllerManager centerViewController] openTargetString:[RITarget getTargetString:CAMPAIGN node:argument]];
         } else if ([targetKey isEqualToString:@"ss"] && argument.length) {
-            
             [[ViewControllerManager centerViewController] openTargetString:[RITarget getTargetString:STATIC_PAGE node:argument]];
         }
         
