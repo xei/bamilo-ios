@@ -220,6 +220,10 @@
     completionHandler(UIBackgroundFetchResultNewData);
 }
 
+-(void)applicationDidBecomeActive:(UIApplication *)application {
+    [application setApplicationIconBadgeNumber:0];
+}
+
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     [RIApi startApiWithCountry:nil reloadAPI:NO successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory){
         if(hasUpdate) {
