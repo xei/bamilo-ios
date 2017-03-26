@@ -4,10 +4,10 @@
 <dict>
 	<key>Pushwoosh_APPID</key>
 	<string>82449-6B792</string>
-	<key>Pushwoosh_LOG_LEVEL</key>
-	<string>NONE</string>
 	<key>Pushwoosh_APPNAME</key>
 	<string>Bamilo</string>
+	<key>Pushwoosh_LOG_LEVEL</key>
+	<string>NONE</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -18,6 +18,8 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
+	<key>CFBundleVersion</key>
+	<string>0</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -46,8 +48,6 @@
 			</array>
 		</dict>
 	</array>
-	<key>CFBundleVersion</key>
-	<string>11</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>

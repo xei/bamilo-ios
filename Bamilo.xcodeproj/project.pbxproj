@@ -112,6 +112,7 @@
 		871BA8561E867F4A007680C5 /* BaseEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BA8551E867F4A007680C5 /* BaseEvent.m */; };
 		871BA8591E867FE0007680C5 /* SearchEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BA8581E867FE0007680C5 /* SearchEvent.m */; };
 		871BA85C1E8680A1007680C5 /* EventConsts.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BA85B1E8680A1007680C5 /* EventConsts.m */; };
+		871BA85F1E8786C5007680C5 /* Bamilo-Debug-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 871BA85E1E8786C5007680C5 /* Bamilo-Debug-Info.plist */; };
 		872230DC1E6A965E000748E9 /* Accengage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 872230DB1E6A965E000748E9 /* Accengage.framework */; };
 		872230DE1E6A969E000748E9 /* Accengage.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 872230DB1E6A965E000748E9 /* Accengage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		872230E31E6A9815000748E9 /* AccengageTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 872230E21E6A9815000748E9 /* AccengageTracker.m */; };
@@ -814,6 +815,7 @@
 		871BA8581E867FE0007680C5 /* SearchEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchEvent.m; sourceTree = "<group>"; };
 		871BA85A1E8680A1007680C5 /* EventConsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventConsts.h; sourceTree = "<group>"; };
 		871BA85B1E8680A1007680C5 /* EventConsts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventConsts.m; sourceTree = "<group>"; };
+		871BA85E1E8786C5007680C5 /* Bamilo-Debug-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Bamilo-Debug-Info.plist"; sourceTree = "<group>"; };
 		872230DB1E6A965E000748E9 /* Accengage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Accengage.framework; sourceTree = "<group>"; };
 		872230E01E6A97E0000748E9 /* DataTrackerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataTrackerProtocol.h; sourceTree = "<group>"; };
 		872230E11E6A9815000748E9 /* AccengageTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccengageTracker.h; sourceTree = "<group>"; };
@@ -4676,6 +4678,7 @@
 			isa = PBXGroup;
 			children = (
 				CE9AE12C1AB84C2300D56481 /* Bamilo-Info.plist */,
+				871BA85E1E8786C5007680C5 /* Bamilo-Debug-Info.plist */,
 				8754351F1E780D6B00B5D6B4 /* Bamilo-Staging-Info.plist */,
 				874AAB541E3C764600B3F8FE /* Bamilo-Configs.plist */,
 				870F8CCB1E3354700021F87B /* Bamilo.entitlements */,
@@ -5281,6 +5284,7 @@
 				874AAB551E3C764600B3F8FE /* Bamilo-Configs.plist in Resources */,
 				875435201E780D6B00B5D6B4 /* Bamilo-Staging-Info.plist in Resources */,
 				CEDBF8971B0DF5D00073971A /* JANewsletterComponent~iPad_RTL.xib in Resources */,
+				871BA85F1E8786C5007680C5 /* Bamilo-Debug-Info.plist in Resources */,
 				87459CA11E4F159E00743120 /* PaymentTypeTableViewCell.xib in Resources */,
 				CE9AE03C1AB6D78200D56481 /* JANewsletterComponent~iPad.xib in Resources */,
 				9A564CAF1B332FB200F23057 /* JASellerRatingsViewController.xib in Resources */,
@@ -6217,7 +6221,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bamilo/Bamilo-Prefix.pch";
-				INFOPLIST_FILE = "Bamilo/Bamilo-Staging-Info.plist";
+				INFOPLIST_FILE = "Bamilo/Bamilo-Debug-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;

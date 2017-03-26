@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>Pushwoosh_APPID</key>
-	<string>82449-6B792</string>
+	<string>A9EF7-6FDD2</string>
 	<key>Pushwoosh_APPNAME</key>
-	<string>Bamilo</string>
+	<string>Bamilo (Staging)</string>
 	<key>Pushwoosh_LOG_LEVEL</key>
-	<string>NONE</string>
+	<string>VERBOSE</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -19,7 +19,7 @@
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundleVersion</key>
-	<string>13</string>
+	<string>0</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
