@@ -51,7 +51,7 @@
 @property (copy, nonatomic) NSString *delivery;
 @property (strong, nonatomic) OrderStatus *status;
 @property (strong, nonatomic) NSArray<OrderReturn *> *returns;
-@property (nonatomic) long int price;
+@property (nonatomic) long long price;
 @property (copy, nonatomic)   NSString *formatedPrice;
 @property (strong, nonatomic) NSNumber *quantity;
 @property (strong, nonatomic) NSMutableArray<OrderProductAction> *actions;
