@@ -132,7 +132,6 @@
 		87459C9C1E4F0DCD00743120 /* RadioButtonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87459C9B1E4F0DCD00743120 /* RadioButtonView.xib */; };
 		87459CA11E4F159E00743120 /* PaymentTypeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87459CA01E4F159E00743120 /* PaymentTypeTableViewCell.xib */; };
 		87459CA41E4F15AF00743120 /* PaymentTypeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87459CA31E4F15AF00743120 /* PaymentTypeTableViewCell.m */; };
-		874AAB551E3C764600B3F8FE /* Bamilo-Configs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 874AAB541E3C764600B3F8FE /* Bamilo-Configs.plist */; };
 		874AAB5E1E3C778E00B3F8FE /* ConfigManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB5D1E3C778E00B3F8FE /* ConfigManager.m */; };
 		874AAB651E3CE35B00B3F8FE /* ConfigManager-Consts.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB641E3CE35B00B3F8FE /* ConfigManager-Consts.m */; };
 		874AAB691E3CEA0700B3F8FE /* AppManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB681E3CEA0700B3F8FE /* AppManager.m */; };
@@ -855,7 +854,6 @@
 		87459CA01E4F159E00743120 /* PaymentTypeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentTypeTableViewCell.xib; sourceTree = "<group>"; };
 		87459CA21E4F15AF00743120 /* PaymentTypeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentTypeTableViewCell.h; sourceTree = "<group>"; };
 		87459CA31E4F15AF00743120 /* PaymentTypeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentTypeTableViewCell.m; sourceTree = "<group>"; };
-		874AAB541E3C764600B3F8FE /* Bamilo-Configs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Bamilo-Configs.plist"; sourceTree = "<group>"; };
 		874AAB5D1E3C778E00B3F8FE /* ConfigManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigManager.m; sourceTree = "<group>"; };
 		874AAB621E3CE32C00B3F8FE /* ConfigManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigManager.h; sourceTree = "<group>"; };
 		874AAB631E3CE35B00B3F8FE /* ConfigManager-Consts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConfigManager-Consts.h"; sourceTree = "<group>"; };
@@ -4680,7 +4678,6 @@
 				CE9AE12C1AB84C2300D56481 /* Bamilo-Info.plist */,
 				871BA85E1E8786C5007680C5 /* Bamilo-Debug-Info.plist */,
 				8754351F1E780D6B00B5D6B4 /* Bamilo-Staging-Info.plist */,
-				874AAB541E3C764600B3F8FE /* Bamilo-Configs.plist */,
 				870F8CCB1E3354700021F87B /* Bamilo.entitlements */,
 				870F8CCD1E3354E10021F87B /* Consts */,
 				CE9AE1221AB824B700D56481 /* Fonts */,
@@ -5281,7 +5278,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				61148E0A1E47255F00E2540B /* StepperView.xib in Resources */,
-				874AAB551E3C764600B3F8FE /* Bamilo-Configs.plist in Resources */,
 				875435201E780D6B00B5D6B4 /* Bamilo-Staging-Info.plist in Resources */,
 				CEDBF8971B0DF5D00073971A /* JANewsletterComponent~iPad_RTL.xib in Resources */,
 				871BA85F1E8786C5007680C5 /* Bamilo-Debug-Info.plist in Resources */,

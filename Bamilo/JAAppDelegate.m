@@ -109,34 +109,13 @@
     }
     
 //#########################################################################################################
-    ConfigManager *configManager = [[ConfigManager alloc] initWithConfigurationFile:@"Bamilo-Configs"];
-#ifdef IS_RELEASE
-    //NSString *newRelicApiKey = [configManager getConfigurationForKey:@"NewRelic" variation:kConfManagerEnvLive];
-    NSString *crashlyticsApiKey = [configManager getConfigurationForKey:@"Crashlytics" variation:kConfManagerEnvLive];
-#else
-    //NSString *newRelicApiKey = [configManager getConfigurationForKey:@"NewRelic" variation:kConfManagerEnvStaging];
-    NSString *crashlyticsApiKey = [configManager getConfigurationForKey:@"Crashlytics" variation:kConfManagerEnvStaging];
-#endif
+    //Start Crashlytics
+    [Fabric with:@[[Crashlytics class]]];
     
-    /*
-    if (newRelicApiKey) {
-        [NewRelicAgent startWithApplicationToken:newRelicApiKey];
-        
-        #ifdef IS_RELEASE
-            [NewRelicAgent enableCrashReporting:YES];
-        #else
-             [NewRelicAgent disableFeatures:NRFeatureFlag_CrashReporting];
-        #endif
-    }*/
-    
-    if(crashlyticsApiKey) {
-        [Crashlytics startWithAPIKey:crashlyticsApiKey];
-        
-        //Crashlytics Integration
-        //http://docs.pushwoosh.com/docs/crashlytics-integration
-        NSString *userId = [[PushNotificationManager pushManager] getHWID];
-        [[Crashlytics sharedInstance] setUserIdentifier:userId];
-    }
+    //Crashlytics Integration with PushWoosh
+    //http://docs.pushwoosh.com/docs/crashlytics-integration
+    NSString *userId = [[PushNotificationManager pushManager] getHWID];
+    [[Crashlytics sharedInstance] setUserIdentifier:userId];
     
     //PUSH WOOSH
     // set custom delegate for push handling, in our case AppDelegate
