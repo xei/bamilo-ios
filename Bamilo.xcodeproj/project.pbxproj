@@ -132,8 +132,6 @@
 		87459C9C1E4F0DCD00743120 /* RadioButtonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87459C9B1E4F0DCD00743120 /* RadioButtonView.xib */; };
 		87459CA11E4F159E00743120 /* PaymentTypeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87459CA01E4F159E00743120 /* PaymentTypeTableViewCell.xib */; };
 		87459CA41E4F15AF00743120 /* PaymentTypeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87459CA31E4F15AF00743120 /* PaymentTypeTableViewCell.m */; };
-		874AAB5E1E3C778E00B3F8FE /* ConfigManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB5D1E3C778E00B3F8FE /* ConfigManager.m */; };
-		874AAB651E3CE35B00B3F8FE /* ConfigManager-Consts.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB641E3CE35B00B3F8FE /* ConfigManager-Consts.m */; };
 		874AAB691E3CEA0700B3F8FE /* AppManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB681E3CEA0700B3F8FE /* AppManager.m */; };
 		874AAB6D1E3DCEDB00B3F8FE /* SessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB6C1E3DCEDB00B3F8FE /* SessionManager.m */; };
 		874AAB771E3DD31600B3F8FE /* URLUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB761E3DD31600B3F8FE /* URLUtility.m */; };
@@ -854,10 +852,6 @@
 		87459CA01E4F159E00743120 /* PaymentTypeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentTypeTableViewCell.xib; sourceTree = "<group>"; };
 		87459CA21E4F15AF00743120 /* PaymentTypeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentTypeTableViewCell.h; sourceTree = "<group>"; };
 		87459CA31E4F15AF00743120 /* PaymentTypeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentTypeTableViewCell.m; sourceTree = "<group>"; };
-		874AAB5D1E3C778E00B3F8FE /* ConfigManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigManager.m; sourceTree = "<group>"; };
-		874AAB621E3CE32C00B3F8FE /* ConfigManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigManager.h; sourceTree = "<group>"; };
-		874AAB631E3CE35B00B3F8FE /* ConfigManager-Consts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConfigManager-Consts.h"; sourceTree = "<group>"; };
-		874AAB641E3CE35B00B3F8FE /* ConfigManager-Consts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ConfigManager-Consts.m"; sourceTree = "<group>"; };
 		874AAB671E3CEA0700B3F8FE /* AppManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppManager.h; sourceTree = "<group>"; };
 		874AAB681E3CEA0700B3F8FE /* AppManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppManager.m; sourceTree = "<group>"; };
 		874AAB6B1E3DCEDB00B3F8FE /* SessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionManager.h; sourceTree = "<group>"; };
@@ -3089,7 +3083,6 @@
 				8714E05E1E474015004C9B1D /* RequestManager */,
 				8714E0521E471DDB004C9B1D /* DataManager */,
 				874AAB661E3CE9F400B3F8FE /* AppManager */,
-				874AAB5F1E3C790300B3F8FE /* ConfigManager */,
 				874AAB6A1E3DCECD00B3F8FE /* SessionManager */,
 				87A6814B1E40DC2000D252AC /* ViewControllerManager */,
 				879F87FC1E5095CF0033FE87 /* LoadingManager */,
@@ -3098,25 +3091,6 @@
 				872230EB1E6A98B1000748E9 /* ThreadManager */,
 			);
 			name = Managers;
-			sourceTree = "<group>";
-		};
-		874AAB5F1E3C790300B3F8FE /* ConfigManager */ = {
-			isa = PBXGroup;
-			children = (
-				874AAB611E3CE2FC00B3F8FE /* ConfigManager-Constants */,
-				874AAB621E3CE32C00B3F8FE /* ConfigManager.h */,
-				874AAB5D1E3C778E00B3F8FE /* ConfigManager.m */,
-			);
-			name = ConfigManager;
-			sourceTree = "<group>";
-		};
-		874AAB611E3CE2FC00B3F8FE /* ConfigManager-Constants */ = {
-			isa = PBXGroup;
-			children = (
-				874AAB631E3CE35B00B3F8FE /* ConfigManager-Consts.h */,
-				874AAB641E3CE35B00B3F8FE /* ConfigManager-Consts.m */,
-			);
-			name = "ConfigManager-Constants";
 			sourceTree = "<group>";
 		};
 		874AAB661E3CE9F400B3F8FE /* AppManager */ = {
@@ -5200,7 +5174,6 @@
 				875AD58C1E38C62A00584ABF /* ShellScript */,
 				A496F8EDC748088D90A309BD /* [CP] Embed Pods Frameworks */,
 				AF99C33FE560E007DC18281B /* [CP] Copy Pods Resources */,
-				873369E11E5B295F00B0B5E5 /* ShellScript */,
 				872230DD1E6A9686000748E9 /* CopyFiles */,
 				872230DF1E6A96C6000748E9 /* ShellScript */,
 			);
@@ -5403,19 +5376,6 @@
 			shellPath = /bin/sh;
 			shellScript = "FRAMEWORKS_DIRECTORY=\"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}\"\nACCENGAGE_FRAMEWORKS=`find $FRAMEWORKS_DIRECTORY -type d -name \"Accengage*.framework\"`\n\nfor framework in $ACCENGAGE_FRAMEWORKS; do\nframework_name=`basename $framework`\nframework_binary_path=$framework\"/${framework_name%.*}\"\n\narchs=\"$(lipo -info \"${framework_binary_path}\" | rev | cut -d ':' -f1 | rev)\"\nstripped=\"\"\nfor arch in $archs; do\nif ! [[ \"${VALID_ARCHS}\" == *\"$arch\"* ]]; then\nlipo -remove \"$arch\" -output \"$framework_binary_path\" \"$framework_binary_path\" || exit 1\nstripped=\"$stripped $arch\"\nfi\ndone\nif [[ \"$stripped\" != \"\" ]]; then\necho \"Stripped $framework_binary_path of architectures:$stripped\"\nif [ \"${CODE_SIGNING_REQUIRED}\" == \"YES\" ]; then\n/usr/bin/codesign --force --sign ${EXPANDED_CODE_SIGN_IDENTITY} --preserve-metadata=identifier,entitlements \"${framework_binary_path}\"\nfi\nfi\ndone";
 		};
-		873369E11E5B295F00B0B5E5 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [[ \"$CONFIGURATION\" == \"Release\" ]]\nthen\n    ./Pods/Fabric/Fabric.framework/run 93ef3db21e524147cf9702fd4dc34e7169e372d1\nelse\n    ./Pods/Fabric/Fabric.framework/run ddde4ad6ad210575fdac10a908040d1a93e74833\nfi";
-		};
 		875AD58C1E38C62A00584ABF /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -5574,7 +5534,6 @@
 				875AD57C1E38C0C900584ABF /* RICommunicationWrapper.m in Sources */,
 				875AD5641E38C0C900584ABF /* RILocale.m in Sources */,
 				61036B6C1E65B638006E12A9 /* OrderProduct.m in Sources */,
-				874AAB651E3CE35B00B3F8FE /* ConfigManager-Consts.m in Sources */,
 				874AAB771E3DD31600B3F8FE /* URLUtility.m in Sources */,
 				8754351B1E77ECE500B5D6B4 /* PushWooshTracker.m in Sources */,
 				9ADEA09F1C9C0E6D00B2A605 /* JAProductInfoSizeLine.m in Sources */,
@@ -5787,7 +5746,6 @@
 				61148E051E4724FC00E2540B /* StepperView.m in Sources */,
 				875AD54F1E38C0C900584ABF /* RISearchSuggestion.m in Sources */,
 				87A681711E41FCF300D252AC /* CheckoutProgressView.m in Sources */,
-				874AAB5E1E3C778E00B3F8FE /* ConfigManager.m in Sources */,
 				CE9ADFC71AB6D78200D56481 /* JAButtonWithBlur.m in Sources */,
 				FFB1B08E1CE5E163000F60AD /* JAORWaysViewController.m in Sources */,
 				CE9ADFCB1AB6D78200D56481 /* JAAddRatingView.m in Sources */,

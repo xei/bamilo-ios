@@ -16,7 +16,6 @@
 #import "JAUtils.h"
 #import "RIAdjustTracker.h"
 #import "RIProduct.h"
-#import "ConfigManager.h"
 #import "AppManager.h"
 #import "SessionManager.h"
 #import "URLUtility.h"
@@ -133,6 +132,18 @@
     
     // register for push notifications!
     [[PushNotificationManager pushManager] registerForPushNotifications];
+    
+    NSDictionary *configs = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"Configs"];
+    if(configs) {
+        NSString *isPushWooshBeta = [configs objectForKey:@"Pushwoosh_BETA"];
+        if([isPushWooshBeta isEqualToString:@"1"]) {
+            [[PushNotificationManager pushManager] setTags:@{ @"Beta": isPushWooshBeta } withCompletion:^(NSError *error) {
+                if(error == nil) {
+                    NSLog(@"Beta tag is set to %@", isPushWooshBeta);
+                }
+            }];
+        }
+    }
     
     return YES;
 }

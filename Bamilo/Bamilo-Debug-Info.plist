@@ -2,6 +2,11 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Configs</key>
+	<dict>
+		<key>Pushwoosh_BETA</key>
+		<string>1</string>
+	</dict>
 	<key>Pushwoosh_APPID</key>
 	<string>A9EF7-6FDD2</string>
 	<key>Pushwoosh_APPNAME</key>
