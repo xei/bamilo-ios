@@ -253,6 +253,8 @@
 		87D07D781E4097FF00C00AC6 /* CheckoutAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D07D771E4097FF00C00AC6 /* CheckoutAddressViewController.m */; };
 		87D07D7C1E4099C300C00AC6 /* CheckoutConfirmationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D07D7B1E4099C300C00AC6 /* CheckoutConfirmationViewController.m */; };
 		87D07D801E4099E800C00AC6 /* CheckoutPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D07D7F1E4099E800C00AC6 /* CheckoutPaymentViewController.m */; };
+		87D3DD1C1E8A323000C960FF /* BaseDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D3DD1B1E8A323000C960FF /* BaseDataManager.m */; };
+		87D3DD211E8A32D900C960FF /* EmarsysDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D3DD201E8A32D900C960FF /* EmarsysDataManager.m */; };
 		87DAABE31E54430D00445EBB /* PaymentOptionWithLogoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DAABE21E54430D00445EBB /* PaymentOptionWithLogoTableViewCell.m */; };
 		87DAABE51E54431A00445EBB /* PaymentOptionWithLogoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87DAABE41E54431A00445EBB /* PaymentOptionWithLogoTableViewCell.xib */; };
 		87DAABE91E55A1C400445EBB /* PaymentOptionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DAABE81E55A1C400445EBB /* PaymentOptionTableViewCell.m */; };
@@ -1106,6 +1108,10 @@
 		87D07D7B1E4099C300C00AC6 /* CheckoutConfirmationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckoutConfirmationViewController.m; sourceTree = "<group>"; };
 		87D07D7E1E4099E800C00AC6 /* CheckoutPaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckoutPaymentViewController.h; sourceTree = "<group>"; };
 		87D07D7F1E4099E800C00AC6 /* CheckoutPaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckoutPaymentViewController.m; sourceTree = "<group>"; };
+		87D3DD1A1E8A323000C960FF /* BaseDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseDataManager.h; sourceTree = "<group>"; };
+		87D3DD1B1E8A323000C960FF /* BaseDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseDataManager.m; sourceTree = "<group>"; };
+		87D3DD1F1E8A32D900C960FF /* EmarsysDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysDataManager.h; sourceTree = "<group>"; };
+		87D3DD201E8A32D900C960FF /* EmarsysDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysDataManager.m; sourceTree = "<group>"; };
 		87DAABE11E54430D00445EBB /* PaymentOptionWithLogoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentOptionWithLogoTableViewCell.h; sourceTree = "<group>"; };
 		87DAABE21E54430D00445EBB /* PaymentOptionWithLogoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentOptionWithLogoTableViewCell.m; sourceTree = "<group>"; };
 		87DAABE41E54431A00445EBB /* PaymentOptionWithLogoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentOptionWithLogoTableViewCell.xib; sourceTree = "<group>"; };
@@ -2670,6 +2676,7 @@
 		870F8CD41E3357D40021F87B /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				87D3DD1E1E8A32C000C960FF /* EmarsysDataManager */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -3078,6 +3085,7 @@
 		874AAB5B1E3C775900B3F8FE /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				87D3DD171E8A2DE300C960FF /* Base */,
 				873369BB1E58375900B0B5E5 /* ImageManager */,
 				87DAABF01E55DDE300445EBB /* AlertManager */,
 				8714E05E1E474015004C9B1D /* RequestManager */,
@@ -3987,6 +3995,40 @@
 				87A681731E4200B900D252AC /* AddressTableViewHeaderCell */,
 			);
 			name = TableViewHeaderFooters;
+			sourceTree = "<group>";
+		};
+		87D3DD171E8A2DE300C960FF /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				87D3DD191E8A321F00C960FF /* DataManager */,
+			);
+			name = Base;
+			sourceTree = "<group>";
+		};
+		87D3DD191E8A321F00C960FF /* DataManager */ = {
+			isa = PBXGroup;
+			children = (
+				87D3DD1D1E8A323600C960FF /* BaseDataManager */,
+			);
+			name = DataManager;
+			sourceTree = "<group>";
+		};
+		87D3DD1D1E8A323600C960FF /* BaseDataManager */ = {
+			isa = PBXGroup;
+			children = (
+				87D3DD1A1E8A323000C960FF /* BaseDataManager.h */,
+				87D3DD1B1E8A323000C960FF /* BaseDataManager.m */,
+			);
+			name = BaseDataManager;
+			sourceTree = "<group>";
+		};
+		87D3DD1E1E8A32C000C960FF /* EmarsysDataManager */ = {
+			isa = PBXGroup;
+			children = (
+				87D3DD1F1E8A32D900C960FF /* EmarsysDataManager.h */,
+				87D3DD201E8A32D900C960FF /* EmarsysDataManager.m */,
+			);
+			name = EmarsysDataManager;
 			sourceTree = "<group>";
 		};
 		87DAABE01E5442EF00445EBB /* PaymentOptionWithLogoTableViewCell */ = {
@@ -5482,6 +5524,7 @@
 				9A08B1131CC7C377003282CB /* JAActionWebViewController.m in Sources */,
 				873369CA1E58A1D200B0B5E5 /* ShippingMethodOption.m in Sources */,
 				87EA03331E6DA27D00B1E062 /* ProgressItemViewModel.m in Sources */,
+				87D3DD1C1E8A323000C960FF /* BaseDataManager.m in Sources */,
 				87EA032D1E6D993C00B1E062 /* ProgressItemView.m in Sources */,
 				9A189E611BB31AC70039BC14 /* JAProductInfoHeaderLine.m in Sources */,
 				8714E0661E476DF8004C9B1D /* AddressList.m in Sources */,
@@ -5680,6 +5723,7 @@
 				875AD5711E38C0C900584ABF /* RISellerDelivery.m in Sources */,
 				CE9ADFA81AB6D78200D56481 /* JARatingsView.m in Sources */,
 				CE9ADFA91AB6D78200D56481 /* JASizeGuideViewController.m in Sources */,
+				87D3DD211E8A32D900C960FF /* EmarsysDataManager.m in Sources */,
 				9AB517A61C934342007E1327 /* JAButton.m in Sources */,
 				9A55A6911BC2E894008EF4A6 /* JAPDVVariationsViewController.m in Sources */,
 				872230EA1E6A989D000748E9 /* SettingsManager.m in Sources */,

@@ -9,29 +9,47 @@
 #import "RequestManager.h"
 #import "LoadingManager.h"
 
+@interface RequestManager()
+@property (copy, nonatomic) NSString *baseUrl;
+
+@end
+
 @implementation RequestManager {
 @private
     int _pendingRequestsNumber;
 }
 
-+(void) asyncGET:(id<DataServiceProtocol>)target path:(NSString *)path params:(NSDictionary *)params type:(RequestExecutionType)type completion:(RequestCompletion)completion {
-    [RequestManager asyncRequest:HttpVerbGET path:path params:params type:type target:target completion:completion];
+-(instancetype)init {
+    NSAssert(false, @"Call initWithBaseUrl instead");
+    return nil;
 }
 
-+(void) asyncPOST:(id<DataServiceProtocol>)target path:(NSString *)path params:(NSDictionary *)params type:(RequestExecutionType)type completion:(RequestCompletion)completion {
-    [RequestManager asyncRequest:HttpVerbPOST path:path params:params type:type target:target completion:completion];
+-(instancetype)initWithBaseUrl:(NSString *)baseUrl {
+    if(self = [super init]) {
+        self.baseUrl = baseUrl;
+    }
+    
+    return self;
 }
 
-+(void) asyncPUT:(id<DataServiceProtocol>)target path:(NSString *)path params:(NSDictionary *)params type:(RequestExecutionType)type completion:(RequestCompletion)completion {
-    [RequestManager asyncRequest:HttpVerbPUT path:path params:params type:type target:target completion:completion];
+-(void) asyncGET:(id<DataServiceProtocol>)target path:(NSString *)path params:(NSDictionary *)params type:(RequestExecutionType)type completion:(RequestCompletion)completion {
+    [self asyncRequest:HttpVerbGET path:path params:params type:type target:target completion:completion];
 }
 
-+(void) asyncDELETE:(id<DataServiceProtocol>)target path:(NSString *)path params:(NSDictionary *)params type:(RequestExecutionType)type completion:(RequestCompletion)completion {
-    [RequestManager asyncRequest:HttpVerbDELETE path:path params:params type:type target:target completion:completion];
+-(void) asyncPOST:(id<DataServiceProtocol>)target path:(NSString *)path params:(NSDictionary *)params type:(RequestExecutionType)type completion:(RequestCompletion)completion {
+    [self asyncRequest:HttpVerbPOST path:path params:params type:type target:target completion:completion];
+}
+
+-(void) asyncPUT:(id<DataServiceProtocol>)target path:(NSString *)path params:(NSDictionary *)params type:(RequestExecutionType)type completion:(RequestCompletion)completion {
+    [self asyncRequest:HttpVerbPUT path:path params:params type:type target:target completion:completion];
+}
+
+-(void) asyncDELETE:(id<DataServiceProtocol>)target path:(NSString *)path params:(NSDictionary *)params type:(RequestExecutionType)type completion:(RequestCompletion)completion {
+    [self asyncRequest:HttpVerbDELETE path:path params:params type:type target:target completion:completion];
 }
 
 #pragma mark - Private Methods
-+(void)asyncRequest:(HttpVerb)method path:(NSString *)path params:(NSDictionary *)params type:(RequestExecutionType)type target:(id<DataServiceProtocol>)target completion:(RequestCompletion)completion {
+-(void)asyncRequest:(HttpVerb)method path:(NSString *)path params:(NSDictionary *)params type:(RequestExecutionType)type target:(id<DataServiceProtocol>)target completion:(RequestCompletion)completion {
     switch (type) {
         case REQUEST_EXEC_IN_FOREGROUND:
             [[LoadingManager sharedInstance] showLoading];
@@ -41,8 +59,10 @@
             break;
     }
     
+    NSURL *requestUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", self.baseUrl, path]];
+    
     [[RICommunicationWrapper sharedInstance]
-     sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, path]]
+     sendRequestWithUrl:requestUrl
      parameters:params
      httpMethod:method
      cacheType:RIURLCacheNoCache
