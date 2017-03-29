@@ -29,6 +29,7 @@
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager.requestSerializer setValue:[self getAuthorizationHeaderValue] forHTTPHeaderField:@"Authorization"];
+    
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/plain"];
     
     NSString *requestUrl = [NSString stringWithFormat:@"%@%@", self.baseUrl, path];

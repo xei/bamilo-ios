@@ -219,7 +219,7 @@
     [application setApplicationIconBadgeNumber:0];
     
     PushNotificationManager *pushManager = [PushNotificationManager pushManager];
-    [[EmarsysMobileEngage sharedInstance] sendUpdate:[pushManager appCode] hardwareId:[pushManager getHWID] pushToken:[pushManager getPushToken] completion:^(BOOL success) {
+    [[EmarsysMobileEngage sharedInstance] sendLogin:[pushManager appCode] hardwareId:[pushManager getHWID] pushToken:[pushManager getPushToken] completion:^(BOOL success) {
         NSLog(@"Emarsys Mobile Engage > sendUpdate > %@", success ? sSUCCESSFUL : sFAILED);
     }];
 }
@@ -306,7 +306,7 @@
     if(!VALID_NOTEMPTY(application, UIApplication) || UIApplicationStateActive != application.applicationState) {
         [[RITrackingWrapper sharedInstance] applicationDidReceiveRemoteNotification:userInfo];
     }
-    
+
     //PUSH WOOSH
     [[PushNotificationManager pushManager] handlePushReceived:userInfo];
 }

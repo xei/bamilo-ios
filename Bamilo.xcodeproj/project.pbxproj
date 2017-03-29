@@ -2685,9 +2685,7 @@
 		870F8CD41E3357D40021F87B /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				87D3DD2D1E8BA10400C960FF /* EmarsysMobileEngage */,
-				87D3DD241E8A95FB00C960FF /* EmarsysRequestManager */,
-				87D3DD1E1E8A32C000C960FF /* EmarsysDataManager */,
+				87D3DD311E8BDE2300C960FF /* Emarsys */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -4077,6 +4075,16 @@
 				87D3DD2F1E8BA11600C960FF /* EmarsysMobileEngage.m */,
 			);
 			name = EmarsysMobileEngage;
+			sourceTree = "<group>";
+		};
+		87D3DD311E8BDE2300C960FF /* Emarsys */ = {
+			isa = PBXGroup;
+			children = (
+				87D3DD2D1E8BA10400C960FF /* EmarsysMobileEngage */,
+				87D3DD241E8A95FB00C960FF /* EmarsysRequestManager */,
+				87D3DD1E1E8A32C000C960FF /* EmarsysDataManager */,
+			);
+			name = Emarsys;
 			sourceTree = "<group>";
 		};
 		87DAABE01E5442EF00445EBB /* PaymentOptionWithLogoTableViewCell */ = {
