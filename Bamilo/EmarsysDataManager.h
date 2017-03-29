@@ -10,4 +10,6 @@
 
 @interface EmarsysDataManager : BaseDataManager
 
+-(void) doAnonymousLogin:(id<DataServiceProtocol>)target applicationId:(NSString *)applicationId hardwareId:(NSString *)hardwareId pushToken:(NSString *)pushToken completion:(DataCompletion)completion;
+
 @end

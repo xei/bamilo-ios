@@ -38,7 +38,7 @@ static DataManager *instance;
 - (void)getSubCategoriesFilter:(id<DataServiceProtocol>)target ofCategroyUrlKey:(NSString *)urlKey completion:(DataCompletion)completion {
     
     NSString *path = [NSString stringWithFormat:RI_API_GET_CATEGORIES_BY_URLKEY, urlKey];
-    [self.requestManager asyncGET:target path:path params:nil type:REQUEST_EXEC_IN_BACKGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+    [self.requestManager asyncGET:target path:path params:nil type:REQUEST_EXEC_IN_BACKGROUND completion:^(int response, id data, NSArray *errorMessages) {
         if (((NSArray *)[data objectForKey:@"data"]).count) {
             //This must be refactored from server side :(
             NSArray *garbageArray = data[@"data"][0][@"children"];
@@ -75,13 +75,13 @@ static DataManager *instance;
                         path:[NSString stringWithFormat:@"%@?id=%@", RI_API_GET_CUSTOMER_ADDDRESS, uid]
                       params:nil
                         type:REQUEST_EXEC_IN_FOREGROUND
-                  completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+                  completion:^(int response, id data, NSArray *errorMessages) {
                       [self serialize:data into:[Address class] response:response errorMessages:errorMessages completion:completion];
                   }];
 }
 
 -(void)addAddress:(id<DataServiceProtocol>)target params:(NSDictionary *)params completion:(DataCompletion)completion {
-    [self.requestManager asyncPOST:target path:RI_API_POST_CUSTOMER_ADDDRESS_CREATE params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+    [self.requestManager asyncPOST:target path:RI_API_POST_CUSTOMER_ADDDRESS_CREATE params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
         if(response == RIApiResponseSuccess && data) {
             completion(data, nil);
         } else {
@@ -91,7 +91,7 @@ static DataManager *instance;
 }
 
 - (void)updateAddress:(id<DataServiceProtocol>)target params:(NSMutableDictionary *)params withID:(NSString *)uid completion:(DataCompletion)completion {
-    [self.requestManager asyncPOST:target path:[NSString stringWithFormat:@"%@%@", RI_API_POST_CUSTOMER_ADDDRESS_EDIT, uid] params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+    [self.requestManager asyncPOST:target path:[NSString stringWithFormat:@"%@%@", RI_API_POST_CUSTOMER_ADDDRESS_EDIT, uid] params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
         if(response == RIApiResponseSuccess && data) {
             completion(data, nil);
         } else {
@@ -108,14 +108,14 @@ static DataManager *instance;
          @"page"    : @(page)
     };
     
-    [self.requestManager asyncPOST:target path:RI_API_GET_ORDERS params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+    [self.requestManager asyncPOST:target path:RI_API_GET_ORDERS params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
         [self serialize:data into:[OrderList class] response:response errorMessages:errorMessages completion:completion];
     }];
 }
 
 - (void)getOrder:(id<DataServiceProtocol>)target forOrderId:(NSString *)orderId  completion:(DataCompletion)completion {
     NSString *path = [NSString stringWithFormat:RI_API_TRACK_ORDER, orderId];
-    [self.requestManager asyncPOST:target path:path params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+    [self.requestManager asyncPOST:target path:path params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
         [self serialize:data into:[Order class] response:response errorMessages:errorMessages completion:completion];
     }];
 }
@@ -127,7 +127,7 @@ static DataManager *instance;
          @"login[email]": username,
          @"login[password]": password
     };
-    [self.requestManager asyncPOST:target path:RI_API_LOGIN_CUSTOMER params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+    [self.requestManager asyncPOST:target path:RI_API_LOGIN_CUSTOMER params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
         if(response == RIApiResponseSuccess && data) {
             [RICustomer parseCustomerWithJson:[data objectForKey:@"customer_entity"] plainPassword:password loginMethod:@"normal"];
             completion(data, nil);
@@ -139,7 +139,7 @@ static DataManager *instance;
 
 //### FORGET PASSWORD ###
 - (void)forgetPassword:(id<DataServiceProtocol>)target withFields:(NSDictionary *)fields completion:(DataCompletion)completion {
-    [self.requestManager asyncPOST:target path:RI_API_FORGET_PASS_CUSTOMER params:fields type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+    [self.requestManager asyncPOST:target path:RI_API_FORGET_PASS_CUSTOMER params:fields type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
         if(response == RIApiResponseSuccess && data) {
             completion(data, nil);
         } else {
@@ -152,7 +152,7 @@ static DataManager *instance;
 - (void)signupUser:(id<DataServiceProtocol>)target withFieldsDictionary:(NSMutableDictionary *)fields completion:(DataCompletion)completion {
     //must be remove from server side!
     fields[@"customer[phone_prefix]"] = @"100";
-    [self.requestManager asyncPOST:target path:RI_API_REGISTER_CUSTOMER params:fields type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+    [self.requestManager asyncPOST:target path:RI_API_REGISTER_CUSTOMER params:fields type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
         if(response == RIApiResponseSuccess && data) {
             [RICustomer parseCustomerWithJson:[data objectForKey:@"customer_entity"] plainPassword:fields[@"customer[password]"] loginMethod:@"normal"];
             completion(data, nil);
@@ -164,7 +164,7 @@ static DataManager *instance;
 
 //### ADDRESS ###
 - (void)getUserAddressList:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
-    [self.requestManager asyncPOST:target path:RI_API_GET_CUSTOMER_ADDRESS_LIST params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+    [self.requestManager asyncPOST:target path:RI_API_GET_CUSTOMER_ADDRESS_LIST params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
         [self serialize:data into:[AddressList class] response:response errorMessages:errorMessages completion:completion];
     }];
 }
@@ -175,7 +175,7 @@ static DataManager *instance;
          @"type": isBilling ? @"billing" : @"shipping"
     };
     
-    [self.requestManager asyncPUT:target path:RI_API_GET_CUSTOMER_SELECT_DEFAULT params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+    [self.requestManager asyncPUT:target path:RI_API_GET_CUSTOMER_SELECT_DEFAULT params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
         [self serialize:data into:[AddressList class] response:response errorMessages:errorMessages completion:completion];
     }];
 }
@@ -185,21 +185,21 @@ static DataManager *instance;
         @"id": address.uid
     };
     
-    [self.requestManager asyncDELETE:target path:RI_API_DELETE_ADDRESS_REMOVE params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+    [self.requestManager asyncDELETE:target path:RI_API_DELETE_ADDRESS_REMOVE params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
         [self processResponse:response forData:data errorMessages:errorMessages completion:completion];
     }];
 }
 
 //### CART ###
 - (void)getUserCart:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
-    [self.requestManager asyncPOST:target path:RI_API_GET_CART_DATA params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+    [self.requestManager asyncPOST:target path:RI_API_GET_CART_DATA params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
         [self serialize:data into:[RICart class] response:response errorMessages:errorMessages completion:completion];
     }];
 }
 
 //### ORDER ###
 -(void)getMultistepAddressList:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
-    [self.requestManager asyncGET:target path:RI_API_MULTISTEP_GET_ADDRESSES params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+    [self.requestManager asyncGET:target path:RI_API_MULTISTEP_GET_ADDRESSES params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
         [self serialize:data into:[RICart class] response:response errorMessages:errorMessages completion:completion];
     }];
 }
@@ -210,19 +210,19 @@ static DataManager *instance;
         @"addresses[billing_id]": billingAddressId
     };
     
-    [self.requestManager asyncPOST:target path:RI_API_MULTISTEP_SUBMIT_ADDRESSES params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+    [self.requestManager asyncPOST:target path:RI_API_MULTISTEP_SUBMIT_ADDRESSES params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
         [self serialize:data into:[MultistepEntity class] response:response errorMessages:errorMessages completion:completion];
     }];
 }
 
 -(void)getMultistepConfirmation:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
-    [self.requestManager asyncGET:target path:RI_API_MULTISTEP_GET_FINISH params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+    [self.requestManager asyncGET:target path:RI_API_MULTISTEP_GET_FINISH params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
         [self serialize:data into:[RICart class] response:response errorMessages:errorMessages completion:completion];
     }];
 }
 
 -(void) getMultistepShipping:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
-    [self.requestManager asyncGET:target path:RI_API_MULTISTEP_GET_SHIPPING params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+    [self.requestManager asyncGET:target path:RI_API_MULTISTEP_GET_SHIPPING params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
         [self serialize:data into:[RICart class] response:response errorMessages:errorMessages completion:completion];
     }];
 }
@@ -240,13 +240,13 @@ static DataManager *instance;
 }*/
 
 - (void) getMultistepPayment:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
-    [self.requestManager asyncGET:target path:RI_API_MULTISTEP_GET_PAYMENT params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+    [self.requestManager asyncGET:target path:RI_API_MULTISTEP_GET_PAYMENT params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
         [self serialize:data into:[RICart class] response:response errorMessages:errorMessages completion:completion];
     }];
 }
 
 -(void)setMultistepPayment:(id<DataServiceProtocol>)target params:(NSDictionary *)params completion:(DataCompletion)completion {
-    [self.requestManager asyncPOST:target path:RI_API_MULTISTEP_SUBMIT_PAYMENT params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+    [self.requestManager asyncPOST:target path:RI_API_MULTISTEP_SUBMIT_PAYMENT params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
         [self serialize:data into:[MultistepEntity class] response:response errorMessages:errorMessages completion:completion];
     }];
 }
@@ -257,7 +257,7 @@ static DataManager *instance;
         @"customer_device": UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() ? @"tablet" : @"mobile"
     };
     
-    [self.requestManager asyncPOST:target path:RI_API_MULTISTEP_SUBMIT_FINISH params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+    [self.requestManager asyncPOST:target path:RI_API_MULTISTEP_SUBMIT_FINISH params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
         if(completion != nil && errorMessages.count == 0) {
             completion([RICart parseCheckoutFinish:data forCart:cart], nil);
         } else {
@@ -272,7 +272,7 @@ static DataManager *instance;
          @"couponcode": voucherCode
     };
     
-    [self.requestManager asyncPOST:target path:RI_API_ADD_VOUCHER_TO_CART params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+    [self.requestManager asyncPOST:target path:RI_API_ADD_VOUCHER_TO_CART params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
         [self serialize:data into:[RICart class] response:response errorMessages:errorMessages completion:completion];
     }];
 }
@@ -282,7 +282,7 @@ static DataManager *instance;
         @"couponcode": voucherCode
     };
     
-    [self.requestManager asyncDELETE:target path:RI_API_REMOVE_VOUCHER_FROM_CART params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+    [self.requestManager asyncDELETE:target path:RI_API_REMOVE_VOUCHER_FROM_CART params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
         [self serialize:data into:[RICart class] response:response errorMessages:errorMessages completion:completion];
     }];
 }
@@ -334,7 +334,7 @@ static DataManager *instance;
 
 //Area Helper function
 - (void)getAreaZone:(id<DataServiceProtocol>)target type:(RequestExecutionType)type path:(NSString *)path completion:(DataCompletion)completion {
-    [self.requestManager asyncGET:target path:path params:nil type:type completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
+    [self.requestManager asyncGET:target path:path params:nil type:type completion:^(int response, id data, NSArray *errorMessages) {
         if(response == RIApiResponseSuccess && data) {
             //Please skip this tof for now! @Narbeh
             NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];

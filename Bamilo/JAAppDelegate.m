@@ -20,7 +20,6 @@
 #import "SessionManager.h"
 #import "URLUtility.h"
 
-
 //#######################################################################################
 #import <Pushwoosh/PushNotificationManager.h>
 #import <UserNotifications/UserNotifications.h>
@@ -29,6 +28,7 @@
 #import "ThemeManager.h"
 #import "DeepLinkManager.h"
 #import "PushWooshTracker.h"
+#import "EmarsysMobileEngage.h"
 
 @interface JAAppDelegate () <RIAdjustTrackerDelegate>
 
@@ -133,7 +133,7 @@
     // register for push notifications!
     [[PushNotificationManager pushManager] registerForPushNotifications];
     
-    NSDictionary *configs = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"Configs"];
+    NSDictionary *configs = [[NSBundle mainBundle] objectForInfoDictionaryKey:kConfigs];
     if(configs) {
         NSString *isPushWooshBeta = [configs objectForKey:@"Pushwoosh_BETA"];
         if([isPushWooshBeta isEqualToString:@"1"]) {
@@ -217,6 +217,11 @@
 
 -(void)applicationDidBecomeActive:(UIApplication *)application {
     [application setApplicationIconBadgeNumber:0];
+    
+    PushNotificationManager *pushManager = [PushNotificationManager pushManager];
+    [[EmarsysMobileEngage sharedInstance] sendUpdate:[pushManager appCode] hardwareId:[pushManager getHWID] pushToken:[pushManager getPushToken] completion:^(BOOL success) {
+        NSLog(@"Emarsys Mobile Engage > sendUpdate > %@", success ? sSUCCESSFUL : sFAILED);
+    }];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {

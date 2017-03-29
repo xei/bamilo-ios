@@ -255,6 +255,9 @@
 		87D07D801E4099E800C00AC6 /* CheckoutPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D07D7F1E4099E800C00AC6 /* CheckoutPaymentViewController.m */; };
 		87D3DD1C1E8A323000C960FF /* BaseDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D3DD1B1E8A323000C960FF /* BaseDataManager.m */; };
 		87D3DD211E8A32D900C960FF /* EmarsysDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D3DD201E8A32D900C960FF /* EmarsysDataManager.m */; };
+		87D3DD271E8A962C00C960FF /* EmarsysRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D3DD261E8A962C00C960FF /* EmarsysRequestManager.m */; };
+		87D3DD2B1E8B810B00C960FF /* DeviceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D3DD2A1E8B810B00C960FF /* DeviceManager.m */; };
+		87D3DD301E8BA11600C960FF /* EmarsysMobileEngage.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D3DD2F1E8BA11600C960FF /* EmarsysMobileEngage.m */; };
 		87DAABE31E54430D00445EBB /* PaymentOptionWithLogoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DAABE21E54430D00445EBB /* PaymentOptionWithLogoTableViewCell.m */; };
 		87DAABE51E54431A00445EBB /* PaymentOptionWithLogoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87DAABE41E54431A00445EBB /* PaymentOptionWithLogoTableViewCell.xib */; };
 		87DAABE91E55A1C400445EBB /* PaymentOptionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DAABE81E55A1C400445EBB /* PaymentOptionTableViewCell.m */; };
@@ -1112,6 +1115,12 @@
 		87D3DD1B1E8A323000C960FF /* BaseDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseDataManager.m; sourceTree = "<group>"; };
 		87D3DD1F1E8A32D900C960FF /* EmarsysDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysDataManager.h; sourceTree = "<group>"; };
 		87D3DD201E8A32D900C960FF /* EmarsysDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysDataManager.m; sourceTree = "<group>"; };
+		87D3DD251E8A962C00C960FF /* EmarsysRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysRequestManager.h; sourceTree = "<group>"; };
+		87D3DD261E8A962C00C960FF /* EmarsysRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysRequestManager.m; sourceTree = "<group>"; };
+		87D3DD291E8B810B00C960FF /* DeviceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceManager.h; sourceTree = "<group>"; };
+		87D3DD2A1E8B810B00C960FF /* DeviceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceManager.m; sourceTree = "<group>"; };
+		87D3DD2E1E8BA11600C960FF /* EmarsysMobileEngage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysMobileEngage.h; sourceTree = "<group>"; };
+		87D3DD2F1E8BA11600C960FF /* EmarsysMobileEngage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysMobileEngage.m; sourceTree = "<group>"; };
 		87DAABE11E54430D00445EBB /* PaymentOptionWithLogoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentOptionWithLogoTableViewCell.h; sourceTree = "<group>"; };
 		87DAABE21E54430D00445EBB /* PaymentOptionWithLogoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentOptionWithLogoTableViewCell.m; sourceTree = "<group>"; };
 		87DAABE41E54431A00445EBB /* PaymentOptionWithLogoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentOptionWithLogoTableViewCell.xib; sourceTree = "<group>"; };
@@ -2676,6 +2685,8 @@
 		870F8CD41E3357D40021F87B /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				87D3DD2D1E8BA10400C960FF /* EmarsysMobileEngage */,
+				87D3DD241E8A95FB00C960FF /* EmarsysRequestManager */,
 				87D3DD1E1E8A32C000C960FF /* EmarsysDataManager */,
 			);
 			name = Libraries;
@@ -3086,17 +3097,18 @@
 			isa = PBXGroup;
 			children = (
 				87D3DD171E8A2DE300C960FF /* Base */,
-				873369BB1E58375900B0B5E5 /* ImageManager */,
-				87DAABF01E55DDE300445EBB /* AlertManager */,
-				8714E05E1E474015004C9B1D /* RequestManager */,
-				8714E0521E471DDB004C9B1D /* DataManager */,
 				874AAB661E3CE9F400B3F8FE /* AppManager */,
-				874AAB6A1E3DCECD00B3F8FE /* SessionManager */,
-				87A6814B1E40DC2000D252AC /* ViewControllerManager */,
+				87DAABF01E55DDE300445EBB /* AlertManager */,
+				8714E0521E471DDB004C9B1D /* DataManager */,
+				87D3DD281E8B80CA00C960FF /* DeviceManager */,
+				873369BB1E58375900B0B5E5 /* ImageManager */,
 				879F87FC1E5095CF0033FE87 /* LoadingManager */,
+				8714E05E1E474015004C9B1D /* RequestManager */,
+				874AAB6A1E3DCECD00B3F8FE /* SessionManager */,
 				872230E71E6A9894000748E9 /* SettingsManager */,
 				870BEA7A1E73F4B800C5B615 /* ThemeManager */,
 				872230EB1E6A98B1000748E9 /* ThreadManager */,
+				87A6814B1E40DC2000D252AC /* ViewControllerManager */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -4000,17 +4012,9 @@
 		87D3DD171E8A2DE300C960FF /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				87D3DD191E8A321F00C960FF /* DataManager */,
-			);
-			name = Base;
-			sourceTree = "<group>";
-		};
-		87D3DD191E8A321F00C960FF /* DataManager */ = {
-			isa = PBXGroup;
-			children = (
 				87D3DD1D1E8A323600C960FF /* BaseDataManager */,
 			);
-			name = DataManager;
+			name = Base;
 			sourceTree = "<group>";
 		};
 		87D3DD1D1E8A323600C960FF /* BaseDataManager */ = {
@@ -4029,6 +4033,50 @@
 				87D3DD201E8A32D900C960FF /* EmarsysDataManager.m */,
 			);
 			name = EmarsysDataManager;
+			sourceTree = "<group>";
+		};
+		87D3DD241E8A95FB00C960FF /* EmarsysRequestManager */ = {
+			isa = PBXGroup;
+			children = (
+				87D3DD251E8A962C00C960FF /* EmarsysRequestManager.h */,
+				87D3DD261E8A962C00C960FF /* EmarsysRequestManager.m */,
+			);
+			name = EmarsysRequestManager;
+			sourceTree = "<group>";
+		};
+		87D3DD281E8B80CA00C960FF /* DeviceManager */ = {
+			isa = PBXGroup;
+			children = (
+				87D3DD291E8B810B00C960FF /* DeviceManager.h */,
+				87D3DD2A1E8B810B00C960FF /* DeviceManager.m */,
+			);
+			name = DeviceManager;
+			sourceTree = "<group>";
+		};
+		87D3DD2C1E8B9D5200C960FF /* BML */ = {
+			isa = PBXGroup;
+			children = (
+				87A681541E40EF3700D252AC /* Categories.pch */,
+				610ED5801E742918000D5BEC /* UITextField+Extensions */,
+				613D37741E6EE168001B2852 /* NSDate+Extensions */,
+				612553581E4F37AD00975C6F /* UIScrollView+Extensions */,
+				879F87EC1E5048550033FE87 /* NSMutableArray+Extensions */,
+				874AAB6E1E3DD27900B3F8FE /* NSString+Extensions */,
+				8714E0461E45FD36004C9B1D /* NSMutableString+Extensions */,
+				8714E0401E45E186004C9B1D /* UIButton+Extensions */,
+				8714E0411E45E22B004C9B1D /* UILabel+Extensions */,
+				8714E07B1E48C1A6004C9B1D /* UIView+Extensions */,
+			);
+			name = BML;
+			sourceTree = "<group>";
+		};
+		87D3DD2D1E8BA10400C960FF /* EmarsysMobileEngage */ = {
+			isa = PBXGroup;
+			children = (
+				87D3DD2E1E8BA11600C960FF /* EmarsysMobileEngage.h */,
+				87D3DD2F1E8BA11600C960FF /* EmarsysMobileEngage.m */,
+			);
+			name = EmarsysMobileEngage;
 			sourceTree = "<group>";
 		};
 		87DAABE01E5442EF00445EBB /* PaymentOptionWithLogoTableViewCell */ = {
@@ -4691,9 +4739,9 @@
 		B5A301AB19811D0700F71726 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				CE9AE12C1AB84C2300D56481 /* Bamilo-Info.plist */,
 				871BA85E1E8786C5007680C5 /* Bamilo-Debug-Info.plist */,
 				8754351F1E780D6B00B5D6B4 /* Bamilo-Staging-Info.plist */,
+				CE9AE12C1AB84C2300D56481 /* Bamilo-Info.plist */,
 				870F8CCB1E3354700021F87B /* Bamilo.entitlements */,
 				870F8CCD1E3354E10021F87B /* Consts */,
 				CE9AE1221AB824B700D56481 /* Fonts */,
@@ -4770,17 +4818,8 @@
 		B5C1E33419BA1E3D009C422C /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				610ED5801E742918000D5BEC /* UITextField+Extensions */,
-				613D37741E6EE168001B2852 /* NSDate+Extensions */,
-				612553581E4F37AD00975C6F /* UIScrollView+Extensions */,
-				87A681541E40EF3700D252AC /* Categories.pch */,
-				879F87EC1E5048550033FE87 /* NSMutableArray+Extensions */,
+				87D3DD2C1E8B9D5200C960FF /* BML */,
 				874AAB6F1E3DD28D00B3F8FE /* UIColor+Format */,
-				874AAB6E1E3DD27900B3F8FE /* NSString+Extensions */,
-				8714E0461E45FD36004C9B1D /* NSMutableString+Extensions */,
-				8714E0401E45E186004C9B1D /* UIButton+Extensions */,
-				8714E0411E45E22B004C9B1D /* UILabel+Extensions */,
-				8714E07B1E48C1A6004C9B1D /* UIView+Extensions */,
 				9ABCAEEC1B0F6A2C00A69271 /* UIView+Mirror.h */,
 				9ABCAEED1B0F6A2C00A69271 /* UIView+Mirror.m */,
 				CEDBF85F1B0A01B60073971A /* UIImage+Mirror.h */,
@@ -5522,6 +5561,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A08B1131CC7C377003282CB /* JAActionWebViewController.m in Sources */,
+				87D3DD2B1E8B810B00C960FF /* DeviceManager.m in Sources */,
 				873369CA1E58A1D200B0B5E5 /* ShippingMethodOption.m in Sources */,
 				87EA03331E6DA27D00B1E062 /* ProgressItemViewModel.m in Sources */,
 				87D3DD1C1E8A323000C960FF /* BaseDataManager.m in Sources */,
@@ -5543,6 +5583,7 @@
 				616058E91E6AE2030079B2CD /* SearchFilterItem.m in Sources */,
 				CE9ADF311AB6D78200D56481 /* JACheckBoxComponent.m in Sources */,
 				87C69DAE1E38B7A50026018F /* UIColor+Format.m in Sources */,
+				87D3DD271E8A962C00C960FF /* EmarsysRequestManager.m in Sources */,
 				875AD5781E38C0C900584ABF /* RISpecificationAttribute.m in Sources */,
 				61E0996C1E3E117F004ED14E /* BaseTableViewCell.m in Sources */,
 				9A38765D1BCD0DE00088B186 /* JAProductSpecificationView.m in Sources */,
@@ -5755,6 +5796,7 @@
 				87EA03231E6D987400B1E062 /* ProgressViewControl.m in Sources */,
 				61036B441E658329006E12A9 /* OrderListViewController.m in Sources */,
 				CE9ADFBB1AB6D78200D56481 /* JAPDVViewController.m in Sources */,
+				87D3DD301E8BA11600C960FF /* EmarsysMobileEngage.m in Sources */,
 				87DAABEF1E55BD9D00445EBB /* AddressTableViewController.m in Sources */,
 				870F8D061E33975A0021F87B /* IntUtility.m in Sources */,
 				875AD5751E38C0C900584ABF /* RIShippingMethodFormField.m in Sources */,

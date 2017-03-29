@@ -94,4 +94,9 @@
     NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", [NSString emailRegxPattern]];
     return [emailTest evaluateWithObject:self];
 }
+
+-(NSString *)toEncodeBase64 {
+    return [[self dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:kNilOptions];
+}
+
 @end

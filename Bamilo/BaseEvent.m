@@ -7,9 +7,10 @@
 //
 
 #import "BaseEvent.h"
-#import "RICustomer.h"
 #import "RIApi.h"
+#import "RICustomer.h"
 #import "AppManager.h"
+#import "DeviceManager.h"
 
 @implementation BaseEvent
 
@@ -18,7 +19,7 @@
             dictionaryWithObjects:@[
                         [RICustomer getCustomerId],
                         [[AppManager sharedInstance] getAppFullFormattedVersion],
-                        [[AppManager sharedInstance] getDeviceModel],
+                        [DeviceManager getDeviceModel],
                         [RIApi getCountryIsoInUse] ]
             
             forKeys:@[  kEventUserId,

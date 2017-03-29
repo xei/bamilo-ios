@@ -9,8 +9,10 @@
 #import <Foundation/Foundation.h>
 
 @interface NSString (Extensions)
+
 + (NSString *)emailRegxPattern;
 + (NSString *)mobileRegxPattern;
+
 - (NSString *)wrapWithMaxSize:(int) maxSize;
 - (NSString *)numbersToPersian;
 - (NSString *)numbersToEnglish;
@@ -18,6 +20,6 @@
 - (NSString *)getPriceStringFromFormatedPrice;
 - (NSString *)struckThroughText;
 - (BOOL)isValidEmail;
-
+- (NSString *) toEncodeBase64;
 
 @end

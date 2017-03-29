@@ -73,4 +73,8 @@
     #import "Categories.pch"
     #import "ThemeManager.h"
 
+#define sSUCCESSFUL @"SUCCESSFUL"
+#define sFAILED @"FAILED"
+#define kConfigs @"Configs"
+
 #endif
