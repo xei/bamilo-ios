@@ -1,5 +1,5 @@
 //
-//  BaseEvent.h
+//  AppEvent.h
 //  Bamilo
 //
 //  Created by Narbeh Mirzaei on 3/25/17.
@@ -11,9 +11,9 @@
 
 #define cUNKNOWN_EVENT_VALUE @"?"
 
-@interface BaseEvent : NSObject
+@interface AppEvent : NSObject
 
-+(NSMutableDictionary *) event;
 +(NSString *) name;
++(NSMutableDictionary *) attributes;
 
 @end

@@ -24,6 +24,7 @@
 #define kContactFieldValue @"contact_field_value"
 #define kSID @"sid"
 
+//### EmarsysContactIdentifier
 @implementation EmarsysContactIdentifier
 
 +(instancetype)appId:(NSString *)appId hwid:(NSString *)hwid {
@@ -35,13 +36,27 @@
     
     emarsysUserIdentifier.applicationId = appId;
     emarsysUserIdentifier.hardwareId = hwid;
-    emarsysUserIdentifier.pushToken = pushToken;
     
     return emarsysUserIdentifier;
 }
 
 @end
 
+
+//### EmarsysPushIdentifier
+@implementation EmarsysPushIdentifier
+
++(instancetype)appId:(NSString *)appId hwid:(NSString *)hwid pushToken:(NSString *)pushToken {
+    EmarsysPushIdentifier *emarsysPushIdentifier = (EmarsysPushIdentifier *)[EmarsysContactIdentifier appId:appId hwid:hwid];
+    emarsysPushIdentifier.pushToken = pushToken;
+    
+    return emarsysPushIdentifier;
+}
+
+@end
+
+
+//### EmarsysDataManager
 @implementation EmarsysDataManager
 
 static EmarsysDataManager *instance;
@@ -64,31 +79,33 @@ static EmarsysDataManager *instance;
 }
 
 #pragma mark - Public Methods
--(void)anonymousLogin:(EmarsysContactIdentifier *)contact completion:(DataCompletion)completion {
+-(void)anonymousLogin:(EmarsysPushIdentifier *)contact completion:(DataCompletion)completion {
     NSMutableDictionary *params = [self commonLoginParams:contact];
     [self executeLogin:params completion:completion];
 }
 
--(void)login:(EmarsysContactIdentifier *)contact contactFieldId:(NSString *)contactFieldId contactFieldValue:(NSString *)contactFieldValue completion:(DataCompletion)completion {
+-(void)login:(EmarsysPushIdentifier *)contact contactFieldId:(NSString *)contactFieldId contactFieldValue:(NSString *)contactFieldValue completion:(DataCompletion)completion {
     NSMutableDictionary *params = [self commonLoginParams:contact];
     [params setObject:contactFieldId forKey:kContactFieldId];
     [params setObject:contactFieldValue forKey:kContactFieldValue];
     [self executeLogin:params completion:completion];
 }
 
--(void)openMessage:(EmarsysContactIdentifier *)contact sid:(NSString *)sid completion:(DataCompletion)completion {
-    NSMutableDictionary *params = [self commonEventParams:contact];
-    [params setObject:sid forKey:kSID];
-    [self executeEvent:@"message_open" params:params completion:completion];
+-(void)openMessageEvent:(EmarsysContactIdentifier *)contact sid:(NSString *)sid completion:(DataCompletion)completion {
+    [self customEvent:contact event:@"message_open" attributes:@{ kSID: sid } completion:completion];
 }
 
--(void)event:(EmarsysContactIdentifier *)contact event:(NSString *)event completion:(DataCompletion)completion {
+-(void)customEvent:(EmarsysContactIdentifier *)contact event:(NSString *)event attributes:(NSDictionary *)attributes completion:(DataCompletion)completion {
     NSMutableDictionary *params = [self commonEventParams:contact];
+    for(id key in attributes) {
+        [params setObject:[attributes objectForKey:key] forKey:key];
+    }
+    
     [self executeEvent:event params:params completion:completion];
 }
 
 #pragma mark - Private Methods
--(NSMutableDictionary *)commonLoginParams:(EmarsysContactIdentifier *)contact {
+-(NSMutableDictionary *)commonLoginParams:(EmarsysPushIdentifier *)contact {
     //TEMP: fa - Multi-language app?
     return [NSMutableDictionary
             dictionaryWithObjects:@[ contact.applicationId, contact.hardwareId, @"ios", @"fa",
@@ -108,16 +125,22 @@ static EmarsysDataManager *instance;
 
 -(void) executeLogin:(NSDictionary *)params completion:(DataCompletion)completion {
     [self.requestManager asyncPOST:nil path:@"users/login" params:params type:REQUEST_EXEC_IN_BACKGROUND completion:^(int statusCode, id data, NSArray *errorMessages) {
-        if(statusCode == SUCCESSFUL) {
-            completion(data, nil);
-        } else {
-            completion(nil, [NSError errorWithDomain:@"com.bamilo.ios" code:statusCode userInfo:@{ NSUnderlyingErrorKey: errorMessages[0] }]);
-        }
+        [self handleEmarsysDataManagerResponse:statusCode data:data errorMessages:errorMessages completion:completion];
     }];
 }
 
 -(void) executeEvent:(NSString *)event params:(NSDictionary *)params completion:(DataCompletion)completion {
-    
+    [self.requestManager asyncPOST:nil path:[NSString stringWithFormat:@"events/%@", event] params:params type:REQUEST_EXEC_IN_BACKGROUND completion:^(int statusCode, id data, NSArray *errorMessages) {
+        [self handleEmarsysDataManagerResponse:statusCode data:data errorMessages:errorMessages completion:completion];
+    }];
+}
+
+-(void) handleEmarsysDataManagerResponse:(int)statusCode data:(id)data errorMessages:(NSArray *)errorMessages completion:(DataCompletion)completion {
+    if(statusCode == CREATED || statusCode == SUCCESSFUL) {
+        completion(data, nil);
+    } else {
+        completion(nil, [NSError errorWithDomain:@"com.bamilo.ios" code:statusCode userInfo:@{ NSUnderlyingErrorKey: errorMessages[0] }]);
+    }
 }
 
 @end

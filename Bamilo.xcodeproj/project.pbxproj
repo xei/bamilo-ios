@@ -109,7 +109,7 @@
 		8714E0901E48CD41004C9B1D /* DiscountSwitcherView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8714E08F1E48CD41004C9B1D /* DiscountSwitcherView.m */; };
 		8714E0921E48CD57004C9B1D /* DiscountSwitcherView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8714E0911E48CD57004C9B1D /* DiscountSwitcherView.xib */; };
 		8716987D1E38A94C0027B34A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8716987A1E38A94C0027B34A /* Main.storyboard */; };
-		871BA8561E867F4A007680C5 /* BaseEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BA8551E867F4A007680C5 /* BaseEvent.m */; };
+		871BA8561E867F4A007680C5 /* AppEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BA8551E867F4A007680C5 /* AppEvent.m */; };
 		871BA8591E867FE0007680C5 /* SearchEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BA8581E867FE0007680C5 /* SearchEvent.m */; };
 		871BA85C1E8680A1007680C5 /* EventConsts.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BA85B1E8680A1007680C5 /* EventConsts.m */; };
 		871BA85F1E8786C5007680C5 /* Bamilo-Debug-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 871BA85E1E8786C5007680C5 /* Bamilo-Debug-Info.plist */; };
@@ -811,8 +811,8 @@
 		8714E0941E48CE9F004C9B1D /* DiscountSwitcherViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscountSwitcherViewDelegate.h; sourceTree = "<group>"; };
 		8716987B1E38A94C0027B34A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Bamilo/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		871BA8501E8678DE007680C5 /* EventTrackerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventTrackerProtocol.h; sourceTree = "<group>"; };
-		871BA8541E867F4A007680C5 /* BaseEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseEvent.h; sourceTree = "<group>"; };
-		871BA8551E867F4A007680C5 /* BaseEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseEvent.m; sourceTree = "<group>"; };
+		871BA8541E867F4A007680C5 /* AppEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppEvent.h; sourceTree = "<group>"; };
+		871BA8551E867F4A007680C5 /* AppEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppEvent.m; sourceTree = "<group>"; };
 		871BA8571E867FE0007680C5 /* SearchEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchEvent.h; sourceTree = "<group>"; };
 		871BA8581E867FE0007680C5 /* SearchEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchEvent.m; sourceTree = "<group>"; };
 		871BA85A1E8680A1007680C5 /* EventConsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventConsts.h; sourceTree = "<group>"; };
@@ -2918,8 +2918,8 @@
 			isa = PBXGroup;
 			children = (
 				871BA85D1E86810A007680C5 /* Consts */,
-				871BA8541E867F4A007680C5 /* BaseEvent.h */,
-				871BA8551E867F4A007680C5 /* BaseEvent.m */,
+				871BA8541E867F4A007680C5 /* AppEvent.h */,
+				871BA8551E867F4A007680C5 /* AppEvent.m */,
 			);
 			name = Base;
 			sourceTree = "<group>";
@@ -5684,7 +5684,7 @@
 				CE9ADF5C1AB6D78200D56481 /* JAEmailNotificationsViewController.m in Sources */,
 				CE9ADF601AB6D78200D56481 /* JANoConnectionView.m in Sources */,
 				617AAA441E503AB9004D9430 /* FormItemModel.m in Sources */,
-				871BA8561E867F4A007680C5 /* BaseEvent.m in Sources */,
+				871BA8561E867F4A007680C5 /* AppEvent.m in Sources */,
 				613D37771E6EE19E001B2852 /* NSDate+Extensions.m in Sources */,
 				61CBA04A1E51D18F005673F7 /* FormTableViewCell.m in Sources */,
 				8714E0771E479C00004C9B1D /* CheckoutProgressViewButtonModel.m in Sources */,

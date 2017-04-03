@@ -14,15 +14,15 @@
 NSString *const kSearchEventNumberOfProducts = @"SearchEventNumberOfProducts";
 NSString *const kSearchEventKeywords = @"SearchEventKeywords";
 
-+(NSMutableDictionary *)event {
-    NSMutableDictionary *event = [super event];
++(NSMutableDictionary *)attributes {
+    NSMutableDictionary *attributes = [super attributes];
     
-    [event setObject:[RICustomer getCustomerId] forKey:kEventLabel];
-    [event setObject:@"Search" forKey:kEventAction];
-    [event setObject:@"Catalog" forKey:kEventCategory];
-    [event setObject:[RICustomer getCustomerGender] ?: cUNKNOWN_EVENT_VALUE forKey:kEventUserGender];
+    [attributes setObject:[RICustomer getCustomerId] forKey:kEventLabel];
+    [attributes setObject:@"Search" forKey:kEventAction];
+    [attributes setObject:@"Catalog" forKey:kEventCategory];
+    [attributes setObject:[RICustomer getCustomerGender] ?: cUNKNOWN_EVENT_VALUE forKey:kEventUserGender];
     
-    return event;
+    return attributes;
 }
 
 +(NSString *)name {

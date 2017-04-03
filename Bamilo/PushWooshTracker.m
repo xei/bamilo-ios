@@ -35,7 +35,8 @@ static PushWooshTracker *instance;
     }
     
     if(jsonData) { //HOW TO CHECK IF IT'S EMARSYS DATA???
-        [[EmarsysMobileEngage sharedInstance] sendOpen:[pushManager appCode] hardwareId:[pushManager getHWID] sid:@"" completion:^(BOOL success) {
+        [[EmarsysMobileEngage sharedInstance] sendOpen:nil completion:^(BOOL success) {
+            NSLog(@"EmarsysMobileEngage > sendOpen > %@", success ? sSUCCESSFUL : sFAILED);
         }];
     }
 }
