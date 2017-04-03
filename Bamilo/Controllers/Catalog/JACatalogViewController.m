@@ -1549,8 +1549,7 @@ typedef void (^ProcessActionBlock)(void);
 }
 
 - (BOOL)preventSendTransactionInViewWillAppear {
-    if (self.searchString.length == 0) return YES;
-    return NO;
+    return self.searchString.length == 0;
 }
 
 @end

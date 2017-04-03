@@ -1652,8 +1652,7 @@ typedef void (^ProcessActionBlock)(void);
                                               data:[trackingDictionary copy]];
 }
 
-- (void)trackingEventAddToCart:(RICart *)cart
-{
+- (void)trackingEventAddToCart:(RICart *)cart {
     CGRect addToCartEventCoachMark = CGRectMake([ViewControllerManager centerViewController].navigationBarView.cartButton.frame.origin.x, [ViewControllerManager centerViewController].navigationBarView.cartButton.frame.origin.y+20,35, 35);
     
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"FirtTimeAddToCart"])
