@@ -41,4 +41,6 @@
 
 -(void) customEvent:(EmarsysContactIdentifier *)contact event:(NSString *)event attributes:(NSDictionary *)attributes completion:(DataCompletion)completion;
 
+-(void) logout:(EmarsysPushIdentifier *)contact completion:(DataCompletion)completion;
+  
 @end

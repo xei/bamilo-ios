@@ -44,7 +44,8 @@ static EmarsysMobileEngage *instance;
     }];
 }
 
-7    [[EmarsysDataManager sharedInstance] customEvent:[self getIdentifier:nil] event:event attributes:attributes completion:^(id data, NSError *error) {
+-(void)sendCustomEvent:(NSString *)event attributes:(NSDictionary *)attributes completion:(EmarsysMobileEngageResponse)completion {
+    [[EmarsysDataManager sharedInstance] customEvent:[self getIdentifier:nil] event:event attributes:attributes completion:^(id data, NSError *error) {
         [self handleEmarsysMobileEngageResponse:data error:error completion:completion];
     }];
 }

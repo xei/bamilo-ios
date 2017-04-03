@@ -14,6 +14,7 @@ typedef NS_ENUM(NSUInteger, EmarsysMobileEngageHTTPStatusCode) {
     SUCCESSFUL = 202, //User data is successfully updated
     WRONG_INPUT_OR_MISSING_PARAM = 400, //Wrong input or missing mandatory parameter
     UNAUTHORIZED = 401, //Invalid HTTP Basic Authentication
+    ALREADY_EXISTS = 409,
     DATABASE_ERROR = 500, //Database error (Everything else)
     INTERNAL_SERVER_ERROR = 501 //Internal server error
 };

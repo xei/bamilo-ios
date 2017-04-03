@@ -28,10 +28,6 @@
 @implementation EmarsysContactIdentifier
 
 +(instancetype)appId:(NSString *)appId hwid:(NSString *)hwid {
-    return [self appId:appId hwid:hwid pushToken:nil];
-}
-
-+(instancetype)appId:(NSString *)appId hwid:(NSString *)hwid pushToken:(NSString *)pushToken {
     EmarsysContactIdentifier *emarsysUserIdentifier = [EmarsysContactIdentifier new];
     
     emarsysUserIdentifier.applicationId = appId;
@@ -47,7 +43,10 @@
 @implementation EmarsysPushIdentifier
 
 +(instancetype)appId:(NSString *)appId hwid:(NSString *)hwid pushToken:(NSString *)pushToken {
-    EmarsysPushIdentifier *emarsysPushIdentifier = (EmarsysPushIdentifier *)[EmarsysContactIdentifier appId:appId hwid:hwid];
+    EmarsysPushIdentifier *emarsysPushIdentifier = [EmarsysPushIdentifier new];
+    
+    emarsysPushIdentifier.applicationId = appId;
+    emarsysPushIdentifier.hardwareId = hwid;
     emarsysPushIdentifier.pushToken = pushToken;
     
     return emarsysPushIdentifier;
@@ -96,12 +95,17 @@ static EmarsysDataManager *instance;
 }
 
 -(void)customEvent:(EmarsysContactIdentifier *)contact event:(NSString *)event attributes:(NSDictionary *)attributes completion:(DataCompletion)completion {
-    NSMutableDictionary *params = [self commonEventParams:contact];
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjects:@[ contact.applicationId, contact.hardwareId ]forKeys:@[ kApplicationId, kHardwareId ]];
     for(id key in attributes) {
         [params setObject:[attributes objectForKey:key] forKey:key];
     }
     
     [self executeEvent:event params:params completion:completion];
+}
+
+-(void)logout:(EmarsysPushIdentifier *)contact completion:(DataCompletion)completion {
+    NSDictionary *params = @{ kApplicationId: contact.applicationId, kHardwareId: contact.hardwareId };
+    [self executeLogout:params completion:completion];
 }
 
 #pragma mark - Private Methods
@@ -117,12 +121,6 @@ static EmarsysDataManager *instance;
             forKeys:@[ kApplicationId, kHardwareId, kPlatform, kLanguage, kTimezone, kDeviceModel, kApplicationVersion, kOSVersion, kPushToken]];
 }
 
--(NSMutableDictionary *)commonEventParams:(EmarsysContactIdentifier *)contact {
-    return [NSMutableDictionary
-            dictionaryWithObjects:@[ contact.applicationId, contact.hardwareId ]
-            forKeys:@[ kApplicationId, kHardwareId ]];
-}
-
 -(void) executeLogin:(NSDictionary *)params completion:(DataCompletion)completion {
     [self.requestManager asyncPOST:nil path:@"users/login" params:params type:REQUEST_EXEC_IN_BACKGROUND completion:^(int statusCode, id data, NSArray *errorMessages) {
         [self handleEmarsysDataManagerResponse:statusCode data:data errorMessages:errorMessages completion:completion];
@@ -131,6 +129,12 @@ static EmarsysDataManager *instance;
 
 -(void) executeEvent:(NSString *)event params:(NSDictionary *)params completion:(DataCompletion)completion {
     [self.requestManager asyncPOST:nil path:[NSString stringWithFormat:@"events/%@", event] params:params type:REQUEST_EXEC_IN_BACKGROUND completion:^(int statusCode, id data, NSArray *errorMessages) {
+        [self handleEmarsysDataManagerResponse:statusCode data:data errorMessages:errorMessages completion:completion];
+    }];
+}
+
+-(void) executeLogout:(NSDictionary *)params completion:(DataCompletion)completion {
+    [self.requestManager asyncPOST:nil path:@"users/logout" params:params type:REQUEST_EXEC_IN_BACKGROUND completion:^(int statusCode, id data, NSArray *errorMessages) {
         [self handleEmarsysDataManagerResponse:statusCode data:data errorMessages:errorMessages completion:completion];
     }];
 }
