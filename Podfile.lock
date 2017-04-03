@@ -27,6 +27,7 @@ PODS:
     - AFNetworking (~> 2.2)
   - Crashlytics (3.8.4):
     - Fabric (~> 1.6.3)
+  - EmarsysPredictSDK (1.0.32)
   - Fabric (1.6.11)
   - FXBlurView (1.6.4)
   - GoogleAnalytics (3.14.0)
@@ -51,6 +52,7 @@ DEPENDENCIES:
   - Adjust (~> 4.11.0)
   - AlgoliaSearch-Client (~> 3.5)
   - Crashlytics (~> 3.8)
+  - EmarsysPredictSDK
   - Fabric
   - FXBlurView (~> 1.6.4)
   - GoogleAnalytics (= 3.14.0)
@@ -69,6 +71,7 @@ SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
   AlgoliaSearch-Client: 8a937017f9faad0eef7a2d43fdb695f7620de140
   Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
+  EmarsysPredictSDK: 8267726b1e8b3d5621a67d68b3c123060dde3639
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
   FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
   GoogleAnalytics: 9be1afdb8deeac4bb5f13ca7f7d3b9db2a1f43dc
@@ -84,6 +87,6 @@ SPEC CHECKSUMS:
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   TTRangeSlider: 2f2ce4a33b32bb323c6575b9f5161c4664459c58
 
-PODFILE CHECKSUM: e7c8489e5ea50d502aa1d7af1daf4bf34055b7b9
+PODFILE CHECKSUM: f5c4d83799bf646d4a643bee43071f1d185f3587
 
 COCOAPODS: 1.1.1

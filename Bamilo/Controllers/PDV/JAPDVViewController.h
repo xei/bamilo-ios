@@ -12,8 +12,9 @@
 #import "RICategory.h"
 #import "JAPDVImageSection.h"
 #import "MPCoachMarks.h"
+#import "EmarsysPredictProtocol.h"
 
-@interface JAPDVViewController : JABaseViewController <JAPDVImageSectionDelegate>
+@interface JAPDVViewController : JABaseViewController <JAPDVImageSectionDelegate, EmarsysPredictProtocol>
 
 @property (strong, nonatomic) RIProduct *product;
 @property (strong, nonatomic) NSString* productSku;

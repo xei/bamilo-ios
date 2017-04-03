@@ -9,10 +9,10 @@
 #import "JABaseViewController.h"
 #import "JACatalogTopView.h"
 #import "RICategory.h"
-#import "JAPDVViewController.h"
 #import "JAUndefinedSearchView.h"
 #import "JASortingView.h"
 #import "JAFiltersViewController.h"
+#import "EmarsysPredictProtocol.h"
 
 @interface JACatalogViewController : JABaseViewController
 <
@@ -21,7 +21,8 @@
     UICollectionViewDataSource,
     UICollectionViewDelegate,
     JAFiltersViewControllerDelegate,
-    JAUndefinedSearchViewDelegate
+    JAUndefinedSearchViewDelegate,
+    EmarsysPredictProtocol
 >
 
 @property (nonatomic, strong)RICategory* category;

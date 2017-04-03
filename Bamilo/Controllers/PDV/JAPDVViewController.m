@@ -39,6 +39,7 @@
 #import "JACenterNavigationController.h"
 #import "JATabBarButton.h"
 #import "ViewControllerManager.h"
+#import "EmarsysPredictManager.h"
 
 typedef void (^ProcessActionBlock)(void);
 
@@ -490,6 +491,7 @@ typedef void (^ProcessActionBlock)(void);
     //    [self.wizardView setHasNoSeller:product.seller?NO:YES];
     
     [self trackingEventViewProduct:product];
+    [EmarsysPredictManager sendTransactionsOf:self];
     
     [self trackingEventLoadingTime];
     
@@ -503,6 +505,7 @@ typedef void (^ProcessActionBlock)(void);
     }
     
     [self trackingEventMostViewedBrand];
+    
 }
 
 - (void)retryAddToCart {
@@ -1144,6 +1147,7 @@ typedef void (^ProcessActionBlock)(void);
                           }
                           
                           [self trackingEventAddToCart:cart];
+                          [EmarsysPredictManager sendTransactionsOf:self];
                           
                           NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                           [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
@@ -2060,8 +2064,7 @@ typedef void (^ProcessActionBlock)(void);
                                               data:[trackingDictionary copy]];
 }
 
-- (void)trackingEventMostViewedBrand
-{
+- (void)trackingEventMostViewedBrand {
     NSString *topBrand = [RIProduct getTopBrand:self.product];
     if (VALID_NOTEMPTY(topBrand, NSString)) {
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventMostViewedBrand] data:[NSDictionary dictionaryWithObject:topBrand forKey:kRIEventBrandName]];
@@ -2092,6 +2095,19 @@ typedef void (^ProcessActionBlock)(void);
 #pragma mark - DataTrackerProtocol
 -(NSString *)getDataTrackerAlias {
     return @"PRODUCT";
+}
+
+
+#pragma mark - EmarsysPredictProtocol
+- (EMTransaction *)getDataCollection:(EMTransaction *)transaction {
+    if (!self.hasLoaddedProduct) {
+        [transaction setView:self.product.sku];
+    }
+    return transaction;
+}
+
+- (BOOL)preventSendTransactionInViewWillAppear {
+    return YES;
 }
 
 @end

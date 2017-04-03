@@ -37,6 +37,7 @@
 #import "PushWooshTracker.h"
 #import "SearchEvent.h"
 
+
 #define JACatalogGridSelected @"CATALOG_GRID_IS_SELECTED"
 #define JACatalogViewControllerMaxProducts 36
 #define JACatalogViewControllerMaxProducts_ipad 46
@@ -1537,6 +1538,19 @@ typedef void (^ProcessActionBlock)(void);
     [[DataManager sharedInstance] getSubCategoriesFilter:nil ofCategroyUrlKey:self.categoryUrlKey completion:^(id data, NSError *error) {
         subCatFilter = data;
     }];
+}
+
+#pragma mark - EmarsysPredictProtocol
+- (EMTransaction *)getDataCollection:(EMTransaction *)transaction {
+    if (self.searchString.length) {
+        [transaction setSearchTerm:self.searchString];
+    }
+    return transaction;
+}
+
+- (BOOL)preventSendTransactionInViewWillAppear {
+    if (self.searchString.length == 0) return YES;
+    return NO;
 }
 
 @end

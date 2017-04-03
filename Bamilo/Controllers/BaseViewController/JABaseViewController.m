@@ -17,6 +17,7 @@
 #import "JACenterNavigationController.h"
 #import "ViewControllerManager.h"
 #import "NotificationBarView.h"
+#import "EmarsysPredictManager.h"
 
 #define kSearchViewBarHeight 44.0f
 
@@ -261,6 +262,16 @@
     
     if (self.searchBarIsVisible) {
         [self showSearchBar];
+    }
+    
+    if ([self conformsToProtocol:@protocol(EmarsysPredictProtocol)]) {
+        if ([self respondsToSelector:@selector(preventSendTransactionInViewWillAppear)]) {
+            if (![((id<EmarsysPredictProtocol>)self) preventSendTransactionInViewWillAppear]) {
+                [EmarsysPredictManager sendTransactionsOf:self];
+            }
+        } else {
+            [EmarsysPredictManager sendTransactionsOf:self];
+        }
     }
 }
 
