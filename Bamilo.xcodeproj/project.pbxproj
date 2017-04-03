@@ -113,6 +113,7 @@
 		871BA8561E867F4A007680C5 /* BaseEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BA8551E867F4A007680C5 /* BaseEvent.m */; };
 		871BA8591E867FE0007680C5 /* SearchEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BA8581E867FE0007680C5 /* SearchEvent.m */; };
 		871BA85C1E8680A1007680C5 /* EventConsts.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BA85B1E8680A1007680C5 /* EventConsts.m */; };
+		871BA85F1E8786C5007680C5 /* Bamilo-Debug-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 871BA85E1E8786C5007680C5 /* Bamilo-Debug-Info.plist */; };
 		872230DC1E6A965E000748E9 /* Accengage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 872230DB1E6A965E000748E9 /* Accengage.framework */; };
 		872230DE1E6A969E000748E9 /* Accengage.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 872230DB1E6A965E000748E9 /* Accengage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		872230E31E6A9815000748E9 /* AccengageTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 872230E21E6A9815000748E9 /* AccengageTracker.m */; };
@@ -132,9 +133,6 @@
 		87459C9C1E4F0DCD00743120 /* RadioButtonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87459C9B1E4F0DCD00743120 /* RadioButtonView.xib */; };
 		87459CA11E4F159E00743120 /* PaymentTypeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87459CA01E4F159E00743120 /* PaymentTypeTableViewCell.xib */; };
 		87459CA41E4F15AF00743120 /* PaymentTypeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87459CA31E4F15AF00743120 /* PaymentTypeTableViewCell.m */; };
-		874AAB551E3C764600B3F8FE /* Bamilo-Configs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 874AAB541E3C764600B3F8FE /* Bamilo-Configs.plist */; };
-		874AAB5E1E3C778E00B3F8FE /* ConfigManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB5D1E3C778E00B3F8FE /* ConfigManager.m */; };
-		874AAB651E3CE35B00B3F8FE /* ConfigManager-Consts.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB641E3CE35B00B3F8FE /* ConfigManager-Consts.m */; };
 		874AAB691E3CEA0700B3F8FE /* AppManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB681E3CEA0700B3F8FE /* AppManager.m */; };
 		874AAB6D1E3DCEDB00B3F8FE /* SessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB6C1E3DCEDB00B3F8FE /* SessionManager.m */; };
 		874AAB771E3DD31600B3F8FE /* URLUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 874AAB761E3DD31600B3F8FE /* URLUtility.m */; };
@@ -256,6 +254,8 @@
 		87D07D781E4097FF00C00AC6 /* CheckoutAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D07D771E4097FF00C00AC6 /* CheckoutAddressViewController.m */; };
 		87D07D7C1E4099C300C00AC6 /* CheckoutConfirmationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D07D7B1E4099C300C00AC6 /* CheckoutConfirmationViewController.m */; };
 		87D07D801E4099E800C00AC6 /* CheckoutPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D07D7F1E4099E800C00AC6 /* CheckoutPaymentViewController.m */; };
+		87D3DD1C1E8A323000C960FF /* BaseDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D3DD1B1E8A323000C960FF /* BaseDataManager.m */; };
+		87D3DD211E8A32D900C960FF /* EmarsysDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D3DD201E8A32D900C960FF /* EmarsysDataManager.m */; };
 		87DAABE31E54430D00445EBB /* PaymentOptionWithLogoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DAABE21E54430D00445EBB /* PaymentOptionWithLogoTableViewCell.m */; };
 		87DAABE51E54431A00445EBB /* PaymentOptionWithLogoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87DAABE41E54431A00445EBB /* PaymentOptionWithLogoTableViewCell.xib */; };
 		87DAABE91E55A1C400445EBB /* PaymentOptionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DAABE81E55A1C400445EBB /* PaymentOptionTableViewCell.m */; };
@@ -818,6 +818,7 @@
 		871BA8581E867FE0007680C5 /* SearchEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchEvent.m; sourceTree = "<group>"; };
 		871BA85A1E8680A1007680C5 /* EventConsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventConsts.h; sourceTree = "<group>"; };
 		871BA85B1E8680A1007680C5 /* EventConsts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventConsts.m; sourceTree = "<group>"; };
+		871BA85E1E8786C5007680C5 /* Bamilo-Debug-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Bamilo-Debug-Info.plist"; sourceTree = "<group>"; };
 		872230DB1E6A965E000748E9 /* Accengage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Accengage.framework; sourceTree = "<group>"; };
 		872230E01E6A97E0000748E9 /* DataTrackerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataTrackerProtocol.h; sourceTree = "<group>"; };
 		872230E11E6A9815000748E9 /* AccengageTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccengageTracker.h; sourceTree = "<group>"; };
@@ -857,11 +858,6 @@
 		87459CA01E4F159E00743120 /* PaymentTypeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentTypeTableViewCell.xib; sourceTree = "<group>"; };
 		87459CA21E4F15AF00743120 /* PaymentTypeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentTypeTableViewCell.h; sourceTree = "<group>"; };
 		87459CA31E4F15AF00743120 /* PaymentTypeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentTypeTableViewCell.m; sourceTree = "<group>"; };
-		874AAB541E3C764600B3F8FE /* Bamilo-Configs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Bamilo-Configs.plist"; sourceTree = "<group>"; };
-		874AAB5D1E3C778E00B3F8FE /* ConfigManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigManager.m; sourceTree = "<group>"; };
-		874AAB621E3CE32C00B3F8FE /* ConfigManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigManager.h; sourceTree = "<group>"; };
-		874AAB631E3CE35B00B3F8FE /* ConfigManager-Consts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConfigManager-Consts.h"; sourceTree = "<group>"; };
-		874AAB641E3CE35B00B3F8FE /* ConfigManager-Consts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ConfigManager-Consts.m"; sourceTree = "<group>"; };
 		874AAB671E3CEA0700B3F8FE /* AppManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppManager.h; sourceTree = "<group>"; };
 		874AAB681E3CEA0700B3F8FE /* AppManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppManager.m; sourceTree = "<group>"; };
 		874AAB6B1E3DCEDB00B3F8FE /* SessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionManager.h; sourceTree = "<group>"; };
@@ -1116,6 +1112,10 @@
 		87D07D7B1E4099C300C00AC6 /* CheckoutConfirmationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckoutConfirmationViewController.m; sourceTree = "<group>"; };
 		87D07D7E1E4099E800C00AC6 /* CheckoutPaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckoutPaymentViewController.h; sourceTree = "<group>"; };
 		87D07D7F1E4099E800C00AC6 /* CheckoutPaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckoutPaymentViewController.m; sourceTree = "<group>"; };
+		87D3DD1A1E8A323000C960FF /* BaseDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseDataManager.h; sourceTree = "<group>"; };
+		87D3DD1B1E8A323000C960FF /* BaseDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseDataManager.m; sourceTree = "<group>"; };
+		87D3DD1F1E8A32D900C960FF /* EmarsysDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysDataManager.h; sourceTree = "<group>"; };
+		87D3DD201E8A32D900C960FF /* EmarsysDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysDataManager.m; sourceTree = "<group>"; };
 		87DAABE11E54430D00445EBB /* PaymentOptionWithLogoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentOptionWithLogoTableViewCell.h; sourceTree = "<group>"; };
 		87DAABE21E54430D00445EBB /* PaymentOptionWithLogoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentOptionWithLogoTableViewCell.m; sourceTree = "<group>"; };
 		87DAABE41E54431A00445EBB /* PaymentOptionWithLogoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentOptionWithLogoTableViewCell.xib; sourceTree = "<group>"; };
@@ -2690,6 +2690,7 @@
 		870F8CD41E3357D40021F87B /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				87D3DD1E1E8A32C000C960FF /* EmarsysDataManager */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -3099,12 +3100,12 @@
 			isa = PBXGroup;
 			children = (
 				611FF46B1E8BDBCB006F0064 /* EmarsysPredictManager */,
+				87D3DD171E8A2DE300C960FF /* Base */,
 				873369BB1E58375900B0B5E5 /* ImageManager */,
 				87DAABF01E55DDE300445EBB /* AlertManager */,
 				8714E05E1E474015004C9B1D /* RequestManager */,
 				8714E0521E471DDB004C9B1D /* DataManager */,
 				874AAB661E3CE9F400B3F8FE /* AppManager */,
-				874AAB5F1E3C790300B3F8FE /* ConfigManager */,
 				874AAB6A1E3DCECD00B3F8FE /* SessionManager */,
 				87A6814B1E40DC2000D252AC /* ViewControllerManager */,
 				879F87FC1E5095CF0033FE87 /* LoadingManager */,
@@ -3113,25 +3114,6 @@
 				872230EB1E6A98B1000748E9 /* ThreadManager */,
 			);
 			name = Managers;
-			sourceTree = "<group>";
-		};
-		874AAB5F1E3C790300B3F8FE /* ConfigManager */ = {
-			isa = PBXGroup;
-			children = (
-				874AAB611E3CE2FC00B3F8FE /* ConfigManager-Constants */,
-				874AAB621E3CE32C00B3F8FE /* ConfigManager.h */,
-				874AAB5D1E3C778E00B3F8FE /* ConfigManager.m */,
-			);
-			name = ConfigManager;
-			sourceTree = "<group>";
-		};
-		874AAB611E3CE2FC00B3F8FE /* ConfigManager-Constants */ = {
-			isa = PBXGroup;
-			children = (
-				874AAB631E3CE35B00B3F8FE /* ConfigManager-Consts.h */,
-				874AAB641E3CE35B00B3F8FE /* ConfigManager-Consts.m */,
-			);
-			name = "ConfigManager-Constants";
 			sourceTree = "<group>";
 		};
 		874AAB661E3CE9F400B3F8FE /* AppManager */ = {
@@ -4030,6 +4012,40 @@
 			name = TableViewHeaderFooters;
 			sourceTree = "<group>";
 		};
+		87D3DD171E8A2DE300C960FF /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				87D3DD191E8A321F00C960FF /* DataManager */,
+			);
+			name = Base;
+			sourceTree = "<group>";
+		};
+		87D3DD191E8A321F00C960FF /* DataManager */ = {
+			isa = PBXGroup;
+			children = (
+				87D3DD1D1E8A323600C960FF /* BaseDataManager */,
+			);
+			name = DataManager;
+			sourceTree = "<group>";
+		};
+		87D3DD1D1E8A323600C960FF /* BaseDataManager */ = {
+			isa = PBXGroup;
+			children = (
+				87D3DD1A1E8A323000C960FF /* BaseDataManager.h */,
+				87D3DD1B1E8A323000C960FF /* BaseDataManager.m */,
+			);
+			name = BaseDataManager;
+			sourceTree = "<group>";
+		};
+		87D3DD1E1E8A32C000C960FF /* EmarsysDataManager */ = {
+			isa = PBXGroup;
+			children = (
+				87D3DD1F1E8A32D900C960FF /* EmarsysDataManager.h */,
+				87D3DD201E8A32D900C960FF /* EmarsysDataManager.m */,
+			);
+			name = EmarsysDataManager;
+			sourceTree = "<group>";
+		};
 		87DAABE01E5442EF00445EBB /* PaymentOptionWithLogoTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -4691,8 +4707,8 @@
 			isa = PBXGroup;
 			children = (
 				CE9AE12C1AB84C2300D56481 /* Bamilo-Info.plist */,
+				871BA85E1E8786C5007680C5 /* Bamilo-Debug-Info.plist */,
 				8754351F1E780D6B00B5D6B4 /* Bamilo-Staging-Info.plist */,
-				874AAB541E3C764600B3F8FE /* Bamilo-Configs.plist */,
 				870F8CCB1E3354700021F87B /* Bamilo.entitlements */,
 				870F8CCD1E3354E10021F87B /* Consts */,
 				CE9AE1221AB824B700D56481 /* Fonts */,
@@ -5215,7 +5231,6 @@
 				875AD58C1E38C62A00584ABF /* ShellScript */,
 				A496F8EDC748088D90A309BD /* [CP] Embed Pods Frameworks */,
 				AF99C33FE560E007DC18281B /* [CP] Copy Pods Resources */,
-				873369E11E5B295F00B0B5E5 /* ShellScript */,
 				872230DD1E6A9686000748E9 /* CopyFiles */,
 				872230DF1E6A96C6000748E9 /* ShellScript */,
 			);
@@ -5293,9 +5308,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				61148E0A1E47255F00E2540B /* StepperView.xib in Resources */,
-				874AAB551E3C764600B3F8FE /* Bamilo-Configs.plist in Resources */,
 				875435201E780D6B00B5D6B4 /* Bamilo-Staging-Info.plist in Resources */,
 				CEDBF8971B0DF5D00073971A /* JANewsletterComponent~iPad_RTL.xib in Resources */,
+				871BA85F1E8786C5007680C5 /* Bamilo-Debug-Info.plist in Resources */,
 				87459CA11E4F159E00743120 /* PaymentTypeTableViewCell.xib in Resources */,
 				CE9AE03C1AB6D78200D56481 /* JANewsletterComponent~iPad.xib in Resources */,
 				9A564CAF1B332FB200F23057 /* JASellerRatingsViewController.xib in Resources */,
@@ -5418,19 +5433,6 @@
 			shellPath = /bin/sh;
 			shellScript = "FRAMEWORKS_DIRECTORY=\"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}\"\nACCENGAGE_FRAMEWORKS=`find $FRAMEWORKS_DIRECTORY -type d -name \"Accengage*.framework\"`\n\nfor framework in $ACCENGAGE_FRAMEWORKS; do\nframework_name=`basename $framework`\nframework_binary_path=$framework\"/${framework_name%.*}\"\n\narchs=\"$(lipo -info \"${framework_binary_path}\" | rev | cut -d ':' -f1 | rev)\"\nstripped=\"\"\nfor arch in $archs; do\nif ! [[ \"${VALID_ARCHS}\" == *\"$arch\"* ]]; then\nlipo -remove \"$arch\" -output \"$framework_binary_path\" \"$framework_binary_path\" || exit 1\nstripped=\"$stripped $arch\"\nfi\ndone\nif [[ \"$stripped\" != \"\" ]]; then\necho \"Stripped $framework_binary_path of architectures:$stripped\"\nif [ \"${CODE_SIGNING_REQUIRED}\" == \"YES\" ]; then\n/usr/bin/codesign --force --sign ${EXPANDED_CODE_SIGN_IDENTITY} --preserve-metadata=identifier,entitlements \"${framework_binary_path}\"\nfi\nfi\ndone";
 		};
-		873369E11E5B295F00B0B5E5 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [[ \"$CONFIGURATION\" == \"Release\" ]]\nthen\n    ./Pods/Fabric/Fabric.framework/run 93ef3db21e524147cf9702fd4dc34e7169e372d1\nelse\n    ./Pods/Fabric/Fabric.framework/run ddde4ad6ad210575fdac10a908040d1a93e74833\nfi";
-		};
 		875AD58C1E38C62A00584ABF /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -5537,6 +5539,7 @@
 				9A08B1131CC7C377003282CB /* JAActionWebViewController.m in Sources */,
 				873369CA1E58A1D200B0B5E5 /* ShippingMethodOption.m in Sources */,
 				87EA03331E6DA27D00B1E062 /* ProgressItemViewModel.m in Sources */,
+				87D3DD1C1E8A323000C960FF /* BaseDataManager.m in Sources */,
 				87EA032D1E6D993C00B1E062 /* ProgressItemView.m in Sources */,
 				9A189E611BB31AC70039BC14 /* JAProductInfoHeaderLine.m in Sources */,
 				8714E0661E476DF8004C9B1D /* AddressList.m in Sources */,
@@ -5589,7 +5592,6 @@
 				875AD57C1E38C0C900584ABF /* RICommunicationWrapper.m in Sources */,
 				875AD5641E38C0C900584ABF /* RILocale.m in Sources */,
 				61036B6C1E65B638006E12A9 /* OrderProduct.m in Sources */,
-				874AAB651E3CE35B00B3F8FE /* ConfigManager-Consts.m in Sources */,
 				874AAB771E3DD31600B3F8FE /* URLUtility.m in Sources */,
 				8754351B1E77ECE500B5D6B4 /* PushWooshTracker.m in Sources */,
 				9ADEA09F1C9C0E6D00B2A605 /* JAProductInfoSizeLine.m in Sources */,
@@ -5737,6 +5739,7 @@
 				875AD5711E38C0C900584ABF /* RISellerDelivery.m in Sources */,
 				CE9ADFA81AB6D78200D56481 /* JARatingsView.m in Sources */,
 				CE9ADFA91AB6D78200D56481 /* JASizeGuideViewController.m in Sources */,
+				87D3DD211E8A32D900C960FF /* EmarsysDataManager.m in Sources */,
 				9AB517A61C934342007E1327 /* JAButton.m in Sources */,
 				9A55A6911BC2E894008EF4A6 /* JAPDVVariationsViewController.m in Sources */,
 				872230EA1E6A989D000748E9 /* SettingsManager.m in Sources */,
@@ -5803,7 +5806,6 @@
 				61148E051E4724FC00E2540B /* StepperView.m in Sources */,
 				875AD54F1E38C0C900584ABF /* RISearchSuggestion.m in Sources */,
 				87A681711E41FCF300D252AC /* CheckoutProgressView.m in Sources */,
-				874AAB5E1E3C778E00B3F8FE /* ConfigManager.m in Sources */,
 				CE9ADFC71AB6D78200D56481 /* JAButtonWithBlur.m in Sources */,
 				FFB1B08E1CE5E163000F60AD /* JAORWaysViewController.m in Sources */,
 				CE9ADFCB1AB6D78200D56481 /* JAAddRatingView.m in Sources */,
@@ -6047,6 +6049,7 @@
 				CODE_SIGN_ENTITLEMENTS = Bamilo/Bamilo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
 				CURRENT_PROJECT_VERSION = 28;
+				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -6058,6 +6061,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
 				PRODUCT_NAME = Bamilo;
+				PROVISIONING_PROFILE = "84edce36-e15a-4384-9eb4-158164c65295";
 				PROVISIONING_PROFILE_SPECIFIER = "BML AdHoc";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(PROJECT_DIR)/Bamilo/ExternalFrameworks/RICommunicationFramework/** $(PROJECT_DIR)/Bamilo/ExternalFrameworks/FXBlurView/**";
@@ -6227,17 +6231,19 @@
 				CODE_SIGN_ENTITLEMENTS = Bamilo/Bamilo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: ramtin monazahian (39SHTXEZ68)";
 				CURRENT_PROJECT_VERSION = 28;
+				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bamilo/Bamilo-Prefix.pch";
-				INFOPLIST_FILE = "Bamilo/Bamilo-Staging-Info.plist";
+				INFOPLIST_FILE = "Bamilo/Bamilo-Debug-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
 				PRODUCT_NAME = Bamilo;
+				PROVISIONING_PROFILE = "1695f311-2e81-481a-8ef4-21b19afc5d37";
 				PROVISIONING_PROFILE_SPECIFIER = "BML Development";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(PROJECT_DIR)/Bamilo/ExternalFrameworks/RICommunicationFramework/** $(PROJECT_DIR)/Bamilo/ExternalFrameworks/FXBlurView/**";
@@ -6256,6 +6262,7 @@
 				CODE_SIGN_ENTITLEMENTS = Bamilo/Bamilo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
 				CURRENT_PROJECT_VERSION = 28;
+				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -6266,6 +6273,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
 				PRODUCT_NAME = Bamilo;
+				PROVISIONING_PROFILE = "da40df0d-3da5-48f5-8ea4-6a146de8be7c";
 				PROVISIONING_PROFILE_SPECIFIER = "BML AppStore";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(PROJECT_DIR)/Bamilo/ExternalFrameworks/RICommunicationFramework/** $(PROJECT_DIR)/Bamilo/ExternalFrameworks/FXBlurView/**";

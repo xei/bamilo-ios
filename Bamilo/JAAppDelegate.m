@@ -16,7 +16,6 @@
 #import "JAUtils.h"
 #import "RIAdjustTracker.h"
 #import "RIProduct.h"
-#import "ConfigManager.h"
 #import "AppManager.h"
 #import "SessionManager.h"
 #import "URLUtility.h"
@@ -109,29 +108,13 @@
     }
     
 //#########################################################################################################
-    ConfigManager *configManager = [[ConfigManager alloc] initWithConfigurationFile:@"Bamilo-Configs"];
-#ifdef IS_RELEASE
-    //NSString *newRelicApiKey = [configManager getConfigurationForKey:@"NewRelic" variation:kConfManagerEnvLive];
-    NSString *crashlyticsApiKey = [configManager getConfigurationForKey:@"Crashlytics" variation:kConfManagerEnvLive];
-#else
-    //NSString *newRelicApiKey = [configManager getConfigurationForKey:@"NewRelic" variation:kConfManagerEnvStaging];
-    NSString *crashlyticsApiKey = [configManager getConfigurationForKey:@"Crashlytics" variation:kConfManagerEnvStaging];
-#endif
+    //Start Crashlytics
+    [Fabric with:@[[Crashlytics class]]];
     
-    /*
-    if (newRelicApiKey) {
-        [NewRelicAgent startWithApplicationToken:newRelicApiKey];
-        
-        #ifdef IS_RELEASE
-            [NewRelicAgent enableCrashReporting:YES];
-        #else
-             [NewRelicAgent disableFeatures:NRFeatureFlag_CrashReporting];
-        #endif
-    }*/
-    
-    if(crashlyticsApiKey) {
-        [Crashlytics startWithAPIKey:crashlyticsApiKey];
-    }
+    //Crashlytics Integration with PushWoosh
+    //http://docs.pushwoosh.com/docs/crashlytics-integration
+    NSString *userId = [[PushNotificationManager pushManager] getHWID];
+    [[Crashlytics sharedInstance] setUserIdentifier:userId];
     
     //PUSH WOOSH
     // set custom delegate for push handling, in our case AppDelegate
@@ -149,8 +132,20 @@
     
     // register for push notifications!
     [[PushNotificationManager pushManager] registerForPushNotifications];
-    
-    
+
+    NSDictionary *configs = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"Configs"];
+    if(configs) {
+        NSString *isPushWooshBeta = [configs objectForKey:@"Pushwoosh_BETA"];
+        if([isPushWooshBeta isEqualToString:@"1"]) {
+            [[PushNotificationManager pushManager] setTags:@{ @"Beta": isPushWooshBeta } withCompletion:^(NSError *error) {
+                if(error == nil) {
+                    NSLog(@"Beta tag is set to %@", isPushWooshBeta);
+                }
+            }];
+        }
+    }
+
+
     // Set merchant ID. for emarsysPredict
     EMSession *emarsysSession = [EMSession sharedSession];
     emarsysSession.merchantID = @"18146DE34FE0B8C9";
@@ -224,6 +219,10 @@
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     [[RITrackingWrapper sharedInstance] applicationDidEnterBackground:application];
     completionHandler(UIBackgroundFetchResultNewData);
+}
+
+-(void)applicationDidBecomeActive:(UIApplication *)application {
+    [application setApplicationIconBadgeNumber:0];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {

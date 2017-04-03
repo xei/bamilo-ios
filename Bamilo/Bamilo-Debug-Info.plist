@@ -8,11 +8,11 @@
 		<string>1</string>
 	</dict>
 	<key>Pushwoosh_APPID</key>
-	<string>82449-6B792</string>
+	<string>A9EF7-6FDD2</string>
 	<key>Pushwoosh_APPNAME</key>
-	<string>Bamilo</string>
+	<string>Bamilo (Staging)</string>
 	<key>Pushwoosh_LOG_LEVEL</key>
-	<string>NONE</string>
+	<string>VERBOSE</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>

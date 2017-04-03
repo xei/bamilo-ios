@@ -7,16 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RequestManager.h"
+#import "BaseDataManager.h"
 #import "Address.h"
 #import "RICart.h"
 #import "FormItemModel.h"
 
-typedef void(^DataCompletion)(id data, NSError *error);
-
-@interface DataManager : NSObject
-
-+ (instancetype)sharedInstance;
+@interface DataManager : BaseDataManager
 
 - (void)getSubCategoriesFilter:(id<DataServiceProtocol>)target ofCategroyUrlKey:(NSString *)urlKey completion:(DataCompletion)completion;
 
