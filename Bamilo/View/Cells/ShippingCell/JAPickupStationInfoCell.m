@@ -59,7 +59,7 @@
                                   16.0f,
                                   80.0f,
                                   60.0f);
-    [self.image setImageWithURL:[NSURL URLWithString:pickupStation.image]
+    [self.image sd_setImageWithURL:[NSURL URLWithString:pickupStation.image]
                placeholderImage:[UIImage imageNamed:@"placeholder_variations"]];
     [self.image changeImageHeight:0.0f andWidth:60.0f];
     

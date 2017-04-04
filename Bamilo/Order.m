@@ -28,7 +28,7 @@
 
 - (NSString *)formattedPrice {
     if (self.price) {
-        NSString *priceString = [NSString stringWithFormat:@"%ld", self.price];
+        NSString *priceString = [NSString stringWithFormat:@"%lld", self.price];
         return [NSString stringWithFormat:@"%@ %@", [[priceString formatPrice] numbersToPersian], STRING_CURRENCY];
     }
     return nil;

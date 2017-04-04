@@ -73,7 +73,7 @@
         NSString* imageUrl = component.imagePortraitUrl;
         UIImageView* imageView = [UIImageView new];
         imageView.contentMode = UIViewContentModeScaleAspectFit;
-        [imageView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
+        [imageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"] completed:nil];
         [imageView setFrame:CGRectMake(clickableView.bounds.origin.x,
                                        clickableView.bounds.origin.y,
                                        clickableView.bounds.size.width,

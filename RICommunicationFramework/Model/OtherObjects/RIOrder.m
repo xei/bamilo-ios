@@ -73,7 +73,7 @@
     }
     
     if(VALID_NOTEMPTY([json objectForKey:@"price"], NSString)) {
-        item.total = [NSNumber numberWithLong:[[json objectForKey:@"price"] longLongValue]];
+        item.total = [NSNumber numberWithLongLong:[[json objectForKey:@"price"] longLongValue]];
         
         item.totalFormatted = [RICountryConfiguration formatPrice:item.total country:country];
     }
@@ -204,7 +204,7 @@
     {
         trackOrder.total = [json objectForKey:@"grand_total"];
         
-        NSNumber *totalNumber = [NSNumber numberWithLong:[trackOrder.total longLongValue]];
+        NSNumber *totalNumber = [NSNumber numberWithLongLong:[trackOrder.total longLongValue]];
         trackOrder.totalFormatted = [RICountryConfiguration formatPrice:totalNumber country:country];
     }
     
@@ -240,7 +240,7 @@
     {
         trackOrder.total = [json objectForKey:@"total"];
         
-        NSNumber *totalNumber = [NSNumber numberWithLong:[trackOrder.total longLongValue]];
+        NSNumber *totalNumber = [NSNumber numberWithLongLong:[trackOrder.total longLongValue]];
         trackOrder.totalFormatted = [RICountryConfiguration formatPrice:totalNumber country:country];
     }
     

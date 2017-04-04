@@ -322,11 +322,10 @@ withCampaignTargetString:(NSString*)campaignTargetString
         [campaignPage loadWithCampaign:campaign];
         [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
-        
         if (apiResponse == RIApiResponseAPIError) {
-            for (NSDictionary *error in error) {
-                if (VALID([error objectForKey:@"reason"], NSString)) {
-                    if ([[error objectForKey:@"reason"] isEqualToString:@"CAMPAIGN_NOT_EXIST"]) {
+            for (NSDictionary *err in error) {
+                if (VALID([err objectForKey:@"reason"], NSString)) {
+                    if ([[err objectForKey:@"reason"] isEqualToString:@"CAMPAIGN_NOT_EXIST"]) {
                         if (VALID_NOTEMPTY(self.topTabsView, JATopTabsView) && NO == [self.topTabsView isLoaded]) {
                             [self.topTabsView setupWithTabNames:[NSArray arrayWithObject:STRING_NOT_AVAILABLE]];
                         }

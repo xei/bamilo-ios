@@ -112,7 +112,7 @@
     UIToolbar* keyboardDoneButtonView = [[UIToolbar alloc] init];
     [keyboardDoneButtonView sizeToFit];
     UIBarButtonItem* doneButton = [[UIBarButtonItem alloc] initWithTitle:STRING_DONE
-                                                                   style:UIBarButtonItemStyleBordered target:self.delegate
+                                                                   style:UIBarButtonItemStylePlain target:self.delegate
                                                                   action:@selector(doneClicked:)];
     
     if (!RI_IS_RTL) {

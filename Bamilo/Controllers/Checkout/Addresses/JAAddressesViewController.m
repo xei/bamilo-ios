@@ -433,15 +433,15 @@ UITableViewDelegate>
     }
     
     RIAddress* address;
-    SEL clickMethod;
+    SEL clickMethod = @selector(editOtherAddressPressed:);
     
     if(tableView == self.shippingAddressTableView) {
-        if (0 == indexPath.row) {
+        if (indexPath.row == 0) {
             address = self.shippingAddress;
             clickMethod = @selector(editShippingAddressPressed);
         }
     } else if(tableView == self.billingAddressTableView) {
-        if (0 == indexPath.row) {
+        if (indexPath.row == 0) {
             address = self.billingAddress;
             clickMethod = @selector(editBillingAddressPressed);
         }
@@ -450,7 +450,6 @@ UITableViewDelegate>
         if (indexPath.row < [otherAddresses count]) {
             address = [otherAddresses objectAtIndex:indexPath.row];
         }
-        clickMethod = @selector(editOtherAddressPressed:);
     }
     
     [cell loadWithWidth:self.contentScrollView.frame.size.width address:address];

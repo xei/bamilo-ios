@@ -14,7 +14,7 @@ target 'Bamilo' do
   # Pods for Bamilo
   # pod 'Accengage-iOS-SDK', '~> 6.0'
   pod 'Adjust', '~> 4.11.0'
-  pod 'AlgoliaSearch-Client', '~> 3.5'
+  pod 'AlgoliaSearch-Client'
   pod 'Fabric'
   pod ‘EmarsysPredictSDK’
   pod 'Crashlytics', '~> 3.8'

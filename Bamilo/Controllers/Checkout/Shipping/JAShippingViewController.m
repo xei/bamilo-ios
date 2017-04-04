@@ -158,10 +158,10 @@ UITableViewDelegate
             
             [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
             self.cart = cart;
-            self.shippingMethodForm = cart.formEntity.shippingMethodForm;
+            //self.shippingMethodForm = cart.formEntity.shippingMethodForm;
             
             // LIST OF AVAILABLE SHIPPING METHODS
-            self.shippingMethods = [RIShippingMethodForm getShippingMethods:cart.formEntity.shippingMethodForm];
+            //self.shippingMethods = [RIShippingMethodForm getShippingMethods:cart.formEntity.shippingMethodForm];
             
             [self finishedLoadingShippingMethods];
         } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {

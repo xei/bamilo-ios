@@ -320,7 +320,7 @@ NSString *const KOkGotIt = @"متوجه شدم";
     self.lblCaption.attributedText = attributedText;
     [self.lblCaption sizeToFit];
     
-    CGFloat y;
+    CGFloat y = 0.0;
     CGFloat x;
     
     //Label Aligment and Position, set x value

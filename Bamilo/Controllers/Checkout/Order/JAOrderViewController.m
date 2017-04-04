@@ -257,7 +257,7 @@
                                                                            imageSize.width,
                                                                            imageSize.height)];
     
-    [imageView setImageWithURL:[NSURL URLWithString:cartItem.imageUrl]
+    [imageView sd_setImageWithURL:[NSURL URLWithString:cartItem.imageUrl]
               placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
     [itemCell addSubview:imageView];
     

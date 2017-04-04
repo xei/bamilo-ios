@@ -141,7 +141,7 @@
     [self.labelPrice setWidth:self.width - 12];
     
     [self.favoriteImage setFrame:CGRectMake(self.width - 28, 10, 22, 22)];
-    [self setFavorite:self.product.favoriteAddDate];
+    [self setFavorite:(self.product.favoriteAddDate != nil)];
 }
 
 - (void)setFavorite:(BOOL)favorite {
@@ -154,7 +154,7 @@
 
 - (void)setSearchTypeProduct:(RISearchTypeProduct *)product {
     if (product.image.length) {
-        [self.imageViewItem setImageWithURL:[NSURL URLWithString:product.image]
+        [self.imageViewItem sd_setImageWithURL:[NSURL URLWithString:product.image]
                            placeholderImage:[UIImage imageNamed:@"placeholder_scrollable"]];
         [self.imageViewItem setX:30.f];
         [self.imageViewItem setY:6.f];

@@ -348,7 +348,7 @@
 
     }
     
-    [self.imageView setImageWithURL:[NSURL URLWithString:campaignProduct.imagesUrl]
+    [self.imageView sd_setImageWithURL:[NSURL URLWithString:campaignProduct.imagesUrl]
                    placeholderImage:[UIImage imageNamed:@"placeholder_scrollable"]
      ];
     
