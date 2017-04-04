@@ -8,6 +8,7 @@
 
 #import "PushWooshTracker.h"
 #import <Pushwoosh/PWInAppManager.h>
+#import "EmarsysMobileEngage.h"
 
 @implementation PushWooshTracker
 
@@ -24,11 +25,19 @@ static PushWooshTracker *instance;
 
 #pragma mark - PushNotificationTrackerProtocol
 -(void)onPushAccepted:(PushNotificationManager *)pushManager withNotification:(NSDictionary *)pushNotification {
+    NSLog(@"PushWooshTracker > onPushAccepted : %@", pushNotification);
+    
     NSString *customDataString = [pushManager getCustomPushData:pushNotification];
     
     NSDictionary *jsonData = nil;
     if (customDataString) {
         jsonData = [NSJSONSerialization JSONObjectWithData:[customDataString dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
+    }
+    
+    if(jsonData) { //HOW TO CHECK IF IT'S EMARSYS DATA???
+        [[EmarsysMobileEngage sharedInstance] sendOpen:nil completion:^(BOOL success) {
+            NSLog(@"EmarsysMobileEngage > sendOpen > %@", success ? sSUCCESSFUL : sFAILED);
+        }];
     }
 }
 

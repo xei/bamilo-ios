@@ -36,6 +36,7 @@
 #import "DataManager.h"
 #import "PushWooshTracker.h"
 #import "SearchEvent.h"
+#import "EmarsysMobileEngage.h"
 
 #define JACatalogGridSelected @"CATALOG_GRID_IS_SELECTED"
 #define JACatalogViewControllerMaxProducts 36
@@ -1421,13 +1422,19 @@ typedef void (^ProcessActionBlock)(void);
                                               data:[trackingDictionary copy]];
 //################################
     //PUSHWOOSH EVENT
-    NSMutableDictionary *event = [SearchEvent event];
+    NSMutableDictionary *attributes = [SearchEvent attributes];
     
-    [event setObject:numberOfProducts forKey:kEventValue];
-    [event setObject:numberOfProducts forKey:kSearchEventNumberOfProducts];
-    [event setObject:string forKey:kSearchEventKeywords];
+    [attributes setObject:numberOfProducts forKey:kEventValue];
+    [attributes setObject:numberOfProducts forKey:kSearchEventNumberOfProducts];
+    [attributes setObject:string forKey:kSearchEventKeywords];
     
-    [[PushWooshTracker sharedTracker] postEvent:event forName:[SearchEvent name]];
+    [[PushWooshTracker sharedTracker] postEvent:attributes forName:[SearchEvent name]];
+    
+    //TEMP: EmarsysMobileEngages should comply to EventTrackerProtocol
+    //TEMP: A wrapper should call all the EventTrackerProtocol classes
+    [[EmarsysMobileEngage sharedInstance] sendCustomEvent:[SearchEvent name] attributes:attributes completion:^(BOOL success) {
+        NSLog(@"EmarsysMobileEngage > sendCustomEvent > %@", success ? sSUCCESSFUL : sFAILED);
+    }];
 }
 
 - (void)trackingEventGTMListingForCategoryName:(NSString *)categoryName andSubCategoryName:(NSString *)subCategoryName {

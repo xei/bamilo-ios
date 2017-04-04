@@ -4,6 +4,13 @@
 <dict>
 	<key>Configs</key>
 	<dict>
+		<key>Emarsys</key>
+		<dict>
+			<key>Application_CODE</key>
+			<string>A9EF7-6FDD2</string>
+			<key>Application_PASSWORD</key>
+			<string>+xhBaMoKRjc3SAHLsgqKTIodKWXJFhM/</string>
+		</dict>
 		<key>Pushwoosh_BETA</key>
 		<string>1</string>
 	</dict>

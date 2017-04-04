@@ -4,6 +4,13 @@
 <dict>
 	<key>Configs</key>
 	<dict>
+		<key>Emarsys</key>
+		<dict>
+			<key>Application_CODE</key>
+			<string>82449-6B792</string>
+			<key>Application_PASSWORD</key>
+			<string>oKjusj5sk9ebqCYgi38XdM/PtPCPqLTl</string>
+		</dict>
 		<key>Pushwoosh_BETA</key>
 		<string>1</string>
 	</dict>
@@ -12,7 +19,7 @@
 	<key>Pushwoosh_APPNAME</key>
 	<string>Bamilo</string>
 	<key>Pushwoosh_LOG_LEVEL</key>
-	<string>NONE</string>
+	<string>VERBOSE</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>

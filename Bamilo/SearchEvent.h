@@ -6,9 +6,9 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import "BaseEvent.h"
+#import "AppEvent.h"
 
-@interface SearchEvent : BaseEvent
+@interface SearchEvent : AppEvent
 
 FOUNDATION_EXPORT NSString *const kSearchEventNumberOfProducts;
 FOUNDATION_EXPORT NSString *const kSearchEventKeywords;

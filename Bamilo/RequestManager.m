@@ -9,11 +9,6 @@
 #import "RequestManager.h"
 #import "LoadingManager.h"
 
-@interface RequestManager()
-@property (copy, nonatomic) NSString *baseUrl;
-
-@end
-
 @implementation RequestManager {
 @private
     int _pendingRequestsNumber;
@@ -26,9 +21,8 @@
 
 -(instancetype)initWithBaseUrl:(NSString *)baseUrl {
     if(self = [super init]) {
-        self.baseUrl = baseUrl;
+        _baseUrl = baseUrl;
     }
-    
     return self;
 }
 
@@ -48,7 +42,6 @@
     [self asyncRequest:HttpVerbDELETE path:path params:params type:type target:target completion:completion];
 }
 
-#pragma mark - Private Methods
 -(void)asyncRequest:(HttpVerb)method path:(NSString *)path params:(NSDictionary *)params type:(RequestExecutionType)type target:(id<DataServiceProtocol>)target completion:(RequestCompletion)completion {
     switch (type) {
         case REQUEST_EXEC_IN_FOREGROUND:
