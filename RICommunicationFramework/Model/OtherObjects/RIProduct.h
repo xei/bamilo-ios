@@ -11,6 +11,7 @@
 #import "RICatalog.h"
 #import "RIRecentlyViewedProductSku.h"
 #import "RICatalogSorting.h"
+#import <EmarsysPredictSDK/EmarsysPredictSDK.h>
 
 @class RIImage, RIProductSimple, RIVariation, RIBundle, RISeller, RIUndefinedSearchTerm;
 
@@ -81,6 +82,7 @@
 
 @property (nonatomic) BOOL hasStock;
 @property (nonatomic) BOOL freeShippingPossible;
+@property (nonatomic, strong) EMRecommendationItem *srcItem;
 
 /**
  *  Method to load a product and all its details given his sku. This method uses getCompleteProductWithUrl:successBlock:andFailureBlock:

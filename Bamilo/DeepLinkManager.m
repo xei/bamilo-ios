@@ -146,12 +146,8 @@
         
         [categoryDictionary setObject:[sortingMap objectForKey:targetKey] forKey:@"sorting"];
         successfullyHandled = YES;
-    } else if ([targetKey isEqualToString:@"n"] && argument.length) {
-        
-        // Catalog view - category id
-        // Don't know what should I do! :(
-        successfullyHandled = YES;
     }
+
     
     if (successfullyHandled) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:categoryDictionary];

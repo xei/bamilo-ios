@@ -11,6 +11,7 @@
 #import "BaseViewController.h"
 #import "ViewControllerManager.h"
 #import "NotificationBarView.h"
+#import "EmarsysPredictManager.h"
 
 @interface BaseViewController()
 @property (strong, nonatomic) JAMessageView *messageView;
@@ -54,7 +55,16 @@
     if([self getIsSideMenuAvailable]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOnMenuSwipePanelNotification object:nil];
     }
-
+    
+    if ([self conformsToProtocol:@protocol(EmarsysPredictProtocol)]) {
+        if ([self respondsToSelector:@selector(preventSendTransactionInViewWillAppear)]) {
+            if (![((id<EmarsysPredictProtocol>)self) preventSendTransactionInViewWillAppear]) {
+                [EmarsysPredictManager sendTransactionsOf:self];
+            }
+        } else {
+            [EmarsysPredictManager sendTransactionsOf:self];
+        }
+    }
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillEnterForeground) name:kAppWillEnterForeground object:nil];
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground) name:kAppDidEnterBackground object:nil];
 }

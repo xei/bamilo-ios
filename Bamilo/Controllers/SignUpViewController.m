@@ -90,6 +90,8 @@
 #pragma mark - DataServiceProtocol
 - (void)bind:(id)data forRequestId:(int)rid {
     
+    
+    
     // --------------- Legacy actions --------------
     RICustomer *customerObject = [(NSDictionary*)data objectForKey:@"customer"];
     [[NSUserDefaults standardUserDefaults] synchronize];

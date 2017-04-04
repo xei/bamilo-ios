@@ -601,4 +601,12 @@
     return @"CheckoutFinish";
 }
 
+
+#pragma mark - EmarsysPredictProtocol
+
+- (EMTransaction *)getDataCollection:(EMTransaction *)transaction {
+    [transaction setPurchase:self.cart.orderNr ofItems: [self.cart convertItems]];
+    return transaction;
+}
+
 @end

@@ -40,7 +40,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.startLoadingTime = [NSDate date];
-    
+
     //SETUP THEME
     ThemeFont *themeFont = [ThemeFont fontWithVariations:@{
         kFontVariationRegular: cFontVariationNone,
@@ -50,7 +50,7 @@
         kFontVariationLight: @"Light"
     }];
     [[ThemeManager sharedInstance] addThemeFont:cPrimaryFont font:themeFont];
-    
+
     ThemeColor *themeColor = [ThemeColor colorWithPalette:@{
         kColorBlue: [UIColor withRGBA:74 green:144 blue:226 alpha:1.0f],
         kColorOrange: [UIColor withRGBA:255 green:153 blue:0 alpha:1.0f],
@@ -61,11 +61,11 @@
         kColorLightGray: [UIColor withRepeatingRGBA:146 alpha:1.0f],
         kColorExtraLightGray: [UIColor withRepeatingRGBA:186 alpha:1.0f],
         kColorExtraExtraLightGray: [UIColor withRepeatingRGBA:222 alpha:1.0f],
-        kColorRed: [UIColor withRGBA:185 green:15 blue:0 alpha:1.0f], 
+        kColorRed: [UIColor withRGBA:185 green:15 blue:0 alpha:1.0f],
         kColorExtraLightRed: [UIColor withRGBA:254 green:243 blue:242 alpha:1.0f]
     }];
     [[ThemeManager sharedInstance] addThemeColor:cPrimaryPalette color:themeColor];
-    
+
     [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans" forKey:kFontRegularNameKey];
     [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans-Light" forKey:kFontLightNameKey];
     [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans-Bold" forKey:kFontBoldNameKey];
@@ -77,19 +77,19 @@
 #else
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITrackingDebug_Bamilo" ofType:@"plist"];
 #endif
-    
+
     [[RITrackingWrapper sharedInstance] startWithConfigurationFromPropertyListAtPath:plistPath launchOptions:launchOptions delegate:self];
 
     [[GSDAppIndexing sharedInstance] registerApp:kAppStoreIdBamiloInteger];
-    
+
     [[SessionManager sharedInstance] evaluateActiveSessions];
-    
+
     [[UINavigationBar appearance] setBarTintColor:JABlack300Color];
-    
+
     [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:JABackgroundGrey, NSForegroundColorAttributeName, [Theme font:kFontVariationLight size:18], NSFontAttributeName,nil] forState:UIControlStateNormal];
-    
+
     [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[Theme color:kColorOrange], NSForegroundColorAttributeName, [Theme font:kFontVariationLight size:18], NSFontAttributeName,nil] forState:UIControlStateSelected];
-    
+
     NSString* phpSessIDCookie = [NSString stringWithFormat:@"%@%@",kPHPSESSIDCookie,[RIApi getCountryIsoInUse]];
     NSDictionary *cookieProperties = [[NSUserDefaults standardUserDefaults] objectForKey:phpSessIDCookie];
     if(VALID_NOTEMPTY(cookieProperties, NSDictionary)) {
@@ -103,36 +103,35 @@
         if(VALID_NOTEMPTY(mainController, JARootViewController)) {
             mainController.notification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
         }
-        
+
         [[RITrackingWrapper sharedInstance] applicationDidReceiveRemoteNotification:[launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey]];
     }
-    
+
 //#########################################################################################################
     //Start Crashlytics
     [Fabric with:@[[Crashlytics class]]];
-    
+
     //Crashlytics Integration with PushWoosh
     //http://docs.pushwoosh.com/docs/crashlytics-integration
     NSString *userId = [[PushNotificationManager pushManager] getHWID];
     [[Crashlytics sharedInstance] setUserIdentifier:userId];
-    
+
     //PUSH WOOSH
     // set custom delegate for push handling, in our case AppDelegate
     PushNotificationManager *pushManager = [PushNotificationManager pushManager];
     pushManager.delegate = [PushWooshTracker sharedTracker];
-    
+
     // set default Pushwoosh delegate for iOS10 foreground push handling
     [UNUserNotificationCenter currentNotificationCenter].delegate = [PushNotificationManager pushManager].notificationCenterDelegate;
-    
+
     // handling push on app start
     [[PushNotificationManager pushManager] handlePushReceived:launchOptions];
-    
+
     // track application open statistics
     [[PushNotificationManager pushManager] sendAppOpen];
-    
+
     // register for push notifications!
     [[PushNotificationManager pushManager] registerForPushNotifications];
-    
     NSDictionary *configs = [[NSBundle mainBundle] objectForInfoDictionaryKey:kConfigs];
     if(configs) {
         NSString *isPushWooshBeta = [configs objectForKey:@"Pushwoosh_BETA"];
@@ -144,7 +143,13 @@
             }];
         }
     }
-    
+
+
+    // Set merchant ID. for emarsysPredict
+    EMSession *emarsysSession = [EMSession sharedSession];
+    emarsysSession.merchantID = @"18146DE34FE0B8C9";
+    emarsysSession.logLevel = EMLogLevelDebug;
+
     return YES;
 }
 
@@ -158,7 +163,7 @@
     if(!VALID_NOTEMPTY(application, UIApplication) || UIApplicationStateActive != application.applicationState) {
         [[RITrackingWrapper sharedInstance] applicationHandleActionWithIdentifier:identifier forRemoteNotification:userInfo];
     }
-    
+
     completionHandler();
 }
 #endif
@@ -166,7 +171,7 @@
 - (BOOL)application:(UIApplication *)application continueUserActivity:(nonnull NSUserActivity *)userActivity restorationHandler:(nonnull void (^)(NSArray * _Nullable))restorationHandler {
     if ([[userActivity activityType] isEqualToString:NSUserActivityTypeBrowsingWeb]) {
         [Adjust appWillOpenUrl:[userActivity webpageURL]];
-        
+
         NSString* appName = [APP_NAME lowercaseString];
         NSURL * deeplink = [Adjust convertUniversalLink:[userActivity webpageURL] scheme:appName];
         [self handleOpenAppWithURL:deeplink];
@@ -177,15 +182,15 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     id topViewController = [ViewControllerManager topViewController];
     NSString *screenName;
-    
+
     if([topViewController conformsToProtocol:@protocol(PerformanceTrackerProtocol)]) {
         screenName = [topViewController getPerformanceTrackerScreenName];
     }
-    
+
     if(screenName) {
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCloseApp] data:[NSDictionary dictionaryWithObject:screenName forKey:kRIEventScreenNameKey]];
     }
-    
+
     /*
     UINavigationController *rootViewController = (UINavigationController*) self.window.rootViewController;
     JARootViewController* mainController = (JARootViewController*) [rootViewController topViewController];
@@ -202,9 +207,9 @@
             }
         }
     }*/
-    
+
     [[RITrackingWrapper sharedInstance] applicationDidEnterBackground:application];
-    
+
     [[NSNotificationCenter defaultCenter] postNotificationName:kAppDidEnterBackground object:nil];
 }
 
@@ -217,7 +222,7 @@
 
 -(void)applicationDidBecomeActive:(UIApplication *)application {
     [application setApplicationIconBadgeNumber:0];
-    
+
     PushNotificationManager *pushManager = [PushNotificationManager pushManager];
     [[EmarsysMobileEngage sharedInstance] sendLogin:[pushManager getPushToken] completion:^(BOOL success) {
         NSLog(@"Emarsys Mobile Engage > sendUpdate > %@", success ? sSUCCESSFUL : sFAILED);
@@ -239,30 +244,30 @@
         }
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage){
     }];
-    
+
     self.startLoadingTime = [NSDate date];
-    
+
     [[SessionManager sharedInstance] evaluateActiveSessions];
-    
+
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-    
-    [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];    
+
+    [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
     [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
 
     CGFloat duration = fabs([self.startLoadingTime timeIntervalSinceNow] * 1000);
-    
+
     [trackingDictionary setValue:[NSString stringWithFormat:@"%f", duration] forKey:kRILaunchEventDurationDataKey];
-    
+
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventOpenApp]
                                               data:[trackingDictionary copy]];
-    
+
     [[NSNotificationCenter defaultCenter] postNotificationName:kAppWillEnterForeground object:nil];
 }
 
 - (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
     NSUInteger supportedInterfaceOrientationsForWindow = -1;
-    
+
     UINavigationController *rootViewController = (UINavigationController*)self.window.rootViewController;
     JARootViewController* mainController = (JARootViewController*) [rootViewController topViewController];
     if(VALID_NOTEMPTY(mainController, JARootViewController)) {
@@ -290,7 +295,7 @@
 #pragma mark - Push Notification
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     [[RITrackingWrapper sharedInstance] applicationDidRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
-    
+
     //PUSH WOOSH
     [[PushNotificationManager pushManager] handlePushRegistration:deviceToken];
 }
@@ -317,46 +322,46 @@
 
 #pragma mark - Open URL Scheme
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    
+
     [Adjust appWillOpenUrl:url = [GSDDeepLink handleDeepLink:url]];
-    
+
     if (url) {
         [[RITrackingWrapper sharedInstance] trackOpenURL:url];
         [self handleOpenAppWithURL:url];
         return YES;
     }
-    
+
     return NO;
 }
 
 #pragma mark - Private Methods
 - (void)handleOpenAppWithURL:(NSURL *)url {
-    
+
     [DeepLinkManager handleUrl:url];
-    
+
     /*
     NSString *urlScheme = [url scheme];
-    
+
     if (urlScheme) {
         NSString *urlHost = [NSString stringWithString:url.host];
         NSDictionary *queryString = [URLUtility parseQueryString:url];
-        
+
         NSMutableString *queryBuilder = [NSMutableString new];
         for(id key in queryString) {
             if(![key isEqualToString:@"UTM"]) {
                 [queryBuilder appendFormat:@"%@/%@", key, [queryString valueForKey:key]];
             }
         }
-        
+
         NSString *path = [url.path stringByAppendingFormat:@"/%@", [NSString stringWithString:queryBuilder]];
-        
+
         NSString *utm = [queryString valueForKey:@"UTM"];
         if(utm) {
             [path stringByAppendingFormat:@"?%@", utm];
         }
-        
+
         NSMutableDictionary *fullUrl = [NSMutableDictionary dictionaryWithObject:[urlHost stringByAppendingString:path] forKey:@"u"];
-        
+
         [[RITrackingWrapper sharedInstance] handlePushNotifcation:fullUrl];
     }
     */
@@ -364,10 +369,10 @@
     NSString *urlScheme = [url scheme];
     if (urlScheme) {
         NSMutableDictionary *fullUrl = [NSMutableDictionary dictionaryWithObject:@"" forKey:@"u"];
-        
+
         NSString *path = [NSString stringWithString:url.path];
         NSString *urlHost = [NSString stringWithString:url.host];
-        
+
         if (url.query && [url.query length] >= 5) {
             if (![[url.query substringToIndex:4] isEqualToString:@"ADXID"]) {
                 NSRange range = [url.query rangeOfString:@"?ADXID"];
@@ -379,22 +384,22 @@
                 }
             }
         }
-        
+
         NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
         if (![urlHost isEqualToString:bundleIdentifier]) {
             path = [urlHost stringByAppendingString:path];
         } else {
             path = [path substringFromIndex:1];
         }
-        
+
         NSDictionary *dict = [URLUtility parseQueryString:url];
-        
+
         fullUrl = [NSMutableDictionary dictionaryWithObject:path forKey:@"u"];
-        
+
         if ([dict objectForKey:@"UTM"]) {
             [fullUrl addEntriesFromDictionary:dict];
         }
-        
+
         [[RITrackingWrapper sharedInstance] handlePushNotifcation:fullUrl];
     }*/
 }
@@ -416,7 +421,7 @@
     {
         [dictionary setObject:creative forKey:kRIEventCreativeKey];
     }
-    
+
     [[RITrackingWrapper sharedInstance] trackEvent:@(RIEventInstallViaAdjust) data:dictionary];
 }
 

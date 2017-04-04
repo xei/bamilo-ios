@@ -31,6 +31,7 @@
 		61148E051E4724FC00E2540B /* StepperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61148E041E4724FC00E2540B /* StepperView.m */; };
 		61148E081E47250A00E2540B /* StepperViewControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 61148E071E47250A00E2540B /* StepperViewControl.m */; };
 		61148E0A1E47255F00E2540B /* StepperView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61148E091E47255F00E2540B /* StepperView.xib */; };
+		611FF46E1E8BDBEF006F0064 /* EmarsysPredictManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 611FF46D1E8BDBEF006F0064 /* EmarsysPredictManager.m */; };
 		612553471E4EE5B500975C6F /* InputTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 612553461E4EE5B500975C6F /* InputTextField.m */; };
 		612553491E4EE5C600975C6F /* InputTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 612553481E4EE5C600975C6F /* InputTextField.xib */; };
 		6125534C1E4EF63000975C6F /* InputTextFieldControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 6125534B1E4EF63000975C6F /* InputTextFieldControl.m */; };
@@ -666,6 +667,9 @@
 		61148E061E47250A00E2540B /* StepperViewControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepperViewControl.h; sourceTree = "<group>"; };
 		61148E071E47250A00E2540B /* StepperViewControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StepperViewControl.m; sourceTree = "<group>"; };
 		61148E091E47255F00E2540B /* StepperView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StepperView.xib; sourceTree = "<group>"; };
+		611FF46C1E8BDBEF006F0064 /* EmarsysPredictManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysPredictManager.h; sourceTree = "<group>"; };
+		611FF46D1E8BDBEF006F0064 /* EmarsysPredictManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysPredictManager.m; sourceTree = "<group>"; };
+		611FF46F1E8BE9C7006F0064 /* EmarsysPredictProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysPredictProtocol.h; sourceTree = "<group>"; };
 		612553451E4EE5B500975C6F /* InputTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputTextField.h; sourceTree = "<group>"; };
 		612553461E4EE5B500975C6F /* InputTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputTextField.m; sourceTree = "<group>"; };
 		612553481E4EE5C600975C6F /* InputTextField.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InputTextField.xib; sourceTree = "<group>"; };
@@ -2077,6 +2081,16 @@
 			name = Controls;
 			sourceTree = "<group>";
 		};
+		611FF46B1E8BDBCB006F0064 /* EmarsysPredictManager */ = {
+			isa = PBXGroup;
+			children = (
+				611FF46C1E8BDBEF006F0064 /* EmarsysPredictManager.h */,
+				611FF46D1E8BDBEF006F0064 /* EmarsysPredictManager.m */,
+				611FF46F1E8BE9C7006F0064 /* EmarsysPredictProtocol.h */,
+			);
+			name = EmarsysPredictManager;
+			sourceTree = "<group>";
+		};
 		612553421E4EE4FD00975C6F /* inputTextField */ = {
 			isa = PBXGroup;
 			children = (
@@ -3094,6 +3108,7 @@
 		874AAB5B1E3C775900B3F8FE /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				611FF46B1E8BDBCB006F0064 /* EmarsysPredictManager */,
 				87D3DD171E8A2DE300C960FF /* Base */,
 				874AAB661E3CE9F400B3F8FE /* AppManager */,
 				87DAABF01E55DDE300445EBB /* AlertManager */,
@@ -5746,6 +5761,7 @@
 				9AE766A21CB3CF5300B63D8E /* JAAccountServicesView.m in Sources */,
 				87459CA41E4F15AF00743120 /* PaymentTypeTableViewCell.m in Sources */,
 				9A3D21811CA3041A00FE41B6 /* JAChooseCountryViewController.m in Sources */,
+				611FF46E1E8BDBEF006F0064 /* EmarsysPredictManager.m in Sources */,
 				9DBD0C211C7F1CBB00F60374 /* JAProductInfoSISLine.m in Sources */,
 				CE9ADF9A1AB6D78200D56481 /* JASmallTeaserView.m in Sources */,
 				8714E0721E47977D004C9B1D /* BaseViewControl.m in Sources */,

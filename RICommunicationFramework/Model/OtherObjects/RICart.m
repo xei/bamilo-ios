@@ -13,8 +13,29 @@
 #import "RIPaymentMethodForm.h"
 #import "RIPaymentInformation.h"
 #import "CartForm.h"
+#import "RICartItem.h"
 
 @implementation RICart
+
+
+static RICart *instance;
+
++ (instancetype)sharedInstance {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        instance = [RICart new];
+    });
+    return instance;
+}
+
+- (NSArray<EMCartItem *> *)convertItems {
+    NSMutableArray<EMCartItem *> *emCartItems = [[NSMutableArray alloc] init];
+    for (RICartItem *item in self.cartEntity.cartItems) {
+        EMCartItem *wrapped = [[EMCartItem alloc] initWithItemID:item.sku price:item.price.floatValue quantity:item.quantity.intValue];
+        [emCartItems addObject:wrapped];
+    }
+    return emCartItems;
+}
 
 #pragma mark - Get cart
 
@@ -837,35 +858,28 @@
     NSDictionary *dict = objects[0];
     RICountryConfiguration *country = objects[1];
     
-    RICart *cart;
-    if(objects.count >= 3) {
-        cart = (RICart *)[objects objectAtIndex:2];
-    } else {
-        cart = [RICart new];
-    }
-    
     //ADDRESSES
     if (VALID_NOTEMPTY([dict objectForKey:@"addresses"], NSDictionary)) {
         RIForm* address = [RIForm parseForm:[dict objectForKey:@"addresses"]];
-        cart.addressForm = address;
+        [RICart sharedInstance].addressForm = address;
     }
     
     //FORM ENTITY
     NSDictionary *_formEntity = [dict objectForKey:@"form_entity"];
     if(_formEntity) {
-        cart.formEntity = [FormEntity parseToDataModelWithObjects:@[ _formEntity ]];
+        [RICart sharedInstance].formEntity = [FormEntity parseToDataModelWithObjects:@[ _formEntity ]];
     }
     
     //CART ENTITY
     NSDictionary *_cartEntity = [dict objectForKey:@"cart_entity"];
     if(_cartEntity) {
-        cart.cartEntity = [CartEntity parseToDataModelWithObjects:@[ _cartEntity, country ]];
+        [RICart sharedInstance].cartEntity = [CartEntity parseToDataModelWithObjects:@[ _cartEntity, country ]];
     }
     
     //CUSTOMER ENTITY
     NSDictionary *_customerEntity = [dict objectForKey:@"customer_entity"];
     if(_customerEntity) {
-        cart.customerEntity = [RICustomer parseToDataModelWithObjects:@[ _customerEntity ]];
+        [RICart sharedInstance].customerEntity = [RICustomer parseToDataModelWithObjects:@[ _customerEntity ]];
     }
     
     //SHIPPING METHOD FORM
@@ -883,10 +897,10 @@
     //MULTI-STEP ENTITY
     if (VALID_NOTEMPTY([dict objectForKey:@"multistep_entity"], NSDictionary) ) {
         NSDictionary* nextStep = [dict objectForKey:@"multistep_entity"];
-        cart.nextStep = [nextStep objectForKey:@"next_step"];
+        [RICart sharedInstance].nextStep = [nextStep objectForKey:@"next_step"];
     }
     
-    return cart;
+    return [RICart sharedInstance];
 }
 
 @end

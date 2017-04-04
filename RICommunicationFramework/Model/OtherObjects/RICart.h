@@ -11,6 +11,7 @@
 #import "CartEntity.h"
 #import "FormEntity.h"
 #import "RICustomer.h"
+#import <EmarsysPredictSDK/EmarsysPredictSDK.h>
 
 @interface RICart : NSObject <JSONVerboseModel>
 
@@ -27,6 +28,10 @@
 @property (nonatomic, strong) NSString *customerFirstMame;
 @property (nonatomic, strong) NSString *customerLastName;
 @property (nonatomic, strong) RIPaymentInformation *paymentInformation;
+
++ (instancetype)sharedInstance;
+
+- (NSArray<EMCartItem *> *)convertItems;
 
 /**
  *  Method to add a product to the cart
