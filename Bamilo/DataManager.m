@@ -137,6 +137,19 @@ static DataManager *instance;
     }];
 }
 
+//### Logout ###
+- (void)logoutUser:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
+    [self.requestManager asyncPOST:target path:RI_API_LOGOUT_CUSTOMER params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(int statusCode, id data, NSArray *errorMessages) {
+        if(statusCode == RIApiResponseSuccess && data) {
+            completion(data, nil);
+        } else {
+            completion(nil, [self getErrorFrom:statusCode errorMessages:errorMessages]);
+        }
+        [RICustomer cleanCustomerFromDB];
+    }];
+}
+
+
 //### FORGET PASSWORD ###
 - (void)forgetPassword:(id<DataServiceProtocol>)target withFields:(NSDictionary *)fields completion:(DataCompletion)completion {
     [self.requestManager asyncPOST:target path:RI_API_FORGET_PASS_CUSTOMER params:fields type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {

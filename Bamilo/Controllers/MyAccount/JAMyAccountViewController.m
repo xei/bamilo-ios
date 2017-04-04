@@ -14,8 +14,9 @@
 #import "RICustomer.h"
 #import "ViewControllerManager.h"
 #import "IconTableViewHeaderCell.h"
+#import "DataManager.h"
 
-@interface JAMyAccountViewController ()
+@interface JAMyAccountViewController() <DataServiceProtocol>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray* tableViewListItems;
@@ -134,37 +135,9 @@
 
 - (void)logout {
     [self showLoading];
-
-    __block NSString *custumerId = [RICustomer getCustomerId];
-
-    [RICustomer logoutCustomerWithSuccessBlock:^ {
-        [self hideLoading];
-
-        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-        [trackingDictionary setValue:custumerId forKey:kRIEventLabelKey];
-        [trackingDictionary setValue:@"LogoutSuccess" forKey:kRIEventActionKey];
-        [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
-        [trackingDictionary setValue:custumerId forKey:kRIEventUserIdKey];
-        [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-        [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-        [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-        [[RITrackingWrapper sharedInstance] trackEvent:@(RIEventLogout) data:[trackingDictionary copy]];
-        [self userDidLogout];
-
-    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject) {
-        [self hideLoading];
-        [self userDidLogout];
+    [[DataManager sharedInstance] logoutUser:self completion:^(id data, NSError *error) {
+        [self bind:data forRequestId:0];
     }];
-}
-
-- (void)userDidLogout {
-
-    [RICommunicationWrapper deleteSessionCookie];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedOutNotification object:nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
-
 }
 
 #pragma mark - UITableViewDelegate
@@ -205,7 +178,6 @@
             [self performSelector:customSelector];
             return;
         }
-
         if ([selectedObjItem objectForKey:@"notification"]) {
             [[NSNotificationCenter defaultCenter] postNotificationName:[selectedObjItem objectForKey:@"notification"] object:@{@"animated":[selectedObjItem objectForKey:@"animated"]} userInfo:@{@"from_checkout":@NO}];
         }
@@ -232,4 +204,28 @@
     return @"CustomerAccount";
 }
 
+
+- (void)bind:(id)data forRequestId:(int)rid {
+    [self hideLoading];
+    // --- Legacy Codes ----
+    NSString *custumerId = [RICustomer getCustomerId];
+    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+    [trackingDictionary setValue:custumerId forKey:kRIEventLabelKey];
+    [trackingDictionary setValue:@"LogoutSuccess" forKey:kRIEventActionKey];
+    [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+    [trackingDictionary setValue:custumerId forKey:kRIEventUserIdKey];
+    [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+    [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+    [[RITrackingWrapper sharedInstance] trackEvent:@(RIEventLogout) data:[trackingDictionary copy]];
+    
+    [RICommunicationWrapper deleteSessionCookie];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedOutNotification object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
+    
+    [RICustomer cleanCustomerFromDB];
+    [[ViewControllerManager sharedInstance] clearCache];
+}
 @end

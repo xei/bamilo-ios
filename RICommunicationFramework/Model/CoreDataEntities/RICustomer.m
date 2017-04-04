@@ -383,29 +383,29 @@
                                                           }];
 }
 
-+ (NSString*)logoutCustomerWithSuccessBlock:(void (^)())successBlock
-                            andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock {
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_LOGOUT_CUSTOMER]]
-                                                            parameters:nil
-                                                            httpMethod:HttpVerbPOST
-                                                             cacheType:RIURLCacheNoCache
-                                                             cacheTime:RIURLCacheDefaultTime
-                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
-                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-                                                              [RICustomer cleanCustomerFromDB];
-                                                              successBlock();
-                                                              [[ViewControllerManager sharedInstance] clearCache];
-                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
-                                                              [RICustomer cleanCustomerFromDB];
-                                                              if(NOTEMPTY(errorJsonObject)) {
-                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
-                                                              } else if(NOTEMPTY(errorObject)) {
-                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                  failureBlock(apiResponse, errorArray);
-                                                              } else {
-                                                                  failureBlock(apiResponse, nil);
-                                                              }
-                                                          }];
+//+ (NSString*)logoutCustomerWithSuccessBlock:(void (^)())successBlock
+//                            andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock {
+//    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_LOGOUT_CUSTOMER]]
+//                                                            parameters:nil
+//                                                            httpMethod:HttpVerbPOST
+//                                                             cacheType:RIURLCacheNoCache
+//                                                             cacheTime:RIURLCacheDefaultTime
+//                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
+//                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+//                                                              [RICustomer cleanCustomerFromDB];
+//                                                              successBlock();
+//                                                              [[ViewControllerManager sharedInstance] clearCache];
+//                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
+//                                                              [RICustomer cleanCustomerFromDB];
+//                                                              if(NOTEMPTY(errorJsonObject)) {
+//                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
+//                                                              } else if(NOTEMPTY(errorObject)) {
+//                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+//                                                                  failureBlock(apiResponse, errorArray);
+//                                                              } else {
+//                                                                  failureBlock(apiResponse, nil);
+//                                                              }
+//                                                          }];
 }
 
 + (void)cleanCustomerFromDB {

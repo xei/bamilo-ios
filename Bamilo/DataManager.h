@@ -32,6 +32,7 @@
 - (void)forgetPassword:(id<DataServiceProtocol>)target withFields:(NSDictionary<NSString *,FormItemModel *> *)fields completion:(DataCompletion)completion;
 - (void)loginUser:(id<DataServiceProtocol>)target withUsername:(NSString *)username password:(NSString *)password completion:(DataCompletion)completion;
 - (void)signupUser:(id<DataServiceProtocol>)target withFieldsDictionary:(NSDictionary<NSString *,FormItemModel *> *)newUserDictionary completion:(DataCompletion)completion;
+- (void)logoutUser:(id<DataServiceProtocol>)target completion:(DataCompletion)completion;
 
 //### ADDRESS ###
 - (void)getUserAddressList:(id<DataServiceProtocol>)target completion:(DataCompletion)completion;
