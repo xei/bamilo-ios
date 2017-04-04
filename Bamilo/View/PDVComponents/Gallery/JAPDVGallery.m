@@ -72,8 +72,8 @@
         point.y = self.height/2;
         imageView.center = point;
         
-        [imageView setImageWithURL:[NSURL URLWithString:image.url]
-                  placeholderImage:[UIImage imageNamed:@"placeholder_gallery"]];
+        [imageView sd_setImageWithURL:[NSURL URLWithString:image.url]
+                  placeholderImage:[UIImage imageNamed:@"placeholder_gallery"] completed:nil];
         [imageView setBackgroundColor:[UIColor whiteColor]];
 
         [imageViewsToScroll addObject:imageView];

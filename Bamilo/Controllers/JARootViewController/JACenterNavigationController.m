@@ -245,7 +245,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showCheckoutEditAddressScreen:)
                                                  name:kShowCheckoutEditAddressScreenNotification
-                                               object:nil];*/
+                                               object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showCheckoutShippingScreen)
@@ -261,7 +261,7 @@
                                              selector:@selector(showCheckoutFinishScreen:)
                                                  name:kShowCheckoutFinishScreenNotification
                                                object:nil];
-    
+    */
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showCheckoutExternalPaymentsScreen:)
                                                  name:kShowCheckoutExternalPaymentsScreenNotification
@@ -851,7 +851,7 @@
 
 #pragma mark Track Order Screen
 - (void)showMyOrdersViewController:(NSNotification*)notification {
-    UIViewController *topViewController = [self topViewController];
+    //UIViewController *topViewController = [self topViewController];
     if([RICustomer checkIfUserIsLogged]) {
 //        if (VALID_NOTEMPTY(notification.object, NSString)) {
 //            if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {

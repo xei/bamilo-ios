@@ -1143,4 +1143,8 @@ NSString *kGTMToken = @"kGTMToken";
     return formattedPrice;
 }
 
+-(void)trackTimingInMillis:(NSNumber *)millis reference:(NSString *)reference label:(NSString *)label {
+    
+}
+
 @end

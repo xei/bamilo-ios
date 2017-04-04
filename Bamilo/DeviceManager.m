@@ -35,9 +35,9 @@
 
 +(NSString *)getOSVersionFormatted {
     NSOperatingSystemVersion osVersion = [DeviceManager getOSVersion];
-    NSMutableString *osVersionFormatted = [NSMutableString stringWithFormat:@"%ld.%ld", osVersion.majorVersion, osVersion.minorVersion];
+    NSMutableString *osVersionFormatted = [NSMutableString stringWithFormat:@"%d.%d", (int)osVersion.majorVersion, (int)osVersion.minorVersion];
     if(osVersion.patchVersion) {
-        [osVersionFormatted appendFormat:@".%ld", osVersion.patchVersion];
+        [osVersionFormatted appendFormat:@".%d", (int)osVersion.patchVersion];
     }
     
     return osVersionFormatted;

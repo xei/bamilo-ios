@@ -96,30 +96,30 @@ country:(RICountryConfiguration*)country {
         }
         
         if ([teaserComponentJSON objectForKey:@"max_price"]) {
-            newTeaserComponent.maxPrice = [NSNumber numberWithLong:[[teaserComponentJSON objectForKey:@"max_price"] longLongValue]];
+            newTeaserComponent.maxPrice = [NSNumber numberWithLongLong:[[teaserComponentJSON objectForKey:@"max_price"] longLongValue]];
             newTeaserComponent.maxPriceFormatted = [RICountryConfiguration formatPrice:newTeaserComponent.maxPrice country:country];
         }
         
         if ([teaserComponentJSON objectForKey:@"max_price_converted"]) {
-            newTeaserComponent.maxPriceEuroConverted = [NSNumber numberWithLong:[[teaserComponentJSON objectForKey:@"max_price_converted"] longLongValue]];
+            newTeaserComponent.maxPriceEuroConverted = [NSNumber numberWithLongLong:[[teaserComponentJSON objectForKey:@"max_price_converted"] longLongValue]];
         }
         
         if ([teaserComponentJSON objectForKey:@"price"]) {
-            newTeaserComponent.price = [NSNumber numberWithLong:[[teaserComponentJSON objectForKey:@"price"] longLongValue]];
+            newTeaserComponent.price = [NSNumber numberWithLongLong:[[teaserComponentJSON objectForKey:@"price"] longLongValue]];
             newTeaserComponent.priceFormatted = [RICountryConfiguration formatPrice:newTeaserComponent.price country:country];
         }
         
         if ([teaserComponentJSON objectForKey:@"price_converted"]) {
-            newTeaserComponent.priceEuroConverted = [NSNumber numberWithLong:[[teaserComponentJSON objectForKey:@"price_converted"] longLongValue]];
+            newTeaserComponent.priceEuroConverted = [NSNumber numberWithLongLong:[[teaserComponentJSON objectForKey:@"price_converted"] longLongValue]];
         }
         
         if ([teaserComponentJSON objectForKey:@"special_price"]) {
-            newTeaserComponent.specialPrice = [NSNumber numberWithLong:[[teaserComponentJSON objectForKey:@"special_price"] longLongValue]];
+            newTeaserComponent.specialPrice = [NSNumber numberWithLongLong:[[teaserComponentJSON objectForKey:@"special_price"] longLongValue]];
             newTeaserComponent.specialPriceFormatted = [RICountryConfiguration formatPrice:newTeaserComponent.specialPrice country:country];
         }
         
         if ([teaserComponentJSON objectForKey:@"special_price_converted"]) {
-            newTeaserComponent.specialPriceEuroConverted = [NSNumber numberWithLong:[[teaserComponentJSON objectForKey:@"special_price_converted"] longLongValue]];
+            newTeaserComponent.specialPriceEuroConverted = [NSNumber numberWithLongLong:[[teaserComponentJSON objectForKey:@"special_price_converted"] longLongValue]];
         }
 
     }

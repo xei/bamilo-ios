@@ -227,7 +227,7 @@
         JAClickableView *clickView = [[JAClickableView alloc] initWithFrame:CGRectMake(0, 0, 48, 48)];
         UIImageView *smallImage = [[UIImageView alloc] init];
         [smallImage setFrame:CGRectMake(0, 0, 48, 48)];
-        [smallImage setImageWithURL:[NSURL URLWithString:[_urlImages objectAtIndex:_infinite?i-1:i]] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
+        [smallImage sd_setImageWithURL:[NSURL URLWithString:[_urlImages objectAtIndex:_infinite?i-1:i]] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"] completed:nil];
         [smallImage setX:3+(_infinite?j-1:j)*54];
         smallImage.tag = i;
         clickView.tag = i;

@@ -50,7 +50,7 @@ PODS:
 
 DEPENDENCIES:
   - Adjust (~> 4.11.0)
-  - AlgoliaSearch-Client (~> 3.5)
+  - AlgoliaSearch-Client
   - Crashlytics (~> 3.8)
   - EmarsysPredictSDK
   - Fabric
@@ -87,6 +87,6 @@ SPEC CHECKSUMS:
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   TTRangeSlider: 2f2ce4a33b32bb323c6575b9f5161c4664459c58
 
-PODFILE CHECKSUM: f5c4d83799bf646d4a643bee43071f1d185f3587
+PODFILE CHECKSUM: 5bc601816229ba315e6ce187fd03a63f610e49bb
 
 COCOAPODS: 1.1.1

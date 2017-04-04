@@ -406,7 +406,7 @@
 //                                                                  failureBlock(apiResponse, nil);
 //                                                              }
 //                                                          }];
-}
+//}
 
 + (void)cleanCustomerFromDB {
     [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RICustomer class])];

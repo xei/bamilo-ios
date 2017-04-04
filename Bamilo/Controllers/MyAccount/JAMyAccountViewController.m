@@ -173,9 +173,9 @@
         [[ViewControllerManager centerViewController] requestNavigateToClass:class args:nil];
     } else {
         if ([[selectedObjItem objectForKey:@"selector"] pointerValue]) {
-            SEL customSelector = [[selectedObjItem objectForKey:@"selector"] pointerValue];
+            __unused SEL customSelector = [[selectedObjItem objectForKey:@"selector"] pointerValue];
             //[self performSelector:customSelector withObject: 0];
-            [self performSelector:customSelector];
+            //[self performSelector:customSelector];
             return;
         }
         if ([selectedObjItem objectForKey:@"notification"]) {

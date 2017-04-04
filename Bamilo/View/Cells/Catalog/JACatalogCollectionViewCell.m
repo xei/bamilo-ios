@@ -215,7 +215,7 @@
     
     RIImage* firstImage = [product.images firstObject];
     
-    [_productImageView setImageWithURL:[NSURL URLWithString:firstImage.url]
+    [_productImageView sd_setImageWithURL:[NSURL URLWithString:firstImage.url]
                       placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
     
     if (VALID_NOTEMPTY(product.priceRange, NSString)) {
@@ -289,7 +289,7 @@
     
     RIImage* firstImage = variation.image;
     
-    [_productImageView setImageWithURL:[NSURL URLWithString:firstImage.url]
+    [_productImageView sd_setImageWithURL:[NSURL URLWithString:firstImage.url]
                       placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
 
     if (VALID_NOTEMPTY(variation.specialPrice, NSNumber)) {

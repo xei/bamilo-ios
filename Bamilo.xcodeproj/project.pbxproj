@@ -113,7 +113,6 @@
 		871BA8561E867F4A007680C5 /* AppEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BA8551E867F4A007680C5 /* AppEvent.m */; };
 		871BA8591E867FE0007680C5 /* SearchEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BA8581E867FE0007680C5 /* SearchEvent.m */; };
 		871BA85C1E8680A1007680C5 /* EventConsts.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BA85B1E8680A1007680C5 /* EventConsts.m */; };
-		871BA85F1E8786C5007680C5 /* Bamilo-Debug-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 871BA85E1E8786C5007680C5 /* Bamilo-Debug-Info.plist */; };
 		872230DC1E6A965E000748E9 /* Accengage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 872230DB1E6A965E000748E9 /* Accengage.framework */; };
 		872230DE1E6A969E000748E9 /* Accengage.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 872230DB1E6A965E000748E9 /* Accengage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		872230E31E6A9815000748E9 /* AccengageTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 872230E21E6A9815000748E9 /* AccengageTracker.m */; };
@@ -142,7 +141,6 @@
 		875435121E77E91000B5D6B4 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 875435111E77E91000B5D6B4 /* libz.tbd */; };
 		875435171E77ECD000B5D6B4 /* BaseTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 875435161E77ECD000B5D6B4 /* BaseTracker.m */; };
 		8754351B1E77ECE500B5D6B4 /* PushWooshTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 8754351A1E77ECE500B5D6B4 /* PushWooshTracker.m */; };
-		875435201E780D6B00B5D6B4 /* Bamilo-Staging-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8754351F1E780D6B00B5D6B4 /* Bamilo-Staging-Info.plist */; };
 		875AD53F1E38C0C800584ABF /* RIConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD48C1E38C0C800584ABF /* RIConfiguration.m */; };
 		875AD5401E38C0C800584ABF /* RIAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD4901E38C0C800584ABF /* RIAddress.m */; };
 		875AD5411E38C0C900584ABF /* RIApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD4921E38C0C800584ABF /* RIApi.m */; };
@@ -5297,7 +5295,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = "";
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "Rocket Internet";
 				TargetAttributes = {
 					870F8CF21E338D2C0021F87B = {
@@ -5355,9 +5353,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				61148E0A1E47255F00E2540B /* StepperView.xib in Resources */,
-				875435201E780D6B00B5D6B4 /* Bamilo-Staging-Info.plist in Resources */,
 				CEDBF8971B0DF5D00073971A /* JANewsletterComponent~iPad_RTL.xib in Resources */,
-				871BA85F1E8786C5007680C5 /* Bamilo-Debug-Info.plist in Resources */,
 				87459CA11E4F159E00743120 /* PaymentTypeTableViewCell.xib in Resources */,
 				CE9AE03C1AB6D78200D56481 /* JANewsletterComponent~iPad.xib in Resources */,
 				9A564CAF1B332FB200F23057 /* JASellerRatingsViewController.xib in Resources */,

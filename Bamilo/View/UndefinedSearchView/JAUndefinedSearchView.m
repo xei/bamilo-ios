@@ -306,7 +306,7 @@
                 UIImageView *brandImage = [[UIImageView alloc] initWithFrame:CGRectMake(30, 20, 50, 40)];
                 
                 if (brand.image.length > 0) {
-                    [brandImage setImageWithURL:[NSURL URLWithString:brand.image]
+                    [brandImage sd_setImageWithURL:[NSURL URLWithString:brand.image]
                                placeholderImage:[UIImage imageNamed:@"placeholder_scrollable"]];
                 } else {
                     [brandImage setImage:[UIImage imageNamed:@"placeholder_scrollable"]];

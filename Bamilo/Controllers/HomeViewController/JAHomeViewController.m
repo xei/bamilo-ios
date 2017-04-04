@@ -76,7 +76,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffMenuSwipePanelNotification
                                                         object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self.teaserPageView
+    /*[[NSNotificationCenter defaultCenter] addObserver:self.teaserPageView
                                              selector:@selector(keyboardWillShow:)
                                                  name:UIKeyboardDidShowNotification
                                                object:nil];
@@ -89,7 +89,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self.teaserPageView
                                              selector:@selector(hideKeyboard)
                                                  name:kOpenMenuNotification
-                                               object:nil];
+                                               object:nil];*/
     
     [self hideLoading];
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"]) {

@@ -41,25 +41,25 @@ static EmarsysMobileEngage *instance;
 }
 
 -(void)sendOpen:(NSString *)sid completion:(EmarsysMobileEngageResponse)completion {
-    [[EmarsysDataManager sharedInstance] openMessageEvent:[self getConactIdentifier] sid:sid completion:^(id data, NSError *error) {
+    [[EmarsysDataManager sharedInstance] openMessageEvent:[self getContactIdentifier] sid:sid completion:^(id data, NSError *error) {
         [self handleEmarsysMobileEngageResponse:data error:error completion:completion];
     }];
 }
 
 -(void)sendCustomEvent:(NSString *)event attributes:(NSDictionary *)attributes completion:(EmarsysMobileEngageResponse)completion {
-    [[EmarsysDataManager sharedInstance] customEvent:[self getConactIdentifier] event:event attributes:attributes completion:^(id data, NSError *error) {
+    [[EmarsysDataManager sharedInstance] customEvent:[self getContactIdentifier] event:event attributes:attributes completion:^(id data, NSError *error) {
         [self handleEmarsysMobileEngageResponse:data error:error completion:completion];
     }];
 }
 
 -(void)sendLogout:(EmarsysMobileEngageResponse)completion {
-    [[EmarsysDataManager sharedInstance] logout:[self getConactIdentifier] completion:^(id data, NSError *error) {
+    [[EmarsysDataManager sharedInstance] logout:[self getContactIdentifier] completion:^(id data, NSError *error) {
         [self handleEmarsysMobileEngageResponse:data error:error completion:completion];
     }];
 }
 
 #pragma mark - Private Methods
--(id) getConactIdentifier {
+-(id) getContactIdentifier {
     PushNotificationManager *pushManager = [PushNotificationManager pushManager];
     return [EmarsysContactIdentifier appId:[pushManager appCode] hwid:[pushManager getHWID]];
 }

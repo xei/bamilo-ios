@@ -208,7 +208,7 @@
 {
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context)
      {
-         UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+         //UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
          // do whatever
          if (VALID_NOTEMPTY(self.product, RIProduct)) {
              [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];

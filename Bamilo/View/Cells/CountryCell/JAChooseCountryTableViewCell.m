@@ -76,7 +76,7 @@
 - (void)setCountry:(RICountry *)country
 {
     self.countryName.text = country.name;
-    [self.countryImage setImageWithURL:[NSURL URLWithString:country.flag]];
+    [self.countryImage sd_setImageWithURL:[NSURL URLWithString:country.flag]];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

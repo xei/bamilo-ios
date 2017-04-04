@@ -30,7 +30,7 @@
                                                                            imageSize.width,
                                                                            imageSize.height)];
     
-    [imageView setImageWithURL:[NSURL URLWithString:itemCollection.imageURL]
+    [imageView sd_setImageWithURL:[NSURL URLWithString:itemCollection.imageURL]
               placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
     [self addSubview:imageView];
     

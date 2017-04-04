@@ -1084,13 +1084,9 @@ typedef void (^ProcessActionBlock)(void);
     [activityController setValue:[NSString stringWithFormat:STRING_SHARE_OBJECT, APP_NAME]
                           forKey:@"subject"];
     
-    
-    activityController.completionHandler = ^(NSString *activityType, BOOL completed)
-    {
+    activityController.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
         [self trackingEventShared:activityType];
     };
-    
-    
     
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
     {

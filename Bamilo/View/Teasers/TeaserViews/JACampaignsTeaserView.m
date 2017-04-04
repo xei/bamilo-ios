@@ -158,7 +158,7 @@
                                    self.bounds.origin.y,
                                    halfWidth,
                                    mainAreaHeight)];
-    [imageView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
     [mainClickableView addSubview:imageView];
     
     
@@ -296,7 +296,7 @@
     CGFloat imageViewHeight = 103.0f; //value by design
     NSString* imageUrl = mainCampaign.imagePortraitUrl;
     UIImageView* imageView = [UIImageView new];
-    [imageView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
     [mainClickableView addSubview:imageView];
     
     CGFloat totalOcuppiedWidth = imageViewWidth + clockViewWidth;
