@@ -23,4 +23,7 @@ typedef void(^EmarsysMobileEngageResponse)(BOOL success);
 //POST events/<event-name>
 -(void) sendCustomEvent:(NSString *)event attributes:(NSDictionary *)attributes completion:(EmarsysMobileEngageResponse)completion;
 
+//POST logout
+-(void) sendLogout:(EmarsysMobileEngageResponse)completion;
+
 @end

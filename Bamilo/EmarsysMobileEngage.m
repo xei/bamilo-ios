@@ -12,6 +12,8 @@
 #import "RICustomer.h"
 #import "SearchEvent.h"
 
+#define cContactFieldId @"4819" //Field Editor (found in 'Admin') - Emarsys Dashboard
+
 @implementation EmarsysMobileEngage
 
 static EmarsysMobileEngage *instance;
@@ -28,9 +30,9 @@ static EmarsysMobileEngage *instance;
 #pragma mark - Public Methods
 -(void)sendLogin:(NSString *)pushToken completion:(EmarsysMobileEngageResponse)completion {
     if([RICustomer checkIfUserIsLogged]) {
-        /*[[EmarsysDataManager sharedInstance] doLogin:applicationId hardwareId:hardwareId pushToken:pushToken contactFieldId:@"Email" contactFieldValue:[RICustomer getCurrentCustomer].email completion:^(id data, NSError *error) {
+        [[EmarsysDataManager sharedInstance] login:[self getIdentifier:pushToken] contactFieldId:cContactFieldId contactFieldValue:[RICustomer getCustomerId] completion:^(id data, NSError *error) {
             completion(error == nil);
-        }];*/
+        }];
     } else {
         [[EmarsysDataManager sharedInstance] anonymousLogin:[self getIdentifier:pushToken] completion:^(id data, NSError *error) {
             [self handleEmarsysMobileEngageResponse:data error:error completion:completion];
@@ -46,6 +48,12 @@ static EmarsysMobileEngage *instance;
 
 -(void)sendCustomEvent:(NSString *)event attributes:(NSDictionary *)attributes completion:(EmarsysMobileEngageResponse)completion {
     [[EmarsysDataManager sharedInstance] customEvent:[self getIdentifier:nil] event:event attributes:attributes completion:^(id data, NSError *error) {
+        [self handleEmarsysMobileEngageResponse:data error:error completion:completion];
+    }];
+}
+
+-(void)sendLogout:(EmarsysMobileEngageResponse)completion {
+    [[EmarsysDataManager sharedInstance] logout:[self getIdentifier:nil] completion:^(id data, NSError *error) {
         [self handleEmarsysMobileEngageResponse:data error:error completion:completion];
     }];
 }

@@ -55,7 +55,8 @@
     
     if(responseObject) {
         switch (statusCode) {
-            case SUCCESSFUL: {
+            case SUCCESSFUL:
+            case CREATED: {
                 completion(statusCode, responseObject, nil);
             }
             break;
