@@ -397,16 +397,12 @@
                                                               [[ViewControllerManager sharedInstance] clearCache];
                                                           } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               [RICustomer cleanCustomerFromDB];
-                                                              if(NOTEMPTY(errorJsonObject))
-                                                              {
+                                                              if(NOTEMPTY(errorJsonObject)) {
                                                                   failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
-                                                              }
-                                                              else if(NOTEMPTY(errorObject))
-                                                              {
+                                                              } else if(NOTEMPTY(errorObject)) {
                                                                   NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
                                                                   failureBlock(apiResponse, errorArray);
-                                                              } else
-                                                              {
+                                                              } else {
                                                                   failureBlock(apiResponse, nil);
                                                               }
                                                           }];
@@ -415,10 +411,10 @@
 + (void)cleanCustomerFromDB {
     [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RICustomer class])];
     [[RIDataBaseWrapper sharedInstance] saveContext];
-    [EmarsysPredictManager userLogedOut];
     
     //Reset cartEntity of sharedInstance cart
     [RICart sharedInstance].cartEntity.cartItems = @[];
+    [EmarsysPredictManager userLogedOut];
 }
 
 + (NSString *)requestPasswordReset:(void (^)())successBlock

@@ -149,7 +149,7 @@
         [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
         NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
         [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLogout] data:[trackingDictionary copy]];
+        [[RITrackingWrapper sharedInstance] trackEvent:@(RIEventLogout) data:[trackingDictionary copy]];
         [self userDidLogout];
 
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject) {
