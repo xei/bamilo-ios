@@ -21,7 +21,7 @@
     EMTransaction *transaction = [[EMTransaction alloc] init];
     [transaction setCart:[[RICart sharedInstance] convertItems]];
     
-    if ([viewController conformsToProtocol:@protocol(EmarsysWebExtendProtocol)]) {
+    if ([viewController conformsToProtocol:@protocol(EmarsysWebExtendProtocol)] && [viewController respondsToSelector:@selector(getDataCollection:)]) {
         transaction = [((id<EmarsysWebExtendProtocol>)viewController) getDataCollection:transaction];
     }
     
