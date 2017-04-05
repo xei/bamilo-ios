@@ -114,7 +114,6 @@
 		871BA8591E867FE0007680C5 /* SearchEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BA8581E867FE0007680C5 /* SearchEvent.m */; };
 		871BA85C1E8680A1007680C5 /* EventConsts.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BA85B1E8680A1007680C5 /* EventConsts.m */; };
 		872230DC1E6A965E000748E9 /* Accengage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 872230DB1E6A965E000748E9 /* Accengage.framework */; };
-		872230DE1E6A969E000748E9 /* Accengage.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 872230DB1E6A965E000748E9 /* Accengage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		872230E31E6A9815000748E9 /* AccengageTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 872230E21E6A9815000748E9 /* AccengageTracker.m */; };
 		872230E61E6A9851000748E9 /* CAPSPageMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 872230E51E6A9851000748E9 /* CAPSPageMenu.m */; };
 		872230EA1E6A989D000748E9 /* SettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 872230E91E6A989D000748E9 /* SettingsManager.m */; };
@@ -559,19 +558,6 @@
 			remoteInfo = Bamilo;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		872230DD1E6A9686000748E9 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				872230DE1E6A969E000748E9 /* Accengage.framework in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1123BA1ABA81805B2A214BA9 /* Pods-Bamilo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bamilo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bamilo/Pods-Bamilo.release.xcconfig"; sourceTree = "<group>"; };
@@ -5276,8 +5262,7 @@
 				875AD58C1E38C62A00584ABF /* ShellScript */,
 				A496F8EDC748088D90A309BD /* [CP] Embed Pods Frameworks */,
 				AF99C33FE560E007DC18281B /* [CP] Copy Pods Resources */,
-				872230DD1E6A9686000748E9 /* CopyFiles */,
-				872230DF1E6A96C6000748E9 /* ShellScript */,
+				878EA5FA1E94D6DF00D97B28 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -5463,19 +5448,6 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		872230DF1E6A96C6000748E9 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "FRAMEWORKS_DIRECTORY=\"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}\"\nACCENGAGE_FRAMEWORKS=`find $FRAMEWORKS_DIRECTORY -type d -name \"Accengage*.framework\"`\n\nfor framework in $ACCENGAGE_FRAMEWORKS; do\nframework_name=`basename $framework`\nframework_binary_path=$framework\"/${framework_name%.*}\"\n\narchs=\"$(lipo -info \"${framework_binary_path}\" | rev | cut -d ':' -f1 | rev)\"\nstripped=\"\"\nfor arch in $archs; do\nif ! [[ \"${VALID_ARCHS}\" == *\"$arch\"* ]]; then\nlipo -remove \"$arch\" -output \"$framework_binary_path\" \"$framework_binary_path\" || exit 1\nstripped=\"$stripped $arch\"\nfi\ndone\nif [[ \"$stripped\" != \"\" ]]; then\necho \"Stripped $framework_binary_path of architectures:$stripped\"\nif [ \"${CODE_SIGNING_REQUIRED}\" == \"YES\" ]; then\n/usr/bin/codesign --force --sign ${EXPANDED_CODE_SIGN_IDENTITY} --preserve-metadata=identifier,entitlements \"${framework_binary_path}\"\nfi\nfi\ndone";
-		};
 		875AD58C1E38C62A00584ABF /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -5488,6 +5460,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "SCRIPT=`/usr/bin/find \"${SRCROOT}\" -name newrelic_postbuild.sh | head -n 1`\n\n/bin/sh \"${SCRIPT}\" \"AAdde6b4d1fb2abb804137521a6709a5f5c771df14\"";
+		};
+		878EA5FA1E94D6DF00D97B28 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ \"${CONFIGURATION}\" = \"AdHoc\" ]; then\n./Pods/Fabric/iOS/Fabric.framework/run ddde4ad6ad210575fdac10a908040d1a93e74833 c37b1e5c603fb0fd9b71f1bf627d92f87718c6efd4aada50d724ab8ad126fe35\nfi";
 		};
 		A496F8EDC748088D90A309BD /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
