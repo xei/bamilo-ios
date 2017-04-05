@@ -11,10 +11,11 @@
 
 @protocol EmarsysPredictProtocol
 
-@optional - (EMTransaction *)getDataCollection:(EMTransaction *)transaction;
-@optional - (EMRecommendationRequest *)getReccomandtaionRequest:(EMRecommendationRequest *)transaction;
-@optional - (NSString *)getRecommandationLogic;
-@optional - (void)reccomandationResult:(EMRecommendationResult *)result;
-@optional - (BOOL)preventSendTransactionInViewWillAppear;
+@optional
+- (EMTransaction *)getDataCollection:(EMTransaction *)transaction;
+- (EMRecommendationRequest *)getReccomandtaionRequest:(EMRecommendationRequest *)transaction;
+- (NSString *)getRecommandationLogic;
+- (void)reccomandationResult:(EMRecommendationResult *)result;
+- (BOOL)isPreventSendTransactionInViewWillAppear;
 
 @end

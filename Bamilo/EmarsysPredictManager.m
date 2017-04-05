@@ -49,13 +49,15 @@
 
 + (void)setCustomer:(RICustomer *)customer {
     EMSession *emarsysSession = [EMSession sharedSession];
-    if (customer.email)
+    if (customer.email) {
         [emarsysSession setCustomerEmail:customer.email];
-    if (customer.customerId)
+    }
+    if (customer.customerId) {
         [emarsysSession setCustomerID:[customer.customerId stringValue]];
+    }
 }
 
-+ (void)userLogedOut {
++ (void)userLoggedOut {
     EMSession *emarsysSession = [EMSession sharedSession];
     [emarsysSession setCustomerID:nil];
     [emarsysSession setCustomerEmail:nil];

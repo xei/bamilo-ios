@@ -414,7 +414,7 @@
     
     //Reset cartEntity of sharedInstance cart
     [RICart sharedInstance].cartEntity.cartItems = @[];
-    [EmarsysPredictManager userLogedOut];
+    [EmarsysPredictManager userLoggedOut];
 }
 
 + (NSString *)requestPasswordReset:(void (^)())successBlock

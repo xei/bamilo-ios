@@ -57,8 +57,8 @@
     }
     
     if ([self conformsToProtocol:@protocol(EmarsysPredictProtocol)]) {
-        if ([self respondsToSelector:@selector(preventSendTransactionInViewWillAppear)]) {
-            if (![((id<EmarsysPredictProtocol>)self) preventSendTransactionInViewWillAppear]) {
+        if ([self respondsToSelector:@selector(isPreventSendTransactionInViewWillAppear)]) {
+            if (![((id<EmarsysPredictProtocol>)self) isPreventSendTransactionInViewWillAppear]) {
                 [EmarsysPredictManager sendTransactionsOf:self];
             }
         } else {
