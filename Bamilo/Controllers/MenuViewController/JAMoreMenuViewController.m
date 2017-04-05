@@ -185,8 +185,10 @@
     NSDictionary *selectedObjItem = self.tableViewListItems[indexPath.row];
     if ([[selectedObjItem objectForKey:@"selector"] pointerValue]) {
         __unused SEL customSelector = [[selectedObjItem objectForKey:@"selector"] pointerValue];
-        //[self performSelector:customSelector withObject: 0];
-        //[self performSelector:customSelector];
+        
+        IMP implementation = [self methodForSelector:customSelector];
+        void (*function)(id, SEL) = (void *)implementation;
+        function(self, customSelector);
         return;
     }
     

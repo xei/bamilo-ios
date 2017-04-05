@@ -2101,7 +2101,7 @@ typedef void (^ProcessActionBlock)(void);
     return transaction;
 }
 
-- (BOOL)preventSendTransactionInViewWillAppear {
+- (BOOL)isPreventSendTransactionInViewWillAppear {
     return YES;
 }
 

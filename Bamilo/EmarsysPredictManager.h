@@ -16,6 +16,6 @@
 
 + (void)sendTransactionsOf:(UIViewController *)viewController;
 + (void)setCustomer:(RICustomer *)customer;
-+ (void)userLogedOut;
++ (void)userLoggedOut;
 
 @end

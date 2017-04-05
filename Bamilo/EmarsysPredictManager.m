@@ -13,7 +13,7 @@
 
 + (void)sendTransactionsOf:(UIViewController *)viewController {
     
-    if (![viewController conformsToProtocol:@protocol(EmarsysPredictProtocol)]) {
+    if (![viewController conformsToProtocol:@protocol(EmarsysPredictProtocolBase)]) {
         return;
     }
     
@@ -21,22 +21,18 @@
     EMTransaction *transaction = [[EMTransaction alloc] init];
     [transaction setCart:[[RICart sharedInstance] convertItems]];
     
-    if ([viewController respondsToSelector:@selector(getDataCollection:)]) {
-        transaction = [((id<EmarsysPredictProtocol>)viewController) getDataCollection:transaction];
+    if ([viewController conformsToProtocol:@protocol(EmarsysWebExtendProtocol)]) {
+        transaction = [((id<EmarsysWebExtendProtocol>)viewController) getDataCollection:transaction];
     }
     
-    if ([viewController respondsToSelector:@selector(getReccomandtaionRequest:)]) {
-        if (![viewController respondsToSelector:@selector(getRecommandationLogic)]) {
-            NSAssert(true, @"getRecommandationLogic doesn't return login name (String) in %@", NSStringFromClass(viewController.class));
-            return;
-        }
-        NSString *logic = [((id<EmarsysPredictProtocol>)viewController) getRecommandationLogic];
+    if ([viewController conformsToProtocol:@protocol(EmarsysRecommendationsProtocol)]) {
+        NSString *logic = [((id<EmarsysRecommendationsProtocol>)viewController) getRecommandationLogic];
         EMRecommendationRequest *recommend = [[EMRecommendationRequest alloc] initWithLogic: logic];
-        recommend = [((id<EmarsysPredictProtocol>)viewController) getReccomandtaionRequest:recommend];
+        recommend = [((id<EmarsysRecommendationsProtocol>)viewController) getReccomandtaionRequest:recommend];
         recommend.completionHandler = ^(EMRecommendationResult *_Nonnull result) {
             // Process result
             NSLog(@"%@", result.featureID);
-            [((id<EmarsysPredictProtocol>)viewController) reccomandationResult:result];
+            [((id<EmarsysRecommendationsProtocol>)viewController) reccomandationResult:result];
         };
         [transaction recommend:recommend];
     }
@@ -49,13 +45,15 @@
 
 + (void)setCustomer:(RICustomer *)customer {
     EMSession *emarsysSession = [EMSession sharedSession];
-    if (customer.email)
+    if (customer.email) {
         [emarsysSession setCustomerEmail:customer.email];
-    if (customer.customerId)
+    }
+    if (customer.customerId) {
         [emarsysSession setCustomerID:[customer.customerId stringValue]];
+    }
 }
 
-+ (void)userLogedOut {
++ (void)userLoggedOut {
     EMSession *emarsysSession = [EMSession sharedSession];
     [emarsysSession setCustomerID:nil];
     [emarsysSession setCustomerEmail:nil];

@@ -32,15 +32,9 @@
         NSString *filterString = url.query ? [url.query stringByReplacingOccurrencesOfString:@"=" withString:@"/"] : nil;
         
         
-        if ([DeepLinkManager goToSearchWithTarget:targetKey argument:argument filter:filterString]) {
-            return;
-        }
-        
-        if ([DeepLinkManager goToSellerPageWithTargetKey:targetKey argument:argument]) {
-            return;
-        }
-        
-        if ([DeepLinkManager justGoToSpecialViewWithTarget:targetKey]) {
+        if ([DeepLinkManager goToSearchWithTarget:targetKey argument:argument filter:filterString] ||
+            [DeepLinkManager goToSellerPageWithTargetKey:targetKey argument:argument] ||
+            [DeepLinkManager justGoToSpecialViewWithTarget:targetKey]) {
             return;
         }
         
