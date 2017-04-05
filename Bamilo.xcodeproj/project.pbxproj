@@ -6082,8 +6082,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
 				PRODUCT_NAME = Bamilo;
-				PROVISIONING_PROFILE = "84edce36-e15a-4384-9eb4-158164c65295";
-				PROVISIONING_PROFILE_SPECIFIER = "BML AdHoc";
+				PROVISIONING_PROFILE = "718587df-6281-4f01-8556-bfc43c8e3df4";
+				PROVISIONING_PROFILE_SPECIFIER = "BLO AdHoc";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(PROJECT_DIR)/Bamilo/ExternalFrameworks/RICommunicationFramework/** $(PROJECT_DIR)/Bamilo/ExternalFrameworks/FXBlurView/**";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -6250,7 +6250,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Bamilo/Bamilo.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: ramtin monazahian (39SHTXEZ68)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Narbeh Mirzaei (8KGZNNMRW6)";
 				CURRENT_PROJECT_VERSION = 28;
 				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -6264,8 +6264,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
 				PRODUCT_NAME = Bamilo;
-				PROVISIONING_PROFILE = "1695f311-2e81-481a-8ef4-21b19afc5d37";
-				PROVISIONING_PROFILE_SPECIFIER = "BML Development";
+				PROVISIONING_PROFILE = "7fdbd164-cea3-4b58-9a5b-dcded3772e5d";
+				PROVISIONING_PROFILE_SPECIFIER = "BLO Development";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(PROJECT_DIR)/Bamilo/ExternalFrameworks/RICommunicationFramework/** $(PROJECT_DIR)/Bamilo/ExternalFrameworks/FXBlurView/**";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -6294,8 +6294,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
 				PRODUCT_NAME = Bamilo;
-				PROVISIONING_PROFILE = "da40df0d-3da5-48f5-8ea4-6a146de8be7c";
-				PROVISIONING_PROFILE_SPECIFIER = "BML AppStore";
+				PROVISIONING_PROFILE = "f926cf4c-9911-47c4-860c-d2810ac0299f";
+				PROVISIONING_PROFILE_SPECIFIER = "BLO Distribution";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(PROJECT_DIR)/Bamilo/ExternalFrameworks/RICommunicationFramework/** $(PROJECT_DIR)/Bamilo/ExternalFrameworks/FXBlurView/**";
 				VALID_ARCHS = "armv7 armv7s arm64";
