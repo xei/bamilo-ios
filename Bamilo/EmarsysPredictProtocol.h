@@ -8,14 +8,29 @@
 
 #import <Foundation/Foundation.h>
 
-
-@protocol EmarsysPredictProtocol
+@protocol EmarsysPredictProtocolBase <NSObject>
 
 @optional
-- (EMTransaction *)getDataCollection:(EMTransaction *)transaction;
+- (BOOL)isPreventSendTransactionInViewWillAppear;
+
+@end
+
+@protocol EmarsysRecommendationsProtocol<EmarsysPredictProtocolBase>
+
+@required
 - (EMRecommendationRequest *)getReccomandtaionRequest:(EMRecommendationRequest *)transaction;
 - (NSString *)getRecommandationLogic;
 - (void)reccomandationResult:(EMRecommendationResult *)result;
-- (BOOL)isPreventSendTransactionInViewWillAppear;
 
+@end
+
+@protocol EmarsysWebExtendProtocol<EmarsysPredictProtocolBase>
+
+@required
+- (EMTransaction *)getDataCollection:(EMTransaction *)transaction;
+
+@end
+
+
+@protocol EmarsysPredictProtocol<EmarsysWebExtendProtocol, EmarsysRecommendationsProtocol>
 @end

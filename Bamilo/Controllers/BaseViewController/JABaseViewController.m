@@ -264,9 +264,9 @@
         [self showSearchBar];
     }
     
-    if ([self conformsToProtocol:@protocol(EmarsysPredictProtocol)]) {
+    if ([self conformsToProtocol:@protocol(EmarsysPredictProtocolBase)]) {
         if ([self respondsToSelector:@selector(isPreventSendTransactionInViewWillAppear)]) {
-            if (![((id<EmarsysPredictProtocol>)self) isPreventSendTransactionInViewWillAppear]) {
+            if (![((id<EmarsysPredictProtocolBase>)self) isPreventSendTransactionInViewWillAppear]) {
                 [EmarsysPredictManager sendTransactionsOf:self];
             }
         } else {
