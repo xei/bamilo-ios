@@ -146,17 +146,17 @@
     
     self.loadingView.alpha = 0.0f;
     
-    self.accengageAlias = [self getDataTrackerAlias];
+    //self.accengageAlias = [self getDataTrackerAlias];
 }
 
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    [Accengage trackScreenDisplay:[self getPerformanceTrackerScreenName] ?: @""];
+    //[Accengage trackScreenDisplay:[self getPerformanceTrackerScreenName] ?: @""];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
-    [Accengage trackScreenDismiss:[self getPerformanceTrackerScreenName] ?: @""];
+    //[Accengage trackScreenDismiss:[self getPerformanceTrackerScreenName] ?: @""];
     
     [super viewDidDisappear:animated];
 }

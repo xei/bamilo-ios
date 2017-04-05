@@ -34,7 +34,7 @@
     self.title = nil;
     self.view.backgroundColor = JABackgroundGrey;
     
-    self.accengageAlias = [self getDataTrackerAlias];
+    //self.accengageAlias = [self getDataTrackerAlias];
 }
 
 - (JANavigationBarLayout *)navBarLayout {
@@ -72,7 +72,7 @@
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    [Accengage trackScreenDisplay:[self getPerformanceTrackerScreenName] ?: @""];
+    //[Accengage trackScreenDisplay:[self getPerformanceTrackerScreenName] ?: @""];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -84,7 +84,7 @@
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
-    [Accengage trackScreenDismiss:[self getPerformanceTrackerScreenName] ?: @""];
+    //[Accengage trackScreenDismiss:[self getPerformanceTrackerScreenName] ?: @""];
     
     [super viewDidDisappear:animated];
 }

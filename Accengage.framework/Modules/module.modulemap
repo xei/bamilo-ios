@@ -1,6 +1,0 @@
-framework module Accengage {
-  umbrella header "Accengage.h"
-
-  export *
-  module * { export * }
-}
