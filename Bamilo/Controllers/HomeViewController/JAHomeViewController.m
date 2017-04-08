@@ -22,8 +22,9 @@
 #import "JACenterNavigationController.h"
 #import "JATabBarButton.h"
 #import "ViewControllerManager.h"
+#import "EmarsysPredictProtocol.h"
 
-@interface JAHomeViewController () <JAPickerDelegate, JANewsletterGenderProtocol>
+@interface JAHomeViewController () <JAPickerDelegate, JANewsletterGenderProtocol, EmarsysRecommendationsProtocol>
 @property (strong, nonatomic) JATeaserPageView* teaserPageView;
 @property (nonatomic, assign) BOOL isLoaded;
 @property (nonatomic, strong)JAFallbackView *fallbackView;
@@ -371,6 +372,18 @@
 #pragma mark - DataTrackerProtocol
 -(NSString *)getDataTrackerAlias {
     return @"HOME";
+}
+
+#pragma EmarsysRecommendationsProtocol
+- (NSArray<EMRecommendationRequest *> *)getRecommendations {
+    
+    EMRecommendationRequest *recommend = [EMRecommendationRequest requestWithLogic:@"PERSONAL"];
+    recommend.limit = 15;
+    recommend.completionHandler = ^(EMRecommendationResult *_Nonnull result) {
+        
+    };
+    
+    return @[recommend];
 }
 
 @end

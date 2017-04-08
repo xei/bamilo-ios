@@ -17,16 +17,12 @@
 
 @protocol EmarsysRecommendationsProtocol<EmarsysPredictProtocolBase>
 
-@required
-- (EMRecommendationRequest *)getReccomandtaionRequest:(EMRecommendationRequest *)transaction;
-- (NSString *)getRecommandationLogic;
-- (void)reccomandationResult:(EMRecommendationResult *)result;
+@optional - (NSArray<EMRecommendationRequest *> *)getRecommendations;
 
 @end
 
 @protocol EmarsysWebExtendProtocol<EmarsysPredictProtocolBase>
 
-@optional
 - (EMTransaction *)getDataCollection:(EMTransaction *)transaction;
 
 @end

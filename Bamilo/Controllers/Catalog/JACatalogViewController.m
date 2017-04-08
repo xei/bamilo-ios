@@ -37,6 +37,8 @@
 #import "PushWooshTracker.h"
 #import "SearchEvent.h"
 #import "EmarsysMobileEngage.h"
+#import "NSMutableArray+Extensions.h"
+#import "EmarsysPredictManager.h"
 
 
 #define JACatalogGridSelected @"CATALOG_GRID_IS_SELECTED"
@@ -51,7 +53,7 @@ typedef void (^ProcessActionBlock)(void);
     BOOL _hasBanner;
 }
 
-@property (nonatomic, strong) CatalogNoResultViewController* containerViewController;
+@property (nonatomic, strong) CatalogNoResultViewController* NoResultContainerViewController;
 @property (nonatomic, strong) JAFilteredNoResultsView *filteredNoResultsView;
 @property (nonatomic, strong) JACatalogTopView* catalogTopView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -138,7 +140,7 @@ typedef void (^ProcessActionBlock)(void);
         [self.view addSubview:self.filteredNoResultsView];
     }
     
-    self.containerViewController.searchQuery = self.searchString ? self.searchString : self.categoryName;
+    self.NoResultContainerViewController.searchQuery = self.searchString ? self.searchString : self.categoryName;
     [self.catalogTopView setHidden:YES];
     [self.collectionView setHidden:YES];
     [self.containerView setHidden:NO];
@@ -547,6 +549,9 @@ typedef void (^ProcessActionBlock)(void);
     
     self.isLoadingMoreProducts = NO;
     [self hideLoading];
+    
+    //######################################
+    [EmarsysPredictManager sendTransactionsOf:self];
 }
 
 - (void)setLoadProductsError:(RIApiResponse) apiResponse  errorMessages:(NSArray *)errorMessages undefSearchTerm:(RIUndefinedSearchTerm *)undefSearchTerm {
@@ -559,12 +564,6 @@ typedef void (^ProcessActionBlock)(void);
     if(self.productsArray.count) {
         [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:@selector(loadMoreProducts) objects:nil];
     } else {
-        //$WIZ$
-        //        if (VALID_NOTEMPTY(self.wizardView, JACatalogWizardView))
-        //        {
-        //            [self.wizardView removeFromSuperview];
-        //        }
-        
         if(RIApiResponseAPIError == apiResponse) {
             [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
             
@@ -919,7 +918,6 @@ typedef void (^ProcessActionBlock)(void);
 }
 
 #pragma mark - kProductChangedNotification
-
 - (void)updatedProduct:(NSNotification *)notification {
     if (VALID_NOTEMPTY(notification.object, NSArray)) {
         for (NSString *sku in notification.object) {
@@ -974,7 +972,6 @@ typedef void (^ProcessActionBlock)(void);
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [self.flowLayout resetSizes];
-    
     [self changeViewToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
 }
 
@@ -986,7 +983,6 @@ typedef void (^ProcessActionBlock)(void);
 }
 
 #pragma mark - Button actions
-
 - (void)addToFavoritesPressed:(UIButton*)button {
     RIProduct* product = [self.productsArray objectAtIndex:button.tag];
     if (!button.selected && !VALID_NOTEMPTY(product.favoriteAddDate, NSDate))
@@ -1255,8 +1251,7 @@ typedef void (^ProcessActionBlock)(void);
             break;
     }
     
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCatalog]
-                                              data:[trackingDictionary copy]];
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCatalog] data:[trackingDictionary copy]];
 }
 
 - (void)trackingEventLoadingTime {
@@ -1497,7 +1492,7 @@ typedef void (^ProcessActionBlock)(void);
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     NSString * segueName = segue.identifier;
     if ([segueName isEqualToString: @"embedCatalogNoResult"]) {
-        self.containerViewController = (CatalogNoResultViewController *) [segue destinationViewController];
+        self.NoResultContainerViewController = (CatalogNoResultViewController *) [segue destinationViewController];
     }
     
     if ([segueName isEqualToString: @"showFilterView"]) {
@@ -1556,7 +1551,23 @@ typedef void (^ProcessActionBlock)(void);
 }
 
 - (BOOL)isPreventSendTransactionInViewWillAppear {
-    return self.searchString.length == 0;
+    return YES;
+}
+
+#pragma mark - EmarsysPredictProtocol
+- (NSArray<EMRecommendationRequest *> *)getRecommendations {
+    
+    EMRecommendationRequest *recommend = [EMRecommendationRequest requestWithLogic:@"SEARCH"];
+    recommend.limit = 15;
+
+    [recommend excludeItemsWhere:@"item" isIn:[self.productsArray map:^id(id item) {
+        return ((RIProduct *)item).sku;
+    }]];
+    
+    recommend.completionHandler = ^(EMRecommendationResult *_Nonnull result) {
+        
+    };
+    return @[recommend];
 }
 
 @end

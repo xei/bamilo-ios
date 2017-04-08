@@ -13,4 +13,6 @@
 +(NSMutableArray *) indexPathArrayOfLength:(int)length forSection:(int)section;
 +(NSMutableArray *) indexPathArrayFromRange:(NSRange)range forSection:(int)section;
 
+- (NSMutableArray *)map:(id(^)(id))block;
+
 @end

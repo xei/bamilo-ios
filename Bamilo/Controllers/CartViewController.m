@@ -364,4 +364,16 @@
     } completion:nil];
 }
 
+
+#pragma mark - EmarsysPredictProtocol
+- (NSArray<EMRecommendationRequest *> *)getRecommendations {
+    
+    EMRecommendationRequest *recommend = [EMRecommendationRequest requestWithLogic:@"CART"];
+    recommend.limit = 15;
+    recommend.completionHandler = ^(EMRecommendationResult *_Nonnull result) {
+        
+    };
+    return @[recommend];
+}
+
 @end
