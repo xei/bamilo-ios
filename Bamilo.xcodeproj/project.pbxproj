@@ -89,6 +89,9 @@
 		8702FBB61E98E720001D1AA9 /* LoginEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBB51E98E720001D1AA9 /* LoginEvent.m */; };
 		8702FBBA1E98FE3A001D1AA9 /* EmailUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBB91E98FE3A001D1AA9 /* EmailUtility.m */; };
 		8702FBBE1E9901AE001D1AA9 /* EventFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBBD1E9901AE001D1AA9 /* EventFactory.m */; };
+		8702FBC21E990C2D001D1AA9 /* OpenAppEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBC11E990C2D001D1AA9 /* OpenAppEvent.m */; };
+		8702FBC71E9919A8001D1AA9 /* SignUpEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBC61E9919A8001D1AA9 /* SignUpEvent.m */; };
+		8702FBCC1E991C9A001D1AA9 /* LogoutEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBCB1E991C9A001D1AA9 /* LogoutEvent.m */; };
 		870680B81E62DF20000368D5 /* AddressTableViewHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 870680B71E62DF20000368D5 /* AddressTableViewHeaderCell.m */; };
 		870680B91E62E1FA000368D5 /* AddressTableViewHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87A6817A1E4201F400D252AC /* AddressTableViewHeaderCell.xib */; };
 		8708A1721E406C1100ABA7D8 /* ContactUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8708A1711E406C1100ABA7D8 /* ContactUsViewController.m */; };
@@ -759,6 +762,12 @@
 		8702FBB91E98FE3A001D1AA9 /* EmailUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailUtility.m; sourceTree = "<group>"; };
 		8702FBBC1E9901AE001D1AA9 /* EventFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventFactory.h; sourceTree = "<group>"; };
 		8702FBBD1E9901AE001D1AA9 /* EventFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventFactory.m; sourceTree = "<group>"; };
+		8702FBC01E990C2D001D1AA9 /* OpenAppEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenAppEvent.h; sourceTree = "<group>"; };
+		8702FBC11E990C2D001D1AA9 /* OpenAppEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenAppEvent.m; sourceTree = "<group>"; };
+		8702FBC51E9919A8001D1AA9 /* SignUpEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpEvent.h; sourceTree = "<group>"; };
+		8702FBC61E9919A8001D1AA9 /* SignUpEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpEvent.m; sourceTree = "<group>"; };
+		8702FBCA1E991C9A001D1AA9 /* LogoutEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogoutEvent.h; sourceTree = "<group>"; };
+		8702FBCB1E991C9A001D1AA9 /* LogoutEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogoutEvent.m; sourceTree = "<group>"; };
 		870680B61E62DF20000368D5 /* AddressTableViewHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressTableViewHeaderCell.h; sourceTree = "<group>"; };
 		870680B71E62DF20000368D5 /* AddressTableViewHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressTableViewHeaderCell.m; sourceTree = "<group>"; };
 		8708A1701E406C1100ABA7D8 /* ContactUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactUsViewController.h; sourceTree = "<group>"; };
@@ -2612,6 +2621,45 @@
 			name = EventFactory;
 			sourceTree = "<group>";
 		};
+		8702FBBF1E990C16001D1AA9 /* OpenAppEvent */ = {
+			isa = PBXGroup;
+			children = (
+				8702FBC01E990C2D001D1AA9 /* OpenAppEvent.h */,
+				8702FBC11E990C2D001D1AA9 /* OpenAppEvent.m */,
+			);
+			name = OpenAppEvent;
+			sourceTree = "<group>";
+		};
+		8702FBC31E991963001D1AA9 /* SignUpEvent */ = {
+			isa = PBXGroup;
+			children = (
+				8702FBC51E9919A8001D1AA9 /* SignUpEvent.h */,
+				8702FBC61E9919A8001D1AA9 /* SignUpEvent.m */,
+			);
+			name = SignUpEvent;
+			sourceTree = "<group>";
+		};
+		8702FBC41E99196A001D1AA9 /* UserEvents */ = {
+			isa = PBXGroup;
+			children = (
+				8702FBB31E98E6F9001D1AA9 /* LoginEvent */,
+				8702FBC31E991963001D1AA9 /* SignUpEvent */,
+				8702FBC91E991C61001D1AA9 /* LogoutEvent */,
+				8702FBBF1E990C16001D1AA9 /* OpenAppEvent */,
+				8702FBB21E98E6F2001D1AA9 /* SearchEvent */,
+			);
+			name = UserEvents;
+			sourceTree = "<group>";
+		};
+		8702FBC91E991C61001D1AA9 /* LogoutEvent */ = {
+			isa = PBXGroup;
+			children = (
+				8702FBCA1E991C9A001D1AA9 /* LogoutEvent.h */,
+				8702FBCB1E991C9A001D1AA9 /* LogoutEvent.m */,
+			);
+			name = LogoutEvent;
+			sourceTree = "<group>";
+		};
 		8708A16F1E406BF600ABA7D8 /* ContactUsViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -2958,8 +3006,7 @@
 			children = (
 				871BA8531E867F3A007680C5 /* Base */,
 				8702FBBB1E99019C001D1AA9 /* EventFactory */,
-				8702FBB31E98E6F9001D1AA9 /* LoginEvent */,
-				8702FBB21E98E6F2001D1AA9 /* SearchEvent */,
+				8702FBC41E99196A001D1AA9 /* UserEvents */,
 			);
 			name = Events;
 			sourceTree = "<group>";
@@ -5727,6 +5774,7 @@
 				CE59BF011AE801DA0057F4E2 /* JABrandTeaserView.m in Sources */,
 				9A3D21881CA4057A00FE41B6 /* JAChooseCountryTableViewCell.m in Sources */,
 				CE9ADF581AB6D78200D56481 /* JAEditAddressViewController.m in Sources */,
+				8702FBCC1E991C9A001D1AA9 /* LogoutEvent.m in Sources */,
 				CE9ADF5A1AB6D78200D56481 /* JANewRatingViewController.m in Sources */,
 				CE9ADF5B1AB6D78200D56481 /* JAGenericFiltersView.m in Sources */,
 				875AD5591E38C0C900584ABF /* RICampaign.m in Sources */,
@@ -5741,6 +5789,7 @@
 				875AD5701E38C0C900584ABF /* RISeller.m in Sources */,
 				89C177BF1BC2EC17006D3B19 /* JAPDVProductInfoSellerInfo.m in Sources */,
 				879F88051E50B2940033FE87 /* AuthenticationBaseViewController.m in Sources */,
+				8702FBC21E990C2D001D1AA9 /* OpenAppEvent.m in Sources */,
 				CE9ADF621AB6D78200D56481 /* JASellerRatingsViewController.m in Sources */,
 				875081B31E532E400031ECBF /* AddressViewController.m in Sources */,
 				875AD58B1E38C0C900584ABF /* RIURLCacheWrapper.m in Sources */,
@@ -6028,6 +6077,7 @@
 				872230E61E6A9851000748E9 /* CAPSPageMenu.m in Sources */,
 				CE9AE00E1AB6D78200D56481 /* JACampaignPageView.m in Sources */,
 				6125535B1E4F382100975C6F /* UIScrollView+Extension.m in Sources */,
+				8702FBC71E9919A8001D1AA9 /* SignUpEvent.m in Sources */,
 				8714E0901E48CD41004C9B1D /* DiscountSwitcherView.m in Sources */,
 				875435171E77ECD000B5D6B4 /* BaseTracker.m in Sources */,
 				CE9AE0101AB6D78200D56481 /* JABirthDateComponent.m in Sources */,

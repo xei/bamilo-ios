@@ -1,20 +1,20 @@
 //
-//  LoginEvent.m
+//  SignUpEvent.m
 //  Bamilo
 //
 //  Created by Narbeh Mirzaei on 4/8/17.
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import "LoginEvent.h"
+#import "SignUpEvent.h"
 #import "EmailUtility.h"
 #import "RICustomer.h"
 
-@implementation LoginEvent
+@implementation SignUpEvent
 
 #pragma mark - Overrides
 +(NSString *)name {
-    return @"Login";
+    return @"SignUp";
 }
 
 +(NSMutableDictionary *)attributes {

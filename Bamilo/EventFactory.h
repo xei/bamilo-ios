@@ -8,9 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import "LoginEvent.h"
+#import "SignUpEvent.h"
+#import "LogoutEvent.h"
 
 @interface EventFactory : NSObject
 
 +(NSDictionary *) login:(NSString *)loginMethod success:(BOOL)success;
++(NSDictionary *) signup:(NSString *)signupMethod success:(BOOL)success;
++(NSDictionary *) logout:(BOOL)success;
 
 @end

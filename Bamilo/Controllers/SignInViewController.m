@@ -81,6 +81,7 @@
         if(error == nil) {
             [self bind:data forRequestId:0];
             
+            //EVENT: LOGIN / SUCCESS
             [TrackerManager postEvent:[EventFactory login:cLoginMethodEmail success:YES] forName:[LoginEvent name]];
             
             if (self.completion) {
@@ -89,6 +90,7 @@
                 [((UIViewController *)self.delegate).navigationController popViewControllerAnimated:YES];
             }
         } else {
+            //EVENT: LOGIN / FAILURE
             [TrackerManager postEvent:[EventFactory login:cLoginMethodEmail success:NO] forName:[LoginEvent name]];
             
             for(NSDictionary* errorField in [error.userInfo objectForKey:@"errorMessages"]) {

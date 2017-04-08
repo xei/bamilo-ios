@@ -7,7 +7,6 @@
 //
 
 #import "AppEvent.h"
-#import "RIApi.h"
 #import "RICustomer.h"
 #import "AppManager.h"
 #import "DeviceManager.h"
@@ -19,7 +18,17 @@
 }
 
 +(NSMutableDictionary *)attributes {
-    return [NSMutableDictionary dictionaryWithObjects:@[ [[AppManager sharedInstance] getAppFullFormattedVersion], [DeviceManager getConnectionType], [NSDate date] ] forKeys:@[ kEventAppVersion, kEventConnection, kEventDate ]];
+    NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithObjects:@[ [[AppManager sharedInstance] getAppFullFormattedVersion], [DeviceManager getConnectionType], [NSDate date] ] forKeys:@[ kEventAppVersion, kEventConnection, kEventDate ]];
+    
+    RICustomer *user = [RICustomer getCurrentCustomer];
+    if(user) {
+        //Gender
+        if(user.gender) {
+            [attributes setObject:[user.gender substringToIndex:1] forKey:kEventUserGender]; //m OR f
+        }
+    }
+    
+    return attributes;
 }
 
 @end

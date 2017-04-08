@@ -1,5 +1,5 @@
 //
-//  LoginEvent.h
+//  LogoutEvent.h
 //  Bamilo
 //
 //  Created by Narbeh Mirzaei on 4/8/17.
@@ -8,6 +8,6 @@
 
 #import "AppEvent.h"
 
-@interface LoginEvent : AppEvent
+@interface LogoutEvent : AppEvent
 
 @end

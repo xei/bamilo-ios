@@ -15,7 +15,16 @@ NSString *const kEventAppVersion = @"AppVersion";
 NSString *const kEventConnection = @"Connection";
 NSString *const kEventDate = @"Date";
 
-NSString *const kEventUserGender = @"Gender";
+NSString *const kEventMethod = @"Method";
+NSString *const kEventEmailDomain = @"EmailDomain";
+NSString *const kEventUserGender = @"Gender"; 
 NSString *const kEventSuccess = @"Success";
+NSString *const kEventCount = @"Count";
+NSString *const kEventSource = @"Source";
+NSString *const kEventCategory = @"Category";
+NSString *const kEventBasketValue = @"BasketValue";
+NSString *const kEventAction = @"Action";
+NSString *const kEventKeywords = @"Keywords";
+NSString *const kEventPrice = @"Price";
 
 @end
