@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "EventConsts.h"
 
-#define cUNKNOWN_EVENT_VALUE @"?"
+#define cUNKNOWN_EVENT_VALUE @""
 
 @interface AppEvent : NSObject
 

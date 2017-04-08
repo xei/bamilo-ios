@@ -21,7 +21,7 @@
     
     NSString *platform = [NSString stringWithCString:machine encoding:NSUTF8StringEncoding];
     if([platform isEqualToString:@"i386"] || [platform isEqualToString:@"x86_64"]) {
-        platform = @"Simulator";
+        platform = @"simulator";
     }
     
     free(machine);
@@ -48,6 +48,24 @@
     [dateFormatter setDateFormat:@"Z"];
     
     return [dateFormatter stringFromDate:[NSDate date]];
+}
+
++(NSString *)getConnectionType {
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    
+    [reachability startNotifier];
+    NetworkStatus status = [reachability currentReachabilityStatus];
+    [reachability stopNotifier];
+    
+    if(status == NotReachable) {
+        return @"no internet";
+    } else if (status == ReachableViaWiFi) {
+        return @"wifi";
+    } else if (status == ReachableViaWWAN) {
+        return @"cellular";
+    } else {
+        return @"unknown";
+    }
 }
 
 @end

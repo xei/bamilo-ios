@@ -144,11 +144,17 @@
         }
     }
 
-
     // Set merchant ID. for emarsysPredict
     EMSession *emarsysSession = [EMSession sharedSession];
     emarsysSession.merchantID = @"18146DE34FE0B8C9";
     emarsysSession.logLevel = EMLogLevelDebug;
+    
+    //Setup Trackers
+    //********************************************************************
+    
+    //Event
+    [TrackerManager addEventTracker:[PushWooshTracker sharedTracker]];
+    [TrackerManager addEventTracker:[EmarsysMobileEngage sharedInstance]];
 
     return YES;
 }

@@ -1419,23 +1419,16 @@ typedef void (^ProcessActionBlock)(void);
     
     [trackingDictionary setValue:[NSNumber numberWithInteger:[numberOfProducts integerValue]] forKey:kRIEventNumberOfProductsKey];
     
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSearch]
-                                              data:[trackingDictionary copy]];
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSearch] data:[trackingDictionary copy]];
 //################################
     //PUSHWOOSH EVENT
-    NSMutableDictionary *attributes = [SearchEvent attributes];
+    /*NSMutableDictionary *attributes = [SearchEvent attributes];
     
     [attributes setObject:numberOfProducts forKey:kEventValue];
     [attributes setObject:numberOfProducts forKey:kSearchEventNumberOfProducts];
     [attributes setObject:string forKey:kSearchEventKeywords];
     
-    [[PushWooshTracker sharedTracker] postEvent:attributes forName:[SearchEvent name]];
-    
-    //TEMP: EmarsysMobileEngages should comply to EventTrackerProtocol
-    //TEMP: A wrapper should call all the EventTrackerProtocol classes
-    [[EmarsysMobileEngage sharedInstance] sendCustomEvent:[SearchEvent name] attributes:attributes completion:^(BOOL success) {
-        NSLog(@"EmarsysMobileEngage > sendCustomEvent > %@", success ? sSUCCESSFUL : sFAILED);
-    }];
+    [[PushWooshTracker sharedTracker] postEvent:attributes forName:[SearchEvent name]];*/
 }
 
 - (void)trackingEventGTMListingForCategoryName:(NSString *)categoryName andSubCategoryName:(NSString *)subCategoryName {

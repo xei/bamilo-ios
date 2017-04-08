@@ -10,10 +10,14 @@
 #import "SignInViewController.h"
 #import "InputTextFieldControl.h"
 #import "UIScrollView+Extension.h"
+#import "EventFactory.h"
 
 //Legacy importing
 #import "RICustomer.h"
 #import "JAUtils.h"
+
+#define cLoginMethodEmail @"email"
+#define cLoginMethodGoogle @"sso-google"
 
 @interface SignInViewController ()
 @property (weak, nonatomic) IBOutlet InputTextFieldControl *emailControl;
@@ -77,12 +81,16 @@
         if(error == nil) {
             [self bind:data forRequestId:0];
             
+            [TrackerManager postEvent:[EventFactory login:cLoginMethodEmail success:YES] forName:[LoginEvent name]];
+            
             if (self.completion) {
                 self.completion(AUTHENTICATION_FINISHED_WITH_LOGIN);
             } else {
                 [((UIViewController *)self.delegate).navigationController popViewControllerAnimated:YES];
             }
         } else {
+            [TrackerManager postEvent:[EventFactory login:cLoginMethodEmail success:NO] forName:[LoginEvent name]];
+            
             for(NSDictionary* errorField in [error.userInfo objectForKey:@"errorMessages"]) {
                 NSString *fieldName = errorField[@"field"];
                 if ([fieldName isEqualToString:@"password"]) {

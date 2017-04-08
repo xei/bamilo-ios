@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "EventTrackerProtocol.h"
 
 typedef void(^EmarsysMobileEngageResponse)(BOOL success);
 
-@interface EmarsysMobileEngage : NSObject
+@interface EmarsysMobileEngage : NSObject <EventTrackerProtocol>
 
 + (instancetype)sharedInstance;
 

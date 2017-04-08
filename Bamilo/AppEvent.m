@@ -19,17 +19,7 @@
 }
 
 +(NSMutableDictionary *)attributes {
-    return [NSMutableDictionary
-            dictionaryWithObjects:@[
-                                    [RICustomer getCustomerId],
-                                    [[AppManager sharedInstance] getAppFullFormattedVersion],
-                                    [DeviceManager getDeviceModel],
-                                    [RIApi getCountryIsoInUse] ]
-            
-            forKeys:@[  kEventUserId,
-                        kEventAppVersion,
-                        kEventDeviceModel,
-                        kEventShopCountry ]];
+    return [NSMutableDictionary dictionaryWithObjects:@[ [[AppManager sharedInstance] getAppFullFormattedVersion], [DeviceManager getConnectionType], [NSDate date] ] forKeys:@[ kEventAppVersion, kEventConnection, kEventDate ]];
 }
 
 @end

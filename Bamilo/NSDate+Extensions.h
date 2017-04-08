@@ -10,6 +10,7 @@
 
 @interface NSDate (Extensions)
 
-- (NSString *)convertToJalali;
+-(NSString *) convertToJalali;
+-(NSString *) webFormalized;
 
 @end

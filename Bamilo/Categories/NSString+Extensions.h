@@ -10,7 +10,6 @@
 
 @interface NSString (Extensions)
 
-+ (NSString *)emailRegxPattern;
 + (NSString *)mobileRegxPattern;
 
 - (NSString *)wrapWithMaxSize:(int) maxSize;
@@ -19,7 +18,6 @@
 - (NSString *)formatPrice;
 - (NSString *)getPriceStringFromFormatedPrice;
 - (NSString *)struckThroughText;
-- (BOOL)isValidEmail;
-- (NSString *) toEncodeBase64;
+- (NSString *)toEncodeBase64;
 
 @end

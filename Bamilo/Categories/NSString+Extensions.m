@@ -20,10 +20,6 @@
     return _numberFormatter;
 }
 
-+ (NSString *)emailRegxPattern {
-    return @"^.+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2}[A-Za-z]*$";
-}
-
 + (NSString *)mobileRegxPattern {
     return @"(0|\\+98)?([ ]|,|-|[()]){0,2}9[1|2|3|4]([ ]|,|-|[()]){0,2}(?:[0-9]([ ]|,|-|[()]){0,2}){8}";
 }
@@ -88,11 +84,6 @@
         cammaIndex += 4;
     }
     return [formatedPrice copy];
-}
-
-- (BOOL)isValidEmail {
-    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", [NSString emailRegxPattern]];
-    return [emailTest evaluateWithObject:self];
 }
 
 -(NSString *)toEncodeBase64 {

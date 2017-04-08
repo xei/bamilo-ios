@@ -10,20 +10,12 @@
 
 @implementation EventConsts
 
+//Common
 NSString *const kEventAppVersion = @"AppVersion";
-NSString *const kEventDeviceModel = @"DeviceModel";
+NSString *const kEventConnection = @"Connection";
+NSString *const kEventDate = @"Date";
 
-//User
-NSString *const kEventUserId = @"UserId";
-NSString *const kEventUserGender = @"UserGender";
-
-//Shop
-NSString *const kEventShopCountry = @"ShopCountry";
-
-//Event Details
-NSString *const kEventLabel = @"Label";
-NSString *const kEventAction = @"Action";
-NSString *const kEventCategory = @"Category";
-NSString *const kEventValue = @"Value";
+NSString *const kEventUserGender = @"Gender";
+NSString *const kEventSuccess = @"Success";
 
 @end

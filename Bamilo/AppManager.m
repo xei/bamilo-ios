@@ -15,7 +15,7 @@ static AppManager *instance;
 +(instancetype)sharedInstance {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        instance = [[AppManager alloc] init];
+        instance = [AppManager new];
     });
     
     return instance;
