@@ -12,7 +12,7 @@
 
 //Common
 FOUNDATION_EXPORT NSString *const kEventAppVersion;
-FOUNDATION_EXPORT NSString *const kEventDeviceModel;
+FOUNDATION_EXPORT NSString *const kEventPlatform;
 FOUNDATION_EXPORT NSString *const kEventConnection;
 FOUNDATION_EXPORT NSString *const kEventDate;
 

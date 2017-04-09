@@ -12,6 +12,7 @@
 
 //Common
 NSString *const kEventAppVersion = @"AppVersion";
+NSString *const kEventPlatform = @"Platform";
 NSString *const kEventConnection = @"Connection";
 NSString *const kEventDate = @"Date";
 

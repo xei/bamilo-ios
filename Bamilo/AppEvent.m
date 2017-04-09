@@ -18,7 +18,7 @@
 }
 
 +(NSMutableDictionary *)attributes {
-    NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithObjects:@[ [[AppManager sharedInstance] getAppFullFormattedVersion], [DeviceManager getConnectionType], [NSDate date] ] forKeys:@[ kEventAppVersion, kEventConnection, kEventDate ]];
+    NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithObjects:@[ [[AppManager sharedInstance] getAppFullFormattedVersion], @"ios", [DeviceManager getConnectionType], [NSDate date] ] forKeys:@[ kEventAppVersion, kEventPlatform, kEventConnection, kEventDate ]];
     
     RICustomer *user = [RICustomer getCurrentCustomer];
     if(user) {
