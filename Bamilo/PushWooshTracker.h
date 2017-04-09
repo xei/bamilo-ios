@@ -9,7 +9,8 @@
 #import "BaseTracker.h"
 #import "PushNotificationTrackerProtocol.h"
 #import "EventTrackerProtocol.h"
+#import "TagTrackerProtocol.h"
 
-@interface PushWooshTracker : BaseTracker <PushNotificationTrackerProtocol, EventTrackerProtocol>
+@interface PushWooshTracker : BaseTracker <PushNotificationTrackerProtocol, EventTrackerProtocol, TagTrackerProtocol>
 
 @end

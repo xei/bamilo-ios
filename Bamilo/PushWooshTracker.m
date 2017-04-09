@@ -46,13 +46,22 @@ static PushWooshTracker *instance;
     } else {
         //App opened from Notification
         [[AppManager sharedInstance] updateOpenAppEventSource:OPEN_APP_SOURCE_PUSH_NOTIFICATION];
-        [TrackerManager postEvent:[EventFactory openApp:[UserDefaultsManager incrementCounter:kUDMAppOpenCount] source:OPEN_APP_SOURCE_PUSH_NOTIFICATION] forName:[OpenAppEvent name]];
+        [TrackerManager postEvent:[EventFactory openApp:OPEN_APP_SOURCE_PUSH_NOTIFICATION] forName:[OpenAppEvent name]];
     }
 }
 
 #pragma mark - EventTrackerProtocol
 -(void)postEvent:(NSDictionary *)attributes forName:(NSString *)name {
     [[PWInAppManager sharedManager] postEvent:name withAttributes:attributes];
+}
+
+#pragma mark - TagTrackerProtocol
+-(void)sendTags:(NSDictionary *)tags completion:(TagTrackerCompletion)completion {
+    [[PushNotificationManager pushManager] setTags:tags withCompletion:^(NSError *error) {
+        if(completion) {
+            completion(error);
+        }
+    }];
 }
 
 @end

@@ -11,5 +11,6 @@
 @interface UserDefaultsConsts : NSObject
 
 FOUNDATION_EXPORT NSString *const kUDMAppOpenCount;
+FOUNDATION_EXPORT NSString *const kUDMPurchaseCount;
 
 @end

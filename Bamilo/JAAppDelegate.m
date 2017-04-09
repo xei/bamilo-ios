@@ -121,6 +121,7 @@
     [[Crashlytics sharedInstance] setUserIdentifier:userId];
 
     //PUSH WOOSH
+    //********************************************************************
     // set custom delegate for push handling, in our case AppDelegate
     PushNotificationManager *pushManager = [PushNotificationManager pushManager];
     pushManager.delegate = [PushWooshTracker sharedTracker];
@@ -136,29 +137,35 @@
 
     // register for push notifications!
     [[PushNotificationManager pushManager] registerForPushNotifications];
-    NSDictionary *configs = [[NSBundle mainBundle] objectForInfoDictionaryKey:kConfigs];
-    if(configs) {
-        NSString *isPushWooshBeta = [configs objectForKey:@"Pushwoosh_BETA"];
-        if([isPushWooshBeta isEqualToString:@"1"]) {
-            [[PushNotificationManager pushManager] setTags:@{ @"Beta": isPushWooshBeta } withCompletion:^(NSError *error) {
-                if(error == nil) {
-                    NSLog(@"Beta tag is set to %@", isPushWooshBeta);
-                }
-            }];
-        }
-    }
-
-    // Set merchant ID. for emarsysPredict
-    EMSession *emarsysSession = [EMSession sharedSession];
-    emarsysSession.merchantID = @"18146DE34FE0B8C9";
-    emarsysSession.logLevel = EMLogLevelDebug;
     
-    //Setup Trackers
+    
+    //SETUP TRACKERS
     //********************************************************************
     
     //Event
     [TrackerManager addEventTracker:[PushWooshTracker sharedTracker]];
     [TrackerManager addEventTracker:[EmarsysMobileEngage sharedInstance]];
+    
+    //Tag
+    [TrackerManager addTagTracker:[PushWooshTracker sharedTracker]];
+    
+    
+    NSDictionary *configs = [[NSBundle mainBundle] objectForInfoDictionaryKey:kConfigs];
+    if(configs) {
+        NSString *isPushWooshBeta = [configs objectForKey:@"Pushwoosh_BETA"];
+        if([isPushWooshBeta isEqualToString:@"1"]) {
+            [TrackerManager sendTags:@{ @"Beta": isPushWooshBeta } completion:^(NSError *error) {
+                if(error == nil) {
+                    NSLog(@"TrackerManager > Beta > %@", isPushWooshBeta);
+                }
+            }];
+        }
+    }
+    
+    // Set merchant ID. for emarsysPredict
+    EMSession *emarsysSession = [EMSession sharedSession];
+    emarsysSession.merchantID = @"18146DE34FE0B8C9";
+    emarsysSession.logLevel = EMLogLevelDebug;
 
     return YES;
 }
@@ -233,7 +240,7 @@
 
     PushNotificationManager *pushManager = [PushNotificationManager pushManager];
     [[EmarsysMobileEngage sharedInstance] sendLogin:[pushManager getPushToken] completion:^(BOOL success) {
-        NSLog(@"Emarsys Mobile Engage > sendUpdate > %@", success ? sSUCCESSFUL : sFAILED);
+        NSLog(@"Emarsys Mobile Engage > sendLogin > %@", success ? sSUCCESSFUL : sFAILED);
     }];
     
     OpenAppEventSourceType openAppEventSourceType = [[AppManager sharedInstance] getOpenAppEventSource];
@@ -242,8 +249,14 @@
        openAppEventSourceType != OPEN_APP_SOURCE_DEEPLINK) {
         //EVENT: OPEN APP / DIRECT
         [[AppManager sharedInstance] updateOpenAppEventSource:OPEN_APP_SOURCE_DIRECT];
-        [TrackerManager postEvent:[EventFactory openApp:[UserDefaultsManager incrementCounter:kUDMAppOpenCount] source:OPEN_APP_SOURCE_DIRECT] forName:[OpenAppEvent name]];
+        [TrackerManager postEvent:[EventFactory openApp:OPEN_APP_SOURCE_DIRECT] forName:[OpenAppEvent name]];
     }
+    
+    [TrackerManager sendTags:@{ @"AppOpenCount": @([UserDefaultsManager incrementCounter:kUDMAppOpenCount]) } completion:^(NSError *error) {
+        if(error == nil) {
+            NSLog(@"TrackerManager > AppOpenCount > %d", [UserDefaultsManager getCounter:kUDMAppOpenCount]);
+        }
+    }];
     
     //Reset to none for next app open
     [[AppManager sharedInstance] updateOpenAppEventSource:OPEN_APP_SOURCE_NONE];
@@ -358,7 +371,7 @@
         
         //EVENT: OPEN APP / DEEP LINK
         [[AppManager sharedInstance] updateOpenAppEventSource:OPEN_APP_SOURCE_DEEPLINK];
-        [TrackerManager postEvent:[EventFactory openApp:[UserDefaultsManager incrementCounter:kUDMAppOpenCount] source:OPEN_APP_SOURCE_DEEPLINK] forName:[OpenAppEvent name]];
+        [TrackerManager postEvent:[EventFactory openApp:OPEN_APP_SOURCE_DEEPLINK] forName:[OpenAppEvent name]];
         
         return YES;
     }

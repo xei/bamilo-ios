@@ -24,7 +24,7 @@
     if(user) {
         //Gender
         if(user.gender) {
-            [attributes setObject:[user.gender substringToIndex:1] forKey:kEventUserGender]; //m OR f
+            [attributes setObject:user.gender forKey:kEventUserGender]; //male OR female
         }
     }
     

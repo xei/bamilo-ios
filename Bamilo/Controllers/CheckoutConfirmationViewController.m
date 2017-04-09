@@ -19,7 +19,7 @@
 #import "RIShippingMethodForm.h"
 #import "RIShippingMethod.h"
 #import "DeliveryTimeTableViewCell.h"
-#import "DataManager.h"
+#import "CheckoutDataManager.h"
 
 @interface CheckoutConfirmationViewController() <DiscountCodeViewDelegate, DiscountSwitcherViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -76,7 +76,7 @@
     [super viewWillAppear:animated];
     
     if(self.isCompleteFetch == NO) {
-        [[DataManager sharedInstance] getMultistepConfirmation:self completion:^(id data, NSError *error) {
+        [[CheckoutDataManager sharedInstance] getMultistepConfirmation:self completion:^(id data, NSError *error) {
             if(error == nil) {
                 [self bind:data forRequestId:0];
                 
@@ -86,7 +86,7 @@
                 }
                 
                 //Delivery Time
-                [[DataManager sharedInstance] getMultistepShipping:self completion:^(id data, NSError *error) {
+                [[CheckoutDataManager sharedInstance] getMultistepShipping:self completion:^(id data, NSError *error) {
                     if(error == nil) {
                         [self bind:data forRequestId:1];
                         
@@ -283,7 +283,7 @@
 #pragma mark - DiscountCodeViewDelegate
 -(void)discountCodeViewDidFinish:(id)sender withCode:(NSString *)discountCode {
     if(self.cart.cartEntity.couponCode == nil && discountCode && discountCode.length) {
-        [[DataManager sharedInstance] applyVoucher:self voucherCode:discountCode completion:^(id data, NSError *error) {
+        [[CheckoutDataManager sharedInstance] applyVoucher:self voucherCode:discountCode completion:^(id data, NSError *error) {
             if(error == nil) {
                 [self bind:data forRequestId:2];
                 
@@ -395,7 +395,7 @@
 }
 
 -(void) requestRemovalOfVoucherCode {
-    [[DataManager sharedInstance] removeVoucher:self voucherCode:self.cart.cartEntity.couponCode completion:^(id data, NSError *error) {
+    [[CheckoutDataManager sharedInstance] removeVoucher:self voucherCode:self.cart.cartEntity.couponCode completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:3];
             

@@ -16,10 +16,4 @@
     return @"Search";
 }
 
-+(NSMutableDictionary *)attributes {
-    NSMutableDictionary *attributes = [super attributes];
-    
-    return attributes;
-}
-
 @end

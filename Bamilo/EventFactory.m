@@ -36,10 +36,8 @@
     return attributes;
 }
 
-+(NSDictionary *)openApp:(int)count source:(OpenAppEventSourceType)source {
++(NSDictionary *)openApp:(OpenAppEventSourceType)source {
     NSMutableDictionary *attributes = [OpenAppEvent attributes];
-    
-    [attributes setObject:@(count) forKey:kEventCount];
     
     switch (source) {
         //DIRECT
@@ -61,6 +59,23 @@
         default:
             break;
     }
+    
+    return attributes;
+}
+
++(NSDictionary *)addToFavorites:(NSString *)category {
+    NSMutableDictionary *attributes = [AddToFavoritesEvent attributes];
+    
+    [attributes setObject:category forKey:kEventCategory];
+    
+    return attributes;
+}
+
++(NSDictionary *)addToCart:(NSString *)category basketValue:(int)basketValue {
+    NSMutableDictionary *attributes = [AddToCartEvent attributes];
+    
+    [attributes setObject:category forKey:kEventCategory];
+    [attributes setObject:@(basketValue) forKey:kEventBasketValue];
     
     return attributes;
 }

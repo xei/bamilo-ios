@@ -8,11 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import "BaseDataManager.h"
-#import "Address.h"
 #import "RICart.h"
 #import "FormItemModel.h"
 
 @interface DataManager : BaseDataManager
+
+- (void)serialize:(id)data into:(Class)aClass response:(RIApiResponse)response errorMessages:(NSArray *)errorMessages completion:(DataCompletion)completion;
+-(void) processResponse:(RIApiResponse)response forData:(id)data errorMessages:(NSArray *)errorMessages completion:(DataCompletion)completion;
+- (NSError *)getErrorFrom:(RIApiResponse)response errorMessages:(NSArray *)errorMessages;
 
 - (void)getSubCategoriesFilter:(id<DataServiceProtocol>)target ofCategroyUrlKey:(NSString *)urlKey completion:(DataCompletion)completion;
 
@@ -28,33 +31,7 @@
 - (void)getOrders:(id<DataServiceProtocol>)target forPageNumber:(int)page perPageCount:(int)perPageCount completion:(DataCompletion)completion;
 - (void)getOrder:(id<DataServiceProtocol>)target forOrderId:(NSString *)orderId  completion:(DataCompletion)completion;
 
-//### Authentications ###
-- (void)forgetPassword:(id<DataServiceProtocol>)target withFields:(NSDictionary<NSString *,FormItemModel *> *)fields completion:(DataCompletion)completion;
-- (void)loginUser:(id<DataServiceProtocol>)target withUsername:(NSString *)username password:(NSString *)password completion:(DataCompletion)completion;
-- (void)signupUser:(id<DataServiceProtocol>)target withFieldsDictionary:(NSDictionary<NSString *,FormItemModel *> *)newUserDictionary completion:(DataCompletion)completion;
-- (void)logoutUser:(id<DataServiceProtocol>)target completion:(DataCompletion)completion;
-
-//### ADDRESS ###
-- (void)getUserAddressList:(id<DataServiceProtocol>)target completion:(DataCompletion)completion;
-- (void)setDefaultAddress:(id<DataServiceProtocol>)target address:(Address *)address isBilling:(BOOL)isBilling completion:(DataCompletion)completion;
--(void)deleteAddress:(id<DataServiceProtocol>)target address:(Address *)address completion:(DataCompletion)completion;
-
 //### CART ###
 - (void)getUserCart:(id<DataServiceProtocol>)target completion:(DataCompletion)completion;
-
-//### ORDER ###
--(void) getMultistepAddressList:(id<DataServiceProtocol>)target completion:(DataCompletion)completion;
--(void) setMultistepAddress:(id<DataServiceProtocol>)target forShipping:(NSString *)shippingAddressId billing:(NSString*)billingAddressId completion:(DataCompletion)completion;
-
--(void) getMultistepConfirmation:(id<DataServiceProtocol>)target completion:(DataCompletion)completion;
--(void) getMultistepShipping:(id<DataServiceProtocol>)target completion:(DataCompletion)completion;
-//-(void) setMultistepShipping:(id<DataServiceProtocol>)target forShippingMethod:(NSString*)shippingMethod pickupStation:(NSString*)pickupStation region:(NSString*)region completion:(DataCompletion)completion;
--(void) getMultistepPayment:(id<DataServiceProtocol>)target completion:(DataCompletion)completion;
--(void) setMultistepPayment:(id<DataServiceProtocol>)target params:(NSDictionary *)params completion:(DataCompletion)completion;
--(void) setMultistepConfirmation:(id<DataServiceProtocol>)target cart:(RICart *)cart completion:(DataCompletion)completion;
-
-//### COUPON ###
-- (void)applyVoucher:(id<DataServiceProtocol>)target voucherCode:(NSString *)voucherCode completion:(DataCompletion)completion;
-- (void)removeVoucher:(id<DataServiceProtocol>)target voucherCode:(NSString *)voucherCode completion:(DataCompletion)completion;
 
 @end

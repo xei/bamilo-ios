@@ -11,5 +11,6 @@
 @implementation UserDefaultsConsts
 
 NSString *const kUDMAppOpenCount = @"UDMAppOpenCount";
+NSString *const kUDMPurchaseCount = @"UDMPurchaseCount";
 
 @end

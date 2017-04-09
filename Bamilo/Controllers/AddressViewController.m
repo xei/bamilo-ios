@@ -8,7 +8,7 @@
 
 #import "AddressViewController.h"
 #import "AddressList.h"
-#import "DataManager.h"
+#import "AddressDataManager.h"
 #import "AddressTableViewController.h"
 #import "ViewControllerManager.h"
 #import "AlertManager.h"
@@ -61,7 +61,7 @@
     
     [[AlertManager sharedInstance] confirmAlert:@"تغییر آدرس" text:@"از تغییر آدرس پیش فرض خود اطمینان دارید؟" confirm:@"بله" cancel:@"خیر" completion:^(BOOL OK) {
         if(OK) {
-            [[DataManager sharedInstance] setDefaultAddress:self address:address isBilling:NO completion:^(id data, NSError *error) {
+            [[AddressDataManager sharedInstance] setDefaultAddress:self address:address isBilling:NO completion:^(id data, NSError *error) {
                 if(error == nil) {
                     [self bind:data forRequestId:1];
                     [_addressTableViewController scrollToTop];
@@ -84,7 +84,7 @@
     
     [[AlertManager sharedInstance] confirmAlert:@"حذف آدرس" text:@"از حذف آدرس خود اطمینان دارید؟" confirm:@"بله" cancel:@"خیر" completion:^(BOOL OK) {
         if(OK) {
-            [[DataManager sharedInstance] deleteAddress:self address:_currentAddress completion:^(id data, NSError *error) {
+            [[AddressDataManager sharedInstance] deleteAddress:self address:_currentAddress completion:^(id data, NSError *error) {
                 if(error == nil) {
                     [self fetchAddressList];
                 }
@@ -110,7 +110,7 @@
 
 #pragma mark - Helpers
 -(void) fetchAddressList {
-    [[DataManager sharedInstance] getUserAddressList:self completion:^(id data, NSError *error) {
+    [[AddressDataManager sharedInstance] getUserAddressList:self completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
             [self publishScreenLoadTime];

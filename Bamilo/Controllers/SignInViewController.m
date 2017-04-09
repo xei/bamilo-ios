@@ -6,7 +6,7 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import "DataManager.h"
+#import "AuthenticationDataManager.h"
 #import "SignInViewController.h"
 #import "InputTextFieldControl.h"
 #import "UIScrollView+Extension.h"
@@ -76,7 +76,7 @@
         return;
     }
     
-    [[DataManager sharedInstance] loginUser:self withUsername:[self.emailControl getStringValue] password:[self.passwordControl getStringValue] completion:^(id data, NSError *error) {
+    [[AuthenticationDataManager sharedInstance] loginUser:self withUsername:[self.emailControl getStringValue] password:[self.passwordControl getStringValue] completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
             
