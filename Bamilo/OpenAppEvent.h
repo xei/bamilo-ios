@@ -10,4 +10,11 @@
 
 @interface OpenAppEvent : AppEvent
 
+typedef NS_ENUM(NSUInteger, OpenAppEventSourceType) {
+    OPEN_APP_SOURCE_NONE = 0,
+    OPEN_APP_SOURCE_DIRECT = 1,
+    OPEN_APP_SOURCE_PUSH_NOTIFICATION,
+    OPEN_APP_SOURCE_DEEPLINK
+};
+
 @end

@@ -7,7 +7,6 @@
 //
 
 #import "SignUpViewController.h"
-#import "EventFactory.h"
 
 //Lagacy importing
 #import "RICustomer.h"

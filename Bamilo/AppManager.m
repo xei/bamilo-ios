@@ -8,6 +8,12 @@
 
 #import "AppManager.h"
 
+@interface AppManager()
+
+@property (assign, nonatomic) OpenAppEventSourceType openAppEventSource;
+
+@end
+
 @implementation AppManager
 
 static AppManager *instance;
@@ -31,6 +37,14 @@ static AppManager *instance;
 
 -(NSString *)getAppFullFormattedVersion {
     return [NSString stringWithFormat:@"%@ (%@)", [self getAppVersionNumber], [self getAppBuildNumber]];
+}
+
+-(void)updateOpenAppEventSource:(OpenAppEventSourceType)source {
+    self.openAppEventSource = source;
+}
+
+-(OpenAppEventSourceType)getOpenAppEventSource {
+    return self.openAppEventSource;
 }
 
 @end

@@ -15,7 +15,6 @@
 #import "ViewControllerManager.h"
 #import "IconTableViewHeaderCell.h"
 #import "DataManager.h"
-#import "EventFactory.h"
 
 @interface JAMyAccountViewController() <DataServiceProtocol>
 

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "EventTrackerProtocol.h"
+#import "EventFactory.h"
 
 @interface TrackerManager : NSObject
 

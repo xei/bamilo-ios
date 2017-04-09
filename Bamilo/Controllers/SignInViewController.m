@@ -10,7 +10,6 @@
 #import "SignInViewController.h"
 #import "InputTextFieldControl.h"
 #import "UIScrollView+Extension.h"
-#import "EventFactory.h"
 
 //Legacy importing
 #import "RICustomer.h"

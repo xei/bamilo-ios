@@ -10,4 +10,9 @@
 
 @implementation OpenAppEvent
 
+#pragma mark - Overrides
++(NSString *)name {
+    return @"OpenApp";
+}
+
 @end

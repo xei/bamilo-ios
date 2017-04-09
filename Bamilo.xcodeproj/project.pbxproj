@@ -92,6 +92,8 @@
 		8702FBC21E990C2D001D1AA9 /* OpenAppEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBC11E990C2D001D1AA9 /* OpenAppEvent.m */; };
 		8702FBC71E9919A8001D1AA9 /* SignUpEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBC61E9919A8001D1AA9 /* SignUpEvent.m */; };
 		8702FBCC1E991C9A001D1AA9 /* LogoutEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBCB1E991C9A001D1AA9 /* LogoutEvent.m */; };
+		8702FBD01E99FDD2001D1AA9 /* UserDefaultsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBCF1E99FDD2001D1AA9 /* UserDefaultsManager.m */; };
+		8702FBD41E99FE0E001D1AA9 /* UserDefaultsConsts.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBD31E99FE0E001D1AA9 /* UserDefaultsConsts.m */; };
 		870680B81E62DF20000368D5 /* AddressTableViewHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 870680B71E62DF20000368D5 /* AddressTableViewHeaderCell.m */; };
 		870680B91E62E1FA000368D5 /* AddressTableViewHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87A6817A1E4201F400D252AC /* AddressTableViewHeaderCell.xib */; };
 		8708A1721E406C1100ABA7D8 /* ContactUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8708A1711E406C1100ABA7D8 /* ContactUsViewController.m */; };
@@ -768,6 +770,10 @@
 		8702FBC61E9919A8001D1AA9 /* SignUpEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpEvent.m; sourceTree = "<group>"; };
 		8702FBCA1E991C9A001D1AA9 /* LogoutEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogoutEvent.h; sourceTree = "<group>"; };
 		8702FBCB1E991C9A001D1AA9 /* LogoutEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogoutEvent.m; sourceTree = "<group>"; };
+		8702FBCE1E99FDD2001D1AA9 /* UserDefaultsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDefaultsManager.h; sourceTree = "<group>"; };
+		8702FBCF1E99FDD2001D1AA9 /* UserDefaultsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDefaultsManager.m; sourceTree = "<group>"; };
+		8702FBD21E99FE0E001D1AA9 /* UserDefaultsConsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDefaultsConsts.h; sourceTree = "<group>"; };
+		8702FBD31E99FE0E001D1AA9 /* UserDefaultsConsts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDefaultsConsts.m; sourceTree = "<group>"; };
 		870680B61E62DF20000368D5 /* AddressTableViewHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressTableViewHeaderCell.h; sourceTree = "<group>"; };
 		870680B71E62DF20000368D5 /* AddressTableViewHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressTableViewHeaderCell.m; sourceTree = "<group>"; };
 		8708A1701E406C1100ABA7D8 /* ContactUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactUsViewController.h; sourceTree = "<group>"; };
@@ -2660,6 +2666,25 @@
 			name = LogoutEvent;
 			sourceTree = "<group>";
 		};
+		8702FBCD1E99FDA1001D1AA9 /* UserDefaultsManager */ = {
+			isa = PBXGroup;
+			children = (
+				8702FBD51E99FE15001D1AA9 /* UserDefaultsConsts */,
+				8702FBCE1E99FDD2001D1AA9 /* UserDefaultsManager.h */,
+				8702FBCF1E99FDD2001D1AA9 /* UserDefaultsManager.m */,
+			);
+			name = UserDefaultsManager;
+			sourceTree = "<group>";
+		};
+		8702FBD51E99FE15001D1AA9 /* UserDefaultsConsts */ = {
+			isa = PBXGroup;
+			children = (
+				8702FBD21E99FE0E001D1AA9 /* UserDefaultsConsts.h */,
+				8702FBD31E99FE0E001D1AA9 /* UserDefaultsConsts.m */,
+			);
+			name = UserDefaultsConsts;
+			sourceTree = "<group>";
+		};
 		8708A16F1E406BF600ABA7D8 /* ContactUsViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -3196,7 +3221,6 @@
 				87DAABF01E55DDE300445EBB /* AlertManager */,
 				8714E0521E471DDB004C9B1D /* DataManager */,
 				87D3DD281E8B80CA00C960FF /* DeviceManager */,
-				611FF46B1E8BDBCB006F0064 /* EmarsysPredictManager */,
 				873369BB1E58375900B0B5E5 /* ImageManager */,
 				879F87FC1E5095CF0033FE87 /* LoadingManager */,
 				8714E05E1E474015004C9B1D /* RequestManager */,
@@ -3204,6 +3228,8 @@
 				872230E71E6A9894000748E9 /* SettingsManager */,
 				870BEA7A1E73F4B800C5B615 /* ThemeManager */,
 				872230EB1E6A98B1000748E9 /* ThreadManager */,
+				611FF46B1E8BDBCB006F0064 /* EmarsysPredictManager */,
+				8702FBCD1E99FDA1001D1AA9 /* UserDefaultsManager */,
 				87A6814B1E40DC2000D252AC /* ViewControllerManager */,
 			);
 			name = Managers;
@@ -5775,6 +5801,7 @@
 				9A3D21881CA4057A00FE41B6 /* JAChooseCountryTableViewCell.m in Sources */,
 				CE9ADF581AB6D78200D56481 /* JAEditAddressViewController.m in Sources */,
 				8702FBCC1E991C9A001D1AA9 /* LogoutEvent.m in Sources */,
+				8702FBD01E99FDD2001D1AA9 /* UserDefaultsManager.m in Sources */,
 				CE9ADF5A1AB6D78200D56481 /* JANewRatingViewController.m in Sources */,
 				CE9ADF5B1AB6D78200D56481 /* JAGenericFiltersView.m in Sources */,
 				875AD5591E38C0C900584ABF /* RICampaign.m in Sources */,
@@ -6005,6 +6032,7 @@
 				89C7AF551BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m in Sources */,
 				CE9ADFEA1AB6D78200D56481 /* main.m in Sources */,
 				CE9ADFEC1AB6D78200D56481 /* JARatingsViewMedium.m in Sources */,
+				8702FBD41E99FE0E001D1AA9 /* UserDefaultsConsts.m in Sources */,
 				841E81AA1D1680F300A35AAF /* MPCoachMarks.m in Sources */,
 				873369BA1E582D0100B0B5E5 /* MultistepEntity.m in Sources */,
 				612FDC371E45E0A900A9D0BD /* CartTableViewCell.m in Sources */,

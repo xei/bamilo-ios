@@ -36,4 +36,33 @@
     return attributes;
 }
 
++(NSDictionary *)openApp:(int)count source:(OpenAppEventSourceType)source {
+    NSMutableDictionary *attributes = [OpenAppEvent attributes];
+    
+    [attributes setObject:@(count) forKey:kEventCount];
+    
+    switch (source) {
+        //DIRECT
+        case OPEN_APP_SOURCE_DIRECT:
+            [attributes setObject:@"direct" forKey:kEventSource];
+        break;
+            
+        //DEEPLINK
+        case OPEN_APP_SOURCE_DEEPLINK:
+            [attributes setObject:@"deeplink" forKey:kEventSource];
+        break;
+        
+        //PUSH NOTIFICATION
+        case OPEN_APP_SOURCE_PUSH_NOTIFICATION:
+            [attributes setObject:@"push_notification" forKey:kEventSource];
+        break;
+            
+        //NONE
+        default:
+            break;
+    }
+    
+    return attributes;
+}
+
 @end

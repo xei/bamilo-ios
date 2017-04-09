@@ -9,6 +9,7 @@
 #import "PushWooshTracker.h"
 #import <Pushwoosh/PWInAppManager.h>
 #import "EmarsysMobileEngage.h"
+#import "RITrackingWrapper.h"
 
 @implementation PushWooshTracker
 
@@ -38,6 +39,14 @@ static PushWooshTracker *instance;
         [[EmarsysMobileEngage sharedInstance] sendOpen:nil completion:^(BOOL success) {
             NSLog(@"EmarsysMobileEngage > sendOpen > %@", success ? sSUCCESSFUL : sFAILED);
         }];
+    }
+    
+    if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+        //App already open
+    } else {
+        //App opened from Notification
+        [[AppManager sharedInstance] updateOpenAppEventSource:OPEN_APP_SOURCE_PUSH_NOTIFICATION];
+        [TrackerManager postEvent:[EventFactory openApp:[UserDefaultsManager incrementCounter:kUDMAppOpenCount] source:OPEN_APP_SOURCE_PUSH_NOTIFICATION] forName:[OpenAppEvent name]];
     }
 }
 

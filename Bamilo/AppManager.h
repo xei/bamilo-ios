@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "OpenAppEvent.h"
 
 @interface AppManager : NSObject
 
@@ -15,5 +16,8 @@
 -(NSString *) getAppVersionNumber;
 -(NSString *) getAppBuildNumber;
 -(NSString *) getAppFullFormattedVersion;
+
+-(void) updateOpenAppEventSource:(OpenAppEventSourceType)source;
+-(OpenAppEventSourceType) getOpenAppEventSource;
 
 @end
