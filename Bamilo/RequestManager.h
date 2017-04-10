@@ -8,13 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import "DataServiceProtocol.h"
+#import "Data.h"
 
 typedef NS_OPTIONS(NSUInteger, RequestExecutionType) {
     REQUEST_EXEC_IN_BACKGROUND = 0,
     REQUEST_EXEC_IN_FOREGROUND = 1
 };
 
-typedef void(^RequestCompletion)(int statusCode, id data, NSArray* errorMessages);
+typedef void(^RequestCompletion)(int statusCode, Data *data, NSArray *errorMessages);
 
 @interface RequestManager : NSObject
 

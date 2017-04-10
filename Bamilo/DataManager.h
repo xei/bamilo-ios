@@ -11,10 +11,13 @@
 #import "RICart.h"
 #import "FormItemModel.h"
 
+#define kDataMessages @"DataMessages"
+#define kDataPayload @"DataPayload"
+
 @interface DataManager : BaseDataManager
 
 - (void)serialize:(id)data into:(Class)aClass response:(RIApiResponse)response errorMessages:(NSArray *)errorMessages completion:(DataCompletion)completion;
--(void) processResponse:(RIApiResponse)response forData:(id)data errorMessages:(NSArray *)errorMessages completion:(DataCompletion)completion;
+-(void) processResponse:(RIApiResponse)response class:(Class)aClass forData:(id)data errorMessages:(NSArray *)errorMessages completion:(DataCompletion)completion;
 - (NSError *)getErrorFrom:(RIApiResponse)response errorMessages:(NSArray *)errorMessages;
 
 - (void)getSubCategoriesFilter:(id<DataServiceProtocol>)target ofCategroyUrlKey:(NSString *)urlKey completion:(DataCompletion)completion;

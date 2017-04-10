@@ -23,24 +23,24 @@ static AddressDataManager *instance;
 }
 
 - (void)getUserAddressList:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
-    [self.requestManager asyncPOST:target path:RI_API_GET_CUSTOMER_ADDRESS_LIST params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
-        [self serialize:data into:[AddressList class] response:response errorMessages:errorMessages completion:completion];
+    [self.requestManager asyncPOST:target path:RI_API_GET_CUSTOMER_ADDRESS_LIST params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(int statusCode, Data *data, NSArray *errorMessages) {
+        [self serialize:data into:[AddressList class] response:statusCode errorMessages:errorMessages completion:completion];
     }];
 }
 
 - (void)setDefaultAddress:(id<DataServiceProtocol>)target address:(Address *)address isBilling:(BOOL)isBilling completion:(DataCompletion)completion {
     NSDictionary *params = @{ @"id": address.uid, @"type": isBilling ? @"billing" : @"shipping" };
     
-    [self.requestManager asyncPUT:target path:RI_API_GET_CUSTOMER_SELECT_DEFAULT params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
-        [self serialize:data into:[AddressList class] response:response errorMessages:errorMessages completion:completion];
+    [self.requestManager asyncPUT:target path:RI_API_GET_CUSTOMER_SELECT_DEFAULT params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int statusCode, Data *data, NSArray *errorMessages) {
+        [self serialize:data into:[AddressList class] response:statusCode errorMessages:errorMessages completion:completion];
     }];
 }
 
 -(void)deleteAddress:(id<DataServiceProtocol>)target address:(Address *)address completion:(DataCompletion)completion {
     NSDictionary *params = @{ @"id": address.uid };
     
-    [self.requestManager asyncDELETE:target path:RI_API_DELETE_ADDRESS_REMOVE params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
-        [self processResponse:response forData:data errorMessages:errorMessages completion:completion];
+    [self.requestManager asyncDELETE:target path:RI_API_DELETE_ADDRESS_REMOVE params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int statusCode, Data *data, NSArray *errorMessages) {
+        [self processResponse:statusCode class:nil forData:data errorMessages:errorMessages completion:completion];
     }];
 }
 

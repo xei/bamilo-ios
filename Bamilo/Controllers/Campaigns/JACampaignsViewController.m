@@ -456,7 +456,7 @@ withCampaignTargetString:(NSString*)campaignTargetString
             if (VALID_NOTEMPTY(self.teaserTrackingInfo, NSString)) {
                 NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
                 
-                NSString* obj = [skusFromTeaserInCart objectForKey:self.backupSimpleSku];
+                NSString *obj = [skusFromTeaserInCart objectForKey:self.backupSimpleSku];
                 
                 if (ISEMPTY(obj)) {
                     [skusFromTeaserInCart setValue:self.teaserTrackingInfo forKey:self.backupSimpleSku];
@@ -511,8 +511,7 @@ withCampaignTargetString:(NSString*)campaignTargetString
             trackingDictionary = [NSMutableDictionary new];
             [trackingDictionary setValue:self.cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
             [trackingDictionary setValue:self.cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
-                                                      data:[trackingDictionary copy]];
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart] data:[trackingDictionary copy]];
             
             trackingDictionary = [NSMutableDictionary new];
             [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
@@ -529,7 +528,7 @@ withCampaignTargetString:(NSString*)campaignTargetString
             NSDictionary* userInfo = [NSDictionary dictionaryWithObject:self.cart forKey:kUpdateCartNotificationValue];
             [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
             
-            //[self onSuccessResponse:RIApiResponseSuccess messages:successMessage showMessage:YES];
+            [self onSuccessResponse:RIApiResponseSuccess messages:[self extractSuccessMessages:data] showMessage:YES];
             //[self hideLoading];
         } else {
             [TrackerManager postEvent:[EventFactory addToCart:self.backupSimpleSku basketValue:[self.cart.cartEntity.cartValue intValue] success:NO] forName:[AddToCartEvent name]];

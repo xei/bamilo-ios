@@ -13,6 +13,8 @@
 #import "JAScreenTarget.h"
 #import "PerformanceTrackerProtocol.h"
 #import "DataTrackerProtocol.h"
+//#######
+#import "DataMessageList.h"
 
 @interface JABaseViewController : UIViewController <PerformanceTrackerProtocol, DataTrackerProtocol, UISearchBarDelegate>
 
@@ -80,6 +82,9 @@
 - (void)appDidEnterBackground;
 
 - (void)onOrientationChanged;
+
+//TEMP FUNCTION
+-(NSArray *) extractSuccessMessages:(DataMessageList *)dataMessages;
 
 @end
 

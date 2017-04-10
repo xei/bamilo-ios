@@ -233,6 +233,9 @@
 		876869A71E5C97FA004B4333 /* NotificationBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 876869A61E5C97FA004B4333 /* NotificationBarView.m */; };
 		876869A91E5C9805004B4333 /* NotificationBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 876869A81E5C9805004B4333 /* NotificationBarView.xib */; };
 		876C94031E9A73DB009994E1 /* CartDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 876C94021E9A73DB009994E1 /* CartDataManager.m */; };
+		877762C91E9BB37C00B73140 /* Data.m in Sources */ = {isa = PBXBuildFile; fileRef = 877762C81E9BB37C00B73140 /* Data.m */; };
+		877762CD1E9BB38800B73140 /* DataMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 877762CB1E9BB38800B73140 /* DataMessage.m */; };
+		877762D11E9BB39300B73140 /* DataMessageList.m in Sources */ = {isa = PBXBuildFile; fileRef = 877762D01E9BB39300B73140 /* DataMessageList.m */; };
 		879F87EF1E5048790033FE87 /* NSMutableArray+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F87EE1E5048790033FE87 /* NSMutableArray+Extensions.m */; };
 		879F87F21E5057F10033FE87 /* PlainTableViewHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 879F87F11E5057F10033FE87 /* PlainTableViewHeaderCell.xib */; };
 		879F87F51E5058060033FE87 /* PlainTableViewHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F87F41E5058060033FE87 /* PlainTableViewHeaderCell.m */; };
@@ -1082,6 +1085,12 @@
 		876869A81E5C9805004B4333 /* NotificationBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationBarView.xib; sourceTree = "<group>"; };
 		876C94011E9A73DB009994E1 /* CartDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartDataManager.h; sourceTree = "<group>"; };
 		876C94021E9A73DB009994E1 /* CartDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartDataManager.m; sourceTree = "<group>"; };
+		877762C71E9BB37C00B73140 /* Data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Data.h; sourceTree = "<group>"; };
+		877762C81E9BB37C00B73140 /* Data.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Data.m; sourceTree = "<group>"; };
+		877762CB1E9BB38800B73140 /* DataMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataMessage.m; sourceTree = "<group>"; };
+		877762CC1E9BB38800B73140 /* DataMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataMessage.h; sourceTree = "<group>"; };
+		877762CF1E9BB39300B73140 /* DataMessageList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataMessageList.h; sourceTree = "<group>"; };
+		877762D01E9BB39300B73140 /* DataMessageList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataMessageList.m; sourceTree = "<group>"; };
 		879F87ED1E5048790033FE87 /* NSMutableArray+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Extensions.h"; sourceTree = "<group>"; };
 		879F87EE1E5048790033FE87 /* NSMutableArray+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Extensions.m"; sourceTree = "<group>"; };
 		879F87F11E5057F10033FE87 /* PlainTableViewHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlainTableViewHeaderCell.xib; sourceTree = "<group>"; };
@@ -3781,6 +3790,35 @@
 			name = CartDataManager;
 			sourceTree = "<group>";
 		};
+		877762C61E9BB36D00B73140 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				877762CE1E9BB38A00B73140 /* DataMessageList */,
+				877762CA1E9BB37F00B73140 /* DataMessage */,
+				877762C71E9BB37C00B73140 /* Data.h */,
+				877762C81E9BB37C00B73140 /* Data.m */,
+			);
+			name = Data;
+			sourceTree = "<group>";
+		};
+		877762CA1E9BB37F00B73140 /* DataMessage */ = {
+			isa = PBXGroup;
+			children = (
+				877762CB1E9BB38800B73140 /* DataMessage.m */,
+				877762CC1E9BB38800B73140 /* DataMessage.h */,
+			);
+			name = DataMessage;
+			sourceTree = "<group>";
+		};
+		877762CE1E9BB38A00B73140 /* DataMessageList */ = {
+			isa = PBXGroup;
+			children = (
+				877762CF1E9BB39300B73140 /* DataMessageList.h */,
+				877762D01E9BB39300B73140 /* DataMessageList.m */,
+			);
+			name = DataMessageList;
+			sourceTree = "<group>";
+		};
 		879F87EC1E5048550033FE87 /* NSMutableArray+Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -4172,9 +4210,10 @@
 		87B685191E4B746B0042C09F /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				8714E0621E47483B004C9B1D /* Base */,
+				877762C61E9BB36D00B73140 /* Data */,
 				61036B6D1E65B6F2006E12A9 /* OrderGroup */,
 				617BBFDD1E6AD0A900A165AF /* FilterGroup */,
-				8714E0621E47483B004C9B1D /* Base */,
 				879F88071E50B8380033FE87 /* AddressList */,
 				879F88061E50B8320033FE87 /* Address */,
 				879F88321E51DFAA0033FE87 /* CartForm */,
@@ -5966,6 +6005,7 @@
 				CE9ADF581AB6D78200D56481 /* JAEditAddressViewController.m in Sources */,
 				8702FBCC1E991C9A001D1AA9 /* LogoutEvent.m in Sources */,
 				8702FBD01E99FDD2001D1AA9 /* UserDefaultsManager.m in Sources */,
+				877762C91E9BB37C00B73140 /* Data.m in Sources */,
 				CE9ADF5A1AB6D78200D56481 /* JANewRatingViewController.m in Sources */,
 				CE9ADF5B1AB6D78200D56481 /* JAGenericFiltersView.m in Sources */,
 				875AD5591E38C0C900584ABF /* RICampaign.m in Sources */,
@@ -6078,6 +6118,7 @@
 				CE9ADFB11AB6D78200D56481 /* JAUndefinedSearchView.m in Sources */,
 				9AED08341C74CA0E00B5FDF0 /* JASuccessPageViewController.m in Sources */,
 				CEA106F91BD003EC00EF88B1 /* JACategoriesSideMenuCell.m in Sources */,
+				877762CD1E9BB38800B73140 /* DataMessage.m in Sources */,
 				1CCD52A01E2BA42F008BAEE4 /* PopularTeaserTableViewCell.m in Sources */,
 				875AD54D1E38C0C900584ABF /* RILanguage.m in Sources */,
 				CE7CC0921BE38B47006F4A56 /* JASearchView.m in Sources */,
@@ -6286,6 +6327,7 @@
 				CEF0C48D1BE8EE44005B5B12 /* JAReviewCollectionCell.m in Sources */,
 				875AD5681E38C0C900584ABF /* RIPaymentMethodFormField.m in Sources */,
 				875AD55C1E38C0C900584ABF /* RICatalog.m in Sources */,
+				877762D11E9BB39300B73140 /* DataMessageList.m in Sources */,
 				8714E0441E45E247004C9B1D /* UILabel+Extensions.m in Sources */,
 				CE9AE0151AB6D78200D56481 /* JARootViewController.m in Sources */,
 				CEF0C48E1BE8EE56005B5B12 /* JASellerDeliveryView.m in Sources */,

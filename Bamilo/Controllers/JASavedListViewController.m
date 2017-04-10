@@ -473,7 +473,7 @@
             NSDictionary* userInfo = [NSDictionary dictionaryWithObject:self.cart forKey:kUpdateCartNotificationValue];
             [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
             
-            //[self onSuccessResponse:RIApiResponseSuccess messages:successMessage showMessage:YES];
+            [self onSuccessResponse:RIApiResponseSuccess messages:[self extractSuccessMessages:data] showMessage:YES];
             
             NSMutableDictionary *tracking = [NSMutableDictionary new];
             [tracking setValue:product.name forKey:kRIEventProductNameKey];

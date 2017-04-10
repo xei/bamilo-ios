@@ -138,7 +138,7 @@
             
             NSDictionary *userInfo = [NSDictionary dictionaryWithObject:self.cart forKey:kUpdateCartNotificationValue];
             [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
-            //[self.parent onSuccessResponse:RIApiResponseTimeOut messages:successMessage showMessage:YES];
+            [self onSuccessResponse:RIApiResponseTimeOut messages:[self extractSuccessMessages:data] showMessage:YES];
             //[self.parent hideLoading];
         } else {
             [TrackerManager postEvent:[EventFactory addToCart:item.sku basketValue:[self.cart.cartEntity.cartValue intValue] success:NO] forName:[AddToCartEvent name]];

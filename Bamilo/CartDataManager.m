@@ -25,8 +25,8 @@ static CartDataManager *instance;
 -(void)addProductToCart:(id<DataServiceProtocol>)target simpleSku:(NSString *)simpleSku completion:(DataCompletion)completion {
     NSDictionary *params = @{ @"quantity": @1, @"sku": simpleSku };
     
-    [self.requestManager asyncPOST:target path:RI_API_ADD_ORDER params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
-        [self serialize:data into:[RICart class] response:response errorMessages:errorMessages completion:completion];
+    [self.requestManager asyncPOST:target path:RI_API_ADD_ORDER params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int statusCode, Data *data, NSArray *errorMessages) {
+        [self serialize:data into:[RICart class] response:statusCode errorMessages:errorMessages completion:completion];
     }];
 }
 

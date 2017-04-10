@@ -1039,7 +1039,7 @@ typedef void (^ProcessActionBlock)(void);
                 
                 [self trackingEventAddToWishList:product];
                 
-                //[self onSuccessResponse:RIApiResponseSuccess messages:success showMessage:YES];
+                [self onSuccessResponse:RIApiResponseSuccess messages:[self extractSuccessMessages:data] showMessage:YES];
                 //[self hideLoading];
                 
                 NSDictionary *userInfo = nil;
@@ -1051,8 +1051,8 @@ typedef void (^ProcessActionBlock)(void);
                 
                 [self.collectionView reloadData];
             } else {
-                /*[self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:@selector(addToFavorites:) objects:@[button]];
-                [self hideLoading];*/
+                [self onErrorResponse:error.code messages:[error.userInfo objectForKey:kErrorMessages] showAsMessage:YES selector:@selector(addToFavorites:) objects:@[button]];
+                //[self hideLoading];
                 [TrackerManager postEvent:[EventFactory addToFavorites:product.categoryUrlKey success:NO] forName:[AddToFavoritesEvent name]];
             }
         }];

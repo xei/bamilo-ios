@@ -725,6 +725,18 @@
     self.orientation = [[UIApplication sharedApplication] statusBarOrientation];
 }
 
+
+//TEMP FUNCTION
+-(NSArray *) extractSuccessMessages:(DataMessageList *)dataMessages {
+    NSMutableArray *messages = [NSMutableArray array];
+    
+    for(DataMessage *msgObject in dataMessages.success) {
+        [messages addObject:msgObject.message];
+    }
+    
+    return messages;
+}
+
 //##################################################################################################
 #pragma mark - PerformanceTrackerProtocol
 -(void) recordStartLoadTime {

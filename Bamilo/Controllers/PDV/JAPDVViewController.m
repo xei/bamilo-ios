@@ -1146,7 +1146,7 @@ typedef void (^ProcessActionBlock)(void);
                 NSDictionary* userInfo = [NSDictionary dictionaryWithObject:self.cart forKey:kUpdateCartNotificationValue];
                 [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                 
-                //[self onSuccessResponse:RIApiResponseSuccess messages:successMessage showMessage:YES];
+                [self onSuccessResponse:RIApiResponseSuccess messages:[self extractSuccessMessages:data] showMessage:YES];
                 //[self hideLoading];
             } else {
                 [TrackerManager postEvent:[EventFactory addToCart:self.currentSimple.sku basketValue:[self.cart.cartEntity.cartValue intValue] success:NO] forName:[AddToCartEvent name]];
@@ -1457,10 +1457,10 @@ typedef void (^ProcessActionBlock)(void);
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification object:self.product.sku userInfo:userInfo];
                 
-                //[self onSuccessResponse:RIApiResponseSuccess messages:success showMessage:YES];
+                [self onSuccessResponse:RIApiResponseSuccess messages:[self extractSuccessMessages:data] showMessage:YES];
             } else {
-                /*[self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:@selector(addToWishList:) objects:@[button]];
-                [self hideLoading];*/
+                [self onErrorResponse:error.code messages:[error.userInfo objectForKey:kErrorMessages] showAsMessage:YES selector:@selector(addToWishList:) objects:@[button]];
+                //[self hideLoading];
                 [TrackerManager postEvent:[EventFactory addToFavorites:self.product.categoryUrlKey success:NO] forName:[AddToFavoritesEvent name]];
             }
         }];

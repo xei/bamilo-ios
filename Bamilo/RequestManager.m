@@ -61,16 +61,20 @@
      cacheType:RIURLCacheNoCache
      cacheTime:RIURLCacheDefaultTime
      userAgentInjection:[RIApi getCountryUserAgentInjection] successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-        NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
-        if (metadata || [jsonObject objectForKey:@"success"]) {
-            completion(apiResponse, metadata, nil);
-        } else {
+         
+         NSError *error;
+         Data *data = [Data new];
+         [data mergeFromDictionary:jsonObject useKeyMapping:NO error:&error];
+         
+         if (data.success) {
+            completion(apiResponse, data, nil);
+         } else {
             completion(apiResponse, nil, nil);
-        }
+         }
          
-        [[LoadingManager sharedInstance] hideLoading];
+         [[LoadingManager sharedInstance] hideLoading];
          
-    } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
+     } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
         if(errorJsonObject && errorJsonObject.allKeys.count) {
             completion(apiResponse, nil, [RIError getPerfectErrorMessages:errorJsonObject]);
         } else if(errorObject) {
