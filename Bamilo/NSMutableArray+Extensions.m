@@ -23,7 +23,7 @@
     return _array;
 }
 
-- (NSMutableArray *)map:(id(^)(id))block {
+- (NSMutableArray *)map:(id(^)(id item))block {
     NSEnumerator * enumerator = ((NSArray *)self.copy).objectEnumerator;
     NSMutableArray *mappedResult = [NSMutableArray arrayWithCapacity:[self count]];
     id obj; NSUInteger idx = 0;

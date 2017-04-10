@@ -23,11 +23,13 @@
 #import "JATabBarButton.h"
 #import "ViewControllerManager.h"
 #import "EmarsysPredictProtocol.h"
+#import "NSArray+Extension.h"
+#import "RecommendItem.h"
 
 @interface JAHomeViewController () <JAPickerDelegate, JANewsletterGenderProtocol, EmarsysRecommendationsProtocol>
 @property (strong, nonatomic) JATeaserPageView* teaserPageView;
 @property (nonatomic, assign) BOOL isLoaded;
-@property (nonatomic, strong)JAFallbackView *fallbackView;
+@property (nonatomic, strong) JAFallbackView *fallbackView;
 @property (nonatomic, strong) JARadioComponent *radioComponent;
 @property (nonatomic, strong) JAPicker *picker;
 
@@ -38,28 +40,24 @@
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad {
+    [super viewDidLoad];
+    
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"newsletter_subscribed"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     self.navBarLayout.showCartButton = NO;
     self.navBarLayout.showSeparatorView = NO;
     self.searchBarIsVisible = YES;
     self.tabBarIsVisible = YES;
-    
-    [super viewDidLoad];
-    
-    //self.A4SViewControllerAlias = @"HOME";
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(campaignTimerEnded) name:kCampaignMainTeaserTimerEndedNotification object:nil];
-    
     self.isLoaded = NO;
     
     self.teaserPageView = [[JATeaserPageView alloc] init];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(campaignTimerEnded) name:kCampaignMainTeaserTimerEndedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reload) name:kHomeShouldReload object:nil];
 
 }
 
--(void)campaignTimerEnded {
+- (void)campaignTimerEnded {
     if (self.isLoaded) {
         [self.teaserPageView loadTeasersForFrame:[self viewBounds]];
     }
@@ -74,23 +72,7 @@
     
     [self requestTeasers];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffMenuSwipePanelNotification
-                                                        object:nil];
-    
-    /*[[NSNotificationCenter defaultCenter] addObserver:self.teaserPageView
-                                             selector:@selector(keyboardWillShow:)
-                                                 name:UIKeyboardDidShowNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self.teaserPageView
-                                             selector:@selector(keyboardWillHide:)
-                                                 name:UIKeyboardWillHideNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self.teaserPageView
-                                             selector:@selector(hideKeyboard)
-                                                 name:kOpenMenuNotification
-                                               object:nil];*/
+    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffMenuSwipePanelNotification object:nil];
     
     [self hideLoading];
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"]) {
@@ -100,7 +82,7 @@
     }
 }
 
--(void)presentCoachMarks {
+- (void)presentCoachMarks {
     
     CGRect searchButtonFrame = self.searchIconImageView.frame; //search button
     
@@ -216,9 +198,7 @@
     if (self.isLoaded) {
         return;
     }
-    
-    [RITeaserGrouping getTeaserGroupingsWithSuccessBlock:^(NSDictionary *teaserGroupings, BOOL richTeasers) {
-        
+    [RITeaserGrouping getTeaserGroupingsWithSuccessBlock:^(NSDictionary *teaserGroupings, BOOL richTeaserGrouping) {
         NSArray *forms = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIForm class]) withPropertyName:@"type" andPropertyValue:@"newsletter_homepage"];
         RIForm *form = nil;
         if (forms.count > 0) {
@@ -237,8 +217,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
         [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         self.isLoaded = YES;
-        
-    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
+    } failBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
         //if this is the failure came from richBlock, fail gracefully
         if (!self.isLoaded) {
             [self publishScreenLoadTime];
@@ -251,12 +230,12 @@
                 [self.view addSubview:self.fallbackView];
             }
         }
-    } andRichBlock:^(RITeaserGrouping *richTeaserGroupings) {
+    } rickBlock:^(RITeaserGrouping *richTeaserGrouping) {
         NSMutableDictionary *tempTeaserGroupings = [self.teaserPageView.teaserGroupings mutableCopy];
-        [tempTeaserGroupings setObject:richTeaserGroupings forKey:richTeaserGroupings.type];
+        [tempTeaserGroupings setObject:richTeaserGrouping forKey:richTeaserGrouping.type];
         
         self.teaserPageView.teaserGroupings = [tempTeaserGroupings copy];
-        [self.teaserPageView addTeaserGrouping:richTeaserGroupings.type];
+        [self.teaserPageView addTeaserGrouping:richTeaserGrouping.type];
     }];
 }
 
@@ -380,10 +359,18 @@
     EMRecommendationRequest *recommend = [EMRecommendationRequest requestWithLogic:@"PERSONAL"];
     recommend.limit = 15;
     recommend.completionHandler = ^(EMRecommendationResult *_Nonnull result) {
-        
+        [self renderRecommendations:result];
     };
     
     return @[recommend];
+}
+
+- (void)renderRecommendations:(EMRecommendationResult *)result {
+    NSArray<RecommendItem *>* recommendItems = [result.products map:^id(EMRecommendationItem *item) {
+        return [RecommendItem instanceWithEMRecommendationItem:item];
+    }];
+    
+    self.teaserPageView.mainScrollView;
 }
 
 @end

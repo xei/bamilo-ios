@@ -73,8 +73,8 @@
 }
 
 + (NSString*)getTeaserGroupingsWithSuccessBlock:(void (^)(NSDictionary* teaserGroupings, BOOL richTeaserGrouping))successBlock
-                                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
-                                   andRichBlock:(void (^)(RITeaserGrouping * richTeaserGrouping))richBlock
+                                      failBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
+                                      rickBlock:(void (^)(RITeaserGrouping * richTeaserGrouping))richBlock
 {
     NSString *operationID = nil;
     NSArray *allTeaserGroupings = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RITeaserGrouping

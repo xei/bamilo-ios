@@ -22,13 +22,11 @@
 {
     BOOL _needsRefresh;
     BOOL _keyboardEvent;
-    CGFloat _scrollViewHeight;
 }
 
-@property (nonatomic)UIScrollView* mainScrollView;
 //we need to keep the main teaser because we have to access it to know about it's last position
-@property (nonatomic, strong)JAMainTeaserView* mainTeaserView;
-@property (nonatomic, assign)NSInteger mainTeaserLastIndex;
+@property (nonatomic, strong) JAMainTeaserView* mainTeaserView;
+@property (nonatomic, assign) NSInteger mainTeaserLastIndex;
 @property (nonatomic, strong) JANewsletterTeaserView* newsletterTeaserView;
 
 @end
@@ -76,7 +74,6 @@
         mainScrollY += 6.0f;
         [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.frame.size.width, mainScrollY)];
     }
-    _scrollViewHeight = self.mainScrollView.height;
 }
 
 - (void)setNewsletterForm:(RIForm *)newsletterForm {

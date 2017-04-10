@@ -10,7 +10,7 @@
 
 @implementation NSArray (Extension)
 
-- (NSArray *)map:(id(^)(id))block {
+- (NSArray *)map:(id(^)(id item))block {
     NSMutableArray * array = [NSMutableArray arrayWithCapacity:[self count]];
     [self enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         id newObject = block(obj) ?: [NSNull null];

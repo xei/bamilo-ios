@@ -39,6 +39,8 @@
 #import "EmarsysMobileEngage.h"
 #import "NSMutableArray+Extensions.h"
 #import "EmarsysPredictManager.h"
+#import "NSArray+Extension.h"
+#import "RecommendItem.h"
 
 
 #define JACatalogGridSelected @"CATALOG_GRID_IS_SELECTED"
@@ -60,7 +62,7 @@ typedef void (^ProcessActionBlock)(void);
 @property (weak, nonatomic) IBOutlet UIView *containerView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *collectionViewTopConstraint;
 @property (nonatomic, strong) JAProductCollectionViewFlowLayout* flowLayout;
-@property (nonatomic, strong) NSMutableArray* productsArray;
+@property (nonatomic, strong) NSMutableArray <RIProduct *>* productsArray;
 @property (nonatomic, copy)   NSArray<BaseSearchFilterItem*> *filtersArray;
 @property (nonatomic, assign) int priceFilterIndex;
 @property (nonatomic, strong) RICategory* filterCategory;
@@ -373,7 +375,7 @@ typedef void (^ProcessActionBlock)(void);
     self.loadedEverything = NO;
 }
 
-- (void)addProductsToTable:(NSArray*)products {
+- (void)addProductsToTable:(NSArray <RIProduct *>*)products {
     self.apiResponse = RIApiResponseSuccess;
     [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
     
@@ -1559,14 +1561,18 @@ typedef void (^ProcessActionBlock)(void);
     
     EMRecommendationRequest *recommend = [EMRecommendationRequest requestWithLogic:@"SEARCH"];
     recommend.limit = 15;
-
-    [recommend excludeItemsWhere:@"item" isIn:[self.productsArray map:^id(id item) {
-        return ((RIProduct *)item).sku;
+    
+    
+    [recommend excludeItemsWhere:@"item" isIn:[self.productsArray map:^id(RIProduct *item) {
+        return item.sku;
     }]];
     
     recommend.completionHandler = ^(EMRecommendationResult *_Nonnull result) {
-        
+        NSArray<RecommendItem *>* recommendItems = [result.products map:^id(EMRecommendationItem *item) {
+            return [RecommendItem instanceWithEMRecommendationItem:item];
+        }];
     };
+    
     return @[recommend];
 }
 

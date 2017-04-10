@@ -11,7 +11,7 @@
 #import "JACampaignsTeaserView.h"
 
 @interface JATeaserPageView : UIView
-
+@property (nonatomic)UIScrollView* mainScrollView;
 @property (nonatomic, strong) NSDictionary* teaserGroupings;
 
 // Newsletter

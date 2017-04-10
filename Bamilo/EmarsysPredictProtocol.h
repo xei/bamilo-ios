@@ -23,7 +23,7 @@
 
 @protocol EmarsysWebExtendProtocol<EmarsysPredictProtocolBase>
 
-- (EMTransaction *)getDataCollection:(EMTransaction *)transaction;
+@optional - (EMTransaction *)getDataCollection:(EMTransaction *)transaction;
 
 @end
 

@@ -10,6 +10,6 @@
 
 @interface NSArray<ObjectType> (Extension)
 
-- (NSArray *)map:(ObjectType(^)(ObjectType))block;
+- (NSArray *)map:(id(^)(ObjectType item))block;
 
 @end

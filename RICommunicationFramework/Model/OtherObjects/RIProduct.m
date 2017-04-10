@@ -133,8 +133,7 @@
 + (NSString *)getCompleteProductWithTargetString:(NSString*)targetString
                                withRichParameter:(NSDictionary*)parameter
                                     successBlock:(void (^)(id product))successBlock
-                                 andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
-{
+                                 andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock {
     NSString *richParam = [NSMutableString new];
     if (VALID_NOTEMPTY(parameter, NSDictionary) && [parameter objectForKey:@"rich_parameter"]) {
         richParam = [RITarget getURLStringforTargetString:[parameter objectForKey:@"rich_parameter"]];
