@@ -38,7 +38,6 @@
 #import "SearchEvent.h"
 #import "EmarsysMobileEngage.h"
 
-
 #define JACatalogGridSelected @"CATALOG_GRID_IS_SELECTED"
 #define JACatalogViewControllerMaxProducts 36
 #define JACatalogViewControllerMaxProducts_ipad 46
@@ -1012,7 +1011,7 @@ typedef void (^ProcessActionBlock)(void);
 }
 
 - (void)addToFavorites:(UIButton *)button {
-    [self showLoading];
+    //[self showLoading];
     
     __weak typeof (self) weakSelf = self;
     
@@ -1031,31 +1030,32 @@ typedef void (^ProcessActionBlock)(void);
     
     RIProduct* product = [self.productsArray objectAtIndex:button.tag];
     if (!button.selected && !VALID_NOTEMPTY(product.favoriteAddDate, NSDate)) {
-        [RIProduct addToFavorites:product successBlock:^(RIApiResponse apiResponse,  NSArray *success){
-            button.selected = YES;
-            product.favoriteAddDate = [NSDate date];
-            
-            [self trackingEventAddToWishList:product];
-            
-            [self onSuccessResponse:RIApiResponseSuccess messages:success showMessage:YES];
-            [self hideLoading];
-            
-            NSDictionary *userInfo = nil;
-            if (product.favoriteAddDate) {
-                userInfo = [NSDictionary dictionaryWithObject:product.favoriteAddDate forKey:@"favoriteAddDate"];
+        [[ProductDataManager sharedInstance] addToFavorites:self sku:product.sku completion:^(id data, NSError *error) {
+            if(error == nil) {
+                [TrackerManager postEvent:[EventFactory addToFavorites:product.categoryUrlKey success:YES] forName:[AddToFavoritesEvent name]];
+                
+                button.selected = YES;
+                product.favoriteAddDate = [NSDate date];
+                
+                [self trackingEventAddToWishList:product];
+                
+                //[self onSuccessResponse:RIApiResponseSuccess messages:success showMessage:YES];
+                //[self hideLoading];
+                
+                NSDictionary *userInfo = nil;
+                if (product.favoriteAddDate) {
+                    userInfo = [NSDictionary dictionaryWithObject:product.favoriteAddDate forKey:@"favoriteAddDate"];
+                }
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification object:product.sku userInfo:userInfo];
+                
+                [self.collectionView reloadData];
+            } else {
+                /*[self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:@selector(addToFavorites:) objects:@[button]];
+                [self hideLoading];*/
+                [TrackerManager postEvent:[EventFactory addToFavorites:product.categoryUrlKey success:NO] forName:[AddToFavoritesEvent name]];
             }
-            [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
-                                                                object:product.sku
-                                                              userInfo:userInfo];
-            
-            [self.collectionView reloadData];
-            
-        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-            [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:@selector(addToFavorites:) objects:@[button]];
-            [self hideLoading];
         }];
-    } else {
-        [self hideLoading];
     }
 }
 
@@ -1195,7 +1195,6 @@ typedef void (^ProcessActionBlock)(void);
 }
 
 #pragma mark - JASortingView
-
 - (void)selectedSortingMethod:(RICatalogSortingEnum)catalogSorting {
     if (catalogSorting != self.sortingMethod) {
         [self killScroll];
@@ -1209,7 +1208,6 @@ typedef void (^ProcessActionBlock)(void);
         [self loadMoreProducts];
         
         [self trackingEventSort];
-        
     }
 }
 
@@ -1222,20 +1220,17 @@ typedef void (^ProcessActionBlock)(void);
 }
 
 #pragma mark - Tracking events
-
 - (void)trackingEventFilter:(NSMutableDictionary *)trackingDictionary {
     NSString* url = [RITarget getURLStringforTargetString:self.targetString];
     [trackingDictionary setValue:url forKey:kRIEventLabelKey];
     [trackingDictionary setValue:STRING_FILTERS forKey:kRIEventActionKey];
     [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
     
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFilter]
-                                              data:[trackingDictionary copy]];
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFilter] data:[trackingDictionary copy]];
 }
 
 - (void)trackingEventIndividualFilter:(NSString *)filterName {
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventIndividualFilter]
-                                              data:[NSDictionary dictionaryWithObject:filterName forKey:kRIEventFilterTypeKey]];
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventIndividualFilter] data:[NSDictionary dictionaryWithObject:filterName forKey:kRIEventFilterTypeKey]];
 }
 
 - (void)trackingEventCatalog {
@@ -1331,6 +1326,7 @@ typedef void (^ProcessActionBlock)(void);
     if(categoryName.length) {
         [trackingDictionary setValue:categoryName forKey:kRIEventCategoryIdKey];
     }
+    
     if(subCategoryName.length) {
         [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryIdKey];
     }
@@ -1338,6 +1334,7 @@ typedef void (^ProcessActionBlock)(void);
     if (product.categoryName.length) {
         [trackingDictionary setValue:product.categoryName forKey:kRIEventCategoryNameKey];
     }
+    
     if (product.categoryUrlKey.length) {
         [trackingDictionary setValue:product.categoryUrlKey forKey:kRIEventCategoryIdKey];
     }
@@ -1345,14 +1342,11 @@ typedef void (^ProcessActionBlock)(void);
     [trackingDictionary setValue:product.name forKey:kRIEventProductNameKey];
     
     [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages) {
-        
         [trackingDictionary setValue:[NSNumber numberWithInteger:favoriteProducts.count] forKey:kRIEventTotalWishlistKey];
         
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToWishlist]
-                                                  data:[trackingDictionary copy]];
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToWishlist] data:[trackingDictionary copy]];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToWishlist]
-                                                  data:[trackingDictionary copy]];
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToWishlist] data:[trackingDictionary copy]];
     }];
 }
 
@@ -1397,8 +1391,7 @@ typedef void (^ProcessActionBlock)(void);
     [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
     [trackingDictionary setValue:[RICatalogSorting sortingName:self.sortingMethod] forKey:kRIEventSortTypeKey];
     
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSort]
-                                              data:[trackingDictionary copy]];
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSort] data:[trackingDictionary copy]];
 }
 
 - (void)trackingEventSearchForString:(NSString *)string with:(NSNumber *)numberOfProducts {
@@ -1420,15 +1413,6 @@ typedef void (^ProcessActionBlock)(void);
     [trackingDictionary setValue:[NSNumber numberWithInteger:[numberOfProducts integerValue]] forKey:kRIEventNumberOfProductsKey];
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSearch] data:[trackingDictionary copy]];
-//################################
-    //PUSHWOOSH EVENT
-    /*NSMutableDictionary *attributes = [SearchEvent attributes];
-    
-    [attributes setObject:numberOfProducts forKey:kEventValue];
-    [attributes setObject:numberOfProducts forKey:kSearchEventNumberOfProducts];
-    [attributes setObject:string forKey:kSearchEventKeywords];
-    
-    [[PushWooshTracker sharedTracker] postEvent:attributes forName:[SearchEvent name]];*/
 }
 
 - (void)trackingEventGTMListingForCategoryName:(NSString *)categoryName andSubCategoryName:(NSString *)subCategoryName {
@@ -1532,14 +1516,6 @@ typedef void (^ProcessActionBlock)(void);
     }
 }
 
-
-#pragma mark - helper function
-- (void)getSubcategories {
-    [[DataManager sharedInstance] getSubCategoriesFilter:nil ofCategroyUrlKey:self.categoryUrlKey completion:^(id data, NSError *error) {
-        subCatFilter = data;
-    }];
-}
-
 #pragma mark - EmarsysPredictProtocol
 - (EMTransaction *)getDataCollection:(EMTransaction *)transaction {
     if (self.searchString.length) {
@@ -1550,6 +1526,18 @@ typedef void (^ProcessActionBlock)(void);
 
 - (BOOL)isPreventSendTransactionInViewWillAppear {
     return self.searchString.length == 0;
+}
+
+#pragma mark - DataServiceProtocol
+-(void)bind:(id)data forRequestId:(int)rid {
+    return;
+}
+
+#pragma mark - Helper Methods
+- (void)getSubcategories {
+    [[DataManager sharedInstance] getSubCategoriesFilter:nil ofCategroyUrlKey:self.categoryUrlKey completion:^(id data, NSError *error) {
+        subCatFilter = data;
+    }];
 }
 
 @end

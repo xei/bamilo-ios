@@ -17,7 +17,7 @@
 -(NSString *) getAppBuildNumber;
 -(NSString *) getAppFullFormattedVersion;
 
--(void) updateOpenAppEventSource:(OpenAppEventSourceType)source;
+-(OpenAppEventSourceType) updateOpenAppEventSource:(OpenAppEventSourceType)source;
 -(OpenAppEventSourceType) getOpenAppEventSource;
 
 @end

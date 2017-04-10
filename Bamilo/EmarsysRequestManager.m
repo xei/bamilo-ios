@@ -53,24 +53,19 @@
 -(void) handleEmarsysMobileEngageResponse:(AFHTTPRequestOperation *)operation responseObject:(id)responseObject error:(NSError *)error completion:(RequestCompletion)completion {
     int statusCode = (int)[operation.response statusCode];
     
-    if(responseObject) {
-        switch (statusCode) {
-            case SUCCESSFUL:
-            case CREATED: {
-                completion(statusCode, responseObject, nil);
-            }
-            break;
-                
-            case WRONG_INPUT_OR_MISSING_PARAM:
-            case UNAUTHORIZED:
-            case INTERNAL_SERVER_ERROR: {
-                completion(statusCode, nil, [self extractErrors:responseObject]);
-            }
-            break;
+    switch (statusCode) {
+        case SUCCESSFUL:
+        case CREATED: {
+            completion(statusCode, responseObject, nil);
         }
-    } else {
-        NSLog(@"Emarsys Request Manager Failed: %@", error.localizedDescription);
-        completion(statusCode, nil, @[ error.localizedDescription ]);
+        break;
+            
+        case WRONG_INPUT_OR_MISSING_PARAM:
+        case UNAUTHORIZED:
+        case INTERNAL_SERVER_ERROR: {
+            completion(statusCode, nil, [self extractErrors:responseObject]);
+        }
+        break;
     }
     
     [[LoadingManager sharedInstance] hideLoading];

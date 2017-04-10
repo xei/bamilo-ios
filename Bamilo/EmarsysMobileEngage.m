@@ -31,7 +31,9 @@ static EmarsysMobileEngage *instance;
 -(void)sendLogin:(NSString *)pushToken completion:(EmarsysMobileEngageResponse)completion {
     if([RICustomer checkIfUserIsLogged]) {
         [[EmarsysDataManager sharedInstance] login:[self getPushIdentifier:pushToken] contactFieldId:cContactFieldId contactFieldValue:[RICustomer getCustomerId] completion:^(id data, NSError *error) {
-            completion(error == nil);
+            if(completion) {
+                completion(error == nil);
+            }
         }];
     } else {
         [[EmarsysDataManager sharedInstance] anonymousLogin:[self getPushIdentifier:pushToken] completion:^(id data, NSError *error) {

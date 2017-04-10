@@ -30,7 +30,8 @@
 UITextFieldDelegate,
 UICollectionViewDataSource,
 UICollectionViewDelegate,
-UICollectionViewDelegateFlowLayout>
+UICollectionViewDelegateFlowLayout,
+OrderDetailViewDelegate>
 {
     NSInteger _selectedCellIndex;
 }
@@ -59,6 +60,7 @@ UICollectionViewDelegateFlowLayout>
 @property (strong, nonatomic) RITrackOrder *trackingOrder;
 
 @property (assign, nonatomic) RIApiResponse apiResponse;
+@property (strong, nonatomic) RICart *cart;
 
 @end
 
@@ -162,7 +164,7 @@ UICollectionViewDelegateFlowLayout>
 -(JAMyOrderDetailView *)orderDetailsView {
     if (!VALID_NOTEMPTY(_orderDetailsView, JAMyOrderDetailView)) {
         _orderDetailsView = [JAMyOrderDetailView new];
-        [_orderDetailsView setParent:self];
+        [_orderDetailsView setDelegate:self];
         [_orderDetailsView setHidden:YES];
         [self.orderDetailsScrollView addSubview:_orderDetailsView];
     }
@@ -363,10 +365,7 @@ UICollectionViewDelegateFlowLayout>
     }
 }
 
-
-
 #pragma mark UICollectionViewDelegateFlowLayout
-
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     CGSize sizeForItemAtIndexPath = CGSizeZero;

@@ -12,8 +12,9 @@
 #import "JACampaignPageView.h"
 #import "RITeaserGrouping.h"
 #import "JATopTabsView.h"
+#import "CartDataManager.h"
 
-@interface JACampaignsViewController : JABaseViewController <UIScrollViewDelegate, JAPickerDelegate, JACampaignPageViewDelegate, JATopTabsViewDelegate>
+@interface JACampaignsViewController : JABaseViewController <UIScrollViewDelegate, JAPickerDelegate, JACampaignPageViewDelegate, JATopTabsViewDelegate, DataServiceProtocol>
 
 @property (nonatomic, strong)RITeaserGrouping* teaserGrouping;
 @property (nonatomic, strong)NSString* startingTitle;

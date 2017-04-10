@@ -10,4 +10,6 @@
 
 @interface CartDataManager : DataManager
 
+-(void) addProductToCart:(id<DataServiceProtocol>)target simpleSku:(NSString *)simpleSku completion:(DataCompletion)completion;
+
 @end

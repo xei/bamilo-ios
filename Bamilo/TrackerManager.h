@@ -13,12 +13,12 @@
 
 @interface TrackerManager : NSObject
 
++(NSMutableArray *) addTracker:(id)tracker;
+
 //### EventTrackerProtocol
-+(NSMutableArray *) addEventTracker:(id<EventTrackerProtocol>)tracker;
 +(void) postEvent:(NSDictionary *)attributes forName:(NSString *)name;
 
 //### TagTrackerProtocol
-+(NSMutableArray *) addTagTracker:(id<TagTrackerProtocol>)tracker;
 +(void) sendTags:(NSDictionary *)tags completion:(TagTrackerCompletion)completion;
 
 @end

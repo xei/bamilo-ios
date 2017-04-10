@@ -63,19 +63,21 @@
     return attributes;
 }
 
-+(NSDictionary *)addToFavorites:(NSString *)category {
++(NSDictionary *)addToFavorites:(NSString *)categoryUrlKey success:(BOOL)success {
     NSMutableDictionary *attributes = [AddToFavoritesEvent attributes];
     
-    [attributes setObject:category forKey:kEventCategory];
+    [attributes setObject:categoryUrlKey ?: cUNKNOWN_EVENT_VALUE forKey:kEventCategoryUrlKey];
+    [attributes setObject:@(success) forKey:kEventSuccess];
     
     return attributes;
 }
 
-+(NSDictionary *)addToCart:(NSString *)category basketValue:(int)basketValue {
++(NSDictionary *)addToCart:(NSString *)sku basketValue:(int)basketValue success:(BOOL)success {
     NSMutableDictionary *attributes = [AddToCartEvent attributes];
     
-    [attributes setObject:category forKey:kEventCategory];
-    [attributes setObject:@(basketValue) forKey:kEventBasketValue];
+    [attributes setObject:sku ?: cUNKNOWN_EVENT_VALUE forKey:kEventSKU];
+    [attributes setObject:@(basketValue) ?: cUNKNOWN_EVENT_VALUE forKey:kEventBasketValue];
+    [attributes setObject:@(success) forKey:kEventSuccess];
     
     return attributes;
 }

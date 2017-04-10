@@ -22,9 +22,10 @@ NSString *const kEventUserGender = @"Gender";
 NSString *const kEventSuccess = @"Success";
 NSString *const kEventCount = @"Count";
 NSString *const kEventSource = @"Source";
-NSString *const kEventCategory = @"Category";
+NSString *const kEventCategoryUrlKey = @"CategoryUrlKey";
 NSString *const kEventBasketValue = @"BasketValue";
 NSString *const kEventKeywords = @"Keywords";
 NSString *const kEventPrice = @"Price";
+NSString *const kEventSKU = @"SKU";
 
 @end

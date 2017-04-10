@@ -39,8 +39,8 @@ static AppManager *instance;
     return [NSString stringWithFormat:@"%@ (%@)", [self getAppVersionNumber], [self getAppBuildNumber]];
 }
 
--(void)updateOpenAppEventSource:(OpenAppEventSourceType)source {
-    self.openAppEventSource = source;
+-(OpenAppEventSourceType)updateOpenAppEventSource:(OpenAppEventSourceType)source {
+    return self.openAppEventSource = source;
 }
 
 -(OpenAppEventSourceType)getOpenAppEventSource {

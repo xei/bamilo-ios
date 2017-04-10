@@ -154,7 +154,7 @@ static DataManager *instance;
 
 -(void) processResponse:(RIApiResponse)response forData:(id)data errorMessages:(NSArray *)errorMessages completion:(DataCompletion)completion {
     if(completion) {
-        if(response == RIApiResponseSuccess && data) {
+        if(response == RIApiResponseSuccess /*&& data*/) {
             completion(data, nil);
         } else {
             completion(nil, [self getErrorFrom:response errorMessages:errorMessages]);

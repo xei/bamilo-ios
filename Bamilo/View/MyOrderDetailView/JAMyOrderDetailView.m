@@ -33,16 +33,14 @@
 
 @implementation JAMyOrderDetailView
 
-- (JAMyOrderResumeView *)myOrderResumeView
-{
+- (JAMyOrderResumeView *)myOrderResumeView {
     if (!VALID(_myOrderResumeView, UIView)) {
         _myOrderResumeView = [[JAMyOrderResumeView alloc] initWithFrame:CGRectMake(0, 0, self.width, 260)];
     }
     return _myOrderResumeView;
 }
 
-- (JAProductInfoHeaderLine *)itemsHeader
-{
+- (JAProductInfoHeaderLine *)itemsHeader {
     if (!VALID(_itemsHeader, JAProductInfoHeaderLine)) {
         _itemsHeader = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.myOrderResumeView.frame), self.width, kProductInfoHeaderLineHeight)];
         [_itemsHeader setTitle:[STRING_ORDER_ITEMS uppercaseString]];
@@ -50,8 +48,7 @@
     return _itemsHeader;
 }
 
-- (UICollectionView *)collectionView
-{
+- (UICollectionView *)collectionView {
     if (!VALID(_collectionView, UICollectionView)) {
         
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.itemsHeader.frame), self.width, self.height - CGRectGetMaxY(self.itemsHeader.frame))
@@ -65,8 +62,7 @@
     return _collectionView;
 }
 
-- (JAProductCollectionViewFlowLayout *)collectionViewFlowLayout
-{
+- (JAProductCollectionViewFlowLayout *)collectionViewFlowLayout {
     if (!VALID_NOTEMPTY(_collectionViewFlowLayout, JAProductCollectionViewFlowLayout)) {
         
         _collectionViewFlowLayout = [[JAProductCollectionViewFlowLayout alloc] init];
@@ -82,16 +78,14 @@
     return _collectionViewFlowLayout;
 }
 
-- (NSMutableArray *)itemsToReturnArray
-{
+- (NSMutableArray *)itemsToReturnArray {
     if (!VALID(_itemsToReturnArray, NSMutableArray)) {
         _itemsToReturnArray = [NSMutableArray new];
     }
     return _itemsToReturnArray;
 }
 
-- (JABottomSubmitView *)returnMultipleItemsButton
-{
+- (JABottomSubmitView *)returnMultipleItemsButton {
     if (!VALID(_returnMultipleItemsButton, JABottomSubmitView)) {
         _returnMultipleItemsButton = [[JABottomSubmitView alloc] initWithFrame:CGRectMake(0, 0, self.width, [JABottomSubmitView defaultHeight])];
         _returnMultipleItemsButton.button = [[JAButton alloc] initAlternativeButtonWithTitle:[@"Return selected items" uppercaseString] target:self action:@selector(returnMultipleItems)];
@@ -101,14 +95,12 @@
     return _returnMultipleItemsButton;
 }
 
-- (void)setHasMultipleSelection:(BOOL)hasMultipleSelection
-{
+- (void)setHasMultipleSelection:(BOOL)hasMultipleSelection {
     _hasMultipleSelection = hasMultipleSelection;
     [self.returnMultipleItemsButton setHidden:!hasMultipleSelection];
 }
 
-- (void)setupWithOrder:(RITrackOrder*)order frame:(CGRect)frame
-{
+- (void)setupWithOrder:(RITrackOrder*)order frame:(CGRect)frame {
     if (!CGRectEqualToRect(self.frame, frame)) {
         [self.collectionViewFlowLayout resetSizes];
     }
@@ -154,8 +146,7 @@
     [self.collectionView reloadData];
 }
 
-- (void)reloadFrame
-{
+- (void)reloadFrame {
     /*
      * workarround: this view is used by two viewcontrollers (JAMyOrdersViewController and JAMyOrderDetailViewController) and it's inside a different UIScrollView.
      * returnMultipleItemsButton must be outside this view and outside the scrollview where this view is. So the button's parent depends on each viewController
@@ -176,8 +167,7 @@
     }
 }
 
-- (CGFloat)totalHeightForCollectionView
-{
+- (CGFloat)totalHeightForCollectionView {
     CGFloat totalHeight = 0.f;
     for (int i = 0; i < [self collectionView:self.collectionView numberOfItemsInSection:0]; i++) {
         totalHeight += [self collectionView:self.collectionView layout:self.collectionViewFlowLayout sizeForItemAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]].height;
@@ -186,9 +176,7 @@
 }
 
 #pragma mark - collectionView
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     RIItemCollection *item = [self.order.itemCollection objectAtIndex:indexPath.row];
     CGFloat extra = 0;
     if (VALID(item, RIItemCollection) && VALID_NOTEMPTY(item.returns, NSArray)) {
@@ -200,8 +188,7 @@
     return size;
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     JAOrderItemCollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"CellWithLines" forIndexPath:indexPath];
     RIItemCollection *item = [self.order.itemCollection objectAtIndex:indexPath.row];
     [cell setTag:indexPath.row];
@@ -217,24 +204,21 @@
     return cell;
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     if (VALID(self.order, RITrackOrder)) {
         return self.order.itemCollection.count;
     }
     return 0;
 }
 
-- (void)reloadMultipleChecks
-{
+- (void)reloadMultipleChecks {
     [self.returnMultipleItemsButton.button setEnabled:VALID_NOTEMPTY(self.itemsToReturnArray, NSMutableArray)];
     [self.returnMultipleItemsButton setWidth:self.width];
     [self.returnMultipleItemsButton setYBottomAligned:0.f];
     [self reloadFrame];
 }
 
-- (void)itemClicked:(UIButton *)button
-{
+- (void)itemClicked:(UIButton *)button {
     RIItemCollection *item = [self.order.itemCollection objectAtIndex:button.tag];
     
     NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
@@ -247,33 +231,21 @@
         [userInfo setObject:sku forKey:@"sku"];
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
-                                                        object:nil
-                                                      userInfo:userInfo];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication object:nil userInfo:userInfo];
 }
 
 - (void)addToCart:(UIButton *)button {
-    if (!self.parent) {
+    if (!self.delegate) {
         return;
     }
     RIItemCollection *item = [self.order.itemCollection objectAtIndex:button.tag];
-    [self.parent showLoading];
-    if(VALID_NOTEMPTY(item.sku, NSString))
-    [RICart addProductWithQuantity:@"1"
-                         simpleSku:item.sku
-                  withSuccessBlock:^(RICart *cart, RIApiResponse apiResponse, NSArray *successMessage) {
-                      NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
-                      [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
-                      [self.parent onSuccessResponse:RIApiResponseTimeOut messages:successMessage showMessage:YES];
-                      [self.parent hideLoading];
-                  } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
-                      [self.parent onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:@selector(addToCart:) objects:@[button]];
-                      [self.parent hideLoading];
-                  }];
+    //[self.parent showLoading];
+    if(VALID_NOTEMPTY(item.sku, NSString)) {
+        [self.delegate reOrder:button item:item];
+    }
 }
 
-- (void)multipleCheckClicked:(UIButton *)button
-{
+- (void)multipleCheckClicked:(UIButton *)button {
     RIItemCollection *item = [self.order.itemCollection objectAtIndex:button.tag];
     if(VALID_NOTEMPTY(item.sku, NSString))
     {
@@ -291,8 +263,7 @@
     [self reloadMultipleChecks];
 }
 
-- (void)returnItem:(UIButton *)button
-{
+- (void)returnItem:(UIButton *)button {
     RIItemCollection *item = [self.order.itemCollection objectAtIndex:button.tag];
     if(VALID_NOTEMPTY(item.sku, NSString))
     {
@@ -304,8 +275,7 @@
     }
 }
 
-- (void)returnMultipleItems
-{
+- (void)returnMultipleItems {
     [[ViewControllerManager centerViewController] goToOnlineReturnsConfirmConditionsForItems:[self.itemsToReturnArray copy] order:self.order];
 }
 

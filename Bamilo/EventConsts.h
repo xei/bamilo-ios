@@ -22,9 +22,10 @@ FOUNDATION_EXPORT NSString *const kEventUserGender;
 FOUNDATION_EXPORT NSString *const kEventSuccess;
 FOUNDATION_EXPORT NSString *const kEventCount;
 FOUNDATION_EXPORT NSString *const kEventSource;
-FOUNDATION_EXPORT NSString *const kEventCategory;
+FOUNDATION_EXPORT NSString *const kEventCategoryUrlKey;
 FOUNDATION_EXPORT NSString *const kEventBasketValue;
 FOUNDATION_EXPORT NSString *const kEventKeywords;
 FOUNDATION_EXPORT NSString *const kEventPrice;
+FOUNDATION_EXPORT NSString *const kEventSKU;
 
 @end

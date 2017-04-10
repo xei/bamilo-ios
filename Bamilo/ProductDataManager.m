@@ -22,4 +22,12 @@ static ProductDataManager *instance;
     return instance;
 }
 
+-(void)addToFavorites:(id<DataServiceProtocol>)target sku:(NSString *)sku completion:(DataCompletion)completion {
+    NSDictionary *params = @{ @"sku": sku };
+    
+    [self.requestManager asyncPOST:target path:RI_API_ADD_TO_WISHLIST params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
+        [self processResponse:response forData:data errorMessages:errorMessages completion:completion];
+    }];
+}
+
 @end

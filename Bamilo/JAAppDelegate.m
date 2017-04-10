@@ -141,14 +141,8 @@
     
     //SETUP TRACKERS
     //********************************************************************
-    
-    //Event
-    [TrackerManager addEventTracker:[PushWooshTracker sharedTracker]];
-    [TrackerManager addEventTracker:[EmarsysMobileEngage sharedInstance]];
-    
-    //Tag
-    [TrackerManager addTagTracker:[PushWooshTracker sharedTracker]];
-    
+    [TrackerManager addTracker:[PushWooshTracker sharedTracker]];
+    [TrackerManager addTracker:[EmarsysMobileEngage sharedInstance]];
     
     NSDictionary *configs = [[NSBundle mainBundle] objectForInfoDictionaryKey:kConfigs];
     if(configs) {
@@ -239,17 +233,14 @@
     [application setApplicationIconBadgeNumber:0];
 
     PushNotificationManager *pushManager = [PushNotificationManager pushManager];
-    [[EmarsysMobileEngage sharedInstance] sendLogin:[pushManager getPushToken] completion:^(BOOL success) {
-        NSLog(@"Emarsys Mobile Engage > sendLogin > %@", success ? sSUCCESSFUL : sFAILED);
-    }];
+    [[EmarsysMobileEngage sharedInstance] sendLogin:[pushManager getPushToken] completion:nil];
     
     OpenAppEventSourceType openAppEventSourceType = [[AppManager sharedInstance] getOpenAppEventSource];
     
     if(openAppEventSourceType != OPEN_APP_SOURCE_PUSH_NOTIFICATION &&
        openAppEventSourceType != OPEN_APP_SOURCE_DEEPLINK) {
         //EVENT: OPEN APP / DIRECT
-        [[AppManager sharedInstance] updateOpenAppEventSource:OPEN_APP_SOURCE_DIRECT];
-        [TrackerManager postEvent:[EventFactory openApp:OPEN_APP_SOURCE_DIRECT] forName:[OpenAppEvent name]];
+        [TrackerManager postEvent:[EventFactory openApp:[[AppManager sharedInstance] updateOpenAppEventSource:OPEN_APP_SOURCE_DIRECT]] forName:[OpenAppEvent name]];
     }
     
     [TrackerManager sendTags:@{ @"AppOpenCount": @([UserDefaultsManager incrementCounter:kUDMAppOpenCount]) } completion:^(NSError *error) {
@@ -370,8 +361,7 @@
         [DeepLinkManager handleUrl:url];
         
         //EVENT: OPEN APP / DEEP LINK
-        [[AppManager sharedInstance] updateOpenAppEventSource:OPEN_APP_SOURCE_DEEPLINK];
-        [TrackerManager postEvent:[EventFactory openApp:OPEN_APP_SOURCE_DEEPLINK] forName:[OpenAppEvent name]];
+        [TrackerManager postEvent:[EventFactory openApp:[[AppManager sharedInstance] updateOpenAppEventSource:OPEN_APP_SOURCE_DEEPLINK]] forName:[OpenAppEvent name]];
         
         return YES;
     }

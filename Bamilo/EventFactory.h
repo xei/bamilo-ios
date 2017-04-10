@@ -25,7 +25,7 @@
 +(NSDictionary *) signup:(NSString *)signupMethod success:(BOOL)success;
 +(NSDictionary *) logout:(BOOL)success;
 +(NSDictionary *) openApp:(OpenAppEventSourceType)source;
-+(NSDictionary *) addToFavorites:(NSString *)category;
-+(NSDictionary *) addToCart:(NSString *)category basketValue:(int)basketValue;
++(NSDictionary *) addToFavorites:(NSString *)categoryUrlKey success:(BOOL)success;
++(NSDictionary *) addToCart:(NSString *)sku basketValue:(int)basketValue success:(BOOL)success;
 
 @end

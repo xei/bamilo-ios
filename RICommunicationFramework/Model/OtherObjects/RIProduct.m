@@ -735,6 +735,18 @@
                 }
             }
         }
+        
+        if ([dataDic objectForKey:@"category_entity"]) {
+            NSDictionary *categoryEntityDictionary = [dataDic objectForKey:@"category_entity"];
+            
+            if ([categoryEntityDictionary objectForKey:@"name"] && newProduct.categoryName == nil) {
+                newProduct.categoryName = [categoryEntityDictionary objectForKey:@"name"];
+            }
+            
+            if ([categoryEntityDictionary objectForKey:@"url_key"] && newProduct.categoryUrlKey == nil) {
+                newProduct.categoryUrlKey = [categoryEntityDictionary objectForKey:@"url_key"];
+            }
+        }
     }
     
     return newProduct;
