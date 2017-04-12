@@ -110,7 +110,6 @@
 		8702FBE11E9A3377001D1AA9 /* AbandonCartEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBE01E9A3377001D1AA9 /* AbandonCartEvent.m */; };
 		8702FBE51E9A33FC001D1AA9 /* PurchaseEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBE41E9A33FC001D1AA9 /* PurchaseEvent.m */; };
 		8702FBE91E9A3458001D1AA9 /* ViewProductEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBE81E9A3458001D1AA9 /* ViewProductEvent.m */; };
-		8702FBED1E9A3473001D1AA9 /* ViewCategoryEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBEC1E9A3473001D1AA9 /* ViewCategoryEvent.m */; };
 		8702FBF41E9A4A7A001D1AA9 /* ProductDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBF31E9A4A7A001D1AA9 /* ProductDataManager.m */; };
 		8702FBF81E9A4ABB001D1AA9 /* AuthenticationDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBF71E9A4ABB001D1AA9 /* AuthenticationDataManager.m */; };
 		8702FBFC1E9A4BA9001D1AA9 /* CheckoutDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBFB1E9A4BA9001D1AA9 /* CheckoutDataManager.m */; };
@@ -830,8 +829,6 @@
 		8702FBE41E9A33FC001D1AA9 /* PurchaseEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PurchaseEvent.m; sourceTree = "<group>"; };
 		8702FBE71E9A3458001D1AA9 /* ViewProductEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewProductEvent.h; sourceTree = "<group>"; };
 		8702FBE81E9A3458001D1AA9 /* ViewProductEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewProductEvent.m; sourceTree = "<group>"; };
-		8702FBEB1E9A3473001D1AA9 /* ViewCategoryEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewCategoryEvent.h; sourceTree = "<group>"; };
-		8702FBEC1E9A3473001D1AA9 /* ViewCategoryEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewCategoryEvent.m; sourceTree = "<group>"; };
 		8702FBEF1E9A3758001D1AA9 /* TagTrackerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagTrackerProtocol.h; sourceTree = "<group>"; };
 		8702FBF21E9A4A7A001D1AA9 /* ProductDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductDataManager.h; sourceTree = "<group>"; };
 		8702FBF31E9A4A7A001D1AA9 /* ProductDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductDataManager.m; sourceTree = "<group>"; };
@@ -2849,7 +2846,6 @@
 				8702FBE21E9A338D001D1AA9 /* PurchaseEvent */,
 				8702FBB21E98E6F2001D1AA9 /* SearchEvent */,
 				8702FBE61E9A343C001D1AA9 /* ViewProductEvent */,
-				8702FBEA1E9A345F001D1AA9 /* ViewCategoryEvent */,
 			);
 			name = UserEvents;
 			sourceTree = "<group>";
@@ -2925,15 +2921,6 @@
 				8702FBE81E9A3458001D1AA9 /* ViewProductEvent.m */,
 			);
 			name = ViewProductEvent;
-			sourceTree = "<group>";
-		};
-		8702FBEA1E9A345F001D1AA9 /* ViewCategoryEvent */ = {
-			isa = PBXGroup;
-			children = (
-				8702FBEB1E9A3473001D1AA9 /* ViewCategoryEvent.h */,
-				8702FBEC1E9A3473001D1AA9 /* ViewCategoryEvent.m */,
-			);
-			name = ViewCategoryEvent;
 			sourceTree = "<group>";
 		};
 		8702FBEE1E9A3736001D1AA9 /* Tags */ = {
@@ -6381,7 +6368,6 @@
 				874AAB6D1E3DCEDB00B3F8FE /* SessionManager.m in Sources */,
 				6125534C1E4EF63000975C6F /* InputTextFieldControl.m in Sources */,
 				875AD5541E38C0C900584ABF /* RIURLCache.m in Sources */,
-				8702FBED1E9A3473001D1AA9 /* ViewCategoryEvent.m in Sources */,
 				875AD5651E38C0C900584ABF /* RIOrder.m in Sources */,
 				FF4465221CECB806003A65EA /* JAORPaymentViewController.m in Sources */,
 				87B684DF1E49CE740042C09F /* BasicTableViewCell.m in Sources */,

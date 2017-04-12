@@ -21,4 +21,12 @@
     return [categories componentsJoinedByString:@","];
 }
 
++(NSString *)getSearchKeywords:(NSString *)query {
+    if(query == nil) {
+        return nil;
+    }
+    
+    return [[query componentsSeparatedByString:@" "] componentsJoinedByString:@","];
+}
+
 @end

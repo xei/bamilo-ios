@@ -451,7 +451,8 @@ withCampaignTargetString:(NSString*)campaignTargetString
         if(error == nil) {
             [self bind:data forRequestId:0];
             
-            [TrackerManager postEvent:[EventFactory addToCart:self.backupSimpleSku basketValue:[self.cart.cartEntity.cartValue intValue] success:YES] forName:[AddToCartEvent name]];
+            //EVENT : ADD TO CART
+            [TrackerManager postEvent:[EventFactory addToCart:self.backupSimpleSku basketValue:[self.cart.cartEntity.cartValue longValue] success:YES] forName:[AddToCartEvent name]];
             
             if (VALID_NOTEMPTY(self.teaserTrackingInfo, NSString)) {
                 NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
@@ -531,6 +532,7 @@ withCampaignTargetString:(NSString*)campaignTargetString
             [self onSuccessResponse:RIApiResponseSuccess messages:[self extractSuccessMessages:[data objectForKey:kDataMessages]] showMessage:YES];
             //[self hideLoading];
         } else {
+            //EVENT : ADD TO CART
             [TrackerManager postEvent:[EventFactory addToCart:self.backupSimpleSku basketValue:[self.cart.cartEntity.cartValue intValue] success:NO] forName:[AddToCartEvent name]];
             
             [self onErrorResponse:error.code messages:[error.userInfo objectForKey:kErrorMessages] showAsMessage:YES selector:@selector(finishAddToCart) objects:nil];
