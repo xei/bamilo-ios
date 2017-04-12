@@ -106,6 +106,11 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     NSError *error;
     
+    if (!self.mutableData) {
+        self.failureBlock(RIApiResponseAPIError, nil, nil);
+        return;
+    }
+    
     NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:self.mutableData options:kNilOptions error:&error];
 
     if (RI_RESPONSE_LOGGER) {
