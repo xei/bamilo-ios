@@ -18,7 +18,6 @@
 #import "SearchEvent.h"
 #import "ViewProductEvent.h"
 #import "ViewCategoryEvent.h"
-#import "RICart.h"
 
 @interface EventFactory : NSObject
 
