@@ -528,7 +528,7 @@ withCampaignTargetString:(NSString*)campaignTargetString
             NSDictionary* userInfo = [NSDictionary dictionaryWithObject:self.cart forKey:kUpdateCartNotificationValue];
             [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
             
-            [self onSuccessResponse:RIApiResponseSuccess messages:[self extractSuccessMessages:data] showMessage:YES];
+            [self onSuccessResponse:RIApiResponseSuccess messages:[self extractSuccessMessages:[data objectForKey:kDataMessages]] showMessage:YES];
             //[self hideLoading];
         } else {
             [TrackerManager postEvent:[EventFactory addToCart:self.backupSimpleSku basketValue:[self.cart.cartEntity.cartValue intValue] success:NO] forName:[AddToCartEvent name]];
@@ -593,7 +593,7 @@ withCampaignTargetString:(NSString*)campaignTargetString
 -(void)bind:(id)data forRequestId:(int)rid {
     switch (rid) {
         case 0:
-            self.cart = data;
+            self.cart = [data objectForKey:kDataContent];
         break;
             
         default:

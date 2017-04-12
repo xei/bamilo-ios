@@ -26,7 +26,7 @@ static CartDataManager *instance;
     NSDictionary *params = @{ @"quantity": @1, @"sku": simpleSku };
     
     [self.requestManager asyncPOST:target path:RI_API_ADD_ORDER params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int statusCode, Data *data, NSArray *errorMessages) {
-        [self serialize:data into:[RICart class] response:statusCode errorMessages:errorMessages completion:completion];
+        [self processResponse:statusCode ofClass:[RICart class] forData:data errorMessages:errorMessages completion:completion];
     }];
 }
 

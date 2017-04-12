@@ -11,7 +11,7 @@
 
 @interface Data : BaseModel
 
-@property (strong, nonatomic) NSObject *metadata;
+@property (strong, nonatomic) NSDictionary *metadata;
 @property (strong, nonatomic) DataMessageList *messages;
 @property (assign, nonatomic) BOOL success;
 

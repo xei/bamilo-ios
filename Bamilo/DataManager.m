@@ -41,7 +41,7 @@ static DataManager *instance;
             //This must be refactored from server side :(
             NSArray *garbageArray = data.metadata[@"data"][0][@"children"];
             if (garbageArray.count) {
-                [self serialize:garbageArray[0] into:[SearchCategoryFilter class] response:statusCode errorMessages:errorMessages completion:completion];
+                [self processResponse:statusCode ofClass:[SearchCategoryFilter class] forData:data errorMessages:errorMessages completion:completion];
             } else {
                 completion(nil, [self getErrorFrom:statusCode errorMessages:@[STRING_ERROR]]);
             }
@@ -73,7 +73,7 @@ static DataManager *instance;
                       params:nil
                         type:REQUEST_EXEC_IN_FOREGROUND
                   completion:^(int statusCode, Data *data, NSArray *errorMessages) {
-                      [self serialize:data into:[Address class] response:statusCode errorMessages:errorMessages completion:completion];
+                      [self processResponse:statusCode ofClass:[Address class] forData:data errorMessages:errorMessages completion:completion];
                   }];
 }
 
@@ -105,46 +105,26 @@ static DataManager *instance;
     };
     
     [self.requestManager asyncPOST:target path:RI_API_GET_ORDERS params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int statusCode, Data *data, NSArray *errorMessages) {
-        [self serialize:data into:[OrderList class] response:statusCode errorMessages:errorMessages completion:completion];
+        [self processResponse:statusCode ofClass:[OrderList class] forData:data errorMessages:errorMessages completion:completion];
     }];
 }
 
-- (void)getOrder:(id<DataServiceProtocol>)target forOrderId:(NSString *)orderId  completion:(DataCompletion)completion {
+- (void)getOrder:(id<DataServiceProtocol>)target forOrderId:(NSString *)orderId completion:(DataCompletion)completion {
     NSString *path = [NSString stringWithFormat:RI_API_TRACK_ORDER, orderId];
-    [self.requestManager asyncPOST:target path:path params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
-        [self serialize:data into:[Order class] response:response errorMessages:errorMessages completion:completion];
+    [self.requestManager asyncPOST:target path:path params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(int statusCode, id data, NSArray *errorMessages) {
+        [self processResponse:statusCode ofClass:[Order class] forData:data errorMessages:errorMessages completion:completion];
     }];
 }
 
 //### CART ###
 - (void)getUserCart:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
     [self.requestManager asyncPOST:target path:RI_API_GET_CART_DATA params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(int statusCode, Data *data, NSArray *errorMessages) {
-        [self serialize:data into:[RICart class] response:statusCode errorMessages:errorMessages completion:completion];
+        [self processResponse:statusCode ofClass:[RICart class] forData:data errorMessages:errorMessages completion:completion];
     }];
 }
 
 #pragma mark - Public Methods
-- (void)serialize:(id)data into:(Class)aClass response:(RIApiResponse)response errorMessages:(NSArray *)errorMessages completion:(DataCompletion)completion {
-    [self processResponse:response class:aClass forData:data errorMessages:errorMessages completion:^(id data, NSError *error) {
-        if(error == nil && data) {
-            if([aClass conformsToProtocol:@protocol(JSONVerboseModel)]) {
-                [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
-                    completion([aClass parseToDataModelWithObjects:@[ data, configuration ]], nil);
-                } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
-                    completion(nil, [self getErrorFrom:apiResponse errorMessages:errorMessages]);
-                }];
-            } else {
-                
-                
- 
-            }
-        } else {
-            completion(nil, error);
-        }
-    }];
-}
-
--(void) processResponse:(RIApiResponse)response class:(Class)aClass forData:(id)data errorMessages:(NSArray *)errorMessages completion:(DataCompletion)completion {
+-(void) processResponse:(RIApiResponse)response ofClass:(Class)aClass forData:(id)data errorMessages:(NSArray *)errorMessages completion:(DataCompletion)completion {
     if(completion) {
         if(response == RIApiResponseSuccess && data) {
             Data *serviceData = (Data *)data;
@@ -154,24 +134,27 @@ static DataManager *instance;
             if(dataMessages) {
                 [payload setObject:dataMessages forKey:kDataMessages];
             }
-            
-            id metadata = serviceData.metadata;
-            if(metadata && aClass) {
-                NSError *error;
-                id dataModel = [[aClass alloc] init];
-                [dataModel mergeFromDictionary:serviceData.metadata useKeyMapping:YES error:&error];
-                
-                if(error == nil) {
-                    [payload setObject:dataModel forKey:kDataPayload];
-                }
-            }
-            
-            if(payload.allKeys.count > 1) {
-                completion(payload, nil);
-            } else if(metadata){
-                completion(metadata, nil);
+
+            if([aClass conformsToProtocol:@protocol(JSONVerboseModel)]) {
+                [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+                    [payload setObject:[aClass parseToDataModelWithObjects:@[ ((Data *)data).metadata, configuration ]] forKey:kDataContent];
+                    [self handlePayload:payload completion:completion];
+                } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+                    completion(nil, [self getErrorFrom:apiResponse errorMessages:errorMessages]);
+                }];
             } else {
-                completion(dataMessages, nil);
+                id metadata = serviceData.metadata;
+                if(metadata && aClass) {
+                    NSError *error;
+                    id dataModel = [[aClass alloc] init];
+                    [dataModel mergeFromDictionary:serviceData.metadata useKeyMapping:YES error:&error];
+                    
+                    if(error == nil) {
+                        [payload setObject:dataModel forKey:kDataContent];
+                    }
+                }
+                
+                [self handlePayload:payload completion:completion];
             }
         } else {
             completion(nil, [self getErrorFrom:response errorMessages:errorMessages]);
@@ -181,6 +164,16 @@ static DataManager *instance;
 
 - (NSError *)getErrorFrom:(RIApiResponse)response errorMessages:(NSArray *)errorMessages {
     return [NSError errorWithDomain:@"com.bamilo.ios" code:response userInfo:(errorMessages ? @{ kErrorMessages: errorMessages } : nil)];
+}
+
+-(void) handlePayload:(NSMutableDictionary *)payload completion:(DataCompletion)completion {
+    if(payload.allKeys.count > 1) {
+        completion(payload, nil);
+    } else if([payload objectForKey:kDataContent]) {
+        completion([payload objectForKey:kDataContent], nil);
+    } else {
+        completion([payload objectForKey:kDataMessages], nil);
+    }
 }
 
 #pragma mark - Helpers

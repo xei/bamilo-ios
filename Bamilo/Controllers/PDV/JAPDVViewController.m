@@ -1132,7 +1132,7 @@ typedef void (^ProcessActionBlock)(void);
                 if (VALID_NOTEMPTY(self.teaserTrackingInfo, NSString)) {
                     NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
                     
-                    NSString* obj = [skusFromTeaserInCart objectForKey:self.product.sku];
+                    NSString *obj = [skusFromTeaserInCart objectForKey:self.product.sku];
                     
                     if (ISEMPTY(obj)) {
                         [skusFromTeaserInCart setValue:self.teaserTrackingInfo forKey:self.product.sku];
@@ -1146,7 +1146,7 @@ typedef void (^ProcessActionBlock)(void);
                 NSDictionary* userInfo = [NSDictionary dictionaryWithObject:self.cart forKey:kUpdateCartNotificationValue];
                 [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                 
-                [self onSuccessResponse:RIApiResponseSuccess messages:[self extractSuccessMessages:data] showMessage:YES];
+                [self onSuccessResponse:RIApiResponseSuccess messages:[self extractSuccessMessages:[data objectForKey:kDataMessages]] showMessage:YES];
                 //[self hideLoading];
             } else {
                 [TrackerManager postEvent:[EventFactory addToCart:self.currentSimple.sku basketValue:[self.cart.cartEntity.cartValue intValue] success:NO] forName:[AddToCartEvent name]];
@@ -2104,7 +2104,7 @@ typedef void (^ProcessActionBlock)(void);
 -(void)bind:(id)data forRequestId:(int)rid {
     switch (rid) {
         case 0:
-            self.cart = data;
+            self.cart = [data objectForKey:kDataContent];
         break;
             
         default:

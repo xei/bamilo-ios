@@ -12,12 +12,11 @@
 #import "FormItemModel.h"
 
 #define kDataMessages @"DataMessages"
-#define kDataPayload @"DataPayload"
+#define kDataContent @"DataContent"
 
 @interface DataManager : BaseDataManager
 
-- (void)serialize:(id)data into:(Class)aClass response:(RIApiResponse)response errorMessages:(NSArray *)errorMessages completion:(DataCompletion)completion;
--(void) processResponse:(RIApiResponse)response class:(Class)aClass forData:(id)data errorMessages:(NSArray *)errorMessages completion:(DataCompletion)completion;
+-(void) processResponse:(RIApiResponse)response ofClass:(Class)aClass forData:(id)data errorMessages:(NSArray *)errorMessages completion:(DataCompletion)completion;
 - (NSError *)getErrorFrom:(RIApiResponse)response errorMessages:(NSArray *)errorMessages;
 
 - (void)getSubCategoriesFilter:(id<DataServiceProtocol>)target ofCategroyUrlKey:(NSString *)urlKey completion:(DataCompletion)completion;
@@ -32,7 +31,7 @@
 
 //### ORDER TRACKING
 - (void)getOrders:(id<DataServiceProtocol>)target forPageNumber:(int)page perPageCount:(int)perPageCount completion:(DataCompletion)completion;
-- (void)getOrder:(id<DataServiceProtocol>)target forOrderId:(NSString *)orderId  completion:(DataCompletion)completion;
+- (void)getOrder:(id<DataServiceProtocol>)target forOrderId:(NSString *)orderId completion:(DataCompletion)completion;
 
 //### CART ###
 - (void)getUserCart:(id<DataServiceProtocol>)target completion:(DataCompletion)completion;
