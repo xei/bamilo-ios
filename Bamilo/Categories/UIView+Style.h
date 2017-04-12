@@ -2,7 +2,7 @@
 //  UIView+Style.h
 //  Jumia
 //
-//  Created by Ali saiedifar on 1/23/17.
+//  Created by Ali Saeedifar on 1/23/17.
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 

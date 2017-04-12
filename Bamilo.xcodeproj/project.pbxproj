@@ -51,6 +51,8 @@
 		613FF2C11E4B3D1B008660CF /* Authentication.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 613FF2C01E4B3D1B008660CF /* Authentication.storyboard */; };
 		61432EC61E9B5DD7001F7930 /* BaseCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61432EC51E9B5DD7001F7930 /* BaseCollectionViewCell.m */; };
 		61432ECB1E9B60DE001F7930 /* RecommendItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 61432ECA1E9B60DE001F7930 /* RecommendItem.m */; };
+		615F96ED1E9E11FD00614644 /* NotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 615F96EC1E9E11FD00614644 /* NotificationService.m */; };
+		615F96F11E9E11FD00614644 /* NotificationService.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 615F96E91E9E11FD00614644 /* NotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		616058E61E6AD8D50079B2CD /* SearchFilterItemOption.m in Sources */ = {isa = PBXBuildFile; fileRef = 616058E51E6AD8D50079B2CD /* SearchFilterItemOption.m */; };
 		616058E91E6AE2030079B2CD /* SearchFilterItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 616058E81E6AE2030079B2CD /* SearchFilterItem.m */; };
 		616D65EC1E670984008B07EA /* OrderProductListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 616D65EA1E670984008B07EA /* OrderProductListTableViewCell.m */; };
@@ -582,6 +584,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		615F96EF1E9E11FD00614644 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B5A301A019811D0700F71726 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 615F96E81E9E11FD00614644;
+			remoteInfo = NotificationService;
+		};
 		870F8CF81E338D2D0021F87B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B5A301A019811D0700F71726 /* Project object */;
@@ -590,6 +599,20 @@
 			remoteInfo = Bamilo;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		615F96F61E9E11FD00614644 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				615F96F11E9E11FD00614644 /* NotificationService.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1123BA1ABA81805B2A214BA9 /* Pods-Bamilo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bamilo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bamilo/Pods-Bamilo.release.xcconfig"; sourceTree = "<group>"; };
@@ -718,6 +741,10 @@
 		61432EC51E9B5DD7001F7930 /* BaseCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseCollectionViewCell.m; sourceTree = "<group>"; };
 		61432EC91E9B60DE001F7930 /* RecommendItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecommendItem.h; sourceTree = "<group>"; };
 		61432ECA1E9B60DE001F7930 /* RecommendItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommendItem.m; sourceTree = "<group>"; };
+		615F96E91E9E11FD00614644 /* NotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		615F96EB1E9E11FD00614644 /* NotificationService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationService.h; sourceTree = "<group>"; };
+		615F96EC1E9E11FD00614644 /* NotificationService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationService.m; sourceTree = "<group>"; };
+		615F96EE1E9E11FD00614644 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		616058E41E6AD8D50079B2CD /* SearchFilterItemOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchFilterItemOption.h; sourceTree = "<group>"; };
 		616058E51E6AD8D50079B2CD /* SearchFilterItemOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchFilterItemOption.m; sourceTree = "<group>"; };
 		616058E71E6AE2030079B2CD /* SearchFilterItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchFilterItem.h; sourceTree = "<group>"; };
@@ -1685,6 +1712,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		615F96E61E9E11FD00614644 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		870F8CF01E338D2C0021F87B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -2319,6 +2353,16 @@
 				61432ECA1E9B60DE001F7930 /* RecommendItem.m */,
 			);
 			name = RecommendItem;
+			sourceTree = "<group>";
+		};
+		615F96EA1E9E11FD00614644 /* NotificationService */ = {
+			isa = PBXGroup;
+			children = (
+				615F96EB1E9E11FD00614644 /* NotificationService.h */,
+				615F96EC1E9E11FD00614644 /* NotificationService.m */,
+				615F96EE1E9E11FD00614644 /* Info.plist */,
+			);
+			path = NotificationService;
 			sourceTree = "<group>";
 		};
 		616058E21E6AD89D0079B2CD /* SearchFilterItemOption */ = {
@@ -5188,6 +5232,7 @@
 			children = (
 				B5A301AA19811D0700F71726 /* Bamilo */,
 				870F8CF41E338D2D0021F87B /* BamiloUITests */,
+				615F96EA1E9E11FD00614644 /* NotificationService */,
 				B5A301D119811E7600F71726 /* Frameworks */,
 				B5A301A919811D0700F71726 /* Products */,
 				A0ABAE906DF2A6D103470865 /* Pods */,
@@ -5199,6 +5244,7 @@
 			children = (
 				CE9AE11F1AB6D78200D56481 /* Bamilo.app */,
 				870F8CF31E338D2C0021F87B /* BamiloUITests.xctest */,
+				615F96E91E9E11FD00614644 /* NotificationService.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -5703,6 +5749,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		615F96E81E9E11FD00614644 /* NotificationService */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 615F96F51E9E11FD00614644 /* Build configuration list for PBXNativeTarget "NotificationService" */;
+			buildPhases = (
+				615F96E51E9E11FD00614644 /* Sources */,
+				615F96E61E9E11FD00614644 /* Frameworks */,
+				615F96E71E9E11FD00614644 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NotificationService;
+			productName = NotificationService;
+			productReference = 615F96E91E9E11FD00614644 /* NotificationService.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		870F8CF21E338D2C0021F87B /* BamiloUITests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 870F8CFD1E338D2D0021F87B /* Build configuration list for PBXNativeTarget "BamiloUITests" */;
@@ -5736,10 +5799,12 @@
 				A496F8EDC748088D90A309BD /* [CP] Embed Pods Frameworks */,
 				AF99C33FE560E007DC18281B /* [CP] Copy Pods Resources */,
 				878EA5FA1E94D6DF00D97B28 /* ShellScript */,
+				615F96F61E9E11FD00614644 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				615F96F01E9E11FD00614644 /* PBXTargetDependency */,
 			);
 			name = Bamilo;
 			productName = Jumia;
@@ -5756,6 +5821,11 @@
 				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "Rocket Internet";
 				TargetAttributes = {
+					615F96E81E9E11FD00614644 = {
+						CreatedOnToolsVersion = 8.3.1;
+						DevelopmentTeam = 3GCCEEQ32X;
+						ProvisioningStyle = Manual;
+					};
 					870F8CF21E338D2C0021F87B = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = 3GCCEEQ32X;
@@ -5794,11 +5864,19 @@
 			targets = (
 				CE9ADF271AB6D78200D56481 /* Bamilo */,
 				870F8CF21E338D2C0021F87B /* BamiloUITests */,
+				615F96E81E9E11FD00614644 /* NotificationService */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		615F96E71E9E11FD00614644 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		870F8CF11E338D2C0021F87B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -6027,6 +6105,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		615F96E51E9E11FD00614644 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				615F96ED1E9E11FD00614644 /* NotificationService.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		870F8CEF1E338D2C0021F87B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -6498,6 +6584,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		615F96F01E9E11FD00614644 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 615F96E81E9E11FD00614644 /* NotificationService */;
+			targetProxy = 615F96EF1E9E11FD00614644 /* PBXContainerItemProxy */;
+		};
 		870F8CF91E338D2D0021F87B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CE9ADF271AB6D78200D56481 /* Bamilo */;
@@ -6603,6 +6694,81 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(PROJECT_DIR)/Bamilo/ExternalFrameworks/RICommunicationFramework/** $(PROJECT_DIR)/Bamilo/ExternalFrameworks/FXBlurView/**";
 				VALID_ARCHS = "armv7 armv7s arm64";
+			};
+			name = AdHoc;
+		};
+		615F96F21E9E11FD00614644 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Narbeh Mirzaei (8KGZNNMRW6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 3GCCEEQ32X;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = NotificationService/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios.NotificationService;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "55257571-cb7b-48c9-bbf2-597ba091c68a";
+				PROVISIONING_PROFILE_SPECIFIER = "BLO NotificationService Development";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		615F96F31E9E11FD00614644 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 3GCCEEQ32X;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = NotificationService/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios.NotificationService;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "ba80c0dc-fd57-46ca-8bcb-85db811e2af2";
+				PROVISIONING_PROFILE_SPECIFIER = "BLO NotificationService Distribution";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		615F96F41E9E11FD00614644 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 3GCCEEQ32X;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = NotificationService/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios.NotificationService;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "6a1d092e-50a4-4610-9c0f-c35698cb1533";
+				PROVISIONING_PROFILE_SPECIFIER = "BLO NotificationService AdHoc";
+				SKIP_INSTALL = YES;
 			};
 			name = AdHoc;
 		};
@@ -6821,6 +6987,16 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		615F96F51E9E11FD00614644 /* Build configuration list for PBXNativeTarget "NotificationService" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				615F96F21E9E11FD00614644 /* Debug */,
+				615F96F31E9E11FD00614644 /* Release */,
+				615F96F41E9E11FD00614644 /* AdHoc */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		870F8CFD1E338D2D0021F87B /* Build configuration list for PBXNativeTarget "BamiloUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
