@@ -10,8 +10,8 @@
 #import "EmarsysRecommendationCarouselCollectionViewCell.h"
 #import "ThreadManager.h"
 
-const CGFloat cellHeight = 280;
-const CGFloat cellWidth = 138;
+const CGFloat cellHeight = 230;
+const CGFloat cellWidth = 134;
 
 @interface EmarsysRecommendationCarouselView()
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
@@ -23,7 +23,7 @@ const CGFloat cellWidth = 138;
 - (void)awakeFromNib {
     [super awakeFromNib];
     self.collectionView.delegate = self;
-    self.collectionView.dataSource = self;
+    self.collectionView.dataSource = self;    
     
     [self.collectionView registerNib:[UINib nibWithNibName:[EmarsysRecommendationCarouselCollectionViewCell nibName] bundle:nil]
           forCellWithReuseIdentifier:[EmarsysRecommendationCarouselCollectionViewCell nibName]];
