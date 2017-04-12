@@ -2,7 +2,7 @@
 //  EmarsysPredictManager.m
 //  Bamilo
 //
-//  Created by Ali saiedifar on 3/29/17.
+//  Created by Ali Saeedifar on 3/29/17.
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 

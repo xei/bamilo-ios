@@ -2,7 +2,7 @@
 //  RecieptViewCartTableViewCell.m
 //  Bamilo
 //
-//  Created by Ali saiedifar on 2/15/17.
+//  Created by Ali Saeedifar on 2/15/17.
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 

@@ -2,7 +2,7 @@
 //  NSArray+Extension.m
 //  Bamilo
 //
-//  Created by Ali saiedifar on 4/8/17.
+//  Created by Ali Saeedifar on 4/8/17.
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
