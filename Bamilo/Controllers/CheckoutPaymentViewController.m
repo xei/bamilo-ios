@@ -16,6 +16,7 @@
 #import "CartEntitySummaryViewControl.h"
 #import "RIPaymentInformation.h"
 #import "JACheckoutForms.h"
+#import "EventUtilities.h"
 
 typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
     PAYMENT_METHOD_ONLINE = 1 << 0,
@@ -116,6 +117,8 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
                             completion(multistepEntity.nextStep, YES);
                         } else {
                             [self showNotificationBar:error isSuccess:NO];
+                            
+                            [TrackerManager postEvent:[EventFactory purchase:[EventUtilities getEventCategories:self.cart] basketValue:[self.cart.cartEntity.cartValue intValue] success:NO] forName:[PurchaseEvent name]];
                         }
                     }];
                 }

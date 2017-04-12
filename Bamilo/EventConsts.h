@@ -27,5 +27,7 @@ FOUNDATION_EXPORT NSString *const kEventBasketValue;
 FOUNDATION_EXPORT NSString *const kEventKeywords;
 FOUNDATION_EXPORT NSString *const kEventPrice;
 FOUNDATION_EXPORT NSString *const kEventSKU;
+FOUNDATION_EXPORT NSString *const kEventCategories;
+
 
 @end

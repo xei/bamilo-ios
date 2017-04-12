@@ -247,6 +247,7 @@
 		877762C91E9BB37C00B73140 /* Data.m in Sources */ = {isa = PBXBuildFile; fileRef = 877762C81E9BB37C00B73140 /* Data.m */; };
 		877762CD1E9BB38800B73140 /* DataMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 877762CB1E9BB38800B73140 /* DataMessage.m */; };
 		877762D11E9BB39300B73140 /* DataMessageList.m in Sources */ = {isa = PBXBuildFile; fileRef = 877762D01E9BB39300B73140 /* DataMessageList.m */; };
+		879E57841E9E0BAB001C4C71 /* EventUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 879E57831E9E0BAB001C4C71 /* EventUtilities.m */; };
 		879F87EF1E5048790033FE87 /* NSMutableArray+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F87EE1E5048790033FE87 /* NSMutableArray+Extensions.m */; };
 		879F87F21E5057F10033FE87 /* PlainTableViewHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 879F87F11E5057F10033FE87 /* PlainTableViewHeaderCell.xib */; };
 		879F87F51E5058060033FE87 /* PlainTableViewHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F87F41E5058060033FE87 /* PlainTableViewHeaderCell.m */; };
@@ -1122,6 +1123,8 @@
 		877762CC1E9BB38800B73140 /* DataMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataMessage.h; sourceTree = "<group>"; };
 		877762CF1E9BB39300B73140 /* DataMessageList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataMessageList.h; sourceTree = "<group>"; };
 		877762D01E9BB39300B73140 /* DataMessageList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataMessageList.m; sourceTree = "<group>"; };
+		879E57821E9E0BAB001C4C71 /* EventUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventUtilities.h; sourceTree = "<group>"; };
+		879E57831E9E0BAB001C4C71 /* EventUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventUtilities.m; sourceTree = "<group>"; };
 		879F87ED1E5048790033FE87 /* NSMutableArray+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Extensions.h"; sourceTree = "<group>"; };
 		879F87EE1E5048790033FE87 /* NSMutableArray+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Extensions.m"; sourceTree = "<group>"; };
 		879F87F11E5057F10033FE87 /* PlainTableViewHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlainTableViewHeaderCell.xib; sourceTree = "<group>"; };
@@ -3338,6 +3341,7 @@
 				871BA8531E867F3A007680C5 /* Base */,
 				8702FBBB1E99019C001D1AA9 /* EventFactory */,
 				8702FBC41E99196A001D1AA9 /* UserEvents */,
+				879E57811E9E0B88001C4C71 /* Utilities */,
 			);
 			name = Events;
 			sourceTree = "<group>";
@@ -3963,6 +3967,15 @@
 				877762D01E9BB39300B73140 /* DataMessageList.m */,
 			);
 			name = DataMessageList;
+			sourceTree = "<group>";
+		};
+		879E57811E9E0B88001C4C71 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				879E57821E9E0BAB001C4C71 /* EventUtilities.h */,
+				879E57831E9E0BAB001C4C71 /* EventUtilities.m */,
+			);
+			name = Utilities;
 			sourceTree = "<group>";
 		};
 		879F87EC1E5048550033FE87 /* NSMutableArray+Extensions */ = {
@@ -6324,6 +6337,7 @@
 				9AE766B11CBBB28E00B63D8E /* JACartProductsView.m in Sources */,
 				FFB1B0951CE61D96000F60AD /* JARadioExpandableComponent.m in Sources */,
 				CE28A7A31BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */,
+				879E57841E9E0BAB001C4C71 /* EventUtilities.m in Sources */,
 				8702FC001E9A4CB5001D1AA9 /* AddressDataManager.m in Sources */,
 				875AD5731E38C0C900584ABF /* RIShippingMethod.m in Sources */,
 				61CBA0511E51E26B005673F7 /* FormValidationType.m in Sources */,

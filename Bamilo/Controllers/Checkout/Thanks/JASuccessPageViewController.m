@@ -16,6 +16,7 @@
 #import "JAButton.h"
 #import "JAProductInfoHeaderLine.h"
 #import "JAPDVSingleRelatedItem.h"
+#import "EventUtilities.h"
 
 #define kTopMargin 20.f
 #define kLateralMargin 16.f
@@ -152,6 +153,15 @@
     [self.topScrollView addSubview:self.continueShoppingButton];
     [self.rrView addSubview:self.rrHeaderLine];
     [self.rrView addSubview:self.rrScrollView];
+
+//##################################################################
+    [TrackerManager postEvent:[EventFactory purchase:[EventUtilities getEventCategories:self.cart] basketValue:[self.cart.cartEntity.cartValue intValue] success:YES] forName:[PurchaseEvent name]];
+    [TrackerManager sendTags:@{ @"PurchaseCount": @([UserDefaultsManager incrementCounter:kUDMPurchaseCount]) } completion:^(NSError *error) {
+        if(error == nil) {
+            NSLog(@"TrackerManager > PurchaseCount > %d", [UserDefaultsManager getCounter:kUDMPurchaseCount]);
+        }
+    }];
+//##################################################################
     
     // Notification to clean cart
     [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:nil];

@@ -82,10 +82,10 @@
     return attributes;
 }
 
-+(NSDictionary *)purchase:(NSString *)categoryUrlKey basketValue:(int)basketValue success:(BOOL)success {
++(NSDictionary *)purchase:(NSString *)categories basketValue:(int)basketValue success:(BOOL)success {
     NSMutableDictionary *attributes = [PurchaseEvent attributes];
 
-    [attributes setObject:categoryUrlKey ?: cUNKNOWN_EVENT_VALUE forKey:kEventCategoryUrlKey];
+    [attributes setObject:categories ?: cUNKNOWN_EVENT_VALUE forKey:kEventCategories];
     [attributes setObject:@(basketValue) ?: cUNKNOWN_EVENT_VALUE forKey:kEventBasketValue];
     [attributes setObject:@(success) forKey:kEventSuccess];
     
