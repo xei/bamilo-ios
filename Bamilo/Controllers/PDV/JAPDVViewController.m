@@ -2105,4 +2105,14 @@ typedef void (^ProcessActionBlock)(void);
     return YES;
 }
 
+- (NSArray<EMRecommendationRequest *> *)getRecommendations {
+    
+    EMRecommendationRequest *recommend = [EMRecommendationRequest requestWithLogic:@"RELATED"];
+    recommend.limit = 15;
+    recommend.completionHandler = ^(EMRecommendationResult *_Nonnull result) {
+        
+    };
+    return @[recommend];
+}
+
 @end

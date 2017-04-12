@@ -7,9 +7,9 @@
 //
 
 #import "RICatalog.h"
-#import "RIProduct.h"
 #import "SearchPriceFilter.h"
 #import "SearchFilterItem.h"
+#import "RIProduct.h"
 
 @implementation RICatalog
 

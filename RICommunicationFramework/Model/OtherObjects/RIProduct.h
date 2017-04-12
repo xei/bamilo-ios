@@ -82,7 +82,6 @@
 
 @property (nonatomic) BOOL hasStock;
 @property (nonatomic) BOOL freeShippingPossible;
-@property (nonatomic, strong) EMRecommendationItem *srcItem;
 
 /**
  *  Method to load a product and all its details given his sku. This method uses getCompleteProductWithUrl:successBlock:andFailureBlock:

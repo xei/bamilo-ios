@@ -8,9 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSMutableArray (Extensions)
+@interface NSMutableArray<ObjectType> (Extensions)
 
 +(NSMutableArray *) indexPathArrayOfLength:(int)length forSection:(int)section;
 +(NSMutableArray *) indexPathArrayFromRange:(NSRange)range forSection:(int)section;
+
+- (NSMutableArray *)map:(id(^)(ObjectType item))block;
 
 @end

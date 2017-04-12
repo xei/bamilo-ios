@@ -90,6 +90,10 @@
     return [formatedPrice copy];
 }
 
+- (NSString *)formatPriceWithCurrency {
+    return [NSString stringWithFormat:@"%@ %@", [[self formatPrice] numbersToPersian], STRING_CURRENCY];
+}
+
 - (BOOL)isValidEmail {
     NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", [NSString emailRegxPattern]];
     return [emailTest evaluateWithObject:self];

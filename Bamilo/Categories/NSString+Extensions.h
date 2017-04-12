@@ -17,6 +17,7 @@
 - (NSString *)numbersToPersian;
 - (NSString *)numbersToEnglish;
 - (NSString *)formatPrice;
+- (NSString *)formatPriceWithCurrency;
 - (NSString *)getPriceStringFromFormatedPrice;
 - (NSString *)struckThroughText;
 - (BOOL)isValidEmail;

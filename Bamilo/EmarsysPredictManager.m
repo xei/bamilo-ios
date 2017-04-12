@@ -18,7 +18,7 @@
     }
     
     EMSession *emarsysSession = [EMSession sharedSession];
-    EMTransaction *transaction = [[EMTransaction alloc] init];
+    __block EMTransaction *transaction = [[EMTransaction alloc] init];
     [transaction setCart:[[RICart sharedInstance] convertItems]];
     
     if ([viewController conformsToProtocol:@protocol(EmarsysWebExtendProtocol)] && [viewController respondsToSelector:@selector(getDataCollection:)]) {
@@ -26,15 +26,10 @@
     }
     
     if ([viewController conformsToProtocol:@protocol(EmarsysRecommendationsProtocol)]) {
-        NSString *logic = [((id<EmarsysRecommendationsProtocol>)viewController) getRecommandationLogic];
-        EMRecommendationRequest *recommend = [[EMRecommendationRequest alloc] initWithLogic: logic];
-        recommend = [((id<EmarsysRecommendationsProtocol>)viewController) getReccomandtaionRequest:recommend];
-        recommend.completionHandler = ^(EMRecommendationResult *_Nonnull result) {
-            // Process result
-            NSLog(@"%@", result.featureID);
-            [((id<EmarsysRecommendationsProtocol>)viewController) reccomandationResult:result];
-        };
-        [transaction recommend:recommend];
+        NSArray<EMRecommendationRequest *> * recommendations = [((id<EmarsysRecommendationsProtocol>)viewController) getRecommendations];
+        [recommendations enumerateObjectsUsingBlock:^(EMRecommendationRequest * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [transaction recommend:obj];
+        }];
     }
     
     [emarsysSession sendTransaction:transaction errorHandler:^(NSError *_Nonnull error) {

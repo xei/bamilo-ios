@@ -15,7 +15,7 @@
 @property (nonatomic, retain) NSArray *categories;
 @property (nonatomic, retain) NSArray <BaseSearchFilterItem*> *filters;
 @property (nonatomic, assign) int priceFilterIndex;
-@property (nonatomic, retain) NSArray *products;
+@property (nonatomic, retain) NSArray  *products;
 @property (nonatomic, retain) NSString *title;
 @property (nonatomic, retain) NSString *sort;
 @property (nonatomic, retain) NSNumber *totalProducts;
