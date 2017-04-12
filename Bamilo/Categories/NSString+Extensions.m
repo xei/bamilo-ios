@@ -30,11 +30,11 @@
         NSRange stringRange = {0, MIN([self length], maxSize)};
         stringRange = [self rangeOfComposedCharacterSequencesForRange:stringRange];
         NSString *shortString = [self substringWithRange:stringRange];
-        
+
          result = [NSString stringWithFormat:@"%@...", shortString];
     }
     return result;
-    
+
 }
 
 - (NSAttributedString *) struckThroughText {
@@ -54,7 +54,7 @@
 - (NSString *)changeNumberToLocalId:(NSString *) identifier {
     NSNumberFormatter *formatter = [NSNumberFormatter new];
     NSString *result = self;
-    for (NSInteger i = 0; i < 10; i++) {        
+    for (NSInteger i = 0; i < 10; i++) {
         NSString *occurance = @"";
         if ([identifier isEqualToString:@"en_US"]) {
             formatter.locale = [NSLocale localeWithLocaleIdentifier:@"ar"];
@@ -65,7 +65,7 @@
         formatter.locale = [NSLocale localeWithLocaleIdentifier:identifier];
         result = [result stringByReplacingOccurrencesOfString:occurance withString:[formatter stringFromNumber:@(i)]];
     }
-    
+
     return result;
 }
 
@@ -75,15 +75,19 @@
 
 - (NSString *)formatPrice {
     if (self.length <= 3) return self;
-    
+
     NSMutableString *formatedPrice = [NSMutableString stringWithString: self];
     int cammaIndex = ((int)(self.length % 3) ?: 3);
-    
+
     while (cammaIndex < formatedPrice.length) {
         [formatedPrice insertString: @"," atIndex: cammaIndex];
         cammaIndex += 4;
     }
     return [formatedPrice copy];
+}
+
+- (NSString *)formatPriceWithCurrency {
+    return [NSString stringWithFormat:@"%@ %@", [[self formatPrice] numbersToPersian], STRING_CURRENCY];
 }
 
 -(NSString *)toEncodeBase64 {

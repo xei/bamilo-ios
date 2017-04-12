@@ -23,8 +23,8 @@
     UICollectionViewDelegate,
     JAFiltersViewControllerDelegate,
     JAUndefinedSearchViewDelegate,
-    EmarsysWebExtendProtocol,
-    DataServiceProtocol
+    DataServiceProtocol,
+    EmarsysPredictProtocol
 >
 
 @property (nonatomic, strong)RICategory* category;

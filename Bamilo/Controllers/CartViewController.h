@@ -12,7 +12,7 @@
 #import "CartEntitySummaryViewControl.h"
 #import "EmarsysPredictProtocol.h"
 
-@interface CartViewController : JABaseViewController <DataServiceProtocol, CartEntitySummaryDelegate, UITableViewDataSource, UIScrollViewDelegate, UITableViewDelegate, EmarsysWebExtendProtocol>
+@interface CartViewController : JABaseViewController <DataServiceProtocol, CartEntitySummaryDelegate, UITableViewDataSource, UIScrollViewDelegate, UITableViewDelegate, EmarsysPredictProtocol>
 
 @property (strong, nonatomic) RICart *cart;
 

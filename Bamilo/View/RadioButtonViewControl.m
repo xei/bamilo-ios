@@ -15,7 +15,7 @@
 
 @implementation RadioButtonViewControl
 
--(void)awakeFromNib {
+- (void)awakeFromNib {
     [super awakeFromNib];
     
     self.backgroundColor = [UIColor whiteColor];
@@ -29,13 +29,13 @@
     }
 }
 
--(void)setIsSelected:(BOOL)isSelected {
+- (void)setIsSelected:(BOOL)isSelected {
     [self.radioButtonView update:isSelected];
     _isSelected = isSelected;
 }
 
 #pragma mark - RadioButtonViewControlDelegate
--(void)didSelectRadioButton:(id)button {
+- (void)didSelectRadioButton:(id)button {
     [self.delegate didSelectRadioButton:self];
 }
 

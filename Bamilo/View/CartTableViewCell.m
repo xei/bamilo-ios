@@ -46,7 +46,8 @@
     NSString *realPrice = cartItem.priceFormatted;
     NSString *specialPrice = cartItem.specialPriceFormatted;
     self.priceLabel.text = specialPrice ?: realPrice;
-    self.discountValue.attributedText = [(specialPrice ? realPrice : nil) struckThroughText];
+    
+    self.discountValue.attributedText = (NSAttributedString *)[(specialPrice ? realPrice : nil) struckThroughText];
     
     if (cartItem.variation && [cartItem.variationName isEqualToString:@"size"]) {
         self.sizeLabel.text = [[NSString stringWithFormat:@"اندازه:‌%@", cartItem.variation] numbersToPersian];

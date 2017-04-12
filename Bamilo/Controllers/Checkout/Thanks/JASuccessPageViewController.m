@@ -602,7 +602,7 @@
 }
 
 
-#pragma mark - EmarsysPredictProtocol
+#pragma mark - EmarsysWebExtendProtocol
 - (EMTransaction *)getDataCollection:(EMTransaction *)transaction {
     [transaction setPurchase:self.cart.orderNr ofItems: [self.cart convertItems]];
     return transaction;

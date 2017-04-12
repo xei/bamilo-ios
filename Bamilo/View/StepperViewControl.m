@@ -18,7 +18,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    self.stepperView = [[[NSBundle mainBundle] loadNibNamed:@"StepperView" owner:self options:nil] lastObject];
+    self.stepperView = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([StepperView class]) owner:self options:nil] lastObject];
     self.stepperView.controller = self;
     [self addSubview:self.stepperView];
     self.stepperView.frame = self.bounds;

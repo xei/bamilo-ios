@@ -11,7 +11,7 @@
 #import "JACampaignsTeaserView.h"
 
 @interface JATeaserPageView : UIView
-
+@property (nonatomic, strong) UIScrollView* mainScrollView;
 @property (nonatomic, strong) NSDictionary* teaserGroupings;
 
 // Newsletter
@@ -20,5 +20,6 @@
 
 - (void)loadTeasersForFrame:(CGRect)frame;
 - (void)addTeaserGrouping:(NSString*)type;
+- (void)addCustomViewToScrollView:(UIView *)view;
 
 @end
