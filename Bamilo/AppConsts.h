@@ -13,4 +13,6 @@
 FOUNDATION_EXPORT NSString *const kErrorMessages;
 FOUNDATION_EXPORT NSString *const kMessage;
 
+FOUNDATION_EXPORT NSString *const kCart;
+
 @end

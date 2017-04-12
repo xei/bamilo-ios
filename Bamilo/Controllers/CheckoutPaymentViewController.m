@@ -105,7 +105,7 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
                         if(error == nil) {
                             [self bind:data forRequestId:1];
                             
-                            NSDictionary *userInfo = @{ @"cart" : self.cart };
+                            NSDictionary *userInfo = @{ kCart : self.cart };
                             
                             if(self.cart.paymentInformation.type == RIPaymentInformationCheckoutEnded) {
                                  [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutThanksScreenNotification object:nil userInfo:userInfo];

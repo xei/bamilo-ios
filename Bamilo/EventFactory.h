@@ -27,5 +27,9 @@
 +(NSDictionary *) openApp:(OpenAppEventSourceType)source;
 +(NSDictionary *) addToFavorites:(NSString *)categoryUrlKey success:(BOOL)success;
 +(NSDictionary *) addToCart:(NSString *)sku basketValue:(int)basketValue success:(BOOL)success;
++(NSDictionary *) purchase:(NSString *)categoryUrlKey basketValue:(int)basketValue success:(BOOL)success;
++(NSDictionary *) search:(NSString *)categoryUrlKey keywords:(NSString *)keywords;
++(NSDictionary *) viewProduct:(NSString *)categoryUrlKey price:(int)price;
++(NSDictionary *) viewCategory:(NSString *)categoryUrlKey;
 
 @end

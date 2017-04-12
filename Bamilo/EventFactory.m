@@ -82,4 +82,40 @@
     return attributes;
 }
 
++(NSDictionary *)purchase:(NSString *)categoryUrlKey basketValue:(int)basketValue success:(BOOL)success {
+    NSMutableDictionary *attributes = [PurchaseEvent attributes];
+
+    [attributes setObject:categoryUrlKey ?: cUNKNOWN_EVENT_VALUE forKey:kEventCategoryUrlKey];
+    [attributes setObject:@(basketValue) ?: cUNKNOWN_EVENT_VALUE forKey:kEventBasketValue];
+    [attributes setObject:@(success) forKey:kEventSuccess];
+    
+    return attributes;
+}
+
++(NSDictionary *)search:(NSString *)categoryUrlKey keywords:(NSString *)keywords {
+    NSMutableDictionary *attributes = [SearchEvent attributes];
+    
+    [attributes setObject:categoryUrlKey ?: cUNKNOWN_EVENT_VALUE forKey:kEventCategoryUrlKey];
+    [attributes setObject:keywords ?: cUNKNOWN_EVENT_VALUE forKey:kEventKeywords];
+    
+    return attributes;
+}
+
++(NSDictionary *)viewProduct:(NSString *)categoryUrlKey price:(int)price {
+    NSMutableDictionary *attributes = [ViewProductEvent attributes];
+    
+    [attributes setObject:categoryUrlKey ?: cUNKNOWN_EVENT_VALUE forKey:kEventCategoryUrlKey];
+    [attributes setObject:@(price) ?: cUNKNOWN_EVENT_VALUE forKey:kEventPrice];
+    
+    return attributes;
+}
+
++(NSDictionary *)viewCategory:(NSString *)categoryUrlKey {
+    NSMutableDictionary *attributes = [ViewCategoryEvent attributes];
+    
+    [attributes setObject:categoryUrlKey ?: cUNKNOWN_EVENT_VALUE forKey:kEventCategoryUrlKey];
+    
+    return attributes;
+}
+
 @end

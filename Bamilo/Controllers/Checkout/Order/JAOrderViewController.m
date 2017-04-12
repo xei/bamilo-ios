@@ -989,7 +989,7 @@
         {
             if(RIPaymentInformationCheckoutEnded == cart.paymentInformation.type)
             {
-                NSDictionary *userInfo = VALID_NOTEMPTY(rrTargetString, NSString)?@{ @"cart" : cart, @"rrTargetString" : rrTargetString }:@{ @"cart" : cart };
+                NSDictionary *userInfo = VALID_NOTEMPTY(rrTargetString, NSString)?@{ kCart : cart, @"rrTargetString" : rrTargetString }:@{ kCart : cart };
                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutThanksScreenNotification
                                                                     object:nil
                                                                   userInfo:userInfo];
@@ -997,7 +997,7 @@
             }
             else
             {
-                NSDictionary *userInfo = [NSDictionary dictionaryWithObject:cart forKey:@"cart"];
+                NSDictionary *userInfo = [NSDictionary dictionaryWithObject:cart forKey:kCart];
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutExternalPaymentsScreenNotification
                                                                     object:nil
