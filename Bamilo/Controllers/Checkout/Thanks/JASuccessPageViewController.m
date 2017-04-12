@@ -155,7 +155,9 @@
     [self.rrView addSubview:self.rrScrollView];
 
 //##################################################################
-    [TrackerManager postEvent:[EventFactory purchase:[EventUtilities getEventCategories:self.cart] basketValue:[self.cart.cartEntity.cartValue intValue] success:YES] forName:[PurchaseEvent name]];
+    //EVENT: PURCHASE
+    [TrackerManager postEvent:[EventFactory purchase:[EventUtilities getEventCategories:self.cart] basketValue:[self.cart.cartEntity.cartValue longValue] success:YES] forName:[PurchaseEvent name]];
+    
     [TrackerManager sendTags:@{ @"PurchaseCount": @([UserDefaultsManager incrementCounter:kUDMPurchaseCount]) } completion:^(NSError *error) {
         if(error == nil) {
             NSLog(@"TrackerManager > PurchaseCount > %d", [UserDefaultsManager getCounter:kUDMPurchaseCount]);

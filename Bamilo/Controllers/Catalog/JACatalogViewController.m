@@ -41,6 +41,7 @@
 #import "EmarsysPredictManager.h"
 #import "NSArray+Extension.h"
 #import "RecommendItem.h"
+#import "EventUtilities.h"
 
 #define JACatalogGridSelected @"CATALOG_GRID_IS_SELECTED"
 #define JACatalogViewControllerMaxProducts 36
@@ -160,16 +161,13 @@ typedef void (^ProcessActionBlock)(void);
 }
 
 - (void)viewDidLoad {
-    
     [super viewDidLoad];
+    
     self.navBarLayout.showBackButton = YES;
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(navBarClicked) name:kDidPressNavBar object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getCategories) name:kSideMenuShouldReload object:nil];
-    
-    
-    
     
     //Here we have a real shit!!!!!!
     if (self.category) {
@@ -183,18 +181,15 @@ typedef void (^ProcessActionBlock)(void);
         }
     }
     
-    
     if (self.categoryUrlKey) {
         [self getSubcategories];
     }
-    
     
     self.apiResponse = RIApiResponseSuccess;
     
     if (self.forceShowBackButton) {
         self.navBarLayout.showBackButton = YES;
     }
-    
     
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         self.maxProducts = JACatalogViewControllerMaxProducts_ipad;
@@ -211,6 +206,9 @@ typedef void (^ProcessActionBlock)(void);
     }
     
     [self.containerView setHidden:YES];
+    
+    //EVENT : SEARCH
+    [TrackerManager postEvent:[EventFactory search:self.categoryUrlKey keywords:[EventUtilities getSearchKeywords:self.searchString]] forName:[SearchEvent name]];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -1030,6 +1028,7 @@ typedef void (^ProcessActionBlock)(void);
     if (!button.selected && !VALID_NOTEMPTY(product.favoriteAddDate, NSDate)) {
         [[ProductDataManager sharedInstance] addToFavorites:self sku:product.sku completion:^(id data, NSError *error) {
             if(error == nil) {
+                //EVENT: ADD TO FAVORITES
                 [TrackerManager postEvent:[EventFactory addToFavorites:product.categoryUrlKey success:YES] forName:[AddToFavoritesEvent name]];
                 
                 button.selected = YES;
@@ -1051,6 +1050,8 @@ typedef void (^ProcessActionBlock)(void);
             } else {
                 [self onErrorResponse:error.code messages:[error.userInfo objectForKey:kErrorMessages] showAsMessage:YES selector:@selector(addToFavorites:) objects:@[button]];
                 //[self hideLoading];
+                
+                //EVENT: ADD TO FAVORITES
                 [TrackerManager postEvent:[EventFactory addToFavorites:product.categoryUrlKey success:NO] forName:[AddToFavoritesEvent name]];
             }
         }];

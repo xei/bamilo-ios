@@ -493,8 +493,6 @@ typedef void (^ProcessActionBlock)(void);
     //    [self.wizardView setHasNoSeller:product.seller?NO:YES];
 
     [self trackingEventViewProduct:product];
-    [EmarsysPredictManager sendTransactionsOf:self];
-
     [self trackingEventLoadingTime];
 
     [RIRecentlyViewedProductSku addToRecentlyViewed:product successBlock:^{
@@ -507,7 +505,12 @@ typedef void (^ProcessActionBlock)(void);
     }
 
     [self trackingEventMostViewedBrand];
-
+    
+//###################
+    [EmarsysPredictManager sendTransactionsOf:self];
+    
+    //EVENT : VIEW PRODUCT
+    [TrackerManager postEvent:[EventFactory viewProduct:product.categoryUrlKey price:[product.price longValue]] forName:[ViewProductEvent name]];
 }
 
 - (void)retryAddToCart {
@@ -1127,7 +1130,8 @@ typedef void (^ProcessActionBlock)(void);
             if(error == nil) {
                 [self bind:data forRequestId:0];
 
-                [TrackerManager postEvent:[EventFactory addToCart:self.currentSimple.sku basketValue:[self.cart.cartEntity.cartValue intValue] success:YES] forName:[AddToCartEvent name]];
+                //EVENT: ADD TO CART
+                [TrackerManager postEvent:[EventFactory addToCart:self.currentSimple.sku basketValue:[self.cart.cartEntity.cartValue longValue] success:YES] forName:[AddToCartEvent name]];
 
                 if (VALID_NOTEMPTY(self.teaserTrackingInfo, NSString)) {
                     NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
@@ -1149,6 +1153,7 @@ typedef void (^ProcessActionBlock)(void);
                 [self onSuccessResponse:RIApiResponseSuccess messages:[self extractSuccessMessages:[data objectForKey:kDataMessages]] showMessage:YES];
                 //[self hideLoading];
             } else {
+                //EVENT: ADD TO CART
                 [TrackerManager postEvent:[EventFactory addToCart:self.currentSimple.sku basketValue:[self.cart.cartEntity.cartValue intValue] success:NO] forName:[AddToCartEvent name]];
 
                 [self onErrorResponse:error.code messages:[error.userInfo objectForKey:kErrorMessages] showAsMessage:YES selector:@selector(addToCart) objects:nil];
@@ -1441,6 +1446,7 @@ typedef void (^ProcessActionBlock)(void);
     if (!button.selected && !VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate)) {
         [[ProductDataManager sharedInstance] addToFavorites:self sku:self.product.sku completion:^(id data, NSError *error) {
             if(error == nil) {
+                //EVENT: ADD TO FAVORITES
                 [TrackerManager postEvent:[EventFactory addToFavorites:self.product.categoryUrlKey success:YES] forName:[AddToFavoritesEvent name]];
 
                 //[self hideLoading];
@@ -1461,6 +1467,8 @@ typedef void (^ProcessActionBlock)(void);
             } else {
                 [self onErrorResponse:error.code messages:[error.userInfo objectForKey:kErrorMessages] showAsMessage:YES selector:@selector(addToWishList:) objects:@[button]];
                 //[self hideLoading];
+                
+                //EVENT: ADD TO FAVORITES
                 [TrackerManager postEvent:[EventFactory addToFavorites:self.product.categoryUrlKey success:NO] forName:[AddToFavoritesEvent name]];
             }
         }];

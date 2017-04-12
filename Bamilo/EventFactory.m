@@ -72,7 +72,7 @@
     return attributes;
 }
 
-+(NSDictionary *)addToCart:(NSString *)sku basketValue:(int)basketValue success:(BOOL)success {
++(NSDictionary *)addToCart:(NSString *)sku basketValue:(long)basketValue success:(BOOL)success {
     NSMutableDictionary *attributes = [AddToCartEvent attributes];
     
     [attributes setObject:sku ?: cUNKNOWN_EVENT_VALUE forKey:kEventSKU];
@@ -82,7 +82,7 @@
     return attributes;
 }
 
-+(NSDictionary *)purchase:(NSString *)categories basketValue:(int)basketValue success:(BOOL)success {
++(NSDictionary *)purchase:(NSString *)categories basketValue:(long)basketValue success:(BOOL)success {
     NSMutableDictionary *attributes = [PurchaseEvent attributes];
 
     [attributes setObject:categories ?: cUNKNOWN_EVENT_VALUE forKey:kEventCategories];
@@ -106,14 +106,6 @@
     
     [attributes setObject:categoryUrlKey ?: cUNKNOWN_EVENT_VALUE forKey:kEventCategoryUrlKey];
     [attributes setObject:@(price) ?: cUNKNOWN_EVENT_VALUE forKey:kEventPrice];
-    
-    return attributes;
-}
-
-+(NSDictionary *)viewCategory:(NSString *)categoryUrlKey {
-    NSMutableDictionary *attributes = [ViewCategoryEvent attributes];
-    
-    [attributes setObject:categoryUrlKey ?: cUNKNOWN_EVENT_VALUE forKey:kEventCategoryUrlKey];
     
     return attributes;
 }

@@ -12,5 +12,6 @@
 @interface EventUtilities : NSObject
 
 +(NSString *) getEventCategories:(RICart *)cart;
++(NSString *) getSearchKeywords:(NSString *)query;
 
 @end

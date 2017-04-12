@@ -17,8 +17,6 @@
 #import "PurchaseEvent.h"
 #import "SearchEvent.h"
 #import "ViewProductEvent.h"
-#import "ViewCategoryEvent.h"
-#import "RICart.h"
 
 @interface EventFactory : NSObject
 
@@ -27,10 +25,9 @@
 +(NSDictionary *) logout:(BOOL)success;
 +(NSDictionary *) openApp:(OpenAppEventSourceType)source;
 +(NSDictionary *) addToFavorites:(NSString *)categoryUrlKey success:(BOOL)success;
-+(NSDictionary *) addToCart:(NSString *)sku basketValue:(int)basketValue success:(BOOL)success;
-+(NSDictionary *) purchase:(NSString *)categories basketValue:(int)basketValue success:(BOOL)success;
++(NSDictionary *) addToCart:(NSString *)sku basketValue:(long)basketValue success:(BOOL)success;
++(NSDictionary *) purchase:(NSString *)categories basketValue:(long)basketValue success:(BOOL)success;
 +(NSDictionary *) search:(NSString *)categoryUrlKey keywords:(NSString *)keywords;
-+(NSDictionary *) viewProduct:(NSString *)categoryUrlKey price:(int)price;
-+(NSDictionary *) viewCategory:(NSString *)categoryUrlKey;
++(NSDictionary *) viewProduct:(NSString *)categoryUrlKey price:(long)price;
 
 @end

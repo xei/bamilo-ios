@@ -102,6 +102,18 @@
         cartItem.freeShippingPossible = NO;
     }
     
+    if ([info objectForKey:@"category_entity"]) {
+        NSDictionary *categoryEntityDictionary = [info objectForKey:@"category_entity"];
+        
+        if ([categoryEntityDictionary objectForKey:@"name"] && cartItem.category == nil) {
+            cartItem.category = [categoryEntityDictionary objectForKey:@"name"];
+        }
+        
+        if ([categoryEntityDictionary objectForKey:@"url_key"] && cartItem.categoryUrlKey == nil) {
+            cartItem.categoryUrlKey = [categoryEntityDictionary objectForKey:@"url_key"];
+        }
+    }
+    
     [[RICustomer getCurrentCustomer].wishlistProducts enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([(NSString *)obj isEqualToString:cartItem.sku]) {
             cartItem.isWishList = YES;

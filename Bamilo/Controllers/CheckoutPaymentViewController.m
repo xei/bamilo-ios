@@ -118,7 +118,8 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
                         } else {
                             [self showNotificationBar:error isSuccess:NO];
                             
-                            [TrackerManager postEvent:[EventFactory purchase:[EventUtilities getEventCategories:self.cart] basketValue:[self.cart.cartEntity.cartValue intValue] success:NO] forName:[PurchaseEvent name]];
+                            //EVENT : PURCHASE
+                            [TrackerManager postEvent:[EventFactory purchase:[EventUtilities getEventCategories:self.cart] basketValue:[self.cart.cartEntity.cartValue longValue] success:NO] forName:[PurchaseEvent name]];
                         }
                     }];
                 }
