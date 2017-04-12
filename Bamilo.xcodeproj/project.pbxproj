@@ -112,7 +112,6 @@
 		8702FBE11E9A3377001D1AA9 /* AbandonCartEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBE01E9A3377001D1AA9 /* AbandonCartEvent.m */; };
 		8702FBE51E9A33FC001D1AA9 /* PurchaseEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBE41E9A33FC001D1AA9 /* PurchaseEvent.m */; };
 		8702FBE91E9A3458001D1AA9 /* ViewProductEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBE81E9A3458001D1AA9 /* ViewProductEvent.m */; };
-		8702FBED1E9A3473001D1AA9 /* ViewCategoryEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBEC1E9A3473001D1AA9 /* ViewCategoryEvent.m */; };
 		8702FBF41E9A4A7A001D1AA9 /* ProductDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBF31E9A4A7A001D1AA9 /* ProductDataManager.m */; };
 		8702FBF81E9A4ABB001D1AA9 /* AuthenticationDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBF71E9A4ABB001D1AA9 /* AuthenticationDataManager.m */; };
 		8702FBFC1E9A4BA9001D1AA9 /* CheckoutDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBFB1E9A4BA9001D1AA9 /* CheckoutDataManager.m */; };
@@ -249,6 +248,7 @@
 		877762C91E9BB37C00B73140 /* Data.m in Sources */ = {isa = PBXBuildFile; fileRef = 877762C81E9BB37C00B73140 /* Data.m */; };
 		877762CD1E9BB38800B73140 /* DataMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 877762CB1E9BB38800B73140 /* DataMessage.m */; };
 		877762D11E9BB39300B73140 /* DataMessageList.m in Sources */ = {isa = PBXBuildFile; fileRef = 877762D01E9BB39300B73140 /* DataMessageList.m */; };
+		879E57841E9E0BAB001C4C71 /* EventUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 879E57831E9E0BAB001C4C71 /* EventUtilities.m */; };
 		879F87EF1E5048790033FE87 /* NSMutableArray+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F87EE1E5048790033FE87 /* NSMutableArray+Extensions.m */; };
 		879F87F21E5057F10033FE87 /* PlainTableViewHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 879F87F11E5057F10033FE87 /* PlainTableViewHeaderCell.xib */; };
 		879F87F51E5058060033FE87 /* PlainTableViewHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F87F41E5058060033FE87 /* PlainTableViewHeaderCell.m */; };
@@ -856,8 +856,6 @@
 		8702FBE41E9A33FC001D1AA9 /* PurchaseEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PurchaseEvent.m; sourceTree = "<group>"; };
 		8702FBE71E9A3458001D1AA9 /* ViewProductEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewProductEvent.h; sourceTree = "<group>"; };
 		8702FBE81E9A3458001D1AA9 /* ViewProductEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewProductEvent.m; sourceTree = "<group>"; };
-		8702FBEB1E9A3473001D1AA9 /* ViewCategoryEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewCategoryEvent.h; sourceTree = "<group>"; };
-		8702FBEC1E9A3473001D1AA9 /* ViewCategoryEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewCategoryEvent.m; sourceTree = "<group>"; };
 		8702FBEF1E9A3758001D1AA9 /* TagTrackerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagTrackerProtocol.h; sourceTree = "<group>"; };
 		8702FBF21E9A4A7A001D1AA9 /* ProductDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductDataManager.h; sourceTree = "<group>"; };
 		8702FBF31E9A4A7A001D1AA9 /* ProductDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductDataManager.m; sourceTree = "<group>"; };
@@ -1149,6 +1147,8 @@
 		877762CC1E9BB38800B73140 /* DataMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataMessage.h; sourceTree = "<group>"; };
 		877762CF1E9BB39300B73140 /* DataMessageList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataMessageList.h; sourceTree = "<group>"; };
 		877762D01E9BB39300B73140 /* DataMessageList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataMessageList.m; sourceTree = "<group>"; };
+		879E57821E9E0BAB001C4C71 /* EventUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventUtilities.h; sourceTree = "<group>"; };
+		879E57831E9E0BAB001C4C71 /* EventUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventUtilities.m; sourceTree = "<group>"; };
 		879F87ED1E5048790033FE87 /* NSMutableArray+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Extensions.h"; sourceTree = "<group>"; };
 		879F87EE1E5048790033FE87 /* NSMutableArray+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Extensions.m"; sourceTree = "<group>"; };
 		879F87F11E5057F10033FE87 /* PlainTableViewHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlainTableViewHeaderCell.xib; sourceTree = "<group>"; };
@@ -2890,7 +2890,6 @@
 				8702FBE21E9A338D001D1AA9 /* PurchaseEvent */,
 				8702FBB21E98E6F2001D1AA9 /* SearchEvent */,
 				8702FBE61E9A343C001D1AA9 /* ViewProductEvent */,
-				8702FBEA1E9A345F001D1AA9 /* ViewCategoryEvent */,
 			);
 			name = UserEvents;
 			sourceTree = "<group>";
@@ -2966,15 +2965,6 @@
 				8702FBE81E9A3458001D1AA9 /* ViewProductEvent.m */,
 			);
 			name = ViewProductEvent;
-			sourceTree = "<group>";
-		};
-		8702FBEA1E9A345F001D1AA9 /* ViewCategoryEvent */ = {
-			isa = PBXGroup;
-			children = (
-				8702FBEB1E9A3473001D1AA9 /* ViewCategoryEvent.h */,
-				8702FBEC1E9A3473001D1AA9 /* ViewCategoryEvent.m */,
-			);
-			name = ViewCategoryEvent;
 			sourceTree = "<group>";
 		};
 		8702FBEE1E9A3736001D1AA9 /* Tags */ = {
@@ -3382,6 +3372,7 @@
 				871BA8531E867F3A007680C5 /* Base */,
 				8702FBBB1E99019C001D1AA9 /* EventFactory */,
 				8702FBC41E99196A001D1AA9 /* UserEvents */,
+				879E57811E9E0B88001C4C71 /* Utilities */,
 			);
 			name = Events;
 			sourceTree = "<group>";
@@ -4007,6 +3998,15 @@
 				877762D01E9BB39300B73140 /* DataMessageList.m */,
 			);
 			name = DataMessageList;
+			sourceTree = "<group>";
+		};
+		879E57811E9E0B88001C4C71 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				879E57821E9E0BAB001C4C71 /* EventUtilities.h */,
+				879E57831E9E0BAB001C4C71 /* EventUtilities.m */,
+			);
+			name = Utilities;
 			sourceTree = "<group>";
 		};
 		879F87EC1E5048550033FE87 /* NSMutableArray+Extensions */ = {
@@ -6410,6 +6410,7 @@
 				9AE766B11CBBB28E00B63D8E /* JACartProductsView.m in Sources */,
 				FFB1B0951CE61D96000F60AD /* JARadioExpandableComponent.m in Sources */,
 				CE28A7A31BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */,
+				879E57841E9E0BAB001C4C71 /* EventUtilities.m in Sources */,
 				8702FC001E9A4CB5001D1AA9 /* AddressDataManager.m in Sources */,
 				875AD5731E38C0C900584ABF /* RIShippingMethod.m in Sources */,
 				61CBA0511E51E26B005673F7 /* FormValidationType.m in Sources */,
@@ -6453,7 +6454,6 @@
 				874AAB6D1E3DCEDB00B3F8FE /* SessionManager.m in Sources */,
 				6125534C1E4EF63000975C6F /* InputTextFieldControl.m in Sources */,
 				875AD5541E38C0C900584ABF /* RIURLCache.m in Sources */,
-				8702FBED1E9A3473001D1AA9 /* ViewCategoryEvent.m in Sources */,
 				875AD5651E38C0C900584ABF /* RIOrder.m in Sources */,
 				FF4465221CECB806003A65EA /* JAORPaymentViewController.m in Sources */,
 				87B684DF1E49CE740042C09F /* BasicTableViewCell.m in Sources */,

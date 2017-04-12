@@ -27,5 +27,6 @@ NSString *const kEventBasketValue = @"BasketValue";
 NSString *const kEventKeywords = @"Keywords";
 NSString *const kEventPrice = @"Price";
 NSString *const kEventSKU = @"SKU";
+NSString *const kEventCategories = @"Categories";
 
 @end

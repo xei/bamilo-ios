@@ -37,5 +37,6 @@
 @property (assign, nonatomic)BOOL forceShowBackButton;
 
 @property (nonatomic, strong) NSString* teaserTrackingInfo;
+@property (copy, nonatomic) NSString *action;
 
 @end
