@@ -7,10 +7,13 @@
 //
 
 #import "SignUpViewController.h"
+#import "EmarsysPredictManager.h"
+#import "PushWooshTracker.h"
 
 //Lagacy importing
 #import "RICustomer.h"
 #import "JAUtils.h"
+
 
 #define cSignUpMethodEmail @"email"
 #define cSignUpMethodGoogle @"sso-google"
@@ -75,6 +78,10 @@
             
             //EVENT: SIGNUP / SUCCESS
             [TrackerManager postEvent:[EventFactory signup:cSignUpMethodEmail success:YES] forName:[SignUpEvent name]];
+            
+            [EmarsysPredictManager setCustomer:[RICustomer getCurrentCustomer]];
+            
+            [[PushWooshTracker sharedTracker] setUserID:[RICustomer getCurrentCustomer].email];
             
             if (self.completion) {
                 self.completion(AUTHENTICATION_FINISHED_WITH_REGISTER);

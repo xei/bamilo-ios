@@ -24,6 +24,10 @@ static PushWooshTracker *instance;
     return instance;
 }
 
+-(void)setUserID:(NSString *)userId {
+    [[PWInAppManager sharedManager] setUserId:userId];
+}
+
 #pragma mark - PushNotificationTrackerProtocol
 -(void)onPushAccepted:(PushNotificationManager *)pushManager withNotification:(NSDictionary *)pushNotification {
     NSLog(@"PushWooshTracker > onPushAccepted : %@", pushNotification);

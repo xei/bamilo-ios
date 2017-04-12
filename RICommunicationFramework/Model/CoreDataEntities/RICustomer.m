@@ -11,7 +11,6 @@
 #import "RIForm.h"
 #import "RIField.h"
 #import "ViewControllerManager.h"
-#import "EmarsysPredictManager.h"
 
 #define kUserIsGuestFlagKey [NSString stringWithFormat:@"%@_user_is_guest", [RIApi getCountryIsoInUse]]
 
@@ -414,7 +413,6 @@
     
     //Reset cartEntity of sharedInstance cart
     [RICart sharedInstance].cartEntity.cartItems = @[];
-    [EmarsysPredictManager userLoggedOut];
 }
 
 + (NSString *)requestPasswordReset:(void (^)())successBlock
@@ -624,10 +622,7 @@
     if(_phone) {
         customer.phone = _phone;
     }
-    
-    //To send data for EmarsysPredict
-    [EmarsysPredictManager setCustomer:customer];
-    
+        
     return customer;
 }
 

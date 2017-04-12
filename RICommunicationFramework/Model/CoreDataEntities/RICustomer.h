@@ -70,8 +70,7 @@
  * @param the block where the failure response can be processed
  * @return a string with the operationID that can be used to cancel the operation
  */
-+ (NSString *)logoutCustomerWithSuccessBlock:(void (^)())successBlock
-                             andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock;
+//+ (NSString *)logoutCustomerWithSuccessBlock:(void (^)())successBlock andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock;
 
 /**
  * Method to clean the customer from the db

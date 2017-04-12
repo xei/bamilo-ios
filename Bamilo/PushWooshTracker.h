@@ -13,4 +13,6 @@
 
 @interface PushWooshTracker : BaseTracker <PushNotificationTrackerProtocol, EventTrackerProtocol, TagTrackerProtocol>
 
+-(void) setUserID:(NSString *)userId;
+
 @end
