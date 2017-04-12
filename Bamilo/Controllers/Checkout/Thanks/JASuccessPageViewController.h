@@ -10,7 +10,7 @@
 #import "RICart.h"
 #import "EmarsysPredictProtocol.h"
 
-@interface JASuccessPageViewController : JABaseViewController <EmarsysPredictProtocol>
+@interface JASuccessPageViewController : JABaseViewController <EmarsysWebExtendProtocol>
 
 @property (strong, nonatomic) RICart *cart;
 

@@ -37,7 +37,12 @@ const CGFloat cellWidth = 138;
 }
 
 + (EmarsysRecommendationCarouselView *)nibInstance {
-    return [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass(self) owner:self options:nil] lastObject];
+    return [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([self class]) owner:self options:nil] lastObject];
+}
+
+- (void)applyPrefferedHeight {
+    CGFloat verticalInsets = self.collectionView.contentInset.top + self.collectionView.contentInset.bottom;
+    [self setHeight:cellHeight + verticalInsets];
 }
 
 #pragma mark - UICollectionViewDataSource

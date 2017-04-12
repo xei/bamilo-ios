@@ -21,12 +21,17 @@
 #import "JANewsletterTeaserView.h"
 #import "JACenterNavigationController.h"
 #import "JATabBarButton.h"
+
+//#########################################
 #import "ViewControllerManager.h"
 #import "EmarsysPredictProtocol.h"
 #import "NSArray+Extension.h"
 #import "RecommendItem.h"
+#import "EmarsysRecommendationCarouselView.h"
+#import "ThreadManager.h"
+#import "EmarsysPredictManager.h"
 
-@interface JAHomeViewController () <JAPickerDelegate, JANewsletterGenderProtocol, EmarsysRecommendationsProtocol>
+@interface JAHomeViewController () <JAPickerDelegate, JANewsletterGenderProtocol, EmarsysRecommendationsProtocol, EmarsysRecommendationCarouselViewDelegate>
 @property (strong, nonatomic) JATeaserPageView* teaserPageView;
 @property (nonatomic, assign) BOOL isLoaded;
 @property (nonatomic, strong) JAFallbackView *fallbackView;
@@ -54,7 +59,8 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(campaignTimerEnded) name:kCampaignMainTeaserTimerEndedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reload) name:kHomeShouldReload object:nil];
-
+    
+    [EmarsysPredictManager sendTransactionsOf:self];
 }
 
 - (void)campaignTimerEnded {
@@ -354,6 +360,11 @@
 }
 
 #pragma EmarsysRecommendationsProtocol
+
+- (BOOL)isPreventSendTransactionInViewWillAppear {
+    return YES;
+}
+
 - (NSArray<EMRecommendationRequest *> *)getRecommendations {
     
     EMRecommendationRequest *recommend = [EMRecommendationRequest requestWithLogic:@"PERSONAL"];
@@ -366,11 +377,24 @@
 }
 
 - (void)renderRecommendations:(EMRecommendationResult *)result {
-    NSArray<RecommendItem *>* recommendItems = [result.products map:^id(EMRecommendationItem *item) {
+    NSArray<RecommendItem *> *recommendItems = [result.products map:^id(EMRecommendationItem *item) {
         return [RecommendItem instanceWithEMRecommendationItem:item];
     }];
     
-    self.teaserPageView.mainScrollView;
+    EmarsysRecommendationCarouselView *recommendationView = [EmarsysRecommendationCarouselView nibInstance];
+    recommendationView.delegate = self;
+    [recommendationView applyPrefferedHeight];
+    
+    [ThreadManager executeOnMainThread:^{
+        [self.teaserPageView addCustomViewToScrollView:recommendationView];
+        [recommendationView updateWithModel:recommendItems];
+    }];
+}
+
+#pragma mark - EmarsysRecommendationCarouselViewDelegate
+
+- (void)selectSuggestedItem:(RecommendItem *)item {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication object:nil userInfo:@{@"sku": item.sku}];
 }
 
 @end
