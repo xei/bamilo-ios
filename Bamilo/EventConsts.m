@@ -10,20 +10,22 @@
 
 @implementation EventConsts
 
+//Common
 NSString *const kEventAppVersion = @"AppVersion";
-NSString *const kEventDeviceModel = @"DeviceModel";
+NSString *const kEventPlatform = @"Platform";
+NSString *const kEventConnection = @"Connection";
+NSString *const kEventDate = @"Date";
 
-//User
-NSString *const kEventUserId = @"UserId";
-NSString *const kEventUserGender = @"UserGender";
-
-//Shop
-NSString *const kEventShopCountry = @"ShopCountry";
-
-//Event Details
-NSString *const kEventLabel = @"Label";
-NSString *const kEventAction = @"Action";
-NSString *const kEventCategory = @"Category";
-NSString *const kEventValue = @"Value";
+NSString *const kEventMethod = @"Method";
+NSString *const kEventEmailDomain = @"EmailDomain";
+NSString *const kEventUserGender = @"Gender"; 
+NSString *const kEventSuccess = @"Success";
+NSString *const kEventCount = @"Count";
+NSString *const kEventSource = @"Source";
+NSString *const kEventCategoryUrlKey = @"CategoryUrlKey";
+NSString *const kEventBasketValue = @"BasketValue";
+NSString *const kEventKeywords = @"Keywords";
+NSString *const kEventPrice = @"Price";
+NSString *const kEventSKU = @"SKU";
 
 @end

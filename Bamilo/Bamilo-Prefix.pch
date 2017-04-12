@@ -70,8 +70,11 @@
     #import "UIButton+Size.h"
 //####################################################################################################################
     #import "AppConsts.h"
+    #import "AppManager.h"
     #import "Categories.pch"
     #import "ThemeManager.h"
+    #import "TrackerManager.h"
+    #import "UserDefaultsManager.h"
 
 #define sSUCCESSFUL @"SUCCESSFUL"
 #define sFAILED @"FAILED"

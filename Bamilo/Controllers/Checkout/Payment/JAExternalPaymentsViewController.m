@@ -178,7 +178,7 @@
         
         if(VALID_NOTEMPTY(orderNumber, NSString))
         {
-            NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[orderNumber, self.cart] forKeys:@[@"order_number", @"cart"]];
+            NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[orderNumber, self.cart] forKeys:@[@"order_number", kCart]];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutThanksScreenNotification
                                                                 object:nil

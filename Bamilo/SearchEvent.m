@@ -11,20 +11,7 @@
 
 @implementation SearchEvent
 
-NSString *const kSearchEventNumberOfProducts = @"SearchEventNumberOfProducts";
-NSString *const kSearchEventKeywords = @"SearchEventKeywords";
-
-+(NSMutableDictionary *)attributes {
-    NSMutableDictionary *attributes = [super attributes];
-    
-    [attributes setObject:[RICustomer getCustomerId] forKey:kEventLabel];
-    [attributes setObject:@"Search" forKey:kEventAction];
-    [attributes setObject:@"Catalog" forKey:kEventCategory];
-    [attributes setObject:[RICustomer getCustomerGender] ?: cUNKNOWN_EVENT_VALUE forKey:kEventUserGender];
-    
-    return attributes;
-}
-
+#pragma mark - Overrides
 +(NSString *)name {
     return @"Search";
 }

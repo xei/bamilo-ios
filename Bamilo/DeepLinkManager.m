@@ -66,7 +66,7 @@
 + (BOOL)justGoToSpecialViewWithTarget:(NSString *)targetKey {
     
     NSDictionary *targetKeyToNotificationMap = @{
-                                                 @"cart": kOpenCartNotification,
+                                                 kCart  : kOpenCartNotification,
                                                  @"w"   : kShowSavedListScreenNotification,
                                                  @"o"   : kShowMyOrdersScreenNotification,
                                                  @"l"   : kShowAuthenticationScreenNotification,

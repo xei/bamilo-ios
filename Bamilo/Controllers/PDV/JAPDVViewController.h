@@ -13,8 +13,9 @@
 #import "JAPDVImageSection.h"
 #import "MPCoachMarks.h"
 #import "EmarsysPredictProtocol.h"
+#import "ProductDataManager.h"
 
-@interface JAPDVViewController : JABaseViewController <JAPDVImageSectionDelegate, EmarsysWebExtendProtocol>
+@interface JAPDVViewController : JABaseViewController <JAPDVImageSectionDelegate, EmarsysWebExtendProtocol, DataServiceProtocol>
 
 @property (strong, nonatomic) RIProduct *product;
 @property (strong, nonatomic) NSString* productSku;

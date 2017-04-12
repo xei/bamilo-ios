@@ -13,6 +13,7 @@
 #import "JASortingView.h"
 #import "JAFiltersViewController.h"
 #import "EmarsysPredictProtocol.h"
+#import "ProductDataManager.h"
 
 @interface JACatalogViewController : JABaseViewController
 <
@@ -22,7 +23,8 @@
     UICollectionViewDelegate,
     JAFiltersViewControllerDelegate,
     JAUndefinedSearchViewDelegate,
-    EmarsysWebExtendProtocol
+    EmarsysWebExtendProtocol,
+    DataServiceProtocol
 >
 
 @property (nonatomic, strong)RICategory* category;

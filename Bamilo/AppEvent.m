@@ -7,7 +7,6 @@
 //
 
 #import "AppEvent.h"
-#import "RIApi.h"
 #import "RICustomer.h"
 #import "AppManager.h"
 #import "DeviceManager.h"
@@ -19,17 +18,17 @@
 }
 
 +(NSMutableDictionary *)attributes {
-    return [NSMutableDictionary
-            dictionaryWithObjects:@[
-                                    [RICustomer getCustomerId],
-                                    [[AppManager sharedInstance] getAppFullFormattedVersion],
-                                    [DeviceManager getDeviceModel],
-                                    [RIApi getCountryIsoInUse] ]
-            
-            forKeys:@[  kEventUserId,
-                        kEventAppVersion,
-                        kEventDeviceModel,
-                        kEventShopCountry ]];
+    NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithObjects:@[ [[AppManager sharedInstance] getAppFullFormattedVersion], @"ios", [DeviceManager getConnectionType], [NSDate date] ] forKeys:@[ kEventAppVersion, kEventPlatform, kEventConnection, kEventDate ]];
+    
+    RICustomer *user = [RICustomer getCurrentCustomer];
+    if(user) {
+        //Gender
+        if(user.gender) {
+            [attributes setObject:user.gender forKey:kEventUserGender]; //male OR female
+        }
+    }
+    
+    return attributes;
 }
 
 @end

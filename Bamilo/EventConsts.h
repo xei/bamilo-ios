@@ -10,21 +10,22 @@
 
 @interface EventConsts : NSObject
 
-//App & Device
+//Common
 FOUNDATION_EXPORT NSString *const kEventAppVersion;
-FOUNDATION_EXPORT NSString *const kEventDeviceModel;
+FOUNDATION_EXPORT NSString *const kEventPlatform;
+FOUNDATION_EXPORT NSString *const kEventConnection;
+FOUNDATION_EXPORT NSString *const kEventDate;
 
-//User
-FOUNDATION_EXPORT NSString *const kEventUserId;
+FOUNDATION_EXPORT NSString *const kEventMethod;
+FOUNDATION_EXPORT NSString *const kEventEmailDomain;
 FOUNDATION_EXPORT NSString *const kEventUserGender;
-
-//Shop
-FOUNDATION_EXPORT NSString *const kEventShopCountry;
-
-//Event Details
-FOUNDATION_EXPORT NSString *const kEventLabel;
-FOUNDATION_EXPORT NSString *const kEventAction;
-FOUNDATION_EXPORT NSString *const kEventCategory;
-FOUNDATION_EXPORT NSString *const kEventValue;
+FOUNDATION_EXPORT NSString *const kEventSuccess;
+FOUNDATION_EXPORT NSString *const kEventCount;
+FOUNDATION_EXPORT NSString *const kEventSource;
+FOUNDATION_EXPORT NSString *const kEventCategoryUrlKey;
+FOUNDATION_EXPORT NSString *const kEventBasketValue;
+FOUNDATION_EXPORT NSString *const kEventKeywords;
+FOUNDATION_EXPORT NSString *const kEventPrice;
+FOUNDATION_EXPORT NSString *const kEventSKU;
 
 @end

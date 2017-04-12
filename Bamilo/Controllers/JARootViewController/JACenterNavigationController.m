@@ -1110,7 +1110,7 @@
         
         JAExternalPaymentsViewController *externalPaymentsVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"externalPaymentsViewController"];
         
-        externalPaymentsVC.cart = [notification.userInfo objectForKey:@"cart"];
+        externalPaymentsVC.cart = [notification.userInfo objectForKey:kCart];
         
         [self pushViewController:externalPaymentsVC animated:YES];
     }
@@ -1124,7 +1124,7 @@
     
         JASuccessPageViewController *thanksVC = [[JASuccessPageViewController alloc] init];
     
-        thanksVC.cart = [notification.userInfo objectForKey:@"cart"];
+        thanksVC.cart = [notification.userInfo objectForKey:kCart];
         thanksVC.targetString = [notification.userInfo objectForKey:@"rrTargetString"];
     
         [self pushViewController:thanksVC animated:YES];

@@ -18,4 +18,10 @@
     return [df stringFromDate:self];
 }
 
+-(NSString *)webFormalized {
+    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    return [dateFormatter stringFromDate:self];
+}
+
 @end

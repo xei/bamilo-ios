@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-//#import <UserNotifications/UserNotifications.h>
 
 @interface JAAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+
++(JAAppDelegate *) instance;
 
 @end
 

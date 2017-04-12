@@ -735,6 +735,18 @@
                 }
             }
         }
+        
+        if ([dataDic objectForKey:@"category_entity"]) {
+            NSDictionary *categoryEntityDictionary = [dataDic objectForKey:@"category_entity"];
+            
+            if ([categoryEntityDictionary objectForKey:@"name"] && newProduct.categoryName == nil) {
+                newProduct.categoryName = [categoryEntityDictionary objectForKey:@"name"];
+            }
+            
+            if ([categoryEntityDictionary objectForKey:@"url_key"] && newProduct.categoryUrlKey == nil) {
+                newProduct.categoryUrlKey = [categoryEntityDictionary objectForKey:@"url_key"];
+            }
+        }
     }
     
     return newProduct;
@@ -833,9 +845,7 @@
 
 + (void)addToFavorites:(RIProduct*)product
           successBlock:(void (^)(RIApiResponse apiResponse, NSArray *success))successBlock
-       andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
-{
-    
+       andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock {
     NSString *finalUrl = [NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_ADD_TO_WISHLIST];
     NSDictionary *parameters = [NSDictionary dictionaryWithObject:product.sku forKey:@"sku"];
     [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:finalUrl]

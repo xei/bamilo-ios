@@ -6,7 +6,7 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import "DataManager.h"
+#import "CheckoutDataManager.h"
 #import "CheckoutPaymentViewController.h"
 #import "CheckoutProgressViewButtonModel.h"
 #import "PlainTableViewHeaderCell.h"
@@ -54,7 +54,7 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[DataManager sharedInstance] getMultistepPayment:self completion:^(id data, NSError *error) {
+    [[CheckoutDataManager sharedInstance] getMultistepPayment:self completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
             [self.cartEntitySummaryViewControl updateWithModel:self.cart.cartEntity];
@@ -93,7 +93,7 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
         JACheckoutForms *checkoutFormForPaymentMethod = [[JACheckoutForms alloc] initWithPaymentMethodForm:self.cart.formEntity.paymentMethodForm width:0.0];
         [params addEntriesFromDictionary:[checkoutFormForPaymentMethod getValuesForPaymentMethod:selectedPaymentMethod]];
         
-        [[DataManager sharedInstance] setMultistepPayment:self params:params completion:^(id data, NSError *error) {
+        [[CheckoutDataManager sharedInstance] setMultistepPayment:self params:params completion:^(id data, NSError *error) {
             if(error == nil && completion != nil) {
                 NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
                 [trackingDictionary setValue:selectedPaymentMethod.label forKey:kRIEventPaymentMethodKey];
@@ -101,11 +101,11 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
                 
                 MultistepEntity *multistepEntity = (MultistepEntity *)data;
                 if([multistepEntity.nextStep isEqualToString:@"finish"]) {
-                    [[DataManager sharedInstance] setMultistepConfirmation:self cart:self.cart completion:^(id data, NSError *error) {
+                    [[CheckoutDataManager sharedInstance] setMultistepConfirmation:self cart:self.cart completion:^(id data, NSError *error) {
                         if(error == nil) {
                             [self bind:data forRequestId:1];
                             
-                            NSDictionary *userInfo = @{ @"cart" : self.cart };
+                            NSDictionary *userInfo = @{ kCart : self.cart };
                             
                             if(self.cart.paymentInformation.type == RIPaymentInformationCheckoutEnded) {
                                  [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutThanksScreenNotification object:nil userInfo:userInfo];

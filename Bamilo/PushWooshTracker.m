@@ -9,6 +9,7 @@
 #import "PushWooshTracker.h"
 #import <Pushwoosh/PWInAppManager.h>
 #import "EmarsysMobileEngage.h"
+#import "RITrackingWrapper.h"
 
 @implementation PushWooshTracker
 
@@ -35,15 +36,29 @@ static PushWooshTracker *instance;
     }
     
     if(jsonData) { //HOW TO CHECK IF IT'S EMARSYS DATA???
-        [[EmarsysMobileEngage sharedInstance] sendOpen:nil completion:^(BOOL success) {
-            NSLog(@"EmarsysMobileEngage > sendOpen > %@", success ? sSUCCESSFUL : sFAILED);
-        }];
+        [[EmarsysMobileEngage sharedInstance] sendOpen:nil completion:nil];
+    }
+    
+    if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+        //App already open
+    } else {
+        //App opened from Notification
+        [TrackerManager postEvent:[EventFactory openApp:[[AppManager sharedInstance] updateOpenAppEventSource:OPEN_APP_SOURCE_PUSH_NOTIFICATION]] forName:[OpenAppEvent name]];
     }
 }
 
 #pragma mark - EventTrackerProtocol
 -(void)postEvent:(NSDictionary *)attributes forName:(NSString *)name {
     [[PWInAppManager sharedManager] postEvent:name withAttributes:attributes];
+}
+
+#pragma mark - TagTrackerProtocol
+-(void)sendTags:(NSDictionary *)tags completion:(TagTrackerCompletion)completion {
+    [[PushNotificationManager pushManager] setTags:tags withCompletion:^(NSError *error) {
+        if(completion) {
+            completion(error);
+        }
+    }];
 }
 
 @end

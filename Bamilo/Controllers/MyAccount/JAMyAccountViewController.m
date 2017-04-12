@@ -14,7 +14,7 @@
 #import "RICustomer.h"
 #import "ViewControllerManager.h"
 #import "IconTableViewHeaderCell.h"
-#import "DataManager.h"
+#import "AuthenticationDataManager.h"
 
 @interface JAMyAccountViewController() <DataServiceProtocol>
 
@@ -135,8 +135,11 @@
 
 - (void)logout {
     [self showLoading];
-    [[DataManager sharedInstance] logoutUser:self completion:^(id data, NSError *error) {
+    [[AuthenticationDataManager sharedInstance] logoutUser:self completion:^(id data, NSError *error) {
         [self bind:data forRequestId:0];
+        
+        //EVENT: LOGOUT
+        [TrackerManager postEvent:[EventFactory logout:(error == nil)] forName:[LogoutEvent name]];
     }];
 }
 

@@ -32,11 +32,15 @@
 
 @interface JAAppDelegate () <RIAdjustTrackerDelegate>
 
-@property (nonatomic, strong)NSDate *startLoadingTime;
+@property (nonatomic, strong) NSDate *startLoadingTime;
 
 @end
 
 @implementation JAAppDelegate
+
++(JAAppDelegate *)instance {
+    return (JAAppDelegate *)[UIApplication sharedApplication].delegate;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.startLoadingTime = [NSDate date];
@@ -117,6 +121,7 @@
     [[Crashlytics sharedInstance] setUserIdentifier:userId];
 
     //PUSH WOOSH
+    //********************************************************************
     // set custom delegate for push handling, in our case AppDelegate
     PushNotificationManager *pushManager = [PushNotificationManager pushManager];
     pushManager.delegate = [PushWooshTracker sharedTracker];
@@ -132,19 +137,25 @@
 
     // register for push notifications!
     [[PushNotificationManager pushManager] registerForPushNotifications];
+    
+    
+    //SETUP TRACKERS
+    //********************************************************************
+    [TrackerManager addTracker:[PushWooshTracker sharedTracker]];
+    [TrackerManager addTracker:[EmarsysMobileEngage sharedInstance]];
+    
     NSDictionary *configs = [[NSBundle mainBundle] objectForInfoDictionaryKey:kConfigs];
     if(configs) {
         NSString *isPushWooshBeta = [configs objectForKey:@"Pushwoosh_BETA"];
         if([isPushWooshBeta isEqualToString:@"1"]) {
-            [[PushNotificationManager pushManager] setTags:@{ @"Beta": isPushWooshBeta } withCompletion:^(NSError *error) {
+            [TrackerManager sendTags:@{ @"Beta": isPushWooshBeta } completion:^(NSError *error) {
                 if(error == nil) {
-                    NSLog(@"Beta tag is set to %@", isPushWooshBeta);
+                    NSLog(@"TrackerManager > Beta > %@", isPushWooshBeta);
                 }
             }];
         }
     }
-
-
+    
     // Set merchant ID. for emarsysPredict
     EMSession *emarsysSession = [EMSession sharedSession];
     emarsysSession.merchantID = @"18146DE34FE0B8C9";
@@ -171,11 +182,9 @@
 - (BOOL)application:(UIApplication *)application continueUserActivity:(nonnull NSUserActivity *)userActivity restorationHandler:(nonnull void (^)(NSArray * _Nullable))restorationHandler {
     if ([[userActivity activityType] isEqualToString:NSUserActivityTypeBrowsingWeb]) {
         [Adjust appWillOpenUrl:[userActivity webpageURL]];
-
-        NSString* appName = [APP_NAME lowercaseString];
-        NSURL * deeplink = [Adjust convertUniversalLink:[userActivity webpageURL] scheme:appName];
-        [self handleOpenAppWithURL:deeplink];
+        [DeepLinkManager handleUrl:[Adjust convertUniversalLink:[userActivity webpageURL] scheme:[APP_NAME lowercaseString]]];
     }
+    
     return YES;
 }
 
@@ -224,9 +233,24 @@
     [application setApplicationIconBadgeNumber:0];
 
     PushNotificationManager *pushManager = [PushNotificationManager pushManager];
-    [[EmarsysMobileEngage sharedInstance] sendLogin:[pushManager getPushToken] completion:^(BOOL success) {
-        NSLog(@"Emarsys Mobile Engage > sendUpdate > %@", success ? sSUCCESSFUL : sFAILED);
+    [[EmarsysMobileEngage sharedInstance] sendLogin:[pushManager getPushToken] completion:nil];
+    
+    OpenAppEventSourceType openAppEventSourceType = [[AppManager sharedInstance] getOpenAppEventSource];
+    
+    if(openAppEventSourceType != OPEN_APP_SOURCE_PUSH_NOTIFICATION &&
+       openAppEventSourceType != OPEN_APP_SOURCE_DEEPLINK) {
+        //EVENT: OPEN APP / DIRECT
+        [TrackerManager postEvent:[EventFactory openApp:[[AppManager sharedInstance] updateOpenAppEventSource:OPEN_APP_SOURCE_DIRECT]] forName:[OpenAppEvent name]];
+    }
+    
+    [TrackerManager sendTags:@{ @"AppOpenCount": @([UserDefaultsManager incrementCounter:kUDMAppOpenCount]) } completion:^(NSError *error) {
+        if(error == nil) {
+            NSLog(@"TrackerManager > AppOpenCount > %d", [UserDefaultsManager getCounter:kUDMAppOpenCount]);
+        }
     }];
+    
+    //Reset to none for next app open
+    [[AppManager sharedInstance] updateOpenAppEventSource:OPEN_APP_SOURCE_NONE];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -293,6 +317,7 @@
 }
 
 #pragma mark - Push Notification
+/*
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     [[RITrackingWrapper sharedInstance] applicationDidRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 
@@ -308,14 +333,20 @@
 
 // system push notifications callback, delegate to pushManager
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    if(!VALID_NOTEMPTY(application, UIApplication) || UIApplicationStateActive != application.applicationState) {
+    if (application.applicationState == UIApplicationStateActive) {
+        //App already open
+    } else {
+        //App opened from Notification
         [[RITrackingWrapper sharedInstance] applicationDidReceiveRemoteNotification:userInfo];
+        
+        //EVENT: OPEN APP / PUSH NOTIFICATION
+        [TrackerManager postEvent:[EventFactory openApp:[UserDefaultsManager incrementCounter:kUDMAppOpenCount] source:(self.openAppEventSource = OPEN_APP_SOURCE_PUSH_NOTIFICATION)] forName:[OpenAppEvent name]];
     }
-
+    
     //PUSH WOOSH
     [[PushNotificationManager pushManager] handlePushReceived:userInfo];
 }
-
+*/
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
     [[RITrackingWrapper sharedInstance] applicationDidReceiveLocalNotification:notification];
 }
@@ -327,7 +358,11 @@
 
     if (url) {
         [[RITrackingWrapper sharedInstance] trackOpenURL:url];
-        [self handleOpenAppWithURL:url];
+        [DeepLinkManager handleUrl:url];
+        
+        //EVENT: OPEN APP / DEEP LINK
+        [TrackerManager postEvent:[EventFactory openApp:[[AppManager sharedInstance] updateOpenAppEventSource:OPEN_APP_SOURCE_DEEPLINK]] forName:[OpenAppEvent name]];
+        
         return YES;
     }
 
@@ -335,75 +370,6 @@
 }
 
 #pragma mark - Private Methods
-- (void)handleOpenAppWithURL:(NSURL *)url {
-
-    [DeepLinkManager handleUrl:url];
-
-    /*
-    NSString *urlScheme = [url scheme];
-
-    if (urlScheme) {
-        NSString *urlHost = [NSString stringWithString:url.host];
-        NSDictionary *queryString = [URLUtility parseQueryString:url];
-
-        NSMutableString *queryBuilder = [NSMutableString new];
-        for(id key in queryString) {
-            if(![key isEqualToString:@"UTM"]) {
-                [queryBuilder appendFormat:@"%@/%@", key, [queryString valueForKey:key]];
-            }
-        }
-
-        NSString *path = [url.path stringByAppendingFormat:@"/%@", [NSString stringWithString:queryBuilder]];
-
-        NSString *utm = [queryString valueForKey:@"UTM"];
-        if(utm) {
-            [path stringByAppendingFormat:@"?%@", utm];
-        }
-
-        NSMutableDictionary *fullUrl = [NSMutableDictionary dictionaryWithObject:[urlHost stringByAppendingString:path] forKey:@"u"];
-
-        [[RITrackingWrapper sharedInstance] handlePushNotifcation:fullUrl];
-    }
-    */
-    /*
-    NSString *urlScheme = [url scheme];
-    if (urlScheme) {
-        NSMutableDictionary *fullUrl = [NSMutableDictionary dictionaryWithObject:@"" forKey:@"u"];
-
-        NSString *path = [NSString stringWithString:url.path];
-        NSString *urlHost = [NSString stringWithString:url.host];
-
-        if (url.query && [url.query length] >= 5) {
-            if (![[url.query substringToIndex:4] isEqualToString:@"ADXID"]) {
-                NSRange range = [url.query rangeOfString:@"?ADXID"];
-                if (range.location != NSNotFound) {
-                    NSString *paramsWithoutAdXData = [url.query substringToIndex:range.location];
-                    path = [url.path stringByAppendingString:[NSString stringWithFormat:@"?%@", paramsWithoutAdXData]];
-                } else {
-                    path = [url.path stringByAppendingString:[NSString stringWithFormat:@"?%@", url.query]];
-                }
-            }
-        }
-
-        NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
-        if (![urlHost isEqualToString:bundleIdentifier]) {
-            path = [urlHost stringByAppendingString:path];
-        } else {
-            path = [path substringFromIndex:1];
-        }
-
-        NSDictionary *dict = [URLUtility parseQueryString:url];
-
-        fullUrl = [NSMutableDictionary dictionaryWithObject:path forKey:@"u"];
-
-        if ([dict objectForKey:@"UTM"]) {
-            [fullUrl addEntriesFromDictionary:dict];
-        }
-
-        [[RITrackingWrapper sharedInstance] handlePushNotifcation:fullUrl];
-    }*/
-}
-
 - (void)adjustAttributionChanged:(NSString *)network campaign:(NSString *)campaign adGroup:(NSString *)adGroup creative:(NSString *)creative {
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
     if(VALID_NOTEMPTY(network, NSString)) {

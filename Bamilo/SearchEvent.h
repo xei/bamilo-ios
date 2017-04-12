@@ -10,7 +10,4 @@
 
 @interface SearchEvent : AppEvent
 
-FOUNDATION_EXPORT NSString *const kSearchEventNumberOfProducts;
-FOUNDATION_EXPORT NSString *const kSearchEventKeywords;
-
 @end

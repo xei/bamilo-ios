@@ -12,6 +12,9 @@
 #import "RICustomer.h"
 #import "JAUtils.h"
 
+#define cSignUpMethodEmail @"email"
+#define cSignUpMethodGoogle @"sso-google"
+
 @interface SignUpViewController()
 @property (nonatomic, weak) IBOutlet UITableView* tableView;
 @property (nonatomic, strong) FormViewControl *formController;
@@ -66,9 +69,12 @@
         return;
     }
     
-    [[DataManager sharedInstance] signupUser:self withFieldsDictionary:[self.formController getMutableDictionaryOfForm] completion:^(id data, NSError *error) {
+    [[AuthenticationDataManager sharedInstance] signupUser:self withFieldsDictionary:[self.formController getMutableDictionaryOfForm] completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
+            
+            //EVENT: SIGNUP / SUCCESS
+            [TrackerManager postEvent:[EventFactory signup:cSignUpMethodEmail success:YES] forName:[SignUpEvent name]];
             
             if (self.completion) {
                 self.completion(AUTHENTICATION_FINISHED_WITH_REGISTER);
@@ -76,6 +82,9 @@
                 [((UIViewController *)self.delegate).navigationController popViewControllerAnimated:YES];
             }
         } else {
+            //EVENT: SIGNUP / FAILURE
+            [TrackerManager postEvent:[EventFactory signup:cSignUpMethodEmail success:NO] forName:[SignUpEvent name]];
+            
             BaseViewController *baseViewController = (BaseViewController *)self.delegate;
             if(![baseViewController showNotificationBar:error isSuccess:NO]) {
                 for(NSDictionary* errorField in [error.userInfo objectForKey:kErrorMessages]) {

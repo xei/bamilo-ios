@@ -7,6 +7,7 @@
 //
 
 #import "FormItemModel.h"
+#import "EmailUtility.h"
 
 @implementation FormItemModel
 
@@ -90,7 +91,7 @@
                                         andIcon:nil
                                     placeholder:@"ایمیل"
                                            type:InputTextFieldControlTypeEmail
-                                     validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:[NSString emailRegxPattern]]
+                                     validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:[EmailUtility emailRegexPattern]]
                                   selectOptions:nil];
 }
 

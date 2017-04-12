@@ -16,6 +16,7 @@
 #import "JAUtils.h"
 #import "JAProductListFlowLayout.h"
 #import "JAPicker.h"
+#import "CartDataManager.h"
 
 @interface JAOtherOffersViewController () <JAPickerDelegate>
 {
@@ -38,6 +39,7 @@
 @property (nonatomic, strong) NSMutableDictionary* selectedProductSimple;
 
 @property (nonatomic) JAPicker *picker;
+@property (strong, nonatomic) RICart *cart;
 
 @end
 
@@ -235,11 +237,9 @@
             }
         }
     }
-    
 }
 
-- (JAPicker *)picker
-{
+- (JAPicker *)picker {
     if (!VALID_NOTEMPTY(_picker, JAPicker)) {
         _picker = [JAPicker new];
     }
@@ -248,19 +248,15 @@
 
 
 #pragma mark - UICollectionView
-
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-{
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.productOffers.count;
 }
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat cellHeight = 114.0f;
     RIProductOffer* offer = [self.productOffers objectAtIndex:indexPath.row];
     if (offer.freeShippingPossible) {
@@ -269,8 +265,7 @@
     return CGSizeMake(self.collectionView.width, cellHeight);
 }
 
--(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     RIProductOffer* offer = [self.productOffers objectAtIndex:indexPath.row];
     
     JAOfferCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:self.cellIdentifier forIndexPath:indexPath];
@@ -288,92 +283,91 @@
     return cell;
 }
 
-- (void)collectionView:(UICollectionView*)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)collectionView:(UICollectionView*)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
 }
 
 #pragma mark - Button Actions
 
-- (void)addToCartButtonPressed:(UIButton*)sender
-{
+- (void)addToCartButtonPressed:(UIButton*)sender {
     RIProductOffer* offer = [self.productOffers objectAtIndex:sender.tag];
     RIProductSimple* simp =[self.selectedProductSimple objectForKey:offer.productSku];
     NSString* simpleSku = simp.sku;
     
-    [self showLoading];
-    [RICart addProductWithQuantity:@"1"
-                         simpleSku:simpleSku
-                  withSuccessBlock:^(RICart *cart, RIApiResponse apiResponse,  NSArray *successMessage) {
-                      
-                      NSNumber *price = offer.priceEuroConverted;
-                      
-                      NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                      [trackingDictionary setValue:simpleSku forKey:kRIEventLabelKey];
-                      [trackingDictionary setValue:@"SellerAddToCart" forKey:kRIEventActionKey];
-                      [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
-                      [trackingDictionary setValue:price forKey:kRIEventValueKey];
-                      
-                      NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-                      
-                      [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-                      [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-                      [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-                      [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-                      
-                      // Since we're sending the converted price, we have to send the currency as EUR.
-                      // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
-                      [trackingDictionary setValue:price forKey:kRIEventPriceKey];
-                      [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
-
-                      [trackingDictionary setObject:self.product.brand forKey:kRIEventBrandName];
-                      [trackingDictionary setObject:self.product.brandUrlKey forKey:kRIEventBrandKey];
-                      [trackingDictionary setValue:self.product.name forKey:kRIEventProductNameKey];
-                      [trackingDictionary setValue:simpleSku forKey:kRIEventSkuKey];
-                      [trackingDictionary setValue:cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
-                      [trackingDictionary setValue:cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
-                      
-                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
-                                                                data:[trackingDictionary copy]];
-                      
-                      
-                      NSMutableDictionary *tracking = [NSMutableDictionary new];
-                      [tracking setValue:self.product.name forKey:kRIEventProductNameKey];
-                      [tracking setValue:self.product.sku forKey:kRIEventSkuKey];
-                      if(VALID_NOTEMPTY(self.product.categoryIds, NSArray)) {
-                          [tracking setValue:[self.product.categoryIds lastObject] forKey:kRIEventLastCategoryAddedToCartKey];
-                      }
-                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLastAddedToCart] data:tracking];
-                      
-                      tracking = [NSMutableDictionary new];
-                      [tracking setValue:cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
-                      [tracking setValue:cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
-                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
-                                                                data:[tracking copy]];
-                      
-                      trackingDictionary = [NSMutableDictionary new];
-                      [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-                      NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
-                      [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
-                      
-                      [trackingDictionary setValue:[price stringValue] forKey:kRIEventFBValueToSumKey];
-                      [trackingDictionary setValue:self.product.sku forKey:kRIEventFBContentIdKey];
-                      [trackingDictionary setValue:@"product" forKey:kRIEventFBContentTypeKey];
-                      [trackingDictionary setValue:@"EUR" forKey:kRIEventFBCurrency];
-                      
-                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookAddToCart]
-                                                                data:[trackingDictionary copy]];
-                      
-                      NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
-                      [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
-                      
-                      [self onSuccessResponse:RIApiResponseSuccess messages:successMessage showMessage:YES];
-                      [self hideLoading];
-                      
-                  }andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-                      [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:@selector(addToCartButtonPressed:) objects:@[sender]];
-                      [self hideLoading];
-                  }];
+    [[CartDataManager sharedInstance] addProductToCart:self simpleSku:simpleSku completion:^(id data, NSError *error) {
+        if(error == nil) {
+            [self bind:data forRequestId:0];
+            
+            [TrackerManager postEvent:[EventFactory addToCart:simpleSku basketValue:[self.cart.cartEntity.cartValue intValue] success:YES] forName:[AddToCartEvent name]];
+            
+            NSNumber *price = offer.priceEuroConverted;
+            
+            NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+            [trackingDictionary setValue:simpleSku forKey:kRIEventLabelKey];
+            [trackingDictionary setValue:@"SellerAddToCart" forKey:kRIEventActionKey];
+            [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
+            [trackingDictionary setValue:price forKey:kRIEventValueKey];
+            
+            NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+            
+            [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+            [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+            [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+            
+            // Since we're sending the converted price, we have to send the currency as EUR.
+            // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
+            [trackingDictionary setValue:price forKey:kRIEventPriceKey];
+            [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
+            
+            [trackingDictionary setObject:self.product.brand forKey:kRIEventBrandName];
+            [trackingDictionary setObject:self.product.brandUrlKey forKey:kRIEventBrandKey];
+            [trackingDictionary setValue:self.product.name forKey:kRIEventProductNameKey];
+            [trackingDictionary setValue:simpleSku forKey:kRIEventSkuKey];
+            [trackingDictionary setValue:self.cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
+            [trackingDictionary setValue:self.cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+            
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart] data:[trackingDictionary copy]];
+            
+            NSMutableDictionary *tracking = [NSMutableDictionary new];
+            [tracking setValue:self.product.name forKey:kRIEventProductNameKey];
+            [tracking setValue:self.product.sku forKey:kRIEventSkuKey];
+            if(VALID_NOTEMPTY(self.product.categoryIds, NSArray)) {
+                [tracking setValue:[self.product.categoryIds lastObject] forKey:kRIEventLastCategoryAddedToCartKey];
+            }
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLastAddedToCart] data:tracking];
+            
+            tracking = [NSMutableDictionary new];
+            [tracking setValue:self.cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+            [tracking setValue:self.cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
+                                                      data:[tracking copy]];
+            
+            trackingDictionary = [NSMutableDictionary new];
+            [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+            NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
+            [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
+            
+            [trackingDictionary setValue:[price stringValue] forKey:kRIEventFBValueToSumKey];
+            [trackingDictionary setValue:self.product.sku forKey:kRIEventFBContentIdKey];
+            [trackingDictionary setValue:@"product" forKey:kRIEventFBContentTypeKey];
+            [trackingDictionary setValue:@"EUR" forKey:kRIEventFBCurrency];
+            
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookAddToCart]
+                                                      data:[trackingDictionary copy]];
+            
+            NSDictionary* userInfo = [NSDictionary dictionaryWithObject:self.cart forKey:kUpdateCartNotificationValue];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
+            
+            [self onSuccessResponse:RIApiResponseSuccess messages:[self extractSuccessMessages:[data objectForKey:kDataMessages]] showMessage:YES];
+            //[self hideLoading];
+        } else {
+            [TrackerManager postEvent:[EventFactory addToCart:simpleSku basketValue:[self.cart.cartEntity.cartValue intValue] success:NO] forName:[AddToCartEvent name]];
+            
+            [self onErrorResponse:error.code messages:[error.userInfo objectForKey:kErrorMessages] showAsMessage:YES selector:@selector(addToCartButtonPressed:) objects:@[sender]];
+            //[self hideLoading];
+        }
+    }];
 }
 
 - (void)sizeButtonPressed:(UIButton*)button {
@@ -459,11 +453,22 @@
                      }];
 }
 
-- (void)leftButtonPressed;
-{
+- (void)leftButtonPressed {
     if (VALID_NOTEMPTY(self.product.sizeGuideUrl, NSString)) {
         NSDictionary* dic = [NSDictionary dictionaryWithObjectsAndKeys:self.product.sizeGuideUrl, @"sizeGuideUrl", nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowSizeGuideNotification object:nil userInfo:dic];
+    }
+}
+
+#pragma mark - DataServiceProtocol.h
+-(void)bind:(id)data forRequestId:(int)rid {
+    switch (rid) {
+        case 0:
+            self.cart = [data objectForKey:kDataContent];
+        break;
+            
+        default:
+            break;
     }
 }
 

@@ -296,7 +296,7 @@
     
     if ([entitiesJSON objectForKey:@"cart_entity"]) {
         RICart *newCart = [RICart parseCart:entitiesJSON country:nil];
-        [newEntities setObject:newCart forKey:@"cart"];
+        [newEntities setObject:newCart forKey:kCart];
     }
     
     if ([entitiesJSON objectForKey:@"multistep_entity"]) {

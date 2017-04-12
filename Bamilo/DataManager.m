@@ -7,7 +7,6 @@
 //
 
 #import "DataManager.h"
-#import "Models.pch"
 #import "RICart.h"
 #import "RIForm.h"
 #import "RICategory.h"
@@ -29,29 +28,27 @@ static DataManager *instance;
 + (instancetype)sharedInstance {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        instance = [[DataManager alloc] init];
+        instance = [DataManager new];
     });
     
     return instance;
 }
 
 - (void)getSubCategoriesFilter:(id<DataServiceProtocol>)target ofCategroyUrlKey:(NSString *)urlKey completion:(DataCompletion)completion {
-    
     NSString *path = [NSString stringWithFormat:RI_API_GET_CATEGORIES_BY_URLKEY, urlKey];
-    [self.requestManager asyncGET:target path:path params:nil type:REQUEST_EXEC_IN_BACKGROUND completion:^(int response, id data, NSArray *errorMessages) {
-        if (((NSArray *)[data objectForKey:@"data"]).count) {
+    [self.requestManager asyncGET:target path:path params:nil type:REQUEST_EXEC_IN_BACKGROUND completion:^(int statusCode, Data *data, NSArray *errorMessages) {
+        if (((NSArray *)[data.metadata objectForKey:@"data"]).count) {
             //This must be refactored from server side :(
-            NSArray *garbageArray = data[@"data"][0][@"children"];
+            NSArray *garbageArray = data.metadata[@"data"][0][@"children"];
             if (garbageArray.count) {
-                [self serialize:garbageArray[0] into:[SearchCategoryFilter class] response:response errorMessages:errorMessages completion:completion];
+                [self processResponse:statusCode ofClass:[SearchCategoryFilter class] forData:data errorMessages:errorMessages completion:completion];
             } else {
-                completion(nil, [self getErrorFrom:response errorMessages:@[STRING_ERROR]]);
+                completion(nil, [self getErrorFrom:statusCode errorMessages:@[STRING_ERROR]]);
             }
         } else {
-            completion(nil, [self getErrorFrom:response errorMessages:@[STRING_ERROR]]);
+            completion(nil, [self getErrorFrom:statusCode errorMessages:@[STRING_ERROR]]);
         }
     }];
-    
 }
 
 //### AREA_INFORMATION
@@ -75,31 +72,30 @@ static DataManager *instance;
                         path:[NSString stringWithFormat:@"%@?id=%@", RI_API_GET_CUSTOMER_ADDDRESS, uid]
                       params:nil
                         type:REQUEST_EXEC_IN_FOREGROUND
-                  completion:^(int response, id data, NSArray *errorMessages) {
-                      [self serialize:data into:[Address class] response:response errorMessages:errorMessages completion:completion];
+                  completion:^(int statusCode, Data *data, NSArray *errorMessages) {
+                      [self processResponse:statusCode ofClass:[Address class] forData:data errorMessages:errorMessages completion:completion];
                   }];
 }
 
 -(void)addAddress:(id<DataServiceProtocol>)target params:(NSDictionary *)params completion:(DataCompletion)completion {
-    [self.requestManager asyncPOST:target path:RI_API_POST_CUSTOMER_ADDDRESS_CREATE params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
-        if(response == RIApiResponseSuccess && data) {
+    [self.requestManager asyncPOST:target path:RI_API_POST_CUSTOMER_ADDDRESS_CREATE params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int statusCode, Data *data, NSArray *errorMessages) {
+        if(statusCode == RIApiResponseSuccess && data) {
             completion(data, nil);
         } else {
-            completion(nil, [self getErrorFrom:response errorMessages:errorMessages]);
+            completion(nil, [self getErrorFrom:statusCode errorMessages:errorMessages]);
         }
     }];
 }
 
 - (void)updateAddress:(id<DataServiceProtocol>)target params:(NSMutableDictionary *)params withID:(NSString *)uid completion:(DataCompletion)completion {
-    [self.requestManager asyncPOST:target path:[NSString stringWithFormat:@"%@%@", RI_API_POST_CUSTOMER_ADDDRESS_EDIT, uid] params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
-        if(response == RIApiResponseSuccess && data) {
+    [self.requestManager asyncPOST:target path:[NSString stringWithFormat:@"%@%@", RI_API_POST_CUSTOMER_ADDDRESS_EDIT, uid] params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int statusCode, Data *data, NSArray *errorMessages) {
+        if(statusCode == RIApiResponseSuccess && data) {
             completion(data, nil);
         } else {
-            completion(nil, [self getErrorFrom:response errorMessages:errorMessages]);
+            completion(nil, [self getErrorFrom:statusCode errorMessages:errorMessages]);
         }
     }];
 }
-
 
 //### ORDER ####
 - (void)getOrders:(id<DataServiceProtocol>)target forPageNumber:(int)page perPageCount:(int)perPageCount completion:(DataCompletion)completion {
@@ -108,255 +104,91 @@ static DataManager *instance;
          @"page"    : @(page)
     };
     
-    [self.requestManager asyncPOST:target path:RI_API_GET_ORDERS params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
-        [self serialize:data into:[OrderList class] response:response errorMessages:errorMessages completion:completion];
+    [self.requestManager asyncPOST:target path:RI_API_GET_ORDERS params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int statusCode, Data *data, NSArray *errorMessages) {
+        [self processResponse:statusCode ofClass:[OrderList class] forData:data errorMessages:errorMessages completion:completion];
     }];
 }
 
-- (void)getOrder:(id<DataServiceProtocol>)target forOrderId:(NSString *)orderId  completion:(DataCompletion)completion {
+- (void)getOrder:(id<DataServiceProtocol>)target forOrderId:(NSString *)orderId completion:(DataCompletion)completion {
     NSString *path = [NSString stringWithFormat:RI_API_TRACK_ORDER, orderId];
-    [self.requestManager asyncPOST:target path:path params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
-        [self serialize:data into:[Order class] response:response errorMessages:errorMessages completion:completion];
-    }];
-}
-
-
-//### LOGIN ###
-- (void)loginUser:(id<DataServiceProtocol>)target withUsername:(NSString *)username password:(NSString *)password completion:(DataCompletion)completion {
-    NSDictionary *params = @{
-         @"login[email]": username,
-         @"login[password]": password
-    };
-    [self.requestManager asyncPOST:target path:RI_API_LOGIN_CUSTOMER params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
-        if(response == RIApiResponseSuccess && data) {
-            [RICustomer parseCustomerWithJson:[data objectForKey:@"customer_entity"] plainPassword:password loginMethod:@"normal"];
-            completion(data, nil);
-        } else {
-            completion(nil, [self getErrorFrom:response errorMessages:errorMessages]);
-        }
-    }];
-}
-
-//### Logout ###
-- (void)logoutUser:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
-    [self.requestManager asyncPOST:target path:RI_API_LOGOUT_CUSTOMER params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(int statusCode, id data, NSArray *errorMessages) {
-        if(statusCode == RIApiResponseSuccess && data) {
-            completion(data, nil);
-        } else {
-            completion(nil, [self getErrorFrom:statusCode errorMessages:errorMessages]);
-        }
-        [RICustomer cleanCustomerFromDB];
-    }];
-}
-
-
-//### FORGET PASSWORD ###
-- (void)forgetPassword:(id<DataServiceProtocol>)target withFields:(NSDictionary *)fields completion:(DataCompletion)completion {
-    [self.requestManager asyncPOST:target path:RI_API_FORGET_PASS_CUSTOMER params:fields type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
-        if(response == RIApiResponseSuccess && data) {
-            completion(data, nil);
-        } else {
-            completion(nil, [self getErrorFrom:response errorMessages:errorMessages]);
-        }
-    }];
-}
-
-//### SIGNUP ###
-- (void)signupUser:(id<DataServiceProtocol>)target withFieldsDictionary:(NSMutableDictionary *)fields completion:(DataCompletion)completion {
-    //must be remove from server side!
-    fields[@"customer[phone_prefix]"] = @"100";
-    [self.requestManager asyncPOST:target path:RI_API_REGISTER_CUSTOMER params:fields type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
-        if(response == RIApiResponseSuccess && data) {
-            [RICustomer parseCustomerWithJson:[data objectForKey:@"customer_entity"] plainPassword:fields[@"customer[password]"] loginMethod:@"normal"];
-            completion(data, nil);
-        } else {
-            completion(nil, [self getErrorFrom:response errorMessages:errorMessages]);
-        }
-    }];
-}
-
-//### ADDRESS ###
-- (void)getUserAddressList:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
-    [self.requestManager asyncPOST:target path:RI_API_GET_CUSTOMER_ADDRESS_LIST params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
-        [self serialize:data into:[AddressList class] response:response errorMessages:errorMessages completion:completion];
-    }];
-}
-
-- (void)setDefaultAddress:(id<DataServiceProtocol>)target address:(Address *)address isBilling:(BOOL)isBilling completion:(DataCompletion)completion {
-    NSDictionary *params = @{
-         @"id": address.uid,
-         @"type": isBilling ? @"billing" : @"shipping"
-    };
-    
-    [self.requestManager asyncPUT:target path:RI_API_GET_CUSTOMER_SELECT_DEFAULT params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
-        [self serialize:data into:[AddressList class] response:response errorMessages:errorMessages completion:completion];
-    }];
-}
-
--(void)deleteAddress:(id<DataServiceProtocol>)target address:(Address *)address completion:(DataCompletion)completion {
-    NSDictionary *params = @{
-        @"id": address.uid
-    };
-    
-    [self.requestManager asyncDELETE:target path:RI_API_DELETE_ADDRESS_REMOVE params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
-        [self processResponse:response forData:data errorMessages:errorMessages completion:completion];
+    [self.requestManager asyncPOST:target path:path params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(int statusCode, id data, NSArray *errorMessages) {
+        [self processResponse:statusCode ofClass:[Order class] forData:data errorMessages:errorMessages completion:completion];
     }];
 }
 
 //### CART ###
 - (void)getUserCart:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
-    [self.requestManager asyncPOST:target path:RI_API_GET_CART_DATA params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
-        [self serialize:data into:[RICart class] response:response errorMessages:errorMessages completion:completion];
+    [self.requestManager asyncPOST:target path:RI_API_GET_CART_DATA params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(int statusCode, Data *data, NSArray *errorMessages) {
+        [self processResponse:statusCode ofClass:[RICart class] forData:data errorMessages:errorMessages completion:completion];
     }];
 }
 
-//### ORDER ###
--(void)getMultistepAddressList:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
-    [self.requestManager asyncGET:target path:RI_API_MULTISTEP_GET_ADDRESSES params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
-        [self serialize:data into:[RICart class] response:response errorMessages:errorMessages completion:completion];
-    }];
-}
-
--(void)setMultistepAddress:(id<DataServiceProtocol>)target forShipping:(NSString *)shippingAddressId billing:(NSString *)billingAddressId completion:(DataCompletion)completion {
-    NSDictionary *params = @{
-        @"addresses[shipping_id]": shippingAddressId,
-        @"addresses[billing_id]": billingAddressId
-    };
-    
-    [self.requestManager asyncPOST:target path:RI_API_MULTISTEP_SUBMIT_ADDRESSES params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
-        [self serialize:data into:[MultistepEntity class] response:response errorMessages:errorMessages completion:completion];
-    }];
-}
-
--(void)getMultistepConfirmation:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
-    [self.requestManager asyncGET:target path:RI_API_MULTISTEP_GET_FINISH params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
-        [self serialize:data into:[RICart class] response:response errorMessages:errorMessages completion:completion];
-    }];
-}
-
--(void) getMultistepShipping:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
-    [self.requestManager asyncGET:target path:RI_API_MULTISTEP_GET_SHIPPING params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
-        [self serialize:data into:[RICart class] response:response errorMessages:errorMessages completion:completion];
-    }];
-}
-
-/*-(void) setMultistepShipping:(id<DataServiceProtocol>)target forShippingMethod:(NSString*)shippingMethod pickupStation:(NSString*)pickupStation region:(NSString*)region completion:(DataCompletion)completion {
-    NSDictionary *params = @{
-         @"shipping_method[shipping_method]": shippingMethod,
-         @"shipping_method[pickup_station]": pickupStation,
-         @"shipping_method[pickup_station_customer_address_region]": region
-    };
-    
-    [RequestManager asyncPOST:target path:RI_API_MULTISTEP_SUBMIT_SHIPPING params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(RIApiResponse response, id data, NSArray *errorMessages) {
-        [self serialize:data into:[RICart class] response:response errorMessages:errorMessages completion:completion];
-    }];
-}*/
-
-- (void) getMultistepPayment:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
-    [self.requestManager asyncGET:target path:RI_API_MULTISTEP_GET_PAYMENT params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
-        [self serialize:data into:[RICart class] response:response errorMessages:errorMessages completion:completion];
-    }];
-}
-
--(void)setMultistepPayment:(id<DataServiceProtocol>)target params:(NSDictionary *)params completion:(DataCompletion)completion {
-    [self.requestManager asyncPOST:target path:RI_API_MULTISTEP_SUBMIT_PAYMENT params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
-        [self serialize:data into:[MultistepEntity class] response:response errorMessages:errorMessages completion:completion];
-    }];
-}
-
--(void) setMultistepConfirmation:(id<DataServiceProtocol>)target cart:(RICart *)cart completion:(DataCompletion)completion {
-    NSDictionary *params = @{
-        @"app": @"ios",
-        @"customer_device": UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() ? @"tablet" : @"mobile"
-    };
-    
-    [self.requestManager asyncPOST:target path:RI_API_MULTISTEP_SUBMIT_FINISH params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
-        if(completion != nil && errorMessages.count == 0) {
-            completion([RICart parseCheckoutFinish:data forCart:cart], nil);
-        } else {
-            completion(nil, [self getErrorFrom:response errorMessages:errorMessages]);
-        }
-    }];
-}
-
-//### COUPON ###
--(void) applyVoucher:(id<DataServiceProtocol>)target voucherCode:(NSString *)voucherCode completion:(DataCompletion)completion {
-    NSDictionary *params = @{
-         @"couponcode": voucherCode
-    };
-    
-    [self.requestManager asyncPOST:target path:RI_API_ADD_VOUCHER_TO_CART params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
-        [self serialize:data into:[RICart class] response:response errorMessages:errorMessages completion:completion];
-    }];
-}
-
--(void) removeVoucher:(id<DataServiceProtocol>)target voucherCode:(NSString *)voucherCode completion:(DataCompletion)completion {
-    NSDictionary *params = @{
-        @"couponcode": voucherCode
-    };
-    
-    [self.requestManager asyncDELETE:target path:RI_API_REMOVE_VOUCHER_FROM_CART params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int response, id data, NSArray *errorMessages) {
-        [self serialize:data into:[RICart class] response:response errorMessages:errorMessages completion:completion];
-    }];
-}
-
-#pragma mark - Private Methods
-- (void)serialize:(id)data into:(Class)aClass response:(RIApiResponse)response errorMessages:(NSArray *)errorMessages completion:(DataCompletion)completion {
-    [self processResponse:response forData:data errorMessages:errorMessages completion:^(id data, NSError *error) {
-        if(error == nil && data) {
-            id dataModel;
+#pragma mark - Public Methods
+-(void) processResponse:(RIApiResponse)response ofClass:(Class)aClass forData:(id)data errorMessages:(NSArray *)errorMessages completion:(DataCompletion)completion {
+    if(completion) {
+        if(response == RIApiResponseSuccess && data) {
+            Data *serviceData = (Data *)data;
+            NSMutableDictionary *payload = [NSMutableDictionary dictionary];
             
+            DataMessageList *dataMessages = serviceData.messages;
+            if(dataMessages) {
+                [payload setObject:dataMessages forKey:kDataMessages];
+            }
+
             if([aClass conformsToProtocol:@protocol(JSONVerboseModel)]) {
                 [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
-                    completion([aClass parseToDataModelWithObjects:@[ data, configuration ]], nil);
+                    [payload setObject:[aClass parseToDataModelWithObjects:@[ ((Data *)data).metadata, configuration ]] forKey:kDataContent];
+                    [self handlePayload:payload completion:completion];
                 } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
                     completion(nil, [self getErrorFrom:apiResponse errorMessages:errorMessages]);
                 }];
             } else {
-                NSError *error;
-                dataModel = [[aClass alloc] init];
-                [dataModel mergeFromDictionary:data useKeyMapping:YES error:&error];
-                
-                if(error == nil) {
-                    completion(dataModel, nil);
-                } else {
-                    completion(nil, error);
+                id metadata = serviceData.metadata;
+                if(metadata && aClass) {
+                    NSError *error;
+                    id dataModel = [[aClass alloc] init];
+                    [dataModel mergeFromDictionary:serviceData.metadata useKeyMapping:YES error:&error];
+                    
+                    if(error == nil) {
+                        [payload setObject:dataModel forKey:kDataContent];
+                    }
                 }
+                
+                [self handlePayload:payload completion:completion];
             }
-        } else {
-            completion(nil, error);
-        }
-    }];
-}
-
--(void) processResponse:(RIApiResponse)response forData:(id)data errorMessages:(NSArray *)errorMessages completion:(DataCompletion)completion {
-    if(completion) {
-        if(response == RIApiResponseSuccess && data) {
-            completion(data, nil);
         } else {
             completion(nil, [self getErrorFrom:response errorMessages:errorMessages]);
         }
     }
 }
 
-#pragma mark - Helpers
-
 - (NSError *)getErrorFrom:(RIApiResponse)response errorMessages:(NSArray *)errorMessages {
     return [NSError errorWithDomain:@"com.bamilo.ios" code:response userInfo:(errorMessages ? @{ kErrorMessages: errorMessages } : nil)];
 }
 
+-(void) handlePayload:(NSMutableDictionary *)payload completion:(DataCompletion)completion {
+    if(payload.allKeys.count > 1) {
+        completion(payload, nil);
+    } else if([payload objectForKey:kDataContent]) {
+        completion([payload objectForKey:kDataContent], nil);
+    } else {
+        completion([payload objectForKey:kDataMessages], nil);
+    }
+}
+
+#pragma mark - Helpers
 //Area Helper function
 - (void)getAreaZone:(id<DataServiceProtocol>)target type:(RequestExecutionType)type path:(NSString *)path completion:(DataCompletion)completion {
-    [self.requestManager asyncGET:target path:path params:nil type:type completion:^(int response, id data, NSArray *errorMessages) {
-        if(response == RIApiResponseSuccess && data) {
+    [self.requestManager asyncGET:target path:path params:nil type:type completion:^(int statusCode, Data *data, NSArray *errorMessages) {
+        if(statusCode == RIApiResponseSuccess && data) {
             //Please skip this tof for now! @Narbeh
             NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
-            for (NSDictionary *region in  data[@"data"]) {
+            for (NSDictionary *region in  data.metadata[@"data"]) {
                 dictionary[region[@"label"]] = [NSString stringWithFormat:@"%@", region[@"value"]];
             }
             completion(dictionary, nil);
         } else {
-            completion(nil, [self getErrorFrom:response errorMessages:errorMessages]);
+            completion(nil, [self getErrorFrom:statusCode errorMessages:errorMessages]);
         }
     }];
 }

@@ -14,5 +14,6 @@
 +(NSOperatingSystemVersion) getOSVersion;
 +(NSString *) getOSVersionFormatted;
 +(NSString *) getLocalTimeZoneRFC822Formatted; //RFC 822 Format
++(NSString *) getConnectionType;
 
 @end

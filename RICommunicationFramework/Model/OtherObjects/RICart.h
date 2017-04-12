@@ -43,10 +43,7 @@
  *
  *  @return the string with the code to cancel the request
  */
-+ (NSString *)addProductWithQuantity:(NSString *)quantity
-                           simpleSku:(NSString *)simpleSku
-                    withSuccessBlock:(void (^)(RICart *cart, RIApiResponse apiResponse, NSArray *successMessage))sucessBlock
-                     andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
+//+ (NSString *)addProductWithQuantity:(NSString *)quantity simpleSku:(NSString *)simpleSku withSuccessBlock:(void (^)(RICart *cart, RIApiResponse apiResponse, NSArray *successMessage))sucessBlock andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 /**
  *  Method to add multiple products to the cart

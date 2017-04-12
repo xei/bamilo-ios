@@ -40,6 +40,7 @@
 #import "JATabBarButton.h"
 #import "ViewControllerManager.h"
 #import "EmarsysPredictManager.h"
+#import "CartDataManager.h"
 
 typedef void (^ProcessActionBlock)(void);
 
@@ -78,6 +79,7 @@ typedef void (^ProcessActionBlock)(void);
 @property (nonatomic, assign) BOOL hasLoaddedProduct;
 
 @property (strong, nonatomic) UIPopoverController *currentPopoverController;
+@property (strong, nonatomic) RICart *cart;
 
 @end
 
@@ -1078,7 +1080,6 @@ typedef void (^ProcessActionBlock)(void);
         
     }
     
-    
     activityController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList];
     
     [activityController setValue:[NSString stringWithFormat:STRING_SHARE_OBJECT, APP_NAME]
@@ -1107,56 +1108,53 @@ typedef void (^ProcessActionBlock)(void);
     }
 }
 
-- (void)addToWishList
-{
+- (void)addToWishList {
     [self addToWishList:self.productImageSection.wishListButton];
 }
 
-- (void)addToCart
-{
-    if(VALID_NOTEMPTY(self.product.productSimples, NSArray) && self.product.productSimples.count > 1 && !VALID_NOTEMPTY(self.currentSimple, RIProductSimple))
-    {
+- (void)addToCart {
+    if(VALID_NOTEMPTY(self.product.productSimples, NSArray) && self.product.productSimples.count > 1 && !VALID_NOTEMPTY(self.currentSimple, RIProductSimple)) {
         self.openPickerFromCart = YES;
         [self showSizePicker];
-    }
-    else
-    {
-        [self showLoading];
+    } else {
+        //[self showLoading];
         
         if (!self.currentSimple && self.product.productSimples.count == 1) {
             self.currentSimple = [self.product.productSimples firstObject];
         }
         
-        [RICart addProductWithQuantity:@"1"
-                             simpleSku:self.currentSimple.sku
-                      withSuccessBlock:^(RICart *cart, RIApiResponse apiResponse,  NSArray *successMessage) {
-                          
-                          if (VALID_NOTEMPTY(self.teaserTrackingInfo, NSString)) {
-                              NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
-                              
-                              NSString* obj = [skusFromTeaserInCart objectForKey:self.product.sku];
-                              
-                              if (ISEMPTY(obj)) {
-                                  [skusFromTeaserInCart setValue:self.teaserTrackingInfo forKey:self.product.sku];
-                                  [[NSUserDefaults standardUserDefaults] setObject:[skusFromTeaserInCart copy] forKey:kSkusFromTeaserInCartKey];
-                              }
-                          }
-                          
-                          [self trackingEventAddToCart:cart];
-                          [EmarsysPredictManager sendTransactionsOf:self];
-                          
-                          NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
-                          [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
-                          
-                          
-                          [self onSuccessResponse:RIApiResponseSuccess messages:successMessage showMessage:YES];
-                          [self hideLoading];
-                          
-                      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-                          
-                          [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:@selector(addToCart) objects:nil];
-                          [self hideLoading];
-                      }];
+        [[CartDataManager sharedInstance] addProductToCart:self simpleSku:self.currentSimple.sku completion:^(id data, NSError *error) {
+            if(error == nil) {
+                [self bind:data forRequestId:0];
+                
+                [TrackerManager postEvent:[EventFactory addToCart:self.currentSimple.sku basketValue:[self.cart.cartEntity.cartValue intValue] success:YES] forName:[AddToCartEvent name]];
+                
+                if (VALID_NOTEMPTY(self.teaserTrackingInfo, NSString)) {
+                    NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
+                    
+                    NSString *obj = [skusFromTeaserInCart objectForKey:self.product.sku];
+                    
+                    if (ISEMPTY(obj)) {
+                        [skusFromTeaserInCart setValue:self.teaserTrackingInfo forKey:self.product.sku];
+                        [[NSUserDefaults standardUserDefaults] setObject:[skusFromTeaserInCart copy] forKey:kSkusFromTeaserInCartKey];
+                    }
+                }
+                
+                [self trackingEventAddToCart:self.cart];
+                [EmarsysPredictManager sendTransactionsOf:self];
+                
+                NSDictionary* userInfo = [NSDictionary dictionaryWithObject:self.cart forKey:kUpdateCartNotificationValue];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
+                
+                [self onSuccessResponse:RIApiResponseSuccess messages:[self extractSuccessMessages:[data objectForKey:kDataMessages]] showMessage:YES];
+                //[self hideLoading];
+            } else {
+                [TrackerManager postEvent:[EventFactory addToCart:self.currentSimple.sku basketValue:[self.cart.cartEntity.cartValue intValue] success:NO] forName:[AddToCartEvent name]];
+
+                [self onErrorResponse:error.code messages:[error.userInfo objectForKey:kErrorMessages] showAsMessage:YES selector:@selector(addToCart) objects:nil];
+                //[self hideLoading];
+            }
+        }];
     }
 }
 
@@ -1423,7 +1421,7 @@ typedef void (^ProcessActionBlock)(void);
 }
 
 - (void)addToWishList:(UIButton *)button {
-    [self showLoading];
+    //[self showLoading];
     
     __weak typeof (self) weakSelf = self;
     
@@ -1431,7 +1429,7 @@ typedef void (^ProcessActionBlock)(void);
         _needAddToFavBlock = NO;
         if(![RICustomer checkIfUserIsLogged]) {
             return;
-        }else{
+        } else {
             [weakSelf addToWishList:button];
         }
     }];
@@ -1440,34 +1438,32 @@ typedef void (^ProcessActionBlock)(void);
         return;
     }
     
-    if (!button.selected && !VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate))
-    {
-        //add to favorites
-        [RIProduct addToFavorites:self.product successBlock:^(RIApiResponse apiResponse,  NSArray *success){
-            [self hideLoading];
-            button.selected = YES;
-            
-            self.product.favoriteAddDate = [NSDate date];
-            
-            [self trackingEventAddToWishList];
-            
-            NSDictionary *userInfo = nil;
-            if (self.product.favoriteAddDate) {
-                userInfo = [NSDictionary dictionaryWithObject:self.product.favoriteAddDate forKey:@"favoriteAddDate"];
+    if (!button.selected && !VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate)) {
+        [[ProductDataManager sharedInstance] addToFavorites:self sku:self.product.sku completion:^(id data, NSError *error) {
+            if(error == nil) {
+                [TrackerManager postEvent:[EventFactory addToFavorites:self.product.categoryUrlKey success:YES] forName:[AddToFavoritesEvent name]];
+                
+                //[self hideLoading];
+                button.selected = YES;
+                
+                self.product.favoriteAddDate = [NSDate date];
+                
+                [self trackingEventAddToWishList];
+                
+                NSDictionary *userInfo = nil;
+                if (self.product.favoriteAddDate) {
+                    userInfo = [NSDictionary dictionaryWithObject:self.product.favoriteAddDate forKey:@"favoriteAddDate"];
+                }
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification object:self.product.sku userInfo:userInfo];
+                
+                [self onSuccessResponse:RIApiResponseSuccess messages:[self extractSuccessMessages:data] showMessage:YES];
+            } else {
+                [self onErrorResponse:error.code messages:[error.userInfo objectForKey:kErrorMessages] showAsMessage:YES selector:@selector(addToWishList:) objects:@[button]];
+                //[self hideLoading];
+                [TrackerManager postEvent:[EventFactory addToFavorites:self.product.categoryUrlKey success:NO] forName:[AddToFavoritesEvent name]];
             }
-            [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
-                                                                object:self.product.sku
-                                                              userInfo:userInfo];
-            
-            [self onSuccessResponse:RIApiResponseSuccess messages:success showMessage:YES];
-            
-        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-            
-            [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:@selector(addToWishList:) objects:@[button]];
-            [self hideLoading];
         }];
-    }else{
-        [self hideLoading];
     }
 }
 
@@ -2092,7 +2088,6 @@ typedef void (^ProcessActionBlock)(void);
     return @"PRODUCT";
 }
 
-
 #pragma mark - EmarsysPredictProtocol
 - (EMTransaction *)getDataCollection:(EMTransaction *)transaction {
     if (!self.hasLoaddedProduct) {
@@ -2103,6 +2098,18 @@ typedef void (^ProcessActionBlock)(void);
 
 - (BOOL)isPreventSendTransactionInViewWillAppear {
     return YES;
+}
+
+#pragma mark - DataServiceProtocol
+-(void)bind:(id)data forRequestId:(int)rid {
+    switch (rid) {
+        case 0:
+            self.cart = [data objectForKey:kDataContent];
+        break;
+            
+        default:
+            break;
+    }
 }
 
 @end

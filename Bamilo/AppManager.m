@@ -8,6 +8,12 @@
 
 #import "AppManager.h"
 
+@interface AppManager()
+
+@property (assign, nonatomic) OpenAppEventSourceType openAppEventSource;
+
+@end
+
 @implementation AppManager
 
 static AppManager *instance;
@@ -15,7 +21,7 @@ static AppManager *instance;
 +(instancetype)sharedInstance {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        instance = [[AppManager alloc] init];
+        instance = [AppManager new];
     });
     
     return instance;
@@ -31,6 +37,14 @@ static AppManager *instance;
 
 -(NSString *)getAppFullFormattedVersion {
     return [NSString stringWithFormat:@"%@ (%@)", [self getAppVersionNumber], [self getAppBuildNumber]];
+}
+
+-(OpenAppEventSourceType)updateOpenAppEventSource:(OpenAppEventSourceType)source {
+    return self.openAppEventSource = source;
+}
+
+-(OpenAppEventSourceType)getOpenAppEventSource {
+    return self.openAppEventSource;
 }
 
 @end
