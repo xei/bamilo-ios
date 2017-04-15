@@ -10,6 +10,8 @@
 #import "SignInViewController.h"
 #import "InputTextFieldControl.h"
 #import "UIScrollView+Extension.h"
+#import "EmarsysPredictManager.h"
+#import "PushWooshTracker.h"
 
 //Legacy importing
 #import "RICustomer.h"
@@ -82,6 +84,10 @@
             
             //EVENT: LOGIN / SUCCESS
             [TrackerManager postEvent:[EventFactory login:cLoginMethodEmail success:YES] forName:[LoginEvent name]];
+            
+            [EmarsysPredictManager setCustomer:[RICustomer getCurrentCustomer]];
+        
+            [[PushWooshTracker sharedTracker] setUserID:[RICustomer getCurrentCustomer].email];
             
             if (self.completion) {
                 self.completion(AUTHENTICATION_FINISHED_WITH_LOGIN);

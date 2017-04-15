@@ -15,6 +15,7 @@
 #import "ViewControllerManager.h"
 #import "IconTableViewHeaderCell.h"
 #import "AuthenticationDataManager.h"
+#import "EmarsysPredictManager.h"
 
 @interface JAMyAccountViewController() <DataServiceProtocol>
 
@@ -140,6 +141,8 @@
         
         //EVENT: LOGOUT
         [TrackerManager postEvent:[EventFactory logout:(error == nil)] forName:[LogoutEvent name]];
+        
+        [EmarsysPredictManager userLoggedOut];
     }];
 }
 

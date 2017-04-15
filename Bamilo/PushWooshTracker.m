@@ -24,6 +24,10 @@ static PushWooshTracker *instance;
     return instance;
 }
 
+-(void)setUserID:(NSString *)userId {
+    [[PWInAppManager sharedManager] setUserId:userId];
+}
+
 #pragma mark - PushNotificationTrackerProtocol
 -(void)onPushAccepted:(PushNotificationManager *)pushManager withNotification:(NSDictionary *)pushNotification {
     NSLog(@"PushWooshTracker > onPushAccepted : %@", pushNotification);
@@ -44,6 +48,7 @@ static PushWooshTracker *instance;
     } else {
         //App opened from Notification
         
+        [[RITrackingWrapper sharedInstance] applicationDidReceiveRemoteNotification:pushNotification];
         //EVENT: OPEN APP
         [TrackerManager postEvent:[EventFactory openApp:[[AppManager sharedInstance] updateOpenAppEventSource:OPEN_APP_SOURCE_PUSH_NOTIFICATION]] forName:[OpenAppEvent name]];
     }

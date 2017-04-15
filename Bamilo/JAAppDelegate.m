@@ -317,7 +317,6 @@
 }
 
 #pragma mark - Push Notification
-/*
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     [[RITrackingWrapper sharedInstance] applicationDidRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 
@@ -333,20 +332,10 @@
 
 // system push notifications callback, delegate to pushManager
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    if (application.applicationState == UIApplicationStateActive) {
-        //App already open
-    } else {
-        //App opened from Notification
-        [[RITrackingWrapper sharedInstance] applicationDidReceiveRemoteNotification:userInfo];
-        
-        //EVENT: OPEN APP / PUSH NOTIFICATION
-        [TrackerManager postEvent:[EventFactory openApp:[UserDefaultsManager incrementCounter:kUDMAppOpenCount] source:(self.openAppEventSource = OPEN_APP_SOURCE_PUSH_NOTIFICATION)] forName:[OpenAppEvent name]];
-    }
-    
     //PUSH WOOSH
     [[PushNotificationManager pushManager] handlePushReceived:userInfo];
 }
-*/
+
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
     [[RITrackingWrapper sharedInstance] applicationDidReceiveLocalNotification:notification];
 }
