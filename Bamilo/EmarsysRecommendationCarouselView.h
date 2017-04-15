@@ -21,7 +21,7 @@
 @property (nonatomic, weak) id<EmarsysRecommendationCarouselViewDelegate> delegate;
 
 + (EmarsysRecommendationCarouselView *)nibInstance;
-- (void)updateWithModel:(NSArray<RecommendItem *>*)modelArray;
-- (void)applyPrefferedHeight;
+- (void)updateWithModel:(NSArray<RecommendItem *>*)modelArray; //Must be called in main threat
+- (void)updateTitle:(NSString *)title;
 
 @end

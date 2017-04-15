@@ -383,7 +383,6 @@
     
     EmarsysRecommendationCarouselView *recommendationView = [EmarsysRecommendationCarouselView nibInstance];
     recommendationView.delegate = self;
-    [recommendationView applyPrefferedHeight];
     
     [ThreadManager executeOnMainThread:^{
         [self.teaserPageView addCustomViewToScrollView:recommendationView];
