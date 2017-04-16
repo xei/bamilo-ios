@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "RadioButtonViewProtocol.h"
 #import "RadioButtonViewControlDelegate.h"
+#import "BaseControlView.h"
 
-@interface RadioButtonView : UIView <RadioButtonViewProtocol>
+@interface RadioButtonView : BaseControlView <RadioButtonViewProtocol>
 
 @property (weak, nonatomic) id<RadioButtonViewControlDelegate> delegate;
 

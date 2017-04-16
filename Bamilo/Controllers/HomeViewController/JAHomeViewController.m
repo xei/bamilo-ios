@@ -28,10 +28,11 @@
 #import "NSArray+Extension.h"
 #import "RecommendItem.h"
 #import "EmarsysRecommendationCarouselView.h"
+#import "EmarsysRecommendationGridWidgetView.h"
 #import "ThreadManager.h"
 #import "EmarsysPredictManager.h"
 
-@interface JAHomeViewController () <JAPickerDelegate, JANewsletterGenderProtocol, EmarsysRecommendationsProtocol, EmarsysRecommendationCarouselViewDelegate>
+@interface JAHomeViewController () <JAPickerDelegate, JANewsletterGenderProtocol, EmarsysRecommendationsProtocol, FeatureBoxCollectionViewWidgetViewDelegate>
 @property (strong, nonatomic) JATeaserPageView* teaserPageView;
 @property (nonatomic, assign) BOOL isLoaded;
 @property (nonatomic, strong) JAFallbackView *fallbackView;
@@ -381,8 +382,13 @@
         return [RecommendItem instanceWithEMRecommendationItem:item];
     }];
     
-    EmarsysRecommendationCarouselView *recommendationView = [EmarsysRecommendationCarouselView nibInstance];
+    EmarsysRecommendationGridWidgetView *recommendationView = [EmarsysRecommendationGridWidgetView nibInstance];
     recommendationView.delegate = self;
+    
+    [recommendationView setHeight:[EmarsysRecommendationGridWidgetView preferredHeightWithContentModel:recommendItems boundWidth:self.view.width]];
+
+    [recommendationView updateTitle:STRING_SPECIFICATIONS];
+    
     
     [ThreadManager executeOnMainThread:^{
         [self.teaserPageView addCustomViewToScrollView:recommendationView];
@@ -390,10 +396,13 @@
     }];
 }
 
-#pragma mark - EmarsysRecommendationCarouselViewDelegate
-
-- (void)selectSuggestedItem:(RecommendItem *)item {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication object:nil userInfo:@{@"sku": item.sku}];
+#pragma mark - FeatureBoxCollectionViewWidgetViewDelegate
+- (void)selectFeatureItem:(NSObject *)item widgetBox:(id)widgetBox {
+    if ([item isKindOfClass:[RecommendItem class]]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName: kDidSelectTeaserWithPDVUrlNofication
+                                                            object: nil
+                                                          userInfo: @{@"sku": ((RecommendItem *)item).sku}];
+    }
 }
 
 @end

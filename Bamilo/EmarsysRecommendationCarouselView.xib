@@ -47,7 +47,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="carouselTitle" destination="dsO-KM-g6B" id="aGv-zy-LFC"/>
-                <outlet property="collectionView" destination="Po2-0Z-7lO" id="TZQ-YO-tPp"/>
+                <outlet property="collectionView" destination="Po2-0Z-7lO" id="n1q-B7-YOY"/>
             </connections>
             <point key="canvasLocation" x="-712.5" y="-454"/>
         </view>

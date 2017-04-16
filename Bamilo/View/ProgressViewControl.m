@@ -20,7 +20,7 @@
     
     self.backgroundColor = [UIColor whiteColor];
     
-    self.progressView = [[[NSBundle mainBundle] loadNibNamed:@"ProgressView" owner:self options:nil] lastObject];
+    self.progressView = [ProgressView nibInstance];
     
     if(self.progressView) {
         [self addSubview:self.progressView];

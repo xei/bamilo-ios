@@ -17,7 +17,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    self.summeryView = [[[NSBundle mainBundle] loadNibNamed:@"CartEntitySummaryView" owner:self options:nil] lastObject];
+    self.summeryView = [CartEntitySummaryView nibInstance];
     self.summeryView.delegate = self;
     [self addSubview:self.summeryView];
     self.summeryView.frame = self.bounds;

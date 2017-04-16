@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "ProgressItemView.h"
+#import "BaseControlView.h"
 
-@interface ProgressView : UIView
+@interface ProgressView : BaseControlView
 
 @property (weak, nonatomic) id<ProgressViewDelegate> delegate;
 
