@@ -53,7 +53,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>22</string>
+	<string>23</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -113,8 +113,8 @@
 	<string>Bamilo would like to access your photos</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Bamilo would like to access your location</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>Bamilo would like to access your location</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Bamilo would like to access your location</string>
 	<key>Pushwoosh_APPID</key>
 	<string>A9EF7-6FDD2</string>
 	<key>Pushwoosh_APPNAME</key>
