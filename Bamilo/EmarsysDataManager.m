@@ -143,7 +143,11 @@ static EmarsysDataManager *instance;
     if(statusCode == CREATED || statusCode == SUCCESSFUL) {
         completion(data, nil);
     } else {
-        completion(nil, [NSError errorWithDomain:@"com.bamilo.ios" code:statusCode userInfo:@{ NSUnderlyingErrorKey: errorMessages[0] }]);
+        if(errorMessages && errorMessages.count) {
+            completion(nil, [NSError errorWithDomain:@"com.bamilo.ios" code:statusCode userInfo:@{ NSUnderlyingErrorKey: errorMessages[0] }]);
+        } else {
+            completion(nil, nil);
+        }
     }
 }
 
