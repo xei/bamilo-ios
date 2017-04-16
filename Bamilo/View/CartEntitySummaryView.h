@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "CartEntity.h"
+#import "BaseControlView.h"
 
 @protocol CartEntitySummaryViewDelegate <NSObject>
 @optional - (void)cartEntitySummeryTapped:(id)view;
 @end
 
-@interface CartEntitySummaryView: UIView
+@interface CartEntitySummaryView: BaseControlView
 @property (nonatomic, strong) CartEntity *cartEntity;
 @property (nonatomic, weak) id<CartEntitySummaryViewDelegate> delegate;
 

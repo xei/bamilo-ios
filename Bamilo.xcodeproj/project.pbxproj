@@ -61,15 +61,19 @@
 		617AAA441E503AB9004D9430 /* FormItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 617AAA431E503AB9004D9430 /* FormItemModel.m */; };
 		618204991E6D465500322937 /* SearchCategoryFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 618204981E6D465500322937 /* SearchCategoryFilter.m */; };
 		618204A01E6DABFA00322937 /* SubCatFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6182049F1E6DABFA00322937 /* SubCatFilterViewController.m */; };
+		61840B631EA397FF006739EB /* EmarsysRecommendationGridWidgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61840B621EA397FF006739EB /* EmarsysRecommendationGridWidgetView.m */; };
+		61840B651EA3981E006739EB /* EmarsysRecommendationGridWidgetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61840B641EA3981E006739EB /* EmarsysRecommendationGridWidgetView.xib */; };
+		61840B681EA39941006739EB /* EmarsysRecommendationGridWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 61840B671EA39941006739EB /* EmarsysRecommendationGridWidget.m */; };
+		619D0B071EA347DE00FDB255 /* BaseControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 619D0B061EA347DE00FDB255 /* BaseControlView.m */; };
+		619D0B0D1EA34AF400FDB255 /* WidgetBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 619D0B0C1EA34AF400FDB255 /* WidgetBaseView.m */; };
+		619D0B121EA34B3500FDB255 /* FeatureBoxWidgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 619D0B111EA34B3500FDB255 /* FeatureBoxWidgetView.m */; };
+		619D0B171EA34B8600FDB255 /* FeatureBoxCollectionViewWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 619D0B161EA34B8600FDB255 /* FeatureBoxCollectionViewWidget.m */; };
+		619D0B1A1EA34B9900FDB255 /* FeatureBoxCollectionViewWidgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 619D0B191EA34B9900FDB255 /* FeatureBoxCollectionViewWidgetView.m */; };
 		61A62CAD1E98FB0600E78D81 /* NSArray+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A62CAC1E98FB0600E78D81 /* NSArray+Extension.m */; };
-		61A98E7F1EA2329B001A1CDD /* EmarsysRecommendationCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A98E7E1EA2329B001A1CDD /* EmarsysRecommendationCollectionView.m */; };
-		61A98E821EA2341C001A1CDD /* EmarsysRecommendationCollectionViewWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A98E811EA2341C001A1CDD /* EmarsysRecommendationCollectionViewWidget.m */; };
-		61A98E841EA23F94001A1CDD /* EmarsysRecommendationCollectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61A98E831EA23F94001A1CDD /* EmarsysRecommendationCollectionView.xib */; };
 		61B161D01E6BF24E0032C5C6 /* SearchPriceFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B161CF1E6BF24E0032C5C6 /* SearchPriceFilter.m */; };
 		61B161D41E6BF9520032C5C6 /* BaseSearchFilterItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B161D31E6BF9520032C5C6 /* BaseSearchFilterItem.m */; };
 		61BA9B3D1E99FDEE004E9DE8 /* WidgetBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BA9B3C1E99FDEE004E9DE8 /* WidgetBase.m */; };
 		61BA9B411E99FE09004E9DE8 /* FeatureBoxWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BA9B401E99FE09004E9DE8 /* FeatureBoxWidget.m */; };
-		61BA9B451E99FE5C004E9DE8 /* FeatureBoxCarouselWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BA9B441E99FE5C004E9DE8 /* FeatureBoxCarouselWidget.m */; };
 		61BA9B4B1E9A009E004E9DE8 /* EmarsysRecommendationCarouselWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BA9B4A1E9A009E004E9DE8 /* EmarsysRecommendationCarouselWidget.m */; };
 		61BA9B4E1E9A00D7004E9DE8 /* EmarsysRecommendationCarouselView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BA9B4D1E9A00D7004E9DE8 /* EmarsysRecommendationCarouselView.m */; };
 		61BA9B501E9A04E1004E9DE8 /* EmarsysRecommendationCarouselView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61BA9B4F1E9A04E1004E9DE8 /* EmarsysRecommendationCarouselView.xib */; };
@@ -763,13 +767,23 @@
 		618204981E6D465500322937 /* SearchCategoryFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchCategoryFilter.m; sourceTree = "<group>"; };
 		6182049E1E6DABFA00322937 /* SubCatFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubCatFilterViewController.h; sourceTree = "<group>"; };
 		6182049F1E6DABFA00322937 /* SubCatFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubCatFilterViewController.m; sourceTree = "<group>"; };
+		61840B611EA397FF006739EB /* EmarsysRecommendationGridWidgetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysRecommendationGridWidgetView.h; sourceTree = "<group>"; };
+		61840B621EA397FF006739EB /* EmarsysRecommendationGridWidgetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysRecommendationGridWidgetView.m; sourceTree = "<group>"; };
+		61840B641EA3981E006739EB /* EmarsysRecommendationGridWidgetView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmarsysRecommendationGridWidgetView.xib; sourceTree = "<group>"; };
+		61840B661EA39941006739EB /* EmarsysRecommendationGridWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysRecommendationGridWidget.h; sourceTree = "<group>"; };
+		61840B671EA39941006739EB /* EmarsysRecommendationGridWidget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysRecommendationGridWidget.m; sourceTree = "<group>"; };
+		619D0B051EA347DE00FDB255 /* BaseControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseControlView.h; sourceTree = "<group>"; };
+		619D0B061EA347DE00FDB255 /* BaseControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseControlView.m; sourceTree = "<group>"; };
+		619D0B0B1EA34AF400FDB255 /* WidgetBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetBaseView.h; sourceTree = "<group>"; };
+		619D0B0C1EA34AF400FDB255 /* WidgetBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WidgetBaseView.m; sourceTree = "<group>"; };
+		619D0B101EA34B3500FDB255 /* FeatureBoxWidgetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeatureBoxWidgetView.h; sourceTree = "<group>"; };
+		619D0B111EA34B3500FDB255 /* FeatureBoxWidgetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeatureBoxWidgetView.m; sourceTree = "<group>"; };
+		619D0B151EA34B8600FDB255 /* FeatureBoxCollectionViewWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeatureBoxCollectionViewWidget.h; sourceTree = "<group>"; };
+		619D0B161EA34B8600FDB255 /* FeatureBoxCollectionViewWidget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeatureBoxCollectionViewWidget.m; sourceTree = "<group>"; };
+		619D0B181EA34B9900FDB255 /* FeatureBoxCollectionViewWidgetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeatureBoxCollectionViewWidgetView.h; sourceTree = "<group>"; };
+		619D0B191EA34B9900FDB255 /* FeatureBoxCollectionViewWidgetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeatureBoxCollectionViewWidgetView.m; sourceTree = "<group>"; };
 		61A62CAB1E98FB0600E78D81 /* NSArray+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Extension.h"; sourceTree = "<group>"; };
 		61A62CAC1E98FB0600E78D81 /* NSArray+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Extension.m"; sourceTree = "<group>"; };
-		61A98E7D1EA2329B001A1CDD /* EmarsysRecommendationCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysRecommendationCollectionView.h; sourceTree = "<group>"; };
-		61A98E7E1EA2329B001A1CDD /* EmarsysRecommendationCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysRecommendationCollectionView.m; sourceTree = "<group>"; };
-		61A98E801EA2341C001A1CDD /* EmarsysRecommendationCollectionViewWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysRecommendationCollectionViewWidget.h; sourceTree = "<group>"; };
-		61A98E811EA2341C001A1CDD /* EmarsysRecommendationCollectionViewWidget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysRecommendationCollectionViewWidget.m; sourceTree = "<group>"; };
-		61A98E831EA23F94001A1CDD /* EmarsysRecommendationCollectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmarsysRecommendationCollectionView.xib; sourceTree = "<group>"; };
 		61B161CE1E6BF24E0032C5C6 /* SearchPriceFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchPriceFilter.h; sourceTree = "<group>"; };
 		61B161CF1E6BF24E0032C5C6 /* SearchPriceFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchPriceFilter.m; sourceTree = "<group>"; };
 		61B161D21E6BF9520032C5C6 /* BaseSearchFilterItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseSearchFilterItem.h; sourceTree = "<group>"; };
@@ -778,8 +792,6 @@
 		61BA9B3C1E99FDEE004E9DE8 /* WidgetBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WidgetBase.m; sourceTree = "<group>"; };
 		61BA9B3F1E99FE09004E9DE8 /* FeatureBoxWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeatureBoxWidget.h; sourceTree = "<group>"; };
 		61BA9B401E99FE09004E9DE8 /* FeatureBoxWidget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeatureBoxWidget.m; sourceTree = "<group>"; };
-		61BA9B431E99FE5C004E9DE8 /* FeatureBoxCarouselWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeatureBoxCarouselWidget.h; sourceTree = "<group>"; };
-		61BA9B441E99FE5C004E9DE8 /* FeatureBoxCarouselWidget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeatureBoxCarouselWidget.m; sourceTree = "<group>"; };
 		61BA9B491E9A009E004E9DE8 /* EmarsysRecommendationCarouselWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysRecommendationCarouselWidget.h; sourceTree = "<group>"; };
 		61BA9B4A1E9A009E004E9DE8 /* EmarsysRecommendationCarouselWidget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysRecommendationCarouselWidget.m; sourceTree = "<group>"; };
 		61BA9B4C1E9A00D7004E9DE8 /* EmarsysRecommendationCarouselView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysRecommendationCarouselView.h; sourceTree = "<group>"; };
@@ -2488,6 +2500,106 @@
 			name = SubCatFilterViewController;
 			sourceTree = "<group>";
 		};
+		61840B5E1EA39773006739EB /* EmarsysRecommendationGridWidget */ = {
+			isa = PBXGroup;
+			children = (
+				61840B601EA397D8006739EB /* Control */,
+				61840B5F1EA397D2006739EB /* View */,
+			);
+			name = EmarsysRecommendationGridWidget;
+			sourceTree = "<group>";
+		};
+		61840B5F1EA397D2006739EB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				61840B641EA3981E006739EB /* EmarsysRecommendationGridWidgetView.xib */,
+				61840B611EA397FF006739EB /* EmarsysRecommendationGridWidgetView.h */,
+				61840B621EA397FF006739EB /* EmarsysRecommendationGridWidgetView.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		61840B601EA397D8006739EB /* Control */ = {
+			isa = PBXGroup;
+			children = (
+				61840B661EA39941006739EB /* EmarsysRecommendationGridWidget.h */,
+				61840B671EA39941006739EB /* EmarsysRecommendationGridWidget.m */,
+			);
+			name = Control;
+			sourceTree = "<group>";
+		};
+		619D0B041EA3478800FDB255 /* BaseView */ = {
+			isa = PBXGroup;
+			children = (
+				619D0B051EA347DE00FDB255 /* BaseControlView.h */,
+				619D0B061EA347DE00FDB255 /* BaseControlView.m */,
+			);
+			name = BaseView;
+			sourceTree = "<group>";
+		};
+		619D0B081EA34A3600FDB255 /* FeatureBoxCollectionViewWdiget */ = {
+			isa = PBXGroup;
+			children = (
+				619D0B141EA34B6200FDB255 /* View */,
+				619D0B131EA34B5D00FDB255 /* Control */,
+			);
+			name = FeatureBoxCollectionViewWdiget;
+			sourceTree = "<group>";
+		};
+		619D0B091EA34AD400FDB255 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				619D0B0B1EA34AF400FDB255 /* WidgetBaseView.h */,
+				619D0B0C1EA34AF400FDB255 /* WidgetBaseView.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		619D0B0A1EA34ADC00FDB255 /* Control */ = {
+			isa = PBXGroup;
+			children = (
+				61BA9B3B1E99FDEE004E9DE8 /* WidgetBase.h */,
+				61BA9B3C1E99FDEE004E9DE8 /* WidgetBase.m */,
+			);
+			name = Control;
+			sourceTree = "<group>";
+		};
+		619D0B0E1EA34B1300FDB255 /* Control */ = {
+			isa = PBXGroup;
+			children = (
+				61BA9B3F1E99FE09004E9DE8 /* FeatureBoxWidget.h */,
+				61BA9B401E99FE09004E9DE8 /* FeatureBoxWidget.m */,
+			);
+			name = Control;
+			sourceTree = "<group>";
+		};
+		619D0B0F1EA34B1800FDB255 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				619D0B101EA34B3500FDB255 /* FeatureBoxWidgetView.h */,
+				619D0B111EA34B3500FDB255 /* FeatureBoxWidgetView.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		619D0B131EA34B5D00FDB255 /* Control */ = {
+			isa = PBXGroup;
+			children = (
+				619D0B151EA34B8600FDB255 /* FeatureBoxCollectionViewWidget.h */,
+				619D0B161EA34B8600FDB255 /* FeatureBoxCollectionViewWidget.m */,
+			);
+			name = Control;
+			sourceTree = "<group>";
+		};
+		619D0B141EA34B6200FDB255 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				619D0B181EA34B9900FDB255 /* FeatureBoxCollectionViewWidgetView.h */,
+				619D0B191EA34B9900FDB255 /* FeatureBoxCollectionViewWidgetView.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		61A62CAA1E98FAEB00E78D81 /* NSArray+Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -2495,34 +2607,6 @@
 				61A62CAC1E98FB0600E78D81 /* NSArray+Extension.m */,
 			);
 			name = "NSArray+Extensions";
-			sourceTree = "<group>";
-		};
-		61A98E771EA22EB2001A1CDD /* EmarsysRecommendationCollectionViewWidget */ = {
-			isa = PBXGroup;
-			children = (
-				61A98E7C1EA23281001A1CDD /* Control */,
-				61A98E781EA23099001A1CDD /* View */,
-			);
-			name = EmarsysRecommendationCollectionViewWidget;
-			sourceTree = "<group>";
-		};
-		61A98E781EA23099001A1CDD /* View */ = {
-			isa = PBXGroup;
-			children = (
-				61A98E7D1EA2329B001A1CDD /* EmarsysRecommendationCollectionView.h */,
-				61A98E7E1EA2329B001A1CDD /* EmarsysRecommendationCollectionView.m */,
-				61A98E831EA23F94001A1CDD /* EmarsysRecommendationCollectionView.xib */,
-			);
-			name = View;
-			sourceTree = "<group>";
-		};
-		61A98E7C1EA23281001A1CDD /* Control */ = {
-			isa = PBXGroup;
-			children = (
-				61A98E801EA2341C001A1CDD /* EmarsysRecommendationCollectionViewWidget.h */,
-				61A98E811EA2341C001A1CDD /* EmarsysRecommendationCollectionViewWidget.m */,
-			);
-			name = Control;
 			sourceTree = "<group>";
 		};
 		61B161CD1E6BF2390032C5C6 /* SearchPriceFilter */ = {
@@ -2548,9 +2632,9 @@
 			children = (
 				61BA9B3A1E99FDD3004E9DE8 /* WidgetBase */,
 				61BA9B3E1E99FDF5004E9DE8 /* FeatureBoxWidget */,
-				61BA9B421E99FE0D004E9DE8 /* FeatureBoxCarouselWidget */,
+				61840B5E1EA39773006739EB /* EmarsysRecommendationGridWidget */,
+				619D0B081EA34A3600FDB255 /* FeatureBoxCollectionViewWdiget */,
 				61BA9B461E9A000F004E9DE8 /* EmarsysRecommendationCarouselWidget */,
-				61A98E771EA22EB2001A1CDD /* EmarsysRecommendationCollectionViewWidget */,
 			);
 			name = Widgets;
 			path = ..;
@@ -2559,8 +2643,8 @@
 		61BA9B3A1E99FDD3004E9DE8 /* WidgetBase */ = {
 			isa = PBXGroup;
 			children = (
-				61BA9B3B1E99FDEE004E9DE8 /* WidgetBase.h */,
-				61BA9B3C1E99FDEE004E9DE8 /* WidgetBase.m */,
+				619D0B0A1EA34ADC00FDB255 /* Control */,
+				619D0B091EA34AD400FDB255 /* View */,
 			);
 			name = WidgetBase;
 			sourceTree = "<group>";
@@ -2568,19 +2652,10 @@
 		61BA9B3E1E99FDF5004E9DE8 /* FeatureBoxWidget */ = {
 			isa = PBXGroup;
 			children = (
-				61BA9B3F1E99FE09004E9DE8 /* FeatureBoxWidget.h */,
-				61BA9B401E99FE09004E9DE8 /* FeatureBoxWidget.m */,
+				619D0B0F1EA34B1800FDB255 /* View */,
+				619D0B0E1EA34B1300FDB255 /* Control */,
 			);
 			name = FeatureBoxWidget;
-			sourceTree = "<group>";
-		};
-		61BA9B421E99FE0D004E9DE8 /* FeatureBoxCarouselWidget */ = {
-			isa = PBXGroup;
-			children = (
-				61BA9B431E99FE5C004E9DE8 /* FeatureBoxCarouselWidget.h */,
-				61BA9B441E99FE5C004E9DE8 /* FeatureBoxCarouselWidget.m */,
-			);
-			name = FeatureBoxCarouselWidget;
 			sourceTree = "<group>";
 		};
 		61BA9B461E9A000F004E9DE8 /* EmarsysRecommendationCarouselWidget */ = {
@@ -3300,6 +3375,7 @@
 		8714E06E1E479763004C9B1D /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				619D0B041EA3478800FDB255 /* BaseView */,
 				8714E06F1E47976E004C9B1D /* Base */,
 				87EA031E1E6D983100B1E062 /* Progress */,
 				61C5C40A1E545C0C00F22130 /* CartEntitySummery */,
@@ -5951,12 +6027,12 @@
 				CE9AE0751AB6D78200D56481 /* JAFallbackView.xib in Resources */,
 				CE9AE0811AB6D78200D56481 /* JAGrayButtonCell_ipad_landscape.xib in Resources */,
 				87EA030B1E6C697F00B1E062 /* IconTableViewHeaderCell.xib in Resources */,
-				61A98E841EA23F94001A1CDD /* EmarsysRecommendationCollectionView.xib in Resources */,
 				875AD5841E38C0C900584ABF /* RITrackingDebug_Bamilo.plist in Resources */,
 				87EA032A1E6D990500B1E062 /* ProgressView.xib in Resources */,
 				616D65ED1E670984008B07EA /* OrderProductListTableViewCell.xib in Resources */,
 				CE9AE0931AB6D78200D56481 /* JAGrayButtonCell.xib in Resources */,
 				CEA2A1BB1B25D53B00E5973F /* JANewRatingViewController.xib in Resources */,
+				61840B651EA3981E006739EB /* EmarsysRecommendationGridWidgetView.xib in Resources */,
 				9A564CC11B38187100F23057 /* JANewSellerRatingViewController~ipad.xib in Resources */,
 				CE9AE09B1AB6D78200D56481 /* JAPaymentCell.xib in Resources */,
 				61CBA0571E51FF2F005673F7 /* ButtonTableViewCell.xib in Resources */,
@@ -6168,10 +6244,11 @@
 				873369CA1E58A1D200B0B5E5 /* ShippingMethodOption.m in Sources */,
 				87EA03331E6DA27D00B1E062 /* ProgressItemViewModel.m in Sources */,
 				87D3DD1C1E8A323000C960FF /* BaseDataManager.m in Sources */,
+				619D0B171EA34B8600FDB255 /* FeatureBoxCollectionViewWidget.m in Sources */,
+				61840B631EA397FF006739EB /* EmarsysRecommendationGridWidgetView.m in Sources */,
 				87EA032D1E6D993C00B1E062 /* ProgressItemView.m in Sources */,
 				9A189E611BB31AC70039BC14 /* JAProductInfoHeaderLine.m in Sources */,
 				8714E0661E476DF8004C9B1D /* AddressList.m in Sources */,
-				61BA9B451E99FE5C004E9DE8 /* FeatureBoxCarouselWidget.m in Sources */,
 				9A6BC08A1C4907BB00DD9492 /* JAMessageView.m in Sources */,
 				CE9ADF2A1AB6D78200D56481 /* JACartListHeaderView.m in Sources */,
 				1C3043021E2A3A5800BD391E /* CatalogNoResultViewController.m in Sources */,
@@ -6235,6 +6312,7 @@
 				8702FBE11E9A3377001D1AA9 /* AbandonCartEvent.m in Sources */,
 				FF4383EA1C6E1F49003BA957 /* JAScreenRadioComponent.m in Sources */,
 				871BA85C1E8680A1007680C5 /* EventConsts.m in Sources */,
+				61840B681EA39941006739EB /* EmarsysRecommendationGridWidget.m in Sources */,
 				FF6BDCA01CE238F3002BFE11 /* JAORReasonsViewController.m in Sources */,
 				879F87EF1E5048790033FE87 /* NSMutableArray+Extensions.m in Sources */,
 				875AD54C1E38C0C900584ABF /* RIImageResolution.m in Sources */,
@@ -6247,6 +6325,7 @@
 				9A7A77291B2B45F1002F530F /* JAPagedView.m in Sources */,
 				879F88111E50BB050033FE87 /* CartViewController.m in Sources */,
 				875AD5441E38C0C900584ABF /* RICustomer.m in Sources */,
+				619D0B0D1EA34AF400FDB255 /* WidgetBaseView.m in Sources */,
 				872230EE1E6A98BC000748E9 /* ThreadManager.m in Sources */,
 				8714E07E1E48C1C5004C9B1D /* UIView+Extensions.m in Sources */,
 				875AD5601E38C0C900584ABF /* RIFeaturedBoxTeaserGrouping.m in Sources */,
@@ -6327,6 +6406,7 @@
 				875AD56E1E38C0C900584ABF /* RIProductSimple.m in Sources */,
 				870BEA851E73F6BC00C5B615 /* ThemeFont.m in Sources */,
 				610ED5831E742947000D5BEC /* UITextField+Extensions.m in Sources */,
+				619D0B121EA34B3500FDB255 /* FeatureBoxWidgetView.m in Sources */,
 				875AD5801E38C0C900584ABF /* RITrackingWrapper.m in Sources */,
 				CE9ADF7D1AB6D78200D56481 /* JAPDVImageSection.m in Sources */,
 				61C5C4191E54796A00F22130 /* RecieptViewCartTableViewCell.m in Sources */,
@@ -6379,7 +6459,6 @@
 				CE9ADF9F1AB6D78200D56481 /* JACampaignsViewController.m in Sources */,
 				61432EC61E9B5DD7001F7930 /* BaseCollectionViewCell.m in Sources */,
 				FFC9C0C71C984E7900DD5851 /* JATopTabsView.m in Sources */,
-				61A98E7F1EA2329B001A1CDD /* EmarsysRecommendationCollectionView.m in Sources */,
 				CE9ADFA11AB6D78200D56481 /* JACatalogWizardView.m in Sources */,
 				875AD5461E38C0C900584ABF /* RIField.m in Sources */,
 				CE9ADFA31AB6D78200D56481 /* JAExternalPaymentsViewController.m in Sources */,
@@ -6390,6 +6469,7 @@
 				8702FBF81E9A4ABB001D1AA9 /* AuthenticationDataManager.m in Sources */,
 				87D3DD211E8A32D900C960FF /* EmarsysDataManager.m in Sources */,
 				9AB517A61C934342007E1327 /* JAButton.m in Sources */,
+				619D0B071EA347DE00FDB255 /* BaseControlView.m in Sources */,
 				9A55A6911BC2E894008EF4A6 /* JAPDVVariationsViewController.m in Sources */,
 				872230EA1E6A989D000748E9 /* SettingsManager.m in Sources */,
 				CE9ADFAB1AB6D78200D56481 /* JANavigationBarLayout.m in Sources */,
@@ -6457,7 +6537,6 @@
 				87A6ACF21E38919C00C0E7DC /* NSString+HTML.m in Sources */,
 				CEA106F11BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m in Sources */,
 				875AD5531E38C0C900584ABF /* RITeaserGrouping.m in Sources */,
-				61A98E821EA2341C001A1CDD /* EmarsysRecommendationCollectionViewWidget.m in Sources */,
 				FFF900721C6A5CC700DDF538 /* JATextFieldComponent.m in Sources */,
 				61148E051E4724FC00E2540B /* StepperView.m in Sources */,
 				875AD54F1E38C0C900584ABF /* RISearchSuggestion.m in Sources */,
@@ -6505,6 +6584,7 @@
 				CE59BF081AE8057A0057F4E2 /* JAShopsWeekTeaserView.m in Sources */,
 				875AD5431E38C0C900584ABF /* RICountryConfiguration.m in Sources */,
 				CE9ADFDF1AB6D78200D56481 /* JAMyOrderCell.m in Sources */,
+				619D0B1A1EA34B9900FDB255 /* FeatureBoxCollectionViewWidgetView.m in Sources */,
 				8714E06D1E47949D004C9B1D /* CheckoutProgressViewControl.m in Sources */,
 				879F88311E51D55A0033FE87 /* FormEntity.m in Sources */,
 				875AD5421E38C0C900584ABF /* RICategory.m in Sources */,

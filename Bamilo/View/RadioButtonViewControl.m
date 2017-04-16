@@ -20,7 +20,7 @@
     
     self.backgroundColor = [UIColor whiteColor];
     
-    self.radioButtonView = [[[NSBundle mainBundle] loadNibNamed:@"RadioButtonView" owner:self options:nil] lastObject];
+    self.radioButtonView = [RadioButtonView nibInstance];
     
     if(self.radioButtonView) {
         [self.radioButtonView setDelegate:self];

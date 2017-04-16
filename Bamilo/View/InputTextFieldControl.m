@@ -57,7 +57,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    self.input = [[[NSBundle mainBundle] loadNibNamed:@"InputTextField" owner:self options:nil] lastObject];
+    self.input = [InputTextField nibInstance];
     [self addSubview:self.input];
     self.input.frame = self.bounds;
     

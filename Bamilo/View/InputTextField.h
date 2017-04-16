@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseControlView.h"
 
-@interface InputTextField : UIView
+@interface InputTextField : BaseControlView
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UIImageView *icon;
 @property (assign, nonatomic) BOOL hasIcon;

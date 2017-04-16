@@ -6,8 +6,8 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import "FeatureBoxCarouselWidget.h"
+#import "FeatureBoxCollectionViewWidget.h"
 
-@interface EmarsysRecommendationCarouselWidget : FeatureBoxCarouselWidget
+@interface EmarsysRecommendationCarouselWidget : FeatureBoxCollectionViewWidget
 
 @end
