@@ -26,10 +26,10 @@
 }
 
 - (void) setupView {
-    [self.titleLabel applyStyle:[Theme font:kFontVariationBold size:8.0f] color:[UIColor blackColor]];
-    [self.brandLabel applyStyle:[Theme font:kFontVariationRegular size:8.0f] color:[Theme color:kColorLightGray]];
-    [self.priceLabel applyStyle:[Theme font:kFontVariationRegular size:8.0f] color: [Theme color:kColorLightGray]];
-    [self.discountedPriceLabel applyStyle:[Theme font:kFontVariationBold size:8.0f] color: [UIColor blackColor]];
+    [self.titleLabel applyStyle:[Theme font:kFontVariationRegular size:11.0f] color:[UIColor blackColor]];
+    [self.brandLabel applyStyle:[Theme font:kFontVariationRegular size:9.0f] color:[Theme color:kColorLightGray]];
+    [self.priceLabel applyStyle:[Theme font:kFontVariationRegular size:9.0f] color: [Theme color:kColorLightGray]];
+    [self.discountedPriceLabel applyStyle:[Theme font:kFontVariationRegular size:12.0f] color: [UIColor blackColor]];
     
     self.discountedPriceLabel.attributedText = (NSAttributedString *)[STRING_PRICE struckThroughText];
 }
@@ -52,6 +52,11 @@
     self.brandLabel.text = nil;
     self.priceLabel.text = nil;
     self.discountedPriceLabel.text = nil;
+}
+
+
++ (CGSize)preferedSize {
+    return CGSizeMake(134, 230);
 }
 
 @end

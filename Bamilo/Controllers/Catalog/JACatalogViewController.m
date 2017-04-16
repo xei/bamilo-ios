@@ -1538,7 +1538,7 @@ typedef void (^ProcessActionBlock)(void);
     }]];
     
     recommend.completionHandler = ^(EMRecommendationResult *_Nonnull result) {
-        NSArray<RecommendItem *>* recommendItems = [result.products map:^id(EMRecommendationItem *item) {
+        [result.products map:^id(EMRecommendationItem *item) {
             return [RecommendItem instanceWithEMRecommendationItem:item];
         }];
     };

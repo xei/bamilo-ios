@@ -10,12 +10,11 @@
 #import "EmarsysRecommendationCarouselCollectionViewCell.h"
 #import "ThreadManager.h"
 
-const CGFloat cellHeight = 230;
-const CGFloat cellWidth = 134;
-
 @interface EmarsysRecommendationCarouselView()
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, strong) NSArray <RecommendItem *>* recommendationArray;
+@property (weak, nonatomic) IBOutlet UILabel *carouselTitle;
+
 @end
 
 @implementation EmarsysRecommendationCarouselView
@@ -31,18 +30,15 @@ const CGFloat cellWidth = 134;
 
 - (void)updateWithModel:(NSArray<RecommendItem *> *)modelArray {
     self.recommendationArray = modelArray;
-    [ThreadManager executeOnMainThread:^{
-        [self.collectionView reloadData];
-    }];
+    [self.collectionView reloadData];
+}
+
+- (void)updateTitle:(NSString *)title {
+    self.carouselTitle.text = title;
 }
 
 + (EmarsysRecommendationCarouselView *)nibInstance {
     return [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([self class]) owner:self options:nil] lastObject];
-}
-
-- (void)applyPrefferedHeight {
-    CGFloat verticalInsets = self.collectionView.contentInset.top + self.collectionView.contentInset.bottom;
-    [self setHeight:cellHeight + verticalInsets];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -53,11 +49,15 @@ const CGFloat cellWidth = 134;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(cellWidth, cellHeight);
+    return [EmarsysRecommendationCarouselCollectionViewCell preferedSize];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.recommendationArray.count;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+    return 2;
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {

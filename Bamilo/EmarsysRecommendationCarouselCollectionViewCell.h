@@ -13,4 +13,6 @@
 
 @interface EmarsysRecommendationCarouselCollectionViewCell : BaseCollectionViewCell
 
++ (CGSize)preferedSize;
+
 @end

@@ -16,12 +16,12 @@
 
 @end
 
-@interface EmarsysRecommendationCarouselView: FeatureBoxWidget <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+@interface EmarsysRecommendationCarouselView: UIView <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, weak) id<EmarsysRecommendationCarouselViewDelegate> delegate;
 
 + (EmarsysRecommendationCarouselView *)nibInstance;
-- (void)updateWithModel:(NSArray<RecommendItem *>*)modelArray;
-- (void)applyPrefferedHeight;
+- (void)updateWithModel:(NSArray<RecommendItem *>*)modelArray; //Must be called in main threat
+- (void)updateTitle:(NSString *)title;
 
 @end
