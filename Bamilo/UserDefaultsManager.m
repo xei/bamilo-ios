@@ -21,6 +21,12 @@
     return [standardUserDefaults objectForKey:key];
 }
 
++(void)remove:(NSString *)key {
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    [standardUserDefaults removeObjectForKey:key];
+    [standardUserDefaults synchronize];
+}
+
 //Utility Functions
 +(int)getCounter:(NSString *)key {
     NSNumber *counter = [UserDefaultsManager get:key];

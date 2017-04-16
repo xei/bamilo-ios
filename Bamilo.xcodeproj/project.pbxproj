@@ -126,6 +126,7 @@
 		870BEA801E73F5CB00C5B615 /* ThemeKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 870BEA7F1E73F5CB00C5B615 /* ThemeKeys.m */; };
 		870BEA851E73F6BC00C5B615 /* ThemeFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 870BEA841E73F6BC00C5B615 /* ThemeFont.m */; };
 		870BEA8D1E74013F00C5B615 /* ThemeColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 870BEA8C1E74013F00C5B615 /* ThemeColor.m */; };
+		870BF7D61EA37D4600A0982E /* TimerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 870BF7D51EA37D4600A0982E /* TimerManager.m */; };
 		870F8CF61E338D2D0021F87B /* BamiloUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 870F8CF51E338D2D0021F87B /* BamiloUITests.m */; };
 		870F8D061E33975A0021F87B /* IntUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 870F8D051E33975A0021F87B /* IntUtility.m */; };
 		8714E0361E45CC85004C9B1D /* AddressTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8714E0351E45CC85004C9B1D /* AddressTableViewCell.m */; };
@@ -885,6 +886,8 @@
 		870BEA841E73F6BC00C5B615 /* ThemeFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemeFont.m; sourceTree = "<group>"; };
 		870BEA8B1E74013F00C5B615 /* ThemeColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemeColor.h; sourceTree = "<group>"; };
 		870BEA8C1E74013F00C5B615 /* ThemeColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemeColor.m; sourceTree = "<group>"; };
+		870BF7D41EA37D4600A0982E /* TimerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimerManager.h; sourceTree = "<group>"; };
+		870BF7D51EA37D4600A0982E /* TimerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimerManager.m; sourceTree = "<group>"; };
 		870F8CCB1E3354700021F87B /* Bamilo.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Bamilo.entitlements; sourceTree = "<group>"; };
 		870F8CF31E338D2C0021F87B /* BamiloUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BamiloUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		870F8CF51E338D2D0021F87B /* BamiloUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BamiloUITests.m; sourceTree = "<group>"; };
@@ -3104,6 +3107,15 @@
 			name = ThemeColor;
 			sourceTree = "<group>";
 		};
+		870BF7D31EA37D3300A0982E /* TimerManager */ = {
+			isa = PBXGroup;
+			children = (
+				870BF7D41EA37D4600A0982E /* TimerManager.h */,
+				870BF7D51EA37D4600A0982E /* TimerManager.m */,
+			);
+			name = TimerManager;
+			sourceTree = "<group>";
+		};
 		870F8CCC1E33548F0021F87B /* Application */ = {
 			isa = PBXGroup;
 			children = (
@@ -3606,6 +3618,7 @@
 				872230E71E6A9894000748E9 /* SettingsManager */,
 				870BEA7A1E73F4B800C5B615 /* ThemeManager */,
 				872230EB1E6A98B1000748E9 /* ThreadManager */,
+				870BF7D31EA37D3300A0982E /* TimerManager */,
 				8702FBCD1E99FDA1001D1AA9 /* UserDefaultsManager */,
 				87A6814B1E40DC2000D252AC /* ViewControllerManager */,
 			);
@@ -6216,6 +6229,7 @@
 				8702FBBE1E9901AE001D1AA9 /* EventFactory.m in Sources */,
 				8702FBBA1E98FE3A001D1AA9 /* EmailUtility.m in Sources */,
 				616058E61E6AD8D50079B2CD /* SearchFilterItemOption.m in Sources */,
+				870BF7D61EA37D4600A0982E /* TimerManager.m in Sources */,
 				61B161D41E6BF9520032C5C6 /* BaseSearchFilterItem.m in Sources */,
 				9A4ADF6C1C2AF1010019F439 /* JADropdownControl.m in Sources */,
 				875AD57F1E38C0C900584ABF /* RILocalizationWrapper.m in Sources */,
