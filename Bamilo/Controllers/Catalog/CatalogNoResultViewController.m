@@ -40,12 +40,11 @@ const CGFloat tableViewHeaderSectionHeight = 35;
     
     [self.noResultMessageUILabel setFont: [UIFont fontWithName:kFontRegularName size:14]];
     [self.warningMessageUILabel setFont: [UIFont fontWithName:kFontLightName size:11]];
-
 }
 
 
 - (void)getPopularTeasers {
-    NSDictionary* popularTeaserJson = [self getPopularTeaserMock];
+    NSDictionary *popularTeaserJson = [self getPopularTeaserMock];
     self.teaserGroup = [RITeaserGrouping parseTeaserGrouping:popularTeaserJson country:nil];
     [self refreshView];
 }
