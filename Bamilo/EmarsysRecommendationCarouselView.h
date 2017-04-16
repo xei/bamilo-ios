@@ -16,7 +16,7 @@
 
 @end
 
-@interface EmarsysRecommendationCarouselView: FeatureBoxWidget <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+@interface EmarsysRecommendationCarouselView: UIView <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, weak) id<EmarsysRecommendationCarouselViewDelegate> delegate;
 

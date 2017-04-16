@@ -54,4 +54,9 @@
     self.discountedPriceLabel.text = nil;
 }
 
+
++ (CGSize)preferedSize {
+    return CGSizeMake(134, 230);
+}
+
 @end

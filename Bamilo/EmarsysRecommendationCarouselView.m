@@ -10,9 +10,6 @@
 #import "EmarsysRecommendationCarouselCollectionViewCell.h"
 #import "ThreadManager.h"
 
-const CGFloat cellHeight = 230;
-const CGFloat cellWidth = 134;
-
 @interface EmarsysRecommendationCarouselView()
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, strong) NSArray <RecommendItem *>* recommendationArray;
@@ -52,7 +49,7 @@ const CGFloat cellWidth = 134;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(cellWidth, cellHeight);
+    return [EmarsysRecommendationCarouselCollectionViewCell preferedSize];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {

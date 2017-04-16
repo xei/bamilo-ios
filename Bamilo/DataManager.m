@@ -41,7 +41,13 @@ static DataManager *instance;
             //This must be refactored from server side :(
             NSArray *garbageArray = data.metadata[@"data"][0][@"children"];
             if (garbageArray.count) {
-                [self processResponse:statusCode ofClass:[SearchCategoryFilter class] forData:data errorMessages:errorMessages completion:completion];
+                
+                
+                Data *filterData = [Data new];
+                NSError *error;
+                [filterData mergeFromDictionary:@{@"metadata": garbageArray[0], @"messages": @[]} useKeyMapping:NO error:&error];
+                
+                [self processResponse:statusCode ofClass:[SearchCategoryFilter class] forData:filterData errorMessages:errorMessages completion:completion];
             } else {
                 completion(nil, [self getErrorFrom:statusCode errorMessages:@[STRING_ERROR]]);
             }
