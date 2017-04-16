@@ -37,23 +37,9 @@ static DataManager *instance;
 - (void)getSubCategoriesFilter:(id<DataServiceProtocol>)target ofCategroyUrlKey:(NSString *)urlKey completion:(DataCompletion)completion {
     NSString *path = [NSString stringWithFormat:RI_API_GET_CATEGORIES_BY_URLKEY, urlKey];
     [self.requestManager asyncGET:target path:path params:nil type:REQUEST_EXEC_IN_BACKGROUND completion:^(int statusCode, Data *data, NSArray *errorMessages) {
-        if (((NSArray *)[data.metadata objectForKey:@"data"]).count) {
-            //This must be refactored from server side :(
-            NSArray *garbageArray = data.metadata[@"data"][0][@"children"];
-            if (garbageArray.count) {
-                
-                
-                Data *filterData = [Data new];
-                NSError *error;
-                [filterData mergeFromDictionary:@{@"metadata": garbageArray[0], @"messages": @[]} useKeyMapping:NO error:&error];
-                
-                [self processResponse:statusCode ofClass:[SearchCategoryFilter class] forData:filterData errorMessages:errorMessages completion:completion];
-            } else {
-                completion(nil, [self getErrorFrom:statusCode errorMessages:@[STRING_ERROR]]);
-            }
-        } else {
-            completion(nil, [self getErrorFrom:statusCode errorMessages:@[STRING_ERROR]]);
-        }
+        Data *_data = (Data *)data;
+        _data.metadata = [data.metadata objectForKey:@"data"][0][@"children"][0];
+        [self processResponse:statusCode ofClass:[SearchCategoryFilter class] forData:_data errorMessages:errorMessages completion:completion];
     }];
 }
 

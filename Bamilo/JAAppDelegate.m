@@ -160,7 +160,9 @@
     EMSession *emarsysSession = [EMSession sharedSession];
     emarsysSession.merchantID = @"18146DE34FE0B8C9";
     emarsysSession.logLevel = EMLogLevelDebug;
-
+    
+    [[PushNotificationManager pushManager] startLocationTracking];
+    
     return YES;
 }
 

@@ -20,6 +20,8 @@
 	<string>Bamilo</string>
 	<key>Pushwoosh_LOG_LEVEL</key>
 	<string>NONE</string>
+	<key>PW_USE_GPS</key>
+	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -117,6 +119,10 @@
 	<string>Bamilo would like to access your contacts</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Bamilo would like to access your photos</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Bamilo would like to access your location</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Bamilo would like to access your location</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Bamilosans Reg.ttf</string>
@@ -128,6 +134,7 @@
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
+		<string>location</string>
 		<string>remote-notification</string>
 	</array>
 	<key>UIMainStoryboardFile</key>

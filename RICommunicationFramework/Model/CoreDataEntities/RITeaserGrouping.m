@@ -245,7 +245,6 @@
                         
                         //[newTeaserGrouping addTeaserComponentsObject:newTeaserComponent];
                         [newTeaserGrouping.teaserComponents addObject:newTeaserComponent];
-                        
                     }
                 }
             }

@@ -13,6 +13,7 @@
 
 +(BOOL) set:(NSString *)key value:(id)value;
 +(id) get:(NSString *)key;
++(void) remove:(NSString *)key;
 
 //Utility Functions
 +(int) getCounter:(NSString *)key;

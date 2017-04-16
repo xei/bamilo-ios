@@ -10,6 +10,7 @@
 #import <Pushwoosh/PWInAppManager.h>
 #import "EmarsysMobileEngage.h"
 #import "RITrackingWrapper.h"
+#import "DeepLinkManager.h"
 
 @implementation PushWooshTracker
 
@@ -39,8 +40,11 @@ static PushWooshTracker *instance;
         jsonData = [NSJSONSerialization JSONObjectWithData:[customDataString dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
     }
     
-    if(jsonData) { //HOW TO CHECK IF IT'S EMARSYS DATA???
-        [[EmarsysMobileEngage sharedInstance] sendOpen:nil completion:nil];
+    NSString *emarsysSID = [jsonData objectForKey:@"sid"];
+    if(emarsysSID) {
+        [[EmarsysMobileEngage sharedInstance] sendOpen:emarsysSID completion:^(BOOL success) {
+            NSLog(@"EmarsysMobileEngage > sendOpen > %@", success ? sSUCCESSFUL : sFAILED);
+        }];
     }
     
     if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {

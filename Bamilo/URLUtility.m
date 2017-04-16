@@ -18,10 +18,12 @@
     for (NSString *pair in pairs) {
         NSArray *elements = [pair componentsSeparatedByString:@"="];
         
-        NSString *key = [elements[0] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        NSString *val = [elements[1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        
-        [dict setObject:val forKey:key];
+        if(elements.count >= 2) {
+            NSString *key = [[elements[0] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding] lowercaseString];
+            NSString *val = [elements[1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            
+            [dict setObject:val forKey:key];
+        }
     }
     
     return dict;
