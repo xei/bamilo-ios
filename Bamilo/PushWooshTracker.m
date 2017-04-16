@@ -10,6 +10,7 @@
 #import <Pushwoosh/PWInAppManager.h>
 #import "EmarsysMobileEngage.h"
 #import "RITrackingWrapper.h"
+#import "DeepLinkManager.h"
 
 @implementation PushWooshTracker
 

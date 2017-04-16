@@ -14,7 +14,6 @@
 @implementation DeepLinkManager
 
 + (void)handleUrl:(NSURL *)url {
-    
     if (url.scheme) {
         //I don't know what the hell is this, but I keep it (`UTM` in queryString!!)
         NSDictionary *queryDictionary = [URLUtility parseQueryString:url];
@@ -32,12 +31,11 @@
         NSString *filterString = url.query ? [url.query stringByReplacingOccurrencesOfString:@"=" withString:@"/"] : nil;
         
         
-        if ([DeepLinkManager goToSearchWithTarget:targetKey argument:argument filter:filterString] ||
-            [DeepLinkManager goToSellerPageWithTargetKey:targetKey argument:argument] ||
-            [DeepLinkManager justGoToSpecialViewWithTarget:targetKey]) {
+        if ([DeepLinkManager searchWithTarget:targetKey argument:argument filter:filterString] ||
+            [DeepLinkManager sellerPageWithTargetKey:targetKey argument:argument] ||
+            [DeepLinkManager specialViewWithTarget:targetKey]) {
             return;
         }
-        
         
         // ---- handle some special views with special params ----
         
@@ -63,8 +61,7 @@
     }
 }
 
-+ (BOOL)justGoToSpecialViewWithTarget:(NSString *)targetKey {
-    
++ (BOOL)specialViewWithTarget:(NSString *)targetKey {
     NSDictionary *targetKeyToNotificationMap = @{
                                                  kCart  : kOpenCartNotification,
                                                  @"w"   : kShowSavedListScreenNotification,
@@ -83,9 +80,9 @@
     return NO;
 }
 
-+ (BOOL)goToSellerPageWithTargetKey:(NSString *)targetKey argument:(NSString *)argument {
-    
++ (BOOL)sellerPageWithTargetKey:(NSString *)targetKey argument:(NSString *)argument {
     NSMutableDictionary* categoryDictionary = [NSMutableDictionary new];
+    
     if (argument.length) {
         [categoryDictionary setObject:argument forKey:@"category_url_key"];
     }
@@ -105,17 +102,18 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:categoryDictionary];
         return YES;
     }
+    
     return NO;
 }
 
-+ (BOOL)goToSearchWithTarget:(NSString *)targetKey argument:(NSString *)argument filter:(NSString *)filter {
-    
++ (BOOL)searchWithTarget:(NSString *)targetKey argument:(NSString *)argument filter:(NSString *)filter {
     BOOL successfullyHandled = NO;
     
     NSMutableDictionary* categoryDictionary = [NSMutableDictionary new];
     if (argument.length) {
         [categoryDictionary setObject:argument forKey:@"category_url_key"];
     }
+    
     if (filter.length) {
         [categoryDictionary setObject:filter forKey:@"filter"];
     }

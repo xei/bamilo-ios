@@ -162,7 +162,7 @@
     emarsysSession.logLevel = EMLogLevelDebug;
     
     [[PushNotificationManager pushManager] startLocationTracking];
-
+    
     return YES;
 }
 

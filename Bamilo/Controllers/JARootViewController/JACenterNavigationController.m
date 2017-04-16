@@ -1829,9 +1829,9 @@
 }
 
 - (void)openCart:(NSNotification*) notification {
-    if ([[self topViewController] isKindOfClass:[JALoadCountryViewController class]]) {
+    /*if ([[self topViewController] isKindOfClass:[JALoadCountryViewController class]]) {
         return;
-    }
+    }*/
     
     typedef void (^GoToCartBlock)(void);
         GoToCartBlock goToCartBlock = ^void {
