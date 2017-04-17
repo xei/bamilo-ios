@@ -12,7 +12,7 @@
 @interface EmarsysRecommendationGridWidgetView()
 
 @property (nonatomic, weak) IBOutlet UILabel *widgetTitle;
-@property (nonatomic, weak) IBOutlet UIButton *moreButton;
+@property (nonatomic, weak) IBOutlet UIButton *leftButton;
 
 @end
 
@@ -24,11 +24,15 @@ const int numberOfColumns = 2;
 - (void)awakeFromNib {
     [super awakeFromNib];
     [self setWidgetBacgkround:[UIColor clearColor]];
-    [self.moreButton setHidden:YES];
+    [self.leftButton setHidden:YES];
     
     [self.widgetTitle applyStyle:[Theme font:kFontVariationRegular size:12.0f] color:[UIColor blackColor]];
     [self.collectionView registerNib:[UINib nibWithNibName:[EmarsysRecommendationCarouselCollectionViewCell nibName] bundle:nil]
           forCellWithReuseIdentifier:[EmarsysRecommendationCarouselCollectionViewCell nibName]];
+}
+
+- (void)updateLeftButtonTitle:(NSString *)title {
+    [self.leftButton setTitle:title forState:UIControlStateNormal];
 }
 
 - (void)updateTitle:(NSString *)title {

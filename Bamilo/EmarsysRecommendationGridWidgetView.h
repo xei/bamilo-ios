@@ -12,6 +12,7 @@
 @interface EmarsysRecommendationGridWidgetView: FeatureBoxCollectionViewWidgetView
 
 - (void)updateTitle:(NSString *)title;
+- (void)updateLeftButtonTitle:(NSString *)title;
 + (CGFloat)preferredHeightWithContentModel:(NSArray<RecommendItem *> *)arrayModel boundWidth:(CGFloat)width;
 
 @end

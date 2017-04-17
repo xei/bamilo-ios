@@ -2540,13 +2540,13 @@
 			name = BaseView;
 			sourceTree = "<group>";
 		};
-		619D0B081EA34A3600FDB255 /* FeatureBoxCollectionViewWdiget */ = {
+		619D0B081EA34A3600FDB255 /* FeatureBoxCollectionViewWidget */ = {
 			isa = PBXGroup;
 			children = (
 				619D0B141EA34B6200FDB255 /* View */,
 				619D0B131EA34B5D00FDB255 /* Control */,
 			);
-			name = FeatureBoxCollectionViewWdiget;
+			name = FeatureBoxCollectionViewWidget;
 			sourceTree = "<group>";
 		};
 		619D0B091EA34AD400FDB255 /* View */ = {
@@ -2636,7 +2636,7 @@
 				61BA9B3A1E99FDD3004E9DE8 /* WidgetBase */,
 				61BA9B3E1E99FDF5004E9DE8 /* FeatureBoxWidget */,
 				61840B5E1EA39773006739EB /* EmarsysRecommendationGridWidget */,
-				619D0B081EA34A3600FDB255 /* FeatureBoxCollectionViewWdiget */,
+				619D0B081EA34A3600FDB255 /* FeatureBoxCollectionViewWidget */,
 				61BA9B461E9A000F004E9DE8 /* EmarsysRecommendationCarouselWidget */,
 			);
 			name = Widgets;

@@ -28,7 +28,6 @@
 #import "NSArray+Extension.h"
 #import "RecommendItem.h"
 #import "EmarsysRecommendationCarouselView.h"
-#import "EmarsysRecommendationGridWidgetView.h"
 #import "ThreadManager.h"
 #import "EmarsysPredictManager.h"
 
@@ -382,10 +381,8 @@
         return [RecommendItem instanceWithEMRecommendationItem:item];
     }];
     
-    EmarsysRecommendationGridWidgetView *recommendationView = [EmarsysRecommendationGridWidgetView nibInstance];
+    EmarsysRecommendationCarouselView *recommendationView = [EmarsysRecommendationCarouselView nibInstance];
     recommendationView.delegate = self;
-    
-    [recommendationView setHeight:[EmarsysRecommendationGridWidgetView preferredHeightWithContentModel:recommendItems boundWidth:self.view.width]];
 
     [recommendationView updateTitle:STRING_SPECIFICATIONS];
     

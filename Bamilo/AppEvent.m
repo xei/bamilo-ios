@@ -20,14 +20,11 @@
 +(NSMutableDictionary *)attributes {
     NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithObjects:@[ [[AppManager sharedInstance] getAppFullFormattedVersion], @"ios", [DeviceManager getConnectionType], [NSDate date] ] forKeys:@[ kEventAppVersion, kEventPlatform, kEventConnection, kEventDate ]];
     
-    RICustomer *user = [RICustomer getCurrentCustomer];
-    if(user) {
-        //Gender
-        if(user.gender) {
-            [attributes setObject:user.gender forKey:kEventUserGender]; //male OR female
+        NSString *userGender = [RICustomer getCustomerGender];
+        if(userGender) {
+            [attributes setObject:userGender forKey:kEventUserGender]; //male OR female
         }
-    }
-    
+
     return attributes;
 }
 
