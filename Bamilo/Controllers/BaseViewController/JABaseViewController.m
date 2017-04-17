@@ -251,8 +251,6 @@
     [self reloadNavBar];
     [self reloadTabBar];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOnMenuSwipePanelNotification object:nil];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sideMenuIsOpening) name:kOpenMenuNotification object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showSearchView) name:kDidPressSearchButtonNotification object:nil];

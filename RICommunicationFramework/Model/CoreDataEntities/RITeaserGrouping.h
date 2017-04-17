@@ -25,6 +25,7 @@
                                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 + (RITeaserGrouping*)parseTeaserGrouping:(NSDictionary*)teaserGroupingJSON country:(RICountryConfiguration*)country;
++ (RITeaserGrouping*)parseTeaserGroupingWithoutSave:(NSDictionary*)teaserGroupingJSON country:(RICountryConfiguration*)country;
 
 + (NSString*)getTeaserGroupingsWithSuccessBlock:(void (^)(NSDictionary* teaserGroupings, BOOL richTeaserGrouping))successBlock
                                       failBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock

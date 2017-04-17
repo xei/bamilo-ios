@@ -19,7 +19,6 @@
     [super awakeFromNib];
     
     self.backgroundColor = [UIColor whiteColor];
-    
     self.progressView = [ProgressView nibInstance];
     
     if(self.progressView) {

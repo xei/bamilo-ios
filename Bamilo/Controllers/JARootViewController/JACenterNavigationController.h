@@ -21,7 +21,6 @@ typedef void(^ProtectedBlock)(BOOL userHadSession);
 
 @property (strong, nonatomic) JACustomNavigationBarView *navigationBarView;
 @property (strong, nonatomic) JATabBarView *tabBarView;
-
 @property (nonatomic, assign)BOOL searchViewAlwaysHidden;
 
 - (void)openTargetString:(NSString *)targetString;

@@ -132,15 +132,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.neeedsExternalPaymentMethod = NO;
-    
     [self loadNavigationViews];
-    
     self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    /*if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
-    }*/
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showLoadCountryScreen:)
@@ -207,61 +201,11 @@
                                                  name:kShowAuthenticationScreenNotification
                                                object:nil];
     
-    /*[[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(runBlockAfterAuthentication:)
-                                                 name:kRunBlockAfterAuthenticationNotification
-                                               object:nil];*/
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showSignInScreen:)
-                                                 name:kShowSignInScreenNotification
-                                               object:nil];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showSignUpScreen:)
                                                  name:kShowSignUpScreenNotification
                                                object:nil];
-    
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(showForgotPasswordScreen:)
-//                                                 name:kShowForgotPasswordScreenNotification
-//                                               object:nil];
-    
-    /*[[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showCheckoutForgotPasswordScreen)
-                                                 name:kShowCheckoutForgotPasswordScreenNotification
-                                               object:nil];*/
-    
-    /*[[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showCheckoutAddressesScreen:)
-                                                 name:kShowCheckoutAddressesScreenNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showCheckoutAddAddressScreen:)
-                                                 name:kShowCheckoutAddAddressScreenNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showCheckoutEditAddressScreen:)
-                                                 name:kShowCheckoutEditAddressScreenNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showCheckoutShippingScreen)
-                                                 name:kShowCheckoutShippingScreenNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showCheckoutPaymentScreen)
-                                                 name:kShowCheckoutPaymentScreenNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showCheckoutFinishScreen:)
-                                                 name:kShowCheckoutFinishScreenNotification
-                                               object:nil];
-    */
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showCheckoutExternalPaymentsScreen:)
                                                  name:kShowCheckoutExternalPaymentsScreenNotification
@@ -327,11 +271,6 @@
                                                  name:kDidSelectTeaserWithShopUrlNofication
                                                object:nil];
     
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(didSelectCategoryFromCenterPanel:)
-//                                                 name:kDidSelectCategoryFromCenterPanelNotification
-//                                               object:nil];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(closeCurrentScreenNotificaion:)
                                                  name:kCloseCurrentScreenNotification
@@ -351,11 +290,6 @@
                                              selector:@selector(changeNavigationWithNotification:)
                                                  name:kChangeNavigationBarNotification
                                                object:nil];
-    
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(deactivateExternalPayment)
-//                                                 name:kDeactivateExternalPaymentNotification
-//                                               object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showProductSpecificationScreen:)
@@ -680,11 +614,6 @@
 - (void)showAuthenticationScreen:(NSNotification *)notification {
     AuthenticationContainerViewController *authenticationViewController = (AuthenticationContainerViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Authentication" nibName:@"AuthenticationContainerViewController" resetCache:YES];
 
-    /*if (VALID_NOTEMPTY(notification, NSNotification) && notification.object) {
-        //TODO: Call the completion block
-        //[authenticationViewController setNextStepBlock:notification.object];
-    }*/
-    
     authenticationViewController.navBarLayout.showBackButton = YES;
     
     authenticationViewController.fromSideMenu = NO;
@@ -714,120 +643,16 @@
     [self pushViewController:authenticationViewController animated:YES];
 }
 
-//- (void)runBlockAfterAuthentication:(NSNotification *)notification {
-//    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"from_side_menu"], NSNumber)) {
-//        [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
-//    } else {
-//        JAStepByStepTabViewController *stepByStepTabViewController = (JAStepByStepTabViewController *)[self topViewController];
-//        if ([stepByStepTabViewController isKindOfClass:[JAStepByStepTabViewController class]] && [stepByStepTabViewController.stepByStepModel isKindOfClass:[JACheckoutStepByStepModel class]])
-//        {
-//            if (VALID_NOTEMPTY(notification, NSNotification) && notification.object) {
-//                typedef void (^NextStepBlock)(void);
-//                NextStepBlock nextStepBlock = notification.object;
-//                nextStepBlock();
-//            }
-//        } else {
-//            NSInteger count = [self.viewControllers count];
-//            if (count > 2)
-//            {
-//                UIViewController *viewController = [self.viewControllers objectAtIndex:count-2];
-//                UIViewController *viewControllerToPop = [self.viewControllers objectAtIndex:count-3];
-//                
-//                if ([viewController isKindOfClass:[JAAuthenticationViewController class]]) {
-//                    [self popToViewController:viewControllerToPop animated:NO];
-//                }else{
-//                    [self popViewControllerAnimated:YES];
-//                }
-//            }else{
-//                [self popViewControllerAnimated:YES];
-//            }
-//            
-//            if (VALID_NOTEMPTY(notification, NSNotification) && notification.object) {
-//                typedef void (^NextStepBlock)(void);
-//                NextStepBlock nextStepBlock = notification.object;
-//                nextStepBlock();
-//            }
-//        }
-//    }
-//}
-
 - (void)showSignInScreen:(NSNotification *)notification {
-    JASignInViewController *signInVC = [[JASignInViewController alloc] init];
-    
-    BOOL animated = YES;
-    if(VALID_NOTEMPTY(notification, NSNotification)) {
-        signInVC.nextStepBlock = notification.object;
-        
-        if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"shows_back_button"], NSNumber)) {
-            NSNumber* showsBack = [notification.userInfo objectForKey:@"shows_back_button"];
-            signInVC.navBarLayout.showBackButton = [showsBack boolValue];
-        } else {
-            signInVC.navBarLayout.showBackButton = YES;
-        }
-        signInVC.fromSideMenu = NO;
-        if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"from_side_menu"], NSNumber)) {
-            NSNumber* fromSide = [notification.userInfo objectForKey:@"from_side_menu"];
-            signInVC.fromSideMenu = [fromSide boolValue];
-        }
-        if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"tabbar_is_visible"], NSNumber)) {
-            NSNumber* tabbarIsVisible = [notification.userInfo objectForKey:@"tabbar_is_visible"];
-            signInVC.tabBarIsVisible = [tabbarIsVisible boolValue];
-            [self popToRootViewControllerAnimated:NO];
-            animated = NO;
-        }
-        if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"animated"], NSNumber)) {
-            NSNumber* animatedNumber = [notification.userInfo objectForKey:@"animated"];
-            animated = [animatedNumber boolValue];
-        }
-        
-        if ([[notification.userInfo objectForKey:@"email"] length]) {
-            signInVC.authenticationEmail = [notification.userInfo objectForKey:@"email"];
-        }
-    }
-    
-    BOOL checkout = NO;
-    
-    if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"checkout"], NSNumber)) {
-        checkout = [[notification.userInfo objectForKey:@"checkout"] boolValue];
-    }
-    
-    if (checkout) {
-        [self goToStep:signInVC forStepByStepViewController:self.checkoutStepByStepViewController];
-    } else {
-        [self pushViewController:signInVC animated:YES];
-    }
+    [self showAuthenticationScreen:nil];
 }
 
 #pragma mark Sign Up Screen
 - (void)showSignUpScreen:(NSNotification *)notification {
-    UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JARegisterViewController class]] && ![RICustomer checkIfUserIsLogged]) {
-        JARegisterViewController *signUpVC = [[JARegisterViewController alloc] init];
-        
-        if(VALID_NOTEMPTY(notification, NSNotification)) {
-            signUpVC.navBarLayout.showBackButton = YES;
-            signUpVC.fromSideMenu = [[notification.userInfo objectForKey:@"from_side_menu"] boolValue];
-            
-            if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"email"], NSString)) {
-                signUpVC.authenticationEmail = [notification.userInfo objectForKey:@"email"];
-            }
-            signUpVC.nextStepBlock = notification.object;
-        } else {
-            signUpVC.fromSideMenu = YES;
-            //$$$ NOT SURE ABOUT THIS
-//            [self popToRootViewControllerAnimated:NO];
-        }
-        
-        BOOL checkout = NO;
-        if ([notification.userInfo objectForKey:@"checkout"]) {
-            checkout = [[notification.userInfo objectForKey:@"checkout"] boolValue];
-        }
-        if (checkout) {
-            [self goToStep:signUpVC forStepByStepViewController:self.checkoutStepByStepViewController];
-        }else{
-            [self pushViewController:signUpVC animated:NO];
-        }
-    }
+    AuthenticationContainerViewController *authenticationViewController = (AuthenticationContainerViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Authentication" nibName:@"AuthenticationContainerViewController" resetCache:YES];
+    authenticationViewController.startWithSignUpViewController = YES;
+    authenticationViewController.navBarLayout.showBackButton = YES;
+    [self pushViewController:authenticationViewController animated:YES];
 }
 
 #pragma mark Recently Viewed Screen
@@ -853,36 +678,6 @@
 - (void)showMyOrdersViewController:(NSNotification*)notification {
     //UIViewController *topViewController = [self topViewController];
     if([RICustomer checkIfUserIsLogged]) {
-//        if (VALID_NOTEMPTY(notification.object, NSString)) {
-//            if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-//                if(UIDeviceOrientationLandscapeLeft == [UIDevice currentDevice].orientation || UIDeviceOrientationLandscapeRight == [UIDevice currentDevice].orientation) {
-//                    if (![topViewController isKindOfClass:[JAMyOrdersViewController class]])
-//                    {
-//                        JAMyOrdersViewController *myOrderVC = [JAMyOrdersViewController new];
-//                        [myOrderVC setOrderNumber:notification.object];
-//                        [self pushViewController:myOrderVC animated:YES];
-//                    }
-//                }else if (![topViewController isKindOfClass:[JAMyOrderDetailViewController class]])
-//                {
-//                    JAMyOrderDetailViewController *myOrderVC = [JAMyOrderDetailViewController new];
-//                    [myOrderVC setOrderNumber:notification.object];
-//                    [self pushViewController:myOrderVC animated:YES];
-//                }
-//            } else {
-//                
-//                if (![topViewController isKindOfClass:[JAMyOrderDetailViewController class]]) {
-//                    JAMyOrderDetailViewController *myOrderVC = [JAMyOrderDetailViewController new];
-//                    [myOrderVC setOrderNumber:notification.object];
-//                    [self pushViewController:myOrderVC animated:YES];
-//                }
-//            }
-//        }else{
-//            if (![topViewController isKindOfClass:[JAMyOrdersViewController class]]) {
-//                JAMyOrdersViewController *myOrderVC = [JAMyOrdersViewController new];
-//                [self pushViewController:myOrderVC animated:YES];
-//            }
-//        }
-        
         OrderListViewController *myOrderViewCtrl = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"OrderListViewController"];
         [self pushViewController:myOrderViewCtrl animated:YES];
     } else {
@@ -1475,14 +1270,11 @@
     }
 }
 
-- (void)didSelectTeaserWithShopUrl:(NSNotification*)notification
-{
+- (void)didSelectTeaserWithShopUrl:(NSNotification*)notification {
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
                                                         object:nil];
     
     NSString* targetString = [notification.userInfo objectForKey:@"targetString"];
-//    NSString* uid = [notification.userInfo objectForKey:@"shop_id"];
-
     JAShopWebViewController* viewController = [[JAShopWebViewController alloc] init];
     if([notification.userInfo objectForKey:@"show_back_button"])
     {
@@ -1504,37 +1296,7 @@
         [self pushViewController:viewController animated:YES];
 
     }
-    //$$$ HOPEFULLY THIS IS NO LONGER NEEDED
-//    else if (VALID_NOTEMPTY(uid, NSString))
-//    {
-//        viewController.url = [NSString stringWithFormat:@"%@%@main/getstatic/?key=%@",[RIApi getCountryUrlInUse], RI_API_VERSION, uid];
-//        [self pushViewController:viewController animated:YES];
-//    }
-
 }
-
-//- (void)didSelectCategoryFromCenterPanel:(NSNotification*)notification {
-//    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification object:nil];
-//    
-//    NSDictionary *selectedItem = [notification object];
-//    
-//    RICategory* category = [selectedItem objectForKey:@"category"];
-//    if (VALID_NOTEMPTY(category, RICategory)) {
-//        
-//        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
-//        
-//        catalog.category = category;
-//        
-//        catalog.navBarLayout.title = category.label;
-//        catalog.navBarLayout.backButtonTitle = STRING_ALL_CATEGORIES;
-//        
-//        if ([notification.userInfo objectForKey:@"teaserTrackingInfo"]) {
-//            catalog.teaserTrackingInfo = [notification.userInfo objectForKey:@"teaserTrackingInfo"];
-//        }
-//        
-//        [self pushViewController:catalog animated:YES];
-//    }
-//}
 
 - (void)closeCurrentScreenNotificaion:(NSNotification*)notification {
     BOOL animated = YES;

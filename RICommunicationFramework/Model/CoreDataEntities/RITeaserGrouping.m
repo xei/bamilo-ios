@@ -213,8 +213,14 @@
     return [newTeaserGroupings copy];
 }
 
-
 + (RITeaserGrouping*)parseTeaserGrouping:(NSDictionary*)teaserGroupingJSON
+                                 country:(RICountryConfiguration*)country {
+    RITeaserGrouping *newTeaserGrouping = [RITeaserGrouping parseTeaserGroupingWithoutSave:teaserGroupingJSON country:country];
+    [RITeaserGrouping saveTeaserGrouping:newTeaserGrouping andContext:YES];
+    return newTeaserGrouping;
+}
+
++ (RITeaserGrouping*)parseTeaserGroupingWithoutSave:(NSDictionary*)teaserGroupingJSON
                                  country:(RICountryConfiguration*)country {
     RITeaserGrouping* newTeaserGrouping = (RITeaserGrouping*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RITeaserGrouping class])];
     
@@ -250,9 +256,6 @@
             }
         }
     }
-    
-    [RITeaserGrouping saveTeaserGrouping:newTeaserGrouping andContext:YES];
-    
     return newTeaserGrouping;
 }
 
