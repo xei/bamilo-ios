@@ -31,7 +31,7 @@
     [self.priceLabel applyStyle:[Theme font:kFontVariationRegular size:9.0f] color: [Theme color:kColorLightGray]];
     [self.discountedPriceLabel applyStyle:[Theme font:kFontVariationRegular size:12.0f] color: [UIColor blackColor]];
     
-    self.discountedPriceLabel.attributedText = (NSAttributedString *)[STRING_PRICE struckThroughText];
+    self.priceLabel.attributedText = (NSAttributedString *)[STRING_PRICE struckThroughText];
 }
 
 - (void)updateWithModel:(id)model {
@@ -42,8 +42,9 @@
     [self.imageView sd_setImageWithURL:[NSURL URLWithString:item.imageUrl] placeholderImage:[ImageManager defaultPlaceholder]];
     [self.titleLabel setText:item.name];
     [self.brandLabel setText:item.brandName];
-    [self.priceLabel setText:item.formattedDiscountedPrice];
-    self.discountedPriceLabel.attributedText = (NSAttributedString *)[item.formattedPrice struckThroughText];
+    [self.discountedPriceLabel setText:item.formattedPrice];
+    self.priceLabel.attributedText = (NSAttributedString *)[item.formattedDiscountedPrice struckThroughText];
+    
 }
 
 - (void)prepareForReuse {

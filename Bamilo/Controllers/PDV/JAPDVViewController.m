@@ -38,13 +38,19 @@
 #import "RISeller.h"
 #import "JACenterNavigationController.h"
 #import "JATabBarButton.h"
+
+//##########################
 #import "ViewControllerManager.h"
 #import "EmarsysPredictManager.h"
 #import "CartDataManager.h"
+#import "RecommendItem.h"
+#import "NSArray+Extension.h"
+#import "EmarsysRecommendationGridWidgetView.h"
+#import "ThreadManager.h"
 
 typedef void (^ProcessActionBlock)(void);
 
-@interface JAPDVViewController () <JAPDVGalleryDelegate, JAPickerDelegate, JAActivityViewControllerDelegate> {
+@interface JAPDVViewController () <JAPDVGalleryDelegate, JAPickerDelegate, JAActivityViewControllerDelegate, FeatureBoxCollectionViewWidgetViewDelegate> {
     BOOL _needRefreshProduct;
     BOOL _needAddToFavBlock;
     ProcessActionBlock _processActionBlock;
@@ -124,16 +130,6 @@ typedef void (^ProcessActionBlock)(void);
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-
-    //$WIZ$
-    //    BOOL alreadyShowedWizardPDV = [[NSUserDefaults standardUserDefaults] boolForKey:kJAPDVWizardUserDefaultsKey];
-    //    if(alreadyShowedWizardPDV == NO)
-    //    {
-    //        [self hideLoading];
-    //        self.wizardView = [[JAPDVWizardView alloc] initWithFrame:self.view.bounds];
-    //        [self.view addSubview:self.wizardView];
-    //        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJAPDVWizardUserDefaultsKey];
-    //    }
 
     if(self.hasLoaddedProduct) {
         [self removeSuperviews];
@@ -489,9 +485,6 @@ typedef void (^ProcessActionBlock)(void);
     [self.navBarLayout setTitle:product.brand];
     [self reloadNavBar];
 
-    //$WIZ$
-    //    [self.wizardView setHasNoSeller:product.seller?NO:YES];
-
     [self trackingEventViewProduct:product];
     [self trackingEventLoadingTime];
 
@@ -507,8 +500,6 @@ typedef void (^ProcessActionBlock)(void);
     [self trackingEventMostViewedBrand];
     
 //###################
-    [EmarsysPredictManager sendTransactionsOf:self];
-    
     //EVENT : VIEW PRODUCT
     [TrackerManager postEvent:[EventFactory viewProduct:product.categoryUrlKey price:[product.price longValue]] forName:[ViewProductEvent name]];
 }
@@ -518,7 +509,6 @@ typedef void (^ProcessActionBlock)(void);
 }
 
 #pragma mark - Product loaded
-
 - (void)productLoaded {
     [self removeSuperviews];
 
@@ -579,8 +569,7 @@ typedef void (^ProcessActionBlock)(void);
         [self.ctaView addSmallButton:[UIImage imageNamed:@"ic_calltoorder"] target:self action:@selector(callToOrder)];
     }
 
-    if (!self.product.hasStock)
-    {
+    if (!self.product.hasStock) {
         JAButton *saveButton = [self.ctaView addAlternativeButton:STRING_SAVE_ITEM target:self action:@selector(addToWishList)];
         [saveButton setTitleColor:JAOrange1Color forState:UIControlStateNormal];
     } else if (self.product.preOrder) {
@@ -589,9 +578,6 @@ typedef void (^ProcessActionBlock)(void);
         [self.ctaView addButton:STRING_BUY_NOW target:self action:@selector(addToCart)];
     }
 
-    //make sure wizard and picker are in front
-    //$WIZ$
-    //    [self.view bringSubviewToFront:self.wizardView];
     [self.view bringSubviewToFront:self.picker];
 }
 
@@ -817,73 +803,73 @@ typedef void (^ProcessActionBlock)(void);
      Related Items
      ***************/
 
-    if (self.product.relatedProducts.count > 1) {
-        if (self.relatedItemsView) {
-            for (UIView *view in self.relatedItemsView.subviews) {
-                [view removeFromSuperview];
-            }
-        }
-
-        if (self.product.richRelevanceTitle.length) {
-            [self.relatedItemsView setHeaderText:self.product.richRelevanceTitle];
-        } else {
-            [self.relatedItemsView setHeaderText:[STRING_YOU_MAY_ALSO_LIKE uppercaseString]];
-        }
-
-        CGFloat relatedItemX = .0f;
-        CGFloat relatedItemY = 0;
-
-        NSArray* relatedProducts = [self.product.relatedProducts allObjects];
-
-        CGFloat singleItemHeight = 245;
-        NSInteger numberOfCols = 2;
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-            if (!isiPadInLandscape) {
-                numberOfCols = 4;
-                singleItemHeight = 285;
-            } else {
-                singleItemHeight = 355;
-            }
-        }
-
-        CGFloat singleItemWidth = self.mainScrollView.width/numberOfCols;
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && !isiPadInLandscape) {
-            singleItemWidth = self.mainScrollView.width/numberOfCols;
-        }
-
-        for (int i = 0; i < relatedProducts.count; i++) {
-            RIProduct* product = [relatedProducts objectAtIndex:i];
-
-            JAPDVSingleRelatedItem *singleItem = [[JAPDVSingleRelatedItem alloc] initWithFrame:CGRectMake(0, 0, singleItemWidth, singleItemHeight)];
-            singleItem.tag = i;
-            [singleItem addTarget:self
-                           action:@selector(goToSelectedRelatedItem:)
-                 forControlEvents:UIControlEventTouchUpInside];
-
-            CGRect tempFrame = singleItem.frame;
-            tempFrame.origin.x = relatedItemX;
-            tempFrame.origin.y = relatedItemY;
-            singleItem.frame = tempFrame;
-            singleItem.product = product;
-
-            [self.relatedItemsView addRelatedItemView:singleItem];
-
-            if ((i+1)%numberOfCols==0) {
-                relatedItemX = 0.0f;
-                relatedItemY += singleItem.frame.size.height;
-            }else{
-                relatedItemX += singleItem.frame.size.width;
-            }
-
-        }
-        self.relatedItemsView.frame = CGRectMake(0.0f,
-                                                 scrollViewY,
-                                                 self.relatedItemsView.frame.size.width,
-                                                 self.relatedItemsView.frame.size.height);
-
-        scrollViewY += (6.0f + self.relatedItemsView.frame.size.height);
-
-    }
+//    if (self.product.relatedProducts.count > 1) {
+//        if (self.relatedItemsView) {
+//            for (UIView *view in self.relatedItemsView.subviews) {
+//                [view removeFromSuperview];
+//            }
+//        }
+//
+//        if (self.product.richRelevanceTitle.length) {
+//            [self.relatedItemsView setHeaderText:self.product.richRelevanceTitle];
+//        } else {
+//            [self.relatedItemsView setHeaderText:[STRING_YOU_MAY_ALSO_LIKE uppercaseString]];
+//        }
+//
+//        CGFloat relatedItemX = .0f;
+//        CGFloat relatedItemY = 0;
+//
+//        NSArray* relatedProducts = [self.product.relatedProducts allObjects];
+//
+//        CGFloat singleItemHeight = 245;
+//        NSInteger numberOfCols = 2;
+//        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+//            if (!isiPadInLandscape) {
+//                numberOfCols = 4;
+//                singleItemHeight = 285;
+//            } else {
+//                singleItemHeight = 355;
+//            }
+//        }
+//
+//        CGFloat singleItemWidth = self.mainScrollView.width/numberOfCols;
+//        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && !isiPadInLandscape) {
+//            singleItemWidth = self.mainScrollView.width/numberOfCols;
+//        }
+//
+//        for (int i = 0; i < relatedProducts.count; i++) {
+//            RIProduct* product = [relatedProducts objectAtIndex:i];
+//
+//            JAPDVSingleRelatedItem *singleItem = [[JAPDVSingleRelatedItem alloc] initWithFrame:CGRectMake(0, 0, singleItemWidth, singleItemHeight)];
+//            singleItem.tag = i;
+//            [singleItem addTarget:self
+//                           action:@selector(goToSelectedRelatedItem:)
+//                 forControlEvents:UIControlEventTouchUpInside];
+//
+//            CGRect tempFrame = singleItem.frame;
+//            tempFrame.origin.x = relatedItemX;
+//            tempFrame.origin.y = relatedItemY;
+//            singleItem.frame = tempFrame;
+//            singleItem.product = product;
+//
+//            [self.relatedItemsView addRelatedItemView:singleItem];
+//
+//            if ((i+1)%numberOfCols==0) {
+//                relatedItemX = 0.0f;
+//                relatedItemY += singleItem.frame.size.height;
+//            }else{
+//                relatedItemX += singleItem.frame.size.width;
+//            }
+//
+//        }
+//        self.relatedItemsView.frame = CGRectMake(0.0f,
+//                                                 scrollViewY,
+//                                                 self.relatedItemsView.frame.size.width,
+//                                                 self.relatedItemsView.frame.size.height);
+//
+//        scrollViewY += (6.0f + self.relatedItemsView.frame.size.height);
+//
+//    }
 
     self.mainScrollView.contentSize = CGSizeMake(self.mainScrollView.frame.size.width, scrollViewY);
     self.landscapeScrollView.contentSize = CGSizeMake(self.landscapeScrollView.frame.size.width, landscapeScrollViewY);
@@ -893,10 +879,6 @@ typedef void (^ProcessActionBlock)(void);
     } else {
         [self.productImageSection setOutOfStock:YES];
     }
-
-    //make sure wizard is in front
-    //$WIZ$
-    //    [self.view bringSubviewToFront:self.wizardView];
 
     if (RI_IS_RTL) {
         [self.view flipAllSubviews];
@@ -909,6 +891,9 @@ typedef void (^ProcessActionBlock)(void);
             [[NSUserDefaults standardUserDefaults] synchronize];
             [self presentCoachMarks];
         }
+        
+        //################ when product is fully loaded & rendered
+        [EmarsysPredictManager sendTransactionsOf:self];
     }
 }
 
@@ -1061,12 +1046,11 @@ typedef void (^ProcessActionBlock)(void);
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenOtherOffers object:self.product];
 }
 
-- (void)shareProduct
-{
+- (void)shareProduct {
     NSString *url = self.product.shareUrl;
 
     // Share with WhatsApp
-    UIActivity *whatsAppActivity = [[JBWhatsAppActivity alloc] init];
+//    UIActivity *whatsAppActivity = [[JBWhatsAppActivity alloc] init];
 
     //NSArray *objectToShare = @[fbmActivity, whatsAppActivity];;
     //crash fix on clicking items with name in farsi
@@ -1145,13 +1129,16 @@ typedef void (^ProcessActionBlock)(void);
                 }
 
                 [self trackingEventAddToCart:self.cart];
-                [EmarsysPredictManager sendTransactionsOf:self];
 
                 NSDictionary* userInfo = [NSDictionary dictionaryWithObject:self.cart forKey:kUpdateCartNotificationValue];
                 [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
 
                 [self onSuccessResponse:RIApiResponseSuccess messages:[self extractSuccessMessages:[data objectForKey:kDataMessages]] showMessage:YES];
                 //[self hideLoading];
+                
+                //##############
+                [EmarsysPredictManager sendTransactionsOf:self];
+                
             } else {
                 //EVENT: ADD TO CART
                 [TrackerManager postEvent:[EventFactory addToCart:self.currentSimple.sku basketValue:[self.cart.cartEntity.cartValue intValue] success:NO] forName:[AddToCartEvent name]];
@@ -1163,18 +1150,16 @@ typedef void (^ProcessActionBlock)(void);
     }
 }
 
-- (void)callToOrder
-{
+- (void)callToOrder {
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"تماس با تیم خدمات مشتریان بامیلو" delegate:nil cancelButtonTitle:@"لغو" otherButtonTitles:@"تایید", nil];
     alert.delegate = self;
     [alert show];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if(buttonIndex ==0){
+    if(buttonIndex ==0) {
 
-    }
-    else{
+    } else {
         [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
 
             [self trackingEventCallToOrder];
@@ -1279,8 +1264,7 @@ typedef void (^ProcessActionBlock)(void);
 }
 
 #pragma mark JAPickerDelegate
-- (void)selectedRow:(NSInteger)selectedRow
-{
+- (void)selectedRow:(NSInteger)selectedRow {
     self.currentSimple = [self.pickerDataSource objectAtIndex:selectedRow];
 
     NSString* option = self.currentSimple.variation;
@@ -1310,8 +1294,7 @@ typedef void (^ProcessActionBlock)(void);
                      }];
 }
 
-- (void)closePicker
-{
+- (void)closePicker {
     CGRect frame = self.picker.frame;
     frame.origin.y = self.view.frame.size.height;
 
@@ -1323,8 +1306,7 @@ typedef void (^ProcessActionBlock)(void);
                      }];
 }
 
-- (void)leftButtonPressed;
-{
+- (void)leftButtonPressed {
     if (VALID_NOTEMPTY(self.product.sizeGuideUrl, NSString)) {
         NSDictionary* dic = [NSDictionary dictionaryWithObjectsAndKeys:self.product.sizeGuideUrl, @"sizeGuideUrl", nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowSizeGuideNotification object:nil userInfo:dic];
@@ -1334,13 +1316,11 @@ typedef void (^ProcessActionBlock)(void);
 
 #pragma mark JAPDVImageSectionDelegate
 
-- (void)imageClickedAtIndex:(NSInteger)index
-{
+- (void)imageClickedAtIndex:(NSInteger)index {
     [self presentGalleryAtIndex:index];
 }
 
-- (void)presentGalleryAtIndex:(NSInteger)index;
-{
+- (void)presentGalleryAtIndex:(NSInteger)index {
     if(VALID(_galleryPaged, JAPDVGallery))
         [_galleryPaged removeFromSuperview];
 
@@ -1350,18 +1330,14 @@ typedef void (^ProcessActionBlock)(void);
     CGFloat height = gallerySuperView.frame.size.height;
     CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
 
-    if(UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
-    {
-        if(width < gallerySuperView.frame.size.height)
-        {
+    if(UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
+        if(width < gallerySuperView.frame.size.height) {
             width = gallerySuperView.frame.size.height;
             height = gallerySuperView.frame.size.width;
         }
         if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0"))
             statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.width;
-    }
-    else
-    {
+    } else {
         if(width > gallerySuperView.frame.size.height)
         {
             width = gallerySuperView.frame.size.height;
@@ -1410,8 +1386,7 @@ typedef void (^ProcessActionBlock)(void);
     }
 }
 
-- (BOOL)isUserLoggedInWithBlock:(ProcessActionBlock)block
-{
+- (BOOL)isUserLoggedInWithBlock:(ProcessActionBlock)block {
     if(![RICustomer checkIfUserIsLogged]) {
         [self hideLoading];
         _needAddToFavBlock = YES;
@@ -2051,8 +2026,7 @@ typedef void (^ProcessActionBlock)(void);
                                               data:[trackingDictionary copy]];
 }
 
-- (void)trackingEventRelatedItemSelection:(RIProduct *)product
-{
+- (void)trackingEventRelatedItemSelection:(RIProduct *)product {
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:product.sku forKey:kRIEventLabelKey];
     [trackingDictionary setValue:@"RelatedItem" forKey:kRIEventActionKey];
@@ -2096,9 +2070,22 @@ typedef void (^ProcessActionBlock)(void);
     return @"PRODUCT";
 }
 
+
+#pragma mark - DataServiceProtocol
+-(void)bind:(id)data forRequestId:(int)rid {
+    switch (rid) {
+        case 0:
+            self.cart = [data objectForKey:kDataContent];
+            break;
+            
+        default:
+            break;
+    }
+}
+
 #pragma mark - EmarsysPredictProtocol
 - (EMTransaction *)getDataCollection:(EMTransaction *)transaction {
-    if (!self.hasLoaddedProduct) {
+    if (self.product.sku) {
         [transaction setView:self.product.sku];
     }
     return transaction;
@@ -2108,26 +2095,43 @@ typedef void (^ProcessActionBlock)(void);
     return YES;
 }
 
-#pragma mark - DataServiceProtocol
--(void)bind:(id)data forRequestId:(int)rid {
-    switch (rid) {
-        case 0:
-            self.cart = [data objectForKey:kDataContent];
-        break;
-
-        default:
-            break;
-    }
-}
-
 - (NSArray<EMRecommendationRequest *> *)getRecommendations {
 
     EMRecommendationRequest *recommend = [EMRecommendationRequest requestWithLogic:@"RELATED"];
-    recommend.limit = 15;
+    recommend.limit = 4;
     recommend.completionHandler = ^(EMRecommendationResult *_Nonnull result) {
-
+        [self renderRecommendations:result];
     };
     return @[recommend];
+}
+
+- (void)renderRecommendations:(EMRecommendationResult *)result {
+    NSArray<RecommendItem *> *recommendItems = [result.products map:^id(EMRecommendationItem *item) {
+        return [RecommendItem instanceWithEMRecommendationItem:item];
+    }];
+    
+    EmarsysRecommendationGridWidgetView *recommendationView = [EmarsysRecommendationGridWidgetView nibInstance];
+    recommendationView.delegate = self;
+    
+    [recommendationView setHeight:[EmarsysRecommendationGridWidgetView preferredHeightWithContentModel:recommendItems boundWidth:self.mainScrollView.width]];
+    [recommendationView updateTitle:STRING_SPECIFICATIONS];
+    [recommendationView setBackgroundColor:JAHomePageBackgroundGrey];
+    
+    [ThreadManager executeOnMainThread:^{
+        [recommendationView setFrame:CGRectMake(0, self.mainScrollView.contentSize.height, self.mainScrollView.width, recommendationView.height)];
+        [self.mainScrollView addSubview:recommendationView];
+        [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.width, self.mainScrollView.contentSize.height + recommendationView.height)];
+        [recommendationView updateWithModel:recommendItems];
+    }];
+}
+
+#pragma mark - FeatureBoxCollectionViewWidgetViewDelegate
+- (void)selectFeatureItem:(NSObject *)item widgetBox:(id)widgetBox {
+    if ([item isKindOfClass:[RecommendItem class]]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName: kDidSelectTeaserWithPDVUrlNofication
+                                                            object: nil
+                                                          userInfo: @{@"sku": ((RecommendItem *)item).sku}];
+    }
 }
 
 @end
