@@ -51,7 +51,11 @@
     
     self.pagemenu = [[CAPSPageMenu alloc] initWithViewControllers:@[ self.signUpViewController, self.signInViewController ] frame:CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height) options:parameters];
     self.pagemenu.delegate = self;
-    [self.pagemenu moveToPage:1];
+    
+    if (!self.startWithSignUpViewController){
+        [self.pagemenu moveToPage:1];
+    }
+    
     [self.view addSubview:_pagemenu.view];
 }
 

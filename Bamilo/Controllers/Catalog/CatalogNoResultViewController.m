@@ -45,7 +45,7 @@ const CGFloat tableViewHeaderSectionHeight = 35;
 
 - (void)getPopularTeasers {
     NSDictionary *popularTeaserJson = [self getPopularTeaserMock];
-    self.teaserGroup = [RITeaserGrouping parseTeaserGrouping:popularTeaserJson country:nil];
+    self.teaserGroup = [RITeaserGrouping parseTeaserGroupingWithoutSave:popularTeaserJson country:nil];
     [self refreshView];
 }
 

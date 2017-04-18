@@ -159,7 +159,12 @@
     // Set merchant ID. for emarsysPredict
     EMSession *emarsysSession = [EMSession sharedSession];
     emarsysSession.merchantID = @"18146DE34FE0B8C9";
+    
+#ifdef IS_RELEASE
+    emarsysSession.logLevel = EMLogLevelNone;
+#else
     emarsysSession.logLevel = EMLogLevelDebug;
+#endif
     
     [[PushNotificationManager pushManager] startLocationTracking];
     
@@ -201,23 +206,6 @@
     if(screenName) {
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCloseApp] data:[NSDictionary dictionaryWithObject:screenName forKey:kRIEventScreenNameKey]];
     }
-
-    /*
-    UINavigationController *rootViewController = (UINavigationController*) self.window.rootViewController;
-    JARootViewController* mainController = (JARootViewController*) [rootViewController topViewController];
-    if(VALID_NOTEMPTY(mainController, JARootViewController)) {
-        UINavigationController* centerPanel = (UINavigationController*) [mainController centerPanel];
-        if(VALID_NOTEMPTY(centerPanel, UINavigationController)) {
-            NSArray *viewControllers = centerPanel.viewControllers;
-            if(VALID_NOTEMPTY(viewControllers, NSArray)) {
-                JABaseViewController *rootViewController = (JABaseViewController *) OBJECT_AT_INDEX(viewControllers, [viewControllers count] - 1);
-                NSString *screenName = [rootViewController getPerformanceTrackerScreenName];
-                if(VALID_NOTEMPTY(screenName, NSString)) {
-
-                }
-            }
-        }
-    }*/
 
     [[RITrackingWrapper sharedInstance] applicationDidEnterBackground:application];
 
@@ -352,7 +340,7 @@
     if (url) {
         [[RITrackingWrapper sharedInstance] trackOpenURL:url];
         [DeepLinkManager handleUrl:url];
-        
+    
         //EVENT: OPEN APP / DEEP LINK
         [TrackerManager postEvent:[EventFactory openApp:[[AppManager sharedInstance] updateOpenAppEventSource:OPEN_APP_SOURCE_DEEPLINK]] forName:[OpenAppEvent name]];
         

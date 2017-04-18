@@ -16,7 +16,7 @@
 #import "JAAppDelegate.h"
 #import "JAFallbackView.h"
 #import "RIAddress.h"
-#import "RIForm.h"
+//#import "RIForm.h"
 #import "JAPicker.h"
 #import "JANewsletterTeaserView.h"
 #import "JACenterNavigationController.h"
@@ -30,6 +30,7 @@
 #import "EmarsysRecommendationCarouselView.h"
 #import "ThreadManager.h"
 #import "EmarsysPredictManager.h"
+#import "DeepLinkManager.h"
 
 @interface JAHomeViewController () <JAPickerDelegate, JANewsletterGenderProtocol, EmarsysRecommendationsProtocol, FeatureBoxCollectionViewWidgetViewDelegate>
 @property (strong, nonatomic) JATeaserPageView* teaserPageView;
@@ -59,8 +60,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(campaignTimerEnded) name:kCampaignMainTeaserTimerEndedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reload) name:kHomeShouldReload object:nil];
-    
-    [EmarsysPredictManager sendTransactionsOf:self];
+    [DeepLinkManager listenersReady];
 }
 
 - (void)campaignTimerEnded {
@@ -91,7 +91,6 @@
 - (void)presentCoachMarks {
     
     CGRect searchButtonFrame = self.searchIconImageView.frame; //search button
-    
     JATabBarButton* moreButton = [[ViewControllerManager centerViewController].tabBarView.tabButtonsArray objectAtIndex:4];//morbutton in tab
     CGRect moreButtonFrame = moreButton.frame;
     
@@ -219,6 +218,9 @@
         
         [self publishScreenLoadTime];
         
+        //############## when home page is fully loaded & rendered
+        [EmarsysPredictManager sendTransactionsOf:self];
+        
         // notify the InAppNotification SDK that this the active view controller
         [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
         [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
@@ -251,10 +253,7 @@
     [self.view addSubview:promotionPopUp];
 }
 
-#pragma mark - Newsletter
-
 #pragma mark - Picker
-
 - (void)openPicker:(JARadioComponent *)radioComponent {
     self.radioComponent = radioComponent;
     
@@ -383,7 +382,6 @@
     
     EmarsysRecommendationCarouselView *recommendationView = [EmarsysRecommendationCarouselView nibInstance];
     recommendationView.delegate = self;
-
     [recommendationView updateTitle:STRING_SPECIFICATIONS];
     
     

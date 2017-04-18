@@ -52,10 +52,6 @@
     [self requestNavigationBarReload];
     [self requestTabBarReload];
     
-    if([self getIsSideMenuAvailable]) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOnMenuSwipePanelNotification object:nil];
-    }
-    
     if ([self conformsToProtocol:@protocol(EmarsysPredictProtocolBase)]) {
         if ([self respondsToSelector:@selector(isPreventSendTransactionInViewWillAppear)]) {
             if (![((id<EmarsysPredictProtocolBase>)self) isPreventSendTransactionInViewWillAppear]) {
@@ -65,22 +61,14 @@
             [EmarsysPredictManager sendTransactionsOf:self];
         }
     }
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillEnterForeground) name:kAppWillEnterForeground object:nil];
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground) name:kAppDidEnterBackground object:nil];
 }
 
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
-    //[Accengage trackScreenDisplay:[self getPerformanceTrackerScreenName] ?: @""];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kTurnOnMenuSwipePanelNotification object:nil];
-    //[[NSNotificationCenter defaultCenter] removeObserver:self name:kAppWillEnterForeground object:nil];
-    //[[NSNotificationCenter defaultCenter] removeObserver:self name:kAppDidEnterBackground object:nil];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {

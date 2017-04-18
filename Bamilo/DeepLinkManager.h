@@ -11,5 +11,6 @@
 @interface DeepLinkManager : NSObject
 
 + (void)handleUrl:(NSURL *)url;
++ (void)listenersReady;
 
 @end

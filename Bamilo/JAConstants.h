@@ -34,7 +34,6 @@
 #define kCloseMenuNotification @"NOTIFICATION_OPEN_COLSE"
 #define kOpenCenterPanelNotification @"NOTIFICATION_OPEN_CENTER_PANEL"
 #define kTurnOffMenuSwipePanelNotification @"NOTIFICATION_TURN_OFF_MENU_SWIPE_PANEL"
-#define kTurnOnMenuSwipePanelNotification @"NOTIFICATION_TURN_ON_MENU_SWIPE_PANEL"
 //************
 
 //************ center navigation controller notifications

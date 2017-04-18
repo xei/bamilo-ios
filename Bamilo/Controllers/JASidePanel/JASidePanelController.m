@@ -423,8 +423,7 @@ static char ja_kvoContext;
     }
 }
 
-- (void)updateLeftPanelInformation:(NSDictionary*)userInfo
-{
+- (void)updateLeftPanelInformation:(NSDictionary*)userInfo {
 //    if (VALID_NOTEMPTY(_leftPanel, UINavigationController))
 //    {
 //        UINavigationController *navigationController = (UINavigationController *)_leftPanel;
@@ -445,8 +444,7 @@ static char ja_kvoContext;
 //    }
 }
 
-- (void)updateRightPanelInformation:(NSDictionary*)userInfo
-{
+- (void)updateRightPanelInformation:(NSDictionary*)userInfo {
 //    if (VALID_NOTEMPTY(_rightPanel, UINavigationController))
 //    {
 //        UINavigationController *navigationController = (UINavigationController *)_rightPanel;
