@@ -131,6 +131,8 @@
 		870BEA851E73F6BC00C5B615 /* ThemeFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 870BEA841E73F6BC00C5B615 /* ThemeFont.m */; };
 		870BEA8D1E74013F00C5B615 /* ThemeColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 870BEA8C1E74013F00C5B615 /* ThemeColor.m */; };
 		870BF7D61EA37D4600A0982E /* TimerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 870BF7D51EA37D4600A0982E /* TimerManager.m */; };
+		870BF7DE1EA4F12C00A0982E /* Autumn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 870BF7DD1EA4F12C00A0982E /* Autumn@2x.png */; };
+		870BF7E01EA4F13D00A0982E /* Autumn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 870BF7DF1EA4F13D00A0982E /* Autumn@3x.png */; };
 		870F8CF61E338D2D0021F87B /* BamiloUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 870F8CF51E338D2D0021F87B /* BamiloUITests.m */; };
 		870F8D061E33975A0021F87B /* IntUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 870F8D051E33975A0021F87B /* IntUtility.m */; };
 		8714E0361E45CC85004C9B1D /* AddressTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8714E0351E45CC85004C9B1D /* AddressTableViewCell.m */; };
@@ -900,6 +902,8 @@
 		870BEA8C1E74013F00C5B615 /* ThemeColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemeColor.m; sourceTree = "<group>"; };
 		870BF7D41EA37D4600A0982E /* TimerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimerManager.h; sourceTree = "<group>"; };
 		870BF7D51EA37D4600A0982E /* TimerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimerManager.m; sourceTree = "<group>"; };
+		870BF7DD1EA4F12C00A0982E /* Autumn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Autumn@2x.png"; sourceTree = "<group>"; };
+		870BF7DF1EA4F13D00A0982E /* Autumn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Autumn@3x.png"; sourceTree = "<group>"; };
 		870F8CCB1E3354700021F87B /* Bamilo.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Bamilo.entitlements; sourceTree = "<group>"; };
 		870F8CF31E338D2C0021F87B /* BamiloUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BamiloUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		870F8CF51E338D2D0021F87B /* BamiloUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BamiloUITests.m; sourceTree = "<group>"; };
@@ -3191,6 +3195,23 @@
 			name = TimerManager;
 			sourceTree = "<group>";
 		};
+		870BF7DB1EA4F10100A0982E /* Alternatives */ = {
+			isa = PBXGroup;
+			children = (
+				870BF7DC1EA4F10B00A0982E /* Autumn */,
+			);
+			name = Alternatives;
+			sourceTree = "<group>";
+		};
+		870BF7DC1EA4F10B00A0982E /* Autumn */ = {
+			isa = PBXGroup;
+			children = (
+				870BF7DD1EA4F12C00A0982E /* Autumn@2x.png */,
+				870BF7DF1EA4F13D00A0982E /* Autumn@3x.png */,
+			);
+			name = Autumn;
+			sourceTree = "<group>";
+		};
 		870F8CCC1E33548F0021F87B /* Application */ = {
 			isa = PBXGroup;
 			children = (
@@ -3218,6 +3239,7 @@
 		870F8CCE1E3355060021F87B /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				870BF7DB1EA4F10100A0982E /* Alternatives */,
 				B5A301BB19811D0700F71726 /* Images.xcassets */,
 				CE9AE1341AB8994F00D56481 /* Bamilo.xcassets */,
 			);
@@ -6065,6 +6087,7 @@
 				87EA031D1E6D706E00B1E062 /* FormHeaderTableViewCell.xib in Resources */,
 				87DAABE51E54431A00445EBB /* PaymentOptionWithLogoTableViewCell.xib in Resources */,
 				CE9AE0C21AB6D78200D56481 /* JACatalogTopView_ipad.xib in Resources */,
+				870BF7DE1EA4F12C00A0982E /* Autumn@2x.png in Resources */,
 				CE9AE0C41AB6D78200D56481 /* JAPriceFiltersView.xib in Resources */,
 				87DAABEB1E55A2C100445EBB /* PaymentOptionTableViewCell.xib in Resources */,
 				CE9AE0CA1AB6D78200D56481 /* JAPDVProductInfo.xib in Resources */,
@@ -6087,6 +6110,7 @@
 				CE9AE0EA1AB6D78200D56481 /* JARatingsView.xib in Resources */,
 				CE9AE0EF1AB6D78200D56481 /* JARatingsViewMedium.xib in Resources */,
 				1CCD52A11E2BA42F008BAEE4 /* PopularTeaserTableViewCell.xib in Resources */,
+				870BF7E01EA4F13D00A0982E /* Autumn@3x.png in Resources */,
 				61E099781E3E1A02004ED14E /* VersionTableViewCell.xib in Resources */,
 				8714E0381E45CDC3004C9B1D /* AddressTableViewCell.xib in Resources */,
 				CE9AE1071AB6D78200D56481 /* JAGrayButtonCell_ipad_portrait.xib in Resources */,

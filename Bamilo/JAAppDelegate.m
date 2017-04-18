@@ -253,6 +253,8 @@
     
     //Reset to none for next app open
     [[AppManager sharedInstance] updateOpenAppEventSource:OPEN_APP_SOURCE_NONE];
+    
+    [[AppManager sharedInstance] executeScheduledAppIconUpdates];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {

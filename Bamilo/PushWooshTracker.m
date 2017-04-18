@@ -35,18 +35,10 @@ static PushWooshTracker *instance;
     
     NSString *customDataString = [pushManager getCustomPushData:pushNotification];
     
-    NSDictionary *jsonData = nil;
     if (customDataString) {
-        jsonData = [NSJSONSerialization JSONObjectWithData:[customDataString dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
+        [self handleCustomData:[NSJSONSerialization JSONObjectWithData:[customDataString dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil]];
     }
-    
-    NSString *emarsysSID = [jsonData objectForKey:@"sid"];
-    if(emarsysSID) {
-        [[EmarsysMobileEngage sharedInstance] sendOpen:emarsysSID completion:^(BOOL success) {
-            NSLog(@"EmarsysMobileEngage > sendOpen > %@", success ? sSUCCESSFUL : sFAILED);
-        }];
-    }
-    
+
     if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
         //App already open
     } else {
@@ -70,6 +62,41 @@ static PushWooshTracker *instance;
             completion(error);
         }
     }];
+}
+
+#pragma mark - Helpers
+-(void) handleCustomData:(NSDictionary *)jsonData {
+    [self handleActions:[jsonData objectForKey:@"actions"]];
+    
+    NSString *emarsysSID = [jsonData objectForKey:@"sid"];
+    if(emarsysSID) {
+        [[EmarsysMobileEngage sharedInstance] sendOpen:emarsysSID completion:^(BOOL success) {
+            NSLog(@"EmarsysMobileEngage > sendOpen > %@", success ? sSUCCESSFUL : sFAILED);
+        }];
+    }
+}
+
+-(void) handleActions:(NSArray *)actions {
+    if(actions && actions.count) {
+        for(NSDictionary *action in actions) {
+            NSString *actionKey = [action objectForKey:@"key"];
+            NSDictionary *actionData = [action objectForKey:@"data"];
+        
+            //Handle alternative icon for iOS 10.3+ action
+            if ([actionKey isEqualToString:@"change_icon"]) {
+                NSString *icon = [actionData objectForKey:@"icon"];
+                if(icon) {
+                    //If there is an expiryDate, consider that. If not, default is 1 week
+                    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+                    [dateFormatter setDateFormat:cWebNormalizedDateTimeFormat];
+                    //[dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
+                    //[dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
+                    NSDate *expiryDate = [dateFormatter dateFromString:[actionData objectForKey:@"expires"]] ?: [[NSDate date] addWeeks:1];
+                    [[AppManager sharedInstance] setAppIcon:icon expires:expiryDate];
+                }
+            }
+        }
+    }
 }
 
 @end

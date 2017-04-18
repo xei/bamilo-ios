@@ -18,10 +18,18 @@
     return [df stringFromDate:self];
 }
 
--(NSString *)webFormalized {
+-(NSString *)toWebDateString {
     NSDateFormatter *dateFormatter = [NSDateFormatter new];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    [dateFormatter setDateFormat:cWebNormalizedDateTimeFormat];
     return [dateFormatter stringFromDate:self];
+}
+
+-(NSDate *)addDays:(int)numberOfDays {
+    return [[NSCalendar currentCalendar] dateByAddingUnit:NSCalendarUnitDay value:numberOfDays toDate:self options:0];
+}
+
+-(NSDate *)addWeeks:(int)numberOfWeeks {
+    return [self addDays:numberOfWeeks * 7];
 }
 
 @end

@@ -20,5 +20,6 @@
 - (NSString *)getPriceStringFromFormatedPrice;
 - (NSString *)struckThroughText;
 - (NSString *)toEncodeBase64;
+- (NSDate *) toWebDate;
 
 @end

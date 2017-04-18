@@ -2,6 +2,42 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Configs</key>
+	<dict>
+		<key>Emarsys</key>
+		<dict>
+			<key>Application_CODE</key>
+			<string>82449-6B792</string>
+			<key>Application_PASSWORD</key>
+			<string>oKjusj5sk9ebqCYgi38XdM/PtPCPqLTl</string>
+		</dict>
+		<key>Pushwoosh_BETA</key>
+		<string>1</string>
+	</dict>
+	<key>CFBundleIcons</key>
+	<dict>
+		<key>CFBundleAlternateIcons</key>
+		<dict>
+			<key>Autumn</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>Autumn</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+		</dict>
+		<key>CFBundlePrimaryIcon</key>
+		<dict>
+			<key>CFBundleIconFiles</key>
+			<array>
+				<string>AppIcon</string>
+			</array>
+			<key>UIPrerenderedIcon</key>
+			<false/>
+		</dict>
+	</dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -42,18 +78,6 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>23</string>
-	<key>Configs</key>
-	<dict>
-		<key>Emarsys</key>
-		<dict>
-			<key>Application_CODE</key>
-			<string>82449-6B792</string>
-			<key>Application_PASSWORD</key>
-			<string>oKjusj5sk9ebqCYgi38XdM/PtPCPqLTl</string>
-		</dict>
-		<key>Pushwoosh_BETA</key>
-		<string>1</string>
-	</dict>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
