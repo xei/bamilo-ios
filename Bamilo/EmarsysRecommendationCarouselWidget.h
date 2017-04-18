@@ -7,7 +7,11 @@
 //
 
 #import "FeatureBoxCollectionViewWidget.h"
+#import "EmarsysRecommendationCarouselView.h"
 
 @interface EmarsysRecommendationCarouselWidget : FeatureBoxCollectionViewWidget
+
+@property (nonatomic, weak) id<FeatureBoxCollectionViewWidgetViewDelegate> delegate;
+- (void)updateTitle:(NSString *)title;
 
 @end
