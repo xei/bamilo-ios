@@ -25,8 +25,7 @@
 
 @implementation JAEmptyCartView
 
-- (UILabel *)emptyCartLabel
-{
+- (UILabel *)emptyCartLabel {
     if (!VALID_NOTEMPTY(_emptyCartLabel, UILabel)) {
         _emptyCartLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, kTopMargin, self.width - 2*kLateralMargin, 17)];
         [_emptyCartLabel setFont:JADisplay2Font];
@@ -39,8 +38,7 @@
     return _emptyCartLabel;
 }
 
-- (UIImageView *)emptyCartImageView
-{
+- (UIImageView *)emptyCartImageView {
     if (!VALID_NOTEMPTY(_emptyCartImageView, UIImageView)) {
         UIImage *image = [UIImage imageNamed:@"img_emptyCart"];
         _emptyCartImageView = [[UIImageView alloc] initWithImage:image];
@@ -50,8 +48,7 @@
     return _emptyCartImageView;
 }
 
-- (JAButton *)continueShoppingButton
-{
+- (JAButton *)continueShoppingButton {
     if (!VALID_NOTEMPTY(_continueShoppingButton, JAButton)) {
         _continueShoppingButton = [[JAButton alloc] initButtonWithTitle:[STRING_CONTINUE_SHOPPING uppercaseString] target:self action:@selector(goToHomeScreen)];
         
@@ -61,20 +58,17 @@
     return _continueShoppingButton;
 }
 
-- (void)layoutSubviews
-{
+- (void)layoutSubviews {
     [super layoutSubviews];
     [self.emptyCartLabel setXCenterAligned];
     [self.emptyCartImageView setXCenterAligned];
     [self.continueShoppingButton setXCenterAligned];
 }
 
-- (void)goToHomeScreen
-{
+- (void)goToHomeScreen {
 }
 
-- (void)addHomeScreenTarget:(id)target action:(SEL)action
-{
+- (void)addHomeScreenTarget:(id)target action:(SEL)action {
     [self.continueShoppingButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
 }
 

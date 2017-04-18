@@ -57,7 +57,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aPI-2d-kOH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1705" y="-1101"/>
+            <point key="canvasLocation" x="-2619" y="-1101"/>
         </scene>
         <!--Sub Categories View Controller-->
         <scene sceneID="DkP-k9-TEh">
@@ -276,7 +276,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aDQ-za-Re3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1697" y="-1907"/>
+            <point key="canvasLocation" x="-2619" y="-1908"/>
         </scene>
         <!--Contact Us View Controller-->
         <scene sceneID="h22-lE-e8W">
@@ -503,7 +503,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lE9-PA-jRw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-802" y="-1907"/>
+            <point key="canvasLocation" x="-1725" y="-1908"/>
         </scene>
         <!--Cart View Controller-->
         <scene sceneID="x2b-dV-MkH">
@@ -599,6 +599,12 @@
                                             <action selector="proceedToCheckout:" destination="9Ss-pC-YRE" eventType="touchUpInside" id="ycL-d3-M2W"/>
                                         </connections>
                                     </button>
+                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Zb-5G-jna">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="663"/>
+                                        <connections>
+                                            <segue destination="160-dK-6zH" kind="embed" identifier="embedEmptyCartViewController" id="gkQ-2h-5Oy"/>
+                                        </connections>
+                                    </containerView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -606,12 +612,16 @@
                                     <constraint firstItem="ig0-vW-kqW" firstAttribute="leading" secondItem="qMZ-Vq-mnw" secondAttribute="leading" id="6CI-FM-OM4"/>
                                     <constraint firstAttribute="trailing" secondItem="f8h-QL-QyM" secondAttribute="trailing" id="8yX-IY-Sbo"/>
                                     <constraint firstAttribute="trailing" secondItem="Fm5-0g-qnq" secondAttribute="trailing" id="MhF-KG-bfK"/>
+                                    <constraint firstAttribute="trailing" secondItem="3Zb-5G-jna" secondAttribute="trailing" id="Ppk-aB-US8"/>
                                     <constraint firstItem="R5o-k2-OAi" firstAttribute="leading" secondItem="qMZ-Vq-mnw" secondAttribute="leading" id="Snz-ea-lP3"/>
                                     <constraint firstAttribute="bottom" secondItem="f8h-QL-QyM" secondAttribute="bottom" id="Wg7-fO-RXM"/>
+                                    <constraint firstItem="3Zb-5G-jna" firstAttribute="top" secondItem="qMZ-Vq-mnw" secondAttribute="top" id="Wzb-zV-b4S"/>
                                     <constraint firstItem="R5o-k2-OAi" firstAttribute="top" secondItem="Fm5-0g-qnq" secondAttribute="top" id="X0X-t0-0Fo"/>
                                     <constraint firstItem="f8h-QL-QyM" firstAttribute="top" secondItem="ig0-vW-kqW" secondAttribute="bottom" id="YMd-KB-IjR"/>
+                                    <constraint firstItem="3Zb-5G-jna" firstAttribute="leading" secondItem="qMZ-Vq-mnw" secondAttribute="leading" id="bBQ-ji-pOp"/>
                                     <constraint firstAttribute="trailing" secondItem="R5o-k2-OAi" secondAttribute="trailing" id="lor-Iy-sop"/>
                                     <constraint firstItem="f8h-QL-QyM" firstAttribute="top" secondItem="R5o-k2-OAi" secondAttribute="bottom" constant="-45" id="rSD-k0-cZW"/>
+                                    <constraint firstAttribute="bottom" secondItem="3Zb-5G-jna" secondAttribute="bottom" id="tdF-6P-nLv"/>
                                     <constraint firstItem="Fm5-0g-qnq" firstAttribute="leading" secondItem="qMZ-Vq-mnw" secondAttribute="leading" id="uIf-kq-CEM"/>
                                     <constraint firstItem="f8h-QL-QyM" firstAttribute="leading" secondItem="qMZ-Vq-mnw" secondAttribute="leading" id="x3I-Ed-hU9"/>
                                     <constraint firstItem="ig0-vW-kqW" firstAttribute="top" secondItem="qMZ-Vq-mnw" secondAttribute="top" id="y7A-sY-3qT"/>
@@ -630,6 +640,7 @@
                         <outlet property="cartSummeryView" destination="Fm5-0g-qnq" id="8eC-Pb-QM4"/>
                         <outlet property="contentWrapper" destination="qMZ-Vq-mnw" id="sgB-Sg-cim"/>
                         <outlet property="costSummeryContainerTopToWholeCostTopConstraint" destination="X0X-t0-0Fo" id="cTb-d9-4G3"/>
+                        <outlet property="emptyCartViewContainer" destination="3Zb-5G-jna" id="yQv-o3-Ddr"/>
                         <outlet property="summeryView" destination="R5o-k2-OAi" id="vdI-bl-chs"/>
                         <outlet property="summeryViewToBottomConstraint" destination="rSD-k0-cZW" id="il2-eP-QnQ"/>
                         <outlet property="tableView" destination="ig0-vW-kqW" id="RND-tc-DDe"/>
@@ -639,7 +650,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9mC-sw-S7i" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2500" y="-1907.4962518740631"/>
+            <point key="canvasLocation" x="-1707" y="-2636"/>
         </scene>
         <!--Address Table View Controller-->
         <scene sceneID="IcB-B5-54b">
@@ -821,9 +832,9 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="NoResultViewControllerContainer" destination="eAy-WM-iDC" id="egQ-CL-CAF"/>
                         <outlet property="collectionView" destination="uvl-Jb-YwM" id="Oln-Fz-QFS"/>
                         <outlet property="collectionViewTopConstraint" destination="zRa-gn-Un8" id="D1W-r5-WoH"/>
-                        <outlet property="containerView" destination="eAy-WM-iDC" id="6iI-LB-h56"/>
                         <segue destination="L8G-Sy-CpX" kind="show" identifier="showFilterView" id="JKW-Pq-7fE"/>
                     </connections>
                 </viewController>
@@ -847,7 +858,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="436"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JRw-GO-gRl" userLabel="Message Container View">
-                                        <rect key="frame" x="62.666666666666657" y="139" width="290" height="160"/>
+                                        <rect key="frame" x="62.666666666666657" y="138" width="290" height="160"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pageNotFound" translatesAutoresizingMaskIntoConstraints="NO" id="WnJ-6T-0gc">
                                                 <rect key="frame" x="117" y="5" width="55" height="55"/>
@@ -1342,7 +1353,56 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xli-Xe-FgN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2500" y="-1101"/>
+            <point key="canvasLocation" x="-3413" y="-1101"/>
+        </scene>
+        <!--Empty Cart View Controller-->
+        <scene sceneID="7DM-WZ-vkX">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zP1-Cy-ljt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="160-dK-6zH" customClass="EmptyCartViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="RQQ-YE-rah">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="663"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2vc-F9-F9R" customClass="EmarsysRecommendationCarouselWidget">
+                                <rect key="frame" x="0.0" y="383" width="414" height="280"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="280" id="XZY-UT-FKi"/>
+                                </constraints>
+                            </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img_emptyCart" translatesAutoresizingMaskIntoConstraints="NO" id="kXT-4q-loM">
+                                <rect key="frame" x="173.66666666666666" y="20" width="66.666666666666686" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="kXT-4q-loM" secondAttribute="height" multiplier="51:46" id="APG-8b-trB"/>
+                                    <constraint firstAttribute="height" constant="60" id="JZU-6P-Sd0"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="شما هیچ کالایی در سبد خرید ندارید." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lZ4-7s-ZqF">
+                                <rect key="frame" x="86" y="96" width="243.66666666666669" height="28.666666666666671"/>
+                                <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="2vc-F9-F9R" secondAttribute="bottom" id="5rm-o6-6ts"/>
+                            <constraint firstItem="kXT-4q-loM" firstAttribute="top" secondItem="RQQ-YE-rah" secondAttribute="top" constant="20" id="9T4-qL-aKG"/>
+                            <constraint firstItem="lZ4-7s-ZqF" firstAttribute="centerX" secondItem="RQQ-YE-rah" secondAttribute="centerX" id="GV2-qq-PBB"/>
+                            <constraint firstItem="lZ4-7s-ZqF" firstAttribute="top" secondItem="kXT-4q-loM" secondAttribute="bottom" constant="16" id="Lgw-YG-5Cl"/>
+                            <constraint firstAttribute="trailing" secondItem="2vc-F9-F9R" secondAttribute="trailing" id="W3x-fQ-ISS"/>
+                            <constraint firstItem="2vc-F9-F9R" firstAttribute="leading" secondItem="RQQ-YE-rah" secondAttribute="leading" id="Wfd-Ng-yfF"/>
+                            <constraint firstItem="kXT-4q-loM" firstAttribute="centerX" secondItem="RQQ-YE-rah" secondAttribute="centerX" id="hBL-Yk-oMh"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="carouselWidget" destination="2vc-F9-F9R" id="dVK-ba-qZq"/>
+                        <outlet property="titleLabel" destination="lZ4-7s-ZqF" id="2H9-2S-Rd5"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="-946.37681159420299" y="-2636.005434782609"/>
         </scene>
     </scenes>
     <resources>
@@ -1350,6 +1410,7 @@
         <image name="banner" width="708" height="300"/>
         <image name="bug" width="21" height="25"/>
         <image name="call" width="25" height="25"/>
+        <image name="img_emptyCart" width="102" height="92"/>
         <image name="pageNotFound" width="853" height="853"/>
         <image name="subcatIcon" width="18" height="19"/>
     </resources>

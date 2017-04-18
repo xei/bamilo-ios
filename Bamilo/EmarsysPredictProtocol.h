@@ -7,11 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <EmarsysPredictSDK/EmarsysPredictSDK.h>
 
 @protocol EmarsysPredictProtocolBase <NSObject>
 
 @optional
 - (BOOL)isPreventSendTransactionInViewWillAppear;
+- (void)recievedErrorSendingTransition:(NSError *)error;
 
 @end
 

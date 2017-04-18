@@ -1591,9 +1591,6 @@
 }
 
 - (void)openCart:(NSNotification*) notification {
-    /*if ([[self topViewController] isKindOfClass:[JALoadCountryViewController class]]) {
-        return;
-    }*/
     
     typedef void (^GoToCartBlock)(void);
         GoToCartBlock goToCartBlock = ^void {
@@ -1606,18 +1603,6 @@
             [self pushViewController:cartViewController animated:NO];
         }
     };
-    
-    /*typedef void (^GoToCartBlock)(void);
-    GoToCartBlock goToCartBlock = ^void {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification object:nil];
-        if (![[self topViewController] isKindOfClass:[JACartViewController class]]) {
-            JACartViewController *cartViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"CartViewController"];
-            [cartViewController setCart:self.cart];
-            [self popToRootViewControllerAnimated:NO];
-            [self.tabBarView selectButtonAtIndex:2];
-            [self pushViewController:cartViewController animated:NO];
-        }
-    };*/
     
     if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY(notification.object, NSString)) {
         [RICart addMultipleProducts:[notification.object componentsSeparatedByString:@"_"] withSuccessBlock:^(RICart *cart, NSArray *productsNotAdded) {
