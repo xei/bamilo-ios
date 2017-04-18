@@ -36,11 +36,6 @@
 #define VALID_VALUE(__OBJECT, __CLASSNAME) (nil != __OBJECT && [__OBJECT isKindOfClass:[__CLASSNAME class]])?__OBJECT:nil
 #endif
 
-
-#ifndef SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO
-#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
-#endif
-
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
@@ -79,5 +74,13 @@
 #define sSUCCESSFUL @"SUCCESSFUL"
 #define sFAILED @"FAILED"
 #define kConfigs @"Configs"
+#define cWebNormalizedDateTimeFormat @"yyyy-MM-dd HH:mm:ss"
+
+#define SYSTEM_VERSION(v) [[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch]
+#define SYSTEM_VERSION_EQUAL_TO(v) (SYSTEM_VERSION(v) == NSOrderedSame)
+#define SYSTEM_VERSION_GREATER_THAN(v) (SYSTEM_VERSION(v) == NSOrderedDescending)
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v) (SYSTEM_VERSION(v) != NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN(v) (SYSTEM_VERSION(v) == NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v) (SYSTEM_VERSION(v) != NSOrderedDescending)
 
 #endif

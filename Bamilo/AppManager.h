@@ -20,4 +20,7 @@
 -(OpenAppEventSourceType) updateOpenAppEventSource:(OpenAppEventSourceType)source;
 -(OpenAppEventSourceType) getOpenAppEventSource;
 
+-(void) setAppIcon:(NSString *)icon expires:(NSDate *)expires;
+-(void) executeScheduledAppIconUpdates;
+
 @end

@@ -94,4 +94,10 @@
     return [[self dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:kNilOptions];
 }
 
+-(NSDate *)toWebDate {
+    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+    [dateFormatter setDateFormat:cWebNormalizedDateTimeFormat];
+    return [dateFormatter dateFromString:self];
+}
+
 @end

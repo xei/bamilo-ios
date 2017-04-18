@@ -14,6 +14,28 @@
 		<key>Pushwoosh_BETA</key>
 		<string>0</string>
 	</dict>
+	<key>CFBundleIcons</key>
+	<dict>
+		<key>CFBundleAlternateIcons</key>
+		<dict>
+			<key>Autumn</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>Autumn</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+		</dict>
+		<key>CFBundlePrimaryIcon</key>
+		<dict>
+			<key>CFBundleIconFiles</key>
+			<array>
+				<string>AppIcon</string>
+			</array>
+		</dict>
+	</dict>
 	<key>Pushwoosh_APPID</key>
 	<string>82449-6B792</string>
 	<key>Pushwoosh_APPNAME</key>
@@ -121,8 +143,8 @@
 	<string>Bamilo would like to access your photos</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Bamilo would like to access your location</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>Bamilo would like to access your location</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Bamilo would like to access your location</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Bamilosans Reg.ttf</string>

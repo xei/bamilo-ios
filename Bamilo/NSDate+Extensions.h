@@ -11,6 +11,8 @@
 @interface NSDate (Extensions)
 
 -(NSString *) convertToJalali;
--(NSString *) webFormalized;
+-(NSString *) toWebDateString;
+-(NSDate *) addDays:(int)numberOfDays;
+-(NSDate *) addWeeks:(int)numberOfWeeks;
 
 @end
