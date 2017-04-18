@@ -6,8 +6,11 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 
-@interface CatalogNoResultViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
-    @property (nonatomic, strong) NSString* searchQuery;
+@interface CatalogNoResultViewController : BaseViewController /*<UITableViewDelegate, UITableViewDataSource>*/
+
+@property (nonatomic, strong) NSString* searchQuery;
+- (void)getSuggestions;
+
 @end

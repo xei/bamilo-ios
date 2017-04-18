@@ -32,6 +32,7 @@ const int numberOfColumns = 2;
 }
 
 - (void)updateLeftButtonTitle:(NSString *)title {
+    [self.leftButton setHeight:NO];
     [self.leftButton setTitle:title forState:UIControlStateNormal];
 }
 

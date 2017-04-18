@@ -15,16 +15,12 @@
     [super awakeFromNib];
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
+    [self.collectionView setBackgroundColor:[UIColor clearColor]];
 }
 
 - (void)updateWithModel:(NSArray *)arrayModel {
     self.collectionItems = arrayModel;
     [self.collectionView reloadData];
-}
-
-- (void)setWidgetBacgkround:(UIColor *)color {
-    [super setWidgetBacgkround:color];
-    self.collectionView.backgroundColor = color;
 }
 
 #pragma mark - UICollectionViewDataSource

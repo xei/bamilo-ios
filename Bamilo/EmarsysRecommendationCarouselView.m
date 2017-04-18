@@ -12,6 +12,7 @@
 @interface EmarsysRecommendationCarouselView()
 
 @property (weak, nonatomic) IBOutlet UILabel *carouselTitle;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @end
 
@@ -24,10 +25,12 @@
     
     [self.collectionView registerNib:[UINib nibWithNibName:[EmarsysRecommendationCarouselCollectionViewCell nibName] bundle:nil]
           forCellWithReuseIdentifier:[EmarsysRecommendationCarouselCollectionViewCell nibName]];
+    [self.activityIndicator startAnimating];
 }
 
 - (void)updateWithModel:(NSArray *)arrayModel {
     if ([arrayModel isKindOfClass:[NSArray<RecommendItem *> class]]) {
+        if (arrayModel.count) [self.activityIndicator stopAnimating];
         [super updateWithModel:arrayModel];
     }
 }

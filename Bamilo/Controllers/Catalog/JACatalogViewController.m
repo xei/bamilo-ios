@@ -143,6 +143,7 @@ typedef void (^ProcessActionBlock)(void);
     }
     
     self.NoResultContainerViewController.searchQuery = self.searchString ? self.searchString : self.categoryName;
+    [self.NoResultContainerViewController getSuggestions];
     [self.catalogTopView setHidden:YES];
     [self.collectionView setHidden:YES];
     [self.containerView setHidden:NO];
