@@ -337,12 +337,8 @@
 
     if (url) {
         [[RITrackingWrapper sharedInstance] trackOpenURL:url];
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-            [DeepLinkManager handleUrl:url];
-        });
-
-        
+        [DeepLinkManager handleUrl:url];
+    
         //EVENT: OPEN APP / DEEP LINK
         [TrackerManager postEvent:[EventFactory openApp:[[AppManager sharedInstance] updateOpenAppEventSource:OPEN_APP_SOURCE_DEEPLINK]] forName:[OpenAppEvent name]];
         

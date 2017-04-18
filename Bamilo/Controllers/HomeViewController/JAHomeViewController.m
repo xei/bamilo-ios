@@ -30,6 +30,7 @@
 #import "EmarsysRecommendationCarouselView.h"
 #import "ThreadManager.h"
 #import "EmarsysPredictManager.h"
+#import "DeepLinkManager.h"
 
 @interface JAHomeViewController () <JAPickerDelegate, JANewsletterGenderProtocol, EmarsysRecommendationsProtocol, FeatureBoxCollectionViewWidgetViewDelegate>
 @property (strong, nonatomic) JATeaserPageView* teaserPageView;
@@ -59,6 +60,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(campaignTimerEnded) name:kCampaignMainTeaserTimerEndedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reload) name:kHomeShouldReload object:nil];
+    [DeepLinkManager listenersReady];
 }
 
 - (void)campaignTimerEnded {

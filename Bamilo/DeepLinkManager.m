@@ -11,9 +11,19 @@
 #import "URLUtility.h"
 #import "ViewControllerManager.h"
 
+
+static NSMutableArray<NSURL *> *deepLinkPipe;
+static BOOL isListenersReady;
+
 @implementation DeepLinkManager
 
 + (void)handleUrl:(NSURL *)url {
+    
+    if (!isListenersReady) {
+        [DeepLinkManager addToQueue:url];
+        return;
+    }
+    
     if (url.scheme) {
         //I don't know what the hell is this, but I keep it (`UTM` in queryString!!)
         NSDictionary *queryDictionary = [URLUtility parseQueryString:url];
@@ -22,7 +32,7 @@
         if (utm) {
             [[RITrackingWrapper sharedInstance] trackCampaignWithName:[[queryDictionary valueForKey:@"UTM"] objectForKey:@"UTM"]];
         }*/
-            
+        
         NSArray *pathComponents = [[url.path componentsSeparatedByString:@"/"] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"length > 0"]];
         if (!pathComponents.count) {
             [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
@@ -146,6 +156,28 @@
     }
     
     return NO;
+}
+
+
++ (void)addToQueue:(NSURL *)url {
+    if (!deepLinkPipe) {
+        deepLinkPipe = [[NSMutableArray alloc] init];
+    }
+    
+    [deepLinkPipe insertObject:url atIndex:0];
+}
+
++ (void)listenersReady {
+    isListenersReady = YES;
+    [DeepLinkManager popAndPerform];
+}
+
++ (void)popAndPerform {
+    NSURL *target = [deepLinkPipe lastObject];
+    if (target) {
+        [deepLinkPipe removeLastObject];
+        [DeepLinkManager handleUrl:target];
+    }
 }
 
 @end
