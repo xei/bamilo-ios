@@ -55,11 +55,11 @@ typedef void (^ProcessActionBlock)(void);
     BOOL _hasBanner;
 }
 
-@property (nonatomic, strong) CatalogNoResultViewController* NoResultContainerViewController;
+@property (nonatomic, weak) CatalogNoResultViewController* NoResultViewController;
 @property (nonatomic, strong) JAFilteredNoResultsView *filteredNoResultsView;
 @property (nonatomic, strong) JACatalogTopView* catalogTopView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-@property (weak, nonatomic) IBOutlet UIView *containerView;
+@property (weak, nonatomic) IBOutlet UIView *NoResultViewControllerContainer;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *collectionViewTopConstraint;
 @property (nonatomic, strong) JAProductCollectionViewFlowLayout* flowLayout;
 @property (nonatomic, strong) NSMutableArray <RIProduct *>* productsArray;
@@ -142,11 +142,11 @@ typedef void (^ProcessActionBlock)(void);
         [self.view addSubview:self.filteredNoResultsView];
     }
     
-    self.NoResultContainerViewController.searchQuery = self.searchString ? self.searchString : self.categoryName;
-    [self.NoResultContainerViewController getSuggestions];
+    self.NoResultViewController.searchQuery = self.searchString ? self.searchString : self.categoryName;
+    [self.NoResultViewController getSuggestions];
     [self.catalogTopView setHidden:YES];
     [self.collectionView setHidden:YES];
-    [self.containerView setHidden:NO];
+    [self.NoResultViewControllerContainer setHidden:NO];
     
 }
 
@@ -206,7 +206,7 @@ typedef void (^ProcessActionBlock)(void);
         [self getCategories];
     }
     
-    [self.containerView setHidden:YES];
+    [self.NoResultViewControllerContainer setHidden:YES];
     
     //EVENT : SEARCH
     [TrackerManager postEvent:[EventFactory search:self.categoryUrlKey keywords:[EventUtilities getSearchKeywords:self.searchString]] forName:[SearchEvent name]];
@@ -395,7 +395,7 @@ typedef void (^ProcessActionBlock)(void);
 
 - (void)loadMoreProducts {
     [self.filteredNoResultsView removeFromSuperview];
-    [self.containerView setHidden: YES];
+    [self.NoResultViewControllerContainer setHidden: YES];
     if(!self.isLoadingMoreProducts) {
         self.loadedEverything = NO;
         NSNumber *pageNumber = [NSNumber numberWithInteger:[self getCurrentPage] + 1];
@@ -1433,8 +1433,7 @@ typedef void (^ProcessActionBlock)(void);
                                               data:[trackingDictionary copy]];
 }
 
-- (void)trackingEventViewListingForProducts:(NSArray *)productsToTrack
-{
+- (void)trackingEventViewListingForProducts:(NSArray *)productsToTrack {
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
     
@@ -1473,7 +1472,7 @@ typedef void (^ProcessActionBlock)(void);
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     NSString * segueName = segue.identifier;
     if ([segueName isEqualToString: @"embedCatalogNoResult"]) {
-        self.NoResultContainerViewController = (CatalogNoResultViewController *) [segue destinationViewController];
+        self.NoResultViewController = (CatalogNoResultViewController *) [segue destinationViewController];
     }
     
     if ([segueName isEqualToString: @"showFilterView"]) {

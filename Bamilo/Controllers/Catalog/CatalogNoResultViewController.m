@@ -23,8 +23,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *warningMessageUILabel;
 @property (strong, nonatomic) RITeaserGrouping *teaserGroup;
 @property (strong, nonatomic) IBOutlet EmarsysRecommendationCarouselWidget *carouselWidget;
-
-
 @end
 
 @implementation CatalogNoResultViewController
@@ -42,14 +40,15 @@
     [EmarsysPredictManager sendTransactionsOf:self];
 }
 
+- (void)updateNavBar {
+    self.navBarLayout.showBackButton = YES;
+}
 
 - (void)setSearchQuery:(NSString *)searchQuery {
     NSString* msgToShow;
     if (searchQuery) {
-        
         searchQuery = [searchQuery wrapWithMaxSize:7];
         msgToShow = [NSString stringWithFormat:@"متاسفانه برای %@ نتیجه یافت نشد", searchQuery];
-        
     } else { //if there is no searchQuery (e.g. comes from empty category
         msgToShow = @"متاسفانه موردی یافت نشد";
     }
@@ -60,7 +59,6 @@
 }
 
 #pragma mark - EmarsysPredictProtocol
-
 - (BOOL)isPreventSendTransactionInViewWillAppear {
     return YES;
 }

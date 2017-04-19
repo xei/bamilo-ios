@@ -20,10 +20,11 @@
 #import "ViewControllerManager.h"
 #import "AlertManager.h"
 #import "CartEntitySummaryViewControl.h"
+#import "EmptyCartViewController.h"
 
 
 @interface CartViewController() <CartTableViewCellDelegate>
-@property (nonatomic, strong) JAEmptyCartView *emptyCartView;
+//@property (nonatomic, strong) JAEmptyCartView *emptyCartView;
 @property (nonatomic, strong) RICartItem *currentItem;
 @property (nonatomic, weak) IBOutlet UIView *contentWrapper;
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
@@ -33,19 +34,11 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *costSummeryContainerTopToWholeCostTopConstraint;
 @property (weak, nonatomic) IBOutlet CartEntitySummaryViewControl *summeryView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *summeryViewToBottomConstraint;
+@property (weak, nonatomic) EmptyCartViewController *emptyCartViewController;
+@property (weak, nonatomic) IBOutlet UIView *emptyCartViewContainer;
 @end
 
 @implementation CartViewController
-
-- (JAEmptyCartView *)emptyCartView {
-    if (!VALID(_emptyCartView, JAEmptyCartView)) {
-        _emptyCartView = [[JAEmptyCartView alloc] initWithFrame:self.viewBounds];
-        [_emptyCartView setBackgroundColor:JAWhiteColor];
-        [_emptyCartView addHomeScreenTarget:self action:@selector(goToHomeScreen)];
-        [self.view addSubview:_emptyCartView];
-    }
-    return _emptyCartView;
-}
 
 - (void)setCart:(RICart *)cart {
     _cart = cart;
@@ -61,13 +54,14 @@
 }
 
 - (void)setCartEmpty:(BOOL)empty {
-    [self.emptyCartView setHidden:!empty];
+    [self.emptyCartViewContainer setHidden:!empty];
+    if (empty) {
+        [self.emptyCartViewController getSuggestions];
+    }
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    //self.A4SViewControllerAlias = @"CART";
     
     self.navBarLayout.title = STRING_CART;
     self.navBarLayout.showBackButton = NO;
@@ -292,7 +286,6 @@
 #pragma mark - DataServiceProtocol
 - (void)bind:(id)data forRequestId:(int)rid {
     RICart *cart = (RICart *)data;
-    
     [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo: @{kUpdateCartNotificationValue: cart}];
     self.cart = cart;
     [self.tableView reloadData];
@@ -376,4 +369,13 @@
     return @[recommend];
 }
 
+
+#pragma segue preparation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    NSString * segueName = segue.identifier;
+    if ([segueName isEqualToString: @"embedEmptyCartViewController"]) {
+        self.emptyCartViewController = (EmptyCartViewController *) [segue destinationViewController];
+    }
+}
 @end

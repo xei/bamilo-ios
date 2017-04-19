@@ -69,6 +69,7 @@
 		619D0B121EA34B3500FDB255 /* FeatureBoxWidgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 619D0B111EA34B3500FDB255 /* FeatureBoxWidgetView.m */; };
 		619D0B171EA34B8600FDB255 /* FeatureBoxCollectionViewWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 619D0B161EA34B8600FDB255 /* FeatureBoxCollectionViewWidget.m */; };
 		619D0B1A1EA34B9900FDB255 /* FeatureBoxCollectionViewWidgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 619D0B191EA34B9900FDB255 /* FeatureBoxCollectionViewWidgetView.m */; };
+		61A4D1AB1EA6256A003E203C /* EmptyCartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A4D1AA1EA6256A003E203C /* EmptyCartViewController.m */; };
 		61A62CAD1E98FB0600E78D81 /* NSArray+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A62CAC1E98FB0600E78D81 /* NSArray+Extension.m */; };
 		61B161D01E6BF24E0032C5C6 /* SearchPriceFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B161CF1E6BF24E0032C5C6 /* SearchPriceFilter.m */; };
 		61B161D41E6BF9520032C5C6 /* BaseSearchFilterItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B161D31E6BF9520032C5C6 /* BaseSearchFilterItem.m */; };
@@ -933,6 +934,8 @@
 		619D0B161EA34B8600FDB255 /* FeatureBoxCollectionViewWidget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeatureBoxCollectionViewWidget.m; sourceTree = "<group>"; };
 		619D0B181EA34B9900FDB255 /* FeatureBoxCollectionViewWidgetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeatureBoxCollectionViewWidgetView.h; sourceTree = "<group>"; };
 		619D0B191EA34B9900FDB255 /* FeatureBoxCollectionViewWidgetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeatureBoxCollectionViewWidgetView.m; sourceTree = "<group>"; };
+		61A4D1A91EA6256A003E203C /* EmptyCartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmptyCartViewController.h; sourceTree = "<group>"; };
+		61A4D1AA1EA6256A003E203C /* EmptyCartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmptyCartViewController.m; sourceTree = "<group>"; };
 		61A62CAB1E98FB0600E78D81 /* NSArray+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Extension.h"; sourceTree = "<group>"; };
 		61A62CAC1E98FB0600E78D81 /* NSArray+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Extension.m"; sourceTree = "<group>"; };
 		61B161CE1E6BF24E0032C5C6 /* SearchPriceFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchPriceFilter.h; sourceTree = "<group>"; };
@@ -2901,6 +2904,15 @@
 				619D0B191EA34B9900FDB255 /* FeatureBoxCollectionViewWidgetView.m */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		61A4D1A81EA62541003E203C /* EmptyCartViewController */ = {
+			isa = PBXGroup;
+			children = (
+				61A4D1A91EA6256A003E203C /* EmptyCartViewController.h */,
+				61A4D1AA1EA6256A003E203C /* EmptyCartViewController.m */,
+			);
+			name = EmptyCartViewController;
 			sourceTree = "<group>";
 		};
 		61A62CAA1E98FAEB00E78D81 /* NSArray+Extensions */ = {
@@ -5151,6 +5163,7 @@
 		87D07D821E40B4B100C00AC6 /* BML */ = {
 			isa = PBXGroup;
 			children = (
+				61A4D1A81EA62541003E203C /* EmptyCartViewController */,
 				879F88361E52EA690033FE87 /* Base */,
 				875081AF1E532E020031ECBF /* Account */,
 				61CBA03F1E51BA1D005673F7 /* FormViewController */,
@@ -7054,6 +7067,7 @@
 				CE9ADF551AB6D78200D56481 /* JACampaignsTeaserView.m in Sources */,
 				CE9ADF561AB6D78200D56481 /* JASwitchCell.m in Sources */,
 				87DAABE91E55A1C400445EBB /* PaymentOptionTableViewCell.m in Sources */,
+				61A4D1AB1EA6256A003E203C /* EmptyCartViewController.m in Sources */,
 				87A681581E40F21B00D252AC /* BaseButton.m in Sources */,
 				87459C821E4EF37200743120 /* CartListItemTableViewCell.m in Sources */,
 				875AD5691E38C0C900584ABF /* RIPaymentMethodFormOption.m in Sources */,

@@ -228,8 +228,7 @@
     [self.noCampaignView setHidden:!visible];
 }
 
-- (void)goToHomeScreen
-{
+- (void)goToHomeScreen {
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
 }
 
