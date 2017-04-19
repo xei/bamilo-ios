@@ -26,6 +26,16 @@
     [standardUserDefaults removeObjectForKey:key];
     [standardUserDefaults synchronize];
 }
+    
++(void)update:(NSString *)key insert:(id)value {
+    id object = [self get:key];
+    if([object isKindOfClass:[NSArray class]]) {
+        NSMutableArray *newObject = [object copy];
+        [newObject addObject:value];
+        [self remove:key];
+        [self set:key value:newObject];
+    }
+}
 
 //Utility Functions
 +(int)getCounter:(NSString *)key {

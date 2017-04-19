@@ -47,21 +47,39 @@ static AppManager *instance;
     return self.openAppEventSource;
 }
 
--(void)setAppIcon:(NSString *)icon expires:(NSDate *)expires {
-    [UserDefaultsManager set:kUDMAltIconExpiryDate value:expires];
+-(void)addAltAppIcon:(NSString *)icon expires:(NSDate *)expires {
+    [UserDefaultsManager update:kUDMAltIcons insert:@{ @"icon": icon, @"expires": expires }];
     [self updateAppIcon:icon];
 }
 
 -(void)resetAppIconToDefault {
     if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"10.3") && [UIApplication sharedApplication].alternateIconName) {
-        [UserDefaultsManager remove:kUDMAltIconExpiryDate];
+        [UserDefaultsManager remove:kUDMAltIcons];
         [self updateAppIcon:nil];
     }
 }
 
 -(void)executeScheduledAppIconUpdates {
-    NSDate *altIconExpiryDate = [UserDefaultsManager get:kUDMAltIconExpiryDate];
-    if(altIconExpiryDate && [[NSDate date] compare:altIconExpiryDate] == NSOrderedDescending) {
+    NSMutableArray *altIcons = [UserDefaultsManager get:kUDMAltIcons];
+    if(altIcons.count) {
+        NSMutableArray *discardedItems = [NSMutableArray new];
+        for(NSDictionary *altIcon in altIcons) {
+            NSDate *altIconExpiryDate = [altIcon objectForKey:@"expires"];
+            if([[NSDate date] compare:altIconExpiryDate] == NSOrderedDescending) {
+                [discardedItems addObject:altIcon];
+            }
+        }
+        
+        [altIcons removeObjectsInArray:discardedItems];
+        [UserDefaultsManager set:kUDMAltIcons value:altIcons];
+        
+        if(altIcons.count) {
+            [self updateAppIcon:[[altIcons lastObject] objectForKey:@"icon"]];
+        } else {
+            [self resetAppIconToDefault];
+        }
+    } else if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"10.3") && [UIApplication sharedApplication].alternateIconName) {
+        //There is no alt icons stored but icon is changed to alt. WTF! If we leave it like this, alt icon is not going to change back. Force reset to default
         [self resetAppIconToDefault];
     }
 }
