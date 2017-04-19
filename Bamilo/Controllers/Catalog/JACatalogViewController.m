@@ -89,6 +89,7 @@ typedef void (^ProcessActionBlock)(void);
 
 @implementation JACatalogViewController {
 @private SearchCategoryFilter *subCatFilter;
+@protected NSString *fullPathCategory;
 }
 
 @synthesize bannerImageView = _bannerImageView;
@@ -551,6 +552,7 @@ typedef void (^ProcessActionBlock)(void);
     [self hideLoading];
     
     //######################################
+    fullPathCategory = catalog.breadcrumbs.fullPath;
     [EmarsysPredictManager sendTransactionsOf:self];
 }
 
@@ -1121,8 +1123,6 @@ typedef void (^ProcessActionBlock)(void);
     [self.undefinedView setupWithUndefinedSearchResult:undefSearch
                                             searchText:self.searchString
                                            orientation:[[UIApplication sharedApplication] statusBarOrientation]];
-    //$WIZ$
-    //    [self.view bringSubviewToFront:self.wizardView];
 }
 
 #pragma mark - Undefined view delegate
@@ -1519,6 +1519,9 @@ typedef void (^ProcessActionBlock)(void);
     if (self.searchString.length) {
         [transaction setSearchTerm:self.searchString];
     }
+    if (fullPathCategory) {
+        [transaction setCategory:fullPathCategory];
+    }
     return transaction;
 }
 
@@ -1531,7 +1534,6 @@ typedef void (^ProcessActionBlock)(void);
     
     EMRecommendationRequest *recommend = [EMRecommendationRequest requestWithLogic:@"SEARCH"];
     recommend.limit = 15;
-    
     
     [recommend excludeItemsWhere:@"item" isIn:[self.productsArray map:^id(RIProduct *item) {
         return item.sku;
