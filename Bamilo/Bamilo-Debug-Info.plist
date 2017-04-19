@@ -2,48 +2,19 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Configs</key>
-	<dict>
-		<key>Emarsys</key>
-		<dict>
-			<key>Application_CODE</key>
-			<string>A9EF7-6FDD2</string>
-			<key>Application_PASSWORD</key>
-			<string>+xhBaMoKRjc3SAHLsgqKTIodKWXJFhM/</string>
-		</dict>
-		<key>Pushwoosh_BETA</key>
-		<string>1</string>
-	</dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleExecutable</key>
+	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIcons</key>
 	<dict>
 		<key>CFBundleAlternateIcons</key>
 		<dict>
-			<key>Spring</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>Spring</string>
-				</array>
-			</dict>
-			<key>Summer</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>Summer</string>
-				</array>
-			</dict>
 			<key>Autumn</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
 					<string>Autumn</string>
-				</array>
-			</dict>
-			<key>Winter</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>Winter</string>
 				</array>
 			</dict>
 			<key>Birthday</key>
@@ -74,11 +45,32 @@
 					<string>SpecialOffer</string>
 				</array>
 			</dict>
+			<key>Spring</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>Spring</string>
+				</array>
+			</dict>
+			<key>Summer</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>Summer</string>
+				</array>
+			</dict>
 			<key>Tragedy</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
 					<string>Tragedy</string>
+				</array>
+			</dict>
+			<key>Winter</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>Winter</string>
 				</array>
 			</dict>
 			<key>Yalda</key>
@@ -99,10 +91,6 @@
 			<false/>
 		</dict>
 	</dict>
-	<key>CFBundleDevelopmentRegion</key>
-	<string>en</string>
-	<key>CFBundleExecutable</key>
-	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -138,7 +126,19 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>24</string>
+	<string>25</string>
+	<key>Configs</key>
+	<dict>
+		<key>Emarsys</key>
+		<dict>
+			<key>Application_CODE</key>
+			<string>A9EF7-6FDD2</string>
+			<key>Application_PASSWORD</key>
+			<string>+xhBaMoKRjc3SAHLsgqKTIodKWXJFhM/</string>
+		</dict>
+		<key>Pushwoosh_BETA</key>
+		<string>1</string>
+	</dict>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -194,20 +194,20 @@
 	<string>Bamilo would like to access your camera</string>
 	<key>NSContactsUsageDescription</key>
 	<string>Bamilo would like to access your contacts</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Bamilo would like to access your photos</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Bamilo would like to access your location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Bamilo would like to access your location</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Bamilo would like to access your photos</string>
+	<key>PW_USE_GPS</key>
+	<true/>
 	<key>Pushwoosh_APPID</key>
 	<string>A9EF7-6FDD2</string>
 	<key>Pushwoosh_APPNAME</key>
 	<string>Bamilo (Staging)</string>
 	<key>Pushwoosh_LOG_LEVEL</key>
 	<string>VERBOSE</string>
-	<key>PW_USE_GPS</key>
-	<true/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Bamilosans Reg.ttf</string>
