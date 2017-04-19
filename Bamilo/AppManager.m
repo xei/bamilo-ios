@@ -51,14 +51,6 @@ static AppManager *instance;
     [UserDefaultsManager update:kUDMAltIcons insert:@{ @"icon": icon, @"expires": expires }];
 }
 
--(void)resetAppIconToDefault {
-    if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"10.3") && [UIApplication sharedApplication].alternateIconName) {
-        [UserDefaultsManager remove:kUDMAltIcons];
-        [UserDefaultsManager remove:kUDMAlternativeIcon];
-        [self updateAppIcon:nil];
-    }
-}
-
 -(void)updateScheduledAppIcons {
     NSMutableArray *altIcons = [NSMutableArray arrayWithArray:[UserDefaultsManager get:kUDMAltIcons]];
     if(altIcons.count) {
@@ -88,6 +80,14 @@ static AppManager *instance;
         }
     } else {
         [self resetAppIconToDefault];
+    }
+}
+    
+-(void)resetAppIconToDefault {
+    if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"10.3") && [UIApplication sharedApplication].alternateIconName) {
+        [UserDefaultsManager remove:kUDMAltIcons];
+        [UserDefaultsManager remove:kUDMAlternativeIcon];
+        [self updateAppIcon:nil];
     }
 }
 

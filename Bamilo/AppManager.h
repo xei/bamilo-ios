@@ -22,6 +22,7 @@
 
 -(void) addAltAppIcon:(NSString *)icon expires:(NSDate *)expires;
 -(void) updateScheduledAppIcons;
--(void) executeScheduledAppIcons; 
+-(void) executeScheduledAppIcons;
+-(void) resetAppIconToDefault;
 
 @end
