@@ -13,5 +13,6 @@
 NSString *const kUDMAppOpenCount = @"UDMAppOpenCount";
 NSString *const kUDMPurchaseCount = @"UDMPurchaseCount";
 NSString *const kUDMAltIcons = @"UDMAltIcons";
+NSString *const kUDMAlternativeIcon = @"UDMAlternativeIcon";
 
 @end

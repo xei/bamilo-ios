@@ -93,6 +93,7 @@ static PushWooshTracker *instance;
                     //[dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
                     NSDate *expiryDate = [dateFormatter dateFromString:[actionData objectForKey:@"expires"]] ?: [[NSDate date] addWeeks:1];
                     [[AppManager sharedInstance] addAltAppIcon:icon expires:expiryDate];
+                    [[AppManager sharedInstance] executeScheduledAppIcons];
                 }
             }
         }

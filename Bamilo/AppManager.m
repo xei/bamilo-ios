@@ -49,18 +49,18 @@ static AppManager *instance;
 
 -(void)addAltAppIcon:(NSString *)icon expires:(NSDate *)expires {
     [UserDefaultsManager update:kUDMAltIcons insert:@{ @"icon": icon, @"expires": expires }];
-    [self updateAppIcon:icon];
 }
 
 -(void)resetAppIconToDefault {
     if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"10.3") && [UIApplication sharedApplication].alternateIconName) {
         [UserDefaultsManager remove:kUDMAltIcons];
+        [UserDefaultsManager remove:kUDMAlternativeIcon];
         [self updateAppIcon:nil];
     }
 }
 
--(void)executeScheduledAppIconUpdates {
-    NSMutableArray *altIcons = [UserDefaultsManager get:kUDMAltIcons];
+-(void)updateScheduledAppIcons {
+    NSMutableArray *altIcons = [NSMutableArray arrayWithArray:[UserDefaultsManager get:kUDMAltIcons]];
     if(altIcons.count) {
         NSMutableArray *discardedItems = [NSMutableArray new];
         for(NSDictionary *altIcon in altIcons) {
@@ -72,14 +72,21 @@ static AppManager *instance;
         
         [altIcons removeObjectsInArray:discardedItems];
         [UserDefaultsManager set:kUDMAltIcons value:altIcons];
-        
-        if(altIcons.count) {
-            [self updateAppIcon:[[altIcons lastObject] objectForKey:@"icon"]];
-        } else {
-            [self resetAppIconToDefault];
-        }
     } else if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"10.3") && [UIApplication sharedApplication].alternateIconName) {
         //There is no alt icons stored but icon is changed to alt. WTF! If we leave it like this, alt icon is not going to change back. Force reset to default
+        [self resetAppIconToDefault];
+    }
+}
+    
+-(void)executeScheduledAppIcons {
+    NSMutableArray *altIcons = [NSMutableArray arrayWithArray:[UserDefaultsManager get:kUDMAltIcons]];
+    if(altIcons.count) {
+        NSString *icon = [[altIcons lastObject] objectForKey:@"icon"];
+        if(![[UserDefaultsManager get:kUDMAlternativeIcon] isEqualToString:icon]) {
+            [UserDefaultsManager set:kUDMAlternativeIcon value:icon];
+            [self updateAppIcon:icon];
+        }
+    } else {
         [self resetAppIconToDefault];
     }
 }

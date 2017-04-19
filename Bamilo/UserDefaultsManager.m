@@ -29,12 +29,10 @@
     
 +(void)update:(NSString *)key insert:(id)value {
     id object = [self get:key];
-    if([object isKindOfClass:[NSArray class]]) {
-        NSMutableArray *newObject = [object copy];
-        [newObject addObject:value];
-        [self remove:key];
-        [self set:key value:newObject];
-    }
+    NSMutableArray *newObject = object ? [NSMutableArray arrayWithArray:object] : [NSMutableArray array];
+    [newObject addObject:value];
+    [self remove:key];
+    [self set:key value:newObject];
 }
 
 //Utility Functions
