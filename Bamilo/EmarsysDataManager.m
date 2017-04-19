@@ -112,7 +112,8 @@ static EmarsysDataManager *instance;
 -(NSMutableDictionary *)commonLoginParams:(EmarsysPushIdentifier *)contact {
     //TEMP: fa - Multi-language app?
     return [NSMutableDictionary
-            dictionaryWithObjects:@[ contact.applicationId, contact.hardwareId, @"ios", @"fa",
+            dictionaryWithObjects:@[ contact.applicationId, contact.hardwareId, @"ios",
+                                     [[NSLocale currentLocale] objectForKey:NSLocaleLanguageCode],
                                      [DeviceManager getLocalTimeZoneRFC822Formatted],
                                      [DeviceManager getDeviceModel],
                                      [[AppManager sharedInstance] getAppVersionNumber],
