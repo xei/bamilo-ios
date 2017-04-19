@@ -14,9 +14,9 @@
 #import "NSArray+Extension.h"
 #import "EmarsysPredictManager.h"
 
-@interface EmptyCartViewController() <EmarsysRecommendationsProtocol, FeatureBoxCollectionViewWidgetViewDelegate>
+@interface EmptyCartViewController() /* <EmarsysRecommendationsProtocol, FeatureBoxCollectionViewWidgetViewDelegate> */
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet EmarsysRecommendationCarouselWidget *carouselWidget;
+//@property (weak, nonatomic) IBOutlet EmarsysRecommendationCarouselWidget *carouselWidget;
 @end
 
 @implementation EmptyCartViewController
@@ -27,8 +27,8 @@
     [self.view setBackgroundColor:[UIColor whiteColor]];
     self.tabBarIsVisible = YES;
     
-    [self.carouselWidget setBackgroundColor:JAHomePageBackgroundGrey];
-    self.carouselWidget.delegate = self;
+//    [self.carouselWidget setBackgroundColor:JAHomePageBackgroundGrey];
+//    self.carouselWidget.delegate = self;
     
     [self.titleLabel applyStyle:[Theme font:kFontVariationRegular size:13.0f] color:[UIColor blackColor]];
 }
@@ -37,32 +37,32 @@
     [EmarsysPredictManager sendTransactionsOf:self];
 }
 
-#pragma mark - EmarsysPredictProtocol
-- (BOOL)isPreventSendTransactionInViewWillAppear {
-    return YES;
-}
-
-- (NSArray<EMRecommendationRequest *> *)getRecommendations {
-    EMRecommendationRequest *recommend = [EMRecommendationRequest requestWithLogic:@"PERSONAL"];
-    recommend.limit = 15;
-    recommend.completionHandler = ^(EMRecommendationResult *_Nonnull result) {
-        [ThreadManager executeOnMainThread:^{
-            [self.carouselWidget updateWithModel:[result.products map:^id(EMRecommendationItem *item) {
-                return [RecommendItem instanceWithEMRecommendationItem:item];
-            }]];
-        }];
-    };
-    
-    return @[recommend];
-}
-
-#pragma mark - FeatureBoxCollectionViewWidgetViewDelegate
-- (void)selectFeatureItem:(NSObject *)item widgetBox:(id)widgetBox {
-    if ([item isKindOfClass:[RecommendItem class]]) {
-        [[NSNotificationCenter defaultCenter] postNotificationName: kDidSelectTeaserWithPDVUrlNofication
-                                                            object: nil
-                                                          userInfo: @{@"sku": ((RecommendItem *)item).sku}];
-    }
-}
+//#pragma mark - EmarsysPredictProtocol
+//- (BOOL)isPreventSendTransactionInViewWillAppear {
+//    return YES;
+//}
+//
+//- (NSArray<EMRecommendationRequest *> *)getRecommendations {
+//    EMRecommendationRequest *recommend = [EMRecommendationRequest requestWithLogic:@"PERSONAL"];
+//    recommend.limit = 15;
+//    recommend.completionHandler = ^(EMRecommendationResult *_Nonnull result) {
+//        [ThreadManager executeOnMainThread:^{
+//            [self.carouselWidget updateWithModel:[result.products map:^id(EMRecommendationItem *item) {
+//                return [RecommendItem instanceWithEMRecommendationItem:item];
+//            }]];
+//        }];
+//    };
+//    
+//    return @[recommend];
+//}
+//
+//#pragma mark - FeatureBoxCollectionViewWidgetViewDelegate
+//- (void)selectFeatureItem:(NSObject *)item widgetBox:(id)widgetBox {
+//    if ([item isKindOfClass:[RecommendItem class]]) {
+//        [[NSNotificationCenter defaultCenter] postNotificationName: kDidSelectTeaserWithPDVUrlNofication
+//                                                            object: nil
+//                                                          userInfo: @{@"sku": ((RecommendItem *)item).sku}];
+//    }
+//}
 
 @end
