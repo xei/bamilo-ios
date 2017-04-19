@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "RIBanner.h"
 #import "BaseSearchFilterItem.h"
+#import "Breadcrumbs.h"
 
 @interface RICatalog : NSObject
 
@@ -20,6 +21,7 @@
 @property (nonatomic, retain) NSString *sort;
 @property (nonatomic, retain) NSNumber *totalProducts;
 @property (nonatomic, retain) RIBanner *banner;
+@property (nonatomic, retain) Breadcrumbs *breadcrumbs;
 
 + (RICatalog *)parseCatalog:(NSDictionary *)catalogDictionary forCountryConfiguration:(RICountryConfiguration *)configuration;
 

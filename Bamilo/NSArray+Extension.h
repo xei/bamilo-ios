@@ -11,5 +11,6 @@
 @interface NSArray<ObjectType> (Extension)
 
 - (NSArray *)map:(id(^)(ObjectType item))block;
+- (NSString *)reduceString:(NSString *)initial combine:(NSString *(^)(NSString * acum, ObjectType element))block;
 
 @end

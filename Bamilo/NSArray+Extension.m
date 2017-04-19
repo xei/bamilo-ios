@@ -19,4 +19,16 @@
     return array.copy;
 }
 
+- (NSString *)reduceString:(NSString *)initial combine:(NSString *(^)(NSString * acum, id element))block {
+    if (!self) {
+        return initial;
+    }
+    NSString *acum = initial;
+    for (id element in self) {
+        acum = block(acum, element);
+    }
+    
+    return acum;
+}
+
 @end

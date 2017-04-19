@@ -45,31 +45,30 @@
     if ([[catalogDictionary objectForKey:@"title"] length]) {
         newCatalog.title = [catalogDictionary objectForKey:@"title"];
     }
-    
-    //_UNS
-//    NSArray* categoriesArray = [NSArray new];
-//    if (VALID_NOTEMPTY([catalogDictionary objectForKey:@"categories"], NSString)) {
-//        categoriesArray = [[catalogDictionary objectForKey:@"categories"] componentsSeparatedByString:@","];
-//    }
+
     
     newCatalog.totalProducts = [catalogDictionary objectForKey:@"total_products"];
     
     NSArray* results = [catalogDictionary objectForKey:@"results"];
     
     if (results.count) {
-        
         NSMutableArray* products = [NSMutableArray new];
-        
         for (NSDictionary* productJSON in results) {
-            
             RIProduct* product = [RIProduct parseProduct:productJSON country:configuration];
             [products addObject:product];
         }
-        
         newCatalog.products = [products copy];
     }
     
     newCatalog.sort = VALID_NOTEMPTY_VALUE([catalogDictionary objectForKey:@"sort"], NSString);
+    
+    
+    if ([catalogDictionary objectForKey:@"breadcrumb"]) {
+        Breadcrumbs *breadcrumbs = [Breadcrumbs new];
+        //This action should be refactored when RICatalog has been refactored.
+        [breadcrumbs mergeFromDictionary:@{@"items": [catalogDictionary objectForKey:@"breadcrumb"]} useKeyMapping:YES error:nil];
+        newCatalog.breadcrumbs = breadcrumbs;
+    }
     
     return newCatalog;
 }

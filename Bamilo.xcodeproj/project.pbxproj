@@ -70,6 +70,8 @@
 		619D0B171EA34B8600FDB255 /* FeatureBoxCollectionViewWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 619D0B161EA34B8600FDB255 /* FeatureBoxCollectionViewWidget.m */; };
 		619D0B1A1EA34B9900FDB255 /* FeatureBoxCollectionViewWidgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 619D0B191EA34B9900FDB255 /* FeatureBoxCollectionViewWidgetView.m */; };
 		61A4D1AB1EA6256A003E203C /* EmptyCartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A4D1AA1EA6256A003E203C /* EmptyCartViewController.m */; };
+		61A4D1B01EA7335C003E203C /* Breadcrumbs.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A4D1AF1EA7335C003E203C /* Breadcrumbs.m */; };
+		61A4D1B41EA733FF003E203C /* BreadcrumbItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A4D1B31EA733FF003E203C /* BreadcrumbItem.m */; };
 		61A62CAD1E98FB0600E78D81 /* NSArray+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A62CAC1E98FB0600E78D81 /* NSArray+Extension.m */; };
 		61B161D01E6BF24E0032C5C6 /* SearchPriceFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B161CF1E6BF24E0032C5C6 /* SearchPriceFilter.m */; };
 		61B161D41E6BF9520032C5C6 /* BaseSearchFilterItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B161D31E6BF9520032C5C6 /* BaseSearchFilterItem.m */; };
@@ -936,6 +938,10 @@
 		619D0B191EA34B9900FDB255 /* FeatureBoxCollectionViewWidgetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeatureBoxCollectionViewWidgetView.m; sourceTree = "<group>"; };
 		61A4D1A91EA6256A003E203C /* EmptyCartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmptyCartViewController.h; sourceTree = "<group>"; };
 		61A4D1AA1EA6256A003E203C /* EmptyCartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmptyCartViewController.m; sourceTree = "<group>"; };
+		61A4D1AE1EA7335C003E203C /* Breadcrumbs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Breadcrumbs.h; sourceTree = "<group>"; };
+		61A4D1AF1EA7335C003E203C /* Breadcrumbs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Breadcrumbs.m; sourceTree = "<group>"; };
+		61A4D1B21EA733FF003E203C /* BreadcrumbItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BreadcrumbItem.h; sourceTree = "<group>"; };
+		61A4D1B31EA733FF003E203C /* BreadcrumbItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BreadcrumbItem.m; sourceTree = "<group>"; };
 		61A62CAB1E98FB0600E78D81 /* NSArray+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Extension.h"; sourceTree = "<group>"; };
 		61A62CAC1E98FB0600E78D81 /* NSArray+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Extension.m"; sourceTree = "<group>"; };
 		61B161CE1E6BF24E0032C5C6 /* SearchPriceFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchPriceFilter.h; sourceTree = "<group>"; };
@@ -2913,6 +2919,33 @@
 				61A4D1AA1EA6256A003E203C /* EmptyCartViewController.m */,
 			);
 			name = EmptyCartViewController;
+			sourceTree = "<group>";
+		};
+		61A4D1AC1EA732AC003E203C /* Catalog */ = {
+			isa = PBXGroup;
+			children = (
+				61A4D1B11EA733EA003E203C /* BreadcrumbItem */,
+				61A4D1AD1EA7331C003E203C /* Breadcrumbs */,
+			);
+			name = Catalog;
+			sourceTree = "<group>";
+		};
+		61A4D1AD1EA7331C003E203C /* Breadcrumbs */ = {
+			isa = PBXGroup;
+			children = (
+				61A4D1AE1EA7335C003E203C /* Breadcrumbs.h */,
+				61A4D1AF1EA7335C003E203C /* Breadcrumbs.m */,
+			);
+			name = Breadcrumbs;
+			sourceTree = "<group>";
+		};
+		61A4D1B11EA733EA003E203C /* BreadcrumbItem */ = {
+			isa = PBXGroup;
+			children = (
+				61A4D1B21EA733FF003E203C /* BreadcrumbItem.h */,
+				61A4D1B31EA733FF003E203C /* BreadcrumbItem.m */,
+			);
+			name = BreadcrumbItem;
 			sourceTree = "<group>";
 		};
 		61A62CAA1E98FAEB00E78D81 /* NSArray+Extensions */ = {
@@ -5076,6 +5109,7 @@
 		87B685191E4B746B0042C09F /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				61A4D1AC1EA732AC003E203C /* Catalog */,
 				8714E0621E47483B004C9B1D /* Base */,
 				877762C61E9BB36D00B73140 /* Data */,
 				61432EC81E9B60BE001F7930 /* RecommendItem */,
@@ -7119,6 +7153,7 @@
 				87EA03091E6C695D00B1E062 /* IconTableViewHeaderCell.m in Sources */,
 				875AD56F1E38C0C900584ABF /* RIPromotion.m in Sources */,
 				9A6BC0831C43CBB900DD9492 /* JAMyOrderResumeView.m in Sources */,
+				61A4D1B01EA7335C003E203C /* Breadcrumbs.m in Sources */,
 				875AD56E1E38C0C900584ABF /* RIProductSimple.m in Sources */,
 				870BEA851E73F6BC00C5B615 /* ThemeFont.m in Sources */,
 				610ED5831E742947000D5BEC /* UITextField+Extensions.m in Sources */,
@@ -7174,6 +7209,7 @@
 				CE9ADF9E1AB6D78200D56481 /* JAOtherOffersView.m in Sources */,
 				CE9ADF9F1AB6D78200D56481 /* JACampaignsViewController.m in Sources */,
 				61432EC61E9B5DD7001F7930 /* BaseCollectionViewCell.m in Sources */,
+				61A4D1B41EA733FF003E203C /* BreadcrumbItem.m in Sources */,
 				FFC9C0C71C984E7900DD5851 /* JATopTabsView.m in Sources */,
 				CE9ADFA11AB6D78200D56481 /* JACatalogWizardView.m in Sources */,
 				875AD5461E38C0C900584ABF /* RIField.m in Sources */,
