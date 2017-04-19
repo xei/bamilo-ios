@@ -9,8 +9,6 @@
 #import "BaseCollectionViewCell.h"
 #import "RecommendItem.h"
 
-
-
 @interface EmarsysRecommendationCarouselCollectionViewCell : BaseCollectionViewCell
 
 + (CGSize)preferedSize;

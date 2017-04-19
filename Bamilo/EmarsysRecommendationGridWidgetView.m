@@ -27,8 +27,7 @@ const int numberOfColumns = 2;
     [self.leftButton setHidden:YES];
     
     [self.widgetTitle applyStyle:[Theme font:kFontVariationRegular size:12.0f] color:[UIColor blackColor]];
-    [self.collectionView registerNib:[UINib nibWithNibName:[EmarsysRecommendationCarouselCollectionViewCell nibName] bundle:nil]
-          forCellWithReuseIdentifier:[EmarsysRecommendationCarouselCollectionViewCell nibName]];
+    [self.collectionView registerNib:[UINib nibWithNibName:[EmarsysRecommendationCarouselCollectionViewCell nibName] bundle:nil] forCellWithReuseIdentifier:[EmarsysRecommendationCarouselCollectionViewCell nibName]];
 }
 
 - (void)updateLeftButtonTitle:(NSString *)title {
@@ -39,7 +38,6 @@ const int numberOfColumns = 2;
 - (void)updateTitle:(NSString *)title {
     self.widgetTitle.text = title;
 }
-
 
 - (void)updateWithModel:(NSArray *)arrayModel {
     if ([arrayModel isKindOfClass:[NSArray<RecommendItem *> class]]) {
@@ -85,6 +83,5 @@ const int numberOfColumns = 2;
     CGFloat itemWidth = (CGRectGetWidth(self.collectionView.frame) - ((numberOfColumns - 1) * cellSpace)) / numberOfColumns;
     return CGSizeMake(itemWidth, itemWidth * ratio);
 }
-
 
 @end

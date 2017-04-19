@@ -20,6 +20,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    
     [self setWidgetBacgkround:[UIColor clearColor]];
     [self.carouselTitle applyStyle:[Theme font:kFontVariationRegular size:12.0f] color:[UIColor blackColor]];
     
@@ -30,7 +31,9 @@
 
 - (void)updateWithModel:(NSArray *)arrayModel {
     if ([arrayModel isKindOfClass:[NSArray<RecommendItem *> class]]) {
-        if (arrayModel.count) [self.activityIndicator stopAnimating];
+        if (arrayModel.count) {
+            [self.activityIndicator stopAnimating];
+        }
         [super updateWithModel:arrayModel];
     }
 }

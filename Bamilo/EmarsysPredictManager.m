@@ -12,7 +12,6 @@
 @implementation EmarsysPredictManager
 
 + (void)sendTransactionsOf:(UIViewController *)viewController {
-    
     if (![viewController conformsToProtocol:@protocol(EmarsysPredictProtocolBase)]) {
         return;
     }

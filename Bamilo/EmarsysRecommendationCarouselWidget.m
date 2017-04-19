@@ -9,7 +9,9 @@
 #import "EmarsysRecommendationCarouselWidget.h"
 
 @interface EmarsysRecommendationCarouselWidget()
+    
 @property (nonatomic, strong) EmarsysRecommendationCarouselView *carouselView;
+
 @end
 
 @implementation EmarsysRecommendationCarouselWidget
