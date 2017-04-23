@@ -113,7 +113,7 @@ static EmarsysDataManager *instance;
     //TEMP: fa - Multi-language app?
     return [NSMutableDictionary
             dictionaryWithObjects:@[ contact.applicationId, contact.hardwareId, @"ios",
-                                     [[NSLocale currentLocale] objectForKey:NSLocaleLanguageCode],
+                                     ([[NSLocale currentLocale] objectForKey:NSLocaleLanguageCode] ?: @"fa"),
                                      [DeviceManager getLocalTimeZoneRFC822Formatted],
                                      [DeviceManager getDeviceModel],
                                      [[AppManager sharedInstance] getAppVersionNumber],

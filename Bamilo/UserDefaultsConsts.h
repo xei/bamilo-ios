@@ -12,6 +12,7 @@
 
 FOUNDATION_EXPORT NSString *const kUDMAppOpenCount;
 FOUNDATION_EXPORT NSString *const kUDMPurchaseCount;
-FOUNDATION_EXPORT NSString *const kUDMAltIconExpiryDate;
+FOUNDATION_EXPORT NSString *const kUDMAltIcons;
+FOUNDATION_EXPORT NSString *const kUDMAlternativeIcon;
 
 @end

@@ -47,22 +47,47 @@ static AppManager *instance;
     return self.openAppEventSource;
 }
 
--(void)setAppIcon:(NSString *)icon expires:(NSDate *)expires {
-    [UserDefaultsManager set:kUDMAltIconExpiryDate value:expires];
-    [self updateAppIcon:icon];
+-(void)addAltAppIcon:(NSString *)icon expires:(NSDate *)expires {
+    [UserDefaultsManager update:kUDMAltIcons insert:@{ @"icon": icon, @"expires": expires }];
 }
 
--(void)resetAppIconToDefault {
-    if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"10.3") && [UIApplication sharedApplication].alternateIconName) {
-        [UserDefaultsManager remove:kUDMAltIconExpiryDate];
-        [self updateAppIcon:nil];
+-(void)updateScheduledAppIcons {
+    NSMutableArray *altIcons = [NSMutableArray arrayWithArray:[UserDefaultsManager get:kUDMAltIcons]];
+    if(altIcons.count) {
+        NSMutableArray *discardedItems = [NSMutableArray new];
+        for(NSDictionary *altIcon in altIcons) {
+            NSDate *altIconExpiryDate = [altIcon objectForKey:@"expires"];
+            if([[NSDate date] compare:altIconExpiryDate] == NSOrderedDescending) {
+                [discardedItems addObject:altIcon];
+            }
+        }
+        
+        [altIcons removeObjectsInArray:discardedItems];
+        [UserDefaultsManager set:kUDMAltIcons value:altIcons];
+    } else if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"10.3") && [UIApplication sharedApplication].alternateIconName) {
+        //There is no alt icons stored but icon is changed to alt. WTF! If we leave it like this, alt icon is not going to change back. Force reset to default
+        [self resetAppIconToDefault];
     }
 }
-
--(void)executeScheduledAppIconUpdates {
-    NSDate *altIconExpiryDate = [UserDefaultsManager get:kUDMAltIconExpiryDate];
-    if(altIconExpiryDate && [[NSDate date] compare:altIconExpiryDate] == NSOrderedDescending) {
+    
+-(void)executeScheduledAppIcons {
+    NSMutableArray *altIcons = [NSMutableArray arrayWithArray:[UserDefaultsManager get:kUDMAltIcons]];
+    if(altIcons.count) {
+        NSString *icon = [[altIcons lastObject] objectForKey:@"icon"];
+        if(![[UserDefaultsManager get:kUDMAlternativeIcon] isEqualToString:icon]) {
+            [UserDefaultsManager set:kUDMAlternativeIcon value:icon];
+            [self updateAppIcon:icon];
+        }
+    } else {
         [self resetAppIconToDefault];
+    }
+}
+    
+-(void)resetAppIconToDefault {
+    if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"10.3") && [UIApplication sharedApplication].alternateIconName) {
+        [UserDefaultsManager remove:kUDMAltIcons];
+        [UserDefaultsManager remove:kUDMAlternativeIcon];
+        [self updateAppIcon:nil];
     }
 }
 
