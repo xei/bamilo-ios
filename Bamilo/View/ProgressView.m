@@ -24,15 +24,12 @@
     [super awakeFromNib];
     
     self.centerLineView.backgroundColor = [UIColor withRepeatingRGBA:222 alpha:1.0];
-    
     _progressItemViews = [NSMutableArray new];
-    
     self.centerLineView.alpha = 0;
 }
 
 -(void)updateWithModel:(NSArray<ProgressItemViewModel *> *)items {
     _items = items;
-    
     [self updateProgressViewAppearance];
 }
 

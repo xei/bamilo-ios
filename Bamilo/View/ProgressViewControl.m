@@ -23,7 +23,8 @@
     
     if(self.progressView) {
         [self addSubview:self.progressView];
-        [self anchorMatch:self.progressView];
+//        [self anchorMatch:self.progressView];
+        self.progressView.frame = self.bounds;
     }
 }
 
