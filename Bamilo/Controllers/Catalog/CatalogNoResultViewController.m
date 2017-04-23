@@ -47,7 +47,7 @@
 - (void)setSearchQuery:(NSString *)searchQuery {
     NSString* msgToShow;
     if (searchQuery) {
-        searchQuery = [searchQuery wrapWithMaxSize:7];
+        searchQuery = [searchQuery wrapWithMaxSize:20];
         msgToShow = [NSString stringWithFormat:@"متاسفانه برای %@ نتیجه یافت نشد", searchQuery];
     } else { //if there is no searchQuery (e.g. comes from empty category
         msgToShow = @"متاسفانه موردی یافت نشد";

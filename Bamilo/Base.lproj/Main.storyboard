@@ -858,23 +858,23 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="436"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JRw-GO-gRl" userLabel="Message Container View">
-                                        <rect key="frame" x="62.666666666666657" y="138" width="290" height="160"/>
+                                        <rect key="frame" x="62.666666666666657" y="128" width="290" height="180"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pageNotFound" translatesAutoresizingMaskIntoConstraints="NO" id="WnJ-6T-0gc">
-                                                <rect key="frame" x="117" y="5" width="55" height="55"/>
+                                                <rect key="frame" x="117.66666666666669" y="5" width="55" height="55"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="55" id="TCQ-Xj-8Vw"/>
                                                     <constraint firstAttribute="width" secondItem="WnJ-6T-0gc" secondAttribute="height" multiplier="1:1" id="rCE-Yw-TxW"/>
                                                 </constraints>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="متاسفانه برای کلمه شما نتیجه یافت نشد" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lwx-IM-0oN">
-                                                <rect key="frame" x="17.666666666666657" y="80" width="254.33333333333334" height="27"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="متاسفانه برای کلمه شما نتیجه یافت نشد" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lwx-IM-0oN">
+                                                <rect key="frame" x="0.0" y="80" width="290" height="27"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="14"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="✔︎ از صحت نگارش عبارت مورد نظر خود اطمینان حاصل نموده و مجدد جستجو نمایید." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A5u-Np-HlN">
-                                                <rect key="frame" x="29" y="115.33333333333336" width="232" height="39.666666666666643"/>
+                                                <rect key="frame" x="29" y="135.33333333333331" width="232" height="39.666666666666686"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="11"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -883,9 +883,11 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="WnJ-6T-0gc" firstAttribute="centerX" secondItem="JRw-GO-gRl" secondAttribute="centerX" id="6dR-tn-luW"/>
+                                            <constraint firstItem="lwx-IM-0oN" firstAttribute="leading" secondItem="JRw-GO-gRl" secondAttribute="leading" id="7fP-vJ-deK"/>
                                             <constraint firstItem="A5u-Np-HlN" firstAttribute="centerX" secondItem="JRw-GO-gRl" secondAttribute="centerX" id="Ock-58-Bcy"/>
                                             <constraint firstItem="A5u-Np-HlN" firstAttribute="width" secondItem="JRw-GO-gRl" secondAttribute="width" multiplier="0.8:1" id="Xas-fk-AqM"/>
-                                            <constraint firstAttribute="height" constant="160" id="aqU-W4-lrE"/>
+                                            <constraint firstAttribute="trailing" secondItem="lwx-IM-0oN" secondAttribute="trailing" id="Yem-Ms-ogI"/>
+                                            <constraint firstAttribute="height" constant="180" id="aqU-W4-lrE"/>
                                             <constraint firstAttribute="width" constant="290" id="dGi-2Z-Kpt"/>
                                             <constraint firstAttribute="bottom" secondItem="A5u-Np-HlN" secondAttribute="bottom" constant="5" id="eNd-oe-GOD"/>
                                             <constraint firstItem="lwx-IM-0oN" firstAttribute="centerX" secondItem="WnJ-6T-0gc" secondAttribute="centerX" id="ffD-HB-B9L"/>
@@ -1079,7 +1081,7 @@
                                                 </connections>
                                             </switch>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="فقط با تخفیف ها" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gEn-nz-ntR">
-                                                <rect key="frame" x="59.000000000000028" y="15" width="85.333333333333314" height="21.333333333333336"/>
+                                                <rect key="frame" x="59.000000000000028" y="15.333333333333336" width="85.333333333333314" height="21.333333333333329"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
