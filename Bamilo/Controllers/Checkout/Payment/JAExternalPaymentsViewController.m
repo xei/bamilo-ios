@@ -60,17 +60,12 @@
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
--(void)loadPaymentMethodRequest
-{
-    if(VALID_NOTEMPTY(self.cart.paymentInformation, RIPaymentInformation))
-    {
-        if(RIPaymentInformationCheckoutShowWebviewWithUrl == self.cart.paymentInformation.type && VALID_NOTEMPTY(self.cart.paymentInformation.url, NSString))
-        {
+-(void)loadPaymentMethodRequest {
+    if(VALID_NOTEMPTY(self.cart.paymentInformation, RIPaymentInformation)) {
+        if(RIPaymentInformationCheckoutShowWebviewWithUrl == self.cart.paymentInformation.type && VALID_NOTEMPTY(self.cart.paymentInformation.url, NSString)) {
             NSLog(@"RIPaymentInformationCheckoutShowWebviewWithUrl %@", self.cart.paymentInformation.url);
             [self.webView loadRequest:[self createRequestWithUrl:self.cart.paymentInformation.url]];
-        }
-        else if(RIPaymentInformationCheckoutShowWebviewWithForm == self.cart.paymentInformation.type && VALID_NOTEMPTY(self.cart.paymentInformation.form, RIForm) && VALID_NOTEMPTY(self.cart.paymentInformation.form.action, NSString))
-        {
+        } else if(RIPaymentInformationCheckoutShowWebviewWithForm == self.cart.paymentInformation.type && VALID_NOTEMPTY(self.cart.paymentInformation.form, RIForm) && VALID_NOTEMPTY(self.cart.paymentInformation.form.action, NSString)) {
             NSLog(@"RIPaymentInformationCheckoutShowWebviewWithForm %@", self.cart.paymentInformation.form.action);
             
             NSMutableURLRequest *request = [self createRequestWithUrl:self.cart.paymentInformation.form.action];

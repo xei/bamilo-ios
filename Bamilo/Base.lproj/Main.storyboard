@@ -1004,6 +1004,7 @@
         <!--Center Navigation Controller-->
         <scene sceneID="zbS-US-1sA">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="D9k-Dg-apF" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="JACenterNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="t6o-pS-UXi" customClass="JACenterNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="tCF-5Z-jLJ">
@@ -1012,87 +1013,9 @@
                         <color key="barTintColor" red="0.91764705882352937" green="0.91764705882352937" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="fgT-Jv-tdb" kind="show" identifier="showPdv" id="uaI-yU-cmP"/>
-                    </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="D9k-Dg-apF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-764" y="-1101"/>
-        </scene>
-        <!--PDV View Controller-->
-        <scene sceneID="PB4-GR-7g5">
-            <objects>
-                <viewController storyboardIdentifier="pdvViewController" automaticallyAdjustsScrollViewInsets="NO" id="fgT-Jv-tdb" userLabel="PDV View Controller" customClass="JAPDVViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="DR6-1s-BTG"/>
-                        <viewControllerLayoutGuide type="bottom" id="0ot-Ab-3Ot"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="jhw-lm-hpC">
-                        <rect key="frame" x="0.0" y="64" width="414" height="672"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="nFe-QH-wMv"/>
-                    <connections>
-                        <segue destination="nXK-xm-YTt" kind="show" id="GX3-Fb-mOc"/>
-                        <segue destination="Mbc-MG-i7X" kind="show" id="oNr-rL-T1e"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zwP-v4-smR" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="97" y="-1101"/>
-        </scene>
-        <!--External Payments View Controller-->
-        <scene sceneID="y00-ag-OxJ">
-            <objects>
-                <viewController storyboardIdentifier="externalPaymentsViewController" automaticallyAdjustsScrollViewInsets="NO" id="Mbc-MG-i7X" customClass="JAExternalPaymentsViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="oT7-ZX-znD"/>
-                        <viewControllerLayoutGuide type="bottom" id="dOc-eC-Nia"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="zb1-zh-1KE">
-                        <rect key="frame" x="0.0" y="64" width="414" height="672"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Umg-9w-f8A">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </webView>
-                        </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="JAo-Vg-aKW"/>
-                    <connections>
-                        <outlet property="webView" destination="Umg-9w-f8A" id="y64-Va-yKD"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Tni-oi-jWG" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="881" y="-769"/>
-        </scene>
-        <!--Order View Controller-->
-        <scene sceneID="hba-VA-Yez">
-            <objects>
-                <viewController storyboardIdentifier="orderViewController" automaticallyAdjustsScrollViewInsets="NO" id="nXK-xm-YTt" customClass="JAOrderViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="bQJ-Ti-s4N"/>
-                        <viewControllerLayoutGuide type="bottom" id="3YV-0o-hbJ"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="VPd-f5-Jz4">
-                        <rect key="frame" x="0.0" y="64" width="414" height="672"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="ymW-Lp-deb"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="GJ7-mZ-UR0" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="881" y="-1606"/>
         </scene>
         <!--Filters View Controller-->
         <scene sceneID="sPO-lR-OuH">
