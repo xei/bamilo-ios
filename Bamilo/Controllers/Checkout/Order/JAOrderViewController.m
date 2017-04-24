@@ -970,33 +970,26 @@
 
 #pragma mark - Button actions
 
--(void)nextStepButtonPressed
-{
+-(void)nextStepButtonPressed {
     [self continueNextStep];
 }
 
-- (void)continueNextStep
-{
-    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess)
-    {
+- (void)continueNextStep {
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess) {
         [self showLoading];
     }
 
     
     [RICart setMultistepFinishForCart:self.cart withSuccessBlock:^(RICart *cart, NSString *rrTargetString) {
         
-        if(VALID_NOTEMPTY(cart.paymentInformation, RIPaymentInformation))
-        {
-            if(RIPaymentInformationCheckoutEnded == cart.paymentInformation.type)
-            {
+        if(VALID_NOTEMPTY(cart.paymentInformation, RIPaymentInformation)) {
+            if(RIPaymentInformationCheckoutEnded == cart.paymentInformation.type) {
                 NSDictionary *userInfo = VALID_NOTEMPTY(rrTargetString, NSString)?@{ kCart : cart, @"rrTargetString" : rrTargetString }:@{ kCart : cart };
                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutThanksScreenNotification
                                                                     object:nil
                                                                   userInfo:userInfo];
                 
-            }
-            else
-            {
+            } else {
                 NSDictionary *userInfo = [NSDictionary dictionaryWithObject:cart forKey:kCart];
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutExternalPaymentsScreenNotification
