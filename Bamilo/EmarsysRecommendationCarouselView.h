@@ -9,6 +9,7 @@
 #import "FeatureBoxWidget.h"
 #import "RecommendItem.h"
 #import "FeatureBoxCollectionViewWidgetView.h"
+#import "BaseEmarsysRecommendationCollectionViewCell.h"
 
 @interface EmarsysRecommendationCarouselView: FeatureBoxCollectionViewWidgetView
 

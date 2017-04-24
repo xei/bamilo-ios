@@ -1,15 +1,15 @@
 //
-//  EmarsysRecommendationCarouselWidget.h
+//  EmarsysRecommendationMinimalCarouselWidget.h
 //  Bamilo
 //
-//  Created by Ali Saeedifar on 4/9/17.
+//  Created by Ali Saeedifar on 4/23/17.
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
 #import "FeatureBoxCollectionViewWidget.h"
-#import "EmarsysRecommendationCarouselView.h"
+#import "FeatureBoxCollectionViewWidgetView.h"
 
-@interface EmarsysRecommendationCarouselWidget : FeatureBoxCollectionViewWidget
+@interface EmarsysRecommendationMinimalCarouselWidget : FeatureBoxCollectionViewWidget
 
 @property (nonatomic, weak) id<FeatureBoxCollectionViewWidgetViewDelegate> delegate;
 - (void)updateTitle:(NSString *)title;

@@ -34,6 +34,9 @@
     
     [self.noResultMessageUILabel setFont: [UIFont fontWithName:kFontRegularName size:14]];
     [self.warningMessageUILabel setFont: [UIFont fontWithName:kFontLightName size:11]];
+    
+    [self.carouselWidget hide];
+    [self.view setBackgroundColor:[UIColor whiteColor]];
 }
 
 - (void)getSuggestions {
@@ -53,9 +56,9 @@
         msgToShow = @"متاسفانه موردی یافت نشد";
     }
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        self.noResultMessageUILabel.text = msgToShow;
-    });
+    [ThreadManager executeOnMainThread:^{
+      self.noResultMessageUILabel.text = msgToShow;
+    }];
 }
 
 #pragma mark - EmarsysPredictProtocol
@@ -68,6 +71,7 @@
     recommend.limit = 15;
     recommend.completionHandler = ^(EMRecommendationResult *_Nonnull result) {
         [ThreadManager executeOnMainThread:^{
+            [self.carouselWidget fadeIn:0.15];
             [self.carouselWidget updateWithModel:[result.products map:^id(EMRecommendationItem *item) {
                 return [RecommendItem instanceWithEMRecommendationItem:item];
             }]];

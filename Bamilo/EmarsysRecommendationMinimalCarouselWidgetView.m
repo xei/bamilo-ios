@@ -1,35 +1,32 @@
 //
-//  EmarsysRecommendationCarouselView.m
+//  EmarsysRecommendationMinimalCarouselWidgetView.m
 //  Bamilo
 //
-//  Created by Ali Saeedifar on 4/9/17.
+//  Created by Ali Saeedifar on 4/23/17.
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import "EmarsysRecommendationCarouselView.h"
-#import "EmarsysRecommendationCarouselCollectionViewCell.h"
+#import "EmarsysRecommendationMinimalCarouselWidgetView.h"
+#import "EmarsysRecommendationMinimalCarouselCollectionViewCell.h"
 
-@interface EmarsysRecommendationCarouselView()
+@interface EmarsysRecommendationMinimalCarouselWidgetView()
 
 @property (weak, nonatomic) IBOutlet UILabel *carouselTitle;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @end
 
-@implementation EmarsysRecommendationCarouselView 
+@implementation EmarsysRecommendationMinimalCarouselWidgetView
 
 - (void)awakeFromNib {
     [super awakeFromNib];
     [self setWidgetBacgkround:[UIColor clearColor]];
     [self.carouselTitle applyStyle:[Theme font:kFontVariationRegular size:12.0f] color:[UIColor blackColor]];
-    [self.collectionView registerNib:[UINib nibWithNibName:[EmarsysRecommendationCarouselCollectionViewCell nibName] bundle:nil]
-          forCellWithReuseIdentifier:[EmarsysRecommendationCarouselCollectionViewCell nibName]];
+    [self.collectionView registerNib:[UINib nibWithNibName:[EmarsysRecommendationMinimalCarouselCollectionViewCell nibName] bundle:nil]
+          forCellWithReuseIdentifier:[EmarsysRecommendationMinimalCarouselCollectionViewCell nibName]];
     [self.activityIndicator startAnimating];
 }
 
-- (void)registerCollectionViewCell {
-    
-}
 
 - (void)updateWithModel:(NSArray *)arrayModel {
     if ([arrayModel isKindOfClass:[NSArray<RecommendItem *> class]]) {
@@ -46,13 +43,13 @@
 
 #pragma mark - UICollectionViewDataSource
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    EmarsysRecommendationCarouselCollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:[EmarsysRecommendationCarouselCollectionViewCell nibName] forIndexPath:indexPath];
+    EmarsysRecommendationMinimalCarouselCollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:[EmarsysRecommendationMinimalCarouselCollectionViewCell nibName] forIndexPath:indexPath];
     [cell updateWithModel:self.collectionItems[indexPath.row]];
     return cell;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return [EmarsysRecommendationCarouselCollectionViewCell preferedSize];
+    return [EmarsysRecommendationMinimalCarouselCollectionViewCell preferedSize];
 }
 
 @end

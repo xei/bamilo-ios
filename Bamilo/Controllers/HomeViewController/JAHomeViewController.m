@@ -28,6 +28,7 @@
 #import "NSArray+Extension.h"
 #import "RecommendItem.h"
 #import "EmarsysRecommendationCarouselView.h"
+#import "EmarsysRecommendationMinimalCarouselWidgetView.h"
 #import "ThreadManager.h"
 #import "EmarsysPredictManager.h"
 #import "DeepLinkManager.h"

@@ -20,7 +20,7 @@
 #import "ViewControllerManager.h"
 #import "AlertManager.h"
 #import "CartEntitySummaryViewControl.h"
-#import "EmptyCartViewController.h"
+#import "EmptyViewController.h"
 
 
 @interface CartViewController() <CartTableViewCellDelegate>
@@ -34,7 +34,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *costSummeryContainerTopToWholeCostTopConstraint;
 @property (weak, nonatomic) IBOutlet CartEntitySummaryViewControl *summeryView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *summeryViewToBottomConstraint;
-@property (weak, nonatomic) EmptyCartViewController *emptyCartViewController;
+@property (weak, nonatomic) EmptyViewController *emptyCartViewController;
 @property (weak, nonatomic) IBOutlet UIView *emptyCartViewContainer;
 @end
 
@@ -371,11 +371,13 @@
 
 
 #pragma segue preparation
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     NSString * segueName = segue.identifier;
-    if ([segueName isEqualToString: @"embedEmptyCartViewController"]) {
-        self.emptyCartViewController = (EmptyCartViewController *) [segue destinationViewController];
+    if ([segueName isEqualToString: @"embedEmptyViewController"]) {
+        self.emptyCartViewController = (EmptyViewController *) [segue destinationViewController];
+        [self.emptyCartViewController updateTitle:STRING_NO_ITEMS_IN_CART];
+        [self.emptyCartViewController updateImage:[UIImage imageNamed:@"img_emptyCart"]];
     }
 }
+
 @end

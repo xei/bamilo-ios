@@ -6,11 +6,8 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import "BaseCollectionViewCell.h"
-#import "RecommendItem.h"
+#import "BaseEmarsysRecommendationCollectionViewCell.h"
 
-@interface EmarsysRecommendationCarouselCollectionViewCell : BaseCollectionViewCell
-
-+ (CGSize)preferedSize;
+@interface EmarsysRecommendationCarouselCollectionViewCell: BaseEmarsysRecommendationCollectionViewCell
 
 @end

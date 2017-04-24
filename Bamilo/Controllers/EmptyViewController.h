@@ -1,5 +1,5 @@
 //
-//  EmptyCartViewController.h
+//  EmptyViewController.h
 //  Bamilo
 //
 //  Created by Ali Saeedifar on 4/18/17.
@@ -8,8 +8,10 @@
 
 #import "JABaseViewController.h"
 
-@interface EmptyCartViewController : JABaseViewController
+@interface EmptyViewController : JABaseViewController
 
 - (void)getSuggestions;
+- (void)updateTitle:(NSString *)title;
+- (void)updateImage:(UIImage *)image;
 
 @end

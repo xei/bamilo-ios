@@ -576,17 +576,10 @@
 
 #pragma mark Favorites Screen
 - (void)showSavedListViewController:(NSNotification*)notification {
-    [self requestNavigateToClass:@"JASavedListViewController" args:nil];
-    /*
-        [AuthenticationContainerViewController authenticateAndExecuteBlock:^{
-        UIViewController *topViewController = [self topViewController];
-        if (![topViewController isKindOfClass:[JASavedListViewController class]])
-        {
-            JASavedListViewController *savedListViewController = [JASavedListViewController new];
-            
-            [self pushViewController:savedListViewController animated:NO];
-        }
-    } showBackButtonForAuthentication:NO];*/
+    UIViewController *topViewController = [self topViewController];
+    if (![topViewController isKindOfClass:[JASavedListViewController class]]) {
+        [self requestNavigateToNib:NSStringFromClass([JASavedListViewController class]) args:nil];
+    }
 }
 
 #pragma mark MoreMenu
@@ -1659,11 +1652,11 @@
 }
 
 //#####################################################################################################################
--(void) requestNavigateToNib:(NSString *)destNib args:(NSDictionary *)args {
+- (void) requestNavigateToNib:(NSString *)destNib args:(NSDictionary *)args {
     [self requestNavigateToNib:destNib ofStoryboard:@"Main" useCache:YES args:args];
 }
 
--(void) requestNavigateToNib:(NSString *)destNib ofStoryboard:(NSString *)storyboard useCache:(BOOL)useCache args:(NSDictionary *)args {
+- (void) requestNavigateToNib:(NSString *)destNib ofStoryboard:(NSString *)storyboard useCache:(BOOL)useCache args:(NSDictionary *)args {
     UIViewController *destViewController;
     
     if(storyboard == nil) {
@@ -1675,13 +1668,13 @@
     [self requestNavigateToViewController:destViewController args:args];
 }
 
--(void) requestNavigateToClass:(NSString *)destClass args:(NSDictionary *)args {
+- (void) requestNavigateToClass:(NSString *)destClass args:(NSDictionary *)args {
     UIViewController *destViewController = (UIViewController *)[NSClassFromString(destClass) new];
     
     [self requestNavigateToViewController:destViewController args:args];
 }
 
--(void)performProtectedBlock:(ProtectedBlock)block {
+- (void)performProtectedBlock:(ProtectedBlock)block {
     if(block && ![RICustomer checkIfUserIsLogged]) {
         [self pushAuthenticationViewController:^{
             block(NO);
@@ -1692,7 +1685,7 @@
 }
 
 #pragma mark - Helpers
--(void) requestNavigateToViewController:(UIViewController *)viewController args:(NSDictionary *)args {
+- (void) requestNavigateToViewController:(UIViewController *)viewController args:(NSDictionary *)args {
     if(viewController) {
         if([viewController conformsToProtocol:@protocol(ProtectedViewControllerProtocol)] && ![RICustomer checkIfUserIsLogged]) {
             [self pushAuthenticationViewController:^{
@@ -1704,7 +1697,7 @@
     }
 }
 
--(UIViewController *) setArgsForViewController:(UIViewController *)viewController args:(NSDictionary *)args {
+- (UIViewController *) setArgsForViewController:(UIViewController *)viewController args:(NSDictionary *)args {
     if([viewController conformsToProtocol:@protocol(ArgsReceiverProtocol)]) {
         [viewController performSelectorOnMainThread:@selector(updateWithArgs:) withObject:args waitUntilDone:YES];
     }
@@ -1712,7 +1705,7 @@
     return viewController;
 }
 
--(void) pushAuthenticationViewController:(void (^)(void))completion {
+- (void) pushAuthenticationViewController:(void (^)(void))completion {
     AuthenticationCompletion _authenticationCompletion = ^(AuthenticationStatus status) {
         switch (status) {
             case AUTHENTICATION_FINISHED_WITH_LOGIN:

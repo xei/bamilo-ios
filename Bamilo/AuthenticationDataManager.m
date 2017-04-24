@@ -41,7 +41,7 @@ static AuthenticationDataManager *instance;
     [self.requestManager asyncPOST:target path:RI_API_REGISTER_CUSTOMER params:fields type:REQUEST_EXEC_IN_FOREGROUND completion:^(int statusCode, Data *data, NSArray *errorMessages) {
         if(statusCode == RIApiResponseSuccess && data) {
             [RICustomer parseCustomerWithJson:[data.metadata objectForKey:@"customer_entity"] plainPassword:fields[@"customer[password]"] loginMethod:@"normal"];
-            completion(data, nil);
+            completion(data.metadata, nil);
         } else {
             completion(nil, [self getErrorFrom:statusCode errorMessages:errorMessages]);
         }
