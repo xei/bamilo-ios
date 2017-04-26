@@ -61,7 +61,8 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(campaignTimerEnded) name:kCampaignMainTeaserTimerEndedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reload) name:kHomeShouldReload object:nil];
-    [DeepLinkManager listenersReady];
+    
+    [self requestTeasers];
 }
 
 - (void)campaignTimerEnded {
@@ -77,8 +78,6 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self requestTeasers];
-    
     [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffMenuSwipePanelNotification object:nil];
     
     [self hideLoading];
@@ -87,6 +86,11 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
         [self presentCoachMarks];
     }
+    
+    if ([self isBeingPresented] || [self isMovingToParentViewController]) {
+        //Perform an action that will only be done once
+        [DeepLinkManager listenersReady];
+    }
 }
 
 - (void)presentCoachMarks {
@@ -94,7 +98,6 @@
     CGRect searchButtonFrame = self.searchIconImageView.frame; //search button
     JATabBarButton* moreButton = [[ViewControllerManager centerViewController].tabBarView.tabButtonsArray objectAtIndex:4];//morbutton in tab
     CGRect moreButtonFrame = moreButton.frame;
-    
     CGRect menuButtonFrame = [[ViewControllerManager centerViewController].navigationBarView.leftButton frame];//menu button
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")){
         searchButtonFrame.origin.y = searchButtonFrame.origin.y + 64.0f;
@@ -183,13 +186,10 @@
 
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
-    
     if (self.isLoaded) {
         [self.teaserPageView setFrame:[self viewBounds]];
     }
-    
     [self hideLoading];
-    
     if(self.fallbackView && self.fallbackView.superview) {
         [self.fallbackView setupFallbackView:[self viewBounds] orientation:[[UIApplication sharedApplication] statusBarOrientation]];
     }
@@ -283,16 +283,10 @@
     
     CGFloat pickerViewHeight = self.view.frame.size.height;
     CGFloat pickerViewWidth = self.view.frame.size.width;
-    [self.picker setFrame:CGRectMake(0.0f,
-                                     pickerViewHeight,
-                                     pickerViewWidth,
-                                     pickerViewHeight)];
+    [self.picker setFrame:CGRectMake(0.0f, pickerViewHeight, pickerViewWidth, pickerViewHeight)];
     [UIView animateWithDuration:0.4f
                      animations:^{
-                         [self.picker setFrame:CGRectMake(0.0f,
-                                                          0.0f,
-                                                          pickerViewWidth,
-                                                          pickerViewHeight)];
+                         [self.picker setFrame:CGRectMake(0.0f, 0.0f, pickerViewWidth, pickerViewHeight)];
                      }];
     
     [self.view addSubview:self.picker];

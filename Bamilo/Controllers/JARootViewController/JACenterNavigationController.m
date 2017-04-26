@@ -440,10 +440,7 @@
 
 #pragma mark Home Screen
 - (void)showHomeScreen:(NSNotification*)notification {
-    UIViewController *topViewController = [self topViewController];
-    
-    if (![topViewController isKindOfClass:[JAHomeViewController class]])
-    {
+    if (![[self topViewController] isKindOfClass:[JAHomeViewController class]]) {
         if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification object], NSDictionary)){
             [self showRootViewController];
         } else {
@@ -451,7 +448,7 @@
         }
         
         [self.tabBarView selectButtonAtIndex:0];
-        JAHomeViewController *home = [JAHomeViewController new];
+        JAHomeViewController *home = (JAHomeViewController *)[[ViewControllerManager sharedInstance] loadViewControllerWithoutStoryBoard:NSStringFromClass([JAHomeViewController class])];
         [self pushViewController:home animated:NO];
     }
 }
@@ -487,8 +484,7 @@
     }
 }
 
-- (void)showLoadCountryScreen:(NSNotification*)notification
-{
+- (void)showLoadCountryScreen:(NSNotification*)notification {
     RICountry* country = notification.object;
     
     if (VALID_NOTEMPTY(country, RICountry) && VALID_NOTEMPTY(country.selectedLanguage, RILanguage)) {
@@ -600,6 +596,10 @@
 
 #pragma mark Sign In Screen
 - (void)showAuthenticationScreen:(NSNotification *)notification {
+    if ([self showAndCheckIfUserAlreadyLoggedIn]) {
+        return;
+    }
+    
     AuthenticationContainerViewController *authenticationViewController = (AuthenticationContainerViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Authentication" nibName:@"AuthenticationContainerViewController" resetCache:YES];
 
     authenticationViewController.navBarLayout.showBackButton = YES;
@@ -637,10 +637,26 @@
 
 #pragma mark Sign Up Screen
 - (void)showSignUpScreen:(NSNotification *)notification {
+    if ([self showAndCheckIfUserAlreadyLoggedIn]) {
+        return;
+    }
+    
     AuthenticationContainerViewController *authenticationViewController = (AuthenticationContainerViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Authentication" nibName:@"AuthenticationContainerViewController" resetCache:YES];
     authenticationViewController.startWithSignUpViewController = YES;
     authenticationViewController.navBarLayout.showBackButton = YES;
     [self pushViewController:authenticationViewController animated:YES];
+}
+
+- (BOOL)showAndCheckIfUserAlreadyLoggedIn {
+    if ([RICustomer checkIfUserIsLogged]) {
+        if ([self.topViewController isKindOfClass:[BaseViewController class]]) {
+            [((BaseViewController *)self.topViewController) showNotificationBarMessage:STRING_ALREADY_LOGGED_IN isSuccess:YES];
+        } else if ([self.topViewController isKindOfClass:[JABaseViewController class]]) {
+            [((JABaseViewController *)self.topViewController) showMessage:STRING_ALREADY_LOGGED_IN success:YES];
+        }
+        return YES;
+    }
+    return NO;
 }
 
 #pragma mark Recently Viewed Screen

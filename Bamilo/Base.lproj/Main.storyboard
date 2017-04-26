@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="0V7-j2-mJV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="0V7-j2-mJV">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -343,7 +343,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NF1-Gu-L9D" userLabel="ContactUsButtonView">
-                                                <rect key="frame" x="57.666666666666657" y="545" width="300" height="44"/>
+                                                <rect key="frame" x="57" y="545" width="300" height="44"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vWl-gU-ciC" userLabel="ContactUsButton">
                                                         <rect key="frame" x="0.0" y="0.0" width="300" height="44"/>
@@ -357,7 +357,7 @@
                                                         </connections>
                                                     </button>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ArrowLeft" translatesAutoresizingMaskIntoConstraints="NO" id="sq9-Gh-X5C" userLabel="LeftArrow">
-                                                        <rect key="frame" x="15.000000000000007" y="15" width="8" height="14"/>
+                                                        <rect key="frame" x="15" y="15" width="8" height="14"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="8" id="iN9-zZ-c2V"/>
                                                         </constraints>
@@ -369,7 +369,7 @@
                                                         </constraints>
                                                     </imageView>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LCj-dQ-Cfy" userLabel="SplitterView">
-                                                        <rect key="frame" x="244.00000000000003" y="0.0" width="1" height="44"/>
+                                                        <rect key="frame" x="244" y="0.0" width="1" height="44"/>
                                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="1" id="zHg-ry-xNU"/>
@@ -398,7 +398,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o1u-H1-J6t" userLabel="ReportBugButtonView">
-                                                <rect key="frame" x="57.666666666666657" y="604" width="300" height="44"/>
+                                                <rect key="frame" x="57" y="604" width="300" height="44"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xpw-Yz-NpH" userLabel="ReportBugButton">
                                                         <rect key="frame" x="0.0" y="0.0" width="300" height="44"/>
@@ -412,7 +412,7 @@
                                                         </connections>
                                                     </button>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ArrowLeft" translatesAutoresizingMaskIntoConstraints="NO" id="Vut-Ug-F29" userLabel="LeftArrow">
-                                                        <rect key="frame" x="15.000000000000007" y="15" width="8" height="14"/>
+                                                        <rect key="frame" x="15" y="15" width="8" height="14"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="8" id="FrE-qe-4MR"/>
                                                         </constraints>
@@ -424,7 +424,7 @@
                                                         </constraints>
                                                     </imageView>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tm5-ZL-2On" userLabel="SplitterView">
-                                                        <rect key="frame" x="244.00000000000003" y="0.0" width="1" height="44"/>
+                                                        <rect key="frame" x="244" y="0.0" width="1" height="44"/>
                                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="1" id="Hsz-xI-EtH"/>
@@ -580,25 +580,25 @@
                                         <rect key="frame" x="0.0" y="618" width="414" height="75"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="مجموع خرید:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iiG-ZB-Lk2">
-                                                <rect key="frame" x="326.33333333333326" y="10" width="67.666666666666686" height="21.333333333333371"/>
+                                                <rect key="frame" x="326" y="10" width="68" height="22"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <color key="textColor" red="0.33725490196078434" green="0.33725490196078434" blue="0.33725490196078434" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="مجموع تخفیف:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QIn-JG-WlR">
-                                                <rect key="frame" x="316" y="43.666666666666629" width="78" height="21.333333333333371"/>
+                                                <rect key="frame" x="316" y="43" width="78" height="22"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="در حال محاسبه" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vgt-Lp-1Ci" userLabel="total price">
-                                                <rect key="frame" x="20" y="10" width="296.33333333333331" height="21.333333333333371"/>
+                                                <rect key="frame" x="20" y="10" width="296" height="22"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="در حال محاسبه" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Co6-Dd-SGv" userLabel="total discounted Price">
-                                                <rect key="frame" x="20" y="43.666666666666629" width="286" height="21.333333333333371"/>
+                                                <rect key="frame" x="20" y="43" width="286" height="22"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -717,7 +717,7 @@
                                 <rect key="frame" x="0.0" y="28" width="414" height="160"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pgz-Vl-RXA" id="cNm-Dn-ldr">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="159.66666666666666"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="159"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -910,10 +910,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="436"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JRw-GO-gRl" userLabel="Message Container View">
-                                        <rect key="frame" x="62.666666666666657" y="128" width="290" height="180"/>
+                                        <rect key="frame" x="62" y="128" width="290" height="180"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pageNotFound" translatesAutoresizingMaskIntoConstraints="NO" id="WnJ-6T-0gc">
-                                                <rect key="frame" x="117.66666666666669" y="5" width="55" height="55"/>
+                                                <rect key="frame" x="117" y="5" width="55" height="55"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="55" id="TCQ-Xj-8Vw"/>
                                                     <constraint firstAttribute="width" secondItem="WnJ-6T-0gc" secondAttribute="height" multiplier="1:1" id="rCE-Yw-TxW"/>
@@ -926,7 +926,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="✔︎ از صحت نگارش عبارت مورد نظر خود اطمینان حاصل نموده و مجدد جستجو نمایید." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A5u-Np-HlN">
-                                                <rect key="frame" x="29" y="135.33333333333331" width="232" height="39.666666666666686"/>
+                                                <rect key="frame" x="29" y="135" width="232" height="40"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="11"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1046,17 +1046,17 @@
                                 <rect key="frame" x="0.0" y="20" width="414" height="50"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="suT-vs-cb1" userLabel="only discount filter container view">
-                                        <rect key="frame" x="207.66666666666663" y="0.0" width="206.33333333333337" height="50"/>
+                                        <rect key="frame" x="207" y="0.0" width="207" height="50"/>
                                         <subviews>
                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="02K-RQ-ZgY">
-                                                <rect key="frame" x="149.33333333333334" y="10" width="51" height="31"/>
+                                                <rect key="frame" x="150" y="10" width="51" height="31"/>
                                                 <color key="onTintColor" red="0.47450980392156861" green="0.71372549019607845" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
                                                     <action selector="discountOnlySwitch:" destination="L8G-Sy-CpX" eventType="valueChanged" id="di2-jw-7cr"/>
                                                 </connections>
                                             </switch>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="فقط با تخفیف ها" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gEn-nz-ntR">
-                                                <rect key="frame" x="59.000000000000028" y="15" width="85.333333333333314" height="21.333333333333336"/>
+                                                <rect key="frame" x="59" y="15" width="86" height="22"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1079,10 +1079,10 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DMw-yI-1ik" userLabel="only discount filter container view">
-                                        <rect key="frame" x="1" y="0.0" width="206.66666666666666" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="207" height="50"/>
                                         <subviews>
                                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="frd-em-X2G">
-                                                <rect key="frame" x="0.0" y="0.0" width="206.66666666666666" height="50"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="207" height="50"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans-Bold" family="Bamilo-Sans" pointSize="12"/>
                                                 <state key="normal" title="پاک کردن همه">
                                                     <color key="titleColor" red="0.12941176470588234" green="0.52156862745098043" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1109,7 +1109,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y2G-Vh-l9y" userLabel="top filter buttons seperator view">
-                                        <rect key="frame" x="206.66666666666666" y="0.0" width="1" height="50"/>
+                                        <rect key="frame" x="206" y="0.0" width="1" height="50"/>
                                         <color key="backgroundColor" red="0.89803921568627454" green="0.89803921568627454" blue="0.89803921568627454" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="0.5" id="gzV-mo-rAG"/>
@@ -1355,17 +1355,17 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="489"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aHK-zt-d1F">
-                                        <rect key="frame" x="52" y="185.33333333333331" width="310" height="119.99999999999994"/>
+                                        <rect key="frame" x="52" y="185" width="310" height="120"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img_emptyCart" translatesAutoresizingMaskIntoConstraints="NO" id="6mZ-Dq-aV9">
-                                                <rect key="frame" x="121.99999999999999" y="10" width="66.666666666666643" height="60"/>
+                                                <rect key="frame" x="122" y="10" width="67" height="60"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="6mZ-Dq-aV9" secondAttribute="height" multiplier="51:46" id="GUi-v4-g6M"/>
                                                     <constraint firstAttribute="height" constant="60" id="qQQ-zu-ESG"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="شما هیچ کالایی در سبد خرید ندارید." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uxT-zy-g4F">
-                                                <rect key="frame" x="34" y="85.999999999999972" width="243.66666666666669" height="28.666666666666686"/>
+                                                <rect key="frame" x="34" y="86" width="244" height="29"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="15"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>

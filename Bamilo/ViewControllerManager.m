@@ -61,6 +61,16 @@ static ViewControllerManager *instance;
     return destViewController;
 }
 
+- (UIViewController *)loadViewControllerWithoutStoryBoard:(NSString *)className {
+    NSString *viewControllerFullKey = [NSString stringWithFormat:@"Root-%@", className];
+    UIViewController *destViewController = [_viewControllerCache objectForKey:viewControllerFullKey];
+    if (!destViewController) {
+        destViewController = [NSClassFromString(className) new];
+        [_viewControllerCache setObject:destViewController forKey:viewControllerFullKey];
+    }
+    return destViewController;
+}
+
 - (UIViewController *) loadViewController:(NSString *)nibName {
     return [self loadViewController:nibName resetCache:YES];
 }

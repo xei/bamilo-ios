@@ -501,5 +501,6 @@
 #define STRING_IN_PROGRESS RILocalizedString(@"in_progress", nil)
 #define STRING_SENT RILocalizedString(@"sent", nil)
 #define STRING_CANCELLED RILocalizedString(@"cancelled", nil)
+#define STRING_ALREADY_LOGGED_IN RILocalizedString(@"already_logged_in", nil)
 
 #endif
