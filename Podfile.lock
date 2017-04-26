@@ -38,7 +38,7 @@ PODS:
   - JSONModel (1.7.0)
   - Masonry (1.0.2)
   - NewRelicAgent (5.10.1)
-  - Pushwoosh (5.1.4)
+  - Pushwoosh (5.1.5)
   - RAlertView (0.1.1):
     - Masonry
     - RGB
@@ -81,7 +81,7 @@ SPEC CHECKSUMS:
   JSONModel: 840bc0fcffb24b8454d2c026bf26fea454b8e98d
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   NewRelicAgent: d16c572a3355d3ff9a359a6677e946c7a75a8f76
-  Pushwoosh: a9e267c3a2b03f4955171cb3d480bde9481152e8
+  Pushwoosh: c98a9ac508af669871f528b3cbaef6db8af7adae
   RAlertView: b9996eb63ceb64c7d1879a1d1846af5e386a1808
   RGB: 21cf4b60ef3501c6b7cbb268a30045905dd90995
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
