@@ -24,7 +24,8 @@
     self.carouselView = [EmarsysRecommendationMinimalCarouselWidgetView nibInstance];
     if(self.carouselView) {
         [self addSubview:self.carouselView];
-        [self anchorMatch:self.carouselView];
+        [self.carouselView setFrame:self.bounds];
+//        [self anchorMatch:self.carouselView];
     }
 }
 

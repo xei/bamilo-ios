@@ -23,7 +23,7 @@
 #import "JACatalogViewController.h"
 #import "JAPDVViewController.h"
 #import "JAExternalPaymentsViewController.h"
-#import "JASuccessPageViewController.h"
+//#import "JASuccessPageViewController.h"
 #import "RIProduct.h"
 #import "RISeller.h"
 #import "JANavigationBarLayout.h"
@@ -70,6 +70,7 @@
 #import "AuthenticationContainerViewController.h"
 #import "ProtectedViewControllerProtocol.h"
 #import "ArgsReceiverProtocol.h"
+#import "SuccessPaymentViewController.h"
 
 @interface JACenterNavigationController ()
 
@@ -900,22 +901,11 @@
 
 //#pragma mark Checkout Thanks Screen
 - (void)showCheckoutThanksScreen:(NSNotification *)notification {
-    UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JASuccessPageViewController class]] && [RICustomer checkIfUserIsLogged]) {
-        self.neeedsExternalPaymentMethod = NO;
+    SuccessPaymentViewController *viewCtrl = (SuccessPaymentViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Checkout" nibName:NSStringFromClass([SuccessPaymentViewController class]) resetCache:NO];
     
-        JASuccessPageViewController *thanksVC = [[JASuccessPageViewController alloc] init];
-    
-        thanksVC.cart = [notification.userInfo objectForKey:kCart];
-        thanksVC.targetString = [notification.userInfo objectForKey:@"rrTargetString"];
-    
-        [self pushViewController:thanksVC animated:YES];
-    }
+    viewCtrl.cart = [notification.userInfo objectForKey:kCart];
+    [self pushViewController:viewCtrl animated:YES];
 }
-
-//- (void)deactivateExternalPayment {
-//    self.neeedsExternalPaymentMethod = NO;
-//}
 
 #pragma mark Catalog Screen
 - (void)pushCatalogToShowSearchResults:(NSString *)query {

@@ -23,7 +23,7 @@
     self.carouselView = [EmarsysRecommendationCarouselView nibInstance];
     if(self.carouselView) {
         [self addSubview:self.carouselView];
-        [self anchorMatch:self.carouselView];
+        [self.carouselView setFrame:self.bounds];
     }
 }
 

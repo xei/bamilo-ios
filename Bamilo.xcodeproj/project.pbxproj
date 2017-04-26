@@ -101,6 +101,7 @@
 		61CBA0511E51E26B005673F7 /* FormValidationType.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA0501E51E26B005673F7 /* FormValidationType.m */; };
 		61CBA0561E51FF2F005673F7 /* ButtonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA0541E51FF2F005673F7 /* ButtonTableViewCell.m */; };
 		61CBA0571E51FF2F005673F7 /* ButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61CBA0551E51FF2F005673F7 /* ButtonTableViewCell.xib */; };
+		61D10E6C1EAE22C6009A0865 /* SuccessPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D10E6B1EAE22C6009A0865 /* SuccessPaymentViewController.m */; };
 		61D8D8DE1E656FE0006650F5 /* OrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D8D8DD1E656FE0006650F5 /* OrderDetailViewController.m */; };
 		61DBCCB61E46128300BA8251 /* IconButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 61DBCCB51E46128300BA8251 /* IconButton.m */; };
 		61E099641E3E0E21004ED14E /* IconTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E099621E3E0E21004ED14E /* IconTableViewCell.m */; };
@@ -1001,6 +1002,8 @@
 		61CBA0541E51FF2F005673F7 /* ButtonTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonTableViewCell.m; sourceTree = "<group>"; };
 		61CBA0551E51FF2F005673F7 /* ButtonTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ButtonTableViewCell.xib; sourceTree = "<group>"; };
 		61CBA0581E5204D8005673F7 /* ButtonTableViewCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonTableViewCellDelegate.h; sourceTree = "<group>"; };
+		61D10E6A1EAE22C6009A0865 /* SuccessPaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuccessPaymentViewController.h; sourceTree = "<group>"; };
+		61D10E6B1EAE22C6009A0865 /* SuccessPaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuccessPaymentViewController.m; sourceTree = "<group>"; };
 		61D8D8DC1E656FE0006650F5 /* OrderDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDetailViewController.h; sourceTree = "<group>"; };
 		61D8D8DD1E656FE0006650F5 /* OrderDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDetailViewController.m; sourceTree = "<group>"; };
 		61DBCCB41E46128300BA8251 /* IconButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconButton.h; sourceTree = "<group>"; };
@@ -3221,6 +3224,15 @@
 			name = ButtonTableviewCell;
 			sourceTree = "<group>";
 		};
+		61D10E691EAE22B5009A0865 /* SuccessPaymentViewController */ = {
+			isa = PBXGroup;
+			children = (
+				61D10E6A1EAE22C6009A0865 /* SuccessPaymentViewController.h */,
+				61D10E6B1EAE22C6009A0865 /* SuccessPaymentViewController.m */,
+			);
+			name = SuccessPaymentViewController;
+			sourceTree = "<group>";
+		};
 		61D8D8D91E656F82006650F5 /* Order */ = {
 			isa = PBXGroup;
 			children = (
@@ -5260,6 +5272,7 @@
 		87D07D821E40B4B100C00AC6 /* BML */ = {
 			isa = PBXGroup;
 			children = (
+				61D10E691EAE22B5009A0865 /* SuccessPaymentViewController */,
 				61A4D1A81EA62541003E203C /* EmptyViewController */,
 				879F88361E52EA690033FE87 /* Base */,
 				875081AF1E532E020031ECBF /* Account */,
@@ -7045,6 +7058,7 @@
 				9A08B1131CC7C377003282CB /* JAActionWebViewController.m in Sources */,
 				87D3DD2B1E8B810B00C960FF /* DeviceManager.m in Sources */,
 				873369CA1E58A1D200B0B5E5 /* ShippingMethodOption.m in Sources */,
+				61D10E6C1EAE22C6009A0865 /* SuccessPaymentViewController.m in Sources */,
 				87EA03331E6DA27D00B1E062 /* ProgressItemViewModel.m in Sources */,
 				87D3DD1C1E8A323000C960FF /* BaseDataManager.m in Sources */,
 				619D0B171EA34B8600FDB255 /* FeatureBoxCollectionViewWidget.m in Sources */,

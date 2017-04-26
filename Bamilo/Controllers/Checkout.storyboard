@@ -6,8 +6,14 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Bamilosans Reg.ttf">
+            <string>Bamilo-Sans</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Checkout Address View Controller-->
         <scene sceneID="MHk-nt-BjF">
@@ -218,11 +224,135 @@
                         <outlet property="checkoutProgressViewControl" destination="7Bg-pG-uxa" id="9Vi-Co-9mf"/>
                         <outlet property="continueButton" destination="dAO-l3-ogF" id="Iyt-m0-eWg"/>
                         <outlet property="tableView" destination="zc7-Vb-nIS" id="ghJ-n9-PSq"/>
+                        <segue destination="DJI-Ev-Zxb" kind="show" identifier="SuccessPaymentViewController" id="CTo-Jx-FjS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w3x-oZ-fdD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1383" y="-70"/>
         </scene>
+        <!--Success Payment View Controller-->
+        <scene sceneID="iko-IL-kNl">
+            <objects>
+                <viewController storyboardIdentifier="SuccessPaymentViewController" id="DJI-Ev-Zxb" customClass="SuccessPaymentViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="46t-5N-X8G"/>
+                        <viewControllerLayoutGuide type="bottom" id="Tox-Mo-Mfw"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="tQL-hg-4Jg">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2GG-zN-eTT">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="420"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JMC-xp-BYm">
+                                        <rect key="frame" x="67" y="130" width="240" height="160"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="successIcon" translatesAutoresizingMaskIntoConstraints="NO" id="aqz-cZ-E7n">
+                                                <rect key="frame" x="185" y="5" width="50" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="5Bu-PC-CsW"/>
+                                                    <constraint firstAttribute="width" secondItem="aqz-cZ-E7n" secondAttribute="height" multiplier="1:1" id="TAw-7f-5da"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="با تشکر از شما!" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tr4-mC-OYm">
+                                                <rect key="frame" x="5" y="19" width="170" height="23.5"/>
+                                                <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="20"/>
+                                                <color key="textColor" red="0.63921568627450975" green="0.81176470588235294" blue="0.38431372549019605" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fcY-30-Vag">
+                                                <rect key="frame" x="0.0" y="100" width="240" height="50"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="eFA-d3-IWr"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="14"/>
+                                                <state key="normal" title="جزئیات سفارش">
+                                                    <color key="titleColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                        <color key="value" red="0.88627450980392153" green="0.88627450980392153" blue="0.88627450980392153" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                        <real key="value" value="1"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <segue destination="gww-nF-gX8" kind="show" id="LqE-q2-b2X"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="fcY-30-Vag" secondAttribute="trailing" id="Gpl-fw-UTm"/>
+                                            <constraint firstAttribute="width" constant="240" id="VBz-N5-ig9"/>
+                                            <constraint firstItem="Tr4-mC-OYm" firstAttribute="centerY" secondItem="aqz-cZ-E7n" secondAttribute="centerY" id="cKO-IC-Wb7"/>
+                                            <constraint firstAttribute="bottom" secondItem="fcY-30-Vag" secondAttribute="bottom" constant="10" id="clE-yD-FO9"/>
+                                            <constraint firstItem="Tr4-mC-OYm" firstAttribute="leading" secondItem="JMC-xp-BYm" secondAttribute="leading" constant="5" id="kOP-4i-GYr"/>
+                                            <constraint firstItem="aqz-cZ-E7n" firstAttribute="top" secondItem="JMC-xp-BYm" secondAttribute="top" constant="5" id="ld7-eA-s9K"/>
+                                            <constraint firstAttribute="height" constant="160" id="mUd-be-4TZ"/>
+                                            <constraint firstItem="aqz-cZ-E7n" firstAttribute="leading" secondItem="Tr4-mC-OYm" secondAttribute="trailing" constant="10" id="ugU-bw-p7B"/>
+                                            <constraint firstAttribute="trailing" secondItem="aqz-cZ-E7n" secondAttribute="trailing" constant="5" id="vKP-nP-9fL"/>
+                                            <constraint firstItem="fcY-30-Vag" firstAttribute="leading" secondItem="JMC-xp-BYm" secondAttribute="leading" id="zks-Rg-VbD"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ft2-Po-4VA">
+                                        <rect key="frame" x="166" y="200" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="Ft2-Po-4VA" firstAttribute="centerY" secondItem="JMC-xp-BYm" secondAttribute="centerY" id="7VI-mf-e8I"/>
+                                    <constraint firstItem="JMC-xp-BYm" firstAttribute="centerY" secondItem="2GG-zN-eTT" secondAttribute="centerY" id="WYh-QK-KcT"/>
+                                    <constraint firstItem="JMC-xp-BYm" firstAttribute="centerX" secondItem="2GG-zN-eTT" secondAttribute="centerX" id="dCV-DR-xN6"/>
+                                    <constraint firstItem="Ft2-Po-4VA" firstAttribute="centerX" secondItem="JMC-xp-BYm" secondAttribute="centerX" id="geX-cZ-06g"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RUh-Wx-p8b" customClass="EmarsysRecommendationMinimalCarouselWidget">
+                                <rect key="frame" x="0.0" y="420" width="375" height="247"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="247" id="dHQ-RV-aQG"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="RUh-Wx-p8b" firstAttribute="top" secondItem="2GG-zN-eTT" secondAttribute="bottom" id="HEp-1p-aOG"/>
+                            <constraint firstItem="2GG-zN-eTT" firstAttribute="top" secondItem="46t-5N-X8G" secondAttribute="bottom" id="VGM-9J-dFv"/>
+                            <constraint firstItem="RUh-Wx-p8b" firstAttribute="leading" secondItem="tQL-hg-4Jg" secondAttribute="leading" id="WyS-Yh-i4J"/>
+                            <constraint firstItem="2GG-zN-eTT" firstAttribute="leading" secondItem="tQL-hg-4Jg" secondAttribute="leading" id="ZVE-LD-gdO"/>
+                            <constraint firstItem="Tox-Mo-Mfw" firstAttribute="top" secondItem="RUh-Wx-p8b" secondAttribute="bottom" id="aNb-BY-w5A"/>
+                            <constraint firstAttribute="trailing" secondItem="2GG-zN-eTT" secondAttribute="trailing" id="egt-tv-Poc"/>
+                            <constraint firstAttribute="trailing" secondItem="RUh-Wx-p8b" secondAttribute="trailing" id="ouM-Dm-2eS"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="carouselWidget" destination="RUh-Wx-p8b" id="Fjt-1D-Ah7"/>
+                        <outlet property="descLabel" destination="Ft2-Po-4VA" id="rMS-lh-umz"/>
+                        <outlet property="titleLabel" destination="Tr4-mC-OYm" id="Ftm-Cn-KHz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="78b-NQ-EYb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2189.5999999999999" y="-72.413793103448285"/>
+        </scene>
+        <!--OrderListViewController-->
+        <scene sceneID="pwe-As-CV2">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="OrderListViewController" id="gww-nF-gX8" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rM7-CH-hzc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2886" y="-71"/>
+        </scene>
     </scenes>
+    <resources>
+        <image name="successIcon" width="50" height="50"/>
+    </resources>
 </document>

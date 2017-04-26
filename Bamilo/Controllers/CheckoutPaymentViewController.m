@@ -17,6 +17,7 @@
 #import "RIPaymentInformation.h"
 #import "JACheckoutForms.h"
 #import "EventUtilities.h"
+#import "SuccessPaymentViewController.h"
 
 typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
     PAYMENT_METHOD_ONLINE = 1 << 0,
@@ -78,7 +79,6 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
 
 -(void)updateNavBar {
     [super updateNavBar];
-    
     self.navBarLayout.title = STRING_PAYMENT_OPTION;
 }
 
@@ -109,7 +109,7 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
                             NSDictionary *userInfo = @{ kCart : self.cart };
                             
                             if(self.cart.paymentInformation.type == RIPaymentInformationCheckoutEnded) {
-                                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutThanksScreenNotification object:nil userInfo:userInfo];
+                                [self performSegueWithIdentifier:NSStringFromClass([SuccessPaymentViewController class]) sender:nil];
                             } else {
                                  [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutExternalPaymentsScreenNotification object:nil userInfo:userInfo];
                             }
@@ -252,6 +252,15 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
 #pragma mark - PerformanceTrackerProtocol
 -(NSString *)getPerformanceTrackerScreenName {
     return @"CheckoutPayment";
+}
+
+
+#pragma mark - prepareForSegue
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    NSString * segueName = segue.identifier;
+    if ([segueName isEqualToString: NSStringFromClass([SuccessPaymentViewController class])]) {
+        ((SuccessPaymentViewController *) [segue destinationViewController]).cart = self.cart;
+    }
 }
 
 @end
