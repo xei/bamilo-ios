@@ -147,7 +147,8 @@
          @{STRING_ORDER_DATE_INFO: [[self.order.creationDate convertToJalali] numbersToPersian] ?: @""},
          @{STRING_TOTAL_COST_INFO: self.order.formattedPrice ?: @""},
          @{STRING_ORDER_PRODUCT_QUANTITY: [NSString stringWithFormat:@"%lu %@", (unsigned long)self.order.products.count, STRING_PRODUCT_QUANTITY_POSTFIX] ?: @""},
-         @{STRING_PAYMENT_METHOD: self.order.paymentMethod ?: @""}
+         @{STRING_PAYMENT_METHOD: self.order.paymentMethod ?: @""},
+         @{STRING_ADDRESS: self.order.shippingAddress.address}
     ];
 
     [self.tableview setHidden:NO];
