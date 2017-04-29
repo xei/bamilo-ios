@@ -24,7 +24,7 @@
     JAFiltersViewControllerDelegate,
     JAUndefinedSearchViewDelegate,
     DataServiceProtocol,
-    EmarsysPredictProtocol
+    EmarsysWebExtendProtocol
 >
 
 @property (nonatomic, strong)RICategory* category;

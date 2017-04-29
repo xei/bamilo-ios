@@ -1529,25 +1529,6 @@ typedef void (^ProcessActionBlock)(void);
     return YES;
 }
 
-#pragma mark - EmarsysPredictProtocol
-- (NSArray<EMRecommendationRequest *> *)getRecommendations {
-    
-    EMRecommendationRequest *recommend = [EMRecommendationRequest requestWithLogic:@"SEARCH"];
-    recommend.limit = 15;
-    
-    [recommend excludeItemsWhere:@"item" isIn:[self.productsArray map:^id(RIProduct *item) {
-        return item.sku;
-    }]];
-    
-    recommend.completionHandler = ^(EMRecommendationResult *_Nonnull result) {
-        [result.products map:^id(EMRecommendationItem *item) {
-            return [RecommendItem instanceWithEMRecommendationItem:item];
-        }];
-    };
-    
-    return @[recommend];
-}
-
 #pragma mark - DataServiceProtocol
 -(void)bind:(id)data forRequestId:(int)rid {
     return;

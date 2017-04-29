@@ -18,10 +18,11 @@
 #import "RecommendItem.h"
 #import "ThreadManager.h"
 
-@interface CatalogNoResultViewController () <EmarsysRecommendationsProtocol, FeatureBoxCollectionViewWidgetViewDelegate>
+@interface CatalogNoResultViewController () <EmarsysPredictProtocol, FeatureBoxCollectionViewWidgetViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *noResultMessageUILabel;
 @property (weak, nonatomic) IBOutlet UILabel *warningMessageUILabel;
 @property (strong, nonatomic) RITeaserGrouping *teaserGroup;
+@property (nonatomic, copy) NSString *searchTerm;
 @property (strong, nonatomic) IBOutlet EmarsysRecommendationCarouselWidget *carouselWidget;
 @end
 
@@ -48,6 +49,7 @@
 }
 
 - (void)setSearchQuery:(NSString *)searchQuery {
+    self.searchTerm = searchQuery;
     NSString* msgToShow;
     if (searchQuery) {
         searchQuery = [searchQuery wrapWithMaxSize:20];
@@ -79,6 +81,13 @@
     };
     
     return @[recommend];
+}
+
+- (EMTransaction *)getDataCollection:(EMTransaction *)transaction {
+    if (self.searchTerm) {
+        [transaction setSearchTerm:self.searchTerm];
+    }
+    return transaction;
 }
 
 #pragma mark - FeatureBoxCollectionViewWidgetViewDelegate
