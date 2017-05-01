@@ -22,7 +22,7 @@ static GoogleAnalyticsTracker *instance;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         instance = [GoogleAnalyticsTracker new];
-        [instance setConfigs];
+//        [instance setConfigs];
     });
     
     return instance;

@@ -287,7 +287,7 @@ static dispatch_once_t sharedInstanceToken;
 
 #pragma mark - Campaign protocol
 
-- (void)trackCampaignWithName:(NSString *)campaignName {
+- (void)trackCampaignData:(NSDictionary *)campaignData {
     RIDebugLog(@"Tracking campaign with name '%@'", campaignName);
     
     if (!self.trackers) {
@@ -296,8 +296,8 @@ static dispatch_once_t sharedInstanceToken;
     }
     
     [self RI_callTrackersConformToProtocol:@protocol(RICampaignTracker)
-                                  selector:@selector(trackCampaignWithName:)
-                                 arguments:@[campaignName]];
+                                  selector:@selector(trackCampaignData:)
+                                 arguments:@[campaignData]];
 }
 
 #pragma mark - RIStaticPageTracker

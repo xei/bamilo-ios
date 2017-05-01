@@ -31,7 +31,16 @@ static PushWooshTracker *instance;
 
 - (NSArray *)eligableEvents {
     if (!_eligableEvents) {
-        _eligableEvents = @[[LoginEvent name], [LogoutEvent name], [SignUpEvent name], [OpenAppEvent name], [AddToFavoritesEvent name], [AddToCartEvent name], [AbandonCartEvent name], [PurchaseEvent name], [SearchEvent name], [ViewProductEvent name]];
+        _eligableEvents = @[[LoginEvent name],
+                            [LogoutEvent name],
+                            [SignUpEvent name],
+                            [OpenAppEvent name],
+                            [AddToFavoritesEvent name],
+                            [AddToCartEvent name],
+                            [AbandonCartEvent name],
+                            [PurchaseEvent name],
+                            [SearchEvent name],
+                            [ViewProductEvent name]];
     }
     return _eligableEvents;
 }
@@ -88,6 +97,12 @@ static PushWooshTracker *instance;
         [[EmarsysMobileEngage sharedInstance] sendOpen:emarsysSID completion:^(BOOL success) {
             NSLog(@"EmarsysMobileEngage > sendOpen > %@", success ? sSUCCESSFUL : sFAILED);
         }];
+    }
+    if ([jsonData objectForKey:kUTMSource] ||
+        [jsonData objectForKey:kUTMMedium] ||
+        [jsonData objectForKey:kUTMCampaign] ||
+        [jsonData objectForKey:kUTMContent]) {
+        [[RITrackingWrapper sharedInstance] trackCampaignData:jsonData];
     }
 }
 

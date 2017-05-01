@@ -15,6 +15,7 @@
 static NSMutableArray<NSURL *> *deepLinkPipe;
 static BOOL isListenersReady;
 
+
 @implementation DeepLinkManager
 
 + (void)handleUrl:(NSURL *)url {
@@ -25,13 +26,15 @@ static BOOL isListenersReady;
     }
     
     if (url.scheme) {
-        //I don't know what the hell is this, but I keep it (`UTM` in queryString!!)
+    
         NSDictionary *queryDictionary = [URLUtility parseQueryString:url];
         
-        /*NSString *utm = [queryDictionary valueForKey:@"UTM"];
-        if (utm) {
-            [[RITrackingWrapper sharedInstance] trackCampaignWithName:[[queryDictionary valueForKey:@"UTM"] objectForKey:@"UTM"]];
-        }*/
+        if ([queryDictionary objectForKey:kUTMSource] ||
+            [queryDictionary objectForKey:kUTMMedium] ||
+            [queryDictionary objectForKey:kUTMCampaign] ||
+            [queryDictionary objectForKey:kUTMContent]) {
+            [[RITrackingWrapper sharedInstance] trackCampaignData:queryDictionary];
+        }
         
         NSArray *pathComponents = [[url.path componentsSeparatedByString:@"/"] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"length > 0"]];
         if (!pathComponents.count) {

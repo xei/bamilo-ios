@@ -76,6 +76,12 @@
 #define kConfigs @"Configs"
 #define cWebNormalizedDateTimeFormat @"yyyy-MM-dd HH:mm:ss"
 
+#define kUTMSource @"UTM_source"
+#define kUTMMedium  @"UTM_medium"
+#define kUTMCampaign @"UTM_campaign"
+#define kUTMContent @"UTM_content"
+
+
 #define SYSTEM_VERSION(v) [[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch]
 #define SYSTEM_VERSION_EQUAL_TO(v) (SYSTEM_VERSION(v) == NSOrderedSame)
 #define SYSTEM_VERSION_GREATER_THAN(v) (SYSTEM_VERSION(v) == NSOrderedDescending)
