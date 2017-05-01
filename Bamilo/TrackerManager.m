@@ -10,23 +10,29 @@
 
 @implementation TrackerManager
 
-static NSMutableArray *_trackers;
+static NSMutableArray <BaseTracker *> *_trackers;
 
 #pragma mark - Public Methods
-+(NSMutableArray *)addTracker:(id)tracker {
++(NSMutableArray *)addTracker:(BaseTracker *)tracker {
     if(_trackers == nil) {
-        _trackers = [NSMutableArray new];
+        _trackers = [NSMutableArray<BaseTracker *> new];
     }
-    
     [_trackers addObject:tracker];
-    
     return _trackers;
 }
 
 +(void)postEvent:(NSDictionary *)attributes forName:(NSString *)name {
-    for(id tracker in _trackers) {
-        if([tracker conformsToProtocol:@protocol(EventTrackerProtocol)]) {
+    for (id tracker in _trackers) {
+        if([tracker conformsToProtocol:@protocol(EventTrackerProtocol)] && [tracker isEventEligable:name]) {
             [tracker postEvent:attributes forName:name];
+        }
+    }
+}
+
++ (void)trackScreenName:(NSString *)screenName {
+    for (id tracker in _trackers) {
+        if([tracker conformsToProtocol:@protocol(ScreenTrackingProtocol)]) {
+            [tracker trackScreenName:screenName];
         }
     }
 }

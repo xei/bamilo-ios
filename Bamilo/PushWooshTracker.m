@@ -12,6 +12,10 @@
 #import "RITrackingWrapper.h"
 #import "DeepLinkManager.h"
 
+@interface PushWooshTracker()
+@property (nonatomic, strong) NSArray<NSString *>*eligableEvents;
+@end
+
 @implementation PushWooshTracker
 
 static PushWooshTracker *instance;
@@ -23,6 +27,13 @@ static PushWooshTracker *instance;
     });
     
     return instance;
+}
+
+- (NSArray *)eligableEvents {
+    if (!_eligableEvents) {
+        _eligableEvents = @[[LoginEvent name], [LogoutEvent name], [SignUpEvent name], [OpenAppEvent name], [AddToFavoritesEvent name], [AddToCartEvent name], [AbandonCartEvent name], [PurchaseEvent name], [SearchEvent name], [ViewProductEvent name]];
+    }
+    return _eligableEvents;
 }
 
 -(void)setUserID:(NSString *)userId {
@@ -53,6 +64,10 @@ static PushWooshTracker *instance;
 #pragma mark - EventTrackerProtocol
 -(void)postEvent:(NSDictionary *)attributes forName:(NSString *)name {
     [[PWInAppManager sharedManager] postEvent:name withAttributes:attributes];
+}
+
+-(BOOL)isEventEligable:(NSString *)eventName {
+    return [self.eligableEvents indexOfObjectIdenticalTo: eventName] != NSNotFound;;
 }
 
 #pragma mark - TagTrackerProtocol

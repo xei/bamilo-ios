@@ -14,6 +14,7 @@
 
 @interface EmarsysPredictManager : NSObject
 
++ (void)setConfigs;
 + (void)sendTransactionsOf:(UIViewController *)viewController;
 + (void)setCustomer:(RICustomer *)customer;
 + (void)userLoggedOut;

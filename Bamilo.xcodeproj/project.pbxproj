@@ -25,6 +25,8 @@
 		61036B651E65B570006E12A9 /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = 61036B641E65B570006E12A9 /* Order.m */; };
 		61036B681E65B5F5006E12A9 /* OrderList.m in Sources */ = {isa = PBXBuildFile; fileRef = 61036B671E65B5F5006E12A9 /* OrderList.m */; };
 		61036B6C1E65B638006E12A9 /* OrderProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 61036B6B1E65B638006E12A9 /* OrderProduct.m */; };
+		61037CBE1EB72C7600A461E0 /* EmarsysMobileEngageTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 61037CBD1EB72C7600A461E0 /* EmarsysMobileEngageTracker.m */; };
+		61037CC21EB73AF100A461E0 /* GoogleAnalyticsTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 61037CC11EB73AF100A461E0 /* GoogleAnalyticsTracker.m */; };
 		610ED5831E742947000D5BEC /* UITextField+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 610ED5821E742947000D5BEC /* UITextField+Extensions.m */; };
 		611195821E3CB14B00D06690 /* PlainTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 611195801E3CB14B00D06690 /* PlainTableViewCell.m */; };
 		611195831E3CB14B00D06690 /* PlainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 611195811E3CB14B00D06690 /* PlainTableViewCell.xib */; };
@@ -863,6 +865,11 @@
 		61036B671E65B5F5006E12A9 /* OrderList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderList.m; sourceTree = "<group>"; };
 		61036B6A1E65B638006E12A9 /* OrderProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderProduct.h; sourceTree = "<group>"; };
 		61036B6B1E65B638006E12A9 /* OrderProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderProduct.m; sourceTree = "<group>"; };
+		61037CBC1EB72C7600A461E0 /* EmarsysMobileEngageTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysMobileEngageTracker.h; sourceTree = "<group>"; };
+		61037CBD1EB72C7600A461E0 /* EmarsysMobileEngageTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysMobileEngageTracker.m; sourceTree = "<group>"; };
+		61037CC01EB73AF100A461E0 /* GoogleAnalyticsTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleAnalyticsTracker.h; sourceTree = "<group>"; };
+		61037CC11EB73AF100A461E0 /* GoogleAnalyticsTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleAnalyticsTracker.m; sourceTree = "<group>"; };
+		61037CC31EB7416200A461E0 /* ScreenTrackingProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenTrackingProtocol.h; sourceTree = "<group>"; };
 		610ED5811E742947000D5BEC /* UITextField+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+Extensions.h"; sourceTree = "<group>"; };
 		610ED5821E742947000D5BEC /* UITextField+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+Extensions.m"; sourceTree = "<group>"; };
 		6111957F1E3CB14B00D06690 /* PlainTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlainTableViewCell.h; path = ../Controllers/MenuViewController/PlainTableViewCell.h; sourceTree = "<group>"; };
@@ -2502,6 +2509,24 @@
 				61036B611E65B553006E12A9 /* Order */,
 			);
 			name = OrderGroup;
+			sourceTree = "<group>";
+		};
+		61037CBA1EB72C4500A461E0 /* EmarsysMobileEngageTracker */ = {
+			isa = PBXGroup;
+			children = (
+				61037CBC1EB72C7600A461E0 /* EmarsysMobileEngageTracker.h */,
+				61037CBD1EB72C7600A461E0 /* EmarsysMobileEngageTracker.m */,
+			);
+			name = EmarsysMobileEngageTracker;
+			sourceTree = "<group>";
+		};
+		61037CBF1EB73ACB00A461E0 /* GoogleAnalyticsTracker */ = {
+			isa = PBXGroup;
+			children = (
+				61037CC01EB73AF100A461E0 /* GoogleAnalyticsTracker.h */,
+				61037CC11EB73AF100A461E0 /* GoogleAnalyticsTracker.m */,
+			);
+			name = GoogleAnalyticsTracker;
 			sourceTree = "<group>";
 		};
 		610ED5801E742918000D5BEC /* UITextField+Extensions */ = {
@@ -4257,6 +4282,8 @@
 				875435141E77ECC400B5D6B4 /* Base */,
 				8702FBAE1E98DF60001D1AA9 /* TrackerManager */,
 				875435181E77ECD200B5D6B4 /* PushWoosh */,
+				61037CBA1EB72C4500A461E0 /* EmarsysMobileEngageTracker */,
+				61037CBF1EB73ACB00A461E0 /* GoogleAnalyticsTracker */,
 			);
 			name = Trackers;
 			sourceTree = "<group>";
@@ -4287,6 +4314,7 @@
 				8754351D1E77ED1100B5D6B4 /* PushNotificationTrackerProtocol.h */,
 				871BA8501E8678DE007680C5 /* EventTrackerProtocol.h */,
 				8702FBEF1E9A3758001D1AA9 /* TagTrackerProtocol.h */,
+				61037CC31EB7416200A461E0 /* ScreenTrackingProtocol.h */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -7192,6 +7220,7 @@
 				871BA8561E867F4A007680C5 /* AppEvent.m in Sources */,
 				613D37771E6EE19E001B2852 /* NSDate+Extensions.m in Sources */,
 				61CBA04A1E51D18F005673F7 /* FormTableViewCell.m in Sources */,
+				61037CC21EB73AF100A461E0 /* GoogleAnalyticsTracker.m in Sources */,
 				8714E0771E479C00004C9B1D /* CheckoutProgressViewButtonModel.m in Sources */,
 				9A189E6F1BB31AF70039BC14 /* JAProductInfoSingleLine.m in Sources */,
 				875AD5701E38C0C900584ABF /* RISeller.m in Sources */,
@@ -7253,6 +7282,7 @@
 				CEE558661AFCC2FB00FC87D4 /* JARadioRelatedComponent.m in Sources */,
 				CE9ADF941AB6D78200D56481 /* JAPicker.m in Sources */,
 				8714E0591E471E2F004C9B1D /* DataManager.m in Sources */,
+				61037CBE1EB72C7600A461E0 /* EmarsysMobileEngageTracker.m in Sources */,
 				CE9ADF971AB6D78200D56481 /* JAFallbackView.m in Sources */,
 				9AE766A21CB3CF5300B63D8E /* JAAccountServicesView.m in Sources */,
 				87459CA41E4F15AF00743120 /* PaymentTypeTableViewCell.m in Sources */,

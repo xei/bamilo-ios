@@ -34,7 +34,7 @@
     self.title = nil;
     self.view.backgroundColor = JABackgroundGrey;
     
-    //self.accengageAlias = [self getDataTrackerAlias];
+    [TrackerManager trackScreenName:[self getDataTrackerAlias]];
 }
 
 - (JANavigationBarLayout *)navBarLayout {

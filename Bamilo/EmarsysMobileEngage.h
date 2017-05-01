@@ -11,7 +11,7 @@
 
 typedef void(^EmarsysMobileEngageResponse)(BOOL success);
 
-@interface EmarsysMobileEngage : NSObject <EventTrackerProtocol>
+@interface EmarsysMobileEngage : NSObject
 
 + (instancetype)sharedInstance;
 

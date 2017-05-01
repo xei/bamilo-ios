@@ -29,6 +29,9 @@
 #import "DeepLinkManager.h"
 #import "PushWooshTracker.h"
 #import "EmarsysMobileEngage.h"
+#import "EmarsysMobileEngageTracker.h"
+#import "GoogleAnalyticsTracker.h"
+#import "EmarsysPredictManager.h"
 
 @interface JAAppDelegate () <RIAdjustTrackerDelegate>
 
@@ -142,7 +145,8 @@
     //SETUP TRACKERS
     //********************************************************************
     [TrackerManager addTracker:[PushWooshTracker sharedTracker]];
-    [TrackerManager addTracker:[EmarsysMobileEngage sharedInstance]];
+    [TrackerManager addTracker:[EmarsysMobileEngageTracker sharedTracker]];
+    [TrackerManager addTracker:[GoogleAnalyticsTracker sharedTracker]];
     
     NSDictionary *configs = [[NSBundle mainBundle] objectForInfoDictionaryKey:kConfigs];
     if(configs) {
@@ -155,17 +159,7 @@
             }];
         }
     }
-    
-    // Set merchant ID. for emarsysPredict
-    EMSession *emarsysSession = [EMSession sharedSession];
-    emarsysSession.merchantID = @"18146DE34FE0B8C9";
-    
-#ifdef IS_RELEASE
-    emarsysSession.logLevel = EMLogLevelNone;
-#else
-    emarsysSession.logLevel = EMLogLevelDebug;
-#endif
-    
+    [EmarsysPredictManager setConfigs];
     [[PushNotificationManager pushManager] startLocationTracking];
     
     return YES;

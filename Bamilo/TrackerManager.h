@@ -10,13 +10,18 @@
 #import "EventTrackerProtocol.h"
 #import "EventFactory.h"
 #import "TagTrackerProtocol.h"
+#import "BaseTracker.h"
+#import "ScreenTrackingProtocol.h"
 
 @interface TrackerManager : NSObject
 
-+(NSMutableArray *) addTracker:(id)tracker;
++(NSMutableArray *) addTracker:(BaseTracker *)tracker;
 
 //### EventTrackerProtocol
 +(void) postEvent:(NSDictionary *)attributes forName:(NSString *)name;
+
+//#### ScreenTrackingProtocol
++(void)trackScreenName:(NSString *)screenName;
 
 //### TagTrackerProtocol
 +(void) sendTags:(NSDictionary *)tags completion:(TagTrackerCompletion)completion;

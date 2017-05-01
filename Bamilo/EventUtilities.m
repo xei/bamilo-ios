@@ -18,7 +18,7 @@
         [categories addObject:item.categoryUrlKey];
     }
     
-    return [categories componentsJoinedByString:@","];
+    return [categories componentsJoinedByString:@"|"];
 }
 
 +(NSString *)getSearchKeywords:(NSString *)query {

@@ -60,11 +60,6 @@ static EmarsysMobileEngage *instance;
     }];
 }
 
-#pragma mark - EventTrackerProtocol
--(void)postEvent:(NSDictionary *)attributes forName:(NSString *)name {
-    [self sendCustomEvent:name attributes:attributes completion:nil];
-}
-
 #pragma mark - Private Methods
 -(id) getContactIdentifier {
     PushNotificationManager *pushManager = [PushNotificationManager pushManager];

@@ -10,6 +10,7 @@
 
 @protocol EventTrackerProtocol <NSObject>
 
+-(BOOL) isEventEligable:(NSString *)eventName;
 -(void) postEvent:(NSDictionary *)attributes forName:(NSString *)name;
 
 @end

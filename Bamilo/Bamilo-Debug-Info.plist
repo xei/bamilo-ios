@@ -129,6 +129,10 @@
 	<string>27</string>
 	<key>Configs</key>
 	<dict>
+		<key>EMMerchantID</key>
+		<string>18146DE34FE0B8C9</string>
+		<key>GoogleAnalyticsID</key>
+		<string>UA-89467232-1</string>
 		<key>Emarsys</key>
 		<dict>
 			<key>Application_CODE</key>

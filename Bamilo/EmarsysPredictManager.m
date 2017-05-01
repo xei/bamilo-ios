@@ -54,4 +54,17 @@
     [emarsysSession setCustomerEmail:nil];
 }
 
++ (void)setConfigs {
+    EMSession *emarsysSession = [EMSession sharedSession];
+    
+    NSString *merchantId = [[[NSBundle mainBundle] objectForInfoDictionaryKey:kConfigs] objectForKey:@"EMMerchantID"];
+    emarsysSession.merchantID = merchantId;
+    
+#ifdef IS_RELEASE
+    emarsysSession.logLevel = EMLogLevelNone;
+#else
+    emarsysSession.logLevel = EMLogLevelDebug;
+#endif
+}
+
 @end
