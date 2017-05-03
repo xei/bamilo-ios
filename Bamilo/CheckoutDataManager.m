@@ -24,7 +24,7 @@ static CheckoutDataManager *instance;
 }
 
 -(void)getMultistepAddressList:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
-    [self.requestManager asyncGET:target path:RI_API_MULTISTEP_GET_ADDRESSES params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(int statusCode, Data *data, NSArray *errorMessages) {
+    [self.requestManager asyncGET:target path:RI_API_MULTISTEP_GET_ADDRESSES params:nil type:RequestExecutionTypeForeground completion:^(NSInteger statusCode, ResponseData *data, NSArray *errorMessages) {
         [self processResponse:statusCode ofClass:[RICart class] forData:data errorMessages:errorMessages completion:completion];
     }];
 }
@@ -32,19 +32,19 @@ static CheckoutDataManager *instance;
 -(void)setMultistepAddress:(id<DataServiceProtocol>)target forShipping:(NSString *)shippingAddressId billing:(NSString *)billingAddressId completion:(DataCompletion)completion {
     NSDictionary *params = @{ @"addresses[shipping_id]": shippingAddressId, @"addresses[billing_id]": billingAddressId };
     
-    [self.requestManager asyncPOST:target path:RI_API_MULTISTEP_SUBMIT_ADDRESSES params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int statusCode, Data *data, NSArray *errorMessages) {
+    [self.requestManager asyncPOST:target path:RI_API_MULTISTEP_SUBMIT_ADDRESSES params:params type:RequestExecutionTypeForeground completion:^(NSInteger statusCode, ResponseData *data, NSArray *errorMessages) {
         [self processResponse:statusCode ofClass:[MultistepEntity class] forData:data errorMessages:errorMessages completion:completion];
     }];
 }
 
 -(void)getMultistepConfirmation:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
-    [self.requestManager asyncGET:target path:RI_API_MULTISTEP_GET_FINISH params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(int statusCode, Data *data, NSArray *errorMessages) {
+    [self.requestManager asyncGET:target path:RI_API_MULTISTEP_GET_FINISH params:nil type:RequestExecutionTypeForeground completion:^(NSInteger statusCode, ResponseData *data, NSArray *errorMessages) {
         [self processResponse:statusCode ofClass:[RICart class] forData:data errorMessages:errorMessages completion:completion];
     }];
 }
 
 -(void) getMultistepShipping:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
-    [self.requestManager asyncGET:target path:RI_API_MULTISTEP_GET_SHIPPING params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(int statusCode, Data *data, NSArray *errorMessages) {
+    [self.requestManager asyncGET:target path:RI_API_MULTISTEP_GET_SHIPPING params:nil type:RequestExecutionTypeForeground completion:^(NSInteger statusCode, ResponseData *data, NSArray *errorMessages) {
         [self processResponse:statusCode ofClass:[RICart class] forData:data errorMessages:errorMessages completion:completion];
     }];
 }
@@ -62,13 +62,13 @@ static CheckoutDataManager *instance;
  }*/
 
 - (void) getMultistepPayment:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
-    [self.requestManager asyncGET:target path:RI_API_MULTISTEP_GET_PAYMENT params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(int statusCode, Data *data, NSArray *errorMessages) {
+    [self.requestManager asyncGET:target path:RI_API_MULTISTEP_GET_PAYMENT params:nil type:RequestExecutionTypeForeground completion:^(NSInteger statusCode, ResponseData *data, NSArray *errorMessages) {
         [self processResponse:statusCode ofClass:[RICart class] forData:data errorMessages:errorMessages completion:completion];
     }];
 }
 
 -(void)setMultistepPayment:(id<DataServiceProtocol>)target params:(NSDictionary *)params completion:(DataCompletion)completion {
-    [self.requestManager asyncPOST:target path:RI_API_MULTISTEP_SUBMIT_PAYMENT params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int statusCode, Data *data, NSArray *errorMessages) {
+    [self.requestManager asyncPOST:target path:RI_API_MULTISTEP_SUBMIT_PAYMENT params:params type:RequestExecutionTypeForeground completion:^(NSInteger statusCode, ResponseData *data, NSArray *errorMessages) {
         [self processResponse:statusCode ofClass:[MultistepEntity class] forData:data errorMessages:errorMessages completion:completion];
     }];
 }
@@ -76,7 +76,7 @@ static CheckoutDataManager *instance;
 -(void) setMultistepConfirmation:(id<DataServiceProtocol>)target cart:(RICart *)cart completion:(DataCompletion)completion {
     NSDictionary *params = @{ @"app": @"ios", @"customer_device": UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() ? @"tablet" : @"mobile" };
     
-    [self.requestManager asyncPOST:target path:RI_API_MULTISTEP_SUBMIT_FINISH params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int statusCode, Data *data, NSArray *errorMessages) {
+    [self.requestManager asyncPOST:target path:RI_API_MULTISTEP_SUBMIT_FINISH params:params type:RequestExecutionTypeForeground completion:^(NSInteger statusCode, ResponseData *data, NSArray *errorMessages) {
         if(completion != nil && errorMessages.count == 0) {
             completion([RICart parseCheckoutFinish:data.metadata forCart:cart], nil);
         } else {
@@ -89,7 +89,7 @@ static CheckoutDataManager *instance;
 -(void) applyVoucher:(id<DataServiceProtocol>)target voucherCode:(NSString *)voucherCode completion:(DataCompletion)completion {
     NSDictionary *params = @{ @"couponcode": voucherCode };
     
-    [self.requestManager asyncPOST:target path:RI_API_ADD_VOUCHER_TO_CART params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int statusCode, Data *data, NSArray *errorMessages) {
+    [self.requestManager asyncPOST:target path:RI_API_ADD_VOUCHER_TO_CART params:params type:RequestExecutionTypeForeground completion:^(NSInteger statusCode, ResponseData *data, NSArray *errorMessages) {
         [self processResponse:statusCode ofClass:[RICart class] forData:data errorMessages:errorMessages completion:completion];
     }];
 }
@@ -97,7 +97,7 @@ static CheckoutDataManager *instance;
 -(void) removeVoucher:(id<DataServiceProtocol>)target voucherCode:(NSString *)voucherCode completion:(DataCompletion)completion {
     NSDictionary *params = @{ @"couponcode": voucherCode };
     
-    [self.requestManager asyncDELETE:target path:RI_API_REMOVE_VOUCHER_FROM_CART params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int statusCode, Data *data, NSArray *errorMessages) {
+    [self.requestManager asyncDELETE:target path:RI_API_REMOVE_VOUCHER_FROM_CART params:params type:RequestExecutionTypeForeground completion:^(NSInteger statusCode, ResponseData *data, NSArray *errorMessages) {
         [self processResponse:statusCode ofClass:[RICart class] forData:data errorMessages:errorMessages completion:completion];
     }];
 }

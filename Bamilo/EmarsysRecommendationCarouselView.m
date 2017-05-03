@@ -27,10 +27,6 @@
     [self.activityIndicator startAnimating];
 }
 
-- (void)registerCollectionViewCell {
-    
-}
-
 - (void)updateWithModel:(NSArray *)arrayModel {
     if ([arrayModel isKindOfClass:[NSArray<RecommendItem *> class]]) {
         if (arrayModel.count) {

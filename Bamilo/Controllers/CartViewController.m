@@ -7,7 +7,7 @@
 //
 
 #import "CartViewController.h"
-#import "DataManager.h"
+#import "CartDataManager.h"
 #import "JAEmptyCartView.h"
 #import "RICustomer.h"
 #import "JAUtils.h"
@@ -271,7 +271,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[DataManager sharedInstance] getUserCart:self completion:^(id data, NSError *error) {
+    [[CartDataManager sharedInstance] getUserCart:self completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
         }

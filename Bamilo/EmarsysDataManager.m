@@ -123,24 +123,25 @@ static EmarsysDataManager *instance;
 }
 
 -(void) executeLogin:(NSDictionary *)params completion:(DataCompletion)completion {
-    [self.requestManager asyncPOST:nil path:@"users/login" params:params type:REQUEST_EXEC_IN_BACKGROUND completion:^(int statusCode, id data, NSArray *errorMessages) {
+    [self.requestManager asyncPOST:nil path:@"users/login" params:params type:RequestExecutionTypeBackground completion:^(NSInteger statusCode, id data, NSArray *errorMessages) {
         [self handleEmarsysDataManagerResponse:statusCode data:data errorMessages:errorMessages completion:completion];
     }];
 }
 
 -(void) executeEvent:(NSString *)event params:(NSDictionary *)params completion:(DataCompletion)completion {
-    [self.requestManager asyncPOST:nil path:[NSString stringWithFormat:@"events/%@", event] params:params type:REQUEST_EXEC_IN_BACKGROUND completion:^(int statusCode, id data, NSArray *errorMessages) {
+    [self.requestManager asyncPOST:nil path:[NSString stringWithFormat:@"events/%@", event] params:params type:RequestExecutionTypeBackground completion:^(NSInteger statusCode, id data, NSArray *errorMessages) {
         [self handleEmarsysDataManagerResponse:statusCode data:data errorMessages:errorMessages completion:completion];
     }];
 }
 
 -(void) executeLogout:(NSDictionary *)params completion:(DataCompletion)completion {
-    [self.requestManager asyncPOST:nil path:@"users/logout" params:params type:REQUEST_EXEC_IN_BACKGROUND completion:^(int statusCode, id data, NSArray *errorMessages) {
+    [self.requestManager asyncPOST:nil path:@"users/logout" params:params type:RequestExecutionTypeBackground completion:^(NSInteger statusCode, id data, NSArray *errorMessages) {
         [self handleEmarsysDataManagerResponse:statusCode data:data errorMessages:errorMessages completion:completion];
     }];
 }
 
--(void) handleEmarsysDataManagerResponse:(int)statusCode data:(id)data errorMessages:(NSArray *)errorMessages completion:(DataCompletion)completion {
+#pragma Mark: - helpers
+-(void) handleEmarsysDataManagerResponse:(NSUInteger)statusCode data:(id)data errorMessages:(NSArray *)errorMessages completion:(DataCompletion)completion {
     if(statusCode == CREATED || statusCode == SUCCESSFUL) {
         completion(data, nil);
     } else {

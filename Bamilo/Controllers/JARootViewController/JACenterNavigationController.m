@@ -379,13 +379,13 @@
         }
         case CATALOG_SEARCH: {
             JACatalogViewController *viewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
-            //JACatalogViewController *viewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];;
             [self loadScreenTarget:screenTarget forBaseViewController:viewController];
             [viewController setSearchString:screenTarget.target.node];
             [self pushViewController:viewController animated:screenTarget.pushAnimation];
             return YES;
         }
         case CATALOG_HASH:
+        case CATALOG_BRAND:
         case CATALOG_CATEGORY: {
             JACatalogViewController *viewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];;
             [self loadScreenTarget:screenTarget forBaseViewController:viewController];
@@ -405,12 +405,6 @@
             JAActionWebViewController* viewController = [[JAActionWebViewController alloc] init];
             [self loadScreenTarget:screenTarget forBaseViewController:viewController];
             [viewController setHtmlString:VALID_NOTEMPTY_VALUE([screenTarget.screenInfo objectForKey:@"html"], NSString)];
-            [self pushViewController:viewController animated:screenTarget.pushAnimation];
-            return YES;
-        }
-        case CATALOG_BRAND: {
-            JACatalogViewController *viewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];;
-            [self loadScreenTarget:screenTarget forBaseViewController:viewController];
             [self pushViewController:viewController animated:screenTarget.pushAnimation];
             return YES;
         }
@@ -524,7 +518,7 @@
                 // It's to perform a search
                 [self pushCatalogToShowSearchResults:[selectedItem objectForKey:@"text"]];
             } else if ([index isEqual:@(98)]) {
-                [self pushCatalogForUndefinedSearchWithBrandTargetString:[selectedItem objectForKey:@"targetString"]
+                [self  pushCatalogForUndefinedSearchWithBrandTargetString:[selectedItem objectForKey:@"targetString"]
                                                    andBrandName:[selectedItem objectForKey:@"name"]];
             } else {
                 [self changeCenterPanel:[selectedItem objectForKey:@"name"] notification:notification];

@@ -8,14 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import "DataServiceProtocol.h"
-#import "Data.h"
+#import "ResponseData.h"
 
-typedef NS_OPTIONS(NSUInteger, RequestExecutionType) {
-    REQUEST_EXEC_IN_BACKGROUND = 0,
-    REQUEST_EXEC_IN_FOREGROUND = 1
+typedef NS_ENUM(NSUInteger, RequestExecutionType) {
+    RequestExecutionTypeBackground = 0,
+    RequestExecutionTypeForeground = 1
 };
 
-typedef void(^RequestCompletion)(int statusCode, Data *data, NSArray *errorMessages);
+typedef void(^RequestCompletion)(RIApiResponse statusCode, ResponseData *data, NSArray <NSString *>*errorMessages);
 
 @interface RequestManager : NSObject
 

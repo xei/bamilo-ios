@@ -6,8 +6,8 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import "Data.h"
+#import "ResponseData.h"
 
-@implementation Data
+@implementation ResponseData
 
 @end

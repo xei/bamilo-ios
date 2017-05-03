@@ -1,4 +1,4 @@
-//
+	//
 //  AddressEditViewController.m
 //  Bamilo
 //
@@ -8,7 +8,7 @@
 
 
 #import "AddressEditViewController.h"
-#import "DataManager.h"
+#import "Bamilo-Swift.h"
 
 @interface AddressEditViewController () <DataServiceProtocol>
 @property (nonatomic, weak) IBOutlet UITableView* tableView;
@@ -133,8 +133,7 @@
     if(self.address.uid) {
         //EDIT / UPDATE ADDRESS
         params[@"address_form[id]"] = self.address.uid;
-        
-        [[DataManager sharedInstance] updateAddress:self params:params withID:self.address.uid completion:^(id data, NSError *error) {
+        [[AddressDataManager sharedInstance] updateAddressWithTarget:self params:params id:self.address.uid completion:^(id data, NSError *error) {
             if (error == nil) {
                 [self.navigationController popViewControllerAnimated:YES];
             } else {
@@ -149,7 +148,7 @@
     } else {
         //ADD NEW ADDRESS
         params[@"address_form[id]"] = @"";
-        [[DataManager sharedInstance] addAddress:self params:params completion:^(id data, NSError *error) {
+        [[AddressDataManager sharedInstance] addAddressWithTarget:self params:params completion:^(id data, NSError *error) {
             if (error == nil) {
                 [self.navigationController popViewControllerAnimated:YES];
             } else {
@@ -204,7 +203,7 @@
 
 #pragma mark - Helpers
 - (void)getAddressByID: (NSString *)uid {
-    [[DataManager sharedInstance] getAddress:self byId:uid completion:^(id data, NSError *error) {
+    [[AddressDataManager sharedInstance] getAddressWithTarget:self id:uid completion:^(id data, NSError *error) {
         if (error == nil) {
             [self bind:data forRequestId:3];
             [self publishScreenLoadTime];
@@ -262,7 +261,7 @@
 
 
 - (void)getRegionsByCompletion:(void (^)(void))completion {
-    [[DataManager sharedInstance] getRegions:self completion:^(id data, NSError *error) {
+    [[AddressDataManager sharedInstance] getRegionsWithTarget:self completion:^(id data, NSError *error) {
         if (!error)  {
             [self bind:data forRequestId:0];
             if(completion) completion();
@@ -271,7 +270,7 @@
 }
 
 - (void)getCitiesForRegionId:(NSString *)regionId completion:(void (^)(void))completion {
-    [[DataManager sharedInstance] getCities:self forRegionId:regionId completion:^(id data, NSError *error) {
+    [[AddressDataManager sharedInstance] getCitiesWithTarget:self regionId:regionId completion:^(id data, NSError *error) {
         if (!error) {
             [self bind:data forRequestId:1];
             if (completion) completion();
@@ -280,7 +279,7 @@
 }
 
 - (void)getVicinitiesForCityId:(NSString *)cityId completion:(void (^)(void))completion {
-    [[DataManager sharedInstance] getVicinity:self forCityId:cityId completion:^(id data, NSError *error) {
+    [[AddressDataManager sharedInstance] getVicinityWithTarget:self cityId:cityId completion:^(id data, NSError *error) {
         if (!error) {
             [self bind:data forRequestId:2];
             if (completion) completion();

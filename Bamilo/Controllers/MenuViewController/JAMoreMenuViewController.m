@@ -14,6 +14,7 @@
 #import "IconTableViewCell.h"
 #import "JAActivityViewController.h"
 #import "JBWhatsAppActivity.h"
+#import "Bamilo-Swift.h"
 
 @interface JAMoreMenuViewController ()
 
@@ -33,7 +34,6 @@
     self.searchBarIsVisible = YES;
     
     self.view.backgroundColor = [UIColor whiteColor];
-    
     
     //   Nib registration for tableView
     [self.tableView registerNib:[UINib nibWithNibName:[IconTableViewCell nibName] bundle:nil] forCellReuseIdentifier: [IconTableViewCell nibName]];

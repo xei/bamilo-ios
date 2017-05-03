@@ -48,7 +48,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"newsletter_subscribed"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     self.navBarLayout.showCartButton = NO;

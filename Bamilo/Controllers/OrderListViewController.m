@@ -8,7 +8,7 @@
 
 #import "OrderListViewController.h"
 #import "OrderListTableViewCell.h"
-#import "DataManager.h"
+#import "Bamilo-Swift.h"
 #import "OrderDetailViewController.h"
 #import "OrderList.h"
 
@@ -106,7 +106,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [[DataManager sharedInstance] getOrders:self forPageNumber:self.currentOrdersPage perPageCount:kOrdersPerPage completion:^(id data, NSError *error) {
+    [[OrderDataManager sharedInstance] getOrdersWithTarget:self page:self.currentOrdersPage perPageCount:kOrdersPerPage completion:^(id data, NSError *error) {
         if (error == nil) {
             [self bind:data forRequestId:0];
         } else {

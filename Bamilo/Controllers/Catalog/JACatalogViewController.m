@@ -33,7 +33,7 @@
 #import "RICatalogSorting.h"
 //##############################
 #import "ViewControllerManager.h"
-#import "DataManager.h"
+#import "Bamilo-Swift.h"
 #import "PushWooshTracker.h"
 #import "SearchEvent.h"
 #import "EmarsysMobileEngage.h"
@@ -1536,7 +1536,7 @@ typedef void (^ProcessActionBlock)(void);
 
 #pragma mark - Helper Methods
 - (void)getSubcategories {
-    [[DataManager sharedInstance] getSubCategoriesFilter:nil ofCategroyUrlKey:self.categoryUrlKey completion:^(id data, NSError *error) {
+    [[CatalogDataManager sharedInstance] getSubCategoriesFilterWithTarget:self categoryUrlKey:self.categoryUrlKey completion:^(id data, NSError *error) {
         subCatFilter = data;
     }];
 }

@@ -180,7 +180,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
                 if (VALID_NOTEMPTY([campaignData objectForKey:kUTMCampaign], NSString)) {
                     [params addObject:@"utm_source=push"];
                 }
-            } else
+            } else 
                 [params addObject:[NSString stringWithFormat:@"utm_source=%@",[campaignData objectForKey:kUTMSource]]];
             
             if (!VALID_NOTEMPTY([campaignData objectForKey:kUTMMedium], NSString)) {

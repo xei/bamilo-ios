@@ -9,7 +9,7 @@
 #import "BaseModel.h"
 #import "DataMessageList.h"
 
-@interface Data : BaseModel
+@interface ResponseData : BaseModel
 
 @property (strong, nonatomic) NSDictionary *metadata;
 @property (strong, nonatomic) DataMessageList *messages;

@@ -44,7 +44,7 @@
 
 -(void)asyncRequest:(HttpVerb)method path:(NSString *)path params:(NSDictionary *)params type:(RequestExecutionType)type target:(id<DataServiceProtocol>)target completion:(RequestCompletion)completion {
     switch (type) {
-        case REQUEST_EXEC_IN_FOREGROUND:
+        case RequestExecutionTypeForeground:
             [[LoadingManager sharedInstance] showLoading];
         break;
             
@@ -63,7 +63,7 @@
      userAgentInjection:[RIApi getCountryUserAgentInjection] successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
          
          NSError *error;
-         Data *data = [Data new];
+         ResponseData *data = [ResponseData new];
          [data mergeFromDictionary:jsonObject useKeyMapping:NO error:&error];
          
          if (data.success) {

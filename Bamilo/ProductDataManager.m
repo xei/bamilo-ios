@@ -25,7 +25,7 @@ static ProductDataManager *instance;
 -(void)addToFavorites:(id<DataServiceProtocol>)target sku:(NSString *)sku completion:(DataCompletion)completion {
     NSDictionary *params = @{ @"sku": sku };
     
-    [self.requestManager asyncPOST:target path:RI_API_ADD_TO_WISHLIST params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int statusCode, Data *data, NSArray *errorMessages) {
+    [self.requestManager asyncPOST:target path:RI_API_ADD_TO_WISHLIST params:params type:RequestExecutionTypeForeground completion:^(NSInteger statusCode, ResponseData *data, NSArray *errorMessages) {
         [self processResponse:statusCode ofClass:nil forData:data errorMessages:errorMessages completion:completion];
     }];
 }

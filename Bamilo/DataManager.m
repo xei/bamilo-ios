@@ -22,6 +22,7 @@ static DataManager *instance;
     if (self = [super init]) {
         self.requestManager = [[RequestManager alloc] initWithBaseUrl:[NSString stringWithFormat:@"%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION]];
     }
+    
     return self;
 }
 
@@ -34,92 +35,11 @@ static DataManager *instance;
     return instance;
 }
 
-- (void)getSubCategoriesFilter:(id<DataServiceProtocol>)target ofCategroyUrlKey:(NSString *)urlKey completion:(DataCompletion)completion {
-    NSString *path = [NSString stringWithFormat:RI_API_GET_CATEGORIES_BY_URLKEY, urlKey];
-    [self.requestManager asyncGET:target path:path params:nil type:REQUEST_EXEC_IN_BACKGROUND completion:^(int statusCode, Data *data, NSArray *errorMessages) {
-        Data *_data = (Data *)data;
-        _data.metadata = [data.metadata objectForKey:@"data"][0][@"children"][0];
-        [self processResponse:statusCode ofClass:[SearchCategoryFilter class] forData:_data errorMessages:errorMessages completion:completion];
-    }];
-}
-
-//### AREA_INFORMATION
-- (void)getVicinity:(id<DataServiceProtocol>)target forCityId:(NSString *)uid completion:(DataCompletion)completion {
-    NSString *path = [NSString stringWithFormat:@"%@city_id/%@", RI_API_GET_CUSTOMER_POSTCODES, uid];
-    [self getAreaZone:target type:REQUEST_EXEC_IN_BACKGROUND path:path completion:completion];
-}
-
-- (void)getCities:(id<DataServiceProtocol>)target forRegionId:(NSString *)uid completion:(DataCompletion)completion {
-    NSString *path = [NSString stringWithFormat:@"%@region/%@", RI_API_GET_CUSTOMER_CITIES, uid];
-    [self getAreaZone:target type:REQUEST_EXEC_IN_BACKGROUND path:path completion:completion];
-}
-
-- (void)getRegions:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
-    [self getAreaZone:target type:REQUEST_EXEC_IN_BACKGROUND path:RI_API_GET_CUSTOMER_REGIONS completion:completion];
-}
-
-
-- (void)getAddress:(id<DataServiceProtocol>)target byId:(NSString *)uid completion:(DataCompletion)completion {
-    [self.requestManager asyncGET:target
-                        path:[NSString stringWithFormat:@"%@?id=%@", RI_API_GET_CUSTOMER_ADDDRESS, uid]
-                      params:nil
-                        type:REQUEST_EXEC_IN_FOREGROUND
-                  completion:^(int statusCode, Data *data, NSArray *errorMessages) {
-                      [self processResponse:statusCode ofClass:[Address class] forData:data errorMessages:errorMessages completion:completion];
-                  }];
-}
-
--(void)addAddress:(id<DataServiceProtocol>)target params:(NSDictionary *)params completion:(DataCompletion)completion {
-    [self.requestManager asyncPOST:target path:RI_API_POST_CUSTOMER_ADDDRESS_CREATE params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int statusCode, Data *data, NSArray *errorMessages) {
-        if(statusCode == RIApiResponseSuccess && data) {
-            completion(data, nil);
-        } else {
-            completion(nil, [self getErrorFrom:statusCode errorMessages:errorMessages]);
-        }
-    }];
-}
-
-- (void)updateAddress:(id<DataServiceProtocol>)target params:(NSMutableDictionary *)params withID:(NSString *)uid completion:(DataCompletion)completion {
-    [self.requestManager asyncPOST:target path:[NSString stringWithFormat:@"%@%@", RI_API_POST_CUSTOMER_ADDDRESS_EDIT, uid] params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int statusCode, Data *data, NSArray *errorMessages) {
-        if(statusCode == RIApiResponseSuccess && data) {
-            completion(data, nil);
-        } else {
-            completion(nil, [self getErrorFrom:statusCode errorMessages:errorMessages]);
-        }
-    }];
-}
-
-//### ORDER ####
-- (void)getOrders:(id<DataServiceProtocol>)target forPageNumber:(int)page perPageCount:(int)perPageCount completion:(DataCompletion)completion {
-    NSDictionary *params = @{
-         @"per_page": @(perPageCount),
-         @"page"    : @(page)
-    };
-    
-    [self.requestManager asyncPOST:target path:RI_API_GET_ORDERS params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int statusCode, Data *data, NSArray *errorMessages) {
-        [self processResponse:statusCode ofClass:[OrderList class] forData:data errorMessages:errorMessages completion:completion];
-    }];
-}
-
-- (void)getOrder:(id<DataServiceProtocol>)target forOrderId:(NSString *)orderId completion:(DataCompletion)completion {
-    NSString *path = [NSString stringWithFormat:RI_API_TRACK_ORDER, orderId];
-    [self.requestManager asyncPOST:target path:path params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(int statusCode, id data, NSArray *errorMessages) {
-        [self processResponse:statusCode ofClass:[Order class] forData:data errorMessages:errorMessages completion:completion];
-    }];
-}
-
-//### CART ###
-- (void)getUserCart:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
-    [self.requestManager asyncPOST:target path:RI_API_GET_CART_DATA params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(int statusCode, Data *data, NSArray *errorMessages) {
-        [self processResponse:statusCode ofClass:[RICart class] forData:data errorMessages:errorMessages completion:completion];
-    }];
-}
-
 #pragma mark - Public Methods
 -(void) processResponse:(RIApiResponse)response ofClass:(Class)aClass forData:(id)data errorMessages:(NSArray *)errorMessages completion:(DataCompletion)completion {
     if(completion) {
         if(response == RIApiResponseSuccess && data) {
-            Data *serviceData = (Data *)data;
+            ResponseData *serviceData = (ResponseData *)data;
             NSMutableDictionary *payload = [NSMutableDictionary dictionary];
             
             DataMessageList *dataMessages = serviceData.messages;
@@ -129,7 +49,7 @@ static DataManager *instance;
 
             if([aClass conformsToProtocol:@protocol(JSONVerboseModel)]) {
                 [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
-                    [payload setObject:[aClass parseToDataModelWithObjects:@[ ((Data *)data).metadata, configuration ]] forKey:kDataContent];
+                    [payload setObject:[aClass parseToDataModelWithObjects:@[ ((ResponseData *)data).metadata, configuration ]] forKey:kDataContent];
                     [self handlePayload:payload completion:completion];
                 } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
                     completion(nil, [self getErrorFrom:apiResponse errorMessages:errorMessages]);
@@ -166,23 +86,6 @@ static DataManager *instance;
     } else {
         completion([payload objectForKey:kDataMessages], nil);
     }
-}
-
-#pragma mark - Helpers
-//Area Helper function
-- (void)getAreaZone:(id<DataServiceProtocol>)target type:(RequestExecutionType)type path:(NSString *)path completion:(DataCompletion)completion {
-    [self.requestManager asyncGET:target path:path params:nil type:type completion:^(int statusCode, Data *data, NSArray *errorMessages) {
-        if(statusCode == RIApiResponseSuccess && data) {
-            //Please skip this tof for now! @Narbeh
-            NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
-            for (NSDictionary *region in  data.metadata[@"data"]) {
-                dictionary[region[@"label"]] = [NSString stringWithFormat:@"%@", region[@"value"]];
-            }
-            completion(dictionary, nil);
-        } else {
-            completion(nil, [self getErrorFrom:statusCode errorMessages:errorMessages]);
-        }
-    }];
 }
 
 @end
