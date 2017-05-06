@@ -16,7 +16,7 @@ target 'Bamilo' do
   pod 'Adjust', '~> 4.11.0'
   pod 'AlgoliaSearch-Client'
   pod 'Fabric'
-  pod ‘EmarsysPredictSDK’
+  pod 'EmarsysPredictSDK'
   pod 'Crashlytics', '~> 3.8'
   pod 'FXBlurView','~> 1.6.4'
   # pod 'GoogleTagManager', '~> 5.0.8'
