@@ -10,7 +10,11 @@
 #import "AppConsts.h"
 #import "RIApi.h"
 
+#import <Masonry/Masonry.h>
+#import <RGB/RRGB.h>
+
 #import "DataManager.h"
 #import "SearchCategoryFilter.h"
 #import "OrderList.h"
-
+#import "RIFilter.h"
+#import "SearchPriceFilter.h"

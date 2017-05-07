@@ -15,8 +15,6 @@
 		1C80D8841E2E3D850036B514 /* ‌Bamilosans Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1C71FC5A1E2CABAD007ACF02 /* ‌Bamilosans Bold.ttf */; };
 		1CCD52A01E2BA42F008BAEE4 /* PopularTeaserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCD529E1E2BA42F008BAEE4 /* PopularTeaserTableViewCell.m */; };
 		1CCD52A11E2BA42F008BAEE4 /* PopularTeaserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CCD529F1E2BA42F008BAEE4 /* PopularTeaserTableViewCell.xib */; };
-		48AD8FE22FD2C5FDC1CEBFF8 /* libPods-BamiloUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18BD9C21DAEE905E1607A899 /* libPods-BamiloUITests.a */; };
-		503C9D52C4AD9778E8C113A7 /* libPods-Bamilo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D245C5FE6A656AA98164739 /* libPods-Bamilo.a */; };
 		61036B441E658329006E12A9 /* OrderListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61036B431E658329006E12A9 /* OrderListViewController.m */; };
 		61036B501E65897D006E12A9 /* MutualTitleHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61036B4E1E65897D006E12A9 /* MutualTitleHeaderCell.m */; };
 		61036B511E65897D006E12A9 /* MutualTitleHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61036B4F1E65897D006E12A9 /* MutualTitleHeaderCell.xib */; };
@@ -49,6 +47,9 @@
 		61338D001EACC61A0017BB06 /* EmarsysRecommendationMinimalCarouselWidgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61338CFF1EACC61A0017BB06 /* EmarsysRecommendationMinimalCarouselWidgetView.m */; };
 		61338D021EACC63B0017BB06 /* EmarsysRecommendationMinimalCarouselWidgetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61338D011EACC63B0017BB06 /* EmarsysRecommendationMinimalCarouselWidgetView.xib */; };
 		61338D051EACC64D0017BB06 /* EmarsysRecommendationMinimalCarouselWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 61338D041EACC64D0017BB06 /* EmarsysRecommendationMinimalCarouselWidget.m */; };
+		613A7E8D1EBF069100E1AB3F /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613A7E8C1EBF069100E1AB3F /* Product.swift */; };
+		613A7E8F1EBF0F6B00E1AB3F /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613A7E8E1EBF0F6B00E1AB3F /* Category.swift */; };
+		613A7E911EBF2B0600E1AB3F /* Catalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613A7E901EBF2B0600E1AB3F /* Catalog.swift */; };
 		613D37771E6EE19E001B2852 /* NSDate+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 613D37761E6EE19E001B2852 /* NSDate+Extensions.m */; };
 		613D377C1E6F133B001B2852 /* OrderDetailInformationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 613D377A1E6F133B001B2852 /* OrderDetailInformationTableViewCell.m */; };
 		613D377D1E6F133B001B2852 /* OrderDetailInformationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 613D377B1E6F133B001B2852 /* OrderDetailInformationTableViewCell.xib */; };
@@ -120,6 +121,7 @@
 		6CF4AE821ADEAA290024EC34 /* JACatalogBannerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CF4AE7E1ADEAA290024EC34 /* JACatalogBannerCell.xib */; };
 		6CF4AE881ADEABBB0024EC34 /* JACatalogBannerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CF4AE841ADEABBB0024EC34 /* JACatalogBannerCell.m */; };
 		841E81AA1D1680F300A35AAF /* MPCoachMarks.m in Sources */ = {isa = PBXBuildFile; fileRef = 841E81A81D1680F300A35AAF /* MPCoachMarks.m */; };
+		8559CE9952DAB9B58E471B5E /* Pods_BamiloUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92384C738CCA116118128745 /* Pods_BamiloUITests.framework */; };
 		8702FBB11E98DF79001D1AA9 /* TrackerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBB01E98DF79001D1AA9 /* TrackerManager.m */; };
 		8702FBB61E98E720001D1AA9 /* LoginEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBB51E98E720001D1AA9 /* LoginEvent.m */; };
 		8702FBBA1E98FE3A001D1AA9 /* EmailUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBB91E98FE3A001D1AA9 /* EmailUtility.m */; };
@@ -737,6 +739,7 @@
 		CEE5F4E41B1CB6B500556150 /* JARecentSearchesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEE5F4DF1B1CB6B500556150 /* JARecentSearchesViewController.xib */; };
 		CEF0C48D1BE8EE44005B5B12 /* JAReviewCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A2CD0B61BD113D300A878D2 /* JAReviewCollectionCell.m */; };
 		CEF0C48E1BE8EE56005B5B12 /* JASellerDeliveryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 898A24BF1BCE9EAF00BBEE31 /* JASellerDeliveryView.m */; };
+		D15CB708E3ACF708F44FE7A5 /* Pods_Bamilo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 796869504F4BBF88216E097C /* Pods_Bamilo.framework */; };
 		FF4383E31C6CD4AC003BA957 /* JASwitchRadioComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4383DE1C6CD4AC003BA957 /* JASwitchRadioComponent.m */; };
 		FF4383EA1C6E1F49003BA957 /* JAScreenRadioComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4383E51C6E1F49003BA957 /* JAScreenRadioComponent.m */; };
 		FF4383F11C71DCE1003BA957 /* JANewsletterSubscriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4383EC1C71DCE1003BA957 /* JANewsletterSubscriptionViewController.m */; };
@@ -788,7 +791,6 @@
 
 /* Begin PBXFileReference section */
 		1123BA1ABA81805B2A214BA9 /* Pods-Bamilo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bamilo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bamilo/Pods-Bamilo.release.xcconfig"; sourceTree = "<group>"; };
-		18BD9C21DAEE905E1607A899 /* libPods-BamiloUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BamiloUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C3043001E2A3A5800BD391E /* CatalogNoResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CatalogNoResultViewController.h; sourceTree = "<group>"; };
 		1C3043011E2A3A5800BD391E /* CatalogNoResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CatalogNoResultViewController.m; sourceTree = "<group>"; };
 		1C71FC591E2CABAD007ACF02 /* Bamilosans Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bamilosans Black.ttf"; sourceTree = "<group>"; };
@@ -852,7 +854,6 @@
 		520A37CC1A48904B0046C8B1 /* JAMyOrdersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMyOrdersViewController.m; sourceTree = "<group>"; };
 		52AC8FDA1A4056CB00E7C874 /* JASizeGuideWizardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASizeGuideWizardView.h; sourceTree = "<group>"; };
 		52AC8FDB1A4056CB00E7C874 /* JASizeGuideWizardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASizeGuideWizardView.m; sourceTree = "<group>"; };
-		5D245C5FE6A656AA98164739 /* libPods-Bamilo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Bamilo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D35AAC06173E4696653CF50 /* Pods-Bamilo.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bamilo.adhoc.xcconfig"; path = "Pods/Target Support Files/Pods-Bamilo/Pods-Bamilo.adhoc.xcconfig"; sourceTree = "<group>"; };
 		61036B421E658329006E12A9 /* OrderListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderListViewController.h; sourceTree = "<group>"; };
 		61036B431E658329006E12A9 /* OrderListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderListViewController.m; sourceTree = "<group>"; };
@@ -911,6 +912,9 @@
 		61338D011EACC63B0017BB06 /* EmarsysRecommendationMinimalCarouselWidgetView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmarsysRecommendationMinimalCarouselWidgetView.xib; sourceTree = "<group>"; };
 		61338D031EACC64D0017BB06 /* EmarsysRecommendationMinimalCarouselWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysRecommendationMinimalCarouselWidget.h; sourceTree = "<group>"; };
 		61338D041EACC64D0017BB06 /* EmarsysRecommendationMinimalCarouselWidget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysRecommendationMinimalCarouselWidget.m; sourceTree = "<group>"; };
+		613A7E8C1EBF069100E1AB3F /* Product.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
+		613A7E8E1EBF0F6B00E1AB3F /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		613A7E901EBF2B0600E1AB3F /* Catalog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Catalog.swift; sourceTree = "<group>"; };
 		613D37751E6EE19E001B2852 /* NSDate+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extensions.h"; sourceTree = "<group>"; };
 		613D37761E6EE19E001B2852 /* NSDate+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extensions.m"; sourceTree = "<group>"; };
 		613D37791E6F133B001B2852 /* OrderDetailInformationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDetailInformationTableViewCell.h; sourceTree = "<group>"; };
@@ -1038,6 +1042,7 @@
 		6CF4AE7E1ADEAA290024EC34 /* JACatalogBannerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACatalogBannerCell.xib; sourceTree = "<group>"; };
 		6CF4AE831ADEABBB0024EC34 /* JACatalogBannerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACatalogBannerCell.h; sourceTree = "<group>"; };
 		6CF4AE841ADEABBB0024EC34 /* JACatalogBannerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACatalogBannerCell.m; sourceTree = "<group>"; };
+		796869504F4BBF88216E097C /* Pods_Bamilo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bamilo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		841E81A71D1680F300A35AAF /* MPCoachMarks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPCoachMarks.h; path = ../MPCoachMarks.h; sourceTree = "<group>"; };
 		841E81A81D1680F300A35AAF /* MPCoachMarks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPCoachMarks.m; path = ../MPCoachMarks.m; sourceTree = "<group>"; };
 		8702FBAF1E98DF79001D1AA9 /* TrackerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackerManager.h; sourceTree = "<group>"; };
@@ -1640,6 +1645,7 @@
 		89AB5C2D1BC2B01B00BA38E5 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		89C7AF4E1BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACatalogPictureCollectionViewCell.h; sourceTree = "<group>"; };
 		89C7AF4F1BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACatalogPictureCollectionViewCell.m; sourceTree = "<group>"; };
+		92384C738CCA116118128745 /* Pods_BamiloUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BamiloUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A007C731C203355007D99FC /* JAMyAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMyAccountViewController.h; sourceTree = "<group>"; };
 		9A007C741C203355007D99FC /* JAMyAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMyAccountViewController.m; sourceTree = "<group>"; };
 		9A08B10D1CC7C377003282CB /* JAActionWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAActionWebViewController.h; sourceTree = "<group>"; };
@@ -2085,7 +2091,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				48AD8FE22FD2C5FDC1CEBFF8 /* libPods-BamiloUITests.a in Frameworks */,
+				8559CE9952DAB9B58E471B5E /* Pods_BamiloUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2117,7 +2123,7 @@
 				CE9AE0291AB6D78200D56481 /* libsqlite3.dylib in Frameworks */,
 				875435101E77E8FD00B5D6B4 /* libstdc++.tbd in Frameworks */,
 				875435121E77E91000B5D6B4 /* libz.tbd in Frameworks */,
-				503C9D52C4AD9778E8C113A7 /* libPods-Bamilo.a in Frameworks */,
+				D15CB708E3ACF708F44FE7A5 /* Pods_Bamilo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2697,6 +2703,23 @@
 			name = Control;
 			sourceTree = "<group>";
 		};
+		613A7E8A1EBF033400E1AB3F /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		613A7E8B1EBF033E00E1AB3F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				613A7E8C1EBF069100E1AB3F /* Product.swift */,
+				613A7E8E1EBF0F6B00E1AB3F /* Category.swift */,
+				613A7E901EBF2B0600E1AB3F /* Catalog.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		613D37741E6EE168001B2852 /* NSDate+Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -2868,6 +2891,8 @@
 			isa = PBXGroup;
 			children = (
 				617F77AD1EB85BEC000A2A6C /* Bamilo-Bridging-Header.h */,
+				613A7E8B1EBF033E00E1AB3F /* Models */,
+				613A7E8A1EBF033400E1AB3F /* ViewControllers */,
 				617F77AB1EB85B94000A2A6C /* Support */,
 			);
 			name = "Bamilo-Swift";
@@ -6146,8 +6171,8 @@
 				B5A301D219811E8900F71726 /* ExternalFrameworks */,
 				B5A302ED19811EDD00F71726 /* libsqlite3.dylib */,
 				B5A302EB19811ED700F71726 /* libz.dylib */,
-				5D245C5FE6A656AA98164739 /* libPods-Bamilo.a */,
-				18BD9C21DAEE905E1607A899 /* libPods-BamiloUITests.a */,
+				796869504F4BBF88216E097C /* Pods_Bamilo.framework */,
+				92384C738CCA116118128745 /* Pods_BamiloUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -7226,6 +7251,7 @@
 				CE9ADF4C1AB6D78200D56481 /* UIImageView+JA.m in Sources */,
 				875AD5891E38C0C900584ABF /* RIGTMTracker.m in Sources */,
 				CED6205C1BEB526B00FA8403 /* JAFiltersViewController.m in Sources */,
+				613A7E8F1EBF0F6B00E1AB3F /* Category.swift in Sources */,
 				875AD57E1E38C0C900584ABF /* RIDataBaseWrapper.m in Sources */,
 				875AD5761E38C0C900584ABF /* RIShippingMethodPickupStationOption.m in Sources */,
 				61716BA71E865B3D00F4E65F /* DeepLinkManager.m in Sources */,
@@ -7267,6 +7293,7 @@
 				8702FBC21E990C2D001D1AA9 /* OpenAppEvent.m in Sources */,
 				CE9ADF621AB6D78200D56481 /* JASellerRatingsViewController.m in Sources */,
 				875081B31E532E400031ECBF /* AddressViewController.m in Sources */,
+				613A7E8D1EBF069100E1AB3F /* Product.swift in Sources */,
 				875AD58B1E38C0C900584ABF /* RIURLCacheWrapper.m in Sources */,
 				87C69DAB1E38B78E0026018F /* NSString+Extensions.m in Sources */,
 				CE9ADF631AB6D78200D56481 /* JASignInViewController.m in Sources */,
@@ -7567,6 +7594,7 @@
 				875AD5551E38C0C900584ABF /* Model.xcdatamodeld in Sources */,
 				CE9AE00C1AB6D78200D56481 /* JAWizardView.m in Sources */,
 				61E099771E3E1A02004ED14E /* VersionTableViewCell.m in Sources */,
+				613A7E911EBF2B0600E1AB3F /* Catalog.swift in Sources */,
 				875AD5611E38C0C900584ABF /* RIFilter.m in Sources */,
 				875AD5831E38C0C900584ABF /* RITrackingConfiguration.m in Sources */,
 				9A38766B1BCD121A0088B186 /* JATabButton.m in Sources */,
@@ -7639,6 +7667,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -7671,6 +7701,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Bamilo/Bamilo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
@@ -7860,6 +7891,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -7894,6 +7927,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Bamilo/Bamilo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -7906,6 +7940,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -7937,6 +7973,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Bamilo/Bamilo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;

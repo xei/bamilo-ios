@@ -164,7 +164,9 @@ typedef void (^ProcessActionBlock)(void);
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [[CatalogDataManager sharedInstance] getCatalogWithTarget:self completion:^(id data, NSError *error) {
+        
+    }];
     self.navBarLayout.showBackButton = YES;
     [self.view setBackgroundColor:[UIColor whiteColor]];
     

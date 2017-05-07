@@ -16,6 +16,13 @@ class CatalogDataManager: DataManager {
         return shared;
     }
     
+    func getCatalog(target:DataServiceProtocol,  completion: @escaping DataCompletion) {
+        let path = "search/find/category/women_clothes/page/1/maxitems/36"
+        self.requestManager.asyncGET(target, path: path, params: nil, type: .foreground) { (statusCode, data, errorMessages) in
+//            self.processResponse(statusCode, of: Catalog.self, forData: data, errorMessages: errorMessages, completion: completion)
+        }
+    }
+    
     func getSubCategoriesFilter(target: DataServiceProtocol, categoryUrlKey: String, completion: @escaping DataCompletion) {
         let path = "\(RI_API_GET_CATEGORIES_BY_URLKEY)\(categoryUrlKey)"
         
@@ -25,4 +32,5 @@ class CatalogDataManager: DataManager {
             self.processResponse(statusCode, of: SearchCategoryFilter.self, forData: _data, errorMessages: errorMessages, completion: completion)
         }
     }
+    
 }
