@@ -357,24 +357,12 @@
     } completion:nil];
 }
 
-
-#pragma mark - EmarsysPredictProtocol
-- (NSArray<EMRecommendationRequest *> *)getRecommendations {
-    
-    EMRecommendationRequest *recommend = [EMRecommendationRequest requestWithLogic:@"CART"];
-    recommend.limit = 15;
-    recommend.completionHandler = ^(EMRecommendationResult *_Nonnull result) {
-        
-    };
-    return @[recommend];
-}
-
-
 #pragma segue preparation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     NSString * segueName = segue.identifier;
     if ([segueName isEqualToString: @"embedEmptyViewController"]) {
         self.emptyCartViewController = (EmptyViewController *) [segue destinationViewController];
+        self.emptyCartViewController.recommendationLogic = @"PERSONAL";
         [self.emptyCartViewController updateTitle:STRING_NO_ITEMS_IN_CART];
         [self.emptyCartViewController updateImage:[UIImage imageNamed:@"img_emptyCart"]];
     }

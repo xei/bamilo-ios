@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="cPx-eU-fFb">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="cPx-eU-fFb">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -247,23 +247,23 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="420"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JMC-xp-BYm">
-                                        <rect key="frame" x="67" y="130" width="240" height="160"/>
+                                        <rect key="frame" x="67" y="125" width="240" height="170"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="successIcon" translatesAutoresizingMaskIntoConstraints="NO" id="aqz-cZ-E7n">
-                                                <rect key="frame" x="185" y="5" width="50" height="50"/>
+                                                <rect key="frame" x="157.5" y="5" width="50" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="5Bu-PC-CsW"/>
                                                     <constraint firstAttribute="width" secondItem="aqz-cZ-E7n" secondAttribute="height" multiplier="1:1" id="TAw-7f-5da"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="با تشکر از شما!" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tr4-mC-OYm">
-                                                <rect key="frame" x="5" y="19" width="170" height="23.5"/>
+                                                <rect key="frame" x="32.5" y="19" width="115" height="23.5"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="20"/>
                                                 <color key="textColor" red="0.63921568627450975" green="0.81176470588235294" blue="0.38431372549019605" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fcY-30-Vag">
-                                                <rect key="frame" x="0.0" y="100" width="240" height="50"/>
+                                                <rect key="frame" x="0.0" y="120" width="240" height="50"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="eFA-d3-IWr"/>
@@ -290,12 +290,11 @@
                                             <constraint firstAttribute="trailing" secondItem="fcY-30-Vag" secondAttribute="trailing" id="Gpl-fw-UTm"/>
                                             <constraint firstAttribute="width" constant="240" id="VBz-N5-ig9"/>
                                             <constraint firstItem="Tr4-mC-OYm" firstAttribute="centerY" secondItem="aqz-cZ-E7n" secondAttribute="centerY" id="cKO-IC-Wb7"/>
-                                            <constraint firstAttribute="bottom" secondItem="fcY-30-Vag" secondAttribute="bottom" constant="10" id="clE-yD-FO9"/>
-                                            <constraint firstItem="Tr4-mC-OYm" firstAttribute="leading" secondItem="JMC-xp-BYm" secondAttribute="leading" constant="5" id="kOP-4i-GYr"/>
+                                            <constraint firstAttribute="bottom" secondItem="fcY-30-Vag" secondAttribute="bottom" id="clE-yD-FO9"/>
+                                            <constraint firstAttribute="centerX" secondItem="Tr4-mC-OYm" secondAttribute="centerX" constant="30" id="ez7-eo-Gep"/>
                                             <constraint firstItem="aqz-cZ-E7n" firstAttribute="top" secondItem="JMC-xp-BYm" secondAttribute="top" constant="5" id="ld7-eA-s9K"/>
-                                            <constraint firstAttribute="height" constant="160" id="mUd-be-4TZ"/>
+                                            <constraint firstAttribute="height" constant="170" id="mUd-be-4TZ"/>
                                             <constraint firstItem="aqz-cZ-E7n" firstAttribute="leading" secondItem="Tr4-mC-OYm" secondAttribute="trailing" constant="10" id="ugU-bw-p7B"/>
-                                            <constraint firstAttribute="trailing" secondItem="aqz-cZ-E7n" secondAttribute="trailing" constant="5" id="vKP-nP-9fL"/>
                                             <constraint firstItem="fcY-30-Vag" firstAttribute="leading" secondItem="JMC-xp-BYm" secondAttribute="leading" id="zks-Rg-VbD"/>
                                         </constraints>
                                     </view>

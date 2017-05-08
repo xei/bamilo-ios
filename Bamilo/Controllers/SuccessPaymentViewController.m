@@ -340,15 +340,13 @@
 #pragma mark - EmarsysPredictProtocol
 - (EMTransaction *)getDataCollection:(EMTransaction *)transaction {
     [transaction setPurchase:self.cart.orderNr ofItems: [self.cart convertItems]];
-    
-    //Reset the shared Cart entities
-    [RICart sharedInstance].cartEntity.cartItems = @[];
     return transaction;
 }
 
 
 - (NSArray<EMRecommendationRequest *> *)getRecommendations {
-    EMRecommendationRequest *recommend = [EMRecommendationRequest requestWithLogic:@"PERSONAL"];
+    NSString *recommendationLogic = self.cart.cartEntity.cartItems.count == 1 ? @"ALSO_BOUGHT" : @"PERSONAL"; //Production requirement
+    EMRecommendationRequest *recommend = [EMRecommendationRequest requestWithLogic: recommendationLogic];
     recommend.limit = 15;
     recommend.completionHandler = ^(EMRecommendationResult *_Nonnull result) {
         [ThreadManager executeOnMainThread:^{
@@ -357,6 +355,9 @@
                 return [RecommendItem instanceWithEMRecommendationItem:item];
             }]];
         }];
+        
+        //Reset the shared Cart entities
+        [RICart sharedInstance].cartEntity.cartItems = @[];
     };
     
     return @[recommend];

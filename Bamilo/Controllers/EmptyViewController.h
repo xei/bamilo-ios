@@ -10,6 +10,8 @@
 
 @interface EmptyViewController : JABaseViewController
 
+@property (nonatomic, copy) NSString *recommendationLogic;
+
 - (void)getSuggestions;
 - (void)updateTitle:(NSString *)title;
 - (void)updateImage:(UIImage *)image;

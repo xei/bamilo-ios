@@ -32,6 +32,7 @@
     
     [self.carouselWidget setBackgroundColor:JAHomePageBackgroundGrey];
     self.carouselWidget.delegate = self;
+    [self.carouselWidget updateTitle:STRING_BAMILO_RECOMMENDATION];
     
     [self.carouselWidget hide];
     [self.titleLabel applyStyle:[Theme font:kFontVariationRegular size:13.0f] color:[UIColor blackColor]];
@@ -60,9 +61,10 @@
 }
 
 - (NSArray<EMRecommendationRequest *> *)getRecommendations {
-    EMRecommendationRequest *recommend = [EMRecommendationRequest requestWithLogic:@"PERSONAL"];
+    EMRecommendationRequest *recommend = [EMRecommendationRequest requestWithLogic:self.recommendationLogic ?: @"PERSONAL"];
     recommend.limit = 15;
     recommend.completionHandler = ^(EMRecommendationResult *_Nonnull result) {
+        if (!result.products.count) return;
         [ThreadManager executeOnMainThread:^{
             [self.carouselWidget fadeIn:0.15];
             [self.carouselWidget updateWithModel:[result.products map:^id(EMRecommendationItem *item) {
