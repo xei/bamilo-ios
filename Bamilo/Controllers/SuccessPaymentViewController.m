@@ -57,7 +57,6 @@
         }
     }];
     
-    
     //// ------- START OF LEGACY CODES ------
     // Notification to clean cart
     [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:nil];
@@ -341,6 +340,9 @@
 #pragma mark - EmarsysPredictProtocol
 - (EMTransaction *)getDataCollection:(EMTransaction *)transaction {
     [transaction setPurchase:self.cart.orderNr ofItems: [self.cart convertItems]];
+    
+    //Reset the shared Cart entities
+    [RICart sharedInstance].cartEntity.cartItems = @[];
     return transaction;
 }
 

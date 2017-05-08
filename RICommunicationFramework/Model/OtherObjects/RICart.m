@@ -133,11 +133,9 @@ static RICart *instance;
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               sucessBlock();
                                                           } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObject) {
-                                                              if (NOTEMPTY(errorJsonObject))
-                                                              {
+                                                              if (NOTEMPTY(errorJsonObject)) {
                                                                   failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
-                                                              } else if (NOTEMPTY(errorObject))
-                                                              {
+                                                              } else if (NOTEMPTY(errorObject)) {
                                                                   NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
                                                                   failureBlock(apiResponse, errorArray);
                                                               } else {
