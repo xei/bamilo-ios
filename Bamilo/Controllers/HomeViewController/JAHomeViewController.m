@@ -36,16 +36,31 @@
 @interface JAHomeViewController () <JAPickerDelegate, JANewsletterGenderProtocol, EmarsysRecommendationsProtocol, FeatureBoxCollectionViewWidgetViewDelegate>
 @property (strong, nonatomic) JATeaserPageView* teaserPageView;
 @property (nonatomic, assign) BOOL isLoaded;
+@property (nonatomic, assign) BOOL isReturningHome;
 @property (nonatomic, strong) JAFallbackView *fallbackView;
 @property (nonatomic, strong) JARadioComponent *radioComponent;
 @property (nonatomic, strong) JAPicker *picker;
+@property (nonatomic, strong) EmarsysRecommendationCarouselView *recommendationView;
 
 @end
 
 @implementation JAHomeViewController
 
-#pragma mark - View lifecycle
 
+- (EmarsysRecommendationCarouselView *)recommendationView {
+    if (!self.isLoaded) return nil;
+    if (!_recommendationView) {
+        _recommendationView = [EmarsysRecommendationCarouselView nibInstance];
+        _recommendationView.delegate = self;
+        [_recommendationView updateTitle:STRING_BAMILO_RECOMMENDATION];
+        [ThreadManager executeOnMainThread:^{
+            [self.teaserPageView addCustomViewToScrollView:self.recommendationView];
+        }];
+    }
+    return _recommendationView;
+}
+
+#pragma mark - View lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -56,6 +71,7 @@
     self.searchBarIsVisible = YES;
     self.tabBarIsVisible = YES;
     self.isLoaded = NO;
+    self.isReturningHome = NO;
     
     self.teaserPageView = [[JATeaserPageView alloc] init];
     
@@ -91,7 +107,18 @@
         //Perform an action that will only be done once
         [DeepLinkManager listenersReady];
     }
+    
+    if (self.isLoaded && self.isReturningHome) {
+        [EmarsysPredictManager sendTransactionsOf:self];
+    }
 }
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.isReturningHome = YES;
+}
+
+
 
 - (void)presentCoachMarks {
     
@@ -375,14 +402,8 @@
         return [RecommendItem instanceWithEMRecommendationItem:item];
     }];
     
-    EmarsysRecommendationCarouselView *recommendationView = [EmarsysRecommendationCarouselView nibInstance];
-    recommendationView.delegate = self;
-    [recommendationView updateTitle:STRING_SPECIFICATIONS];
-    
-    
     [ThreadManager executeOnMainThread:^{
-        [self.teaserPageView addCustomViewToScrollView:recommendationView];
-        [recommendationView updateWithModel:recommendItems];
+        [self.recommendationView updateWithModel:recommendItems];
     }];
 }
 
