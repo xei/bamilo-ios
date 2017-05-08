@@ -13,7 +13,7 @@ import SwiftyJSON
 class Catalog: Mappable {
     
     var title:String?
-    var filters: [BaseSearchFilterItem]?
+    var filters: [BaseCatalogFilterItem]?
     var products: [Product]?
     var totalProductsCount: Int?
     var sortType: CatalogSortType?
@@ -39,29 +39,19 @@ class Catalog: Mappable {
         products <- map["results"]
         totalProductsCount <- map["total_products"]
         
-        
         //Mapping filters
         let json = JSON(map.JSON)
         var searchIndex = 0;
-        filters = json["filters"].array?.map{ (element) -> BaseSearchFilterItem in
+        
+        filters = json["filters"].array?.map{ (element) -> BaseCatalogFilterItem in
             if element["id"] == "price" {
-                let priceFilter = SearchPriceFilter()
-                do {
-                    try priceFilter.merge(from: element.dictionaryObject, useKeyMapping: true, error: ())
-                } catch {
-                    print("parsing Catalog error")
-                }
+                let priceFilter = CatalogPriceFilterItem(JSON: element.dictionaryObject!)
                 priceFilterIndex = searchIndex
-                return priceFilter
+                return priceFilter!
             } else {
-                let filterItem = SearchFilterItem()
-                do {
-                    try filterItem.merge(from: element.dictionaryObject, useKeyMapping: true, error: ())
-                } catch {
-                    print("parsing Catalog error")
-                }
+                let filterItem = CatalogFilterItem(JSON: element.dictionaryObject!)
                 searchIndex += 1
-                return filterItem
+                return filterItem!
             }
         }
     }

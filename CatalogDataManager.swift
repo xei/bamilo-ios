@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ObjectMapper
 
 class CatalogDataManager: DataManager {
     
@@ -19,7 +20,7 @@ class CatalogDataManager: DataManager {
     func getCatalog(target:DataServiceProtocol,  completion: @escaping DataCompletion) {
         let path = "search/find/category/women_clothes/page/1/maxitems/36"
         self.requestManager.asyncGET(target, path: path, params: nil, type: .foreground) { (statusCode, data, errorMessages) in
-//            self.processResponse(statusCode, of: Catalog.self, forData: data, errorMessages: errorMessages, completion: completion)
+            self.processResponse(statusCode, of: Catalog.self, for: data, errorMessages: errorMessages, completion: completion)
         }
     }
     
@@ -29,8 +30,40 @@ class CatalogDataManager: DataManager {
         self.requestManager.asyncGET(target, path: path, params: nil, type: .foreground) { (statusCode, data, errorMessages) in
             let _data = ResponseData()
             _data.metadata = ((((data?.metadata["data"] as? [[String:Any]])?[0])?["children"]) as? [[String: Any]])?[0]
-            self.processResponse(statusCode, of: SearchCategoryFilter.self, forData: _data, errorMessages: errorMessages, completion: completion)
+            self.processResponse(statusCode, of: CatalogCategoryFilterItem.self, for: _data, errorMessages: errorMessages, completion: completion)
         }
     }
     
+    override func processResponse(_ response: RIApiResponse, of aClass: AnyClass!, for data: ResponseData!, errorMessages: [Any]!, completion: DataCompletion!) {
+            if completion != nil {
+                if response == RIApiResponse.success && data != nil {
+                    var payload = [String: Any]()
+                    if let messages = data.messages {
+                        payload["DataMessages"] = messages
+                    }
+                    
+                    if let serviceData = data.metadata as? [String:Any], let mappableClass = aClass as? Mappable.Type {
+                        if let responseObj = mappableClass.init(JSON: serviceData) {
+                            payload["DataContent"] = responseObj
+                        }
+                        
+                    }
+                    
+                    self.handlePayload(payload: payload, completion: completion)
+                } else {
+                    completion(nil, self.getErrorFrom(response, errorMessages: errorMessages))
+                }
+            }
+    }
+    
+    
+    private func handlePayload(payload: [String:Any], completion: @escaping DataCompletion) {
+        if payload.count > 1 {
+            completion(payload, nil)
+        } else if payload["DataContent"] != nil {
+            completion(payload["DataContent"], nil)
+        } else if payload["DataMessages"] != nil {
+            completion(payload["DataMessages"], nil)
+        }
+    }
 }

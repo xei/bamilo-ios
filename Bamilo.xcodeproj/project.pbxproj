@@ -50,6 +50,10 @@
 		613A7E8D1EBF069100E1AB3F /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613A7E8C1EBF069100E1AB3F /* Product.swift */; };
 		613A7E8F1EBF0F6B00E1AB3F /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613A7E8E1EBF0F6B00E1AB3F /* Category.swift */; };
 		613A7E911EBF2B0600E1AB3F /* Catalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613A7E901EBF2B0600E1AB3F /* Catalog.swift */; };
+		613A7E941EBF651600E1AB3F /* BaseCatalogFilterItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613A7E931EBF651600E1AB3F /* BaseCatalogFilterItem.swift */; };
+		613A7E961EBF66B700E1AB3F /* CatalogPriceFilterItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613A7E951EBF66B700E1AB3F /* CatalogPriceFilterItem.swift */; };
+		613A7E981EBF692E00E1AB3F /* CatalogFilterOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613A7E971EBF692E00E1AB3F /* CatalogFilterOption.swift */; };
+		613A7E9A1EBF6ABC00E1AB3F /* CatalogFilterItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613A7E991EBF6ABC00E1AB3F /* CatalogFilterItem.swift */; };
 		613D37771E6EE19E001B2852 /* NSDate+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 613D37761E6EE19E001B2852 /* NSDate+Extensions.m */; };
 		613D377C1E6F133B001B2852 /* OrderDetailInformationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 613D377A1E6F133B001B2852 /* OrderDetailInformationTableViewCell.m */; };
 		613D377D1E6F133B001B2852 /* OrderDetailInformationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 613D377B1E6F133B001B2852 /* OrderDetailInformationTableViewCell.xib */; };
@@ -116,6 +120,8 @@
 		61E099721E3E18F0004ED14E /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E099701E3E18F0004ED14E /* NotificationTableViewCell.xib */; };
 		61E099771E3E1A02004ED14E /* VersionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E099751E3E1A02004ED14E /* VersionTableViewCell.m */; };
 		61E099781E3E1A02004ED14E /* VersionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E099761E3E1A02004ED14E /* VersionTableViewCell.xib */; };
+		61EE798E1EC0395C0036F93E /* CatalogCategoryFilterItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EE798D1EC0395C0036F93E /* CatalogCategoryFilterItem.swift */; };
+		61EE79901EC046D90036F93E /* CatalogCategoryFilterOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EE798F1EC046D90036F93E /* CatalogCategoryFilterOption.swift */; };
 		61FFD5861EB8CE17004A3518 /* CatalogDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FFD5851EB8CE17004A3518 /* CatalogDataManager.swift */; };
 		6C18BD741AB87E0A00905FD2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A301BB19811D0700F71726 /* Images.xcassets */; };
 		6CF4AE821ADEAA290024EC34 /* JACatalogBannerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CF4AE7E1ADEAA290024EC34 /* JACatalogBannerCell.xib */; };
@@ -915,6 +921,10 @@
 		613A7E8C1EBF069100E1AB3F /* Product.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		613A7E8E1EBF0F6B00E1AB3F /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		613A7E901EBF2B0600E1AB3F /* Catalog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Catalog.swift; sourceTree = "<group>"; };
+		613A7E931EBF651600E1AB3F /* BaseCatalogFilterItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCatalogFilterItem.swift; sourceTree = "<group>"; };
+		613A7E951EBF66B700E1AB3F /* CatalogPriceFilterItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogPriceFilterItem.swift; sourceTree = "<group>"; };
+		613A7E971EBF692E00E1AB3F /* CatalogFilterOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogFilterOption.swift; sourceTree = "<group>"; };
+		613A7E991EBF6ABC00E1AB3F /* CatalogFilterItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogFilterItem.swift; sourceTree = "<group>"; };
 		613D37751E6EE19E001B2852 /* NSDate+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extensions.h"; sourceTree = "<group>"; };
 		613D37761E6EE19E001B2852 /* NSDate+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extensions.m"; sourceTree = "<group>"; };
 		613D37791E6F133B001B2852 /* OrderDetailInformationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDetailInformationTableViewCell.h; sourceTree = "<group>"; };
@@ -1036,6 +1046,8 @@
 		61E099741E3E1A02004ED14E /* VersionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionTableViewCell.h; sourceTree = "<group>"; };
 		61E099751E3E1A02004ED14E /* VersionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersionTableViewCell.m; sourceTree = "<group>"; };
 		61E099761E3E1A02004ED14E /* VersionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VersionTableViewCell.xib; sourceTree = "<group>"; };
+		61EE798D1EC0395C0036F93E /* CatalogCategoryFilterItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogCategoryFilterItem.swift; sourceTree = "<group>"; };
+		61EE798F1EC046D90036F93E /* CatalogCategoryFilterOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogCategoryFilterOption.swift; sourceTree = "<group>"; };
 		61FFD5851EB8CE17004A3518 /* CatalogDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogDataManager.swift; sourceTree = "<group>"; };
 		633B32545D30D5C2D6CFFC51 /* Pods-Bamilo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bamilo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bamilo/Pods-Bamilo.debug.xcconfig"; sourceTree = "<group>"; };
 		6C18BDAB1A1B4CA300626706 /* JANewsletterComponent~iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JANewsletterComponent~iPad.xib"; sourceTree = "<group>"; };
@@ -2713,11 +2725,25 @@
 		613A7E8B1EBF033E00E1AB3F /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				613A7E921EBF64EB00E1AB3F /* CatalogFiltes */,
 				613A7E8C1EBF069100E1AB3F /* Product.swift */,
 				613A7E8E1EBF0F6B00E1AB3F /* Category.swift */,
 				613A7E901EBF2B0600E1AB3F /* Catalog.swift */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		613A7E921EBF64EB00E1AB3F /* CatalogFiltes */ = {
+			isa = PBXGroup;
+			children = (
+				613A7E931EBF651600E1AB3F /* BaseCatalogFilterItem.swift */,
+				613A7E951EBF66B700E1AB3F /* CatalogPriceFilterItem.swift */,
+				613A7E971EBF692E00E1AB3F /* CatalogFilterOption.swift */,
+				613A7E991EBF6ABC00E1AB3F /* CatalogFilterItem.swift */,
+				61EE798D1EC0395C0036F93E /* CatalogCategoryFilterItem.swift */,
+				61EE798F1EC046D90036F93E /* CatalogCategoryFilterOption.swift */,
+			);
+			name = CatalogFiltes;
 			sourceTree = "<group>";
 		};
 		613D37741E6EE168001B2852 /* NSDate+Extensions */ = {
@@ -7152,6 +7178,7 @@
 				87D3DD1C1E8A323000C960FF /* BaseDataManager.m in Sources */,
 				619D0B171EA34B8600FDB255 /* FeatureBoxCollectionViewWidget.m in Sources */,
 				61840B631EA397FF006739EB /* EmarsysRecommendationGridWidgetView.m in Sources */,
+				613A7E9A1EBF6ABC00E1AB3F /* CatalogFilterItem.swift in Sources */,
 				87EA032D1E6D993C00B1E062 /* ProgressItemView.m in Sources */,
 				9A189E611BB31AC70039BC14 /* JAProductInfoHeaderLine.m in Sources */,
 				8714E0661E476DF8004C9B1D /* AddressList.m in Sources */,
@@ -7250,6 +7277,7 @@
 				613FF2BF1E4B2871008660CF /* AuthenticationContainerViewController.m in Sources */,
 				CE9ADF4C1AB6D78200D56481 /* UIImageView+JA.m in Sources */,
 				875AD5891E38C0C900584ABF /* RIGTMTracker.m in Sources */,
+				61EE79901EC046D90036F93E /* CatalogCategoryFilterOption.swift in Sources */,
 				CED6205C1BEB526B00FA8403 /* JAFiltersViewController.m in Sources */,
 				613A7E8F1EBF0F6B00E1AB3F /* Category.swift in Sources */,
 				875AD57E1E38C0C900584ABF /* RIDataBaseWrapper.m in Sources */,
@@ -7309,6 +7337,7 @@
 				8702FBFC1E9A4BA9001D1AA9 /* CheckoutDataManager.m in Sources */,
 				87EA03111E6D450300B1E062 /* FormHeaderModel.m in Sources */,
 				61036B651E65B570006E12A9 /* Order.m in Sources */,
+				61EE798E1EC0395C0036F93E /* CatalogCategoryFilterItem.swift in Sources */,
 				CE9ADF731AB6D78200D56481 /* JAPaymentCell.m in Sources */,
 				CE9ADF741AB6D78200D56481 /* JAPDVBundleSingleItem.m in Sources */,
 				CE9ADF7A1AB6D78200D56481 /* JAPercentageBarView.m in Sources */,
@@ -7414,6 +7443,7 @@
 				CE9ADFBA1AB6D78200D56481 /* JAUtils.m in Sources */,
 				873369C61E58A12E00B0B5E5 /* ShippingMethod.m in Sources */,
 				875AD5811E38C0C900584ABF /* RIOpenURLHandler.m in Sources */,
+				613A7E981EBF692E00E1AB3F /* CatalogFilterOption.swift in Sources */,
 				9A3876641BCD0DFD0088B186 /* JAProductReviewsView.m in Sources */,
 				9A189E6A1BB31AF70039BC14 /* JAProductInfoRatingLine.m in Sources */,
 				87EA03231E6D987400B1E062 /* ProgressViewControl.m in Sources */,
@@ -7516,6 +7546,7 @@
 				CE9ADFE31AB6D78200D56481 /* JACheckBoxWithOptionsComponent.m in Sources */,
 				613D377C1E6F133B001B2852 /* OrderDetailInformationTableViewCell.m in Sources */,
 				875AD57B1E38C0C900584ABF /* RIVariation.m in Sources */,
+				613A7E961EBF66B700E1AB3F /* CatalogPriceFilterItem.swift in Sources */,
 				9AEF74251CD8A86900A5D574 /* JAORConfirmConditionsViewController.m in Sources */,
 				6CF4AE881ADEABBB0024EC34 /* JACatalogBannerCell.m in Sources */,
 				9AEF742C1CD8A8BD00A5D574 /* JAORConfirmationScreenViewController.m in Sources */,
@@ -7549,6 +7580,7 @@
 				61CBA0421E51BA33005673F7 /* FormViewControl.m in Sources */,
 				8702FBD91E9A3139001D1AA9 /* AddToFavoritesEvent.m in Sources */,
 				612544061EBA1075007F9350 /* OrderDataManager.swift in Sources */,
+				613A7E941EBF651600E1AB3F /* BaseCatalogFilterItem.swift in Sources */,
 				CE9ADFF71AB6D78200D56481 /* JASidePanelController.m in Sources */,
 				9AC4D6A01B46A50000036F1C /* JACatalogCollectionViewCell.m in Sources */,
 				61D8D8DE1E656FE0006650F5 /* OrderDetailViewController.m in Sources */,

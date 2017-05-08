@@ -12,7 +12,6 @@
 #import "RICategory.h"
 #import "RICustomer.h"
 #import "OrderList.h"
-#import "SearchCategoryFilter.h"
 
 @implementation DataManager
 
@@ -36,13 +35,12 @@ static DataManager *instance;
 }
 
 #pragma mark - Public Methods
--(void) processResponse:(RIApiResponse)response ofClass:(Class)aClass forData:(id)data errorMessages:(NSArray *)errorMessages completion:(DataCompletion)completion {
+- (void) processResponse:(RIApiResponse)response ofClass:(Class)aClass forData:(ResponseData *)data errorMessages:(NSArray *)errorMessages completion:(DataCompletion)completion {
     if(completion) {
         if(response == RIApiResponseSuccess && data) {
-            ResponseData *serviceData = (ResponseData *)data;
             NSMutableDictionary *payload = [NSMutableDictionary dictionary];
             
-            DataMessageList *dataMessages = serviceData.messages;
+            DataMessageList *dataMessages = data.messages;
             if(dataMessages) {
                 [payload setObject:dataMessages forKey:kDataMessages];
             }
@@ -55,11 +53,11 @@ static DataManager *instance;
                     completion(nil, [self getErrorFrom:apiResponse errorMessages:errorMessages]);
                 }];
             } else {
-                id metadata = serviceData.metadata;
+                id metadata = data.metadata;
                 if(metadata && aClass) {
                     NSError *error;
                     id dataModel = [[aClass alloc] init];
-                    [dataModel mergeFromDictionary:serviceData.metadata useKeyMapping:YES error:&error];
+                    [dataModel mergeFromDictionary:data.metadata useKeyMapping:YES error:&error];
                     
                     if(error == nil) {
                         [payload setObject:dataModel forKey:kDataContent];

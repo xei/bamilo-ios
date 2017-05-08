@@ -20,7 +20,7 @@ import UIKit
     //MARK: Address List API
     func getUserAddressList(target:DataServiceProtocol, completion: @escaping DataCompletion) {
         self.requestManager.asyncPOST(target, path: RI_API_GET_CUSTOMER_ADDRESS_LIST, params: nil, type: .foreground) { (responseStatus, data, errorMessages) in
-            self.processResponse(responseStatus, of: AddressList.self, forData: data, errorMessages: errorMessages, completion: completion)
+            self.processResponse(responseStatus, of: AddressList.self, for: data, errorMessages: errorMessages, completion: completion)
         }
     }
     
@@ -30,7 +30,7 @@ import UIKit
             "type" : isBilling ? "billing" : "shipping"
         ]
         self.requestManager.asyncPUT(target, path: RI_API_GET_CUSTOMER_SELECT_DEFAULT, params: params, type: .foreground) { (statusCode, data, errorMessages) in
-            self.processResponse(statusCode, of: AddressList.self, forData: data, errorMessages: errorMessages, completion: completion)
+            self.processResponse(statusCode, of: AddressList.self, for: data, errorMessages: errorMessages, completion: completion)
         }
     }
     
@@ -76,14 +76,14 @@ import UIKit
     func getAddress(target: DataServiceProtocol, id: String, completion:@escaping DataCompletion) {
         let path = "\(RI_API_GET_CUSTOMER_ADDDRESS)?id=\(id)"
         self.requestManager .asyncGET(target, path: path, params: nil, type: .foreground) { (statusCode, data, errorMessages) in
-            self.processResponse(statusCode, of: Address.self, forData: data, errorMessages: errorMessages, completion: completion)
+            self.processResponse(statusCode, of: Address.self, for: data, errorMessages: errorMessages, completion: completion)
         }
     }
     
     func deleteAddress(target: DataServiceProtocol, address: Address, completion: @escaping DataCompletion) {
         let params : [String: String] = ["id" : address.uid ]
         self.requestManager.asyncDELETE(target, path: RI_API_DELETE_ADDRESS_REMOVE, params: params, type: .foreground) { (statusCode, data, errorMesssages) in
-            self.processResponse(statusCode, of: nil, forData: data, errorMessages: errorMesssages, completion: completion)
+            self.processResponse(statusCode, of: nil, for: data, errorMessages: errorMesssages, completion: completion)
         }
     }
     
