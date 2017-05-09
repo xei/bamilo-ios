@@ -1,7 +1,7 @@
 PODS:
-  - Adjust (4.11.3):
-    - Adjust/Core (= 4.11.3)
-  - Adjust/Core (4.11.3)
+  - Adjust (4.11.4):
+    - Adjust/Core (= 4.11.4)
+  - Adjust/Core (4.11.4)
   - AFNetworking (2.6.3):
     - AFNetworking/NSURLConnection (= 2.6.3)
     - AFNetworking/NSURLSession (= 2.6.3)
@@ -67,7 +67,7 @@ DEPENDENCIES:
   - TTRangeSlider (~> 1.0.5)
 
 SPEC CHECKSUMS:
-  Adjust: 877fd0480982709488a0ab4e8dce759a10b484eb
+  Adjust: c3265d1c75916d727277aca22ac4b52072fc18d2
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
   AlgoliaSearch-Client: 8a937017f9faad0eef7a2d43fdb695f7620de140
   Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
@@ -89,4 +89,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 5bc601816229ba315e6ce187fd03a63f610e49bb
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.1.1
