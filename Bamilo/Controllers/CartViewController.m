@@ -46,7 +46,6 @@
     
     if (cart.cartEntity.cartItems.count) {
         [self setCartEmpty:NO];
-        [EmarsysPredictManager sendTransactionsOf:self];
     } else {
         [self setCartEmpty:YES];
     }
@@ -292,6 +291,11 @@
     self.cart = cart;
     [self.tableView reloadData];
     [self checkIfSummeryViewsMustBeVisibleOrNot];
+    
+    //When cart is ready & not empty
+    if (cart.cartEntity.cartCount) {
+        [EmarsysPredictManager sendTransactionsOf:self];
+    }
 }
 
 #pragma mark - PerformanceTrackerProtocol
