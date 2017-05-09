@@ -12,17 +12,17 @@
 #pragma mark - JSONModel
 + (JSONKeyMapper *)keyMapper {
     return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{
-          @"orderId":@"number",
-          @"creationDate":@"date",
-          @"price":@"total",
-          @"formattedPrice":@"total",
-          @"shippingAddress": @"shipping_address",
-          @"billingAddress":@"billing_address",
-          @"products":@"products",
-          @"paymentReference":@"payment.transaction_reference",
-          @"paymentDescription":@"payment.transaction_description",
-          @"paymentMethod":@"payment.title"
-    }];
+                                                                  @"orderId":@"number",
+                                                                  @"creationDate":@"date",
+                                                                  @"price":@"total",
+                                                                  @"formattedPrice":@"total",
+                                                                  @"shippingAddress": @"shipping_address",
+                                                                  @"billingAddress":@"billing_address",
+                                                                  @"products":@"products",
+                                                                  @"paymentReference":@"payment.transaction_reference",
+                                                                  @"paymentDescription":@"payment.transaction_description",
+                                                                  @"paymentMethod":@"payment.title"
+                                                                  }];
 }
 
 
@@ -38,7 +38,7 @@
     [super mergeFromDictionary:dict useKeyMapping:useKeyMapping error:error];
     
     [self.products enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-       [obj mergeFromDictionary:[dict objectForKey:@"products"][idx] useKeyMapping:YES error:nil];
+        [obj mergeFromDictionary:[dict objectForKey:@"products"][idx] useKeyMapping:YES error:nil];
     }];
     
     if ([dict objectForKey:@"order_number"]) {
@@ -65,35 +65,48 @@
             self.paymentDescription = [[dict objectForKey:@"payment"] objectForKey:@"status_description"];
         }
     }
+    NSString *orderStatus = [dict objectForKey:@"status"];
+    if (!orderStatus.length && [dict objectForKey:@"status"]) {
+        orderStatus = dict[@"status"][@"name"];
+    }
     
-    if(self.products.count) {
-        self.orderStatus = [self getOrderStatusFromOrderProducts:self.products];
+    if(orderStatus.length) {
+        self.orderStatus = [self statusTypeFromString:orderStatus];
     }
     
     return YES;
 }
 
 #pragma mark - Helpers
--(OrderStatusType) getOrderStatusFromOrderProducts:(NSArray<OrderProduct> *)products {
-    int currentOrderStep = 99;
-    for(OrderProduct *product in products) {
-        currentOrderStep = MIN(currentOrderStep, [self getStatusIndexFromStatusString:product.status.label]);
-    }
-    
-    return (OrderStatusType)currentOrderStep;
-}
-
--(int) getStatusIndexFromStatusString:(NSString *)statusString {
-    if([statusString containsString:@"سفارش جدید"]) { //0
-        return ORDER_STATUS_NEW_ORDER;
-    } else if([statusString containsString:@"در حال پردازش"]) { //1
-        return ORDER_STATUS_REGISTERED;
-    } else if([statusString containsString:@"ارسال شد"]) { //2
-        return ORDER_STATUS_IN_PROGRESS;
-    } else if([statusString containsString:@"تحویل داده شد"]) { //3
-        return ORDER_STATUS_DELIVERED;
-    } else if([statusString containsString:@"لغو شده"]) { //4
-        return ORDER_STATUS_CANCELLED;
+-(int) statusTypeFromString:(NSString *)statusString {
+    if([statusString isEqualToString:@"new"]) {
+        return OrderStatusTypeNew;
+    } else if([statusString isEqualToString:@"order_verification_pending"]) {
+        return OrderStatusVerificationPending;
+    } else if([statusString isEqualToString:@"order_verification_in_progress"]) {
+        return OrderStatusTypeVerificationInProgress;
+    } else if([statusString isEqualToString:@"exportable"]) { //3
+        return OrderStatusTypeExportable;
+    } else if([statusString isEqualToString:@"exported"]) { //4
+        return OrderStatusTypeExported;
+    } else if([statusString isEqualToString:@"shipped"]) {
+        return OrderStatusTypeShipped;
+    } else if([statusString isEqualToString:@"delivered"]) {
+        return OrderStatusTypeDelivered;
+    } else if([statusString isEqualToString:@"delivery_failed"]) { //3
+        return OrderStatusTypeDeliveryFailed;
+    } else if([statusString isEqualToString:@"closed"]) { //4
+        return OrderStatusTypeClosed;
+    } else if([statusString isEqualToString:@"returned"]) {
+        return OrderStatusTypeReturned;
+    } else if([statusString isEqualToString:@"replaced"]) {
+        return OrderStatusTypeReplaced;
+    } else if([statusString isEqualToString:@"return_denied"]) { //3
+        return OrderStatusTypeReturnDenied;
+    } else if([statusString isEqualToString:@"refunded_after_return"]) { //4
+        return OrderStatusTypeRefundedAfterReturn;
+    } else if([statusString isEqualToString:@"canceled"]) { //4
+        return OrderStatusTypeCanceled;
     }
     
     return -1;
