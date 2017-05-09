@@ -685,6 +685,7 @@
     if ([segueName isEqualToString: @"embedEmptyViewController"]) {
         self.emptyViewController = (EmptyViewController *) [segue destinationViewController];
         [self.emptyViewController updateTitle:STRING_FAVOURITES_NO_SAVED_ITEMS];
+        self.emptyViewController.recommendationLogic = @"POPULAR";
         [self.emptyViewController updateImage:[UIImage imageNamed:@"emptyFavoritesIcon"]];
     }
 }

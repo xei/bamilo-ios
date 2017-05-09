@@ -31,5 +31,5 @@ typedef NS_ENUM(NSUInteger, OrderStatusType) {
 @property (strong, nonatomic) NSArray<OrderProduct> *products;
 @property (nonatomic, strong) Address *shippingAddress;
 @property (nonatomic, strong) Address *billingAddress;
-@property (assign, nonatomic) OrderStatusType status;
+@property (assign, nonatomic) OrderStatusType orderStatus;
 @end

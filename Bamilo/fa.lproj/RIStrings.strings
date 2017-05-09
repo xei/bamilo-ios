@@ -686,7 +686,7 @@
 
 "profile" = "اطلاعات کاربر";
 
-"favourites_no_saved_items" = "کالای ذخیره‌ شده‌ای وجود ندارد.";
+"favourites_no_saved_items" = "شما هیچ کالای ذخیره شده ای در علاقه مندی ها ندارید";
 
 "favourites_no_saved_items_description" = "شما کالای ذخیره شده ای ندارید";
 
@@ -844,3 +844,5 @@
 "cancelled" = "لغو شده";
 
 "already_logged_in" = "شما قبلا وارد سیستم شده اید";
+
+"bamilo_recommendation" = "پیشنهادهای بامیلو برای شما";

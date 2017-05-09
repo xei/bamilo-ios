@@ -502,5 +502,5 @@
 #define STRING_SENT RILocalizedString(@"sent", nil)
 #define STRING_CANCELLED RILocalizedString(@"cancelled", nil)
 #define STRING_ALREADY_LOGGED_IN RILocalizedString(@"already_logged_in", nil)
-
+#define STRING_BAMILO_RECOMMENDATION RILocalizedString(@"bamilo_recommendation", nil)
 #endif

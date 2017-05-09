@@ -11,6 +11,7 @@
 #import "RIForm.h"
 #import "RIField.h"
 #import "ViewControllerManager.h"
+#import "EmarsysPredictManager.h"
 
 #define kUserIsGuestFlagKey [NSString stringWithFormat:@"%@_user_is_guest", [RIApi getCountryIsoInUse]]
 
@@ -150,6 +151,8 @@
                                                           }];
 }
 
+
+//TODO: !!! we should really decide about this
 + (NSString*)autoLogin:(void (^)(BOOL success, NSDictionary *entities, NSString *loginMethod))returnBlock
 {
     NSString *operationID = nil;
@@ -212,6 +215,10 @@
                                  dispatch_async(dispatch_get_main_queue(), ^{
                                      returnBlock(YES, jsonObject, customerObject.loginMethod);
                                  });
+                                 
+                                 //##########
+                                 [EmarsysPredictManager setCustomer:customerObject];
+                                 
                              } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
                              {
                                  dispatch_async(dispatch_get_main_queue(), ^{

@@ -580,25 +580,25 @@
                                         <rect key="frame" x="0.0" y="618" width="414" height="75"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="مجموع خرید:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iiG-ZB-Lk2">
-                                                <rect key="frame" x="326" y="10" width="68" height="22"/>
+                                                <rect key="frame" x="326.33333333333326" y="10" width="67.666666666666686" height="21.333333333333371"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <color key="textColor" red="0.33725490196078434" green="0.33725490196078434" blue="0.33725490196078434" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="مجموع تخفیف:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QIn-JG-WlR">
-                                                <rect key="frame" x="316" y="43" width="78" height="22"/>
+                                                <rect key="frame" x="316" y="43.666666666666629" width="78" height="21.333333333333371"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="در حال محاسبه" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vgt-Lp-1Ci" userLabel="total price">
-                                                <rect key="frame" x="20" y="10" width="296" height="22"/>
+                                                <rect key="frame" x="20" y="10" width="296.33333333333331" height="21.333333333333371"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="در حال محاسبه" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Co6-Dd-SGv" userLabel="total discounted Price">
-                                                <rect key="frame" x="20" y="43" width="286" height="22"/>
+                                                <rect key="frame" x="20" y="43.666666666666629" width="286" height="21.333333333333371"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -717,7 +717,7 @@
                                 <rect key="frame" x="0.0" y="28" width="414" height="160"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pgz-Vl-RXA" id="cNm-Dn-ldr">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="159"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="159.66666666666666"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -926,7 +926,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="✔︎ از صحت نگارش عبارت مورد نظر خود اطمینان حاصل نموده و مجدد جستجو نمایید." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A5u-Np-HlN">
-                                                <rect key="frame" x="29" y="135" width="232" height="40"/>
+                                                <rect key="frame" x="29" y="135.33333333333331" width="232" height="39.666666666666686"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="11"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1001,6 +1001,39 @@
             </objects>
             <point key="canvasLocation" x="-1706" y="-215"/>
         </scene>
+        <!--External Payments View Controller-->
+        <scene sceneID="wVg-Vi-92H">
+            <objects>
+                <viewController storyboardIdentifier="externalPaymentsViewController" id="Xmf-ZZ-p4r" customClass="JAExternalPaymentsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="dRI-gS-skw"/>
+                        <viewControllerLayoutGuide type="bottom" id="eRw-lb-yGL"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9gf-1A-3dY">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mch-Fz-H4L">
+                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="mch-Fz-H4L" firstAttribute="top" secondItem="dRI-gS-skw" secondAttribute="bottom" id="Gju-dD-ksE"/>
+                            <constraint firstItem="eRw-lb-yGL" firstAttribute="top" secondItem="mch-Fz-H4L" secondAttribute="bottom" id="me0-Rr-XhF"/>
+                            <constraint firstAttribute="trailing" secondItem="mch-Fz-H4L" secondAttribute="trailing" id="qQF-eh-gOk"/>
+                            <constraint firstItem="mch-Fz-H4L" firstAttribute="leading" secondItem="9gf-1A-3dY" secondAttribute="leading" id="yJP-uO-5zm"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="mch-Fz-H4L" id="LY9-8g-OfD"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ccb-qh-2qX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1668" y="-1099"/>
+        </scene>
         <!--Center Navigation Controller-->
         <scene sceneID="zbS-US-1sA">
             <objects>
@@ -1056,7 +1089,7 @@
                                                 </connections>
                                             </switch>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="فقط با تخفیف ها" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gEn-nz-ntR">
-                                                <rect key="frame" x="59" y="15" width="86" height="22"/>
+                                                <rect key="frame" x="59.666666666666686" y="15" width="85.333333333333314" height="21.333333333333336"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1355,17 +1388,17 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="489"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aHK-zt-d1F">
-                                        <rect key="frame" x="52" y="185" width="310" height="120"/>
+                                        <rect key="frame" x="85.333333333333343" y="180" width="243.66666666666666" height="130"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img_emptyCart" translatesAutoresizingMaskIntoConstraints="NO" id="6mZ-Dq-aV9">
-                                                <rect key="frame" x="122" y="10" width="67" height="60"/>
+                                                <rect key="frame" x="87.666666666666671" y="10" width="67.000000000000014" height="60"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="6mZ-Dq-aV9" secondAttribute="height" multiplier="51:46" id="GUi-v4-g6M"/>
                                                     <constraint firstAttribute="height" constant="60" id="qQQ-zu-ESG"/>
                                                 </constraints>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="شما هیچ کالایی در سبد خرید ندارید." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uxT-zy-g4F">
-                                                <rect key="frame" x="34" y="86" width="244" height="29"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="شما هیچ کالایی در سبد خرید ندارید." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uxT-zy-g4F">
+                                                <rect key="frame" x="0.0" y="101.33333333333331" width="243.66666666666669" height="28.666666666666686"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="15"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1373,20 +1406,23 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="310" id="1ke-6T-IZR"/>
                                             <constraint firstItem="6mZ-Dq-aV9" firstAttribute="top" secondItem="aHK-zt-d1F" secondAttribute="top" constant="10" id="3u3-KN-Mpb"/>
+                                            <constraint firstAttribute="trailing" secondItem="uxT-zy-g4F" secondAttribute="trailing" id="LTL-UA-wUR"/>
                                             <constraint firstItem="uxT-zy-g4F" firstAttribute="centerX" secondItem="6mZ-Dq-aV9" secondAttribute="centerX" id="ea1-Y2-j9c"/>
-                                            <constraint firstAttribute="height" constant="120" id="jNq-LY-6sL"/>
+                                            <constraint firstItem="uxT-zy-g4F" firstAttribute="leading" secondItem="aHK-zt-d1F" secondAttribute="leading" id="iht-kj-2fb"/>
+                                            <constraint firstAttribute="height" constant="130" id="jNq-LY-6sL"/>
                                             <constraint firstItem="6mZ-Dq-aV9" firstAttribute="width" secondItem="6mZ-Dq-aV9" secondAttribute="height" multiplier="51:46" id="n1k-z3-178"/>
-                                            <constraint firstItem="uxT-zy-g4F" firstAttribute="top" secondItem="6mZ-Dq-aV9" secondAttribute="bottom" constant="16" id="sR0-ch-Jcj"/>
+                                            <constraint firstAttribute="bottom" secondItem="uxT-zy-g4F" secondAttribute="bottom" id="vsW-fd-YjJ"/>
                                             <constraint firstItem="6mZ-Dq-aV9" firstAttribute="centerX" secondItem="aHK-zt-d1F" secondAttribute="centerX" id="wj9-ek-VKd"/>
                                         </constraints>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstAttribute="right" relation="greaterThanOrEqual" secondItem="aHK-zt-d1F" secondAttribute="right" constant="20" id="BVo-cc-DoV"/>
                                     <constraint firstItem="aHK-zt-d1F" firstAttribute="centerX" secondItem="DxB-lE-UDF" secondAttribute="centerX" id="Pht-2Z-6Gn"/>
                                     <constraint firstItem="aHK-zt-d1F" firstAttribute="centerY" secondItem="DxB-lE-UDF" secondAttribute="centerY" id="QYE-Jf-APU"/>
+                                    <constraint firstItem="aHK-zt-d1F" firstAttribute="left" relation="greaterThanOrEqual" secondItem="DxB-lE-UDF" secondAttribute="left" constant="20" id="k9j-No-DTq"/>
                                 </constraints>
                             </view>
                         </subviews>

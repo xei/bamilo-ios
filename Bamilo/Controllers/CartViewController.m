@@ -21,6 +21,7 @@
 #import "AlertManager.h"
 #import "CartEntitySummaryViewControl.h"
 #import "EmptyViewController.h"
+#import "EmarsysPredictManager.h"
 
 
 @interface CartViewController() <CartTableViewCellDelegate>
@@ -45,6 +46,7 @@
     
     if (cart.cartEntity.cartItems.count) {
         [self setCartEmpty:NO];
+        [EmarsysPredictManager sendTransactionsOf:self];
     } else {
         [self setCartEmpty:YES];
     }
@@ -357,27 +359,19 @@
     } completion:nil];
 }
 
-
-#pragma mark - EmarsysPredictProtocol
-- (NSArray<EMRecommendationRequest *> *)getRecommendations {
-    
-    EMRecommendationRequest *recommend = [EMRecommendationRequest requestWithLogic:@"CART"];
-    recommend.limit = 15;
-    recommend.completionHandler = ^(EMRecommendationResult *_Nonnull result) {
-        
-    };
-    return @[recommend];
-}
-
-
 #pragma segue preparation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     NSString * segueName = segue.identifier;
     if ([segueName isEqualToString: @"embedEmptyViewController"]) {
         self.emptyCartViewController = (EmptyViewController *) [segue destinationViewController];
+        self.emptyCartViewController.recommendationLogic = @"PERSONAL";
         [self.emptyCartViewController updateTitle:STRING_NO_ITEMS_IN_CART];
         [self.emptyCartViewController updateImage:[UIImage imageNamed:@"img_emptyCart"]];
     }
+}
+
+- (BOOL)isPreventSendTransactionInViewWillAppear {
+    return YES;
 }
 
 @end

@@ -13,6 +13,7 @@
 #import "NSArray+Extension.h"
 #import "TrackerManager.h"
 #import "EventUtilities.h"
+#import "EmarsysPredictManager.h"
 
 
 // --- Legacy imports ---
@@ -56,7 +57,6 @@
             NSLog(@"TrackerManager > PurchaseCount > %d", [UserDefaultsManager getCounter:kUDMPurchaseCount]);
         }
     }];
-    
     
     //// ------- START OF LEGACY CODES ------
     // Notification to clean cart
@@ -167,8 +167,6 @@
         
         [viewCartTrackingProduct setValue:[cartItem.quantity stringValue] forKey:kRIEventQuantityKey];
         [viewCartTrackingProducts addObject:viewCartTrackingProduct];
-        
-        
     }
     
     trackingDictionary = [[NSMutableDictionary alloc] init];
@@ -331,6 +329,7 @@
     //// ------- END OF LEGACY CODES ------
     
     [self publishScreenLoadTime];
+    [EmarsysPredictManager sendTransactionsOf:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -346,15 +345,20 @@
 
 
 - (NSArray<EMRecommendationRequest *> *)getRecommendations {
-    EMRecommendationRequest *recommend = [EMRecommendationRequest requestWithLogic:@"PERSONAL"];
+    NSString *recommendationLogic = self.cart.cartEntity.cartCount.integerValue == 1 ? @"ALSO_BOUGHT" : @"PERSONAL"; //Production requirement
+    EMRecommendationRequest *recommend = [EMRecommendationRequest requestWithLogic: recommendationLogic];
     recommend.limit = 15;
     recommend.completionHandler = ^(EMRecommendationResult *_Nonnull result) {
+        if (!result.products.count) return;
         [ThreadManager executeOnMainThread:^{
             [self.carouselWidget fadeIn:0.15];
             [self.carouselWidget updateWithModel:[result.products map:^id(EMRecommendationItem *item) {
                 return [RecommendItem instanceWithEMRecommendationItem:item];
             }]];
         }];
+        
+        //Reset the shared Cart entities
+        [RICart sharedInstance].cartEntity.cartItems = @[];
     };
     
     return @[recommend];
@@ -367,6 +371,9 @@
     return @"CheckoutFinish";
 }
 
+- (BOOL)isPreventSendTransactionInViewWillAppear {
+    return YES;
+}
 
 #pragma mark - FeatureBoxCollectionViewWidgetViewDelegate
 - (void)selectFeatureItem:(NSObject *)item widgetBox:(id)widgetBox {

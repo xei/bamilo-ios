@@ -32,6 +32,7 @@ static BOOL isListenersReady;
         if ([queryDictionary objectForKey:kUTMSource] ||
             [queryDictionary objectForKey:kUTMMedium] ||
             [queryDictionary objectForKey:kUTMCampaign] ||
+            [queryDictionary objectForKey:kUTMTerm] ||
             [queryDictionary objectForKey:kUTMContent]) {
             [[RITrackingWrapper sharedInstance] trackCampaignData:queryDictionary];
         }

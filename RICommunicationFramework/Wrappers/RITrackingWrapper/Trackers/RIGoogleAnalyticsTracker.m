@@ -112,13 +112,16 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     
     [[GAI sharedInstance].logger setLogLevel:kGAILogLevelNone];// kGAILogLevelVerbose];
     
-    // Create tracker instance.
-#ifdef IS_RELEASE
-    [[GAI sharedInstance] trackerWithTrackingId:trackingId ?: [RITrackingConfiguration valueForKey:kRIGoogleAnalyticsTrackingID]];
-#else
-    [[GAI sharedInstance] trackerWithTrackingId:[RITrackingConfiguration valueForKey:kRIGoogleAnalyticsTrackingID]];
-#endif
-            
+    
+    NSString *GAId = [[[NSBundle mainBundle] objectForInfoDictionaryKey:kConfigs] objectForKey:@"GoogleAnalyticsID"];
+    [[GAI sharedInstance] trackerWithTrackingId: GAId];
+//    // Create tracker instance.
+//#ifdef IS_RELEASE
+//    [[GAI sharedInstance] trackerWithTrackingId:trackingId ?: [RITrackingConfiguration valueForKey:kRIGoogleAnalyticsTrackingID]];
+//#else
+//    [[GAI sharedInstance] trackerWithTrackingId:[RITrackingConfiguration valueForKey:kRIGoogleAnalyticsTrackingID]];
+//#endif
+    
     // Setup the app version
     NSString *version = [[AppManager sharedInstance] getAppFullFormattedVersion] ?: @"?";
     [[GAI sharedInstance].defaultTracker set:kGAIAppVersion value:version];
@@ -166,29 +169,33 @@ static RIGoogleAnalyticsTracker *sharedInstance;
             
             NSMutableString* finalStr = [NSMutableString new];
             //hostname doesn't matter
-            [finalStr appendString:@"http://www.hostname.com?"];
+            [finalStr appendString:@"http://www.bamilo.com?"];
             
             
             
             NSMutableArray* params = [NSMutableArray new];
             
             if ([campaignData objectForKey:kUTMCampaign]) {
-                [params addObject:[NSString stringWithFormat:@"utm_campaign=%@",[campaignData objectForKey:kUTMCampaign]]];
+                [params addObject:[NSString stringWithFormat:@"%@=%@", kUTMCampaign, [campaignData objectForKey:kUTMCampaign]]];
             }
             
             if (!VALID_NOTEMPTY([campaignData objectForKey:kUTMSource], NSString)) {
                 if (VALID_NOTEMPTY([campaignData objectForKey:kUTMCampaign], NSString)) {
                     [params addObject:@"utm_source=push"];
                 }
-            } else 
-                [params addObject:[NSString stringWithFormat:@"utm_source=%@",[campaignData objectForKey:kUTMSource]]];
+            } else
+                [params addObject:[NSString stringWithFormat:@"%@=%@",kUTMSource, [campaignData objectForKey:kUTMSource]]];
             
             if (!VALID_NOTEMPTY([campaignData objectForKey:kUTMMedium], NSString)) {
                 if (VALID_NOTEMPTY([campaignData objectForKey:kUTMCampaign], NSString)) {
-                    [params addObject:@"utm_medium=referrer"];
+                    [params addObject:[NSString stringWithFormat:@"%@=referrer" , kUTMMedium]];
                 }
             } else
-                [params addObject:[NSString stringWithFormat:@"utm_medium=%@",[campaignData objectForKey:kUTMMedium]]];
+                [params addObject:[NSString stringWithFormat:@"%@=%@",kUTMMedium, [campaignData objectForKey:kUTMMedium]]];
+            
+            if ([campaignData objectForKey:kUTMTerm]) {
+                [params addObject:[NSString stringWithFormat:@"%@=%@",kUTMTerm, [campaignData objectForKey:kUTMTerm]]];
+            }
             
             [finalStr appendString:[params componentsJoinedByString:@"&"]];
             self.campaignData = [finalStr copy];
