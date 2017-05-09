@@ -20,7 +20,6 @@
 #import "JAMyOrderDetailViewController.h"
 #import "JASignInViewController.h"
 #import "JARegisterViewController.h"
-#import "JACatalogViewController.h"
 #import "JAPDVViewController.h"
 #import "JAExternalPaymentsViewController.h"
 //#import "JASuccessPageViewController.h"
@@ -71,6 +70,7 @@
 #import "ProtectedViewControllerProtocol.h"
 #import "ArgsReceiverProtocol.h"
 #import "SuccessPaymentViewController.h"
+#import "Bamilo-Swift.h"
 
 @interface JACenterNavigationController ()
 
@@ -378,8 +378,11 @@
             return YES;
         }
         case CATALOG_SEARCH: {
-            JACatalogViewController *viewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
-            [self loadScreenTarget:screenTarget forBaseViewController:viewController];
+            CatalogViewController *viewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+            RITarget *target = [RITarget parseTarget:screenTarget.target.targetString];
+            if (target.targetType == CATALOG_CATEGORY) {
+                viewController.categoryUrlKey = target.node;
+            }
             [viewController setSearchString:screenTarget.target.node];
             [self pushViewController:viewController animated:screenTarget.pushAnimation];
             return YES;
@@ -387,8 +390,11 @@
         case CATALOG_HASH:
         case CATALOG_BRAND:
         case CATALOG_CATEGORY: {
-            JACatalogViewController *viewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];;
-            [self loadScreenTarget:screenTarget forBaseViewController:viewController];
+            CatalogViewController *viewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];;
+            RITarget *target = [RITarget parseTarget:screenTarget.target.targetString];
+            if (target.targetType == CATALOG_CATEGORY) {
+                viewController.categoryUrlKey = target.node;
+            }
             [self pushViewController:viewController animated:screenTarget.pushAnimation];
             return YES;
         }
@@ -919,7 +925,7 @@
 
 #pragma mark Catalog Screen
 - (void)pushCatalogToShowSearchResults:(NSString *)query {
-    JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+    CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
     catalog.searchString = query;
     
     catalog.navBarLayout.title = query;
@@ -928,12 +934,14 @@
 }
 
 - (void)pushCatalogForUndefinedSearchWithBrandTargetString:(NSString *)brandTargetString andBrandName:(NSString *)brandName {
-    JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
-    catalog.targetString = brandTargetString;
-    catalog.forceShowBackButton = YES;
+    CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+    
+    RITarget *target = [RITarget parseTarget:brandTargetString];
+    if (target.targetType == CATALOG_CATEGORY) {
+        catalog.categoryUrlKey = target.node;
+    }
     
     catalog.navBarLayout.title = brandName;
-    
     [self pushViewController:catalog animated:YES];
 }
 
@@ -946,16 +954,16 @@
     
     if (category) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification object:nil];
-        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+        CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
         catalog.navBarLayout.title = category.label;
-        catalog.category = category;
+        catalog.categoryUrlKey = category.urlKey;
         
         [self pushViewController:catalog animated:YES];
     } else if (categoryUrlKey.length) {
-        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+        CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
         catalog.categoryUrlKey = categoryUrlKey;
-        catalog.filterPush = filterPush;
-        catalog.sortingMethodFromPush = sorting;
+        catalog.filterQueryParamsString = filterPush;
+//        catalog.sortingMethodFromPush = sorting;
         [self pushViewController:catalog animated:YES];
     }
 }
@@ -1124,15 +1132,17 @@
     }
 }
 
--(void)showSellerCatalog: (NSNotification *)notification
-{
+-(void)showSellerCatalog: (NSNotification *)notification {
     NSString* targetString = [notification.userInfo objectForKey:@"targetString"];
     NSString* title = [notification.userInfo objectForKey:@"name"];
     
     if(VALID_NOTEMPTY(targetString, NSString))
     {
-        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
-        catalog.targetString = targetString;
+        CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+        RITarget *target = [RITarget parseTarget:targetString];
+        if (target.targetType == CATALOG_CATEGORY) {
+            catalog.categoryUrlKey = target.node;
+        }
         catalog.navBarLayout.title = title;
         catalog.navBarLayout.showBackButton = YES;
         
@@ -1149,9 +1159,13 @@
     NSString* title = [notification.userInfo objectForKey:@"title"];
     
     if (targetString.length) {
-        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+        CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
         
-        catalog.targetString = targetString;
+        RITarget *target = [RITarget parseTarget:targetString];
+        if (target.targetType == CATALOG_CATEGORY) {
+            catalog.categoryUrlKey = target.node;
+        }
+
         catalog.navBarLayout.title = title;
         
         if ([notification.userInfo objectForKey:@"show_back_button_title"]) {
@@ -1159,9 +1173,9 @@
         } else {
             [catalog.navBarLayout setShowBackButton:YES];;
         }
-        if ([notification.userInfo objectForKey:@"teaserTrackingInfo"]) {
-            catalog.teaserTrackingInfo = [notification.userInfo objectForKey:@"teaserTrackingInfo"];
-        }
+//        if ([notification.userInfo objectForKey:@"teaserTrackingInfo"]) {
+//            catalog.teaserTrackingInfo = [notification.userInfo objectForKey:@"teaserTrackingInfo"];
+//        }
         
         [self pushViewController:catalog animated:YES];
     }
@@ -1446,7 +1460,7 @@
     RISearchSuggestion *recentSearch = notification.object;
     
     if (recentSearch) {
-        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+        CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
         catalog.searchString = recentSearch.item;
         
         catalog.navBarLayout.title = recentSearch.item;

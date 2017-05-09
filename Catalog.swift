@@ -10,7 +10,7 @@ import UIKit
 import ObjectMapper
 import SwiftyJSON
 
-class Catalog: Mappable {
+@objc class Catalog: NSObject, Mappable {
     
     var title:String?
     var filters: [BaseCatalogFilterItem]?

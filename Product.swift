@@ -10,7 +10,7 @@ import UIKit
 import ObjectMapper
 import SwiftyJSON
 
-class Product: Mappable {
+@objc class Product: NSObject, Mappable {
     
     var sku: String!
     var name: String?
@@ -19,7 +19,7 @@ class Product: Mappable {
     var price: UInt64?
     var specialPrice: UInt64?
     var categoryIds: [String]?
-    var category: Category?
+    var category: CategoryProduct?
     var imageUrl: URL?
     var target:String?
     var reviewsAverage: Double?

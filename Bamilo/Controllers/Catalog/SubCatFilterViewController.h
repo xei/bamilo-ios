@@ -10,6 +10,7 @@
 #import "BaseViewController.h"
 #import "SearchCategoryFilter.h"
 #import "JAFiltersView.h"
+#import "Bamilo-Swift.h"
 
 @protocol SubCatFilterViewControllerDelegate
 - (void)submitSubCategoryFilterByUrlKey: (NSString*)urlKey;

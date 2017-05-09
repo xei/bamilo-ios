@@ -10,6 +10,7 @@
 #import "AppConsts.h"
 #import "RIApi.h"
 #import "JAStrings.h"
+#import "JANavigationBarLayout.h"
 
 #import <Masonry/Masonry.h>
 #import <RGB/RRGB.h>
@@ -18,3 +19,7 @@
 #import "OrderList.h"
 #import "RIFilter.h"
 #import "SearchPriceFilter.h"
+#import "PerformanceTrackerProtocol.h"
+#import "DataTrackerProtocol.h"
+
+#import "BaseViewController.h"

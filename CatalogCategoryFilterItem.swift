@@ -10,7 +10,7 @@ import UIKit
 import ObjectMapper
 import SwiftyJSON
 
-class CatalogCategoryFilterItem: BaseCatalogFilterItem {
+@objc class CatalogCategoryFilterItem: BaseCatalogFilterItem {
     
     var options: [CatalogCategoryFilterOption]?
     

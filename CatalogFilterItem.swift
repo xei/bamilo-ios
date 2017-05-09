@@ -9,7 +9,7 @@
 import UIKit
 import ObjectMapper
 
-class CatalogFilterItem: BaseCatalogFilterItem {
+@objc class CatalogFilterItem: BaseCatalogFilterItem {
     
     var options: [CatalogFilterOption]?
     

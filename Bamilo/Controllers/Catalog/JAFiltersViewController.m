@@ -35,7 +35,6 @@ const int subCatButtonVisibleHeight = 50;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.navBarLayout.title = STRING_FILTERS;
     self.navBarLayout.showBackButton = YES;
     [self selectIndex:0];

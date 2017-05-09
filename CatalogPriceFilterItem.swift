@@ -9,7 +9,7 @@
 import UIKit
 import ObjectMapper
 
-class CatalogPriceFilterItem: BaseCatalogFilterItem {
+@objc class CatalogPriceFilterItem: BaseCatalogFilterItem {
     
     var maxPrice: UInt64!
     var minPrice: UInt64!

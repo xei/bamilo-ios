@@ -48,7 +48,7 @@
 		61338D021EACC63B0017BB06 /* EmarsysRecommendationMinimalCarouselWidgetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61338D011EACC63B0017BB06 /* EmarsysRecommendationMinimalCarouselWidgetView.xib */; };
 		61338D051EACC64D0017BB06 /* EmarsysRecommendationMinimalCarouselWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 61338D041EACC64D0017BB06 /* EmarsysRecommendationMinimalCarouselWidget.m */; };
 		613A7E8D1EBF069100E1AB3F /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613A7E8C1EBF069100E1AB3F /* Product.swift */; };
-		613A7E8F1EBF0F6B00E1AB3F /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613A7E8E1EBF0F6B00E1AB3F /* Category.swift */; };
+		613A7E8F1EBF0F6B00E1AB3F /* CategoryProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613A7E8E1EBF0F6B00E1AB3F /* CategoryProduct.swift */; };
 		613A7E911EBF2B0600E1AB3F /* Catalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613A7E901EBF2B0600E1AB3F /* Catalog.swift */; };
 		613A7E941EBF651600E1AB3F /* BaseCatalogFilterItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613A7E931EBF651600E1AB3F /* BaseCatalogFilterItem.swift */; };
 		613A7E961EBF66B700E1AB3F /* CatalogPriceFilterItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613A7E951EBF66B700E1AB3F /* CatalogPriceFilterItem.swift */; };
@@ -97,6 +97,7 @@
 		61BA9B501E9A04E1004E9DE8 /* EmarsysRecommendationCarouselView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61BA9B4F1E9A04E1004E9DE8 /* EmarsysRecommendationCarouselView.xib */; };
 		61BA9B551E9A0645004E9DE8 /* EmarsysRecommendationCarouselCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BA9B531E9A0645004E9DE8 /* EmarsysRecommendationCarouselCollectionViewCell.m */; };
 		61BA9B561E9A0645004E9DE8 /* EmarsysRecommendationCarouselCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61BA9B541E9A0645004E9DE8 /* EmarsysRecommendationCarouselCollectionViewCell.xib */; };
+		61C5BAF11EC1F40300F3A796 /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C5BAF01EC1F40300F3A796 /* CatalogViewController.swift */; };
 		61C5C40D1E545C6200F22130 /* CartEntitySummaryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61C5C40C1E545C6200F22130 /* CartEntitySummaryView.m */; };
 		61C5C40F1E545C7500F22130 /* CartEntitySummaryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61C5C40E1E545C7400F22130 /* CartEntitySummaryView.xib */; };
 		61C5C4141E54674600F22130 /* CartEntitySummaryViewControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 61C5C4131E54674600F22130 /* CartEntitySummaryViewControl.m */; };
@@ -919,7 +920,7 @@
 		61338D031EACC64D0017BB06 /* EmarsysRecommendationMinimalCarouselWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysRecommendationMinimalCarouselWidget.h; sourceTree = "<group>"; };
 		61338D041EACC64D0017BB06 /* EmarsysRecommendationMinimalCarouselWidget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysRecommendationMinimalCarouselWidget.m; sourceTree = "<group>"; };
 		613A7E8C1EBF069100E1AB3F /* Product.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
-		613A7E8E1EBF0F6B00E1AB3F /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		613A7E8E1EBF0F6B00E1AB3F /* CategoryProduct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryProduct.swift; sourceTree = "<group>"; };
 		613A7E901EBF2B0600E1AB3F /* Catalog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Catalog.swift; sourceTree = "<group>"; };
 		613A7E931EBF651600E1AB3F /* BaseCatalogFilterItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCatalogFilterItem.swift; sourceTree = "<group>"; };
 		613A7E951EBF66B700E1AB3F /* CatalogPriceFilterItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogPriceFilterItem.swift; sourceTree = "<group>"; };
@@ -1005,6 +1006,7 @@
 		61BA9B541E9A0645004E9DE8 /* EmarsysRecommendationCarouselCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmarsysRecommendationCarouselCollectionViewCell.xib; sourceTree = "<group>"; };
 		61C407C31E476486004ACEE8 /* StepperViewControlDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepperViewControlDelegate.h; sourceTree = "<group>"; };
 		61C407C41E476939004ACEE8 /* CartTableViewCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartTableViewCellDelegate.h; sourceTree = "<group>"; };
+		61C5BAF01EC1F40300F3A796 /* CatalogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 		61C5C4081E54479100F22130 /* ProtectedViewControllerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtectedViewControllerProtocol.h; sourceTree = "<group>"; };
 		61C5C40B1E545C6200F22130 /* CartEntitySummaryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartEntitySummaryView.h; sourceTree = "<group>"; };
 		61C5C40C1E545C6200F22130 /* CartEntitySummaryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartEntitySummaryView.m; sourceTree = "<group>"; };
@@ -2718,6 +2720,7 @@
 		613A7E8A1EBF033400E1AB3F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				61C5BAF01EC1F40300F3A796 /* CatalogViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -2727,7 +2730,7 @@
 			children = (
 				613A7E921EBF64EB00E1AB3F /* CatalogFiltes */,
 				613A7E8C1EBF069100E1AB3F /* Product.swift */,
-				613A7E8E1EBF0F6B00E1AB3F /* Category.swift */,
+				613A7E8E1EBF0F6B00E1AB3F /* CategoryProduct.swift */,
 				613A7E901EBF2B0600E1AB3F /* Catalog.swift */,
 			);
 			name = Models;
@@ -7279,7 +7282,7 @@
 				875AD5891E38C0C900584ABF /* RIGTMTracker.m in Sources */,
 				61EE79901EC046D90036F93E /* CatalogCategoryFilterOption.swift in Sources */,
 				CED6205C1BEB526B00FA8403 /* JAFiltersViewController.m in Sources */,
-				613A7E8F1EBF0F6B00E1AB3F /* Category.swift in Sources */,
+				613A7E8F1EBF0F6B00E1AB3F /* CategoryProduct.swift in Sources */,
 				875AD57E1E38C0C900584ABF /* RIDataBaseWrapper.m in Sources */,
 				875AD5761E38C0C900584ABF /* RIShippingMethodPickupStationOption.m in Sources */,
 				61716BA71E865B3D00F4E65F /* DeepLinkManager.m in Sources */,
@@ -7500,6 +7503,7 @@
 				9A189E811BB54C2D0039BC14 /* JAScrolledImageGalleryView.m in Sources */,
 				8976FB2C1C0F323700483651 /* JARatingFilterCell.m in Sources */,
 				87A6ACEF1E38919C00C0E7DC /* GTMNSString+HTML.m in Sources */,
+				61C5BAF11EC1F40300F3A796 /* CatalogViewController.swift in Sources */,
 				870BEA8D1E74013F00C5B615 /* ThemeColor.m in Sources */,
 				9AB488891B727B2D00886A44 /* UIImage+WithColor.m in Sources */,
 				CE9ADFD11AB6D78200D56481 /* JAOrderSummaryView.m in Sources */,

@@ -835,7 +835,7 @@
         <!--Catalog View Controller-->
         <scene sceneID="aKC-VI-rqH">
             <objects>
-                <viewController storyboardIdentifier="catalogViewController" id="Mg8-YE-Ahp" customClass="JACatalogViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="catalogViewController" id="Mg8-YE-Ahp" customClass="CatalogViewController" customModule="Bamilo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="BAm-y5-w81"/>
                         <viewControllerLayoutGuide type="bottom" id="mY3-o9-UW7"/>
@@ -884,9 +884,6 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="NoResultViewControllerContainer" destination="eAy-WM-iDC" id="egQ-CL-CAF"/>
-                        <outlet property="collectionView" destination="uvl-Jb-YwM" id="Oln-Fz-QFS"/>
-                        <outlet property="collectionViewTopConstraint" destination="zRa-gn-Un8" id="D1W-r5-WoH"/>
                         <segue destination="L8G-Sy-CpX" kind="show" identifier="showFilterView" id="JKW-Pq-7fE"/>
                     </connections>
                 </viewController>
@@ -1089,7 +1086,7 @@
                                                 </connections>
                                             </switch>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="فقط با تخفیف ها" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gEn-nz-ntR">
-                                                <rect key="frame" x="59.666666666666686" y="15" width="85.333333333333314" height="21.333333333333336"/>
+                                                <rect key="frame" x="59.666666666666686" y="15.333333333333336" width="85.333333333333314" height="21.333333333333329"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
