@@ -98,11 +98,21 @@ static PushWooshTracker *instance;
             NSLog(@"EmarsysMobileEngage > sendOpen > %@", success ? sSUCCESSFUL : sFAILED);
         }];
     }
-    if ([jsonData objectForKey:kUTMSource] ||
-        [jsonData objectForKey:kUTMMedium] ||
-        [jsonData objectForKey:kUTMCampaign] ||
-        [jsonData objectForKey:kUTMContent]) {
-        [[RITrackingWrapper sharedInstance] trackCampaignData:jsonData];
+    
+    // -- UTM tracking
+    __block NSMutableDictionary *utmDictionary = [NSMutableDictionary new];
+    [jsonData enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        NSString *lowerCaseKey = [key lowercaseString];
+        if ([lowerCaseKey isEqualToString:kUTMSource] ||
+            [lowerCaseKey isEqualToString:kUTMMedium] ||
+            [lowerCaseKey isEqualToString:kUTMCampaign] ||
+            [lowerCaseKey isEqualToString:kUTMTerm] ||
+            [lowerCaseKey isEqualToString:kUTMContent]) {
+            [utmDictionary setObject:obj forKey:lowerCaseKey];
+        }
+    }];
+    if (utmDictionary.allKeys.count) {
+        [[RITrackingWrapper sharedInstance] trackCampaignData:utmDictionary];
     }
 }
 

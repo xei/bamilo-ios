@@ -76,10 +76,11 @@
 #define kConfigs @"Configs"
 #define cWebNormalizedDateTimeFormat @"yyyy-MM-dd HH:mm:ss"
 
-#define kUTMSource @"UTM_source"
-#define kUTMMedium  @"UTM_medium"
-#define kUTMCampaign @"UTM_campaign"
-#define kUTMContent @"UTM_content"
+#define kUTMSource @"utm_source"
+#define kUTMMedium  @"utm_medium"
+#define kUTMCampaign @"utm_campaign"
+#define kUTMContent @"utm_content"
+#define kUTMTerm @"utm_term"
 
 
 #define SYSTEM_VERSION(v) [[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch]
