@@ -183,7 +183,7 @@
        [ProgressItemViewModel itemWithIcons:_orderDeliveredImageSet title:STRING_SENT errorTitle:STRING_CANCELLED isIndicator:YES]
     ];
 
-    switch (order.status) {
+    switch (order.orderStatus) {
         case ORDER_STATUS_NEW_ORDER: {
             ((ProgressItemViewModel *)progressViewControlContent[0]).type = PROGRESS_ITEM_ACTIVE;
         }

@@ -67,7 +67,7 @@
     }
     
     if(self.products.count) {
-        self.status = [self getOrderStatusFromOrderProducts:self.products];
+        self.orderStatus = [self getOrderStatusFromOrderProducts:self.products];
     }
     
     return YES;
