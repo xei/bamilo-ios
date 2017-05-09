@@ -21,6 +21,7 @@
 #import "AlertManager.h"
 #import "CartEntitySummaryViewControl.h"
 #import "EmptyViewController.h"
+#import "EmarsysPredictManager.h"
 
 
 @interface CartViewController() <CartTableViewCellDelegate>
@@ -45,6 +46,7 @@
     
     if (cart.cartEntity.cartItems.count) {
         [self setCartEmpty:NO];
+        [EmarsysPredictManager sendTransactionsOf:self];
     } else {
         [self setCartEmpty:YES];
     }
@@ -366,6 +368,10 @@
         [self.emptyCartViewController updateTitle:STRING_NO_ITEMS_IN_CART];
         [self.emptyCartViewController updateImage:[UIImage imageNamed:@"img_emptyCart"]];
     }
+}
+
+- (BOOL)isPreventSendTransactionInViewWillAppear {
+    return YES;
 }
 
 @end
