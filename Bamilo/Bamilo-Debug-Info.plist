@@ -126,13 +126,11 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>30</string>
+	<string>31</string>
 	<key>Configs</key>
 	<dict>
 		<key>EMMerchantID</key>
 		<string>18146DE34FE0B8C9</string>
-		<key>GoogleAnalyticsID</key>
-		<string>UA-52004541-5</string>
 		<key>Emarsys</key>
 		<dict>
 			<key>Application_CODE</key>
@@ -140,6 +138,8 @@
 			<key>Application_PASSWORD</key>
 			<string>+xhBaMoKRjc3SAHLsgqKTIodKWXJFhM/</string>
 		</dict>
+		<key>GoogleAnalyticsID</key>
+		<string>UA-52004541-5</string>
 		<key>Pushwoosh_BETA</key>
 		<string>1</string>
 	</dict>
