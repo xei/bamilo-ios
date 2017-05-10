@@ -11,17 +11,16 @@ import ObjectMapper
 
 @objc class CatalogPriceFilterItem: BaseCatalogFilterItem {
     
-    var maxPrice: UInt64!
-    var minPrice: UInt64!
-    var interval: Int?
-    var discountOnly: Bool?
-    var lowerValue: UInt64?
-    var upperValue: UInt64?
+    var maxPrice: UInt64 = 0
+    var minPrice: UInt64 = 0
+    var interval: Int = 0
+    var discountOnly: Bool = false
+    var lowerValue: UInt64 = 0
+    var upperValue: UInt64 = 0
     
     
     override func mapping(map: Map) {
-        super.mapping(map: map)
-        
+        super.mapping(map: map)        
         maxPrice <- map["option.max"]
         lowerValue <- map["option.min"]
         upperValue <- map["option.max"]

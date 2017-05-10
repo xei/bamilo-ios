@@ -9,6 +9,7 @@
 #import "JAPriceFiltersView.h"
 #import "TTRangeSlider.h"
 #import "NSString+Extensions.h"
+#import "Bamilo-Swift.h"
 
 @interface JAPriceFiltersView()
 
@@ -17,13 +18,13 @@
 @property (strong, nonatomic) IBOutletCollection(UILabel) NSArray *textsInPriceRangeUILabels;
 @property (weak, nonatomic) IBOutlet UITextField *lowerSelectedPriceUITextField;
 @property (weak, nonatomic) IBOutlet UITextField *upperSelectedPriceUITextField;
-@property (nonatomic, strong) SearchPriceFilter* priceFilter;
+@property (nonatomic, strong) CatalogPriceFilterItem* priceFilter;
 
 @end
 
 @implementation JAPriceFiltersView
 
-- (void)initializeWithPriceFilterOption:(SearchPriceFilter*)priceFilter {
+- (void)initializeWithPriceFilterOption:(CatalogPriceFilterItem *)priceFilter {
     self.priceFilter = priceFilter;
     self.backgroundColor = [UIColor whiteColor];
     

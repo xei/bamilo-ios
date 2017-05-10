@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
-#import "SearchCategoryFilter.h"
+//#import "SearchCategoryFilter.h"
+#import "Bamilo-Swift.h"
 #import "JAFiltersView.h"
 #import "Bamilo-Swift.h"
 
@@ -17,6 +18,6 @@
 @end
 
 @interface SubCatFilterViewController : BaseViewController <JAFiltersViewDelegate>
-@property (nonatomic, strong) SearchCategoryFilter *subCatsFilter;
+@property (nonatomic, strong) CatalogCategoryFilterItem *subCatsFilter;
 @property (nonatomic, weak) id<SubCatFilterViewControllerDelegate>delegate;
 @end

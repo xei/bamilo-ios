@@ -22,6 +22,6 @@
 
 - (void)setupIsLandscape:(BOOL)landscape;
 
-- (void)setFilterOption:(SearchFilterItemOption*)option;
+- (void)setFilterOption:(id)option;
 
 @end

@@ -1,14 +1,14 @@
+////
+////  SearchCategoryFilter.h
+////  Bamilo
+////
+////  Created by Ali Saeedifar on 3/6/17.
+////  Copyright © 2017 Rocket Internet. All rights reserved.
+////
 //
-//  SearchCategoryFilter.h
-//  Bamilo
+//#import "BaseModel.h"
+//#import "SearchFilterItem.h"
 //
-//  Created by Ali Saeedifar on 3/6/17.
-//  Copyright © 2017 Rocket Internet. All rights reserved.
+//@interface SearchCategoryFilter : SearchFilterItem
 //
-
-#import "BaseModel.h"
-#import "SearchFilterItem.h"
-
-@interface SearchCategoryFilter : SearchFilterItem
-
-@end
+//@end

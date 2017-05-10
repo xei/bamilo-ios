@@ -12,8 +12,8 @@ import ObjectMapper
 @objc class BaseCatalogFilterItem: NSObject, Mappable {
     var id: String!
     var name: String?
-    var filterSeparator:String?
-    var multi: Bool?
+    var filterSeparator: String?
+    var multi: Bool = false
     
     required init?(map: Map) {
         

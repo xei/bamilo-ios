@@ -207,88 +207,88 @@
     }
 }
 
-+ (NSString *)getResultsForSearch:(NSString *)query
-                             page:(NSString *)page
-                         maxItems:(NSString *)maxItems
-                    sortingMethod:(RICatalogSortingEnum)sortingMethod
-                          filters:(NSArray*)filters
-                     successBlock:(void (^)(RICatalog *catalog))successBlock
-                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm))failureBlock {
-    
-
-    NSString *tempUrl = [NSString stringWithFormat:@"%@%@search/find/", [RIApi getCountryUrlInUse], RI_API_VERSION];
-    NSString *sortingString = [RICatalogSorting urlComponentForSortingMethod:sortingMethod];
-
-    
-    if (sortingString.length) {
-        sortingString = [NSString stringWithFormat:@"/%@", sortingString];
-    }
-    
-    NSString *filtersString = [BaseSearchFilterItem urlWithFiltersArray:filters];
-    if(filtersString.length) {
-        if(NSNotFound == [@"q" rangeOfString:filtersString].location) {
-            tempUrl = [NSString stringWithFormat:@"%@q/%@/page/%@/maxitems/%@%@/%@/", tempUrl, query, page, maxItems,
-                       sortingString, filtersString];
-        } else {
-            tempUrl = [NSString stringWithFormat:@"%@/page/%@/maxitems/%@%@/%@/", tempUrl, page, maxItems,
-                          sortingString, filtersString];
-        }
-    } else {
-        tempUrl = [NSString stringWithFormat:@"%@q/%@/page/%@/maxitems/%@%@/", tempUrl, query, page, maxItems,
-                   sortingString];
-    }
-    
-
-    tempUrl = [tempUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSURL *url = [NSURL URLWithString:tempUrl];
-    
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
-                                                            parameters:nil
-                                                            httpMethod:HttpVerbGET
-                                                             cacheType:RIURLCacheNoCache
-                                                             cacheTime:RIURLCacheNoTime
-                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
-                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-                                                              [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
-                                                                  NSDictionary *metadata = [jsonObject objectForKey:@"metadata"];
-                                                                  
-                                                                  RICatalog *catalog = [RICatalog parseCatalog:metadata forCountryConfiguration:configuration];
-                                                                  if (catalog && catalog.products.count != 0) {
-                                                                      dispatch_async(dispatch_get_main_queue(), ^{
-                                                                          successBlock(catalog);
-                                                                      });
-                                                                  } else {
-                                                                      dispatch_async(dispatch_get_main_queue(), ^{
-                                                                          failureBlock(apiResponse, nil, nil);
-                                                                      });
-                                                                  }
-                                                                  
-                                                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-                                                                  
-                                                                  dispatch_async(dispatch_get_main_queue(), ^{
-                                                                      failureBlock(apiResponse, nil, nil);
-                                                                  });
-                                                              }];
-                                                              
-                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
-                                                              
-                                                              dispatch_async(dispatch_get_main_queue(), ^{
-                                                                  if ([errorJsonObject objectForKey:@"metadata"]) {
-                                                                      failureBlock(apiResponse, nil, [RISearchSuggestion parseUndefinedSearchTerm:[errorJsonObject objectForKey:@"metadata"]]);
-                                                                  } else {
-                                                                      if(errorJsonObject) {
-                                                                          failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject], nil);
-                                                                      } else if(errorObject) {
-                                                                          NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                          failureBlock(apiResponse, errorArray, nil);
-                                                                      } else {
-                                                                          failureBlock(apiResponse, nil, nil);
-                                                                      }
-                                                                  }
-                                                              });
-                                                          }];
-    
-}
+//+ (NSString *)getResultsForSearch:(NSString *)query
+//                             page:(NSString *)page
+//                         maxItems:(NSString *)maxItems
+//                    sortingMethod:(RICatalogSortingEnum)sortingMethod
+//                          filters:(NSArray*)filters
+//                     successBlock:(void (^)(RICatalog *catalog))successBlock
+//                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm))failureBlock {
+//    
+//
+//    NSString *tempUrl = [NSString stringWithFormat:@"%@%@search/find/", [RIApi getCountryUrlInUse], RI_API_VERSION];
+//    NSString *sortingString = [RICatalogSorting urlComponentForSortingMethod:sortingMethod];
+//
+//    
+//    if (sortingString.length) {
+//        sortingString = [NSString stringWithFormat:@"/%@", sortingString];
+//    }
+//    
+//    NSString *filtersString = [BaseSearchFilterItem urlWithFiltersArray:filters];
+//    if(filtersString.length) {
+//        if(NSNotFound == [@"q" rangeOfString:filtersString].location) {
+//            tempUrl = [NSString stringWithFormat:@"%@q/%@/page/%@/maxitems/%@%@/%@/", tempUrl, query, page, maxItems,
+//                       sortingString, filtersString];
+//        } else {
+//            tempUrl = [NSString stringWithFormat:@"%@/page/%@/maxitems/%@%@/%@/", tempUrl, page, maxItems,
+//                          sortingString, filtersString];
+//        }
+//    } else {
+//        tempUrl = [NSString stringWithFormat:@"%@q/%@/page/%@/maxitems/%@%@/", tempUrl, query, page, maxItems,
+//                   sortingString];
+//    }
+//    
+//
+//    tempUrl = [tempUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+//    NSURL *url = [NSURL URLWithString:tempUrl];
+//    
+//    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
+//                                                            parameters:nil
+//                                                            httpMethod:HttpVerbGET
+//                                                             cacheType:RIURLCacheNoCache
+//                                                             cacheTime:RIURLCacheNoTime
+//                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
+//                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+//                                                              [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+//                                                                  NSDictionary *metadata = [jsonObject objectForKey:@"metadata"];
+//                                                                  
+//                                                                  RICatalog *catalog = [RICatalog parseCatalog:metadata forCountryConfiguration:configuration];
+//                                                                  if (catalog && catalog.products.count != 0) {
+//                                                                      dispatch_async(dispatch_get_main_queue(), ^{
+//                                                                          successBlock(catalog);
+//                                                                      });
+//                                                                  } else {
+//                                                                      dispatch_async(dispatch_get_main_queue(), ^{
+//                                                                          failureBlock(apiResponse, nil, nil);
+//                                                                      });
+//                                                                  }
+//                                                                  
+//                                                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+//                                                                  
+//                                                                  dispatch_async(dispatch_get_main_queue(), ^{
+//                                                                      failureBlock(apiResponse, nil, nil);
+//                                                                  });
+//                                                              }];
+//                                                              
+//                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
+//                                                              
+//                                                              dispatch_async(dispatch_get_main_queue(), ^{
+//                                                                  if ([errorJsonObject objectForKey:@"metadata"]) {
+//                                                                      failureBlock(apiResponse, nil, [RISearchSuggestion parseUndefinedSearchTerm:[errorJsonObject objectForKey:@"metadata"]]);
+//                                                                  } else {
+//                                                                      if(errorJsonObject) {
+//                                                                          failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject], nil);
+//                                                                      } else if(errorObject) {
+//                                                                          NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+//                                                                          failureBlock(apiResponse, errorArray, nil);
+//                                                                      } else {
+//                                                                          failureBlock(apiResponse, nil, nil);
+//                                                                      }
+//                                                                  }
+//                                                              });
+//                                                          }];
+//    
+//}
 
 #pragma mark - Get Recent searches
 

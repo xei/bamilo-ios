@@ -35,7 +35,7 @@
 
 #pragma mark - JAFiltersViewDelegate
 - (void)updatedValues {
-    self.subCatsFilter = (SearchCategoryFilter *)filterView.filter;
+    self.subCatsFilter = (CatalogCategoryFilterItem *)[filterView getFilter];
 }
 
 #pragma override from BaseViewController
@@ -45,7 +45,7 @@
 }
 
 - (IBAction)submitButtonTapped:(id)sender {
-    for(SearchFilterItemOption *catFilterOption in self.subCatsFilter.options) {
+    for(CatalogFilterOption *catFilterOption in self.subCatsFilter.options) {
         if (catFilterOption.selected) {
             [self.navigationController popViewControllerAnimated:NO];
             [self.delegate submitSubCategoryFilterByUrlKey:catFilterOption.value];

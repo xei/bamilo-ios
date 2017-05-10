@@ -7,6 +7,7 @@
 //
 
 #import "JAMainFilterCell.h"
+#import "Bamilo-Swift.h"
 
 @interface JAMainFilterCell()
 
@@ -17,7 +18,7 @@
 
 @implementation JAMainFilterCell
 
-- (void)setupWithFilter:(BaseSearchFilterItem *)filter options:(NSString*)options width:(CGFloat)width {
+- (void)setupWithFilter:(CatalogFilterItem *)filter options:(NSString*)options width:(CGFloat)width {
     //remove the clickable view
     for (UIView* view in self.subviews) {
         if ([view isKindOfClass:[JAClickableView class]]) { //remove the clickable view

@@ -8,13 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "JAFiltersView.h"
-#import "SearchFilterItem.h"
 
 @interface JAGenericFiltersView : JAFiltersView <UITableViewDelegate, UITableViewDataSource>
 
-@property (nonatomic, strong)SearchFilterItem* filter;
 
-- (void)initializeWithFilter:(SearchFilterItem*)filter isLandscape:(BOOL)isLandscape;
+- (void)initializeWithFilter:(id)filter isLandscape:(BOOL)isLandscape;
+- (id)getFilter;
 - (void)saveOptions;
 
 @end

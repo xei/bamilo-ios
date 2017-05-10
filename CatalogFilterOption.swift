@@ -13,8 +13,8 @@ import ObjectMapper
     
     var name: String?
     var value: String?
-    var average: Int?
-    var productsCount: Int?
+    var average: Int = 0
+    var productsCount: Int = 0
     
     //for color filter options
     var colorHexValue:String?

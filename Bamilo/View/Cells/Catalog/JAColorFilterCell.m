@@ -8,6 +8,7 @@
 
 #import "JAColorFilterCell.h"
 #import "SearchFilterItemOption.h"
+#import "Bamilo-Swift.h"
 
 @implementation JAColorFilterCell
 
@@ -97,8 +98,8 @@
     }
 }
 
-- (void)setFilterOption:(SearchFilterItemOption*)option {
-    self.colorTitleLabel.text = [[NSString stringWithFormat:@"%@ (%d)", option.name, option.productsCount] numbersToPersian];
+- (void)setFilterOption:(CatalogFilterOption *)option {
+    self.colorTitleLabel.text = [[NSString stringWithFormat:@"%@ (%ld)", option.name, (long)option.productsCount] numbersToPersian];
     if (option.colorHexValue) {
         [self.colorView setColorWithHexString:option.colorHexValue];
     }

@@ -10,10 +10,8 @@
 #import "JAFilterCell.h"
 #import "JAGenericFiltersView.h"
 #import "JAPriceFiltersView.h"
-#import "SearchPriceFilter.h"
-#import "SearchFilterItem.h"
-#import "SearchCategoryFilter.h"
 #import "SubCatFilterViewController.h"
+#import "Bamilo-Swift.h"
 
 @interface JAFiltersViewController () <UITableViewDataSource, UITableViewDelegate, JAFiltersViewDelegate, SubCatFilterViewControllerDelegate>
 
@@ -41,12 +39,12 @@ const int subCatButtonVisibleHeight = 50;
     [self updateTitle];
     
     self.discountOnlyUISwitch.enabled = YES;
-    SearchPriceFilter *priceFilter = (SearchPriceFilter *)[self.filtersArray objectAtIndex:self.priceFilterIndex];
+    CatalogPriceFilterItem *priceFilter = (CatalogPriceFilterItem *)[self.filtersArray objectAtIndex:self.priceFilterIndex];
     self.discountOnlyUISwitch.on = priceFilter.discountOnly;
     
     [self.subCatButton applyStyle:kFontRegularName fontSize:11 color:[UIColor blackColor]];
     [self.subCatButton setTitle:STRING_SUBCATEGORIES forState:UIControlStateNormal];
-    if (self.subCatsFilter && self.subCatsFilter.options.count) {
+    if (self.subCatsFilter && ((CatalogCategoryFilterItem *)self.subCatsFilter).options.count) {
         self.subCatButtonHeightConstraint.constant = subCatButtonVisibleHeight;
     } else{
         self.subCatButtonHeightConstraint.constant = 0;
@@ -73,14 +71,14 @@ const int subCatButtonVisibleHeight = 50;
 
 - (void)updateTitle {
     NSInteger totalSelected = 0;
-    for (BaseSearchFilterItem* filter in self.filtersArray) {
-        if ([filter isKindOfClass:[SearchPriceFilter class]]) {
-            SearchPriceFilter *priceFilter = (SearchPriceFilter*)filter;
+    for (BaseCatalogFilterItem* filter in self.filtersArray) {
+        if ([filter isKindOfClass:[CatalogPriceFilterItem class]]) {
+            CatalogPriceFilterItem *priceFilter = (CatalogPriceFilterItem*)filter;
             if (priceFilter.lowerValue > priceFilter.minPrice || priceFilter.upperValue < priceFilter.maxPrice || YES == priceFilter.discountOnly) {
                 totalSelected++;
             }
         } else {
-            for (SearchFilterItemOption* option in ((SearchFilterItem*)filter).options) {
+            for (CatalogFilterOption* option in ((CatalogFilterItem*)filter).options) {
                 if (option.selected) {
                     totalSelected++;
                 }
@@ -159,15 +157,15 @@ const int subCatButtonVisibleHeight = 50;
     
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:oldSelectedIndexPath, self.selectedIndexPath, nil] withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.currentFilterView removeFromSuperview];
-    BaseSearchFilterItem* filter = [self.filtersArray objectAtIndex:index];
+    BaseCatalogFilterItem* filter = [self.filtersArray objectAtIndex:index];
     
-    if ([filter isKindOfClass:[SearchPriceFilter class]]) {
+    if ([filter isKindOfClass:[CatalogPriceFilterItem class]]) {
         self.currentFilterView = [[[NSBundle mainBundle] loadNibNamed:@"JAPriceFiltersView" owner:self options:nil] objectAtIndex:0];
-        [(JAPriceFiltersView*)self.currentFilterView initializeWithPriceFilterOption:(SearchPriceFilter*)filter];
+        [(JAPriceFiltersView*)self.currentFilterView initializeWithPriceFilterOption:(CatalogPriceFilterItem*)filter];
         
     } else {
         self.currentFilterView = [[[NSBundle mainBundle] loadNibNamed:@"JAGenericFiltersView" owner:self options:nil] objectAtIndex:0];
-        [(JAGenericFiltersView*) self.currentFilterView initializeWithFilter:(SearchFilterItem*)filter isLandscape:YES];
+        [(JAGenericFiltersView*) self.currentFilterView initializeWithFilter:(CatalogFilterItem*)filter isLandscape:YES];
         
     }
     
@@ -187,8 +185,8 @@ const int subCatButtonVisibleHeight = 50;
 #pragma mark - JAFiltersViewDelegate
 - (void)updatedValues {
     UITableViewRowAnimation animation = UITableViewRowAnimationAutomatic;
-    BaseSearchFilterItem *filter = [self.filtersArray objectAtIndex:self.selectedIndexPath.row];
-    if ([filter isKindOfClass:[SearchPriceFilter class]]) {
+    BaseCatalogFilterItem *filter = [self.filtersArray objectAtIndex:self.selectedIndexPath.row];
+    if ([filter isKindOfClass:[CatalogPriceFilterItem class]]) {
         animation = UITableViewRowAnimationNone;
     }
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:self.selectedIndexPath] withRowAnimation:animation];
@@ -197,13 +195,13 @@ const int subCatButtonVisibleHeight = 50;
 
 #pragma Button Logic
 - (IBAction)clearAllFilters {
-    for (BaseSearchFilterItem* filter in self.filtersArray) {
-        if ([filter isKindOfClass:[SearchPriceFilter class]]) {
-            ((SearchPriceFilter*)filter).lowerValue = ((SearchPriceFilter*)filter).minPrice;
-            ((SearchPriceFilter*)filter).upperValue = ((SearchPriceFilter*)filter).maxPrice;
-            ((SearchPriceFilter*)filter).discountOnly = NO;
+    for (BaseCatalogFilterItem* filter in self.filtersArray) {
+        if ([filter isKindOfClass:[CatalogPriceFilterItem class]]) {
+            ((CatalogPriceFilterItem*)filter).lowerValue = ((CatalogPriceFilterItem*)filter).minPrice;
+            ((CatalogPriceFilterItem*)filter).upperValue = ((CatalogPriceFilterItem*)filter).maxPrice;
+            ((CatalogPriceFilterItem*)filter).discountOnly = NO;
         } else {
-            for (SearchFilterItemOption* option in ((SearchFilterItem *)filter).options) {
+            for (CatalogFilterOption* option in ((CatalogFilterItem *)filter).options) {
                 option.selected = NO;
             }
         }
@@ -226,7 +224,7 @@ const int subCatButtonVisibleHeight = 50;
 
 - (IBAction)discountOnlySwitch:(UISwitch *)sender {
     if (self.priceFilterIndex && self.filtersArray.count) {
-        ((SearchPriceFilter *)[self.filtersArray objectAtIndex:self.priceFilterIndex]).discountOnly = sender.on;
+        ((CatalogPriceFilterItem *)[self.filtersArray objectAtIndex:self.priceFilterIndex]).discountOnly = sender.on;
     }
 }
 

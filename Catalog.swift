@@ -17,7 +17,7 @@ import SwiftyJSON
     var products: [Product]?
     var totalProductsCount: Int?
     var sortType: CatalogSortType?
-    var priceFilterIndex: Int?
+    var priceFilterIndex: Int = 0
     
     enum CatalogSortType: String {
         case name = "NAME"
