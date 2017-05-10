@@ -264,7 +264,7 @@
 - (void)cartEntityTapped:(id)cartEntityControl {
     if (self.costSummeryContainerTopToWholeCostTopConstraint.constant == 0) {
         [self showDetailSummeryView:YES];
-    } else {
+    } else { 
         [self showDetailSummeryView:NO];
     }
 }

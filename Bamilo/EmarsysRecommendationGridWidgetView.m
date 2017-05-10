@@ -26,7 +26,7 @@ const int numberOfColumns = 2;
     [self setWidgetBacgkround:[UIColor clearColor]];
     [self.leftButton setHidden:YES];
     
-    [self.widgetTitle applyStyle:[Theme font:kFontVariationRegular size:12.0f] color:[UIColor blackColor]];
+    [self.widgetTitle applyStyle:[Theme font:kFontVariationBold size:11.0f] color:[UIColor blackColor]];
     [self.collectionView registerNib:[UINib nibWithNibName:[EmarsysRecommendationCarouselCollectionViewCell nibName] bundle:nil] forCellWithReuseIdentifier:[EmarsysRecommendationCarouselCollectionViewCell nibName]];
 }
 

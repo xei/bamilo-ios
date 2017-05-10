@@ -247,6 +247,7 @@
         [self publishScreenLoadTime];
         
         //############## when home page is fully loaded & rendered
+        self.recommendationView = nil;
         [EmarsysPredictManager sendTransactionsOf:self];
         
         // notify the InAppNotification SDK that this the active view controller

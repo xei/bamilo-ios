@@ -21,7 +21,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     [self setWidgetBacgkround:[UIColor clearColor]];
-    [self.carouselTitle applyStyle:[Theme font:kFontVariationRegular size:12.0f] color:[UIColor blackColor]];
+    [self.carouselTitle applyStyle:[Theme font:kFontVariationBold size:11.0f] color:[UIColor blackColor]];
     [self.collectionView registerNib:[UINib nibWithNibName:[EmarsysRecommendationMinimalCarouselCollectionViewCell nibName] bundle:nil]
           forCellWithReuseIdentifier:[EmarsysRecommendationMinimalCarouselCollectionViewCell nibName]];
     [self.activityIndicator startAnimating];

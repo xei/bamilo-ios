@@ -38,6 +38,7 @@
     self.carouselWidget.delegate = self;
     [self setupView];
     [self trackPurchase];
+    [self.carouselWidget updateTitle:STRING_BAMILO_RECOMMENDATION];
 }
 
 - (void)setupView {
