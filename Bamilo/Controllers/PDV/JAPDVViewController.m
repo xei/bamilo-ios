@@ -2114,8 +2114,8 @@ typedef void (^ProcessActionBlock)(void);
     recommendationView.delegate = self;
     
     [recommendationView setHeight:[EmarsysRecommendationGridWidgetView preferredHeightWithContentModel:recommendItems boundWidth:self.mainScrollView.width]];
-    [recommendationView updateTitle:STRING_SPECIFICATIONS];
-    [recommendationView setWidgetBacgkround:JAHomePageBackgroundGrey];
+    [recommendationView updateTitle:STRING_BAMILO_RECOMMENDATION];
+    [recommendationView setWidgetBacgkround:JABlack300Color];
     
     [ThreadManager executeOnMainThread:^{
         [recommendationView setFrame:CGRectMake(0, self.mainScrollView.contentSize.height, self.mainScrollView.width, recommendationView.height)];

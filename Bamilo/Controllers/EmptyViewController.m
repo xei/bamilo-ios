@@ -39,6 +39,7 @@
     
     self.titleLabel.text = self.titleString;
     self.topImageView.image = self.topImage;
+    
 }
 
 - (void)updateTitle:(NSString *)title {

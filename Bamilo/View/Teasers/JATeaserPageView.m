@@ -127,7 +127,7 @@ const CGFloat marginBottom = 6.0f;
         self.mainTeaserView = [[JAMainTeaserView alloc] initWithFrame:CGRectMake(scrollView.bounds.origin.x,
                                                                                  yPosition,
                                                                                  scrollView.bounds.size.width,
-                                                                                 1)]; //height is set by the view itself
+                                                                                 1)];
         [scrollView addSubview:self.mainTeaserView];
         self.mainTeaserView.teaserGrouping = teaserGrouping;
         [self.mainTeaserView load];
@@ -145,8 +145,7 @@ const CGFloat marginBottom = 6.0f;
         
         JASmallTeaserView* smallTeaserView = [[JASmallTeaserView alloc] initWithFrame:CGRectMake(scrollView.bounds.origin.x,
                                                                                                  yPosition,
-                                                                                                 scrollView.bounds.size.width,
-                                                                                                 1)]; //height is set by the view itself
+                                                                                                 scrollView.bounds.size.width, 1)];
         [scrollView addSubview:smallTeaserView];
         smallTeaserView.teaserGrouping = teaserGrouping;
         [smallTeaserView load];

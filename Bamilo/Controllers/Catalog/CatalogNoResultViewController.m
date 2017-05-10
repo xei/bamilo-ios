@@ -33,6 +33,8 @@
     [self.carouselWidget setBackgroundColor:JAHomePageBackgroundGrey];
     self.carouselWidget.delegate = self;
     
+    [self.carouselWidget updateTitle:STRING_BAMILO_RECOMMENDATION];
+    
     [self.noResultMessageUILabel setFont: [UIFont fontWithName:kFontRegularName size:14]];
     [self.warningMessageUILabel setFont: [UIFont fontWithName:kFontLightName size:11]];
     
