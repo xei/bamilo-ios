@@ -13,6 +13,7 @@
 #import "EmarsysPredictManager.h"
 #import "PushWooshTracker.h"
 #import "EmarsysMobileEngage.h"
+#import <Crashlytics/Crashlytics.h>
 
 //Legacy importing
 #import "RICustomer.h"
@@ -86,10 +87,13 @@
             //EVENT: LOGIN / SUCCESS
             [TrackerManager postEvent:[EventFactory login:cLoginMethodEmail success:YES] forName:[LoginEvent name]];
             
+            RICustomer *customer = [RICustomer getCurrentCustomer];
+            
             [[EmarsysMobileEngage sharedInstance] sendLogin:[[PushNotificationManager pushManager] getPushToken] completion:nil];
-            [EmarsysPredictManager setCustomer:[RICustomer getCurrentCustomer]];
+            [EmarsysPredictManager setCustomer:customer];
         
-            [[PushWooshTracker sharedTracker] setUserID:[RICustomer getCurrentCustomer].email];
+            [[PushWooshTracker sharedTracker] setUserID:customer.email];
+            [[Crashlytics sharedInstance] setUserEmail:customer.email];
             
             if (self.completion) {
                 self.completion(AUTHENTICATION_FINISHED_WITH_LOGIN);
