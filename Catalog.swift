@@ -55,4 +55,6 @@ import SwiftyJSON
             }
         }
     }
+    
+//    static func url(for)
 }

@@ -9,15 +9,16 @@
 import UIKit
 
 @objc class CatalogViewController: BaseViewController, DataServiceProtocol, JAFiltersViewControllerDelegate {
+     
+    var searchTarget: RITarget?
+    var sortingMethod: RICatalogSortingEnum = .none
+    var pushFilterQueryString : String?
     
-    var categoryUrlKey: String?
-    var searchString: String?
-    var filterQueryParamsString: String?
-    var subCategoryFilterItem: CatalogCategoryFilterItem?
     
+    private var subCategoryFilterItem: CatalogCategoryFilterItem?
+    private var pageNumber: Int = 1
     private var catalogData: Catalog?
     private var noResultViewController: CatalogNoResultViewController?
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,18 +28,20 @@ import UIKit
     
     override func updateNavBar() {
         super.updateNavBar()
-        
-        self.navBarLayout.title = self.catalogData?.title
         self.navBarLayout.showBackButton = true
+        if let navTitle = self.catalogData?.title {
+            self.navBarLayout.title = navTitle
+            self.requestNavigationBarReload()
+        }
     }
     
     //MARK - DataServiceProtocol
     func bind(_ data: Any!, forRequestId rid: Int32) {
-        if let catalogData = data as? Catalog {
+        if rid == 0, let catalogData = data as? Catalog {
             self.catalogData = catalogData
             self.updateNavBar()
-            
-            self.performSegue(withIdentifier: "showFilterView", sender: nil)
+        } else if rid == 1, let catalogData = data as? Catalog, let newProductArray = catalogData.products {
+            self.catalogData?.products?.append(contentsOf: newProductArray)
         }
     }
     
@@ -53,9 +56,22 @@ import UIKit
     
     //MARK - Helpers
     private func loadData() {
-        CatalogDataManager.sharedInstance().getCatalog(target: self) { (data, error) in
+        self.pageNumber = 1
+        CatalogDataManager.sharedInstance().getCatalog(target: self, searchTarget: searchTarget, filtersQueryString: pushFilterQueryString, sortingMethod: sortingMethod) { (data, errorMessages) in
             self.bind(data, forRequestId: 0)
         }
+    }
+    
+    private func loadMore() {
+        self.pageNumber += 1
+        CatalogDataManager.sharedInstance().getCatalog(target: self, searchTarget: searchTarget, filtersQueryString: pushFilterQueryString, sortingMethod: sortingMethod, page: self.pageNumber) { (data, errorMessages) in
+            self.bind(data, forRequestId: 1)
+        }
+    }
+    
+    private func resetAndClear() {
+        self.pageNumber = 0
+        self.catalogData = nil
     }
     
     //MARK - prepareForSegue
@@ -73,7 +89,6 @@ import UIKit
                 destinationViewCtrl?.priceFilterIndex = Int32(index);
             }
             destinationViewCtrl?.delegate = self;
-            
         }
     }
 }

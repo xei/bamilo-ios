@@ -81,11 +81,11 @@
     [self.view endEditing:YES];
 }
 
-#pragma mark - Private Methods
 - (void)requestNavigationBarReload {
     [[NSNotificationCenter defaultCenter] postNotificationName:kChangeNavigationBarNotification object:self.navBarLayout];
 }
 
+#pragma mark - Private Methods
 - (void)requestTabBarReload {
     [[NSNotificationCenter defaultCenter] postNotificationName:kChangeTabBarVisibility object:[NSNumber numberWithBool:[self getTabBarVisible]]];
 }

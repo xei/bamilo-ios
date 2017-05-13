@@ -16,6 +16,10 @@
     return [RITarget getURLStringforTarget:self];
 }
 
+- (void)setTargetType:(TargetType)targetType {
+    self.type = [RITarget getTargetKey:targetType];
+}
+
 - (TargetType)targetType
 {
     if ([self.type isEqualToString:[RITarget getTargetKey:PRODUCT_DETAIL]]) {
@@ -92,15 +96,21 @@
 }
 
 
-+ (NSString*)getURLStringforTarget:(RITarget*)target
-{
++ (NSString*)getURLStringforTarget:(RITarget*)target {
     return [RITarget getURLStringforType:target.type node:target.node];
 }
 
-+ (NSString*)getURLStringforType:(NSString*)type
-                            node:(NSString*)node;
-{
++ (NSString*)getRelativeUrlStringforTarget:(RITarget*)target {
+    return [RITarget getRelativeUrlForType:target.type node:target.node];
+}
+
++ (NSString*)getURLStringforType:(NSString*)type node:(NSString*)node {
     NSString* urlString = [NSString stringWithFormat:@"%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION];
+    return [NSString stringWithFormat:@"%@%@", urlString, [RITarget getRelativeUrlForType:type node:node]];
+}
+
++ (NSString *)getRelativeUrlForType:(NSString *)type node: (NSString *)node {
+    NSString *urlString = @"";
     if (VALID_NOTEMPTY(type, NSString)) {
         if ([type isEqualToString:[self getTargetKey:PRODUCT_DETAIL]]) {
             urlString = [urlString stringByAppendingString:RI_API_PRODUCT_DETAIL];
@@ -185,13 +195,11 @@
     }
 }
 
-+ (RITarget *)getTarget:(TargetType)type node:(NSString *)node
-{
-    NSString *targetString = [self getTargetString:type node:node];
-    if (targetString) {
-        return [self parseTarget:targetString];
-    }
-    return nil;
++ (RITarget *)getTarget:(TargetType)type node:(NSString *)node {
+    RITarget *target = [RITarget new];
+    target.targetType = type;
+    target.node = node;
+    return target;
 }
 
 @end

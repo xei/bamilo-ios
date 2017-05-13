@@ -9,6 +9,7 @@
 #import "RIConfiguration.h"
 #import "AppConsts.h"
 #import "RIApi.h"
+#import "RITarget.h"
 #import "JAStrings.h"
 #import "JANavigationBarLayout.h"
 
@@ -21,6 +22,7 @@
 #import "SearchPriceFilter.h"
 #import "PerformanceTrackerProtocol.h"
 #import "DataTrackerProtocol.h"
+#import "RICatalogSorting.h"
 
 #import "BaseViewController.h"
 #import "CatalogNoResultViewController.h"

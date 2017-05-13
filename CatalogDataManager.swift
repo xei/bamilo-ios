@@ -17,8 +17,22 @@ class CatalogDataManager: DataManager {
         return shared;
     }
     
-    func getCatalog(target:DataServiceProtocol,  completion: @escaping DataCompletion) {
-        let path = "search/find/category/women_clothes/page/1/maxitems/36"
+    func getCatalog(target:DataServiceProtocol, searchTarget:RITarget? = nil, filtersQueryString:String? = nil, sortingMethod:RICatalogSortingEnum = .none, page:Int = 1, completion: @escaping DataCompletion) {
+        var path = "\(RI_API_CATALOG)"
+        if let target = searchTarget {
+            path += RITarget.getRelativeUrlStringforTarget(target)
+        }
+        
+        if let filters = filtersQueryString {
+            path += filters
+        }
+        
+        if let sortUrl = RICatalogSorting.urlComponent(forSortingMethod: sortingMethod) {
+            path += "\(sortUrl)/"
+        }
+        
+        path += "maxItems/36/page/\(page)"
+        
         self.requestManager.asyncGET(target, path: path, params: nil, type: .foreground) { (statusCode, data, errorMessages) in
             self.processResponse(statusCode, of: Catalog.self, for: data, errorMessages: errorMessages, completion: completion)
         }

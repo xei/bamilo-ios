@@ -379,11 +379,7 @@
         }
         case CATALOG_SEARCH: {
             CatalogViewController *viewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
-            RITarget *target = [RITarget parseTarget:screenTarget.target.targetString];
-            if (target.targetType == CATALOG_CATEGORY) {
-                viewController.categoryUrlKey = target.node;
-            }
-            [viewController setSearchString:screenTarget.target.node];
+            viewController.searchTarget = screenTarget.target;
             [self pushViewController:viewController animated:screenTarget.pushAnimation];
             return YES;
         }
@@ -391,10 +387,7 @@
         case CATALOG_BRAND:
         case CATALOG_CATEGORY: {
             CatalogViewController *viewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];;
-            RITarget *target = [RITarget parseTarget:screenTarget.target.targetString];
-            if (target.targetType == CATALOG_CATEGORY) {
-                viewController.categoryUrlKey = target.node;
-            }
+            viewController.searchTarget = screenTarget.target;
             [self pushViewController:viewController animated:screenTarget.pushAnimation];
             return YES;
         }
@@ -926,7 +919,7 @@
 #pragma mark Catalog Screen
 - (void)pushCatalogToShowSearchResults:(NSString *)query {
     CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
-    catalog.searchString = query;
+    catalog.searchTarget = [RITarget getTarget:CATALOG_SEARCH node:query];
     
     catalog.navBarLayout.title = query;
     
@@ -935,11 +928,7 @@
 
 - (void)pushCatalogForUndefinedSearchWithBrandTargetString:(NSString *)brandTargetString andBrandName:(NSString *)brandName {
     CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
-    
-    RITarget *target = [RITarget parseTarget:brandTargetString];
-    if (target.targetType == CATALOG_CATEGORY) {
-        catalog.categoryUrlKey = target.node;
-    }
+    catalog.searchTarget = [RITarget parseTarget:brandTargetString];
     
     catalog.navBarLayout.title = brandName;
     [self pushViewController:catalog animated:YES];
@@ -956,14 +945,14 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification object:nil];
         CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
         catalog.navBarLayout.title = category.label;
-        catalog.categoryUrlKey = category.urlKey;
+        catalog.searchTarget = [RITarget getTarget:CATALOG_CATEGORY node:category.urlKey];
         
         [self pushViewController:catalog animated:YES];
     } else if (categoryUrlKey.length) {
         CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
-        catalog.categoryUrlKey = categoryUrlKey;
-        catalog.filterQueryParamsString = filterPush;
-//        catalog.sortingMethodFromPush = sorting;
+        catalog.searchTarget = [RITarget getTarget:CATALOG_CATEGORY node:categoryUrlKey];
+        catalog.pushFilterQueryString = filterPush;
+        catalog.sortingMethod = sorting.integerValue;
         [self pushViewController:catalog animated:YES];
     }
 }
@@ -1140,9 +1129,7 @@
     {
         CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
         RITarget *target = [RITarget parseTarget:targetString];
-        if (target.targetType == CATALOG_CATEGORY) {
-            catalog.categoryUrlKey = target.node;
-        }
+        catalog.searchTarget = target;
         catalog.navBarLayout.title = title;
         catalog.navBarLayout.showBackButton = YES;
         
@@ -1162,9 +1149,7 @@
         CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
         
         RITarget *target = [RITarget parseTarget:targetString];
-        if (target.targetType == CATALOG_CATEGORY) {
-            catalog.categoryUrlKey = target.node;
-        }
+        catalog.searchTarget = target;
 
         catalog.navBarLayout.title = title;
         
@@ -1461,8 +1446,7 @@
     
     if (recentSearch) {
         CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
-        catalog.searchString = recentSearch.item;
-        
+        catalog.searchTarget = [RITarget getTarget:CATALOG_SEARCH node:recentSearch.item];
         catalog.navBarLayout.title = recentSearch.item;
         
         [self pushViewController:catalog animated:YES];
