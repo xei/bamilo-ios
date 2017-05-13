@@ -293,7 +293,7 @@
     [self checkIfSummeryViewsMustBeVisibleOrNot];
     
     //When cart is ready & not empty
-    if (cart.cartEntity.cartCount) {
+    if (cart.cartEntity.cartCount.integerValue) {
         [EmarsysPredictManager sendTransactionsOf:self];
     }
 }
