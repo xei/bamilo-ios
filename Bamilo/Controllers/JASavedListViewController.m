@@ -18,6 +18,7 @@
 #import "RICart.h"
 #import "CartDataManager.h"
 #import "EmptyViewController.h"
+#import "EmarsysPredictManager.h"
 
 #define kMaxProducts 20
 #define kMaxProducts_ipad 34
@@ -68,62 +69,6 @@
     }
     return _productsArray;
 }
-
-//-(UIView *)emptyListView {
-//    if (!VALID_NOTEMPTY(_emptyListView, UIView)) {
-//        _emptyListView = [[UIView alloc]initWithFrame:CGRectMake(self.viewBounds.origin.x,
-//                                                                 self.viewBounds.origin.y,
-//                                                                 self.viewBounds.size.width,
-//                                                                 self.viewBounds.size.height)];
-//        [_emptyListView setBackgroundColor:[UIColor whiteColor]];
-//        [_emptyListView addSubview:self.emptyTitleLabel];
-//        [_emptyListView addSubview:self.emptyListImageView];
-//        [_emptyListView addSubview:self.emptyListLabel];
-//        [self.view addSubview:_emptyListView];
-//    }
-//    return _emptyListView;
-//}
-
-//-(UILabel *)emptyTitleLabel {
-//    if(!VALID_NOTEMPTY(_emptyTitleLabel, UILabel)) {
-//        _emptyTitleLabel = [UILabel new];
-//        [_emptyTitleLabel setFont:JADisplay2Font];
-//        [_emptyTitleLabel setTextColor:JABlackColor];
-//        [_emptyTitleLabel setText:STRING_FAVOURITES_NO_SAVED_ITEMS];
-//        [_emptyTitleLabel sizeToFit];
-//        [_emptyTitleLabel setFrame:CGRectMake((self.viewBounds.size.width - _emptyTitleLabel.width)/2,
-//                                              48.f,
-//                                              _emptyTitleLabel.width, _emptyTitleLabel.height)];
-//    }
-//    return _emptyTitleLabel;
-//}
-
-//-(UIImageView *)emptyListImageView {
-//    if (!VALID_NOTEMPTY(_emptyListImageView, UIImageView)) {
-//        _emptyListImageView = [UIImageView new];
-//        UIImage * img = [UIImage imageNamed:@"emptyFavoritesIcon"];
-//        [_emptyListImageView setImage:img];
-//        [_emptyListImageView setFrame:CGRectMake((self.viewBounds.size.width - img.size.width)/2,
-//                                                 CGRectGetMaxY(self.emptyTitleLabel.frame) + 28.f,
-//                                                 img.size.width, img.size.height)];
-//    }
-//    return _emptyListImageView;
-//}
-
-//-(UILabel *)emptyListLabel {
-//    if (!VALID_NOTEMPTY(_emptyListLabel, UILabel)) {
-//        _emptyListLabel = [UILabel new];
-//        _emptyListLabel.font = JABodyFont;
-//        _emptyListLabel.textColor = JABlack800Color;
-//        _emptyListLabel.text = STRING_FAVOURITES_NO_SAVED_ITEMS_DESCRIPTION;
-//        [_emptyListLabel sizeToFit];
-//        [_emptyListLabel setFrame:CGRectMake((self.viewBounds.size.width - _emptyListLabel.width)/2,
-//                                             CGRectGetMaxY(self.emptyListImageView.frame) + 28,
-//                                             _emptyListLabel.width, _emptyListLabel.height)];
-//    }
-//    return _emptyListLabel;
-//}
-
 - (JAProductCollectionViewFlowLayout *)flowLayout {
     if (!VALID_NOTEMPTY(_flowLayout, JAProductCollectionViewFlowLayout)) {
         
@@ -268,15 +213,13 @@
         
         [self.emptyViewContainer fadeIn:0.15];
         [self.emptyViewController getSuggestions];
-//        self.emptyListView.hidden = NO;
         self.collectionView.hidden = YES;
         [self.bottomView setHidden:YES];
     } else {
-        
         [self.emptyViewContainer hide];
-//        self.emptyListView.hidden = YES;
         self.collectionView.hidden = NO;
         [self.bottomView setHidden:NO];
+        [EmarsysPredictManager sendTransactionsOf:self];
     }
     [self hideLoading];
 }
