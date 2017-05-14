@@ -28,6 +28,7 @@
 		610C68A31EC74292008FB66C /* CatalogHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610C68A21EC74292008FB66C /* CatalogHeaderView.swift */; };
 		610C68A51EC742E3008FB66C /* CatalogHeaderControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610C68A41EC742E3008FB66C /* CatalogHeaderControl.swift */; };
 		610C68A71EC7442B008FB66C /* CatalogHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 610C68A61EC7442B008FB66C /* CatalogHeaderView.xib */; };
+		610C68AD1EC87F2A008FB66C /* Translations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610C68AC1EC87F2A008FB66C /* Translations.swift */; };
 		610ED5831E742947000D5BEC /* UITextField+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 610ED5821E742947000D5BEC /* UITextField+Extensions.m */; };
 		611195821E3CB14B00D06690 /* PlainTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 611195801E3CB14B00D06690 /* PlainTableViewCell.m */; };
 		611195831E3CB14B00D06690 /* PlainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 611195811E3CB14B00D06690 /* PlainTableViewCell.xib */; };
@@ -887,6 +888,7 @@
 		610C68A21EC74292008FB66C /* CatalogHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogHeaderView.swift; sourceTree = "<group>"; };
 		610C68A41EC742E3008FB66C /* CatalogHeaderControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogHeaderControl.swift; sourceTree = "<group>"; };
 		610C68A61EC7442B008FB66C /* CatalogHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CatalogHeaderView.xib; sourceTree = "<group>"; };
+		610C68AC1EC87F2A008FB66C /* Translations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Translations.swift; sourceTree = "<group>"; };
 		610ED5811E742947000D5BEC /* UITextField+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+Extensions.h"; sourceTree = "<group>"; };
 		610ED5821E742947000D5BEC /* UITextField+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+Extensions.m"; sourceTree = "<group>"; };
 		6111957F1E3CB14B00D06690 /* PlainTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlainTableViewCell.h; path = ../Controllers/MenuViewController/PlainTableViewCell.h; sourceTree = "<group>"; };
@@ -2631,6 +2633,14 @@
 			name = Control;
 			sourceTree = "<group>";
 		};
+		610C68AB1EC87F0F008FB66C /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				610C68AC1EC87F2A008FB66C /* Translations.swift */,
+			);
+			name = Constants;
+			sourceTree = "<group>";
+		};
 		610ED5801E742918000D5BEC /* UITextField+Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -2995,6 +3005,7 @@
 			isa = PBXGroup;
 			children = (
 				617F77AD1EB85BEC000A2A6C /* Bamilo-Bridging-Header.h */,
+				610C68AB1EC87F0F008FB66C /* Constants */,
 				610C68941EC7395B008FB66C /* Views */,
 				613A7E8B1EBF033E00E1AB3F /* Models */,
 				613A7E8A1EBF033400E1AB3F /* ViewControllers */,
@@ -7327,6 +7338,7 @@
 				875AD5601E38C0C900584ABF /* RIFeaturedBoxTeaserGrouping.m in Sources */,
 				CE59BF1D1AE8097C0057F4E2 /* JAFeatureStoresTeaserView.m in Sources */,
 				CE8C92B01B8B555600C77706 /* JAMainFilterCell.m in Sources */,
+				610C68AD1EC87F2A008FB66C /* Translations.swift in Sources */,
 				87B684F51E4A04030042C09F /* ReceiptItemModel.m in Sources */,
 				CE9ADF491AB6D78200D56481 /* JAForgotPasswordViewController.m in Sources */,
 				879F88291E51CF140033FE87 /* CartEntity.m in Sources */,

@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum CatalogListViewType {
+enum CatalogListViewType: String {
     case card
     case grid
     case list
@@ -22,26 +22,69 @@ protocol CatalogHeaderViewDelegate {
 
 class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDelegate {
     
+    @IBOutlet private weak var verticalSeperator: UIView!
+    @IBOutlet private weak var secondVerticalSeperator: UIView!
+    @IBOutlet private weak var horizontalSeperator: UIView!
+    
+    @IBOutlet private weak var filterTitleLabel: UILabel!
+    @IBOutlet private weak var filterDescLabel: UILabel!
+    @IBOutlet private weak var sortingTitleLabel: UILabel!
+    @IBOutlet private weak var sortingDescLabel: UILabel!
+    
+    @IBOutlet private weak var changeListViewIconButton: IconButton!
+    @IBOutlet private weak var sortIconImage: UIImageView!
+    @IBOutlet private weak var filterIconImage: UIImageView!
+    
+    private var sortingOptionInex: Int = 0
+    private var pickerViewTextFiled: UITextField?
+    
+    private let sortOptionTranslation: [Catalog.CatalogSortType: String] = [
+        .populaity: STRING_POPULARITY,
+        .bestRating: STRING_BEST_RATING,
+        .brand: STRING_BRAND,
+        .name: STRING_NAME,
+        .newest: STRING_NEW_IN,
+        .priceUp: STRING_PRICE_UP,
+        .priceDown: STRING_PRICE_DOWN
+    ]
+    private let sortingOptions: [Catalog.CatalogSortType] = [ .populaity, .bestRating, .brand, .name, .newest, .priceUp, .priceDown ]
+    private let listViewTypeSequence: [CatalogListViewType] = [.grid, .list, .card]
+    
     var delegate: CatalogHeaderViewDelegate?
-    var pickerViewTextFiled: UITextField?
-    var sortType: Catalog.CatalogSortType = .populaity
+    var sortType: Catalog.CatalogSortType = .populaity {
+        didSet {
+            self.setSortingButtonActive()
+            self.sortingDescLabel.text = self.sortOptionTranslation[self.sortType]
+        }
+    }
     
-    @IBOutlet weak var changeListViewIconButton: IconButton!
-    @IBOutlet weak var sortIconImage: UIImageView!
-    @IBOutlet weak var filterIconImage: UIImageView!
+    var listViewType: CatalogListViewType = .grid {
+        didSet {
+            var nextStateListType : CatalogListViewType = .grid
+            if let currentIndex = self.listViewTypeSequence.index(of: self.listViewType) {
+                if currentIndex + 1 > 2 {
+                     nextStateListType = self.listViewTypeSequence[0]
+                } else {
+                    nextStateListType = self.listViewTypeSequence[currentIndex + 1]
+                }
+            }
+            self.changeListViewIconButton.setImage(UIImage(named: "view_\(nextStateListType.rawValue)"), for: .normal)
+            self.changeListViewIconButton.setImage(UIImage(named: "view_\(nextStateListType.rawValue)_active"), for: .highlighted)
+        }
+    }
     
-    lazy var doneButton: UIBarButtonItem = { [unowned self] in
+    private lazy var doneButton: UIBarButtonItem = { [unowned self] in
         
         let doneBtn = UIBarButtonItem(title:"تایید", style: .plain, target: self, action: #selector(doneButtonPickerTapped(sender:)))
         doneBtn.setTitleTextAttributes([
-            NSFontAttributeName: Theme.font(kFontVariationBold, size: 13),
+            NSFontAttributeName: Theme.font(kFontVariationRegular, size: 13),
             NSForegroundColorAttributeName: Theme.color(kColorBlue)
             ], for: .normal)
         return doneBtn
         
     }()
     
-    lazy var cancelButton: UIBarButtonItem = { [unowned self] in
+    private lazy var cancelButton: UIBarButtonItem = { [unowned self] in
         
         let cancelBtn = UIBarButtonItem(title:"لغو", style: .plain, target: self, action: #selector(doneButtonPickerTapped(sender:)))
         cancelBtn.setTitleTextAttributes([
@@ -52,7 +95,7 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
         
         }()
     
-    lazy var pickerView: UIPickerView = {
+    private lazy var pickerView: UIPickerView = {
         
         let picker = UIPickerView()
         picker.dataSource = self
@@ -63,7 +106,7 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
         
     }()
     
-    lazy var toolBar: UIToolbar = { [unowned self] in
+    private lazy var toolBar: UIToolbar = { [unowned self] in
         
         let sortToolBar = UIToolbar()
         sortToolBar.barStyle = .default
@@ -71,7 +114,7 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
         sortToolBar.tintColor = Theme.color(kColorExtraLightGray)
         sortToolBar.backgroundColor = Theme.color(kColorExtraLightGray)
         let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        sortToolBar.items = [self.cancelButton, flexible, self.doneButton] // .setItems([flexible, self.doneButton], animated: true)
+        sortToolBar.items = [self.cancelButton, flexible, self.doneButton]
         sortToolBar.sizeToFit()
         
         return sortToolBar
@@ -83,8 +126,31 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
         self.setupView()
     }
     
-    func setupView() {
+    private func setupView() {
+        self.listViewType = .grid
+        self.filterIconImage.image = UIImage(named: "filterIcon_normal")
+        self.sortIconImage.image = UIImage(named: "sortingIcon_normal")
         
+        self.verticalSeperator.backgroundColor = Theme.color(kColorExtraExtraLightGray)
+        self.horizontalSeperator.backgroundColor = Theme.color(kColorExtraExtraLightGray)
+        self.secondVerticalSeperator.backgroundColor = Theme.color(kColorExtraExtraLightGray)
+        
+        self.filterTitleLabel.font = Theme.font(kFontVariationRegular, size: 11)
+        self.filterTitleLabel.textColor = Theme.color(kColorDarkGray)
+        self.filterDescLabel.font = Theme.font(kFontVariationRegular, size: 9)
+        self.filterDescLabel.textColor = Theme.color(kColorLightGray)
+        self.sortingTitleLabel.font = Theme.font(kFontVariationRegular, size: 11)
+        self.sortingTitleLabel.textColor = Theme.color(kColorDarkGray)
+        self.sortingDescLabel.font = Theme.font(kFontVariationRegular, size: 9)
+        self.sortingDescLabel.textColor = Theme.color(kColorLightGray)
+        
+        self.sortingDescLabel.text = self.sortOptionTranslation[self.sortType]
+    }
+    
+    private func setSortingButtonActive() {
+        self.sortingTitleLabel.textColor = UIColor.init(colorLiteralRed: 0/255, green: 145/255, blue: 255/255, alpha: 1)
+        self.sortingDescLabel.textColor = UIColor.init(colorLiteralRed: 117/255, green: 189/255, blue: 243/255, alpha: 1)
+        self.sortIconImage.image = UIImage(named: "sortingIcon_highlighted")
     }
     
     func cancelButtonPickerTapped(sender: UIBarButtonItem) {
@@ -93,6 +159,10 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
     
     func doneButtonPickerTapped(sender: UIBarButtonItem) {
         self.pickerViewTextFiled?.resignFirstResponder()
+        let selectedRow = self.pickerView.selectedRow(inComponent: 0)
+        self.sortingOptionInex = selectedRow
+        self.sortType = self.sortingOptions[selectedRow]
+        self.delegate?.sortTypeSelected(type: self.sortType)
     }
     
     @IBAction func sortButtonTapped(_ sender: Any) {
@@ -103,14 +173,24 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
             self.pickerViewTextFiled?.inputView = self.pickerView
             self.pickerViewTextFiled?.inputAccessoryView = self.toolBar
         }
-        
+        self.pickerView.selectRow(self.sortingOptionInex, inComponent: 0, animated: false)
         self.pickerViewTextFiled?.becomeFirstResponder()
     }
     
     @IBAction func filterButtonTapped(_ sender: Any) {
-        
+        self.delegate?.filterButtonTapped()
     }
     
+    @IBAction func chageListTypeButtonTapped(_ sender: Any) {
+        if let currentIndex = self.listViewTypeSequence.index(of: self.listViewType) {
+            if currentIndex + 1 > 2 {
+                self.listViewType = self.listViewTypeSequence[0]
+            } else {
+                self.listViewType = self.listViewTypeSequence[currentIndex + 1]
+            }
+            self.delegate?.changeListViewType(type: self.listViewType)
+        }
+    }
     
     //MARK - UIPickerViewDataSource
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -118,7 +198,7 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return 0
+        return self.sortingOptions.count
     }
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
@@ -126,9 +206,10 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
         if titleView == nil {
             titleView = UILabel()
             titleView?.font = Theme.font(kFontVariationRegular, size: 12)
+            titleView?.textAlignment = .center
             titleView?.numberOfLines = 3
         }
-        titleView?.text = ""
+        titleView?.text = self.sortOptionTranslation[self.sortingOptions[row]] ?? ""
         return titleView!;
     }
     

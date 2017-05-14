@@ -66,6 +66,9 @@
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N8y-rD-otp">
                             <rect key="frame" x="0.0" y="0.0" width="156" height="40"/>
+                            <state key="highlighted">
+                                <color key="titleShadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
                             <connections>
                                 <action selector="filterButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="Nhk-T8-BEi"/>
                             </connections>
@@ -90,7 +93,7 @@
                     <rect key="frame" x="79" y="0.0" width="154" height="40"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="مرتب سازی" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yyF-Hm-4Cp">
-                            <rect key="frame" x="44" y="5" width="56.5" height="15"/>
+                            <rect key="frame" x="44.5" y="5" width="56.5" height="15"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="15" id="KDq-qF-dpU"/>
                             </constraints>
@@ -99,14 +102,14 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sortingIcon_highlighted" translatesAutoresizingMaskIntoConstraints="NO" id="ypJ-2R-QMH">
-                            <rect key="frame" x="110.5" y="11" width="18" height="18"/>
+                            <rect key="frame" x="111" y="11" width="18" height="18"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="ypJ-2R-QMH" secondAttribute="height" multiplier="1:1" id="Crx-G4-eK5"/>
                                 <constraint firstAttribute="height" constant="18" id="jjP-qv-2Zc"/>
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="رنگ و جنس و ..." textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9cD-bd-IrV">
-                            <rect key="frame" x="8" y="22" width="92.5" height="11"/>
+                            <rect key="frame" x="8" y="22" width="93" height="11"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="11" id="WCK-vn-swx"/>
                             </constraints>
@@ -116,6 +119,9 @@
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XjW-9i-Xtb">
                             <rect key="frame" x="0.0" y="0.0" width="154" height="40"/>
+                            <state key="highlighted">
+                                <color key="titleShadowColor" red="0.8862745098" green="0.8862745098" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
                             <connections>
                                 <action selector="sortButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="3VP-bz-Rx2"/>
                             </connections>
@@ -139,6 +145,9 @@
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FOV-rh-6Uz" customClass="IconButton">
                     <rect key="frame" x="0.0" y="0.0" width="78" height="40"/>
                     <state key="normal" image="view_grid"/>
+                    <connections>
+                        <action selector="chageListTypeButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="a4S-Mw-lfZ"/>
+                    </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kal-cG-7uo" userLabel="horizontal seperator">
                     <rect key="frame" x="0.0" y="39" width="390" height="1"/>
@@ -178,14 +187,21 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="changeListViewIconButton" destination="FOV-rh-6Uz" id="qCw-Kf-JHz"/>
+                <outlet property="filterDescLabel" destination="pqw-fb-HOz" id="9ox-vS-uIo"/>
                 <outlet property="filterIconImage" destination="Lqm-hf-FSx" id="bSf-GI-Rs9"/>
+                <outlet property="filterTitleLabel" destination="33J-bp-zUN" id="ldH-Ew-Qet"/>
+                <outlet property="horizontalSeperator" destination="Kal-cG-7uo" id="5Zf-9N-UwN"/>
+                <outlet property="secondVerticalSeperator" destination="CcI-KF-0IB" id="yxr-6m-LI1"/>
                 <outlet property="sortIconImage" destination="ypJ-2R-QMH" id="UzA-2Z-QFW"/>
+                <outlet property="sortingDescLabel" destination="9cD-bd-IrV" id="O7e-yw-p3A"/>
+                <outlet property="sortingTitleLabel" destination="yyF-Hm-4Cp" id="6EM-gs-i7u"/>
+                <outlet property="verticalSeperator" destination="Auh-B5-ONh" id="Ewd-cT-NLL"/>
             </connections>
             <point key="canvasLocation" x="82" y="-261"/>
         </view>
     </objects>
     <resources>
-        <image name="sortingIcon_highlighted" width="15" height="16"/>
-        <image name="view_grid" width="26" height="26"/>
+        <image name="sortingIcon_highlighted" width="18" height="18"/>
+        <image name="view_grid" width="22" height="22"/>
     </resources>
 </document>

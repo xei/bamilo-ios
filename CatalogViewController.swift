@@ -8,7 +8,11 @@
 
 import UIKit
 
-@objc class CatalogViewController: BaseViewController, DataServiceProtocol, JAFiltersViewControllerDelegate {
+@objc class CatalogViewController: BaseViewController, DataServiceProtocol, JAFiltersViewControllerDelegate, CatalogHeaderViewDelegate {
+    
+    @IBOutlet private weak var catalogHeader: CatalogHeaderControl!
+    @IBOutlet private weak var collectionView: UICollectionView!
+    
     
     var searchTarget: RITarget?
     var sortingMethod: Catalog.CatalogSortType = .populaity
@@ -32,8 +36,9 @@ import UIKit
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.loadData()
         
+        self.catalogHeader.delegate = self
+        self.loadData()
     }
     
     override func updateNavBar() {
@@ -100,5 +105,19 @@ import UIKit
             }
             destinationViewCtrl?.delegate = self;
         }
+    }
+    
+    //MARK - CatalogHeaderViewDelegate
+    func sortTypeSelected(type: Catalog.CatalogSortType) {
+        self.sortingMethod = type
+        self.loadData()
+    }
+    
+    func filterButtonTapped() {
+        self.performSegue(withIdentifier: "showFilterView", sender: nil)
+    }
+    
+    func changeListViewType(type: CatalogListViewType) {
+        
     }
 }

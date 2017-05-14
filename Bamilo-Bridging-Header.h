@@ -13,6 +13,7 @@
 #import "JAStrings.h"
 #import "JANavigationBarLayout.h"
 #import "IconButton.h"
+#import "RILocalizationWrapper.h"
 
 #import <Masonry/Masonry.h>
 #import <RGB/RRGB.h>
