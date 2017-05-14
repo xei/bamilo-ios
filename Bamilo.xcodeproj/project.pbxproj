@@ -25,6 +25,9 @@
 		61036B6C1E65B638006E12A9 /* OrderProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 61036B6B1E65B638006E12A9 /* OrderProduct.m */; };
 		61037CBE1EB72C7600A461E0 /* EmarsysMobileEngageTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 61037CBD1EB72C7600A461E0 /* EmarsysMobileEngageTracker.m */; };
 		61037CC21EB73AF100A461E0 /* GoogleAnalyticsTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 61037CC11EB73AF100A461E0 /* GoogleAnalyticsTracker.m */; };
+		610C68A31EC74292008FB66C /* CatalogHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610C68A21EC74292008FB66C /* CatalogHeaderView.swift */; };
+		610C68A51EC742E3008FB66C /* CatalogHeaderControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610C68A41EC742E3008FB66C /* CatalogHeaderControl.swift */; };
+		610C68A71EC7442B008FB66C /* CatalogHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 610C68A61EC7442B008FB66C /* CatalogHeaderView.xib */; };
 		610ED5831E742947000D5BEC /* UITextField+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 610ED5821E742947000D5BEC /* UITextField+Extensions.m */; };
 		611195821E3CB14B00D06690 /* PlainTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 611195801E3CB14B00D06690 /* PlainTableViewCell.m */; };
 		611195831E3CB14B00D06690 /* PlainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 611195811E3CB14B00D06690 /* PlainTableViewCell.xib */; };
@@ -881,6 +884,9 @@
 		61037CC01EB73AF100A461E0 /* GoogleAnalyticsTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleAnalyticsTracker.h; sourceTree = "<group>"; };
 		61037CC11EB73AF100A461E0 /* GoogleAnalyticsTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleAnalyticsTracker.m; sourceTree = "<group>"; };
 		61037CC31EB7416200A461E0 /* ScreenTrackingProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenTrackingProtocol.h; sourceTree = "<group>"; };
+		610C68A21EC74292008FB66C /* CatalogHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogHeaderView.swift; sourceTree = "<group>"; };
+		610C68A41EC742E3008FB66C /* CatalogHeaderControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogHeaderControl.swift; sourceTree = "<group>"; };
+		610C68A61EC7442B008FB66C /* CatalogHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CatalogHeaderView.xib; sourceTree = "<group>"; };
 		610ED5811E742947000D5BEC /* UITextField+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+Extensions.h"; sourceTree = "<group>"; };
 		610ED5821E742947000D5BEC /* UITextField+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+Extensions.m"; sourceTree = "<group>"; };
 		6111957F1E3CB14B00D06690 /* PlainTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlainTableViewCell.h; path = ../Controllers/MenuViewController/PlainTableViewCell.h; sourceTree = "<group>"; };
@@ -2556,6 +2562,75 @@
 			name = GoogleAnalyticsTracker;
 			sourceTree = "<group>";
 		};
+		610C68941EC7395B008FB66C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				610C689E1EC7423B008FB66C /* Controls */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		610C689B1EC741DA008FB66C /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				610C689D1EC741E8008FB66C /* Control */,
+				610C689C1EC741E1008FB66C /* View */,
+			);
+			name = Base;
+			sourceTree = "<group>";
+		};
+		610C689C1EC741E1008FB66C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				619D0B051EA347DE00FDB255 /* BaseControlView.h */,
+				619D0B061EA347DE00FDB255 /* BaseControlView.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		610C689D1EC741E8008FB66C /* Control */ = {
+			isa = PBXGroup;
+			children = (
+				8714E0701E47977D004C9B1D /* BaseViewControl.h */,
+				8714E0711E47977D004C9B1D /* BaseViewControl.m */,
+			);
+			name = Control;
+			sourceTree = "<group>";
+		};
+		610C689E1EC7423B008FB66C /* Controls */ = {
+			isa = PBXGroup;
+			children = (
+				610C689F1EC74244008FB66C /* CatalogHeader */,
+			);
+			name = Controls;
+			sourceTree = "<group>";
+		};
+		610C689F1EC74244008FB66C /* CatalogHeader */ = {
+			isa = PBXGroup;
+			children = (
+				610C68A11EC74255008FB66C /* Control */,
+				610C68A01EC74250008FB66C /* View */,
+			);
+			name = CatalogHeader;
+			sourceTree = "<group>";
+		};
+		610C68A01EC74250008FB66C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				610C68A21EC74292008FB66C /* CatalogHeaderView.swift */,
+				610C68A61EC7442B008FB66C /* CatalogHeaderView.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		610C68A11EC74255008FB66C /* Control */ = {
+			isa = PBXGroup;
+			children = (
+				610C68A41EC742E3008FB66C /* CatalogHeaderControl.swift */,
+			);
+			name = Control;
+			sourceTree = "<group>";
+		};
 		610ED5801E742918000D5BEC /* UITextField+Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -2920,6 +2995,7 @@
 			isa = PBXGroup;
 			children = (
 				617F77AD1EB85BEC000A2A6C /* Bamilo-Bridging-Header.h */,
+				610C68941EC7395B008FB66C /* Views */,
 				613A7E8B1EBF033E00E1AB3F /* Models */,
 				613A7E8A1EBF033400E1AB3F /* ViewControllers */,
 				617F77AB1EB85B94000A2A6C /* Support */,
@@ -3016,15 +3092,6 @@
 				61840B671EA39941006739EB /* EmarsysRecommendationGridWidget.m */,
 			);
 			name = Control;
-			sourceTree = "<group>";
-		};
-		619D0B041EA3478800FDB255 /* BaseView */ = {
-			isa = PBXGroup;
-			children = (
-				619D0B051EA347DE00FDB255 /* BaseControlView.h */,
-				619D0B061EA347DE00FDB255 /* BaseControlView.m */,
-			);
-			name = BaseView;
 			sourceTree = "<group>";
 		};
 		619D0B081EA34A3600FDB255 /* FeatureBoxCollectionViewWidget */ = {
@@ -3960,8 +4027,7 @@
 		8714E06E1E479763004C9B1D /* Controls */ = {
 			isa = PBXGroup;
 			children = (
-				619D0B041EA3478800FDB255 /* BaseView */,
-				8714E06F1E47976E004C9B1D /* Base */,
+				610C689B1EC741DA008FB66C /* Base */,
 				87EA031E1E6D983100B1E062 /* Progress */,
 				61C5C40A1E545C0C00F22130 /* CartEntitySummery */,
 				612553421E4EE4FD00975C6F /* inputTextField */,
@@ -3970,15 +4036,6 @@
 				61BA9B391E99FDC5004E9DE8 /* Widgets */,
 			);
 			name = Controls;
-			sourceTree = "<group>";
-		};
-		8714E06F1E47976E004C9B1D /* Base */ = {
-			isa = PBXGroup;
-			children = (
-				8714E0701E47977D004C9B1D /* BaseViewControl.h */,
-				8714E0711E47977D004C9B1D /* BaseViewControl.m */,
-			);
-			name = Base;
 			sourceTree = "<group>";
 		};
 		8714E0741E479BDA004C9B1D /* Models */ = {
@@ -6982,6 +7039,7 @@
 				875744421EA60E71001B518A /* Winter-76@2x.png in Resources */,
 				875744061EA60E2D001B518A /* Summer-72@2x.png in Resources */,
 				8757434C1EA60D8E001B518A /* Autumn-72@2x.png in Resources */,
+				610C68A71EC7442B008FB66C /* CatalogHeaderView.xib in Resources */,
 				875743E81EA60E13001B518A /* Spring-72.png in Resources */,
 				875743C51EA60DFD001B518A /* SpecialOffer-Small-40.png in Resources */,
 				611195831E3CB14B00D06690 /* PlainTableViewCell.xib in Resources */,
@@ -7457,6 +7515,7 @@
 				87DAABEF1E55BD9D00445EBB /* AddressTableViewController.m in Sources */,
 				870F8D061E33975A0021F87B /* IntUtility.m in Sources */,
 				875AD5751E38C0C900584ABF /* RIShippingMethodFormField.m in Sources */,
+				610C68A31EC74292008FB66C /* CatalogHeaderView.swift in Sources */,
 				CE9ADFBC1AB6D78200D56481 /* JAColorView.m in Sources */,
 				618204A01E6DABFA00322937 /* SubCatFilterViewController.m in Sources */,
 				897460DE1C19DDFD00A38073 /* JACollectionHeaderView.m in Sources */,
@@ -7555,6 +7614,7 @@
 				6CF4AE881ADEABBB0024EC34 /* JACatalogBannerCell.m in Sources */,
 				9AEF742C1CD8A8BD00A5D574 /* JAORConfirmationScreenViewController.m in Sources */,
 				CE9ADFE51AB6D78200D56481 /* JANewsletterComponent.m in Sources */,
+				610C68A51EC742E3008FB66C /* CatalogHeaderControl.swift in Sources */,
 				874AAB691E3CEA0700B3F8FE /* AppManager.m in Sources */,
 				CE9ADFE91AB6D78200D56481 /* JADynamicForm.m in Sources */,
 				87A681521E40ED9200D252AC /* OrangeButton.m in Sources */,

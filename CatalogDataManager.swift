@@ -17,7 +17,7 @@ class CatalogDataManager: DataManager {
         return shared;
     }
     
-    func getCatalog(target:DataServiceProtocol, searchTarget:RITarget? = nil, filtersQueryString:String? = nil, sortingMethod:RICatalogSortingEnum = .none, page:Int = 1, completion: @escaping DataCompletion) {
+    func getCatalog(target:DataServiceProtocol, searchTarget:RITarget? = nil, filtersQueryString:String? = nil, sortingMethod:Catalog.CatalogSortType = .populaity, page:Int = 1, completion: @escaping DataCompletion) {
         var path = "\(RI_API_CATALOG)"
         if let target = searchTarget {
             path += RITarget.getRelativeUrlStringforTarget(target)
@@ -27,7 +27,7 @@ class CatalogDataManager: DataManager {
             path += filters
         }
         
-        if let sortUrl = RICatalogSorting.urlComponent(forSortingMethod: sortingMethod) {
+        if let sortUrl = Catalog.urlForSortType(type: sortingMethod) {
             path += "\(sortUrl)/"
         }
         

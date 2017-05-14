@@ -20,14 +20,14 @@ import SwiftyJSON
     var priceFilterIndex: Int = 0
     
     enum CatalogSortType: String {
-        case name = "NAME"
+        case bestRating = "BEST_RATING"
+        case populaity = "POPULARITY"
+        case newest = "NEW_IN"
         case priceUp = "PRICE_UP"
         case priceDown = "PRICE_DOWN"
-        case bestRating = "BEST_RATING"
+        case name = "NAME"
         case brand = "BRAND"
-        case newest = "NEW_IN"
     }
-    
     
     required init?(map: Map) {
         
@@ -56,5 +56,25 @@ import SwiftyJSON
         }
     }
     
-//    static func url(for)
+    static func urlForSortType(type: CatalogSortType) -> String? {
+        var urlComponent:String?
+        switch (type) {
+        case .bestRating:
+            urlComponent = "sort/rating/dir/desc";
+        case .newest:
+            urlComponent = "sort/newest/dir/desc";
+        case .priceUp:
+            urlComponent = "sort/price/dir/asc";
+        case .priceDown:
+            urlComponent = "sort/price/dir/desc";
+        case .name:
+            urlComponent = "sort/name/dir/asc";
+        case .brand:
+            urlComponent = "sort/brand/dir/asc";
+        case .populaity:
+            urlComponent = "sort/popularity";
+        }
+        
+        return urlComponent;
+    }
 }

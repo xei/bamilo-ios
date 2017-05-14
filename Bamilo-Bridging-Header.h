@@ -12,6 +12,7 @@
 #import "RITarget.h"
 #import "JAStrings.h"
 #import "JANavigationBarLayout.h"
+#import "IconButton.h"
 
 #import <Masonry/Masonry.h>
 #import <RGB/RRGB.h>
@@ -22,7 +23,10 @@
 #import "SearchPriceFilter.h"
 #import "PerformanceTrackerProtocol.h"
 #import "DataTrackerProtocol.h"
-#import "RICatalogSorting.h"
+#import "ThemeManager.h"
+
+#import "BaseControlView.h"
+#import "BaseViewControl.h"
 
 #import "BaseViewController.h"
 #import "CatalogNoResultViewController.h"

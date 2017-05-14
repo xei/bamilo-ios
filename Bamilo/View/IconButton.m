@@ -56,4 +56,8 @@
     [self.nextResponder touchesBegan:touches withEvent:event];
 }
 
+- (BOOL)canBecomeFirstResponder {
+    return YES;
+}
+
 @end

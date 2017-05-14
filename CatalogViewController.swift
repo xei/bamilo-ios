@@ -9,10 +9,20 @@
 import UIKit
 
 @objc class CatalogViewController: BaseViewController, DataServiceProtocol, JAFiltersViewControllerDelegate {
-     
+    
     var searchTarget: RITarget?
-    var sortingMethod: RICatalogSortingEnum = .none
+    var sortingMethod: Catalog.CatalogSortType = .populaity
     var pushFilterQueryString : String?
+    
+    //TODO: this property is only used for passing enum (swift type) property from objective c
+    // so we have to remove it after migration those who wanna pass this property
+    var sortingMethodString: String? {
+        didSet {
+            if let sortString = sortingMethodString, let sortingMethod = Catalog.CatalogSortType(rawValue: sortString) {
+                self.sortingMethod = sortingMethod
+            }
+        }
+    }
     
     
     private var subCategoryFilterItem: CatalogCategoryFilterItem?
@@ -22,8 +32,8 @@ import UIKit
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.loadData()
+        
     }
     
     override func updateNavBar() {

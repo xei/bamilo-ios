@@ -939,7 +939,7 @@
     RICategory* category = [selectedItem objectForKey:@"category"];
     NSString* categoryUrlKey = [selectedItem objectForKey:@"category_url_key"];
     NSString* filterPush = [selectedItem objectForKey:@"filter"];
-    NSNumber* sorting = [selectedItem objectForKey:@"sorting"];
+    NSString* sorting = [selectedItem objectForKey:@"sorting"];
     
     if (category) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification object:nil];
@@ -952,7 +952,8 @@
         CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
         catalog.searchTarget = [RITarget getTarget:CATALOG_CATEGORY node:categoryUrlKey];
         catalog.pushFilterQueryString = filterPush;
-        catalog.sortingMethod = sorting.integerValue;
+
+        catalog.sortingMethodString = sorting;
         [self pushViewController:catalog animated:YES];
     }
 }
