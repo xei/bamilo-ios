@@ -165,6 +165,16 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
         self.delegate?.sortTypeSelected(type: self.sortType)
     }
     
+    func setFilterDescription(description: String) {
+        self.filterDescLabel.text = description
+    }
+    
+    func setFilterButtonActive () {
+        self.filterTitleLabel.textColor = UIColor.init(colorLiteralRed: 0/255, green: 145/255, blue: 255/255, alpha: 1)
+        self.filterDescLabel.textColor = UIColor.init(colorLiteralRed: 117/255, green: 189/255, blue: 243/255, alpha: 1)
+        self.filterIconImage.image = UIImage(named: "filterIcon_highlighted")
+    }
+    
     @IBAction func sortButtonTapped(_ sender: Any) {
         
         if self.pickerViewTextFiled == nil {

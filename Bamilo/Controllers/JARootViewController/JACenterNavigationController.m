@@ -921,7 +921,7 @@
     CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
     catalog.searchTarget = [RITarget getTarget:CATALOG_SEARCH node:query];
     
-    catalog.navBarLayout.title = query;
+//    catalog.navBarLayout.title = query;
     
     [self pushViewController:catalog animated:YES];
 }
@@ -930,7 +930,7 @@
     CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
     catalog.searchTarget = [RITarget parseTarget:brandTargetString];
     
-    catalog.navBarLayout.title = brandName;
+//    catalog.navBarLayout.title = brandName;
     [self pushViewController:catalog animated:YES];
 }
 

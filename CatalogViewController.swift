@@ -12,11 +12,14 @@ import UIKit
     
     @IBOutlet private weak var catalogHeader: CatalogHeaderControl!
     @IBOutlet private weak var collectionView: UICollectionView!
+    @IBOutlet private weak var noResultViewContainer: UIView!
     
     
-    var searchTarget: RITarget?
+    var searchTarget: RITarget!
     var sortingMethod: Catalog.CatalogSortType = .populaity
     var pushFilterQueryString : String?
+    var activeFilters : [CatalogFilterItem]?
+    var activePriceFilter: CatalogPriceFilterItem?
     
     //TODO: this property is only used for passing enum (swift type) property from objective c
     // so we have to remove it after migration those who wanna pass this property
@@ -34,10 +37,13 @@ import UIKit
     private var catalogData: Catalog?
     private var noResultViewController: CatalogNoResultViewController?
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.catalogHeader.delegate = self
+        self.setSortingMethodToHeader()
+        
         self.loadData()
     }
     
@@ -50,30 +56,123 @@ import UIKit
         }
     }
     
+    
     //MARK - DataServiceProtocol
     func bind(_ data: Any!, forRequestId rid: Int32) {
         if rid == 0, let catalogData = data as? Catalog {
             self.catalogData = catalogData
-            self.updateNavBar()
-        } else if rid == 1, let catalogData = data as? Catalog, let newProductArray = catalogData.products {
-            self.catalogData?.products?.append(contentsOf: newProductArray)
+            self.processCatalogData()
+            
+        } else if rid == 1, let catalogData = data as? Catalog, catalogData.products.count > 0 {
+            self.catalogData?.products.append(contentsOf: catalogData.products)
         }
     }
     
     //MARK - JAFiltersViewControllerDelegate
     func updatedFilters(_ updatedFiltersArray: [Any]!) {
-        
+        self.catalogData?.filters = updatedFiltersArray as? [BaseCatalogFilterItem]
+//        self.findActiveFilters()
+//        self.setActiveFiltersToHeader()
     }
     
     func subCategorySelected(_ subCategoryUrlKey: String!) {
         
     }
     
-    //MARK - Helpers
+    
+    //MARK - CatalogHeaderViewDelegate
+    func sortTypeSelected(type: Catalog.CatalogSortType) {
+        self.sortingMethod = type
+        self.loadData()
+    }
+    
+    func filterButtonTapped() {
+        self.performSegue(withIdentifier: "showFilterView", sender: nil)
+    }
+    
+    func changeListViewType(type: CatalogListViewType) {
+        
+    }
+    
+    
+    
+    //MARK - helpers 
+    private func setSortingMethodToHeader() {
+        if self.sortingMethod != .populaity {
+            self.catalogHeader.setSortingType(type: self.sortingMethod)
+        }
+    }
+    
+    private func processCatalogData() {
+        self.updateNavBar()
+        
+        if self.catalogData == nil || self.catalogData?.products.count == 0 {
+            self.showNoResultView()
+        }
+        
+        //Sequence of these functions are important
+        self.sortingMethod = self.catalogData?.sortType ?? .populaity
+        self.setSortingMethodToHeader()
+        self.findActiveFilters()
+        self.setActiveFiltersToHeader()
+    }
+    
+    private func showNoResultView() {
+        if let filters = self.catalogData?.filters, filters.count > 0 {
+            
+        } else {
+            if self.searchTarget.type.contains("catalog_") {
+                self.noResultViewController?.searchQuery = self.searchTarget.node
+            }
+            self.noResultViewController?.getSuggestions()
+            self.noResultViewContainer.isHidden = false
+        }
+    }
+    
+    private func findActiveFilters() {
+        self.activeFilters = self.catalogData?.filters?.filter({ (filterItem) -> Bool in
+            let activeFilterOptions = (filterItem as? CatalogFilterItem)?.options?.filter({ (filterOption) -> Bool in
+                return filterOption.selected
+            })
+            return activeFilterOptions != nil ?  activeFilterOptions!.count > 0 : false
+        }) as? [CatalogFilterItem]
+        
+        if let index = self.catalogData?.priceFilterIndex, let priceFilter = self.catalogData?.filters?[index] as? CatalogPriceFilterItem, priceFilter.lowerValue != 0 || priceFilter.upperValue != priceFilter.maxPrice {
+            self.activePriceFilter = priceFilter
+        } else {
+            self.activePriceFilter = nil
+        }
+    }
+    
+    private func setActiveFiltersToHeader() {
+        var activeFilterString = ""
+        if let filters = self.activeFilters, filters.count > 0 {
+             activeFilterString = filters.map { (filter) -> String in
+                return filter.name
+                }.joined(separator: "، ");
+        }
+        if let _ = self.activePriceFilter {
+            activeFilterString += activeFilterString.characters.count > 0 ? "، \(STRING_PRICE)" : "\(STRING_PRICE)"
+        }
+        if activeFilterString.characters.count > 0 {
+            self.catalogHeader.setFilterDescription(filterDescription: activeFilterString)
+            self.catalogHeader.setFilterButtonActive()
+        }
+    }
+    
+    private func resetAndClear() {
+        self.pageNumber = 0
+        self.catalogData = nil
+    }
+    
     private func loadData() {
         self.pageNumber = 1
         CatalogDataManager.sharedInstance().getCatalog(target: self, searchTarget: searchTarget, filtersQueryString: pushFilterQueryString, sortingMethod: sortingMethod) { (data, errorMessages) in
-            self.bind(data, forRequestId: 0)
+            if errorMessages == nil {
+                self.bind(data, forRequestId: 0)
+            } else {
+                self.showNoResultView()
+            }
         }
     }
     
@@ -84,10 +183,6 @@ import UIKit
         }
     }
     
-    private func resetAndClear() {
-        self.pageNumber = 0
-        self.catalogData = nil
-    }
     
     //MARK - prepareForSegue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -105,19 +200,5 @@ import UIKit
             }
             destinationViewCtrl?.delegate = self;
         }
-    }
-    
-    //MARK - CatalogHeaderViewDelegate
-    func sortTypeSelected(type: Catalog.CatalogSortType) {
-        self.sortingMethod = type
-        self.loadData()
-    }
-    
-    func filterButtonTapped() {
-        self.performSegue(withIdentifier: "showFilterView", sender: nil)
-    }
-    
-    func changeListViewType(type: CatalogListViewType) {
-        
     }
 }

@@ -10,22 +10,34 @@ import UIKit
 
 class CatalogHeaderControl: BaseViewControl {
     
-    var catalogHeaderView: CatalogHeaderView?
+    private var headerView: CatalogHeaderView?
     var delegate: CatalogHeaderViewDelegate? {
         didSet {
-            self.catalogHeaderView?.delegate = self.delegate
+            self.headerView?.delegate = self.delegate
         }
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.catalogHeaderView = CatalogHeaderView.nibInstance()
-        self.catalogHeaderView?.delegate = self.delegate
-        if let view = self.catalogHeaderView {
+        self.headerView = CatalogHeaderView.nibInstance()
+        self.headerView?.delegate = self.delegate
+        if let view = self.headerView {
             self.addSubview(view)
             view.frame = self.bounds;
         }
+    }
+
+    func setSortingType(type: Catalog.CatalogSortType) {
+        self.headerView?.sortType = type
+    }
+    
+    func setFilterDescription(filterDescription: String) {
+        self.headerView?.setFilterDescription(description: filterDescription)
+    }
+    
+    func setFilterButtonActive() {
+        self.headerView?.setFilterButtonActive()
     }
 
 }

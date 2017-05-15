@@ -117,7 +117,7 @@
         } else if ([type isEqualToString:[self getTargetKey:CATALOG_HASH]]) {
             urlString = [urlString stringByAppendingString:RI_API_CATALOG_HASH];
         } else if ([type isEqualToString:[self getTargetKey:CATALOG_SEARCH]]) {
-            urlString = [urlString stringByAppendingString:RI_API_CATALOG];
+            urlString = [urlString stringByAppendingString:RI_API_CATALOG_QUERY_SEARCH];
         }else if ([type isEqualToString:[self getTargetKey:CATALOG_CATEGORY]]) {
             urlString = [urlString stringByAppendingString:RI_API_CATALOG_CATEGORY];
         } else if ([type isEqualToString:[self getTargetKey:CATALOG_BRAND]]) {

@@ -14,7 +14,7 @@ import SwiftyJSON
     
     var title:String?
     var filters: [BaseCatalogFilterItem]?
-    var products: [Product]?
+    var products: [Product] = []
     var totalProductsCount: Int?
     var sortType: CatalogSortType?
     var priceFilterIndex: Int = 0
