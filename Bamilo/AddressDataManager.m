@@ -39,7 +39,7 @@ static AddressDataManager *instance;
 -(void)deleteAddress:(id<DataServiceProtocol>)target address:(Address *)address completion:(DataCompletion)completion {
     NSDictionary *params = @{ @"id": address.uid };
     
-    [self.requestManager asyncDELETE:target path:RI_API_DELETE_ADDRESS_REMOVE params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int statusCode, Data *data, NSArray *errorMessages) {
+    [self.requestManager asyncDELETE:target path:RI_API_DELETE_ADDRESS_REMOVE params:params type:REQUEST_EXEC_AS_CONTAINER completion:^(int statusCode, Data *data, NSArray *errorMessages) {
         [self processResponse:statusCode ofClass:nil forData:data errorMessages:errorMessages completion:completion];
     }];
 }

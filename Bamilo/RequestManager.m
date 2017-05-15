@@ -43,13 +43,14 @@
 }
 
 -(void)asyncRequest:(HttpVerb)method path:(NSString *)path params:(NSDictionary *)params type:(RequestExecutionType)type target:(id<DataServiceProtocol>)target completion:(RequestCompletion)completion {
+    
     switch (type) {
         case REQUEST_EXEC_IN_FOREGROUND:
+        case REQUEST_EXEC_AS_CONTAINER:
             [[LoadingManager sharedInstance] showLoading];
         break;
             
-        default:
-            break;
+        default: break;
     }
     
     NSURL *requestUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", self.baseUrl, path]];
@@ -72,7 +73,13 @@
             completion(apiResponse, nil, nil);
          }
          
-         [[LoadingManager sharedInstance] hideLoading];
+         switch (type) {
+            case REQUEST_EXEC_IN_FOREGROUND:
+                 [[LoadingManager sharedInstance] hideLoading];
+            break;
+                 
+            default: break;
+         }
          
      } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
         if(errorJsonObject && errorJsonObject.allKeys.count) {

@@ -16,13 +16,11 @@
 
 @implementation LoadingManager {
 @private
-    int _pendingRequestsCount;
+    BOOL _isLoadingVisible;
 }
 
 - (instancetype)init {
     if (self = [super init]) {
-        _pendingRequestsCount = 0;
-        
         self.loadingView = [[UIView alloc] initWithFrame:CGRectZero];
         self.loadingView.backgroundColor = [UIColor blackColor];
         self.loadingView.alpha = 0.0f;
@@ -69,9 +67,7 @@ static LoadingManager *instance;
     if([viewcontroller isKindOfClass:[UIViewController class]]) {
         UIViewController *targetViewController = ((UIViewController *)viewcontroller);
         
-        _pendingRequestsCount++;
-        
-        if(_pendingRequestsCount == 1) {
+        if(_isLoadingVisible == NO) {
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
             
             [self.loadingView setFrame:CGRectMake(0, 0, targetViewController.view.bounds.size.width, targetViewController.view.bounds.size.height)];
@@ -87,18 +83,14 @@ static LoadingManager *instance;
                 self.loadingView.alpha = 0.5f;
                 self.loadingAnimationView.alpha = 0.5f;
             }];
+            
+            _isLoadingVisible = YES;
         }
     }
 }
 
 -(void)hideLoading {
-    _pendingRequestsCount--;
-    
-    if(_pendingRequestsCount < 0) {
-        _pendingRequestsCount = 0;
-    }
-    
-    if(_pendingRequestsCount == 0) {
+    if(_isLoadingVisible == YES) {
         [UIView animateWithDuration:0.4f animations: ^{
             self.loadingView.alpha = 0.0f;
             self.loadingAnimationView.alpha = 0.0f;
@@ -108,11 +100,14 @@ static LoadingManager *instance;
         }];
         
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        
+        _isLoadingVisible = NO;
     }
 }
 
 #pragma mark - Private Methods
-- (void)cancelLoading { [[NSNotificationCenter defaultCenter] postNotificationName:kCancelLoadingNotificationName object:nil];
+- (void)cancelLoading {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kCancelLoadingNotificationName object:nil];
 }
 
 @end

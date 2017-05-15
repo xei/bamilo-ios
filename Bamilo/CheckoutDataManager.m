@@ -37,8 +37,8 @@ static CheckoutDataManager *instance;
     }];
 }
 
--(void)getMultistepConfirmation:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
-    [self.requestManager asyncGET:target path:RI_API_MULTISTEP_GET_FINISH params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(int statusCode, Data *data, NSArray *errorMessages) {
+-(void)getMultistepConfirmation:(id<DataServiceProtocol>)target type:(RequestExecutionType)type completion:(DataCompletion)completion {
+    [self.requestManager asyncGET:target path:RI_API_MULTISTEP_GET_FINISH params:nil type:type completion:^(int statusCode, Data *data, NSArray *errorMessages) {
         [self processResponse:statusCode ofClass:[RICart class] forData:data errorMessages:errorMessages completion:completion];
     }];
 }
@@ -62,13 +62,13 @@ static CheckoutDataManager *instance;
  }*/
 
 - (void) getMultistepPayment:(id<DataServiceProtocol>)target completion:(DataCompletion)completion {
-    [self.requestManager asyncGET:target path:RI_API_MULTISTEP_GET_PAYMENT params:nil type:REQUEST_EXEC_IN_FOREGROUND completion:^(int statusCode, Data *data, NSArray *errorMessages) {
+    [self.requestManager asyncGET:target path:RI_API_MULTISTEP_GET_PAYMENT params:nil type:REQUEST_EXEC_AS_CONTAINER completion:^(int statusCode, Data *data, NSArray *errorMessages) {
         [self processResponse:statusCode ofClass:[RICart class] forData:data errorMessages:errorMessages completion:completion];
     }];
 }
 
 -(void)setMultistepPayment:(id<DataServiceProtocol>)target params:(NSDictionary *)params completion:(DataCompletion)completion {
-    [self.requestManager asyncPOST:target path:RI_API_MULTISTEP_SUBMIT_PAYMENT params:params type:REQUEST_EXEC_IN_FOREGROUND completion:^(int statusCode, Data *data, NSArray *errorMessages) {
+    [self.requestManager asyncPOST:target path:RI_API_MULTISTEP_SUBMIT_PAYMENT params:params type:REQUEST_EXEC_AS_CONTAINER completion:^(int statusCode, Data *data, NSArray *errorMessages) {
         [self processResponse:statusCode ofClass:[MultistepEntity class] forData:data errorMessages:errorMessages completion:completion];
     }];
 }

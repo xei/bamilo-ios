@@ -12,7 +12,9 @@
 
 typedef NS_OPTIONS(NSUInteger, RequestExecutionType) {
     REQUEST_EXEC_IN_BACKGROUND = 0,
-    REQUEST_EXEC_IN_FOREGROUND = 1
+    REQUEST_EXEC_IN_FOREGROUND = 1,
+    //A request that contains another one. This is to signal to not hide activity indicator when finished
+    REQUEST_EXEC_AS_CONTAINER = 2
 };
 
 typedef void(^RequestCompletion)(int statusCode, Data *data, NSArray *errorMessages);
