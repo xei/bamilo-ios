@@ -16,3 +16,4 @@ let STRING_PRICE_DOWN = RILocalizationWrapper.localizedString("products_sort_pri
 let STRING_NAME = RILocalizationWrapper.localizedString("products_sort_name")!
 let STRING_BRAND = RILocalizationWrapper.localizedString("products_sort_brand")!
 let STRING_PRICE = RILocalizationWrapper.localizedString("string_price")!
+let STRING_CURRENCY = RILocalizationWrapper.localizedString("currency")!

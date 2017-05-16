@@ -30,7 +30,7 @@
     [self.view setBackgroundColor:[UIColor whiteColor]];
     self.tabBarIsVisible = YES;
     
-    [self.carouselWidget setBackgroundColor:JAHomePageBackgroundGrey];
+    [self.carouselWidget setBackgroundColor:[Theme color:kColorVeryLightGray]];
     self.carouselWidget.delegate = self;
     [self.carouselWidget updateTitle:STRING_BAMILO_RECOMMENDATION];
     

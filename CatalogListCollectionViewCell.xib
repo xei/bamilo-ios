@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Bamilosans Reg.ttf">
+            <string>Bamilo-Sans</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="CatalogListCollectionViewCell" customModule="Bamilo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="348" height="127"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="348" height="127"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9Ep-gK-TRa">
+                        <rect key="frame" x="254" y="8" width="89" height="111"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="9Ep-gK-TRa" secondAttribute="height" multiplier="1:1.25" id="2rB-ph-hmD"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="پیراهن با کت مجلسی زنانه پیراهن با کت مجلسی زنانه پیراهن با کت مجلسی زنانه پیراهن با کت مجلسی زنانه " textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rbc-vu-7eS">
+                        <rect key="frame" x="35" y="8" width="214" height="38.5"/>
+                        <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="10"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Bo-fY-FHu" customClass="IconButton">
+                        <rect key="frame" x="10" y="8" width="20" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="25" id="EU6-jl-Rba"/>
+                            <constraint firstAttribute="width" constant="20" id="pQP-sX-PKa"/>
+                        </constraints>
+                        <state key="normal" image="FavButton"/>
+                        <connections>
+                            <action selector="addToWishListButtonTapped:" destination="gTV-IL-0wX" eventType="touchUpInside" id="cc8-XY-t9b"/>
+                        </connections>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Logitec" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OBz-df-mWr">
+                        <rect key="frame" x="221" y="48.5" width="28" height="17.5"/>
+                        <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="9"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(۱۲)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mnS-Gf-1QS">
+                        <rect key="frame" x="152" y="66.5" width="15" height="17.5"/>
+                        <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="9"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۱۰۰،۰۰۰ ریال" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eXO-Ic-9E1">
+                        <rect key="frame" x="103" y="98.5" width="52.5" height="19.5"/>
+                        <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="10"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="٪۱۰۰" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nDO-Lm-UYK">
+                        <rect key="frame" x="68" y="98" width="25" height="19.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="25" id="MAj-g6-K5y"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="10"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۲۰،۵۰۰،۰۰۰ ریال" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B7x-en-kdn">
+                        <rect key="frame" x="165.5" y="96" width="83.5" height="23"/>
+                        <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ISl-GX-JWz">
+                        <rect key="frame" x="169" y="67" width="80" height="16"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="80" id="mTl-co-ogi"/>
+                            <constraint firstAttribute="height" constant="16" id="wgP-JU-QKt"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="9Ep-gK-TRa" firstAttribute="left" secondItem="Rbc-vu-7eS" secondAttribute="right" constant="5" id="0oG-Rm-T54"/>
+                <constraint firstItem="OBz-df-mWr" firstAttribute="top" secondItem="Rbc-vu-7eS" secondAttribute="bottom" constant="2" id="2j3-Hc-NfQ"/>
+                <constraint firstItem="Rbc-vu-7eS" firstAttribute="top" secondItem="9Ep-gK-TRa" secondAttribute="top" id="590-pd-xlT"/>
+                <constraint firstItem="mnS-Gf-1QS" firstAttribute="centerY" secondItem="ISl-GX-JWz" secondAttribute="centerY" id="BQ9-bb-BQy"/>
+                <constraint firstItem="Rbc-vu-7eS" firstAttribute="left" secondItem="3Bo-fY-FHu" secondAttribute="right" constant="5" id="E9e-IG-GMX"/>
+                <constraint firstItem="B7x-en-kdn" firstAttribute="left" secondItem="eXO-Ic-9E1" secondAttribute="right" constant="10" id="Iup-fz-2qw"/>
+                <constraint firstItem="ISl-GX-JWz" firstAttribute="top" secondItem="OBz-df-mWr" secondAttribute="bottom" constant="1" id="JAY-b7-PQT"/>
+                <constraint firstItem="B7x-en-kdn" firstAttribute="bottom" secondItem="9Ep-gK-TRa" secondAttribute="bottom" id="MeG-sj-oky"/>
+                <constraint firstAttribute="right" secondItem="9Ep-gK-TRa" secondAttribute="right" constant="5" id="Q0f-5d-45G"/>
+                <constraint firstItem="3Bo-fY-FHu" firstAttribute="top" secondItem="9Ep-gK-TRa" secondAttribute="top" id="RtT-Ld-qQ0"/>
+                <constraint firstItem="3Bo-fY-FHu" firstAttribute="left" secondItem="gTV-IL-0wX" secondAttribute="left" constant="10" id="aiW-8j-EAo"/>
+                <constraint firstItem="eXO-Ic-9E1" firstAttribute="centerY" secondItem="B7x-en-kdn" secondAttribute="centerY" id="elJ-fq-Wl8"/>
+                <constraint firstItem="B7x-en-kdn" firstAttribute="trailing" secondItem="ISl-GX-JWz" secondAttribute="trailing" id="hCE-pP-XBR"/>
+                <constraint firstItem="nDO-Lm-UYK" firstAttribute="centerY" secondItem="B7x-en-kdn" secondAttribute="centerY" id="iJ2-eZ-kGT"/>
+                <constraint firstItem="9Ep-gK-TRa" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="j6e-nz-CWq"/>
+                <constraint firstItem="ISl-GX-JWz" firstAttribute="left" secondItem="mnS-Gf-1QS" secondAttribute="right" constant="2" id="tRX-C4-WTT"/>
+                <constraint firstAttribute="bottom" secondItem="9Ep-gK-TRa" secondAttribute="bottom" constant="8" id="u84-bo-DFh"/>
+                <constraint firstItem="OBz-df-mWr" firstAttribute="trailing" secondItem="Rbc-vu-7eS" secondAttribute="trailing" id="vAP-EN-wOg"/>
+                <constraint firstItem="eXO-Ic-9E1" firstAttribute="left" secondItem="nDO-Lm-UYK" secondAttribute="right" constant="10" id="xig-Fb-ZHJ"/>
+                <constraint firstItem="9Ep-gK-TRa" firstAttribute="left" secondItem="ISl-GX-JWz" secondAttribute="right" constant="5" id="y5f-wc-CDp"/>
+            </constraints>
+            <size key="customSize" width="509" height="153"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                    <color key="value" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                </userDefinedRuntimeAttribute>
+                <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
+                    <size key="value" width="0.0" height="1"/>
+                </userDefinedRuntimeAttribute>
+                <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                    <real key="value" value="0.0"/>
+                </userDefinedRuntimeAttribute>
+                <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                    <real key="value" value="0.20000000000000001"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
+            <connections>
+                <outlet property="brandLabel" destination="OBz-df-mWr" id="xbX-Xz-R7L"/>
+                <outlet property="dicountPrecentageLabel" destination="nDO-Lm-UYK" id="itL-cQ-9vx"/>
+                <outlet property="discountedPriceLabel" destination="B7x-en-kdn" id="sZn-W5-yU5"/>
+                <outlet property="priceLabel" destination="eXO-Ic-9E1" id="BWU-M8-XPi"/>
+                <outlet property="productImage" destination="9Ep-gK-TRa" id="6je-kc-F9y"/>
+                <outlet property="titleLabel" destination="Rbc-vu-7eS" id="3Ic-9r-xKX"/>
+            </connections>
+            <point key="canvasLocation" x="-242" y="-135"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="FavButton" width="15" height="13"/>
+    </resources>
+</document>

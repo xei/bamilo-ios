@@ -83,6 +83,12 @@
 		61840B631EA397FF006739EB /* EmarsysRecommendationGridWidgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61840B621EA397FF006739EB /* EmarsysRecommendationGridWidgetView.m */; };
 		61840B651EA3981E006739EB /* EmarsysRecommendationGridWidgetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61840B641EA3981E006739EB /* EmarsysRecommendationGridWidgetView.xib */; };
 		61840B681EA39941006739EB /* EmarsysRecommendationGridWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 61840B671EA39941006739EB /* EmarsysRecommendationGridWidget.m */; };
+		619351A51ECAC9A900330E5C /* CatalogGridCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619351A31ECAC9A900330E5C /* CatalogGridCollectionViewCell.swift */; };
+		619351A61ECAC9A900330E5C /* CatalogGridCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 619351A41ECAC9A900330E5C /* CatalogGridCollectionViewCell.xib */; };
+		619351AB1ECAC9DD00330E5C /* CatalogCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619351A91ECAC9DD00330E5C /* CatalogCardCollectionViewCell.swift */; };
+		619351AC1ECAC9DD00330E5C /* CatalogCardCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 619351AA1ECAC9DD00330E5C /* CatalogCardCollectionViewCell.xib */; };
+		619351B01ECACA1F00330E5C /* CatalogListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619351AE1ECACA1F00330E5C /* CatalogListCollectionViewCell.swift */; };
+		619351B11ECACA1F00330E5C /* CatalogListCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 619351AF1ECACA1F00330E5C /* CatalogListCollectionViewCell.xib */; };
 		619D0B071EA347DE00FDB255 /* BaseControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 619D0B061EA347DE00FDB255 /* BaseControlView.m */; };
 		619D0B0D1EA34AF400FDB255 /* WidgetBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 619D0B0C1EA34AF400FDB255 /* WidgetBaseView.m */; };
 		619D0B121EA34B3500FDB255 /* FeatureBoxWidgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 619D0B111EA34B3500FDB255 /* FeatureBoxWidgetView.m */; };
@@ -107,6 +113,10 @@
 		61C5C4141E54674600F22130 /* CartEntitySummaryViewControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 61C5C4131E54674600F22130 /* CartEntitySummaryViewControl.m */; };
 		61C5C4191E54796A00F22130 /* RecieptViewCartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61C5C4171E54796A00F22130 /* RecieptViewCartTableViewCell.m */; };
 		61C5C41A1E54796A00F22130 /* RecieptViewCartTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61C5C4181E54796A00F22130 /* RecieptViewCartTableViewCell.xib */; };
+		61C860411ECAF94400F2C571 /* AppUtitlity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C860401ECAF94400F2C571 /* AppUtitlity.swift */; };
+		61C860471ECB1EAF00F2C571 /* CardCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C860461ECB1EAF00F2C571 /* CardCollectionViewFlowLayout.swift */; };
+		61C860491ECB370300F2C571 /* BaseCatallogCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C860481ECB370300F2C571 /* BaseCatallogCollectionViewCell.swift */; };
+		61C8604C1ECB3C0F00F2C571 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C8604B1ECB3C0F00F2C571 /* String.swift */; };
 		61CBA0391E51A72A005673F7 /* ForgetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA0381E51A72A005673F7 /* ForgetPasswordViewController.m */; };
 		61CBA03D1E51A75C005673F7 /* ContinueWitoutLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA03C1E51A75C005673F7 /* ContinueWitoutLoginViewController.m */; };
 		61CBA0421E51BA33005673F7 /* FormViewControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA0411E51BA33005673F7 /* FormViewControl.m */; };
@@ -127,6 +137,8 @@
 		61E099781E3E1A02004ED14E /* VersionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E099761E3E1A02004ED14E /* VersionTableViewCell.xib */; };
 		61EE798E1EC0395C0036F93E /* CatalogCategoryFilterItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EE798D1EC0395C0036F93E /* CatalogCategoryFilterItem.swift */; };
 		61EE79901EC046D90036F93E /* CatalogCategoryFilterOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EE798F1EC046D90036F93E /* CatalogCategoryFilterOption.swift */; };
+		61FE97D51EC9BB7700DF233D /* GridCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FE97D41EC9BB7600DF233D /* GridCollectionViewFlowLayout.swift */; };
+		61FE97D71EC9C19300DF233D /* ListCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FE97D61EC9C19300DF233D /* ListCollectionViewFlowLayout.swift */; };
 		61FFD5861EB8CE17004A3518 /* CatalogDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FFD5851EB8CE17004A3518 /* CatalogDataManager.swift */; };
 		6C18BD741AB87E0A00905FD2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A301BB19811D0700F71726 /* Images.xcassets */; };
 		6CF4AE821ADEAA290024EC34 /* JACatalogBannerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CF4AE7E1ADEAA290024EC34 /* JACatalogBannerCell.xib */; };
@@ -978,6 +990,12 @@
 		61840B641EA3981E006739EB /* EmarsysRecommendationGridWidgetView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmarsysRecommendationGridWidgetView.xib; sourceTree = "<group>"; };
 		61840B661EA39941006739EB /* EmarsysRecommendationGridWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysRecommendationGridWidget.h; sourceTree = "<group>"; };
 		61840B671EA39941006739EB /* EmarsysRecommendationGridWidget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysRecommendationGridWidget.m; sourceTree = "<group>"; };
+		619351A31ECAC9A900330E5C /* CatalogGridCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogGridCollectionViewCell.swift; sourceTree = "<group>"; };
+		619351A41ECAC9A900330E5C /* CatalogGridCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CatalogGridCollectionViewCell.xib; sourceTree = "<group>"; };
+		619351A91ECAC9DD00330E5C /* CatalogCardCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogCardCollectionViewCell.swift; sourceTree = "<group>"; };
+		619351AA1ECAC9DD00330E5C /* CatalogCardCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CatalogCardCollectionViewCell.xib; sourceTree = "<group>"; };
+		619351AE1ECACA1F00330E5C /* CatalogListCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogListCollectionViewCell.swift; sourceTree = "<group>"; };
+		619351AF1ECACA1F00330E5C /* CatalogListCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CatalogListCollectionViewCell.xib; sourceTree = "<group>"; };
 		619D0B051EA347DE00FDB255 /* BaseControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseControlView.h; sourceTree = "<group>"; };
 		619D0B061EA347DE00FDB255 /* BaseControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseControlView.m; sourceTree = "<group>"; };
 		619D0B0B1EA34AF400FDB255 /* WidgetBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetBaseView.h; sourceTree = "<group>"; };
@@ -1024,6 +1042,10 @@
 		61C5C4161E54796A00F22130 /* RecieptViewCartTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecieptViewCartTableViewCell.h; sourceTree = "<group>"; };
 		61C5C4171E54796A00F22130 /* RecieptViewCartTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecieptViewCartTableViewCell.m; sourceTree = "<group>"; };
 		61C5C4181E54796A00F22130 /* RecieptViewCartTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecieptViewCartTableViewCell.xib; sourceTree = "<group>"; };
+		61C860401ECAF94400F2C571 /* AppUtitlity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUtitlity.swift; sourceTree = "<group>"; };
+		61C860461ECB1EAF00F2C571 /* CardCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		61C860481ECB370300F2C571 /* BaseCatallogCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCatallogCollectionViewCell.swift; sourceTree = "<group>"; };
+		61C8604B1ECB3C0F00F2C571 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		61CBA0371E51A72A005673F7 /* ForgetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetPasswordViewController.h; sourceTree = "<group>"; };
 		61CBA0381E51A72A005673F7 /* ForgetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgetPasswordViewController.m; sourceTree = "<group>"; };
 		61CBA03B1E51A75C005673F7 /* ContinueWitoutLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContinueWitoutLoginViewController.h; sourceTree = "<group>"; };
@@ -1058,6 +1080,8 @@
 		61E099761E3E1A02004ED14E /* VersionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VersionTableViewCell.xib; sourceTree = "<group>"; };
 		61EE798D1EC0395C0036F93E /* CatalogCategoryFilterItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogCategoryFilterItem.swift; sourceTree = "<group>"; };
 		61EE798F1EC046D90036F93E /* CatalogCategoryFilterOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogCategoryFilterOption.swift; sourceTree = "<group>"; };
+		61FE97D41EC9BB7600DF233D /* GridCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		61FE97D61EC9C19300DF233D /* ListCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		61FFD5851EB8CE17004A3518 /* CatalogDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogDataManager.swift; sourceTree = "<group>"; };
 		633B32545D30D5C2D6CFFC51 /* Pods-Bamilo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bamilo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bamilo/Pods-Bamilo.debug.xcconfig"; sourceTree = "<group>"; };
 		6C18BDAB1A1B4CA300626706 /* JANewsletterComponent~iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JANewsletterComponent~iPad.xib"; sourceTree = "<group>"; };
@@ -2567,6 +2591,8 @@
 		610C68941EC7395B008FB66C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				6193519F1ECAC92800330E5C /* CollectionViewCell */,
+				61FE97D31EC9BB3F00DF233D /* CollectionViewFlowLayout */,
 				610C689E1EC7423B008FB66C /* Controls */,
 			);
 			name = Views;
@@ -3006,6 +3032,7 @@
 			children = (
 				617F77AD1EB85BEC000A2A6C /* Bamilo-Bridging-Header.h */,
 				610C68AB1EC87F0F008FB66C /* Constants */,
+				61C8604A1ECB3BD900F2C571 /* extensions */,
 				610C68941EC7395B008FB66C /* Views */,
 				613A7E8B1EBF033E00E1AB3F /* Models */,
 				613A7E8A1EBF033400E1AB3F /* ViewControllers */,
@@ -3018,6 +3045,7 @@
 			isa = PBXGroup;
 			children = (
 				617F77AC1EB85B9A000A2A6C /* Managers */,
+				61C860401ECAF94400F2C571 /* AppUtitlity.swift */,
 			);
 			name = Support;
 			sourceTree = "<group>";
@@ -3103,6 +3131,52 @@
 				61840B671EA39941006739EB /* EmarsysRecommendationGridWidget.m */,
 			);
 			name = Control;
+			sourceTree = "<group>";
+		};
+		6193519F1ECAC92800330E5C /* CollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				619351A01ECAC93600330E5C /* Catalog */,
+			);
+			name = CollectionViewCell;
+			sourceTree = "<group>";
+		};
+		619351A01ECAC93600330E5C /* Catalog */ = {
+			isa = PBXGroup;
+			children = (
+				619351AD1ECAC9E300330E5C /* CatalogListCollectionViewCell */,
+				619351A81ECAC9C900330E5C /* CatalogCardCollectionViewCell */,
+				619351A71ECAC9B700330E5C /* CatalogGridCollectionViewCell */,
+				61C860481ECB370300F2C571 /* BaseCatallogCollectionViewCell.swift */,
+			);
+			name = Catalog;
+			sourceTree = "<group>";
+		};
+		619351A71ECAC9B700330E5C /* CatalogGridCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				619351A31ECAC9A900330E5C /* CatalogGridCollectionViewCell.swift */,
+				619351A41ECAC9A900330E5C /* CatalogGridCollectionViewCell.xib */,
+			);
+			name = CatalogGridCollectionViewCell;
+			sourceTree = "<group>";
+		};
+		619351A81ECAC9C900330E5C /* CatalogCardCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				619351A91ECAC9DD00330E5C /* CatalogCardCollectionViewCell.swift */,
+				619351AA1ECAC9DD00330E5C /* CatalogCardCollectionViewCell.xib */,
+			);
+			name = CatalogCardCollectionViewCell;
+			sourceTree = "<group>";
+		};
+		619351AD1ECAC9E300330E5C /* CatalogListCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				619351AE1ECACA1F00330E5C /* CatalogListCollectionViewCell.swift */,
+				619351AF1ECACA1F00330E5C /* CatalogListCollectionViewCell.xib */,
+			);
+			name = CatalogListCollectionViewCell;
 			sourceTree = "<group>";
 		};
 		619D0B081EA34A3600FDB255 /* FeatureBoxCollectionViewWidget */ = {
@@ -3340,6 +3414,14 @@
 			name = RecieptViewCartTableViewCell;
 			sourceTree = "<group>";
 		};
+		61C8604A1ECB3BD900F2C571 /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				61C8604B1ECB3C0F00F2C571 /* String.swift */,
+			);
+			name = extensions;
+			sourceTree = "<group>";
+		};
 		61CBA03A1E51A72E005673F7 /* ForgetPasswordViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -3517,6 +3599,16 @@
 				61E099761E3E1A02004ED14E /* VersionTableViewCell.xib */,
 			);
 			name = VersionTableViewCell;
+			sourceTree = "<group>";
+		};
+		61FE97D31EC9BB3F00DF233D /* CollectionViewFlowLayout */ = {
+			isa = PBXGroup;
+			children = (
+				61FE97D41EC9BB7600DF233D /* GridCollectionViewFlowLayout.swift */,
+				61FE97D61EC9C19300DF233D /* ListCollectionViewFlowLayout.swift */,
+				61C860461ECB1EAF00F2C571 /* CardCollectionViewFlowLayout.swift */,
+			);
+			name = CollectionViewFlowLayout;
 			sourceTree = "<group>";
 		};
 		6C9355941A6EC8E700167486 /* Bundles */ = {
@@ -6900,6 +6992,7 @@
 				87459C9C1E4F0DCD00743120 /* RadioButtonView.xib in Resources */,
 				875744631EA60E8E001B518A /* Yalda-72@2x.png in Resources */,
 				875743661EA60DA5001B518A /* Birthday-Small-50.png in Resources */,
+				619351A61ECAC9A900330E5C /* CatalogGridCollectionViewCell.xib in Resources */,
 				9A564CBB1B34273800F23057 /* JASellerRatingsViewController~ipad.xib in Resources */,
 				875743481EA60D8E001B518A /* Autumn-Small-40@2x.png in Resources */,
 				879F87F21E5057F10033FE87 /* PlainTableViewHeaderCell.xib in Resources */,
@@ -6912,6 +7005,7 @@
 				87CE1DCC1E619204000A2C9E /* DeliveryTimeTableViewCell.xib in Resources */,
 				CE9AE0581AB6D78200D56481 /* JAPDVVariations.xib in Resources */,
 				CE9AE0611AB6D78200D56481 /* JAOrangeButtonCell_ipad_portrait.xib in Resources */,
+				619351B11ECACA1F00330E5C /* CatalogListCollectionViewCell.xib in Resources */,
 				875743AB1EA60DE0001B518A /* Ramadan-60@3x.png in Resources */,
 				CE9AE0691AB6D78200D56481 /* JAOrangeButtonCell_ipad_landscape.xib in Resources */,
 				8757439E1EA60DE0001B518A /* Ramadan@2x.png in Resources */,
@@ -7084,6 +7178,7 @@
 				61BA9B561E9A0645004E9DE8 /* EmarsysRecommendationCarouselCollectionViewCell.xib in Resources */,
 				875744451EA60E71001B518A /* Winter-72.png in Resources */,
 				875744031EA60E2D001B518A /* Summer-Small-40.png in Resources */,
+				619351AC1ECAC9DD00330E5C /* CatalogCardCollectionViewCell.xib in Resources */,
 				87D07D6F1E40939100C00AC6 /* Checkout.storyboard in Resources */,
 				875743C61EA60DFD001B518A /* SpecialOffer-76@2x.png in Resources */,
 				875743651EA60DA5001B518A /* Birthday-Small-50@2x.png in Resources */,
@@ -7346,6 +7441,7 @@
 				61E099641E3E0E21004ED14E /* IconTableViewCell.m in Sources */,
 				CE59BEFA1AE7EF0B0057F4E2 /* JAShopTeaserView.m in Sources */,
 				9A86F80A1C281F8F001A91D5 /* JARecentlyViewedViewController.m in Sources */,
+				61FE97D71EC9C19300DF233D /* ListCollectionViewFlowLayout.swift in Sources */,
 				879F87F91E507FD10033FE87 /* BaseModel.m in Sources */,
 				613FF2BF1E4B2871008660CF /* AuthenticationContainerViewController.m in Sources */,
 				CE9ADF4C1AB6D78200D56481 /* UIImageView+JA.m in Sources */,
@@ -7371,6 +7467,7 @@
 				FF4383F11C71DCE1003BA957 /* JANewsletterSubscriptionViewController.m in Sources */,
 				CE9ADF571AB6D78200D56481 /* JACampaignBannerCell.m in Sources */,
 				CE59BF011AE801DA0057F4E2 /* JABrandTeaserView.m in Sources */,
+				619351B01ECACA1F00330E5C /* CatalogListCollectionViewCell.swift in Sources */,
 				9A3D21881CA4057A00FE41B6 /* JAChooseCountryTableViewCell.m in Sources */,
 				CE9ADF581AB6D78200D56481 /* JAEditAddressViewController.m in Sources */,
 				8702FBCC1E991C9A001D1AA9 /* LogoutEvent.m in Sources */,
@@ -7391,6 +7488,7 @@
 				875AD5701E38C0C900584ABF /* RISeller.m in Sources */,
 				89C177BF1BC2EC17006D3B19 /* JAPDVProductInfoSellerInfo.m in Sources */,
 				879F88051E50B2940033FE87 /* AuthenticationBaseViewController.m in Sources */,
+				619351A51ECAC9A900330E5C /* CatalogGridCollectionViewCell.swift in Sources */,
 				8702FBC21E990C2D001D1AA9 /* OpenAppEvent.m in Sources */,
 				CE9ADF621AB6D78200D56481 /* JASellerRatingsViewController.m in Sources */,
 				875081B31E532E400031ECBF /* AddressViewController.m in Sources */,
@@ -7426,6 +7524,7 @@
 				875AD5801E38C0C900584ABF /* RITrackingWrapper.m in Sources */,
 				CE9ADF7D1AB6D78200D56481 /* JAPDVImageSection.m in Sources */,
 				61C5C4191E54796A00F22130 /* RecieptViewCartTableViewCell.m in Sources */,
+				61C860411ECAF94400F2C571 /* AppUtitlity.swift in Sources */,
 				CE9ADF831AB6D78200D56481 /* JAHomeViewController.m in Sources */,
 				875AD5791E38C0C900584ABF /* RISuccess.m in Sources */,
 				CE9ADF861AB6D78200D56481 /* JAColorFilterCell.m in Sources */,
@@ -7444,6 +7543,7 @@
 				875AD5721E38C0C900584ABF /* RISellerReviewInfo.m in Sources */,
 				8976FB321C0F3F4300483651 /* JATextFilterCell.m in Sources */,
 				875AD5521E38C0C900584ABF /* RITeaserComponent.m in Sources */,
+				61C8604C1ECB3C0F00F2C571 /* String.swift in Sources */,
 				875AD5661E38C0C900584ABF /* RIPaymentInformation.m in Sources */,
 				875081B91E53309A0031ECBF /* AddressEditViewController.m in Sources */,
 				CEE558661AFCC2FB00FC87D4 /* JARadioRelatedComponent.m in Sources */,
@@ -7470,6 +7570,7 @@
 				875AD56B1E38C0C900584ABF /* RIProduct.m in Sources */,
 				618204991E6D465500322937 /* SearchCategoryFilter.m in Sources */,
 				CEA107011BD78CE500EF88B1 /* JATabBarView.m in Sources */,
+				61C860471ECB1EAF00F2C571 /* CardCollectionViewFlowLayout.swift in Sources */,
 				CE28A7AA1BDE987400B1FADA /* JATabBarButton.m in Sources */,
 				61C5C4141E54674600F22130 /* CartEntitySummaryViewControl.m in Sources */,
 				CE9ADF9E1AB6D78200D56481 /* JAOtherOffersView.m in Sources */,
@@ -7640,6 +7741,7 @@
 				612FDC371E45E0A900A9D0BD /* CartTableViewCell.m in Sources */,
 				CE9ADFEF1AB6D78200D56481 /* JAPickerScrollView.m in Sources */,
 				870BEA801E73F5CB00C5B615 /* ThemeKeys.m in Sources */,
+				61FE97D51EC9BB7700DF233D /* GridCollectionViewFlowLayout.swift in Sources */,
 				875AD5411E38C0C900584ABF /* RIApi.m in Sources */,
 				CE9ADFF11AB6D78200D56481 /* JARecentSearchesViewController.m in Sources */,
 				CE28A79B1BD9475100B1FADA /* JAMoreMenuViewController.m in Sources */,
@@ -7649,6 +7751,7 @@
 				879F87F51E5058060033FE87 /* PlainTableViewHeaderCell.m in Sources */,
 				9A38764E1BCD0CDC0088B186 /* JATabNavigationViewController.m in Sources */,
 				CE9ADFF41AB6D78200D56481 /* JAActivityViewController.m in Sources */,
+				619351AB1ECAC9DD00330E5C /* CatalogCardCollectionViewCell.swift in Sources */,
 				CE9ADFF61AB6D78200D56481 /* JAShippingInfoCell.m in Sources */,
 				87459C8D1E4F04AD00743120 /* RadioButtonViewControl.m in Sources */,
 				9AC4D6991B45A51A00036F1C /* JACatalogListCollectionViewCell.m in Sources */,
@@ -7669,6 +7772,7 @@
 				9A007C791C203355007D99FC /* JAMyAccountViewController.m in Sources */,
 				CEDBF8651B0A01B60073971A /* UIImage+Mirror.m in Sources */,
 				9A55A6991BC2E8AA008EF4A6 /* JABundlesViewController.m in Sources */,
+				61C860491ECB370300F2C571 /* BaseCatallogCollectionViewCell.swift in Sources */,
 				87DAABF31E55DDF400445EBB /* AlertManager.m in Sources */,
 				8714E0491E45FDF9004C9B1D /* NSMutableString+Extensions.m in Sources */,
 				CE9ADFFD1AB6D78200D56481 /* JATeaserPageView.m in Sources */,

@@ -8,7 +8,12 @@
 
 import UIKit
 
-@objc class CatalogViewController: BaseViewController, DataServiceProtocol, JAFiltersViewControllerDelegate, CatalogHeaderViewDelegate {
+@objc class CatalogViewController: BaseViewController,
+                                    DataServiceProtocol,
+                                    JAFiltersViewControllerDelegate,
+                                    CatalogHeaderViewDelegate,
+                                    UICollectionViewDataSource,
+                                    UICollectionViewDelegate {
     
     @IBOutlet private weak var catalogHeader: CatalogHeaderControl!
     @IBOutlet private weak var collectionView: UICollectionView!
@@ -20,6 +25,7 @@ import UIKit
     var pushFilterQueryString : String?
     var activeFilters : [CatalogFilterItem]?
     var activePriceFilter: CatalogPriceFilterItem?
+    private var listViewType: CatalogListViewType = .grid
     
     //TODO: this property is only used for passing enum (swift type) property from objective c
     // so we have to remove it after migration those who wanna pass this property
@@ -40,10 +46,16 @@ import UIKit
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = Theme.color(kColorVeryLightGray)
         
         self.catalogHeader.delegate = self
         self.setSortingMethodToHeader()
-        
+        self.collectionView.delegate = self
+        self.collectionView.dataSource = self
+        self.collectionView.register(UINib(nibName: CatalogListCollectionViewCell.nibName, bundle: nil), forCellWithReuseIdentifier: CatalogListCollectionViewCell.nibName)
+        self.collectionView.register(UINib(nibName: CatalogCardCollectionViewCell.nibName, bundle: nil), forCellWithReuseIdentifier: CatalogCardCollectionViewCell.nibName)
+        self.collectionView.register(UINib(nibName: CatalogGridCollectionViewCell.nibName, bundle: nil), forCellWithReuseIdentifier: CatalogGridCollectionViewCell.nibName)
+        self.collectionView.setCollectionViewLayout(self.getProperCollectionViewFlowLayout(), animated: true)
         self.loadData()
     }
     
@@ -66,6 +78,7 @@ import UIKit
         } else if rid == 1, let catalogData = data as? Catalog, catalogData.products.count > 0 {
             self.catalogData?.products.append(contentsOf: catalogData.products)
         }
+        self.collectionView.reloadData()
     }
     
     //MARK - JAFiltersViewControllerDelegate
@@ -91,7 +104,12 @@ import UIKit
     }
     
     func changeListViewType(type: CatalogListViewType) {
-        
+        self.listViewType = type
+        self.collectionView.reloadData()
+        UIView.animate(withDuration: 0.15, animations: { 
+            self.collectionView.collectionViewLayout.invalidateLayout()
+            self.collectionView.setCollectionViewLayout(self.getProperCollectionViewFlowLayout(), animated: true)
+        }, completion: nil)
     }
     
     
@@ -100,6 +118,25 @@ import UIKit
     private func setSortingMethodToHeader() {
         if self.sortingMethod != .populaity {
             self.catalogHeader.setSortingType(type: self.sortingMethod)
+        }
+    }
+    
+    private(set) lazy var gridFlowLayout: GridCollectionViewFlowLayout = {
+       return GridCollectionViewFlowLayout()
+    }()
+    private(set) lazy var listFlowLayout: ListCollectionViewFlowLayout = {
+        return ListCollectionViewFlowLayout()
+    }()
+    private(set) lazy var cardFlowLayout: CardCollectionViewFlowLayout = {
+        return CardCollectionViewFlowLayout()
+    }()
+    private func getProperCollectionViewFlowLayout () -> UICollectionViewFlowLayout {
+        if self.listViewType == .grid {
+            return gridFlowLayout
+        } else if self.listViewType == .list {
+            return listFlowLayout
+        } else  {
+            return cardFlowLayout
         }
     }
     
@@ -182,6 +219,35 @@ import UIKit
             self.bind(data, forRequestId: 1)
         }
     }
+    
+    
+    //MARK - UICollectionViewDataSource & UICollectionViewDelegate
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        var cell: BaseCatallogCollectionViewCell!
+        if self.listViewType == .grid {
+            cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: CatalogGridCollectionViewCell.nibName, for: indexPath) as! CatalogGridCollectionViewCell
+        } else if self.listViewType == .list {
+            cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: CatalogListCollectionViewCell.nibName, for: indexPath) as! CatalogListCollectionViewCell
+        } else {
+            cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: CatalogCardCollectionViewCell.nibName, for: indexPath) as! CatalogCardCollectionViewCell
+        }
+    
+        cell.updateWithProduct(product: self.catalogData!.products[indexPath.row])
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return (self.catalogData != nil) ? self.catalogData!.products.count : 0
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
     
     
     //MARK - prepareForSegue

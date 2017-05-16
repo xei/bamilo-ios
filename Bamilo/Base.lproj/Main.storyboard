@@ -927,24 +927,36 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UiY-yi-baF" userLabel="Catalog header" customClass="CatalogHeaderControl" customModule="Bamilo" customModuleProvider="target">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" translatesAutoresizingMaskIntoConstraints="NO" id="UiY-yi-baF" userLabel="Catalog header" customClass="CatalogHeaderControl" customModule="Bamilo" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="20" width="414" height="40"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="7wM-DA-gpN"/>
                                 </constraints>
                             </view>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="uvl-Jb-YwM">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wP7-Pc-1Pj" userLabel="colletion view container">
                                 <rect key="frame" x="0.0" y="60" width="414" height="676"/>
+                                <subviews>
+                                    <collectionView contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="CDQ-8E-fbn">
+                                        <rect key="frame" x="5" y="5" width="404" height="666"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="jTl-Lx-f52">
+                                            <size key="itemSize" width="50" height="50"/>
+                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        </collectionViewFlowLayout>
+                                        <cells/>
+                                    </collectionView>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ZsP-yT-AX3">
-                                    <size key="itemSize" width="50" height="50"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells/>
-                            </collectionView>
+                                <constraints>
+                                    <constraint firstItem="CDQ-8E-fbn" firstAttribute="leading" secondItem="wP7-Pc-1Pj" secondAttribute="leading" constant="5" id="Cl6-x0-IDS"/>
+                                    <constraint firstItem="CDQ-8E-fbn" firstAttribute="top" secondItem="wP7-Pc-1Pj" secondAttribute="top" constant="5" id="Xnd-MA-eYf"/>
+                                    <constraint firstAttribute="bottom" secondItem="CDQ-8E-fbn" secondAttribute="bottom" constant="5" id="eOU-74-9XP"/>
+                                    <constraint firstAttribute="trailing" secondItem="CDQ-8E-fbn" secondAttribute="trailing" constant="5" id="kLf-T2-tbL"/>
+                                </constraints>
+                            </view>
                             <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eAy-WM-iDC">
                                 <rect key="frame" x="0.0" y="20" width="414" height="716"/>
                                 <connections>
@@ -952,24 +964,24 @@
                                 </connections>
                             </containerView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.92549019610000005" green="0.92549019610000005" blue="0.92549019610000005" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="uvl-Jb-YwM" firstAttribute="leading" secondItem="NAL-9e-Ury" secondAttribute="leading" id="4nS-ea-Oie"/>
                             <constraint firstItem="UiY-yi-baF" firstAttribute="left" secondItem="NAL-9e-Ury" secondAttribute="left" id="5Zo-2E-w2W"/>
+                            <constraint firstItem="mY3-o9-UW7" firstAttribute="top" secondItem="wP7-Pc-1Pj" secondAttribute="bottom" id="HhU-xp-7QM"/>
                             <constraint firstItem="UiY-yi-baF" firstAttribute="top" secondItem="BAm-y5-w81" secondAttribute="bottom" id="IJQ-zH-kMl"/>
+                            <constraint firstItem="wP7-Pc-1Pj" firstAttribute="top" secondItem="UiY-yi-baF" secondAttribute="bottom" id="Kqx-SE-sgS"/>
                             <constraint firstAttribute="right" secondItem="UiY-yi-baF" secondAttribute="right" id="LFS-qa-Nv6"/>
-                            <constraint firstItem="mY3-o9-UW7" firstAttribute="top" secondItem="uvl-Jb-YwM" secondAttribute="bottom" id="TV0-sH-ajC"/>
+                            <constraint firstAttribute="trailing" secondItem="wP7-Pc-1Pj" secondAttribute="trailing" id="S0o-g8-BOx"/>
+                            <constraint firstItem="wP7-Pc-1Pj" firstAttribute="leading" secondItem="NAL-9e-Ury" secondAttribute="leading" id="UvH-Mu-3Hl"/>
                             <constraint firstItem="eAy-WM-iDC" firstAttribute="leading" secondItem="NAL-9e-Ury" secondAttribute="leading" id="eJ2-47-Dt3"/>
-                            <constraint firstItem="uvl-Jb-YwM" firstAttribute="top" secondItem="UiY-yi-baF" secondAttribute="bottom" id="gQK-sh-Ynw"/>
                             <constraint firstItem="mY3-o9-UW7" firstAttribute="top" secondItem="eAy-WM-iDC" secondAttribute="bottom" id="lue-O9-svx"/>
                             <constraint firstItem="eAy-WM-iDC" firstAttribute="top" secondItem="BAm-y5-w81" secondAttribute="bottom" id="onA-Cm-ru6"/>
-                            <constraint firstAttribute="trailing" secondItem="uvl-Jb-YwM" secondAttribute="trailing" id="sJi-QF-zOg"/>
                             <constraint firstAttribute="trailing" secondItem="eAy-WM-iDC" secondAttribute="trailing" id="wzq-JX-48w"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="catalogHeader" destination="UiY-yi-baF" id="b7m-Ug-LPY"/>
-                        <outlet property="collectionView" destination="uvl-Jb-YwM" id="NQe-FM-Ro5"/>
+                        <outlet property="collectionView" destination="CDQ-8E-fbn" id="QVO-Bd-QC4"/>
                         <outlet property="noResultViewContainer" destination="eAy-WM-iDC" id="M5h-nJ-cCy"/>
                         <segue destination="L8G-Sy-CpX" kind="show" identifier="showFilterView" id="JKW-Pq-7fE"/>
                     </connections>
