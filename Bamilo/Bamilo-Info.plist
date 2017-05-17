@@ -2,22 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Configs</key>
-	<dict>
-		<key>EMMerchantID</key>
-		<string>18146DE34FE0B8C9</string>
-		<key>GoogleAnalyticsID</key>
-		<string>UA-57415371-2</string>
-		<key>Emarsys</key>
-		<dict>
-			<key>Application_CODE</key>
-			<string>82449-6B792</string>
-			<key>Application_PASSWORD</key>
-			<string>oKjusj5sk9ebqCYgi38XdM/PtPCPqLTl</string>
-		</dict>
-		<key>Pushwoosh_BETA</key>
-		<string>0</string>
-	</dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleExecutable</key>
+	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIcons</key>
 	<dict>
 		<key>CFBundleAlternateIcons</key>
@@ -109,10 +97,22 @@
 	<string>NONE</string>
 	<key>PW_USE_GPS</key>
 	<true/>
-	<key>CFBundleDevelopmentRegion</key>
-	<string>en</string>
-	<key>CFBundleExecutable</key>
-	<string>${EXECUTABLE_NAME}</string>
+	<key>Configs</key>
+	<dict>
+		<key>EMMerchantID</key>
+		<string>18146DE34FE0B8C9</string>
+		<key>GoogleAnalyticsID</key>
+		<string>UA-57415371-2</string>
+		<key>Emarsys</key>
+		<dict>
+			<key>Application_CODE</key>
+			<string>82449-6B792</string>
+			<key>Application_PASSWORD</key>
+			<string>oKjusj5sk9ebqCYgi38XdM/PtPCPqLTl</string>
+		</dict>
+		<key>Pushwoosh_BETA</key>
+		<string>0</string>
+	</dict>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -120,7 +120,7 @@
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundleVersion</key>
-	<string>5</string>
+	<string>35</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
