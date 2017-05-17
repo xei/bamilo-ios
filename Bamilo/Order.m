@@ -8,21 +8,28 @@
 
 #import "Order.h"
 
+#define OrderRegisteredAPIStatusesPredicate [NSPredicate predicateWithFormat:@"SELF IN %@", @[@"new", @"payment_pending", @"order_verification_pending", @"order_verification_in_progress"]]
+#define OrderInProgressAPIStatusesPredicate [NSPredicate predicateWithFormat:@"SELF IN %@", @[@"exportable", @"exported"]]
+#define OrderShippedAPIStatusesPredicate [NSPredicate predicateWithFormat:@"SELF IN %@", @[@"shipped"]]
+#define OrderDeliveredAPIStatusesPredicate [NSPredicate predicateWithFormat:@"SELF IN %@", @[@"delivered"]]
+#define OrderCancelledAPIStatusesPredicate [NSPredicate predicateWithFormat:@"SELF IN %@", @[@"canceled", @"invalid", @"canceled_before_payment", @"incomplete"]]
+
 @implementation Order
+
 #pragma mark - JSONModel
 + (JSONKeyMapper *)keyMapper {
     return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{
-                                                                  @"orderId":@"number",
-                                                                  @"creationDate":@"date",
-                                                                  @"price":@"total",
-                                                                  @"formattedPrice":@"total",
-                                                                  @"shippingAddress": @"shipping_address",
-                                                                  @"billingAddress":@"billing_address",
-                                                                  @"products":@"products",
-                                                                  @"paymentReference":@"payment.transaction_reference",
-                                                                  @"paymentDescription":@"payment.transaction_description",
-                                                                  @"paymentMethod":@"payment.title"
-                                                                  }];
+              @"orderId":@"number",
+              @"creationDate":@"date",
+              @"price":@"total",
+              @"formattedPrice":@"total",
+              @"shippingAddress": @"shipping_address",
+              @"billingAddress":@"billing_address",
+              @"products":@"products",
+              @"paymentReference":@"payment.transaction_reference",
+              @"paymentDescription":@"payment.transaction_description",
+              @"paymentMethod":@"payment.title"
+    }];
 }
 
 
@@ -65,51 +72,53 @@
             self.paymentDescription = [[dict objectForKey:@"payment"] objectForKey:@"status_description"];
         }
     }
-    NSString *orderStatus = [dict objectForKey:@"status"];
-    if (!orderStatus.length && [dict objectForKey:@"status"]) {
-        orderStatus = dict[@"status"][@"name"];
-    }
     
-    if(orderStatus.length) {
-        self.orderStatus = [self statusTypeFromString:orderStatus];
+    if([dict objectForKey:@"status"]) {
+        self.orderStatus = [self mapServiceStatusTypeFromString:[dict objectForKey:@"status"]];
+    } else {
+        NSString *productStatus = [self getStatusFromProductStatus:dict];
+        if(productStatus) {
+            self.orderStatus = [self mapServiceStatusTypeFromString:productStatus];
+        } else {
+            NSArray *products = [dict objectForKey:@"products"];
+            int _max_status = 99;
+            for(NSDictionary *product in products) {
+                productStatus = [self getStatusFromProductStatus:product];
+                if(productStatus) {
+                    _max_status = MIN(_max_status, [self mapServiceStatusTypeFromString:productStatus]);
+                }
+            }
+            self.orderStatus = _max_status;
+        }
     }
     
     return YES;
 }
 
 #pragma mark - Helpers
--(int) statusTypeFromString:(NSString *)statusString {
-    if([statusString isEqualToString:@"new"]) {
-        return OrderStatusTypeNew;
-    } else if([statusString isEqualToString:@"order_verification_pending"]) {
-        return OrderStatusVerificationPending;
-    } else if([statusString isEqualToString:@"order_verification_in_progress"]) {
-        return OrderStatusTypeVerificationInProgress;
-    } else if([statusString isEqualToString:@"exportable"]) { //3
-        return OrderStatusTypeExportable;
-    } else if([statusString isEqualToString:@"exported"]) { //4
-        return OrderStatusTypeExported;
-    } else if([statusString isEqualToString:@"shipped"]) {
-        return OrderStatusTypeShipped;
-    } else if([statusString isEqualToString:@"delivered"]) {
-        return OrderStatusTypeDelivered;
-    } else if([statusString isEqualToString:@"delivery_failed"]) { //3
-        return OrderStatusTypeDeliveryFailed;
-    } else if([statusString isEqualToString:@"closed"]) { //4
-        return OrderStatusTypeClosed;
-    } else if([statusString isEqualToString:@"returned"]) {
-        return OrderStatusTypeReturned;
-    } else if([statusString isEqualToString:@"replaced"]) {
-        return OrderStatusTypeReplaced;
-    } else if([statusString isEqualToString:@"return_denied"]) { //3
-        return OrderStatusTypeReturnDenied;
-    } else if([statusString isEqualToString:@"refunded_after_return"]) { //4
-        return OrderStatusTypeRefundedAfterReturn;
-    } else if([statusString isEqualToString:@"canceled"]) { //4
-        return OrderStatusTypeCanceled;
+-(NSString *)getStatusFromProductStatus:(NSDictionary *)product {
+    NSDictionary *productStatus = [product objectForKey:@"status"];
+    if(productStatus) {
+        return [productStatus objectForKey:@"name"];
     }
     
-    return -1;
+    return nil;
+}
+
+-(int) mapServiceStatusTypeFromString:(NSString *)statusString {
+    if([OrderRegisteredAPIStatusesPredicate evaluateWithObject:statusString]) {
+        return OrderStatusRegistered;
+    } else if([OrderInProgressAPIStatusesPredicate evaluateWithObject:statusString]) {
+        return OrderStatusInProgress;
+    } else if([OrderShippedAPIStatusesPredicate evaluateWithObject:statusString]){
+        return OrderStatusShipped;
+    } else if([OrderDeliveredAPIStatusesPredicate evaluateWithObject:statusString]) {
+        return OrderStatusDelivered;
+    } else if([OrderCancelledAPIStatusesPredicate evaluateWithObject:statusString]) {
+        return OrderStatusCancelled;
+    }
+    
+    return 99; //Ignore
 }
 
 @end

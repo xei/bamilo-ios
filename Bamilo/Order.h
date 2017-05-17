@@ -11,20 +11,11 @@
 #import "Address.h"
 
 typedef NS_ENUM(NSUInteger, OrderStatusType) {
-    OrderStatusTypeNew = 0,
-    OrderStatusVerificationPending = 1,
-    OrderStatusTypeVerificationInProgress,
-    OrderStatusTypeExportable,
-    OrderStatusTypeExported,
-    OrderStatusTypeShipped,
-    OrderStatusTypeDelivered,
-    OrderStatusTypeDeliveryFailed,
-    OrderStatusTypeClosed,
-    OrderStatusTypeReturned,
-    OrderStatusTypeReplaced,
-    OrderStatusTypeReturnDenied,
-    OrderStatusTypeRefundedAfterReturn,
-    OrderStatusTypeCanceled
+    OrderStatusRegistered = 1,
+    OrderStatusInProgress = 2,
+    OrderStatusShipped = 3,
+    OrderStatusDelivered= 4,
+    OrderStatusCancelled = 5
 };
 
 @interface Order : BaseModel

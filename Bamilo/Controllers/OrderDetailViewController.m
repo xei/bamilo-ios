@@ -184,33 +184,32 @@
     ];
 
     switch (order.orderStatus) {
-        case OrderStatusTypeNew: {
+        case OrderStatusRegistered: {
             ((ProgressItemViewModel *)progressViewControlContent[0]).type = PROGRESS_ITEM_ACTIVE;
         }
         break;
 
-        case OrderStatusTypeVerificationInProgress:
-        case OrderStatusTypeExportable : {
+        case OrderStatusInProgress: {
             ((ProgressItemViewModel *)progressViewControlContent[0]).type = PROGRESS_ITEM_DONE;
             ((ProgressItemViewModel *)progressViewControlContent[1]).type = PROGRESS_ITEM_ACTIVE;
         }
         break;
 
-        case OrderStatusTypeShipped: {
+        case OrderStatusShipped: {
             ((ProgressItemViewModel *)progressViewControlContent[0]).type = PROGRESS_ITEM_DONE;
             ((ProgressItemViewModel *)progressViewControlContent[1]).type = PROGRESS_ITEM_DONE;
             ((ProgressItemViewModel *)progressViewControlContent[2]).type = PROGRESS_ITEM_ACTIVE;
         }
         break;
 
-        case OrderStatusTypeDelivered: {
+        case OrderStatusDelivered: {
             ((ProgressItemViewModel *)progressViewControlContent[0]).type = PROGRESS_ITEM_DONE;
             ((ProgressItemViewModel *)progressViewControlContent[1]).type = PROGRESS_ITEM_DONE;
             ((ProgressItemViewModel *)progressViewControlContent[2]).type = PROGRESS_ITEM_DONE;
         }
         break;
 
-        case OrderStatusTypeCanceled: {
+        case OrderStatusCancelled: {
             ((ProgressItemViewModel *)progressViewControlContent[0]).type = PROGRESS_ITEM_PENDING;
             ((ProgressItemViewModel *)progressViewControlContent[1]).type = PROGRESS_ITEM_PENDING;
             ((ProgressItemViewModel *)progressViewControlContent[2]).type = PROGRESS_ITEM_ERROR;
