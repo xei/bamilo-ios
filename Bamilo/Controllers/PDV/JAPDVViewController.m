@@ -54,6 +54,7 @@ typedef void (^ProcessActionBlock)(void);
     BOOL _needRefreshProduct;
     BOOL _needAddToFavBlock;
     ProcessActionBlock _processActionBlock;
+    EmarsysRecommendationGridWidgetView *_recommendationView;
 }
 
 @property (strong, nonatomic) UIScrollView *mainScrollView;
@@ -2070,7 +2071,6 @@ typedef void (^ProcessActionBlock)(void);
     return @"PRODUCT";
 }
 
-
 #pragma mark - DataServiceProtocol
 -(void)bind:(id)data forRequestId:(int)rid {
     switch (rid) {
@@ -2096,7 +2096,6 @@ typedef void (^ProcessActionBlock)(void);
 }
 
 - (NSArray<EMRecommendationRequest *> *)getRecommendations {
-
     EMRecommendationRequest *recommend = [EMRecommendationRequest requestWithLogic:@"RELATED"];
     recommend.limit = 4;
     recommend.completionHandler = ^(EMRecommendationResult *_Nonnull result) {
@@ -2110,19 +2109,24 @@ typedef void (^ProcessActionBlock)(void);
         return [RecommendItem instanceWithEMRecommendationItem:item];
     }];
     
-    EmarsysRecommendationGridWidgetView *recommendationView = [EmarsysRecommendationGridWidgetView nibInstance];
-    recommendationView.delegate = self;
-    
-    [recommendationView setHeight:[EmarsysRecommendationGridWidgetView preferredHeightWithContentModel:recommendItems boundWidth:self.mainScrollView.width]];
-    [recommendationView updateTitle:STRING_BAMILO_RECOMMENDATION];
-    [recommendationView setWidgetBacgkround:JABlack300Color];
-    
-    [ThreadManager executeOnMainThread:^{
-        [recommendationView setFrame:CGRectMake(0, self.mainScrollView.contentSize.height, self.mainScrollView.width, recommendationView.height)];
-        [self.mainScrollView addSubview:recommendationView];
-        [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.width, self.mainScrollView.contentSize.height + recommendationView.height)];
-        [recommendationView updateWithModel:recommendItems];
-    }];
+    if(_recommendationView == nil) {
+        _recommendationView = [EmarsysRecommendationGridWidgetView nibInstance];
+        _recommendationView.delegate = self;
+        
+        [_recommendationView setHeight:[EmarsysRecommendationGridWidgetView preferredHeightWithContentModel:recommendItems boundWidth:self.mainScrollView.width]];
+        [_recommendationView updateTitle:STRING_BAMILO_RECOMMENDATION];
+        [_recommendationView setWidgetBacgkround:JABlack300Color];
+        [ThreadManager executeOnMainThread:^{
+            [_recommendationView setFrame:CGRectMake(0, self.mainScrollView.contentSize.height, self.mainScrollView.width, _recommendationView.height)];
+            [self.mainScrollView addSubview:_recommendationView];
+            [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.width, self.mainScrollView.contentSize.height + _recommendationView.height)];
+            [_recommendationView updateWithModel:recommendItems];
+        }];
+    } else {
+        [ThreadManager executeOnMainThread:^{
+            [_recommendationView updateWithModel:recommendItems];
+        }];
+    }
 }
 
 #pragma mark - FeatureBoxCollectionViewWidgetViewDelegate
