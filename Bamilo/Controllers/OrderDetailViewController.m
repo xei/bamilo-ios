@@ -105,7 +105,6 @@
     }
 }
 
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
         return self.orderDetailInoArray.count;
@@ -126,8 +125,8 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    NSDictionary *userInfo = @{@"sku": ((OrderProduct *)self.order.products[indexPath.row]).sku};
-//    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication object:nil userInfo:userInfo];
+    NSDictionary *userInfo = @{@"sku": ((OrderProduct *)self.order.products[indexPath.row]).sku};
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication object:nil userInfo:userInfo];
     [self.tableview deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -158,21 +157,20 @@
 
 - (void)needsToShowProductReviewForProduct:(OrderProduct *)product {
     [[LoadingManager sharedInstance] showLoading];
-//    [RIProduct getCompleteProductWithSku:product.sku successBlock:^(id product) {
-//        [[LoadingManager sharedInstance] hideLoading];
-//        NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
-//        if(VALID_NOTEMPTY(product, RIProduct)) {
-//            [userInfo setObject:product forKey:@"product"];
-//        }
-//        [userInfo setObject:@"reviews" forKey:@"product.screen"];
-//        [[NSNotificationCenter defaultCenter] postNotificationName:kShowProductSpecificationScreenNotification object:nil userInfo:userInfo];
-//    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-//        [[LoadingManager sharedInstance] hideLoading];
-//        if (error.count && ![self showNotificationBarMessage:error[0] isSuccess:NO]) {
-//
-//        }
-//    }];
+    [RIProduct getCompleteProductWithSku:product.sku successBlock:^(id product) {
+        [[LoadingManager sharedInstance] hideLoading];
+        NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
+        if(VALID_NOTEMPTY(product, RIProduct)) {
+            [userInfo setObject:product forKey:@"product"];
+        }
+        [userInfo setObject:@"reviews" forKey:@"product.screen"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowProductSpecificationScreenNotification object:nil userInfo:userInfo];
+    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
+        [[LoadingManager sharedInstance] hideLoading];
+        if (error.count && ![self showNotificationBarMessage:error[0] isSuccess:NO]) {
 
+        }
+    }];
 }
 
 #pragma mark - Helpers

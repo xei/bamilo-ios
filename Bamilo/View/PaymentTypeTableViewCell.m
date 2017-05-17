@@ -45,6 +45,10 @@
     }
 }
 
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [self didSelectRadioButton:self];
+}
+
 #pragma mark - RadioButtonViewControlDelegate
 -(void)didSelectRadioButton:(id)button {
     [self.delegate didSelectRadioButton:self];
