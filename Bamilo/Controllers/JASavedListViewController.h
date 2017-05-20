@@ -9,7 +9,8 @@
 #import "JABaseViewController.h"
 #import "JAPicker.h"
 #import "ProtectedViewControllerProtocol.h"
+#import "DataServiceProtocol.h"
 
-@interface JASavedListViewController : JABaseViewController <ProtectedViewControllerProtocol>
+@interface JASavedListViewController : JABaseViewController <ProtectedViewControllerProtocol, DataServiceProtocol>
 
 @end

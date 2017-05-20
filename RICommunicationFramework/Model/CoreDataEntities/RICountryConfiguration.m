@@ -203,20 +203,8 @@
 }
 
 + (NSString*)formatPrice:(NSNumber*)price country:(RICountryConfiguration*)country {
-//    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-//    [formatter setMaximumFractionDigits:[[country noDecimals] integerValue]];
-//    [formatter setMinimumFractionDigits:[[country noDecimals] integerValue]];
-//    [formatter setRoundingMode: NSNumberFormatterRoundHalfUp];
-//    [formatter setDecimalSeparator:[country decimalsSep]];
-//    [formatter setGroupingSeparator:[country thousandsSep]];
-//    [formatter setUsesGroupingSeparator:YES];
-    
-    if(!VALID_NOTEMPTY([country currencyPosition], NSNumber) || ![[country currencyPosition] boolValue]) {
-        return [NSString stringWithFormat:@"%@ %@", [country currencySymbol], price];
-    } else {
-        NSString *priceString = [NSString stringWithFormat:@"%@", price ?: @"0"];
-        return [NSString stringWithFormat:@"%@ %@", [[priceString formatPrice] numbersToPersian], [country currencySymbol]];
-    }
+    NSString *priceString = [NSString stringWithFormat:@"%ld", price.longValue ?: 0];
+    return [NSString stringWithFormat:@"%@ %@", [[priceString formatPrice] numbersToPersian], STRING_CURRENCY];
 }
 
 + (void)saveConfiguration:(RICountryConfiguration *)configuration andContext:(BOOL)save

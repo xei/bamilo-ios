@@ -11,132 +11,94 @@
 #import "RITeaserComponent.h"
 #import "PopularTeaserTableViewCell.h"
 #import "PlainTableViewHeaderCell.h"
+#import "EmarsysRecommendationCarouselWidget.h"
+#import "EmarsysPredictManager.h"
+#import "EmarsysPredictProtocol.h"
+#import "NSArray+Extension.h"
+#import "RecommendItem.h"
+#import "ThreadManager.h"
 
-@interface CatalogNoResultViewController ()
-    @property (weak, nonatomic) IBOutlet UITableView *tableView;
-    @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewHeightConstraint;
-    @property (weak, nonatomic) IBOutlet UILabel *noResultMessageUILabel;
-    @property (weak, nonatomic) IBOutlet UILabel *warningMessageUILabel;
-
-    @property (strong, nonatomic) RITeaserGrouping *teaserGroup;
+@interface CatalogNoResultViewController () <EmarsysPredictProtocol, FeatureBoxCollectionViewWidgetViewDelegate>
+@property (weak, nonatomic) IBOutlet UILabel *noResultMessageUILabel;
+@property (weak, nonatomic) IBOutlet UILabel *warningMessageUILabel;
+@property (strong, nonatomic) RITeaserGrouping *teaserGroup;
+@property (nonatomic, copy) NSString *searchTerm;
+@property (strong, nonatomic) IBOutlet EmarsysRecommendationCarouselWidget *carouselWidget;
 @end
 
 @implementation CatalogNoResultViewController
 
-const CGFloat tableViewCellHeight = 45;
-const CGFloat tableViewHeaderSectionHeight = 35;
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self getPopularTeasers];
+    [self.carouselWidget setBackgroundColor:JAHomePageBackgroundGrey];
+    self.carouselWidget.delegate = self;
     
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    
-    [self.tableView registerNib:[UINib nibWithNibName:[PopularTeaserTableViewCell nibName] bundle:nil]
-                    forCellReuseIdentifier:[PopularTeaserTableViewCell nibName]];
-    [self.tableView registerNib:[UINib nibWithNibName:[PlainTableViewHeaderCell nibName] bundle:nil]
-                    forCellReuseIdentifier:[PlainTableViewHeaderCell nibName]];
+    [self.carouselWidget updateTitle:STRING_BAMILO_RECOMMENDATION];
     
     [self.noResultMessageUILabel setFont: [UIFont fontWithName:kFontRegularName size:14]];
     [self.warningMessageUILabel setFont: [UIFont fontWithName:kFontLightName size:11]];
-
+    
+    [self.carouselWidget hide];
+    [self.view setBackgroundColor:[UIColor whiteColor]];
 }
 
-
-- (void)getPopularTeasers {
-    NSDictionary* popularTeaserJson = [self getPopularTeaserMock];
-    self.teaserGroup = [RITeaserGrouping parseTeaserGrouping:popularTeaserJson country:nil];
-    [self refreshView];
+- (void)getSuggestions {
+    [EmarsysPredictManager sendTransactionsOf:self];
 }
 
-- (NSDictionary *)getPopularTeaserMock {
-    return @{
-             @"type" : @"popular_teaser",
-             @"title": @"مجموعه های منتخب",
-             @"data" : @[
-                     @{
-                         @"image": @"fashion",
-                         @"title": @"مد و لباس",
-                         @"target":@"static_page::fashion-lp"
-                         },
-                     @{
-                         @"image": @"electronic-acc",
-                         @"title": @"لوازم جانبی الکترونیکی",
-                         @"target":@"shop_in_shop::electronic_accessories_lp"
-                         },
-                     @{
-                         @"image": @"home-life-style",
-                         @"title": @"خانه و سبک زندگی",
-                         @"target":@"shop_in_shop::home_furniture_lifestyle_lp"
-                         },
-                     
-                     @{
-                         @"image": @"health-and-beauty",
-                         @"title": @"زیبایی و سلامت",
-                         @"target":@"shop_in_shop::health_beauty_personal_care_lp"
-                         },
-                     @{
-                         @"image": @"mobile-tablet",
-                         @"title": @"موبایل و تبلت",
-                         @"target":@"shop_in_shop::smartphone_tablet_mobile_lp"
-                         }
-                     ]
-             };
-}
-
-- (void)refreshView {
-    dispatch_async(dispatch_get_main_queue(), ^{
-       self.tableViewHeightConstraint.constant = (tableViewCellHeight * self.teaserGroup.teaserComponents.count) + tableViewHeaderSectionHeight;
-    });
-    [self.tableView reloadData];
+- (void)updateNavBar {
+    self.navBarLayout.showBackButton = YES;
 }
 
 - (void)setSearchQuery:(NSString *)searchQuery {
+    self.searchTerm = searchQuery;
     NSString* msgToShow;
     if (searchQuery) {
-        
-        searchQuery = [searchQuery wrapWithMaxSize:7];
+        searchQuery = [searchQuery wrapWithMaxSize:20];
         msgToShow = [NSString stringWithFormat:@"متاسفانه برای %@ نتیجه یافت نشد", searchQuery];
-        
     } else { //if there is no searchQuery (e.g. comes from empty category
         msgToShow = @"متاسفانه موردی یافت نشد";
     }
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        self.noResultMessageUILabel.text = msgToShow;
-    });
+    [ThreadManager executeOnMainThread:^{
+      self.noResultMessageUILabel.text = msgToShow;
+    }];
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [[self.teaserGroup.teaserComponents objectAtIndex:indexPath.row] sendNotificationForTeaseTarget:nil];
-    [self.tableView deselectRowAtIndexPath:indexPath animated:false];
+#pragma mark - EmarsysPredictProtocol
+- (BOOL)isPreventSendTransactionInViewWillAppear {
+    return YES;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    PlainTableViewHeaderCell *headerCell = [self.tableView dequeueReusableCellWithIdentifier:[PlainTableViewHeaderCell nibName]];
-    headerCell.titleString = self.teaserGroup.title;
-    return headerCell;
+- (NSArray<EMRecommendationRequest *> *)getRecommendations {
+    EMRecommendationRequest *recommend = [EMRecommendationRequest requestWithLogic:@"PERSONAL"];
+    recommend.limit = 15;
+    recommend.completionHandler = ^(EMRecommendationResult *_Nonnull result) {
+        [ThreadManager executeOnMainThread:^{
+            [self.carouselWidget fadeIn:0.15];
+            [self.carouselWidget updateWithModel:[result.products map:^id(EMRecommendationItem *item) {
+                return [RecommendItem instanceWithEMRecommendationItem:item];
+            }]];
+        }];
+    };
+    
+    return @[recommend];
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return tableViewHeaderSectionHeight;
+- (EMTransaction *)getDataCollection:(EMTransaction *)transaction {
+    if (self.searchTerm) {
+        [transaction setSearchTerm:self.searchTerm];
+    }
+    return transaction;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return tableViewCellHeight;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    PopularTeaserTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:[PopularTeaserTableViewCell nibName] forIndexPath:indexPath];
-    RITeaserComponent* teaserComponent = [self.teaserGroup.teaserComponents objectAtIndex:indexPath.row];
-    cell.titleString = teaserComponent.title;
-    cell.imageUrl = teaserComponent.imagePortraitUrl;
-    return cell;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.teaserGroup.teaserComponents.count;
+#pragma mark - FeatureBoxCollectionViewWidgetViewDelegate
+- (void)selectFeatureItem:(NSObject *)item widgetBox:(id)widgetBox {
+    if ([item isKindOfClass:[RecommendItem class]]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName: kDidSelectTeaserWithPDVUrlNofication
+                                                            object: nil
+                                                          userInfo: @{@"sku": ((RecommendItem *)item).sku}];
+    }
 }
 
 @end

@@ -8,12 +8,14 @@
 
 #import "JAFiltersViewController.h"
 #import "JAFilterCell.h"
-#import "RIFilter.h"
 #import "JAGenericFiltersView.h"
 #import "JAPriceFiltersView.h"
+#import "SearchPriceFilter.h"
+#import "SearchFilterItem.h"
+#import "SearchCategoryFilter.h"
+#import "SubCatFilterViewController.h"
 
-@interface JAFiltersViewController () <UITableViewDataSource, UITableViewDelegate, JAFiltersViewDelegate>
-
+@interface JAFiltersViewController () <UITableViewDataSource, UITableViewDelegate, JAFiltersViewDelegate, SubCatFilterViewControllerDelegate>
 
 @property (nonatomic, strong) JAFiltersView* currentFilterView;
 @property (nonatomic, weak) IBOutlet UITableView* tableView;
@@ -22,13 +24,14 @@
 @property (nonatomic, weak) IBOutlet UILabel* discountOnlyUILabel;
 @property (weak, nonatomic) IBOutlet UISwitch *discountOnlyUISwitch;
 @property (weak, nonatomic) IBOutlet UIView *currentFilterContainerView;
-
 @property (nonatomic, strong) NSIndexPath* selectedIndexPath;
-@property (nonatomic) NSUInteger avaiablePriceFilterIndex;
-
+@property (weak, nonatomic) IBOutlet UIButton *subCatButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *subCatButtonHeightConstraint;
 @end
 
 @implementation JAFiltersViewController
+
+const int subCatButtonVisibleHeight = 50;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -38,25 +41,21 @@
     [self selectIndex:0];
     [self updateTitle];
     
-    // Get the index of price filter in filterArray
-    [self.filtersArray enumerateObjectsUsingBlock: ^(RIFilter *filter, NSUInteger index, BOOL *stop) {
-        if ([filter.uid isEqualToString:@"price"]) {
-            self.avaiablePriceFilterIndex = index;
-            *stop = YES;
-        }
-     }];
+    self.discountOnlyUISwitch.enabled = YES;
+    SearchPriceFilter *priceFilter = (SearchPriceFilter *)[self.filtersArray objectAtIndex:self.priceFilterIndex];
+    self.discountOnlyUISwitch.on = priceFilter.discountOnly;
     
-    if (self.avaiablePriceFilterIndex) {
-        self.discountOnlyUISwitch.enabled = YES;
-        RIFilter *priceFilter = [self.filtersArray objectAtIndex:self.avaiablePriceFilterIndex];
-        RIFilterOption *priceFilterOption = [priceFilter.options firstObject];
-        self.discountOnlyUISwitch.on = priceFilterOption.discountOnly;
+    [self.subCatButton applyStyle:kFontRegularName fontSize:11 color:[UIColor blackColor]];
+    [self.subCatButton setTitle:STRING_SUBCATEGORIES forState:UIControlStateNormal];
+    if (self.subCatsFilter && self.subCatsFilter.options.count) {
+        self.subCatButtonHeightConstraint.constant = subCatButtonVisibleHeight;
+    } else{
+        self.subCatButtonHeightConstraint.constant = 0;
     }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
@@ -75,14 +74,14 @@
 
 - (void)updateTitle {
     NSInteger totalSelected = 0;
-    for (RIFilter* filter in self.filtersArray) {
-        if ([filter.uid isEqualToString:@"price"]) {
-            RIFilterOption* option = [filter.options firstObject];
-            if (option.lowerValue > option.min || option.upperValue < option.max || YES == option.discountOnly) {
+    for (BaseSearchFilterItem* filter in self.filtersArray) {
+        if ([filter isKindOfClass:[SearchPriceFilter class]]) {
+            SearchPriceFilter *priceFilter = (SearchPriceFilter*)filter;
+            if (priceFilter.lowerValue > priceFilter.minPrice || priceFilter.upperValue < priceFilter.maxPrice || YES == priceFilter.discountOnly) {
                 totalSelected++;
             }
         } else {
-            for (RIFilterOption* option in filter.options) {
+            for (SearchFilterItemOption* option in ((SearchFilterItem*)filter).options) {
                 if (option.selected) {
                     totalSelected++;
                 }
@@ -96,9 +95,10 @@
         newTitle = [[NSString stringWithFormat:@"%@ (%ld)", STRING_FILTERS, (long)totalSelected] numbersToPersian];
     }
     if (![newTitle isEqualToString:self.navBarLayout.title]) {
+        
         //the title changed, force a reload
         self.navBarLayout.title = newTitle;
-        [self reloadNavBar];
+        //[self reloadNavBar];
     }
 }
 
@@ -128,9 +128,7 @@
         cell = [[JAFilterCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    
-    RIFilter* filter = [self.filtersArray objectAtIndex:indexPath.row];
-    
+
     BOOL cellIsSelected = NO;
     if (indexPath.row == self.selectedIndexPath.row) {
         cellIsSelected = YES;
@@ -140,7 +138,7 @@
     if (UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
         margin = 32.0f;
     }
-    [cell setupWithFilter:filter cellIsSelected:cellIsSelected width:tableView.frame.size.width margin:margin];
+    [cell setupWithFilter:[self.filtersArray objectAtIndex:indexPath.row] cellIsSelected:cellIsSelected width:tableView.frame.size.width margin:margin];
     cell.clickView.tag = indexPath.row;
     [cell.clickView addTarget:self action:@selector(cellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -162,17 +160,15 @@
     
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:oldSelectedIndexPath, self.selectedIndexPath, nil] withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.currentFilterView removeFromSuperview];
-    RIFilter* filter = [self.filtersArray objectAtIndex:index];
+    BaseSearchFilterItem* filter = [self.filtersArray objectAtIndex:index];
     
-    if ([filter.uid isEqualToString:@"price"]) {
-        
+    if ([filter isKindOfClass:[SearchPriceFilter class]]) {
         self.currentFilterView = [[[NSBundle mainBundle] loadNibNamed:@"JAPriceFiltersView" owner:self options:nil] objectAtIndex:0];
-        [(JAPriceFiltersView*)self.currentFilterView initializeWithPriceFilterOption:[filter.options firstObject]];
+        [(JAPriceFiltersView*)self.currentFilterView initializeWithPriceFilterOption:(SearchPriceFilter*)filter];
         
     } else {
-        
         self.currentFilterView = [[[NSBundle mainBundle] loadNibNamed:@"JAGenericFiltersView" owner:self options:nil] objectAtIndex:0];
-        [(JAGenericFiltersView*) self.currentFilterView initializeWithFilter:filter isLandscape:YES];
+        [(JAGenericFiltersView*) self.currentFilterView initializeWithFilter:(SearchFilterItem*)filter isLandscape:YES];
         
     }
     
@@ -185,13 +181,15 @@
     [self.currentFilterContainerView addSubview:self.currentFilterView];
 }
 
+- (IBAction)subCatButtonTapped:(id)sender {
+    [self performSegueWithIdentifier:@"pushFilterToSubCat" sender:sender];
+}
 
 #pragma mark - JAFiltersViewDelegate
-
 - (void)updatedValues {
     UITableViewRowAnimation animation = UITableViewRowAnimationAutomatic;
-    RIFilter* filter = [self.filtersArray objectAtIndex:self.selectedIndexPath.row];
-    if ([filter.uid isEqualToString:@"price"]) {
+    BaseSearchFilterItem *filter = [self.filtersArray objectAtIndex:self.selectedIndexPath.row];
+    if ([filter isKindOfClass:[SearchPriceFilter class]]) {
         animation = UITableViewRowAnimationNone;
     }
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:self.selectedIndexPath] withRowAnimation:animation];
@@ -199,16 +197,14 @@
 }
 
 #pragma Button Logic
-
 - (IBAction)clearAllFilters {
-    for (RIFilter* filter in self.filtersArray) {
-        if ([filter.uid isEqualToString:@"price"]) {
-            RIFilterOption* option = [filter.options firstObject];
-            option.lowerValue = option.min;
-            option.upperValue = option.max;
-            option.discountOnly = NO;
+    for (BaseSearchFilterItem* filter in self.filtersArray) {
+        if ([filter isKindOfClass:[SearchPriceFilter class]]) {
+            ((SearchPriceFilter*)filter).lowerValue = ((SearchPriceFilter*)filter).minPrice;
+            ((SearchPriceFilter*)filter).upperValue = ((SearchPriceFilter*)filter).maxPrice;
+            ((SearchPriceFilter*)filter).discountOnly = NO;
         } else {
-            for (RIFilterOption* option in filter.options) {
+            for (SearchFilterItemOption* option in ((SearchFilterItem *)filter).options) {
                 option.selected = NO;
             }
         }
@@ -221,6 +217,7 @@
 }
 
 - (IBAction) applyButtonPressed {
+    [self.view endEditing:YES];
     if (self.delegate && [self.delegate respondsToSelector:@selector(updatedFilters:)]) {
         [self.navigationController popViewControllerAnimated:true];
         [self.delegate updatedFilters:self.filtersArray];
@@ -229,8 +226,8 @@
 
 
 - (IBAction)discountOnlySwitch:(UISwitch *)sender {
-    if (self.avaiablePriceFilterIndex && self.filtersArray.count) {
-        ((RIFilterOption *) ([[(RIFilter *) ([self.filtersArray objectAtIndex:self.avaiablePriceFilterIndex]) options] firstObject])).discountOnly = sender.on;
+    if (self.priceFilterIndex && self.filtersArray.count) {
+        ((SearchPriceFilter *)[self.filtersArray objectAtIndex:self.priceFilterIndex]).discountOnly = sender.on;
     }
 }
 
@@ -276,4 +273,21 @@
     
     return height;
 }
+
+#pragma mark - prepareForSegue 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([segue.identifier isEqualToString:@"pushFilterToSubCat"]) {
+        SubCatFilterViewController *subCatViewCtrl = (SubCatFilterViewController *)segue.destinationViewController;
+        subCatViewCtrl.subCatsFilter = self.subCatsFilter;
+        subCatViewCtrl.delegate = self;
+    }
+}
+
+
+#pragma mark - SubCatFilterViewControllerDelegate
+- (void)submitSubCategoryFilterByUrlKey:(NSString *)urlKey {
+    [self.navigationController popViewControllerAnimated:NO];
+    [self.delegate subCategorySelected:urlKey];
+}
+
 @end

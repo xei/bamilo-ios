@@ -2,18 +2,25 @@
 //  SignInViewController.m
 //  Bamilo
 //
-//  Created by Ali saiedifar on 2/8/17.
+//  Created by Ali Saeedifar on 2/8/17.
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import "DataManager.h"
+#import "AuthenticationDataManager.h"
 #import "SignInViewController.h"
 #import "InputTextFieldControl.h"
 #import "UIScrollView+Extension.h"
+#import "EmarsysPredictManager.h"
+#import "PushWooshTracker.h"
+#import "EmarsysMobileEngage.h"
+#import <Crashlytics/Crashlytics.h>
 
 //Legacy importing
 #import "RICustomer.h"
 #import "JAUtils.h"
+
+#define cLoginMethodEmail @"email"
+#define cLoginMethodGoogle @"sso-google"
 
 @interface SignInViewController ()
 @property (weak, nonatomic) IBOutlet InputTextFieldControl *emailControl;
@@ -73,9 +80,20 @@
         return;
     }
     
-    [[DataManager sharedInstance] loginUser:self withUsername:[self.emailControl getStringValue] password:[self.passwordControl getStringValue] completion:^(id data, NSError *error) {
+    [[AuthenticationDataManager sharedInstance] loginUser:self withUsername:[self.emailControl getStringValue] password:[self.passwordControl getStringValue] completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
+            
+            //EVENT: LOGIN / SUCCESS
+            [TrackerManager postEvent:[EventFactory login:cLoginMethodEmail success:YES] forName:[LoginEvent name]];
+            
+            RICustomer *customer = [RICustomer getCurrentCustomer];
+            
+            [[EmarsysMobileEngage sharedInstance] sendLogin:[[PushNotificationManager pushManager] getPushToken] completion:nil];
+            [EmarsysPredictManager setCustomer:customer];
+        
+            [[PushWooshTracker sharedTracker] setUserID:customer.email];
+            [[Crashlytics sharedInstance] setUserEmail:customer.email];
             
             if (self.completion) {
                 self.completion(AUTHENTICATION_FINISHED_WITH_LOGIN);
@@ -83,6 +101,9 @@
                 [((UIViewController *)self.delegate).navigationController popViewControllerAnimated:YES];
             }
         } else {
+            //EVENT: LOGIN / FAILURE
+            [TrackerManager postEvent:[EventFactory login:cLoginMethodEmail success:NO] forName:[LoginEvent name]];
+            
             for(NSDictionary* errorField in [error.userInfo objectForKey:@"errorMessages"]) {
                 NSString *fieldName = errorField[@"field"];
                 if ([fieldName isEqualToString:@"password"]) {

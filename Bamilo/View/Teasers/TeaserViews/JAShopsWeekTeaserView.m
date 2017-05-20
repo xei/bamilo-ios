@@ -54,7 +54,7 @@
             NSString* imageUrl = component.imagePortraitUrl;
             UIImageView* imageView = [UIImageView new];
             imageView.contentMode = UIViewContentModeScaleAspectFit;
-            [imageView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"] completed:nil];
             [imageView setFrame:CGRectMake(clickableView.bounds.origin.x,
                                            clickableView.bounds.origin.y,
                                            clickableView.bounds.size.width,
@@ -68,8 +68,7 @@
     }
 }
 
-- (NSString*)teaserTrackingInfoForIndex:(NSInteger)index;
-{
+- (NSString*)teaserTrackingInfoForIndex:(NSInteger)index {
     NSString* teaserTrackingInfo = [NSString stringWithFormat:@"Shops_Week_%ld",(long)index];
     return teaserTrackingInfo;
 }

@@ -493,7 +493,7 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
 
 - (NSNumber *)getPrice
 {
-    return (VALID_NOTEMPTY(self.product.specialPriceEuroConverted, NSNumber) && [self.product.specialPriceEuroConverted floatValue] > 0.0f)? self.product.specialPriceEuroConverted : self.product.priceEuroConverted;
+    return (VALID_NOTEMPTY(self.product.specialPriceEuroConverted, NSNumber) && [self.product.specialPriceEuroConverted longValue] > 0.0f)? self.product.specialPriceEuroConverted : self.product.priceEuroConverted;
 }
 
 - (void)trackingEventAddBundleToCart:(RICart *)cart

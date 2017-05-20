@@ -23,7 +23,7 @@
     
     self.contentView.backgroundColor = [UIColor whiteColor];
     
-    [self.titleLabel applyStyle:kFontRegularName fontSize:12.0f color:cDARK_GRAY_COLOR];
+    [self.titleLabel applyStyle:[Theme font:kFontVariationRegular size:12.0f] color:[Theme color:kColorDarkGray]];
 }
 
 #pragma mark - Overrides
@@ -43,6 +43,10 @@
         self.radioButtonViewControl.delegate = self;
         [self.radioButtonViewControl setIsSelected:paymentTypeTableViewCellModel.isSelected];
     }
+}
+
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [self didSelectRadioButton:self];
 }
 
 #pragma mark - RadioButtonViewControlDelegate

@@ -24,8 +24,8 @@
     CartEntity *cartEntity = [[CartEntity alloc] init];
     
     BOOL showUnreducedPrice = NO;
-    CGFloat cartUnreducedValue = 0.0f;
-    CGFloat onlyProductDiscount = 0.0f;
+    long int cartUnreducedValue = 0;
+    long int onlyProductDiscount = 0;
     if ([dict objectForKey:@"products"]) {
         NSArray *cartItemObjects = [dict objectForKey:@"products"];
         if (VALID_NOTEMPTY(cartItemObjects, NSArray)) {
@@ -33,11 +33,11 @@
             for(NSDictionary *cartItemObject in cartItemObjects) {
                 RICartItem *cartItem = [RICartItem parseCartItem:cartItemObject country:country];
                 [cartItems addObject:cartItem];
-                cartUnreducedValue += ([cartItem.price floatValue] * [cartItem.quantity integerValue]);
+                cartUnreducedValue += ([cartItem.price longValue] * [cartItem.quantity integerValue]);
                 if (cartItem.specialPrice) {
-                    onlyProductDiscount += (([cartItem.price floatValue] - [cartItem.specialPrice floatValue]) * [cartItem.quantity integerValue]);
+                    onlyProductDiscount += (([cartItem.price longValue] - [cartItem.specialPrice longValue]) * [cartItem.quantity integerValue]);
                 }
-                if(!showUnreducedPrice && VALID_NOTEMPTY(cartItem.specialPrice , NSNumber) && 0.0f < [cartItem.specialPrice floatValue] && [cartItem.price floatValue] != [cartItem.specialPrice floatValue]) {
+                if(!showUnreducedPrice && VALID_NOTEMPTY(cartItem.specialPrice , NSNumber) && 0.0f < [cartItem.specialPrice longValue] && [cartItem.price longValue] != [cartItem.specialPrice longValue]) {
                     showUnreducedPrice = YES;
                 }
             }
@@ -45,13 +45,13 @@
             cartEntity.cartItems = [cartItems copy];
             
             if(showUnreducedPrice) {
-                cartEntity.cartUnreducedValue = [NSNumber numberWithFloat:cartUnreducedValue];
+                cartEntity.cartUnreducedValue = [NSNumber numberWithLong:cartUnreducedValue];
                 cartEntity.cartUnreducedValueFormatted = [RICountryConfiguration formatPrice:cartEntity.cartUnreducedValue country:country];
             }
         }
     }
     
-    cartEntity.onlyProductsDiscount = [NSNumber numberWithFloat:onlyProductDiscount];;
+    cartEntity.onlyProductsDiscount = [NSNumber numberWithLong:onlyProductDiscount];;
     cartEntity.onlyProductsDiscountFormated = [RICountryConfiguration formatPrice:cartEntity.onlyProductsDiscount country:country];
     
     

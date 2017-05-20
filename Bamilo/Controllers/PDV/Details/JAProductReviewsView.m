@@ -142,7 +142,7 @@
         [_averageValueLabel setFont:JADisplay1Font];
         [_averageValueLabel setTextColor:JABlackColor];
         [_averageValueLabel setTextAlignment:NSTextAlignmentCenter];
-        [_averageValueLabel setText:[NSString stringWithFormat:@"%.1f", self.product.avr.floatValue]];
+        [_averageValueLabel setText:[NSString stringWithFormat:@"%.1ld", self.product.avr.longValue]];
     }
     return _averageValueLabel;
 }

@@ -41,8 +41,13 @@ static const NSString *KEY_HIT_TEST_EDGE_INSETS = @"HitTestEdgeInsets";
 }
 
 -(void)applyStyle:(NSString *)fontName fontSize:(CGFloat)fontSize color:(UIColor *)color {
-    self.titleLabel.font = [UIFont fontWithName:fontName size:fontSize];
+    [self applyStyle:[UIFont fontWithName:fontName size:fontSize] color:color];
+}
+
+-(void)applyStyle:(UIFont *)font color:(UIColor *)color {
+    self.titleLabel.font = font;
     [self setTitleColor:color forState:UIControlStateNormal];
 }
+
 
 @end

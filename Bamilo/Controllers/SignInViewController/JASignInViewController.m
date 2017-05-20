@@ -194,7 +194,7 @@
     
     self.apiResponse = RIApiResponseSuccess;
     
-    self.A4SViewControllerAlias = @"ACCOUNT";
+    //self.A4SViewControllerAlias = @"ACCOUNT";
     
     self.navBarLayout.title = STRING_LOGIN;
     self.navBarLayout.showBackButton = YES;
@@ -515,6 +515,11 @@
 
 -(NSString *)getPerformanceTrackerLabel {
     return self.authenticationEmail;
+}
+
+#pragma mark - DataTrackerProtocol
+-(NSString *)getDataTrackerAlias {
+    return @"ACCOUNT";
 }
 
 @end

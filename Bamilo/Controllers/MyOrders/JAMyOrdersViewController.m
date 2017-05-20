@@ -30,7 +30,8 @@
 UITextFieldDelegate,
 UICollectionViewDataSource,
 UICollectionViewDelegate,
-UICollectionViewDelegateFlowLayout>
+UICollectionViewDelegateFlowLayout,
+OrderDetailViewDelegate>
 {
     NSInteger _selectedCellIndex;
 }
@@ -59,6 +60,7 @@ UICollectionViewDelegateFlowLayout>
 @property (strong, nonatomic) RITrackOrder *trackingOrder;
 
 @property (assign, nonatomic) RIApiResponse apiResponse;
+@property (strong, nonatomic) RICart *cart;
 
 @end
 
@@ -162,7 +164,7 @@ UICollectionViewDelegateFlowLayout>
 -(JAMyOrderDetailView *)orderDetailsView {
     if (!VALID_NOTEMPTY(_orderDetailsView, JAMyOrderDetailView)) {
         _orderDetailsView = [JAMyOrderDetailView new];
-        [_orderDetailsView setParent:self];
+        [_orderDetailsView setDelegate:self];
         [_orderDetailsView setHidden:YES];
         [self.orderDetailsScrollView addSubview:_orderDetailsView];
     }
@@ -247,8 +249,7 @@ UICollectionViewDelegateFlowLayout>
     RITrackOrder *  order = [self.orders objectAtIndex:[self.selectedOrderIndexPath row]];
     
     
-    [RIOrder trackOrderWithOrderNumber:order.orderId
-                      WithSuccessBlock:^(RITrackOrder *trackingOrder) {
+    [RIOrder trackOrderWithOrderNumber:order.orderId WithSuccessBlock:^(RITrackOrder *trackingOrder) {
                           
                           self.trackingOrder = trackingOrder;
                           
@@ -364,10 +365,7 @@ UICollectionViewDelegateFlowLayout>
     }
 }
 
-
-
 #pragma mark UICollectionViewDelegateFlowLayout
-
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     CGSize sizeForItemAtIndexPath = CGSizeZero;
@@ -380,13 +378,11 @@ UICollectionViewDelegateFlowLayout>
 
 #pragma mark UICollectionViewDataSource
 
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-{
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     NSInteger numberOfItemsInSection = 0;
     if(VALID_NOTEMPTY(self.orders, NSArray))
     {
@@ -424,9 +420,8 @@ UICollectionViewDelegateFlowLayout>
 
 #pragma mark Actions
 
-- (void)selectedOrder:(UIButton *)sender
-{
-    if (sender.tag == _selectedCellIndex && (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
+- (void)selectedOrder:(UIButton *)sender {
+    if (sender.tag == _selectedCellIndex && (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
         return;
     }
     _selectedCellIndex = sender.tag;

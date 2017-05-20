@@ -22,18 +22,22 @@
 {
     BOOL _needsRefresh;
     BOOL _keyboardEvent;
-    CGFloat _scrollViewHeight;
 }
 
-@property (nonatomic)UIScrollView* mainScrollView;
 //we need to keep the main teaser because we have to access it to know about it's last position
-@property (nonatomic, strong)JAMainTeaserView* mainTeaserView;
-@property (nonatomic, assign)NSInteger mainTeaserLastIndex;
+@property (nonatomic, strong) JAMainTeaserView* mainTeaserView;
+@property (nonatomic, assign) NSInteger mainTeaserLastIndex;
 @property (nonatomic, strong) JANewsletterTeaserView* newsletterTeaserView;
 
 @end
 
-@implementation JATeaserPageView
+const CGFloat marginBottom = 6.0f;
+
+@implementation JATeaserPageView {
+    CGFloat currentMainScrollY;
+    CGFloat centerScrollX;
+    CGFloat centerScrollWidth;
+}
 
 - (void)loadTeasersForFrame:(CGRect)frame {
     if (!_needsRefresh) {
@@ -55,28 +59,27 @@
         self.mainScrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
         [self addSubview:self.mainScrollView];
         
-        CGFloat mainScrollY = self.bounds.origin.y; //shared between methods
+        currentMainScrollY = self.bounds.origin.y; //shared between methods
         
-        CGFloat centerScrollX = self.mainScrollView.frame.origin.x;
-        CGFloat centerScrollWidth = self.mainScrollView.frame.size.width;
+        centerScrollX = self.mainScrollView.frame.origin.x;
+        centerScrollWidth = self.mainScrollView.frame.size.width;
         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
             centerScrollWidth = 640.0f; //value by design
             centerScrollX = (self.mainScrollView.frame.size.width - centerScrollWidth) / 2;
         }
         
-        mainScrollY = [self loadMainTeasersInScrollView:self.mainScrollView yPosition:mainScrollY];
-        mainScrollY = [self loadSmallTeasersInScrollView:self.mainScrollView yPosition:mainScrollY];
-        mainScrollY = [self loadNewsletterForInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:mainScrollY width:centerScrollWidth];
-        mainScrollY = [self loadCampaignTeasersInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:mainScrollY width:centerScrollWidth];
-        mainScrollY = [self loadShopTeasersInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:mainScrollY width:centerScrollWidth];
-        mainScrollY = [self loadBrandTeasersInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:mainScrollY width:centerScrollWidth];
-        mainScrollY = [self loadShopsWeekTeasersInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:mainScrollY width:centerScrollWidth];
-        mainScrollY = [self loadFeatureStoresTeasersInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:mainScrollY width:centerScrollWidth];
-        mainScrollY = [self loadTopSellersTeasersInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:mainScrollY width:centerScrollWidth];
-        mainScrollY += 6.0f;
-        [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.frame.size.width, mainScrollY)];
+        currentMainScrollY = [self loadMainTeasersInScrollView:self.mainScrollView yPosition:currentMainScrollY];
+        currentMainScrollY = [self loadSmallTeasersInScrollView:self.mainScrollView yPosition:currentMainScrollY];
+        currentMainScrollY = [self loadNewsletterForInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:currentMainScrollY width:centerScrollWidth];
+        currentMainScrollY = [self loadCampaignTeasersInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:currentMainScrollY width:centerScrollWidth];
+        currentMainScrollY = [self loadShopTeasersInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:currentMainScrollY width:centerScrollWidth];
+        currentMainScrollY = [self loadBrandTeasersInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:currentMainScrollY width:centerScrollWidth];
+        currentMainScrollY = [self loadShopsWeekTeasersInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:currentMainScrollY width:centerScrollWidth];
+        currentMainScrollY = [self loadFeatureStoresTeasersInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:currentMainScrollY width:centerScrollWidth];
+        currentMainScrollY = [self loadTopSellersTeasersInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:currentMainScrollY width:centerScrollWidth];
+        currentMainScrollY += marginBottom;
+        [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.frame.size.width, currentMainScrollY)];
     }
-    _scrollViewHeight = self.mainScrollView.height;
 }
 
 - (void)setNewsletterForm:(RIForm *)newsletterForm {
@@ -92,21 +95,24 @@
     _keyboardEvent = NO;
 }
 
+- (void)addCustomViewToScrollView:(UIView *)view {
+    currentMainScrollY -= marginBottom;
+    [view setFrame:CGRectMake(centerScrollX, currentMainScrollY, centerScrollWidth, view.frame.size.height)];
+    currentMainScrollY += view.frame.size.height;
+    currentMainScrollY += marginBottom;
+    
+    [self.mainScrollView addSubview:view];
+    [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.frame.size.width, currentMainScrollY)];
+}
+
 - (void)addTeaserGrouping:(NSString*)type {
-    
-    CGFloat mainScrollY = self.mainScrollView.contentSize.height - 6.f;
-    CGFloat centerScrollX = self.mainScrollView.frame.origin.x;
-    CGFloat centerScrollWidth = self.mainScrollView.frame.size.width;
-    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        centerScrollWidth = 640.0f; //value by design
-        centerScrollX = (self.mainScrollView.frame.size.width - centerScrollWidth) / 2;
-    }
-    
+
     if ([type isEqualToString:@"top_sellers"]) {
-        mainScrollY = [self loadTopSellersTeasersInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:mainScrollY width:centerScrollWidth];
-        mainScrollY += 6.0f;
+        currentMainScrollY -= marginBottom;
+        currentMainScrollY = [self loadTopSellersTeasersInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:currentMainScrollY width:centerScrollWidth];
+        currentMainScrollY += marginBottom;
         
-        [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.frame.size.width, mainScrollY)];
+        [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.frame.size.width, currentMainScrollY)];
     }
 }
 
@@ -115,13 +121,13 @@
         RITeaserGrouping* teaserGrouping = [self.teaserGroupings objectForKey:@"main_teasers"];
         
         if (!self.mainTeaserView) {
-            self.mainTeaserLastIndex = RI_IS_RTL ? teaserGrouping.teaserComponents.count-1 : 0;
+            self.mainTeaserLastIndex = RI_IS_RTL ? teaserGrouping.teaserComponents.count - 1 : 0;
         }
         
         self.mainTeaserView = [[JAMainTeaserView alloc] initWithFrame:CGRectMake(scrollView.bounds.origin.x,
                                                                                  yPosition,
                                                                                  scrollView.bounds.size.width,
-                                                                                 1)]; //height is set by the view itself
+                                                                                 1)];
         [scrollView addSubview:self.mainTeaserView];
         self.mainTeaserView.teaserGrouping = teaserGrouping;
         [self.mainTeaserView load];
@@ -139,8 +145,7 @@
         
         JASmallTeaserView* smallTeaserView = [[JASmallTeaserView alloc] initWithFrame:CGRectMake(scrollView.bounds.origin.x,
                                                                                                  yPosition,
-                                                                                                 scrollView.bounds.size.width,
-                                                                                                 1)]; //height is set by the view itself
+                                                                                                 scrollView.bounds.size.width, 1)];
         [scrollView addSubview:smallTeaserView];
         smallTeaserView.teaserGrouping = teaserGrouping;
         [smallTeaserView load];

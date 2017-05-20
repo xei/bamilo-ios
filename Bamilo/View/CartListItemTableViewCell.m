@@ -25,10 +25,10 @@
     
     self.contentView.backgroundColor = [UIColor whiteColor];
     
-    [self.nameLabel applyStyle:kFontRegularName fontSize:12.0f color:cDARK_GRAY_COLOR];
-    [self.quantityLabel applyStyle:kFontRegularName fontSize:11.0f color:cDARK_GRAY_COLOR];
-    [self.priceLabel applyStyle:kFontRegularName fontSize:11.0f color:cDARK_GRAY_COLOR];
-    [self.brandLabel applyStyle:kFontRegularName fontSize:12.0f color:cLIGHT_GRAY_COLOR];
+    [self.nameLabel applyStyle:[Theme font:kFontVariationRegular size:12.0f] color:[Theme color:kColorDarkGray]];
+    [self.quantityLabel applyStyle:[Theme font:kFontVariationRegular size:11.0f] color:[Theme color:kColorDarkGray]];
+    [self.priceLabel applyStyle:[Theme font:kFontVariationRegular size:11.0f] color:[Theme color:kColorDarkGray]];
+    [self.brandLabel applyStyle:[Theme font:kFontVariationRegular size:12.0f] color:[Theme color:kColorLightGray]];
 }
 
 #pragma mark - Overrides

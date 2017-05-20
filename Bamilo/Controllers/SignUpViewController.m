@@ -2,15 +2,21 @@
 //  SignUpViewController.m
 //  Bamilo
 //
-//  Created by Ali saiedifar on 2/8/17.
+//  Created by Ali Saeedifar on 2/8/17.
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
 #import "SignUpViewController.h"
+#import "EmarsysPredictManager.h"
+#import "PushWooshTracker.h"
 
 //Lagacy importing
 #import "RICustomer.h"
 #import "JAUtils.h"
+
+
+#define cSignUpMethodEmail @"email"
+#define cSignUpMethodGoogle @"sso-google"
 
 @interface SignUpViewController()
 @property (nonatomic, weak) IBOutlet UITableView* tableView;
@@ -29,7 +35,7 @@
     self.formController.tableView = self.tableView;
 
     FormItemModel *melliCode = [[FormItemModel alloc]
-                                initWithTitle:nil
+                                initWithTextValue:nil
                                 fieldName: @"customer[national_id]"
                                 andIcon:nil
                                 placeholder:@"کد ملی"
@@ -39,16 +45,14 @@
     
     
     FormItemModel *email = [FormItemModel emailWithFieldName:@"customer[email]"];
-    FormItemModel *name = [FormItemModel nameFieldWithFiedName:@"customer[first_name]"];
-    FormItemModel *lastname = [FormItemModel lastNameWithFieldName:@"customer[last_name]"];
+    FormItemModel *firstName = [FormItemModel firstNameFieldWithFiedName:@"customer[first_name]"];
+    FormItemModel *lastName = [FormItemModel lastNameWithFieldName:@"customer[last_name]"];
     FormItemModel *phone = [FormItemModel phoneWithFieldName:@"customer[phone]"];
     FormItemModel *password = [FormItemModel passWordWithFieldName:@"customer[password]"];
-
     
     self.formController.submitTitle = @"ثبت نام";
-    self.formController.formMessage = nil; //@"ظاهرا مشتری جدید بامیلو هستید،خواهشمندیم اطلاعات بیشتری برای ساخت حساب کاربری خود ارایه دهید ";
     self.title = STRING_SIGNUP;
-    self.formController.formListModel = [NSMutableArray arrayWithArray:@[ melliCode, name, lastname, email, password, phone]];
+    self.formController.formModelList = [NSMutableArray arrayWithArray:@[ melliCode, firstName, lastName, email, password, phone]];
     
     [self.formController setupTableView];
 }
@@ -68,9 +72,16 @@
         return;
     }
     
-    [[DataManager sharedInstance] signupUser:self withFieldsDictionary:[self.formController getMutableDictionaryOfForm] completion:^(id data, NSError *error) {
+    [[AuthenticationDataManager sharedInstance] signupUser:self withFieldsDictionary:[self.formController getMutableDictionaryOfForm] completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
+            
+            //EVENT: SIGNUP / SUCCESS
+            [TrackerManager postEvent:[EventFactory signup:cSignUpMethodEmail success:YES] forName:[SignUpEvent name]];
+            
+            [EmarsysPredictManager setCustomer:[RICustomer getCurrentCustomer]];
+            
+            [[PushWooshTracker sharedTracker] setUserID:[RICustomer getCurrentCustomer].email];
             
             if (self.completion) {
                 self.completion(AUTHENTICATION_FINISHED_WITH_REGISTER);
@@ -78,6 +89,9 @@
                 [((UIViewController *)self.delegate).navigationController popViewControllerAnimated:YES];
             }
         } else {
+            //EVENT: SIGNUP / FAILURE
+            [TrackerManager postEvent:[EventFactory signup:cSignUpMethodEmail success:NO] forName:[SignUpEvent name]];
+            
             BaseViewController *baseViewController = (BaseViewController *)self.delegate;
             if(![baseViewController showNotificationBar:error isSuccess:NO]) {
                 for(NSDictionary* errorField in [error.userInfo objectForKey:kErrorMessages]) {
@@ -91,6 +105,8 @@
 
 #pragma mark - DataServiceProtocol
 - (void)bind:(id)data forRequestId:(int)rid {
+    
+    
     
     // --------------- Legacy actions --------------
     RICustomer *customerObject = [(NSDictionary*)data objectForKey:@"customer"];

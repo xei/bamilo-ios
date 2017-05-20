@@ -6,7 +6,7 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import "DataManager.h"
+#import "CheckoutDataManager.h"
 #import "CheckoutPaymentViewController.h"
 #import "CheckoutProgressViewButtonModel.h"
 #import "PlainTableViewHeaderCell.h"
@@ -16,11 +16,16 @@
 #import "CartEntitySummaryViewControl.h"
 #import "RIPaymentInformation.h"
 #import "JACheckoutForms.h"
+#import "EventUtilities.h"
+#import "SuccessPaymentViewController.h"
+#import "ThreadManager.h"
 
 typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
     PAYMENT_METHOD_ONLINE = 1 << 0,
     PAYMENT_METHOD_ON_DELIVERY = 1 << 1
 };
+
+typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
 
 @interface CheckoutPaymentViewController () <RadioButtonViewControlDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -31,6 +36,7 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
 @private
     NSArray *_paymentMethods;
     int _selectedPaymentMethodIndex;
+    MultistepEntity *_multistepEntity;
 }
 
 - (void)viewDidLoad {
@@ -49,21 +55,34 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
     [self.tableView registerNib:[UINib nibWithNibName:[PaymentOptionTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[PaymentOptionTableViewCell nibName]];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    _selectedPaymentMethodIndex = -1;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[DataManager sharedInstance] getMultistepPayment:self completion:^(id data, NSError *error) {
-        if(error == nil) {
-            [self bind:data forRequestId:0];
-            [self.cartEntitySummaryViewControl updateWithModel:self.cart.cartEntity];
-            _paymentMethods = [RIPaymentMethodForm getPaymentMethodsInForm:self.cart.formEntity.paymentMethodForm];
-            [self.tableView reloadData];
-            
+    if(_paymentMethods == nil) {
+        [self getPaymentMethods:^(NSArray *paymentMethods) {
             [self publishScreenLoadTime];
-        }
-    }];
+            
+            if(paymentMethods.count) {
+                int __selectedPaymentMethodIndex = 0;
+                
+                if(self.cart.cartEntity.paymentMethod) {
+                    for(int i=0; i<paymentMethods.count; i++) {
+                        RIPaymentMethodFormOption *paymentMethod = paymentMethods[i];
+                        if([paymentMethod.displayName containsString:self.cart.cartEntity.paymentMethod]) {
+                            __selectedPaymentMethodIndex = i;
+                            break;
+                        }
+                    }
+                }
+                
+                [self setPaymentMethod:__selectedPaymentMethodIndex];
+            }
+        }];
+    }
 }
 
 #pragma mark - Overrides
@@ -77,53 +96,29 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
 
 -(void)updateNavBar {
     [super updateNavBar];
-    
     self.navBarLayout.title = STRING_PAYMENT_OPTION;
 }
 
 -(void)performPreDepartureAction:(CheckoutActionCompletion)completion {
-    RIPaymentMethodFormOption *selectedPaymentMethod = [_paymentMethods objectAtIndex:_selectedPaymentMethodIndex];
-    RIPaymentMethodFormField *field = [self.cart.formEntity.paymentMethodForm.fields firstObject];
-    if (VALID_NOTEMPTY(field, RIPaymentMethodFormField)) {
-        field.value = selectedPaymentMethod.value;
-    }
-    
-    if (selectedPaymentMethod && self.cart.cartEntity.cartValue) {
-         NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithDictionary:[RIPaymentMethodForm getParametersForForm:self.cart.formEntity.paymentMethodForm]];
-        JACheckoutForms *checkoutFormForPaymentMethod = [[JACheckoutForms alloc] initWithPaymentMethodForm:self.cart.formEntity.paymentMethodForm width:0.0];
-        [params addEntriesFromDictionary:[checkoutFormForPaymentMethod getValuesForPaymentMethod:selectedPaymentMethod]];
-        
-        [[DataManager sharedInstance] setMultistepPayment:self params:params completion:^(id data, NSError *error) {
-            if(error == nil && completion != nil) {
-                NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                [trackingDictionary setValue:selectedPaymentMethod.label forKey:kRIEventPaymentMethodKey];
-                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentSuccess] data:[trackingDictionary copy]];
+    if([_multistepEntity.nextStep isEqualToString:@"finish"] && completion != nil) {
+        [[CheckoutDataManager sharedInstance] setMultistepConfirmation:self cart:self.cart completion:^(id data, NSError *error) {
+            if(error == nil) {
+                [self bind:data forRequestId:1];
                 
-                MultistepEntity *multistepEntity = (MultistepEntity *)data;
-                if([multistepEntity.nextStep isEqualToString:@"finish"]) {
-                    [[DataManager sharedInstance] setMultistepConfirmation:self cart:self.cart completion:^(id data, NSError *error) {
-                        if(error == nil) {
-                            [self bind:data forRequestId:1];
-                            
-                            NSDictionary *userInfo = @{ @"cart" : self.cart };
-                            
-                            if(self.cart.paymentInformation.type == RIPaymentInformationCheckoutEnded) {
-                                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutThanksScreenNotification object:nil userInfo:userInfo];
-                            } else {
-                                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutExternalPaymentsScreenNotification object:nil userInfo:userInfo];
-                            }
-                            
-                            completion(multistepEntity.nextStep, YES);
-                        }
-                    }];
+                NSDictionary *userInfo = @{ kCart : self.cart };
+                
+                if(self.cart.paymentInformation.type == RIPaymentInformationCheckoutEnded) {
+                    [self performSegueWithIdentifier:NSStringFromClass([SuccessPaymentViewController class]) sender:nil];
+                } else {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutExternalPaymentsScreenNotification object:nil userInfo:userInfo];
                 }
-            } else {
-                NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                [trackingDictionary setValue:selectedPaymentMethod.label forKey:kRIEventPaymentMethodKey];
-                [trackingDictionary setValue:self.cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalTransactionKey];
-                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentFail] data:[trackingDictionary copy]];
                 
-                [self showNotificationBarMessage:STRING_ERROR_SETTING_PAYMENT_METHOD isSuccess:NO];
+                completion(_multistepEntity.nextStep, YES);
+            } else {
+                [self showNotificationBar:error isSuccess:NO];
+                
+                //EVENT : PURCHASE
+                [TrackerManager postEvent:[EventFactory purchase:[EventUtilities getEventCategories:self.cart] basketValue:[self.cart.cartEntity.cartValue longValue] success:NO] forName:[PurchaseEvent name]];
                 
                 completion(nil, NO);
             }
@@ -218,9 +213,7 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
 -(void)didSelectRadioButton:(id)sender {
     if([sender isKindOfClass:[PaymentTypeTableViewCell class]]) {
         PaymentTypeTableViewCell *radioButtonPaymentTypeTableViewCell = (PaymentTypeTableViewCell *)sender;
-        _selectedPaymentMethodIndex = (int)radioButtonPaymentTypeTableViewCell.tag;
-        
-        [self.tableView reloadData];
+        [self setPaymentMethod:(int)radioButtonPaymentTypeTableViewCell.tag];
     }
 }
 
@@ -238,6 +231,7 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
     switch (rid) {
         case 0:
         case 1:
+        case 2:
             self.cart = (RICart *)data;
         break;
     }
@@ -246,6 +240,76 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
 #pragma mark - PerformanceTrackerProtocol
 -(NSString *)getPerformanceTrackerScreenName {
     return @"CheckoutPayment";
+}
+
+#pragma mark - prepareForSegue
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    NSString * segueName = segue.identifier;
+    if ([segueName isEqualToString: NSStringFromClass([SuccessPaymentViewController class])]) {
+        ((SuccessPaymentViewController *) [segue destinationViewController]).cart = self.cart;
+    }
+}
+
+#pragma mark - Helpers
+-(void) getPaymentMethods:(GetPaymentMethodsCompletion)completion {
+    [[CheckoutDataManager sharedInstance] getMultistepPayment:self completion:^(id data, NSError *error) {
+        if(error == nil) {
+            [self bind:data forRequestId:0];
+            [self.cartEntitySummaryViewControl updateWithModel:self.cart.cartEntity];
+            _paymentMethods = [RIPaymentMethodForm getPaymentMethodsInForm:self.cart.formEntity.paymentMethodForm];
+            
+            [ThreadManager executeOnMainThread:^{
+                [self.tableView reloadData];
+            }];
+            
+            if(completion != nil) {
+                completion(_paymentMethods);
+            }
+        }
+    }];
+}
+
+-(void) setPaymentMethod:(int)selectedPaymentMethodIndex {
+    RIPaymentMethodFormOption *selectedPaymentMethod = [_paymentMethods objectAtIndex:selectedPaymentMethodIndex];
+    RIPaymentMethodFormField *field = [self.cart.formEntity.paymentMethodForm.fields firstObject];
+    if (VALID_NOTEMPTY(field, RIPaymentMethodFormField)) {
+        field.value = selectedPaymentMethod.value;
+    }
+    
+    if (selectedPaymentMethod && self.cart.cartEntity.cartValue) {
+        NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithDictionary:[RIPaymentMethodForm getParametersForForm:self.cart.formEntity.paymentMethodForm]];
+        JACheckoutForms *checkoutFormForPaymentMethod = [[JACheckoutForms alloc] initWithPaymentMethodForm:self.cart.formEntity.paymentMethodForm width:0.0];
+        [params addEntriesFromDictionary:[checkoutFormForPaymentMethod getValuesForPaymentMethod:selectedPaymentMethod]];
+        
+        [[CheckoutDataManager sharedInstance] setMultistepPayment:self params:params completion:^(id data, NSError *error) {
+            if(error == nil) {
+                NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                [trackingDictionary setValue:selectedPaymentMethod.label forKey:kRIEventPaymentMethodKey];
+                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentSuccess] data:[trackingDictionary copy]];
+                
+                _multistepEntity = (MultistepEntity *)data;
+                
+                [[CheckoutDataManager sharedInstance] getMultistepConfirmation:self type:REQUEST_EXEC_IN_FOREGROUND completion:^(id data, NSError *error) {
+                    if(error == nil) {
+                        [self bind:data forRequestId:2];
+                        _selectedPaymentMethodIndex = selectedPaymentMethodIndex;
+                        [self.cartEntitySummaryViewControl updateWithModel:self.cart.cartEntity];
+                        
+                        [ThreadManager executeOnMainThread:^{
+                            [self.tableView reloadData];
+                        }];
+                    }
+                }];
+            } else {
+                NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                [trackingDictionary setValue:selectedPaymentMethod.label forKey:kRIEventPaymentMethodKey];
+                [trackingDictionary setValue:self.cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalTransactionKey];
+                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentFail] data:[trackingDictionary copy]];
+                
+                [self showNotificationBarMessage:STRING_ERROR_SETTING_PAYMENT_METHOD isSuccess:NO];
+            }
+        }];
+    }
 }
 
 @end

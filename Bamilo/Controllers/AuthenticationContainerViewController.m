@@ -2,7 +2,7 @@
 //  AuthenticationViewController.m
 //  Bamilo
 //
-//  Created by Ali saiedifar on 2/8/17.
+//  Created by Ali Saeedifar on 2/8/17.
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
@@ -39,19 +39,23 @@
     NSDictionary *parameters = @{CAPSPageMenuOptionUseMenuLikeSegmentedControl: @(YES),
                                  CAPSPageMenuOptionSelectionIndicatorHeight: @2,
                                  CAPSPageMenuOptionMenuItemFont: [UIFont fontWithName:kFontRegularName size: 14],
-                                 CAPSPageMenuOptionSelectionIndicatorColor: cORAGNE_COLOR,
+                                 CAPSPageMenuOptionSelectionIndicatorColor: [Theme color:kColorOrange],
                                  CAPSPageMenuOptionScrollMenuBackgroundColor: [UIColor whiteColor],
                                  CAPSPageMenuOptionMenuHeight: @40,
-                                 CAPSPageMenuOptionBottomMenuHairlineColor:cLIGHT_GRAY_COLOR,
+                                 CAPSPageMenuOptionBottomMenuHairlineColor: [Theme color:kColorLightGray],
                                  CAPSPageMenuOptionAddBottomMenuHairline: @(YES),
-                                 CAPSPageMenuOptionUnselectedMenuItemLabelColor: cDARK_GRAY_COLOR,
-                                 CAPSPageMenuOptionSelectedMenuItemLabelColor: cEXTRA_DARK_GRAY_COLOR,
+                                 CAPSPageMenuOptionUnselectedMenuItemLabelColor: [Theme color:kColorDarkGray],
+                                 CAPSPageMenuOptionSelectedMenuItemLabelColor: [Theme color:kColorExtraDarkGray],
                                  CAPSPageMenuOptionScrollAnimationDurationOnMenuItemTap: @(150)
                                  };
     
     self.pagemenu = [[CAPSPageMenu alloc] initWithViewControllers:@[ self.signUpViewController, self.signInViewController ] frame:CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height) options:parameters];
     self.pagemenu.delegate = self;
-    [self.pagemenu moveToPage:1];
+    
+    if (!self.startWithSignUpViewController){
+        [self.pagemenu moveToPage:1];
+    }
+    
     [self.view addSubview:_pagemenu.view];
 }
 

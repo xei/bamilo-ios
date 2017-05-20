@@ -5,7 +5,6 @@
 //  Created by Narbeh Mirzaei on 2/12/17.
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
-#define cORAGNE_COLOR [UIColor withRGBA:255 green:153 blue:0 alpha:1.0f]
 
 #import "BaseViewController.h"
 #import "PerformanceTrackerProtocol.h"

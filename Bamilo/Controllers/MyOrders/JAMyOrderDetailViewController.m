@@ -9,14 +9,15 @@
 #import "JAMyOrderDetailViewController.h"
 #import "JAMyOrderDetailView.h"
 #import "JAMyOrdersViewController.h"
+#import "CartDataManager.h"
 
-@interface JAMyOrderDetailViewController ()
+@interface JAMyOrderDetailViewController () <OrderDetailViewDelegate, DataServiceProtocol>
 //
 @property (strong, nonatomic) UIScrollView *orderDetailsScrollView;
 @property (strong, nonatomic) JAMyOrderDetailView *orderDetailsView;
 
 @property (assign, nonatomic) RIApiResponse apiResponse;
-
+@property (strong, nonatomic) RICart *cart;
 
 @end
 
@@ -37,7 +38,7 @@
 -(JAMyOrderDetailView *)orderDetailsView {
     if (!VALID_NOTEMPTY(_orderDetailsView,JAMyOrderDetailView)) {
         _orderDetailsView = [JAMyOrderDetailView new];
-        [_orderDetailsView setParent:self];
+        [_orderDetailsView setDelegate:self];
         [_orderDetailsView setHidden:YES];
         [_orderDetailsView setFrame:CGRectMake(0.f, 0.f,
                                                _orderDetailsView.frame.size.width,
@@ -125,6 +126,41 @@
 
 -(NSString *)getPerformanceTrackerLabel {
     return self.orderNumber;
+}
+
+#pragma mark - OrderDetailViewDelegate
+-(void) reOrder:(id)sender item:(RIItemCollection *)item {
+    [[CartDataManager sharedInstance] addProductToCart:self simpleSku:item.sku completion:^(id data, NSError *error) {
+        if(error == nil) {
+            [self bind:data forRequestId:0];
+            
+            //EVENT: ADD TO CART
+            [TrackerManager postEvent:[EventFactory addToCart:item.sku basketValue:[self.cart.cartEntity.cartValue longValue] success:YES] forName:[AddToCartEvent name]];
+            
+            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:self.cart forKey:kUpdateCartNotificationValue];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
+            [self onSuccessResponse:RIApiResponseTimeOut messages:[self extractSuccessMessages:[data objectForKey:kDataMessages]] showMessage:YES];
+            //[self.parent hideLoading];
+        } else {
+            //EVENT: ADD TO CART
+            [TrackerManager postEvent:[EventFactory addToCart:item.sku basketValue:[self.cart.cartEntity.cartValue intValue] success:NO] forName:[AddToCartEvent name]];
+            
+            [self onErrorResponse:error.code messages:[error.userInfo objectForKey:kErrorMessages] showAsMessage:YES selector:@selector(addToCart:) objects:@[sender]];
+            //[self hideLoading];
+        }
+    }];
+}
+
+#pragma mark - DataServiceProtocol
+-(void) bind:(id)data forRequestId:(int)rid {
+    switch (rid) {
+        case 0:
+            self.cart = [data objectForKey:kDataContent];
+        break;
+            
+        default:
+            break;
+    }
 }
 
 @end

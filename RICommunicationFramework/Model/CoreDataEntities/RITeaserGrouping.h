@@ -20,16 +20,16 @@
 
 @interface RITeaserGrouping (CoreDataGeneratedAccessors)
 
-+ (NSString*)loadTeasersIntoDatabaseForCountryUrl:(NSString*)countryUrl
-                        countryUserAgentInjection:(NSString *)countryUserAgentInjection
++ (NSString*)loadTeasersIntoDatabaseForCountryUrl:(NSString*)countryUrl countryUserAgentInjection:(NSString *)countryUserAgentInjection
                                  withSuccessBlock:(void (^)(NSDictionary* teaserGroupings, BOOL richTeasers))successBlock
                                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 + (RITeaserGrouping*)parseTeaserGrouping:(NSDictionary*)teaserGroupingJSON country:(RICountryConfiguration*)country;
++ (RITeaserGrouping*)parseTeaserGroupingWithoutSave:(NSDictionary*)teaserGroupingJSON country:(RICountryConfiguration*)country;
 
 + (NSString*)getTeaserGroupingsWithSuccessBlock:(void (^)(NSDictionary* teaserGroupings, BOOL richTeaserGrouping))successBlock
-                                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
-                                   andRichBlock:(void(^)(RITeaserGrouping* richTeaserGroupings))richBlock;
+                                      failBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
+                                      rickBlock:(void (^)(RITeaserGrouping * richTeaserGrouping))richBlock;
 
 + (void)getTeaserRichRelevance:(NSDictionary*) richTeasers
                   successBlock:(void(^)(RITeaserGrouping * richTeaserGrouping))richBlock

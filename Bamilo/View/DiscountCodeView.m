@@ -27,19 +27,19 @@
     
     //Initial Setup
     self.discountCodeTextFieldContainerView.backgroundColor = [UIColor clearColor];
-    self.discountCodeTextFieldContainerView.layer.borderColor = cLIGHT_GRAY_COLOR.CGColor;
+    self.discountCodeTextFieldContainerView.layer.borderColor = [Theme color:kColorLightGray].CGColor;
     self.discountCodeTextFieldContainerView.layer.borderWidth = 1.0f;
     
     self.discountCodeTextField.placeholder = STRING_ENTER_YOUR_DISCOUNT_CODE;
     self.discountCodeTextField.delegate = self;
     
-    [self.discountApplyButton applyStyle:kFontRegularName fontSize:12.0f color:cDARK_GRAY_COLOR];
+    [self.discountApplyButton applyStyle:[Theme font:kFontVariationRegular size:12] color:[Theme color:kColorDarkGray]];
     self.discountApplyButton.titleLabel.text = STRING_APPLY_DISCOUNT;
     [self.discountApplyButton setEnabled:NO];
     
-    [self.discountRemoveButton applyStyle:kFontRegularName fontSize:12.0f color:cDARK_GRAY_COLOR];
+    [self.discountRemoveButton applyStyle:[Theme font:kFontVariationRegular size:12] color:[Theme color:kColorDarkGray]];
     self.discountRemoveButton.titleLabel.text = STRING_REMOVE_DISCOUNT;
-    
+
     [self updateAppearanceForState:DISCOUNT_CODE_VIEW_STATE_CLEAN];
 }
 

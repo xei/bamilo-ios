@@ -110,7 +110,7 @@ void(^retryBock)(BOOL dismiss);
         }
     }
     
-    RIApi *apiInformation = [RIApi getApiInformation];
+    //RIApi *apiInformation = [RIApi getApiInformation];
     NSString *countryName = @"";
     
     UIImage *backgroundImage = [UIImage imageNamed:self.backgroundImageName];

@@ -10,6 +10,8 @@
 #import "RIAddress.h"
 #import "RIForm.h"
 #import "RIField.h"
+#import "ViewControllerManager.h"
+#import "EmarsysPredictManager.h"
 
 #define kUserIsGuestFlagKey [NSString stringWithFormat:@"%@_user_is_guest", [RIApi getCountryIsoInUse]]
 
@@ -35,11 +37,11 @@
 @dynamic newsletterSubscribed;
 @synthesize costumerRequestID, wishlistProducts;
 @synthesize addressList;
+@synthesize phone;
 
 + (NSString *)signUpAccount:(NSString *)email
                successBlock:(void (^)(id object))successBlock
-            andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock
-{
+            andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock {
     NSString* urlEnding;
     if (VALID_NOTEMPTY(email, NSString)) {
         urlEnding = [NSString stringWithFormat:@"customer/createsignup/?email=%@", email];
@@ -149,6 +151,8 @@
                                                           }];
 }
 
+
+//TODO: !!! we should really decide about this
 + (NSString*)autoLogin:(void (^)(BOOL success, NSDictionary *entities, NSString *loginMethod))returnBlock
 {
     NSString *operationID = nil;
@@ -211,6 +215,10 @@
                                  dispatch_async(dispatch_get_main_queue(), ^{
                                      returnBlock(YES, jsonObject, customerObject.loginMethod);
                                  });
+                                 
+                                 //##########
+                                 [EmarsysPredictManager setCustomer:customerObject];
+                                 
                              } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
                              {
                                  dispatch_async(dispatch_get_main_queue(), ^{
@@ -381,43 +389,41 @@
                                                           }];
 }
 
-+ (NSString*)logoutCustomerWithSuccessBlock:(void (^)())successBlock
-                            andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock {
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_LOGOUT_CUSTOMER]]
-                                                            parameters:nil
-                                                            httpMethod:HttpVerbPOST
-                                                             cacheType:RIURLCacheNoCache
-                                                             cacheTime:RIURLCacheDefaultTime
-                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
-                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-                                                              [RICustomer cleanCustomerFromDB];
-                                                              successBlock();
-                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
-                                                              [RICustomer cleanCustomerFromDB];
-                                                              if(NOTEMPTY(errorJsonObject))
-                                                              {
-                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
-                                                              }
-                                                              else if(NOTEMPTY(errorObject))
-                                                              {
-                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                  failureBlock(apiResponse, errorArray);
-                                                              } else
-                                                              {
-                                                                  failureBlock(apiResponse, nil);
-                                                              }
-                                                          }];
-}
+//+ (NSString*)logoutCustomerWithSuccessBlock:(void (^)())successBlock
+//                            andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock {
+//    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_LOGOUT_CUSTOMER]]
+//                                                            parameters:nil
+//                                                            httpMethod:HttpVerbPOST
+//                                                             cacheType:RIURLCacheNoCache
+//                                                             cacheTime:RIURLCacheDefaultTime
+//                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
+//                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+//                                                              [RICustomer cleanCustomerFromDB];
+//                                                              successBlock();
+//                                                              [[ViewControllerManager sharedInstance] clearCache];
+//                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
+//                                                              [RICustomer cleanCustomerFromDB];
+//                                                              if(NOTEMPTY(errorJsonObject)) {
+//                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
+//                                                              } else if(NOTEMPTY(errorObject)) {
+//                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+//                                                                  failureBlock(apiResponse, errorArray);
+//                                                              } else {
+//                                                                  failureBlock(apiResponse, nil);
+//                                                              }
+//                                                          }];
+//}
 
-+ (void)cleanCustomerFromDB
-{
++ (void)cleanCustomerFromDB {
     [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RICustomer class])];
     [[RIDataBaseWrapper sharedInstance] saveContext];
+    
+    //Reset cartEntity of sharedInstance cart
+    [RICart sharedInstance].cartEntity.cartItems = @[];
 }
 
 + (NSString *)requestPasswordReset:(void (^)())successBlock
-                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock
-{
+                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_LOGOUT_CUSTOMER]]
                                                             parameters:nil
                                                             httpMethod:HttpVerbPOST
@@ -442,8 +448,7 @@
                                                           }];
 }
 
-+ (BOOL)checkIfUserIsLogged
-{
++ (BOOL)checkIfUserIsLogged {
     NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
     
     if (VALID_NOTEMPTY(customers, NSArray)) {
@@ -453,35 +458,27 @@
     }
 }
 
-+ (void)setCustomerAsGuest
-{
++ (void)setCustomerAsGuest {
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kUserIsGuestFlagKey];
 }
 
-+ (void)resetCustomerAsGuest
-{
++ (void)resetCustomerAsGuest {
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserIsGuestFlagKey];
 }
 
-+ (BOOL)checkIfUserIsLoggedAsGuest
-{
++ (BOOL)checkIfUserIsLoggedAsGuest {
     return [[NSUserDefaults standardUserDefaults] boolForKey:kUserIsGuestFlagKey];
 }
 
 
-+ (BOOL)checkIfUserHasAddresses
-{
++ (BOOL)checkIfUserHasAddresses {
     NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
     
-    if (VALID_NOTEMPTY(customers, NSArray))
-    {
+    if (VALID_NOTEMPTY(customers, NSArray)) {
         RICustomer *customer = [customers lastObject];
-        if(VALID_NOTEMPTY(customer.addresses, NSOrderedSet))
-        {
+        if(VALID_NOTEMPTY(customer.addresses, NSOrderedSet)) {
             return YES;
-        }
-        else
-        {
+        } else {
             return NO;
         }
     }
@@ -498,8 +495,7 @@
         [[RICommunicationWrapper sharedInstance] cancelRequest:operationID];
 }
 
-+ (void)saveCustomer:(RICustomer *)customer andContext:(BOOL)save
-{
++ (void)saveCustomer:(RICustomer *)customer andContext:(BOOL)save {
     for (RIAddress *address in customer.addresses) {
         [RIAddress saveAddress:address andContext:NO];
     }
@@ -553,14 +549,12 @@
 + (RICustomer *)parseCustomerWithJson:(NSDictionary *)json plainPassword:(NSString*)plainPassword loginMethod:(NSString*)loginMethod {
     RICustomer *customer = [RICustomer parseToDataModelWithObjects:@[ json ]];
     
-    if(VALID_NOTEMPTY(loginMethod, NSString))
-    {
+    if(VALID_NOTEMPTY(loginMethod, NSString)) {
         customer.loginMethod = loginMethod;
     }
     
     customer.plainPassword = nil;
-    if([@"normal" isEqualToString:loginMethod] && VALID_NOTEMPTY(plainPassword, NSString))
-    {
+    if([@"normal" isEqualToString:loginMethod] && VALID_NOTEMPTY(plainPassword, NSString)) {
         customer.plainPassword = plainPassword;
     }
     
@@ -631,6 +625,11 @@
         [customer.addressList mergeFromDictionary:_addressListDict useKeyMapping:YES error:nil];
     }
     
+    NSString *_phone = [dict objectForKey:@"phone"];
+    if(_phone) {
+        customer.phone = _phone;
+    }
+        
     return customer;
 }
 

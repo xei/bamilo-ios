@@ -14,16 +14,18 @@
 
 +(instancetype) sharedInstance;
 
--(UIViewController *) loadNib:(NSString *)nibName resetCache:(BOOL)resetCache;
--(UIViewController *) loadViewController:(NSString *)nibName;
--(UIViewController *) loadViewController:(NSString *)nibName resetCache:(BOOL)resetCache;
--(UIViewController *) loadViewController:(NSString *)storyboard nibName:(NSString *)nibName resetCache:(BOOL)resetCache;
+- (UIViewController *) loadNib:(NSString *)nibName resetCache:(BOOL)resetCache;
+- (UIViewController *) loadViewController:(NSString *)nibName;
+- (UIViewController *) loadViewController:(NSString *)nibName resetCache:(BOOL)resetCache;
+- (UIViewController *) loadViewController:(NSString *)storyboard nibName:(NSString *)nibName resetCache:(BOOL)resetCache;
+- (UIViewController *)loadViewControllerWithoutStoryBoard:(NSString *)className;
+- (void)clearCache;
 
 @end
 
 @interface ViewControllerManager()
-+(JARootViewController *) rootViewController;
-+(JACenterNavigationController *) centerViewController;
-+(id) topViewController;
++ (JARootViewController *) rootViewController;
++ (JACenterNavigationController *) centerViewController;
++ (id) topViewController;
 
 @end

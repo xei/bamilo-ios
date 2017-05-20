@@ -158,10 +158,10 @@ UITableViewDelegate
             
             [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
             self.cart = cart;
-            self.shippingMethodForm = cart.formEntity.shippingMethodForm;
+            //self.shippingMethodForm = cart.formEntity.shippingMethodForm;
             
             // LIST OF AVAILABLE SHIPPING METHODS
-            self.shippingMethods = [RIShippingMethodForm getShippingMethods:cart.formEntity.shippingMethodForm];
+            //self.shippingMethods = [RIShippingMethodForm getShippingMethods:cart.formEntity.shippingMethodForm];
             
             [self finishedLoadingShippingMethods];
         } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
@@ -449,11 +449,9 @@ UITableViewDelegate
             
             self.pickupStationsForRegion = [[NSMutableArray alloc] initWithArray:[RIShippingMethodForm getPickupStationsForRegion:self.selectedRegionId shippingMethod:self.selectedShippingMethod inForm:self.shippingMethodForm]];
             self.pickupStationHeightsForRegion = [[NSMutableArray alloc] init];
-            for(RIShippingMethodPickupStationOption *pickupStation in self.pickupStationsForRegion)
-            {
-                CGFloat size = [JAPickupStationInfoCell getHeightForPickupStation:pickupStation width:self.tableView.frame.size.width];
-                
-                [self.pickupStationHeightsForRegion addObject:[NSNumber numberWithFloat:size]];
+            for(RIShippingMethodPickupStationOption *pickupStation in self.pickupStationsForRegion) {
+                long int size = [JAPickupStationInfoCell getHeightForPickupStation:pickupStation width:self.tableView.frame.size.width];
+                [self.pickupStationHeightsForRegion addObject:[NSNumber numberWithLong:size]];
             }
             
             self.selectedPickupStationIndexPath = [NSIndexPath indexPathForItem:(self.pickerIndexPath.item + 1) inSection:self.pickerIndexPath.section];

@@ -2,7 +2,7 @@
 //  CartTableViewCell.h
 //  Bamilo
 //
-//  Created by Ali saiedifar on 2/4/17.
+//  Created by Ali Saeedifar on 2/4/17.
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 

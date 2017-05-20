@@ -129,27 +129,27 @@
 
 - (void)refreshTotal
 {
-    CGFloat total = .0f;
+    long int total = .0f;
     for (JAPDVBundleSingleItem *bundleItem in _bundlesArray) {
         if (bundleItem.selected && VALID_NOTEMPTY(bundleItem.product, RIProduct)) {
             if (VALID_NOTEMPTY(bundleItem.productSimple, RIProductSimple)) {
                 if (NO == VALID_NOTEMPTY(bundleItem.productSimple.specialPrice, NSNumber) ||
                     (VALID_NOTEMPTY(bundleItem.productSimple.specialPrice, NSNumber) && 0.0f == [bundleItem.productSimple.specialPrice floatValue])) {
-                    total += bundleItem.productSimple.price.floatValue;
+                    total += bundleItem.productSimple.price.longValue;
                 } else {
-                    total += bundleItem.productSimple.specialPrice.floatValue;
+                    total += bundleItem.productSimple.specialPrice.longValue;
                 }
             } else {
                 if (NO == VALID_NOTEMPTY(bundleItem.product.specialPrice, NSNumber) ||
-                    (VALID_NOTEMPTY(bundleItem.product.specialPrice, NSNumber) && 0.0f == [self.product.specialPrice floatValue])) {
-                    total += bundleItem.product.price.floatValue;
+                    (VALID_NOTEMPTY(bundleItem.product.specialPrice, NSNumber) && 0.0f == [self.product.specialPrice longValue])) {
+                    total += bundleItem.product.price.longValue;
                 } else {
-                    total += bundleItem.product.specialPrice.floatValue;
+                    total += bundleItem.product.specialPrice.longValue;
                 }
             }
         }
     }
-    NSString* totalText = [NSString stringWithFormat:@"%@", [RICountryConfiguration formatPrice:[NSNumber numberWithFloat:total] country:[RICountryConfiguration getCurrentConfiguration]]];
+    NSString* totalText = [NSString stringWithFormat:@"%@", [RICountryConfiguration formatPrice:[NSNumber numberWithLong:total] country:[RICountryConfiguration getCurrentConfiguration]]];
     [self.buyBundleLine setTitle:totalText];
     [self.buyBundleLine.label setTextAlignment:NSTextAlignmentLeft];
     if (RI_IS_RTL) {

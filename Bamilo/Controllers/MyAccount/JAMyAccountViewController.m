@@ -13,8 +13,11 @@
 #import "NotificationTableViewCell.h"
 #import "RICustomer.h"
 #import "ViewControllerManager.h"
+#import "IconTableViewHeaderCell.h"
+#import "AuthenticationDataManager.h"
+#import "EmarsysPredictManager.h"
 
-@interface JAMyAccountViewController ()
+@interface JAMyAccountViewController() <DataServiceProtocol>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray* tableViewListItems;
@@ -33,15 +36,21 @@
     self.tabBarIsVisible = YES;
     [self.view setBackgroundColor:[UIColor whiteColor]];
 
+    //Table View Headers
+    [self.tableView registerNib:[UINib nibWithNibName:[IconTableViewHeaderCell nibName] bundle:nil]
+         forCellReuseIdentifier:[IconTableViewHeaderCell nibName]];
 
-#pragma mark - nib registration
-
+    //Table View Cells
     [self.tableView registerNib:[UINib nibWithNibName:[IconTableViewCell nibName] bundle:nil] forCellReuseIdentifier: [IconTableViewCell nibName]];
     [self.tableView registerNib:[UINib nibWithNibName:[NotificationTableViewCell nibName] bundle:nil] forCellReuseIdentifier: [NotificationTableViewCell nibName]];
+    
 
     [self updateTableViewListItemsModel];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    
+    // This will remove extra separators from tableview
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -127,41 +136,17 @@
 
 - (void)logout {
     [self showLoading];
-
-    __block NSString *custumerId = [RICustomer getCustomerId];
-
-    [RICustomer logoutCustomerWithSuccessBlock:^ {
-        [self hideLoading];
-
-        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-        [trackingDictionary setValue:custumerId forKey:kRIEventLabelKey];
-        [trackingDictionary setValue:@"LogoutSuccess" forKey:kRIEventActionKey];
-        [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
-        [trackingDictionary setValue:custumerId forKey:kRIEventUserIdKey];
-        [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-        [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-        [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLogout] data:[trackingDictionary copy]];
-        [self userDidLogout];
-
-    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject) {
-        [self hideLoading];
-        [self userDidLogout];
+    [[AuthenticationDataManager sharedInstance] logoutUser:self completion:^(id data, NSError *error) {
+        [self bind:data forRequestId:0];
+        
+        //EVENT: LOGOUT
+        [TrackerManager postEvent:[EventFactory logout:(error == nil)] forName:[LogoutEvent name]];
+        
+        [EmarsysPredictManager userLoggedOut];
     }];
 }
 
-- (void)userDidLogout {
-
-    [RICommunicationWrapper deleteSessionCookie];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedOutNotification object:nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
-
-}
-
-#pragma mark - TableView delegates
-
+#pragma mark - UITableViewDelegate
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     NSString *cellID = [self.tableViewListItems[indexPath.row] objectForKey:@"cellType"];
@@ -194,18 +179,32 @@
         [[ViewControllerManager centerViewController] requestNavigateToClass:class args:nil];
     } else {
         if ([[selectedObjItem objectForKey:@"selector"] pointerValue]) {
-            SEL customSelector = [[selectedObjItem objectForKey:@"selector"] pointerValue];
-            //[self performSelector:customSelector withObject: 0];
-            [self performSelector:customSelector];
+            __unused SEL customSelector = [[selectedObjItem objectForKey:@"selector"] pointerValue];
+            
+            IMP implementation = [self methodForSelector:customSelector];
+            void (*function)(id, SEL) = (void *)implementation;
+            function(self, customSelector);
             return;
         }
-
         if ([selectedObjItem objectForKey:@"notification"]) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:[selectedObjItem objectForKey:@"notification"]
-                                                                object:@{@"animated":[selectedObjItem objectForKey:@"animated"]}
-                                                              userInfo:@{@"from_checkout":@NO}];
+            [[NSNotificationCenter defaultCenter] postNotificationName:[selectedObjItem objectForKey:@"notification"] object:@{@"animated":[selectedObjItem objectForKey:@"animated"]} userInfo:@{@"from_checkout":@NO}];
         }
     }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if([RICustomer checkIfUserIsLogged]) {
+        return [IconTableViewHeaderCell cellHeight];
+    } else {
+        return 0.0f;
+    }
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    IconTableViewHeaderCell *userGreetingTableViewHeaderCell = [self.tableView dequeueReusableCellWithIdentifier:[IconTableViewHeaderCell nibName]];
+    [userGreetingTableViewHeaderCell setImageName:@"HappyFace"];
+    userGreetingTableViewHeaderCell.titleString = [NSString stringWithFormat:@"%@ %@!", STRING_HELLO, [RICustomer getCurrentCustomer].firstName];
+    return userGreetingTableViewHeaderCell;
 }
 
 #pragma mark - PerformanceTrackerProtocol
@@ -213,4 +212,28 @@
     return @"CustomerAccount";
 }
 
+
+- (void)bind:(id)data forRequestId:(int)rid {
+    [self hideLoading];
+    // --- Legacy Codes ----
+    NSString *custumerId = [RICustomer getCustomerId];
+    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+    [trackingDictionary setValue:custumerId forKey:kRIEventLabelKey];
+    [trackingDictionary setValue:@"LogoutSuccess" forKey:kRIEventActionKey];
+    [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+    [trackingDictionary setValue:custumerId forKey:kRIEventUserIdKey];
+    [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+    [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+    [[RITrackingWrapper sharedInstance] trackEvent:@(RIEventLogout) data:[trackingDictionary copy]];
+    
+    [RICommunicationWrapper deleteSessionCookie];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedOutNotification object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
+    
+    [RICustomer cleanCustomerFromDB];
+    [[ViewControllerManager sharedInstance] clearCache];
+}
 @end

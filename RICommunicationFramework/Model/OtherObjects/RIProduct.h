@@ -11,6 +11,7 @@
 #import "RICatalog.h"
 #import "RIRecentlyViewedProductSku.h"
 #import "RICatalogSorting.h"
+#import <EmarsysPredictSDK/EmarsysPredictSDK.h>
 
 @class RIImage, RIProductSimple, RIVariation, RIBundle, RISeller, RIUndefinedSearchTerm;
 
@@ -169,9 +170,7 @@
  *  @param the product to be added to the recently viewed list
  *
  */
-+ (void)addToFavorites:(RIProduct*)product
-          successBlock:(void (^)(RIApiResponse apiResponse, NSArray *success))successBlock
-       andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
+//+ (void)addToFavorites:(RIProduct*)product successBlock:(void (^)(RIApiResponse apiResponse, NSArray *success))successBlock andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 /**
  *  Method to remove a product from favorites list (and save it in coredata)
@@ -180,9 +179,7 @@
  *  @param the success block containing the favorite products list updated
  *
  */
-+ (void)removeFromFavorites:(RIProduct*)product
-               successBlock:(void (^)(RIApiResponse apiResponse, NSArray *success))successBlock
-            andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
++ (void)removeFromFavorites:(RIProduct*)product successBlock:(void (^)(RIApiResponse apiResponse, NSArray *success))successBlock andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 /**
  *  Method to load a the recently viewed products from coredata

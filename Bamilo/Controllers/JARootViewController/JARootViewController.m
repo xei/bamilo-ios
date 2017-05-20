@@ -24,30 +24,17 @@
 
 #pragma mark - View lifecycle
 
-- (instancetype)init
-{
+- (instancetype)init {
     self = [super init];
-    if(self)
-    {
+    if(self) {
         self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        /*
-         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-         self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
-         }*/
     }
     return self;
 }
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    
-    if(ISEMPTY(self.mainStoryboard))
-    {
+    if(ISEMPTY(self.mainStoryboard)) {
         self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        /*
-         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-         self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
-         }*/
     }
     
     self.shouldResizeLeftPanel = YES;
@@ -61,11 +48,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(turnOffMenuSwipe)
                                                  name:kTurnOffMenuSwipePanelNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(turnOnMenuSwipe)
-                                                 name:kTurnOnMenuSwipePanelNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -83,14 +65,11 @@
                                                  name:kUpdateCountryNotification
                                                object:nil];
     
-    if(VALID_NOTEMPTY(self.notification, NSDictionary))
-    {
+    if(VALID_NOTEMPTY(self.notification, NSDictionary)) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification
                                                             object:self.selectedCountry
                                                           userInfo:self.notification];
-    }
-    else
-    {
+    } else {
         RICountry* uniqueCountry = [RICountry getUniqueCountry];
         if (VALID_NOTEMPTY(uniqueCountry, RICountry)) {
             if ([RIApi checkIfHaveCountrySelected] && [[RIApi getCountryUrlInUse] isEqualToString:uniqueCountry.url]) {
@@ -102,14 +81,10 @@
             }
         } else {
             
-            if(VALID_NOTEMPTY(self.selectedCountry, RICountry) || [RIApi checkIfHaveCountrySelected])
-            {
+            if(VALID_NOTEMPTY(self.selectedCountry, RICountry) || [RIApi checkIfHaveCountrySelected]) {
                 [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification
                                                                     object:self.selectedCountry];
-            }
-            else
-            {
-                
+            } else {
                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowChooseCountryScreenNotification
                                                                     object:nil];
             }
@@ -117,72 +92,50 @@
     }
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
-- (void)awakeFromNib
-{
+- (void)awakeFromNib {
+    [super awakeFromNib];
     self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    /*if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-     self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
-     }*/
     
     if (RI_IS_RTL) {
         [self setRightPanel:[self.mainStoryboard instantiateViewControllerWithIdentifier:@"menuViewController"]];
-    }else{
+    } else {
         [self setLeftPanel:[self.mainStoryboard instantiateViewControllerWithIdentifier:@"menuViewController"]];
     }
     [self setCenterPanel:[ViewControllerManager centerViewController]];
-    [super awakeFromNib];
+    [self turnOffMenuSwipe];
 }
 
-- (void)updateCountry:(NSNotification*)notification
-{
+- (void)updateCountry:(NSNotification*)notification {
     if (RI_IS_RTL) {
         [self setRightPanel:[self.mainStoryboard instantiateViewControllerWithIdentifier:@"menuViewController"]];
-    }else{
+    } else {
         [self setLeftPanel:[self.mainStoryboard instantiateViewControllerWithIdentifier:@"menuViewController"]];
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"first_screen"]];
     
-    if(VALID_NOTEMPTY(notification.userInfo, NSDictionary) && VALID_NOTEMPTY([RIApi getCountryIsoInUse], NSString))
-    {
+    if(VALID_NOTEMPTY(notification.userInfo, NSDictionary) && VALID_NOTEMPTY([RIApi getCountryIsoInUse], NSString)) {
         [[RITrackingWrapper sharedInstance] handlePushNotifcation:[notification.userInfo copy]];
     }
 }
 
-- (void)turnOffMenuSwipe
-{
+- (void)turnOffMenuSwipe {
     self.allowLeftSwipe = NO;
     self.allowRightSwipe = NO;
 }
 
-- (void)turnOnMenuSwipe
-{
-    if (RI_IS_RTL) {
-        self.allowLeftSwipe = NO;
-        self.allowRightSwipe = YES;
-    } else {
-        self.allowLeftSwipe = YES;
-        self.allowRightSwipe = NO;
-    }
-}
-
-- (void)openMainMenu:(NSNotification *)notification
-{
+- (void)openMainMenu:(NSNotification *)notification {
     UIViewController *topViewController = [(JACenterNavigationController *)self.centerPanel topViewController];
-    if(VALID_NOTEMPTY(topViewController, UIViewController))
-    {
-        if([topViewController respondsToSelector:@selector(removeMessageView)])
-        {
+    if(VALID_NOTEMPTY(topViewController, UIViewController)) {
+        if([topViewController respondsToSelector:@selector(removeMessageView)]) {
             [topViewController performSelector:@selector(removeMessageView)];
         }
     }

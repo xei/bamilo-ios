@@ -8,11 +8,10 @@
 
 #import "RITrackingWrapper.h"
 #import "RIGoogleAnalyticsTracker.h"
-#import "RIBugSenseTracker.h"
 #import "RIOpenURLHandler.h"
-#import "RIAd4PushTracker.h"
 #import "RIAdjustTracker.h"
-#import "RIGTMTracker.h"
+//#import "RIGTMTracker.h"
+//#import "AccengageTracker.h"
 
 @interface RITrackingWrapper ()
 
@@ -69,20 +68,14 @@ static dispatch_once_t sharedInstanceToken;
     //Google Analytics Tracker
     RIGoogleAnalyticsTracker *googleAnalyticsTracker = [[RIGoogleAnalyticsTracker alloc] init];
     
-    //Bug Sense Tracker
-    //RIBugSenseTracker *bugsenseTracker = [[RIBugSenseTracker alloc] init];
-    
-    //Ad4Push Tracker
-    RIAd4PushTracker *ad4PushTracker = [[RIAd4PushTracker alloc] init];
-    
     //Adjust Tracker
     RIAdjustTracker *adjustTracker = [[RIAdjustTracker alloc] init];
     [adjustTracker setDelegate:delegate];
     
     //Google Tag Manager Tracker
-    RIGTMTracker *gtmTracker = [RIGTMTracker sharedInstance];
+    //RIGTMTracker *gtmTracker = [RIGTMTracker sharedInstance];
     
-    self.trackers = [NSMutableArray arrayWithObjects:googleAnalyticsTracker, /*bugsenseTracker,*/ ad4PushTracker, adjustTracker, gtmTracker, nil];
+    self.trackers = [NSMutableArray arrayWithObjects:googleAnalyticsTracker, adjustTracker, /*gtmTracker, [AccengageTracker sharedInstance],*/ nil];
     
     if(VALID_NOTEMPTY(launchOptions, NSDictionary)) {
         [self RI_callTrackersConformToProtocol:@protocol(RITracker)
@@ -214,15 +207,13 @@ static dispatch_once_t sharedInstanceToken;
                                   selector:@selector(applicationDidRegisterForRemoteNotificationsWithDeviceToken:) arguments:@[deviceToken]];
 }
 
-- (void)applicationDidReceiveRemoteNotification:(NSDictionary *)userInfo
-{
+- (void)applicationDidReceiveRemoteNotification:(NSDictionary *)userInfo {
     RIDebugLog(@"Application did receive an remote notification: %@", userInfo);
     
     [self RI_callTrackersConformToProtocol:@protocol(RINotificationTracking)
                                   selector:@selector(applicationDidReceiveRemoteNotification:)
                                  arguments:@[userInfo]];
-    if(VALID_NOTEMPTY(userInfo, NSDictionary))
-    {
+    if(VALID_NOTEMPTY(userInfo, NSDictionary)) {
         [self handlePushNotifcation:[userInfo copy]];
     }
 }
@@ -296,7 +287,7 @@ static dispatch_once_t sharedInstanceToken;
 
 #pragma mark - Campaign protocol
 
-- (void)trackCampaignWithName:(NSString *)campaignName {
+- (void)trackCampaignData:(NSDictionary *)campaignData {
     RIDebugLog(@"Tracking campaign with name '%@'", campaignName);
     
     if (!self.trackers) {
@@ -305,8 +296,8 @@ static dispatch_once_t sharedInstanceToken;
     }
     
     [self RI_callTrackersConformToProtocol:@protocol(RICampaignTracker)
-                                  selector:@selector(trackCampaignWithName:)
-                                 arguments:@[campaignName]];
+                                  selector:@selector(trackCampaignData:)
+                                 arguments:@[campaignData]];
 }
 
 #pragma mark - RIStaticPageTracker

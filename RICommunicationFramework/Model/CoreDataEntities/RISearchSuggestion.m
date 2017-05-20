@@ -7,7 +7,6 @@
 //
 
 #import "RISearchSuggestion.h"
-#import "RIFilter.h"
 #import "RITarget.h"
 #import "RIAlgolia.h"
 
@@ -225,7 +224,7 @@
         sortingString = [NSString stringWithFormat:@"/%@", sortingString];
     }
     
-    NSString *filtersString = [RIFilter urlWithFiltersArray:filters];
+    NSString *filtersString = [BaseSearchFilterItem urlWithFiltersArray:filters];
     if(filtersString.length) {
         if(NSNotFound == [@"q" rangeOfString:filtersString].location) {
             tempUrl = [NSString stringWithFormat:@"%@q/%@/page/%@/maxitems/%@%@/%@/", tempUrl, query, page, maxItems,
@@ -239,19 +238,6 @@
                    sortingString];
     }
     
-    BOOL discountMode = NO;
-    for (RIFilter* filter in filters) {
-        for (RIFilterOption* filterOption in filter.options) {
-            if (filterOption.discountOnly)
-            {
-                discountMode = YES;
-                break;
-            }
-        }
-    }
-    if (discountMode) {
-        tempUrl = [NSString stringWithFormat:@"%@/special_price/1", tempUrl];
-    }
 
     tempUrl = [tempUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSURL *url = [NSURL URLWithString:tempUrl];
@@ -500,11 +486,11 @@
                         
                         if ([productDic objectForKey:@"special_price"]) {
                             product.price = [productDic objectForKey:@"special_price"];
-                            product.priceFormatted = [RICountryConfiguration formatPrice:[NSNumber numberWithFloat:[product.price floatValue]]
+                            product.priceFormatted = [RICountryConfiguration formatPrice:[NSNumber  numberWithLongLong:[product.price longLongValue]]
                                                                                  country:[RICountryConfiguration getCurrentConfiguration]];
                         } else if ([productDic objectForKey:@"price"]) {
                             product.price = [productDic objectForKey:@"price"];
-                            product.priceFormatted = [RICountryConfiguration formatPrice:[NSNumber numberWithFloat:[product.price floatValue]]
+                            product.priceFormatted = [RICountryConfiguration formatPrice:[NSNumber numberWithLongLong:[product.price longLongValue]]
                                                                                  country:[RICountryConfiguration getCurrentConfiguration]];
                         }
                                                 

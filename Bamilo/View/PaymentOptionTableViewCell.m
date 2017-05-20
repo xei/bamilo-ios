@@ -23,7 +23,7 @@
 -(void)awakeFromNib {
     [super awakeFromNib];
     
-    [self.paymentDescLabel applyStyle:kFontRegularName fontSize:11.0f color:cDARK_GRAY_COLOR];
+    [self.paymentDescLabel applyStyle:[Theme font:kFontVariationRegular size:11.0f] color:[Theme color:kColorDarkGray]];
 }
 
 #pragma mark - Overrides

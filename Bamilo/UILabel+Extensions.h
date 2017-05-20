@@ -11,6 +11,7 @@
 @interface UILabel (Extensions)
 
 -(void) applyStyle:(NSString *)fontName fontSize:(CGFloat)fontSize color:(UIColor *)color;
+-(void) applyStyle:(UIFont *)font color:(UIColor *)color;
 -(CGSize) sizeForLabel;
 
 @end

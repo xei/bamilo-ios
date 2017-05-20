@@ -18,11 +18,10 @@
 @property (nonatomic, strong) NSDictionary *vicinityOptionsDictionary;
 @end
 
-@implementation AddressEditViewController
-
-const int RegionFieldIndex = 4;
-const int CityFieldIndex = 5;
-const int VicinityFieldIndex = 6;
+@implementation AddressEditViewController {
+@private
+    FormItemModel *region, *city, *vicinity;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -38,58 +37,53 @@ const int VicinityFieldIndex = 6;
     self.formController.delegate = self;
     self.formController.tableView = self.tableView;
     
-    FormItemModel *name = [FormItemModel nameFieldWithFiedName:@"address_form[first_name]"];
-    FormItemModel *lastname = [FormItemModel lastNameWithFieldName:@"address_form[last_name]"];
-    FormItemModel *phone = [FormItemModel phoneWithFieldName:@"address_form[phone]"];
+    self.formController.formModelList = [NSMutableArray new];
+    
+    //ADDRESS - USER ADDRESS SECTION
+    FormHeaderModel *addressHeader = [[FormHeaderModel alloc] initWithHeaderTitle:STRING_ADDRESS];
+    region = [[FormItemModel alloc] initWithTextValue: (self.address.uid) ? @"": @"تهران" fieldName: @"address_form[region]" andIcon: nil placeholder: @"استان" type: InputTextFieldControlTypeOptions validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil] selectOptions: nil];
+    
+    city = [[FormItemModel alloc] initWithTextValue:nil fieldName: @"address_form[city]" andIcon:nil placeholder: @"شهر" type: InputTextFieldControlTypeOptions validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil] selectOptions:nil];
+
+    vicinity = [[FormItemModel alloc] initWithTextValue: nil fieldName: @"address_form[postcode]" andIcon: nil placeholder: @"محله" type: InputTextFieldControlTypeOptions validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil] selectOptions: nil];
+    vicinity.validation.isRequired = NO;
+    
     FormItemModel *address = [FormItemModel addressWithFieldName:@"address_form[address1]"];
     FormItemModel *postalCode = [FormItemModel postalCodeWithFieldName:@"address_form[address2]"];
     postalCode.validation.isRequired = NO;
     
-    FormItemModel *region = [[FormItemModel alloc] initWithTitle: (self.address.uid) ? @"": @"تهران"
-                                                       fieldName: @"address_form[region]"
-                                                         andIcon: nil
-                                                     placeholder: @"استان"
-                                                            type: InputTextFieldControlTypeOptions
-                                                      validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil]
-                                                   selectOptions: nil];
+    [self.formController.formModelList addObjectsFromArray:@[ addressHeader, region, city, vicinity, address, postalCode ]];
     
+    //ADDRESS - USER INFO SECTION
+    FormHeaderModel *personalInfoHeader = [[FormHeaderModel alloc] initWithHeaderTitle:STRING_RECIPIENT_INFO];
     
-    FormItemModel *city = [[FormItemModel alloc] initWithTitle: nil
-                                                     fieldName: @"address_form[city]"
-                                                       andIcon: nil
-                                                   placeholder: @"شهر"
-                                                          type: InputTextFieldControlTypeOptions
-                                                    validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil]
-                                                 selectOptions: nil];
-
+    FormItemModel *firstName = [FormItemModel firstNameFieldWithFiedName:@"address_form[first_name]"];
+    FormItemModel *lastName = [FormItemModel lastNameWithFieldName:@"address_form[last_name]"];
+    FormItemModel *phone = [FormItemModel phoneWithFieldName:@"address_form[phone]"];
     
-    FormItemModel *vicinity = [[FormItemModel alloc] initWithTitle: nil
-                                                         fieldName: @"address_form[postcode]"
-                                                           andIcon: nil
-                                                       placeholder: @"محله"
-                                                              type: InputTextFieldControlTypeOptions
-                                                        validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil]
-                                                     selectOptions: nil];
-    
-    self.formController.formListModel = [NSMutableArray arrayWithArray:@[name, lastname, phone, postalCode, address]];
-    
-    
-    if (![RICustomer getCustomerGender]) {
-        FormItemModel *gender = [FormItemModel genderWithFieldName:@"address_form[gender]"];
-        [self.formController.formListModel insertObject:gender atIndex:2];
+    if(self.address == nil) {
+        //Adding a new address. Try to pre-fill user info
+        RICustomer *customer = [RICustomer getCurrentCustomer];
+        
+        [firstName setInputTextValue:customer.firstName];
+        [lastName setInputTextValue:customer.lastName];
+        [phone setInputTextValue:customer.phone];
     }
     
-    [self.formController.formListModel insertObject:region atIndex:RegionFieldIndex];
-    [self.formController.formListModel insertObject:city atIndex:CityFieldIndex];
-    [self.formController.formListModel insertObject:vicinity atIndex:VicinityFieldIndex];
-    [self.formController setupTableView];
+    [self.formController.formModelList addObjectsFromArray:@[ personalInfoHeader, firstName, lastName, phone ]];
     
+    if (![RICustomer getCustomerGender] && self.address == nil) {
+        FormItemModel *gender = [FormItemModel genderWithFieldName:@"address_form[gender]"];
+        [self.formController.formModelList addObject:gender];
+    }
+    
+    [self.formController setupTableView];
     
     if (!self.address.uid) {
         // Get regions and citiies for region defualt value (if exists)
         [self getRegionsByCompletion:^{
-            if (region.titleString) {
-                [self getCitiesForRegionId:[self.formController.formListModel[RegionFieldIndex] getValue]  completion: nil];
+            if (region.inputTextValue) {
+                [self getCitiesForRegionId:[region getValue] completion: nil];
             }
         }];
     }
@@ -172,7 +166,7 @@ const int VicinityFieldIndex = 6;
 
 #pragma mark - FormViewControlDelegate
 - (void)fieldHasBeenUpdatedByNewValidValue:(NSString *)value inFieldIndex:(NSUInteger)fieldIndex {
-    FormItemModel *targetModel = self.formController.formListModel[fieldIndex];
+    FormItemModel *targetModel = self.formController.formModelList[fieldIndex];
     if([targetModel.fieldName isEqualToString:@"address_form[region]"]) {
         [self getCitiesForRegionId:[targetModel getValue] completion:nil];
     } else if ([targetModel.fieldName isEqualToString:@"address_form[city]"]) {
@@ -184,13 +178,13 @@ const int VicinityFieldIndex = 6;
 - (void)bind:(id)data forRequestId:(int)rid {
     switch (rid) {
         case 0: //all regions have been received
-            [self updateSelectOptionModelForFieldIndex:RegionFieldIndex withData:data];
+            [self updateSelectOptionModelForFieldIndex:[self.formController.formModelList indexOfObject:region] withData:data];
             break;
         case 1: //all cities of `region` have been receive
-            [self updateSelectOptionModelForFieldIndex:CityFieldIndex withData:data];
+            [self updateSelectOptionModelForFieldIndex:[self.formController.formModelList indexOfObject:city] withData:data];
             break;
         case 2: //all vicinities of `city` have been receive
-            [self updateSelectOptionModelForFieldIndex:VicinityFieldIndex withData:data];
+            [self updateSelectOptionModelForFieldIndex:[self.formController.formModelList indexOfObject:vicinity] withData:data];
             break;
         case 3: //address object have been received for editing
             [self updateFormValuesWithAddress:data];
@@ -223,7 +217,7 @@ const int VicinityFieldIndex = 6;
         model.selectOption = data;
         
         if ([model getValue] == nil) {
-            model.titleString = nil;
+            model.inputTextValue = nil;
         }
         
         return model;
@@ -242,18 +236,22 @@ const int VicinityFieldIndex = 6;
                                       @"address_form[city]"         : address.city ?: @"",
                                       @"address_form[postcode]"     : address.postcode ?: @""
                                     };
-    [self.formController.formListModel enumerateObjectsUsingBlock:^(FormItemModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [self.formController updateFieldIndex:idx WithUpdateModelBlock:^FormItemModel *(FormItemModel *model) {
-            model.titleString = addressFieldMapValues[model.fieldName];
-            return model;
-        }];
+    
+    [self.formController.formModelList enumerateObjectsUsingBlock:^(id _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if([obj isKindOfClass:[FormItemModel class]]) {
+            [self.formController updateFieldIndex:idx WithUpdateModelBlock:^FormItemModel *(FormItemModel *model) {
+                model.inputTextValue = addressFieldMapValues[model.fieldName];
+                return model;
+            }];
+        }
     }];
+    
     [self.formController refreshView];
     [self getRegionsByCompletion:^{
         if (addressFieldMapValues[@"address_form[region]"].length) {
-            [self getCitiesForRegionId:[self.formController.formListModel[RegionFieldIndex] getValue]  completion:^{
+            [self getCitiesForRegionId:[region getValue]  completion:^{
                 if (addressFieldMapValues[@"address_form[city]"]) {
-                    [self getVicinitiesForCityId:[self.formController.formListModel[CityFieldIndex] getValue] completion:nil];
+                    [self getVicinitiesForCityId:[city getValue] completion:nil];
                 }
             }];
         }

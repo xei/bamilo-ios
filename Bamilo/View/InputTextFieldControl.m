@@ -2,7 +2,7 @@
 //  InputTextFieldControl.m
 //  Bamilo
 //
-//  Created by Ali saiedifar on 2/11/17.
+//  Created by Ali Saeedifar on 2/11/17.
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
@@ -57,10 +57,11 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    self.input = [[[NSBundle mainBundle] loadNibNamed:@"InputTextField" owner:self options:nil] lastObject];
+    self.input = [InputTextField nibInstance];
     [self addSubview:self.input];
     self.input.frame = self.bounds;
     
+    [self.input.textField addTarget:self action:@selector(textFieldEditingChanged:) forControlEvents:UIControlEventEditingChanged];
     [self.input.textField addTarget:self action:@selector(textFieldEditingDidEndOnExit:) forControlEvents:UIControlEventEditingDidEnd];
     [self.input.textField addTarget:self action:@selector(textFieldEditingDidEnditingBegan:) forControlEvents:UIControlEventEditingDidBegin];
 }
@@ -91,8 +92,8 @@
 
 
 - (void)updateModel {
-    if (![self.model.titleString isEqualToString:[self getStringValue]]) {
-        self.model.titleString = [self getStringValue];
+    if (![self.model.inputTextValue isEqualToString:[self getStringValue]]) {
+        self.model.inputTextValue = [self getStringValue];
         [self.delegate inputValueHasBeenChanged:self byNewValue:[self getStringValue] inFieldIndex:self.fieldIndex];
     }
 }
@@ -111,8 +112,8 @@
         self.input.hasIcon = NO;
     }
     
-    if (model.titleString.length) {
-        self.input.textField.text = model.titleString;
+    if (model.inputTextValue.length) {
+        self.input.textField.text = (model.type == InputTextFieldControlTypeNumerical) ? [model.inputTextValue numbersToPersian] : model.inputTextValue;
         [self checkValidation];
     }
     
@@ -173,9 +174,15 @@
     if (self.type == InputTextFieldControlTypeOptions) {
         textField.inputView = self.pickerView;
         textField.inputAccessoryView = self.toolBar;
-        if (self.model.titleString && [self.model.selectOption.allKeys containsObject:self.model.titleString]) {
-            [self.pickerView selectRow:[self.model.selectOption.allKeys indexOfObject:self.model.titleString] inComponent:0 animated:NO];
+        if (self.model.inputTextValue && [self.model.selectOption.allKeys containsObject:self.model.inputTextValue]) {
+            [self.pickerView selectRow:[self.model.selectOption.allKeys indexOfObject:self.model.inputTextValue] inComponent:0 animated:NO];
         }
+    }
+}
+
+- (void)textFieldEditingChanged:(UITextField *)textField {
+    if (self.type == InputTextFieldControlTypeNumerical) {
+        textField.text = [textField.text numbersToPersian];
     }
 }
 

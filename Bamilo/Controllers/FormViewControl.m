@@ -2,22 +2,23 @@
 //  FormViewControl.m
 //  Bamilo
 //
-//  Created by Ali saiedifar on 2/13/17.
+//  Created by Ali Saeedifar on 2/13/17.
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
 #import "FormViewControl.h"
-#import "BasicTableViewCell.h"
+#import "FormHeaderTableViewCell.h"
 
 @interface FormViewControl ()
 @property (nonatomic, strong) UITextField *activeField;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, InputTextFieldControl*> *inputControlsDictionary;
 @property (nonatomic) NSUInteger numberOfRowsOfTableView;
-@property (nonatomic) Boolean tableViewRegistered;
+@property (nonatomic) BOOL tableViewRegistered;
 @end
 
 @implementation FormViewControl {
-    @private UIEdgeInsets tableViewInitialInsets;
+@private UIEdgeInsets tableViewInitialInsets;
+@private BOOL allErrorsHaveBeenShown;
 }
 
 //Lazy initialization for inputControlsDictionary
@@ -32,10 +33,10 @@
     //Tableview registrations
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    [self.tableView registerNib: [UINib nibWithNibName:[FormTableViewCell nibName] bundle:nil]
+    [self.tableView registerNib:[UINib nibWithNibName:[FormHeaderTableViewCell nibName] bundle:nil]
+         forCellReuseIdentifier:[FormHeaderTableViewCell nibName]];
+    [self.tableView registerNib:[UINib nibWithNibName:[FormTableViewCell nibName] bundle:nil]
          forCellReuseIdentifier:[FormTableViewCell nibName]];
-    [self.tableView registerNib:[UINib nibWithNibName:[BasicTableViewCell nibName] bundle:nil]
-         forCellReuseIdentifier:[BasicTableViewCell nibName]];
     [self.tableView registerNib:[UINib nibWithNibName:[ButtonTableViewCell nibName] bundle:nil]
          forCellReuseIdentifier:[ButtonTableViewCell nibName]];
     self.tableView.multipleTouchEnabled = NO;
@@ -43,28 +44,31 @@
     self.tableViewRegistered = YES;
 }
 
-- (void)setFormListModel:(NSMutableArray<FormItemModel *> *)formListModel {
-    _formListModel = formListModel;
-    [self reloadViewIfItsPossible];
+- (void)setFormModelList:(NSMutableArray *)formModelList {
+    _formModelList = formModelList;
+    [self reloadViewIfPossible];
 }
 
 - (void)updateFieldIndex:(NSUInteger)index WithUpdateModelBlock:(updateModelWithPreviousModel)block {
-    self.formListModel[index] = block(self.formListModel[index]);
+    self.formModelList[index] = block(self.formModelList[index]);
 }
 
 - (NSMutableDictionary *)getMutableDictionaryOfForm {
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-    [self.formListModel enumerateObjectsUsingBlock:^(FormItemModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.formModelList enumerateObjectsUsingBlock:^(FormItemModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (![obj isKindOfClass:[FormItemModel class]]) {
+            return;
+        }
         params[obj.fieldName] = [obj getValue];
     }];
     return params;
 }
 
 - (void)refreshView {
-    [self reloadViewIfItsPossible];
+    [self reloadViewIfPossible];
 }
 
-- (void)reloadViewIfItsPossible {
+- (void)reloadViewIfPossible {
     if (self.tableViewRegistered) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];
@@ -72,38 +76,46 @@
     }
 }
 
-#pragma mark - tableviewDelegates
+#pragma mark - UITableViewDelegate
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.formMessage && indexPath.row == 0) {
-        BasicTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:[BasicTableViewCell nibName] forIndexPath:indexPath];
-        cell.titleLabel.text = self.formMessage;
-        return cell;
-    }
-    
     if (indexPath.row == self.numberOfRowsOfTableView - 1) {
         ButtonTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:[ButtonTableViewCell nibName] forIndexPath:indexPath];
         [cell.button setTitle:self.submitTitle forState:UIControlStateNormal];
         cell.delegate = self;
         return cell;
+    } else {
+        id<FormElementProtocol> formElement = self.formModelList[indexPath.row];
+        if([formElement isKindOfClass:[FormItemModel class]]) {
+            FormTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:[FormTableViewCell nibName] forIndexPath:indexPath];
+            cell.formItemControl.input.textField.delegate = self;
+            cell.formItemControl.model = self.formModelList[indexPath.row];
+            cell.formItemControl.fieldIndex = indexPath.row;
+            self.inputControlsDictionary[((FormItemModel *)formElement).fieldName] = cell.formItemControl;
+            cell.formItemControl.delegate = self;
+            if (allErrorsHaveBeenShown) {
+                [cell.formItemControl checkValidation];
+            }
+            return cell;
+        } else if([formElement isKindOfClass:[FormHeaderModel class]]) {
+            FormHeaderTableViewCell *formHeaderItemTableViewCell = [self.tableView dequeueReusableCellWithIdentifier:[FormHeaderTableViewCell nibName] forIndexPath:indexPath];
+            formHeaderItemTableViewCell.titleString  = ((FormHeaderModel *)formElement).headerString;
+            return formHeaderItemTableViewCell;
+        }
     }
     
-    FormTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:[FormTableViewCell nibName] forIndexPath:indexPath];
-    cell.formItemControl.input.textField.delegate = self; 
-    NSUInteger fieldIndex = self.formMessage ? indexPath.row - 1 : indexPath.row;
-    cell.formItemControl.model = self.formListModel[fieldIndex];
-    cell.formItemControl.fieldIndex = fieldIndex;
-    self.inputControlsDictionary[self.formListModel[fieldIndex].fieldName] = cell.formItemControl;
-    cell.formItemControl.delegate = self;
-    return cell;
+    return nil;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    self.numberOfRowsOfTableView = self.formListModel.count + 1 + (self.formMessage != nil);
-    return self.numberOfRowsOfTableView;
+    return self.numberOfRowsOfTableView = self.formModelList.count + 1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return UITableViewAutomaticDimension;
+    if(indexPath.row < self.formModelList.count && [[self.formModelList objectAtIndex:indexPath.row] isKindOfClass:[FormHeaderModel class]]) {
+        return [FormHeaderTableViewCell cellHeight];
+    } else {
+        return UITableViewAutomaticDimension;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -159,7 +171,10 @@
 #pragma mark - helper functions
 - (Boolean)isFormValid {
     __block Boolean result = YES;
-    [self.formListModel enumerateObjectsUsingBlock:^(FormItemModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.formModelList enumerateObjectsUsingBlock:^(FormItemModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (![obj isKindOfClass:[FormItemModel class]]) {
+            return;
+        }
         if(![obj.validation checkValiditionOfString:[obj getValue]].boolValue) {
             result = NO;
             *stop = YES;
@@ -177,10 +192,10 @@
 #pragma mark - InputTextFieldControlDelegate
 - (void)inputValueHasBeenChanged:(id)inputTextFieldControl byNewValue:(NSString *)value inFieldIndex:(NSUInteger)fieldIndex {
     
-    self.formListModel[fieldIndex].titleString = value;
+    FormItemModel *model = self.formModelList[fieldIndex];
+    model.inputTextValue = value;
     
-    if ([self.formListModel[fieldIndex].validation checkValiditionOfString:[self.formListModel[fieldIndex] getValue]].boolValue) {
-        
+    if ([model.validation checkValiditionOfString:[model getValue]].boolValue) {
         if ([self.delegate respondsToSelector:@selector(fieldHasBeenUpdatedByNewValidValue:inFieldIndex:)]){
             [self.delegate fieldHasBeenUpdatedByNewValidValue:value inFieldIndex:fieldIndex];
         }
@@ -198,6 +213,7 @@
 }
 
 - (void)showAnyErrorInForm {
+    allErrorsHaveBeenShown = YES;
     [self.inputControlsDictionary enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, InputTextFieldControl * _Nonnull obj, BOOL * _Nonnull stop) {
         [obj checkValidation];
     }];

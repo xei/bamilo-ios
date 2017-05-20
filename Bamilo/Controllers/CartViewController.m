@@ -20,10 +20,12 @@
 #import "ViewControllerManager.h"
 #import "AlertManager.h"
 #import "CartEntitySummaryViewControl.h"
+#import "EmptyViewController.h"
+#import "EmarsysPredictManager.h"
 
 
 @interface CartViewController() <CartTableViewCellDelegate>
-@property (nonatomic, strong) JAEmptyCartView *emptyCartView;
+//@property (nonatomic, strong) JAEmptyCartView *emptyCartView;
 @property (nonatomic, strong) RICartItem *currentItem;
 @property (nonatomic, weak) IBOutlet UIView *contentWrapper;
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
@@ -33,19 +35,11 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *costSummeryContainerTopToWholeCostTopConstraint;
 @property (weak, nonatomic) IBOutlet CartEntitySummaryViewControl *summeryView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *summeryViewToBottomConstraint;
+@property (weak, nonatomic) EmptyViewController *emptyCartViewController;
+@property (weak, nonatomic) IBOutlet UIView *emptyCartViewContainer;
 @end
 
 @implementation CartViewController
-
-- (JAEmptyCartView *)emptyCartView {
-    if (!VALID(_emptyCartView, JAEmptyCartView)) {
-        _emptyCartView = [[JAEmptyCartView alloc] initWithFrame:self.viewBounds];
-        [_emptyCartView setBackgroundColor:JAWhiteColor];
-        [_emptyCartView addHomeScreenTarget:self action:@selector(goToHomeScreen)];
-        [self.view addSubview:_emptyCartView];
-    }
-    return _emptyCartView;
-}
 
 - (void)setCart:(RICart *)cart {
     _cart = cart;
@@ -61,18 +55,20 @@
 }
 
 - (void)setCartEmpty:(BOOL)empty {
-    [self.emptyCartView setHidden:!empty];
+    [self.emptyCartViewContainer setHidden:!empty];
+    if (empty) {
+        [self.emptyCartViewController getSuggestions];
+    }
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.A4SViewControllerAlias = @"CART";
+    
     self.navBarLayout.title = STRING_CART;
     self.navBarLayout.showBackButton = NO;
     self.navBarLayout.showCartButton = NO;
     self.tabBarIsVisible = YES;
     [self.view setBackgroundColor:JAWhiteColor];
-    
     
     //TableView registerations
     self.tableView.delegate = self;
@@ -268,7 +264,7 @@
 - (void)cartEntityTapped:(id)cartEntityControl {
     if (self.costSummeryContainerTopToWholeCostTopConstraint.constant == 0) {
         [self showDetailSummeryView:YES];
-    } else {
+    } else { 
         [self showDetailSummeryView:NO];
     }
 }
@@ -291,11 +287,15 @@
 #pragma mark - DataServiceProtocol
 - (void)bind:(id)data forRequestId:(int)rid {
     RICart *cart = (RICart *)data;
-    
     [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo: @{kUpdateCartNotificationValue: cart}];
     self.cart = cart;
     [self.tableView reloadData];
     [self checkIfSummeryViewsMustBeVisibleOrNot];
+    
+    //When cart is ready & not empty
+    if (cart.cartEntity.cartCount.integerValue) {
+        [EmarsysPredictManager sendTransactionsOf:self];
+    }
 }
 
 #pragma mark - PerformanceTrackerProtocol
@@ -308,9 +308,12 @@
     return [NSString stringWithFormat:@"%@", [skusFromTeaserInCart allKeys]];
 }
 
+#pragma mark - DataTrackerProtocol
+-(NSString *)getDataTrackerAlias {
+    return @"CART";
+}
 
-#pragma mark - helpers
-
+#pragma mark - Helpers
 - (void)checkIfSummeryViewsMustBeVisibleOrNot {
     [self.tableView layoutIfNeeded];
     if (self.tableView.contentSize.height < self.tableView.frame.size.height) {
@@ -346,7 +349,6 @@
     }
 }
 
-
 - (void)changeTheSummeryTopConstraintByAnimationTo:(CGFloat)constant {
     [UIView animateWithDuration:0.15 animations:^{
         self.costSummeryContainerTopToWholeCostTopConstraint.constant = constant;
@@ -359,6 +361,21 @@
         self.summeryViewToBottomConstraint.constant = constant;
         [self.view layoutIfNeeded];
     } completion:nil];
+}
+
+#pragma segue preparation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    NSString * segueName = segue.identifier;
+    if ([segueName isEqualToString: @"embedEmptyViewController"]) {
+        self.emptyCartViewController = (EmptyViewController *) [segue destinationViewController];
+        self.emptyCartViewController.recommendationLogic = @"PERSONAL";
+        [self.emptyCartViewController updateTitle:STRING_NO_ITEMS_IN_CART];
+        [self.emptyCartViewController updateImage:[UIImage imageNamed:@"img_emptyCart"]];
+    }
+}
+
+- (BOOL)isPreventSendTransactionInViewWillAppear {
+    return YES;
 }
 
 @end

@@ -12,12 +12,12 @@ target 'Bamilo' do
   # use_frameworks!
 
   # Pods for Bamilo
-  pod 'Accengage-iOS-SDK', '~> 5.4.0'
+  # pod 'Accengage-iOS-SDK', '~> 6.0'
   pod 'Adjust', '~> 4.11.0'
-  pod 'AlgoliaSearch-Client', '~> 3.5'
-  pod 'BugSense', '~> 3.6'
-  pod 'Crashlytics', '~> 3.8.3'
-  pod 'Fabric', '~> 1.6.11'
+  pod 'AlgoliaSearch-Client'
+  pod 'Fabric'
+  pod ‘EmarsysPredictSDK’
+  pod 'Crashlytics', '~> 3.8'
   pod 'FXBlurView','~> 1.6.4'
   # pod 'GoogleTagManager', '~> 5.0.8'
   pod 'GoogleTagManager', '3.15.0' # ********** Legacy
@@ -28,9 +28,9 @@ target 'Bamilo' do
   pod 'NewRelicAgent', '~> 5.10.0'
   pod 'SDWebImage', '~> 3.8'  
   pod 'TTRangeSlider', '~> 1.0.5'
-  # pod 'Mantle'
   pod 'JSONModel'
   pod 'RAlertView'
+  pod 'Pushwoosh'
 
   target 'BamiloUITests' do
     inherit! :search_paths

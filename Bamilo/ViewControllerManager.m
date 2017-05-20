@@ -61,6 +61,16 @@ static ViewControllerManager *instance;
     return destViewController;
 }
 
+- (UIViewController *)loadViewControllerWithoutStoryBoard:(NSString *)className {
+    NSString *viewControllerFullKey = [NSString stringWithFormat:@"Root-%@", className];
+    UIViewController *destViewController = [_viewControllerCache objectForKey:viewControllerFullKey];
+    if (!destViewController) {
+        destViewController = [NSClassFromString(className) new];
+        [_viewControllerCache setObject:destViewController forKey:viewControllerFullKey];
+    }
+    return destViewController;
+}
+
 - (UIViewController *) loadViewController:(NSString *)nibName {
     return [self loadViewController:nibName resetCache:YES];
 }
@@ -96,6 +106,15 @@ static ViewControllerManager *instance;
 #pragma mark - Private Methods
 -(NSString *)getFullKeyFor:(NSString *)storyboard nibName:(NSString *)nibName {
     return [NSString stringWithFormat:@"%@-%@", storyboard, nibName];
+}
+
+
+- (void)clearCache {
+    [_viewControllerCache enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        if (![obj isKindOfClass:[JARootViewController class]] && ![obj isKindOfClass:[JACenterNavigationController class]]) {
+            [_viewControllerCache removeObjectForKey:key];
+        }
+    }];
 }
 
 @end

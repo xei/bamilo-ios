@@ -15,12 +15,12 @@
 
 @implementation RadioButtonViewControl
 
--(void)awakeFromNib {
+- (void)awakeFromNib {
     [super awakeFromNib];
     
     self.backgroundColor = [UIColor whiteColor];
     
-    self.radioButtonView = [[[NSBundle mainBundle] loadNibNamed:@"RadioButtonView" owner:self options:nil] lastObject];
+    self.radioButtonView = [RadioButtonView nibInstance];
     
     if(self.radioButtonView) {
         [self.radioButtonView setDelegate:self];
@@ -29,13 +29,13 @@
     }
 }
 
--(void)setIsSelected:(BOOL)isSelected {
+- (void)setIsSelected:(BOOL)isSelected {
     [self.radioButtonView update:isSelected];
     _isSelected = isSelected;
 }
 
 #pragma mark - RadioButtonViewControlDelegate
--(void)didSelectRadioButton:(id)button {
+- (void)didSelectRadioButton:(id)button {
     [self.delegate didSelectRadioButton:self];
 }
 

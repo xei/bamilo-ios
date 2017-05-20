@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "OpenAppEvent.h"
 
 @interface AppManager : NSObject
 
@@ -15,5 +16,13 @@
 -(NSString *) getAppVersionNumber;
 -(NSString *) getAppBuildNumber;
 -(NSString *) getAppFullFormattedVersion;
+
+-(OpenAppEventSourceType) updateOpenAppEventSource:(OpenAppEventSourceType)source;
+-(OpenAppEventSourceType) getOpenAppEventSource;
+
+-(void) addAltAppIcon:(NSString *)icon expires:(NSDate *)expires;
+-(void) updateScheduledAppIcons;
+-(void) executeScheduledAppIcons;
+-(void) resetAppIconToDefault;
 
 @end

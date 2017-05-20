@@ -8,16 +8,20 @@
 
 #import <Foundation/Foundation.h>
 #import "RIBanner.h"
+#import "BaseSearchFilterItem.h"
+#import "Breadcrumbs.h"
 
 @interface RICatalog : NSObject
 
 @property (nonatomic, retain) NSArray *categories;
-@property (nonatomic, retain) NSArray *filters;
-@property (nonatomic, retain) NSArray *products;
+@property (nonatomic, retain) NSArray <BaseSearchFilterItem*> *filters;
+@property (nonatomic, assign) int priceFilterIndex;
+@property (nonatomic, retain) NSArray  *products;
 @property (nonatomic, retain) NSString *title;
 @property (nonatomic, retain) NSString *sort;
 @property (nonatomic, retain) NSNumber *totalProducts;
 @property (nonatomic, retain) RIBanner *banner;
+@property (nonatomic, retain) Breadcrumbs *breadcrumbs;
 
 + (RICatalog *)parseCatalog:(NSDictionary *)catalogDictionary forCountryConfiguration:(RICountryConfiguration *)configuration;
 

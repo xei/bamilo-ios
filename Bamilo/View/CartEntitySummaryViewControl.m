@@ -2,7 +2,7 @@
 //  CartEntitySummaryViewControl.m
 //  Bamilo
 //
-//  Created by Ali saiedifar on 2/15/17.
+//  Created by Ali Saeedifar on 2/15/17.
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
@@ -17,7 +17,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    self.summeryView = [[[NSBundle mainBundle] loadNibNamed:@"CartEntitySummaryView" owner:self options:nil] lastObject];
+    self.summeryView = [CartEntitySummaryView nibInstance];
     self.summeryView.delegate = self;
     [self addSubview:self.summeryView];
     self.summeryView.frame = self.bounds;

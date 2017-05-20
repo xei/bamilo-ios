@@ -116,15 +116,13 @@
         [[RICommunicationWrapper sharedInstance] cancelRequest:operationID];
 }
 
-+ (NSArray*)parseCategories:(NSArray*)categories
-                persistData:(BOOL)persistData;
-{
++ (NSArray*)parseCategories:(NSArray*)categories persistData:(BOOL)persistData {
+    
     if (persistData) {
         [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RICategory class])];
     }
     
     NSMutableArray* newCategories = [NSMutableArray new];
-    
     //test if array as another array inside
     NSArray* insideArray = [categories firstObject];
     if (VALID(insideArray, NSArray)) {

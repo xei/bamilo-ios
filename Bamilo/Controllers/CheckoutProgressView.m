@@ -8,10 +8,6 @@
 
 #import "CheckoutProgressView.h"
 
-#define cTHEME_COLOR [UIColor withRGBA:0 green:160 blue:0 alpha:1.0]
-#define cDARKGRAY_COLOR [UIColor withRepeatingRGBA:156 alpha:1.0]
-#define cLIGHTGRAY_COLOR [UIColor withRepeatingRGBA:222 alpha:1.0]
-
 @interface CheckoutProgressView ()
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *stepButtonsCollection;
 @property (strong, nonatomic) IBOutletCollection(UILabel) NSArray *stepButtonLabelsCollection;
@@ -38,15 +34,14 @@
     for(UIButton *button in self.stepButtonsCollection) {
         button.layer.cornerRadius = button.frame.size.width / 2;
         button.layer.masksToBounds = YES;
-        [button setTitleColor:cDARKGRAY_COLOR forState:UIControlStateNormal];
-        [button.titleLabel setFont:[UIFont fontWithName:kFontLightName size:12.0f]];
+        [button applyStyle:[Theme font:kFontVariationLight size:12] color:[Theme color:kColorDarkGray]];
     }
     
     //Initial Button Labels Setup
     for(UILabel *buttonLabel in self.stepButtonLabelsCollection) {
         [buttonLabel setBackgroundColor:[UIColor whiteColor]];
-        [buttonLabel setFont:[UIFont fontWithName:kFontBoldName size:8.0f]];
-        [buttonLabel setTextColor:cDARKGRAY_COLOR];
+        [buttonLabel applyStyle:[Theme font:kFontVariationBold size:8] color:[Theme color:kColorDarkGray]];
+
         
         switch (buttonLabel.tag) {
             case 1:
@@ -92,30 +87,30 @@
         case CHECKOUT_PROGRESSVIEW_BUTTON_STATE_PENDING:
             [button setEnabled:NO];
             [button.layer setBorderColor:[UIColor whiteColor].CGColor];
-            [button.layer setBackgroundColor:cLIGHTGRAY_COLOR.CGColor];
+            [button.layer setBackgroundColor:[Theme color:kColorExtraExtraLightGray].CGColor];
             [button setImage:nil forState:UIControlStateNormal];
             [button setTitle:[[@(button.tag) stringValue] numbersToPersian] forState:UIControlStateNormal];
-            [borderView setBackgroundColor:cLIGHTGRAY_COLOR];
+            [borderView setBackgroundColor:[Theme color:kColorExtraExtraLightGray]];
             [buttonLabel setHidden:YES];
         break;
             
         case CHECKOUT_PROGRESSVIEW_BUTTON_STATE_ACTIVE:
             [button setEnabled:NO];
-            [button.layer setBorderColor:cTHEME_COLOR.CGColor];
+            [button.layer setBorderColor:[Theme color:kColorGreen].CGColor];
             [button.layer setBackgroundColor:[UIColor whiteColor].CGColor];
             [button setImage:nil forState:UIControlStateNormal];
             [button setTitle:[[@(button.tag) stringValue] numbersToPersian] forState:UIControlStateNormal];
-            [borderView setBackgroundColor:cTHEME_COLOR];
+            [borderView setBackgroundColor:[Theme color:kColorGreen]];
             [buttonLabel setHidden:NO];
         break;
             
         case CHECKOUT_PROGRESSVIEW_BUTTON_STATE_DONE:
             [button setEnabled:YES];
-            [button.layer setBorderColor:cTHEME_COLOR.CGColor];
-            [button.layer setBackgroundColor:cTHEME_COLOR.CGColor];
+            [button.layer setBorderColor:[Theme color:kColorGreen].CGColor];
+            [button.layer setBackgroundColor:[Theme color:kColorGreen].CGColor];
             [button setTitle:nil forState:UIControlStateNormal];
             [button setImage:[UIImage imageNamed:@"WhiteThinTick"] forState:UIControlStateNormal];
-            [borderView setBackgroundColor:cTHEME_COLOR];
+            [borderView setBackgroundColor:[Theme color:kColorGreen]];
             [buttonLabel setHidden:YES];
         break;
     }

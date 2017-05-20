@@ -20,5 +20,7 @@
 
 -(void) anchorMatch:(UIView *)view;
 -(CGSize) sizeToFitSubviews;
+- (void)hide;
+- (void)fadeIn:(NSTimeInterval) duration;
 
 @end

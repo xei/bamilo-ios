@@ -2,7 +2,7 @@
 //  StepperViewControl.m
 //  Bamilo
 //
-//  Created by Ali saiedifar on 2/5/17.
+//  Created by Ali Saeedifar on 2/5/17.
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
@@ -18,7 +18,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    self.stepperView = [[[NSBundle mainBundle] loadNibNamed:@"StepperView" owner:self options:nil] lastObject];
+    self.stepperView = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([StepperView class]) owner:self options:nil] lastObject];
     self.stepperView.controller = self;
     [self addSubview:self.stepperView];
     self.stepperView.frame = self.bounds;

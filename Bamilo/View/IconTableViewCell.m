@@ -2,7 +2,7 @@
 //  IconTableViewCell.m
 //  Bamilo
 //
-//  Created by Ali saiedifar on 1/29/17.
+//  Created by Ali Saeedifar on 1/29/17.
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 

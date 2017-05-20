@@ -16,6 +16,8 @@
 #import "JAButton.h"
 #import "JAProductInfoHeaderLine.h"
 #import "JAPDVSingleRelatedItem.h"
+#import "EventUtilities.h"
+#import "EmarsysRecommendationMinimalCarouselWidgetView.h"
 
 #define kTopMargin 20.f
 #define kLateralMargin 16.f
@@ -27,7 +29,7 @@
 @property (nonatomic, strong) UILabel *thankYouLabel;
 @property (nonatomic, strong) UILabel *successMessageLabel;
 @property (nonatomic, strong) JAButton *orderDetailsButton;
-@property (nonatomic, strong) JAButton *continueShoppingButton;
+//@property (nonatomic, strong) JAButton *continueShoppingButton;
 
 @property (nonatomic, strong) UIView *rrView;
 @property (nonatomic, strong) JAProductInfoHeaderLine *rrHeaderLine;
@@ -39,8 +41,7 @@
 
 @implementation JASuccessPageViewController
 
-- (UIScrollView *)topScrollView
-{
+- (UIScrollView *)topScrollView {
     if (!VALID(_topScrollView, UIScrollView)) {
         CGFloat viewWidth = 320;
         _topScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.view.width/2-viewWidth/2, 0, viewWidth, self.viewBounds.size.height)];
@@ -48,8 +49,7 @@
     return _topScrollView;
 }
 
-- (UIImageView *)topImageView
-{
+- (UIImageView *)topImageView {
     if (!VALID(_topImageView, UIImageView)) {
         CGSize imageSize = CGSizeMake(50, 50);
         _topImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.topScrollView.width/2-imageSize.width/2, kTopMargin, imageSize.width, imageSize.height)];
@@ -58,8 +58,7 @@
     return _topImageView;
 }
 
-- (UILabel *)thankYouLabel
-{
+- (UILabel *)thankYouLabel {
     if (!VALID(_thankYouLabel, UILabel)) {
         CGFloat viewWidth = self.topScrollView.width;
         _thankYouLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.topImageView.frame) + 16.f, viewWidth-2*kLateralMargin, 20)];
@@ -72,8 +71,7 @@
     return _thankYouLabel;
 }
 
-- (UILabel *)successMessageLabel
-{
+- (UILabel *)successMessageLabel {
     if (!VALID(_successMessageLabel, UILabel)) {
         CGFloat viewWidth = self.topScrollView.width;
         _successMessageLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.thankYouLabel.frame) + 16.f, viewWidth-2*kLateralMargin, 20)];
@@ -87,8 +85,7 @@
     return _successMessageLabel;
 }
 
-- (JAButton *)orderDetailsButton
-{
+- (JAButton *)orderDetailsButton {
     if (!VALID(_orderDetailsButton, JAButton)) {
         CGFloat viewWidth = self.topScrollView.width;
         _orderDetailsButton = [[JAButton alloc] initAlternativeButtonWithTitle:STRING_ORDER_DETAILS target:self action:@selector(goToTrackOrders)];
@@ -97,26 +94,23 @@
     return _orderDetailsButton;
 }
 
-- (JAButton *)continueShoppingButton
-{
-    if (!VALID(_continueShoppingButton, JAButton)) {
-        CGFloat viewWidth = self.topScrollView.width;
-        _continueShoppingButton = [[JAButton alloc] initButtonWithTitle:STRING_CONTINUE_SHOPPING target:self action:@selector(goToHomeScreen)];
-        [_continueShoppingButton setFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.orderDetailsButton.frame)+16.f, viewWidth-2*kLateralMargin, kBottomDefaultHeight)];
-    }
-    return _continueShoppingButton;
-}
+//- (JAButton *)continueShoppingButton {
+//    if (!VALID(_continueShoppingButton, JAButton)) {
+//        CGFloat viewWidth = self.topScrollView.width;
+//        _continueShoppingButton = [[JAButton alloc] initButtonWithTitle:STRING_CONTINUE_SHOPPING target:self action:@selector(goToHomeScreen)];
+//        [_continueShoppingButton setFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.orderDetailsButton.frame)+16.f, viewWidth-2*kLateralMargin, kBottomDefaultHeight)];
+//    }
+//    return _continueShoppingButton;
+//}
 
-- (UIView *)rrView
-{
+- (UIView *)rrView {
     if (!VALID(_rrView, UIView)) {
         _rrView = [[UIView alloc] init];
     }
     return _rrView;
 }
 
-- (JAProductInfoHeaderLine *)rrHeaderLine
-{
+- (JAProductInfoHeaderLine *)rrHeaderLine {
     if (!VALID(_rrHeaderLine, JAProductInfoHeaderLine)) {
         _rrHeaderLine = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, 0, self.rrView.width, kProductInfoHeaderLineHeight)];
         [_rrHeaderLine setTopSeparatorVisibility:NO];
@@ -125,8 +119,7 @@
     return _rrHeaderLine;
 }
 
-- (UIScrollView *)rrScrollView
-{
+- (UIScrollView *)rrScrollView {
     if (!VALID(_rrScrollView, UIScrollView)) {
         _rrScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.rrHeaderLine.frame), self.rrView.width, 200)];
         [_rrScrollView setBackgroundColor:JABlack200Color];
@@ -149,9 +142,23 @@
     [self.topScrollView addSubview:self.thankYouLabel];
     [self.topScrollView addSubview:self.successMessageLabel];
     [self.topScrollView addSubview:self.orderDetailsButton];
-    [self.topScrollView addSubview:self.continueShoppingButton];
+//    [self.topScrollView addSubview:self.continueShoppingButton];
+    EmarsysRecommendationMinimalCarouselWidgetView *recommendationView = [EmarsysRecommendationMinimalCarouselWidgetView nibInstance];
+    [recommendationView setFrame:CGRectMake(0, CGRectGetMaxY(self.orderDetailsButton.frame)+16.f, self.topScrollView.width, 197)];
+    [self.topImageView addSubview:recommendationView];
     [self.rrView addSubview:self.rrHeaderLine];
     [self.rrView addSubview:self.rrScrollView];
+
+//##################################################################
+    //EVENT: PURCHASE
+    [TrackerManager postEvent:[EventFactory purchase:[EventUtilities getEventCategories:self.cart] basketValue:[self.cart.cartEntity.cartValue longValue] success:YES] forName:[PurchaseEvent name]];
+    
+    [TrackerManager sendTags:@{ @"PurchaseCount": @([UserDefaultsManager incrementCounter:kUDMPurchaseCount]) } completion:^(NSError *error) {
+        if(error == nil) {
+            NSLog(@"TrackerManager > PurchaseCount > %d", [UserDefaultsManager getCounter:kUDMPurchaseCount]);
+        }
+    }];
+//##################################################################
     
     // Notification to clean cart
     [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:nil];
@@ -167,8 +174,7 @@
     }
     
     BOOL userDidFirstBuy = NO;
-    if(VALID_NOTEMPTY([[NSUserDefaults standardUserDefaults] objectForKey:kDidFirstBuyKey], NSNumber))
-    {
+    if(VALID_NOTEMPTY([[NSUserDefaults standardUserDefaults] objectForKey:kDidFirstBuyKey], NSNumber)) {
         userDidFirstBuy = [[[NSUserDefaults standardUserDefaults] objectForKey:kDidFirstBuyKey] boolValue];
     }
     
@@ -176,8 +182,7 @@
     NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
     
     NSString *isNewCustomer = @"false";
-    if([RICustomer wasSignup] && !userDidFirstBuy)
-    {
+    if([RICustomer wasSignup] && !userDidFirstBuy) {
         isNewCustomer = @"true";
     }
     
@@ -228,25 +233,22 @@
         BOOL isConverted = YES;
         NSString *discount = @"false";
         NSNumber *priceNumber = cartItem.priceEuroConverted;
-        if (VALID_NOTEMPTY(cartItem.specialPriceEuroConverted, NSNumber) && [cartItem.specialPriceEuroConverted floatValue] > 0.0f)
-        {
+        if (VALID_NOTEMPTY(cartItem.specialPriceEuroConverted, NSNumber) && [cartItem.specialPriceEuroConverted longValue] > 0.0f) {
             discount = @"true";
             priceNumber = cartItem.specialPriceEuroConverted;
         }
         
-        if(!VALID_NOTEMPTY(priceNumber, NSNumber))
-        {
+        if(!VALID_NOTEMPTY(priceNumber, NSNumber)) {
             isConverted = NO;
             priceNumber = cartItem.price;
-            if (VALID_NOTEMPTY(cartItem.specialPrice, NSNumber) && [cartItem.specialPrice floatValue] > 0.0f)
-            {
+            if (VALID_NOTEMPTY(cartItem.specialPrice, NSNumber) && [cartItem.specialPrice longValue] > 0.0f) {
                 discount = @"true";
                 priceNumber = cartItem.specialPrice;
             }
         }
         
         [skusArray addObject:cartItem.sku];
-        priceSum = [NSNumber numberWithFloat:([priceSum floatValue] + [priceNumber floatValue])];
+        priceSum = [NSNumber numberWithLong:([priceSum longValue] + [priceNumber longValue])];
         
         //check if came from teasers and track that info
         NSString* teaserTrackingInfo = [teaserTrackingInfoDictionary objectForKey:cartItem.sku];
@@ -267,12 +269,9 @@
         // Since we're sending the converted price, we have to send the currency as EUR.
         // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
         [viewCartTrackingProduct setValue:priceNumber forKey:kRIEventPriceKey];
-        if(isConverted)
-        {
+        if(isConverted){
             [viewCartTrackingProduct setObject:@"EUR" forKey:kRIEventCurrencyCodeKey];
-        }
-        else
-        {
+        } else {
             [viewCartTrackingProduct setObject:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
         }
         
@@ -304,16 +303,14 @@
     [trackingDictionary setValue:self.cart.orderNr forKey:kRIEventTransactionIdKey];
     [trackingDictionary setValue:isNewCustomer forKey:kRIEventNewCustomerKey];
     
-    if(VALID_NOTEMPTY(viewCartTrackingProducts, NSMutableArray))
-    {
+    if(VALID_NOTEMPTY(viewCartTrackingProducts, NSMutableArray)) {
         [trackingDictionary setObject:[viewCartTrackingProducts copy] forKey:kRIEventProductsKey];
     }
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventTransactionConfirm]
                                               data:[trackingDictionary copy]];
     
-    if(!userDidFirstBuy)
-    {
+    if(!userDidFirstBuy) {
         // Send customer event
         NSMutableDictionary *customerDictionary = [[NSMutableDictionary alloc] init];
         [customerDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
@@ -340,8 +337,7 @@
     NSMutableArray *ecommerceSkusArray = [NSMutableArray new];
     NSMutableArray *ecommerceProductsArray = [NSMutableArray new];
     CGFloat averageValue = 0.0f;
-    if(VALID_NOTEMPTY(products, NSArray))
-    {
+    if(VALID_NOTEMPTY(products, NSArray)) {
         for (RICartItem* product in products) {
             [ecommerceSkusArray addObject:product.simpleSku];
             
@@ -354,32 +350,26 @@
             // Since we're sending the converted price, we have to send the currency as EUR.
             // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
             NSNumber *price = product.priceEuroConverted;
-            if(VALID_NOTEMPTY(product.specialPriceEuroConverted, NSNumber) && [product.specialPriceEuroConverted floatValue] > 0.0f)
-            {
+            if(VALID_NOTEMPTY(product.specialPriceEuroConverted, NSNumber) && [product.specialPriceEuroConverted floatValue] > 0.0f) {
                 price = product.specialPriceEuroConverted;
             }
             
-            if(!VALID_NOTEMPTY(price, NSNumber))
-            {
+            if(!VALID_NOTEMPTY(price, NSNumber)) {
                 isConverted = NO;
                 price = product.price;
-                if (VALID_NOTEMPTY(product.specialPrice, NSNumber) && [product.specialPrice floatValue] > 0.0f)
-                {
+                if (VALID_NOTEMPTY(product.specialPrice, NSNumber) && [product.specialPrice floatValue] > 0.0f) {
                     price = product.specialPrice;
                 }
             }
             
-            averageValue += [price floatValue];
+            averageValue += [price longValue];
             
             // Since we're sending the converted price, we have to send the currency as EUR.
             // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
             [productDictionary setValue:price forKey:kRIEventPriceKey];
-            if(isConverted)
-            {
+            if(isConverted) {
                 [productDictionary setObject:@"EUR" forKey:kRIEventCurrencyCodeKey];
-            }
-            else
-            {
+            } else {
                 [productDictionary setObject:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
             }
             
@@ -391,13 +381,11 @@
     [ecommerceDictionary setValue:[ecommerceSkusArray copy] forKey:kRIEcommerceSkusKey];
     [ecommerceDictionary setValue:[NSNumber numberWithFloat:averageValue] forKey:kRIEcommerceCartAverageValueKey];
     
-    if(VALID_NOTEMPTY(self.cart.cartEntity.couponCode, NSString))
-    {
+    if(VALID_NOTEMPTY(self.cart.cartEntity.couponCode, NSString)) {
         [ecommerceDictionary setValue:self.cart.cartEntity.couponCode forKey:kRIEcommerceCouponKey];
     }
     
-    if(VALID_NOTEMPTY(self.cart.cartEntity.couponMoneyValueEuroConverted, NSNumber))
-    {
+    if(VALID_NOTEMPTY(self.cart.cartEntity.couponMoneyValueEuroConverted, NSNumber)) {
         [ecommerceDictionary setValue:self.cart.cartEntity.couponMoneyValueEuroConverted forKey:kRIEcommerceCouponValue];
     }
     
@@ -407,8 +395,7 @@
     NSNumber *total = self.cart.cartEntity.cartValue;
     
     NSNumber *convertedTotal = [NSNumber numberWithFloat:0.0f];
-    if(VALID_NOTEMPTY(self.cart.cartEntity.cartValueEuroConverted, NSNumber))
-    {
+    if(VALID_NOTEMPTY(self.cart.cartEntity.cartValueEuroConverted, NSNumber)) {
         convertedTotal = self.cart.cartEntity.cartValueEuroConverted;
     }
     
@@ -418,26 +405,23 @@
     NSNumber *grandTotal = self.cart.cartEntity.cartValue;
     
     NSNumber *convertedGrandTotal = [NSNumber numberWithFloat:0.0f];
-    if(VALID_NOTEMPTY(self.cart.cartEntity.cartValueEuroConverted, NSNumber))
-    {
+    if(VALID_NOTEMPTY(self.cart.cartEntity.cartValueEuroConverted, NSNumber)) {
         convertedGrandTotal = self.cart.cartEntity.cartValueEuroConverted;
     }
     
     [ecommerceDictionary setValue:grandTotal forKey:kRIEcommerceGrandTotalValueKey];
     [ecommerceDictionary setValue:convertedGrandTotal forKey:kRIEcommerceConvertedGrandTotalValueKey];
     
-    if([RICustomer wasSignup])
-    {
+    if([RICustomer wasSignup]) {
         [ecommerceDictionary setValue:[NSNumber numberWithBool:[RICustomer wasSignup]] forKey:kRIEcommerceGuestKey];
     }
     
     [ecommerceDictionary setValue:[ecommerceProductsArray copy] forKey:kRIEcommerceProducts];
     
-    CGFloat totalOfPurchasesValue = grandTotal.floatValue;
+    CGFloat totalOfPurchasesValue = grandTotal.longValue;
     NSNumber *totalOfPurchases = [[NSUserDefaults standardUserDefaults] objectForKey:kRIEventAmountValueTransactions];
-    if(VALID_NOTEMPTY(totalOfPurchases, NSNumber))
-    {
-        totalOfPurchasesValue += [totalOfPurchases floatValue];
+    if(VALID_NOTEMPTY(totalOfPurchases, NSNumber)) {
+        totalOfPurchasesValue += [totalOfPurchases longValue];
     }
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithFloat:totalOfPurchasesValue] forKey:kRIEventAmountValueTransactions];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -457,22 +441,19 @@
     [self publishScreenLoadTime];
 }
 
-- (void)setRrProducts:(NSSet *)rrProducts
-{
+- (void)setRrProducts:(NSSet *)rrProducts {
     _rrProducts = rrProducts;
     [self reloadRR];
 }
 
-- (void)reloadRR
-{
+- (void)reloadRR {
     [[self.rrScrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
     /*******
      Related Items
      *******/
     
-    if (VALID_NOTEMPTY(self.rrProducts, NSSet) && 0 < self.rrProducts.count)
-    {
+    if (VALID_NOTEMPTY(self.rrProducts, NSSet) && 0 < self.rrProducts.count) {
         CGFloat margin = 1.0f; //value by design
         CGFloat relatedItemX = margin;
         CGFloat relatedItemY = 0.f;
@@ -503,18 +484,17 @@
         [self.rrScrollView setHeight:itemSize.height+10];
         [self.rrView setHeight:CGRectGetMaxY(self.rrScrollView.frame)];
         
-        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
-        {
+        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
             if (!VALID(self.rrView.superview, UIView)) {
                 [self.view addSubview:self.rrView];
             }
             [self.rrView setY:self.viewBounds.size.height - self.rrView.height];
             [self.rrView setWidth:self.rrView.superview.width];
-        }else{
+        } else {
             if (!VALID(self.rrView.superview, UIView)) {
                 [self.topScrollView addSubview:self.rrView];
             }
-            [self.rrView setY:CGRectGetMaxY(self.continueShoppingButton.frame)+16.f];
+//            [self.rrView setY:CGRectGetMaxY(self.continueShoppingButton.frame)+16.f];
             [self.rrView setWidth:self.rrView.superview.width];
             [self.topScrollView setContentSize:CGSizeMake(self.topScrollView.width, CGRectGetMaxY(self.rrView.frame))];
         }
@@ -522,7 +502,6 @@
         [self.rrScrollView setWidth:self.rrView.width];
         
         self.rrScrollView.contentSize = CGSizeMake(relatedItemX<self.rrScrollView.width?self.rrScrollView.width:relatedItemX, self.rrScrollView.frame.size.height);
-        
         if (RI_IS_RTL) {
             [self.rrView flipAllSubviews];
         }
@@ -555,8 +534,7 @@
 
 #pragma mark - Actions
 
-- (void)goToSelectedRelatedItem:(UIControl*)sender
-{
+- (void)goToSelectedRelatedItem:(UIControl*)sender {
     NSArray* relatedProducts = [self.rrProducts allObjects];
     RIProduct *tempProduct = [relatedProducts objectAtIndex:sender.tag];
     
@@ -578,18 +556,17 @@
                                                       userInfo:userInfo];
 }
 
-- (void)goToHomeScreen
-{
-    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
-    [trackingDictionary setValue:@"ContinueShopping" forKey:kRIEventActionKey];
-    [trackingDictionary setValue:@"Checkout" forKey:kRIEventCategoryKey];
-    
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutContinueShopping]
-                                              data:[trackingDictionary copy]];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
-}
+//- (void)goToHomeScreen {
+//    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+//    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+//    [trackingDictionary setValue:@"ContinueShopping" forKey:kRIEventActionKey];
+//    [trackingDictionary setValue:@"Checkout" forKey:kRIEventCategoryKey];
+//    
+//    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutContinueShopping]
+//                                              data:[trackingDictionary copy]];
+//    
+//    [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
+//}
 
 - (void)goToTrackOrders
 {
@@ -599,6 +576,13 @@
 #pragma mark - PerformanceTrackerProtocol
 -(NSString *)getPerformanceTrackerScreenName {
     return @"CheckoutFinish";
+}
+
+
+#pragma mark - EmarsysWebExtendProtocol
+- (EMTransaction *)getDataCollection:(EMTransaction *)transaction {
+    [transaction setPurchase:self.cart.orderNr ofItems: [self.cart convertItems]];
+    return transaction;
 }
 
 @end

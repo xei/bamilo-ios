@@ -38,14 +38,23 @@
 #import "RISeller.h"
 #import "JACenterNavigationController.h"
 #import "JATabBarButton.h"
+
+//##########################
 #import "ViewControllerManager.h"
+#import "EmarsysPredictManager.h"
+#import "CartDataManager.h"
+#import "RecommendItem.h"
+#import "NSArray+Extension.h"
+#import "EmarsysRecommendationGridWidgetView.h"
+#import "ThreadManager.h"
 
 typedef void (^ProcessActionBlock)(void);
 
-@interface JAPDVViewController () <JAPDVGalleryDelegate, JAPickerDelegate, JAActivityViewControllerDelegate> {
+@interface JAPDVViewController () <JAPDVGalleryDelegate, JAPickerDelegate, JAActivityViewControllerDelegate, FeatureBoxCollectionViewWidgetViewDelegate> {
     BOOL _needRefreshProduct;
     BOOL _needAddToFavBlock;
     ProcessActionBlock _processActionBlock;
+    EmarsysRecommendationGridWidgetView *_recommendationView;
 }
 
 @property (strong, nonatomic) UIScrollView *mainScrollView;
@@ -77,6 +86,7 @@ typedef void (^ProcessActionBlock)(void);
 @property (nonatomic, assign) BOOL hasLoaddedProduct;
 
 @property (strong, nonatomic) UIPopoverController *currentPopoverController;
+@property (strong, nonatomic) RICart *cart;
 
 @end
 
@@ -87,12 +97,12 @@ typedef void (^ProcessActionBlock)(void);
 
 - (JAPDVImageSection *)productImageSection {
     if (!_productImageSection) {
-        
+
         _productImageSection = [[JAPDVImageSection alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 500)];
         _productImageSection.delegate = self;
         [_productImageSection.wishListButton addTarget:self action:@selector(wishListButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
-    _productImageSection.wishListButton.selected = self.product.favoriteAddDate;
+    _productImageSection.wishListButton.selected = (self.product.favoriteAddDate != nil);
     return _productImageSection;
 }
 
@@ -102,37 +112,26 @@ typedef void (^ProcessActionBlock)(void);
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     self.apiResponse = RIApiResponseSuccess;
-    
-    self.A4SViewControllerAlias = @"PRODUCT";
-    
-    
+
+    //self.A4SViewControllerAlias = @"PRODUCT";
+
     self.navBarLayout.showBackButton = YES;
-    
+
     self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     [self.mainScrollView setHidden:YES];
     [self.view addSubview:self.mainScrollView];
-    
+
     self.landscapeScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     [self.landscapeScrollView setHidden:YES];
     [self.view addSubview:self.landscapeScrollView];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector( applicationDidEnterBackgroundNotification:) name: UIApplicationDidEnterBackgroundNotification object: nil];
-    
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    //$WIZ$
-    //    BOOL alreadyShowedWizardPDV = [[NSUserDefaults standardUserDefaults] boolForKey:kJAPDVWizardUserDefaultsKey];
-    //    if(alreadyShowedWizardPDV == NO)
-    //    {
-    //        [self hideLoading];
-    //        self.wizardView = [[JAPDVWizardView alloc] initWithFrame:self.view.bounds];
-    //        [self.view addSubview:self.wizardView];
-    //        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJAPDVWizardUserDefaultsKey];
-    //    }
-    
+
     if(self.hasLoaddedProduct) {
         [self removeSuperviews];
         if (_needRefreshProduct) {
@@ -148,7 +147,7 @@ typedef void (^ProcessActionBlock)(void);
         }
     }
     if (_needAddToFavBlock) {
-        
+
         if (_processActionBlock) {
             _processActionBlock();
         }
@@ -158,21 +157,21 @@ typedef void (^ProcessActionBlock)(void);
 }
 
 - (void)presentCoachMarks {
-    
+
     CGRect wishListButtonFrame = _productImageSection.wishListButton.frame; //search button
     UIDevice *device = [UIDevice currentDevice];
     NSArray *coachMarks;
     if ([[device model] isEqualToString:@"iPhone"] || [[device model] isEqualToString:@"iPhone Simulator"]) {
         UIButton *callToOrderButton = [self.ctaView.smallButtonsArray objectAtIndex:1];
         UIButton *addToCartButton = [self.ctaView.buttonsArray objectAtIndex:0];
-        
+
         // Setup coach marks
         CGRect coachmark1 = CGRectMake( wishListButtonFrame.origin.x-15, wishListButtonFrame.origin.y + 44, wishListButtonFrame.size.width +35, wishListButtonFrame.size.height + 35);
         CGRect coachmark2 = CGRectMake(callToOrderButton.frame.origin.x, self.view.height+15, callToOrderButton.width, callToOrderButton.height+12);
         CGRect coachmark3 = CGRectMake( self.view.center.x, self.view.center.y,0,0);
         CGRect coachmark4 = CGRectMake( self.productImageSection.center.x, self.productImageSection.center.y,0,0);
         CGRect coachmark6 = CGRectMake(addToCartButton.frame.origin.x, self.view.height+20, addToCartButton.width, addToCartButton.height);
-        
+
         // Setup coach marks
         coachMarks = @[
                        @{
@@ -219,13 +218,13 @@ typedef void (^ProcessActionBlock)(void);
                        ];
     } else {
         UIButton *addToCartButton = [self.ctaView.buttonsArray objectAtIndex:0];
-        
+
         // Setup coach marks
         CGRect coachmark1 = CGRectMake( wishListButtonFrame.origin.x-15, wishListButtonFrame.origin.y + 44, wishListButtonFrame.size.width +35, wishListButtonFrame.size.height + 35);
         CGRect coachmark3 = CGRectMake( self.view.center.x, self.view.center.y,0,0);
         CGRect coachmark4 = CGRectMake( self.productImageSection.center.x, self.productImageSection.center.y,0,0);
         CGRect coachmark6 = CGRectMake(addToCartButton.frame.origin.x, self.view.height+20, addToCartButton.width, addToCartButton.height);
-        
+
         // Setup coach marks
         coachMarks = @[
                        @{
@@ -264,7 +263,7 @@ typedef void (^ProcessActionBlock)(void);
                            }
                        ];
     }
-    
+
     MPCoachMarks *coachMarksView = [[MPCoachMarks alloc] initWithFrame:self.navigationController.view.bounds coachMarks:coachMarks];
     [self.navigationController.view addSubview:coachMarksView];
     [coachMarksView start];
@@ -274,17 +273,17 @@ typedef void (^ProcessActionBlock)(void);
 {
     // notify the InAppNotification SDK that this view controller in no more active
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updatedProduct:)
                                                  name:kProductChangedNotification
                                                object:nil];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updatedProduct:)
                                                  name:kUserLoggedInNotification
                                                object:nil];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updatedProduct:)
                                                  name:kUserLoggedOutNotification
@@ -300,7 +299,7 @@ typedef void (^ProcessActionBlock)(void);
     if(self.currentPopoverController) {
         [self.currentPopoverController dismissPopoverAnimated:NO];
     }
-    
+
     if([self respondsToSelector:@selector(dismissViewControllerAnimated:completion:)]) {
         [self dismissViewControllerAnimated:NO completion:nil];
     }
@@ -314,31 +313,22 @@ typedef void (^ProcessActionBlock)(void);
     if(self.currentPopoverController) {
         [self.currentPopoverController dismissPopoverAnimated:NO];
     }
-    
+
     [self.mainScrollView setHidden:YES];
     [self.landscapeScrollView setHidden:YES];
     [self.ctaView setHidden:YES];
-    
-    //$WIZ$
-    //    if(VALID_NOTEMPTY(self.wizardView, JAPDVWizardView))
-    //    {
-    //        CGRect newFrame = CGRectMake(self.wizardView.frame.origin.x,
-    //                                     self.wizardView.frame.origin.y,
-    //                                     self.view.frame.size.height + self.view.frame.origin.y,
-    //                                     self.view.frame.size.width - self.view.frame.origin.y);
-    //        [self.wizardView reloadForFrame:newFrame];
-    //    }
-    
+
+
     if (self.picker) {
         [self closePicker];
     }
-    
+
     if(self.galleryPaged) {
         UIView *gallerySuperView = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
-        
+
         CGFloat width = gallerySuperView.frame.size.height;
         CGFloat height = gallerySuperView.frame.size.width;
-        
+
         if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
             if(width < height) {
                 width = gallerySuperView.frame.size.width;
@@ -350,10 +340,10 @@ typedef void (^ProcessActionBlock)(void);
                 height = gallerySuperView.frame.size.height;
             }
         }
-        
+
         [self.galleryPaged reloadFrame:CGRectMake(0.0f, 0.0f, width, height)];
     }
-    
+
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
@@ -363,20 +353,14 @@ typedef void (^ProcessActionBlock)(void);
          UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
          // do whatever
          [self fillTheViews];
-         
-         //$WIZ$
-         //    if(VALID_NOTEMPTY(self.wizardView, JAPDVWizardView))
-         //    {
-         //        [self.wizardView reloadForFrame:self.view.bounds];
-         //    }
-         
+
          if(self.galleryPaged) {
              UIView *gallerySuperView = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
-             
+
              CGFloat width = gallerySuperView.frame.size.width;
              CGFloat height = gallerySuperView.frame.size.height;
              CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
-             
+
              if(UIInterfaceOrientationIsLandscape(orientation)) {
                  if(width < height) {
                      width = gallerySuperView.frame.size.height;
@@ -391,16 +375,16 @@ typedef void (^ProcessActionBlock)(void);
                      height = gallerySuperView.frame.size.width;
                  }
              }
-             
+
              [self.galleryPaged reloadFrame:CGRectMake(0.0f, statusBarHeight, width, height)];
              [self.view bringSubviewToFront:self.galleryPaged];
          }
-         
+
      } completion:^(id<UIViewControllerTransitionCoordinatorContext> context)
      {
-         
+
      }];
-    
+
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
 
@@ -412,17 +396,17 @@ typedef void (^ProcessActionBlock)(void);
 - (void) removeSuperviews {
     [self.mainScrollView setHidden:YES];
     [self.landscapeScrollView setHidden:YES];
-    
+
     for(UIView *subView in self.mainScrollView.subviews) {
         [subView removeFromSuperview];
     }
-    
+
     if(self.landscapeScrollView) {
         for(UIView *subView in self.landscapeScrollView.subviews) {
             [subView removeFromSuperview];
         }
     }
-    
+
     if (self.ctaView) {
         [self.ctaView removeFromSuperview];
     }
@@ -448,23 +432,23 @@ typedef void (^ProcessActionBlock)(void);
     if(self.apiResponse == RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess) {
         [self showLoading];
     }
-    
+
     self.hasLoaddedProduct = NO;
-    
+
     NSDictionary *richParameter;
     if (VALID_NOTEMPTY(self.richRelevanceParameter, NSString)) {
         richParameter = [NSDictionary dictionaryWithObject:self.richRelevanceParameter forKey:@"rich_parameter"];
     } else {
         richParameter = nil;
     }
-    
+
     if (VALID_NOTEMPTY(self.targetString, NSString)) {
         [RIProduct getCompleteProductWithTargetString:self.targetString
                                     withRichParameter:richParameter
                                          successBlock:^(id product) {
                                              _needRefreshProduct = NO;
                                              self.apiResponse = RIApiResponseSuccess;
-                                             
+
                                              [self loadedProduct:product];
                                              [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
                                          } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
@@ -477,15 +461,15 @@ typedef void (^ProcessActionBlock)(void);
         [RIProduct getCompleteProductWithSku:self.productSku
                                 successBlock:^(id product) {
                                     self.apiResponse = RIApiResponseSuccess;
-                                    
+
                                     [self loadedProduct:product];
                                     [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
                                 } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
                                     self.apiResponse = apiResponse;
                                     [self trackingEventLoadingTime];
-                                    
+
                                     [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadCompleteProduct) objects:nil];
-                                    
+
                                     [self hideLoading];
                                 }];
     }
@@ -495,30 +479,30 @@ typedef void (^ProcessActionBlock)(void);
 - (void)loadedProduct:(RIProduct*) product {
     // notify the InAppNotification SDK that this the active view controller
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
-    
+
     self.product = product;
     self.productSku = product.sku;
-    
+
     [self.navBarLayout setTitle:product.brand];
     [self reloadNavBar];
-    
-    //$WIZ$
-    //    [self.wizardView setHasNoSeller:product.seller?NO:YES];
-    
+
     [self trackingEventViewProduct:product];
-    
     [self trackingEventLoadingTime];
-    
+
     [RIRecentlyViewedProductSku addToRecentlyViewed:product successBlock:^{
         [self requestBundles];
     } andFailureBlock:nil];
-    
+
     NSDictionary *userInfo = nil;
     if (self.product.favoriteAddDate) {
         userInfo = [NSDictionary dictionaryWithObject:self.product.favoriteAddDate forKey:@"favoriteAddDate"];
     }
-    
+
     [self trackingEventMostViewedBrand];
+    
+//###################
+    //EVENT : VIEW PRODUCT
+    [TrackerManager postEvent:[EventFactory viewProduct:product.categoryUrlKey price:[product.price longValue]] forName:[ViewProductEvent name]];
 }
 
 - (void)retryAddToCart {
@@ -526,12 +510,11 @@ typedef void (^ProcessActionBlock)(void);
 }
 
 #pragma mark - Product loaded
-
 - (void)productLoaded {
     [self removeSuperviews];
-    
+
     self.hasLoaddedProduct = YES;
-    
+
     [self.mainScrollView setFrame:[self viewBounds]];
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
@@ -543,7 +526,7 @@ typedef void (^ProcessActionBlock)(void);
                                                      scrollViewsWidth,
                                                      bounds.size.height)];
             [self.mainScrollView setHidden:NO];
-            
+
             [self.landscapeScrollView setFrame:CGRectMake(bounds.origin.x,
                                                           bounds.origin.y,
                                                           scrollViewsWidth,
@@ -557,13 +540,13 @@ typedef void (^ProcessActionBlock)(void);
         [self.mainScrollView setHidden:NO];
         [self.landscapeScrollView setHidden:YES];
     }
-    
+
     /*******
      CTA Buttons
      *******/
-    
+
     self.ctaView = [[JABottomBar alloc] initWithFrame:CGRectMake(0, self.view.height, self.view.width, kBottomDefaultHeight)];
-    
+
     BOOL isiPadInLandscape = NO;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
@@ -571,24 +554,23 @@ typedef void (^ProcessActionBlock)(void);
             isiPadInLandscape = YES;
         }
     }
-    
+
     [self.ctaView setFrame:CGRectMake(self.mainScrollView.x,
                                       self.view.frame.size.height - self.ctaView.frame.size.height,
                                       self.mainScrollView.frame.size.width,
                                       self.ctaView.frame.size.height)];
-    
+
     [self.view addSubview:self.ctaView];
     [self.ctaView setYBottomAligned:0.f];
     self.mainScrollView.height -= self.ctaView.height;
-    
+
     [self.ctaView addSmallButton:[UIImage imageNamed:@"btn_share"] target:self action:@selector(shareProduct)];
     UIDevice *device = [UIDevice currentDevice];
     if ([[device model] isEqualToString:@"iPhone"] || [[device model] isEqualToString:@"iPhone Simulator"]) {
         [self.ctaView addSmallButton:[UIImage imageNamed:@"ic_calltoorder"] target:self action:@selector(callToOrder)];
     }
-    
-    if (!self.product.hasStock)
-    {
+
+    if (!self.product.hasStock) {
         JAButton *saveButton = [self.ctaView addAlternativeButton:STRING_SAVE_ITEM target:self action:@selector(addToWishList)];
         [saveButton setTitleColor:JAOrange1Color forState:UIControlStateNormal];
     } else if (self.product.preOrder) {
@@ -596,10 +578,7 @@ typedef void (^ProcessActionBlock)(void);
     } else {
         [self.ctaView addButton:STRING_BUY_NOW target:self action:@selector(addToCart)];
     }
-    
-    //make sure wizard and picker are in front
-    //$WIZ$
-    //    [self.view bringSubviewToFront:self.wizardView];
+
     [self.view bringSubviewToFront:self.picker];
 }
 
@@ -618,14 +597,14 @@ typedef void (^ProcessActionBlock)(void);
                        [self.bundleLayout removeFromSuperview];
                        [self hideLoading];
                    }];
-    
+
 }
 
 - (void)setProductBundle:(RIBundle *)productBundle {
     _productBundle = productBundle;
     if (!VALID(self.selectedBundles, NSMutableDictionary)) {
         self.selectedBundles = [[NSMutableDictionary alloc]init];
-        
+
         for (RIProduct* pd in productBundle.bundleProducts) {
             [self.selectedBundles setObject:[pd.productSimples firstObject] forKey:pd.sku];
         }
@@ -638,12 +617,12 @@ typedef void (^ProcessActionBlock)(void);
     if (self.product == nil) {
         return;
     }
-    
+
     [self productLoaded];
-    
+
     CGFloat scrollViewY = .0f;
     CGFloat landscapeScrollViewY = 0.0f;
-    
+
     BOOL isiPadInLandscape = NO;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
@@ -652,19 +631,19 @@ typedef void (^ProcessActionBlock)(void);
             isiPadInLandscape = YES;
         }
     }
-    
+
     /*******
      Image Section
      *******/
-    
+
     self.productImageSection.frame = CGRectMake(0.0f, scrollViewY, self.productImageSection.frame.size.width, self.productImageSection.frame.size.height);
-    
+
     CGRect imageSectionFrame = self.mainScrollView.bounds;
     [self.productImageSection setupWithFrame:imageSectionFrame product:self.product preSelectedSize:self.preSelectedSize];
     if (self.product.seller && [self.product.seller isGlobal]) {
         [self.productImageSection addGlobalButtonTarget:self action:@selector(showSeller)];
     }
-    
+
     if(isiPadInLandscape) {
         [self.landscapeScrollView addSubview:self.productImageSection];
         landscapeScrollViewY = CGRectGetMaxY(self.productImageSection.frame) + 6.0f;
@@ -672,20 +651,20 @@ typedef void (^ProcessActionBlock)(void);
         [self.mainScrollView addSubview:self.productImageSection];
         scrollViewY = CGRectGetMaxY(self.productImageSection.frame) + 6.0f;
     }
-    
+
     if (self.product.variations.count) {
         self.variationsSection = [JAPDVVariations getNewPDVVariationsSection];
         [self.variationsSection setupWithFrame:self.mainScrollView.frame];
     }
-    
+
     /*******
      Product Info Section
      *******/
-    
+
     self.productInfoSection = [[JAPDVProductInfo alloc] init];
     CGRect productInfoSectionFrame = CGRectMake(0, 6, self.mainScrollView.width, 0);
     [self.productInfoSection setupWithFrame:productInfoSectionFrame product:self.product preSelectedSize:self.preSelectedSize];
-    
+
     if (self.currentSimple) {
         [self.productInfoSection setSpecialPrice:self.currentSimple.specialPriceFormatted andPrice:self.currentSimple.priceFormatted andMaxSavingPercentage:self.product.maxSavingPercentage shouldForceFlip:NO];
     }
@@ -698,56 +677,56 @@ typedef void (^ProcessActionBlock)(void);
     [self.productInfoSection addVariationsTarget:self action:@selector(goToVariationsScreen)];
     [self.productInfoSection addOtherOffersTarget:self action:@selector(goToOtherSellersScreen)];
     [self.productInfoSection addSisTarget:self action:@selector(goToSisScreen)];
-    
+
     [self.productInfoSection setY:scrollViewY];
-    
+
     [self.mainScrollView addSubview:self.productInfoSection];
-    
+
     scrollViewY += (self.productInfoSection.frame.size.height);
-    
+
     /*******
      Bundles
      *******/
-    
+
     [self.bundleLayout removeFromSuperview];
     for (UIView *subview in [self.bundleLayout subviews]) {
         [subview removeFromSuperview];
     }
-    
+
     if (self.productBundle) {
         CGFloat bundleSingleItemStart = 5.0f;
         self.bundleSingleItemsArray = [NSMutableArray new];
-        
+
         for(int i= 0; i<self.productBundle.bundleProducts.count; i++) {
-            
+
             RIProduct *bundleProduct = [self.productBundle.bundleProducts objectAtIndex:i];
-            
+
             JAPDVBundleSingleItem* bundleSingleItem = [JAPDVBundleSingleItem getNewPDVBundleSingleItem];
-            
+
             bundleSingleItem.selectedProduct.tag = i;
-            
+
             NSString* checkmarkImageName = @"selectionCheckmark";
             if (0 == i) {
                 checkmarkImageName = @"selectionCheckmarkDisabled";
             }
             [bundleSingleItem.selectedProduct setImage:[UIImage imageNamed:@"noSelectionCheckMark"] forState:UIControlStateNormal];
             [bundleSingleItem.selectedProduct setImage:[UIImage imageNamed:checkmarkImageName] forState:UIControlStateSelected];
-            
+
             [self.bundleSingleItemsArray addObject:bundleSingleItem];
-            
+
             [bundleSingleItem.selectedProduct addTarget:self
                                                  action:@selector(checkBundle:)
                                        forControlEvents:UIControlEventTouchUpInside];
-            
+
             CGRect tempFrame = bundleSingleItem.frame;
             tempFrame.origin.x = bundleSingleItemStart;
             bundleSingleItem.frame = tempFrame;
-            
+
             if (bundleProduct.images.count) {
                 RIImage *imageTemp = [bundleProduct.images firstObject];
-                [bundleSingleItem.productImageView setImageWithURL:[NSURL URLWithString:imageTemp.url] placeholderImage:[UIImage imageNamed:@"placeholder_scrollable"]];
+                [bundleSingleItem.productImageView sd_setImageWithURL:[NSURL URLWithString:imageTemp.url] placeholderImage:[UIImage imageNamed:@"placeholder_scrollable"]];
             }
-            
+
             bundleSingleItem.productNameLabel.text = bundleProduct.name;
             bundleSingleItem.productTypeLabel.text = bundleProduct.brand;
             if (VALID_NOTEMPTY(bundleProduct.specialPrice, NSNumber) && 0.0f == [bundleProduct.specialPrice floatValue]) {
@@ -756,12 +735,12 @@ typedef void (^ProcessActionBlock)(void);
                 bundleSingleItem.productPriceLabel.text = bundleProduct.specialPriceFormatted;
             }
             bundleSingleItem.product = bundleProduct;
-            
+
             if ( 0 == i ) {
                 //always selected
                 bundleSingleItem.alwaysSelected = YES;
             }
-            
+
             BOOL isSelected = YES;
             if (VALID_NOTEMPTY(self.selectedBundles, NSMutableDictionary)) {
                 isSelected = NO;
@@ -779,133 +758,129 @@ typedef void (^ProcessActionBlock)(void);
                 }
             }
             bundleSingleItem.selected = isSelected;
-            
+
             [bundleSingleItem bringSubviewToFront:bundleSingleItem.selectedProduct];
-            
+
             bundleSingleItemStart += bundleSingleItem.frame.size.width + 5.0f;
         }
-        
-        
+
+
         self.bundleLayout = [[JAPDVBundles alloc] initWithFrame:CGRectMake(0, scrollViewY, self.mainScrollView.width, 300) withSize:NO];
-        
+
         if (self.product.fashion) {
             [self.bundleLayout setHeaderText:[STRING_BUY_THE_LOOK uppercaseString]];
         } else {
             [self.bundleLayout setHeaderText:[STRING_COMBOS uppercaseString]];
         }
-        
+
         for (JAPDVBundleSingleItem* singleItem in self.bundleSingleItemsArray) {
             [self.bundleLayout addBundleItemView:singleItem];
         }
-        
+
         self.bundleLayout.frame = CGRectMake(6.0f,
                                              scrollViewY,
                                              self.bundleLayout.frame.size.width,
                                              self.bundleLayout.frame.size.height);
-        
+
         [self.mainScrollView addSubview:self.bundleLayout];
-        
+
         [self.bundleLayout addBuyingBundleTarget:self action:@selector(goToBundlesScreen)];
-        
-        
-        
-        
-        
+
+
+
+
+
         self.bundleLayout.frame = CGRectMake(.0f,
                                              scrollViewY,
                                              self.bundleLayout.frame.size.width,
                                              self.bundleLayout.frame.size.height);
         [self.mainScrollView addSubview:self.bundleLayout];
-        
+
         scrollViewY += (self.bundleLayout.frame.size.height);
-        
+
     }
-    
+
     /****************
      Related Items
      ***************/
-    
-    if (self.product.relatedProducts.count > 1) {
-        if (self.relatedItemsView) {
-            for (UIView *view in self.relatedItemsView.subviews) {
-                [view removeFromSuperview];
-            }
-        }
-        
-        if (self.product.richRelevanceTitle.length) {
-            [self.relatedItemsView setHeaderText:self.product.richRelevanceTitle];
-        } else {
-            [self.relatedItemsView setHeaderText:[STRING_YOU_MAY_ALSO_LIKE uppercaseString]];
-        }
-        
-        CGFloat relatedItemX = .0f;
-        CGFloat relatedItemY = 0;
-        
-        NSArray* relatedProducts = [self.product.relatedProducts allObjects];
-        
-        CGFloat singleItemHeight = 245;
-        NSInteger numberOfCols = 2;
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-            if (!isiPadInLandscape) {
-                numberOfCols = 4;
-                singleItemHeight = 285;
-            } else {
-                singleItemHeight = 355;
-            }
-        }
-        
-        CGFloat singleItemWidth = self.mainScrollView.width/numberOfCols;
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && !isiPadInLandscape) {
-            singleItemWidth = self.mainScrollView.width/numberOfCols;
-        }
-        
-        for (int i = 0; i < relatedProducts.count; i++) {
-            RIProduct* product = [relatedProducts objectAtIndex:i];
-            
-            JAPDVSingleRelatedItem *singleItem = [[JAPDVSingleRelatedItem alloc] initWithFrame:CGRectMake(0, 0, singleItemWidth, singleItemHeight)];
-            singleItem.tag = i;
-            [singleItem addTarget:self
-                           action:@selector(goToSelectedRelatedItem:)
-                 forControlEvents:UIControlEventTouchUpInside];
-            
-            CGRect tempFrame = singleItem.frame;
-            tempFrame.origin.x = relatedItemX;
-            tempFrame.origin.y = relatedItemY;
-            singleItem.frame = tempFrame;
-            singleItem.product = product;
-            
-            [self.relatedItemsView addRelatedItemView:singleItem];
-            
-            if ((i+1)%numberOfCols==0) {
-                relatedItemX = 0.0f;
-                relatedItemY += singleItem.frame.size.height;
-            }else{
-                relatedItemX += singleItem.frame.size.width;
-            }
-            
-        }
-        self.relatedItemsView.frame = CGRectMake(0.0f,
-                                                 scrollViewY,
-                                                 self.relatedItemsView.frame.size.width,
-                                                 self.relatedItemsView.frame.size.height);
-        
-        scrollViewY += (6.0f + self.relatedItemsView.frame.size.height);
-        
-    }
-    
+
+//    if (self.product.relatedProducts.count > 1) {
+//        if (self.relatedItemsView) {
+//            for (UIView *view in self.relatedItemsView.subviews) {
+//                [view removeFromSuperview];
+//            }
+//        }
+//
+//        if (self.product.richRelevanceTitle.length) {
+//            [self.relatedItemsView setHeaderText:self.product.richRelevanceTitle];
+//        } else {
+//            [self.relatedItemsView setHeaderText:[STRING_YOU_MAY_ALSO_LIKE uppercaseString]];
+//        }
+//
+//        CGFloat relatedItemX = .0f;
+//        CGFloat relatedItemY = 0;
+//
+//        NSArray* relatedProducts = [self.product.relatedProducts allObjects];
+//
+//        CGFloat singleItemHeight = 245;
+//        NSInteger numberOfCols = 2;
+//        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+//            if (!isiPadInLandscape) {
+//                numberOfCols = 4;
+//                singleItemHeight = 285;
+//            } else {
+//                singleItemHeight = 355;
+//            }
+//        }
+//
+//        CGFloat singleItemWidth = self.mainScrollView.width/numberOfCols;
+//        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && !isiPadInLandscape) {
+//            singleItemWidth = self.mainScrollView.width/numberOfCols;
+//        }
+//
+//        for (int i = 0; i < relatedProducts.count; i++) {
+//            RIProduct* product = [relatedProducts objectAtIndex:i];
+//
+//            JAPDVSingleRelatedItem *singleItem = [[JAPDVSingleRelatedItem alloc] initWithFrame:CGRectMake(0, 0, singleItemWidth, singleItemHeight)];
+//            singleItem.tag = i;
+//            [singleItem addTarget:self
+//                           action:@selector(goToSelectedRelatedItem:)
+//                 forControlEvents:UIControlEventTouchUpInside];
+//
+//            CGRect tempFrame = singleItem.frame;
+//            tempFrame.origin.x = relatedItemX;
+//            tempFrame.origin.y = relatedItemY;
+//            singleItem.frame = tempFrame;
+//            singleItem.product = product;
+//
+//            [self.relatedItemsView addRelatedItemView:singleItem];
+//
+//            if ((i+1)%numberOfCols==0) {
+//                relatedItemX = 0.0f;
+//                relatedItemY += singleItem.frame.size.height;
+//            }else{
+//                relatedItemX += singleItem.frame.size.width;
+//            }
+//
+//        }
+//        self.relatedItemsView.frame = CGRectMake(0.0f,
+//                                                 scrollViewY,
+//                                                 self.relatedItemsView.frame.size.width,
+//                                                 self.relatedItemsView.frame.size.height);
+//
+//        scrollViewY += (6.0f + self.relatedItemsView.frame.size.height);
+//
+//    }
+
     self.mainScrollView.contentSize = CGSizeMake(self.mainScrollView.frame.size.width, scrollViewY);
     self.landscapeScrollView.contentSize = CGSizeMake(self.landscapeScrollView.frame.size.width, landscapeScrollViewY);
-    
+
     if (!self.product.hasStock || (VALID(self.currentSimple, RIProductSimple) && [self.currentSimple.quantity isEqualToString:@"0"])) {
         [self.productImageSection setOutOfStock:NO];
-    }else{
+    } else {
         [self.productImageSection setOutOfStock:YES];
     }
-    
-    //make sure wizard is in front
-    //$WIZ$
-    //    [self.view bringSubviewToFront:self.wizardView];
-    
+
     if (RI_IS_RTL) {
         [self.view flipAllSubviews];
     }
@@ -917,6 +892,9 @@ typedef void (^ProcessActionBlock)(void);
             [[NSUserDefaults standardUserDefaults] synchronize];
             [self presentCoachMarks];
         }
+        
+        //################ when product is fully loaded & rendered
+        [EmarsysPredictManager sendTransactionsOf:self];
     }
 }
 
@@ -933,24 +911,24 @@ typedef void (^ProcessActionBlock)(void);
 - (void)goToSelectedRelatedItem:(UIControl*)sender {
     NSArray* relatedProducts = [self.product.relatedProducts allObjects];
     RIProduct *tempProduct = [relatedProducts objectAtIndex:sender.tag];
-    
+
     NSMutableDictionary* userInfo = [NSMutableDictionary new];
     [userInfo setObject:[NSNumber numberWithBool:YES] forKey:@"show_back_button"];
-    
+
     if (VALID_NOTEMPTY(tempProduct.targetString, NSString)) {
         [userInfo setObject:tempProduct.targetString forKey:@"targetString"];
-        
+
         if (VALID_NOTEMPTY(tempProduct.richRelevanceParameter, NSString)) {
             [userInfo setObject:tempProduct.richRelevanceParameter forKey:@"richRelevance"];
         }
     } else if (VALID_NOTEMPTY(tempProduct.sku, NSString)) {
         [userInfo setObject:tempProduct.sku forKey:@"sku"];
     }
-    
+
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                         object:nil
                                                       userInfo:userInfo];
-    
+
     [self trackingEventRelatedItemSelection:tempProduct];
     [self trackingEventScreenName:[NSString stringWithFormat:@"related_item_%@",tempProduct.name]];
 }
@@ -966,12 +944,12 @@ typedef void (^ProcessActionBlock)(void);
 
 - (void)goToSellerCatalog {
     NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];
-    
+
     if(self.product.seller) {
         [userInfo setObject:self.product.seller.name forKey:@"name"];
         [userInfo setObject:self.product.seller.targetString forKey:@"targetString"];
     }
-    
+
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:self.product.seller userInfo:userInfo];
     [[RITrackingWrapper sharedInstance] trackScreenWithName:@"SellerPage"];
 }
@@ -979,14 +957,14 @@ typedef void (^ProcessActionBlock)(void);
 - (void)goToSellerLink
 {
     NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];
-    
+
     if(VALID_NOTEMPTY(self.product.seller, RISeller))
     {
         if ([self.product.seller isGlobal]) {
             [userInfo setObject:self.product.seller.linkTextGlobal forKey:@"title"];
             [userInfo setObject:self.product.seller.linkTargetStringGlobal forKey:@"targetString"];
             [userInfo setObject:STRING_BACK forKey:@"show_back_button_title"];
-            
+
             [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithShopUrlNofication
                                                                 object:nil
                                                               userInfo:userInfo];
@@ -1026,22 +1004,22 @@ typedef void (^ProcessActionBlock)(void);
             [userInfo setObject:self.productBundle.bundleProducts forKeyedSubscript:@"product.bundles"];
         }
     }
-    
+
     __weak typeof(self) weakSelf = self;
     id block = ^(NSMutableDictionary *bundles){
         weakSelf.selectedBundles = [bundles mutableCopy];
     };
-    
+
     [userInfo setObject:block forKeyedSubscript:@"product.bundles.onChange"];
-    
+
     if (self.selectedBundles) {
         [userInfo setObject:self.selectedBundles forKeyedSubscript:@"product.bundles.selected"];
     }
-    
+
     if (self.productBundle) {
         [userInfo setObject:self.productBundle forKeyedSubscript:@"product.bundle"];
     }
-    
+
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenProductBundlesScreen object:obj userInfo:userInfo];
 }
 
@@ -1069,49 +1047,43 @@ typedef void (^ProcessActionBlock)(void);
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenOtherOffers object:self.product];
 }
 
-- (void)shareProduct
-{
+- (void)shareProduct {
     NSString *url = self.product.shareUrl;
-    
+
     // Share with WhatsApp
-    UIActivity *whatsAppActivity = [[JBWhatsAppActivity alloc] init];
-    
+//    UIActivity *whatsAppActivity = [[JBWhatsAppActivity alloc] init];
+
     //NSArray *objectToShare = @[fbmActivity, whatsAppActivity];;
     //crash fix on clicking items with name in farsi
     NSString* webStringURL = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSURL* urlToBeShared = [NSURL URLWithString:webStringURL];
-    
+
     WhatsAppMessage *whatsappMsg = [[WhatsAppMessage alloc] initWithMessage:[NSString stringWithFormat:@"%@ %@",STRING_SHARE_PRODUCT_MESSAGE, url] forABID:nil];
-    
+
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[STRING_SHARE_PRODUCT_MESSAGE, urlToBeShared, whatsappMsg] applicationActivities:nil];
-    
+
     if(!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")){
-        
+
         //activityController = [[UIActivityViewController alloc] initWithActivityItems:@[STRING_SHARE_PRODUCT_MESSAGE, urlToBeShared, whatsappMsg] applicationActivities:objectToShare];
-        
+
     }
-    
-    
+
     activityController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList];
-    
+
     [activityController setValue:[NSString stringWithFormat:STRING_SHARE_OBJECT, APP_NAME]
                           forKey:@"subject"];
-    
-    
-    activityController.completionHandler = ^(NSString *activityType, BOOL completed)
-    {
+
+    activityController.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
         [self trackingEventShared:activityType];
     };
-    
-    
-    
+
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
     {
         CGRect sharePopoverRect = CGRectMake(self.ctaView.frame.size.width,
                                              self.ctaView.frame.size.height / 2,
                                              0.0f,
                                              0.0f);
-        
+
         UIPopoverController* popoverController =
         [[UIPopoverController alloc] initWithContentViewController:activityController];
         [popoverController presentPopoverFromRect:sharePopoverRect inView:self.ctaView permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
@@ -1124,74 +1096,75 @@ typedef void (^ProcessActionBlock)(void);
     }
 }
 
-- (void)addToWishList
-{
+- (void)addToWishList {
     [self addToWishList:self.productImageSection.wishListButton];
 }
 
-- (void)addToCart
-{
-    if(VALID_NOTEMPTY(self.product.productSimples, NSArray) && self.product.productSimples.count > 1 && !VALID_NOTEMPTY(self.currentSimple, RIProductSimple))
-    {
+- (void)addToCart {
+    if(VALID_NOTEMPTY(self.product.productSimples, NSArray) && self.product.productSimples.count > 1 && !VALID_NOTEMPTY(self.currentSimple, RIProductSimple)) {
         self.openPickerFromCart = YES;
         [self showSizePicker];
-    }
-    else
-    {
-        [self showLoading];
-        
+    } else {
+        //[self showLoading];
+
         if (!self.currentSimple && self.product.productSimples.count == 1) {
             self.currentSimple = [self.product.productSimples firstObject];
         }
-        
-        [RICart addProductWithQuantity:@"1"
-                             simpleSku:self.currentSimple.sku
-                      withSuccessBlock:^(RICart *cart, RIApiResponse apiResponse,  NSArray *successMessage) {
-                          
-                          if (VALID_NOTEMPTY(self.teaserTrackingInfo, NSString)) {
-                              NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
-                              
-                              NSString* obj = [skusFromTeaserInCart objectForKey:self.product.sku];
-                              
-                              if (ISEMPTY(obj)) {
-                                  [skusFromTeaserInCart setValue:self.teaserTrackingInfo forKey:self.product.sku];
-                                  [[NSUserDefaults standardUserDefaults] setObject:[skusFromTeaserInCart copy] forKey:kSkusFromTeaserInCartKey];
-                              }
-                          }
-                          
-                          [self trackingEventAddToCart:cart];
-                          
-                          NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
-                          [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
-                          
-                          
-                          [self onSuccessResponse:RIApiResponseSuccess messages:successMessage showMessage:YES];
-                          [self hideLoading];
-                          
-                      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-                          
-                          [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:@selector(addToCart) objects:nil];
-                          [self hideLoading];
-                      }];
+
+        [[CartDataManager sharedInstance] addProductToCart:self simpleSku:self.currentSimple.sku completion:^(id data, NSError *error) {
+            if(error == nil) {
+                [self bind:data forRequestId:0];
+
+                //EVENT: ADD TO CART
+                [TrackerManager postEvent:[EventFactory addToCart:self.currentSimple.sku basketValue:[self.cart.cartEntity.cartValue longValue] success:YES] forName:[AddToCartEvent name]];
+
+                if (VALID_NOTEMPTY(self.teaserTrackingInfo, NSString)) {
+                    NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
+
+                    NSString *obj = [skusFromTeaserInCart objectForKey:self.product.sku];
+
+                    if (ISEMPTY(obj)) {
+                        [skusFromTeaserInCart setValue:self.teaserTrackingInfo forKey:self.product.sku];
+                        [[NSUserDefaults standardUserDefaults] setObject:[skusFromTeaserInCart copy] forKey:kSkusFromTeaserInCartKey];
+                    }
+                }
+
+                [self trackingEventAddToCart:self.cart];
+
+                NSDictionary* userInfo = [NSDictionary dictionaryWithObject:self.cart forKey:kUpdateCartNotificationValue];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
+
+                [self onSuccessResponse:RIApiResponseSuccess messages:[self extractSuccessMessages:[data objectForKey:kDataMessages]] showMessage:YES];
+                //[self hideLoading];
+                
+                //##############
+                [EmarsysPredictManager sendTransactionsOf:self];
+                
+            } else {
+                //EVENT: ADD TO CART
+                [TrackerManager postEvent:[EventFactory addToCart:self.currentSimple.sku basketValue:[self.cart.cartEntity.cartValue intValue] success:NO] forName:[AddToCartEvent name]];
+
+                [self onErrorResponse:error.code messages:[error.userInfo objectForKey:kErrorMessages] showAsMessage:YES selector:@selector(addToCart) objects:nil];
+                //[self hideLoading];
+            }
+        }];
     }
 }
 
-- (void)callToOrder
-{
+- (void)callToOrder {
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"تماس با تیم خدمات مشتریان بامیلو" delegate:nil cancelButtonTitle:@"لغو" otherButtonTitles:@"تایید", nil];
     alert.delegate = self;
     [alert show];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if(buttonIndex ==0){
-        
-    }
-    else{
+    if(buttonIndex ==0) {
+
+    } else {
         [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
-            
+
             [self trackingEventCallToOrder];
-            
+
             NSString *phoneNumber = [@"tel://" stringByAppendingString:[JAUtils convertToEnglishNumber:configuration.phoneNumber]];//tessa
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
@@ -1202,10 +1175,10 @@ typedef void (^ProcessActionBlock)(void);
 - (void)showSizePicker
 {
     self.indexOfBundleRelatedToSizePicker = -1;
-    
+
     self.pickerDataSource = [NSMutableArray new];
     NSMutableArray *options = [[NSMutableArray alloc] init];
-    
+
     if(VALID_NOTEMPTY(self.product.productSimples, NSArray))
     {
         for (RIProductSimple *simple in self.product.productSimples)
@@ -1217,12 +1190,12 @@ typedef void (^ProcessActionBlock)(void);
             }
         }
     }
-    
+
     NSString* sizeGuideTitle = nil;
     if (VALID_NOTEMPTY(self.product.sizeGuideUrl, NSString)) {
         sizeGuideTitle = STRING_SIZE_GUIDE;
     }
-    
+
     if (VALID_NOTEMPTY(options, NSMutableArray)) {
         [self loadSizePickerWithOptions:[options copy]
                            previousText:self.productInfoSection.sizesText
@@ -1235,28 +1208,28 @@ typedef void (^ProcessActionBlock)(void);
                   leftButtonTitle:(NSString*)leftButtonTitle
 {
     if (!VALID_NOTEMPTY(self.picker, JAPicker)) {
-        
+
         self.picker = [[JAPicker alloc] initWithFrame:self.view.frame];
         [self.picker setDelegate:self];
     }
-    
+
     if (![self.picker superview]) {
         [self.view addSubview:self.picker];
     }
-    
+
     [self.picker setDataSourceArray:options
                        previousText:previousText
                     leftButtonTitle:leftButtonTitle];
-    
+
     CGFloat pickerViewHeight = self.view.frame.size.height;
     CGFloat pickerViewWidth = self.view.frame.size.width;
     [self.picker setFrame:CGRectMake(0.0f,
                                      pickerViewHeight,
                                      pickerViewWidth,
                                      pickerViewHeight)];
-    
+
     [self.view bringSubviewToFront:self.picker];
-    
+
     [UIView animateWithDuration:0.4f
                      animations:^{
                          [self.picker setFrame:CGRectMake(0.0f,
@@ -1271,9 +1244,9 @@ typedef void (^ProcessActionBlock)(void);
 {
     NSInteger index = sender.tag;
     JAPDVBundleSingleItem* singleItem = [self.bundleSingleItemsArray objectAtIndex:index];
-    
+
     singleItem.selected = !singleItem.selected;
-    
+
     if (!self.selectedBundles) {
         self.selectedBundles = [[NSMutableDictionary alloc] init];
         for (JAPDVBundleSingleItem *item in self.bundleSingleItemsArray) {
@@ -1287,15 +1260,14 @@ typedef void (^ProcessActionBlock)(void);
         }else{
             [self.selectedBundles removeObjectForKey:singleItem.product.sku];
         }
-        
+
     }
 }
 
 #pragma mark JAPickerDelegate
-- (void)selectedRow:(NSInteger)selectedRow
-{
+- (void)selectedRow:(NSInteger)selectedRow {
     self.currentSimple = [self.pickerDataSource objectAtIndex:selectedRow];
-    
+
     NSString* option = self.currentSimple.variation;
     if (ISEMPTY(option)) {
         option = @"";
@@ -1306,15 +1278,15 @@ typedef void (^ProcessActionBlock)(void);
                                     andPrice:self.currentSimple.priceFormatted
                       andMaxSavingPercentage:self.product.maxSavingPercentage
                              shouldForceFlip:YES];
-    
+
     CGRect frame = self.picker.frame;
     frame.origin.y = self.view.frame.size.height;
-    
+
     [UIView animateWithDuration:0.4f
                      animations:^{
                          self.picker.frame = frame;
                      } completion:^(BOOL finished) {
-                         
+
                          if (self.openPickerFromCart)
                          {
                              self.openPickerFromCart = NO;
@@ -1323,11 +1295,10 @@ typedef void (^ProcessActionBlock)(void);
                      }];
 }
 
-- (void)closePicker
-{
+- (void)closePicker {
     CGRect frame = self.picker.frame;
     frame.origin.y = self.view.frame.size.height;
-    
+
     [UIView animateWithDuration:0.4f
                      animations:^{
                          self.picker.frame = frame;
@@ -1336,8 +1307,7 @@ typedef void (^ProcessActionBlock)(void);
                      }];
 }
 
-- (void)leftButtonPressed;
-{
+- (void)leftButtonPressed {
     if (VALID_NOTEMPTY(self.product.sizeGuideUrl, NSString)) {
         NSDictionary* dic = [NSDictionary dictionaryWithObjectsAndKeys:self.product.sizeGuideUrl, @"sizeGuideUrl", nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowSizeGuideNotification object:nil userInfo:dic];
@@ -1347,41 +1317,35 @@ typedef void (^ProcessActionBlock)(void);
 
 #pragma mark JAPDVImageSectionDelegate
 
-- (void)imageClickedAtIndex:(NSInteger)index
-{
+- (void)imageClickedAtIndex:(NSInteger)index {
     [self presentGalleryAtIndex:index];
 }
 
-- (void)presentGalleryAtIndex:(NSInteger)index;
-{
+- (void)presentGalleryAtIndex:(NSInteger)index {
     if(VALID(_galleryPaged, JAPDVGallery))
         [_galleryPaged removeFromSuperview];
-    
+
     UIView *gallerySuperView = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
-    
+
     CGFloat width = gallerySuperView.frame.size.width;
     CGFloat height = gallerySuperView.frame.size.height;
     CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
-    
-    if(UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
-    {
-        if(width < gallerySuperView.frame.size.height)
-        {
+
+    if(UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
+        if(width < gallerySuperView.frame.size.height) {
             width = gallerySuperView.frame.size.height;
             height = gallerySuperView.frame.size.width;
         }
         if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0"))
             statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.width;
-    }
-    else
-    {
+    } else {
         if(width > gallerySuperView.frame.size.height)
         {
             width = gallerySuperView.frame.size.height;
             height = gallerySuperView.frame.size.width;
         }
     }
-    
+
     _galleryPaged = [[JAPDVGallery alloc] initWithFrame:CGRectMake(0, height, width, height-statusBarHeight)];
     CGRect openFrame = CGRectMake(0, statusBarHeight, width, height-statusBarHeight);
     [_galleryPaged loadGalleryWithArray:self.product.images atIndex:index];
@@ -1403,7 +1367,7 @@ typedef void (^ProcessActionBlock)(void);
 {
     CGRect newFrame = self.galleryPaged.frame;
     newFrame.origin.y = self.galleryPaged.frame.size.height;
-    
+
     [UIView animateWithDuration:.3f delay:0.f options:UIViewAnimationOptionCurveEaseInOut animations:^{
         _galleryPaged.frame = newFrame;
     } completion:^(BOOL finished) {
@@ -1423,13 +1387,12 @@ typedef void (^ProcessActionBlock)(void);
     }
 }
 
-- (BOOL)isUserLoggedInWithBlock:(ProcessActionBlock)block
-{
+- (BOOL)isUserLoggedInWithBlock:(ProcessActionBlock)block {
     if(![RICustomer checkIfUserIsLogged]) {
         [self hideLoading];
         _needAddToFavBlock = YES;
         _processActionBlock = block;
-        
+
         NSMutableDictionary* userInfoLogin = [[NSMutableDictionary alloc] init];
         [userInfoLogin setObject:[NSNumber numberWithBool:NO] forKey:@"from_side_menu"];
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowAuthenticationScreenNotification object:nil userInfo:userInfoLogin];
@@ -1439,60 +1402,61 @@ typedef void (^ProcessActionBlock)(void);
 }
 
 - (void)addToWishList:(UIButton *)button {
-    [self showLoading];
-    
+    //[self showLoading];
+
     __weak typeof (self) weakSelf = self;
-    
+
     BOOL logged = [self isUserLoggedInWithBlock:^{
         _needAddToFavBlock = NO;
         if(![RICustomer checkIfUserIsLogged]) {
             return;
-        }else{
+        } else {
             [weakSelf addToWishList:button];
         }
     }];
-    
+
     if (!logged) {
         return;
     }
-    
-    if (!button.selected && !VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate))
-    {
-        //add to favorites
-        [RIProduct addToFavorites:self.product successBlock:^(RIApiResponse apiResponse,  NSArray *success){
-            [self hideLoading];
-            button.selected = YES;
-            
-            self.product.favoriteAddDate = [NSDate date];
-            
-            [self trackingEventAddToWishList];
-            
-            NSDictionary *userInfo = nil;
-            if (self.product.favoriteAddDate) {
-                userInfo = [NSDictionary dictionaryWithObject:self.product.favoriteAddDate forKey:@"favoriteAddDate"];
+
+    if (!button.selected && !VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate)) {
+        [[ProductDataManager sharedInstance] addToFavorites:self sku:self.product.sku completion:^(id data, NSError *error) {
+            if(error == nil) {
+                //EVENT: ADD TO FAVORITES
+                [TrackerManager postEvent:[EventFactory addToFavorites:self.product.categoryUrlKey success:YES] forName:[AddToFavoritesEvent name]];
+
+                //[self hideLoading];
+                button.selected = YES;
+
+                self.product.favoriteAddDate = [NSDate date];
+
+                [self trackingEventAddToWishList];
+
+                NSDictionary *userInfo = nil;
+                if (self.product.favoriteAddDate) {
+                    userInfo = [NSDictionary dictionaryWithObject:self.product.favoriteAddDate forKey:@"favoriteAddDate"];
+                }
+
+                [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification object:self.product.sku userInfo:userInfo];
+
+                [self onSuccessResponse:RIApiResponseSuccess messages:[self extractSuccessMessages:data] showMessage:YES];
+            } else {
+                [self onErrorResponse:error.code messages:[error.userInfo objectForKey:kErrorMessages] showAsMessage:YES selector:@selector(addToWishList:) objects:@[button]];
+                //[self hideLoading];
+                
+                //EVENT: ADD TO FAVORITES
+                [TrackerManager postEvent:[EventFactory addToFavorites:self.product.categoryUrlKey success:NO] forName:[AddToFavoritesEvent name]];
             }
-            [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
-                                                                object:self.product.sku
-                                                              userInfo:userInfo];
-            
-            [self onSuccessResponse:RIApiResponseSuccess messages:success showMessage:YES];
-            
-        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-            
-            [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:@selector(addToWishList:) objects:@[button]];
-            [self hideLoading];
         }];
-    }else{
-        [self hideLoading];
     }
 }
 
 - (void)removeFromFavorites:(UIButton *)button
 {
     [self showLoading];
-    
+
     __weak typeof (self) weakSelf = self;
-    
+
     BOOL logged = [self isUserLoggedInWithBlock:^{
         _needAddToFavBlock = NO;
         if(![RICustomer checkIfUserIsLogged]) {
@@ -1501,7 +1465,7 @@ typedef void (^ProcessActionBlock)(void);
             [weakSelf removeFromFavorites:button];
         }
     }];
-    
+
     if (!logged) {
         return;
     }
@@ -1511,11 +1475,11 @@ typedef void (^ProcessActionBlock)(void);
             //update favoriteProducts
             [self hideLoading];
             button.selected = NO;
-            
+
             self.product.favoriteAddDate = nil;
-            
+
             [self trackingEventRemoveFromWishlist];
-            
+
             [self onSuccessResponse:RIApiResponseSuccess messages:success showMessage:YES];
             NSDictionary *userInfo = nil;
             if (self.product.favoriteAddDate) {
@@ -1525,7 +1489,7 @@ typedef void (^ProcessActionBlock)(void);
                                                                 object:self.product.sku
                                                               userInfo:userInfo];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-            
+
             [self hideLoading];
             [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:@selector(removeFromFavorites:) objects:@[button]];
         }];
@@ -1551,25 +1515,25 @@ typedef void (^ProcessActionBlock)(void);
     NSNumber *price = [self getPrice];
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
-    
+
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
     [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
-    
+
     [trackingDictionary setValue:[price stringValue] forKey:kRIEventFBValueToSumKey];
     [trackingDictionary setValue:self.product.sku forKey:kRIEventFBContentIdKey];
     [trackingDictionary setValue:@"product" forKey:kRIEventFBContentTypeKey];
     [trackingDictionary setValue:@"EUR" forKey:kRIEventFBCurrency];
-    
+
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewProduct]
                                               data:[trackingDictionary copy]];
-    
+
     trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:self.product.sku forKey:kRIEventLabelKey];
     [trackingDictionary setValue:@"ViewProductDetails" forKey:kRIEventActionKey];
     [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
     [trackingDictionary setValue:price forKey:kRIEventValueKey];
-    
+
     [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
     [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
     [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
@@ -1581,25 +1545,25 @@ typedef void (^ProcessActionBlock)(void);
     [trackingDictionary setValue:self.product.sku forKey:kRIEventProductKey];
     [trackingDictionary setObject:self.product.brand forKey:kRIEventBrandName];
     [trackingDictionary setObject:self.product.brandUrlKey forKey:kRIEventBrandKey];
-    
+
     NSString *discountPercentage = @"0";
     if(VALID_NOTEMPTY(self.product.maxSavingPercentage, NSString))
     {
         discountPercentage = self.product.maxSavingPercentage;
     }
-    
+
     // Since we're sending the converted price, we have to send the currency as EUR.
     // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
     [trackingDictionary setValue:price forKey:kRIEventPriceKey];
     [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
-    
+
     [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
-    
+
     if(VALID_NOTEMPTY(self.product.avr, NSNumber))
     {
         [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
     }
-    
+
     NSString *categoryName = @"";
     NSString *subCategoryName = @"";
     if(VALID_NOTEMPTY(self.category, RICategory))
@@ -1624,12 +1588,12 @@ typedef void (^ProcessActionBlock)(void);
         NSArray *categoryIds = self.product.categoryIds;
         NSInteger subCategoryIndex = [categoryIds count] - 1;
         NSInteger categoryIndex = subCategoryIndex - 1;
-        
+
         if(categoryIndex >= 0)
         {
             NSString *categoryId = [categoryIds objectAtIndex:categoryIndex];
             categoryName = [RICategory getCategoryName:categoryId];
-            
+
             NSString *subCategoryId = [categoryIds objectAtIndex:subCategoryIndex];
             subCategoryName = [RICategory getCategoryName:subCategoryId];
         }
@@ -1639,7 +1603,7 @@ typedef void (^ProcessActionBlock)(void);
             categoryName = [RICategory getCategoryName:categoryId];
         }
     }
-    
+
     if(VALID_NOTEMPTY(categoryName, NSString))
     {
         [trackingDictionary setValue:categoryName forKey:kRIEventCategoryIdKey];
@@ -1648,26 +1612,25 @@ typedef void (^ProcessActionBlock)(void);
     {
         [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryIdKey];
     }
-    
+
     if (VALID_NOTEMPTY(self.product.categoryName, NSString)) {
         [trackingDictionary setValue:self.product.categoryName forKey:kRIEventCategoryNameKey];
     }
     if (VALID_NOTEMPTY(self.product.categoryUrlKey, NSString)) {
         [trackingDictionary setValue:self.product.categoryUrlKey forKey:kRIEventCategoryIdKey];
     }
-    
+
     if (VALID_NOTEMPTY(self.product.name, NSString)) {
         [trackingDictionary setValue:self.product.name forKey:kRIEventProductNameKey];
     }
-    
+
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewProduct]
                                               data:[trackingDictionary copy]];
 }
 
-- (void)trackingEventAddToCart:(RICart *)cart
-{
+- (void)trackingEventAddToCart:(RICart *)cart {
     CGRect addToCartEventCoachMark = CGRectMake([ViewControllerManager centerViewController].navigationBarView.cartButton.frame.origin.x, [ViewControllerManager centerViewController].navigationBarView.cartButton.frame.origin.y+20,35, 35);
-    
+
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"FirtTimeAddToCart"])
     {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"FirtTimeAddToCart"];
@@ -1685,7 +1648,7 @@ typedef void (^ProcessActionBlock)(void);
         [self.navigationController.view addSubview:coachMarksView];
         [coachMarksView start];
     }
-    
+
     NSNumber *price = [self getPrice];
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:((RIProduct *)[self.product.productSimples firstObject]).sku forKey:kRIEventLabelKey];
@@ -1697,24 +1660,24 @@ typedef void (^ProcessActionBlock)(void);
     [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-    
+
     // Since we're sending the converted price, we have to send the currency as EUR.
     // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
     [trackingDictionary setValue:price forKey:kRIEventPriceKey];
     [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
-    
+
     [trackingDictionary setValue:self.currentSimple.sku forKey:kRIEventSkuKey];
     [trackingDictionary setValue:self.product.name forKey:kRIEventProductNameKey];
-    
+
     if(VALID_NOTEMPTY(self.product.categoryIds, NSArray))
     {
         NSArray *categoryIds = self.product.categoryIds;
         [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryIdKey];
     }
-    
+
     [trackingDictionary setObject:self.product.brand forKey:kRIEventBrandName];
     [trackingDictionary setObject:self.product.brandUrlKey forKey:kRIEventBrandKey];
-    
+
     NSString *discountPercentage = @"0";
     if(VALID_NOTEMPTY(self.product.maxSavingPercentage, NSString))
     {
@@ -1724,7 +1687,7 @@ typedef void (^ProcessActionBlock)(void);
     [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
     [trackingDictionary setValue:cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
     [trackingDictionary setValue:@"Product Detail screen" forKey:kRIEventLocationKey];
-    
+
     NSString *categoryName = @"";
     NSString *subCategoryName = @"";
     if(VALID_NOTEMPTY(self.category, RICategory))
@@ -1749,12 +1712,12 @@ typedef void (^ProcessActionBlock)(void);
         NSArray *categoryIds = self.product.categoryIds;
         NSInteger subCategoryIndex = [categoryIds count] - 1;
         NSInteger categoryIndex = subCategoryIndex - 1;
-        
+
         if(categoryIndex >= 0)
         {
             NSString *categoryId = [categoryIds objectAtIndex:categoryIndex];
             categoryName = [RICategory getCategoryName:categoryId];
-            
+
             NSString *subCategoryId = [categoryIds objectAtIndex:subCategoryIndex];
             subCategoryName = [RICategory getCategoryName:subCategoryId];
         }
@@ -1764,7 +1727,7 @@ typedef void (^ProcessActionBlock)(void);
             categoryName = [RICategory getCategoryName:categoryId];
         }
     }
-    
+
     if(VALID_NOTEMPTY(categoryName, NSString))
     {
         [trackingDictionary setValue:categoryName forKey:kRIEventCategoryIdKey];
@@ -1779,27 +1742,27 @@ typedef void (^ProcessActionBlock)(void);
     if (VALID_NOTEMPTY(self.product.categoryUrlKey, NSString)) {
         [trackingDictionary setValue:self.product.categoryUrlKey forKey:kRIEventCategoryIdKey];
     }
-    
+
     [trackingDictionary setValue:self.product.name forKey:kRIEventProductNameKey];
     [trackingDictionary setValue:cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
-    
+
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
                                               data:[trackingDictionary copy]];
-    
-    
+
+
     trackingDictionary = [NSMutableDictionary new];
     [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
     NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
     [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
-    
+
     [trackingDictionary setValue:[price stringValue] forKey:kRIEventFBValueToSumKey];
     [trackingDictionary setValue:self.product.sku forKey:kRIEventFBContentIdKey];
     [trackingDictionary setValue:@"product" forKey:kRIEventFBContentTypeKey];
     [trackingDictionary setValue:@"EUR" forKey:kRIEventFBCurrency];
-    
+
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookAddToCart]
                                               data:[trackingDictionary copy]];
-    
+
     [self trackingEventCart:cart];
 }
 
@@ -1809,7 +1772,7 @@ typedef void (^ProcessActionBlock)(void);
     [trackingDictionary setValue:cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
                                               data:[trackingDictionary copy]];
-    
+
     [self trackingEventLastAddedToCart];
 }
 
@@ -1832,7 +1795,7 @@ typedef void (^ProcessActionBlock)(void);
     [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-    
+
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCallToOrder]
                                               data:[trackingDictionary copy]];
 }
@@ -1845,7 +1808,7 @@ typedef void (^ProcessActionBlock)(void);
     [trackingDictionary setValue:@"RemoveFromWishlist" forKey:kRIEventActionKey];
     [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
     [trackingDictionary setValue:price forKey:kRIEventValueKey];
-    
+
     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
     [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
     [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
@@ -1853,16 +1816,16 @@ typedef void (^ProcessActionBlock)(void);
     [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
     [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
     [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
-    
+
     // Since we're sending the converted price, we have to send the currency as EUR.
     // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
     [trackingDictionary setValue:price forKey:kRIEventPriceKey];
     [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
-    
+
     [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages) {
-        
+
         [trackingDictionary setValue:[NSNumber numberWithInteger:favoriteProducts.count] forKey:kRIEventTotalWishlistKey];
-        
+
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
                                                   data:[trackingDictionary copy]];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
@@ -1874,7 +1837,7 @@ typedef void (^ProcessActionBlock)(void);
 - (void)trackingEventAddToWishList
 {
     NSNumber *price = (VALID_NOTEMPTY(self.product.specialPriceEuroConverted, NSNumber) && [self.product.specialPriceEuroConverted floatValue] > 0.0f) ? self.product.specialPriceEuroConverted : self.product.priceEuroConverted;
-    
+
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:self.product.sku forKey:kRIEventLabelKey];
     [trackingDictionary setValue:@"AddtoWishlist" forKey:kRIEventActionKey];
@@ -1885,16 +1848,16 @@ typedef void (^ProcessActionBlock)(void);
     [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-    
+
     // Since we're sending the converted price, we have to send the currency as EUR.
     // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
     [trackingDictionary setValue:price forKey:kRIEventPriceKey];
     [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
-    
+
     [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
     [trackingDictionary setObject:self.product.brand forKey:kRIEventBrandName];
     [trackingDictionary setObject:self.product.brandUrlKey forKey:kRIEventBrandKey];
-    
+
     NSString *discountPercentage = @"0";
     if(VALID_NOTEMPTY(self.product.maxSavingPercentage, NSString))
     {
@@ -1903,7 +1866,7 @@ typedef void (^ProcessActionBlock)(void);
     [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
     [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
     [trackingDictionary setValue:@"Product Detail screen" forKey:kRIEventLocationKey];
-    
+
     NSString *categoryName = @"";
     NSString *subCategoryName = @"";
     if(VALID_NOTEMPTY(self.category, RICategory))
@@ -1928,12 +1891,12 @@ typedef void (^ProcessActionBlock)(void);
         NSArray *categoryIds = self.product.categoryIds;
         NSInteger subCategoryIndex = [categoryIds count] - 1;
         NSInteger categoryIndex = subCategoryIndex - 1;
-        
+
         if(categoryIndex >= 0)
         {
             NSString *categoryId = [categoryIds objectAtIndex:categoryIndex];
             categoryName = [RICategory getCategoryName:categoryId];
-            
+
             NSString *subCategoryId = [categoryIds objectAtIndex:subCategoryIndex];
             subCategoryName = [RICategory getCategoryName:subCategoryId];
         }
@@ -1943,7 +1906,7 @@ typedef void (^ProcessActionBlock)(void);
             categoryName = [RICategory getCategoryName:categoryId];
         }
     }
-    
+
     if(VALID_NOTEMPTY(categoryName, NSString))
     {
         [trackingDictionary setValue:categoryName forKey:kRIEventCategoryIdKey];
@@ -1958,13 +1921,13 @@ typedef void (^ProcessActionBlock)(void);
     if (VALID_NOTEMPTY(self.product.categoryUrlKey, NSString)) {
         [trackingDictionary setValue:self.product.categoryUrlKey forKey:kRIEventCategoryIdKey];
     }
-    
+
     [trackingDictionary setValue:self.product.name forKey:kRIEventProductNameKey];
-    
+
     [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages) {
-        
+
         [trackingDictionary setValue:[NSNumber numberWithInteger:favoriteProducts.count] forKey:kRIEventTotalWishlistKey];
-        
+
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToWishlist]
                                                   data:[trackingDictionary copy]];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
@@ -1975,7 +1938,7 @@ typedef void (^ProcessActionBlock)(void);
 
 - (void)trackingEventShared:(NSString *)activityType
 {
-    
+
     NSString *type = @"Shared";
     NSNumber *eventType = [NSNumber numberWithInt:RIEventShareOther];
     if ([activityType isEqualToString:UIActivityTypeMail])
@@ -1998,7 +1961,7 @@ typedef void (^ProcessActionBlock)(void);
         type = @"SMS";
         eventType = [NSNumber numberWithInt:RIEventShareSMS];
     }
-    
+
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:self.product.sku forKey:kRIEventLabelKey];
     [trackingDictionary setValue:type forKey:kRIEventActionKey];
@@ -2010,7 +1973,7 @@ typedef void (^ProcessActionBlock)(void);
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
     [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
-    
+
     NSString *categoryName = @"";
     NSString *subCategoryName = @"";
     if(VALID_NOTEMPTY(self.category, RICategory))
@@ -2035,12 +1998,12 @@ typedef void (^ProcessActionBlock)(void);
         NSArray *categoryIds = self.product.categoryIds;
         NSInteger subCategoryIndex = [categoryIds count] - 1;
         NSInteger categoryIndex = subCategoryIndex - 1;
-        
+
         if(categoryIndex >= 0)
         {
             NSString *categoryId = [categoryIds objectAtIndex:categoryIndex];
             categoryName = [RICategory getCategoryName:categoryId];
-            
+
             NSString *subCategoryId = [categoryIds objectAtIndex:subCategoryIndex];
             subCategoryName = [RICategory getCategoryName:subCategoryId];
         }
@@ -2050,7 +2013,7 @@ typedef void (^ProcessActionBlock)(void);
             categoryName = [RICategory getCategoryName:categoryId];
         }
     }
-    
+
     if(VALID_NOTEMPTY(categoryName, NSString))
     {
         [trackingDictionary setValue:categoryName forKey:kRIEventCategoryIdKey];
@@ -2059,25 +2022,23 @@ typedef void (^ProcessActionBlock)(void);
     {
         [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryIdKey];
     }
-    
+
     [[RITrackingWrapper sharedInstance] trackEvent:eventType
                                               data:[trackingDictionary copy]];
 }
 
-- (void)trackingEventRelatedItemSelection:(RIProduct *)product
-{
+- (void)trackingEventRelatedItemSelection:(RIProduct *)product {
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:product.sku forKey:kRIEventLabelKey];
     [trackingDictionary setValue:@"RelatedItem" forKey:kRIEventActionKey];
     [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
     [trackingDictionary setValue:product.priceEuroConverted forKey:kRIEventValueKey];
-    
+
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRelatedItem]
                                               data:[trackingDictionary copy]];
 }
 
-- (void)trackingEventMostViewedBrand
-{
+- (void)trackingEventMostViewedBrand {
     NSString *topBrand = [RIProduct getTopBrand:self.product];
     if (VALID_NOTEMPTY(topBrand, NSString)) {
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventMostViewedBrand] data:[NSDictionary dictionaryWithObject:topBrand forKey:kRIEventBrandName]];
@@ -2103,6 +2064,78 @@ typedef void (^ProcessActionBlock)(void);
 
 -(NSString *)getPerformanceTrackerLabel {
     return self.productSku;
+}
+
+#pragma mark - DataTrackerProtocol
+-(NSString *)getDataTrackerAlias {
+    return @"PRODUCT";
+}
+
+#pragma mark - DataServiceProtocol
+-(void)bind:(id)data forRequestId:(int)rid {
+    switch (rid) {
+        case 0:
+            self.cart = [data objectForKey:kDataContent];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+#pragma mark - EmarsysPredictProtocol
+- (EMTransaction *)getDataCollection:(EMTransaction *)transaction {
+    if (self.product.sku) {
+        [transaction setView:self.product.sku];
+    }
+    return transaction;
+}
+
+- (BOOL)isPreventSendTransactionInViewWillAppear {
+    return YES;
+}
+
+- (NSArray<EMRecommendationRequest *> *)getRecommendations {
+    EMRecommendationRequest *recommend = [EMRecommendationRequest requestWithLogic:@"RELATED"];
+    recommend.limit = 4;
+    recommend.completionHandler = ^(EMRecommendationResult *_Nonnull result) {
+        [self renderRecommendations:result];
+    };
+    return @[recommend];
+}
+
+- (void)renderRecommendations:(EMRecommendationResult *)result {
+    NSArray<RecommendItem *> *recommendItems = [result.products map:^id(EMRecommendationItem *item) {
+        return [RecommendItem instanceWithEMRecommendationItem:item];
+    }];
+    
+    if(_recommendationView == nil) {
+        _recommendationView = [EmarsysRecommendationGridWidgetView nibInstance];
+        _recommendationView.delegate = self;
+        
+        [_recommendationView setHeight:[EmarsysRecommendationGridWidgetView preferredHeightWithContentModel:recommendItems boundWidth:self.mainScrollView.width]];
+        [_recommendationView updateTitle:STRING_BAMILO_RECOMMENDATION];
+        [_recommendationView setWidgetBacgkround:JABlack300Color];
+        [ThreadManager executeOnMainThread:^{
+            [_recommendationView setFrame:CGRectMake(0, self.mainScrollView.contentSize.height, self.mainScrollView.width, _recommendationView.height)];
+            [self.mainScrollView addSubview:_recommendationView];
+            [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.width, self.mainScrollView.contentSize.height + _recommendationView.height)];
+            [_recommendationView updateWithModel:recommendItems];
+        }];
+    } else {
+        [ThreadManager executeOnMainThread:^{
+            [_recommendationView updateWithModel:recommendItems];
+        }];
+    }
+}
+
+#pragma mark - FeatureBoxCollectionViewWidgetViewDelegate
+- (void)selectFeatureItem:(NSObject *)item widgetBox:(id)widgetBox {
+    if ([item isKindOfClass:[RecommendItem class]]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName: kDidSelectTeaserWithPDVUrlNofication
+                                                            object: nil
+                                                          userInfo: @{@"sku": ((RecommendItem *)item).sku}];
+    }
 }
 
 @end

@@ -12,7 +12,4 @@
 
 @property (strong, nonatomic) NSDictionary *notification;
 
--(void) toggleSideMenu;
--(void) updateSideMenu:(BOOL)isEnabled;
-
 @end

@@ -22,9 +22,9 @@
     
     self.backgroundColor = [UIColor whiteColor];
     
-    [self.itemNameLabel applyStyle:kFontRegularName fontSize:11.0f color:cDARK_GRAY_COLOR];
-    [self.itemPriceLabel applyStyle:kFontRegularName fontSize:11.0f color:cDARK_GRAY_COLOR];
-    [self.itemCurrencyLabel applyStyle:kFontRegularName fontSize:11.0f color:cDARK_GRAY_COLOR];
+    [self.itemNameLabel applyStyle:[Theme font:kFontVariationRegular size:11] color:[Theme color:kColorDarkGray]];
+    [self.itemPriceLabel applyStyle:[Theme font:kFontVariationRegular size:11] color:[Theme color:kColorDarkGray]];
+    [self.itemCurrencyLabel applyStyle:[Theme font:kFontVariationRegular size:11] color:[Theme color:kColorDarkGray]];
 }
 
 -(void)applyColor:(UIColor *)color {

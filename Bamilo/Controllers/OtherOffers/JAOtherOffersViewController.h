@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "JABaseViewController.h"
 #import "RIProduct.h"
+#import "DataServiceProtocol.h"
 
-@interface JAOtherOffersViewController : JABaseViewController <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface JAOtherOffersViewController : JABaseViewController <UICollectionViewDataSource, UICollectionViewDelegate, DataServiceProtocol>
 
 @property (nonatomic, strong)RIProduct* product;
 

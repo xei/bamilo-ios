@@ -7,13 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "BMA4SViewController.h"
+//#import <Accengage/Accengage.h>
 #import "JANavigationBarLayout.h"
 #import "JATabBarView.h"
 #import "JAScreenTarget.h"
 #import "PerformanceTrackerProtocol.h"
+#import "DataTrackerProtocol.h"
+//#######
+#import "DataMessageList.h"
 
-@interface JABaseViewController : BMA4SViewController <PerformanceTrackerProtocol, UISearchBarDelegate>
+@interface JABaseViewController : UIViewController <PerformanceTrackerProtocol, DataTrackerProtocol, UISearchBarDelegate>
 
 @property (nonatomic, strong)JANavigationBarLayout* navBarLayout;
 
@@ -79,6 +82,9 @@
 - (void)appDidEnterBackground;
 
 - (void)onOrientationChanged;
+
+//TEMP FUNCTION
+-(NSArray *) extractSuccessMessages:(DataMessageList *)dataMessages;
 
 @end
 

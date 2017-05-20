@@ -11,6 +11,7 @@
 #import "BaseViewController.h"
 #import "ViewControllerManager.h"
 #import "NotificationBarView.h"
+#import "EmarsysPredictManager.h"
 
 @interface BaseViewController()
 @property (strong, nonatomic) JAMessageView *messageView;
@@ -32,6 +33,8 @@
     self.navigationItem.hidesBackButton = YES;
     self.title = nil;
     self.view.backgroundColor = JABackgroundGrey;
+    
+    [TrackerManager trackScreenName:[self getDataTrackerAlias]];
 }
 
 - (JANavigationBarLayout *)navBarLayout {
@@ -49,20 +52,29 @@
     [self requestNavigationBarReload];
     [self requestTabBarReload];
     
-    if([self getIsSideMenuAvailable]) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOnMenuSwipePanelNotification object:nil];
+    if ([self conformsToProtocol:@protocol(EmarsysPredictProtocolBase)]) {
+        if ([self respondsToSelector:@selector(isPreventSendTransactionInViewWillAppear)]) {
+            if (![((id<EmarsysPredictProtocolBase>)self) isPreventSendTransactionInViewWillAppear]) {
+                [EmarsysPredictManager sendTransactionsOf:self];
+            }
+        } else {
+            [EmarsysPredictManager sendTransactionsOf:self];
+        }
     }
+}
 
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillEnterForeground) name:kAppWillEnterForeground object:nil];
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground) name:kAppDidEnterBackground object:nil];
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    //[Accengage trackScreenDismiss:[self getPerformanceTrackerScreenName] ?: @""];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kTurnOnMenuSwipePanelNotification object:nil];
-    //[[NSNotificationCenter defaultCenter] removeObserver:self name:kAppWillEnterForeground object:nil];
-    //[[NSNotificationCenter defaultCenter] removeObserver:self name:kAppDidEnterBackground object:nil];
+    [super viewDidDisappear:animated];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -181,6 +193,11 @@
 }
 
 -(NSString *)getPerformanceTrackerLabel {
+    return nil;
+}
+
+#pragma mark - DataTrackerProtocol
+-(NSString *)getDataTrackerAlias {
     return nil;
 }
 

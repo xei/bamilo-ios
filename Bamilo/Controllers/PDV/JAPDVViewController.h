@@ -12,17 +12,19 @@
 #import "RICategory.h"
 #import "JAPDVImageSection.h"
 #import "MPCoachMarks.h"
+#import "EmarsysPredictProtocol.h"
+#import "ProductDataManager.h"
 
-@interface JAPDVViewController : JABaseViewController <JAPDVImageSectionDelegate>
+@interface JAPDVViewController : JABaseViewController <JAPDVImageSectionDelegate, EmarsysPredictProtocol, DataServiceProtocol>
 
 @property (strong, nonatomic) RIProduct *product;
-@property (strong, nonatomic) NSString* productSku;
+@property (strong, nonatomic) NSString *productSku;
 @property (strong, nonatomic) RICategory *category;
 @property (assign, nonatomic) BOOL fromCatalogue;
 @property (strong, nonatomic) NSString *previousCategory;
 @property (strong, nonatomic) NSString *preSelectedSize;
 @property (strong, nonatomic) NSString *richRelevanceParameter;
 
-@property (nonatomic, strong) NSString* teaserTrackingInfo;
+@property (nonatomic, strong) NSString *teaserTrackingInfo;
 
 @end

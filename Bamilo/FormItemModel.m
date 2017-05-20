@@ -2,18 +2,19 @@
 //  FormItemModel.m
 //  Bamilo
 //
-//  Created by Ali saiedifar on 2/12/17.
+//  Created by Ali Saeedifar on 2/12/17.
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
 #import "FormItemModel.h"
+#import "EmailUtility.h"
 
 @implementation FormItemModel
 
-- (instancetype)initWithTitle:(NSString *)title fieldName:(NSString *)fieldName andIcon:(UIImage *)image placeholder:(NSString *)placeholder type:(InputTextFieldControlType)type validation:(FormItemValidation *)validation selectOptions:(NSDictionary *)options {
+- (instancetype)initWithTextValue:(NSString *)title fieldName:(NSString *)fieldName andIcon:(UIImage *)image placeholder:(NSString *)placeholder type:(InputTextFieldControlType)type validation:(FormItemValidation *)validation selectOptions:(NSDictionary *)options {
     self = [super init];
     if (self) {
-        self.titleString = title;
+        self.inputTextValue = title;
         self.icon = image;
         self.placeholder = placeholder;
         self.validation = validation;
@@ -26,16 +27,16 @@
 
 - (NSString *)getValue {
     if (self.type == InputTextFieldControlTypeNumerical) {
-        return [self.titleString numbersToEnglish];
+        return [self.inputTextValue numbersToEnglish];
     } else if (self.type == InputTextFieldControlTypeOptions){
-        return self.selectOption[self.titleString];
+        return self.selectOption[self.inputTextValue];
     } else {
-        return self.titleString;
+        return self.inputTextValue;
     }
 }
 
-+ (FormItemModel *)nameFieldWithFiedName:(NSString *)fieldName {
-    return [[FormItemModel alloc] initWithTitle:nil
++ (FormItemModel *)firstNameFieldWithFiedName:(NSString *)fieldName {
+    return [[FormItemModel alloc] initWithTextValue:nil
                                       fieldName:fieldName
                                         andIcon:nil
                                     placeholder:@"نام"
@@ -45,7 +46,7 @@
 }
 
 + (FormItemModel *)lastNameWithFieldName:(NSString *)fieldName {
-    return [[FormItemModel alloc] initWithTitle:nil
+    return [[FormItemModel alloc] initWithTextValue:nil
                                       fieldName: fieldName
                                         andIcon:nil
                                     placeholder:@"نام خانوادگی"
@@ -55,7 +56,7 @@
 }
 
 + (FormItemModel *)phoneWithFieldName:(NSString *)fieldName {
-    return [[FormItemModel alloc] initWithTitle:nil
+    return [[FormItemModel alloc] initWithTextValue:nil
                                       fieldName: fieldName
                                         andIcon:nil
                                     placeholder:@"تلفن همراه"
@@ -65,7 +66,7 @@
 }
 
 + (FormItemModel *)addressWithFieldName:(NSString *)fieldName {
-    return [[FormItemModel alloc] initWithTitle:nil
+    return [[FormItemModel alloc] initWithTextValue:nil
                                       fieldName: fieldName
                                         andIcon:nil
                                     placeholder:@"نشانی به فارسی"
@@ -75,7 +76,7 @@
 }
 
 + (FormItemModel *)postalCodeWithFieldName:(NSString *)fieldName {
-    return [[FormItemModel alloc] initWithTitle:nil
+    return [[FormItemModel alloc] initWithTextValue:nil
                                       fieldName: fieldName
                                         andIcon:nil
                                     placeholder:@"کد پستی"
@@ -85,17 +86,17 @@
 }
 
 + (FormItemModel *)emailWithFieldName: (NSString *)fieldName {
-    return [[FormItemModel alloc] initWithTitle:nil
+    return [[FormItemModel alloc] initWithTextValue:nil
                                       fieldName: fieldName
                                         andIcon:nil
                                     placeholder:@"ایمیل"
                                            type:InputTextFieldControlTypeEmail
-                                     validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:[NSString emailRegxPattern]]
+                                     validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:[EmailUtility emailRegexPattern]]
                                   selectOptions:nil];
 }
 
 + (FormItemModel *)passWordWithFieldName: (NSString *)fieldName {
-    return [[FormItemModel alloc] initWithTitle:nil
+    return [[FormItemModel alloc] initWithTextValue:nil
                                       fieldName: fieldName
                                         andIcon: nil
                                     placeholder:@"کلمه عبور"
@@ -105,7 +106,7 @@
 }
 
 + (FormItemModel *)genderWithFieldName: (NSString *)fieldName {
-    return [[FormItemModel alloc] initWithTitle:nil
+    return [[FormItemModel alloc] initWithTextValue:nil
                                       fieldName: fieldName
                                         andIcon: nil
                                     placeholder:@"جنسیت"

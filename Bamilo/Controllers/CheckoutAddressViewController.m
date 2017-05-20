@@ -6,7 +6,7 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import "DataManager.h"
+#import "CheckoutDataManager.h"
 #import "CheckoutAddressViewController.h"
 #import "CheckoutProgressViewButtonModel.h"
 #import "ViewControllerManager.h"
@@ -36,7 +36,7 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[DataManager sharedInstance] getMultistepAddressList:self completion:^(id data, NSError *error) {
+    [[CheckoutDataManager sharedInstance] getMultistepAddressList:self completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
             [self setIsStepValid:_addresses.count];
@@ -73,7 +73,7 @@
         completion(nil, NO);
     } else {
         Address *_selectedAddress = [self getSelectedAddress];
-        [[DataManager sharedInstance] setMultistepAddress:self forShipping:_selectedAddress.uid billing:_selectedAddress.uid completion:^(id data, NSError *error) {
+        [[CheckoutDataManager sharedInstance] setMultistepAddress:self forShipping:_selectedAddress.uid billing:_selectedAddress.uid completion:^(id data, NSError *error) {
             if(error == nil && completion != nil) {
                 MultistepEntity *multistepEntity = (MultistepEntity *)data;
                 completion(multistepEntity.nextStep, YES);

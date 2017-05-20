@@ -74,6 +74,9 @@
                                     @"selector": [NSValue valueWithPointer:@selector(openAppStore)]
                                     }
                                 ];
+    
+    // This will remove extra separators from tableview
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 
@@ -181,9 +184,11 @@
     
     NSDictionary *selectedObjItem = self.tableViewListItems[indexPath.row];
     if ([[selectedObjItem objectForKey:@"selector"] pointerValue]) {
-        SEL customSelector = [[selectedObjItem objectForKey:@"selector"] pointerValue];
-        //[self performSelector:customSelector withObject: 0];
-        [self performSelector:customSelector];
+        __unused SEL customSelector = [[selectedObjItem objectForKey:@"selector"] pointerValue];
+        
+        IMP implementation = [self methodForSelector:customSelector];
+        void (*function)(id, SEL) = (void *)implementation;
+        function(self, customSelector);
         return;
     }
     

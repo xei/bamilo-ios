@@ -63,4 +63,24 @@
     return CGSizeMake(width, height);
 }
 
+- (void)hide {
+    [self setHidden:YES];
+    [self setAlpha:0];
+}
+
+- (void)fadeIn:(NSTimeInterval) duration {
+    [self setHidden:NO];
+    [UIView animateWithDuration:duration animations:^{
+        [self setAlpha:1];
+    }];
+}
+
+- (void)fadeOut:(NSTimeInterval) duration {
+    [UIView animateWithDuration:duration animations:^{
+        [self setAlpha:0];
+    } completion:^(BOOL finished) {
+        [self setHidden:YES];
+    }];
+}
+
 @end

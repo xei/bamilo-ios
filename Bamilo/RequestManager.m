@@ -14,50 +14,74 @@
     int _pendingRequestsNumber;
 }
 
-+(void) asyncGET:(id<DataServiceProtocol>)target path:(NSString *)path params:(NSDictionary *)params type:(RequestExecutionType)type completion:(RequestCompletion)completion {
-    [RequestManager asyncRequest:HttpVerbGET path:path params:params type:type target:target completion:completion];
+-(instancetype)init {
+    NSAssert(false, @"Call initWithBaseUrl instead");
+    return nil;
 }
 
-+(void) asyncPOST:(id<DataServiceProtocol>)target path:(NSString *)path params:(NSDictionary *)params type:(RequestExecutionType)type completion:(RequestCompletion)completion {
-    [RequestManager asyncRequest:HttpVerbPOST path:path params:params type:type target:target completion:completion];
+-(instancetype)initWithBaseUrl:(NSString *)baseUrl {
+    if(self = [super init]) {
+        _baseUrl = baseUrl;
+    }
+    return self;
 }
 
-+(void) asyncPUT:(id<DataServiceProtocol>)target path:(NSString *)path params:(NSDictionary *)params type:(RequestExecutionType)type completion:(RequestCompletion)completion {
-    [RequestManager asyncRequest:HttpVerbPUT path:path params:params type:type target:target completion:completion];
+-(void) asyncGET:(id<DataServiceProtocol>)target path:(NSString *)path params:(NSDictionary *)params type:(RequestExecutionType)type completion:(RequestCompletion)completion {
+    [self asyncRequest:HttpVerbGET path:path params:params type:type target:target completion:completion];
 }
 
-+(void) asyncDELETE:(id<DataServiceProtocol>)target path:(NSString *)path params:(NSDictionary *)params type:(RequestExecutionType)type completion:(RequestCompletion)completion {
-    [RequestManager asyncRequest:HttpVerbDELETE path:path params:params type:type target:target completion:completion];
+-(void) asyncPOST:(id<DataServiceProtocol>)target path:(NSString *)path params:(NSDictionary *)params type:(RequestExecutionType)type completion:(RequestCompletion)completion {
+    [self asyncRequest:HttpVerbPOST path:path params:params type:type target:target completion:completion];
 }
 
-#pragma mark - Private Methods
-+(void)asyncRequest:(HttpVerb)method path:(NSString *)path params:(NSDictionary *)params type:(RequestExecutionType)type target:(id<DataServiceProtocol>)target completion:(RequestCompletion)completion {
+-(void) asyncPUT:(id<DataServiceProtocol>)target path:(NSString *)path params:(NSDictionary *)params type:(RequestExecutionType)type completion:(RequestCompletion)completion {
+    [self asyncRequest:HttpVerbPUT path:path params:params type:type target:target completion:completion];
+}
+
+-(void) asyncDELETE:(id<DataServiceProtocol>)target path:(NSString *)path params:(NSDictionary *)params type:(RequestExecutionType)type completion:(RequestCompletion)completion {
+    [self asyncRequest:HttpVerbDELETE path:path params:params type:type target:target completion:completion];
+}
+
+-(void)asyncRequest:(HttpVerb)method path:(NSString *)path params:(NSDictionary *)params type:(RequestExecutionType)type target:(id<DataServiceProtocol>)target completion:(RequestCompletion)completion {
+    
     switch (type) {
         case REQUEST_EXEC_IN_FOREGROUND:
+        case REQUEST_EXEC_AS_CONTAINER:
             [[LoadingManager sharedInstance] showLoading];
         break;
             
-        default:
-            break;
+        default: break;
     }
     
+    NSURL *requestUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", self.baseUrl, path]];
+    
     [[RICommunicationWrapper sharedInstance]
-     sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, path]]
+     sendRequestWithUrl:requestUrl
      parameters:params
      httpMethod:method
      cacheType:RIURLCacheNoCache
      cacheTime:RIURLCacheDefaultTime
      userAgentInjection:[RIApi getCountryUserAgentInjection] successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-        NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
-        if (metadata || [jsonObject objectForKey:@"success"]) {
-            completion(apiResponse, metadata, nil);
-        } else {
+         
+         NSError *error;
+         Data *data = [Data new];
+         [data mergeFromDictionary:jsonObject useKeyMapping:NO error:&error];
+         
+         if (data.success) {
+            completion(apiResponse, data, nil);
+         } else {
             completion(apiResponse, nil, nil);
-        }
+         }
          
-        [[LoadingManager sharedInstance] hideLoading];
+         switch (type) {
+            case REQUEST_EXEC_IN_FOREGROUND:
+                 [[LoadingManager sharedInstance] hideLoading];
+            break;
+                 
+            default: break;
+         }
          
-    } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
+     } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
         if(errorJsonObject && errorJsonObject.allKeys.count) {
             completion(apiResponse, nil, [RIError getPerfectErrorMessages:errorJsonObject]);
         } else if(errorObject) {

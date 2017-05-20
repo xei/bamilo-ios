@@ -2,7 +2,7 @@
 //  CartTableViewCell.m
 //  Bamilo
 //
-//  Created by Ali saiedifar on 2/4/17.
+//  Created by Ali Saeedifar on 2/4/17.
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
@@ -46,8 +46,8 @@
     NSString *realPrice = cartItem.priceFormatted;
     NSString *specialPrice = cartItem.specialPriceFormatted;
     self.priceLabel.text = specialPrice ?: realPrice;
-    self.discountValue.attributedText = [(specialPrice ? realPrice : nil) struckThroughText];
     
+    self.discountValue.attributedText = (NSAttributedString *)[(specialPrice ? realPrice : nil) struckThroughText];
     
     if (cartItem.variation && [cartItem.variationName isEqualToString:@"size"]) {
         self.sizeLabel.text = [[NSString stringWithFormat:@"اندازه:‌%@", cartItem.variation] numbersToPersian];

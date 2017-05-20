@@ -30,12 +30,18 @@
 }
 
 #pragma mark - Overrides
++ (NSString *)nibName {
+    return @"PlainTableViewHeaderCell";
+}
+
 + (CGFloat)cellHeight {
     return 40.0f;
 }
 
-+ (NSString *)nibName {
-    return @"PlainTableViewHeaderCell";
+- (void)prepareForReuse {
+    [super prepareForReuse];
+    self.titleLabel.text = nil;
+    self.titleLabel.attributedText = nil;
 }
 
 @end

@@ -57,10 +57,10 @@
     }
 }
 
--(void)setFilterOption:(RIFilterOption *)filterOption {
+-(void)setFilterOption:(SearchFilterItemOption*)filterOption {
     
-    self.ratingLine.ratingAverage = filterOption.average;
-    self.ratingLine.ratingSum = filterOption.totalProducts;
+    self.ratingLine.ratingAverage = @(filterOption.average);
+    self.ratingLine.ratingSum = @(filterOption.productsCount);
     self.ratingLine.imageRatingSize = kImageRatingSizeSmall;
     self.ratingLine.bottomSeparatorVisibility = YES;
     

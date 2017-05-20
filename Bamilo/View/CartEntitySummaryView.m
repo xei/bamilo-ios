@@ -2,12 +2,12 @@
 //  CartEntitySummaryView.m
 //  Bamilo
 //
-//  Created by Ali saiedifar on 2/15/17.
+//  Created by Ali Saeedifar on 2/15/17.
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
 #import "CartEntitySummaryView.h"
-#define cGRAY_COLOR [UIColor withRepeatingRGBA:217 alpha:1.0f]
+
 
 @interface CartEntitySummaryView()
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -20,7 +20,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    self.backgroundColor = cGRAY_COLOR;
+    self.backgroundColor = [Theme color:kColorGray];
 }
 
 - (void)setCartEntity:(CartEntity *)cartEntity {

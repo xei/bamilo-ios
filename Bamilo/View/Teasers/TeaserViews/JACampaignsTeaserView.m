@@ -100,7 +100,7 @@
     [self.clockLabel removeFromSuperview];
     self.clockLabel = [UILabel new];
     if (VALID_NOTEMPTY(mainCampaign.endingDate, NSDate)) {
-        self.clockLabel.font = JADisplay1Font;
+        self.clockLabel.font = [UIFont fontWithName:kFontRegularName size:15];//JADisplay1Font;
     } else {
         self.clockLabel.font = JADisplay2Font;
     }
@@ -158,7 +158,7 @@
                                    self.bounds.origin.y,
                                    halfWidth,
                                    mainAreaHeight)];
-    [imageView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
     [mainClickableView addSubview:imageView];
     
     
@@ -237,7 +237,7 @@
     [self.clockLabel removeFromSuperview];
     self.clockLabel = [UILabel new];
     if (VALID_NOTEMPTY(mainCampaign.endingDate, NSDate)) {
-        self.clockLabel.font = JADisplay1Font;
+        self.clockLabel.font = [UIFont fontWithName:kFontRegularName size:15]; //JADisplay1Font;
     } else {
         self.clockLabel.font = JADisplay2Font;
     }
@@ -296,7 +296,7 @@
     CGFloat imageViewHeight = 103.0f; //value by design
     NSString* imageUrl = mainCampaign.imagePortraitUrl;
     UIImageView* imageView = [UIImageView new];
-    [imageView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
     [mainClickableView addSubview:imageView];
     
     CGFloat totalOcuppiedWidth = imageViewWidth + clockViewWidth;
@@ -371,7 +371,7 @@
         NSInteger minutes = remainingSeconds / 60;
         remainingSeconds = remainingSeconds % 60; //keep the remainder
         
-        NSString* timeString = [NSString stringWithFormat:@"%02ld:%02ld:%02ld",(long)hours,(long)minutes,(long)remainingSeconds];
+        NSString* timeString = [[NSString stringWithFormat:@"%02ld:%02ld:%02ld",(long)hours,(long)minutes,(long)remainingSeconds] numbersToPersian];
         
 //        if (days > 0) {
 //            timeString = [NSString stringWithFormat:@"%02ld:%@",(long)days,timeString];

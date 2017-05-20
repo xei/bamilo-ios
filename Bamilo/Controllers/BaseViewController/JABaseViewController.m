@@ -17,9 +17,9 @@
 #import "JACenterNavigationController.h"
 #import "ViewControllerManager.h"
 #import "NotificationBarView.h"
+#import "EmarsysPredictManager.h"
 
 #define kSearchViewBarHeight 44.0f
-#define cORAGNE_COLOR [UIColor withRGBA:255 green:153 blue:0 alpha:1.0f]
 
 
 @interface JABaseViewController () {
@@ -126,18 +126,14 @@
     self.loadingView.alpha = 0.0f;
     self.loadingView.userInteractionEnabled = YES;
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                          action:@selector(cancelLoading)];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancelLoading)];
     [self.loadingView addGestureRecognizer:tap];
     
     UIImage *image = [UIImage imageNamed:@"loadingAnimationFrame1"];
     
     int lastFrame = 8;
   
-    self.loadingAnimation = [[UIImageView alloc] initWithFrame:CGRectMake(0,
-                                                                          0,
-                                                                          image.size.width,
-                                                                          image.size.height)];
+    self.loadingAnimation = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, image.size.width, image.size.height)];
     self.loadingAnimation.animationDuration = 1.0f;
     NSMutableArray *animationFrames = [NSMutableArray new];
     for (int i = 1; i <= lastFrame; i++) {
@@ -149,6 +145,20 @@
     self.loadingAnimation.center = self.loadingView.center;
     
     self.loadingView.alpha = 0.0f;
+    
+    //self.accengageAlias = [self getDataTrackerAlias];
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    //[Accengage trackScreenDisplay:[self getPerformanceTrackerScreenName] ?: @""];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    //[Accengage trackScreenDismiss:[self getPerformanceTrackerScreenName] ?: @""];
+    
+    [super viewDidDisappear:animated];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
@@ -241,8 +251,6 @@
     [self reloadNavBar];
     [self reloadTabBar];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOnMenuSwipePanelNotification object:nil];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sideMenuIsOpening) name:kOpenMenuNotification object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showSearchView) name:kDidPressSearchButtonNotification object:nil];
@@ -252,6 +260,16 @@
     
     if (self.searchBarIsVisible) {
         [self showSearchBar];
+    }
+    
+    if ([self conformsToProtocol:@protocol(EmarsysPredictProtocolBase)]) {
+        if ([self respondsToSelector:@selector(isPreventSendTransactionInViewWillAppear)]) {
+            if (![((id<EmarsysPredictProtocolBase>)self) isPreventSendTransactionInViewWillAppear]) {
+                [EmarsysPredictManager sendTransactionsOf:self];
+            }
+        } else {
+            [EmarsysPredictManager sendTransactionsOf:self];
+        }
     }
 }
 
@@ -309,7 +327,7 @@
     self.searchBar.placeholder = STRING_SEARCH_PLACEHOLDER;
     self.searchBar.showsCancelButton = NO;
     
-    [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTintColor: cORAGNE_COLOR];
+    [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTintColor: [Theme color:kColorOrange]];
     
     UITextField *textFieldSearch = [self.searchBar valueForKey:@"_searchField"];
     textFieldSearch.font = [UIFont fontWithName:kFontRegularName size:textFieldSearch.font.pointSize];
@@ -705,6 +723,18 @@
     self.orientation = [[UIApplication sharedApplication] statusBarOrientation];
 }
 
+
+//TEMP FUNCTION
+-(NSArray *) extractSuccessMessages:(DataMessageList *)dataMessages {
+    NSMutableArray *messages = [NSMutableArray array];
+    
+    for(DataMessage *msgObject in dataMessages.success) {
+        [messages addObject:msgObject.message];
+    }
+    
+    return messages;
+}
+
 //##################################################################################################
 #pragma mark - PerformanceTrackerProtocol
 -(void) recordStartLoadTime {
@@ -727,6 +757,11 @@
 }
 
 -(NSString *)getPerformanceTrackerLabel {
+    return nil;
+}
+
+#pragma mark - DataTrackerProtocol
+-(NSString *)getDataTrackerAlias {
     return nil;
 }
 

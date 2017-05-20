@@ -9,10 +9,11 @@
 #import "JABaseViewController.h"
 #import "JACatalogTopView.h"
 #import "RICategory.h"
-#import "JAPDVViewController.h"
 #import "JAUndefinedSearchView.h"
 #import "JASortingView.h"
 #import "JAFiltersViewController.h"
+#import "EmarsysPredictProtocol.h"
+#import "ProductDataManager.h"
 
 @interface JACatalogViewController : JABaseViewController
 <
@@ -21,12 +22,14 @@
     UICollectionViewDataSource,
     UICollectionViewDelegate,
     JAFiltersViewControllerDelegate,
-    JAUndefinedSearchViewDelegate
+    JAUndefinedSearchViewDelegate,
+    DataServiceProtocol,
+    EmarsysWebExtendProtocol
 >
 
 @property (nonatomic, strong)RICategory* category;
 @property (nonatomic, strong)NSString* categoryUrlKey;
-@property (nonatomic, strong)NSString* categoryId;
+//@property (nonatomic, strong)NSString* categoryId;
 @property (nonatomic, strong)NSString* categoryName;
 @property (nonatomic, strong)NSString* searchString;
 @property (nonatomic, strong)NSString* filterPush;
@@ -34,5 +37,6 @@
 @property (assign, nonatomic)BOOL forceShowBackButton;
 
 @property (nonatomic, strong) NSString* teaserTrackingInfo;
+@property (copy, nonatomic) NSString *action;
 
 @end

@@ -10,7 +10,6 @@
 #import "RIImage.h"
 #import "RIProductSimple.h"
 #import "RIVariation.h"
-#import "RIFilter.h"
 #import "RICategory.h"
 #import "RISeller.h"
 #import "RIBanner.h"
@@ -20,8 +19,7 @@
 
 @implementation RIBundle
 
-+ (RIBundle *)parseRIBundle:(NSDictionary *)bundleJSON country:(RICountryConfiguration*)country
-{
++ (RIBundle *)parseRIBundle:(NSDictionary *)bundleJSON country:(RICountryConfiguration*)country {
     RIBundle *newBundle = [[RIBundle alloc] init];
     
     NSDictionary *dataDic = [bundleJSON objectForKey:@"bundle_entity"];
@@ -135,8 +133,7 @@
 + (NSString *)getCompleteProductWithTargetString:(NSString*)targetString
                                withRichParameter:(NSDictionary*)parameter
                                     successBlock:(void (^)(id product))successBlock
-                                 andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
-{
+                                 andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock {
     NSString *richParam = [NSMutableString new];
     if (VALID_NOTEMPTY(parameter, NSDictionary) && [parameter objectForKey:@"rich_parameter"]) {
         richParam = [RITarget getURLStringforTargetString:[parameter objectForKey:@"rich_parameter"]];
@@ -246,10 +243,8 @@
                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error, RIUndefinedSearchTerm *undefSearchTerm))failureBlock
 {
     NSString* fullUrl = @"";
-    NSString *filtersString = [RIFilter urlWithFiltersArray:filters];
+    NSString *filtersString = [BaseSearchFilterItem urlWithFiltersArray:filters];
     
-    
-    //sometimes the url of the product already has ? in it. yeah...
 
     NSString *sortingString = [RICatalogSorting urlComponentForSortingMethod:sortingMethod];
     if (sortingString.length) {
@@ -261,6 +256,11 @@
     } else {
         fullUrl = [NSString stringWithFormat:@"%@/page/%ld/maxitems/%ld%@", url, (long)page, (long)maxItems, sortingString];
     }
+    
+    if (filterPush.length) {
+        fullUrl = [NSString stringWithFormat:@"%@/%@", fullUrl, filterPush];
+    }
+    
     return [RIProduct getProductsWithFullUrl:fullUrl successBlock:successBlock andFailureBlock:failureBlock];
 }
 
@@ -464,43 +464,43 @@
         }
         
         if ([dataDic objectForKey:@"max_price"]) {
-            newProduct.maxPrice = [NSNumber numberWithFloat:[[dataDic objectForKey:@"max_price"] floatValue]];
+            newProduct.maxPrice = [NSNumber numberWithLongLong:[[dataDic objectForKey:@"max_price"] longLongValue]];
             newProduct.maxPriceFormatted = [RICountryConfiguration formatPrice:newProduct.maxPrice country:country];
         }
         
         if ([dataDic objectForKey:@"max_price_converted"]) {
-            newProduct.maxPriceEuroConverted = [NSNumber numberWithFloat:[[dataDic objectForKey:@"max_price_converted"] floatValue]];
+            newProduct.maxPriceEuroConverted = [NSNumber numberWithLongLong:[[dataDic objectForKey:@"max_price_converted"] longLongValue]];
         }
         
         if ([dataDic objectForKey:@"price"]) {
-            newProduct.price = [NSNumber numberWithFloat:[[dataDic objectForKey:@"price"] floatValue]];
+            newProduct.price = [NSNumber numberWithLong:[[dataDic objectForKey:@"price"] longValue]];
             newProduct.priceFormatted = [RICountryConfiguration formatPrice:newProduct.price country:country];
         }
         
         if ([dataDic objectForKey:@"price_converted"]) {
-            newProduct.priceEuroConverted = [NSNumber numberWithFloat:[[dataDic objectForKey:@"price_converted"] floatValue]];
+            newProduct.priceEuroConverted = [NSNumber numberWithLongLong:[[dataDic objectForKey:@"price_converted"] longLongValue]];
         }
         
         if ([dataDic objectForKey:@"price_range"]) {
-            newProduct.priceRange = [dataDic objectForKey:@"price_range"];
+            newProduct.priceRange = [[dataDic objectForKey:@"price_range"] numbersToPersian];
         }
         
         if ([dataDic objectForKey:@"special_price"]) {
-            newProduct.specialPrice = [NSNumber numberWithFloat:[[dataDic objectForKey:@"special_price"] floatValue]];
+            newProduct.specialPrice = [NSNumber numberWithLongLong:[[dataDic objectForKey:@"special_price"] longLongValue]];
             newProduct.specialPriceFormatted = [RICountryConfiguration formatPrice:newProduct.specialPrice country:country];
         }
         
         if ([dataDic objectForKey:@"special_price_converted"]) {
-            newProduct.specialPriceEuroConverted = [NSNumber numberWithFloat:[[dataDic objectForKey:@"special_price_converted"] floatValue]];
+            newProduct.specialPriceEuroConverted = [NSNumber numberWithLongLong:[[dataDic objectForKey:@"special_price_converted"] longLongValue]];
         }
         
         if ([dataDic objectForKey:@"max_special_price"]) {
-            newProduct.maxSpecialPrice = [NSNumber numberWithFloat:[[dataDic objectForKey:@"max_special_price"] floatValue]];
+            newProduct.maxSpecialPrice = [NSNumber numberWithLongLong:[[dataDic objectForKey:@"max_special_price"] longLongValue]];
             newProduct.maxSpecialPriceFormatted = [RICountryConfiguration formatPrice:newProduct.maxSpecialPrice country:country];
         }
         
         if ([dataDic objectForKey:@"max_special_price_converted"]) {
-            newProduct.maxSpecialPriceEuroConverted = [NSNumber numberWithFloat:[[dataDic objectForKey:@"max_special_price_converted"] floatValue]];
+            newProduct.maxSpecialPriceEuroConverted = [NSNumber numberWithLongLong:[[dataDic objectForKey:@"max_special_price_converted"] longLongValue]];
         }
         
         if ([dataDic objectForKey:@"max_saving_percentage"]) {
@@ -663,11 +663,11 @@
             NSDictionary* offersJSON = [dataDic objectForKey:@"offers"];
             if (offersJSON) {
                 if ([offersJSON objectForKey:@"min_price"]) {
-                    newProduct.offersMinPrice = [NSNumber numberWithFloat:[[offersJSON objectForKey:@"min_price"] floatValue]];
+                    newProduct.offersMinPrice = [NSNumber numberWithLongLong:[[offersJSON objectForKey:@"min_price"] longLongValue]];
                     newProduct.offersMinPriceFormatted = [RICountryConfiguration formatPrice:newProduct.offersMinPrice country:country];
                 }
                 if ([offersJSON objectForKey:@"min_price_converted"]) {
-                    newProduct.offersMinPriceEuroConverted = [NSNumber numberWithFloat:[[offersJSON objectForKey:@"min_price_converted"] floatValue]];
+                    newProduct.offersMinPriceEuroConverted = [NSNumber numberWithLongLong:[[offersJSON objectForKey:@"min_price_converted"] longLongValue]];
                 }
                 if ([offersJSON objectForKey:@"total"]) {
                     newProduct.offersTotal = [NSNumber numberWithInteger:[[offersJSON objectForKey:@"total"] integerValue]];
@@ -732,6 +732,18 @@
                 if ([brandEntityDictionary objectForKey:@"url_key"]) {
                     newProduct.brandUrlKey = [brandEntityDictionary objectForKey:@"url_key"];
                 }
+            }
+        }
+        
+        if ([dataDic objectForKey:@"category_entity"]) {
+            NSDictionary *categoryEntityDictionary = [dataDic objectForKey:@"category_entity"];
+            
+            if ([categoryEntityDictionary objectForKey:@"name"] && newProduct.categoryName == nil) {
+                newProduct.categoryName = [categoryEntityDictionary objectForKey:@"name"];
+            }
+            
+            if ([categoryEntityDictionary objectForKey:@"url_key"] && newProduct.categoryUrlKey == nil) {
+                newProduct.categoryUrlKey = [categoryEntityDictionary objectForKey:@"url_key"];
             }
         }
     }
@@ -832,9 +844,7 @@
 
 + (void)addToFavorites:(RIProduct*)product
           successBlock:(void (^)(RIApiResponse apiResponse, NSArray *success))successBlock
-       andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
-{
-    
+       andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock {
     NSString *finalUrl = [NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_ADD_TO_WISHLIST];
     NSDictionary *parameters = [NSDictionary dictionaryWithObject:product.sku forKey:@"sku"];
     [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:finalUrl]
@@ -995,12 +1005,12 @@
         else
         {
             if (VALID_NOTEMPTY([brandsDictionary objectForKey:recentlyViewedProductSku.brand], NSNumber)) {
-                NSNumber *sum = [NSNumber numberWithLong:[[brandsDictionary objectForKey:recentlyViewedProductSku.brand] longValue] + [recentlyViewedProductSku.numberOfTimesSeen longValue]];
+                NSNumber *sum = [NSNumber numberWithLongLong:[[brandsDictionary objectForKey:recentlyViewedProductSku.brand] longLongValue] + [recentlyViewedProductSku.numberOfTimesSeen longValue]];
                 [brandsDictionary setObject:sum forKey:recentlyViewedProductSku.brand];
             }else{
                 [brandsDictionary setObject:recentlyViewedProductSku.numberOfTimesSeen forKey:recentlyViewedProductSku.brand];
             }
-            if([brandsDictionary[topBrand] longValue] < [brandsDictionary[recentlyViewedProductSku.brand] longValue])
+            if([brandsDictionary[topBrand] longLongValue] < [brandsDictionary[recentlyViewedProductSku.brand] longLongValue])
             {
                 topBrand = recentlyViewedProductSku.brand;
             }
