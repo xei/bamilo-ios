@@ -15,7 +15,7 @@ import SwiftyJSON
     var sku: String!
     var name: String?
     var brand: String?
-    var maxSavingPrecentage: String?
+    var maxSavingPrecentage: Int?
     var price: UInt64?
     var specialPrice: UInt64?
     var categoryIds: [String]?
@@ -26,12 +26,6 @@ import SwiftyJSON
     var ratingsCount: Int?
     var reviewsCount: Int?
     
-    // --- Additional properties ---
-    var formatedPrice: String? {
-        get {
-            return self.price?.description
-        }
-    }
     
     required init?(map: Map) {
         if map.JSON["sku"] == nil {

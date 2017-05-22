@@ -19,13 +19,13 @@ import UIKit
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var noResultViewContainer: UIView!
     
-    
     var searchTarget: RITarget!
     var sortingMethod: Catalog.CatalogSortType = .populaity
     var pushFilterQueryString : String?
-    var activeFilters : [CatalogFilterItem]?
-    var activePriceFilter: CatalogPriceFilterItem?
+    private var activeFilters : [CatalogFilterItem]?
+    private var activePriceFilter: CatalogPriceFilterItem?
     private var listViewType: CatalogListViewType = .grid
+    private var listFullyLoaded = false
     
     //TODO: this property is only used for passing enum (swift type) property from objective c
     // so we have to remove it after migration those who wanna pass this property
@@ -42,6 +42,8 @@ import UIKit
     private var pageNumber: Int = 1
     private var catalogData: Catalog?
     private var noResultViewController: CatalogNoResultViewController?
+    private let paginationCellCountThreshold = 6
+    private var loadingDataInProgress = false
     
     
     override func viewDidLoad() {
@@ -57,7 +59,20 @@ import UIKit
         self.collectionView.register(UINib(nibName: CatalogGridCollectionViewCell.nibName, bundle: nil), forCellWithReuseIdentifier: CatalogGridCollectionViewCell.nibName)
         self.collectionView.setCollectionViewLayout(self.getProperCollectionViewFlowLayout(), animated: true)
         self.loadData()
+        
+        let refreshControlView = UIRefreshControl()
+        self.collectionView!.alwaysBounceVertical = true
+        refreshControlView.tintColor = UIColor.red
+        refreshControlView.addTarget(self, action: #selector(dosomething), for: .valueChanged)
+
+        if #available(iOS 10.0, *) {
+            self.collectionView.refreshControl = refreshControlView
+        } else {
+            self.collectionView.addSubview(refreshControlView)
+        }
     }
+    
+    func dosomething() {}
     
     override func updateNavBar() {
         super.updateNavBar()
@@ -71,25 +86,29 @@ import UIKit
     
     //MARK - DataServiceProtocol
     func bind(_ data: Any!, forRequestId rid: Int32) {
-        if rid == 0, let catalogData = data as? Catalog {
-            self.catalogData = catalogData
-            self.processCatalogData()
-            
-        } else if rid == 1, let catalogData = data as? Catalog, catalogData.products.count > 0 {
-            self.catalogData?.products.append(contentsOf: catalogData.products)
+        if let receivedCatalogData = data as? Catalog {
+            if rid == 0 {
+                self.catalogData = receivedCatalogData
+                self.processCatalogData()
+            } else if rid == 1, receivedCatalogData.products.count > 0 {
+                self.catalogData?.products.append(contentsOf: receivedCatalogData.products)
+            }
+            if let totalProducts = receivedCatalogData.totalProductsCount, totalProducts <= receivedCatalogData.products.count {
+                self.listFullyLoaded = true
+            }
+            self.collectionView.reloadData()
         }
-        self.collectionView.reloadData()
     }
     
     //MARK - JAFiltersViewControllerDelegate
     func updatedFilters(_ updatedFiltersArray: [Any]!) {
         self.catalogData?.filters = updatedFiltersArray as? [BaseCatalogFilterItem]
-//        self.findActiveFilters()
-//        self.setActiveFiltersToHeader()
+        self.findActiveFilters()
+        self.pushToSearchByFilterQuery(query: self.getQueryOfActiveFilters())
     }
     
     func subCategorySelected(_ subCategoryUrlKey: String!) {
-        
+        self.pushToSearchByCateory(catalogUrl: subCategoryUrlKey)
     }
     
     
@@ -100,7 +119,9 @@ import UIKit
     }
     
     func filterButtonTapped() {
-        self.performSegue(withIdentifier: "showFilterView", sender: nil)
+        if let _ = self.catalogData?.filters {
+            self.performSegue(withIdentifier: "showFilterView", sender: nil)
+        }
     }
     
     func changeListViewType(type: CatalogListViewType) {
@@ -140,6 +161,21 @@ import UIKit
         }
     }
     
+    private func getQueryOfActiveFilters() -> String {
+        var filterQuery = ""
+        let filtersToString = self.activeFilters?.map({ (filterItem) -> String in
+            return filterItem.id + "/" + (filterItem.options?.filter { $0.selected }.map { $0.value! }.joined(separator: filterItem.filterSeparator!))!
+        }).joined(separator: "/")
+        if let activeFilterQuery = filtersToString {
+            filterQuery = activeFilterQuery + "/"
+        }
+        
+        if let priceFilter = self.activePriceFilter, priceFilter.lowerValue != priceFilter.minPrice || priceFilter.upperValue != priceFilter.maxPrice {
+            filterQuery += String(priceFilter.lowerValue) + "/"
+        }
+        return filterQuery
+    }
+    
     private func processCatalogData() {
         self.updateNavBar()
         
@@ -155,7 +191,7 @@ import UIKit
     }
     
     private func showNoResultView() {
-        if let filters = self.catalogData?.filters, filters.count > 0 {
+        if let _ = self.pushFilterQueryString {
             
         } else {
             if self.searchTarget.type.contains("catalog_") {
@@ -182,6 +218,11 @@ import UIKit
     }
     
     private func setActiveFiltersToHeader() {
+        
+        if let avaiebleFilters = self.catalogData?.filters, avaiebleFilters.count > 0 {
+            self.catalogHeader.enableFilterButton(enable: true)
+        }
+        
         var activeFilterString = ""
         if let filters = self.activeFilters, filters.count > 0 {
              activeFilterString = filters.map { (filter) -> String in
@@ -202,6 +243,21 @@ import UIKit
         self.catalogData = nil
     }
     
+    private func pushToSearchByFilterQuery(query: String) {
+        let newCatalogViewController = ViewControllerManager.sharedInstance().loadViewController("catalogViewController") as! CatalogViewController
+        newCatalogViewController.searchTarget = self.searchTarget
+        newCatalogViewController.sortingMethod = self.sortingMethod
+        newCatalogViewController.pushFilterQueryString = query
+        self.navigationController?.pushViewController(newCatalogViewController, animated: true)
+    }
+    
+    private func pushToSearchByCateory(catalogUrl: String) {
+        let newCatalogViewController = ViewControllerManager.sharedInstance().loadViewController("catalogViewController") as! CatalogViewController
+        //TODO: if we redefined the Target in swift with better structure these type of code must be changed e.g. not proper initlizer for RITarget
+        newCatalogViewController.searchTarget = RITarget.parseTarget("catalog_category::\(catalogUrl)")
+        self.navigationController?.pushViewController(newCatalogViewController, animated: true)
+    }
+    
     private func loadData() {
         self.pageNumber = 1
         CatalogDataManager.sharedInstance().getCatalog(target: self, searchTarget: searchTarget, filtersQueryString: pushFilterQueryString, sortingMethod: sortingMethod) { (data, errorMessages) in
@@ -214,16 +270,27 @@ import UIKit
     }
     
     private func loadMore() {
+        if self.loadingDataInProgress || self.listFullyLoaded { return }
         self.pageNumber += 1
+        self.loadingDataInProgress = true
         CatalogDataManager.sharedInstance().getCatalog(target: self, searchTarget: searchTarget, filtersQueryString: pushFilterQueryString, sortingMethod: sortingMethod, page: self.pageNumber) { (data, errorMessages) in
+            self.loadingDataInProgress = false
             self.bind(data, forRequestId: 1)
         }
+    }
+    
+    private func showProductPage(product: Product) {
+        //TODO: transition from this controller to pdvViewController must not handle by notification!
+        NotificationCenter.default.post(name: NSNotification.Name("NOTIFICATION_DID_SELECT_TEASER_WITH_PDV_URL"), object: nil, userInfo: ["sku": product.sku])
     }
     
     
     //MARK - UICollectionViewDataSource & UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
+        if let product = self.catalogData?.products[indexPath.row] {
+            self.showProductPage(product: product)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -237,7 +304,14 @@ import UIKit
         }
     
         cell.updateWithProduct(product: self.catalogData!.products[indexPath.row])
+        cell.cellIndex = indexPath.row
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if let catalog = self.catalogData, catalog.products.count - indexPath.row < paginationCellCountThreshold {
+            self.loadMore()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

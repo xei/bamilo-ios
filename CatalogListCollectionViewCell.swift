@@ -11,7 +11,7 @@ import UIKit
 class CatalogListCollectionViewCell: BaseCatallogCollectionViewCell {
     
     override func setupView() {
-        
+        super.setupView()
     }
 
 }

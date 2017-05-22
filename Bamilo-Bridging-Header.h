@@ -14,21 +14,23 @@
 #import "JANavigationBarLayout.h"
 #import "IconButton.h"
 #import "RILocalizationWrapper.h"
+#import "ThreadManager.h"
+#import "ThemeManager.h"
 
 #import <Masonry/Masonry.h>
 #import <RGB/RRGB.h>
 
 #import "DataManager.h"
 #import "OrderList.h"
-#import "RIFilter.h"
-#import "SearchPriceFilter.h"
 #import "PerformanceTrackerProtocol.h"
 #import "DataTrackerProtocol.h"
-#import "ThemeManager.h"
+
 
 #import "BaseControlView.h"
 #import "BaseViewControl.h"
+#import "ViewControllerManager.h"
 
 #import "BaseViewController.h"
 #import "CatalogNoResultViewController.h"
 #import "JAFiltersViewController.h"
+

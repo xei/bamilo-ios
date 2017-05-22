@@ -11,7 +11,7 @@ import UIKit
 class CatalogHeaderControl: BaseViewControl {
     
     private var headerView: CatalogHeaderView?
-    var delegate: CatalogHeaderViewDelegate? {
+    weak var delegate: CatalogHeaderViewDelegate? {
         didSet {
             self.headerView?.delegate = self.delegate
         }
@@ -39,5 +39,8 @@ class CatalogHeaderControl: BaseViewControl {
     func setFilterButtonActive() {
         self.headerView?.setFilterButtonActive()
     }
-
+    
+    func enableFilterButton(enable: Bool) {
+        self.headerView?.enableFilterButton(enable: enable)
+    }
 }

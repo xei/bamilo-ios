@@ -30,6 +30,7 @@ target 'Bamilo' do
   pod 'Pushwoosh'
   pod 'ObjectMapper', '~> 2.2'
   pod 'SwiftyJSON'
+  pod 'Kingfisher', '~> 3.0'
 
   target 'BamiloUITests' do
     inherit! :search_paths

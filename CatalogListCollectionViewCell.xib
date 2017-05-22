@@ -54,19 +54,19 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(۱۲)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mnS-Gf-1QS">
-                        <rect key="frame" x="152" y="66.5" width="15" height="17.5"/>
+                        <rect key="frame" x="162" y="65.5" width="15" height="17.5"/>
                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="9"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۱۰۰،۰۰۰ ریال" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eXO-Ic-9E1">
-                        <rect key="frame" x="103" y="98.5" width="52.5" height="19.5"/>
+                        <rect key="frame" x="103" y="98" width="52.5" height="19.5"/>
                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="10"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="٪۱۰۰" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nDO-Lm-UYK">
-                        <rect key="frame" x="68" y="98" width="25" height="19.5"/>
+                        <rect key="frame" x="68" y="98.5" width="25" height="19.5"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="25" id="MAj-g6-K5y"/>
                         </constraints>
@@ -80,12 +80,11 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ISl-GX-JWz">
-                        <rect key="frame" x="169" y="67" width="80" height="16"/>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ISl-GX-JWz" customClass="RateStarControl" customModule="Bamilo" customModuleProvider="target">
+                        <rect key="frame" x="179" y="67" width="70" height="14"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="80" id="mTl-co-ogi"/>
-                            <constraint firstAttribute="height" constant="16" id="wgP-JU-QKt"/>
+                            <constraint firstAttribute="width" constant="70" id="mTl-co-ogi"/>
+                            <constraint firstAttribute="width" secondItem="ISl-GX-JWz" secondAttribute="height" multiplier="5:1" id="ygy-Vl-p9O"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -104,12 +103,12 @@
                 <constraint firstItem="3Bo-fY-FHu" firstAttribute="top" secondItem="9Ep-gK-TRa" secondAttribute="top" id="RtT-Ld-qQ0"/>
                 <constraint firstItem="3Bo-fY-FHu" firstAttribute="left" secondItem="gTV-IL-0wX" secondAttribute="left" constant="10" id="aiW-8j-EAo"/>
                 <constraint firstItem="eXO-Ic-9E1" firstAttribute="centerY" secondItem="B7x-en-kdn" secondAttribute="centerY" id="elJ-fq-Wl8"/>
-                <constraint firstItem="B7x-en-kdn" firstAttribute="trailing" secondItem="ISl-GX-JWz" secondAttribute="trailing" id="hCE-pP-XBR"/>
+                <constraint firstItem="B7x-en-kdn" firstAttribute="right" secondItem="ISl-GX-JWz" secondAttribute="right" id="hCE-pP-XBR"/>
                 <constraint firstItem="nDO-Lm-UYK" firstAttribute="centerY" secondItem="B7x-en-kdn" secondAttribute="centerY" id="iJ2-eZ-kGT"/>
                 <constraint firstItem="9Ep-gK-TRa" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="j6e-nz-CWq"/>
                 <constraint firstItem="ISl-GX-JWz" firstAttribute="left" secondItem="mnS-Gf-1QS" secondAttribute="right" constant="2" id="tRX-C4-WTT"/>
                 <constraint firstAttribute="bottom" secondItem="9Ep-gK-TRa" secondAttribute="bottom" constant="8" id="u84-bo-DFh"/>
-                <constraint firstItem="OBz-df-mWr" firstAttribute="trailing" secondItem="Rbc-vu-7eS" secondAttribute="trailing" id="vAP-EN-wOg"/>
+                <constraint firstItem="OBz-df-mWr" firstAttribute="right" secondItem="Rbc-vu-7eS" secondAttribute="right" id="vAP-EN-wOg"/>
                 <constraint firstItem="eXO-Ic-9E1" firstAttribute="left" secondItem="nDO-Lm-UYK" secondAttribute="right" constant="10" id="xig-Fb-ZHJ"/>
                 <constraint firstItem="9Ep-gK-TRa" firstAttribute="left" secondItem="ISl-GX-JWz" secondAttribute="right" constant="5" id="y5f-wc-CDp"/>
             </constraints>
@@ -134,6 +133,8 @@
                 <outlet property="discountedPriceLabel" destination="B7x-en-kdn" id="sZn-W5-yU5"/>
                 <outlet property="priceLabel" destination="eXO-Ic-9E1" id="BWU-M8-XPi"/>
                 <outlet property="productImage" destination="9Ep-gK-TRa" id="6je-kc-F9y"/>
+                <outlet property="rateCountLabel" destination="mnS-Gf-1QS" id="MXP-n9-RCU"/>
+                <outlet property="rateView" destination="ISl-GX-JWz" id="cPQ-bd-sYp"/>
                 <outlet property="titleLabel" destination="Rbc-vu-7eS" id="3Ic-9r-xKX"/>
             </connections>
             <point key="canvasLocation" x="-242" y="-135"/>

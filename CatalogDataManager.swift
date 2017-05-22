@@ -34,7 +34,7 @@ class CatalogDataManager: DataManager {
         path += "maxItems/36/page/\(page)"
         
         if let urlPath = path.addingPercentEncoding( withAllowedCharacters: .urlQueryAllowed) {
-            self.requestManager.asyncGET(target, path: urlPath, params: nil, type: .foreground) { (statusCode, data, errorMessages) in
+            self.requestManager.asyncGET(target, path: urlPath, params: nil, type: .background) { (statusCode, data, errorMessages) in
                 self.processResponse(statusCode, of: Catalog.self, for: data, errorMessages: errorMessages, completion: completion)
             }
         }

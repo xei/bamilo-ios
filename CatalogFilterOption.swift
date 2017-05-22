@@ -17,10 +17,10 @@ import ObjectMapper
     var productsCount: Int = 0
     
     //for color filter options
-    var colorHexValue:String?
+    var colorHexValue: String?
     
     //current state of filter option
-    var selected: Bool = false
+    var selected = false
     
     required init?(map: Map) {
         
@@ -31,7 +31,7 @@ import ObjectMapper
         value <- map["val"]
         colorHexValue <- map["hex_value"]
         average <- map["average"]
+        selected <- map["selected"]
         productsCount <- map["total_products"]
-        selected <- map["seleceted"]
     }
 }

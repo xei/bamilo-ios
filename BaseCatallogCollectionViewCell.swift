@@ -7,6 +7,11 @@
 //
 
 import UIKit
+import Kingfisher
+
+@objc protocol BaseCatallogCollectionViewCellDelegate {
+    @objc optional func addToWishList(product: Product, cell: BaseCatallogCollectionViewCell)
+}
 
 class BaseCatallogCollectionViewCell: UICollectionViewCell {
     
@@ -16,6 +21,27 @@ class BaseCatallogCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var discountedPriceLabel: UILabel?
     @IBOutlet weak var priceLabel: UILabel?
     @IBOutlet weak var dicountPrecentageLabel: UILabel?
+    @IBOutlet weak var rateView: RateStarControl?
+    @IBOutlet weak var rateCountLabel: UILabel?
+    
+    
+    weak var delegate: BaseCatallogCollectionViewCellDelegate?
+    private var product: Product?
+    
+    
+    var cellIndex: Int = 0 {
+        didSet {
+            productImage?.backgroundColor = self.placeholderColors[cellIndex % 6]
+        }
+    }
+    private let placeholderColors:[UIColor] = [ //Sequence of these colors are important
+        UIColor.init(red: 249/255, green: 239/255, blue: 234/255, alpha: 1),
+        UIColor.init(red: 236/255, green: 236/255, blue: 236/255, alpha: 1),
+        UIColor.init(red: 226/255, green: 232/255, blue: 239/255, alpha: 1),
+        UIColor.init(red: 233/255, green: 247/255, blue: 247/255, alpha: 1),
+        UIColor.init(red: 245/255, green: 241/255, blue: 247/255, alpha: 1),
+        UIColor.init(red: 236/255, green: 235/255, blue: 222/255, alpha: 1)
+    ]
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,25 +49,41 @@ class BaseCatallogCollectionViewCell: UICollectionViewCell {
     }
     
     func setupView() {
-        return
+        self.rateView?.enableButtons(enable: false)
     }
     
     @IBAction func addToWishListButtonTapped(_ sender: Any) {
-        
+        if let avaiableProduct = self.product {
+            self.delegate?.addToWishList?(product: avaiableProduct, cell: self)
+        }
     }
     
     func updateWithProduct(product: Product) {
         titleLabel?.text = product.name
         brandLabel?.text = product.brand
+        productImage?.kf.indicatorType = .activity
+        productImage?.kf.setImage(with: product.imageUrl, options: [.transition(.fade(0.15))])
         if let specialPrice = product.specialPrice, let price = product.price, let precentage = product.maxSavingPrecentage {
             discountedPriceLabel?.text = "\(specialPrice)".formatPriceWithCurrency()
             priceLabel?.attributedText = "\(price)".formatPriceWithCurrency().strucThroughPriceFormat()
-            dicountPrecentageLabel?.text = precentage
+            dicountPrecentageLabel?.text = "%\(precentage)".convertTo(language: .arabic)
         } else if let price = product.price {
             discountedPriceLabel?.text = "\(price)".formatPriceWithCurrency()
             priceLabel?.text = nil
             dicountPrecentageLabel?.text = nil
         }
+        if let rateCount = product.ratingsCount, let reviewAverage = product.reviewsAverage {
+            self.rateCountLabel?.isHidden = false
+            self.rateView?.isHidden = false
+            self.rateCountLabel?.text = "(\(rateCount))".convertTo(language: .arabic)
+            self.rateView?.update(withModel: reviewAverage)
+        } else {
+            self.rateCountLabel?.isHidden = true
+            self.rateView?.isHidden = true
+        }
+        
+        
+        self.product = product
     }
     
     static var nibName: String {

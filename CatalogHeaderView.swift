@@ -14,7 +14,7 @@ enum CatalogListViewType: String {
     case list
 }
 
-protocol CatalogHeaderViewDelegate {
+protocol CatalogHeaderViewDelegate:class {
     func sortTypeSelected(type: Catalog.CatalogSortType)
     func filterButtonTapped()
     func changeListViewType(type: CatalogListViewType)
@@ -34,6 +34,7 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
     @IBOutlet private weak var changeListViewIconButton: IconButton!
     @IBOutlet private weak var sortIconImage: UIImageView!
     @IBOutlet private weak var filterIconImage: UIImageView!
+    @IBOutlet private weak var filterButton: UIButton!
     
     private var sortingOptionInex: Int = 0
     private var pickerViewTextFiled: UITextField?
@@ -50,7 +51,7 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
     private let sortingOptions: [Catalog.CatalogSortType] = [ .populaity, .bestRating, .brand, .name, .newest, .priceUp, .priceDown ]
     private let listViewTypeSequence: [CatalogListViewType] = [.grid, .list, .card]
     
-    var delegate: CatalogHeaderViewDelegate?
+    weak var delegate: CatalogHeaderViewDelegate?
     var sortType: Catalog.CatalogSortType = .populaity {
         didSet {
             self.setSortingButtonActive()
@@ -134,6 +135,7 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
         self.verticalSeperator.backgroundColor = Theme.color(kColorExtraExtraLightGray)
         self.horizontalSeperator.backgroundColor = Theme.color(kColorExtraExtraLightGray)
         self.secondVerticalSeperator.backgroundColor = Theme.color(kColorExtraExtraLightGray)
+        self.filterButton.isEnabled = false
         
         self.filterTitleLabel.font = Theme.font(kFontVariationRegular, size: 11)
         self.filterTitleLabel.textColor = Theme.color(kColorDarkGray)
@@ -167,6 +169,10 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
     
     func setFilterDescription(description: String) {
         self.filterDescLabel.text = description
+    }
+    
+    func enableFilterButton(enable:Bool) {
+        self.filterButton.isEnabled = enable
     }
     
     func setFilterButtonActive () {

@@ -189,6 +189,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="changeListViewIconButton" destination="FOV-rh-6Uz" id="qCw-Kf-JHz"/>
+                <outlet property="filterButton" destination="N8y-rD-otp" id="zNZ-30-a5b"/>
                 <outlet property="filterDescLabel" destination="pqw-fb-HOz" id="9ox-vS-uIo"/>
                 <outlet property="filterIconImage" destination="Lqm-hf-FSx" id="bSf-GI-Rs9"/>
                 <outlet property="filterTitleLabel" destination="33J-bp-zUN" id="ldH-Ew-Qet"/>

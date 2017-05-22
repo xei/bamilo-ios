@@ -80,6 +80,10 @@
 		617F77AF1EB85BEC000A2A6C /* AddressDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617F77AE1EB85BEC000A2A6C /* AddressDataManager.swift */; };
 		618204991E6D465500322937 /* SearchCategoryFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 618204981E6D465500322937 /* SearchCategoryFilter.m */; };
 		618204A01E6DABFA00322937 /* SubCatFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6182049F1E6DABFA00322937 /* SubCatFilterViewController.m */; };
+		61832FD41ED2C039006F01FE /* RateStarsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61832FD31ED2C039006F01FE /* RateStarsView.swift */; };
+		61832FD81ED2C05B006F01FE /* RateStarsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61832FD71ED2C05B006F01FE /* RateStarsView.xib */; };
+		61832FDA1ED2D145006F01FE /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61832FD91ED2D145006F01FE /* Double.swift */; };
+		61832FDE1ED2DC0D006F01FE /* RateStarControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61832FDD1ED2DC0D006F01FE /* RateStarControl.swift */; };
 		61840B631EA397FF006739EB /* EmarsysRecommendationGridWidgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61840B621EA397FF006739EB /* EmarsysRecommendationGridWidgetView.m */; };
 		61840B651EA3981E006739EB /* EmarsysRecommendationGridWidgetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61840B641EA3981E006739EB /* EmarsysRecommendationGridWidgetView.xib */; };
 		61840B681EA39941006739EB /* EmarsysRecommendationGridWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 61840B671EA39941006739EB /* EmarsysRecommendationGridWidget.m */; };
@@ -985,6 +989,10 @@
 		618204981E6D465500322937 /* SearchCategoryFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchCategoryFilter.m; sourceTree = "<group>"; };
 		6182049E1E6DABFA00322937 /* SubCatFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubCatFilterViewController.h; sourceTree = "<group>"; };
 		6182049F1E6DABFA00322937 /* SubCatFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubCatFilterViewController.m; sourceTree = "<group>"; };
+		61832FD31ED2C039006F01FE /* RateStarsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateStarsView.swift; sourceTree = "<group>"; };
+		61832FD71ED2C05B006F01FE /* RateStarsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RateStarsView.xib; sourceTree = "<group>"; };
+		61832FD91ED2D145006F01FE /* Double.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
+		61832FDD1ED2DC0D006F01FE /* RateStarControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateStarControl.swift; sourceTree = "<group>"; };
 		61840B611EA397FF006739EB /* EmarsysRecommendationGridWidgetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysRecommendationGridWidgetView.h; sourceTree = "<group>"; };
 		61840B621EA397FF006739EB /* EmarsysRecommendationGridWidgetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysRecommendationGridWidgetView.m; sourceTree = "<group>"; };
 		61840B641EA3981E006739EB /* EmarsysRecommendationGridWidgetView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmarsysRecommendationGridWidgetView.xib; sourceTree = "<group>"; };
@@ -2628,6 +2636,7 @@
 		610C689E1EC7423B008FB66C /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				61832FD21ED2BFFD006F01FE /* RateStars */,
 				610C689F1EC74244008FB66C /* CatalogHeader */,
 			);
 			name = Controls;
@@ -3105,6 +3114,32 @@
 			name = SubCatFilterViewController;
 			sourceTree = "<group>";
 		};
+		61832FD21ED2BFFD006F01FE /* RateStars */ = {
+			isa = PBXGroup;
+			children = (
+				61832FD61ED2C048006F01FE /* Control */,
+				61832FD51ED2C041006F01FE /* View */,
+			);
+			name = RateStars;
+			sourceTree = "<group>";
+		};
+		61832FD51ED2C041006F01FE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				61832FD31ED2C039006F01FE /* RateStarsView.swift */,
+				61832FD71ED2C05B006F01FE /* RateStarsView.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		61832FD61ED2C048006F01FE /* Control */ = {
+			isa = PBXGroup;
+			children = (
+				61832FDD1ED2DC0D006F01FE /* RateStarControl.swift */,
+			);
+			name = Control;
+			sourceTree = "<group>";
+		};
 		61840B5E1EA39773006739EB /* EmarsysRecommendationGridWidget */ = {
 			isa = PBXGroup;
 			children = (
@@ -3418,6 +3453,7 @@
 			isa = PBXGroup;
 			children = (
 				61C8604B1ECB3C0F00F2C571 /* String.swift */,
+				61832FD91ED2D145006F01FE /* Double.swift */,
 			);
 			name = extensions;
 			sourceTree = "<group>";
@@ -7133,6 +7169,7 @@
 				CE9AE0EF1AB6D78200D56481 /* JARatingsViewMedium.xib in Resources */,
 				875744241EA60E48001B518A /* Tragedy-76.png in Resources */,
 				875744441EA60E71001B518A /* Winter-72@2x.png in Resources */,
+				61832FD81ED2C05B006F01FE /* RateStarsView.xib in Resources */,
 				8757443D1EA60E71001B518A /* Winter-Small.png in Resources */,
 				1CCD52A11E2BA42F008BAEE4 /* PopularTeaserTableViewCell.xib in Resources */,
 				61E099781E3E1A02004ED14E /* VersionTableViewCell.xib in Resources */,
@@ -7344,6 +7381,7 @@
 				87EA03331E6DA27D00B1E062 /* ProgressItemViewModel.m in Sources */,
 				87D3DD1C1E8A323000C960FF /* BaseDataManager.m in Sources */,
 				619D0B171EA34B8600FDB255 /* FeatureBoxCollectionViewWidget.m in Sources */,
+				61832FD41ED2C039006F01FE /* RateStarsView.swift in Sources */,
 				61840B631EA397FF006739EB /* EmarsysRecommendationGridWidgetView.m in Sources */,
 				613A7E9A1EBF6ABC00E1AB3F /* CatalogFilterItem.swift in Sources */,
 				87EA032D1E6D993C00B1E062 /* ProgressItemView.m in Sources */,
@@ -7470,6 +7508,7 @@
 				619351B01ECACA1F00330E5C /* CatalogListCollectionViewCell.swift in Sources */,
 				9A3D21881CA4057A00FE41B6 /* JAChooseCountryTableViewCell.m in Sources */,
 				CE9ADF581AB6D78200D56481 /* JAEditAddressViewController.m in Sources */,
+				61832FDE1ED2DC0D006F01FE /* RateStarControl.swift in Sources */,
 				8702FBCC1E991C9A001D1AA9 /* LogoutEvent.m in Sources */,
 				8702FBD01E99FDD2001D1AA9 /* UserDefaultsManager.m in Sources */,
 				877762C91E9BB37C00B73140 /* ResponseData.m in Sources */,
@@ -7498,6 +7537,7 @@
 				CE9ADF631AB6D78200D56481 /* JASignInViewController.m in Sources */,
 				FFF900801C6A5D2000DDF538 /* JATitleComponent.m in Sources */,
 				CE9ADF681AB6D78200D56481 /* JAShippingCell.m in Sources */,
+				61832FDA1ED2D145006F01FE /* Double.swift in Sources */,
 				CE9ADF691AB6D78200D56481 /* JAMyOrdersViewController.m in Sources */,
 				871BA8591E867FE0007680C5 /* SearchEvent.m in Sources */,
 				CE9ADF6B1AB6D78200D56481 /* JAFiltersView.m in Sources */,

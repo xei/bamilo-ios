@@ -21,7 +21,7 @@ extension String {
     
     func priceFormat() -> String {
         
-        var cammaIndex:Int = self.characters.count % 3 == 0 ? self.characters.count % 3 : 3
+        var cammaIndex:Int = self.characters.count % 3 != 0 ? self.characters.count % 3 : 3
         var result = self
         while (cammaIndex < result.characters.count) {
             result.insert(",", at: result.index(result.startIndex, offsetBy: result.characters.count - cammaIndex))
@@ -37,7 +37,7 @@ extension String {
     
     func strucThroughPriceFormat() -> NSAttributedString {
         let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: self)
-        attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: 2, range: NSMakeRange(0, attributeString.length))
+        attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: 1, range: NSMakeRange(0, attributeString.length))
         return attributeString
     }
 }
