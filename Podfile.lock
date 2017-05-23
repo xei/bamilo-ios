@@ -36,8 +36,10 @@ PODS:
     - GoogleAnalytics (= 3.14.0)
   - JBWhatsAppActivity (1.0)
   - JSONModel (1.7.0)
+  - Kingfisher (3.7.2)
   - Masonry (1.0.2)
   - NewRelicAgent (5.10.1)
+  - ObjectMapper (2.2.6)
   - Pushwoosh (5.1.6)
   - RAlertView (0.1.1):
     - Masonry
@@ -46,6 +48,7 @@ PODS:
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
+  - SwiftyJSON (3.1.4)
   - TTRangeSlider (1.0.5)
 
 DEPENDENCIES:
@@ -60,10 +63,13 @@ DEPENDENCIES:
   - GoogleTagManager (= 3.15.0)
   - JBWhatsAppActivity (~> 1.0)
   - JSONModel
+  - Kingfisher (~> 3.0)
   - NewRelicAgent (~> 5.10.0)
+  - ObjectMapper (~> 2.2)
   - Pushwoosh
   - RAlertView
   - SDWebImage (~> 3.8)
+  - SwiftyJSON
   - TTRangeSlider (~> 1.0.5)
 
 SPEC CHECKSUMS:
@@ -79,14 +85,17 @@ SPEC CHECKSUMS:
   GoogleTagManager: 39e4af1e9250e7817d328f690768e26afe560da0
   JBWhatsAppActivity: e1b4dcf1b967aaf714cc784b42fb49a110972e4a
   JSONModel: 840bc0fcffb24b8454d2c026bf26fea454b8e98d
+  Kingfisher: 5ddc4ac715615cc200de9fdc54ab1511061ea650
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   NewRelicAgent: d16c572a3355d3ff9a359a6677e946c7a75a8f76
+  ObjectMapper: 042708195cc46c20871cbcbec0453826398273fd
   Pushwoosh: 52a2237084d3c9c198638847bf5d7309510086ea
   RAlertView: b9996eb63ceb64c7d1879a1d1846af5e386a1808
   RGB: 21cf4b60ef3501c6b7cbb268a30045905dd90995
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
+  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   TTRangeSlider: 2f2ce4a33b32bb323c6575b9f5161c4664459c58
 
-PODFILE CHECKSUM: 5bc601816229ba315e6ce187fd03a63f610e49bb
+PODFILE CHECKSUM: bc65916889b4a4f3aee03ab26fad457b92bcfc09
 
 COCOAPODS: 1.2.1

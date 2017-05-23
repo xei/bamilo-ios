@@ -8,7 +8,7 @@
 
 #import "OrderDetailViewController.h"
 #import "PlainTableViewHeaderCell.h"
-#import "DataManager.h"
+#import "Bamilo-Swift.h"
 #import "OrderProductListTableViewCell.h"
 #import "OrderDetailInformationTableViewCell.h"
 #import "NSDate+Extensions.h"
@@ -53,8 +53,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-
-    [[DataManager sharedInstance] getOrder:self forOrderId:self.order.orderId completion:^(id data, NSError *error) {
+    [[OrderDataManager sharedInstance] getOrderWithTarget:self orderId:self.order.orderId completion:^(id data, NSError *error) {
         if (error == nil) {
             [self bind:data forRequestId:0];
             NSArray *progressViewContent = [self getProgressViewControlContentForOrder:self.order];

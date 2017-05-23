@@ -65,7 +65,6 @@
         formatter.locale = [NSLocale localeWithLocaleIdentifier:identifier];
         result = [result stringByReplacingOccurrencesOfString:occurance withString:[formatter stringFromNumber:@(i)]];
     }
-
     return result;
 }
 

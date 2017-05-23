@@ -289,7 +289,7 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
                 
                 _multistepEntity = (MultistepEntity *)data;
                 
-                [[CheckoutDataManager sharedInstance] getMultistepConfirmation:self type:REQUEST_EXEC_IN_FOREGROUND completion:^(id data, NSError *error) {
+                [[CheckoutDataManager sharedInstance] getMultistepConfirmation:self type:RequestExecutionTypeForeground completion:^(id data, NSError *error) {
                     if(error == nil) {
                         [self bind:data forRequestId:2];
                         _selectedPaymentMethodIndex = selectedPaymentMethodIndex;

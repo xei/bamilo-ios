@@ -25,7 +25,6 @@
     if(self.carouselView) {
         [self addSubview:self.carouselView];
         [self.carouselView setFrame:self.bounds];
-//        [self anchorMatch:self.carouselView];
     }
 }
 

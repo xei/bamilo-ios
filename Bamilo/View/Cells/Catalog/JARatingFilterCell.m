@@ -7,6 +7,7 @@
 //
 
 #import "JARatingFilterCell.h"
+#import "Bamilo-Swift.h"
 
 @implementation JARatingFilterCell
 
@@ -57,7 +58,7 @@
     }
 }
 
--(void)setFilterOption:(SearchFilterItemOption*)filterOption {
+-(void)setFilterOption:(CatalogFilterOption *)filterOption {
     
     self.ratingLine.ratingAverage = @(filterOption.average);
     self.ratingLine.ratingSum = @(filterOption.productsCount);

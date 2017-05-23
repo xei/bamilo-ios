@@ -34,7 +34,7 @@
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
     [self.carouselWidget hide];
-    [self.carouselWidget setBackgroundColor:JAHomePageBackgroundGrey];
+    [self.carouselWidget setBackgroundColor:[Theme color:kColorVeryLightGray]];
     self.carouselWidget.delegate = self;
     [self setupView];
     [self trackPurchase];

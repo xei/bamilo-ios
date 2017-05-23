@@ -13,6 +13,7 @@
 #import "ViewControllerManager.h"
 #import "AlertManager.h"
 #import "AddressEditViewController.h"
+#import "Bamilo-Swift.h"
 
 @interface AddressViewController() <AddressTableViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *addressListContainerView;
@@ -61,7 +62,7 @@
     
     [[AlertManager sharedInstance] confirmAlert:@"تغییر آدرس" text:@"از تغییر آدرس پیش فرض خود اطمینان دارید؟" confirm:@"بله" cancel:@"خیر" completion:^(BOOL OK) {
         if(OK) {
-            [[AddressDataManager sharedInstance] setDefaultAddress:self address:address isBilling:NO completion:^(id data, NSError *error) {
+            [[AddressDataManager sharedInstance] setDefaultAddressWithTarget:self address:address isBilling:NO completion:^(id _Nullable data , NSError * _Nullable error) {
                 if(error == nil) {
                     [self bind:data forRequestId:1];
                     [_addressTableViewController scrollToTop];
@@ -84,7 +85,7 @@
     
     [[AlertManager sharedInstance] confirmAlert:@"حذف آدرس" text:@"از حذف آدرس خود اطمینان دارید؟" confirm:@"بله" cancel:@"خیر" completion:^(BOOL OK) {
         if(OK) {
-            [[AddressDataManager sharedInstance] deleteAddress:self address:_currentAddress completion:^(id data, NSError *error) {
+            [[AddressDataManager sharedInstance] deleteAddressWithTarget:self address:_currentAddress completion:^(id _Nullable data, NSError * _Nullable error) {
                 if(error == nil) {
                     [self fetchAddressList];
                 }
@@ -110,11 +111,12 @@
 
 #pragma mark - Helpers
 -(void) fetchAddressList {
-    [[AddressDataManager sharedInstance] getUserAddressList:self completion:^(id data, NSError *error) {
+    [[AddressDataManager sharedInstance] getUserAddressListWithTarget:self completion:^(id _Nullable data, NSError * _Nullable error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
             [self publishScreenLoadTime];
         }
+
     }];
 }
 

@@ -12,9 +12,11 @@
 #import "JATextFilterCell.h"
 #import "JAClickableView.h"
 #import "JAProductInfoRatingLine.h"
+#import "Bamilo-Swift.h"
 
 @interface JAGenericFiltersView()
 
+@property (nonatomic, strong)CatalogFilterItem *filter;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong)NSMutableArray* selectedIndexes;
 @property (nonatomic, assign)BOOL isLandscape;
@@ -23,8 +25,11 @@
 
 @implementation JAGenericFiltersView
 
+- (CatalogFilterItem *)getFilter {
+    return self.filter;
+}
 
-- (void)initializeWithFilter:(SearchFilterItem*)filter isLandscape:(BOOL)isLandscape; {
+- (void)initializeWithFilter:(CatalogFilterItem *)filter isLandscape:(BOOL)isLandscape; {
     self.filter = filter;
     self.isLandscape = isLandscape;
     
@@ -41,7 +46,7 @@
     //without saving this selection states into the real filter options, which only happens once the DONE
     // button is pressed.
     self.selectedIndexes = [NSMutableArray new];
-    for (SearchFilterItemOption *filterOption in self.filter.options) {
+    for (CatalogFilterOption *filterOption in self.filter.options) {
         [self.selectedIndexes addObject:[NSNumber numberWithBool:filterOption.selected]];
     }
 }
@@ -51,7 +56,7 @@
     for (int i = 0; i < self.selectedIndexes.count; i++) {
         
         NSNumber *selectionNumber = [self.selectedIndexes objectAtIndex:i];
-        SearchFilterItemOption* filterOption = [self.filter.options objectAtIndex:i];
+        CatalogFilterOption* filterOption = [self.filter.options objectAtIndex:i];
         filterOption.selected = [selectionNumber boolValue];
     }
     
@@ -78,7 +83,7 @@
     NSNumber* selected = [self.selectedIndexes objectAtIndex:indexPath.row];
     
     UITableViewCell* cell ;
-    if ([@"color_family" isEqualToString:self.filter.uid]) {
+    if ([@"color_family" isEqualToString:self.filter.id]) {
         cellIdentifier = @"JAColorFilterCell";
         
         cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
@@ -95,7 +100,7 @@
         [(JAColorFilterCell*)cell clickableView].tag = indexPath.row;
         [[(JAColorFilterCell*)cell clickableView] addTarget:self action:@selector(cellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
 
-    } else if ([@"rating" isEqualToString:self.filter.uid]) {
+    } else if ([@"rating" isEqualToString:self.filter.id]) {
         cellIdentifier = @"JARatingFilterCell";
         cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
         
@@ -104,7 +109,7 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         
-        SearchFilterItemOption* filterOption = [self.filter.options objectAtIndex:indexPath.row];
+        CatalogFilterOption* filterOption = [self.filter.options objectAtIndex:indexPath.row];
         [(JARatingFilterCell*)cell setFilterOption:filterOption];
         [(JARatingFilterCell*)cell setupIsLandscape:self.isLandscape];
     } else {

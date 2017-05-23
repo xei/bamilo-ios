@@ -48,7 +48,7 @@ const CGFloat marginBottom = 6.0f;
     
     self.accessibilityLabel = @"teaserPageScrollView";
     
-    self.backgroundColor = JAHomePageBackgroundGrey;
+    self.backgroundColor = [Theme color:kColorVeryLightGray];
     
     self.mainTeaserLastIndex = self.mainTeaserView.currentPage;
     

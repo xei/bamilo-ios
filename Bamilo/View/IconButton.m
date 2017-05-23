@@ -38,12 +38,18 @@
     
     labelFrame.size = [self.titleLabel.text sizeForFont:self.titleLabel.font withMaxWidth:self.size.width];
     
-    imageFrame.size.height = self.size.height * 0.5;
+    imageFrame.size.height = self.size.height * (self.isAspectFillIcon ? 0.9 : 0.5);
     imageFrame.size.width = imageFrame.size.height;
-    labelFrame.origin.x = (self.size.width / 2)  - ((imageFrame.size.width + labelFrame.size.width + spaceBtwIconAndLabel) / 2);
-    imageFrame.origin.x = labelFrame.origin.x + labelFrame.size.width + spaceBtwIconAndLabel;
-    imageFrame.origin.y = (self.size.height / 2) - (imageFrame.size.height / 2);
-    labelFrame.origin.y = (self.size.height / 2) - (labelFrame.size.height / 2);
+    
+    if (self.titleLabel.text.length != 0) {
+        labelFrame.origin.x = (self.size.width / 2)  - ((imageFrame.size.width + labelFrame.size.width + spaceBtwIconAndLabel) / 2);
+        imageFrame.origin.x = labelFrame.origin.x + labelFrame.size.width + spaceBtwIconAndLabel;
+        imageFrame.origin.y = (self.size.height / 2) - (imageFrame.size.height / 2);
+        labelFrame.origin.y = (self.size.height / 2) - (labelFrame.size.height / 2);
+    } else {
+        imageFrame.origin.x = (self.size.width / 2) - (imageFrame.size.width / 2 );
+        imageFrame.origin.y = (self.size.height / 2) - (imageFrame.size.height / 2 );
+    }
     
     self.imageView.contentMode = UIViewContentModeScaleAspectFit;
     self.imageView.frame = imageFrame;
@@ -54,6 +60,10 @@
     [super touchesBegan:touches withEvent:event];
     [self.imageView.layer addAnimation: self.bounceAnim forKey:nil];
     [self.nextResponder touchesBegan:touches withEvent:event];
+}
+
+- (BOOL)canBecomeFirstResponder {
+    return YES;
 }
 
 @end

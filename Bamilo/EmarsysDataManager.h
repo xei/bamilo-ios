@@ -6,7 +6,7 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import "BaseDataManager.h"
+#import "DataManager.h"
 #import "AppEvent.h"
 
 //### EmarsysContactIdentifier
@@ -31,16 +31,13 @@
 
 
 //### EmarsysDataManager
-@interface EmarsysDataManager : BaseDataManager
+@interface EmarsysDataManager : DataManager
 
++ (instancetype)sharedInstance;
 -(void) anonymousLogin:(EmarsysPushIdentifier *)contact completion:(DataCompletion)completion;
-
 -(void) login:(EmarsysPushIdentifier *)contact contactFieldId:(NSString *)contactFieldId contactFieldValue:(NSString *)contactFieldValue completion:(DataCompletion)completion;
-
 -(void) openMessageEvent:(EmarsysContactIdentifier *)contact sid:(NSString *)sid completion:(DataCompletion)completion;
-
 -(void) customEvent:(EmarsysContactIdentifier *)contact event:(NSString *)event attributes:(NSDictionary *)attributes completion:(DataCompletion)completion;
-
 -(void) logout:(EmarsysPushIdentifier *)contact completion:(DataCompletion)completion;
   
 @end

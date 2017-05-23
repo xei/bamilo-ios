@@ -76,7 +76,7 @@
     [super viewWillAppear:animated];
     
     if(self.isCompleteFetch == NO) {
-        [[CheckoutDataManager sharedInstance] getMultistepConfirmation:self type:REQUEST_EXEC_AS_CONTAINER completion:^(id data, NSError *error) {
+        [[CheckoutDataManager sharedInstance] getMultistepConfirmation:self type:RequestExecutionTypeContainer completion:^(id data, NSError *error) {
             if(error == nil) {
                 [self bind:data forRequestId:0];
                 

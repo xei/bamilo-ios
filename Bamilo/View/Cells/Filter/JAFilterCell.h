@@ -8,15 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "JAClickableView.h"
-#import "SearchFilterItem.h"
-#import "SearchPriceFilter.h"
 
 
 @interface JAFilterCell : UITableViewCell
 
 @property (nonatomic, strong) JAClickableView* clickView;
 
-- (void)setupWithFilter:(BaseSearchFilterItem*)filter
+- (void)setupWithFilter:(id)filter
          cellIsSelected:(BOOL)cellIsSelected
                   width:(CGFloat)width
                  margin:(CGFloat)margin;

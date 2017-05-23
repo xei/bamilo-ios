@@ -105,13 +105,13 @@ static BOOL isListenersReady;
     }
     
     NSDictionary *sortingMap = @{
-                                 @"scbr" : @(0), //best rating
-                                 @"scp"  : @(1), //popularity
-                                 @"scin" : @(2), //new items
-                                 @"scpu" : @(3), //price up
-                                 @"scpd" : @(4), //price down
-                                 @"scn"  : @(5), //name
-                                 @"scb"  : @(6)  //brand
+                                 @"scbr" : @"BEST_RATING",  //best rating
+                                 @"scp"  : @"POPULARITY",   //popularity
+                                 @"scin" : @"NEW_IN",       //new items
+                                 @"scpu" : @"PRICE_UP",     //price up
+                                 @"scpd" : @"PRICE_DOWN",   //price down
+                                 @"scn"  : @"NAME",         //name
+                                 @"scb"  : @"BRAND"         //brand
                                  };
     
     if ([sortingMap objectForKey:targetKey] && argument.length) {
@@ -136,13 +136,13 @@ static BOOL isListenersReady;
     }
     
     NSDictionary *sortingMap = @{
-                                 @"cbr" : @(0), //best rating
-                                 @"cp"  : @(1), //popularity
-                                 @"cin" : @(2), //new items
-                                 @"cpu" : @(3), //price up
-                                 @"cpd" : @(4), //price down
-                                 @"cn"  : @(5), //name
-                                 @"cb"  : @(6)  //brand
+                                 @"cbr" : @"BEST_RATING",  //best rating
+                                 @"cp"  : @"POPULARITY",   //popularity
+                                 @"cin" : @"NEW_IN",       //new items
+                                 @"cpu" : @"PRICE_UP",     //price up
+                                 @"cpd" : @"PRICE_DOWN",   //price down
+                                 @"cn"  : @"NAME",         //name
+                                 @"cb"  : @"BRAND"         //brand
                                  };
     
     if ([targetKey isEqualToString:@"c"] && argument.length) {

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Bamilosans Reg.ttf">
+            <string>Bamilo-Sans</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="CatalogCardCollectionViewCell" customModule="Bamilo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="348" height="310"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="348" height="310"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eof-2J-ngd">
+                        <rect key="frame" x="86" y="10" width="176" height="220"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="eof-2J-ngd" secondAttribute="height" multiplier="1:1.25" id="jrh-6Y-we9"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="کیف پول چرم گاو میش قهوه ای نوبوک زیپدار" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n3a-c3-4e1">
+                        <rect key="frame" x="10" y="235" width="328" height="19"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="19" id="k4d-6O-3hE"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="چرم مشهد" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rgw-q7-MKo">
+                        <rect key="frame" x="290.5" y="256" width="47.5" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="hlY-gw-8E3"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="10"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۲۷۰،۰۰۰ ریال" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Kb-O5-coX">
+                        <rect key="frame" x="270" y="275" width="68.5" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="h5o-i0-4iw"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۱۰،۰۰۰ ریال" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ccm-PA-g8T">
+                        <rect key="frame" x="296" y="290" width="43" height="13"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="13" id="evX-ID-adr"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="9"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="٪۱۰۰" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r2F-AZ-0gw">
+                        <rect key="frame" x="266" y="288" width="25" height="17.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="25" id="pAB-KJ-GX4"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="9"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Q5-K5-pJ4" customClass="IconButton">
+                        <rect key="frame" x="10" y="10" width="20" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="25" id="2BB-ez-Iqp"/>
+                            <constraint firstAttribute="width" constant="20" id="NW1-87-zIh"/>
+                        </constraints>
+                        <state key="normal" image="FavButton"/>
+                        <connections>
+                            <action selector="addToWishListButtonTapped:" destination="gTV-IL-0wX" eventType="touchUpInside" id="7Oi-mU-k6f"/>
+                        </connections>
+                    </button>
+                </subviews>
+            </view>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="ccm-PA-g8T" firstAttribute="right" secondItem="1Kb-O5-coX" secondAttribute="right" id="DGz-qT-W3f"/>
+                <constraint firstItem="1Kb-O5-coX" firstAttribute="right" secondItem="rgw-q7-MKo" secondAttribute="right" id="GNi-pk-71N"/>
+                <constraint firstItem="eof-2J-ngd" firstAttribute="width" secondItem="gTV-IL-0wX" secondAttribute="width" multiplier="176:348" id="Ov5-3j-7rL"/>
+                <constraint firstItem="eof-2J-ngd" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="QrB-jU-MVP"/>
+                <constraint firstItem="n3a-c3-4e1" firstAttribute="left" secondItem="gTV-IL-0wX" secondAttribute="left" constant="10" id="RND-vj-NI7"/>
+                <constraint firstItem="rgw-q7-MKo" firstAttribute="right" secondItem="n3a-c3-4e1" secondAttribute="right" id="Wpj-Cm-VVa"/>
+                <constraint firstItem="eof-2J-ngd" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="flS-8X-XwC"/>
+                <constraint firstItem="ccm-PA-g8T" firstAttribute="left" secondItem="r2F-AZ-0gw" secondAttribute="right" constant="5" id="g3D-6P-qd5"/>
+                <constraint firstItem="r2F-AZ-0gw" firstAttribute="centerY" secondItem="ccm-PA-g8T" secondAttribute="centerY" id="k0G-Yt-7Po"/>
+                <constraint firstItem="ccm-PA-g8T" firstAttribute="top" secondItem="1Kb-O5-coX" secondAttribute="bottom" id="le6-gy-7XF"/>
+                <constraint firstItem="9Q5-K5-pJ4" firstAttribute="left" secondItem="gTV-IL-0wX" secondAttribute="left" constant="10" id="pIe-jq-PZR"/>
+                <constraint firstItem="1Kb-O5-coX" firstAttribute="top" secondItem="rgw-q7-MKo" secondAttribute="bottom" constant="4" id="q3s-MW-MZW"/>
+                <constraint firstItem="9Q5-K5-pJ4" firstAttribute="top" secondItem="eof-2J-ngd" secondAttribute="top" id="qA3-fK-Il4"/>
+                <constraint firstItem="n3a-c3-4e1" firstAttribute="top" secondItem="eof-2J-ngd" secondAttribute="bottom" constant="5" id="r8R-gS-ZzO"/>
+                <constraint firstItem="rgw-q7-MKo" firstAttribute="top" secondItem="n3a-c3-4e1" secondAttribute="bottom" constant="2" id="sHX-Nl-GhE"/>
+                <constraint firstAttribute="right" secondItem="n3a-c3-4e1" secondAttribute="right" constant="10" id="ydj-bU-Dv7"/>
+            </constraints>
+            <size key="customSize" width="416" height="399"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                    <color key="value" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                </userDefinedRuntimeAttribute>
+                <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
+                    <size key="value" width="0.0" height="1"/>
+                </userDefinedRuntimeAttribute>
+                <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                    <real key="value" value="1"/>
+                </userDefinedRuntimeAttribute>
+                <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                    <real key="value" value="0.20000000000000001"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
+            <connections>
+                <outlet property="brandLabel" destination="rgw-q7-MKo" id="AGi-Xo-aNr"/>
+                <outlet property="dicountPrecentageLabel" destination="r2F-AZ-0gw" id="tGe-ac-Ge9"/>
+                <outlet property="discountedPriceLabel" destination="1Kb-O5-coX" id="8BA-vp-UOP"/>
+                <outlet property="priceLabel" destination="ccm-PA-g8T" id="ksx-bj-0bI"/>
+                <outlet property="productImage" destination="eof-2J-ngd" id="KtW-bt-d9m"/>
+                <outlet property="titleLabel" destination="n3a-c3-4e1" id="qR1-Y6-XEg"/>
+            </connections>
+            <point key="canvasLocation" x="-79" y="-46"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="FavButton" width="15" height="13"/>
+    </resources>
+</document>
