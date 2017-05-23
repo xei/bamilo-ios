@@ -257,6 +257,16 @@ import EmarsysPredictSDK
                 self.showNoResultView()
             }
         }
+        self.loadAvaiableSubCategories()
+    }
+    
+    func loadAvaiableSubCategories() {
+        //TODO: type of Target must be enum not string (the enum of RITarget can not be reusded in swift)
+        if self.searchTarget.type == "catalog_category" {
+            CatalogDataManager.sharedInstance().getSubCategoriesFilter(target: self, categoryUrlKey: self.searchTarget.node, completion: { (data, errorMessages) in
+                self.subCategoryFilterItem = data as? CatalogCategoryFilterItem
+            })
+        }
     }
     
     private func loadMore() {
