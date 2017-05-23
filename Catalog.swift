@@ -18,6 +18,15 @@ import SwiftyJSON
     var totalProductsCount: Int?
     var sortType: CatalogSortType?
     var priceFilterIndex: Int = 0
+    var breadcrumbs: [BreadcrumbsItem]?
+    
+    var breadcrumbsFullPath: String? {
+        get {
+            return self.breadcrumbs?.map({ (item) -> String in
+                return item.title!
+            }).joined(separator: " > ")
+        }
+    }
     
     enum CatalogSortType: String {
         case bestRating = "BEST_RATING"
@@ -38,6 +47,7 @@ import SwiftyJSON
         sortType <- (map["brand"], EnumTransform<CatalogSortType>())
         products <- map["results"]
         totalProductsCount <- map["total_products"]
+        breadcrumbs <- map["breadcrumb"]
         
         //Mapping filters
         let json = JSON(map.JSON)

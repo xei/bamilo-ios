@@ -87,6 +87,7 @@
 		61840B631EA397FF006739EB /* EmarsysRecommendationGridWidgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61840B621EA397FF006739EB /* EmarsysRecommendationGridWidgetView.m */; };
 		61840B651EA3981E006739EB /* EmarsysRecommendationGridWidgetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61840B641EA3981E006739EB /* EmarsysRecommendationGridWidgetView.xib */; };
 		61840B681EA39941006739EB /* EmarsysRecommendationGridWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 61840B671EA39941006739EB /* EmarsysRecommendationGridWidget.m */; };
+		6190E9E61ED4263600163F6D /* BreadcrumbsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6190E9E51ED4263600163F6D /* BreadcrumbsItem.swift */; };
 		619351A51ECAC9A900330E5C /* CatalogGridCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619351A31ECAC9A900330E5C /* CatalogGridCollectionViewCell.swift */; };
 		619351A61ECAC9A900330E5C /* CatalogGridCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 619351A41ECAC9A900330E5C /* CatalogGridCollectionViewCell.xib */; };
 		619351AB1ECAC9DD00330E5C /* CatalogCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619351A91ECAC9DD00330E5C /* CatalogCardCollectionViewCell.swift */; };
@@ -998,6 +999,7 @@
 		61840B641EA3981E006739EB /* EmarsysRecommendationGridWidgetView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmarsysRecommendationGridWidgetView.xib; sourceTree = "<group>"; };
 		61840B661EA39941006739EB /* EmarsysRecommendationGridWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysRecommendationGridWidget.h; sourceTree = "<group>"; };
 		61840B671EA39941006739EB /* EmarsysRecommendationGridWidget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysRecommendationGridWidget.m; sourceTree = "<group>"; };
+		6190E9E51ED4263600163F6D /* BreadcrumbsItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BreadcrumbsItem.swift; sourceTree = "<group>"; };
 		619351A31ECAC9A900330E5C /* CatalogGridCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogGridCollectionViewCell.swift; sourceTree = "<group>"; };
 		619351A41ECAC9A900330E5C /* CatalogGridCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CatalogGridCollectionViewCell.xib; sourceTree = "<group>"; };
 		619351A91ECAC9DD00330E5C /* CatalogCardCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogCardCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -2852,6 +2854,7 @@
 				613A7E8C1EBF069100E1AB3F /* Product.swift */,
 				613A7E8E1EBF0F6B00E1AB3F /* CategoryProduct.swift */,
 				613A7E901EBF2B0600E1AB3F /* Catalog.swift */,
+				6190E9E51ED4263600163F6D /* BreadcrumbsItem.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -7529,6 +7532,7 @@
 				879F88051E50B2940033FE87 /* AuthenticationBaseViewController.m in Sources */,
 				619351A51ECAC9A900330E5C /* CatalogGridCollectionViewCell.swift in Sources */,
 				8702FBC21E990C2D001D1AA9 /* OpenAppEvent.m in Sources */,
+				6190E9E61ED4263600163F6D /* BreadcrumbsItem.swift in Sources */,
 				CE9ADF621AB6D78200D56481 /* JASellerRatingsViewController.m in Sources */,
 				875081B31E532E400031ECBF /* AddressViewController.m in Sources */,
 				613A7E8D1EBF069100E1AB3F /* Product.swift in Sources */,

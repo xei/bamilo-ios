@@ -7,13 +7,15 @@
 //
 
 import UIKit
+import EmarsysPredictSDK
 
 @objc class CatalogViewController: BaseViewController,
                                     DataServiceProtocol,
                                     JAFiltersViewControllerDelegate,
                                     CatalogHeaderViewDelegate,
                                     UICollectionViewDataSource,
-                                    UICollectionViewDelegate {
+                                    UICollectionViewDelegate,
+                                    EmarsysWebExtendProtocol {
     
     @IBOutlet private weak var catalogHeader: CatalogHeaderControl!
     @IBOutlet private weak var collectionView: UICollectionView!
@@ -59,20 +61,7 @@ import UIKit
         self.collectionView.register(UINib(nibName: CatalogGridCollectionViewCell.nibName, bundle: nil), forCellWithReuseIdentifier: CatalogGridCollectionViewCell.nibName)
         self.collectionView.setCollectionViewLayout(self.getProperCollectionViewFlowLayout(), animated: true)
         self.loadData()
-        
-        let refreshControlView = UIRefreshControl()
-        self.collectionView!.alwaysBounceVertical = true
-        refreshControlView.tintColor = UIColor.red
-        refreshControlView.addTarget(self, action: #selector(dosomething), for: .valueChanged)
-
-        if #available(iOS 10.0, *) {
-            self.collectionView.refreshControl = refreshControlView
-        } else {
-            self.collectionView.addSubview(refreshControlView)
-        }
     }
-    
-    func dosomething() {}
     
     override func updateNavBar() {
         super.updateNavBar()
@@ -90,6 +79,7 @@ import UIKit
             if rid == 0 {
                 self.catalogData = receivedCatalogData
                 self.processCatalogData()
+                EmarsysPredictManager.sendTransactions(of: self)
             } else if rid == 1, receivedCatalogData.products.count > 0 {
                 self.catalogData?.products.append(contentsOf: receivedCatalogData.products)
             }
@@ -340,5 +330,21 @@ import UIKit
             }
             destinationViewCtrl?.delegate = self;
         }
+    }
+    
+    //MARK: - EmarsysWebExtendProtocol
+    func getDataCollection(_ transaction: EMTransaction!) -> EMTransaction! {
+        if self.searchTarget.type == "catalog_query" {
+            transaction.setSearchTerm(self.searchTarget.node)
+        }
+        if let breadcrumbsFullPath = self.catalogData?.breadcrumbsFullPath {
+            transaction.setCategory(breadcrumbsFullPath)
+        }
+        
+        return transaction
+    }
+    
+    func isPreventSendTransactionInViewWillAppear() -> Bool {
+        return true
     }
 }

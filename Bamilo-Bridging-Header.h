@@ -24,7 +24,8 @@
 #import "OrderList.h"
 #import "PerformanceTrackerProtocol.h"
 #import "DataTrackerProtocol.h"
-
+#import "EmarsysPredictProtocol.h"
+#import "EmarsysPredictManager.h"
 
 #import "BaseControlView.h"
 #import "BaseViewControl.h"
