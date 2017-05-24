@@ -18,15 +18,19 @@ import SwiftyJSON
                                     UICollectionViewDataSource,
                                     UICollectionViewDelegate,
                                     EmarsysWebExtendProtocol,
-                                    UICollectionViewDelegateFlowLayout {
+                                    UICollectionViewDelegateFlowLayout,
+                                    FilteredListNoResultViewControllerDelegate {
     
     @IBOutlet private weak var catalogHeader: CatalogHeaderControl!
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var noResultViewContainer: UIView!
+    @IBOutlet private weak var filteredNoResultContainer: UIView!
     
     var searchTarget: RITarget!
     var sortingMethod: Catalog.CatalogSortType = .populaity
     var pushFilterQueryString : String?
+    var startCatalogStackIndexInNavigationViewController: Int?
+    
     private var activeFilters : [CatalogFilterItem]?
     private var activePriceFilter: CatalogPriceFilterItem?
     private var listViewType: CatalogListViewType = .grid
@@ -99,12 +103,26 @@ import SwiftyJSON
         }
     }
     
+    //MARK: - FilteredListNoResultViewControllerDelegate
+    func editFilterByNoResultView() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     //MARK: - JAFiltersViewControllerDelegate
     func updatedFilters(_ updatedFiltersArray: [Any]!) {
         self.catalogData?.filters = updatedFiltersArray as? [BaseCatalogFilterItem]
         self.findActiveFilters()
-        self.pushToSearchByFilterQuery(query: self.getQueryOfActiveFilters())
+        let queryFilters = self.getQueryOfActiveFilters()
+        
+        if let startIndex = self.startCatalogStackIndexInNavigationViewController, queryFilters.characters.count == 0 {
+            if let arrayOfViewControllers = self.navigationController?.viewControllers {
+                self.navigationController?.popToViewController(arrayOfViewControllers[startIndex], animated: false)
+            }
+        } else if queryFilters != self.pushFilterQueryString {
+            self.pushToSearchByFilterQuery(query: queryFilters)
+        }
     }
+    
     
     func subCategorySelected(_ subCategoryUrlKey: String!) {
         self.pushToSearchByCateory(catalogUrl: subCategoryUrlKey)
@@ -165,7 +183,8 @@ import SwiftyJSON
         let filtersToString = self.activeFilters?.map({ (filterItem) -> String in
             return filterItem.id + "/" + (filterItem.options?.filter { $0.selected }.map { $0.value! }.joined(separator: filterItem.filterSeparator!))!
         }).joined(separator: "/")
-        if let activeFilterQuery = filtersToString {
+        
+        if let activeFilterQuery = filtersToString, activeFilterQuery.characters.count > 0 {
             filterQuery = activeFilterQuery + "/"
         }
         
@@ -191,7 +210,7 @@ import SwiftyJSON
     
     private func showNoResultView() {
         if let _ = self.pushFilterQueryString {
-            
+            self.filteredNoResultContainer.isHidden = false
         } else {
             if self.searchTarget.type.contains("catalog_") {
                 self.noResultViewController?.searchQuery = self.searchTarget.node
@@ -246,6 +265,7 @@ import SwiftyJSON
         let newCatalogViewController = ViewControllerManager.sharedInstance().loadViewController("catalogViewController") as! CatalogViewController
         newCatalogViewController.searchTarget = self.searchTarget
         newCatalogViewController.sortingMethod = self.sortingMethod
+        newCatalogViewController.startCatalogStackIndexInNavigationViewController = self.startCatalogStackIndexInNavigationViewController ?? self.navigationController!.viewControllers.count - 1
         newCatalogViewController.pushFilterQueryString = query
         self.navigationController?.pushViewController(newCatalogViewController, animated: true)
     }
@@ -361,12 +381,17 @@ import SwiftyJSON
         
         if segueName == "showFilterView" {
             let destinationViewCtrl = segue.destination as? JAFiltersViewController
-            destinationViewCtrl?.filtersArray = self.catalogData?.filters ?? []
+            destinationViewCtrl?.filtersArray = self.catalogData?.filters
             destinationViewCtrl?.subCatsFilter = subCategoryFilterItem
             if let index = self.catalogData?.priceFilterIndex {
                 destinationViewCtrl?.priceFilterIndex = Int32(index);
             }
             destinationViewCtrl?.delegate = self;
+        }
+        
+        if segueName == "embedFilteredListNoResult" {
+            let destinationViewCtrl = segue.destination as? FilteredListNoResultViewController
+            destinationViewCtrl?.delegate = self
         }
     }
     

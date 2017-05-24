@@ -25,6 +25,8 @@
 @property (nonatomic, strong) NSIndexPath* selectedIndexPath;
 @property (weak, nonatomic) IBOutlet UIButton *subCatButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *subCatButtonHeightConstraint;
+@property (nonatomic) NSUInteger totalSelected;
+@property (nonatomic) BOOL filterHasBeenChanged;
 @end
 
 @implementation JAFiltersViewController
@@ -70,26 +72,26 @@ const int subCatButtonVisibleHeight = 50;
 
 
 - (void)updateTitle {
-    NSInteger totalSelected = 0;
+    self.totalSelected = 0;
     for (BaseCatalogFilterItem* filter in self.filtersArray) {
         if ([filter isKindOfClass:[CatalogPriceFilterItem class]]) {
             CatalogPriceFilterItem *priceFilter = (CatalogPriceFilterItem*)filter;
             if (priceFilter.lowerValue > priceFilter.minPrice || priceFilter.upperValue < priceFilter.maxPrice || YES == priceFilter.discountOnly) {
-                totalSelected++;
+                self.totalSelected++;
             }
         } else {
             for (CatalogFilterOption* option in ((CatalogFilterItem*)filter).options) {
                 if (option.selected) {
-                    totalSelected++;
+                    self.totalSelected++;
                 }
             }
         }
     }
     NSString* newTitle;
-    if (0 == totalSelected) {
+    if (0 == self.totalSelected) {
         newTitle = STRING_FILTERS;
     } else {
-        newTitle = [[NSString stringWithFormat:@"%@ (%ld)", STRING_FILTERS, (long)totalSelected] numbersToPersian];
+        newTitle = [[NSString stringWithFormat:@"%@ (%ld)", STRING_FILTERS, (long)self.totalSelected] numbersToPersian];
     }
     if (![newTitle isEqualToString:self.navBarLayout.title]) {
         
@@ -191,6 +193,8 @@ const int subCatButtonVisibleHeight = 50;
     }
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:self.selectedIndexPath] withRowAnimation:animation];
     [self updateTitle];
+    
+    self.filterHasBeenChanged = YES;
 }
 
 #pragma Button Logic
@@ -216,7 +220,7 @@ const int subCatButtonVisibleHeight = 50;
 - (IBAction) applyButtonPressed {
     [self.view endEditing:YES];
     if (self.delegate && [self.delegate respondsToSelector:@selector(updatedFilters:)]) {
-        [self.navigationController popViewControllerAnimated:NO];
+        [self.navigationController popViewControllerAnimated: self.totalSelected == 0 || !self.filterHasBeenChanged];
         [self.delegate updatedFilters:self.filtersArray];
     }
 }

@@ -976,25 +976,36 @@
                                     <segue destination="1gH-4D-wsq" kind="embed" identifier="embedCatalogNoResult" id="rXj-wl-oI1"/>
                                 </connections>
                             </containerView>
+                            <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DhN-q4-dsC" userLabel="Filtered list no result Container View">
+                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
+                                <connections>
+                                    <segue destination="m3S-uW-r01" kind="embed" identifier="embedFilteredListNoResult" id="bxd-xd-g8c"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" red="0.92549019610000005" green="0.92549019610000005" blue="0.92549019610000005" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="DhN-q4-dsC" firstAttribute="centerY" secondItem="eAy-WM-iDC" secondAttribute="centerY" id="4ld-Vb-b1h"/>
                             <constraint firstItem="UiY-yi-baF" firstAttribute="left" secondItem="NAL-9e-Ury" secondAttribute="left" id="5Zo-2E-w2W"/>
+                            <constraint firstItem="DhN-q4-dsC" firstAttribute="centerX" secondItem="eAy-WM-iDC" secondAttribute="centerX" id="9jC-XU-tTt"/>
                             <constraint firstItem="mY3-o9-UW7" firstAttribute="top" secondItem="wP7-Pc-1Pj" secondAttribute="bottom" id="HhU-xp-7QM"/>
                             <constraint firstItem="UiY-yi-baF" firstAttribute="top" secondItem="BAm-y5-w81" secondAttribute="bottom" id="IJQ-zH-kMl"/>
                             <constraint firstItem="wP7-Pc-1Pj" firstAttribute="top" secondItem="UiY-yi-baF" secondAttribute="bottom" id="Kqx-SE-sgS"/>
                             <constraint firstAttribute="right" secondItem="UiY-yi-baF" secondAttribute="right" id="LFS-qa-Nv6"/>
+                            <constraint firstItem="DhN-q4-dsC" firstAttribute="width" secondItem="eAy-WM-iDC" secondAttribute="width" id="LXQ-wM-40S"/>
                             <constraint firstAttribute="trailing" secondItem="wP7-Pc-1Pj" secondAttribute="trailing" id="S0o-g8-BOx"/>
                             <constraint firstItem="wP7-Pc-1Pj" firstAttribute="leading" secondItem="NAL-9e-Ury" secondAttribute="leading" id="UvH-Mu-3Hl"/>
                             <constraint firstItem="eAy-WM-iDC" firstAttribute="leading" secondItem="NAL-9e-Ury" secondAttribute="leading" id="eJ2-47-Dt3"/>
                             <constraint firstItem="mY3-o9-UW7" firstAttribute="top" secondItem="eAy-WM-iDC" secondAttribute="bottom" id="lue-O9-svx"/>
                             <constraint firstItem="eAy-WM-iDC" firstAttribute="top" secondItem="BAm-y5-w81" secondAttribute="bottom" id="onA-Cm-ru6"/>
                             <constraint firstAttribute="trailing" secondItem="eAy-WM-iDC" secondAttribute="trailing" id="wzq-JX-48w"/>
+                            <constraint firstItem="DhN-q4-dsC" firstAttribute="height" secondItem="eAy-WM-iDC" secondAttribute="height" id="ykD-3M-50B"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="catalogHeader" destination="UiY-yi-baF" id="b7m-Ug-LPY"/>
                         <outlet property="collectionView" destination="CDQ-8E-fbn" id="QVO-Bd-QC4"/>
+                        <outlet property="filteredNoResultContainer" destination="DhN-q4-dsC" id="1Kj-t9-LLp"/>
                         <outlet property="noResultViewContainer" destination="eAy-WM-iDC" id="M5h-nJ-cCy"/>
                         <segue destination="L8G-Sy-CpX" kind="show" identifier="showFilterView" id="JKW-Pq-7fE"/>
                     </connections>
@@ -1556,12 +1567,59 @@
             </objects>
             <point key="canvasLocation" x="-765" y="-2635"/>
         </scene>
+        <!--Filtered List No Result View Controller-->
+        <scene sceneID="CsY-KX-BfZ">
+            <objects>
+                <viewController id="m3S-uW-r01" customClass="FilteredListNoResultViewController" customModule="Bamilo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="K68-f0-HsX">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="filtered_list_no_result" translatesAutoresizingMaskIntoConstraints="NO" id="mi1-N1-ArN">
+                                <rect key="frame" x="187.66666666666666" y="100" width="40" height="40"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="فیلترهای کمتری را برای جستجو انتخاب نمایید" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SU1-vf-mKc">
+                                <rect key="frame" x="84" y="165" width="247.33333333333331" height="23"/>
+                                <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vRi-98-olW" customClass="OrangeButton">
+                                <rect key="frame" x="87" y="248" width="240" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="bEG-HB-yEx"/>
+                                </constraints>
+                                <state key="normal" title="بازگشت"/>
+                                <connections>
+                                    <action selector="editFilterbuttonTapped:" destination="m3S-uW-r01" eventType="touchUpInside" id="8wK-Ov-Lsv"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="SU1-vf-mKc" firstAttribute="centerX" secondItem="mi1-N1-ArN" secondAttribute="centerX" id="56a-Tv-5Se"/>
+                            <constraint firstItem="vRi-98-olW" firstAttribute="centerX" secondItem="K68-f0-HsX" secondAttribute="centerX" id="AZf-cf-sME"/>
+                            <constraint firstItem="mi1-N1-ArN" firstAttribute="centerX" secondItem="K68-f0-HsX" secondAttribute="centerX" id="H99-5H-P9Y"/>
+                            <constraint firstItem="vRi-98-olW" firstAttribute="top" secondItem="SU1-vf-mKc" secondAttribute="bottom" constant="60" id="NfQ-Cy-cMs"/>
+                            <constraint firstItem="mi1-N1-ArN" firstAttribute="top" secondItem="K68-f0-HsX" secondAttribute="top" constant="100" id="cRv-KM-svn"/>
+                            <constraint firstItem="SU1-vf-mKc" firstAttribute="top" secondItem="mi1-N1-ArN" secondAttribute="bottom" constant="25" id="rw4-PE-Ptu"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="filterviewDescLabel" destination="SU1-vf-mKc" id="p0W-ny-ibK"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hqI-fM-Anc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="95.652173913043484" y="1278.2608695652175"/>
+        </scene>
     </scenes>
     <resources>
         <image name="ArrowLeft" width="8" height="14"/>
         <image name="banner" width="708" height="300"/>
         <image name="bug" width="21" height="25"/>
         <image name="call" width="25" height="25"/>
+        <image name="filtered_list_no_result" width="40" height="40"/>
         <image name="img_emptyCart" width="102" height="92"/>
         <image name="pageNotFound" width="853" height="853"/>
         <image name="subcatIcon" width="18" height="19"/>

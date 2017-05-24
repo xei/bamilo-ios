@@ -35,6 +35,7 @@
 		61143A591ED55C2300C53BA8 /* Bool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61143A581ED55C2300C53BA8 /* Bool.swift */; };
 		61143A601ED5754900C53BA8 /* BaseCatalogCollectionFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61143A5F1ED5754900C53BA8 /* BaseCatalogCollectionFlowLayout.swift */; };
 		61143A621ED57D3900C53BA8 /* CatalogCollectionFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61143A611ED57D3900C53BA8 /* CatalogCollectionFooterView.swift */; };
+		61143A641ED5BCB000C53BA8 /* FilteredListNoResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61143A631ED5BCB000C53BA8 /* FilteredListNoResultViewController.swift */; };
 		61148E051E4724FC00E2540B /* StepperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61148E041E4724FC00E2540B /* StepperView.m */; };
 		61148E081E47250A00E2540B /* StepperViewControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 61148E071E47250A00E2540B /* StepperViewControl.m */; };
 		61148E0A1E47255F00E2540B /* StepperView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61148E091E47255F00E2540B /* StepperView.xib */; };
@@ -918,6 +919,7 @@
 		61143A581ED55C2300C53BA8 /* Bool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bool.swift; sourceTree = "<group>"; };
 		61143A5F1ED5754900C53BA8 /* BaseCatalogCollectionFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCatalogCollectionFlowLayout.swift; sourceTree = "<group>"; };
 		61143A611ED57D3900C53BA8 /* CatalogCollectionFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogCollectionFooterView.swift; sourceTree = "<group>"; };
+		61143A631ED5BCB000C53BA8 /* FilteredListNoResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilteredListNoResultViewController.swift; sourceTree = "<group>"; };
 		61148E031E4724FC00E2540B /* StepperView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepperView.h; sourceTree = "<group>"; };
 		61148E041E4724FC00E2540B /* StepperView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StepperView.m; sourceTree = "<group>"; };
 		61148E061E47250A00E2540B /* StepperViewControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepperViewControl.h; sourceTree = "<group>"; };
@@ -2851,6 +2853,7 @@
 			isa = PBXGroup;
 			children = (
 				61C5BAF01EC1F40300F3A796 /* CatalogViewController.swift */,
+				61143A631ED5BCB000C53BA8 /* FilteredListNoResultViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -7809,6 +7812,7 @@
 				616D65EC1E670984008B07EA /* OrderProductListTableViewCell.m in Sources */,
 				9A4077251CE0CDA600313D20 /* NSString+Size.m in Sources */,
 				879F87F51E5058060033FE87 /* PlainTableViewHeaderCell.m in Sources */,
+				61143A641ED5BCB000C53BA8 /* FilteredListNoResultViewController.swift in Sources */,
 				9A38764E1BCD0CDC0088B186 /* JATabNavigationViewController.m in Sources */,
 				CE9ADFF41AB6D78200D56481 /* JAActivityViewController.m in Sources */,
 				619351AB1ECAC9DD00330E5C /* CatalogCardCollectionViewCell.swift in Sources */,
