@@ -33,6 +33,8 @@
 		611195821E3CB14B00D06690 /* PlainTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 611195801E3CB14B00D06690 /* PlainTableViewCell.m */; };
 		611195831E3CB14B00D06690 /* PlainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 611195811E3CB14B00D06690 /* PlainTableViewCell.xib */; };
 		61143A591ED55C2300C53BA8 /* Bool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61143A581ED55C2300C53BA8 /* Bool.swift */; };
+		61143A601ED5754900C53BA8 /* BaseCatalogCollectionFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61143A5F1ED5754900C53BA8 /* BaseCatalogCollectionFlowLayout.swift */; };
+		61143A621ED57D3900C53BA8 /* CatalogCollectionFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61143A611ED57D3900C53BA8 /* CatalogCollectionFooterView.swift */; };
 		61148E051E4724FC00E2540B /* StepperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61148E041E4724FC00E2540B /* StepperView.m */; };
 		61148E081E47250A00E2540B /* StepperViewControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 61148E071E47250A00E2540B /* StepperViewControl.m */; };
 		61148E0A1E47255F00E2540B /* StepperView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61148E091E47255F00E2540B /* StepperView.xib */; };
@@ -914,6 +916,8 @@
 		611195801E3CB14B00D06690 /* PlainTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlainTableViewCell.m; path = ../Controllers/MenuViewController/PlainTableViewCell.m; sourceTree = "<group>"; };
 		611195811E3CB14B00D06690 /* PlainTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PlainTableViewCell.xib; path = ../Controllers/MenuViewController/PlainTableViewCell.xib; sourceTree = "<group>"; };
 		61143A581ED55C2300C53BA8 /* Bool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bool.swift; sourceTree = "<group>"; };
+		61143A5F1ED5754900C53BA8 /* BaseCatalogCollectionFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCatalogCollectionFlowLayout.swift; sourceTree = "<group>"; };
+		61143A611ED57D3900C53BA8 /* CatalogCollectionFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogCollectionFooterView.swift; sourceTree = "<group>"; };
 		61148E031E4724FC00E2540B /* StepperView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepperView.h; sourceTree = "<group>"; };
 		61148E041E4724FC00E2540B /* StepperView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StepperView.m; sourceTree = "<group>"; };
 		61148E061E47250A00E2540B /* StepperViewControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepperViewControl.h; sourceTree = "<group>"; };
@@ -3191,6 +3195,7 @@
 				619351A81ECAC9C900330E5C /* CatalogCardCollectionViewCell */,
 				619351A71ECAC9B700330E5C /* CatalogGridCollectionViewCell */,
 				61C860481ECB370300F2C571 /* BaseCatallogCollectionViewCell.swift */,
+				61143A611ED57D3900C53BA8 /* CatalogCollectionFooterView.swift */,
 			);
 			name = Catalog;
 			sourceTree = "<group>";
@@ -3652,6 +3657,7 @@
 				61FE97D41EC9BB7600DF233D /* GridCollectionViewFlowLayout.swift */,
 				61FE97D61EC9C19300DF233D /* ListCollectionViewFlowLayout.swift */,
 				61C860461ECB1EAF00F2C571 /* CardCollectionViewFlowLayout.swift */,
+				61143A5F1ED5754900C53BA8 /* BaseCatalogCollectionFlowLayout.swift */,
 			);
 			name = CollectionViewFlowLayout;
 			sourceTree = "<group>";
@@ -7530,6 +7536,7 @@
 				871BA8561E867F4A007680C5 /* AppEvent.m in Sources */,
 				613D37771E6EE19E001B2852 /* NSDate+Extensions.m in Sources */,
 				61CBA04A1E51D18F005673F7 /* FormTableViewCell.m in Sources */,
+				61143A621ED57D3900C53BA8 /* CatalogCollectionFooterView.swift in Sources */,
 				61037CC21EB73AF100A461E0 /* GoogleAnalyticsTracker.m in Sources */,
 				8714E0771E479C00004C9B1D /* CheckoutProgressViewButtonModel.m in Sources */,
 				9A189E6F1BB31AF70039BC14 /* JAProductInfoSingleLine.m in Sources */,
@@ -7566,6 +7573,7 @@
 				87EA03091E6C695D00B1E062 /* IconTableViewHeaderCell.m in Sources */,
 				875AD56F1E38C0C900584ABF /* RIPromotion.m in Sources */,
 				9A6BC0831C43CBB900DD9492 /* JAMyOrderResumeView.m in Sources */,
+				61143A601ED5754900C53BA8 /* BaseCatalogCollectionFlowLayout.swift in Sources */,
 				61A4D1B01EA7335C003E203C /* Breadcrumbs.m in Sources */,
 				875AD56E1E38C0C900584ABF /* RIProductSimple.m in Sources */,
 				870BEA851E73F6BC00C5B615 /* ThemeFont.m in Sources */,

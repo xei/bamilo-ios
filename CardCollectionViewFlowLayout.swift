@@ -8,48 +8,29 @@
 
 import UIKit
 
-class CardCollectionViewFlowLayout: UICollectionViewFlowLayout {
+class CardCollectionViewFlowLayout: BaseCatalogCollectionFlowLayout {
     
     let otherContentHeight: CGFloat = 90
     let cellSpacing: CGFloat = 5
     let imageRatio: CGFloat = 1.25
     let imageWidthProportionalToParentWidth: CGFloat = 176 / 348
     
-    override init() {
-        super.init()
-        setupLayout()
-    }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setupLayout()
-    }
-    
-    func setupLayout() {
+    override func setupLayout() {
+        super.setupLayout()
         minimumInteritemSpacing = 0
         minimumLineSpacing = cellSpacing
         scrollDirection = .vertical
     }
     
-    func itemWidth() -> CGFloat {
+    override func itemWidth() -> CGFloat {
         return collectionView!.frame.width
     }
     
-    func itemHeight() -> CGFloat {
+    override  func itemHeight() -> CGFloat {
         let imageHeight = itemWidth() * imageWidthProportionalToParentWidth * imageRatio
         return imageHeight + otherContentHeight
     }
     
-    override var itemSize: CGSize {
-        set {
-            self.itemSize = CGSize(width: itemWidth(), height: itemHeight())
-        }
-        get {
-            return CGSize(width: itemWidth(), height: itemHeight())
-        }
-    }
     
-    override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint {
-        return collectionView!.contentOffset
-    }
 }

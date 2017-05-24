@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GridCollectionViewFlowLayout: UICollectionViewFlowLayout {
+class GridCollectionViewFlowLayout: BaseCatalogCollectionFlowLayout {
     
     let imageRatio: CGFloat = 1.25
     let numberOfColumns: CGFloat = 2
@@ -16,42 +16,19 @@ class GridCollectionViewFlowLayout: UICollectionViewFlowLayout {
     let righLeftImagePadding: CGFloat = 18 * 2
     let cellSpacing:CGFloat = 5
     
-    override init() {
-        super.init()
-        setupLayout()
-    }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setupLayout()
-    }
-    
-    func setupLayout() {
+    override func setupLayout() {
         minimumInteritemSpacing = cellSpacing / 2
         minimumLineSpacing = cellSpacing
         scrollDirection = .vertical
     }
     
-    /// here we define the width of each cell, creating a 2 column layout. In case you would create 3 columns, change the number 2 to 3
-    func itemWidth() -> CGFloat {
+    override func itemWidth() -> CGFloat {
         return (self.collectionView!.frame.width - (numberOfColumns - 1) * cellSpacing) / numberOfColumns
     }
     
-    func itemHeight() -> CGFloat {
+    override func itemHeight() -> CGFloat {
         let imageWidth = itemWidth() - righLeftImagePadding
         return imageWidth * imageRatio + otherContentOfCellHeight
-    }
-    
-    override var itemSize: CGSize {
-        set {
-            self.itemSize = CGSize(width: itemWidth(), height: itemHeight())
-        }
-        get {
-            return CGSize(width: itemWidth(), height: itemHeight())
-        }
-    }
-    
-    override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint {
-        return collectionView!.contentOffset
     }
 }

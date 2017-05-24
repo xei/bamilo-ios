@@ -17,7 +17,8 @@ import SwiftyJSON
                                     BaseCatallogCollectionViewCellDelegate,
                                     UICollectionViewDataSource,
                                     UICollectionViewDelegate,
-                                    EmarsysWebExtendProtocol {
+                                    EmarsysWebExtendProtocol,
+                                    UICollectionViewDelegateFlowLayout {
     
     @IBOutlet private weak var catalogHeader: CatalogHeaderControl!
     @IBOutlet private weak var collectionView: UICollectionView!
@@ -47,7 +48,12 @@ import SwiftyJSON
     private var catalogData: Catalog?
     private var noResultViewController: CatalogNoResultViewController?
     private let paginationCellCountThreshold = 6
-    private var loadingDataInProgress = false
+    private var loadingDataInProgress = true {
+        didSet {
+            //To refresh the footerView
+            self.collectionView.collectionViewLayout.invalidateLayout()
+        }
+    }
     
     
     override func viewDidLoad() {
@@ -77,6 +83,7 @@ import SwiftyJSON
     
     //MARK: - DataServiceProtocol
     func bind(_ data: Any!, forRequestId rid: Int32) {
+        self.loadingDataInProgress = false
         if let receivedCatalogData = data as? Catalog {
             if rid == 0 {
                 self.catalogData = receivedCatalogData
@@ -276,7 +283,6 @@ import SwiftyJSON
         self.pageNumber += 1
         self.loadingDataInProgress = true
         CatalogDataManager.sharedInstance().getCatalog(target: self, searchTarget: searchTarget, filtersQueryString: pushFilterQueryString, sortingMethod: sortingMethod, page: self.pageNumber) { (data, errorMessages) in
-            self.loadingDataInProgress = false
             self.bind(data, forRequestId: 1)
         }
     }
@@ -321,9 +327,20 @@ import SwiftyJSON
         return (self.catalogData != nil) ? self.catalogData!.products.count : 0
     }
     
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "FooterView", for: indexPath)
+        return headerView
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        return CGSize(width: self.collectionView.frame.width, height: self.loadingDataInProgress ? 50 : 0)
+    }
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
+    
     
     //MARK: - BaseCatallogCollectionViewCellDelegate
     func addOrRemoveFromWishList(product: Product, cell: BaseCatallogCollectionViewCell, add: Bool) {

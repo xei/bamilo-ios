@@ -54,12 +54,6 @@
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(۱۲)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mnS-Gf-1QS">
-                        <rect key="frame" x="162" y="65.5" width="15" height="17.5"/>
-                        <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="9"/>
-                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۱۰۰،۰۰۰ ریال" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eXO-Ic-9E1">
                         <rect key="frame" x="103" y="98" width="52.5" height="19.5"/>
                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="10"/>
@@ -81,11 +75,32 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ISl-GX-JWz" customClass="RateStarControl" customModule="Bamilo" customModuleProvider="target">
-                        <rect key="frame" x="179" y="67" width="70" height="14"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ea0-7I-kQi">
+                        <rect key="frame" x="149" y="66" width="100" height="30"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(۱۲)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XRt-hP-r9N">
+                                <rect key="frame" x="13" y="7" width="15" height="17.5"/>
+                                <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="9"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zzg-MU-ANx" customClass="RateStarControl" customModule="Bamilo" customModuleProvider="target">
+                                <rect key="frame" x="30" y="8" width="70" height="14"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="zzg-MU-ANx" secondAttribute="height" multiplier="5:1" id="Ktg-sy-Qf7"/>
+                                    <constraint firstAttribute="width" constant="70" id="WbQ-MG-MTl"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="70" id="mTl-co-ogi"/>
-                            <constraint firstAttribute="width" secondItem="ISl-GX-JWz" secondAttribute="height" multiplier="5:1" id="ygy-Vl-p9O"/>
+                            <constraint firstAttribute="width" constant="100" id="7gT-yA-z8I"/>
+                            <constraint firstItem="zzg-MU-ANx" firstAttribute="left" secondItem="ea0-7I-kQi" secondAttribute="left" constant="30" id="MFb-Ty-qdU"/>
+                            <constraint firstItem="zzg-MU-ANx" firstAttribute="left" secondItem="XRt-hP-r9N" secondAttribute="right" constant="2" id="T3g-76-Tmn"/>
+                            <constraint firstItem="zzg-MU-ANx" firstAttribute="width" secondItem="zzg-MU-ANx" secondAttribute="height" multiplier="5:1" id="lF7-lg-EfN"/>
+                            <constraint firstItem="zzg-MU-ANx" firstAttribute="centerY" secondItem="ea0-7I-kQi" secondAttribute="centerY" id="m3W-Nl-SX2"/>
+                            <constraint firstAttribute="right" secondItem="zzg-MU-ANx" secondAttribute="right" id="wdf-RY-zsV"/>
+                            <constraint firstItem="XRt-hP-r9N" firstAttribute="centerY" secondItem="zzg-MU-ANx" secondAttribute="centerY" id="zAe-5t-D2r"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -95,23 +110,22 @@
                 <constraint firstItem="9Ep-gK-TRa" firstAttribute="left" secondItem="Rbc-vu-7eS" secondAttribute="right" constant="5" id="0oG-Rm-T54"/>
                 <constraint firstItem="OBz-df-mWr" firstAttribute="top" secondItem="Rbc-vu-7eS" secondAttribute="bottom" constant="2" id="2j3-Hc-NfQ"/>
                 <constraint firstItem="Rbc-vu-7eS" firstAttribute="top" secondItem="9Ep-gK-TRa" secondAttribute="top" id="590-pd-xlT"/>
-                <constraint firstItem="mnS-Gf-1QS" firstAttribute="centerY" secondItem="ISl-GX-JWz" secondAttribute="centerY" id="BQ9-bb-BQy"/>
+                <constraint firstItem="B7x-en-kdn" firstAttribute="right" secondItem="OBz-df-mWr" secondAttribute="right" id="9fh-6X-S6q"/>
                 <constraint firstItem="Rbc-vu-7eS" firstAttribute="left" secondItem="3Bo-fY-FHu" secondAttribute="right" constant="5" id="E9e-IG-GMX"/>
                 <constraint firstItem="B7x-en-kdn" firstAttribute="left" secondItem="eXO-Ic-9E1" secondAttribute="right" constant="10" id="Iup-fz-2qw"/>
-                <constraint firstItem="ISl-GX-JWz" firstAttribute="top" secondItem="OBz-df-mWr" secondAttribute="bottom" constant="1" id="JAY-b7-PQT"/>
                 <constraint firstItem="B7x-en-kdn" firstAttribute="bottom" secondItem="9Ep-gK-TRa" secondAttribute="bottom" id="MeG-sj-oky"/>
                 <constraint firstAttribute="right" secondItem="9Ep-gK-TRa" secondAttribute="right" constant="5" id="Q0f-5d-45G"/>
                 <constraint firstItem="3Bo-fY-FHu" firstAttribute="top" secondItem="9Ep-gK-TRa" secondAttribute="top" id="RtT-Ld-qQ0"/>
                 <constraint firstItem="3Bo-fY-FHu" firstAttribute="left" secondItem="gTV-IL-0wX" secondAttribute="left" constant="10" id="aiW-8j-EAo"/>
+                <constraint firstItem="ea0-7I-kQi" firstAttribute="top" secondItem="OBz-df-mWr" secondAttribute="bottom" id="dO6-r7-5gz"/>
                 <constraint firstItem="eXO-Ic-9E1" firstAttribute="centerY" secondItem="B7x-en-kdn" secondAttribute="centerY" id="elJ-fq-Wl8"/>
-                <constraint firstItem="B7x-en-kdn" firstAttribute="right" secondItem="ISl-GX-JWz" secondAttribute="right" id="hCE-pP-XBR"/>
+                <constraint firstItem="ea0-7I-kQi" firstAttribute="right" secondItem="OBz-df-mWr" secondAttribute="right" id="fIy-3B-y39"/>
                 <constraint firstItem="nDO-Lm-UYK" firstAttribute="centerY" secondItem="B7x-en-kdn" secondAttribute="centerY" id="iJ2-eZ-kGT"/>
                 <constraint firstItem="9Ep-gK-TRa" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="j6e-nz-CWq"/>
-                <constraint firstItem="ISl-GX-JWz" firstAttribute="left" secondItem="mnS-Gf-1QS" secondAttribute="right" constant="2" id="tRX-C4-WTT"/>
+                <constraint firstItem="B7x-en-kdn" firstAttribute="top" secondItem="ea0-7I-kQi" secondAttribute="bottom" id="n3G-xJ-Vs1"/>
                 <constraint firstAttribute="bottom" secondItem="9Ep-gK-TRa" secondAttribute="bottom" constant="8" id="u84-bo-DFh"/>
                 <constraint firstItem="OBz-df-mWr" firstAttribute="right" secondItem="Rbc-vu-7eS" secondAttribute="right" id="vAP-EN-wOg"/>
                 <constraint firstItem="eXO-Ic-9E1" firstAttribute="left" secondItem="nDO-Lm-UYK" secondAttribute="right" constant="10" id="xig-Fb-ZHJ"/>
-                <constraint firstItem="9Ep-gK-TRa" firstAttribute="left" secondItem="ISl-GX-JWz" secondAttribute="right" constant="5" id="y5f-wc-CDp"/>
             </constraints>
             <size key="customSize" width="509" height="153"/>
             <userDefinedRuntimeAttributes>
@@ -135,11 +149,9 @@
                 <outlet property="discountedPriceLabel" destination="B7x-en-kdn" id="sZn-W5-yU5"/>
                 <outlet property="priceLabel" destination="eXO-Ic-9E1" id="BWU-M8-XPi"/>
                 <outlet property="productImage" destination="9Ep-gK-TRa" id="6je-kc-F9y"/>
-                <outlet property="rateCountLabel" destination="mnS-Gf-1QS" id="MXP-n9-RCU"/>
-                <outlet property="rateView" destination="ISl-GX-JWz" id="cPQ-bd-sYp"/>
                 <outlet property="titleLabel" destination="Rbc-vu-7eS" id="3Ic-9r-xKX"/>
             </connections>
-            <point key="canvasLocation" x="-242" y="-135"/>
+            <point key="canvasLocation" x="-242" y="-135.5"/>
         </collectionViewCell>
     </objects>
     <resources>

@@ -8,41 +8,24 @@
 
 import UIKit
 
-class ListCollectionViewFlowLayout: UICollectionViewFlowLayout {
+class ListCollectionViewFlowLayout: BaseCatalogCollectionFlowLayout {
     
-    let itemHeight: CGFloat = 115
+    let cellHeight: CGFloat = 115
     let cellSpacing: CGFloat = 5
     
-    override init() {
-        super.init()
-        setupLayout()
-    }
-  
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setupLayout()
-    }
  
-    func setupLayout() {
+    override func setupLayout() {
+        super.setupLayout()
         minimumInteritemSpacing = 0
         minimumLineSpacing = cellSpacing
         scrollDirection = .vertical
     }
     
-    func itemWidth() -> CGFloat {
+    override func itemWidth() -> CGFloat {
         return collectionView!.frame.width
     }
     
-    override var itemSize: CGSize {
-        set {
-            self.itemSize = CGSize(width: itemWidth(), height: itemHeight)
-        }
-        get {
-            return CGSize(width: itemWidth(), height: itemHeight)
-        }
-    }
-    
-    override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint {
-        return collectionView!.contentOffset
+    override func itemHeight() -> CGFloat {
+        return cellHeight
     }
 }

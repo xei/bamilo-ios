@@ -64,7 +64,7 @@ class BaseCatallogCollectionViewCell: UICollectionViewCell {
         titleLabel?.text = product.name
         brandLabel?.text = product.brand
         productImage?.kf.indicatorType = .activity
-        productImage?.kf.setImage(with: product.imageUrl, options: [.transition(.fade(0.15))])
+        productImage?.kf.setImage(with: product.imageUrl, options: [.transition(.fade(0.20))])
         if let specialPrice = product.specialPrice, let price = product.price, let precentage = product.maxSavingPrecentage {
             discountedPriceLabel?.text = "\(specialPrice)".formatPriceWithCurrency()
             priceLabel?.attributedText = "\(price)".formatPriceWithCurrency().strucThroughPriceFormat()
@@ -83,7 +83,7 @@ class BaseCatallogCollectionViewCell: UICollectionViewCell {
             self.rateCountLabel?.isHidden = true
             self.rateView?.isHidden = true
         }
-        self.addToWishListButton?.isSelected = product.isInWishList ?? false
+        self.addToWishListButton?.isSelected = product.isInWishList
         self.product = product
     }
     
