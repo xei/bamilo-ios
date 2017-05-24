@@ -889,52 +889,52 @@
                                                    }];
 }
 
-+ (void)removeFromFavorites:(RIProduct*)product
-               successBlock:(void (^)(RIApiResponse apiResponse, NSArray *success))successBlock
-            andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
-{
-    NSString *finalUrl = [NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_REMOVE_FOM_WISHLIST];
-    NSDictionary *parameters = [NSDictionary dictionaryWithObject:product.sku forKey:@"sku"];
-    [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:finalUrl]
-                                                     parameters:parameters httpMethod:HttpVerbDELETE
-                                                      cacheType:RIURLCacheNoCache
-                                                      cacheTime:RIURLCacheDefaultTime
-                                             userAgentInjection:[RIApi getCountryUserAgentInjection]
-                                                   successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-                                                       if (VALID_NOTEMPTY([jsonObject objectForKey:@"messages"], NSDictionary)) {
-                                                           NSDictionary *messages = [jsonObject objectForKey:@"messages"];
-                                                           if (VALID_NOTEMPTY([messages objectForKey:@"success"], NSArray)) {
-                                                               NSArray *success = [messages objectForKey:@"success"];
-                                                               if (VALID_NOTEMPTY([success valueForKey:@"message"], NSArray)) {
-                                                                   NSArray *successMessage = [success valueForKey:@"message"];
-                                                                   successBlock(apiResponse, successMessage);
-                                                                   return;
-                                                               }
-                                                               
-                                                           }
-                                                       }
-                                                       successBlock(apiResponse, nil);
-                                                       
-                                                   } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObject) {
-                                                       if (errorObject) {
-                                                           failureBlock(apiResponse, [NSArray arrayWithObject:[errorObject localizedDescription]]);
-                                                       }else{
-                                                           if (VALID_NOTEMPTY([errorJsonObject objectForKey:@"messages"], NSDictionary)) {
-                                                               NSDictionary *messages = [errorJsonObject objectForKey:@"messages"];
-                                                               if (VALID_NOTEMPTY([messages objectForKey:@"error"], NSArray)) {
-                                                                   NSArray *error = [messages objectForKey:@"error"];
-                                                                   if (VALID_NOTEMPTY([error valueForKey:@"message"], NSArray)) {
-                                                                       NSArray *errorMessage = [error valueForKey:@"message"];
-                                                                       failureBlock(apiResponse, errorMessage);
-                                                                       return;
-                                                                   }
-                                                                   
-                                                               }
-                                                           }
-                                                           failureBlock(apiResponse, nil);
-                                                       }
-                                                   }];
-}
+//+ (void)removeFromFavorites:(RIProduct*)product
+//               successBlock:(void (^)(RIApiResponse apiResponse, NSArray *success))successBlock
+//            andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
+//{
+//    NSString *finalUrl = [NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_REMOVE_FOM_WISHLIST];
+//    NSDictionary *parameters = [NSDictionary dictionaryWithObject:product.sku forKey:@"sku"];
+//    [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:finalUrl]
+//                                                     parameters:parameters httpMethod:HttpVerbDELETE
+//                                                      cacheType:RIURLCacheNoCache
+//                                                      cacheTime:RIURLCacheDefaultTime
+//                                             userAgentInjection:[RIApi getCountryUserAgentInjection]
+//                                                   successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+//                                                       if (VALID_NOTEMPTY([jsonObject objectForKey:@"messages"], NSDictionary)) {
+//                                                           NSDictionary *messages = [jsonObject objectForKey:@"messages"];
+//                                                           if (VALID_NOTEMPTY([messages objectForKey:@"success"], NSArray)) {
+//                                                               NSArray *success = [messages objectForKey:@"success"];
+//                                                               if (VALID_NOTEMPTY([success valueForKey:@"message"], NSArray)) {
+//                                                                   NSArray *successMessage = [success valueForKey:@"message"];
+//                                                                   successBlock(apiResponse, successMessage);
+//                                                                   return;
+//                                                               }
+//                                                               
+//                                                           }
+//                                                       }
+//                                                       successBlock(apiResponse, nil);
+//                                                       
+//                                                   } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObject) {
+//                                                       if (errorObject) {
+//                                                           failureBlock(apiResponse, [NSArray arrayWithObject:[errorObject localizedDescription]]);
+//                                                       }else{
+//                                                           if (VALID_NOTEMPTY([errorJsonObject objectForKey:@"messages"], NSDictionary)) {
+//                                                               NSDictionary *messages = [errorJsonObject objectForKey:@"messages"];
+//                                                               if (VALID_NOTEMPTY([messages objectForKey:@"error"], NSArray)) {
+//                                                                   NSArray *error = [messages objectForKey:@"error"];
+//                                                                   if (VALID_NOTEMPTY([error valueForKey:@"message"], NSArray)) {
+//                                                                       NSArray *errorMessage = [error valueForKey:@"message"];
+//                                                                       failureBlock(apiResponse, errorMessage);
+//                                                                       return;
+//                                                                   }
+//                                                                   
+//                                                               }
+//                                                           }
+//                                                           failureBlock(apiResponse, nil);
+//                                                       }
+//                                                   }];
+//}
 
 + (NSDate*)productIsFavoriteInDatabase:(RIProduct*)product
 {

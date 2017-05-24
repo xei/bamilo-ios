@@ -43,6 +43,7 @@
                             <constraint firstAttribute="width" constant="20" id="pQP-sX-PKa"/>
                         </constraints>
                         <state key="normal" image="FavButton"/>
+                        <state key="selected" image="FavButtonPressed"/>
                         <connections>
                             <action selector="addToWishListButtonTapped:" destination="gTV-IL-0wX" eventType="touchUpInside" id="cc8-XY-t9b"/>
                         </connections>
@@ -128,6 +129,7 @@
                 </userDefinedRuntimeAttribute>
             </userDefinedRuntimeAttributes>
             <connections>
+                <outlet property="addToWishListButton" destination="3Bo-fY-FHu" id="5Sl-3c-bUl"/>
                 <outlet property="brandLabel" destination="OBz-df-mWr" id="xbX-Xz-R7L"/>
                 <outlet property="dicountPrecentageLabel" destination="nDO-Lm-UYK" id="itL-cQ-9vx"/>
                 <outlet property="discountedPriceLabel" destination="B7x-en-kdn" id="sZn-W5-yU5"/>
@@ -142,5 +144,6 @@
     </objects>
     <resources>
         <image name="FavButton" width="15" height="13"/>
+        <image name="FavButtonPressed" width="15" height="14"/>
     </resources>
 </document>

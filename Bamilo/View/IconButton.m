@@ -56,10 +56,9 @@
     self.titleLabel.frame = labelFrame;
 }
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [super touchesBegan:touches withEvent:event];
+-(void)setHighlighted:(BOOL)highlighted {
+    [super setHighlighted:highlighted];
     [self.imageView.layer addAnimation: self.bounceAnim forKey:nil];
-    [self.nextResponder touchesBegan:touches withEvent:event];
 }
 
 - (BOOL)canBecomeFirstResponder {

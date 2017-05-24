@@ -24,6 +24,7 @@ import SwiftyJSON
     var target:String?
     var reviewsAverage: Double?
     var ratingsCount: Int?
+    var isInWishList: Bool = false
     var reviewsCount: Int?
     
     
@@ -44,6 +45,7 @@ import SwiftyJSON
         imageUrl            <- (map["image"], URLTransform())
         target              <- map["target"]
         category            <- map["category_entity"]
+        isInWishList        <- map["is_wishlist"]
         reviewsAverage      <- map["rating_reviews_summary.average"]
         ratingsCount        <- map["rating_reviews_summary.ratings_total"]
         reviewsCount        <- map["rating_reviews_summary.reviews_total"]

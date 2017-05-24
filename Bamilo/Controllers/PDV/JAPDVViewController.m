@@ -47,6 +47,7 @@
 #import "NSArray+Extension.h"
 #import "EmarsysRecommendationGridWidgetView.h"
 #import "ThreadManager.h"
+#import "Bamilo-Swift.h"
 
 typedef void (^ProcessActionBlock)(void);
 
@@ -1172,8 +1173,7 @@ typedef void (^ProcessActionBlock)(void);
     }
 }
 
-- (void)showSizePicker
-{
+- (void)showSizePicker {
     self.indexOfBundleRelatedToSizePicker = -1;
 
     self.pickerDataSource = [NSMutableArray new];
@@ -1240,8 +1240,7 @@ typedef void (^ProcessActionBlock)(void);
 }
 
 
-- (IBAction)checkBundle:(UIButton*)sender
-{
+- (IBAction)checkBundle:(UIButton*)sender {
     NSInteger index = sender.tag;
     JAPDVBundleSingleItem* singleItem = [self.bundleSingleItemsArray objectAtIndex:index];
 
@@ -1363,8 +1362,7 @@ typedef void (^ProcessActionBlock)(void);
     [self.productImageSection goToGalleryIndex:index];
 }
 
-- (void)dismissGallery
-{
+- (void)dismissGallery {
     CGRect newFrame = self.galleryPaged.frame;
     newFrame.origin.y = self.galleryPaged.frame.size.height;
 
@@ -1420,7 +1418,7 @@ typedef void (^ProcessActionBlock)(void);
     }
 
     if (!button.selected && !VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate)) {
-        [[ProductDataManager sharedInstance] addToFavorites:self sku:self.product.sku completion:^(id data, NSError *error) {
+        [[ProductDataManager sharedInstance] whishListTransationWithTarget:self sku:self.product.sku add:YES completion:^(id data, NSError *error) {
             if(error == nil) {
                 //EVENT: ADD TO FAVORITES
                 [TrackerManager postEvent:[EventFactory addToFavorites:self.product.categoryUrlKey success:YES] forName:[AddToFavoritesEvent name]];
@@ -1451,8 +1449,7 @@ typedef void (^ProcessActionBlock)(void);
     }
 }
 
-- (void)removeFromFavorites:(UIButton *)button
-{
+- (void)removeFromFavorites:(UIButton *)button {
     [self showLoading];
 
     __weak typeof (self) weakSelf = self;
@@ -1469,37 +1466,38 @@ typedef void (^ProcessActionBlock)(void);
     if (!logged) {
         return;
     }
-    if (self.productImageSection.wishListButton.selected && VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate))
-    {
-        [RIProduct removeFromFavorites:self.product successBlock:^(RIApiResponse apiResponse, NSArray *success) {
-            //update favoriteProducts
-            [self hideLoading];
-            button.selected = NO;
-
-            self.product.favoriteAddDate = nil;
-
-            [self trackingEventRemoveFromWishlist];
-
-            [self onSuccessResponse:RIApiResponseSuccess messages:success showMessage:YES];
-            NSDictionary *userInfo = nil;
-            if (self.product.favoriteAddDate) {
-                userInfo = [NSDictionary dictionaryWithObject:self.product.favoriteAddDate forKey:@"favoriteAddDate"];
+    if (self.productImageSection.wishListButton.selected && VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate)) {
+        [[ProductDataManager  sharedInstance] whishListTransationWithTarget:self sku:self.product.sku add:NO completion:^(id data, NSError *error) {
+            if (error == nil) {
+                [self hideLoading];
+                button.selected = NO;
+    
+                self.product.favoriteAddDate = nil;
+    
+                [self trackingEventRemoveFromWishlist];
+    
+                [self onSuccessResponse:RIApiResponseSuccess messages:[self extractSuccessMessages:data] showMessage:YES];
+                NSDictionary *userInfo = nil;
+                if (self.product.favoriteAddDate) {
+                    userInfo = [NSDictionary dictionaryWithObject:self.product.favoriteAddDate forKey:@"favoriteAddDate"];
+                }
+                [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
+                                                                    object:self.product.sku
+                                                                  userInfo:userInfo];
+            } else {
+                [self onErrorResponse:error.code messages:[error.userInfo objectForKey:kErrorMessages] showAsMessage:YES selector:@selector(removeFromFavorites:) objects:@[button]];
+                //[self hideLoading];
+                
+                //EVENT: ADD TO FAVORITES
+                [TrackerManager postEvent:[EventFactory addToFavorites:self.product.categoryUrlKey success:NO] forName:[AddToFavoritesEvent name]];
             }
-            [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
-                                                                object:self.product.sku
-                                                              userInfo:userInfo];
-        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-
-            [self hideLoading];
-            [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:@selector(removeFromFavorites:) objects:@[button]];
         }];
     }
 }
 
 #pragma mark - Activity delegate
 
-- (void)willDismissActivityViewController:(JAActivityViewController *)activityViewController
-{
+- (void)willDismissActivityViewController:(JAActivityViewController *)activityViewController {
     // Track sharing here :)
 }
 

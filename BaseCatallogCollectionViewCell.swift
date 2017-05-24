@@ -10,7 +10,7 @@ import UIKit
 import Kingfisher
 
 @objc protocol BaseCatallogCollectionViewCellDelegate {
-    @objc optional func addToWishList(product: Product, cell: BaseCatallogCollectionViewCell)
+    @objc optional func addOrRemoveFromWishList(product: Product, cell: BaseCatallogCollectionViewCell, add: Bool)
 }
 
 class BaseCatallogCollectionViewCell: UICollectionViewCell {
@@ -23,7 +23,7 @@ class BaseCatallogCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var dicountPrecentageLabel: UILabel?
     @IBOutlet weak var rateView: RateStarControl?
     @IBOutlet weak var rateCountLabel: UILabel?
-    
+    @IBOutlet weak var addToWishListButton: UIButton?
     
     weak var delegate: BaseCatallogCollectionViewCellDelegate?
     private var product: Product?
@@ -54,7 +54,9 @@ class BaseCatallogCollectionViewCell: UICollectionViewCell {
     
     @IBAction func addToWishListButtonTapped(_ sender: Any) {
         if let avaiableProduct = self.product {
-            self.delegate?.addToWishList?(product: avaiableProduct, cell: self)
+            self.product?.isInWishList.toggle()
+            self.addToWishListButton?.isSelected = !self.addToWishListButton!.isSelected
+            self.delegate?.addOrRemoveFromWishList?(product: avaiableProduct, cell: self, add: avaiableProduct.isInWishList)
         }
     }
     
@@ -81,8 +83,7 @@ class BaseCatallogCollectionViewCell: UICollectionViewCell {
             self.rateCountLabel?.isHidden = true
             self.rateView?.isHidden = true
         }
-        
-        
+        self.addToWishListButton?.isSelected = product.isInWishList ?? false
         self.product = product
     }
     

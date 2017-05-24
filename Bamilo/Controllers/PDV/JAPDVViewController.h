@@ -14,6 +14,7 @@
 #import "MPCoachMarks.h"
 #import "EmarsysPredictProtocol.h"
 #import "ProductDataManager.h"
+#import "DataServiceProtocol.h"
 
 @interface JAPDVViewController : JABaseViewController <JAPDVImageSectionDelegate, EmarsysPredictProtocol, DataServiceProtocol>
 

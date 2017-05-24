@@ -8,11 +8,13 @@
 
 import UIKit
 import EmarsysPredictSDK
+import SwiftyJSON
 
 @objc class CatalogViewController: BaseViewController,
                                     DataServiceProtocol,
                                     JAFiltersViewControllerDelegate,
                                     CatalogHeaderViewDelegate,
+                                    BaseCatallogCollectionViewCellDelegate,
                                     UICollectionViewDataSource,
                                     UICollectionViewDelegate,
                                     EmarsysWebExtendProtocol {
@@ -51,7 +53,7 @@ import EmarsysPredictSDK
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = Theme.color(kColorVeryLightGray)
-        
+    
         self.catalogHeader.delegate = self
         self.setSortingMethodToHeader()
         self.collectionView.delegate = self
@@ -73,7 +75,7 @@ import EmarsysPredictSDK
     }
     
     
-    //MARK - DataServiceProtocol
+    //MARK: - DataServiceProtocol
     func bind(_ data: Any!, forRequestId rid: Int32) {
         if let receivedCatalogData = data as? Catalog {
             if rid == 0 {
@@ -90,7 +92,7 @@ import EmarsysPredictSDK
         }
     }
     
-    //MARK - JAFiltersViewControllerDelegate
+    //MARK: - JAFiltersViewControllerDelegate
     func updatedFilters(_ updatedFiltersArray: [Any]!) {
         self.catalogData?.filters = updatedFiltersArray as? [BaseCatalogFilterItem]
         self.findActiveFilters()
@@ -102,7 +104,7 @@ import EmarsysPredictSDK
     }
     
     
-    //MARK - CatalogHeaderViewDelegate
+    //MARK: - CatalogHeaderViewDelegate
     func sortTypeSelected(type: Catalog.CatalogSortType) {
         self.sortingMethod = type
         self.loadData()
@@ -125,7 +127,7 @@ import EmarsysPredictSDK
     
     
     
-    //MARK - helpers 
+    //MARK: - helpers 
     private func setSortingMethodToHeader() {
         if self.sortingMethod != .populaity {
             self.catalogHeader.setSortingType(type: self.sortingMethod)
@@ -285,12 +287,13 @@ import EmarsysPredictSDK
     }
     
     
-    //MARK - UICollectionViewDataSource & UICollectionViewDelegate
+    //MARK: - UICollectionViewDataSource & UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         if let product = self.catalogData?.products[indexPath.row] {
             self.showProductPage(product: product)
         }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -302,7 +305,7 @@ import EmarsysPredictSDK
         } else {
             cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: CatalogCardCollectionViewCell.nibName, for: indexPath) as! CatalogCardCollectionViewCell
         }
-    
+        cell.delegate = self
         cell.updateWithProduct(product: self.catalogData!.products[indexPath.row])
         cell.cellIndex = indexPath.row
         return cell
@@ -322,9 +325,17 @@ import EmarsysPredictSDK
         return 1
     }
     
+    //MARK: - BaseCatallogCollectionViewCellDelegate
+    func addOrRemoveFromWishList(product: Product, cell: BaseCatallogCollectionViewCell, add: Bool) {
+        ProductDataManager.sharedInstance().whishListTransation(target: self, sku: product.sku, add: add, completion: { (data, error) in
+            if (error != nil) {
+                product.isInWishList.toggle()
+                cell.updateWithProduct(product: product)
+            }
+        })
+    }
     
-    
-    //MARK - prepareForSegue
+    //MARK: - prepareForSegue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let segueName = segue.identifier
         if segueName == "embedCatalogNoResult", let noResultViewCtrl = segue.destination as? CatalogNoResultViewController {

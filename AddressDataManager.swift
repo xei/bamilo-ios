@@ -34,7 +34,7 @@ import UIKit
         }
     }
     
-    //MARK : Areas for Address create/edit
+    //MARK: Areas for Address create/edit
     func getRegions(target: DataServiceProtocol, completion:@escaping DataCompletion) {
         self.getAreaZone(tagret: target, type: .background, path: RI_API_GET_CUSTOMER_REGIONS, completion: completion)
     }

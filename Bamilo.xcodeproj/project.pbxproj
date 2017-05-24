@@ -32,6 +32,7 @@
 		610ED5831E742947000D5BEC /* UITextField+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 610ED5821E742947000D5BEC /* UITextField+Extensions.m */; };
 		611195821E3CB14B00D06690 /* PlainTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 611195801E3CB14B00D06690 /* PlainTableViewCell.m */; };
 		611195831E3CB14B00D06690 /* PlainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 611195811E3CB14B00D06690 /* PlainTableViewCell.xib */; };
+		61143A591ED55C2300C53BA8 /* Bool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61143A581ED55C2300C53BA8 /* Bool.swift */; };
 		61148E051E4724FC00E2540B /* StepperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61148E041E4724FC00E2540B /* StepperView.m */; };
 		61148E081E47250A00E2540B /* StepperViewControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 61148E071E47250A00E2540B /* StepperViewControl.m */; };
 		61148E0A1E47255F00E2540B /* StepperView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61148E091E47255F00E2540B /* StepperView.xib */; };
@@ -142,6 +143,7 @@
 		61E099781E3E1A02004ED14E /* VersionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E099761E3E1A02004ED14E /* VersionTableViewCell.xib */; };
 		61EE798E1EC0395C0036F93E /* CatalogCategoryFilterItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EE798D1EC0395C0036F93E /* CatalogCategoryFilterItem.swift */; };
 		61EE79901EC046D90036F93E /* CatalogCategoryFilterOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EE798F1EC046D90036F93E /* CatalogCategoryFilterOption.swift */; };
+		61F946B31ED4502100F341A6 /* ProductDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F946B21ED4502100F341A6 /* ProductDataManager.swift */; };
 		61FE97D51EC9BB7700DF233D /* GridCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FE97D41EC9BB7600DF233D /* GridCollectionViewFlowLayout.swift */; };
 		61FE97D71EC9C19300DF233D /* ListCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FE97D61EC9C19300DF233D /* ListCollectionViewFlowLayout.swift */; };
 		61FFD5861EB8CE17004A3518 /* CatalogDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FFD5851EB8CE17004A3518 /* CatalogDataManager.swift */; };
@@ -911,6 +913,7 @@
 		6111957F1E3CB14B00D06690 /* PlainTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlainTableViewCell.h; path = ../Controllers/MenuViewController/PlainTableViewCell.h; sourceTree = "<group>"; };
 		611195801E3CB14B00D06690 /* PlainTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlainTableViewCell.m; path = ../Controllers/MenuViewController/PlainTableViewCell.m; sourceTree = "<group>"; };
 		611195811E3CB14B00D06690 /* PlainTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PlainTableViewCell.xib; path = ../Controllers/MenuViewController/PlainTableViewCell.xib; sourceTree = "<group>"; };
+		61143A581ED55C2300C53BA8 /* Bool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bool.swift; sourceTree = "<group>"; };
 		61148E031E4724FC00E2540B /* StepperView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepperView.h; sourceTree = "<group>"; };
 		61148E041E4724FC00E2540B /* StepperView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StepperView.m; sourceTree = "<group>"; };
 		61148E061E47250A00E2540B /* StepperViewControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepperViewControl.h; sourceTree = "<group>"; };
@@ -1090,6 +1093,7 @@
 		61E099761E3E1A02004ED14E /* VersionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VersionTableViewCell.xib; sourceTree = "<group>"; };
 		61EE798D1EC0395C0036F93E /* CatalogCategoryFilterItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogCategoryFilterItem.swift; sourceTree = "<group>"; };
 		61EE798F1EC046D90036F93E /* CatalogCategoryFilterOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogCategoryFilterOption.swift; sourceTree = "<group>"; };
+		61F946B21ED4502100F341A6 /* ProductDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductDataManager.swift; sourceTree = "<group>"; };
 		61FE97D41EC9BB7600DF233D /* GridCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		61FE97D61EC9C19300DF233D /* ListCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		61FFD5851EB8CE17004A3518 /* CatalogDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogDataManager.swift; sourceTree = "<group>"; };
@@ -3068,6 +3072,7 @@
 				617F77AE1EB85BEC000A2A6C /* AddressDataManager.swift */,
 				61FFD5851EB8CE17004A3518 /* CatalogDataManager.swift */,
 				612544051EBA1075007F9350 /* OrderDataManager.swift */,
+				61F946B21ED4502100F341A6 /* ProductDataManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -3457,6 +3462,7 @@
 			children = (
 				61C8604B1ECB3C0F00F2C571 /* String.swift */,
 				61832FD91ED2D145006F01FE /* Double.swift */,
+				61143A581ED55C2300C53BA8 /* Bool.swift */,
 			);
 			name = extensions;
 			sourceTree = "<group>";
@@ -7721,6 +7727,7 @@
 				87A6ACEF1E38919C00C0E7DC /* GTMNSString+HTML.m in Sources */,
 				61C5BAF11EC1F40300F3A796 /* CatalogViewController.swift in Sources */,
 				870BEA8D1E74013F00C5B615 /* ThemeColor.m in Sources */,
+				61F946B31ED4502100F341A6 /* ProductDataManager.swift in Sources */,
 				9AB488891B727B2D00886A44 /* UIImage+WithColor.m in Sources */,
 				CE9ADFD11AB6D78200D56481 /* JAOrderSummaryView.m in Sources */,
 				87A6815C1E40F9C000D252AC /* BaseViewController.m in Sources */,
@@ -7769,6 +7776,7 @@
 				613A7E961EBF66B700E1AB3F /* CatalogPriceFilterItem.swift in Sources */,
 				9AEF74251CD8A86900A5D574 /* JAORConfirmConditionsViewController.m in Sources */,
 				6CF4AE881ADEABBB0024EC34 /* JACatalogBannerCell.m in Sources */,
+				61143A591ED55C2300C53BA8 /* Bool.swift in Sources */,
 				9AEF742C1CD8A8BD00A5D574 /* JAORConfirmationScreenViewController.m in Sources */,
 				CE9ADFE51AB6D78200D56481 /* JANewsletterComponent.m in Sources */,
 				610C68A51EC742E3008FB66C /* CatalogHeaderControl.swift in Sources */,

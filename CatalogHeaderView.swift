@@ -208,7 +208,7 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
         }
     }
     
-    //MARK - UIPickerViewDataSource
+    //MARK: - UIPickerViewDataSource
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }

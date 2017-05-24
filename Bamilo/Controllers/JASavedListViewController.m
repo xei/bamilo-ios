@@ -19,6 +19,7 @@
 #import "CartDataManager.h"
 #import "EmptyViewController.h"
 #import "EmarsysPredictManager.h"
+#import "Bamilo-Swift.h"
 
 #define kMaxProducts 20
 #define kMaxProducts_ipad 34
@@ -500,63 +501,59 @@
 - (void)removeFromSavedList:(RIProduct *)product showMessage:(BOOL)showMessage {
     NSNumber *price = (VALID_NOTEMPTY(product.specialPriceEuroConverted, NSNumber) && [product.specialPriceEuroConverted longValue] > 0.0f) ? product.specialPriceEuroConverted :product.priceEuroConverted;
     [self showLoading];
-    [RIProduct removeFromFavorites:product successBlock:^(RIApiResponse apiResponse, NSArray *success) {
-        
-        [self onSuccessResponse:RIApiResponseSuccess messages:@[STRING_REMOVED_FROM_WISHLIST] showMessage:showMessage];
-        
-        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-        [trackingDictionary setValue:product.sku forKey:kRIEventLabelKey];
-        [trackingDictionary setValue:@"RemoveFromWishlist" forKey:kRIEventActionKey];
-        [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
-        [trackingDictionary setValue:price forKey:kRIEventValueKey];
-        [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-        [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-        [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-        [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-        
-        // Since we're sending the converted price, we have to send the currency as EUR.
-        // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
-        [trackingDictionary setValue:price forKey:kRIEventPriceKey];
-        [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
-        
-        [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
-        [trackingDictionary setValue:product.avr forKey:kRIEventRatingKey];
-        
-        [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages) {
+    [[ProductDataManager sharedInstance] whishListTransationWithTarget:self sku:product.sku add:NO completion:^(id data, NSError *error) {
+        if (error == nil) {
+            [self onSuccessResponse:RIApiResponseSuccess messages:@[STRING_REMOVED_FROM_WISHLIST] showMessage:showMessage];
             
-            [trackingDictionary setValue:[NSNumber numberWithInteger:favoriteProducts.count] forKey:kRIEventTotalWishlistKey];
+            NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+            [trackingDictionary setValue:product.sku forKey:kRIEventLabelKey];
+            [trackingDictionary setValue:@"RemoveFromWishlist" forKey:kRIEventActionKey];
+            [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
+            [trackingDictionary setValue:price forKey:kRIEventValueKey];
+            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+            [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+            [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+            NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+            [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
             
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
-                                                      data:[trackingDictionary copy]];
-        } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
-                                                      data:[trackingDictionary copy]];
-        }];
-        
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInteger:RIEventAddFromWishlistToCart]
-                                                  data:[NSDictionary dictionaryWithObject:product.sku forKey:kRIEventProductFavToCartKey]];
-        
-        [[NSUserDefaults standardUserDefaults] setObject:product.sku forKey:kRIEventProductFavToCartKey];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        
-        NSMutableDictionary *tracking = [NSMutableDictionary new];
-        [tracking setValue:product.name forKey:kRIEventProductNameKey];
-        [tracking setValue:product.sku forKey:kRIEventSkuKey];
-        [tracking setValue:[product.categoryIds lastObject] forKey:kRIEventLastCategoryAddedToCartKey];
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLastAddedToCart] data:tracking];
-        
-        [self.productsArray removeObject:product.sku];
-        [self.productsDictionary removeObjectForKey:product.sku];
-        [self reloadData];
-        [self hideLoading];
-        
-    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-        SEL selector = NSSelectorFromString(@"removeFromSavedList:");
-
-        [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:selector objects:@[product]];
-        
-        [self hideLoading];
+            // Since we're sending the converted price, we have to send the currency as EUR.
+            // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
+            [trackingDictionary setValue:price forKey:kRIEventPriceKey];
+            [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
+            
+            [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
+            [trackingDictionary setValue:product.avr forKey:kRIEventRatingKey];
+            
+            [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages) {
+                
+                [trackingDictionary setValue:[NSNumber numberWithInteger:favoriteProducts.count] forKey:kRIEventTotalWishlistKey];
+                
+                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
+                                                          data:[trackingDictionary copy]];
+            } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
+                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
+                                                          data:[trackingDictionary copy]];
+            }];
+            
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInteger:RIEventAddFromWishlistToCart]
+                                                      data:[NSDictionary dictionaryWithObject:product.sku forKey:kRIEventProductFavToCartKey]];
+            
+            [[NSUserDefaults standardUserDefaults] setObject:product.sku forKey:kRIEventProductFavToCartKey];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            NSMutableDictionary *tracking = [NSMutableDictionary new];
+            [tracking setValue:product.name forKey:kRIEventProductNameKey];
+            [tracking setValue:product.sku forKey:kRIEventSkuKey];
+            [tracking setValue:[product.categoryIds lastObject] forKey:kRIEventLastCategoryAddedToCartKey];
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLastAddedToCart] data:tracking];
+            
+            [self.productsArray removeObject:product.sku];
+            [self.productsDictionary removeObjectForKey:product.sku];
+            [self reloadData];
+            [self hideLoading];
+        } else {
+            
+        }
     }];
 }
 

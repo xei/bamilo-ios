@@ -179,7 +179,7 @@
  *  @param the success block containing the favorite products list updated
  *
  */
-+ (void)removeFromFavorites:(RIProduct*)product successBlock:(void (^)(RIApiResponse apiResponse, NSArray *success))successBlock andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
+//+ (void)removeFromFavorites:(RIProduct*)product successBlock:(void (^)(RIApiResponse apiResponse, NSArray *success))successBlock andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 /**
  *  Method to load a the recently viewed products from coredata
