@@ -31,6 +31,7 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
     @IBOutlet private weak var sortingTitleLabel: UILabel!
     @IBOutlet private weak var sortingDescLabel: UILabel!
     
+    @IBOutlet private weak var filterButtonContainer: UIView!
     @IBOutlet private weak var changeListViewIconButton: IconButton!
     @IBOutlet private weak var sortIconImage: UIImageView!
     @IBOutlet private weak var filterIconImage: UIImageView!
@@ -137,6 +138,7 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
         self.secondVerticalSeperator.backgroundColor = Theme.color(kColorExtraExtraLightGray)
         self.filterButton.isEnabled = false
         
+        self.filterButtonContainer.backgroundColor = UIColor.white
         self.filterTitleLabel.font = Theme.font(kFontVariationRegular, size: 11)
         self.filterTitleLabel.textColor = Theme.color(kColorDarkGray)
         self.filterDescLabel.font = Theme.font(kFontVariationRegular, size: 9)
@@ -173,6 +175,10 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
     
     func enableFilterButton(enable:Bool) {
         self.filterButton.isEnabled = enable
+        self.filterButtonContainer.backgroundColor = enable ? UIColor.white : UIColor.init(colorLiteralRed: 240/255, green: 240/255, blue: 240/255, alpha: 1)  //Theme.color(kColorVeryLightGray)
+        self.filterTitleLabel.textColor = enable ? Theme.color(kColorDarkGray) : Theme.color(kColorLightGray)
+        self.filterDescLabel.textColor = enable ? Theme.color(kColorLightGray) : Theme.color(kColorExtraLightGray)
+        self.filterIconImage.image = enable ? UIImage(named: "filterIcon_normal") : UIImage(named: "filtered_list_no_result")
     }
     
     func setFilterButtonActive () {

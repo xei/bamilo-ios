@@ -105,27 +105,27 @@
             </view>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="P19-Jw-twT" firstAttribute="bottom" secondItem="ccm-PA-g8T" secondAttribute="bottom" id="8BW-cf-jXj"/>
+                <constraint firstAttribute="bottom" secondItem="P19-Jw-twT" secondAttribute="bottom" constant="7" id="3ek-PC-pYR"/>
                 <constraint firstItem="P19-Jw-twT" firstAttribute="left" secondItem="Ohl-pD-oTx" secondAttribute="right" constant="2" id="BOI-5h-549"/>
                 <constraint firstItem="ccm-PA-g8T" firstAttribute="right" secondItem="1Kb-O5-coX" secondAttribute="right" id="DGz-qT-W3f"/>
-                <constraint firstItem="Ohl-pD-oTx" firstAttribute="centerY" secondItem="P19-Jw-twT" secondAttribute="centerY" id="DbL-lL-CuA"/>
                 <constraint firstItem="1Kb-O5-coX" firstAttribute="right" secondItem="rgw-q7-MKo" secondAttribute="right" id="GNi-pk-71N"/>
                 <constraint firstItem="Ohl-pD-oTx" firstAttribute="left" secondItem="9Q5-K5-pJ4" secondAttribute="left" id="LAS-M8-q9R"/>
                 <constraint firstItem="eof-2J-ngd" firstAttribute="width" secondItem="gTV-IL-0wX" secondAttribute="width" multiplier="176:348" id="Ov5-3j-7rL"/>
                 <constraint firstItem="eof-2J-ngd" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="QrB-jU-MVP"/>
                 <constraint firstItem="n3a-c3-4e1" firstAttribute="left" secondItem="gTV-IL-0wX" secondAttribute="left" constant="10" id="RND-vj-NI7"/>
                 <constraint firstItem="rgw-q7-MKo" firstAttribute="right" secondItem="n3a-c3-4e1" secondAttribute="right" id="Wpj-Cm-VVa"/>
+                <constraint firstAttribute="bottom" secondItem="ccm-PA-g8T" secondAttribute="bottom" constant="7" id="aT5-j8-Sqp"/>
                 <constraint firstItem="P19-Jw-twT" firstAttribute="width" secondItem="P19-Jw-twT" secondAttribute="height" multiplier="5:1" id="bfT-pR-KfQ"/>
                 <constraint firstItem="eof-2J-ngd" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="flS-8X-XwC"/>
                 <constraint firstItem="ccm-PA-g8T" firstAttribute="left" secondItem="r2F-AZ-0gw" secondAttribute="right" constant="5" id="g3D-6P-qd5"/>
                 <constraint firstItem="r2F-AZ-0gw" firstAttribute="centerY" secondItem="ccm-PA-g8T" secondAttribute="centerY" id="k0G-Yt-7Po"/>
-                <constraint firstItem="ccm-PA-g8T" firstAttribute="top" secondItem="1Kb-O5-coX" secondAttribute="bottom" id="le6-gy-7XF"/>
                 <constraint firstItem="9Q5-K5-pJ4" firstAttribute="left" secondItem="gTV-IL-0wX" secondAttribute="left" constant="10" id="pIe-jq-PZR"/>
                 <constraint firstItem="1Kb-O5-coX" firstAttribute="top" secondItem="rgw-q7-MKo" secondAttribute="bottom" constant="4" id="q3s-MW-MZW"/>
                 <constraint firstItem="9Q5-K5-pJ4" firstAttribute="top" secondItem="eof-2J-ngd" secondAttribute="top" id="qA3-fK-Il4"/>
                 <constraint firstItem="n3a-c3-4e1" firstAttribute="top" secondItem="eof-2J-ngd" secondAttribute="bottom" constant="5" id="r8R-gS-ZzO"/>
                 <constraint firstItem="rgw-q7-MKo" firstAttribute="top" secondItem="n3a-c3-4e1" secondAttribute="bottom" constant="2" id="sHX-Nl-GhE"/>
                 <constraint firstItem="P19-Jw-twT" firstAttribute="width" secondItem="P19-Jw-twT" secondAttribute="height" multiplier="5:1" id="wCE-g7-i8Q"/>
+                <constraint firstItem="Ohl-pD-oTx" firstAttribute="centerY" secondItem="P19-Jw-twT" secondAttribute="centerY" id="x0d-tg-4BY"/>
                 <constraint firstAttribute="right" secondItem="n3a-c3-4e1" secondAttribute="right" constant="10" id="ydj-bU-Dv7"/>
             </constraints>
             <size key="customSize" width="416" height="399"/>
@@ -148,6 +148,7 @@
                 <outlet property="brandLabel" destination="rgw-q7-MKo" id="AGi-Xo-aNr"/>
                 <outlet property="dicountPrecentageLabel" destination="r2F-AZ-0gw" id="tGe-ac-Ge9"/>
                 <outlet property="discountedPriceLabel" destination="1Kb-O5-coX" id="8BA-vp-UOP"/>
+                <outlet property="discountedPriceTopConstaint" destination="q3s-MW-MZW" id="vxK-rp-eVo"/>
                 <outlet property="priceLabel" destination="ccm-PA-g8T" id="ksx-bj-0bI"/>
                 <outlet property="productImage" destination="eof-2J-ngd" id="KtW-bt-d9m"/>
                 <outlet property="rateCountLabel" destination="Ohl-pD-oTx" id="lSG-KC-EtH"/>

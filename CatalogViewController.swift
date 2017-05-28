@@ -31,8 +31,8 @@ import SwiftyJSON
     var pushFilterQueryString : String?
     var startCatalogStackIndexInNavigationViewController: Int?
     
-    private var activeFilters : [CatalogFilterItem]?
-    private var activePriceFilter: CatalogPriceFilterItem?
+//    private var activeFilters : [CatalogFilterItem]?
+//    private var activePriceFilter: CatalogPriceFilterItem?
     private var listViewType: CatalogListViewType = .grid
     private var listFullyLoaded = false
     
@@ -110,9 +110,8 @@ import SwiftyJSON
     
     //MARK: - JAFiltersViewControllerDelegate
     func updatedFilters(_ updatedFiltersArray: [Any]!) {
-        self.catalogData?.filters = updatedFiltersArray as? [BaseCatalogFilterItem]
-        self.findActiveFilters()
-        let queryFilters = self.getQueryOfActiveFilters()
+        let activeFilters = self.findActiveFilters(filters: updatedFiltersArray as? [BaseCatalogFilterItem])
+        let queryFilters = self.getQueryOfActiveFilters(activeFilters: activeFilters)
         
         if let startIndex = self.startCatalogStackIndexInNavigationViewController, queryFilters.characters.count == 0 {
             if let arrayOfViewControllers = self.navigationController?.viewControllers {
@@ -178,19 +177,22 @@ import SwiftyJSON
         }
     }
     
-    private func getQueryOfActiveFilters() -> String {
+    private func getQueryOfActiveFilters(activeFilters: [BaseCatalogFilterItem]) -> String {
         var filterQuery = ""
-        let filtersToString = self.activeFilters?.map({ (filterItem) -> String in
-            return filterItem.id + "/" + (filterItem.options?.filter { $0.selected }.map { $0.value! }.joined(separator: filterItem.filterSeparator!))!
+        let filtersToString = activeFilters.map({ (filterItem) -> String in
+            if let catalogFilter = filterItem as? CatalogFilterItem {
+                return catalogFilter.id + "/" + (catalogFilter.options?.filter { $0.selected }.map { $0.value! }.joined(separator: filterItem.filterSeparator!))!
+            } else if let priceFilter = filterItem as? CatalogPriceFilterItem {
+                return String(priceFilter.lowerValue)
+            } else {
+                return ""
+            }
         }).joined(separator: "/")
         
-        if let activeFilterQuery = filtersToString, activeFilterQuery.characters.count > 0 {
-            filterQuery = activeFilterQuery + "/"
+        if filtersToString.characters.count > 0 {
+            filterQuery = filtersToString + "/"
         }
-        
-        if let priceFilter = self.activePriceFilter, priceFilter.lowerValue != priceFilter.minPrice || priceFilter.upperValue != priceFilter.maxPrice {
-            filterQuery += String(priceFilter.lowerValue) + "/"
-        }
+
         return filterQuery
     }
     
@@ -204,8 +206,8 @@ import SwiftyJSON
         //Sequence of these functions are important
         self.sortingMethod = self.catalogData?.sortType ?? .populaity
         self.setSortingMethodToHeader()
-        self.findActiveFilters()
-        self.setActiveFiltersToHeader()
+        let activeFilters = self.findActiveFilters(filters: self.catalogData?.filters)
+        self.setActiveFiltersToHeader(activeFilters: activeFilters)
     }
     
     private func showNoResultView() {
@@ -220,35 +222,34 @@ import SwiftyJSON
         }
     }
     
-    private func findActiveFilters() {
-        self.activeFilters = self.catalogData?.filters?.filter({ (filterItem) -> Bool in
-            let activeFilterOptions = (filterItem as? CatalogFilterItem)?.options?.filter({ (filterOption) -> Bool in
-                return filterOption.selected
-            })
-            return activeFilterOptions != nil ?  activeFilterOptions!.count > 0 : false
-        }) as? [CatalogFilterItem]
-        
-        if let index = self.catalogData?.priceFilterIndex, let priceFilter = self.catalogData?.filters?[index] as? CatalogPriceFilterItem, priceFilter.lowerValue != 0 || priceFilter.upperValue != priceFilter.maxPrice {
-            self.activePriceFilter = priceFilter
-        } else {
-            self.activePriceFilter = nil
-        }
+    private func findActiveFilters(filters: [BaseCatalogFilterItem]?) -> [BaseCatalogFilterItem] {
+        return  filters?.filter({ (filterItem) -> Bool in
+            if let catalogFilter = filterItem as? CatalogFilterItem {
+                let activeFilterOptions = catalogFilter.options?.filter({ (filterOption) -> Bool in
+                    return filterOption.selected
+                })
+                return activeFilterOptions != nil ?  activeFilterOptions!.count > 0 : false
+            } else if let priceFilter = filterItem as? CatalogPriceFilterItem, priceFilter.lowerValue != 0 || priceFilter.upperValue != priceFilter.maxPrice {
+                return true
+            } else {
+                return false
+            }
+        }) ?? []
     }
     
-    private func setActiveFiltersToHeader() {
+    private func setActiveFiltersToHeader(activeFilters: [BaseCatalogFilterItem]?) {
         
         if let avaiebleFilters = self.catalogData?.filters, avaiebleFilters.count > 0 {
             self.catalogHeader.enableFilterButton(enable: true)
+        } else {
+            self.catalogHeader.enableFilterButton(enable: false)
         }
         
         var activeFilterString = ""
-        if let filters = self.activeFilters, filters.count > 0 {
+        if let filters = activeFilters, filters.count > 0 {
              activeFilterString = filters.map { (filter) -> String in
                 return filter.name
                 }.joined(separator: "، ");
-        }
-        if let _ = self.activePriceFilter {
-            activeFilterString += activeFilterString.characters.count > 0 ? "، \(STRING_PRICE)" : "\(STRING_PRICE)"
         }
         if activeFilterString.characters.count > 0 {
             self.catalogHeader.setFilterDescription(filterDescription: activeFilterString)
