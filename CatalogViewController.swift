@@ -381,7 +381,7 @@ import SwiftyJSON
         
         if segueName == "showFilterView" {
             let destinationViewCtrl = segue.destination as? JAFiltersViewController
-            destinationViewCtrl?.filtersArray = self.catalogData?.filters
+            destinationViewCtrl?.filtersArray = self.catalogData?.copyFilters() //?.filters
             destinationViewCtrl?.subCatsFilter = subCategoryFilterItem
             if let index = self.catalogData?.priceFilterIndex {
                 destinationViewCtrl?.priceFilterIndex = Int32(index);

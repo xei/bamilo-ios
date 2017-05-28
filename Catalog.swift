@@ -66,6 +66,21 @@ import SwiftyJSON
         }
     }
     
+    func copyFilters() -> [BaseCatalogFilterItem]? {
+        return  self.filters?.map({ (filterItem) -> BaseCatalogFilterItem in
+            if let priceFilter = filterItem as? CatalogPriceFilterItem {
+                let newpriceFilter = CatalogPriceFilterItem(JSON: priceFilter.toJSON())
+                return newpriceFilter!
+            } else if let filter = filterItem as? CatalogFilterItem {
+                let newfilterItem = CatalogFilterItem(JSON: filter.toJSON())
+                return newfilterItem!
+            } else {
+                //Never should comes here
+                return BaseCatalogFilterItem(JSON: [:])!
+            }
+        })
+    }
+    
     static func urlForSortType(type: CatalogSortType) -> String? {
         var urlComponent:String?
         switch (type) {
