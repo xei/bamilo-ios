@@ -44,7 +44,7 @@ import SwiftyJSON
     
     func mapping(map: Map) {
         title <- map["title"]
-        sortType <- (map["brand"], EnumTransform<CatalogSortType>())
+        sortType <- (map["sort"], EnumTransform<CatalogSortType>())
         products <- map["results"]
         totalProductsCount <- map["total_products"]
         breadcrumbs <- map["breadcrumb"]

@@ -183,7 +183,18 @@ import SwiftyJSON
             if let catalogFilter = filterItem as? CatalogFilterItem {
                 return catalogFilter.id + "/" + (catalogFilter.options?.filter { $0.selected }.map { $0.value! }.joined(separator: filterItem.filterSeparator!))!
             } else if let priceFilter = filterItem as? CatalogPriceFilterItem {
-                return String(priceFilter.lowerValue)
+                var priceQuery = ""
+                if (priceFilter.lowerValue != priceFilter.minPrice || priceFilter.upperValue != priceFilter.maxPrice) {
+                    priceQuery += "price/\(priceFilter.lowerValue)-\(priceFilter.upperValue)"
+                }
+                if (priceFilter.discountOnly) {
+                    if (priceQuery.characters.count > 0) {
+                        priceQuery += "/special_price/1"
+                    } else {
+                        priceQuery = "special_price/1"
+                    }
+                }
+                return priceQuery
             } else {
                 return ""
             }
@@ -229,7 +240,8 @@ import SwiftyJSON
                     return filterOption.selected
                 })
                 return activeFilterOptions != nil ?  activeFilterOptions!.count > 0 : false
-            } else if let priceFilter = filterItem as? CatalogPriceFilterItem, priceFilter.lowerValue != 0 || priceFilter.upperValue != priceFilter.maxPrice {
+            } else if let priceFilter = filterItem as? CatalogPriceFilterItem,
+                priceFilter.lowerValue != 0 || priceFilter.upperValue != priceFilter.maxPrice || priceFilter.discountOnly {
                 return true
             } else {
                 return false
