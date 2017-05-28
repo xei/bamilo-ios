@@ -91,42 +91,16 @@
 			<false/>
 		</dict>
 	</dict>
-	<key>Pushwoosh_APPID</key>
-	<string>A9EF7-6FDD2</string>
-	<key>Pushwoosh_APPNAME</key>
-	<string>Bamilo (Debugging)</string>
-	<key>Pushwoosh_LOG_LEVEL</key>
-	<string>NONE</string>
-	<key>PW_USE_GPS</key>
-	<true/>
-	<key>Configs</key>
-	<dict>
-		<key>EMMerchantID</key>
-		<string>18146DE34FE0B8C9</string>
-		<key>GoogleAnalyticsID</key>
-		<string>UA-52004541-5</string>
-		<key>Emarsys</key>
-		<dict>
-			<key>Application_CODE</key>
-			<string>A9EF7-6FDD2</string>
-			<key>Application_PASSWORD</key>
-			<string>+xhBaMoKRjc3SAHLsgqKTIodKWXJFhM/</string>
-		</dict>
-		<key>Pushwoosh_BETA</key>
-		<string>1</string>
-	</dict>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
-	<key>CFBundleVersion</key>
-	<string>36</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.0.1</string>
+	<string>2.0.2</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -152,7 +126,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>36</string>
+	<string>37</string>
 	<key>Configs</key>
 	<dict>
 		<key>EMMerchantID</key>
