@@ -19,7 +19,8 @@ import SwiftyJSON
                                     UICollectionViewDelegate,
                                     EmarsysWebExtendProtocol,
                                     UICollectionViewDelegateFlowLayout,
-                                    FilteredListNoResultViewControllerDelegate {
+                                    FilteredListNoResultViewControllerDelegate,
+                                    JAPDVViewControllerDelegate {
     
     @IBOutlet private weak var catalogHeader: CatalogHeaderControl!
     @IBOutlet private weak var collectionView: UICollectionView!
@@ -31,8 +32,10 @@ import SwiftyJSON
     var pushFilterQueryString : String?
     var startCatalogStackIndexInNavigationViewController: Int?
     
-//    private var activeFilters : [CatalogFilterItem]?
-//    private var activePriceFilter: CatalogPriceFilterItem?
+    private var selectedProduct: Product? //TODO: it's not necessary to keep it, but we should do it for now because
+                                          // we need to know which product (may) has been changed by PDVViewController (add to wish list)
+    
+    
     private var listViewType: CatalogListViewType = .grid
     private var listFullyLoaded = false
     
@@ -117,7 +120,7 @@ import SwiftyJSON
             if let arrayOfViewControllers = self.navigationController?.viewControllers {
                 self.navigationController?.popToViewController(arrayOfViewControllers[startIndex], animated: false)
             }
-        } else if queryFilters != self.pushFilterQueryString {
+        } else if queryFilters != self.pushFilterQueryString && queryFilters.characters.count != 0 {
             self.pushToSearchByFilterQuery(query: queryFilters)
         }
     }
@@ -321,8 +324,8 @@ import SwiftyJSON
     }
     
     private func showProductPage(product: Product) {
-        //TODO: transition from this controller to pdvViewController must not handle by notification!
-        NotificationCenter.default.post(name: NSNotification.Name("NOTIFICATION_DID_SELECT_TEASER_WITH_PDV_URL"), object: nil, userInfo: ["sku": product.sku])
+        self.selectedProduct = product
+        self.performSegue(withIdentifier: "pushPDVViewController", sender: nil)
     }
     
     
@@ -374,6 +377,11 @@ import SwiftyJSON
         return 1
     }
     
+    //MARK: - JAPDVViewControllerDelegate
+    func add(toWishList sku: String!, add: Bool) {
+        self.selectedProduct?.isInWishList = add
+        self.collectionView.reloadData()
+    }
     
     //MARK: - BaseCatallogCollectionViewCellDelegate
     func addOrRemoveFromWishList(product: Product, cell: BaseCatallogCollectionViewCell, add: Bool) {
@@ -383,6 +391,10 @@ import SwiftyJSON
                 cell.updateWithProduct(product: product)
             }
         })
+        
+        //TODO: this legacy action is for other view controllers to be notified that this product state has been changed
+        // this action is better to be handled by realm or other local data bases
+        NotificationCenter.default.post(name: NSNotification.Name("NOTIFICATION_PRODUCT_CHANGED"), object: product.sku, userInfo: nil)
     }
     
     //MARK: - prepareForSegue
@@ -390,9 +402,7 @@ import SwiftyJSON
         let segueName = segue.identifier
         if segueName == "embedCatalogNoResult", let noResultViewCtrl = segue.destination as? CatalogNoResultViewController {
             self.noResultViewController = noResultViewCtrl
-        }
-        
-        if segueName == "showFilterView" {
+        } else if segueName == "showFilterView" {
             let destinationViewCtrl = segue.destination as? JAFiltersViewController
             destinationViewCtrl?.filtersArray = self.catalogData?.copyFilters() //?.filters
             destinationViewCtrl?.subCatsFilter = subCategoryFilterItem
@@ -400,12 +410,15 @@ import SwiftyJSON
                 destinationViewCtrl?.priceFilterIndex = Int32(index);
             }
             destinationViewCtrl?.delegate = self;
-        }
-        
-        if segueName == "embedFilteredListNoResult" {
+        } else if segueName == "embedFilteredListNoResult" {
             let destinationViewCtrl = segue.destination as? FilteredListNoResultViewController
             destinationViewCtrl?.delegate = self
+        } else if segueName == "pushPDVViewController" {
+            let destinationViewCtrl = segue.destination as? JAPDVViewController
+            destinationViewCtrl?.productSku = self.selectedProduct?.sku
+            destinationViewCtrl?.delegate = self
         }
+        
     }
     
     //MARK: - EmarsysWebExtendProtocol

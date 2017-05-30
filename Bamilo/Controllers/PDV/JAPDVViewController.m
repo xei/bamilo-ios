@@ -1438,6 +1438,7 @@ typedef void (^ProcessActionBlock)(void);
                 [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification object:self.product.sku userInfo:userInfo];
 
                 [self onSuccessResponse:RIApiResponseSuccess messages:[self extractSuccessMessages:data] showMessage:YES];
+                [self.delegate addToWishList:self.product.sku add:YES];
             } else {
                 [self onErrorResponse:error.code messages:[error.userInfo objectForKey:kErrorMessages] showAsMessage:YES selector:@selector(addToWishList:) objects:@[button]];
                 //[self hideLoading];
@@ -1484,6 +1485,7 @@ typedef void (^ProcessActionBlock)(void);
                 [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
                                                                     object:self.product.sku
                                                                   userInfo:userInfo];
+                [self.delegate addToWishList:self.product.sku add:NO];
             } else {
                 [self onErrorResponse:error.code messages:[error.userInfo objectForKey:kErrorMessages] showAsMessage:YES selector:@selector(removeFromFavorites:) objects:@[button]];
                 //[self hideLoading];
