@@ -10,6 +10,7 @@
 #import "AppConsts.h"
 #import "RIApi.h"
 #import "RITarget.h"
+#import "RICustomer.h"
 #import "JAStrings.h"
 #import "JANavigationBarLayout.h"
 #import "IconButton.h"
@@ -30,8 +31,8 @@
 #import "BaseControlView.h"
 #import "BaseViewControl.h"
 #import "ViewControllerManager.h"
-
 #import "BaseViewController.h"
+#import "BaseTableViewCell.h"
 #import "CatalogNoResultViewController.h"
 #import "JAFiltersViewController.h"
 

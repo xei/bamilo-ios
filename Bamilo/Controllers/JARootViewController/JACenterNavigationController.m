@@ -14,7 +14,6 @@
 #import "JASavedListViewController.h"
 #import "JARecentSearchesViewController.h"
 #import "JARecentlyViewedViewController.h"
-#import "JAMyAccountViewController.h"
 #import "JAUserDataViewController.h"
 #import "JAMyOrdersViewController.h"
 #import "JAMyOrderDetailViewController.h"
@@ -665,8 +664,8 @@
 #pragma mark My Account Screen
 - (void)showMyAccountController {
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAMyAccountViewController class]]) {
-        JAMyAccountViewController *myAccountViewCtrl = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"myAccountViewController"];
+    if (![topViewController isKindOfClass:[ProfileViewController class]]) {
+        ProfileViewController *myAccountViewCtrl = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
         [self pushViewController:myAccountViewCtrl animated:NO];
     }
 }
