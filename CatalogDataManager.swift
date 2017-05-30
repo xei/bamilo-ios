@@ -43,7 +43,7 @@ class CatalogDataManager: DataManager {
     func getSubCategoriesFilter(target: DataServiceProtocol, categoryUrlKey: String, completion: @escaping DataCompletion) {
         let path = "\(RI_API_GET_CATEGORIES_BY_URLKEY)\(categoryUrlKey)"
         
-        self.requestManager.asyncGET(target, path: path, params: nil, type: .foreground) { (statusCode, data, errorMessages) in
+        self.requestManager.asyncGET(target, path: path, params: nil, type: .background) { (statusCode, data, errorMessages) in
             let _data = ResponseData()
             _data.metadata = ((((data?.metadata["data"] as? [[String:Any]])?[0])?["children"]) as? [[String: Any]])?[0]
             self.processResponse(statusCode, of: CatalogCategoryFilterItem.self, for: _data, errorMessages: errorMessages, completion: completion)

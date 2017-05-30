@@ -48,7 +48,7 @@ static BOOL isListenersReady;
         NSMutableString *filterString = [NSMutableString new];
         if(queryDictionary && queryDictionary.allKeys.count) {
             for(NSString *urlQueryKey in queryDictionary) {
-                [filterString appendFormat:@"%@/%@", urlQueryKey, [queryDictionary objectForKey:urlQueryKey]];
+                [filterString appendFormat:@"%@/%@/", urlQueryKey, [queryDictionary objectForKey:urlQueryKey]];
             }
         }
         
