@@ -21,11 +21,12 @@
             <rect key="frame" x="0.0" y="0.0" width="360" height="48"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="360" height="47"/>
+                <rect key="frame" x="0.0" y="0.0" width="360" height="47.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="W57-M6-YnY">
                         <rect key="frame" x="322" y="13" width="22" height="22"/>
+                        <color key="backgroundColor" red="0.8862745098" green="0.8862745098" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="22" id="Qzl-cL-Grl"/>
                             <constraint firstAttribute="width" secondItem="W57-M6-YnY" secondAttribute="height" multiplier="1:1" id="yk8-PL-9FQ"/>
@@ -44,8 +45,9 @@
                     </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="W57-M6-YnY" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="top" constant="13" id="EKh-oI-Gx3"/>
                     <constraint firstItem="W57-M6-YnY" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Rq0-M0-dje"/>
-                    <constraint firstItem="W57-M6-YnY" firstAttribute="leading" secondItem="IBm-Hp-UUv" secondAttribute="trailing" constant="16" id="Xjb-04-yYv"/>
+                    <constraint firstItem="W57-M6-YnY" firstAttribute="left" secondItem="IBm-Hp-UUv" secondAttribute="right" constant="16" id="Xjb-04-yYv"/>
                     <constraint firstAttribute="right" secondItem="W57-M6-YnY" secondAttribute="right" constant="16" id="bKY-Fu-Adp"/>
                     <constraint firstItem="IBm-Hp-UUv" firstAttribute="centerY" secondItem="W57-M6-YnY" secondAttribute="centerY" id="k2z-GX-ogR"/>
                 </constraints>

@@ -684,7 +684,7 @@
 
 "user_reviews" = "نظرات و پیشنهادهای کاربر";
 
-"profile" = "اطلاعات کاربر";
+"profile" = "اطلاعات کاربری من";
 
 "favourites_no_saved_items" = "شما هیچ کالای ذخیره شده ای در علاقه مندی ها ندارید";
 
@@ -846,3 +846,9 @@
 "already_logged_in" = "شما قبلا وارد سیستم شده اید";
 
 "bamilo_recommendation" = "پیشنهادهای بامیلو برای شما";
+
+"send_ideas_and_reports" = "ارسال مشکلات و ایده‌ها";
+
+"guid" = "راهنما";
+
+"call_to_bamilo_customer_service" = "تماس با تیم خدمات مشتریان بامیلو";

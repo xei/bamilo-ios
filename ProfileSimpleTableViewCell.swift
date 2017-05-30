@@ -20,10 +20,12 @@ class ProfileSimpleTableViewCell: BaseProfileTableViewCell {
     
     override func update(withModel model: Any!) {
         super.update(withModel: model)
-//        if let dataModel = model as? ProfileSimpleTableViewCellDataModel {
-//            self.titleLabel.text = dataModel.title
-//            self.iconImage.image = UIImage(named: dataModel.iconName)
-//        }
+        if let dataModel = model as? ProfileViewDataModel {
+            self.titleLabel.text = dataModel.title
+            if let iconName = dataModel.iconName {
+                self.iconImage.image = UIImage(named: iconName)
+            }
+        }
     }
 
     override static func nibName() -> String {

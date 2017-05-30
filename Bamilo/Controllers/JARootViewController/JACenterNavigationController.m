@@ -700,23 +700,24 @@
 
 #pragma mark User Data Screen
 - (void)showUserData:(NSNotification*)notification {
-    UIViewController *topViewController = [self topViewController];
-    if([RICustomer checkIfUserIsLogged]) {
-        if (![topViewController isKindOfClass:[JAUserDataViewController class]]) {
-            BOOL animated = NO;
-            if(VALID_NOTEMPTY(notification.object, NSDictionary) && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber)) {
-                animated = [[notification.object objectForKey:@"animated"] boolValue];
-            }
-            
-            JAUserDataViewController *userData = [[JAUserDataViewController alloc] init];
-            
-            [self pushViewController:userData animated:animated];
-        }
-    } else {
-        [self performProtectedBlock:^(BOOL userHadSession) {
-            [[NSNotificationCenter defaultCenter] postNotification:notification];
-        }];
-    }
+    [[ViewControllerManager centerViewController] requestNavigateToClass:@"JAUserDataViewController" args:nil];
+//    UIViewController *topViewController = [self topViewController];
+//    if([RICustomer checkIfUserIsLogged]) {
+//        if (![topViewController isKindOfClass:[JAUserDataViewController class]]) {
+//            BOOL animated = NO;
+//            if(VALID_NOTEMPTY(notification.object, NSDictionary) && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber)) {
+//                animated = [[notification.object objectForKey:@"animated"] boolValue];
+//            }
+//            
+//            JAUserDataViewController *userData = [[JAUserDataViewController alloc] init];
+//            
+//            [self pushViewController:userData animated:animated];
+//        }
+//    } else {
+//        [self performProtectedBlock:^(BOOL userHadSession) {
+//            [[NSNotificationCenter defaultCenter] postNotification:notification];
+//        }];
+//    }
 }
 
 #pragma mark Email Notifications Screen

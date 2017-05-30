@@ -800,7 +800,7 @@
                                 <rect key="frame" x="0.0" y="28" width="414" height="160"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pgz-Vl-RXA" id="cNm-Dn-ldr">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="160"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="159.66666666666666"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -1602,7 +1602,7 @@
                                 <rect key="frame" x="187.66666666666666" y="100" width="40" height="40"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="فیلترهای کمتری را برای جستجو انتخاب نمایید" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SU1-vf-mKc">
-                                <rect key="frame" x="84" y="165" width="247.33333333333331" height="23"/>
+                                <rect key="frame" x="84.333333333333314" y="165" width="247.33333333333337" height="23"/>
                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>

@@ -21,11 +21,12 @@
             <rect key="frame" x="0.0" y="0.0" width="490" height="117"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="490" height="116"/>
+                <rect key="frame" x="0.0" y="0.0" width="490" height="116.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VhL-ZZ-ya3">
                         <rect key="frame" x="430" y="33" width="50" height="50"/>
+                        <color key="backgroundColor" red="0.8862745098" green="0.8862745098" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="VhL-ZZ-ya3" secondAttribute="height" multiplier="1:1" id="6FI-rG-oop"/>
                             <constraint firstAttribute="height" constant="50" id="WzB-am-JqN"/>
@@ -43,7 +44,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ورود‌ /‌ ثبت‌نام" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rh8-xe-aWt">
-                        <rect key="frame" x="15" y="60" width="399" height="27"/>
+                        <rect key="frame" x="15" y="59.5" width="399" height="27"/>
                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="14"/>
                         <color key="textColor" red="0.31372549019607843" green="0.31372549019607843" blue="0.31372549019607843" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -56,6 +57,7 @@
                     <constraint firstItem="VhL-ZZ-ya3" firstAttribute="left" secondItem="PjM-RD-hnT" secondAttribute="right" constant="16" id="Grf-R9-T5A"/>
                     <constraint firstItem="Rh8-xe-aWt" firstAttribute="centerY" secondItem="VhL-ZZ-ya3" secondAttribute="centerY" constant="15" id="haR-Mv-85Y"/>
                     <constraint firstItem="VhL-ZZ-ya3" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="hdh-7y-f0A"/>
+                    <constraint firstItem="VhL-ZZ-ya3" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="rfm-I1-Fd6"/>
                     <constraint firstAttribute="right" secondItem="VhL-ZZ-ya3" secondAttribute="right" constant="10" id="uPV-bd-Jra"/>
                     <constraint firstItem="PjM-RD-hnT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="yoz-gB-B8v"/>
                 </constraints>

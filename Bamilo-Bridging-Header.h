@@ -17,6 +17,9 @@
 #import "RILocalizationWrapper.h"
 #import "ThreadManager.h"
 #import "ThemeManager.h"
+#import "TrackerManager.h"
+#import "AlertManager.h"
+#import "RICommunicationWrapper.h"
 
 #import <Masonry/Masonry.h>
 #import <RGB/RRGB.h>
@@ -25,6 +28,7 @@
 #import "OrderList.h"
 #import "PerformanceTrackerProtocol.h"
 #import "DataTrackerProtocol.h"
+#import "AuthenticationDataManager.h"
 #import "EmarsysPredictProtocol.h"
 #import "EmarsysPredictManager.h"
 

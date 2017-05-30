@@ -8,49 +8,115 @@
 
 import UIKit
 
-class ProfileViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
+enum ProfileCellTypeId: String {
+    case profileUserTableViewCell = "ProfileUserTableViewCell"
+    case profileOrderTableViewCell = "ProfileOrderTableViewCell"
+    case profileSimpleTableViewCell = "ProfileSimpleTableViewCell"
+}
+
+struct ProfileViewDataModel {
+    var cellType: ProfileCellTypeId
+    var title: String?
+    var iconName: String?
+    var notificationName: String?
+    var selector: Selector?
+}
+
+
+class ProfileViewController: JABaseViewController, UITableViewDelegate, UITableViewDataSource, DataServiceProtocol {
 
     @IBOutlet private weak var tableView: UITableView!
-    private var tableViewDataSource: [Dictionary<String, Any>]?
-    let footerSectionHeight: CGFloat = 10
-    
-    private enum CellTypeId: String {
-        case profileUserTableViewCell = "ProfileUserTableViewCell"
-        case profileOrderTableViewCell = "ProfileOrderTableViewCell"
-        case profileSimpleTableViewCell = "ProfileSimpleTableViewCell"
-    }
-    
-    private struct ProfileViewDataModel {
-        var cellType: CellTypeId
-        var title: String
-        var iconName: String
-        var notificationName: String?
-        var selector: Selector?
-    }
-
+    private var tableViewDataSource: [[ProfileViewDataModel]]?
+    private let footerSectionHeight: CGFloat = 10
+    private var viewWillApearedOnceOrMore = false
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tableView.backgroundColor = Theme.color(kColorVeryLightGray)
         self.tableView.dataSource = self
         self.tableView.delegate = self
         
-        self.tableView.register(UINib(nibName: ProfileUserTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: CellTypeId.profileUserTableViewCell.rawValue)
-        self.tableView.register(UINib(nibName: ProfileOrderTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: CellTypeId.profileOrderTableViewCell.rawValue)
-        self.tableView.register(UINib(nibName: ProfileSimpleTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: CellTypeId.profileSimpleTableViewCell.rawValue)
+        self.tableView.register(UINib(nibName: ProfileUserTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: ProfileCellTypeId.profileUserTableViewCell.rawValue)
+        self.tableView.register(UINib(nibName: ProfileOrderTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: ProfileCellTypeId.profileOrderTableViewCell.rawValue)
+        self.tableView.register(UINib(nibName: ProfileSimpleTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: ProfileCellTypeId.profileSimpleTableViewCell.rawValue)
+        
+        
+        self.updateTableViewDataSource()
+        self.tableView.reloadData()
+        
+        //TODO: these codes must be removed when tab bar is ok and there is no need for JABaseViewController
+        self.searchBarIsVisible = true;
+        self.tabBarIsVisible = true;
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        if self.viewWillApearedOnceOrMore {
+            self.updateTableViewDataSource()
+            self.tableView.reloadData()
+        }
+        self.viewWillApearedOnceOrMore = true
+    }
+    
+    //TODO: these codes must be removed when tab bar is ok and there is no need for JABaseViewController
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.tableView.frame = self.viewBounds()
     }
     
     func updateTableViewDataSource() {
-
+        self.tableViewDataSource = [
+            [ProfileViewDataModel(cellType: .profileUserTableViewCell, title: nil, iconName: nil, notificationName: nil, selector: #selector(showLogin))],
+            [ProfileViewDataModel(cellType: .profileOrderTableViewCell, title: nil, iconName: nil, notificationName: "NOTIFICATION_SHOW_MY_ORDERS_SCREEN", selector: nil)],
+            [
+                ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_PROFILE, iconName: "user-information-icons", notificationName: "NOTIFICATION_SHOW_USER_DATA_SCREEN", selector: nil),
+                ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_MY_ADDRESSES, iconName: "my-address-icon", notificationName: nil, selector: #selector(showMyAddressViewController)),
+                ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_RECENTLY_VIEWED, iconName: "LastViews", notificationName: "NOTIFICATION_SHOW_RECENTLY_VIEWED_SCREEN", selector: nil)
+            ],
+            [
+                ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_CONTACT_US, iconName: "", notificationName: nil, selector: #selector(callContctUs)),
+                ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_SEND_IDEAS_AND_REPORT, iconName: "", notificationName: nil, selector: nil),
+                ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_GUID, iconName: "", notificationName: nil, selector: #selector(showFAQ))
+            ]
+        ]
+        
+        if RICustomer.checkIfUserIsLogged() {
+            self.tableViewDataSource?.append([ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_LOGOUT, iconName: "", notificationName: nil, selector: #selector(logoutUser))])
+        }
     }
 
     //MARK: - UITableViewDataSource & UITableViewDelegate
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let dataModel = self.tableViewDataSource?[indexPath.section][indexPath.row]
+        var cell: BaseProfileTableViewCell!
+        if let cellType = dataModel?.cellType {
+            switch cellType {
+            case .profileUserTableViewCell:
+                cell = self.tableView.dequeueReusableCell(withIdentifier: ProfileUserTableViewCell.nibName(), for: indexPath) as! ProfileUserTableViewCell
+                cell.update(withModel: RICustomer.getCurrent())
+            case .profileOrderTableViewCell:
+                cell = self.tableView.dequeueReusableCell(withIdentifier: ProfileOrderTableViewCell.nibName(), for: indexPath) as! ProfileOrderTableViewCell
+                cell.update(withModel: dataModel)
+            case .profileSimpleTableViewCell:
+                cell = self.tableView.dequeueReusableCell(withIdentifier: ProfileSimpleTableViewCell.nibName(), for: indexPath) as! ProfileSimpleTableViewCell
+                cell.update(withModel: dataModel)
+            }
+        }
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return self.tableViewDataSource?[section].count ?? 0
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -66,13 +132,75 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         
         let gradient = CAGradientLayer()
         gradient.frame.size = CGSize(width: self.tableView.bounds.width, height: footerSectionHeight)
-        let stopColor = UIColor.gray.cgColor
+        let stopColor = Theme.color(kColorExtraLightGray).cgColor
         let startColor = Theme.color(kColorVeryLightGray).cgColor
         
         gradient.colors = [stopColor,startColor]
-        gradient.locations = [0.0,0.8]
+        gradient.locations = [0.0,0.4]
         shadowView.layer.addSublayer(gradient)
         
         return shadowView
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let dataModel = self.tableViewDataSource?[indexPath.section][indexPath.row] {
+            if let notificationName =  dataModel.notificationName  {
+                NotificationCenter.default.post(name: NSNotification.Name(notificationName), object: nil, userInfo: nil)
+            } else if let selector =  dataModel.selector, self.responds(to: selector) {
+                self.perform(selector)
+            }
+        }
+    }
+    
+    //MARK: - helper functions
+    func showLogin() {
+        if !RICustomer.checkIfUserIsLogged() {
+            NotificationCenter.default.post(name: NSNotification.Name("NOTIFICATION_SHOW_AUTHENTICATION_SCREEN"), object: nil, userInfo: nil)
+        }
+    }
+    
+    func callContctUs() {
+        AlertManager.sharedInstance().confirmAlert("", text: STRING_CALL_CUSTOMER_SERVICE, confirm: STRING_OK, cancel: STRING_CANCEL) { (didSelectOk) in
+            if didSelectOk {
+                RICountry.getCountriesWithSuccessBlock({ (configuration) in
+                    if let configure = configuration as? RICountryConfiguration, let tel = configure.phoneNumber {
+                        UIApplication.shared.openURL(URL(fileURLWithPath: "tel:\(tel)"))
+                    }
+                }, andFailureBlock: { (response, errorMessages) in
+                    
+                })
+            }
+        }
+    }
+    
+    func showMyAddressViewController() {
+        ViewControllerManager.centerViewController().requestNavigate(toNib: "AddressViewController", args: nil)
+    }
+    
+    func logoutUser() {
+        self.showLoading()
+        AuthenticationDataManager.sharedInstance().logoutUser(self) { (data, error) in
+            self.hideLoading()
+            self.bind(data, forRequestId: 0)
+            //EVENT: LOGOUT
+            TrackerManager.postEvent(EventFactory.logout(error == nil), forName: LogoutEvent.name())
+            EmarsysPredictManager.userLoggedOut()
+        }
+    }
+    
+    func showFAQ() {
+        NotificationCenter.default.post(name: NSNotification.Name("NOTIFICATION_DID_SELECT_TEASER_WITH_SHOP_URL"), object: nil, userInfo: ["title": STRING_GUID, "targetString": "shop_in_shop::help-ios", "show_back_button_title": ""])
+    }
+    
+    //MARK: - DataServiceProtocol
+    func bind(_ data: Any!, forRequestId rid: Int32) {
+        
+        //TODO: handle these legacy code with another way (when tab bar is ready)
+        NotificationCenter.default.post(name: NSNotification.Name("NOTIFICATION_USER_LOGGED_OUT"), object: nil, userInfo: nil)
+        NotificationCenter.default.post(name: NSNotification.Name("NOTIFICATION_UPDATE_CART"), object: nil, userInfo: nil)
+        NotificationCenter.default.post(name: NSNotification.Name("NOTIFICATION_HOME_SCREEN"), object: nil, userInfo: nil)
+        
+        RICommunicationWrapper.deleteSessionCookie()
+        ViewControllerManager.sharedInstance().clearCache()
     }
 }

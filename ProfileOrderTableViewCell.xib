@@ -21,7 +21,7 @@
             <rect key="frame" x="0.0" y="0.0" width="378" height="83"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="378" height="82"/>
+                <rect key="frame" x="0.0" y="0.0" width="378" height="82.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="btn_cart_pressed" translatesAutoresizingMaskIntoConstraints="NO" id="cxL-dX-DJB">
@@ -32,7 +32,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="پیگیری سفارشات" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RmY-Pm-qz4">
-                        <rect key="frame" x="212" y="28" width="104" height="27"/>
+                        <rect key="frame" x="212" y="28.5" width="104" height="27"/>
                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -40,6 +40,7 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="RmY-Pm-qz4" firstAttribute="centerY" secondItem="cxL-dX-DJB" secondAttribute="centerY" id="LTr-kK-hzp"/>
+                    <constraint firstItem="cxL-dX-DJB" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="Tw6-RS-FVJ"/>
                     <constraint firstItem="cxL-dX-DJB" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="fS2-8X-Gzz"/>
                     <constraint firstAttribute="right" secondItem="cxL-dX-DJB" secondAttribute="right" constant="16" id="uGq-TL-ItZ"/>
                     <constraint firstItem="cxL-dX-DJB" firstAttribute="left" secondItem="RmY-Pm-qz4" secondAttribute="right" constant="16" id="wTe-ji-CyA"/>
