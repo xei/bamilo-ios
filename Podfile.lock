@@ -23,6 +23,7 @@ PODS:
   - AFNetworking/UIKit (2.6.3):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - Alamofire (4.4.0)
   - AlgoliaSearch-Client (3.7.0):
     - AFNetworking (~> 2.2)
   - Crashlytics (3.8.4):
@@ -53,6 +54,7 @@ PODS:
 
 DEPENDENCIES:
   - Adjust (~> 4.11.0)
+  - Alamofire (~> 4.4)
   - AlgoliaSearch-Client
   - Crashlytics (~> 3.8)
   - EmarsysPredictSDK
@@ -75,6 +77,7 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   Adjust: c3265d1c75916d727277aca22ac4b52072fc18d2
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
+  Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
   AlgoliaSearch-Client: 8a937017f9faad0eef7a2d43fdb695f7620de140
   Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
   EmarsysPredictSDK: 8267726b1e8b3d5621a67d68b3c123060dde3639
@@ -92,10 +95,10 @@ SPEC CHECKSUMS:
   Pushwoosh: 4fafbc1d38ca5bc6237dbee3b02bbac7ddac593e
   RAlertView: b9996eb63ceb64c7d1879a1d1846af5e386a1808
   RGB: 21cf4b60ef3501c6b7cbb268a30045905dd90995
-  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
+  SDWebImage: '098e97e6176540799c27e804c96653ee0833d13c'
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   TTRangeSlider: 2f2ce4a33b32bb323c6575b9f5161c4664459c58
 
-PODFILE CHECKSUM: bc65916889b4a4f3aee03ab26fad457b92bcfc09
+PODFILE CHECKSUM: cf7bc901fa3a715a236368b9955c43c11f287edc
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.2.1

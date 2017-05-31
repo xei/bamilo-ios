@@ -1,6 +1,3 @@
-# Accengage specs source repo
-source 'https://github.com/Accengage/ios-pod-specs.git'
-
 # CocoaPods master specs repo
 source 'https://github.com/CocoaPods/Specs.git'
 
@@ -31,6 +28,7 @@ target 'Bamilo' do
   pod 'ObjectMapper', '~> 2.2'
   pod 'SwiftyJSON'
   pod 'Kingfisher', '~> 3.0'
+  pod 'Alamofire', '~> 4.4'
 
   target 'BamiloUITests' do
     inherit! :search_paths
