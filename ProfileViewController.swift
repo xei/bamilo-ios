@@ -24,7 +24,7 @@ struct ProfileViewDataModel {
 }
 
 
-class ProfileViewController: JABaseViewController, UITableViewDelegate, UITableViewDataSource, DataServiceProtocol, UIActionSheetDelegate {
+class ProfileViewController: JABaseViewController, UITableViewDelegate, UITableViewDataSource, DataServiceProtocol, MFMailComposeViewControllerDelegate{
 
     @IBOutlet private weak var tableView: UITableView!
     private var tableViewDataSource: [[ProfileViewDataModel]]?
@@ -229,10 +229,17 @@ class ProfileViewController: JABaseViewController, UITableViewDelegate, UITableV
             mailComposer.setSubject(forReport ? "اشتراک‌گذاری ایده‌ها نو" : "گزارش مشکلات برنامه")
             mailComposer.setMessageBody(messageBody, isHTML: false)
             mailComposer.setToRecipients(["application@bamilo.com"])
+            mailComposer.mailComposeDelegate = self
             
             self.present(mailComposer, animated: true, completion: nil)
         }
     }
+    
+    //MARK: - MFMailComposeViewControllerDelegate
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     //MARK: - DataServiceProtocol
     func bind(_ data: Any!, forRequestId rid: Int32) {
         
