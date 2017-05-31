@@ -95,7 +95,6 @@
         
         
         NSArray *toRecipents = [NSArray arrayWithObjects:@"application@bamilo.com", nil];
-        //        NSArray *toRecipents = [NSArray arrayWithObjects:@"tessa@qburst.com", nil];
         
         MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
         mc.mailComposeDelegate = self;

@@ -32,7 +32,9 @@ class ProfileUserTableViewCell: BaseProfileTableViewCell {
     override func update(withModel model: Any!) {
         if let user = model as? RICustomer {
             self.setupLoggedInView()
-            self.topMessageLabel.text = user.firstName
+            if let name = user.firstName {
+                self.topMessageLabel.text = "\(STRING_HELLO) \(name)"
+            }
             self.bottomMessageLabel.text = user.email
         } else {
             self.setupLoggedOutView()

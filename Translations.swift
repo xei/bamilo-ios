@@ -29,3 +29,4 @@ let STRING_LOGOUT = RILocalizationWrapper.localizedString("action_label_logout")
 let STRING_CALL_CUSTOMER_SERVICE = RILocalizationWrapper.localizedString("call_to_bamilo_customer_service")!
 let STRING_CANCEL = RILocalizationWrapper.localizedString("cancel_label")!
 let STRING_OK = RILocalizationWrapper.localizedString("ok_got_it")!
+let STRING_HELLO = RILocalizationWrapper.localizedString("hello")!

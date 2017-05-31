@@ -25,10 +25,10 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="W57-M6-YnY">
-                        <rect key="frame" x="322" y="13" width="22" height="22"/>
+                        <rect key="frame" x="326" y="15" width="18" height="18"/>
                         <color key="backgroundColor" red="0.8862745098" green="0.8862745098" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="22" id="Qzl-cL-Grl"/>
+                            <constraint firstAttribute="width" constant="18" id="Qzl-cL-Grl"/>
                             <constraint firstAttribute="width" secondItem="W57-M6-YnY" secondAttribute="height" multiplier="1:1" id="yk8-PL-9FQ"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
@@ -38,14 +38,14 @@
                         </userDefinedRuntimeAttributes>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="اطلاعات کاربری من" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IBm-Hp-UUv">
-                        <rect key="frame" x="206" y="13" width="100" height="23"/>
+                        <rect key="frame" x="210" y="13" width="100" height="23"/>
                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="W57-M6-YnY" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="top" constant="13" id="EKh-oI-Gx3"/>
+                    <constraint firstItem="W57-M6-YnY" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="EKh-oI-Gx3"/>
                     <constraint firstItem="W57-M6-YnY" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Rq0-M0-dje"/>
                     <constraint firstItem="W57-M6-YnY" firstAttribute="left" secondItem="IBm-Hp-UUv" secondAttribute="right" constant="16" id="Xjb-04-yYv"/>
                     <constraint firstAttribute="right" secondItem="W57-M6-YnY" secondAttribute="right" constant="16" id="bKY-Fu-Adp"/>

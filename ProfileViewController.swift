@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MessageUI
 
 enum ProfileCellTypeId: String {
     case profileUserTableViewCell = "ProfileUserTableViewCell"
@@ -23,7 +24,7 @@ struct ProfileViewDataModel {
 }
 
 
-class ProfileViewController: JABaseViewController, UITableViewDelegate, UITableViewDataSource, DataServiceProtocol {
+class ProfileViewController: JABaseViewController, UITableViewDelegate, UITableViewDataSource, DataServiceProtocol, UIActionSheetDelegate {
 
     @IBOutlet private weak var tableView: UITableView!
     private var tableViewDataSource: [[ProfileViewDataModel]]?
@@ -77,7 +78,7 @@ class ProfileViewController: JABaseViewController, UITableViewDelegate, UITableV
             ],
             [
                 ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_CONTACT_US, iconName: "", notificationName: nil, selector: #selector(callContctUs)),
-                ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_SEND_IDEAS_AND_REPORT, iconName: "", notificationName: nil, selector: nil),
+                ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_SEND_IDEAS_AND_REPORT, iconName: "", notificationName: nil, selector: #selector(sendIdeaOrReport)),
                 ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_GUID, iconName: "", notificationName: nil, selector: #selector(showFAQ))
             ]
         ]
@@ -192,6 +193,46 @@ class ProfileViewController: JABaseViewController, UITableViewDelegate, UITableV
         NotificationCenter.default.post(name: NSNotification.Name("NOTIFICATION_DID_SELECT_TEASER_WITH_SHOP_URL"), object: nil, userInfo: ["title": STRING_GUID, "targetString": "shop_in_shop::help-ios", "show_back_button_title": ""])
     }
     
+    func sendIdeaOrReport() {
+        
+        let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let saveAction = UIAlertAction(title: "گزارش مشکلات برنامه", style: .default) { _ in
+            self.sendEmail(forReport: true)
+        }
+        let deleteAction = UIAlertAction(title: "اشتراک‌گذاری ایده‌های نو", style: .default) { _ in
+             self.sendEmail(forReport: false)
+        }
+        let cancelAction = UIAlertAction(title: STRING_CANCEL, style: .cancel) { _ in
+            print("Cancelled")
+        }
+        
+        cancelAction.setValue(Theme.color(kColorRed), forKey: "titleTextColor")
+        
+        optionMenu.addAction(deleteAction)
+        optionMenu.addAction(saveAction)
+        optionMenu.addAction(cancelAction)
+
+        
+        self.present(optionMenu, animated: true, completion: nil)
+    }
+    
+    func sendEmail(forReport: Bool) {
+        if !MFMailComposeViewController.canSendMail() {
+            print("Mail services are not available")
+            return
+        } else {
+            var messageBody = "OS Version: \(UIDevice.current.systemVersion) \n Device Name: \(UIDevice.current.model) \n"
+            if let appVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String {
+                messageBody += " App Version: \(appVersion)"
+            }
+            let mailComposer = MFMailComposeViewController()
+            mailComposer.setSubject(forReport ? "اشتراک‌گذاری ایده‌ها نو" : "گزارش مشکلات برنامه")
+            mailComposer.setMessageBody(messageBody, isHTML: false)
+            mailComposer.setToRecipients(["application@bamilo.com"])
+            
+            self.present(mailComposer, animated: true, completion: nil)
+        }
+    }
     //MARK: - DataServiceProtocol
     func bind(_ data: Any!, forRequestId rid: Int32) {
         
