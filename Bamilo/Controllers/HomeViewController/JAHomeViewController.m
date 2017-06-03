@@ -32,6 +32,7 @@
 #import "ThreadManager.h"
 #import "EmarsysPredictManager.h"
 #import "DeepLinkManager.h"
+#import "Bamilo-Swift.h"
 
 @interface JAHomeViewController () <JAPickerDelegate, JANewsletterGenderProtocol, EmarsysRecommendationsProtocol, FeatureBoxCollectionViewWidgetViewDelegate>
 @property (strong, nonatomic) JATeaserPageView* teaserPageView;

@@ -21,7 +21,6 @@
 #import "JARegisterViewController.h"
 #import "JAPDVViewController.h"
 #import "JAExternalPaymentsViewController.h"
-//#import "JASuccessPageViewController.h"
 #import "RIProduct.h"
 #import "RISeller.h"
 #import "JANavigationBarLayout.h"
