@@ -8,6 +8,7 @@
 
 import Foundation
 import Alamofire
+import AlamofireObjectMapper
 
 enum ApiResponseType: Int {
     case success                = 9000
@@ -21,7 +22,7 @@ enum ApiResponseType: Int {
     case kickoutView            = 9008
 }
 
-typealias ResponseClosure = (_ responseType: ApiResponseType, _ data: ResponseData?, _ errorMessages: [String]?) -> Void
+typealias ResponseClosure = (_ responseType: ApiResponseType, _ data: ApiResponseData?, _ errorMessages: [String]?) -> Void
 
 class RequestManagerSwift {
     enum RequestExecutionType {
@@ -32,23 +33,59 @@ class RequestManagerSwift {
     
     private var baseUrl: String?
     
-    init(with baseUrl: String) {
+    init(with baseUrl: String?) {
         self.baseUrl = baseUrl
     }
     
     func async(_ method: HTTPMethod, target: Any, path: String, params: Parameters?, type: RequestExecutionType, completion: @escaping ResponseClosure) {
         if let baseUrl = self.baseUrl {
-            Alamofire.request("\(baseUrl)/\(path)", method: method, parameters: params, encoding: JSONEncoding.default, headers: self.getHeaders()).responseJSON(completionHandler: { (responseObject) -> Void in
+            if(type == .container || type == .foreground) {
+                LoadingManager.showLoading()
+            }
+            
+            Alamofire.request("\(baseUrl)/\(path)", method: method, parameters: params, encoding: JSONEncoding.default, headers: self.createHeaders()).responseObject { (response: DataResponse<ApiResponseData>) in
+                switch response.result {
+                    case .success:
+                        if let apiResponseData = response.result.value {
+                            if(apiResponseData.success) {
+                                completion(self.map(statusCode: response.response?.statusCode), apiResponseData, nil)
+                            } else {
+                                completion(self.map(statusCode: response.response?.statusCode), nil, nil)
+                            }
+                        }
                     
-                })
+                        if(type == .foreground) {
+                            LoadingManager.hideLoading()
+                        }
+                    case .failure(let error):
+                        print(error)
+                    
+                        LoadingManager.hideLoading()
+//                        if(errorJsonObject && errorJsonObject.allKeys.count) {
+//                            completion(apiResponse, nil, [RIError getPerfectErrorMessages:errorJsonObject]);
+//                        } else if(errorObject) {
+//                            NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+//                            completion(apiResponse, nil, errorArray);
+//                        } else {
+//                            completion(apiResponse, nil, nil);
+//                        }
+                }
+            }
         }
     }
     
     //MARK: Private Methods
-    private func getHeaders() -> HTTPHeaders {
+    private func createHeaders() -> HTTPHeaders {
         return [
             "User-Agent" : "\(AppUtility.getUserAgent()) M_IRAMZ",
             "User-Language" : "fa_IR"
         ]
+    }
+    
+    private func map(statusCode: Int?) -> ApiResponseType {
+        switch statusCode {
+            default:
+                return .success
+        }
     }
 }

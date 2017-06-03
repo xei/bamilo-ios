@@ -8,7 +8,7 @@
 
 import ObjectMapper
 
-class DataMessageList: Mappable {
+class ApiDataMessageList: Mappable {
     var success: [DataMessage]?
     
     required init?(map: Map) {}

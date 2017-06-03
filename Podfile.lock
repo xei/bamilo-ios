@@ -24,6 +24,9 @@ PODS:
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - Alamofire (4.4.0)
+  - AlamofireObjectMapper (4.1.0):
+    - Alamofire (~> 4.1)
+    - ObjectMapper (~> 2.0)
   - AlgoliaSearch-Client (3.7.0):
     - AFNetworking (~> 2.2)
   - Crashlytics (3.8.4):
@@ -55,6 +58,7 @@ PODS:
 DEPENDENCIES:
   - Adjust (~> 4.11.0)
   - Alamofire (~> 4.4)
+  - AlamofireObjectMapper (~> 4.0)
   - AlgoliaSearch-Client
   - Crashlytics (~> 3.8)
   - EmarsysPredictSDK
@@ -78,6 +82,7 @@ SPEC CHECKSUMS:
   Adjust: c3265d1c75916d727277aca22ac4b52072fc18d2
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
+  AlamofireObjectMapper: 435adc82f5b367679bd9e71c4974a54efd0b2521
   AlgoliaSearch-Client: 8a937017f9faad0eef7a2d43fdb695f7620de140
   Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
   EmarsysPredictSDK: 8267726b1e8b3d5621a67d68b3c123060dde3639
@@ -99,6 +104,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   TTRangeSlider: 2f2ce4a33b32bb323c6575b9f5161c4664459c58
 
-PODFILE CHECKSUM: cf7bc901fa3a715a236368b9955c43c11f287edc
+PODFILE CHECKSUM: dda2872dfa4bca2416dcfb52847acda8a474c05a
 
 COCOAPODS: 1.2.1

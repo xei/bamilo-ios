@@ -14,7 +14,7 @@ enum LocalLang : String {
 }
 
 struct AppUtility {
-    
+
     static var appName: String? {
         get {
             if let bundle = Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String {
@@ -62,5 +62,13 @@ struct AppUtility {
         }
         
         return String.EMPTY
+    }
+    
+    static func getInfoConfigs(for key: String) -> Any? {
+        if let configs = Bundle.main.infoDictionary?[AppKeys.Configs] as? NSDictionary {
+            return configs[key]
+        }
+        
+        return nil
     }
 }

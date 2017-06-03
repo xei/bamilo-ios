@@ -8,7 +8,7 @@
 
 import ObjectMapper
 
-class ResponseData: Mappable {
+class ApiResponseData: Mappable {
     var metadata: [String: Any]?
     var messages: DataMessageList?
     var success: Bool = false

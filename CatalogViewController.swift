@@ -38,14 +38,6 @@ import SwiftyJSON
     
     private var listViewType: CatalogListViewType = .grid
     private var listFullyLoaded = false
-    private let wishListTransactionClosure: ((_ product: Product, _ cell: BaseCatallogCollectionViewCell, _ error: Error?) -> Void) = { (product, cell, error) in
-        guard error != nil else {
-            return
-        }
-        
-        product.isInWishList.toggle()
-        cell.updateWithProduct(product: product)
-    }
     
     //TODO: this property is only used for passing enum (swift type) property from objective c
     // so we have to remove it after migration those who wanna pass this property
@@ -56,7 +48,6 @@ import SwiftyJSON
             }
         }
     }
-    
     
     private var subCategoryFilterItem: CatalogCategoryFilterItem?
     private var pageNumber: Int = 1
@@ -261,7 +252,6 @@ import SwiftyJSON
     }
     
     private func setActiveFiltersToHeader(activeFilters: [BaseCatalogFilterItem]?) {
-        
         if let avaiebleFilters = self.catalogData?.filters, avaiebleFilters.count > 0 {
             self.catalogHeader.enableFilterButton(enable: true)
         } else {
@@ -303,7 +293,7 @@ import SwiftyJSON
     
     private func loadData() {
         self.pageNumber = 1
-        CatalogDataManager.sharedInstance().getCatalog(target: self, searchTarget: searchTarget, filtersQueryString: pushFilterQueryString, sortingMethod: sortingMethod) { (data, errorMessages) in
+        CatalogDataManager.sharedInstance.getCatalog(target: self, searchTarget: searchTarget, filtersQueryString: pushFilterQueryString, sortingMethod: sortingMethod) { (data, errorMessages) in
             if errorMessages == nil {
                 self.bind(data, forRequestId: 0)
             } else {
@@ -316,7 +306,7 @@ import SwiftyJSON
     func loadAvaiableSubCategories() {
         //TODO: type of Target must be enum not string (the enum of RITarget can not be reusded in swift)
         if self.searchTarget.type == "catalog_category" {
-            CatalogDataManager.sharedInstance().getSubCategoriesFilter(target: self, categoryUrlKey: self.searchTarget.node, completion: { (data, errorMessages) in
+            CatalogDataManager.sharedInstance.getSubCategoriesFilter(target: self, categoryUrlKey: self.searchTarget.node, completion: { (data, errorMessages) in
                 self.subCategoryFilterItem = data as? CatalogCategoryFilterItem
             })
         }
@@ -326,7 +316,7 @@ import SwiftyJSON
         if self.loadingDataInProgress || self.listFullyLoaded { return }
         self.pageNumber += 1
         self.loadingDataInProgress = true
-        CatalogDataManager.sharedInstance().getCatalog(target: self, searchTarget: searchTarget, filtersQueryString: pushFilterQueryString, sortingMethod: sortingMethod, page: self.pageNumber) { (data, errorMessages) in
+        CatalogDataManager.sharedInstance.getCatalog(target: self, searchTarget: searchTarget, filtersQueryString: pushFilterQueryString, sortingMethod: sortingMethod, page: self.pageNumber) { (data, errorMessages) in
             self.bind(data, forRequestId: 1)
         }
     }
@@ -335,7 +325,6 @@ import SwiftyJSON
         self.selectedProduct = product
         self.performSegue(withIdentifier: "pushPDVViewController", sender: nil)
     }
-    
     
     //MARK: - UICollectionViewDataSource & UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -393,16 +382,15 @@ import SwiftyJSON
     
     //MARK: - BaseCatallogCollectionViewCellDelegate
     func addOrRemoveFromWishList(product: Product, cell: BaseCatallogCollectionViewCell, add: Bool) {
-        if(add) {
-            ProductDataManager.sharedInstance().addToWishList(target: self, sku: product.sku, completion: {
-              (data, error) in
-                self.wishListTransactionClosure(product, cell, error)
-            })
-        } else {
-            ProductDataManager.sharedInstance().removeFromWishList(target: self, sku: product.sku, completion: { (data, error) in
-                self.wishListTransactionClosure(product, cell, error)
-            })
+        ProductDataManager.sharedInstance.wishListTransaction(isAdd: add, target: self, sku: product.sku) { (data, error) in
+            guard error != nil else {
+                return
+            }
+            
+            product.isInWishList.toggle()
+            cell.updateWithProduct(product: product)
         }
+        
         //TODO: this legacy action is for other view controllers to be notified that this product state has been changed
         // this action is better to be handled by realm or other local data bases
         NotificationCenter.default.post(name: NSNotification.Name("NOTIFICATION_PRODUCT_CHANGED"), object: product.sku, userInfo: nil)

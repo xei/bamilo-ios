@@ -155,9 +155,9 @@
 #pragma mark - OrderProductListTableViewCellDelegate
 
 - (void)needsToShowProductReviewForProduct:(OrderProduct *)product {
-    [[LoadingManager sharedInstance] showLoading];
+    [LoadingManager showLoading];
     [RIProduct getCompleteProductWithSku:product.sku successBlock:^(id product) {
-        [[LoadingManager sharedInstance] hideLoading];
+        [LoadingManager hideLoading];
         NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
         if(VALID_NOTEMPTY(product, RIProduct)) {
             [userInfo setObject:product forKey:@"product"];
@@ -165,7 +165,7 @@
         [userInfo setObject:@"reviews" forKey:@"product.screen"];
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowProductSpecificationScreenNotification object:nil userInfo:userInfo];
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-        [[LoadingManager sharedInstance] hideLoading];
+        [LoadingManager hideLoading];
         if (error.count && ![self showNotificationBarMessage:error[0] isSuccess:NO]) {
 
         }

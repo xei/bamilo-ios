@@ -42,4 +42,3 @@
 #import "CatalogNoResultViewController.h"
 #import "JAFiltersViewController.h"
 #import "JAPDVViewController.h"
-

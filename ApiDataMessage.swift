@@ -8,7 +8,7 @@
 
 import ObjectMapper
 
-class DataMessage: Mappable {
+class ApiDataMessage: Mappable {
     var message: String?
     var reason: String?
     

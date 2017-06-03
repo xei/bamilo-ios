@@ -29,6 +29,7 @@ target 'Bamilo' do
   pod 'SwiftyJSON'
   pod 'Kingfisher', '~> 3.0'
   pod 'Alamofire', '~> 4.4'
+  pod 'AlamofireObjectMapper', '~> 4.0'
 
   target 'BamiloUITests' do
     inherit! :search_paths

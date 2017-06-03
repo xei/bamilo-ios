@@ -213,10 +213,12 @@
 		871BA8591E867FE0007680C5 /* SearchEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BA8581E867FE0007680C5 /* SearchEvent.m */; };
 		871BA85C1E8680A1007680C5 /* EventConsts.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BA85B1E8680A1007680C5 /* EventConsts.m */; };
 		8720C3331EDEE19200404378 /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8720C3321EDEE19200404378 /* RequestManager.swift */; };
-		8720C3361EDF034800404378 /* ResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8720C3351EDF034800404378 /* ResponseData.swift */; };
-		8720C3381EE27FB300404378 /* DataMessageList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8720C3371EE27FB300404378 /* DataMessageList.swift */; };
-		8720C33A1EE2808800404378 /* DataMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8720C3391EE2808800404378 /* DataMessage.swift */; };
+		8720C3361EDF034800404378 /* ApiResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8720C3351EDF034800404378 /* ApiResponseData.swift */; };
+		8720C3381EE27FB300404378 /* ApiDataMessageList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8720C3371EE27FB300404378 /* ApiDataMessageList.swift */; };
+		8720C33A1EE2808800404378 /* ApiDataMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8720C3391EE2808800404378 /* ApiDataMessage.swift */; };
 		8720C33C1EE2829300404378 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8720C33B1EE2829300404378 /* DataManager.swift */; };
+		8720C33E1EE2A8CC00404378 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8720C33D1EE2A8CC00404378 /* App.swift */; };
+		8720C3411EE2CD2700404378 /* LoadingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8720C3401EE2CD2700404378 /* LoadingManager.swift */; };
 		872230E61E6A9851000748E9 /* CAPSPageMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 872230E51E6A9851000748E9 /* CAPSPageMenu.m */; };
 		872230EA1E6A989D000748E9 /* SettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 872230E91E6A989D000748E9 /* SettingsManager.m */; };
 		872230EE1E6A98BC000748E9 /* ThreadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 872230ED1E6A98BC000748E9 /* ThreadManager.m */; };
@@ -471,6 +473,7 @@
 		877762C91E9BB37C00B73140 /* ResponseData.m in Sources */ = {isa = PBXBuildFile; fileRef = 877762C81E9BB37C00B73140 /* ResponseData.m */; };
 		877762CD1E9BB38800B73140 /* DataMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 877762CB1E9BB38800B73140 /* DataMessage.m */; };
 		877762D11E9BB39300B73140 /* DataMessageList.m in Sources */ = {isa = PBXBuildFile; fileRef = 877762D01E9BB39300B73140 /* DataMessageList.m */; };
+		87865FD11EE2D3B2009505C7 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87865FD01EE2D3B2009505C7 /* Notifications.swift */; };
 		879E57841E9E0BAB001C4C71 /* EventUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 879E57831E9E0BAB001C4C71 /* EventUtilities.m */; };
 		879F87EF1E5048790033FE87 /* NSMutableArray+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F87EE1E5048790033FE87 /* NSMutableArray+Extensions.m */; };
 		879F87F21E5057F10033FE87 /* PlainTableViewHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 879F87F11E5057F10033FE87 /* PlainTableViewHeaderCell.xib */; };
@@ -1233,10 +1236,12 @@
 		871BA85B1E8680A1007680C5 /* EventConsts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventConsts.m; sourceTree = "<group>"; };
 		871BA85E1E8786C5007680C5 /* Bamilo-Debug-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Bamilo-Debug-Info.plist"; sourceTree = "<group>"; };
 		8720C3321EDEE19200404378 /* RequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestManager.swift; sourceTree = "<group>"; };
-		8720C3351EDF034800404378 /* ResponseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseData.swift; sourceTree = "<group>"; };
-		8720C3371EE27FB300404378 /* DataMessageList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataMessageList.swift; sourceTree = "<group>"; };
-		8720C3391EE2808800404378 /* DataMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataMessage.swift; sourceTree = "<group>"; };
+		8720C3351EDF034800404378 /* ApiResponseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiResponseData.swift; sourceTree = "<group>"; };
+		8720C3371EE27FB300404378 /* ApiDataMessageList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiDataMessageList.swift; sourceTree = "<group>"; };
+		8720C3391EE2808800404378 /* ApiDataMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiDataMessage.swift; sourceTree = "<group>"; };
 		8720C33B1EE2829300404378 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		8720C33D1EE2A8CC00404378 /* App.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
+		8720C3401EE2CD2700404378 /* LoadingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingManager.swift; sourceTree = "<group>"; };
 		872230E01E6A97E0000748E9 /* DataTrackerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataTrackerProtocol.h; sourceTree = "<group>"; };
 		872230E41E6A9851000748E9 /* CAPSPageMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CAPSPageMenu.h; path = Bamilo/CAPSPageMenu.h; sourceTree = SOURCE_ROOT; };
 		872230E51E6A9851000748E9 /* CAPSPageMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CAPSPageMenu.m; path = Bamilo/CAPSPageMenu.m; sourceTree = SOURCE_ROOT; };
@@ -1612,6 +1617,7 @@
 		877762CC1E9BB38800B73140 /* DataMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataMessage.h; sourceTree = "<group>"; };
 		877762CF1E9BB39300B73140 /* DataMessageList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataMessageList.h; sourceTree = "<group>"; };
 		877762D01E9BB39300B73140 /* DataMessageList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataMessageList.m; sourceTree = "<group>"; };
+		87865FD01EE2D3B2009505C7 /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		879E57821E9E0BAB001C4C71 /* EventUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventUtilities.h; sourceTree = "<group>"; };
 		879E57831E9E0BAB001C4C71 /* EventUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventUtilities.m; sourceTree = "<group>"; };
 		879F87ED1E5048790033FE87 /* NSMutableArray+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Extensions.h"; sourceTree = "<group>"; };
@@ -2714,7 +2720,9 @@
 		610C68AB1EC87F0F008FB66C /* Constants */ = {
 			isa = PBXGroup;
 			children = (
+				8720C33D1EE2A8CC00404378 /* App.swift */,
 				610C68AC1EC87F2A008FB66C /* Translations.swift */,
+				87865FD01EE2D3B2009505C7 /* Notifications.swift */,
 			);
 			name = Constants;
 			sourceTree = "<group>";
@@ -3147,12 +3155,8 @@
 		617F77AC1EB85B9A000A2A6C /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				617F77AE1EB85BEC000A2A6C /* AddressDataManager.swift */,
-				61FFD5851EB8CE17004A3518 /* CatalogDataManager.swift */,
-				612544051EBA1075007F9350 /* OrderDataManager.swift */,
-				61F946B21ED4502100F341A6 /* ProductDataManager.swift */,
-				8720C3321EDEE19200404378 /* RequestManager.swift */,
-				8720C33B1EE2829300404378 /* DataManager.swift */,
+				8720C33F1EE2CD1000404378 /* Data */,
+				8720C3401EE2CD2700404378 /* LoadingManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -4386,9 +4390,22 @@
 		8720C3341EDEE19900404378 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				8720C3351EDF034800404378 /* ResponseData.swift */,
-				8720C3371EE27FB300404378 /* DataMessageList.swift */,
-				8720C3391EE2808800404378 /* DataMessage.swift */,
+				8720C3351EDF034800404378 /* ApiResponseData.swift */,
+				8720C3371EE27FB300404378 /* ApiDataMessageList.swift */,
+				8720C3391EE2808800404378 /* ApiDataMessage.swift */,
+			);
+			name = Data;
+			sourceTree = "<group>";
+		};
+		8720C33F1EE2CD1000404378 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				617F77AE1EB85BEC000A2A6C /* AddressDataManager.swift */,
+				61FFD5851EB8CE17004A3518 /* CatalogDataManager.swift */,
+				612544051EBA1075007F9350 /* OrderDataManager.swift */,
+				61F946B21ED4502100F341A6 /* ProductDataManager.swift */,
+				8720C3321EDEE19200404378 /* RequestManager.swift */,
+				8720C33B1EE2829300404378 /* DataManager.swift */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -7537,6 +7554,7 @@
 				61432ECB1E9B60DE001F7930 /* RecommendItem.m in Sources */,
 				617F77AF1EB85BEC000A2A6C /* AddressDataManager.swift in Sources */,
 				CE9ADF3A1AB6D78200D56481 /* JAButtonCell.m in Sources */,
+				8720C33E1EE2A8CC00404378 /* App.swift in Sources */,
 				8702FBBE1E9901AE001D1AA9 /* EventFactory.m in Sources */,
 				617D7F401EDC334900F36CF7 /* ProfileSimpleTableViewCell.swift in Sources */,
 				8702FBBA1E98FE3A001D1AA9 /* EmailUtility.m in Sources */,
@@ -7561,7 +7579,7 @@
 				8702FBE11E9A3377001D1AA9 /* AbandonCartEvent.m in Sources */,
 				FF4383EA1C6E1F49003BA957 /* JAScreenRadioComponent.m in Sources */,
 				871BA85C1E8680A1007680C5 /* EventConsts.m in Sources */,
-				8720C33A1EE2808800404378 /* DataMessage.swift in Sources */,
+				8720C33A1EE2808800404378 /* ApiDataMessage.swift in Sources */,
 				61840B681EA39941006739EB /* EmarsysRecommendationGridWidget.m in Sources */,
 				FF6BDCA01CE238F3002BFE11 /* JAORReasonsViewController.m in Sources */,
 				879F87EF1E5048790033FE87 /* NSMutableArray+Extensions.m in Sources */,
@@ -7634,7 +7652,7 @@
 				61CBA04A1E51D18F005673F7 /* FormTableViewCell.m in Sources */,
 				61143A621ED57D3900C53BA8 /* CatalogCollectionFooterView.swift in Sources */,
 				61037CC21EB73AF100A461E0 /* GoogleAnalyticsTracker.m in Sources */,
-				8720C3381EE27FB300404378 /* DataMessageList.swift in Sources */,
+				8720C3381EE27FB300404378 /* ApiDataMessageList.swift in Sources */,
 				8714E0771E479C00004C9B1D /* CheckoutProgressViewButtonModel.m in Sources */,
 				9A189E6F1BB31AF70039BC14 /* JAProductInfoSingleLine.m in Sources */,
 				875AD5701E38C0C900584ABF /* RISeller.m in Sources */,
@@ -7669,6 +7687,7 @@
 				CE9ADF7A1AB6D78200D56481 /* JAPercentageBarView.m in Sources */,
 				613FF2BA1E4B2858008660CF /* SignUpViewController.m in Sources */,
 				87EA03091E6C695D00B1E062 /* IconTableViewHeaderCell.m in Sources */,
+				87865FD11EE2D3B2009505C7 /* Notifications.swift in Sources */,
 				875AD56F1E38C0C900584ABF /* RIPromotion.m in Sources */,
 				9A6BC0831C43CBB900DD9492 /* JAMyOrderResumeView.m in Sources */,
 				61143A601ED5754900C53BA8 /* BaseCatalogCollectionFlowLayout.swift in Sources */,
@@ -7786,6 +7805,7 @@
 				875AD5751E38C0C900584ABF /* RIShippingMethodFormField.m in Sources */,
 				610C68A31EC74292008FB66C /* CatalogHeaderView.swift in Sources */,
 				CE9ADFBC1AB6D78200D56481 /* JAColorView.m in Sources */,
+				8720C3411EE2CD2700404378 /* LoadingManager.swift in Sources */,
 				618204A01E6DABFA00322937 /* SubCatFilterViewController.m in Sources */,
 				897460DE1C19DDFD00A38073 /* JACollectionHeaderView.m in Sources */,
 				9A4077331CE0CFD700313D20 /* UIButton+Size.m in Sources */,
@@ -7793,7 +7813,7 @@
 				875AD5511E38C0C900584ABF /* RIStaticBlockIndex.m in Sources */,
 				875AD5881E38C0C900584ABF /* RIGoogleAnalyticsTracker.m in Sources */,
 				875AD54E1E38C0C900584ABF /* RIRecentlyViewedProductSku.m in Sources */,
-				8720C3361EDF034800404378 /* ResponseData.swift in Sources */,
+				8720C3361EDF034800404378 /* ApiResponseData.swift in Sources */,
 				CE9ADFBF1AB6D78200D56481 /* JACheckoutForms.m in Sources */,
 				CE9ADFC11AB6D78200D56481 /* JARadioComponent.m in Sources */,
 				87A681611E41B88000D252AC /* SearchBaseViewController.m in Sources */,
@@ -8353,6 +8373,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "armv7 armv7s arm64";
