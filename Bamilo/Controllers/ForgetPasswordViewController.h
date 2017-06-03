@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "FormViewControl.h"
 #import "AuthenticationBaseViewController.h"
-#import "AuthenticationDataManager.h"
+#import "Bamilo-Swift.h"
 
 @interface ForgetPasswordViewController : BaseViewController <DataServiceProtocol, FormViewControlDelegate>
 

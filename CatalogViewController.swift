@@ -293,7 +293,7 @@ import SwiftyJSON
     
     private func loadData() {
         self.pageNumber = 1
-        CatalogDataManager.sharedInstance.getCatalog(target: self, searchTarget: searchTarget, filtersQueryString: pushFilterQueryString, sortingMethod: sortingMethod) { (data, errorMessages) in
+        CatalogDataManager.sharedInstance.getCatalog(self, searchTarget: searchTarget, filtersQueryString: pushFilterQueryString, sortingMethod: sortingMethod) { (data, errorMessages) in
             if errorMessages == nil {
                 self.bind(data, forRequestId: 0)
             } else {
@@ -306,7 +306,7 @@ import SwiftyJSON
     func loadAvaiableSubCategories() {
         //TODO: type of Target must be enum not string (the enum of RITarget can not be reusded in swift)
         if self.searchTarget.type == "catalog_category" {
-            CatalogDataManager.sharedInstance.getSubCategoriesFilter(target: self, categoryUrlKey: self.searchTarget.node, completion: { (data, errorMessages) in
+            CatalogDataManager.sharedInstance.getSubCategoriesFilter(self, categoryUrlKey: self.searchTarget.node, completion: { (data, errorMessages) in
                 self.subCategoryFilterItem = data as? CatalogCategoryFilterItem
             })
         }
@@ -316,7 +316,7 @@ import SwiftyJSON
         if self.loadingDataInProgress || self.listFullyLoaded { return }
         self.pageNumber += 1
         self.loadingDataInProgress = true
-        CatalogDataManager.sharedInstance.getCatalog(target: self, searchTarget: searchTarget, filtersQueryString: pushFilterQueryString, sortingMethod: sortingMethod, page: self.pageNumber) { (data, errorMessages) in
+        CatalogDataManager.sharedInstance.getCatalog(self, searchTarget: searchTarget, filtersQueryString: pushFilterQueryString, sortingMethod: sortingMethod, page: self.pageNumber) { (data, errorMessages) in
             self.bind(data, forRequestId: 1)
         }
     }

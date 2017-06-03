@@ -12,7 +12,7 @@ import ObjectMapper
 class CatalogDataManager: DataManagerSwift {
     static let sharedInstance = CatalogDataManager()
     
-    func getCatalog(target:DataServiceProtocol, searchTarget:RITarget? = nil, filtersQueryString:String? = nil, sortingMethod:Catalog.CatalogSortType = .populaity, page:Int = 1, completion: @escaping DataCompletion) {
+    func getCatalog(_ target:DataServiceProtocol, searchTarget:RITarget? = nil, filtersQueryString:String? = nil, sortingMethod:Catalog.CatalogSortType = .populaity, page:Int = 1, completion: @escaping DataCompletion) {
         var path = "\(RI_API_CATALOG)"
         if let target = searchTarget, let urlForTarget = RITarget.getRelativeUrlStringforTarget(target) {
             path += "\(urlForTarget)/"
@@ -35,7 +35,7 @@ class CatalogDataManager: DataManagerSwift {
         }
     }
     
-    func getSubCategoriesFilter(target: DataServiceProtocol, categoryUrlKey: String, completion: @escaping DataCompletion) {
+    func getSubCategoriesFilter(_ target: DataServiceProtocol, categoryUrlKey: String, completion: @escaping DataCompletion) {
         let path = "\(RI_API_GET_CATEGORIES_BY_URLKEY)\(categoryUrlKey)"
         
         CatalogDataManager.requestManager.async(.get, target: target, path: path, params: nil, type: .background, completion: { (responseType, data, errorMessages) in
