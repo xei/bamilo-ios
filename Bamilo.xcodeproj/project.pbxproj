@@ -212,6 +212,11 @@
 		871BA8561E867F4A007680C5 /* AppEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BA8551E867F4A007680C5 /* AppEvent.m */; };
 		871BA8591E867FE0007680C5 /* SearchEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BA8581E867FE0007680C5 /* SearchEvent.m */; };
 		871BA85C1E8680A1007680C5 /* EventConsts.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BA85B1E8680A1007680C5 /* EventConsts.m */; };
+		8720C3331EDEE19200404378 /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8720C3321EDEE19200404378 /* RequestManager.swift */; };
+		8720C3361EDF034800404378 /* ResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8720C3351EDF034800404378 /* ResponseData.swift */; };
+		8720C3381EE27FB300404378 /* DataMessageList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8720C3371EE27FB300404378 /* DataMessageList.swift */; };
+		8720C33A1EE2808800404378 /* DataMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8720C3391EE2808800404378 /* DataMessage.swift */; };
+		8720C33C1EE2829300404378 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8720C33B1EE2829300404378 /* DataManager.swift */; };
 		872230E61E6A9851000748E9 /* CAPSPageMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 872230E51E6A9851000748E9 /* CAPSPageMenu.m */; };
 		872230EA1E6A989D000748E9 /* SettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 872230E91E6A989D000748E9 /* SettingsManager.m */; };
 		872230EE1E6A98BC000748E9 /* ThreadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 872230ED1E6A98BC000748E9 /* ThreadManager.m */; };
@@ -1227,6 +1232,11 @@
 		871BA85A1E8680A1007680C5 /* EventConsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventConsts.h; sourceTree = "<group>"; };
 		871BA85B1E8680A1007680C5 /* EventConsts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventConsts.m; sourceTree = "<group>"; };
 		871BA85E1E8786C5007680C5 /* Bamilo-Debug-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Bamilo-Debug-Info.plist"; sourceTree = "<group>"; };
+		8720C3321EDEE19200404378 /* RequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestManager.swift; sourceTree = "<group>"; };
+		8720C3351EDF034800404378 /* ResponseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseData.swift; sourceTree = "<group>"; };
+		8720C3371EE27FB300404378 /* DataMessageList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataMessageList.swift; sourceTree = "<group>"; };
+		8720C3391EE2808800404378 /* DataMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataMessage.swift; sourceTree = "<group>"; };
+		8720C33B1EE2829300404378 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		872230E01E6A97E0000748E9 /* DataTrackerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataTrackerProtocol.h; sourceTree = "<group>"; };
 		872230E41E6A9851000748E9 /* CAPSPageMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CAPSPageMenu.h; path = Bamilo/CAPSPageMenu.h; sourceTree = SOURCE_ROOT; };
 		872230E51E6A9851000748E9 /* CAPSPageMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CAPSPageMenu.m; path = Bamilo/CAPSPageMenu.m; sourceTree = SOURCE_ROOT; };
@@ -3094,6 +3104,7 @@
 		617D7F441EDC3DE400F36CF7 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				8720C3341EDEE19900404378 /* Data */,
 				613A7E921EBF64EB00E1AB3F /* CatalogFiltes */,
 				613A7E8C1EBF069100E1AB3F /* Product.swift */,
 				613A7E8E1EBF0F6B00E1AB3F /* CategoryProduct.swift */,
@@ -3115,7 +3126,6 @@
 			children = (
 				617F77AD1EB85BEC000A2A6C /* Bamilo-Bridging-Header.h */,
 				610C68AB1EC87F0F008FB66C /* Constants */,
-				61C8604A1ECB3BD900F2C571 /* extensions */,
 				610C68941EC7395B008FB66C /* Views */,
 				613A7E8B1EBF033E00E1AB3F /* Models */,
 				613A7E8A1EBF033400E1AB3F /* ViewControllers */,
@@ -3127,6 +3137,7 @@
 		617F77AB1EB85B94000A2A6C /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				61C8604A1ECB3BD900F2C571 /* Extensions */,
 				617F77AC1EB85B9A000A2A6C /* Managers */,
 				61C860401ECAF94400F2C571 /* AppUtitlity.swift */,
 			);
@@ -3140,6 +3151,8 @@
 				61FFD5851EB8CE17004A3518 /* CatalogDataManager.swift */,
 				612544051EBA1075007F9350 /* OrderDataManager.swift */,
 				61F946B21ED4502100F341A6 /* ProductDataManager.swift */,
+				8720C3321EDEE19200404378 /* RequestManager.swift */,
+				8720C33B1EE2829300404378 /* DataManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -3525,7 +3538,7 @@
 			name = RecieptViewCartTableViewCell;
 			sourceTree = "<group>";
 		};
-		61C8604A1ECB3BD900F2C571 /* extensions */ = {
+		61C8604A1ECB3BD900F2C571 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				61C8604B1ECB3C0F00F2C571 /* Ext+String.swift */,
@@ -3534,7 +3547,7 @@
 				617D7F381EDC16DC00F36CF7 /* Ext+UILabel.swift */,
 				61EA56691EDE8BC20093EAD4 /* Ext+UIAlertView.swift */,
 			);
-			name = extensions;
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 		61CBA03A1E51A72E005673F7 /* ForgetPasswordViewController */ = {
@@ -4368,6 +4381,16 @@
 				871BA85B1E8680A1007680C5 /* EventConsts.m */,
 			);
 			name = Consts;
+			sourceTree = "<group>";
+		};
+		8720C3341EDEE19900404378 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				8720C3351EDF034800404378 /* ResponseData.swift */,
+				8720C3371EE27FB300404378 /* DataMessageList.swift */,
+				8720C3391EE2808800404378 /* DataMessage.swift */,
+			);
+			name = Data;
 			sourceTree = "<group>";
 		};
 		872230E71E6A9894000748E9 /* SettingsManager */ = {
@@ -7538,6 +7561,7 @@
 				8702FBE11E9A3377001D1AA9 /* AbandonCartEvent.m in Sources */,
 				FF4383EA1C6E1F49003BA957 /* JAScreenRadioComponent.m in Sources */,
 				871BA85C1E8680A1007680C5 /* EventConsts.m in Sources */,
+				8720C33A1EE2808800404378 /* DataMessage.swift in Sources */,
 				61840B681EA39941006739EB /* EmarsysRecommendationGridWidget.m in Sources */,
 				FF6BDCA01CE238F3002BFE11 /* JAORReasonsViewController.m in Sources */,
 				879F87EF1E5048790033FE87 /* NSMutableArray+Extensions.m in Sources */,
@@ -7610,6 +7634,7 @@
 				61CBA04A1E51D18F005673F7 /* FormTableViewCell.m in Sources */,
 				61143A621ED57D3900C53BA8 /* CatalogCollectionFooterView.swift in Sources */,
 				61037CC21EB73AF100A461E0 /* GoogleAnalyticsTracker.m in Sources */,
+				8720C3381EE27FB300404378 /* DataMessageList.swift in Sources */,
 				8714E0771E479C00004C9B1D /* CheckoutProgressViewButtonModel.m in Sources */,
 				9A189E6F1BB31AF70039BC14 /* JAProductInfoSingleLine.m in Sources */,
 				875AD5701E38C0C900584ABF /* RISeller.m in Sources */,
@@ -7636,6 +7661,7 @@
 				8714E05D1E472CDC004C9B1D /* Address.m in Sources */,
 				8702FBFC1E9A4BA9001D1AA9 /* CheckoutDataManager.m in Sources */,
 				87EA03111E6D450300B1E062 /* FormHeaderModel.m in Sources */,
+				8720C33C1EE2829300404378 /* DataManager.swift in Sources */,
 				61036B651E65B570006E12A9 /* Order.m in Sources */,
 				61EE798E1EC0395C0036F93E /* CatalogCategoryFilterItem.swift in Sources */,
 				CE9ADF731AB6D78200D56481 /* JAPaymentCell.m in Sources */,
@@ -7767,6 +7793,7 @@
 				875AD5511E38C0C900584ABF /* RIStaticBlockIndex.m in Sources */,
 				875AD5881E38C0C900584ABF /* RIGoogleAnalyticsTracker.m in Sources */,
 				875AD54E1E38C0C900584ABF /* RIRecentlyViewedProductSku.m in Sources */,
+				8720C3361EDF034800404378 /* ResponseData.swift in Sources */,
 				CE9ADFBF1AB6D78200D56481 /* JACheckoutForms.m in Sources */,
 				CE9ADFC11AB6D78200D56481 /* JARadioComponent.m in Sources */,
 				87A681611E41B88000D252AC /* SearchBaseViewController.m in Sources */,
@@ -7832,6 +7859,7 @@
 				FF4465221CECB806003A65EA /* JAORPaymentViewController.m in Sources */,
 				87B684DF1E49CE740042C09F /* BasicTableViewCell.m in Sources */,
 				9A0BBE951BFE2482007D35CE /* JACustomNavigationBarView.m in Sources */,
+				8720C3331EDEE19200404378 /* RequestManager.swift in Sources */,
 				875AD5471E38C0C900584ABF /* RIFieldDataSetComponent.m in Sources */,
 				CE9ADFDE1AB6D78200D56481 /* JABaseViewController.m in Sources */,
 				8702FBDD1E9A32D3001D1AA9 /* AddToCartEvent.m in Sources */,

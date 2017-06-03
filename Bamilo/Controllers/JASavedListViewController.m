@@ -501,7 +501,7 @@
 - (void)removeFromSavedList:(RIProduct *)product showMessage:(BOOL)showMessage {
     NSNumber *price = (VALID_NOTEMPTY(product.specialPriceEuroConverted, NSNumber) && [product.specialPriceEuroConverted longValue] > 0.0f) ? product.specialPriceEuroConverted :product.priceEuroConverted;
     [self showLoading];
-    [[ProductDataManager sharedInstance] whishListTransationWithTarget:self sku:product.sku add:NO completion:^(id data, NSError *error) {
+    [[ProductDataManager sharedInstance] removeFromFavorites:self sku:product.sku completion:^(id data, NSError *error) {
         if (error == nil) {
             [self onSuccessResponse:RIApiResponseSuccess messages:@[STRING_REMOVED_FROM_WISHLIST] showMessage:showMessage];
             

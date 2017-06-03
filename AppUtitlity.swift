@@ -15,17 +15,6 @@ enum LocalLang : String {
 
 struct AppUtility {
     
-    static func convertSignleCharTo(character: String, language: LocalLang) -> String {
-        let formatter: NumberFormatter = NumberFormatter()
-        let irLoc = NSLocale(localeIdentifier: language.rawValue) as Locale
-        formatter.locale = irLoc
-        let final = formatter.number(from: character)
-        if final != nil {
-            return formatter.string(from: final!)!
-        }
-        return character
-    }
-    
     static var appName: String? {
         get {
             if let bundle = Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String {
@@ -59,4 +48,19 @@ struct AppUtility {
         return nil
     }
     
+    static func getInfoValue<T>(for key:String) -> T? {
+        guard let object = Bundle.main.object(forInfoDictionaryKey: key) as? T else {
+            return nil
+        }
+        
+        return object
+    }
+    
+    static func getUserAgent() -> String {
+        if let userAgent = UIWebView(frame: CGRect.zero).stringByEvaluatingJavaScript(from: "navigator.userAgent") {
+            return userAgent
+        }
+        
+        return String.EMPTY
+    }
 }

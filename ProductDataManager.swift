@@ -8,24 +8,21 @@
 
 import UIKit
 
-@objc class ProductDataManager: DataManager {
-    
-    //TODO: Must be changed when we migrate all data managers
-    private static let shared = ProductDataManager()
+class ProductDataManager: DataManagerSwift {
+
     override class func sharedInstance() -> ProductDataManager {
-        return shared;
+        return ProductDataManager()
     }
     
+    func addToWishList(target: DataServiceProtocol, sku: String, completion: @escaping DataCompletion) {
+        self.requestManager.async(.post, target: target, path:RI_API_ADD_TO_WISHLIST , params: ["sku": sku], type: .foreground, completion: { (responseType, data, errorMessages) in
+            self.processResponse(responseType, aClass: nil, data: data, errorMessages: errorMessages, completion: completion)
+        })
+    }
     
-    func whishListTransation(target: DataServiceProtocol, sku: String, add:Bool, completion: @escaping DataCompletion ) {
-        if add {
-            self.requestManager.asyncPOST(target, path: RI_API_ADD_TO_WISHLIST, params: ["sku": sku], type: .foreground, completion: { (responseStatus, data, errorMessages) in
-                self.processResponse(responseStatus, of: nil, for: data, errorMessages: errorMessages, completion: completion)
-            })
-        } else {
-            self.requestManager.asyncDELETE(target, path: RI_API_REMOVE_FOM_WISHLIST, params: ["sku": sku], type: .foreground, completion: { (responseStatus, data, errorMessages) in
-                self.processResponse(responseStatus, of: nil, for: data, errorMessages: errorMessages, completion: completion)
-            })
-        }
+    func removeFromWishList(target: DataServiceProtocol, sku: String, completion: @escaping DataCompletion) {
+        self.requestManager.async(.delete, target: target, path:RI_API_REMOVE_FOM_WISHLIST, params: ["sku": sku], type: .foreground, completion: { (responseType, data, errorMessages) in
+            self.processResponse(responseType, aClass: nil, data: data, errorMessages: errorMessages, completion: completion)
+        })
     }
 }

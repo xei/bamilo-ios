@@ -9,12 +9,10 @@
 import UIKit
 import ObjectMapper
 
-class CatalogDataManager: DataManager {
+class CatalogDataManager: DataManagerSwift {
     
-    //TODO: Must be changed when we migrate all data managers
-    private static let shared = CatalogDataManager()
     override class func sharedInstance() -> CatalogDataManager {
-        return shared;
+        return CatalogDataManager()
     }
     
     func getCatalog(target:DataServiceProtocol, searchTarget:RITarget? = nil, filtersQueryString:String? = nil, sortingMethod:Catalog.CatalogSortType = .populaity, page:Int = 1, completion: @escaping DataCompletion) {
@@ -34,42 +32,40 @@ class CatalogDataManager: DataManager {
         path += "maxItems/36/page/\(page)"
         
         if let urlPath = path.addingPercentEncoding( withAllowedCharacters: .urlQueryAllowed) {
-            self.requestManager.asyncGET(target, path: urlPath, params: nil, type: .background) { (statusCode, data, errorMessages) in
-                self.processResponse(statusCode, of: Catalog.self, for: data, errorMessages: errorMessages, completion: completion)
-            }
+            self.requestManager.async(.get, target: target, path: urlPath, params: nil, type: .background, completion: { (responseType, data, errorMessages) in
+                self.processResponse(responseType, aClass: Catalog.self, data: data, errorMessages: errorMessages, completion: completion)
+            })
         }
     }
     
     func getSubCategoriesFilter(target: DataServiceProtocol, categoryUrlKey: String, completion: @escaping DataCompletion) {
         let path = "\(RI_API_GET_CATEGORIES_BY_URLKEY)\(categoryUrlKey)"
         
-        self.requestManager.asyncGET(target, path: path, params: nil, type: .background) { (statusCode, data, errorMessages) in
-            let _data = ResponseData()
-            _data.metadata = ((((data?.metadata["data"] as? [[String:Any]])?[0])?["children"]) as? [[String: Any]])?[0]
-            self.processResponse(statusCode, of: CatalogCategoryFilterItem.self, for: _data, errorMessages: errorMessages, completion: completion)
-        }
+        self.requestManager.async(.get, target: target, path: path, params: nil, type: .background, completion: { (responseType, data, errorMessages) in
+            data?.metadata = ((((data?.metadata?["data"] as? [[String:Any]])?[0])?["children"]) as? [[String: Any]])?[0]
+            self.processResponse(responseType, aClass: CatalogCategoryFilterItem.self, data: data, errorMessages: errorMessages, completion: completion)
+        })
     }
     
-    override func processResponse(_ response: RIApiResponse, of aClass: AnyClass!, for data: ResponseData!, errorMessages: [Any]!, completion: DataCompletion!) {
-            if completion != nil {
-                if response == RIApiResponse.success && data != nil {
-                    var payload = [String: Any]()
-                    if let messages = data.messages {
-                        payload["DataMessages"] = messages
-                    }
-                    
-                    if let serviceData = data.metadata as? [String:Any], let mappableClass = aClass as? Mappable.Type {
-                        if let responseObj = mappableClass.init(JSON: serviceData) {
-                            payload["DataContent"] = responseObj
-                        }
-                        
-                    }
-                    
-                    self.handlePayload(payload: payload, completion: completion)
-                } else {
-                    completion(nil, self.getErrorFrom(response, errorMessages: errorMessages))
+    override func processResponse(_ responseType: ApiResponseType, aClass: Any?, data: ResponseData?, errorMessages: [String]?, completion: DataClosure?) {
+        if let completion = completion {
+            guard responseType == ApiResponseType.success, let data = data else {
+                return completion(nil, self.createError(responseType, errorMessages: errorMessages))
+            }
+            
+            var payload = [String: Any]()
+            if let messages = data.messages {
+                payload["DataMessages"] = messages
+            }
+            
+            if let serviceData = data.metadata as [String:Any]?, let mappableClass = aClass as? Mappable.Type {
+                if let responseObj = mappableClass.init(JSON: serviceData) {
+                    payload["DataContent"] = responseObj
                 }
             }
+            
+            self.handlePayload(payload: payload, completion: completion)
+        }
     }
     
     

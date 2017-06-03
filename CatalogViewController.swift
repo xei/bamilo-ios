@@ -38,6 +38,14 @@ import SwiftyJSON
     
     private var listViewType: CatalogListViewType = .grid
     private var listFullyLoaded = false
+    private let wishListTransactionClosure: ((_ product: Product, _ cell: BaseCatallogCollectionViewCell, _ error: Error?) -> Void) = { (product, cell, error) in
+        guard error != nil else {
+            return
+        }
+        
+        product.isInWishList.toggle()
+        cell.updateWithProduct(product: product)
+    }
     
     //TODO: this property is only used for passing enum (swift type) property from objective c
     // so we have to remove it after migration those who wanna pass this property
@@ -385,13 +393,16 @@ import SwiftyJSON
     
     //MARK: - BaseCatallogCollectionViewCellDelegate
     func addOrRemoveFromWishList(product: Product, cell: BaseCatallogCollectionViewCell, add: Bool) {
-        ProductDataManager.sharedInstance().whishListTransation(target: self, sku: product.sku, add: add, completion: { (data, error) in
-            if (error != nil) {
-                product.isInWishList.toggle()
-                cell.updateWithProduct(product: product)
-            }
-        })
-        
+        if(add) {
+            ProductDataManager.sharedInstance().addToWishList(target: self, sku: product.sku, completion: {
+              (data, error) in
+                self.wishListTransactionClosure(product, cell, error)
+            })
+        } else {
+            ProductDataManager.sharedInstance().removeFromWishList(target: self, sku: product.sku, completion: { (data, error) in
+                self.wishListTransactionClosure(product, cell, error)
+            })
+        }
         //TODO: this legacy action is for other view controllers to be notified that this product state has been changed
         // this action is better to be handled by realm or other local data bases
         NotificationCenter.default.post(name: NSNotification.Name("NOTIFICATION_PRODUCT_CHANGED"), object: product.sku, userInfo: nil)
