@@ -6,8 +6,7 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-import UIKit
-import ObjectMapper
+import Foundation
 
 class CatalogDataManager: DataManagerSwift {
     static let sharedInstance = CatalogDataManager()

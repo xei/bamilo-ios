@@ -15,6 +15,7 @@
 #import "JAPicker.h"
 #import "JAUtils.h"
 #import "RICart.h"
+#import "Bamilo-Swift.h"
 
 @interface JARecentlyViewedViewController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, JAPickerDelegate, DataServiceProtocol>
 

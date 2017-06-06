@@ -13,6 +13,7 @@
 #import "RITeaserGrouping.h"
 #import "JATopTabsView.h"
 #import "CartDataManager.h"
+#import "Bamilo-Swift.h"
 
 @interface JACampaignsViewController : JABaseViewController <UIScrollViewDelegate, JAPickerDelegate, JACampaignPageViewDelegate, JATopTabsViewDelegate, DataServiceProtocol>
 

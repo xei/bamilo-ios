@@ -10,6 +10,7 @@
 #import "JAMyOrderDetailView.h"
 #import "JAMyOrdersViewController.h"
 #import "CartDataManager.h"
+#import "Bamilo-Swift.h"
 
 @interface JAMyOrderDetailViewController () <OrderDetailViewDelegate, DataServiceProtocol>
 //

@@ -22,7 +22,7 @@
 #import "CartEntitySummaryViewControl.h"
 #import "EmptyViewController.h"
 #import "EmarsysPredictManager.h"
-
+#import "Bamilo-Swift.h"
 
 @interface CartViewController() <CartTableViewCellDelegate>
 //@property (nonatomic, strong) JAEmptyCartView *emptyCartView;
