@@ -495,6 +495,7 @@
 		87A6ACEF1E38919C00C0E7DC /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A6ACE81E38919C00C0E7DC /* GTMNSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		87A6ACF21E38919C00C0E7DC /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A6ACEC1E38919C00C0E7DC /* NSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		87AFF6831EE68018001EBC4D /* CartDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AFF6821EE68018001EBC4D /* CartDataManager.swift */; };
+		87AFF6851EE686FE001EBC4D /* CheckoutDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AFF6841EE686FE001EBC4D /* CheckoutDataManager.swift */; };
 		87B684D51E49AB890042C09F /* DiscountCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B684D41E49AB890042C09F /* DiscountCodeView.m */; };
 		87B684D71E49AB900042C09F /* DiscountCodeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87B684D61E49AB900042C09F /* DiscountCodeView.xib */; };
 		87B684DC1E49CE660042C09F /* BasicTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87B684DB1E49CE660042C09F /* BasicTableViewCell.xib */; };
@@ -1666,6 +1667,7 @@
 		87A6ACEB1E38919C00C0E7DC /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HTML.h"; sourceTree = "<group>"; };
 		87A6ACEC1E38919C00C0E7DC /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HTML.m"; sourceTree = "<group>"; };
 		87AFF6821EE68018001EBC4D /* CartDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartDataManager.swift; sourceTree = "<group>"; };
+		87AFF6841EE686FE001EBC4D /* CheckoutDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckoutDataManager.swift; sourceTree = "<group>"; };
 		87B684D31E49AB890042C09F /* DiscountCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscountCodeView.h; sourceTree = "<group>"; };
 		87B684D41E49AB890042C09F /* DiscountCodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscountCodeView.m; sourceTree = "<group>"; };
 		87B684D61E49AB900042C09F /* DiscountCodeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiscountCodeView.xib; sourceTree = "<group>"; };
@@ -4408,6 +4410,7 @@
 				87865FD31EE2E468009505C7 /* AuthenticationDataManager.swift */,
 				617F77AE1EB85BEC000A2A6C /* AddressDataManager.swift */,
 				61FFD5851EB8CE17004A3518 /* CatalogDataManager.swift */,
+				87AFF6841EE686FE001EBC4D /* CheckoutDataManager.swift */,
 				87AFF6821EE68018001EBC4D /* CartDataManager.swift */,
 				612544051EBA1075007F9350 /* OrderDataManager.swift */,
 				61F946B21ED4502100F341A6 /* ProductDataManager.swift */,
@@ -7836,6 +7839,7 @@
 				9A17D1A51C64B61200851D6E /* JANewsletterTeaserView.m in Sources */,
 				613FF2B51E4B283F008660CF /* SignInViewController.m in Sources */,
 				875AD5451E38C0C900584ABF /* RIExternalCategory.m in Sources */,
+				87AFF6851EE686FE001EBC4D /* CheckoutDataManager.swift in Sources */,
 				CE9ADFC21AB6D78200D56481 /* JAPriceFiltersView.m in Sources */,
 				9AEF73FE1CD20E1C00A5D574 /* JAStepByStepModel.m in Sources */,
 				61B161D01E6BF24E0032C5C6 /* SearchPriceFilter.m in Sources */,

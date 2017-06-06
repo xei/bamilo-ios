@@ -19,6 +19,7 @@
 #import "EventUtilities.h"
 #import "SuccessPaymentViewController.h"
 #import "ThreadManager.h"
+#import "Bamilo-Swift.h"
 
 typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
     PAYMENT_METHOD_ONLINE = 1 << 0,

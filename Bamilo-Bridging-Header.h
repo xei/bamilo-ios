@@ -42,3 +42,5 @@
 #import "CatalogNoResultViewController.h"
 #import "JAFiltersViewController.h"
 #import "JAPDVViewController.h"
+
+#import "MultistepEntity.h"

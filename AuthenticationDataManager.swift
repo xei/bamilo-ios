@@ -9,6 +9,7 @@
 import Foundation
 
 @objc class AuthenticationDataManager: DataManager {
+    
     //TODO: Must be changed when we migrate all data managers
     private static let shared = AuthenticationDataManager()
     override class func sharedInstance() -> AuthenticationDataManager {

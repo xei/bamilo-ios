@@ -9,6 +9,7 @@
 import Foundation
 
 class CartDataManager: DataManager {
+    
     //TODO: Must be changed when we migrate all data managers
     private static let shared = CartDataManager()
     override class func sharedInstance() -> CartDataManager {

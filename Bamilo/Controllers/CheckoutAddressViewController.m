@@ -12,6 +12,7 @@
 #import "ViewControllerManager.h"
 #import "AddressTableViewController.h"
 #import "AddressList.h"
+#import "Bamilo-Swift.h"
 
 @interface CheckoutAddressViewController() <AddressTableViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *addressListContainerView;
@@ -73,7 +74,7 @@
         completion(nil, NO);
     } else {
         Address *_selectedAddress = [self getSelectedAddress];
-        [[CheckoutDataManager sharedInstance] setMultistepAddress:self forShipping:_selectedAddress.uid billing:_selectedAddress.uid completion:^(id data, NSError *error) {
+        [[CheckoutDataManager sharedInstance] setMultistepAddress:self shipping:_selectedAddress.uid billing:_selectedAddress.uid completion:^(id data, NSError *error) {
             if(error == nil && completion != nil) {
                 MultistepEntity *multistepEntity = (MultistepEntity *)data;
                 completion(multistepEntity.nextStep, YES);
