@@ -1,15 +1,15 @@
+////
+////  JACheckoutStepByStepModel.h
+////  Jumia
+////
+////  Created by Jose Mota on 22/04/16.
+////  Copyright © 2016 Rocket Internet. All rights reserved.
+////
 //
-//  JACheckoutStepByStepModel.h
-//  Jumia
+//#import "JAStepByStepModel.h"
 //
-//  Created by Jose Mota on 22/04/16.
-//  Copyright © 2016 Rocket Internet. All rights reserved.
+//#define kStepByStepModelKey @"stepByStepModel"
 //
-
-#import "JAStepByStepModel.h"
-
-#define kStepByStepModelKey @"stepByStepModel"
-
-@interface JACheckoutStepByStepModel : JAStepByStepModel
-
-@end
+//@interface JACheckoutStepByStepModel : JAStepByStepModel
+//
+//@end

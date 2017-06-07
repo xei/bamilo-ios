@@ -13,7 +13,7 @@
 #import "JAMyOrderResumeView.h"
 #import "JACenterNavigationController.h"
 #import "JABottomSubmitView.h"
-#import "ViewControllerManager.h"
+#import "Bamilo-Swift.h"
 
 @interface JAMyOrderDetailView () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
@@ -268,15 +268,15 @@
     if(VALID_NOTEMPTY(item.sku, NSString))
     {
         if (item.onlineReturn) {
-            [[ViewControllerManager centerViewController] goToOnlineReturnsConfirmConditionsForItems:@[item] order:self.order];
+            [[MainTabBarViewController topNavigationController] goToOnlineReturnsConfirmConditionsForItems:@[item] order:self.order];
         }else if (item.callReturn){
-            [[ViewControllerManager centerViewController] goToOnlineReturnsCall:item fromOrderNumber:self.order.orderId];
+            [[MainTabBarViewController topNavigationController] goToOnlineReturnsCall:item fromOrderNumber:self.order.orderId];
         }
     }
 }
 
 - (void)returnMultipleItems {
-    [[ViewControllerManager centerViewController] goToOnlineReturnsConfirmConditionsForItems:[self.itemsToReturnArray copy] order:self.order];
+    [[MainTabBarViewController topNavigationController] goToOnlineReturnsConfirmConditionsForItems:[self.itemsToReturnArray copy] order:self.order];
 }
 
 @end

@@ -15,10 +15,10 @@
 
 @interface JACategoriesSideMenuViewController ()
 
-@property (nonatomic, strong)NSArray* categoriesArray;
+@property (nonatomic, strong) NSArray* categoriesArray;
 @property (nonatomic, strong) RIExternalCategory *externalCategory;
-@property (nonatomic, strong)UITableView* tableView;
-@property (nonatomic, strong)NSMutableArray* tableViewCategoriesArray;
+@property (nonatomic, strong) UITableView* tableView;
+@property (nonatomic, strong) NSMutableArray* tableViewCategoriesArray;
 
 @property (strong, nonatomic) UIView *loadingView;
 @property (nonatomic, strong) UIImageView *loadingAnimation;
@@ -310,7 +310,7 @@
         
     }
     
-    [cell setupWithCategory:category width:256.0f hasSeparator:hasSeparator isOpen:isOpen];
+    [cell setupWithCategory:category width:self.tableView.width hasSeparator:hasSeparator isOpen:isOpen];
     
     return cell;
 }

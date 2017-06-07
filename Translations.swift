@@ -30,3 +30,7 @@ let STRING_CALL_CUSTOMER_SERVICE = RILocalizationWrapper.localizedString("call_t
 let STRING_CANCEL = RILocalizationWrapper.localizedString("cancel_label")!
 let STRING_OK = RILocalizationWrapper.localizedString("ok_got_it")!
 let STRING_HELLO = RILocalizationWrapper.localizedString("hello")!
+let STRING_DONT_REMOVE_INFO_EMAIL = RILocalizationWrapper.localizedString("please_dont_remove_information_from_email")!
+let STRING_REPORT_BUG = RILocalizationWrapper.localizedString("report_bug")!
+let STRING_SHARE_IDEAS = RILocalizationWrapper.localizedString("share_ideas")!
+

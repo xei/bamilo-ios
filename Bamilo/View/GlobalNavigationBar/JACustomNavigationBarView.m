@@ -77,11 +77,9 @@
 - (UILabel *)cartCountLabel {
     if (!_cartCountLabel) {
         
-        UIFont *font = JACaptionFont;
-    
         _cartCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(301, 8, 18.f, 18.f)];
         _cartCountLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
-        _cartCountLabel.font = font;
+        _cartCountLabel.font = [Theme font:kFontVariationRegular size:13];
         _cartCountLabel.textColor = JAWhiteColor;
         _cartCountLabel.adjustsFontSizeToFitWidth = YES;
         _cartCountLabel.textAlignment = NSTextAlignmentCenter;
@@ -246,9 +244,11 @@
         [self showBackButtonWithTitle:layout.backButtonTitle];
     } else if (layout.showEditButton) {
         [self showEditButtonWithTitle:layout.editButtonTitle];
-    } else if (layout.showMenuButton) {
-        [self showMenuButton];
-    } else {
+    }
+//    else if (layout.showMenuButton) {
+//        [self showMenuButton];
+//    }
+    else {
         [self hideLeftItems];
     }
     
@@ -504,9 +504,9 @@
 #pragma mark - Details
 
 - (void)updateCartProductCount:(NSNumber*)cartNumber {
-    CGRect frame = CGRectMake(self.cartCountLabel.frame.origin.x, self.cartCountLabel.frame.origin.y, 15.f, 15.f);
+    CGRect frame = CGRectMake(self.cartCountLabel.frame.origin.x, self.cartCountLabel.frame.origin.y, 17.f, 17.f);
     self.cartCountLabel.frame = frame;
-    [self.cartCountLabel setText:[NSString stringWithFormat:@"%lld", [cartNumber longLongValue]]];
+    [self.cartCountLabel setText:[[NSString stringWithFormat:@"%lld", [cartNumber longLongValue]] numbersToPersian]];
     self.cartCountLabel.layer.masksToBounds = YES;
     self.cartCountLabel.layer.cornerRadius = frame.size.width / 2;
 }

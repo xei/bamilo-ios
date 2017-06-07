@@ -43,7 +43,7 @@
 @property (strong, nonatomic) NSMutableArray *pickerDataSource;
 @property (nonatomic, strong) NSMutableDictionary* chosenSimples;
 @property (strong, nonatomic) UIButton *backupButton; // for the retry connection, is necessary to store the button
-@property (strong, nonatomic) UIView *bottomView;
+//@property (strong, nonatomic) UIView *bottomView;
 
 // pagination
 @property (nonatomic) BOOL lastPage;
@@ -86,14 +86,14 @@
     return _flowLayout;
 }
 
-- (UIView *)bottomView {
-    if (!VALID(_bottomView, UIView)) {
-        _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.viewBounds.size.height - 49.f, self.viewBounds.size.width, 1.f)];
-        [_bottomView setBackgroundColor:JABlack700Color];
-        [self.view addSubview:_bottomView];
-    }
-    return _bottomView;
-}
+//- (UIView *)bottomView {
+//    if (!VALID(_bottomView, UIView)) {
+//        _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.viewBounds.size.height - 49.f, self.viewBounds.size.width, 1.f)];
+//        [_bottomView setBackgroundColor:JABlack700Color];
+//        [self.view addSubview:_bottomView];
+//    }
+//    return _bottomView;
+//}
 
 - (NSNumber *)currentPage {
     if (!VALID(_currentPage, NSNumber)) {
@@ -124,19 +124,25 @@
     [self.collectionView setBackgroundColor:[UIColor whiteColor]];
     [self.collectionView registerClass:[JARecentlyViewedCell class] forCellWithReuseIdentifier:@"CellWithLines"];
     
-    [self loadProducts];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(updatedProduct:)
-                                                 name:kProductChangedNotification
-                                               object:nil];
     
-     CGRect frame = CGRectMake(self.viewBounds.origin.x, self.viewBounds.origin.y, self.view.frame.size.width, self.viewBounds.size.height - self.bottomView.height);
+     CGRect frame = CGRectMake(self.viewBounds.origin.x, self.viewBounds.origin.y, self.view.frame.size.width, self.viewBounds.size.height);
     self.collectionView.collectionViewLayout = self.flowLayout;
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     [self.collectionView setFrame:frame];
     [self.emptyViewContainer hide];
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if ([RICustomer checkIfUserIsLogged]) {
+        self.currentPage = @0;
+        [self loadProducts];
+    } else {
+        [((JACenterNavigationController *)self.navigationController) requestForcedLogin];
+    }
 }
 
 - (void)viewWillLayoutSubviews {
@@ -145,8 +151,8 @@
 
     
     [self.emptyViewContainer setFrame:self.collectionView.frame];
-    [self.bottomView setWidth:self.viewBounds.size.width];
-    [self.bottomView setYBottomAligned:48.f];
+//    [self.bottomView setWidth:self.viewBounds.size.width];
+//    [self.bottomView setYBottomAligned:48.f];
 }
 
 - (void)onOrientationChanged {
@@ -215,39 +221,39 @@
         [self.emptyViewContainer fadeIn:0.15];
         [self.emptyViewController getSuggestions];
         self.collectionView.hidden = YES;
-        [self.bottomView setHidden:YES];
+//        [self.bottomView setHidden:YES];
     } else {
         [self.emptyViewContainer hide];
         self.collectionView.hidden = NO;
-        [self.bottomView setHidden:NO];
+//        [self.bottomView setHidden:NO];
         [EmarsysPredictManager sendTransactionsOf:self];
     }
     [self hideLoading];
 }
 
 #pragma mark - kProductChangedNotification
-- (void)updatedProduct:(NSNotification *)notification {
-    [self showLoading];
-    __block NSString *sku = notification.object;
-    [RIProduct getCompleteProductWithSku:sku successBlock:^(RIProduct *product) {
-        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
-        if (VALID_NOTEMPTY([product favoriteAddDate], NSDate)) {
-            if (![self.productsArray containsObject:product.sku]) {
-                [self.productsArray addObject:product.sku];
-            }
-        }else{
-            if ([self.productsArray containsObject:product.sku]) {
-                [self.productsArray removeObject:product.sku];
-            }
-        }
-        [self.productsDictionary setObject:product forKey:sku];
-        [self reloadData];
-        [self hideLoading];
-    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
-        [self onErrorResponse:apiResponse messages:error showAsMessage:NO selector:@selector(updatedProduct:) objects:@[notification]];
-        [self hideLoading];
-    }];
-}
+//- (void)updatedProduct:(NSNotification *)notification {
+//    [self showLoading];
+//    __block NSString *sku = notification.object;
+//    [RIProduct getCompleteProductWithSku:sku successBlock:^(RIProduct *product) {
+//        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
+//        if (VALID_NOTEMPTY([product favoriteAddDate], NSDate)) {
+//            if (![self.productsArray containsObject:product.sku]) {
+//                [self.productsArray addObject:product.sku];
+//            }
+//        }else{
+//            if ([self.productsArray containsObject:product.sku]) {
+//                [self.productsArray removeObject:product.sku];
+//            }
+//        }
+//        [self.productsDictionary setObject:product forKey:sku];
+//        [self reloadData];
+//        [self hideLoading];
+//    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
+//        [self onErrorResponse:apiResponse messages:error showAsMessage:NO selector:@selector(updatedProduct:) objects:@[notification]];
+//        [self hideLoading];
+//    }];
+//}
 
 #pragma mark - collectionView methods
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {

@@ -16,7 +16,7 @@
 @property (nonatomic, strong)NSString* backButtonTitle;
 @property (nonatomic, strong)NSString* editButtonTitle;
 @property (nonatomic, assign)BOOL showEditButton;
-@property (nonatomic, assign)BOOL showMenuButton;
+//@property (nonatomic, assign)BOOL showMenuButton;
 
 @property (nonatomic, assign)BOOL showLogo;
 @property (nonatomic, assign)BOOL showTitleLabel;

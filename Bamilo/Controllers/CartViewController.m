@@ -22,6 +22,8 @@
 #import "CartEntitySummaryViewControl.h"
 #import "EmptyViewController.h"
 #import "EmarsysPredictManager.h"
+#import "LoadingManager.h"
+#import "Bamilo-Swift.h"
 
 
 @interface CartViewController() <CartTableViewCellDelegate>
@@ -67,7 +69,7 @@
     self.navBarLayout.title = STRING_CART;
     self.navBarLayout.showBackButton = NO;
     self.navBarLayout.showCartButton = NO;
-    self.tabBarIsVisible = YES;
+//    self.tabBarIsVisible = YES;
     [self.view setBackgroundColor:JAWhiteColor];
     
     //TableView registerations
@@ -80,7 +82,6 @@
 
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
-    self.contentWrapper.frame = self.viewBounds;
 }
 
 - (void)goToHomeScreen {
@@ -108,11 +109,11 @@
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutStart] data:[trackingDictionary copy]];
     [[RITrackingWrapper sharedInstance] trackScreenWithName:@"CheckoutAddress"];
     
-    [[ViewControllerManager centerViewController] requestNavigateToNib:@"CheckoutAddressViewController" ofStoryboard:@"Checkout" useCache:NO args:nil];
+    [[MainTabBarViewController topNavigationController] requestNavigateToNib:@"CheckoutAddressViewController" ofStoryboard:@"Checkout" useCache:NO args:nil];
 }
 
 - (void)removeCartItem:(RICartItem *)cartItem {
-    [self showLoading];
+    [[LoadingManager sharedInstance] showLoading];
     [RICart removeProductWithSku:cartItem.simpleSku withSuccessBlock:^(RICart *cart) {
         
         NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
@@ -149,8 +150,9 @@
         NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
         [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
         
-        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
-        [self hideLoading];
+        
+//        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
+        [[LoadingManager sharedInstance] hideLoading];
         
         self.cart = cart;
         
@@ -159,8 +161,9 @@
         });
         
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-        [self onErrorResponse:apiResponse messages:@[STRING_NO_NETWORK_DETAILS] showAsMessage:YES selector:@selector(removeCartItem:) objects:@[cartItem]];
-        [self hideLoading];
+        
+//        [self onErrorResponse:apiResponse messages:@[STRING_NO_NETWORK_DETAILS] showAsMessage:YES selector:@selector(removeCartItem:) objects:@[cartItem]];
+        [[LoadingManager sharedInstance] hideLoading];
     }];
 }
 
@@ -216,11 +219,11 @@
 #pragma CartTableViewCell Delegate
 
 - (void)quantityWillChangeTo:(int)newValue withCell:(id)cartCell {
-    [self showLoading];
+    [[LoadingManager sharedInstance] showLoading];
 }
 
 - (void)quantityHasBeenChangedTo:(int)newValue withNewCart:(RICart *)cart withCell:(id)cartCell {
-    [self hideLoading];
+    [[LoadingManager sharedInstance] hideLoading];
     
     NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
     [trackingDictionary setValue:cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
@@ -234,13 +237,14 @@
 }
 
 - (void)quantityHasBeenChangedTo:(int)newValue withErrorMessages:(NSArray *)errorMsgs withCell:(id)cartCell {
-    [self hideLoading];
+    [[LoadingManager sharedInstance] hideLoading];
     Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
     if (networkStatus == NotReachable) {
-        [self onErrorResponse:RIApiResponseUnknownError messages:@[STRING_NO_NETWORK_DETAILS] showAsMessage:YES selector:nil objects:nil];
+        [self showNotificationBarMessage:STRING_NO_NETWORK_DETAILS isSuccess:NO];
+//        [self onErrorResponse:RIApiResponseUnknownError messages:@[STRING_NO_NETWORK_DETAILS] showAsMessage:YES selector:nil objects:nil];
     } else {
-        [self onErrorResponse:RIApiResponseUnknownError messages:errorMsgs showAsMessage:YES selector:nil objects:nil];
+//        [self onErrorResponse:RIApiResponseUnknownError messages:errorMsgs showAsMessage:YES selector:nil objects:nil];
     }
 }
 
@@ -251,7 +255,7 @@
 }
 
 - (void)wantToIncreaseCartItemCountMoreThanMax:(RICartItem *)cartItem byCell:(id)cartCell {
-    [self showMessage:[[NSString stringWithFormat:@"سقف خرید %@ عدد می باشد", cartItem.maxQuantity] numbersToPersian] success:NO];
+    [self showNotificationBarMessage:[[NSString stringWithFormat:@"سقف خرید %@ عدد می باشد", cartItem.maxQuantity] numbersToPersian] isSuccess:NO];
 }
 
 - (void)wantsToRemoveCartItem:(RICartItem *)cartItem byCell:(id)cartCell {

@@ -11,7 +11,7 @@
 #import "JAClickableView.h"
 #import "JACenterNavigationController.h"
 #import "RITarget.h"
-#import "ViewControllerManager.h"
+#import "Bamilo-Swift.h"
 
 @interface JASearchView()
 {
@@ -217,7 +217,7 @@
                                       isRecentSearch:YES
                                           andContext:YES];
     }
-    [[ViewControllerManager centerViewController] openTargetString:suggestion.targetString];
+    [[MainTabBarViewController topNavigationController] openTargetString:suggestion.targetString];
     [self setHidden:YES];
 }
 

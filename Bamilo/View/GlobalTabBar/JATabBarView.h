@@ -1,22 +1,22 @@
+////
+////  JATabBarView.h
+////  Jumia
+////
+////  Created by Telmo Pinto on 21/10/15.
+////  Copyright © 2015 Rocket Internet. All rights reserved.
+////
 //
-//  JATabBarView.h
-//  Jumia
+//#import <UIKit/UIKit.h>
 //
-//  Created by Telmo Pinto on 21/10/15.
-//  Copyright © 2015 Rocket Internet. All rights reserved.
+//#define kTabBarHeight 53.0f
 //
-
-#import <UIKit/UIKit.h>
-
-#define kTabBarHeight 53.0f
-
-@interface JATabBarView : UIView
-
-@property (nonatomic, strong) NSMutableArray* tabButtonsArray;
-
-- (void)initialSetup;
-- (void)selectButtonAtIndex:(NSInteger)index;
-
-- (void)updateCartNumber:(NSInteger)cartNumber;
-
-@end
+//@interface JATabBarView : UIView
+//
+//@property (nonatomic, strong) NSMutableArray* tabButtonsArray;
+//
+//- (void)initialSetup;
+//- (void)selectButtonAtIndex:(NSInteger)index;
+//
+//- (void)updateCartNumber:(NSInteger)cartNumber;
+//
+//@end

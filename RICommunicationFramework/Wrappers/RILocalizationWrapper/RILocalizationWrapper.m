@@ -22,17 +22,17 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-+ (BOOL)localizationIsRTL
-{
-    NSString *locale = [[NSUserDefaults standardUserDefaults] stringForKey:kLanguageCodeKey];
-    NSDictionary *componentsFromLocale =  [NSLocale componentsFromLocaleIdentifier:locale];
-    NSString *languageCode = [componentsFromLocale objectForKey:NSLocaleLanguageCode];
-    
-    if ([languageCode isEqualToString:@"ar"] || [languageCode isEqualToString:@"fa"] || [languageCode isEqualToString:@"ur"]) {
-        return YES;
-    } else {
-        return NO;
-    }
++ (BOOL)localizationIsRTL {
+    return YES;
+//    NSString *locale = [[NSUserDefaults standardUserDefaults] stringForKey:kLanguageCodeKey];
+//    NSDictionary *componentsFromLocale =  [NSLocale componentsFromLocaleIdentifier:locale];
+//    NSString *languageCode = [componentsFromLocale objectForKey:NSLocaleLanguageCode];
+//    
+//    if ([languageCode isEqualToString:@"ar"] || [languageCode isEqualToString:@"fa"] || [languageCode isEqualToString:@"ur"]) {
+//        return YES;
+//    } else {
+//        return NO;
+//    }
 }
 
 + (NSString *)localizedString:(NSString *)key;
