@@ -351,7 +351,7 @@
         }
     }
     
-    [[CartDataManager sharedInstance] addProductToCart:self simpleSku:productSimple.sku completion:^(id data, NSError *error) {
+    [DataAggregator addProductToCart:self simpleSku:productSimple.sku completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
             

@@ -82,7 +82,7 @@
         return;
     }
     
-    [[AuthenticationDataManager sharedInstance] loginUser:self username:[self.emailControl getStringValue] password:[self.passwordControl getStringValue] completion:^(id data, NSError *error) {
+    [DataAggregator loginUser:self username:[self.emailControl getStringValue] password:[self.passwordControl getStringValue] completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
             

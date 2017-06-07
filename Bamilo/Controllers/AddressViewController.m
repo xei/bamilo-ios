@@ -62,7 +62,7 @@
     
     [[AlertManager sharedInstance] confirmAlert:@"تغییر آدرس" text:@"از تغییر آدرس پیش فرض خود اطمینان دارید؟" confirm:@"بله" cancel:@"خیر" completion:^(BOOL OK) {
         if(OK) {
-            [[AddressDataManager sharedInstance] setDefaultAddress:self address:address isBilling:NO completion:^(id _Nullable data , NSError * _Nullable error) {
+            [DataAggregator setDefaultAddress:self address:address isBilling:NO completion:^(id _Nullable data , NSError * _Nullable error) {
                 if(error == nil) {
                     [self bind:data forRequestId:1];
                     [_addressTableViewController scrollToTop];
@@ -85,7 +85,7 @@
     
     [[AlertManager sharedInstance] confirmAlert:@"حذف آدرس" text:@"از حذف آدرس خود اطمینان دارید؟" confirm:@"بله" cancel:@"خیر" completion:^(BOOL OK) {
         if(OK) {
-            [[AddressDataManager sharedInstance] deleteAddress:self address:_currentAddress completion:^(id _Nullable data, NSError * _Nullable error) {
+            [DataAggregator deleteAddress:self address:_currentAddress completion:^(id _Nullable data, NSError * _Nullable error) {
                 if(error == nil) {
                     [self fetchAddressList];
                 }
@@ -111,7 +111,7 @@
 
 #pragma mark - Helpers
 -(void) fetchAddressList {
-    [[AddressDataManager sharedInstance] getUserAddressList:self completion:^(id _Nullable data, NSError * _Nullable error) {
+    [DataAggregator getUserAddressList:self completion:^(id _Nullable data, NSError * _Nullable error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
             [self publishScreenLoadTime];

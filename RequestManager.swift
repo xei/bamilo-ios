@@ -22,28 +22,28 @@ enum ApiResponseType: Int {
     case kickoutView            = 9008
 }
 
+enum ApiRequestExecutionType {
+    case foreground
+    case background
+    case container
+}
+
 typealias ResponseClosure = (_ responseType: ApiResponseType, _ data: ApiResponseData?, _ errorMessages: [String]?) -> Void
 
 class RequestManagerSwift {
-    enum RequestExecutionType {
-        case foreground
-        case background
-        case container
-    }
-    
     private var baseUrl: String?
     
     init(with baseUrl: String?) {
         self.baseUrl = baseUrl
     }
     
-    func async(_ method: HTTPMethod, target: Any, path: String, params: Parameters?, type: RequestExecutionType, completion: @escaping ResponseClosure) {
+    func async(_ method: HTTPMethod, target: Any, path: String, params: Parameters?, type: ApiRequestExecutionType, completion: @escaping ResponseClosure) {
         if let baseUrl = self.baseUrl {
             if(type == .container || type == .foreground) {
                 LoadingManager.showLoading()
             }
             
-            Alamofire.request("\(baseUrl)/\(path)", method: method, parameters: params, encoding: JSONEncoding.default, headers: self.createHeaders()).responseObject { (response: DataResponse<ApiResponseData>) in
+            Alamofire.request("\(baseUrl)/\(path)", method: method, parameters: params, encoding: URLEncoding(destination: .methodDependent), headers: self.createHeaders()).responseObject { (response: DataResponse<ApiResponseData>) in
                 switch response.result {
                     case .success:
                         if let apiResponseData = response.result.value {

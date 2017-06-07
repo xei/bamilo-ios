@@ -28,7 +28,7 @@ class DataManagerSwift {
     
     func processResponse(_ responseType: ApiResponseType, aClass: Any?, data: ApiResponseData?, errorMessages: [String]?, completion: DataClosure?) {
         if let completion = completion {
-            guard responseType == ApiResponseType.success, let data = data else {
+            guard responseType == .success, let data = data else {
                 return completion(nil, self.createError(responseType, errorMessages: errorMessages))
             }
             
@@ -43,7 +43,7 @@ class DataManagerSwift {
                 }
             }
             
-            self.handlePayload(payload: payload, completion: completion)
+            self.handlePayload(payload: payload, data: data, completion: completion)
         }
     }
     
@@ -56,13 +56,15 @@ class DataManagerSwift {
     }
     
     //MARK: Private Methods
-    private func handlePayload(payload: [String:Any], completion: @escaping DataCompletion) {
+    private func handlePayload(payload: [String:Any], data: ApiResponseData?, completion: @escaping DataClosure) {
         if payload.count > 1 {
             completion(payload, nil)
         } else if payload[DataManagerKeys.DataContent] != nil {
             completion(payload[DataManagerKeys.DataContent], nil)
         } else if payload[DataManagerKeys.DataMessages] != nil {
             completion(payload[DataManagerKeys.DataMessages], nil)
+        } else {
+            completion(data, nil)
         }
     }
 }

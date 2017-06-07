@@ -53,7 +53,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [[OrderDataManager sharedInstance] getOrder:self orderId:self.order.orderId completion:^(id data, NSError *error) {
+    [DataAggregator getOrder:self orderId:self.order.orderId completion:^(id data, NSError *error) {
         if (error == nil) {
             [self bind:data forRequestId:0];
             NSArray *progressViewContent = [self getProgressViewControlContentForOrder:self.order];

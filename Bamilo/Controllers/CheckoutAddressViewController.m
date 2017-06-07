@@ -37,7 +37,7 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[CheckoutDataManager sharedInstance] getMultistepAddressList:self completion:^(id data, NSError *error) {
+    [DataAggregator getMultistepAddressList:self completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
             [self setIsStepValid:_addresses.count];
@@ -74,7 +74,7 @@
         completion(nil, NO);
     } else {
         Address *_selectedAddress = [self getSelectedAddress];
-        [[CheckoutDataManager sharedInstance] setMultistepAddress:self shipping:_selectedAddress.uid billing:_selectedAddress.uid completion:^(id data, NSError *error) {
+        [DataAggregator setMultistepAddress:self shipping:_selectedAddress.uid billing:_selectedAddress.uid completion:^(id data, NSError *error) {
             if(error == nil && completion != nil) {
                 MultistepEntity *multistepEntity = (MultistepEntity *)data;
                 completion(multistepEntity.nextStep, YES);

@@ -294,7 +294,7 @@
     RIProductSimple *simpleProduct =[self.selectedProductSimple objectForKey:offer.productSku];
     NSString *simpleSku = simpleProduct.sku;
     
-    [[CartDataManager sharedInstance] addProductToCart:self simpleSku:simpleSku completion:^(id data, NSError *error) {
+    [DataAggregator addProductToCart:self simpleSku:simpleSku completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
             

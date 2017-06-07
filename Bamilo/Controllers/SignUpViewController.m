@@ -73,7 +73,7 @@
         return;
     }
     
-    [[AuthenticationDataManager sharedInstance] signupUser:self with:[self.formController getMutableDictionaryOfForm] completion:^(id data, NSError *error) {
+    [DataAggregator signupUser:self with:[self.formController getMutableDictionaryOfForm] completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
             

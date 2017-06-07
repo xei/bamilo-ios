@@ -106,7 +106,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [[OrderDataManager sharedInstance] getOrders:self page:self.currentOrdersPage perPageCount:kOrdersPerPage completion:^(id data, NSError *error) {
+    [DataAggregator getOrders:self page:self.currentOrdersPage perPageCount:kOrdersPerPage completion:^(id data, NSError *error) {
         if (error == nil) {
             [self bind:data forRequestId:0];
         } else {

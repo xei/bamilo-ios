@@ -447,7 +447,7 @@ withCampaignTargetString:(NSString*)campaignTargetString
 }
 
 - (void)finishAddToCart {
-    [[CartDataManager sharedInstance] addProductToCart:self simpleSku:self.backupSimpleSku completion:^(id data, NSError *error) {
+    [DataAggregator addProductToCart:self simpleSku:self.backupSimpleSku completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
             

@@ -1112,7 +1112,7 @@ typedef void (^ProcessActionBlock)(void);
             self.currentSimple = [self.product.productSimples firstObject];
         }
 
-        [[CartDataManager sharedInstance] addProductToCart:self simpleSku:self.currentSimple.sku completion:^(id data, NSError *error) {
+        [DataAggregator addProductToCart:self simpleSku:self.currentSimple.sku completion:^(id data, NSError *error) {
             if(error == nil) {
                 [self bind:data forRequestId:0];
 
@@ -1418,7 +1418,7 @@ typedef void (^ProcessActionBlock)(void);
     }
 
     if (!button.selected && !VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate)) {
-        [[ProductDataManager sharedInstance] addToFavorites:self sku:self.product.sku completion:^(id data, NSError *error) {
+        [DataAggregator wishListTransactionWithIsAdd:YES target:self sku:self.product.sku completion:^(id data, NSError *error) {
             if(error == nil) {
                 //EVENT: ADD TO FAVORITES
                 [TrackerManager postEvent:[EventFactory addToFavorites:self.product.categoryUrlKey success:YES] forName:[AddToFavoritesEvent name]];
@@ -1468,7 +1468,7 @@ typedef void (^ProcessActionBlock)(void);
         return;
     }
     if (self.productImageSection.wishListButton.selected && VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate)) {
-        [[ProductDataManager sharedInstance] removeFromFavorites:self sku:self.product.sku completion:^(id data, NSError *error) {
+        [DataAggregator wishListTransactionWithIsAdd:NO target:self sku:self.product.sku completion:^(id data, NSError *error) {
             if (error == nil) {
                 [self hideLoading];
                 button.selected = NO;
