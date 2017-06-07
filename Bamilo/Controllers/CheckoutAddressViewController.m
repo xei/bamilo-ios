@@ -9,7 +9,7 @@
 #import "CheckoutDataManager.h"
 #import "CheckoutAddressViewController.h"
 #import "CheckoutProgressViewButtonModel.h"
-#import "ViewControllerManager.h"
+#import "Bamilo-Swift.h"
 #import "AddressTableViewController.h"
 #import "AddressList.h"
 
@@ -96,7 +96,7 @@
 
 #pragma mark - AddressTableViewControllerDelegate
 -(void)addressEditButtonTapped:(id)sender {
-    [[ViewControllerManager centerViewController] requestNavigateToNib:@"AddressEditViewController" ofStoryboard:@"Main" useCache:NO args:@{ kAddress: (Address *)sender }];
+    [[MainTabBarViewController topNavigationController] requestNavigateToNib:@"AddressEditViewController" ofStoryboard:@"Main" useCache:NO args:@{ kAddress: (Address *)sender }];
 }
 
 -(BOOL)addressSelected:(Address *)address {
@@ -109,7 +109,7 @@
 }
 
 - (void)addAddressTapped {
-    [[ViewControllerManager centerViewController] requestNavigateToNib:@"AddressEditViewController" ofStoryboard:@"Main" useCache:NO args:nil];
+    [[MainTabBarViewController topNavigationController] requestNavigateToNib:@"AddressEditViewController" ofStoryboard:@"Main" useCache:NO args:nil];
 }
 
 #pragma mark - DataServiceProtocol

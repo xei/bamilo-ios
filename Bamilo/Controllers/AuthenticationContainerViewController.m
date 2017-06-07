@@ -70,7 +70,7 @@
 
     self.navBarLayout.title = STRING_LOGIN_OR_SIGNUP;
     self.navBarLayout.showCartButton = NO;
-    self.navBarLayout.showBackButton = YES;
+    self.navBarLayout.showBackButton = !self.isForcedToLogin;
     self.navBarLayout.showLogo = NO;
 }
 

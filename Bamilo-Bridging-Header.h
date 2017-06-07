@@ -18,7 +18,9 @@
 #import "ThreadManager.h"
 #import "ThemeManager.h"
 #import "TrackerManager.h"
+#import "LoadingManager.h"
 #import "AlertManager.h"
+#import "CartDataManager.h"
 #import "RICommunicationWrapper.h"
 
 #import <Masonry/Masonry.h>
@@ -43,3 +45,7 @@
 #import "JAFiltersViewController.h"
 #import "JAPDVViewController.h"
 
+
+#import "JAHomeViewController.h"
+#import "CartViewController.h"
+#import "JASavedListViewController.h"

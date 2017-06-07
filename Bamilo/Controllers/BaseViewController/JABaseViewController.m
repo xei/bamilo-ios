@@ -18,6 +18,7 @@
 #import "ViewControllerManager.h"
 #import "NotificationBarView.h"
 #import "EmarsysPredictManager.h"
+#import "Bamilo-Swift.h"
 
 #define kSearchViewBarHeight 44.0f
 
@@ -53,9 +54,6 @@
     CGFloat bottomOffset = 0.0f;
     if (self.searchBarIsVisible) {
         topOffset += kSearchViewBarHeight;
-    }
-    if (self.tabBarIsVisible) {
-        bottomOffset += kTabBarHeight;
     }
     return CGRectMake(self.view.bounds.origin.x,
                       self.view.bounds.origin.y + topOffset,
@@ -115,7 +113,7 @@
     
     [self.navigationController.navigationBar setTranslucent:NO];
     self.navigationItem.hidesBackButton = YES;
-    self.title = @"";
+//    self.title = @"";
     
     self.view.backgroundColor = JABackgroundGrey;
     
@@ -249,7 +247,7 @@
     [super viewWillAppear:animated];
     
     [self reloadNavBar];
-    [self reloadTabBar];
+//    [self reloadTabBar];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sideMenuIsOpening) name:kOpenMenuNotification object:nil];
     
@@ -298,10 +296,10 @@
                                                         object:self.navBarLayout];
 }
 
-- (void)reloadTabBar {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kChangeTabBarVisibility
-                                                        object:[NSNumber numberWithBool:self.tabBarIsVisible]];
-}
+//- (void)reloadTabBar {
+//    [[NSNotificationCenter defaultCenter] postNotificationName:kChangeTabBarVisibility
+//                                                        object:[NSNumber numberWithBool:self.tabBarIsVisible]];
+//}
 
 - (void)showSearchBar {
     self.searchBarBackground = [[UIView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, kSearchViewBarHeight)];
@@ -395,7 +393,7 @@
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar;
 {
-    [[ViewControllerManager centerViewController] showSearchView];
+    [[MainTabBarViewController topNavigationController] showSearchView];
     return NO;
 }
 
@@ -600,7 +598,7 @@
                 } showBackButtonForAuthentication:YES];
             }
         }];
-    }else{
+    } else{
         [JAAuthenticationViewController authenticateAndExecuteBlock:^{
             block();
         } showBackButtonForAuthentication:YES];

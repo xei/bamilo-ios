@@ -127,7 +127,6 @@ typedef void (^ProcessActionBlock)(void);
     [self.view addSubview:self.landscapeScrollView];
 
     [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector( applicationDidEnterBackgroundNotification:) name: UIApplicationDidEnterBackgroundNotification object: nil];
-
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -1040,7 +1039,7 @@ typedef void (^ProcessActionBlock)(void);
 
 - (void)goToSisScreen
 {
-    [[ViewControllerManager centerViewController] openTargetString:self.product.brandTarget];
+    [[MainTabBarViewController topNavigationController] openTargetString:self.product.brandTarget];
 }
 
 - (void)goToOtherSellersScreen
@@ -1629,7 +1628,7 @@ typedef void (^ProcessActionBlock)(void);
 }
 
 - (void)trackingEventAddToCart:(RICart *)cart {
-    CGRect addToCartEventCoachMark = CGRectMake([ViewControllerManager centerViewController].navigationBarView.cartButton.frame.origin.x, [ViewControllerManager centerViewController].navigationBarView.cartButton.frame.origin.y+20,35, 35);
+    CGRect addToCartEventCoachMark = CGRectMake([MainTabBarViewController topNavigationController].navigationBarView.cartButton.frame.origin.x, [MainTabBarViewController topNavigationController].navigationBarView.cartButton.frame.origin.y+20,35, 35);
 
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"FirtTimeAddToCart"])
     {
@@ -2137,5 +2136,11 @@ typedef void (^ProcessActionBlock)(void);
                                                           userInfo: @{@"sku": ((RecommendItem *)item).sku}];
     }
 }
+
+#pragma mark - hide tabbar in this view controller
+- (BOOL)hidesBottomBarWhenPushed {
+    return YES;
+}
+
 
 @end

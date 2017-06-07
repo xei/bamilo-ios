@@ -7,14 +7,13 @@
 //
 
 #import "JAORConfirmationScreenViewController.h"
-#import "JACenterNavigationController.h"
 #import "JABottomSubmitView.h"
 #import "JAOptionResumeView.h"
 #import "JAProductInfoHeaderLine.h"
 #import "JAORProductView.h"
 #import "JAMyOrdersViewController.h"
 #import "JAMyOrderDetailViewController.h"
-#import "ViewControllerManager.h"
+#import "Bamilo-Swift.h"
 
 #define kLateralMargin 16.f
 
@@ -242,9 +241,9 @@
                                                        }
                                                        [self onSuccessResponse:apiResponse messages:successMessage showMessage:YES];
                                                        [self hideLoading];
-                                                       BOOL done = [[ViewControllerManager centerViewController] closeScreensToStackClass:[JAMyOrderDetailViewController class] animated:YES];
+                                                       BOOL done = [[MainTabBarViewController topNavigationController] closeScreensToStackClass:[JAMyOrderDetailViewController class] animated:YES];
                                                        if (!done) {
-                                                           done = [[ViewControllerManager centerViewController] closeScreensToStackClass:[JAMyOrdersViewController class] animated:YES];
+                                                           done = [[MainTabBarViewController topNavigationController] closeScreensToStackClass:[JAMyOrdersViewController class] animated:YES];
                                                        }
                                                    } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObject) {
                                                        NSArray *errorMessages = @[];
@@ -261,17 +260,17 @@
 
 - (void)goToReasonStep
 {
-    [[ViewControllerManager centerViewController] goToOnlineReturnsReasonsScreenForItems:self.items order:self.order];
+    [[MainTabBarViewController topNavigationController] goToOnlineReturnsReasonsScreenForItems:self.items order:self.order];
 }
 
 - (void)goToMethodStep
 {
-    [[ViewControllerManager centerViewController] goToOnlineReturnsWaysScreenForItems:self.items order:self.order];
+    [[MainTabBarViewController topNavigationController] goToOnlineReturnsWaysScreenForItems:self.items order:self.order];
 }
 
 - (void)goToPaymentMethodStep
 {
-    [[ViewControllerManager centerViewController] goToOnlineReturnsPaymentScreenForItems:self.items order:self.order];
+    [[MainTabBarViewController topNavigationController] goToOnlineReturnsPaymentScreenForItems:self.items order:self.order];
 }
 
 @end

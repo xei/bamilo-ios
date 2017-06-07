@@ -12,7 +12,7 @@
 #import "JATopSellersTeaserView.h"
 #import "JAScreenTarget.h"
 #import "JACenterNavigationController.h"
-#import "ViewControllerManager.h"
+#import "Bamilo-Swift.h"
 
 @interface JAShopWebViewController ()
 
@@ -131,7 +131,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
 {
     RITarget *target = [RITarget parseTarget:[request.URL absoluteString]];
     JAScreenTarget *screenTarget = [[JAScreenTarget alloc] initWithTarget:target];
-    return ![[ViewControllerManager centerViewController] openScreenTarget:screenTarget];
+    return ![[MainTabBarViewController topNavigationController] openScreenTarget:screenTarget];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView

@@ -31,7 +31,7 @@ extension String {
     }
     
     func formatPriceWithCurrency() -> String {
-        return convertTo(language: .arabic).self.priceFormat() + " " + STRING_CURRENCY
+        return convertTo(language: .arabic).priceFormat() + " " + STRING_CURRENCY
     }
     
     func strucThroughPriceFormat() -> NSAttributedString {

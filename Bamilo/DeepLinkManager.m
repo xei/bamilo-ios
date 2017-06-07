@@ -9,7 +9,7 @@
 #import "DeepLinkManager.h"
 #import "ThreadManager.h"
 #import "URLUtility.h"
-#import "ViewControllerManager.h"
+#import "Bamilo-Swift.h"
 
 
 static NSMutableArray<NSURL *> *deepLinkPipe;
@@ -71,9 +71,9 @@ static BOOL isListenersReady;
             // Catalog view - search term
             [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification object:@{ @"index": @(99), @"name": STRING_SEARCH, @"text": argument }];
         } else if ([targetKey isEqualToString:@"camp"] && argument.length) {
-            [[ViewControllerManager centerViewController] openTargetString:[RITarget getTargetString:CAMPAIGN node:argument]];
+            [[MainTabBarViewController topNavigationController] openTargetString:[RITarget getTargetString:CAMPAIGN node:argument]];
         } else if ([targetKey isEqualToString:@"ss"] && argument.length) {
-            [[ViewControllerManager centerViewController] openTargetString:[RITarget getTargetString:STATIC_PAGE node:argument]];
+            [[MainTabBarViewController topNavigationController] openTargetString:[RITarget getTargetString:STATIC_PAGE node:argument]];
         }
     }
 }

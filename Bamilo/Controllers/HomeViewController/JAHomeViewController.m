@@ -32,6 +32,7 @@
 #import "ThreadManager.h"
 #import "EmarsysPredictManager.h"
 #import "DeepLinkManager.h"
+#import "Bamilo-Swift.h"
 
 @interface JAHomeViewController () <JAPickerDelegate, JANewsletterGenderProtocol, EmarsysRecommendationsProtocol, FeatureBoxCollectionViewWidgetViewDelegate>
 @property (strong, nonatomic) JATeaserPageView* teaserPageView;
@@ -99,13 +100,12 @@
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"]) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        [self presentCoachMarks];
     }
     
-    if ([self isBeingPresented] || [self isMovingToParentViewController]) {
+//    if ([self isBeingPresented] || [self isMovingToParentViewController]) {
         //Perform an action that will only be done once
         [DeepLinkManager listenersReady];
-    }
+//    }
     
     if (self.isLoaded && self.isReturningHome) {
         [EmarsysPredictManager sendTransactionsOf:self];
@@ -119,70 +119,70 @@
 
 
 
-- (void)presentCoachMarks {
-    
-    CGRect searchButtonFrame = self.searchIconImageView.frame; //search button
-    JATabBarButton* moreButton = [[ViewControllerManager centerViewController].tabBarView.tabButtonsArray objectAtIndex:4];//morbutton in tab
-    CGRect moreButtonFrame = moreButton.frame;
-    CGRect menuButtonFrame = [[ViewControllerManager centerViewController].navigationBarView.leftButton frame];//menu button
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")){
-        searchButtonFrame.origin.y = searchButtonFrame.origin.y + 64.0f;
-        moreButtonFrame.origin.y = self.bounds.size.height + 64.0f;
-    } else {
-        moreButtonFrame.origin.y = self.bounds.size.height;
-    }
-
-    // Setup coach marks
-    CGRect coachmark1 = CGRectMake( searchButtonFrame.origin.x - 10, searchButtonFrame.origin.y - 15, searchButtonFrame.size.width +35, searchButtonFrame.size.height + 35);
-    CGRect coachmark2 = CGRectMake( menuButtonFrame.origin.x, menuButtonFrame.origin.y + 22, menuButtonFrame.size.width, menuButtonFrame.size.height - 4);
-    CGRect coachmark3;
-    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        coachmark3 = CGRectMake( 45, moreButtonFrame.origin.y + 54, moreButtonFrame.size.width - 90, moreButtonFrame.size.height);
-    }
-    else{
-        coachmark3 = CGRectMake( 10, moreButtonFrame.origin.y + 64, moreButtonFrame.size.width - 20, moreButtonFrame.size.height - 10);
-    }
-    CGRect coachmark4 = CGRectMake( self.view.center.x, self.view.center.y,0,0);
-
-    // Setup coach marks
-    NSArray *coachMarks = @[
-                            @{
-                                @"rect": [NSValue valueWithCGRect:coachmark2],
-                                @"caption": @"جستجو در منوی اصلی مجموعه ها",
-                                @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
-                                @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_CENTER],
-                                @"position":[NSNumber numberWithInteger:LABEL_POSITION_LEFT]
-                                },
-                            @{
-                                @"rect": [NSValue valueWithCGRect:coachmark1],
-                                @"caption": @"جستجو در فروشگاه \n\n نام محصول، برند و یا مجموعه ای که می خواهید را جستجو کنید",
-                                @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
-                                @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
-                                @"position":[NSNumber numberWithInteger:LABEL_POSITION_RIGHT]
-                                },
-                            @{
-                                @"rect": [NSValue valueWithCGRect:coachmark3],
-                                @"caption": @"ورود / ساخت حساب کاربری و پیگیری سفارش",
-                                @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
-                                @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
-                                @"position":[NSNumber numberWithInteger:LABEL_POSITION_RIGHT]
-                                },
-                            @{
-                                @"rect": [NSValue valueWithCGRect:coachmark4],
-                                @"caption": @"حرکت در میان رویدادهای جاری بامیلو",
-                                @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
-                                @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
-                                @"position":[NSNumber numberWithInteger:LABEL_POSITION_TOP],
-                                @"showArrow":[NSNumber numberWithBool:YES],
-                                @"caption3": @"حرکت عمودی در تمام صفحات",
-                                @"caption2":@"حرکت در میان محصولات برگزیده"
-                                }
-                            ];
-
-    MPCoachMarks *coachMarksView = [[MPCoachMarks alloc] initWithFrame:self.navigationController.view.bounds coachMarks:coachMarks];
-    [self.navigationController.view addSubview:coachMarksView];
-    [coachMarksView start];
-}
+//- (void)presentCoachMarks {
+//    
+//    CGRect searchButtonFrame = self.searchIconImageView.frame; //search button
+////    JATabBarButton* moreButton = [[ViewControllerManager centerViewController].tabBarView.tabButtonsArray objectAtIndex:4];//morbutton in tab
+////    CGRect moreButtonFrame = moreButton.frame;
+////    CGRect menuButtonFrame = [[ViewControllerManager centerViewController].navigationBarView.leftButton frame];//menu button
+//    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")){
+//        searchButtonFrame.origin.y = searchButtonFrame.origin.y + 64.0f;
+////        moreButtonFrame.origin.y = self.bounds.size.height + 64.0f;
+//    } else {
+////        moreButtonFrame.origin.y = self.bounds.size.height;
+//    }
+//
+//    // Setup coach marks
+//    CGRect coachmark1 = CGRectMake( searchButtonFrame.origin.x - 10, searchButtonFrame.origin.y - 15, searchButtonFrame.size.width +35, searchButtonFrame.size.height + 35);
+////    CGRect coachmark2 = CGRectMake( menuButtonFrame.origin.x, menuButtonFrame.origin.y + 22, menuButtonFrame.size.width, menuButtonFrame.size.height - 4);
+//    CGRect coachmark3;
+//    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+////        coachmark3 = CGRectMake( 45, moreButtonFrame.origin.y + 54, moreButtonFrame.size.width - 90, moreButtonFrame.size.height);
+//    }
+//    else{
+//        coachmark3 = CGRectMake( 10, moreButtonFrame.origin.y + 64, moreButtonFrame.size.width - 20, moreButtonFrame.size.height - 10);
+//    }
+//    CGRect coachmark4 = CGRectMake( self.view.center.x, self.view.center.y,0,0);
+//
+//    // Setup coach marks
+//    NSArray *coachMarks = @[
+//                            @{
+//                                @"rect": [NSValue valueWithCGRect:coachmark2],
+//                                @"caption": @"جستجو در منوی اصلی مجموعه ها",
+//                                @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
+//                                @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_CENTER],
+//                                @"position":[NSNumber numberWithInteger:LABEL_POSITION_LEFT]
+//                                },
+//                            @{
+//                                @"rect": [NSValue valueWithCGRect:coachmark1],
+//                                @"caption": @"جستجو در فروشگاه \n\n نام محصول، برند و یا مجموعه ای که می خواهید را جستجو کنید",
+//                                @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
+//                                @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
+//                                @"position":[NSNumber numberWithInteger:LABEL_POSITION_RIGHT]
+//                                },
+//                            @{
+//                                @"rect": [NSValue valueWithCGRect:coachmark3],
+//                                @"caption": @"ورود / ساخت حساب کاربری و پیگیری سفارش",
+//                                @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
+//                                @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
+//                                @"position":[NSNumber numberWithInteger:LABEL_POSITION_RIGHT]
+//                                },
+//                            @{
+//                                @"rect": [NSValue valueWithCGRect:coachmark4],
+//                                @"caption": @"حرکت در میان رویدادهای جاری بامیلو",
+//                                @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
+//                                @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
+//                                @"position":[NSNumber numberWithInteger:LABEL_POSITION_TOP],
+//                                @"showArrow":[NSNumber numberWithBool:YES],
+//                                @"caption3": @"حرکت عمودی در تمام صفحات",
+//                                @"caption2":@"حرکت در میان محصولات برگزیده"
+//                                }
+//                            ];
+//
+//    MPCoachMarks *coachMarksView = [[MPCoachMarks alloc] initWithFrame:self.navigationController.view.bounds coachMarks:coachMarks];
+//    [self.navigationController.view addSubview:coachMarksView];
+//    [coachMarksView start];
+//}
 
 
 - (void)viewDidDisappear:(BOOL)animated {

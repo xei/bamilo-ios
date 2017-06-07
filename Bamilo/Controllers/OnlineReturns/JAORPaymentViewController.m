@@ -14,7 +14,7 @@
 #import "JACenterNavigationController.h"
 #import "JABottomSubmitView.h"
 #import "JAORProductView.h"
-#import "ViewControllerManager.h"
+#import "Bamilo-Swift.h"
 
 @interface JAORPaymentViewController () <JADynamicFormDelegate>
 
@@ -301,7 +301,7 @@
             [self.stateInfoLabels addEntriesFromDictionary:[self.dynamicForm getFieldLabelsReplacePlaceHolder:@"__NAME__" forString:item.sku]];
         }
     }
-    [[ViewControllerManager centerViewController] goToOnlineReturnsConfirmScreenForItems:self.items order:self.order];
+    [[MainTabBarViewController topNavigationController] goToOnlineReturnsConfirmScreenForItems:self.items order:self.order];
 }
 
 

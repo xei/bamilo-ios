@@ -42,21 +42,23 @@
     NSString *flag;
     NSString *countryUserAgentInjection;
     
-    if (ISEMPTY(country))
-    {
-        NSArray* apiArrayFromCoreData = [[RIDataBaseWrapper sharedInstance]allEntriesOfType:NSStringFromClass([RIApi class])];
-        if(VALID_NOTEMPTY(apiArrayFromCoreData, NSArray))
-        {
-            RIApi* api = [apiArrayFromCoreData firstObject];
-            url = api.countryUrl;
-            countryIso = api.countryIso;
-            name = api.countryName;
-            flag = api.countryFlag;
-            countryUserAgentInjection = api.countryUserAgentInjection;
-        }
-    }
-    else
-    {
+    country = [RICountry getUniqueCountry];
+    
+//    if (ISEMPTY(country))
+//    {
+//        NSArray* apiArrayFromCoreData = [[RIDataBaseWrapper sharedInstance]allEntriesOfType:NSStringFromClass([RIApi class])];
+//        if(VALID_NOTEMPTY(apiArrayFromCoreData, NSArray))
+//        {
+//            RIApi* api = [apiArrayFromCoreData firstObject];
+//            url = api.countryUrl;
+//            countryIso = api.countryIso;
+//            name = api.countryName;
+//            flag = api.countryFlag;
+//            countryUserAgentInjection = api.countryUserAgentInjection;
+//        }
+//    }
+//    else
+//    {
         //save customer information so the app will remember him if he returns to the current
         //country
         [RICustomer getCustomerWithSuccessBlock:^(id customer){
@@ -74,7 +76,7 @@
         name = country.name;
         flag = country.flag;
         countryUserAgentInjection = country.userAgentInjection;
-    }
+//    }
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", url, RI_API_VERSION, RI_API_INFO]]
                                                             parameters:nil httpMethod:HttpVerbPOST
@@ -212,77 +214,82 @@
 
 #pragma mark - Verify if there is API stored
 
-+ (BOOL)checkIfHaveCountrySelected
-{
-    NSArray *apiArray = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIApi class])];
-    
-    if (0 == apiArray.count) {
-        return NO;
-    } else {
-        return YES;
-    }
++ (BOOL)checkIfHaveCountrySelected {
+    return YES;
+//    NSArray *apiArray = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIApi class])];
+//    
+//    if (0 == apiArray.count) {
+//        return NO;
+//    } else {
+//        return YES;
+//    }
 }
 
 #pragma mark - Get country code
 
-+ (NSString *)getCountryUrlInUse
-{
-    NSArray *apiArray = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIApi class])];
-    
-    if (0 == apiArray.count) {
-        return @"";
-    } else {
-        RIApi *api = [apiArray firstObject];
-        return api.countryUrl;
-    }
++ (NSString *)getCountryUrlInUse {
+    RICountry *country = [RICountry getUniqueCountry];
+    return country.url;
+//    NSArray *apiArray = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIApi class])];
+//    
+//    if (0 == apiArray.count) {
+//        return @"";
+//    } else {
+//        RIApi *api = [apiArray firstObject];
+//        return api.countryUrl;
+//    }
 }
 
-+ (NSString *)getCountryIsoInUse
-{
-    NSArray *apiArray = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIApi class])];
-    
-    if (0 == apiArray.count) {
-        return @"";
-    } else {
-        RIApi *api = [apiArray firstObject];
-        return api.countryIso;
-    }
++ (NSString *)getCountryIsoInUse {
+    RICountry *country = [RICountry getUniqueCountry];
+    return country.countryIso;
+//    NSArray *apiArray = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIApi class])];
+//    
+//    if (0 == apiArray.count) {
+//        return @"";
+//    } else {
+//        RIApi *api = [apiArray firstObject];
+//        return api.countryIso;
+//    }
 }
 
-+ (NSString *)getCountryNameInUse;
-{
-    NSArray *apiArray = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIApi class])];
-    
-    if (0 == apiArray.count) {
-        return @"";
-    } else {
-        RIApi *api = [apiArray firstObject];
-        return api.countryName;
-    }
++ (NSString *)getCountryNameInUse {
+    RICountry *country = [RICountry getUniqueCountry];
+    return country.name;
+//    NSArray *apiArray = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIApi class])];
+//    
+//    if (0 == apiArray.count) {
+//        return @"";
+//    } else {
+//        RIApi *api = [apiArray firstObject];
+//        return api.countryName;
+//    }
 }
 
-+ (NSString *)getCountryFlagInUse;
-{
-    NSArray *apiArray = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIApi class])];
-    
-    if (0 == apiArray.count) {
-        return @"";
-    } else {
-        RIApi *api = [apiArray firstObject];
-        return api.countryFlag;
-    }
++ (NSString *)getCountryFlagInUse {
+    RICountry *country = [RICountry getUniqueCountry];
+    return country.flag;
+//    NSArray *apiArray = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIApi class])];
+//    
+//    if (0 == apiArray.count) {
+//        return @"";
+//    } else {
+//        RIApi *api = [apiArray firstObject];
+//        return api.countryFlag;
+//    }
 }
 
-+ (NSString *)getCountryUserAgentInjection;
-{
-    NSArray *apiArray = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIApi class])];
-    
-    if (0 == apiArray.count) {
-        return @"";
-    } else {
-        RIApi *api = [apiArray firstObject];
-        return api.countryUserAgentInjection;
-    }
++ (NSString *)getCountryUserAgentInjection {
+    RICountry *country = [RICountry getUniqueCountry];
+    return country.userAgentInjection;
+//    NSArray *apiArray = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIApi class])];
+//    
+//    if (0 == apiArray.count) {
+//        return @"";
+//    } else {
+//        RIApi *api = [apiArray firstObject];
+//        return api.countryUserAgentInjection;
+//    }
 }
 
 + (RIApi *)getApiInformation {

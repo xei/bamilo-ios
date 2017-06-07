@@ -8,7 +8,7 @@
 
 #import "SearchBaseViewController.h"
 #import "JACenterNavigationController.h"
-#import "ViewControllerManager.h"
+#import "Bamilo-Swift.h"
 
 #define kSearchViewBarHeight 44.0f
 
@@ -100,7 +100,7 @@
 
 #pragma mark - UISearchBarDelegate
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
-    [[ViewControllerManager centerViewController] showSearchView];
+    [[MainTabBarViewController topNavigationController] showSearchView];
     return NO;
 }
 

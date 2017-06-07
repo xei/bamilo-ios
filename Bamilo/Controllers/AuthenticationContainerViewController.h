@@ -17,7 +17,9 @@ typedef void(^AuthenticationBlock)(void);
 
 @property (nonatomic) BOOL showContinueWithoutLogin;
 @property (nonatomic, assign) BOOL fromSideMenu;
+@property (nonatomic, assign) BOOL isForcedToLogin;
 @property (nonatomic) NSDictionary *userInfo;
+
 
 @property (strong, nonatomic) SignInViewController *signInViewController;
 @property (strong, nonatomic) SignUpViewController *signUpViewController;

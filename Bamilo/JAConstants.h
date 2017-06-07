@@ -13,7 +13,7 @@
 #define kCheckRedirectInfoNotification @"NOTIFICATION_CHECK_REDIRECT_INFO"
 
 //************ app action notifications
-#define kSelectedCountryNotification @"NOTIFICATION_SELECTED_COUNTRY"
+//#define kSelectedCountryNotification @"NOTIFICATION_SELECTED_COUNTRY"
 #define kUpdateCountryNotification @"NOTIFICATION_UPDATE_COUNTRY"
 #define kUpdateCartNotification @"NOTIFICATION_UPDATE_CART"
 #define kUpdateCartNotificationValue @"NOTIFICATION_UPDATE_CART_VALUE"
@@ -58,7 +58,7 @@
 #define kShowSignUpScreenNotification @"NOTIFICATION_SHOW_SIGN_UP_SCREEN"
 //#define kShowForgotPasswordScreenNotification @"NOTIFICATION_SHOW_FORGOT_PASSWORD_SCREEN"
 #define kShowSavedListScreenNotification @"NOTIFICATION_SHOW_SAVEDLIST_SCREEN"
-#define kShowMoreMenuScreenNotification @"NOTIFICATION_MORE_MENU_SCREEN"
+//#define kShowMoreMenuScreenNotification @"NOTIFICATION_MORE_MENU_SCREEN"
 #define kShowRecentSearchesScreenNotification @"NOTIFICATION_SHOW_RECENT_SEARCHES_SCREEN"
 #define kShowRecentlyViewedScreenNotification @"NOTIFICATION_SHOW_RECENTLY_VIEWED_SCREEN"
 #define kShowMyAccountScreenNotification @"NOTIFICATION_SHOW_MY_ACCOUNT_SCREEN"

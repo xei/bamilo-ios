@@ -1,13 +1,13 @@
+////
+////  JAChooseCountryViewController.h
+////  Jumia
+////
+////  Created by Jose Mota on 23/03/16.
+////  Copyright © 2016 Rocket Internet. All rights reserved.
+////
 //
-//  JAChooseCountryViewController.h
-//  Jumia
+//#import "JABaseViewController.h"
 //
-//  Created by Jose Mota on 23/03/16.
-//  Copyright © 2016 Rocket Internet. All rights reserved.
+//@interface JAChooseCountryViewController : JABaseViewController
 //
-
-#import "JABaseViewController.h"
-
-@interface JAChooseCountryViewController : JABaseViewController
-
-@end
+//@end

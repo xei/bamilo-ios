@@ -32,6 +32,7 @@
 #import "EmarsysMobileEngageTracker.h"
 #import "GoogleAnalyticsTracker.h"
 #import "EmarsysPredictManager.h"
+#import "CartDataManager.h"
 
 @interface JAAppDelegate () <RIAdjustTrackerDelegate>
 
@@ -47,7 +48,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.startLoadingTime = [NSDate date];
-
+    
+    //SET THE LANGUAGE
+    RICountry *country = [RICountry getUniqueCountry];
+    [RILocalizationWrapper setLocalization:country.selectedLanguage.langCode];
+    
     //SETUP THEME
     ThemeFont *themeFont = [ThemeFont fontWithVariations:@{
         kFontVariationRegular: cFontVariationNone,
@@ -106,11 +111,11 @@
     }
 
     if ([launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey] != nil) {
-        UINavigationController *rootViewController = (UINavigationController*)self.window.rootViewController;
-        JARootViewController* mainController = (JARootViewController*) [rootViewController topViewController];
-        if(VALID_NOTEMPTY(mainController, JARootViewController)) {
-            mainController.notification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-        }
+//        UINavigationController *rootViewController = (UINavigationController*)self.window.rootViewController;
+//        JARootViewController* mainController = (JARootViewController*) [rootViewController topViewController];
+//        if(VALID_NOTEMPTY(mainController, JARootViewController)) {
+//            mainController.notification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+//        }
 
         [[RITrackingWrapper sharedInstance] applicationDidReceiveRemoteNotification:[launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey]];
     }
@@ -242,21 +247,21 @@
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    [RIApi startApiWithCountry:nil reloadAPI:NO successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory){
-        if(hasUpdate) {
-            if(isUpdateMandatory) {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_NECESSARY_TITLE message:[NSString stringWithFormat:STRING_UPDATE_NECESSARY_MESSAGE, APP_NAME] delegate:self cancelButtonTitle:STRING_OK_UPDATE otherButtonTitles:nil];
-                [alert setTag:kForceUpdateAlertViewTag];
-                [alert show];
-            } else {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_AVAILABLE_TITLE message:[NSString stringWithFormat:STRING_UPDATE_AVAILABLE_MESSAGE, APP_NAME] delegate:self cancelButtonTitle:STRING_NO_THANKS otherButtonTitles:STRING_UPDATE, nil];
-                [alert setTag:kUpdateAvailableAlertViewTag];
-                [alert show];
-            }
-        }
-    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage){
-    }];
-
+//    [RIApi startApiWithCountry:nil reloadAPI:NO successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory){
+//        if(hasUpdate) {
+//            if(isUpdateMandatory) {
+//                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_NECESSARY_TITLE message:[NSString stringWithFormat:STRING_UPDATE_NECESSARY_MESSAGE, APP_NAME] delegate:self cancelButtonTitle:STRING_OK_UPDATE otherButtonTitles:nil];
+//                [alert setTag:kForceUpdateAlertViewTag];
+//                [alert show];
+//            } else {
+//                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_AVAILABLE_TITLE message:[NSString stringWithFormat:STRING_UPDATE_AVAILABLE_MESSAGE, APP_NAME] delegate:self cancelButtonTitle:STRING_NO_THANKS otherButtonTitles:STRING_UPDATE, nil];
+//                [alert setTag:kUpdateAvailableAlertViewTag];
+//                [alert show];
+//            }
+//        }
+//    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage){
+//    }];
+    
     self.startLoadingTime = [NSDate date];
 
     [[SessionManager sharedInstance] evaluateActiveSessions];
@@ -280,18 +285,18 @@
 - (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
     NSUInteger supportedInterfaceOrientationsForWindow = -1;
 
-    UINavigationController *rootViewController = (UINavigationController*)self.window.rootViewController;
-    JARootViewController* mainController = (JARootViewController*) [rootViewController topViewController];
-    if(VALID_NOTEMPTY(mainController, JARootViewController)) {
-        UINavigationController* centerPanel = (UINavigationController*) [mainController centerPanel];
-        if(VALID_NOTEMPTY(centerPanel, UINavigationController)) {
-            NSArray *viewControllers = centerPanel.viewControllers;
-            if(VALID_NOTEMPTY(viewControllers, NSArray)) {
-                JABaseViewController *rootViewController = (JABaseViewController *) OBJECT_AT_INDEX(viewControllers, [viewControllers count] - 1);
-                supportedInterfaceOrientationsForWindow = [rootViewController supportedInterfaceOrientations];
-            }
-        }
-    }
+//    UINavigationController *rootViewController = (UINavigationController*)self.window.rootViewController;
+//    JARootViewController* mainController = (JARootViewController*) [rootViewController topViewController];
+//    if(VALID_NOTEMPTY(mainController, JARootViewController)) {
+//        UINavigationController* centerPanel = (UINavigationController*) [mainController centerPanel];
+//        if(VALID_NOTEMPTY(centerPanel, UINavigationController)) {
+//            NSArray *viewControllers = centerPanel.viewControllers;
+//            if(VALID_NOTEMPTY(viewControllers, NSArray)) {
+//                JABaseViewController *rootViewController = (JABaseViewController *) OBJECT_AT_INDEX(viewControllers, [viewControllers count] - 1);
+//                supportedInterfaceOrientationsForWindow = [rootViewController supportedInterfaceOrientations];
+//            }
+//        }
+//    }
 
     // This should not happen.
     if(-1 == supportedInterfaceOrientationsForWindow) {

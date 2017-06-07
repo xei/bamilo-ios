@@ -14,7 +14,7 @@
     self = [super init];
     if (self) {
         self.doneButtonTitle = STRING_DONE;
-        self.showMenuButton = YES;
+//        self.showMenuButton = YES;
         self.showCartButton = YES;
         self.showSearchButton = YES;
         self.showLogo = YES;
@@ -30,7 +30,7 @@
     _showBackButton=showBackButton;
     if (showBackButton) {
         self.showEditButton = NO;
-        self.showMenuButton = NO;
+//        self.showMenuButton = NO;
     }
 }
 
@@ -48,19 +48,19 @@
     }
 }
 
-- (void)setShowMenuButton:(BOOL)showMenuButton {
-    _showMenuButton=showMenuButton;
-    if (showMenuButton) {
-        self.showBackButton = NO;
-        self.showEditButton = NO;
-    }
-}
+//- (void)setShowMenuButton:(BOOL)showMenuButton {
+//    _showMenuButton=showMenuButton;
+//    if (showMenuButton) {
+//        self.showBackButton = NO;
+//        self.showEditButton = NO;
+//    }
+//}
 
 - (void)setShowEditButton:(BOOL)showEditButton {
     _showEditButton=showEditButton;
     if (showEditButton) {
         self.showBackButton = NO;
-        self.showMenuButton = NO;
+//        self.showMenuButton = NO;
     }
 }
 

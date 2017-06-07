@@ -24,8 +24,8 @@
 @end
 
 @interface ViewControllerManager()
-+ (JARootViewController *) rootViewController;
-+ (JACenterNavigationController *) centerViewController;
+//+ (JARootViewController *) rootViewController;
+//+ (JACenterNavigationController *) centerViewController;
 + (id) topViewController;
 
 @end

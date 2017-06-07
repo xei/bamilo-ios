@@ -175,7 +175,7 @@ class ProfileViewController: JABaseViewController, UITableViewDelegate, UITableV
     }
     
     func showMyAddressViewController() {
-        ViewControllerManager.centerViewController().requestNavigate(toNib: "AddressViewController", args: nil)
+        MainTabBarViewController.topNavigationController()?.requestNavigate(toNib: "AddressViewController", args: nil)
     }
     
     func logoutUser() {
@@ -225,10 +225,12 @@ class ProfileViewController: JABaseViewController, UITableViewDelegate, UITableV
             if let appVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String {
                 messageBody += " App Version: \(appVersion)"
             }
+            messageBody += STRING_DONT_REMOVE_INFO_EMAIL
+            
             let mailComposer = MFMailComposeViewController()
-            mailComposer.setSubject(forReport ? "اشتراک‌گذاری ایده‌ها نو" : "گزارش مشکلات برنامه")
+            mailComposer.setSubject(forReport ? STRING_REPORT_BUG : STRING_SHARE_IDEAS)
             mailComposer.setMessageBody(messageBody, isHTML: false)
-            mailComposer.setToRecipients(["application@bamilo.com"])
+            mailComposer.setToRecipients([ (forReport ? "support@bamilo.com" : "application@bamilo.com")])
             mailComposer.mailComposeDelegate = self
             
             self.present(mailComposer, animated: true, completion: nil)

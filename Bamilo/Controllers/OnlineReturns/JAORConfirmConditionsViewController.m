@@ -10,7 +10,7 @@
 #import "JAProductInfoHeaderLine.h"
 #import "JACenterNavigationController.h"
 #import "JABottomSubmitView.h"
-#import "ViewControllerManager.h"
+#import "Bamilo-Swift.h"
 
 #define kLateralMargin 8.f
 #define kSpaceBetweenTitleAndBody 2.f
@@ -77,7 +77,7 @@
 
 - (void)goToNext
 {
-    [[ViewControllerManager centerViewController] goToOnlineReturnsReasonsScreenForItems:self.items order:self.order];
+    [[MainTabBarViewController topNavigationController] goToOnlineReturnsReasonsScreenForItems:self.items order:self.order];
 }
 
 -(void)viewWillLayoutSubviews

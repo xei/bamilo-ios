@@ -108,8 +108,7 @@
 }
 
 + (NSString *)getCountryConfigurationWithSuccessBlock:(void (^)(RICountryConfiguration *configuration))successBlock
-                                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
-{
+                                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock {
     NSString *operationID = nil;
     
     NSArray *configuration = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICountryConfiguration class])];
@@ -125,8 +124,7 @@
     return operationID;
 }
 
-+ (NSString *)getCountryPhoneNumber
-{
++ (NSString *)getCountryPhoneNumber {
     NSArray *configuration = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICountryConfiguration class])];
     
     RICountryConfiguration *config = (RICountryConfiguration *)configuration[0];
@@ -136,16 +134,14 @@
 
 #pragma mark - Cancel request
 
-+ (void)cancelRequest:(NSString *)operationID
-{
++ (void)cancelRequest:(NSString *)operationID {
     if(VALID_NOTEMPTY(operationID, NSString))
         [[RICommunicationWrapper sharedInstance] cancelRequest:operationID];
 }
 
 #pragma mark - Parsers
 
-+ (NSArray *)parseCountriesWithJson:(NSDictionary *)jsonObject
-{
++ (NSArray *)parseCountriesWithJson:(NSDictionary *)jsonObject {
     NSMutableArray *countriesArray = [[NSMutableArray alloc] init];
     
     if(VALID_NOTEMPTY(jsonObject, NSDictionary)) {
@@ -182,8 +178,7 @@
     return [countriesArray copy];
 }
 
-+ (RICountry *)parseCountryWithJson:(NSDictionary *)jsonObject
-{
++ (RICountry *)parseCountryWithJson:(NSDictionary *)jsonObject {
     RICountry *country = [[RICountry alloc] init];
     
     if ([jsonObject objectForKey:@"name"]) {

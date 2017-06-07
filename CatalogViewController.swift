@@ -38,6 +38,7 @@ import SwiftyJSON
     
     private var listViewType: CatalogListViewType = .grid
     private var listFullyLoaded = false
+    private var lastContentOffset: CGFloat = 0
     
     //TODO: this property is only used for passing enum (swift type) property from objective c
     // so we have to remove it after migration those who wanna pass this property
@@ -236,6 +237,26 @@ import SwiftyJSON
         }
     }
     
+    
+    private var isChangingTabBar = false
+    private func changeTabBar(hidden:Bool, animated: Bool){
+        let tabBar = self.tabBarController?.tabBar
+        if tabBar!.isHidden == hidden || self.isChangingTabBar { return }
+        self.isChangingTabBar = true
+        let frame = tabBar?.frame
+        let offset = (hidden ? (frame?.size.height)! : -(frame?.size.height)!)
+        tabBar?.isHidden = false
+        if frame != nil {
+            UIView.animate(withDuration: 0.15, animations: {
+                tabBar!.frame = frame!.offsetBy(dx: 0, dy: offset)
+                self.view.layoutIfNeeded()
+            }, completion: {
+                if $0 {tabBar?.isHidden = hidden}
+                self.isChangingTabBar = false
+            })
+        }
+    }
+    
     private func findActiveFilters(filters: [BaseCatalogFilterItem]?) -> [BaseCatalogFilterItem] {
         return  filters?.filter({ (filterItem) -> Bool in
             if let catalogFilter = filterItem as? CatalogFilterItem {
@@ -364,9 +385,8 @@ import SwiftyJSON
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        
-        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "FooterView", for: indexPath)
-        return headerView
+            let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "FooterView", for: indexPath)
+            return footerView
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
@@ -375,6 +395,20 @@ import SwiftyJSON
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
+    }
+    
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        if self.lastContentOffset - 10 > scrollView.contentOffset.y {
+            //scroll to top
+            changeTabBar(hidden: false, animated: true)
+        } else if self.lastContentOffset < scrollView.contentOffset.y {
+            //scroll to bottom
+            changeTabBar(hidden: true, animated: true)
+        }
+        
+        self.lastContentOffset = scrollView.contentOffset.y;
     }
     
     //MARK: - JAPDVViewControllerDelegate
@@ -391,7 +425,6 @@ import SwiftyJSON
                 cell.updateWithProduct(product: product)
             }
         })
-        
         //TODO: this legacy action is for other view controllers to be notified that this product state has been changed
         // this action is better to be handled by realm or other local data bases
         NotificationCenter.default.post(name: NSNotification.Name("NOTIFICATION_PRODUCT_CHANGED"), object: product.sku, userInfo: nil)

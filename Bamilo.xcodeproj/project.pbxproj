@@ -25,6 +25,7 @@
 		61036B6C1E65B638006E12A9 /* OrderProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 61036B6B1E65B638006E12A9 /* OrderProduct.m */; };
 		61037CBE1EB72C7600A461E0 /* EmarsysMobileEngageTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 61037CBD1EB72C7600A461E0 /* EmarsysMobileEngageTracker.m */; };
 		61037CC21EB73AF100A461E0 /* GoogleAnalyticsTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 61037CC11EB73AF100A461E0 /* GoogleAnalyticsTracker.m */; };
+		6106620F1EE6D54D00842674 /* UIBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6106620E1EE6D54D00842674 /* UIBarItem.swift */; };
 		610C68A31EC74292008FB66C /* CatalogHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610C68A21EC74292008FB66C /* CatalogHeaderView.swift */; };
 		610C68A51EC742E3008FB66C /* CatalogHeaderControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610C68A41EC742E3008FB66C /* CatalogHeaderControl.swift */; };
 		610C68A71EC7442B008FB66C /* CatalogHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 610C68A61EC7442B008FB66C /* CatalogHeaderView.xib */; };
@@ -154,6 +155,7 @@
 		61E099771E3E1A02004ED14E /* VersionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E099751E3E1A02004ED14E /* VersionTableViewCell.m */; };
 		61E099781E3E1A02004ED14E /* VersionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E099761E3E1A02004ED14E /* VersionTableViewCell.xib */; };
 		61EA566A1EDE8BC20093EAD4 /* Ext+UIAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EA56691EDE8BC20093EAD4 /* Ext+UIAlertView.swift */; };
+		61EA566C1EDEC75E0093EAD4 /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EA566B1EDEC75E0093EAD4 /* MainTabBarViewController.swift */; };
 		61EE798E1EC0395C0036F93E /* CatalogCategoryFilterItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EE798D1EC0395C0036F93E /* CatalogCategoryFilterItem.swift */; };
 		61EE79901EC046D90036F93E /* CatalogCategoryFilterOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EE798F1EC046D90036F93E /* CatalogCategoryFilterOption.swift */; };
 		61F946B31ED4502100F341A6 /* ProductDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F946B21ED4502100F341A6 /* ProductDataManager.swift */; };
@@ -917,6 +919,7 @@
 		61037CC01EB73AF100A461E0 /* GoogleAnalyticsTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleAnalyticsTracker.h; sourceTree = "<group>"; };
 		61037CC11EB73AF100A461E0 /* GoogleAnalyticsTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleAnalyticsTracker.m; sourceTree = "<group>"; };
 		61037CC31EB7416200A461E0 /* ScreenTrackingProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenTrackingProtocol.h; sourceTree = "<group>"; };
+		6106620E1EE6D54D00842674 /* UIBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBarItem.swift; sourceTree = "<group>"; };
 		610C68A21EC74292008FB66C /* CatalogHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogHeaderView.swift; sourceTree = "<group>"; };
 		610C68A41EC742E3008FB66C /* CatalogHeaderControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogHeaderControl.swift; sourceTree = "<group>"; };
 		610C68A61EC7442B008FB66C /* CatalogHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CatalogHeaderView.xib; sourceTree = "<group>"; };
@@ -1117,6 +1120,7 @@
 		61E099751E3E1A02004ED14E /* VersionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersionTableViewCell.m; sourceTree = "<group>"; };
 		61E099761E3E1A02004ED14E /* VersionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VersionTableViewCell.xib; sourceTree = "<group>"; };
 		61EA56691EDE8BC20093EAD4 /* Ext+UIAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Ext+UIAlertView.swift"; sourceTree = "<group>"; };
+		61EA566B1EDEC75E0093EAD4 /* MainTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
 		61EE798D1EC0395C0036F93E /* CatalogCategoryFilterItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogCategoryFilterItem.swift; sourceTree = "<group>"; };
 		61EE798F1EC046D90036F93E /* CatalogCategoryFilterOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogCategoryFilterOption.swift; sourceTree = "<group>"; };
 		61F946B21ED4502100F341A6 /* ProductDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductDataManager.swift; sourceTree = "<group>"; };
@@ -2898,6 +2902,7 @@
 				61C5BAF01EC1F40300F3A796 /* CatalogViewController.swift */,
 				61143A631ED5BCB000C53BA8 /* FilteredListNoResultViewController.swift */,
 				612FE5161EDC062500C2AFA0 /* ProfileViewController.swift */,
+				61EA566B1EDEC75E0093EAD4 /* MainTabBarViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -3533,6 +3538,7 @@
 				61143A581ED55C2300C53BA8 /* Ext+Bool.swift */,
 				617D7F381EDC16DC00F36CF7 /* Ext+UILabel.swift */,
 				61EA56691EDE8BC20093EAD4 /* Ext+UIAlertView.swift */,
+				6106620E1EE6D54D00842674 /* UIBarItem.swift */,
 			);
 			name = extensions;
 			sourceTree = "<group>";
@@ -7635,6 +7641,7 @@
 				612553611E4F514100975C6F /* FormItemValidation.m in Sources */,
 				8714E05D1E472CDC004C9B1D /* Address.m in Sources */,
 				8702FBFC1E9A4BA9001D1AA9 /* CheckoutDataManager.m in Sources */,
+				61EA566C1EDEC75E0093EAD4 /* MainTabBarViewController.swift in Sources */,
 				87EA03111E6D450300B1E062 /* FormHeaderModel.m in Sources */,
 				61036B651E65B570006E12A9 /* Order.m in Sources */,
 				61EE798E1EC0395C0036F93E /* CatalogCategoryFilterItem.swift in Sources */,
@@ -7884,6 +7891,7 @@
 				9A4077251CE0CDA600313D20 /* NSString+Size.m in Sources */,
 				879F87F51E5058060033FE87 /* PlainTableViewHeaderCell.m in Sources */,
 				61143A641ED5BCB000C53BA8 /* FilteredListNoResultViewController.swift in Sources */,
+				6106620F1EE6D54D00842674 /* UIBarItem.swift in Sources */,
 				9A38764E1BCD0CDC0088B186 /* JATabNavigationViewController.m in Sources */,
 				CE9ADFF41AB6D78200D56481 /* JAActivityViewController.m in Sources */,
 				619351AB1ECAC9DD00330E5C /* CatalogCardCollectionViewCell.swift in Sources */,
