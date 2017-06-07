@@ -37,9 +37,30 @@ class DataManagerSwift {
                 payload[DataManagerKeys.DataMessages] = messages
             }
             
-            if let serviceData = data.metadata as [String:Any]?, let mappableClass = aClass as? Mappable.Type {
+             /*TEMP:
+              When all classes migrated to Swift along with models replace this with
+             
+              if let serviceData = data.metadata as [String:Any]?, let mappableClass = aClass as? Mappable.Type {
                 if let responseObj = mappableClass.init(JSON: serviceData) {
                     payload[DataManagerKeys.DataContent] = responseObj
+                }
+              }
+             */
+            if let serviceData = data.metadata as [String:Any]? {
+                if let mappableClass = aClass as? Mappable.Type, let responseObj = mappableClass.init(JSON: serviceData) {
+                    payload[DataManagerKeys.DataContent] = responseObj
+                } else if let mappableClassVerbose = aClass as? JSONVerboseModel.Type {
+                    RICountry.getConfigurationWithSuccessBlock({ (configuration) in
+                        payload[DataManagerKeys.DataContent] = mappableClassVerbose.parseToDataModel(with: [serviceData, configuration! ])
+                    }, andFailureBlock: { (apiResponse, errorMessages) in
+                        if let errorMessages = errorMessages as? [String], let apiResponseType = self.map(statusCode: apiResponse) {
+                            completion(nil, self.createError(apiResponseType, errorMessages:errorMessages))
+                        }
+                    })
+                } else if let mappableClass = aClass as? BaseModel.Type {
+                    let dataModel = mappableClass.init()
+                    try? dataModel.merge(from: serviceData, useKeyMapping: true, error: ())
+                    payload[DataManagerKeys.DataContent] = dataModel
                 }
             }
             
@@ -65,6 +86,40 @@ class DataManagerSwift {
             completion(payload[DataManagerKeys.DataMessages], nil)
         } else {
             completion(data, nil)
+        }
+    }
+    
+    /*
+     RIApiResponseSuccess                = 9000,
+     RIApiResponseAuthorizationError     = 9001,
+     RIApiResponseTimeOut                = 9002,
+     RIApiResponseBadUrl                 = 9003,
+     RIApiResponseUnknownError           = 9004,
+     RIApiResponseAPIError               = 9005,
+     RIApiResponseNoInternetConnection   = 9006,
+     RIApiResponseMaintenancePage        = 9007,
+     RIApiResponseKickoutView            = 9008
+     */
+    private func map(statusCode: RIApiResponse) -> ApiResponseType? {
+        switch statusCode {
+            case .success:
+                return ApiResponseType.success
+            case .authorizationError:
+                return ApiResponseType.authorizationError
+            case .timeOut:
+                return ApiResponseType.timeOut
+            case .badUrl:
+                return ApiResponseType.badUrl
+            case .unknownError:
+                return ApiResponseType.unknownError
+            case .apiError:
+                return ApiResponseType.apiError
+            case .noInternetConnection:
+                return ApiResponseType.noInternetConnection
+            case .maintenancePage:
+                return ApiResponseType.maintenancePage
+            case .kickoutView:
+                return ApiResponseType.kickoutView
         }
     }
 }
