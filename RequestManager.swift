@@ -42,8 +42,18 @@ class RequestManagerSwift {
             if(type == .container || type == .foreground) {
                 LoadingManager.showLoading()
             }
+            print("------------ Start request for : \(baseUrl)/\(path)")
+            if let sendingParams = params {
+                print(sendingParams)
+            }
             
-            Alamofire.request("\(baseUrl)/\(path)", method: method, parameters: params, encoding: URLEncoding(destination: .methodDependent), headers: self.createHeaders()).responseObject { (response: DataResponse<ApiResponseData>) in
+            Alamofire.request("\(baseUrl)/\(path)", method: method, parameters: params, encoding: URLEncoding(destination: .methodDependent), headers: self.createHeaders()).responseJSON(completionHandler: { (response) in
+                if let url = response.request?.url {
+                    print("------------ Start response for : \(url)")
+                }
+                print(response)
+            }).responseObject { (response: DataResponse<ApiResponseData>) in
+            
                 switch response.result {
                     case .success:
                         if let apiResponseData = response.result.value {

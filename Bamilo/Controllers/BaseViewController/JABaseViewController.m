@@ -18,6 +18,7 @@
 #import "ViewControllerManager.h"
 #import "NotificationBarView.h"
 #import "EmarsysPredictManager.h"
+#import "Bamilo-Swift.h"
 
 #define kSearchViewBarHeight 44.0f
 
@@ -725,11 +726,20 @@
 
 
 //TEMP FUNCTION
--(NSArray *) extractSuccessMessages:(DataMessageList *)dataMessages {
+-(NSArray *) extractSuccessMessages:(id)dataMessages {
     NSMutableArray *messages = [NSMutableArray array];
     
-    for(DataMessage *msgObject in dataMessages.success) {
-        [messages addObject:msgObject.message];
+    if ([dataMessages isKindOfClass:DataMessageList.class]) {
+        for(DataMessage *msgObject in ((DataMessageList *)dataMessages).success) {
+            [messages addObject:msgObject.message];
+        }
+    }
+    
+
+    if ([dataMessages isKindOfClass:ApiDataMessageList.class]) {
+        for(ApiDataMessage *msgObject in ((ApiDataMessageList *)dataMessages).success) {
+            [messages addObject:msgObject.message];
+        }
     }
     
     return messages;

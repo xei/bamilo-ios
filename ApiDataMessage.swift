@@ -8,9 +8,9 @@
 
 import ObjectMapper
 
-class ApiDataMessage: Mappable {
-    var message: String?
-    var reason: String?
+@objc class ApiDataMessage: NSObject, Mappable {
+    var message: String? = nil
+    var reason: String? = nil
     
     required init?(map: Map) {}
     

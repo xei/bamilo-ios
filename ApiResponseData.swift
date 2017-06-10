@@ -10,7 +10,7 @@ import ObjectMapper
 
 class ApiResponseData: Mappable {
     var metadata: [String: Any]?
-    var messages: DataMessageList?
+    var messages: ApiDataMessageList?
     var success: Bool = false
     
     required init?(map: Map) {}

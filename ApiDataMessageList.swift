@@ -8,8 +8,8 @@
 
 import ObjectMapper
 
-class ApiDataMessageList: Mappable {
-    var success: [DataMessage]?
+@objc class ApiDataMessageList:NSObject, Mappable {
+    var success: [ApiDataMessage]?
     
     required init?(map: Map) {}
     
