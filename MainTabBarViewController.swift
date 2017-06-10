@@ -71,6 +71,7 @@ import UIKit
             if let navigationController = tabBarController?.viewControllers?[index] as? JACenterNavigationController {
                 navigationController.popToRootViewController(animated: false)
                 navigationController.registerObservingOnNotifications()
+                MainTabBarViewController.previousSelectedViewController?.removeObservingNotifications()
                 MainTabBarViewController.previousSelectedViewController = navigationController
             }
         }

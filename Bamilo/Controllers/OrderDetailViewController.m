@@ -125,7 +125,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0 ) return;
-    NSDictionary *userInfo = @{@"sku": ((OrderProduct *)self.order.products[indexPath.row]).sku};
+    NSString *targetSku = ((OrderProduct *)self.order.products[indexPath.row]).sku;
+    if (targetSku == nil) return;
+    NSDictionary *userInfo = @{@"sku": targetSku};
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication object:nil userInfo:userInfo];
     [self.tableview deselectRowAtIndexPath:indexPath animated:YES];
 }

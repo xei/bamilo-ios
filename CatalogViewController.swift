@@ -79,6 +79,13 @@ import SwiftyJSON
         self.loadData()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        //To reset the tab bar state
+        changeTabBar(hidden: false, animated: false)
+    }
+    
     override func updateNavBar() {
         super.updateNavBar()
         self.navBarLayout.showBackButton = true

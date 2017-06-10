@@ -291,4 +291,11 @@ const int subCatButtonVisibleHeight = 50;
     [self.delegate subCategorySelected:urlKey];
 }
 
+
+
+#pragma mark - hide tabbar in this view controller
+- (BOOL)hidesBottomBarWhenPushed {
+    return YES;
+}
+
 @end
