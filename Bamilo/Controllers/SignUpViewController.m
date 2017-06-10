@@ -14,6 +14,7 @@
 #import "RICustomer.h"
 #import "JAUtils.h"
 
+#import "Bamilo-Swift.h"
 
 #define cSignUpMethodEmail @"email"
 #define cSignUpMethodGoogle @"sso-google"
@@ -72,7 +73,7 @@
         return;
     }
     
-    [[AuthenticationDataManager sharedInstance] signupUser:self withFieldsDictionary:[self.formController getMutableDictionaryOfForm] completion:^(id data, NSError *error) {
+    [DataAggregator signupUser:self with:[self.formController getMutableDictionaryOfForm] completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
             

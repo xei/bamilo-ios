@@ -6,93 +6,76 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
-@objc class AddressDataManager: DataManager {
-    
-    //TODO: Must be changed when we migrate all data managers
-    private static let shared = AddressDataManager()
-    override class func sharedInstance() -> AddressDataManager {
-        return shared;
-    }
-    
-    
-    //MARK: Address List API
-    func getUserAddressList(target:DataServiceProtocol, completion: @escaping DataCompletion) {
-        self.requestManager.asyncPOST(target, path: RI_API_GET_CUSTOMER_ADDRESS_LIST, params: nil, type: .foreground) { (responseStatus, data, errorMessages) in
-            self.processResponse(responseStatus, of: AddressList.self, for: data, errorMessages: errorMessages, completion: completion)
+class AddressDataManager: DataManagerSwift {
+    static let sharedInstance = AddressDataManager()
+
+    //MARK: - Address List API
+    func getUserAddressList(_ target: DataServiceProtocol, completion: @escaping DataClosure) {
+        AddressDataManager.requestManager.async(.post, target: target, path: RI_API_GET_CUSTOMER_ADDRESS_LIST, params: nil, type: .foreground) { (responseType, data, errorMessages) in
+            self.processResponse(responseType, aClass: AddressList.self, data: data, errorMessages: errorMessages, completion: completion)
         }
     }
     
-    func setDefaultAddress(target: DataServiceProtocol, address: Address, isBilling: Bool, completion: @escaping DataCompletion) {
+    func setDefaultAddress(_ target: DataServiceProtocol, address: Address, isBilling: Bool, completion: @escaping DataClosure) {
         let params : [String: String] = [
             "id"   : address.uid,
             "type" : isBilling ? "billing" : "shipping"
         ]
-        self.requestManager.asyncPUT(target, path: RI_API_GET_CUSTOMER_SELECT_DEFAULT, params: params, type: .foreground) { (statusCode, data, errorMessages) in
-            self.processResponse(statusCode, of: AddressList.self, for: data, errorMessages: errorMessages, completion: completion)
+        AddressDataManager.requestManager.async(.put, target: target, path: RI_API_GET_CUSTOMER_SELECT_DEFAULT, params: params, type: .foreground) { (responseType, data, errorMessages) in
+            self.processResponse(responseType, aClass: AddressList.self, data: data, errorMessages: errorMessages, completion: completion)
         }
     }
     
-    //MARK: Areas for Address create/edit
-    func getRegions(target: DataServiceProtocol, completion:@escaping DataCompletion) {
-        self.getAreaZone(tagret: target, type: .background, path: RI_API_GET_CUSTOMER_REGIONS, completion: completion)
-    }
-    
-    func getCities(target: DataServiceProtocol, regionId:String, completion:@escaping DataCompletion) {
-        
-        let path = "\(RI_API_GET_CUSTOMER_CITIES)region/\(regionId)"
-        self.getAreaZone(tagret: target, type: .background, path: path, completion: completion)
-    }
-    
-    func getVicinity(target: DataServiceProtocol, cityId: String, completion:@escaping DataCompletion) {
-        
-        let path = "\(RI_API_GET_CUSTOMER_POSTCODES)city_id/\(cityId)"
-        self.getAreaZone(tagret: target, type: .background, path:path, completion: completion)
-    }
-    
-    //MARK: Address CRUD
-    func addAddress(target: DataServiceProtocol, params: [String:String], completion:@escaping DataCompletion) {
-        self.requestManager.asyncPOST(target, path: RI_API_POST_CUSTOMER_ADDDRESS_CREATE, params: params, type: .foreground) { (statusCode, data, errorMessages) in
-            if (statusCode == RIApiResponse.success) {
-                completion(data, nil)
-            } else {
-                completion(nil, self.getErrorFrom(statusCode, errorMessages: errorMessages))
-            }
+    //MARK: - Address CRUD
+    func addAddress(_ target: DataServiceProtocol, params: [String:String], completion:@escaping DataClosure) {
+        AddressDataManager.requestManager.async(.post, target: target, path: RI_API_POST_CUSTOMER_ADDDRESS_CREATE, params: params, type: .foreground) { (responseType, data, errorMessages) in
+            self.processResponse(responseType, aClass: nil, data: data, errorMessages: errorMessages, completion: completion)
         }
     }
     
-    func updateAddress(target: DataServiceProtocol, params: [String:String], id: String, completion:@escaping DataCompletion) {
+    func updateAddress(_ target: DataServiceProtocol, params: [String:String], id: String, completion:@escaping DataClosure) {
         let path = "\(RI_API_POST_CUSTOMER_ADDDRESS_EDIT)\(id)"
-        self.requestManager.asyncPOST(target, path: path, params: params, type: .foreground) { (statusCode, data, errorMessages) in
-            if (statusCode == RIApiResponse.success) {
-                completion(data, nil)
-            } else {
-                completion(nil, self.getErrorFrom(statusCode, errorMessages: errorMessages))
-            }
+        AddressDataManager.requestManager.async(.post, target: target, path: path, params: params, type: .foreground) { (responseType, data, errorMessages) in
+            self.processResponse(responseType, aClass: nil, data: data, errorMessages: errorMessages, completion: completion)
         }
     }
     
-    func getAddress(target: DataServiceProtocol, id: String, completion:@escaping DataCompletion) {
+    func getAddress(_ target: DataServiceProtocol, id: String, completion:@escaping DataClosure) {
         let path = "\(RI_API_GET_CUSTOMER_ADDDRESS)?id=\(id)"
-        self.requestManager .asyncGET(target, path: path, params: nil, type: .foreground) { (statusCode, data, errorMessages) in
-            self.processResponse(statusCode, of: Address.self, for: data, errorMessages: errorMessages, completion: completion)
+        AddressDataManager.requestManager.async(.get, target: target, path: path, params: nil, type: .foreground) { (responseType, data, errorMessages) in
+            self.processResponse(responseType, aClass: Address.self, data: data, errorMessages: errorMessages, completion: completion)
         }
     }
     
-    func deleteAddress(target: DataServiceProtocol, address: Address, completion: @escaping DataCompletion) {
+    func deleteAddress(_ target: DataServiceProtocol, address: Address, completion: @escaping DataClosure) {
         let params : [String: String] = ["id" : address.uid ]
-        self.requestManager.asyncDELETE(target, path: RI_API_DELETE_ADDRESS_REMOVE, params: params, type: .container) { (statusCode, data, errorMesssages) in
-            self.processResponse(statusCode, of: nil, for: data, errorMessages: errorMesssages, completion: completion)
+        AddressDataManager.requestManager.async(.delete, target: target, path: RI_API_DELETE_ADDRESS_REMOVE, params: params, type: .container) { (responseType, data, errorMesssages) in
+            self.processResponse(responseType, aClass: nil, data: data, errorMessages: errorMesssages, completion: completion)
         }
     }
     
-    // MARK: Helpers
-    private func getAreaZone(tagret: DataServiceProtocol, type: RequestExecutionType, path: String, completion:@escaping DataCompletion) {
-        self.requestManager.asyncGET(tagret, path: path, params: nil, type: type) { (statusCode, data, errorMessages) in
-            if let response = data, (statusCode == RIApiResponse.success) {
+    func getRegions(_ target: DataServiceProtocol, completion:@escaping DataClosure) {
+        self.getAreaZone(target, type: .background, path: RI_API_GET_CUSTOMER_REGIONS, completion: completion)
+    }
+    
+    func getCities(_ target: DataServiceProtocol, regionId:String, completion:@escaping DataClosure) {
+        let path = "\(RI_API_GET_CUSTOMER_CITIES)region/\(regionId)"
+        self.getAreaZone(target, type: .background, path: path, completion: completion)
+    }
+    
+    func getVicinity(_ target: DataServiceProtocol, cityId: String, completion:@escaping DataClosure) {
+        let path = "\(RI_API_GET_CUSTOMER_POSTCODES)city_id/\(cityId)"
+        self.getAreaZone(target, type: .background, path:path, completion: completion)
+    }
+    
+    // MARK: - Helpers
+    private func getAreaZone(_ tagret: DataServiceProtocol, type: ApiRequestExecutionType, path: String, completion:@escaping DataClosure) {
+        AddressDataManager.requestManager.async(.get, target: tagret, path: path, params: nil, type: type) { (statusCode, data, errorMessages) in
+            if let response = data, (statusCode == .success) {
                 var dictionary: [String: String] = [:]
-                if let regions = response.metadata["data"] as? [[String:Any]] {
+                if let regions = response.metadata?["data"] as? [[String:Any]] {
                     for region in regions {
                         if let regionLabel = region["label"] as? String, let regionValue = region["value"] as? Int {
                             dictionary[regionLabel] = String(regionValue)
@@ -101,7 +84,7 @@ import UIKit
                 }
                 completion(dictionary, nil)
             } else {
-                completion(nil, self.getErrorFrom(statusCode, errorMessages: errorMessages))
+                completion(nil, self.createError(statusCode, errorMessages: errorMessages))
             }
         }
     }

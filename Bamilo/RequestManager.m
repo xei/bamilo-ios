@@ -7,7 +7,7 @@
 //
 
 #import "RequestManager.h"
-#import "LoadingManager.h"
+#import "Bamilo-Swift.h"
 
 @implementation RequestManager {
 @private
@@ -47,7 +47,7 @@
     switch (type) {
         case RequestExecutionTypeContainer:
         case RequestExecutionTypeForeground:
-            [[LoadingManager sharedInstance] showLoading];
+            [LoadingManager showLoading];
         break;
             
         default: break;
@@ -75,7 +75,7 @@
          
          switch (type) {
             case RequestExecutionTypeForeground:
-                 [[LoadingManager sharedInstance] hideLoading];
+                 [LoadingManager hideLoading];
             break;
                  
             default: break;
@@ -91,7 +91,7 @@
             completion(apiResponse, nil, nil);
         }
         
-        [[LoadingManager sharedInstance] hideLoading];
+        [LoadingManager hideLoading];
     }];
 }
 

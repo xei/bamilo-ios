@@ -133,7 +133,7 @@
     if(self.address.uid) {
         //EDIT / UPDATE ADDRESS
         params[@"address_form[id]"] = self.address.uid;
-        [[AddressDataManager sharedInstance] updateAddressWithTarget:self params:params id:self.address.uid completion:^(id data, NSError *error) {
+        [DataAggregator updateAddress:self params:params addressId:self.address.uid completion:^(id data, NSError *error) {
             if (error == nil) {
                 [self.navigationController popViewControllerAnimated:YES];
             } else {
@@ -148,7 +148,7 @@
     } else {
         //ADD NEW ADDRESS
         params[@"address_form[id]"] = @"";
-        [[AddressDataManager sharedInstance] addAddressWithTarget:self params:params completion:^(id data, NSError *error) {
+        [DataAggregator addAddress:self params:params completion:^(id data, NSError *error) {
             if (error == nil) {
                 [self.navigationController popViewControllerAnimated:YES];
             } else {
@@ -203,7 +203,7 @@
 
 #pragma mark - Helpers
 - (void)getAddressByID: (NSString *)uid {
-    [[AddressDataManager sharedInstance] getAddressWithTarget:self id:uid completion:^(id data, NSError *error) {
+    [DataAggregator getAddress:self id:uid completion:^(id data, NSError *error) {
         if (error == nil) {
             [self bind:data forRequestId:3];
             [self publishScreenLoadTime];
@@ -261,7 +261,7 @@
 
 
 - (void)getRegionsByCompletion:(void (^)(void))completion {
-    [[AddressDataManager sharedInstance] getRegionsWithTarget:self completion:^(id data, NSError *error) {
+    [DataAggregator getRegions:self completion:^(id data, NSError *error) {
         if (!error)  {
             [self bind:data forRequestId:0];
             if(completion) completion();
@@ -270,7 +270,7 @@
 }
 
 - (void)getCitiesForRegionId:(NSString *)regionId completion:(void (^)(void))completion {
-    [[AddressDataManager sharedInstance] getCitiesWithTarget:self regionId:regionId completion:^(id data, NSError *error) {
+    [DataAggregator getCities:self regionId:regionId completion:^(id data, NSError *error) {
         if (!error) {
             [self bind:data forRequestId:1];
             if (completion) completion();
@@ -279,7 +279,7 @@
 }
 
 - (void)getVicinitiesForCityId:(NSString *)cityId completion:(void (^)(void))completion {
-    [[AddressDataManager sharedInstance] getVicinityWithTarget:self cityId:cityId completion:^(id data, NSError *error) {
+    [DataAggregator getVicinity:self cityId:cityId completion:^(id data, NSError *error) {
         if (!error) {
             [self bind:data forRequestId:2];
             if (completion) completion();

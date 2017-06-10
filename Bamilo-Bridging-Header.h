@@ -49,3 +49,4 @@
 #import "JAHomeViewController.h"
 #import "CartViewController.h"
 #import "JASavedListViewController.h"
+#import "MultistepEntity.h"

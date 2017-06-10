@@ -9,6 +9,6 @@
 #import "JABaseViewController.h"
 #import "CartDataManager.h"
 
-@interface JARecentlyViewedViewController : JABaseViewController <DataServiceProtocol>
+@interface JARecentlyViewedViewController : JABaseViewController
 
 @end

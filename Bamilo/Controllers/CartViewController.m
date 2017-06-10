@@ -113,7 +113,7 @@
 }
 
 - (void)removeCartItem:(RICartItem *)cartItem {
-    [[LoadingManager sharedInstance] showLoading];
+    [LoadingManager showLoading];
     [RICart removeProductWithSku:cartItem.simpleSku withSuccessBlock:^(RICart *cart) {
         
         NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
@@ -152,7 +152,7 @@
         
         
 //        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
-        [[LoadingManager sharedInstance] hideLoading];
+        [LoadingManager hideLoading];
         
         self.cart = cart;
         
@@ -163,7 +163,7 @@
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
         
 //        [self onErrorResponse:apiResponse messages:@[STRING_NO_NETWORK_DETAILS] showAsMessage:YES selector:@selector(removeCartItem:) objects:@[cartItem]];
-        [[LoadingManager sharedInstance] hideLoading];
+        [LoadingManager hideLoading];
     }];
 }
 
@@ -219,11 +219,11 @@
 #pragma CartTableViewCell Delegate
 
 - (void)quantityWillChangeTo:(int)newValue withCell:(id)cartCell {
-    [[LoadingManager sharedInstance] showLoading];
+    [LoadingManager showLoading];
 }
 
 - (void)quantityHasBeenChangedTo:(int)newValue withNewCart:(RICart *)cart withCell:(id)cartCell {
-    [[LoadingManager sharedInstance] hideLoading];
+    [LoadingManager hideLoading];
     
     NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
     [trackingDictionary setValue:cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
@@ -237,7 +237,7 @@
 }
 
 - (void)quantityHasBeenChangedTo:(int)newValue withErrorMessages:(NSArray *)errorMsgs withCell:(id)cartCell {
-    [[LoadingManager sharedInstance] hideLoading];
+    [LoadingManager hideLoading];
     Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
     if (networkStatus == NotReachable) {
@@ -276,7 +276,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[CartDataManager sharedInstance] getUserCart:self completion:^(id data, NSError *error) {
+    [DataAggregator getUserCart:self completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
         }

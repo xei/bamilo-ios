@@ -53,7 +53,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [[OrderDataManager sharedInstance] getOrderWithTarget:self orderId:self.order.orderId completion:^(id data, NSError *error) {
+    [DataAggregator getOrder:self orderId:self.order.orderId completion:^(id data, NSError *error) {
         if (error == nil) {
             [self bind:data forRequestId:0];
             NSArray *progressViewContent = [self getProgressViewControlContentForOrder:self.order];
@@ -158,9 +158,9 @@
 #pragma mark - OrderProductListTableViewCellDelegate
 
 - (void)needsToShowProductReviewForProduct:(OrderProduct *)product {
-    [[LoadingManager sharedInstance] showLoading];
+    [LoadingManager showLoading];
     [RIProduct getCompleteProductWithSku:product.sku successBlock:^(id product) {
-        [[LoadingManager sharedInstance] hideLoading];
+        [LoadingManager hideLoading];
         NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
         if(VALID_NOTEMPTY(product, RIProduct)) {
             [userInfo setObject:product forKey:@"product"];
@@ -168,7 +168,7 @@
         [userInfo setObject:@"reviews" forKey:@"product.screen"];
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowProductSpecificationScreenNotification object:nil userInfo:userInfo];
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-        [[LoadingManager sharedInstance] hideLoading];
+        [LoadingManager hideLoading];
         if (error.count && ![self showNotificationBarMessage:error[0] isSuccess:NO]) {
 
         }

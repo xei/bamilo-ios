@@ -10,6 +10,7 @@
 #import "JAMyOrderDetailView.h"
 #import "JAMyOrdersViewController.h"
 #import "CartDataManager.h"
+#import "Bamilo-Swift.h"
 
 @interface JAMyOrderDetailViewController () <OrderDetailViewDelegate, DataServiceProtocol>
 //
@@ -130,7 +131,7 @@
 
 #pragma mark - OrderDetailViewDelegate
 -(void) reOrder:(id)sender item:(RIItemCollection *)item {
-    [[CartDataManager sharedInstance] addProductToCart:self simpleSku:item.sku completion:^(id data, NSError *error) {
+    [DataAggregator addProductToCart:self simpleSku:item.sku completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
             

@@ -180,7 +180,7 @@ class ProfileViewController: JABaseViewController, UITableViewDelegate, UITableV
     
     func logoutUser() {
         self.showLoading()
-        AuthenticationDataManager.sharedInstance().logoutUser(self) { (data, error) in
+        AuthenticationDataManager.sharedInstance.logoutUser(self) { (data, error) in
             self.hideLoading()
             self.bind(data, forRequestId: 0)
             //EVENT: LOGOUT

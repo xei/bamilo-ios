@@ -30,4 +30,12 @@
 //    }];
 //}
 //
+//-(void)removeFromFavorites:(id<DataServiceProtocol>)target sku:(NSString *)sku completion:(DataCompletion)completion {
+//    NSDictionary *params = @{ @"sku": sku };
+//    
+//    [self.requestManager asyncDELETE:target path:RI_API_REMOVE_FOM_WISHLIST params:params type:RequestExecutionTypeForeground completion:^(NSInteger statusCode, ResponseData *data, NSArray *errorMessages) {
+//        [self processResponse:statusCode ofClass:nil forData:data errorMessages:errorMessages completion:completion];
+//    }];
+//}
+//
 //@end

@@ -15,6 +15,7 @@
 #import "JAPicker.h"
 #import "JAUtils.h"
 #import "RICart.h"
+#import "Bamilo-Swift.h"
 
 @interface JARecentlyViewedViewController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, JAPickerDelegate, DataServiceProtocol>
 
@@ -350,7 +351,7 @@
         }
     }
     
-    [[CartDataManager sharedInstance] addProductToCart:self simpleSku:productSimple.sku completion:^(id data, NSError *error) {
+    [DataAggregator addProductToCart:self simpleSku:productSimple.sku completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
             

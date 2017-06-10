@@ -11,5 +11,6 @@
 //@interface ProductDataManager : DataManager
 //
 //-(void) addToFavorites:(id<DataServiceProtocol>)target sku:(NSString *)sku completion:(DataCompletion)completion;
+//-(void) removeFromFavorites:(id<DataServiceProtocol>)target sku:(NSString *)sku completion:(DataCompletion)completion;
 //
 //@end

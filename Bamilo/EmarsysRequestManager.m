@@ -8,7 +8,7 @@
 
 #import "EmarsysRequestManager.h"
 #import "AFHTTPRequestOperationManager.h"
-#import "LoadingManager.h"
+#import "Bamilo-Swift.h"
 
 #define kApplicationCode @"Application_CODE"
 #define kApplicationPassword @"Application_PASSWORD"
@@ -20,7 +20,7 @@
     
     switch (type) {
         case RequestExecutionTypeForeground:
-            [[LoadingManager sharedInstance] showLoading];
+            [LoadingManager showLoading];
             break;
             
         default:
@@ -68,7 +68,7 @@
         break;
     }
     
-    [[LoadingManager sharedInstance] hideLoading];
+    [LoadingManager hideLoading];
 }
 
 -(NSArray *)extractErrors:(id)responseObject {

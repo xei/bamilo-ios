@@ -20,6 +20,7 @@
 #import "RIShippingMethod.h"
 #import "DeliveryTimeTableViewCell.h"
 #import "CheckoutDataManager.h"
+#import "Bamilo-Swift.h"
 
 @interface CheckoutConfirmationViewController() <DiscountCodeViewDelegate, DiscountSwitcherViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -76,7 +77,7 @@
     [super viewWillAppear:animated];
     
     if(self.isCompleteFetch == NO) {
-        [[CheckoutDataManager sharedInstance] getMultistepConfirmation:self type:RequestExecutionTypeContainer completion:^(id data, NSError *error) {
+        [DataAggregator getMultistepConfirmation:self type:RequestExecutionTypeContainer completion:^(id data, NSError *error) {
             if(error == nil) {
                 [self bind:data forRequestId:0];
                 
@@ -86,7 +87,7 @@
                 }
                 
                 //Delivery Time
-                [[CheckoutDataManager sharedInstance] getMultistepShipping:self completion:^(id data, NSError *error) {
+                [DataAggregator getMultistepShipping:self completion:^(id data, NSError *error) {
                     if(error == nil) {
                         [self bind:data forRequestId:1];
                         
@@ -283,7 +284,7 @@
 #pragma mark - DiscountCodeViewDelegate
 -(void)discountCodeViewDidFinish:(id)sender withCode:(NSString *)discountCode {
     if(self.cart.cartEntity.couponCode == nil && discountCode && discountCode.length) {
-        [[CheckoutDataManager sharedInstance] applyVoucher:self voucherCode:discountCode completion:^(id data, NSError *error) {
+        [DataAggregator applyVoucher:self voucher:discountCode completion:^(id data, NSError *error) {
             if(error == nil) {
                 [self bind:data forRequestId:2];
                 
@@ -395,7 +396,7 @@
 }
 
 -(void) requestRemovalOfVoucherCode {
-    [[CheckoutDataManager sharedInstance] removeVoucher:self voucherCode:self.cart.cartEntity.couponCode completion:^(id data, NSError *error) {
+    [DataAggregator removeVoucher:self voucher:self.cart.cartEntity.couponCode completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:3];
             

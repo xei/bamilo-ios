@@ -70,7 +70,7 @@
         return;
     }
     
-    [[AuthenticationDataManager sharedInstance] forgetPassword:self withFields:[self.formController getMutableDictionaryOfForm] completion:^(id data, NSError *error) {
+    [DataAggregator forgetPassword:self with:[self.formController getMutableDictionaryOfForm] completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
         } else {
@@ -81,7 +81,7 @@
                 }
             }
         }
-    }]; 
+    }];
 }
 
 #pragma mark - DataServiceProtocol

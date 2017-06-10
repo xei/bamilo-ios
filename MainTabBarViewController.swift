@@ -41,7 +41,7 @@ import UIKit
             RICustomer.autoLogin(nil)
         }
         
-        CartDataManager.sharedInstance().getUserCart(self) { data, errorMessages in
+        CartDataManager.sharedInstance.getUserCart(self) { data, errorMessages in
             self.bind(data, forRequestId: 0)
         };
     }

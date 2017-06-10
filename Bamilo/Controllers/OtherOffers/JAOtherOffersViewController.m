@@ -16,7 +16,7 @@
 #import "JAUtils.h"
 #import "JAProductListFlowLayout.h"
 #import "JAPicker.h"
-#import "CartDataManager.h"
+#import "Bamilo-Swift.h"
 
 @interface JAOtherOffersViewController () <JAPickerDelegate>
 {
@@ -290,11 +290,11 @@
 #pragma mark - Button Actions
 
 - (void)addToCartButtonPressed:(UIButton*)sender {
-    RIProductOffer* offer = [self.productOffers objectAtIndex:sender.tag];
-    RIProductSimple* simp =[self.selectedProductSimple objectForKey:offer.productSku];
-    NSString* simpleSku = simp.sku;
+    RIProductOffer *offer = [self.productOffers objectAtIndex:sender.tag];
+    RIProductSimple *simpleProduct =[self.selectedProductSimple objectForKey:offer.productSku];
+    NSString *simpleSku = simpleProduct.sku;
     
-    [[CartDataManager sharedInstance] addProductToCart:self simpleSku:simpleSku completion:^(id data, NSError *error) {
+    [DataAggregator addProductToCart:self simpleSku:simpleSku completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
             

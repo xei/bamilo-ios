@@ -10,11 +10,13 @@ import Foundation
 
 extension String {
     
+    static let EMPTY = ""
+    
     func convertTo(language: LocalLang) -> String {
         let characters = self.characters
         var converted: String = ""
         for character in characters {
-            converted.append(AppUtility.convertSignleCharTo(character: String(character), language: language))
+            converted.append(convertSingleCharTo(character: String(character), language: language))
         }
         return converted
     }
@@ -39,5 +41,16 @@ extension String {
         attributeString.addAttribute(NSBaselineOffsetAttributeName, value: 0, range: NSMakeRange(0, attributeString.length))
         attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: 1, range: NSMakeRange(0, attributeString.length))
         return attributeString
+    }
+    
+//MARK: Private Methods
+    private func convertSingleCharTo(character: String, language: LocalLang) -> String {
+        let formatter: NumberFormatter = NumberFormatter()
+        let irLoc = NSLocale(localeIdentifier: language.rawValue) as Locale
+        formatter.locale = irLoc
+        if let final = formatter.number(from: character) {
+            return formatter.string(from: final)!
+        }
+        return character
     }
 }
