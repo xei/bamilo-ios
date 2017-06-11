@@ -106,25 +106,20 @@
 {
     RIError *error = [[RIError alloc] init];
     
-    if(VALID_NOTEMPTY([jsonObject objectForKey:@"messages"], NSDictionary))
-    {
+    if(VALID_NOTEMPTY([jsonObject objectForKey:@"messages"], NSDictionary)) {
         NSDictionary *messagesObject = [jsonObject objectForKey:@"messages"];
-        if(VALID_NOTEMPTY([messagesObject objectForKey:@"error"], NSArray))
-        {
+        if(VALID_NOTEMPTY([messagesObject objectForKey:@"error"], NSArray)) {
             NSArray *errorCodesObject = [messagesObject objectForKey:@"error"];
             NSMutableArray *errorCodesArray = [[NSMutableArray alloc] init];
-            for (NSString *errorCodeString in errorCodesObject)
-            {
+            for (NSString *errorCodeString in errorCodesObject) {
                 [errorCodesArray addObject:errorCodeString];
             }
             error.errorCodes = [errorCodesArray copy];
         }
     
-        if(NOT_NIL([messagesObject objectForKey:@"validate"]))
-        {
+        if(NOT_NIL([messagesObject objectForKey:@"validate"])) {
             id errorMessagesObject = [messagesObject objectForKey:@"validate"];
-            if (VALID_NOTEMPTY(errorMessagesObject, NSDictionary))
-            {
+            if (VALID_NOTEMPTY(errorMessagesObject, NSDictionary)) {
                 NSMutableDictionary *errorMessagesDictionary = [[NSMutableDictionary alloc] init];
                 
                 NSArray  *errorMessagesKeys = [errorMessagesObject allKeys];
@@ -132,9 +127,7 @@
                     [errorMessagesDictionary setValue:[errorMessagesObject objectForKey:errorMessageKey] forKey:errorMessageKey];
                 }
                 error.errorMessagesDictionary = [errorMessagesDictionary copy];
-            }
-            else if (VALID_NOTEMPTY(errorMessagesObject, NSArray))
-            {
+            } else if (VALID_NOTEMPTY(errorMessagesObject, NSArray)) {
                 NSMutableArray *errorMessagesArray = [[NSMutableArray alloc] init];
                 
                 if (VALID_NOTEMPTY([errorMessagesObject valueForKey:@"message"], NSArray)) {
@@ -148,9 +141,7 @@
                 error.errorMessgaeFiledArray = errorMessagesObject;
                 error.errorMessagesArray = [errorMessagesArray copy];
             }
-        }
-        else if(VALID_NOTEMPTY([messagesObject objectForKey:@"error"], NSDictionary))
-        {
+        } else if(VALID_NOTEMPTY([messagesObject objectForKey:@"error"], NSDictionary)) {
             error.errorMessagesDictionary = [[messagesObject objectForKey:@"error"] copy];
         }
     }

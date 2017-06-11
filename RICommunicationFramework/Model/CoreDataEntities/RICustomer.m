@@ -215,14 +215,18 @@
                                     [EmarsysPredictManager setCustomer:customerObject];
                                     
                                 } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject) {
-                                    dispatch_async(dispatch_get_main_queue(), ^{
-                                        returnBlock(NO, nil, customerObject.loginMethod);
-                                    });
+                                    if (returnBlock != nil) {
+                                        dispatch_async(dispatch_get_main_queue(), ^{
+                                            returnBlock(NO, nil, customerObject.loginMethod);
+                                        });
+                                    }
                                 }];
                         } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
-                            dispatch_async(dispatch_get_main_queue(), ^{
-                                returnBlock(NO, nil, customerObject.loginMethod);
-                            });
+                            if (returnBlock != nil) {
+                                dispatch_async(dispatch_get_main_queue(), ^{
+                                    returnBlock(NO, nil, customerObject.loginMethod);
+                                });
+                            }
                         }];
             } else {
                 dispatch_async(dispatch_get_main_queue(), ^{

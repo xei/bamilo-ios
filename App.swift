@@ -9,7 +9,7 @@
 import Foundation
 
 struct AppKeys {
-    static let ErrorMessages = "ErrorMessages"
+    static let ErrorMessages = "errorMessages"
     
     static let Configs = "Configs"
     static let APIBaseUrl = "API_BaseUrl"

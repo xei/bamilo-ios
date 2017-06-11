@@ -28,7 +28,7 @@ enum ApiRequestExecutionType {
     case container
 }
 
-typealias ResponseClosure = (_ responseType: ApiResponseType, _ data: ApiResponseData?, _ errorMessages: [String]?) -> Void
+typealias ResponseClosure = (_ responseType: ApiResponseType, _ data: ApiResponseData?, _ errorMessages: [Any]?) -> Void
 
 class RequestManagerSwift {
     private var baseUrl: String?
@@ -60,7 +60,7 @@ class RequestManagerSwift {
                             if(apiResponseData.success) {
                                 completion(self.map(statusCode: response.response?.statusCode), apiResponseData, nil)
                             } else {
-                                completion(self.map(statusCode: response.response?.statusCode), nil, nil)
+                                completion(self.map(statusCode: response.response?.statusCode), nil, self.prepareErrorMessages(messagesList: apiResponseData.messages!))
                             }
                         }
                     
@@ -69,16 +69,7 @@ class RequestManagerSwift {
                         }
                     case .failure(let error):
                         print(error)
-                    
                         LoadingManager.hideLoading()
-//                        if(errorJsonObject && errorJsonObject.allKeys.count) {
-//                            completion(apiResponse, nil, [RIError getPerfectErrorMessages:errorJsonObject]);
-//                        } else if(errorObject) {
-//                            NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-//                            completion(apiResponse, nil, errorArray);
-//                        } else {
-//                            completion(apiResponse, nil, nil);
-//                        }
                 }
             }
         }
@@ -97,5 +88,9 @@ class RequestManagerSwift {
             default:
                 return .success
         }
+    }
+    
+    private func prepareErrorMessages(messagesList: ApiDataMessageList) -> [Any] {
+        return messagesList.validations ?? messagesList.errors?.map { $0.message ?? "" } ?? []
     }
 }

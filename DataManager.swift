@@ -26,7 +26,7 @@ class DataManagerSwift {
         return RequestManagerSwift(with: nil)
     }()
     
-    func processResponse(_ responseType: ApiResponseType, aClass: Any?, data: ApiResponseData?, errorMessages: [String]?, completion: DataClosure?) {
+    func processResponse(_ responseType: ApiResponseType, aClass: Any?, data: ApiResponseData?, errorMessages: [Any]?, completion: DataClosure?) {
         if let completion = completion {
             guard responseType == .success, let data = data else {
                 return completion(nil, self.createError(responseType, errorMessages: errorMessages))
@@ -56,7 +56,7 @@ class DataManagerSwift {
                         payload[DataManagerKeys.DataContent] = mappableClassVerbose.parseToDataModel(with: [serviceData, configuration! ])
                         self.handlePayload(payload: payload, data: data, completion: completion)
                     }, andFailureBlock: { (apiResponse, errorMessages) in
-                        if let errorMessages = errorMessages as? [String], let apiResponseType = self.map(statusCode: apiResponse) {
+                        if let errorMessages = errorMessages, let apiResponseType = self.map(statusCode: apiResponse) {
                             completion(nil, self.createError(apiResponseType, errorMessages:errorMessages))
                         }
                     })
@@ -73,7 +73,7 @@ class DataManagerSwift {
         }
     }
     
-    func createError(_ responseType: ApiResponseType, errorMessages: [String]?) -> Error? {
+    func createError(_ responseType: ApiResponseType, errorMessages: [Any]?) -> Error? {
         guard let errorMessages = errorMessages else {
             return NSError(domain:AppValues.Domain, code:responseType.rawValue, userInfo:nil)
         }

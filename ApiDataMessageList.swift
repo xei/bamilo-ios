@@ -9,11 +9,16 @@
 import ObjectMapper
 
 @objc class ApiDataMessageList:NSObject, Mappable {
+    
     var success: [ApiDataMessage]?
+    var errors: [ApiDataMessage]?
+    var validations: [[String:String]]?
     
     required init?(map: Map) {}
     
     func mapping(map: Map) {
         success     <- map["success"]
+        errors      <- map["error"]
+        validations <- map["validate"]
     }
 }
