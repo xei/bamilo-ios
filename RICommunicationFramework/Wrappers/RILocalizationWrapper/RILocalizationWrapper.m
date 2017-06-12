@@ -59,8 +59,7 @@
     return returnString;
 }
 
-+ (NSString *)localizedErrorCode:(NSString *)errorCode;
-{
++ (NSString *)localizedErrorCode:(NSString *)errorCode {
     NSString *localizedErrorCode = nil;
     NSString *locale = [[NSUserDefaults standardUserDefaults] stringForKey:kLanguageCodeKey];
     NSDictionary *componentsFromLocale =  [NSLocale componentsFromLocaleIdentifier:locale];

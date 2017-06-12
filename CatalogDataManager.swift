@@ -14,7 +14,7 @@ class CatalogDataManager: DataManagerSwift {
     func getCatalog(_ target:DataServiceProtocol, searchTarget:RITarget? = nil, filtersQueryString:String? = nil, sortingMethod:Catalog.CatalogSortType = .populaity, page:Int = 1, completion: @escaping DataClosure) {
         var path = "\(RI_API_CATALOG)"
         if let target = searchTarget, let urlForTarget = RITarget.getRelativeUrlStringforTarget(target) {
-            path += "\(urlForTarget)/"
+            path = "\(urlForTarget)/"
         }
         
         if let filters = filtersQueryString {

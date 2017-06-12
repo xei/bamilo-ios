@@ -67,9 +67,9 @@ class DataManagerSwift {
                     
                     self.handlePayload(payload: payload, data: data, completion: completion)
                 }
+            } else {
+                self.handlePayload(payload: payload, data: data, completion: completion)
             }
-            
-            
         }
     }
     

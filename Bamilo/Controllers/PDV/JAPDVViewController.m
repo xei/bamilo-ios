@@ -1111,7 +1111,7 @@ typedef void (^ProcessActionBlock)(void);
             self.currentSimple = [self.product.productSimples firstObject];
         }
 
-        [DataAggregator addProductToCart:self simpleSku:self.product.sku completion:^(id data, NSError *error) {
+        [DataAggregator addProductToCart:self simpleSku:self.currentSimple.sku completion:^(id data, NSError *error) {
             if(error == nil) {
                 [self bind:data forRequestId:0];
 

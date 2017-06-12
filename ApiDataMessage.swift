@@ -9,6 +9,7 @@
 import ObjectMapper
 
 @objc class ApiDataMessage: NSObject, Mappable {
+    
     var message: String? = nil
     var reason: String? = nil
     

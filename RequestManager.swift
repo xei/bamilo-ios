@@ -43,8 +43,8 @@ class RequestManagerSwift {
                 LoadingManager.showLoading()
             }
             print("------------ Start request for : \(baseUrl)/\(path)")
-            if let sendingParams = params {
-                print(sendingParams)
+            if let params = params {
+                print(params)
             }
             
             Alamofire.request("\(baseUrl)/\(path)", method: method, parameters: params, encoding: URLEncoding(destination: .methodDependent), headers: self.createHeaders()).responseJSON(completionHandler: { (response) in
@@ -53,7 +53,6 @@ class RequestManagerSwift {
                 }
                 print(response)
             }).responseObject { (response: DataResponse<ApiResponseData>) in
-            
                 switch response.result {
                     case .success:
                         if let apiResponseData = response.result.value {
@@ -69,6 +68,7 @@ class RequestManagerSwift {
                         }
                     case .failure(let error):
                         print(error)
+                        completion(self.map(statusCode: response.response?.statusCode), nil, [STRING_OOPS])
                         LoadingManager.hideLoading()
                 }
             }

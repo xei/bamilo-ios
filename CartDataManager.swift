@@ -16,7 +16,8 @@ class CartDataManager: DataManagerSwift {
             "quantity" : "1",
             "sku" : simpleSku
         ]
-        CartDataManager.requestManager.async(.post, target: target, path: RI_API_ADD_ORDER, params: params, type: .foreground) { (responseType, data, errorMessages) in
+        let queryString = "?sku=\(simpleSku)"
+        CartDataManager.requestManager.async(.post, target: target, path: RI_API_ADD_ORDER + queryString, params: params, type: .foreground) { (responseType, data, errorMessages) in
             self.processResponse(responseType, aClass: RICart.self, data: data, errorMessages: errorMessages, completion: completion)
         }
     }

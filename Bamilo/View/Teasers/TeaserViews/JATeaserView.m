@@ -24,6 +24,7 @@
 }
 
 - (void)teaserPressedForIndex:(NSInteger)index {
+    if (self.teaserGrouping.teaserComponents.count <= index) return;
     RITeaserComponent* teaserComponent = [self.teaserGrouping.teaserComponents objectAtIndex:index];
     if (self.validTeaserComponents) {
         teaserComponent = [self.validTeaserComponents objectAtIndex:index];
