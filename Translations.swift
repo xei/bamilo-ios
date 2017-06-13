@@ -34,5 +34,6 @@ let STRING_DONT_REMOVE_INFO_EMAIL = RILocalizationWrapper.localizedString("pleas
 let STRING_REPORT_BUG = RILocalizationWrapper.localizedString("report_bug")!
 let STRING_SHARE_IDEAS = RILocalizationWrapper.localizedString("share_ideas")!
 let STRING_OOPS = RILocalizationWrapper.localizedString("string_oops")!
+let STRING_ORDER_HISTORY = RILocalizationWrapper.localizedString("my_order_history_label")!
 
 

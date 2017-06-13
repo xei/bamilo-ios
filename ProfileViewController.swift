@@ -71,7 +71,7 @@ class ProfileViewController: JABaseViewController, UITableViewDelegate, UITableV
         
         self.tableViewDataSource = [
             [ProfileViewDataModel(cellType: .profileUserTableViewCell, title: nil, iconName: nil, notificationName: nil, selector: #selector(showLogin))],
-            [ProfileViewDataModel(cellType: .profileOrderTableViewCell, title: nil, iconName: nil, notificationName: "NOTIFICATION_SHOW_MY_ORDERS_SCREEN", selector: nil)],
+            [ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_ORDER_HISTORY, iconName: "order-tracking-profile", notificationName: "NOTIFICATION_SHOW_MY_ORDERS_SCREEN", selector: nil)],
             [
                 ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_PROFILE, iconName: "user-information-icons", notificationName: "NOTIFICATION_SHOW_USER_DATA_SCREEN", selector: nil),
                 ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_MY_ADDRESSES, iconName: "address_profie", notificationName: nil, selector: #selector(showMyAddressViewController)),
