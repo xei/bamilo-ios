@@ -8,7 +8,7 @@
 
 import ObjectMapper
 
-typealias DataClosure = (_ data: Any?, _ error: Error?) -> Void
+typealias DataClosure = (_ data: Any?, _ error: NSError?) -> Void
 
 class DataManagerSwift {
     
@@ -73,7 +73,7 @@ class DataManagerSwift {
         }
     }
     
-    func createError(_ responseType: ApiResponseType, errorMessages: [Any]?) -> Error? {
+    func createError(_ responseType: ApiResponseType, errorMessages: [Any]?) -> NSError? {
         guard let errorMessages = errorMessages else {
             return NSError(domain:AppValues.Domain, code:responseType.rawValue, userInfo:nil)
         }

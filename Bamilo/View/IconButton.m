@@ -38,7 +38,7 @@
     
     labelFrame.size = [self.titleLabel.text sizeForFont:self.titleLabel.font withMaxWidth:self.size.width];
     
-    imageFrame.size.height = self.size.height * (self.isAspectFillIcon ? 0.9 : 0.5);
+    imageFrame.size.height = self.size.height * (self.imageHeightToButtonHeightRatio ? MIN(self.imageHeightToButtonHeightRatio, 1) : 0.5);
     imageFrame.size.width = imageFrame.size.height;
     
     if (self.titleLabel.text.length != 0) {

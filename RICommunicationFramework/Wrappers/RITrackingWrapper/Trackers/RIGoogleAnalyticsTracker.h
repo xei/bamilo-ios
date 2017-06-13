@@ -26,6 +26,6 @@ extern NSString * const kRIGoogleAnalyticsTrackingID;
     RICampaignTracker
 >
 
-+ (void)initGATrackerWithId:(NSString *)trackingId;
++ (void)initGATrackerWithId;
 
 @end

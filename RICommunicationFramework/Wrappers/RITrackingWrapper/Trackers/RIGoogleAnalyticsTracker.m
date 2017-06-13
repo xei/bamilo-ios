@@ -98,11 +98,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     return self;
 }
 
-+ (void)initGATrackerWithId:(NSString*)trackingId {
-    if (!trackingId) {
-        RIRaiseError(@"Missing Google Analytics Tracking ID in tracking properties");
-        //return;
-    }
++ (void)initGATrackerWithId {
     
     // Automatically send uncaught exceptions to Google Analytics.
     [GAI sharedInstance].trackUncaughtExceptions = YES;
@@ -115,12 +111,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     
     NSString *GAId = [[[NSBundle mainBundle] objectForInfoDictionaryKey:kConfigs] objectForKey:@"GoogleAnalyticsID"];
     [[GAI sharedInstance] trackerWithTrackingId: GAId];
-//    // Create tracker instance.
-//#ifdef IS_RELEASE
-//    [[GAI sharedInstance] trackerWithTrackingId:trackingId ?: [RITrackingConfiguration valueForKey:kRIGoogleAnalyticsTrackingID]];
-//#else
-//    [[GAI sharedInstance] trackerWithTrackingId:[RITrackingConfiguration valueForKey:kRIGoogleAnalyticsTrackingID]];
-//#endif
+
     
     // Setup the app version
     NSString *version = [[AppManager sharedInstance] getAppFullFormattedVersion] ?: @"?";
@@ -195,6 +186,10 @@ static RIGoogleAnalyticsTracker *sharedInstance;
             
             if ([campaignData objectForKey:kUTMTerm]) {
                 [params addObject:[NSString stringWithFormat:@"%@=%@",kUTMTerm, [campaignData objectForKey:kUTMTerm]]];
+            }
+            
+            if ([campaignData objectForKey:kUTMContent]) {
+                [params addObject:[NSString stringWithFormat:@"%@=%@",kUTMContent, [campaignData objectForKey:kUTMContent]]];
             }
             
             [finalStr appendString:[params componentsJoinedByString:@"&"]];

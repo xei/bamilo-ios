@@ -1130,7 +1130,7 @@
             <objects>
                 <navigationController storyboardIdentifier="menuViewController" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="tA5-pZ-pB4" userLabel="Side Menu Navigation Controller" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="UvQ-KB-VPd">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="UvQ-KB-VPd">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1215,7 +1215,7 @@
                                                 </connections>
                                             </switch>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="فقط با تخفیف ها" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gEn-nz-ntR">
-                                                <rect key="frame" x="59" y="15" width="86" height="22"/>
+                                                <rect key="frame" x="59.666666666666686" y="15.666666666666664" width="85.333333333333314" height="21.333333333333336"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1478,7 +1478,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="0V7-j2-mJV" userLabel="Application Navigation Controller" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="S2r-Lu-SWl">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="S2r-Lu-SWl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1516,8 +1516,8 @@
         <scene sceneID="9ps-59-SOz">
             <objects>
                 <navigationController id="3lk-K0-wUO" customClass="JACenterNavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="سبد خرید" image="btn_cart" id="vOP-LE-mfP"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="JSG-7a-gu8">
+                    <tabBarItem key="tabBarItem" title="سبد خرید" image="tabbar_button_cart" selectedImage="tabbar_button_cart_highlighted" id="vOP-LE-mfP"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="JSG-7a-gu8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1627,7 +1627,7 @@
                                 <rect key="frame" x="187" y="100" width="40" height="40"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="فیلترهای کمتری را برای جستجو انتخاب نمایید" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SU1-vf-mKc">
-                                <rect key="frame" x="83.666666666666657" y="165" width="247.33333333333334" height="23"/>
+                                <rect key="frame" x="84" y="165" width="247.33333333333331" height="23"/>
                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -1666,7 +1666,7 @@
             <objects>
                 <navigationController id="UNH-3a-fvq" customClass="JACenterNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="حساب کاربری" image="tabbar_button_user" selectedImage="tabbar_button_user_highlighted" id="kQT-G5-igf"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="j53-XG-u4H">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="j53-XG-u4H">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1682,8 +1682,8 @@
         <scene sceneID="6GI-gm-hb3">
             <objects>
                 <navigationController id="LF3-PT-6bx" customClass="JACenterNavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="دسته بندی" image="btn_menu" selectedImage="btn_menu_pressed" id="VQI-YI-REh"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="P9F-Ev-iJz">
+                    <tabBarItem key="tabBarItem" title="دسته بندی" image="tabbar_category" selectedImage="tabbar_category_highlighted" id="VQI-YI-REh"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="P9F-Ev-iJz">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1719,7 +1719,7 @@
             <objects>
                 <navigationController id="QoD-0G-T5X" customClass="JACenterNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="علاقه مندی" image="tabbar_button_wishlist" selectedImage="tabbar_button_wishlist_highlighted" id="4Pl-fC-rbr"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="1fp-kM-BWq">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="1fp-kM-BWq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1736,7 +1736,7 @@
             <objects>
                 <navigationController id="cs8-hA-jLu" customClass="JACenterNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="خانه" image="tabbar_button_home" selectedImage="tabbar_button_home_highlighted" id="30f-xb-6Gv"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="8ul-e7-QlM">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="8ul-e7-QlM">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1771,20 +1771,21 @@
     <resources>
         <image name="ArrowLeft" width="8" height="14"/>
         <image name="banner" width="708" height="300"/>
-        <image name="btn_cart" width="25" height="20"/>
-        <image name="btn_menu" width="18" height="20"/>
-        <image name="btn_menu_pressed" width="18" height="20"/>
         <image name="bug" width="21" height="25"/>
         <image name="call" width="25" height="25"/>
         <image name="filtered_list_no_result" width="40" height="40"/>
         <image name="img_emptyCart" width="102" height="92"/>
         <image name="pageNotFound" width="853" height="853"/>
         <image name="subcatIcon" width="18" height="19"/>
-        <image name="tabbar_button_home" width="20" height="19"/>
-        <image name="tabbar_button_home_highlighted" width="20" height="19"/>
-        <image name="tabbar_button_user" width="17" height="19"/>
-        <image name="tabbar_button_user_highlighted" width="17" height="19"/>
-        <image name="tabbar_button_wishlist" width="20" height="18"/>
-        <image name="tabbar_button_wishlist_highlighted" width="20" height="18"/>
+        <image name="tabbar_button_cart" width="22" height="22"/>
+        <image name="tabbar_button_cart_highlighted" width="22" height="22"/>
+        <image name="tabbar_button_home" width="22" height="22"/>
+        <image name="tabbar_button_home_highlighted" width="22" height="22"/>
+        <image name="tabbar_button_user" width="22" height="22"/>
+        <image name="tabbar_button_user_highlighted" width="22" height="22"/>
+        <image name="tabbar_button_wishlist" width="22" height="22"/>
+        <image name="tabbar_button_wishlist_highlighted" width="22" height="22"/>
+        <image name="tabbar_category" width="22" height="22"/>
+        <image name="tabbar_category_highlighted" width="22" height="22"/>
     </resources>
 </document>

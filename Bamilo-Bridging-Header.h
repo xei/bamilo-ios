@@ -22,6 +22,7 @@
 #import "AlertManager.h"
 #import "CartDataManager.h"
 #import "RICommunicationWrapper.h"
+#import "RIGoogleAnalyticsTracker.h"
 
 #import <Masonry/Masonry.h>
 #import <RGB/RRGB.h>

@@ -97,8 +97,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffMenuSwipePanelNotification
-                                                        object:nil];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffMenuSwipePanelNotification
+//                                                        object:nil];
 }
 
 -(void)viewWillLayoutSubviews

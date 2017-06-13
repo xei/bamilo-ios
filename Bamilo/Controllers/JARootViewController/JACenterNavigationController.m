@@ -1282,7 +1282,7 @@
     [self.navigationBar setShadowImage:[UIImage new]];
     
     [self.navigationBarView.cartButton addTarget:self action:@selector(openCart:) forControlEvents:UIControlEventTouchUpInside];
-    [self.navigationBarView.leftButton addTarget:self action:@selector(openMenu) forControlEvents:UIControlEventTouchUpInside];
+//    [self.navigationBarView.leftButton addTarget:self action:@selector(openMenu) forControlEvents:UIControlEventTouchUpInside];
     [self.navigationBarView.doneButton addTarget:self action:@selector(done) forControlEvents:UIControlEventTouchUpInside];
     [self.navigationBarView.editButton addTarget:self action:@selector(edit) forControlEvents:UIControlEventTouchUpInside];
     [self.navigationBarView.backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
@@ -1368,18 +1368,6 @@
 
 - (void)openCart:(NSNotification*) notification {
     [MainTabBarViewController showCart];
-}
-
-- (void)openMenu {
-    if ([[self topViewController] isKindOfClass:[JALoadCountryViewController class]]) { return; }
-    NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];
-    
-    if(self.cart) {
-        [userInfo setObject:self.cart forKey:kUpdateCartNotificationValue];
-    }
-    
-    [userInfo setObject:[NSNumber numberWithBool:self.neeedsExternalPaymentMethod] forKey:kExternalPaymentValue];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenMenuNotification object:nil userInfo:[userInfo copy]];
 }
 
 - (void)didLoggedIn {

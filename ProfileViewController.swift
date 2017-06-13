@@ -68,23 +68,24 @@ class ProfileViewController: JABaseViewController, UITableViewDelegate, UITableV
     }
     
     func updateTableViewDataSource() {
+        
         self.tableViewDataSource = [
             [ProfileViewDataModel(cellType: .profileUserTableViewCell, title: nil, iconName: nil, notificationName: nil, selector: #selector(showLogin))],
             [ProfileViewDataModel(cellType: .profileOrderTableViewCell, title: nil, iconName: nil, notificationName: "NOTIFICATION_SHOW_MY_ORDERS_SCREEN", selector: nil)],
             [
                 ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_PROFILE, iconName: "user-information-icons", notificationName: "NOTIFICATION_SHOW_USER_DATA_SCREEN", selector: nil),
-                ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_MY_ADDRESSES, iconName: "my-address-icon", notificationName: nil, selector: #selector(showMyAddressViewController)),
-                ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_RECENTLY_VIEWED, iconName: "LastViews", notificationName: "NOTIFICATION_SHOW_RECENTLY_VIEWED_SCREEN", selector: nil)
+                ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_MY_ADDRESSES, iconName: "address_profie", notificationName: nil, selector: #selector(showMyAddressViewController)),
+                ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_RECENTLY_VIEWED, iconName: "recently_viewed", notificationName: "NOTIFICATION_SHOW_RECENTLY_VIEWED_SCREEN", selector: nil)
             ],
             [
-                ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_CONTACT_US, iconName: "", notificationName: nil, selector: #selector(callContctUs)),
-                ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_SEND_IDEAS_AND_REPORT, iconName: "", notificationName: nil, selector: #selector(sendIdeaOrReport)),
-                ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_GUID, iconName: "", notificationName: nil, selector: #selector(showFAQ))
+                ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_CONTACT_US, iconName: "contact_us_profile", notificationName: nil, selector: #selector(callContctUs)),
+                ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_SEND_IDEAS_AND_REPORT, iconName: "feedback_profile", notificationName: nil, selector: #selector(sendIdeaOrReport)),
+                ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_GUID, iconName: "faq_profile", notificationName: nil, selector: #selector(showFAQ))
             ]
         ]
         
         if RICustomer.checkIfUserIsLogged() {
-            self.tableViewDataSource?.append([ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_LOGOUT, iconName: "", notificationName: nil, selector: #selector(logoutUser))])
+            self.tableViewDataSource?.append([ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_LOGOUT, iconName: "user_logout_profile", notificationName: nil, selector: #selector(logoutUser))])
         }
     }
 
@@ -246,9 +247,8 @@ class ProfileViewController: JABaseViewController, UITableViewDelegate, UITableV
     func bind(_ data: Any!, forRequestId rid: Int32) {
         
         //TODO: handle these legacy code with another way (when tab bar is ready)
-        NotificationCenter.default.post(name: NSNotification.Name("NOTIFICATION_USER_LOGGED_OUT"), object: nil, userInfo: nil)
         NotificationCenter.default.post(name: NSNotification.Name("NOTIFICATION_UPDATE_CART"), object: nil, userInfo: nil)
-        NotificationCenter.default.post(name: NSNotification.Name("NOTIFICATION_HOME_SCREEN"), object: nil, userInfo: nil)
+        MainTabBarViewController.activateTabItem(rootViewClassType: JAHomeViewController.self)
         
         RICommunicationWrapper.deleteSessionCookie()
         ViewControllerManager.sharedInstance().clearCache()

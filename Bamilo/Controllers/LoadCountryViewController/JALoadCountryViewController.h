@@ -1,18 +1,18 @@
+////
+////  JALoadCountryViewController.h
+////  Jumia
+////
+////  Created by plopes on 08/10/14.
+////  Copyright (c) 2014 Rocket Internet. All rights reserved.
+////
 //
-//  JALoadCountryViewController.h
-//  Jumia
+//#import <UIKit/UIKit.h>
 //
-//  Created by plopes on 08/10/14.
-//  Copyright (c) 2014 Rocket Internet. All rights reserved.
+//@interface JALoadCountryViewController : JABaseViewController
 //
-
-#import <UIKit/UIKit.h>
-
-@interface JALoadCountryViewController : JABaseViewController
-
-@property (nonatomic, strong) RICountry *selectedCountry;
-@property (nonatomic, strong) NSDictionary *pushNotification;
-
-- (void)continueProcessing;
-
-@end
+//@property (nonatomic, strong) RICountry *selectedCountry;
+//@property (nonatomic, strong) NSDictionary *pushNotification;
+//
+//- (void)continueProcessing;
+//
+//@end

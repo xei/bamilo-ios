@@ -44,6 +44,10 @@ import UIKit
         CartDataManager.sharedInstance.getUserCart(self) { data, errorMessages in
             self.bind(data, forRequestId: 0)
         };
+        
+        
+        //Register legacy google tracker with GA ID
+        RIGoogleAnalyticsTracker.initGATrackerWithId()
     }
     
     static func sharedInstance() -> MainTabBarViewController? {

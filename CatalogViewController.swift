@@ -222,6 +222,7 @@ import SwiftyJSON
         
         if self.catalogData == nil || self.catalogData?.products.count == 0 {
             self.showNoResultView()
+            return
         }
         
         //Sequence of these functions are important
@@ -423,18 +424,24 @@ import SwiftyJSON
     
     //MARK: - BaseCatallogCollectionViewCellDelegate
     func addOrRemoveFromWishList(product: Product, cell: BaseCatallogCollectionViewCell, add: Bool) {
-        ProductDataManager.sharedInstance.wishListTransaction(isAdd: add, target: self, sku: product.sku) { (data, error) in
-            guard error != nil else {
-                return
+        (self.navigationController as? JACenterNavigationController)?.performProtectedBlock({ (userHadSession) in
+            ProductDataManager.sharedInstance.wishListTransaction(isAdd: add, target: self, sku: product.sku) { (data, error) in
+                guard error != nil else {
+                    return
+                }
+                
+                if let errorMessage = (error?.userInfo["errorMessages"] as? [String])?[0] {
+                    self.showNotificationBarMessage(errorMessage, isSuccess: false)
+                }
+                
+                product.isInWishList.toggle()
+                cell.updateWithProduct(product: product)
             }
             
-            product.isInWishList.toggle()
-            cell.updateWithProduct(product: product)
-        }
-    
-        //TODO: this legacy action is for other view controllers to be notified that this product state has been changed
-        // this action is better to be handled by realm or other local data bases
-        NotificationCenter.default.post(name: NSNotification.Name("NOTIFICATION_PRODUCT_CHANGED"), object: product.sku, userInfo: nil)
+            //TODO: this legacy action is for other view controllers to be notified that this product state has been changed
+            // this action is better to be handled by realm or other local data bases
+            NotificationCenter.default.post(name: NSNotification.Name("NOTIFICATION_PRODUCT_CHANGED"), object: product.sku, userInfo: nil)
+        })
     }
     
     //MARK: - prepareForSegue

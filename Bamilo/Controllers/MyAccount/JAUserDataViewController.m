@@ -29,8 +29,7 @@
     JADynamicFormDelegate,
     JAPickerDelegate,
     JADatePickerDelegate
->
-{
+> {
     UIView *_firstResponder;
     UIImageView *_userIconView;
 }

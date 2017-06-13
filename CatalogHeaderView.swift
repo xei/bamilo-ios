@@ -55,6 +55,7 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
     weak var delegate: CatalogHeaderViewDelegate?
     var sortType: Catalog.CatalogSortType = .populaity {
         didSet {
+            if self.sortType == .populaity { return }
             self.setSortingButtonActive()
             self.sortingDescLabel.text = self.sortOptionTranslation[self.sortType]
         }
@@ -88,7 +89,7 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
     
     private lazy var cancelButton: UIBarButtonItem = { [unowned self] in
         
-        let cancelBtn = UIBarButtonItem(title:"لغو", style: .plain, target: self, action: #selector(doneButtonPickerTapped(sender:)))
+        let cancelBtn = UIBarButtonItem(title:"لغو", style: .plain, target: self, action: #selector(cancelButtonPickerTapped(sender:)))
         cancelBtn.setTitleTextAttributes([
             NSFontAttributeName: Theme.font(kFontVariationRegular, size: 13),
             NSForegroundColorAttributeName: Theme.color(kColorDarkGray)

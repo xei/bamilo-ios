@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "btn_myaccount@1x.png",
+      "filename" : "profile_22.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "btn_myaccount@2x.png",
+      "filename" : "profile_44.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "btn_myaccount@3x.png",
+      "filename" : "profile_66.png",
       "scale" : "3x"
     }
   ],

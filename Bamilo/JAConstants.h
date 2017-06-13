@@ -33,7 +33,7 @@
 #define kOpenMenuNotification @"NOTIFICATION_OPEN_MENU"
 #define kCloseMenuNotification @"NOTIFICATION_OPEN_COLSE"
 #define kOpenCenterPanelNotification @"NOTIFICATION_OPEN_CENTER_PANEL"
-#define kTurnOffMenuSwipePanelNotification @"NOTIFICATION_TURN_OFF_MENU_SWIPE_PANEL"
+//#define kTurnOffMenuSwipePanelNotification @"NOTIFICATION_TURN_OFF_MENU_SWIPE_PANEL"
 //************
 
 //************ center navigation controller notifications
@@ -97,7 +97,7 @@
 //#define kDidSelectCategoryFromCenterPanelNotification @"NOTIFICATION_SELECTED_CATEGORY_FROM_CENTER_PANEL"
 
 //navbar notification
-#define kChangeTabBarVisibility @"NOTIFICATION_CHANGE_TAB_BAR_VISIBILITY"
+//#define kChangeTabBarVisibility @"NOTIFICATION_CHANGE_TAB_BAR_VISIBILITY"
 #define kChangeNavigationBarNotification @"NOTIFICATION_CHANGE_NAVIGATION_BAR"
 #define kEditShouldChangeStateNotification @"EDIT_SHOULD_CHANGE_NOTIFICATION"
 #define kDoneShouldChangeStateNotification @"DONE_SHOULD_CHANGE_NOTIFICATION"
