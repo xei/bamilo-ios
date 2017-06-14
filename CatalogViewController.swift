@@ -88,8 +88,15 @@ import SwiftyJSON
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        //To reset the tab bar state
-        changeTabBar(hidden: false, animated: false)
+        
+        //if previous view controller has tab bar then reset it
+        if let navController = self.navigationController, navController.viewControllers.count >= 1 {
+            let previousViewController = navController.viewControllers[navController.viewControllers.count - 1]
+            if !previousViewController.hidesBottomBarWhenPushed {
+                //To reset the tab bar state
+                changeTabBar(hidden: false, animated: false)
+            }
+        }
     }
     
     override func updateNavBar() {

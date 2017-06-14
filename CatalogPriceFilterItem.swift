@@ -11,12 +11,12 @@ import ObjectMapper
 
 @objc class CatalogPriceFilterItem: BaseCatalogFilterItem {
     
-    var maxPrice: UInt64 = 0
-    var minPrice: UInt64 = 0
+    var maxPrice: Int64 = 0
+    var minPrice: Int64 = 0
     var interval: Int = 0
     var discountOnly: Bool = false
-    var lowerValue: UInt64 = 0
-    var upperValue: UInt64 = 0
+    var lowerValue: Int64 = 0
+    var upperValue: Int64 = 0
     
     
     override func mapping(map: Map) {
