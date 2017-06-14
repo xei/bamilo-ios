@@ -76,6 +76,13 @@ import SwiftyJSON
         self.collectionView.register(UINib(nibName: CatalogGridCollectionViewCell.nibName, bundle: nil), forCellWithReuseIdentifier: CatalogGridCollectionViewCell.nibName)
         self.collectionView.setCollectionViewLayout(self.getProperCollectionViewFlowLayout(), animated: true)
         self.loadData()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateListWithUserLoginNotification(notification:)), name: NSNotification.Name("NOTIFICATION_USER_LOGGED_IN"), object: nil)
+    }
+    
+    deinit {
+        //remove all observers for this view controller when it's deinitliazed
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -244,7 +251,18 @@ import SwiftyJSON
         }
     }
     
+    func updateListWithUserLoginNotification(notification: Notification) {
+        if let wishlistSkuArray = notification.object as? [String] {
+            self.catalogData?.products.filter({ (product) -> Bool in
+                return wishlistSkuArray.contains(product.sku)
+            }).forEach({ (product) in
+                product.isInWishList = true
+            })
+        }
+        self.collectionView.reloadData()
+    }
     
+    //TODO: this code can be in BaseViewController
     private var isChangingTabBar = false
     private func changeTabBar(hidden:Bool, animated: Bool){
         if let tabBar = self.tabBarController?.tabBar {

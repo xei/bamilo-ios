@@ -8,7 +8,7 @@
 
 import ObjectMapper
 
-class ApiResponseData: Mappable {
+@objc class ApiResponseData: NSObject, Mappable {
     var metadata: [String: Any]?
     var messages: ApiDataMessageList?
     var success: Bool = false

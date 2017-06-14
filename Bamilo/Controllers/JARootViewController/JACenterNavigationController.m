@@ -133,8 +133,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeEditButtonState:) name:kEditShouldChangeStateNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeDoneButtonState:) name:kDoneShouldChangeStateNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeNavigationWithNotification:) name:kChangeNavigationBarNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didLoggedIn) name:kUserLoggedInNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didLoggedOut) name:kUserLoggedOutNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didLoggedIn) name:kUserLoggedInNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didLoggedOut) name:kUserLoggedOutNotification object:nil];
 }
 
 - (void)registerObservingOnNotifications {
@@ -1370,15 +1370,15 @@
     [MainTabBarViewController showCart];
 }
 
-- (void)didLoggedIn {
-    //remove existing ones from database
-    [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RITeaserGrouping class])];
-}
-
-- (void)didLoggedOut {
-    //remove existing ones from database
-    [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RITeaserGrouping class])];
-}
+//- (void)didLoggedIn {
+//    //remove existing ones from database
+//    [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RITeaserGrouping class])];
+//}
+//
+//- (void)didLoggedOut {
+//    //remove existing ones from database
+//    [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RITeaserGrouping class])];
+//}
 
 - (void)viewWillLayoutSubviews {
     [self.searchView resetFrame:self.view.bounds];

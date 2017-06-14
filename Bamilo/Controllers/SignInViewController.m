@@ -90,7 +90,6 @@
             [TrackerManager postEvent:[EventFactory login:cLoginMethodEmail success:YES] forName:[LoginEvent name]];
             
             RICustomer *customer = [RICustomer getCurrentCustomer];
-            
             [[EmarsysMobileEngage sharedInstance] sendLogin:[[PushNotificationManager pushManager] getPushToken] completion:nil];
             [EmarsysPredictManager setCustomer:customer];
         
@@ -120,13 +119,13 @@
 
 #pragma mark - DataServiceProtocol
 - (void)bind:(id)data forRequestId:(int)rid {
+    
     // Legacy actions after login
+    
     [RICustomer resetCustomerAsGuest];
-    if ([data isKindOfClass:[NSDictionary class]]) {
-        NSDictionary* responseDictionary = (NSDictionary*)data;
-        
-        RICustomer *customerObject = [responseDictionary objectForKey:@"customer"];
-        
+    NSDictionary *metadata = ((ApiResponseData *)data).metadata;
+    if ([metadata isKindOfClass:[NSDictionary class]]) {
+        RICustomer *customerObject = [RICustomer parseCustomerWithJson:[metadata objectForKey:@"customer_entity"]];
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:customerObject.customerId forKey:kRIEventLabelKey];
         [trackingDictionary setValue:@"LoginSuccess" forKey:kRIEventActionKey];

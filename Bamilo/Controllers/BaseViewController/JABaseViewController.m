@@ -591,17 +591,17 @@
         [RICustomer autoLogin:^(BOOL success, NSDictionary *entities, NSString *loginMethod) {
             if (success) {
                 block();
-            }else{
+            } else {
                 [RICustomer cleanCustomerFromDB];
-                [JAAuthenticationViewController authenticateAndExecuteBlock:^{
+                [(JACenterNavigationController *)self.navigationController performProtectedBlock:^(BOOL userHadSession) {
                     block();
-                } showBackButtonForAuthentication:YES];
+                }];
             }
         }];
     } else{
-        [JAAuthenticationViewController authenticateAndExecuteBlock:^{
+        [(JACenterNavigationController *)self.navigationController performProtectedBlock:^(BOOL userHadSession) {
             block();
-        } showBackButtonForAuthentication:YES];
+        }];
     }
 }
 
