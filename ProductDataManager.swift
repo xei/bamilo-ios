@@ -9,7 +9,7 @@
 import Foundation
 
 extension ProductDataManager {
-    func wishListTransaction(isAdd: Bool, target: DataServiceProtocol, sku: String, completion: @escaping DataClosure) {
+    func wishListTransaction(isAdd: Bool, target: DataServiceProtocol, sku: String, completion: @escaping DataCompletion) {
         if(isAdd) {
             self.addToWishList(target, sku: sku, completion: completion)
         } else {
@@ -18,18 +18,22 @@ extension ProductDataManager {
     }
 }
 
-class ProductDataManager: DataManagerSwift {
-    static let sharedInstance = ProductDataManager()
+class ProductDataManager: DataManager {
     
-    fileprivate func addToWishList(_ target: DataServiceProtocol, sku: String, completion: @escaping DataClosure) {
-        ProductDataManager.requestManager.async(.post, target: target, path:RI_API_ADD_TO_WISHLIST , params: ["sku": sku], type: .foreground, completion: { (responseType, data, errorMessages) in
-            self.processResponse(responseType, aClass: nil, data: data, errorMessages: errorMessages, completion: completion)
-        })
+    //TODO: Must be changed when we migrate all data managers
+    private static let shared = ProductDataManager()
+    override class func sharedInstance() -> ProductDataManager {
+        return shared;
     }
     
-    fileprivate func removeFromWishList(_ target: DataServiceProtocol, sku: String, completion: @escaping DataClosure) {
-        ProductDataManager.requestManager.async(.delete, target: target, path:RI_API_REMOVE_FOM_WISHLIST, params: ["sku": sku], type: .foreground, completion: { (responseType, data, errorMessages) in
-            self.processResponse(responseType, aClass: nil, data: data, errorMessages: errorMessages, completion: completion)
+    fileprivate func addToWishList(_ target: DataServiceProtocol, sku: String, completion: @escaping DataCompletion) {
+        self.requestManager.asyncPOST(target, path: RI_API_ADD_TO_WISHLIST, params: ["sku": sku], type: .foreground, completion: { (responseStatus, data, errorMessages) in
+            self.processResponse(responseStatus, of: nil, for: data, errorMessages: errorMessages, completion: completion)
+        })    }
+    
+    fileprivate func removeFromWishList(_ target: DataServiceProtocol, sku: String, completion: @escaping DataCompletion) {
+        self.requestManager.asyncDELETE(target, path: RI_API_REMOVE_FOM_WISHLIST, params: ["sku": sku], type: .foreground, completion: { (responseStatus, data, errorMessages) in
+            self.processResponse(responseStatus, of: nil, for: data, errorMessages: errorMessages, completion: completion)
         })
     }
 }

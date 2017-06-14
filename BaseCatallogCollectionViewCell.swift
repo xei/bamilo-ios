@@ -54,9 +54,7 @@ class BaseCatallogCollectionViewCell: UICollectionViewCell {
     
     @IBAction func addToWishListButtonTapped(_ sender: Any) {
         if let avaiableProduct = self.product {
-            self.product?.isInWishList.toggle()
-            self.addToWishListButton?.isSelected = !self.addToWishListButton!.isSelected
-            self.delegate?.addOrRemoveFromWishList?(product: avaiableProduct, cell: self, add: avaiableProduct.isInWishList)
+            self.delegate?.addOrRemoveFromWishList?(product: avaiableProduct, cell: self, add: !avaiableProduct.isInWishList)
         }
     }
     

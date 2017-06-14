@@ -135,7 +135,7 @@ import Foundation
     }
     
 //######## MARK: - ProductDataManager
-    static func wishListTransaction(isAdd: Bool, target: DataServiceProtocol, sku: String, completion: @escaping DataClosure) {
-        ProductDataManager.sharedInstance.wishListTransaction(isAdd: isAdd, target: target, sku: sku, completion: completion)
+    static func wishListTransaction(isAdd: Bool, target: DataServiceProtocol, sku: String, completion: @escaping DataCompletion) {
+        ProductDataManager.sharedInstance().wishListTransaction(isAdd: isAdd, target: target, sku: sku, completion: completion)
     }
 }
