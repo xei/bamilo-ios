@@ -126,7 +126,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>40</string>
+	<string>41</string>
 	<key>Configs</key>
 	<dict>
 		<key>API_BaseUrl</key>
