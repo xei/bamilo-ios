@@ -170,11 +170,17 @@ class ProfileViewController: JABaseViewController, UITableViewDelegate, UITableV
     func callContctUs() {
         AlertManager.sharedInstance().confirmAlert("", text: STRING_CALL_CUSTOMER_SERVICE, confirm: STRING_OK, cancel: STRING_CANCEL) { (didSelectOk) in
             if didSelectOk {
-                RICountry.getCountriesWithSuccessBlock({ (configuration) in
-                    if let configure = configuration as? RICountryConfiguration, let tel = configure.phoneNumber {
-                        UIApplication.shared.openURL(URL(fileURLWithPath: "tel:\(tel)"))
+                RICountry.getConfigurationWithSuccessBlock({ (configuration) in
+                    if let tel = configuration?.phoneNumber {
+                        if let url = URL(string: "tel://\(tel)"), UIApplication.shared.canOpenURL(url) {
+                            if #available(iOS 10, *) {
+                                UIApplication.shared.open(url)
+                            } else {
+                                UIApplication.shared.openURL(url)
+                            }
+                        }
                     }
-                }, andFailureBlock: { (response, errorMessages) in
+                }, andFailureBlock: { (status, errorMessages) in
                     
                 })
             }

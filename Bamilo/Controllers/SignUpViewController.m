@@ -55,7 +55,7 @@
     
     self.formController.submitTitle = @"ثبت نام";
     self.title = STRING_SIGNUP;
-    self.formController.formModelList = [NSMutableArray arrayWithArray:@[ melliCode, firstName, lastName, birthday, email, password, gender, phone]];
+    self.formController.formModelList = [NSMutableArray arrayWithArray:@[  firstName, lastName, melliCode, gender, birthday, email, password, phone]];
     
     [self.formController setupTableView];
 }

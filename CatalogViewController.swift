@@ -433,9 +433,13 @@ import SwiftyJSON
         if self.lastContentOffset - 10 > scrollView.contentOffset.y {
             //scroll to top
             changeTabBar(hidden: false, animated: true)
-        } else if self.lastContentOffset < scrollView.contentOffset.y {
+        } else if self.lastContentOffset < scrollView.contentOffset.y && scrollView.contentOffset.y >= 10 {
             //scroll to bottom
             changeTabBar(hidden: true, animated: true)
+        }
+        
+        if (scrollView.contentOffset.y < 10) {
+            changeTabBar(hidden: false, animated: true)
         }
         
         self.lastContentOffset = scrollView.contentOffset.y;
