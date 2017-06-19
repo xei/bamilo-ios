@@ -30,8 +30,10 @@ import UIKit
         
         
         let attributes: [String : Any] = [NSFontAttributeName: Theme.font(kFontVariationRegular, size: 13)]
+
         if #available(iOS 10.0, *) {
             self.tabBar.items?.first?.setBadgeTextAttributes(attributes, for: .normal)
+            self.tabBar.items?.first?.badgeColor = Theme.color(kColorOrange)
         } else {
             
         }

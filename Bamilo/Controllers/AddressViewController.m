@@ -112,11 +112,12 @@
 #pragma mark - Helpers
 -(void) fetchAddressList {
     [DataAggregator getUserAddressList:self completion:^(id _Nullable data, NSError * _Nullable error) {
-        if(error == nil) {
+        if(error == nil && [data isKindOfClass:AddressList.class]) {
             [self bind:data forRequestId:0];
             [self publishScreenLoadTime];
+        } else if ([data isKindOfClass:ApiResponseData.class]) {
+            //TODO: we can show error messages
         }
-
     }];
 }
 

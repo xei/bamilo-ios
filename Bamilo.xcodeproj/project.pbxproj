@@ -77,6 +77,7 @@
 		613FF2C11E4B3D1B008660CF /* Authentication.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 613FF2C01E4B3D1B008660CF /* Authentication.storyboard */; };
 		61432EC61E9B5DD7001F7930 /* BaseCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61432EC51E9B5DD7001F7930 /* BaseCollectionViewCell.m */; };
 		61432ECB1E9B60DE001F7930 /* RecommendItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 61432ECA1E9B60DE001F7930 /* RecommendItem.m */; };
+		615E796C1EF6BE58008E661D /* UILabel+WhiteUIDatePickerLabels.m in Sources */ = {isa = PBXBuildFile; fileRef = 615E796B1EF6BE58008E661D /* UILabel+WhiteUIDatePickerLabels.m */; };
 		615F96ED1E9E11FD00614644 /* NotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 615F96EC1E9E11FD00614644 /* NotificationService.m */; };
 		615F96F11E9E11FD00614644 /* NotificationService.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 615F96E91E9E11FD00614644 /* NotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		616058E61E6AD8D50079B2CD /* SearchFilterItemOption.m in Sources */ = {isa = PBXBuildFile; fileRef = 616058E51E6AD8D50079B2CD /* SearchFilterItemOption.m */; };
@@ -1004,6 +1005,8 @@
 		61432EC51E9B5DD7001F7930 /* BaseCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseCollectionViewCell.m; sourceTree = "<group>"; };
 		61432EC91E9B60DE001F7930 /* RecommendItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecommendItem.h; sourceTree = "<group>"; };
 		61432ECA1E9B60DE001F7930 /* RecommendItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommendItem.m; sourceTree = "<group>"; };
+		615E796A1EF6BE58008E661D /* UILabel+WhiteUIDatePickerLabels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+WhiteUIDatePickerLabels.h"; sourceTree = "<group>"; };
+		615E796B1EF6BE58008E661D /* UILabel+WhiteUIDatePickerLabels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+WhiteUIDatePickerLabels.m"; sourceTree = "<group>"; };
 		615F96E91E9E11FD00614644 /* NotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		615F96EB1E9E11FD00614644 /* NotificationService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationService.h; sourceTree = "<group>"; };
 		615F96EC1E9E11FD00614644 /* NotificationService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationService.m; sourceTree = "<group>"; };
@@ -6564,6 +6567,8 @@
 				9A4077271CE0CF5200313D20 /* UILabel+Size.m */,
 				9A40772D1CE0CFD700313D20 /* UIButton+Size.h */,
 				9A40772E1CE0CFD700313D20 /* UIButton+Size.m */,
+				615E796A1EF6BE58008E661D /* UILabel+WhiteUIDatePickerLabels.h */,
+				615E796B1EF6BE58008E661D /* UILabel+WhiteUIDatePickerLabels.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -7508,6 +7513,7 @@
 				1C3043021E2A3A5800BD391E /* CatalogNoResultViewController.m in Sources */,
 				875AD55E1E38C0C900584ABF /* RICountry.m in Sources */,
 				9AE766E21CBFF31D00B63D8E /* JACartTableViewCell.m in Sources */,
+				615E796C1EF6BE58008E661D /* UILabel+WhiteUIDatePickerLabels.m in Sources */,
 				612553471E4EE5B500975C6F /* InputTextField.m in Sources */,
 				CE9ADF301AB6D78200D56481 /* JAShippingViewController.m in Sources */,
 				612FE51B1EDC0D6300C2AFA0 /* ProfileUserTableViewCell.swift in Sources */,

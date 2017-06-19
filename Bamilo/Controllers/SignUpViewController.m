@@ -45,15 +45,17 @@
                                 selectOptions:nil];
     
     
+    FormItemModel *birthday = [FormItemModel birthdayFieldName:@"customer[birthday]"];
     FormItemModel *email = [FormItemModel emailWithFieldName:@"customer[email]"];
     FormItemModel *firstName = [FormItemModel firstNameFieldWithFiedName:@"customer[first_name]"];
     FormItemModel *lastName = [FormItemModel lastNameWithFieldName:@"customer[last_name]"];
     FormItemModel *phone = [FormItemModel phoneWithFieldName:@"customer[phone]"];
     FormItemModel *password = [FormItemModel passWordWithFieldName:@"customer[password]"];
+    FormItemModel *gender = [FormItemModel genderWithFieldName:@"customer[gender]"];
     
     self.formController.submitTitle = @"ثبت نام";
     self.title = STRING_SIGNUP;
-    self.formController.formModelList = [NSMutableArray arrayWithArray:@[ melliCode, firstName, lastName, email, password, phone]];
+    self.formController.formModelList = [NSMutableArray arrayWithArray:@[ melliCode, firstName, lastName, birthday, email, password, gender, phone]];
     
     [self.formController setupTableView];
 }

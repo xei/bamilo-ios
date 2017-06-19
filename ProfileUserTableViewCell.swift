@@ -34,7 +34,13 @@ class ProfileUserTableViewCell: BaseProfileTableViewCell {
             self.setupLoggedInView()
             if let name = user.firstName {
                 self.topMessageLabel.text = "\(STRING_HELLO) \(name)"
-                self.logoImage.image = UIImage(named: user.gender == "female" ? "woman_user_profile" : "man_user_profile")
+                
+                if let gender = user.gender {
+                    self.logoImage.image = UIImage(named: gender == "female" ? "woman_user_profile" : "man_user_profile")
+                } else {
+                    self.logoImage.image = UIImage(named:"man_user_profile")
+                }
+                
             }
             self.bottomMessageLabel.text = user.email
         } else {

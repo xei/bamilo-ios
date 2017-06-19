@@ -7,12 +7,14 @@
 //
 
 #import "InputTextFieldControl.h"
+#import "UILabel+WhiteUIDatePickerLabels.h"
 
 @interface InputTextFieldControl() <UIPickerViewDelegate, UIPickerViewDataSource>
 @property (nonatomic, copy) NSString *errorMsg;
 @property (nonatomic, strong) UIPickerView *pickerView;
 @property (nonatomic, strong) UIToolbar *toolBar;
 @property (nonatomic, strong) UIBarButtonItem *doneBtn;
+@property (nonatomic, strong) UIDatePicker *datepicker;
 @end
 
 @implementation InputTextFieldControl
@@ -30,6 +32,18 @@
         [_toolBar setUserInteractionEnabled:YES];
     }
     return _toolBar;
+}
+
+- (UIDatePicker *)datepicker {
+    if (!_datepicker) {
+        _datepicker = [UIDatePicker new];
+        _datepicker.calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierPersian];
+        _datepicker.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"fa_IR"];
+        _datepicker.datePickerMode = UIDatePickerModeDate;
+        _datepicker.backgroundColor = [UIColor whiteColor];
+        _datepicker.maximumDate = [NSDate new];
+    }
+    return _datepicker;
 }
 
 - (UIPickerView *)pickerView {
@@ -123,13 +137,17 @@
         //When we have no selectOption model but it's `Option` type
         self.input.textField.enabled = NO;
     }
+    
+    if (model.lastErrorMessage.length) {
+        [self showErrorMsg:model.lastErrorMessage];
+    }
 }
     
 - (void)checkValidation {
     if ([self isValid]) {
         [self.input clearError];
     } else {
-        [self.input showErrorMsg:self.errorMsg];
+        [self showErrorMsg:self.errorMsg];
     }
 }
 
@@ -139,20 +157,26 @@
 }
 
 - (void)showErrorMsg:(NSString *)msg {
+    self.model.lastErrorMessage = msg;
     [self.input showErrorMsg:msg];
 }
 
 - (Boolean)isValid {
     FormValidationType *validationResult = [self.validation checkValiditionOfString:[[self getStringValue] numbersToEnglish]];
     self.errorMsg = validationResult.errorMsg;
-    return validationResult.boolValue;
+    return self.validation ? validationResult.boolValue : YES; 
 }
 
 
 - (void)donePicker {
-    if ((self.input.textField.text == nil || [self.input.textField.text isEqualToString:@""]) && self.model.selectOption.allKeys.count) {
-        self.input.textField.text = self.model.selectOption.allKeys[0];
+    if (self.type == InputTextFieldControlTypeOptions) {
+        if ((self.input.textField.text == nil || [self.input.textField.text isEqualToString:@""]) && self.model.selectOption.allKeys.count) {
+            self.input.textField.text = self.model.selectOption.allKeys[0];
+        }
+    } else if (self.type == InputTextFieldControlTypeDatePicker) {
+        self.input.textField.text = [self.model.visibleDateFormat stringFromDate:self.datepicker.date];
     }
+    
     [self.input.textField resignFirstResponder];
 }
 
@@ -171,12 +195,17 @@
 
 - (void)textFieldEditingDidEnditingBegan:(UITextField *)textField {
     [self.input clearError];
+    self.model.lastErrorMessage = nil;
     if (self.type == InputTextFieldControlTypeOptions) {
         textField.inputView = self.pickerView;
         textField.inputAccessoryView = self.toolBar;
         if (self.model.inputTextValue && [self.model.selectOption.allKeys containsObject:self.model.inputTextValue]) {
             [self.pickerView selectRow:[self.model.selectOption.allKeys indexOfObject:self.model.inputTextValue] inComponent:0 animated:NO];
         }
+    } else if (self.type == InputTextFieldControlTypeDatePicker) {
+        textField.inputView = self.datepicker;
+        textField.inputAccessoryView = self.toolBar;
+        textField.text = self.model.inputTextValue;
     }
 }
 

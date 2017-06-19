@@ -28,8 +28,11 @@
 - (NSString *)getValue {
     if (self.type == InputTextFieldControlTypeNumerical) {
         return [self.inputTextValue numbersToEnglish];
-    } else if (self.type == InputTextFieldControlTypeOptions){
+    } else if (self.type == InputTextFieldControlTypeOptions) {
         return self.selectOption[self.inputTextValue];
+    } else if (self.type == InputTextFieldControlTypeDatePicker && self.visibleDateFormat && self.outpuutDateFormat ) {
+        NSDate *date = [self.visibleDateFormat dateFromString:[self.inputTextValue numbersToEnglish]];
+        return [self.outpuutDateFormat stringFromDate:date];
     } else {
         return self.inputTextValue;
     }
@@ -99,20 +102,44 @@
     return [[FormItemModel alloc] initWithTextValue:nil
                                       fieldName: fieldName
                                         andIcon: nil
-                                    placeholder:@"کلمه عبور"
-                                           type:InputTextFieldControlTypePassword
-                                     validation:[[FormItemValidation alloc] initWithRequired:YES max:50 min:6 withRegxPatter:nil]
-                                  selectOptions:nil];
+                                    placeholder: @"کلمه عبور"
+                                           type: InputTextFieldControlTypePassword
+                                     validation: [[FormItemValidation alloc] initWithRequired:YES max:50 min:6 withRegxPatter:nil]
+                                  selectOptions: nil];
 }
 
 + (FormItemModel *)genderWithFieldName: (NSString *)fieldName {
     return [[FormItemModel alloc] initWithTextValue:nil
                                       fieldName: fieldName
                                         andIcon: nil
-                                    placeholder:@"جنسیت"
-                                           type:InputTextFieldControlTypeOptions
-                                     validation:[[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil]
-                                  selectOptions:@{@"مرد": @"male", @"زن":@"female"}];
+                                    placeholder: STRING_GENDER
+                                           type: InputTextFieldControlTypeOptions
+                                     validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil]
+                                  selectOptions: @{@"مرد": @"male", @"زن":@"female"}];
+}
+
++ (FormItemModel *)birthdayFieldName: (NSString *)fieldName {
+    FormItemModel *model = [[FormItemModel alloc] initWithTextValue: nil
+                                          fieldName: fieldName
+                                            andIcon: nil
+                                        placeholder: @"تاریخ تولد"
+                                               type: InputTextFieldControlTypeDatePicker
+                                         validation: nil
+                                      selectOptions: nil];
+    
+    NSDateFormatter *visibleFormatter = [NSDateFormatter new];
+    visibleFormatter.dateFormat = @"yyyy MMMM dd";
+    visibleFormatter.calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierPersian];
+    visibleFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"fa_IR"];
+    model.visibleDateFormat = visibleFormatter;
+    
+    NSDateFormatter *outputFormatter = [NSDateFormatter new];
+    outputFormatter.dateFormat = @"yyyy/MM/dd";
+    outputFormatter.calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierPersian];
+    outputFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+    model.outpuutDateFormat = outputFormatter;
+    
+    return model;
 }
 
 @end
