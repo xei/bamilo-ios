@@ -454,16 +454,24 @@ import SwiftyJSON
     //MARK: - BaseCatallogCollectionViewCellDelegate
     func addOrRemoveFromWishList(product: Product, cell: BaseCatallogCollectionViewCell, add: Bool) {
         (self.navigationController as? JACenterNavigationController)?.performProtectedBlock({ (userHadSession) in
-            ProductDataManager.sharedInstance().wishListTransaction(isAdd: add, target: self, sku: product.sku) { (data, error) in
-                guard error != nil else {
-                    product.isInWishList.toggle()
-                    cell.updateWithProduct(product: product)
-                    return
-                }
-                
-                if let error = error, let errorMessage = ((error as NSError).userInfo["errorMessages"] as? [String])?[0] {
-                    self.showNotificationBarMessage(errorMessage, isSuccess: false)
-                }
+            if add {
+                ProductDataManager.sharedInstance.addToWishList(self, sku: product.sku, completion: { (data, error) in
+                    guard error != nil else {
+                        product.isInWishList.toggle()
+                        cell.updateWithProduct(product: product)
+                        return
+                    }
+                    self.showNotificationBar(error, isSuccess: false)
+                })
+            } else {
+                DeleteEntityDataManager.sharedInstance().removeFromWishList(self, sku: product.sku, completion: { (data, error) in
+                    guard error != nil else {
+                        product.isInWishList.toggle()
+                        cell.updateWithProduct(product: product)
+                        return
+                    }
+                    self.showNotificationBar(error, isSuccess: false)
+                })
             }
         })
     }

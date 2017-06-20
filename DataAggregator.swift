@@ -135,7 +135,17 @@ import Foundation
     }
     
 //######## MARK: - ProductDataManager
-    static func wishListTransaction(isAdd: Bool, target: DataServiceProtocol, sku: String, completion: @escaping DataCompletion) {
-        ProductDataManager.sharedInstance().wishListTransaction(isAdd: isAdd, target: target, sku: sku, completion: completion)
+    static func addToWishList(target: DataServiceProtocol, sku: String, completion: @escaping DataCompletion) {
+        //ProductDataManager.sharedInstance().wishListTransaction(isAdd: isAdd, target: target, sku: sku, completion: completion)
+        ProductDataManager.sharedInstance.addToWishList(target, sku: sku, completion: completion)
     }
+//######## MARK: - DeleteEntityDataManager
+    static func removeFromWishList(target: DataServiceProtocol, sku: String, completion: @escaping DataCompletion) {
+        DeleteEntityDataManager.sharedInstance().removeFromWishList(target, sku: sku, completion: completion)
+    }
+    
+    static func deleteAddress(target: DataServiceProtocol, address: Address, completion: @escaping DataCompletion) {
+        DeleteEntityDataManager.sharedInstance().deleteAddress(target, address: address, completion: completion)
+    }
+    
 }

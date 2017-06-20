@@ -1417,7 +1417,7 @@ typedef void (^ProcessActionBlock)(void);
     }
 
     if (!button.selected && !VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate)) {
-        [DataAggregator wishListTransactionWithIsAdd:YES target:self sku:self.product.sku completion:^(id data, NSError *error) {
+        [DataAggregator addToWishListWithTarget:self sku:self.product.sku completion:^(id data, NSError *error) {
             if(error == nil) {
                 //EVENT: ADD TO FAVORITES
                 [TrackerManager postEvent:[EventFactory addToFavorites:self.product.categoryUrlKey success:YES] forName:[AddToFavoritesEvent name]];
@@ -1467,7 +1467,7 @@ typedef void (^ProcessActionBlock)(void);
         return;
     }
     if (self.productImageSection.wishListButton.selected && VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate)) {
-        [DataAggregator wishListTransactionWithIsAdd:NO target:self sku:self.product.sku completion:^(id data, NSError *error) {
+        [DataAggregator removeFromWishListWithTarget:self sku:self.product.sku completion:^(id data, NSError *error) {
             if (error == nil) {
                 [self hideLoading];
                 button.selected = NO;
