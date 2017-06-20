@@ -66,6 +66,8 @@ class DataManagerSwift {
                     payload[DataManagerKeys.DataContent] = dataModel
                     
                     self.handlePayload(payload: payload, data: data, completion: completion)
+                } else { // can not be parse as expected, just pass data
+                    self.handlePayload(payload: payload, data: data, completion: completion)
                 }
             } else {
                 self.handlePayload(payload: payload, data: data, completion: completion)

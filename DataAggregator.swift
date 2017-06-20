@@ -49,9 +49,9 @@ import Foundation
         AddressDataManager.sharedInstance.getAddress(target, id: id, completion: completion)
     }
     
-    static func deleteAddress(_ target: DataServiceProtocol, address: Address, completion: @escaping DataClosure) {
-        AddressDataManager.sharedInstance.deleteAddress(target, address: address, completion: completion)
-    }
+//    static func deleteAddress(_ target: DataServiceProtocol, address: Address, completion: @escaping DataClosure) {
+//        AddressDataManager.sharedInstance.deleteAddress(target, address: address, completion: completion)
+//    }
     
     static func getRegions(_ target: DataServiceProtocol, completion:@escaping DataClosure) {
         AddressDataManager.sharedInstance.getRegions(target, completion: completion)

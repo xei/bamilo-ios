@@ -183,7 +183,7 @@
 		8702FBF41E9A4A7A001D1AA9 /* ProductDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBF31E9A4A7A001D1AA9 /* ProductDataManager.m */; };
 		8702FBF81E9A4ABB001D1AA9 /* AuthenticationDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBF71E9A4ABB001D1AA9 /* AuthenticationDataManager.m */; };
 		8702FBFC1E9A4BA9001D1AA9 /* CheckoutDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBFB1E9A4BA9001D1AA9 /* CheckoutDataManager.m */; };
-		8702FC001E9A4CB5001D1AA9 /* AddressDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBFF1E9A4CB5001D1AA9 /* AddressDataManager.m */; };
+		8702FC001E9A4CB5001D1AA9 /* OBJAddressDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBFF1E9A4CB5001D1AA9 /* OBJAddressDataManager.m */; };
 		870680B81E62DF20000368D5 /* AddressTableViewHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 870680B71E62DF20000368D5 /* AddressTableViewHeaderCell.m */; };
 		870680B91E62E1FA000368D5 /* AddressTableViewHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87A6817A1E4201F400D252AC /* AddressTableViewHeaderCell.xib */; };
 		8708A1721E406C1100ABA7D8 /* ContactUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8708A1711E406C1100ABA7D8 /* ContactUsViewController.m */; };
@@ -1179,8 +1179,8 @@
 		8702FBF71E9A4ABB001D1AA9 /* AuthenticationDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthenticationDataManager.m; sourceTree = "<group>"; };
 		8702FBFA1E9A4BA9001D1AA9 /* CheckoutDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckoutDataManager.h; sourceTree = "<group>"; };
 		8702FBFB1E9A4BA9001D1AA9 /* CheckoutDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckoutDataManager.m; sourceTree = "<group>"; };
-		8702FBFE1E9A4CB5001D1AA9 /* AddressDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressDataManager.h; sourceTree = "<group>"; };
-		8702FBFF1E9A4CB5001D1AA9 /* AddressDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressDataManager.m; sourceTree = "<group>"; };
+		8702FBFE1E9A4CB5001D1AA9 /* OBJAddressDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OBJAddressDataManager.h; sourceTree = "<group>"; };
+		8702FBFF1E9A4CB5001D1AA9 /* OBJAddressDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OBJAddressDataManager.m; sourceTree = "<group>"; };
 		870680B61E62DF20000368D5 /* AddressTableViewHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressTableViewHeaderCell.h; sourceTree = "<group>"; };
 		870680B71E62DF20000368D5 /* AddressTableViewHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressTableViewHeaderCell.m; sourceTree = "<group>"; };
 		8708A1701E406C1100ABA7D8 /* ContactUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactUsViewController.h; sourceTree = "<group>"; };
@@ -3948,8 +3948,8 @@
 		8702FBFD1E9A4C9F001D1AA9 /* AddressDataManager */ = {
 			isa = PBXGroup;
 			children = (
-				8702FBFE1E9A4CB5001D1AA9 /* AddressDataManager.h */,
-				8702FBFF1E9A4CB5001D1AA9 /* AddressDataManager.m */,
+				8702FBFE1E9A4CB5001D1AA9 /* OBJAddressDataManager.h */,
+				8702FBFF1E9A4CB5001D1AA9 /* OBJAddressDataManager.m */,
 			);
 			name = AddressDataManager;
 			sourceTree = "<group>";
@@ -7828,7 +7828,7 @@
 				FFB1B0951CE61D96000F60AD /* JARadioExpandableComponent.m in Sources */,
 				CE28A7A31BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */,
 				879E57841E9E0BAB001C4C71 /* EventUtilities.m in Sources */,
-				8702FC001E9A4CB5001D1AA9 /* AddressDataManager.m in Sources */,
+				8702FC001E9A4CB5001D1AA9 /* OBJAddressDataManager.m in Sources */,
 				875AD5731E38C0C900584ABF /* RIShippingMethod.m in Sources */,
 				61CBA0511E51E26B005673F7 /* FormValidationType.m in Sources */,
 				9AEA3B291B15DD9C00771EEA /* UIView+Frame.m in Sources */,

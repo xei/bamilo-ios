@@ -49,12 +49,12 @@ class AddressDataManager: DataManagerSwift {
         }
     }
     
-    func deleteAddress(_ target: DataServiceProtocol, address: Address, completion: @escaping DataClosure) {
-        let params : [String: String] = ["id" : address.uid ]
-        AddressDataManager.requestManager.async(.delete, target: target, path: RI_API_DELETE_ADDRESS_REMOVE, params: params, type: .container) { (responseType, data, errorMesssages) in
-            self.processResponse(responseType, aClass: nil, data: data, errorMessages: errorMesssages, completion: completion)
-        }
-    }
+//    func deleteAddress(_ target: DataServiceProtocol, address: Address, completion: @escaping DataClosure) {
+//        let params : [String: String] = ["id" : address.uid ]
+//        AddressDataManager.requestManager.async(.delete, target: target, path: RI_API_DELETE_ADDRESS_REMOVE, params: params, type: .container) { (responseType, data, errorMesssages) in
+//            self.processResponse(responseType, aClass: nil, data: data, errorMessages: errorMesssages, completion: completion)
+//        }
+//    }
     
     func getRegions(_ target: DataServiceProtocol, completion:@escaping DataClosure) {
         self.getAreaZone(target, type: .background, path: RI_API_GET_CUSTOMER_REGIONS, completion: completion)

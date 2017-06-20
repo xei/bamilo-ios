@@ -8,7 +8,7 @@
 
 #import "AddressViewController.h"
 #import "AddressList.h"
-#import "AddressDataManager.h"
+#import "OBJAddressDataManager.h"
 #import "AddressTableViewController.h"
 #import "ViewControllerManager.h"
 #import "AlertManager.h"
@@ -85,9 +85,13 @@
     
     [[AlertManager sharedInstance] confirmAlert:@"حذف آدرس" text:@"از حذف آدرس خود اطمینان دارید؟" confirm:@"بله" cancel:@"خیر" completion:^(BOOL OK) {
         if(OK) {
-            [DataAggregator deleteAddress:self address:_currentAddress completion:^(id _Nullable data, NSError * _Nullable error) {
+            [[OBJAddressDataManager sharedInstance] deleteAddress:self address:_currentAddress completion:^(id data, NSError *error) {
                 if(error == nil) {
                     [self fetchAddressList];
+                } else {
+                    if(![self showNotificationBar:error isSuccess:NO]) {
+                        //do not what else should we do here
+                    }
                 }
             }];
         }

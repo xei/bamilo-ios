@@ -63,13 +63,15 @@ class RequestManagerSwift {
                             }
                         }
                     
-                        if(type == .foreground) {
+                        if(type == .container || type == .foreground) {
                             LoadingManager.hideLoading()
                         }
                     case .failure(let error):
                         print(error)
                         completion(self.map(statusCode: response.response?.statusCode), nil, [STRING_OOPS])
-                        LoadingManager.hideLoading()
+                        if(type == .container || type == .foreground) {
+                            LoadingManager.hideLoading()
+                        }
                 }
             }
         }
