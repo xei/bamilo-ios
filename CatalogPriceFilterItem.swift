@@ -8,6 +8,7 @@
 
 import UIKit
 import ObjectMapper
+import SwiftyJSON
 
 @objc class CatalogPriceFilterItem: BaseCatalogFilterItem {
     
@@ -20,7 +21,7 @@ import ObjectMapper
     
     
     override func mapping(map: Map) {
-        super.mapping(map: map)        
+        super.mapping(map: map)
         maxPrice <- map["option.max"]
         lowerValue <- map["option.min"]
         upperValue <- map["option.max"]

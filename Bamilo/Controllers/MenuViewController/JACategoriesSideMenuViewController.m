@@ -227,7 +227,7 @@
     [super viewWillAppear:animated];
     
     //manually add the status bar height into the calculations
-    CGFloat statusBarHeight = 20.0f;
+    CGFloat statusBarHeight = 0.0f;
     [self.tableView setFrame:CGRectMake(self.view.bounds.origin.x,
                                         self.view.bounds.origin.y + statusBarHeight,
                                         self.view.bounds.size.width,
@@ -236,7 +236,7 @@
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
     //manually add the status bar height into the calculations
-    CGFloat statusBarHeight = 20.0f;
+    CGFloat statusBarHeight = 0.0f;
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
     [self.tableView setFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y + statusBarHeight, self.view.bounds.size.width, self.view.bounds.size.height - statusBarHeight)];
 }

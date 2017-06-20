@@ -10,11 +10,11 @@
 #import "UIImageView+WebCache.h"
 
 #define kLeftIPadMargin 24.f
-#define kCellLevelOneMargin 50.f
-#define kCellLevelOneIPadMargin 58.f
-#define kHeaderHeight 48.f
+#define kCellLevelOneMargin 52.f
+#define kCellLevelOneIPadMargin 60.f
+#define kHeaderHeight 0.f
 #define kCellHeight 40.f
-#define kIconImageWidthAndHeight 22.f
+#define kIconImageWidthAndHeight 16.f
 #define kIconImageRightMargin 10.f
 #define kAcessoryImageWidthAndHeight 11.f
 #define kLeftAndRightMargin 16.f
@@ -55,7 +55,7 @@
         [self.backgroundClickableView addSubview:self.iconImageView];
         
         self.separatorView = [UIView new];
-        [self.separatorView setBackgroundColor:JABlack400Color];
+        [self.separatorView setBackgroundColor:[Theme color:kColorExtraExtraLightGray]];
         [self.backgroundClickableView addSubview:self.separatorView];
     }
     return self;
@@ -70,8 +70,8 @@
     CGFloat textTopOffset = 0.0f;
     CGFloat leftMargin = kLeftAndRightMargin;
     CGFloat rightMargin = kLeftAndRightMargin;
-    UIFont* font = JAListFont;
-    UIColor* textColor = [UIColor blackColor];
+    UIFont* font = [Theme font:kFontVariationRegular size:12];
+    UIColor* textColor = [Theme color:kColorExtraDarkGray];
     NSString* text = cellText;
     
     CGFloat accessoryImageWidth = kAcessoryImageWidthAndHeight;
@@ -139,7 +139,8 @@
     
     [self.accessoryImageView setFrame:CGRectMake(self.backgroundClickableView.bounds.size.width - accessoryImageWidth - rightMargin, (height - accessoryImageWidth)/2, accessoryImageWidth, accessoryImageWidth)]; //image is square so width=height
     
-    [self.separatorView setFrame:CGRectMake(leftMargin, height-separatorHeight, self.backgroundClickableView.bounds.size.width - leftMargin, separatorHeight)];
+    CGFloat leftSepratorViewMargin = style == JAGenericMenuCellStyleLevelTwo ? leftMargin : leftMargin + 28;
+    [self.separatorView setFrame:CGRectMake(leftSepratorViewMargin, height-separatorHeight, self.backgroundClickableView.bounds.size.width - leftMargin, separatorHeight)];
     
     if (RI_IS_RTL) {
         [self.backgroundClickableView flipAllSubviews];
