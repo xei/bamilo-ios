@@ -28,7 +28,6 @@
     [super viewDidLoad];
     
     [self.view setBackgroundColor:[UIColor whiteColor]];
-    self.tabBarIsVisible = YES;
     
     [self.carouselWidget setBackgroundColor:[Theme color:kColorVeryLightGray]];
     self.carouselWidget.delegate = self;

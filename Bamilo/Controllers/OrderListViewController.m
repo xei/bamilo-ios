@@ -17,6 +17,10 @@
 
 @interface OrderListViewController ()
 @property (nonatomic, weak) IBOutlet UITableView *tableview;
+@property (weak, nonatomic) IBOutlet UILabel *emptyListMessageLabel;
+@property (weak, nonatomic) IBOutlet UIView *emptyListMessageView;
+
+
 @property (nonatomic, strong) OrderList *list;
 
 @property (assign, nonatomic) int currentOrdersPage;
@@ -86,6 +90,7 @@
 // --- endof Legacy views
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     
     self.tableview.dataSource = self;
     self.tableview.delegate = self;
@@ -94,6 +99,9 @@
     
     // This will remove extra separators from tableview
     self.tableview.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
+    [self.emptyListMessageLabel applyStyle:[Theme font:kFontVariationRegular size:15] color:[UIColor blackColor]];
+    self.emptyListMessageLabel.text = STRING_NO_ORDERS_TITLE;
 }
 
 - (void)updateNavBar {
@@ -148,6 +156,9 @@
 - (void)bind:(id)data forRequestId:(int)rid {
     self.list = data;
     dispatch_async(dispatch_get_main_queue(), ^{
+        if (self.list.orders.count == 0) {
+            self.emptyListMessageView.hidden = NO;
+        }
         [self.tableview reloadData];
     });
 }

@@ -264,11 +264,12 @@
         [self showDoneButtonWithTitle:layout.doneButtonTitle];
     } else if (layout.showCartButton) {
         [self showCartButton];
-        if (layout.showSearchButton) {
-            [self showSearchButton];
-        }
     } else { //default
         [self hideRightItems];
+    }
+    
+    if (layout.showSearchButton) {
+        [self showSearchButton];
     }
     
     [self adjustTitleFrame];

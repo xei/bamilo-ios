@@ -91,7 +91,12 @@
 
 #pragma mark - Public Methods
 - (void)updateNavBar {
-    return;
+    //reset to Default state for nav bar
+    self.navBarLayout.showSearchButton = NO;
+    self.navBarLayout.showBackButton = NO;
+    self.navBarLayout.showDoneButton = NO;
+    self.navBarLayout.showCartButton = NO;
+    self.navBarLayout.showSeparatorView = NO;
 }
 
 #pragma mark - SideMenuProtocol

@@ -14,9 +14,9 @@
     self = [super init];
     if (self) {
         self.doneButtonTitle = STRING_DONE;
-//        self.showMenuButton = YES;
-        self.showCartButton = YES;
-        self.showSearchButton = YES;
+        self.showDoneButton = NO;
+        self.showCartButton = NO;
+        self.showSearchButton = NO;
         self.showLogo = YES;
         self.showSeparatorView = YES;
     }

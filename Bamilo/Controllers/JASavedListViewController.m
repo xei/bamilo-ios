@@ -115,24 +115,27 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.navBarLayout.title = STRING_MY_FAVOURITES;
     self.navBarLayout.showCartButton = NO;
     self.navBarLayout.showSeparatorView = NO;
-    self.searchBarIsVisible = YES;
-    self.tabBarIsVisible = YES;
     [self.collectionView setBackgroundColor:[UIColor whiteColor]];
     [self.collectionView registerClass:[JARecentlyViewedCell class] forCellWithReuseIdentifier:@"CellWithLines"];
     
     
     
-     CGRect frame = CGRectMake(self.viewBounds.origin.x, self.viewBounds.origin.y, self.view.frame.size.width, self.viewBounds.size.height);
+    CGRect frame = self.view.bounds; //  CGRectMake(self.viewBounds.origin.x, self.viewBounds.origin.y, self.view.frame.size.width, self.viewBounds.size.height);
     self.collectionView.collectionViewLayout = self.flowLayout;
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     [self.collectionView setFrame:frame];
     [self.emptyViewContainer hide];
-    
+}
+
+
+- (void)updateNavBar {
+    self.navBarLayout.showLogo = NO;
+    self.navBarLayout.title = STRING_MY_FAVOURITES;
+    self.navBarLayout.showCartButton = NO;
+    self.navBarLayout.showBackButton = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -164,10 +167,9 @@
 #pragma mark - Load Data
 
 - (void)loadProducts {
-    [self showLoading];
+    [LoadingManager showLoading];
     [RIProduct getFavoriteProductsForPage:self.currentPage.integerValue+1 maxItems:self.maxPerPage.integerValue SuccessBlock:^(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages) {
         
-        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         if (favoriteProducts.count > 0) {
             
             if (currentPage == totalPages) {
@@ -194,14 +196,11 @@
             [self reloadData];
         }
         
-        [self hideLoading];
+        [LoadingManager hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
-        
-        [self onErrorResponse:apiResponse messages:error showAsMessage:NO selector:@selector(loadProducts) objects:nil];
-        
+        [self showNotificationBar:error isSuccess:NO];
         [self publishScreenLoadTime];
-        
-        [self hideLoading];
+        [LoadingManager hideLoading];
     }];
 }
 
@@ -214,7 +213,7 @@
 }
 
 - (void)reloadData {
-    [self showLoading];
+    [LoadingManager showLoading];
     [self.collectionView reloadData];
     if (ISEMPTY(self.productsArray)) {
         
@@ -228,7 +227,7 @@
 //        [self.bottomView setHidden:NO];
         [EmarsysPredictManager sendTransactionsOf:self];
     }
-    [self hideLoading];
+    [LoadingManager hideLoading];
 }
 
 #pragma mark - kProductChangedNotification
@@ -301,9 +300,9 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGSize size = CGSizeZero;
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        size = CGSizeMake(self.bounds.size.width/2, 154.5f);
+        size = CGSizeMake(self.view.width/2, 154.5f);
     } else {
-        size = CGSizeMake(self.view.frame.size.width, 154.5f);
+        size = CGSizeMake(self.view.width, 154.5f);
     }
     
     self.flowLayout.itemSize = size;
@@ -406,7 +405,8 @@
             NSDictionary* userInfo = [NSDictionary dictionaryWithObject:self.cart forKey:kUpdateCartNotificationValue];
             [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
             
-            [self onSuccessResponse:RIApiResponseSuccess messages:[self extractSuccessMessages:[data objectForKey:kDataMessages]] showMessage:YES];
+//            [self showNotificationBar:[self extractSuccessMessages:[data objectForKey:kDataMessages]] isSuccess:YES];
+
             
             NSMutableDictionary *tracking = [NSMutableDictionary new];
             [tracking setValue:product.name forKey:kRIEventProductNameKey];
@@ -438,8 +438,7 @@
         } else {
             //EVENT: ADD TO CART
             [TrackerManager postEvent:[EventFactory addToCart:productSimple.sku basketValue:[self.cart.cartEntity.cartValue intValue] success:NO] forName:[AddToCartEvent name]];
-            
-            [self onErrorResponse:error.code messages:[error.userInfo objectForKey:kErrorMessages] showAsMessage:YES selector:@selector(finishAddToCart:) objects:@[button]];
+            [self showNotificationBar:[error.userInfo objectForKey:kErrorMessages] isSuccess:NO];
             //[self hideLoading];
         }
     }];
@@ -506,10 +505,11 @@
 
 - (void)removeFromSavedList:(RIProduct *)product showMessage:(BOOL)showMessage {
     NSNumber *price = (VALID_NOTEMPTY(product.specialPriceEuroConverted, NSNumber) && [product.specialPriceEuroConverted longValue] > 0.0f) ? product.specialPriceEuroConverted :product.priceEuroConverted;
-    [self showLoading];
+    [LoadingManager showLoading];
     [DataAggregator removeFromWishListWithTarget:self sku:product.sku completion:^(id data, NSError *error) {
         if (error == nil) {
-            [self onSuccessResponse:RIApiResponseSuccess messages:@[STRING_REMOVED_FROM_WISHLIST] showMessage:showMessage];
+            
+            [self showNotificationBarMessage:STRING_REMOVED_FROM_WISHLIST isSuccess:YES];
             
             NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
             [trackingDictionary setValue:product.sku forKey:kRIEventLabelKey];
@@ -556,7 +556,7 @@
             [self.productsArray removeObject:product.sku];
             [self.productsDictionary removeObjectForKey:product.sku];
             [self reloadData];
-            [self hideLoading];
+            [LoadingManager hideLoading];
         } else {
             
         }

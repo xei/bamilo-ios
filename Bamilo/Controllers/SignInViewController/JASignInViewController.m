@@ -198,7 +198,7 @@
     
     self.navBarLayout.title = STRING_LOGIN;
     self.navBarLayout.showBackButton = YES;
-    self.navBarLayout.showCartButton = YES;
+//    self.navBarLayout.showCartButton = YES;
     self.navBarLayout.showSearchButton = YES;
     
     _elementsWidth = self.viewBounds.size.width - (kSideMargin * 2);

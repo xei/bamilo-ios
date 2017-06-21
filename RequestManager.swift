@@ -46,6 +46,7 @@ class RequestManagerSwift {
             if let params = params {
                 print(params)
             }
+            Alamofire.SessionManager.default.session.configuration.timeoutIntervalForRequest = 10
             
             Alamofire.request("\(baseUrl)/\(path)", method: method, parameters: params, encoding: URLEncoding(destination: .methodDependent), headers: self.createHeaders()).responseJSON(completionHandler: { (response) in
                 if let url = response.request?.url {

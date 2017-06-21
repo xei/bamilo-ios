@@ -50,20 +50,15 @@
 
 #pragma mark - AddressTableViewControllerDelegate
 - (BOOL)addressSelected:(Address *)address {
-    //TEMPORARILY DISABLED ADDRESS SELECTION
-    return NO;
-    
     if(_currentAddress.uid == address.uid) {
         return NO;
     }
-    
     _currentAddress = address;
-    
     [[AlertManager sharedInstance] confirmAlert:@"تغییر آدرس" text:@"از تغییر آدرس پیش فرض خود اطمینان دارید؟" confirm:@"بله" cancel:@"خیر" completion:^(BOOL OK) {
         if(OK) {
             [DataAggregator setDefaultAddress:self address:address isBilling:NO completion:^(id _Nullable data , NSError * _Nullable error) {
                 if(error == nil) {
-                    [self bind:data forRequestId:1];
+                    [self bind:data[kDataContent] forRequestId:1];
                     [_addressTableViewController scrollToTop];
                 }
             }];
@@ -75,7 +70,6 @@
 
 -(void)addressEditButtonTapped:(id)sender {
     _currentAddress = (Address *)sender;
-    
     [self performSegueWithIdentifier:@"pushAddressListToAddressEdit" sender:nil];
 }
 

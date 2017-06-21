@@ -24,7 +24,7 @@ struct ProfileViewDataModel {
 }
 
 
-class ProfileViewController: JABaseViewController, UITableViewDelegate, UITableViewDataSource, DataServiceProtocol, MFMailComposeViewControllerDelegate{
+class ProfileViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, DataServiceProtocol, MFMailComposeViewControllerDelegate{
 
     @IBOutlet private weak var tableView: UITableView!
     private var tableViewDataSource: [[ProfileViewDataModel]]?
@@ -52,8 +52,6 @@ class ProfileViewController: JABaseViewController, UITableViewDelegate, UITableV
         self.tableView.reloadData()
         
         //TODO: these codes must be removed when tab bar is ok and there is no need for JABaseViewController
-        self.searchBarIsVisible = true;
-        self.tabBarIsVisible = true;
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -66,10 +64,15 @@ class ProfileViewController: JABaseViewController, UITableViewDelegate, UITableV
         self.viewWillApearedOnceOrMore = true
     }
     
-    //TODO: these codes must be removed when tab bar is ok and there is no need for JABaseViewController
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        self.tableView.frame = self.viewBounds()
+    override func updateNavBar() {
+        super.updateNavBar()
+
+        self.navBarLayout.showSearchButton = false
+        self.navBarLayout.showBackButton = false
+        self.navBarLayout.showCartButton = false
+        self.navBarLayout.showDoneButton = false
+        self.navBarLayout.showLogo = false
+        self.navBarLayout.title = STRING_PROFILE
     }
     
     func updateTableViewDataSource() {
@@ -192,9 +195,7 @@ class ProfileViewController: JABaseViewController, UITableViewDelegate, UITableV
     }
     
     func logoutUser() {
-        self.showLoading()
         AuthenticationDataManager.sharedInstance.logoutUser(self) { (data, error) in
-            self.hideLoading()
             self.bind(data, forRequestId: 0)
             //EVENT: LOGOUT
             TrackerManager.postEvent(EventFactory.logout(error == nil), forName: LogoutEvent.name())

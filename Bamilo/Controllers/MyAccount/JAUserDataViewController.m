@@ -172,7 +172,7 @@
     self.apiResponse = RIApiResponseSuccess;
     self.navBarLayout.title = STRING_PROFILE;
     self.navBarLayout.showBackButton = YES;
-    self.navBarLayout.showCartButton = YES;
+//    self.navBarLayout.showCartButton = YES;
     self.navBarLayout.showSearchButton = YES;
     self.isOpeningPicker = NO;
     

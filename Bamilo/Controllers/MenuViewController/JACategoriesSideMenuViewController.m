@@ -140,6 +140,14 @@
     [self reloadData];
 }
 
+- (void)updateNavBar {
+    self.navBarLayout.title = STRING_CATEGORIES;
+    self.navBarLayout.showDoneButton = NO;
+    self.navBarLayout.showBackButton = NO;
+    self.navBarLayout.showCartButton = YES;
+    self.navBarLayout.showSearchButton = YES;
+}
+
 - (void)reloadData {
     [self reloadCategories];
     [self reloadExternalLinks];

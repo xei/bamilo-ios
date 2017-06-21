@@ -8,7 +8,7 @@
 
 #import "JABaseViewController.h"
 
-@interface EmptyViewController : JABaseViewController
+@interface EmptyViewController : UIViewController
 
 @property (nonatomic, copy) NSString *recommendationLogic;
 

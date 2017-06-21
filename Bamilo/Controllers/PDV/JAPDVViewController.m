@@ -117,6 +117,7 @@ typedef void (^ProcessActionBlock)(void);
     //self.A4SViewControllerAlias = @"PRODUCT";
 
     self.navBarLayout.showBackButton = YES;
+    self.navBarLayout.showCartButton = YES;
 
     self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     [self.mainScrollView setHidden:YES];

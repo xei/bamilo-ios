@@ -27,6 +27,7 @@ import SwiftyJSON
     @IBOutlet private weak var noResultViewContainer: UIView!
     @IBOutlet private weak var filteredNoResultContainer: UIView!
     
+    var navBarTitle: String?
     var searchTarget: RITarget!
     var sortingMethod: Catalog.CatalogSortType = .populaity
     var pushFilterQueryString : String?
@@ -85,9 +86,18 @@ import SwiftyJSON
         NotificationCenter.default.removeObserver(self)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
+        if let navTitle = self.navBarTitle {
+            self.navBarLayout.title = navTitle
+            self.requestNavigationBarReload()
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+    
         
         //if previous view controller has tab bar then reset it
         if let navController = self.navigationController, navController.viewControllers.count >= 1 {
@@ -103,6 +113,7 @@ import SwiftyJSON
         super.updateNavBar()
         self.navBarLayout.showBackButton = true
         if let navTitle = self.catalogData?.title {
+            self.navBarTitle = navTitle
             self.navBarLayout.title = navTitle
             self.requestNavigationBarReload()
         }
