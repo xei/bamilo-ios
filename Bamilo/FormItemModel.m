@@ -128,7 +128,7 @@
                                       selectOptions: nil];
     
     NSDateFormatter *visibleFormatter = [NSDateFormatter new];
-    visibleFormatter.dateFormat = @"yyyy MMMM dd";
+    visibleFormatter.dateFormat = @"yyyy/MM/dd";
     visibleFormatter.calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierPersian];
     visibleFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"fa_IR"];
     model.visibleDateFormat = visibleFormatter;

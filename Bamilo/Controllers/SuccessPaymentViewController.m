@@ -336,6 +336,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [[RITrackingWrapper sharedInstance] trackScreenWithName:@"ThankYou"];
+    self.tabBarController.tabBar.hidden = NO;
 }
 
 #pragma mark - EmarsysPredictProtocol

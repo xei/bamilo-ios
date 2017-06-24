@@ -132,15 +132,15 @@ typedef void (^ProcessActionBlock)(void);
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-
-    if(self.hasLoaddedProduct) {
-        [self removeSuperviews];
-        if (_needRefreshProduct) {
-            [self loadCompleteProduct];
-        } else {
-            [self fillTheViews];
-        }
-    } else {
+//
+    if(!self.hasLoaddedProduct) {
+//        [self removeSuperviews];
+//        if (_needRefreshProduct) {
+//            [self loadCompleteProduct];
+//        } else {
+//            [self fillTheViews];
+//        }
+//    } else {
         if (self.targetString.length || self.productSku.length) {
             [self loadCompleteProduct];
         } else {
@@ -153,8 +153,8 @@ typedef void (^ProcessActionBlock)(void);
             _processActionBlock();
         }
     }
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductChangedNotification object:self.product.sku];
-    _needRefreshProduct = NO;
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductChangedNotification object:self.product.sku];
+//    _needRefreshProduct = NO;
 }
 
 - (void)presentCoachMarks {
@@ -1090,9 +1090,7 @@ typedef void (^ProcessActionBlock)(void);
         [popoverController presentPopoverFromRect:sharePopoverRect inView:self.ctaView permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
         popoverController.passthroughViews = nil;
         self.currentPopoverController = popoverController;
-    }
-    else
-    {
+    } else {
         [self presentViewController:activityController animated:YES completion:nil];
     }
 }
@@ -1179,12 +1177,9 @@ typedef void (^ProcessActionBlock)(void);
     self.pickerDataSource = [NSMutableArray new];
     NSMutableArray *options = [[NSMutableArray alloc] init];
 
-    if(VALID_NOTEMPTY(self.product.productSimples, NSArray))
-    {
-        for (RIProductSimple *simple in self.product.productSimples)
-        {
-            if ([simple.quantity integerValue] > 0)
-            {
+    if(VALID_NOTEMPTY(self.product.productSimples, NSArray)) {
+        for (RIProductSimple *simple in self.product.productSimples) {
+            if ([simple.quantity integerValue] > 0) {
                 [self.pickerDataSource addObject:simple];
                 [options addObject:simple.variation];
             }
@@ -1205,8 +1200,7 @@ typedef void (^ProcessActionBlock)(void);
 
 - (void)loadSizePickerWithOptions:(NSArray*)options
                      previousText:(NSString*)previousText
-                  leftButtonTitle:(NSString*)leftButtonTitle
-{
+                  leftButtonTitle:(NSString*)leftButtonTitle {
     if (!VALID_NOTEMPTY(self.picker, JAPicker)) {
 
         self.picker = [[JAPicker alloc] initWithFrame:self.view.frame];
@@ -1253,10 +1247,10 @@ typedef void (^ProcessActionBlock)(void);
                 [self.selectedBundles setObject:[item.product.productSimples firstObject] forKey:item.product.sku];
             }
         }
-    }else{
+    } else {
         if (singleItem.selected) {
             [self.selectedBundles setObject:[singleItem.product.productSimples firstObject]  forKey:singleItem.product.sku];
-        }else{
+        } else {
             [self.selectedBundles removeObjectForKey:singleItem.product.sku];
         }
 
@@ -1357,8 +1351,7 @@ typedef void (^ProcessActionBlock)(void);
     _galleryPaged.delegate = self;
 }
 
-- (void)onIndexChanged:(NSInteger)index
-{
+- (void)onIndexChanged:(NSInteger)index {
     [self.productImageSection goToGalleryIndex:index];
 }
 
@@ -1374,13 +1367,10 @@ typedef void (^ProcessActionBlock)(void);
     }];
 }
 
-- (void)wishListButtonPressed:(UIButton*)button
-{
-    if (!self.productImageSection.wishListButton.selected && !VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate))
-    {
+- (void)wishListButtonPressed:(UIButton*)button {
+    if (!self.productImageSection.wishListButton.selected && !VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate)) {
         [self addToWishList:button];
-    }else if (self.productImageSection.wishListButton.selected && VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate))
-    {
+    } else if (self.productImageSection.wishListButton.selected && VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate)) {
         [self removeFromFavorites:button];
     }
 }
@@ -1505,13 +1495,11 @@ typedef void (^ProcessActionBlock)(void);
 
 #pragma mark - Tracking Events
 
-- (NSNumber *)getPrice
-{
+- (NSNumber *)getPrice {
     return (VALID_NOTEMPTY(self.product.specialPriceEuroConverted, NSNumber) && [self.product.specialPriceEuroConverted floatValue] > 0.0f)? self.product.specialPriceEuroConverted : self.product.priceEuroConverted;
 }
 
-- (void)trackingEventViewProduct:(RIProduct *)product
-{
+- (void)trackingEventViewProduct:(RIProduct *)product {
     NSNumber *price = [self getPrice];
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
@@ -1547,8 +1535,7 @@ typedef void (^ProcessActionBlock)(void);
     [trackingDictionary setObject:self.product.brandUrlKey forKey:kRIEventBrandKey];
 
     NSString *discountPercentage = @"0";
-    if(VALID_NOTEMPTY(self.product.maxSavingPercentage, NSString))
-    {
+    if(VALID_NOTEMPTY(self.product.maxSavingPercentage, NSString)) {
         discountPercentage = self.product.maxSavingPercentage;
     }
 
@@ -1559,57 +1546,44 @@ typedef void (^ProcessActionBlock)(void);
 
     [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
 
-    if(VALID_NOTEMPTY(self.product.avr, NSNumber))
-    {
+    if(VALID_NOTEMPTY(self.product.avr, NSNumber)) {
         [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
     }
 
     NSString *categoryName = @"";
     NSString *subCategoryName = @"";
-    if(VALID_NOTEMPTY(self.category, RICategory))
-    {
-        if(VALID_NOTEMPTY(self.category.parent, RICategory))
-        {
+    if(VALID_NOTEMPTY(self.category, RICategory)) {
+        if(VALID_NOTEMPTY(self.category.parent, RICategory)) {
             RICategory *parent = self.category.parent;
-            while (VALID_NOTEMPTY(parent.parent, RICategory))
-            {
+            while (VALID_NOTEMPTY(parent.parent, RICategory)) {
                 parent = parent.parent;
             }
             categoryName = parent.label;
             subCategoryName = self.category.label;
-        }
-        else
-        {
+        } else {
             categoryName = self.category.label;
         }
-    }
-    else if(VALID_NOTEMPTY(self.product.categoryIds, NSArray))
-    {
+    } else if(VALID_NOTEMPTY(self.product.categoryIds, NSArray)) {
         NSArray *categoryIds = self.product.categoryIds;
         NSInteger subCategoryIndex = [categoryIds count] - 1;
         NSInteger categoryIndex = subCategoryIndex - 1;
 
-        if(categoryIndex >= 0)
-        {
+        if(categoryIndex >= 0) {
             NSString *categoryId = [categoryIds objectAtIndex:categoryIndex];
             categoryName = [RICategory getCategoryName:categoryId];
 
             NSString *subCategoryId = [categoryIds objectAtIndex:subCategoryIndex];
             subCategoryName = [RICategory getCategoryName:subCategoryId];
-        }
-        else
-        {
+        } else {
             NSString *categoryId = [categoryIds objectAtIndex:subCategoryIndex];
             categoryName = [RICategory getCategoryName:categoryId];
         }
     }
 
-    if(VALID_NOTEMPTY(categoryName, NSString))
-    {
+    if(VALID_NOTEMPTY(categoryName, NSString)) {
         [trackingDictionary setValue:categoryName forKey:kRIEventCategoryIdKey];
     }
-    if(VALID_NOTEMPTY(subCategoryName, NSString))
-    {
+    if(VALID_NOTEMPTY(subCategoryName, NSString)) {
         [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryIdKey];
     }
 
@@ -1631,8 +1605,7 @@ typedef void (^ProcessActionBlock)(void);
 - (void)trackingEventAddToCart:(RICart *)cart {
     CGRect addToCartEventCoachMark = CGRectMake([MainTabBarViewController topNavigationController].navigationBarView.cartButton.frame.origin.x, [MainTabBarViewController topNavigationController].navigationBarView.cartButton.frame.origin.y+20,35, 35);
 
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"FirtTimeAddToCart"])
-    {
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"FirtTimeAddToCart"]) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"FirtTimeAddToCart"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         NSArray *coachMarks = @[
@@ -1669,8 +1642,7 @@ typedef void (^ProcessActionBlock)(void);
     [trackingDictionary setValue:self.currentSimple.sku forKey:kRIEventSkuKey];
     [trackingDictionary setValue:self.product.name forKey:kRIEventProductNameKey];
 
-    if(VALID_NOTEMPTY(self.product.categoryIds, NSArray))
-    {
+    if(VALID_NOTEMPTY(self.product.categoryIds, NSArray)) {
         NSArray *categoryIds = self.product.categoryIds;
         [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryIdKey];
     }
@@ -1679,8 +1651,7 @@ typedef void (^ProcessActionBlock)(void);
     [trackingDictionary setObject:self.product.brandUrlKey forKey:kRIEventBrandKey];
 
     NSString *discountPercentage = @"0";
-    if(VALID_NOTEMPTY(self.product.maxSavingPercentage, NSString))
-    {
+    if(VALID_NOTEMPTY(self.product.maxSavingPercentage, NSString)) {
         discountPercentage = self.product.maxSavingPercentage;
     }
     [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
@@ -1690,50 +1661,38 @@ typedef void (^ProcessActionBlock)(void);
 
     NSString *categoryName = @"";
     NSString *subCategoryName = @"";
-    if(VALID_NOTEMPTY(self.category, RICategory))
-    {
-        if(VALID_NOTEMPTY(self.category.parent, RICategory))
-        {
+    if(VALID_NOTEMPTY(self.category, RICategory)) {
+        if(VALID_NOTEMPTY(self.category.parent, RICategory)) {
             RICategory *parent = self.category.parent;
-            while (VALID_NOTEMPTY(parent.parent, RICategory))
-            {
+            while (VALID_NOTEMPTY(parent.parent, RICategory)) {
                 parent = parent.parent;
             }
             categoryName = parent.label;
             subCategoryName = self.category.label;
-        }
-        else
-        {
+        } else {
             categoryName = self.category.label;
         }
-    }
-    else if(VALID_NOTEMPTY(self.product.categoryIds, NSArray))
-    {
+    } else if(VALID_NOTEMPTY(self.product.categoryIds, NSArray)) {
         NSArray *categoryIds = self.product.categoryIds;
         NSInteger subCategoryIndex = [categoryIds count] - 1;
         NSInteger categoryIndex = subCategoryIndex - 1;
 
-        if(categoryIndex >= 0)
-        {
+        if(categoryIndex >= 0) {
             NSString *categoryId = [categoryIds objectAtIndex:categoryIndex];
             categoryName = [RICategory getCategoryName:categoryId];
 
             NSString *subCategoryId = [categoryIds objectAtIndex:subCategoryIndex];
             subCategoryName = [RICategory getCategoryName:subCategoryId];
-        }
-        else
-        {
+        } else {
             NSString *categoryId = [categoryIds objectAtIndex:subCategoryIndex];
             categoryName = [RICategory getCategoryName:categoryId];
         }
     }
 
-    if(VALID_NOTEMPTY(categoryName, NSString))
-    {
+    if(VALID_NOTEMPTY(categoryName, NSString)) {
         [trackingDictionary setValue:categoryName forKey:kRIEventCategoryIdKey];
     }
-    if(VALID_NOTEMPTY(subCategoryName, NSString))
-    {
+    if(VALID_NOTEMPTY(subCategoryName, NSString)) {
         [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryIdKey];
     }
     if (VALID_NOTEMPTY(self.product.categoryName, NSString)) {
@@ -1776,8 +1735,7 @@ typedef void (^ProcessActionBlock)(void);
     [self trackingEventLastAddedToCart];
 }
 
-- (void)trackingEventLastAddedToCart
-{
+- (void)trackingEventLastAddedToCart {
     NSMutableDictionary *tracking = [NSMutableDictionary new];
     [tracking setValue:self.product.name forKey:kRIEventProductNameKey];
     [tracking setValue:self.product.sku forKey:kRIEventSkuKey];
@@ -1787,8 +1745,7 @@ typedef void (^ProcessActionBlock)(void);
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLastAddedToCart] data:tracking];
 }
 
-- (void)trackingEventCallToOrder
-{
+- (void)trackingEventCallToOrder {
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
     [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
@@ -1800,8 +1757,7 @@ typedef void (^ProcessActionBlock)(void);
                                               data:[trackingDictionary copy]];
 }
 
-- (void)trackingEventRemoveFromWishlist
-{
+- (void)trackingEventRemoveFromWishlist {
     NSNumber *price = [self getPrice];
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:self.product.sku forKey:kRIEventLabelKey];
@@ -1834,8 +1790,7 @@ typedef void (^ProcessActionBlock)(void);
     }];
 }
 
-- (void)trackingEventAddToWishList
-{
+- (void)trackingEventAddToWishList {
     NSNumber *price = (VALID_NOTEMPTY(self.product.specialPriceEuroConverted, NSNumber) && [self.product.specialPriceEuroConverted floatValue] > 0.0f) ? self.product.specialPriceEuroConverted : self.product.priceEuroConverted;
 
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
@@ -1859,8 +1814,7 @@ typedef void (^ProcessActionBlock)(void);
     [trackingDictionary setObject:self.product.brandUrlKey forKey:kRIEventBrandKey];
 
     NSString *discountPercentage = @"0";
-    if(VALID_NOTEMPTY(self.product.maxSavingPercentage, NSString))
-    {
+    if(VALID_NOTEMPTY(self.product.maxSavingPercentage, NSString)) {
         discountPercentage = self.product.maxSavingPercentage;
     }
     [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
@@ -1869,50 +1823,38 @@ typedef void (^ProcessActionBlock)(void);
 
     NSString *categoryName = @"";
     NSString *subCategoryName = @"";
-    if(VALID_NOTEMPTY(self.category, RICategory))
-    {
-        if(VALID_NOTEMPTY(self.category.parent, RICategory))
-        {
+    if(VALID_NOTEMPTY(self.category, RICategory)) {
+        if(VALID_NOTEMPTY(self.category.parent, RICategory)) {
             RICategory *parent = self.category.parent;
-            while (VALID_NOTEMPTY(parent.parent, RICategory))
-            {
+            while (VALID_NOTEMPTY(parent.parent, RICategory)) {
                 parent = parent.parent;
             }
             categoryName = parent.label;
             subCategoryName = self.category.label;
-        }
-        else
-        {
+        } else {
             categoryName = self.category.label;
         }
-    }
-    else if(VALID_NOTEMPTY(self.product.categoryIds, NSArray))
-    {
+    } else if(VALID_NOTEMPTY(self.product.categoryIds, NSArray)) {
         NSArray *categoryIds = self.product.categoryIds;
         NSInteger subCategoryIndex = [categoryIds count] - 1;
         NSInteger categoryIndex = subCategoryIndex - 1;
 
-        if(categoryIndex >= 0)
-        {
+        if(categoryIndex >= 0) {
             NSString *categoryId = [categoryIds objectAtIndex:categoryIndex];
             categoryName = [RICategory getCategoryName:categoryId];
 
             NSString *subCategoryId = [categoryIds objectAtIndex:subCategoryIndex];
             subCategoryName = [RICategory getCategoryName:subCategoryId];
-        }
-        else
-        {
+        } else {
             NSString *categoryId = [categoryIds objectAtIndex:subCategoryIndex];
             categoryName = [RICategory getCategoryName:categoryId];
         }
     }
 
-    if(VALID_NOTEMPTY(categoryName, NSString))
-    {
+    if(VALID_NOTEMPTY(categoryName, NSString)) {
         [trackingDictionary setValue:categoryName forKey:kRIEventCategoryIdKey];
     }
-    if(VALID_NOTEMPTY(subCategoryName, NSString))
-    {
+    if(VALID_NOTEMPTY(subCategoryName, NSString)) {
         [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryIdKey];
     }
     if (VALID_NOTEMPTY(self.product.categoryName, NSString)) {
@@ -1936,9 +1878,7 @@ typedef void (^ProcessActionBlock)(void);
     }];
 }
 
-- (void)trackingEventShared:(NSString *)activityType
-{
-
+- (void)trackingEventShared:(NSString *)activityType {
     NSString *type = @"Shared";
     NSNumber *eventType = [NSNumber numberWithInt:RIEventShareOther];
     if ([activityType isEqualToString:UIActivityTypeMail])
@@ -1951,13 +1891,10 @@ typedef void (^ProcessActionBlock)(void);
         type = @"Facebook";
         eventType = [NSNumber numberWithInt:RIEventShareFacebook];
     }*/
-    else if ([activityType isEqualToString:UIActivityTypePostToTwitter])
-    {
+    else if ([activityType isEqualToString:UIActivityTypePostToTwitter]) {
         type = @"Twitter";
         eventType = [NSNumber numberWithInt:RIEventShareTwitter];
-    }
-    else if([activityType isEqualToString:UIActivityTypeMessage])
-    {
+    } else if([activityType isEqualToString:UIActivityTypeMessage]) {
         type = @"SMS";
         eventType = [NSNumber numberWithInt:RIEventShareSMS];
     }
@@ -1976,13 +1913,10 @@ typedef void (^ProcessActionBlock)(void);
 
     NSString *categoryName = @"";
     NSString *subCategoryName = @"";
-    if(VALID_NOTEMPTY(self.category, RICategory))
-    {
-        if(VALID_NOTEMPTY(self.category.parent, RICategory))
-        {
+    if(VALID_NOTEMPTY(self.category, RICategory)) {
+        if(VALID_NOTEMPTY(self.category.parent, RICategory)) {
             RICategory *parent = self.category.parent;
-            while (VALID_NOTEMPTY(parent.parent, RICategory))
-            {
+            while (VALID_NOTEMPTY(parent.parent, RICategory)) {
                 parent = parent.parent;
             }
             categoryName = parent.label;
@@ -1992,34 +1926,27 @@ typedef void (^ProcessActionBlock)(void);
         {
             categoryName = self.category.label;
         }
-    }
-    else if(VALID_NOTEMPTY(self.product.categoryIds, NSArray))
-    {
+    } else if(VALID_NOTEMPTY(self.product.categoryIds, NSArray)) {
         NSArray *categoryIds = self.product.categoryIds;
         NSInteger subCategoryIndex = [categoryIds count] - 1;
         NSInteger categoryIndex = subCategoryIndex - 1;
 
-        if(categoryIndex >= 0)
-        {
+        if(categoryIndex >= 0) {
             NSString *categoryId = [categoryIds objectAtIndex:categoryIndex];
             categoryName = [RICategory getCategoryName:categoryId];
 
             NSString *subCategoryId = [categoryIds objectAtIndex:subCategoryIndex];
             subCategoryName = [RICategory getCategoryName:subCategoryId];
-        }
-        else
-        {
+        } else {
             NSString *categoryId = [categoryIds objectAtIndex:subCategoryIndex];
             categoryName = [RICategory getCategoryName:categoryId];
         }
     }
 
-    if(VALID_NOTEMPTY(categoryName, NSString))
-    {
+    if(VALID_NOTEMPTY(categoryName, NSString)) {
         [trackingDictionary setValue:categoryName forKey:kRIEventCategoryIdKey];
     }
-    if(VALID_NOTEMPTY(subCategoryName, NSString))
-    {
+    if(VALID_NOTEMPTY(subCategoryName, NSString)) {
         [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryIdKey];
     }
 

@@ -241,10 +241,10 @@
                                                        }
                                                        [self onSuccessResponse:apiResponse messages:successMessage showMessage:YES];
                                                        [self hideLoading];
-                                                       BOOL done = [[MainTabBarViewController topNavigationController] closeScreensToStackClass:[JAMyOrderDetailViewController class] animated:YES];
-                                                       if (!done) {
-                                                           done = [[MainTabBarViewController topNavigationController] closeScreensToStackClass:[JAMyOrdersViewController class] animated:YES];
-                                                       }
+//                                                       BOOL done = [[MainTabBarViewController topNavigationController] closeScreensToStackClass:[JAMyOrderDetailViewController class] animated:YES];
+//                                                       if (!done) {
+//                                                           done = [[MainTabBarViewController topNavigationController] closeScreensToStackClass:[JAMyOrdersViewController class] animated:YES];
+//                                                       }
                                                    } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObject) {
                                                        NSArray *errorMessages = @[];
                                                        if(NOTEMPTY(errorJsonObject))

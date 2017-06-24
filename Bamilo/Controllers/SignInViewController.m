@@ -36,9 +36,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self setupView];
-    
     self.scrollView.delegate = self;
 }
 
@@ -105,12 +103,15 @@
             //EVENT: LOGIN / FAILURE
             [TrackerManager postEvent:[EventFactory login:cLoginMethodEmail success:NO] forName:[LoginEvent name]];
             
-            for(NSDictionary* errorField in [error.userInfo objectForKey:@"errorMessages"]) {
-                NSString *fieldName = errorField[@"field"];
-                if ([fieldName isEqualToString:@"password"]) {
-                    [self.passwordControl showErrorMsg:errorField[@"message"]];
-                } else if ([fieldName isEqualToString:@"email"]) {
-                    [self.emailControl showErrorMsg:errorField[@"message"]];
+            BaseViewController *baseViewController = (BaseViewController *)self.delegate;
+            if(![baseViewController showNotificationBar:error isSuccess:NO]) {
+                for(NSDictionary* errorField in [error.userInfo objectForKey:@"errorMessages"]) {
+                    NSString *fieldName = errorField[@"field"];
+                    if ([fieldName isEqualToString:@"password"]) {
+                        [self.passwordControl showErrorMsg:errorField[@"message"]];
+                    } else if ([fieldName isEqualToString:@"email"]) {
+                        [self.emailControl showErrorMsg:errorField[@"message"]];
+                    }
                 }
             }
         }
@@ -121,7 +122,6 @@
 - (void)bind:(id)data forRequestId:(int)rid {
     
     // Legacy actions after login
-    
     [RICustomer resetCustomerAsGuest];
     NSDictionary *metadata = ((ApiResponseData *)data).metadata;
     if ([metadata isKindOfClass:[NSDictionary class]]) {

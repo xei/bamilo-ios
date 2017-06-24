@@ -147,7 +147,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showEmailNotificaitons:) name:kShowEmailNotificationsScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showNewsletterSubscritions:) name:kShowNewsletterSubscriptionsScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showMyOrdersViewController:) name:kShowMyOrdersScreenNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showMyOrderDetailViewController:) name:kShowMyOrderDetailScreenNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showMyOrderDetailViewController:) name:kShowMyOrderDetailScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showAuthenticationScreen:) name:kShowAuthenticationScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showSignUpScreen:) name:kShowSignUpScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showCheckoutExternalPaymentsScreen:) name:kShowCheckoutExternalPaymentsScreenNotification object:nil];
@@ -184,7 +184,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowEmailNotificationsScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowNewsletterSubscriptionsScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowMyOrdersScreenNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowMyOrderDetailScreenNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowMyOrderDetailScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowAuthenticationScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowSignUpScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowCheckoutExternalPaymentsScreenNotification object:nil];

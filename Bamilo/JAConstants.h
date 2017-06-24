@@ -77,7 +77,7 @@
 #define kShowCheckoutExternalPaymentsScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_EXTERNAL_PAYMENTS_SCREEN"
 #define kShowCheckoutThanksScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_THANKS_SCREEN"
 #define kShowMyOrdersScreenNotification @"NOTIFICATION_SHOW_MY_ORDERS_SCREEN"
-#define kShowMyOrderDetailScreenNotification @"NOTIFICATION_SHOW_MY_ORDER_DETAIL_SCREEN"
+//#define kShowMyOrderDetailScreenNotification @"NOTIFICATION_SHOW_MY_ORDER_DETAIL_SCREEN"
 
 // Product
 #define kShowProductSpecificationScreenNotification @"NOTIFICATION_SHOW_PRODUCT_SPECIFICATION_SCREEN"

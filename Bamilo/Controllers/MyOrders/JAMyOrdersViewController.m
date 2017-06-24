@@ -440,7 +440,7 @@ OrderDetailViewDelegate>
 {
     NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];
     [userInfo setObject:[self.orders objectAtIndex:tag] forKey:@"order"];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShowMyOrderDetailScreenNotification object:nil userInfo:userInfo];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:kShowMyOrderDetailScreenNotification object:nil userInfo:userInfo];
 }
 
 #pragma mark - PerformanceTrackerProtocol

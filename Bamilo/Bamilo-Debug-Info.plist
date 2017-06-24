@@ -107,6 +107,16 @@
 	<array>
 		<dict>
 			<key>CFBundleURLName</key>
+			<string>com.pushwoosh.scheme</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>pw-A9EF7-6FDD2</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLName</key>
 			<string>com.bamilo.ios</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
