@@ -35,13 +35,6 @@ class BaseCatalogCollectionFlowLayout: UICollectionViewFlowLayout {
         return 0
     }
     
-//    override var footerReferenceSize: CGSize {
-//        set {}
-//        get {
-//            return CGSize(width: collectionView!.frame.width, height: 200)
-//        }
-//    }
-    
     override var itemSize: CGSize {
         set {
             self.itemSize = CGSize(width: itemWidth(), height: itemHeight())

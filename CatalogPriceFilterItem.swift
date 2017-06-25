@@ -23,9 +23,26 @@ import SwiftyJSON
     override func mapping(map: Map) {
         super.mapping(map: map)
         maxPrice <- map["option.max"]
-        lowerValue <- map["option.min"]
-        upperValue <- map["option.max"]
-        interval <- map["option.interval"]
         minPrice <- map["option.min"]
+        var optionalSelectedLowerValue: Int64?
+        var optionalSelectedUpperValue: Int64?
+        optionalSelectedLowerValue <- map["selected.lowerValue"]
+        optionalSelectedUpperValue <- map["selected.upperValue"]
+        lowerValue = optionalSelectedLowerValue ?? minPrice
+        upperValue = optionalSelectedUpperValue ?? maxPrice
+        interval <- map["option.interval"]
+        discountOnly <- map["special_price.selected"]
+    }
+    
+    func toJSON() -> [String : Any] {
+        return [
+            "filter_separator": self.filterSeparator ?? "-",
+            "id": self.id,
+            "multi": self.multi,
+            "name": self.name,
+            "option" : ["interval": self.interval, "max": self.maxPrice, "min": self.minPrice],
+            "selected": ["lowerValue": self.lowerValue, "upperValue": self.upperValue],
+            "special_price": ["selected": self.discountOnly]
+        ] as [String : Any]
     }
 }

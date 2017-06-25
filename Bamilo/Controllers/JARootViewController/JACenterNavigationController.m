@@ -35,7 +35,7 @@
 #import "JAShopWebViewController.h"
 #import "JABundlesViewController.h"
 #import "JAPDVVariationsViewController.h"
-#import "JAMoreMenuViewController.h"
+//#import "JAMoreMenuViewController.h"
 #import "RICountry.h"
 #import "JANewsletterViewController.h"
 #import "JANewsletterSubscriptionViewController.h"

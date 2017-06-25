@@ -1,18 +1,18 @@
+////
+////  ContactUsViewController.h
+////  Bamilo
+////
+////  Created by Narbeh Mirzaei on 1/31/17.
+////  Copyright © 2017 Rocket Internet. All rights reserved.
+////
 //
-//  ContactUsViewController.h
-//  Bamilo
+//#import "JABaseViewController.h"
+//#import <MessageUI/MFMailComposeViewController.h>
 //
-//  Created by Narbeh Mirzaei on 1/31/17.
-//  Copyright © 2017 Rocket Internet. All rights reserved.
+//@interface ContactUsViewController : JABaseViewController <MFMailComposeViewControllerDelegate>
 //
-
-#import "JABaseViewController.h"
-#import <MessageUI/MFMailComposeViewController.h>
-
-@interface ContactUsViewController : JABaseViewController <MFMailComposeViewControllerDelegate>
-
-@property (weak, nonatomic) IBOutlet UILabel *addresslabel;
-@property (weak, nonatomic) IBOutlet UIButton *callToContactUsButton;
-@property (weak, nonatomic) IBOutlet UIButton *mailForAppFeedbackButton;
-
-@end
+//@property (weak, nonatomic) IBOutlet UILabel *addresslabel;
+//@property (weak, nonatomic) IBOutlet UIButton *callToContactUsButton;
+//@property (weak, nonatomic) IBOutlet UIButton *mailForAppFeedbackButton;
+//
+//@end

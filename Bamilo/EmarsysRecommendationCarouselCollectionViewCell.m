@@ -11,7 +11,7 @@
 @implementation EmarsysRecommendationCarouselCollectionViewCell
 
 + (CGSize)preferedSize {
-    return CGSizeMake(134, 230);
+    return CGSizeMake(133, 230);
 }
 
 @end

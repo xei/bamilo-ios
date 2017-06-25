@@ -13,7 +13,6 @@ class ListCollectionViewFlowLayout: BaseCatalogCollectionFlowLayout {
     let cellHeight: CGFloat = 115
     let cellSpacing: CGFloat = 5
     
- 
     override func setupLayout() {
         super.setupLayout()
         minimumInteritemSpacing = 0

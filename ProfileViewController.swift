@@ -239,11 +239,11 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
             print("Mail services are not available")
             return
         } else {
-            var messageBody = "OS Version: \(UIDevice.current.systemVersion) \n Device Name: \(UIDevice.current.model) \n"
+            var messageBody = "\n\(STRING_DONT_REMOVE_INFO_EMAIL)\n\n"
+            messageBody += "OS Version: \(UIDevice.current.systemVersion) \n Device Name: \(UIDevice.current.model) \n"
             if let appVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String {
                 messageBody += " App Version: \(appVersion)"
             }
-            messageBody += STRING_DONT_REMOVE_INFO_EMAIL
             
             let mailComposer = MFMailComposeViewController()
             mailComposer.setSubject(subject ?? "")
