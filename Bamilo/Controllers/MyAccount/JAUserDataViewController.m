@@ -173,7 +173,7 @@
     self.navBarLayout.title = STRING_PROFILE;
     self.navBarLayout.showBackButton = YES;
 //    self.navBarLayout.showCartButton = YES;
-    self.navBarLayout.showSearchButton = YES;
+    self.navBarLayout.showSearchButton = NO;
     self.isOpeningPicker = NO;
     
     [self.view addSubview:self.mainScrollView];

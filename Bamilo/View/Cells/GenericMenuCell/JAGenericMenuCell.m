@@ -139,7 +139,7 @@
     
     [self.accessoryImageView setFrame:CGRectMake(self.backgroundClickableView.bounds.size.width - accessoryImageWidth - rightMargin, (height - accessoryImageWidth)/2, accessoryImageWidth, accessoryImageWidth)]; //image is square so width=height
     
-    CGFloat leftSepratorViewMargin = style == JAGenericMenuCellStyleLevelTwo ? leftMargin : leftMargin + 28;
+    CGFloat leftSepratorViewMargin = (style == JAGenericMenuCellStyleLevelTwo || iconImageWidth == 0) ? leftMargin : leftMargin + 28;
     [self.separatorView setFrame:CGRectMake(leftSepratorViewMargin, height-separatorHeight, self.backgroundClickableView.bounds.size.width - leftMargin, separatorHeight)];
     
     if (RI_IS_RTL) {
