@@ -8124,7 +8124,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Bamilo/Bamilo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -8397,7 +8397,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Bamilo/Bamilo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Narbeh Mirzaei (8KGZNNMRW6)";
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -8432,7 +8432,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Bamilo/Bamilo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
