@@ -63,7 +63,7 @@ NSString *const RI_UNIQUE_COUNTRY_NAME_BAMILO = @"Iran";
 NSString *const RI_UNIQUE_COUNTRY_ISO_BAMILO = @"IR";
 
 NSString *const RI_MOBAPI_PREFIX = @"mobapi/";
-NSString *const RI_API_VERSION = @"v2.3/"; // ||| DO NOT CHANGE |||
+NSString *const RI_API_VERSION = @"v2.4/"; // ||| DO NOT CHANGE |||
 
 NSString *const RI_API_INFO = @"main/md5/";
 NSString *const RI_API_IMAGE_RESOLUTIONS = @"main/imageresolutions/";
