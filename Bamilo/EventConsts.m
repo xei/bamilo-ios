@@ -11,6 +11,7 @@
 @implementation EventConsts
 
 //Common
+NSString *const kEventName = @"EventName";
 NSString *const kEventAppVersion = @"AppVersion";
 NSString *const kEventPlatform = @"Platform";
 NSString *const kEventConnection = @"Connection";
@@ -28,5 +29,10 @@ NSString *const kEventKeywords = @"Keywords";
 NSString *const kEventPrice = @"Price";
 NSString *const kEventSKU = @"SKU";
 NSString *const kEventCategories = @"Categories";
+
+NSString *const kGAEventCategory = @"CategoryEvent";
+NSString *const kGAEventActionName = @"ActionName";
+NSString *const kGAEventLabel = @"EventLabel";
+NSString *const kGAEventValue = @"EventValue";
 
 @end

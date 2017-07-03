@@ -10,7 +10,6 @@
 @interface EmptyViewController : UIViewController
 
 @property (nonatomic, copy) NSString *recommendationLogic;
-@property (nonatomic, copy) NSString *parentScreenName;
 
 - (void)getSuggestions;
 - (void)updateTitle:(NSString *)title;

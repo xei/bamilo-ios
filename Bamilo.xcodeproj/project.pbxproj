@@ -48,6 +48,7 @@
 		612553501E4F18E800975C6F /* BlueButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 6125534F1E4F18E800975C6F /* BlueButton.m */; };
 		6125535B1E4F382100975C6F /* UIScrollView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 6125535A1E4F382100975C6F /* UIScrollView+Extension.m */; };
 		612553611E4F514100975C6F /* FormItemValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = 612553601E4F514100975C6F /* FormItemValidation.m */; };
+		6128806C1F0A2EC3006F5240 /* TapRecommendationEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 6128806B1F0A2EC3006F5240 /* TapRecommendationEvent.m */; };
 		612FDC371E45E0A900A9D0BD /* CartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 612FDC351E45E0A900A9D0BD /* CartTableViewCell.m */; };
 		612FDC381E45E0A900A9D0BD /* CartTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 612FDC361E45E0A900A9D0BD /* CartTableViewCell.xib */; };
 		612FE5171EDC062500C2AFA0 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612FE5161EDC062500C2AFA0 /* ProfileViewController.swift */; };
@@ -930,7 +931,7 @@
 		61037CBD1EB72C7600A461E0 /* EmarsysMobileEngageTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysMobileEngageTracker.m; sourceTree = "<group>"; };
 		61037CC01EB73AF100A461E0 /* GoogleAnalyticsTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleAnalyticsTracker.h; sourceTree = "<group>"; };
 		61037CC11EB73AF100A461E0 /* GoogleAnalyticsTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleAnalyticsTracker.m; sourceTree = "<group>"; };
-		61037CC31EB7416200A461E0 /* ScreenTrackingProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenTrackingProtocol.h; sourceTree = "<group>"; };
+		61037CC31EB7416200A461E0 /* ScreenTrackerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenTrackerProtocol.h; sourceTree = "<group>"; };
 		6106620E1EE6D54D00842674 /* UIBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBarItem.swift; sourceTree = "<group>"; };
 		610C68A21EC74292008FB66C /* CatalogHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogHeaderView.swift; sourceTree = "<group>"; };
 		610C68A41EC742E3008FB66C /* CatalogHeaderControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogHeaderControl.swift; sourceTree = "<group>"; };
@@ -965,6 +966,8 @@
 		6125535A1E4F382100975C6F /* UIScrollView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+Extension.m"; sourceTree = "<group>"; };
 		6125535F1E4F514100975C6F /* FormItemValidation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormItemValidation.h; sourceTree = "<group>"; };
 		612553601E4F514100975C6F /* FormItemValidation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormItemValidation.m; sourceTree = "<group>"; };
+		6128806A1F0A2EC3006F5240 /* TapRecommendationEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TapRecommendationEvent.h; sourceTree = "<group>"; };
+		6128806B1F0A2EC3006F5240 /* TapRecommendationEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TapRecommendationEvent.m; sourceTree = "<group>"; };
 		612FDC341E45E0A900A9D0BD /* CartTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartTableViewCell.h; sourceTree = "<group>"; };
 		612FDC351E45E0A900A9D0BD /* CartTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartTableViewCell.m; sourceTree = "<group>"; };
 		612FDC361E45E0A900A9D0BD /* CartTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartTableViewCell.xib; sourceTree = "<group>"; };
@@ -1032,6 +1035,7 @@
 		617D7F421EDC341B00F36CF7 /* BaseProfileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseProfileTableViewCell.swift; sourceTree = "<group>"; };
 		617F77AD1EB85BEC000A2A6C /* Bamilo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bamilo-Bridging-Header.h"; sourceTree = "<group>"; };
 		617F77AE1EB85BEC000A2A6C /* AddressDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressDataManager.swift; sourceTree = "<group>"; };
+		61800CE61F0924E40036F5CD /* CampaginTrackerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CampaginTrackerProtocol.h; sourceTree = "<group>"; };
 		618204971E6D465500322937 /* SearchCategoryFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchCategoryFilter.h; sourceTree = "<group>"; };
 		618204981E6D465500322937 /* SearchCategoryFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchCategoryFilter.m; sourceTree = "<group>"; };
 		6182049E1E6DABFA00322937 /* SubCatFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubCatFilterViewController.h; sourceTree = "<group>"; };
@@ -2841,6 +2845,15 @@
 			name = FormItemValidation;
 			sourceTree = "<group>";
 		};
+		612880691F0A2C5D006F5240 /* VisitRecommendationEvent */ = {
+			isa = PBXGroup;
+			children = (
+				6128806A1F0A2EC3006F5240 /* TapRecommendationEvent.h */,
+				6128806B1F0A2EC3006F5240 /* TapRecommendationEvent.m */,
+			);
+			name = VisitRecommendationEvent;
+			sourceTree = "<group>";
+		};
 		612FDC331E45E08500A9D0BD /* CartTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -3817,6 +3830,7 @@
 		8702FBC41E99196A001D1AA9 /* UserEvents */ = {
 			isa = PBXGroup;
 			children = (
+				612880691F0A2C5D006F5240 /* VisitRecommendationEvent */,
 				8702FBB31E98E6F9001D1AA9 /* LoginEvent */,
 				8702FBC31E991963001D1AA9 /* SignUpEvent */,
 				8702FBC91E991C61001D1AA9 /* LogoutEvent */,
@@ -4707,7 +4721,8 @@
 				8754351D1E77ED1100B5D6B4 /* PushNotificationTrackerProtocol.h */,
 				871BA8501E8678DE007680C5 /* EventTrackerProtocol.h */,
 				8702FBEF1E9A3758001D1AA9 /* TagTrackerProtocol.h */,
-				61037CC31EB7416200A461E0 /* ScreenTrackingProtocol.h */,
+				61037CC31EB7416200A461E0 /* ScreenTrackerProtocol.h */,
+				61800CE61F0924E40036F5CD /* CampaginTrackerProtocol.h */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -7593,6 +7608,7 @@
 				61CBA0561E51FF2F005673F7 /* ButtonTableViewCell.m in Sources */,
 				9A7A77291B2B45F1002F530F /* JAPagedView.m in Sources */,
 				879F88111E50BB050033FE87 /* CartViewController.m in Sources */,
+				6128806C1F0A2EC3006F5240 /* TapRecommendationEvent.m in Sources */,
 				875AD5441E38C0C900584ABF /* RICustomer.m in Sources */,
 				619D0B0D1EA34AF400FDB255 /* WidgetBaseView.m in Sources */,
 				872230EE1E6A98BC000748E9 /* ThreadManager.m in Sources */,

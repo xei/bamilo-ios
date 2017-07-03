@@ -373,6 +373,7 @@
     if ([segueName isEqualToString: @"embedEmptyViewController"]) {
         self.emptyCartViewController = (EmptyViewController *) [segue destinationViewController];
         self.emptyCartViewController.recommendationLogic = @"PERSONAL";
+        self.emptyCartViewController.parentScreenName = @"EmptyCart";
         [self.emptyCartViewController updateTitle:STRING_NO_ITEMS_IN_CART];
         [self.emptyCartViewController updateImage:[UIImage imageNamed:@"img_emptyCart"]];
     }

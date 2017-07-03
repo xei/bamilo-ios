@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "TapRecommendationEvent.h"
 #import "LoginEvent.h"
 #import "SignUpEvent.h"
 #import "LogoutEvent.h"
@@ -29,5 +30,6 @@
 +(NSDictionary *) purchase:(NSString *)categories basketValue:(long)basketValue success:(BOOL)success;
 +(NSDictionary *) search:(NSString *)categoryUrlKey keywords:(NSString *)keywords;
 +(NSDictionary *) viewProduct:(NSString *)categoryUrlKey price:(long)price;
++(NSDictionary *) tapRecommectionInScreenName:(NSString *)screenName logic:(NSString *)logic;
 
 @end

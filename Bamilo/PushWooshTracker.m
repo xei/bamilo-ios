@@ -13,7 +13,7 @@
 #import "DeepLinkManager.h"
 
 @interface PushWooshTracker()
-@property (nonatomic, strong) NSArray<NSString *>*eligableEvents;
+@property (nonatomic, strong) NSArray<NSString *>*eligableEventsName;
 @end
 
 @implementation PushWooshTracker
@@ -29,20 +29,17 @@ static PushWooshTracker *instance;
     return instance;
 }
 
-- (NSArray *)eligableEvents {
-    if (!_eligableEvents) {
-        _eligableEvents = @[[LoginEvent name],
-                            [LogoutEvent name],
-                            [SignUpEvent name],
-                            [OpenAppEvent name],
-                            [AddToFavoritesEvent name],
-                            [AddToCartEvent name],
-                            [AbandonCartEvent name],
-                            [PurchaseEvent name],
-                            [SearchEvent name],
-                            [ViewProductEvent name]];
-    }
-    return _eligableEvents;
+- (NSArray <NSString *>*)eligableEventsName {
+    return @[[LoginEvent name],
+             [LogoutEvent name],
+             [SignUpEvent name],
+             [OpenAppEvent name],
+             [AddToFavoritesEvent name],
+             [AddToCartEvent name],
+             [AbandonCartEvent name],
+             [PurchaseEvent name],
+             [SearchEvent name],
+             [ViewProductEvent name]];
 }
 
 -(void)setUserID:(NSString *)userId {
@@ -76,7 +73,7 @@ static PushWooshTracker *instance;
 }
 
 -(BOOL)isEventEligable:(NSString *)eventName {
-    return [self.eligableEvents indexOfObjectIdenticalTo: eventName] != NSNotFound;;
+    return [self.eligableEventsName indexOfObjectIdenticalTo: eventName] != NSNotFound;;
 }
 
 #pragma mark - TagTrackerProtocol
@@ -111,6 +108,7 @@ static PushWooshTracker *instance;
             [utmDictionary setObject:obj forKey:lowerCaseKey];
         }
     }];
+    
     if (utmDictionary.allKeys.count) {
         [[RITrackingWrapper sharedInstance] trackCampaignData:utmDictionary];
     }

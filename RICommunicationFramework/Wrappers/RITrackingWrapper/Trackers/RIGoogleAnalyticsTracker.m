@@ -105,18 +105,15 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     
     // Dispatch tracking information every 5 seconds (default: 120)
     [GAI sharedInstance].dispatchInterval = 5;
-    
     [[GAI sharedInstance].logger setLogLevel:kGAILogLevelNone];// kGAILogLevelVerbose];
     
     
     NSString *GAId = [[[NSBundle mainBundle] objectForInfoDictionaryKey:kConfigs] objectForKey:@"GoogleAnalyticsID"];
     [[GAI sharedInstance] trackerWithTrackingId: GAId];
-
     
     // Setup the app version
     NSString *version = [[AppManager sharedInstance] getAppFullFormattedVersion] ?: @"?";
     [[GAI sharedInstance].defaultTracker set:kGAIAppVersion value:version];
-    
     [[GAI sharedInstance].defaultTracker setAllowIDFACollection:YES];
     
     NSLog(@"Initialized Google Analytics %d", [GAI sharedInstance].trackUncaughtExceptions);
@@ -158,31 +155,27 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     if (!ISEMPTY(tracker)) {
         if(VALID_NOTEMPTY(campaignData, NSDictionary)) {
             
-            NSMutableString* finalStr = [NSMutableString new];
-            //hostname doesn't matter
-            [finalStr appendString:@"http://www.bamilo.com?"];
-            
-            
-            
             NSMutableArray* params = [NSMutableArray new];
             
             if ([campaignData objectForKey:kUTMCampaign]) {
                 [params addObject:[NSString stringWithFormat:@"%@=%@", kUTMCampaign, [campaignData objectForKey:kUTMCampaign]]];
             }
             
-            if (!VALID_NOTEMPTY([campaignData objectForKey:kUTMSource], NSString)) {
-                if (VALID_NOTEMPTY([campaignData objectForKey:kUTMCampaign], NSString)) {
-                    [params addObject:@"utm_source=push"];
+            if ([[campaignData objectForKey:kUTMSource] length] == 0) {
+                if ([[campaignData objectForKey:kUTMCampaign] length]) {
+                    [params addObject: [NSString stringWithFormat:@"%@=push", kUTMSource]];
                 }
-            } else
+            } else {
                 [params addObject:[NSString stringWithFormat:@"%@=%@",kUTMSource, [campaignData objectForKey:kUTMSource]]];
+            }
             
-            if (!VALID_NOTEMPTY([campaignData objectForKey:kUTMMedium], NSString)) {
-                if (VALID_NOTEMPTY([campaignData objectForKey:kUTMCampaign], NSString)) {
+            if ([[campaignData objectForKey:kUTMMedium] length] == 0) {
+                if ([[campaignData objectForKey:kUTMCampaign] length]) {
                     [params addObject:[NSString stringWithFormat:@"%@=referrer" , kUTMMedium]];
                 }
-            } else
+            } else {
                 [params addObject:[NSString stringWithFormat:@"%@=%@",kUTMMedium, [campaignData objectForKey:kUTMMedium]]];
+            }
             
             if ([campaignData objectForKey:kUTMTerm]) {
                 [params addObject:[NSString stringWithFormat:@"%@=%@",kUTMTerm, [campaignData objectForKey:kUTMTerm]]];
@@ -191,9 +184,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
             if ([campaignData objectForKey:kUTMContent]) {
                 [params addObject:[NSString stringWithFormat:@"%@=%@",kUTMContent, [campaignData objectForKey:kUTMContent]]];
             }
-            
-            [finalStr appendString:[params componentsJoinedByString:@"&"]];
-            self.campaignData = [finalStr copy];
+            self.campaignData = [params componentsJoinedByString:@"&"];
         }
     } else {
         RIDebugLog(@"Missing default Google Analytics tracker");
@@ -203,12 +194,9 @@ static RIGoogleAnalyticsTracker *sharedInstance;
 #pragma mark - RIExceptionTracking protocol
 - (void)trackExceptionWithName:(NSString *)name {
     RIDebugLog(@"Google Analytics tracker tracks exception with name '%@'", name);
-    
     id tracker = [[GAI sharedInstance] defaultTracker];
-    
     if (!ISEMPTY(tracker)) {
         NSDictionary *dict = [[GAIDictionaryBuilder createExceptionWithDescription:name withFatal:[NSNumber numberWithBool:NO]] build];
-        
         [tracker send:dict];
     } else {
         RIDebugLog(@"Missing default Google Analytics tracker");
@@ -252,10 +240,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
             NSString *label = [data objectForKey:kRIEventLabelKey];
             NSNumber *value = [data objectForKey:kRIEventValueKey];
             
-            GAIDictionaryBuilder* params = [GAIDictionaryBuilder createEventWithCategory:category
-                                                                                   action:action
-                                                                                    label:label
-                                                                                   value:value];
+            GAIDictionaryBuilder* params = [GAIDictionaryBuilder createEventWithCategory:category action:action label:label value:value];
             if (VALID_NOTEMPTY(self.campaignData, NSString)) {
                 [params setCampaignParametersFromUrl:self.campaignData];
 
@@ -288,12 +273,10 @@ static RIGoogleAnalyticsTracker *sharedInstance;
                                                                       currencyCode:currency];
         [tracker send:[[dict setCampaignParametersFromUrl:self.campaignData] build]];
         
-        if ([data objectForKey:kRIEcommerceProducts])
-        {
+        if ([data objectForKey:kRIEcommerceProducts]) {
             NSArray *tempArray = [data objectForKey:kRIEcommerceProducts];
             
-            for (NSDictionary *tempProduct in tempArray)
-            {
+            for (NSDictionary *tempProduct in tempArray) {
                 GAIDictionaryBuilder *productDict = [GAIDictionaryBuilder createItemWithTransactionId:[data objectForKey:kRIEcommerceTransactionIdKey]
                                                                                                  name:[tempProduct objectForKey:kRIEventProductNameKey]
                                                                                                   sku:[tempProduct objectForKey:kRIEventSkuKey]
@@ -312,16 +295,8 @@ static RIGoogleAnalyticsTracker *sharedInstance;
 #pragma mark - RITrackingTiming implementation
 -(void)trackTimingInMillis:(NSNumber*)millis reference:(NSString *)reference label:(NSString*)label {
     RIDebugLog(@"Google Analytics - Tracking timing: %lu %@ %@", (unsigned long)millis, reference, label);
-    
     id tracker = [[GAI sharedInstance] defaultTracker];
-    
     if (!ISEMPTY(tracker)) {
-//        NSDictionary *dict = [[[GAIDictionaryBuilder createTimingWithCategory:reference
-//                                                                     interval:millis
-//                                                                         name:nil
-//                                                                        label:nil]
-//                               setCampaignParametersFromUrl:self.campaignData] build];
-        
         [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:reference interval:millis name:reference label:label] build]];
     } else {
         RIDebugLog(@"Missing default Google Analytics tracker");

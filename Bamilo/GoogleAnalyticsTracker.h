@@ -7,9 +7,9 @@
 //
 
 #import "BaseTracker.h"
-#import "ScreenTrackingProtocol.h"
+#import "ScreenTrackerProtocol.h"
 #import "EventTrackerProtocol.h"
 
-@interface GoogleAnalyticsTracker : BaseTracker <ScreenTrackingProtocol, EventTrackerProtocol>
+@interface GoogleAnalyticsTracker : BaseTracker <ScreenTrackerProtocol, EventTrackerProtocol>
 
 @end

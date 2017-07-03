@@ -31,7 +31,7 @@ static NSMutableArray <BaseTracker *> *_trackers;
 
 + (void)trackScreenName:(NSString *)screenName {
     for (id tracker in _trackers) {
-        if([tracker conformsToProtocol:@protocol(ScreenTrackingProtocol)]) {
+        if([tracker conformsToProtocol:@protocol(ScreenTrackerProtocol)]) {
             [tracker trackScreenName:screenName];
         }
     }

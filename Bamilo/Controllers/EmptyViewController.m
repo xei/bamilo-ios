@@ -19,8 +19,9 @@
 @property (weak, nonatomic) IBOutlet UIImageView *topImageView;
 @property (weak, nonatomic) IBOutlet EmarsysRecommendationMinimalCarouselWidget *carouselWidget;
 
-@property (strong, nonatomic) NSString *titleString;
+@property (copy, nonatomic) NSString *titleString;
 @property (strong, nonatomic) UIImage *topImage;
+
 @end
 
 @implementation EmptyViewController
@@ -79,6 +80,7 @@
 #pragma mark - FeatureBoxCollectionViewWidgetViewDelegate
 - (void)selectFeatureItem:(NSObject *)item widgetBox:(id)widgetBox {
     if ([item isKindOfClass:[RecommendItem class]]) {
+        [TrackerManager postEvent:[EventFactory tapRecommectionInScreenName:self.parentScreenName logic:self.recommendationLogic ?: @"PERSONAL"] forName:[TapRecommendationEvent name]];
         [[NSNotificationCenter defaultCenter] postNotificationName: kDidSelectTeaserWithPDVUrlNofication
                                                             object: nil
                                                           userInfo: @{@"sku": ((RecommendItem *)item).sku}];

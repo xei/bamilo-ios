@@ -101,11 +101,21 @@
     return attributes;
 }
 
-+(NSDictionary *)viewProduct:(NSString *)categoryUrlKey price:(int)price {
++(NSDictionary *)viewProduct:(NSString *)categoryUrlKey price:(long)price {
     NSMutableDictionary *attributes = [ViewProductEvent attributes];
     
     [attributes setObject:categoryUrlKey ?: cUNKNOWN_EVENT_VALUE forKey:kEventCategoryUrlKey];
     [attributes setObject:@(price) ?: cUNKNOWN_EVENT_VALUE forKey:kEventPrice];
+    
+    return attributes;
+}
+
++(NSDictionary *) tapRecommectionInScreenName:(NSString *)screenName logic:(NSString *)logic {
+    NSMutableDictionary *attributes = [TapRecommendationEvent attributes];
+    
+    [attributes setObject:@"Emarsys" forKey:kGAEventCategory];
+    [attributes setObject:@"click" forKey:kGAEventActionName];
+    [attributes setObject:[NSString stringWithFormat:@"%@ %@", screenName, logic] forKey:kGAEventLabel];
     
     return attributes;
 }

@@ -380,6 +380,7 @@
 #pragma mark - FeatureBoxCollectionViewWidgetViewDelegate
 - (void)selectFeatureItem:(NSObject *)item widgetBox:(id)widgetBox {
     if ([item isKindOfClass:[RecommendItem class]]) {
+        [TrackerManager postEvent:[EventFactory tapRecommectionInScreenName:@"OrderSuccess" logic:self.cart.cartEntity.cartCount.integerValue == 1 ? @"ALSO_BOUGHT" : @"PERSONAL"] forName:[TapRecommendationEvent name]];
         [[NSNotificationCenter defaultCenter] postNotificationName: kDidSelectTeaserWithPDVUrlNofication
                                                             object: nil
                                                           userInfo: @{

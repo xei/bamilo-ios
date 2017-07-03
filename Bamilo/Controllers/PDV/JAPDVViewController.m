@@ -2059,6 +2059,7 @@ typedef void (^ProcessActionBlock)(void);
 #pragma mark - FeatureBoxCollectionViewWidgetViewDelegate
 - (void)selectFeatureItem:(NSObject *)item widgetBox:(id)widgetBox {
     if ([item isKindOfClass:[RecommendItem class]]) {
+        [TrackerManager postEvent:[EventFactory tapRecommectionInScreenName:@"PDV" logic:@"RELATED"] forName:[TapRecommendationEvent name]];
         [[NSNotificationCenter defaultCenter] postNotificationName: kDidSelectTeaserWithPDVUrlNofication
                                                             object: nil
                                                           userInfo: @{@"sku": ((RecommendItem *)item).sku}];

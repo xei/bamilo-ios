@@ -9,7 +9,7 @@
 #import "EmarsysMobileEngageTracker.h"
 
 @interface EmarsysMobileEngageTracker()
-@property (nonatomic, strong) NSArray<NSString *>* eligableEvents;
+@property (nonatomic, strong) NSArray<NSString *>* eligableEventNames;
 @end
 
 @implementation EmarsysMobileEngageTracker
@@ -25,20 +25,17 @@ static EmarsysMobileEngageTracker *instance;
     return instance;
 }
 
-- (NSArray *)eligableEvents {
-    if (!_eligableEvents) {
-        _eligableEvents = @[[LoginEvent name],
-                            [LogoutEvent name],
-                            [SignUpEvent name],
-                            [OpenAppEvent name],
-                            [AddToFavoritesEvent name],
-                            [AddToCartEvent name],
-                            [AbandonCartEvent name],
-                            [PurchaseEvent name],
-                            [SearchEvent name],
-                            [ViewProductEvent name]];
-    }
-    return _eligableEvents;
+- (NSArray<NSString *> *)eligableEventNames {
+    return @[[LoginEvent name],
+             [LogoutEvent name],
+             [SignUpEvent name],
+             [OpenAppEvent name],
+             [AddToFavoritesEvent name],
+             [AddToCartEvent name],
+             [AbandonCartEvent name],
+             [PurchaseEvent name],
+             [SearchEvent name],
+             [ViewProductEvent name]];
 }
 
 #pragma mark - EventTrackerProtocol
@@ -47,7 +44,7 @@ static EmarsysMobileEngageTracker *instance;
 }
 
 -(BOOL)isEventEligable:(NSString *)eventName {
-    return [self.eligableEvents indexOfObjectIdenticalTo: eventName] != NSNotFound;;
+    return [self.eligableEventNames indexOfObjectIdenticalTo: eventName] != NSNotFound;;
 }
 
 @end

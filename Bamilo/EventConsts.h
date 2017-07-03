@@ -11,6 +11,7 @@
 @interface EventConsts : NSObject
 
 //Common
+FOUNDATION_EXPORT NSString *const kEventName;
 FOUNDATION_EXPORT NSString *const kEventAppVersion;
 FOUNDATION_EXPORT NSString *const kEventPlatform;
 FOUNDATION_EXPORT NSString *const kEventConnection;
@@ -29,5 +30,9 @@ FOUNDATION_EXPORT NSString *const kEventPrice;
 FOUNDATION_EXPORT NSString *const kEventSKU;
 FOUNDATION_EXPORT NSString *const kEventCategories;
 
+FOUNDATION_EXPORT NSString *const kGAEventCategory;
+FOUNDATION_EXPORT NSString *const kGAEventActionName;
+FOUNDATION_EXPORT NSString *const kGAEventLabel;
+FOUNDATION_EXPORT NSString *const kGAEventValue;
 
 @end
