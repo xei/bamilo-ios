@@ -20,7 +20,8 @@ import SwiftyJSON
                                     EmarsysWebExtendProtocol,
                                     UICollectionViewDelegateFlowLayout,
                                     FilteredListNoResultViewControllerDelegate,
-                                    JAPDVViewControllerDelegate {
+                                    JAPDVViewControllerDelegate,
+                                    SearchBarListener {
     
     @IBOutlet private weak var catalogHeader: CatalogHeaderControl!
     @IBOutlet private weak var collectionView: UICollectionView!
@@ -111,6 +112,8 @@ import SwiftyJSON
     
     override func updateNavBar() {
         super.updateNavBar()
+        self.navBarLayout.showCartButton = true
+        self.navBarLayout.showSearchButton = true
         self.navBarLayout.showBackButton = true
         if let navTitle = self.catalogData?.title {
             self.navBarTitle = navTitle
@@ -147,6 +150,7 @@ import SwiftyJSON
     func updatedFilters(_ updatedFiltersArray: [Any]!) {
         let activeFilters = self.findActiveFilters(filters: updatedFiltersArray as? [BaseCatalogFilterItem])
         let queryFilters = self.getQueryOfActiveFilters(activeFilters: activeFilters)
+        trackSearchFilter(activeFilterQuery: queryFilters)
         
         if let startIndex = self.startCatalogStackIndexInNavigationViewController, queryFilters.characters.count == 0 {
             if let arrayOfViewControllers = self.navigationController?.viewControllers {
@@ -242,12 +246,23 @@ import SwiftyJSON
         return filterQuery
     }
     
+    private func trackSearchFilter(activeFilterQuery: String) {
+        TrackerManager.postEvent(
+            selector: EventSelectors.searchFilteredSelector(),
+            attributes: EventAttributes.filterSearch(filterQueryString: activeFilterQuery)
+        )
+    }
+    
     private func processCatalogData() {
         self.updateNavBar()
         
         if self.catalogData == nil || self.catalogData?.products.count == 0 {
             self.showNoResultView()
             return
+        }
+        
+        if self.pageNumber == 1 {
+            self.trackSearch(searchTarget: self.searchTarget)
         }
         
         //Sequence of these functions are important
@@ -366,6 +381,15 @@ import SwiftyJSON
             }
         }
         self.loadAvaiableSubCategories()
+    }
+    
+    private func trackSearch(searchTarget: RITarget) {
+        if searchTarget.type == "catalog_category" || searchTarget.type == "catalog_query" {
+            TrackerManager.postEvent(
+                selector: EventSelectors.searchActionSelector(),
+                attributes: EventAttributes.searchAction(searchTarget: searchTarget)
+            )
+        }
     }
     
     func loadAvaiableSubCategories() {
@@ -525,5 +549,13 @@ import SwiftyJSON
     
     func isPreventSendTransactionInViewWillAppear() -> Bool {
         return true
+    }
+    
+    //MARK: -SearchBarListener protocol
+    func searchBarSearched(_ searchBar: UISearchBar!) {
+        TrackerManager.postEvent(
+            selector: EventSelectors.searchBarSearchedSelector(),
+            attributes: EventAttributes.searchBarSearched(searchString: searchBar.text ?? "", screenName: "Catalog")
+        )
     }
 }

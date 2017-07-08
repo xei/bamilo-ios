@@ -8,10 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol SearchBarListener <NSObject>
+
+- (void)searchBarSearched:(UISearchBar *)searchBar;
+
+@end
+
 @interface JASearchView : UIView <UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate>
 
 - (instancetype)initWithFrame:(CGRect)frame andText:(NSString *)text;
-
 - (void)resetFrame:(CGRect)frame;
 
 @end

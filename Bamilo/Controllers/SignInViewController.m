@@ -29,7 +29,7 @@
 @property (weak, nonatomic) IBOutlet InputTextFieldControl *passwordControl;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *continueWithoutLoginBtn;
-
+@property (weak, nonatomic) id ali;
 @end
 
 @implementation SignInViewController
@@ -85,9 +85,10 @@
             [self bind:data forRequestId:0];
             
             //EVENT: LOGIN / SUCCESS
-            [TrackerManager postEvent:[EventFactory login:cLoginMethodEmail success:YES] forName:[LoginEvent name]];
+
             
             RICustomer *customer = [RICustomer getCurrentCustomer];
+            [TrackerManager postEventWithSelector:[EventSelectors loginEventSelector] attributes:[EventAttributes loginWithLoginMethod:cLoginMethodEmail user:customer]];
             [[EmarsysMobileEngage sharedInstance] sendLogin:[[PushNotificationManager pushManager] getPushToken] completion:nil];
             [EmarsysPredictManager setCustomer:customer];
         
@@ -101,8 +102,6 @@
             }
         } else {
             //EVENT: LOGIN / FAILURE
-            [TrackerManager postEvent:[EventFactory login:cLoginMethodEmail success:NO] forName:[LoginEvent name]];
-            
             BaseViewController *baseViewController = (BaseViewController *)self.delegate;
             if(![baseViewController showNotificationBar:error isSuccess:NO]) {
                 for(NSDictionary* errorField in [error.userInfo objectForKey:@"errorMessages"]) {

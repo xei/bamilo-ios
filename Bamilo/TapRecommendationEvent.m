@@ -6,12 +6,7 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import "VisitRecommendationEvent.h"
+#import "TapRecommendationEvent.h"
 
 @implementation TapRecommendationEvent
-
-+(NSString *)name {
-    return @"visitiRecommendation";
-}
-
 @end

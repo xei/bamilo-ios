@@ -10,9 +10,4 @@
 
 @implementation AbandonCartEvent
 
-#pragma mark - Overrides
-+(NSString *)name {
-    return @"AbandonCart";
-}
-
 @end

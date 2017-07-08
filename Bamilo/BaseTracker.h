@@ -10,6 +10,6 @@
 
 @interface BaseTracker : NSObject
 
-+(instancetype) sharedTracker;
++ (instancetype)sharedTracker;
 
 @end

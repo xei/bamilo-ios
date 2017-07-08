@@ -12,6 +12,7 @@
 #import "ViewControllerManager.h"
 #import "NotificationBarView.h"
 #import "EmarsysPredictManager.h"
+#import "Bamilo-Swift.h"
 
 @interface BaseViewController()
 @property (strong, nonatomic) JAMessageView *messageView;
@@ -34,7 +35,7 @@
     self.title = nil;
     self.view.backgroundColor = JABackgroundGrey;
     
-    [TrackerManager trackScreenName:[self getDataTrackerAlias]];
+    [TrackerManager trackScreenNameWithScreenName:[self getScreenName]];
 }
 
 - (JANavigationBarLayout *)navBarLayout {
@@ -171,7 +172,7 @@
 }
 
 #pragma mark - DataTrackerProtocol
--(NSString *)getDataTrackerAlias {
+-(NSString *)getScreenName {
     return nil;
 }
 

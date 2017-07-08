@@ -17,12 +17,14 @@
 #import "RILocalizationWrapper.h"
 #import "ThreadManager.h"
 #import "ThemeManager.h"
-#import "TrackerManager.h"
 #import "LoadingManager.h"
 #import "AlertManager.h"
 #import "CartDataManager.h"
 #import "RICommunicationWrapper.h"
 #import "RIGoogleAnalyticsTracker.h"
+#import "AppManager.h"
+#import "DeviceManager.h"
+
 
 #import <Masonry/Masonry.h>
 #import <RGB/RRGB.h>
@@ -39,15 +41,21 @@
 #import "BaseViewControl.h"
 #import "ViewControllerManager.h"
 
+#import "JASearchView.h"
 #import "JABaseViewController.h"
 #import "BaseViewController.h"
 #import "BaseTableViewCell.h"
 #import "CatalogNoResultViewController.h"
 #import "JAFiltersViewController.h"
 #import "JAPDVViewController.h"
-
+#import "BaseTracker.h"
+#import "TagTrackerProtocol.h"
 
 #import "JAHomeViewController.h"
 #import "CartViewController.h"
 #import "JASavedListViewController.h"
 #import "MultistepEntity.h"
+
+#import "GAIDictionaryBuilder.h"
+#import "GAI.h"
+#import "GAIFields.h"

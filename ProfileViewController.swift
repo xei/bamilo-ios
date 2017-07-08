@@ -198,7 +198,10 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         AuthenticationDataManager.sharedInstance.logoutUser(self) { (data, error) in
             self.bind(data, forRequestId: 0)
             //EVENT: LOGOUT
-            TrackerManager.postEvent(EventFactory.logout(error == nil), forName: LogoutEvent.name())
+            TrackerManager.postEvent(
+                selector: EventSelectors.logoutEventSelector(),
+                attributes: EventAttributes.logout(success: true)
+            )
             EmarsysPredictManager.userLoggedOut()
         }
     }

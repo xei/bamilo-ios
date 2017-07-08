@@ -10,7 +10,7 @@
 
 @implementation BaseTracker
 
-+(instancetype) sharedTracker {
++ (instancetype)sharedTracker {
     return nil;
 }
 

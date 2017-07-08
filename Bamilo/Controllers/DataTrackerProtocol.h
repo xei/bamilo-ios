@@ -10,6 +10,6 @@
 
 @protocol DataTrackerProtocol <NSObject>
 
--(NSString *) getDataTrackerAlias;
+-(NSString *) getScreenName;
 
 @end

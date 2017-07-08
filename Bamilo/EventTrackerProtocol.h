@@ -1,16 +1,18 @@
+////
+////  EventTrackerProtocol.h
+////  Bamilo
+////
+////  Created by Narbeh Mirzaei on 3/25/17.
+////  Copyright © 2017 Rocket Internet. All rights reserved.
+////
 //
-//  EventTrackerProtocol.h
-//  Bamilo
+//#import <Foundation/Foundation.h>
 //
-//  Created by Narbeh Mirzaei on 3/25/17.
-//  Copyright © 2017 Rocket Internet. All rights reserved.
+//@protocol EventTrackerProtocol <NSObject>
 //
-
-#import <Foundation/Foundation.h>
-
-@protocol EventTrackerProtocol <NSObject>
-
--(BOOL) isEventEligable:(NSString *)eventName;
--(void) postEvent:(NSDictionary *)attributes forName:(NSString *)name;
-
-@end
+//+ (void)postEventViaSelector:(SEL)selector attributes:(NSDictionary *)attributes;
+//@optional
+//+ (NSDictionary *)filterSearch:(NSArray *)attributes;
+//
+//
+//@end

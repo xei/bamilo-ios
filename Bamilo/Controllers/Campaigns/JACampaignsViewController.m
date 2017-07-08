@@ -451,8 +451,7 @@ withCampaignTargetString:(NSString*)campaignTargetString
         if(error == nil) {
             [self bind:data forRequestId:0];
             
-            //EVENT : ADD TO CART
-            [TrackerManager postEvent:[EventFactory addToCart:self.backupSimpleSku basketValue:[self.cart.cartEntity.cartValue longValue] success:YES] forName:[AddToCartEvent name]];
+            [self trackAddToCartAction:YES];
             
             if (VALID_NOTEMPTY(self.teaserTrackingInfo, NSString)) {
                 NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
@@ -533,16 +532,22 @@ withCampaignTargetString:(NSString*)campaignTargetString
             //[self hideLoading];
         } else {
             //EVENT : ADD TO CART
-            [TrackerManager postEvent:[EventFactory addToCart:self.backupSimpleSku basketValue:[self.cart.cartEntity.cartValue intValue] success:NO] forName:[AddToCartEvent name]];
-            
+            [self trackAddToCartAction:NO];
             [self onErrorResponse:error.code messages:[error.userInfo objectForKey:kErrorMessages] showAsMessage:YES selector:@selector(finishAddToCart) objects:nil];
             //[self hideLoading];
         }
     }];
 }
 
-#pragma mark - UIScrollViewDelegate
+- (void)trackAddToCartAction:(BOOL)success {
+    RIProduct *product = [RIProduct new];
+    product.sku = self.backupSimpleSku;
+    product.price = self.cart.cartEntity.cartValue;
+    //EVENT : ADD TO CART
+    [TrackerManager postEventWithSelector:[EventSelectors addToCartEventSelector] attributes:[EventAttributes addToCardWithProduct:product success:success]];
+}
 
+#pragma mark - UIScrollViewDelegate
 //this depends on animation existing. if in the future there is a case where no animation
 //happens on the scroll view, we have to move this to another scrollviewdelegate method
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView

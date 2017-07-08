@@ -15,6 +15,8 @@ class DeleteEntityDataManager: DataManager {
         return shared;
     }
     
+    
+    
     func removeFromWishList(_ target: DataServiceProtocol, sku: String, completion: @escaping DataCompletion) {
         self.requestManager.asyncDELETE(target, path: RI_API_REMOVE_FOM_WISHLIST, params: ["sku": sku], type: .foreground, completion: { (responseStatus, data, errorMessages) in
             self.processResponse(responseStatus, of: nil, for: data, errorMessages: errorMessages, completion: completion)

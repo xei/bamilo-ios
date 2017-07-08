@@ -96,6 +96,10 @@ import UIKit
         return MainTabBarViewController.sharedInstance()?.selectedViewController as? JACenterNavigationController
     }
     
+    static func topViewController() -> UIViewController? {
+        return self.topNavigationController()?.visibleViewController
+    }
+    
     static func updateCartValue(cartItemsCount: Int) {
         MainTabBarViewController.sharedInstance()?.tabBar.items?.first?.badgeValue = cartItemsCount == 0 ? nil : "\(cartItemsCount)".convertTo(language: .arabic)
     }

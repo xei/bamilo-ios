@@ -11,9 +11,9 @@
 #import "EmarsysPredictProtocol.h"
 #import "ThreadManager.h"
 #import "NSArray+Extension.h"
-#import "TrackerManager.h"
 #import "EventUtilities.h"
 #import "EmarsysPredictManager.h"
+#import "Bamilo-Swift.h"
 
 
 // --- Legacy imports ---
@@ -51,9 +51,9 @@
 
 - (void)trackPurchase {
     //EVENT: PURCHASE
-    [TrackerManager postEvent:[EventFactory purchase:[EventUtilities getEventCategories:self.cart] basketValue:[self.cart.cartEntity.cartValue longValue] success:YES] forName:[PurchaseEvent name]];
+    [TrackerManager postEventWithSelector:[EventSelectors purchaseSelector] attributes:[EventAttributes purchaseWithCart:self.cart success:YES]];
     
-    [TrackerManager sendTags:@{ @"PurchaseCount": @([UserDefaultsManager incrementCounter:kUDMPurchaseCount]) } completion:^(NSError *error) {
+    [TrackerManager sendTagWithTags:@{ @"PurchaseCount": @([UserDefaultsManager incrementCounter:kUDMPurchaseCount]) } completion:^(NSError *error) {
         if(error == nil) {
             NSLog(@"TrackerManager > PurchaseCount > %d", [UserDefaultsManager getCounter:kUDMPurchaseCount]);
         }
@@ -380,7 +380,7 @@
 #pragma mark - FeatureBoxCollectionViewWidgetViewDelegate
 - (void)selectFeatureItem:(NSObject *)item widgetBox:(id)widgetBox {
     if ([item isKindOfClass:[RecommendItem class]]) {
-        [TrackerManager postEvent:[EventFactory tapRecommectionInScreenName:@"OrderSuccess" logic:self.cart.cartEntity.cartCount.integerValue == 1 ? @"ALSO_BOUGHT" : @"PERSONAL"] forName:[TapRecommendationEvent name]];
+        [TrackerManager postEventWithSelector:[EventSelectors recommendationTappedSelector] attributes:[EventAttributes tapEmarsysRecommendationWithScreenName:[self getScreenName] logic:self.cart.cartEntity.cartCount.integerValue == 1 ? @"ALSO_BOUGHT" : @"PERSONAL"]];
         [[NSNotificationCenter defaultCenter] postNotificationName: kDidSelectTeaserWithPDVUrlNofication
                                                             object: nil
                                                           userInfo: @{

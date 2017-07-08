@@ -18,6 +18,7 @@
 #import "JAPDVSingleRelatedItem.h"
 #import "EventUtilities.h"
 #import "EmarsysRecommendationMinimalCarouselWidgetView.h"
+#import "Bamilo-Swift.h"
 
 #define kTopMargin 20.f
 #define kLateralMargin 16.f
@@ -151,9 +152,9 @@
 
 //##################################################################
     //EVENT: PURCHASE
-    [TrackerManager postEvent:[EventFactory purchase:[EventUtilities getEventCategories:self.cart] basketValue:[self.cart.cartEntity.cartValue longValue] success:YES] forName:[PurchaseEvent name]];
+    [TrackerManager postEventWithSelector:[EventSelectors purchaseSelector] attributes:[EventAttributes purchaseWithCart:self.cart success:YES]];
     
-    [TrackerManager sendTags:@{ @"PurchaseCount": @([UserDefaultsManager incrementCounter:kUDMPurchaseCount]) } completion:^(NSError *error) {
+    [TrackerManager sendTagWithTags:@{ @"PurchaseCount": @([UserDefaultsManager incrementCounter:kUDMPurchaseCount]) } completion:^(NSError *error) {
         if(error == nil) {
             NSLog(@"TrackerManager > PurchaseCount > %d", [UserDefaultsManager getCounter:kUDMPurchaseCount]);
         }

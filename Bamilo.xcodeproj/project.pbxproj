@@ -40,6 +40,9 @@
 		61148E051E4724FC00E2540B /* StepperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61148E041E4724FC00E2540B /* StepperView.m */; };
 		61148E081E47250A00E2540B /* StepperViewControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 61148E071E47250A00E2540B /* StepperViewControl.m */; };
 		61148E0A1E47255F00E2540B /* StepperView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61148E091E47255F00E2540B /* StepperView.xib */; };
+		611C1B2E1F0B757E00C57E4D /* FilterSearchEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 611C1B2D1F0B757E00C57E4D /* FilterSearchEvent.m */; };
+		611C1B321F0BAA0900C57E4D /* SearchBarSearchEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 611C1B311F0BAA0900C57E4D /* SearchBarSearchEvent.m */; };
+		611E23E01F10CFB500E5C3AC /* EventSelectors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611E23DF1F10CFB500E5C3AC /* EventSelectors.swift */; };
 		611FF46E1E8BDBEF006F0064 /* EmarsysPredictManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 611FF46D1E8BDBEF006F0064 /* EmarsysPredictManager.m */; };
 		612544061EBA1075007F9350 /* OrderDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612544051EBA1075007F9350 /* OrderDataManager.swift */; };
 		612553471E4EE5B500975C6F /* InputTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 612553461E4EE5B500975C6F /* InputTextField.m */; };
@@ -84,6 +87,7 @@
 		615F96F11E9E11FD00614644 /* NotificationService.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 615F96E91E9E11FD00614644 /* NotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		616058E61E6AD8D50079B2CD /* SearchFilterItemOption.m in Sources */ = {isa = PBXBuildFile; fileRef = 616058E51E6AD8D50079B2CD /* SearchFilterItemOption.m */; };
 		616058E91E6AE2030079B2CD /* SearchFilterItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 616058E81E6AE2030079B2CD /* SearchFilterItem.m */; };
+		61626BF51F111818008F2463 /* EmarsysBaseTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 61626BF41F111818008F2463 /* EmarsysBaseTracker.m */; };
 		616D65EC1E670984008B07EA /* OrderProductListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 616D65EA1E670984008B07EA /* OrderProductListTableViewCell.m */; };
 		616D65ED1E670984008B07EA /* OrderProductListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 616D65EB1E670984008B07EA /* OrderProductListTableViewCell.xib */; };
 		61716BA71E865B3D00F4E65F /* DeepLinkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 61716BA61E865B3D00F4E65F /* DeepLinkManager.m */; };
@@ -111,6 +115,8 @@
 		619351AC1ECAC9DD00330E5C /* CatalogCardCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 619351AA1ECAC9DD00330E5C /* CatalogCardCollectionViewCell.xib */; };
 		619351B01ECACA1F00330E5C /* CatalogListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619351AE1ECACA1F00330E5C /* CatalogListCollectionViewCell.swift */; };
 		619351B11ECACA1F00330E5C /* CatalogListCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 619351AF1ECACA1F00330E5C /* CatalogListCollectionViewCell.xib */; };
+		6193F3DE1F0CF67100DA3CDE /* EventAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6193F3DD1F0CF67100DA3CDE /* EventAttributes.swift */; };
+		6193F3E11F0CF9D600DA3CDE /* GoogleAnalyticsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6193F3E01F0CF9D600DA3CDE /* GoogleAnalyticsTracker.swift */; };
 		619D0B071EA347DE00FDB255 /* BaseControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 619D0B061EA347DE00FDB255 /* BaseControlView.m */; };
 		619D0B0D1EA34AF400FDB255 /* WidgetBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 619D0B0C1EA34AF400FDB255 /* WidgetBaseView.m */; };
 		619D0B121EA34B3500FDB255 /* FeatureBoxWidgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 619D0B111EA34B3500FDB255 /* FeatureBoxWidgetView.m */; };
@@ -155,6 +161,9 @@
 		61E099721E3E18F0004ED14E /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E099701E3E18F0004ED14E /* NotificationTableViewCell.xib */; };
 		61E099771E3E1A02004ED14E /* VersionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E099751E3E1A02004ED14E /* VersionTableViewCell.m */; };
 		61E099781E3E1A02004ED14E /* VersionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E099761E3E1A02004ED14E /* VersionTableViewCell.xib */; };
+		61E8441B1F0D16AE005D79EE /* ScreentTrackerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E8441A1F0D16AE005D79EE /* ScreentTrackerProtocol.swift */; };
+		61E8441D1F0D18D5005D79EE /* EventTrackerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E8441C1F0D18D5005D79EE /* EventTrackerProtocol.swift */; };
+		61E8441F1F0D203A005D79EE /* TrackerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E8441E1F0D203A005D79EE /* TrackerManager.swift */; };
 		61EA566A1EDE8BC20093EAD4 /* Ext+UIAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EA56691EDE8BC20093EAD4 /* Ext+UIAlertView.swift */; };
 		61EA566C1EDEC75E0093EAD4 /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EA566B1EDEC75E0093EAD4 /* MainTabBarViewController.swift */; };
 		61EE798E1EC0395C0036F93E /* CatalogCategoryFilterItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EE798D1EC0395C0036F93E /* CatalogCategoryFilterItem.swift */; };
@@ -951,6 +960,11 @@
 		61148E061E47250A00E2540B /* StepperViewControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepperViewControl.h; sourceTree = "<group>"; };
 		61148E071E47250A00E2540B /* StepperViewControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StepperViewControl.m; sourceTree = "<group>"; };
 		61148E091E47255F00E2540B /* StepperView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StepperView.xib; sourceTree = "<group>"; };
+		611C1B2C1F0B757E00C57E4D /* FilterSearchEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterSearchEvent.h; sourceTree = "<group>"; };
+		611C1B2D1F0B757E00C57E4D /* FilterSearchEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterSearchEvent.m; sourceTree = "<group>"; };
+		611C1B301F0BAA0900C57E4D /* SearchBarSearchEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchBarSearchEvent.h; sourceTree = "<group>"; };
+		611C1B311F0BAA0900C57E4D /* SearchBarSearchEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchBarSearchEvent.m; sourceTree = "<group>"; };
+		611E23DF1F10CFB500E5C3AC /* EventSelectors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventSelectors.swift; sourceTree = "<group>"; };
 		611FF46C1E8BDBEF006F0064 /* EmarsysPredictManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysPredictManager.h; sourceTree = "<group>"; };
 		611FF46D1E8BDBEF006F0064 /* EmarsysPredictManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysPredictManager.m; sourceTree = "<group>"; };
 		611FF46F1E8BE9C7006F0064 /* EmarsysPredictProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysPredictProtocol.h; sourceTree = "<group>"; };
@@ -1020,6 +1034,8 @@
 		616058E51E6AD8D50079B2CD /* SearchFilterItemOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchFilterItemOption.m; sourceTree = "<group>"; };
 		616058E71E6AE2030079B2CD /* SearchFilterItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchFilterItem.h; sourceTree = "<group>"; };
 		616058E81E6AE2030079B2CD /* SearchFilterItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchFilterItem.m; sourceTree = "<group>"; };
+		61626BF31F111818008F2463 /* EmarsysBaseTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysBaseTracker.h; sourceTree = "<group>"; };
+		61626BF41F111818008F2463 /* EmarsysBaseTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysBaseTracker.m; sourceTree = "<group>"; };
 		616D65E91E670983008B07EA /* OrderProductListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderProductListTableViewCell.h; sourceTree = "<group>"; };
 		616D65EA1E670984008B07EA /* OrderProductListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderProductListTableViewCell.m; sourceTree = "<group>"; };
 		616D65EB1E670984008B07EA /* OrderProductListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OrderProductListTableViewCell.xib; sourceTree = "<group>"; };
@@ -1056,6 +1072,8 @@
 		619351AA1ECAC9DD00330E5C /* CatalogCardCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CatalogCardCollectionViewCell.xib; sourceTree = "<group>"; };
 		619351AE1ECACA1F00330E5C /* CatalogListCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogListCollectionViewCell.swift; sourceTree = "<group>"; };
 		619351AF1ECACA1F00330E5C /* CatalogListCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CatalogListCollectionViewCell.xib; sourceTree = "<group>"; };
+		6193F3DD1F0CF67100DA3CDE /* EventAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventAttributes.swift; sourceTree = "<group>"; };
+		6193F3E01F0CF9D600DA3CDE /* GoogleAnalyticsTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleAnalyticsTracker.swift; sourceTree = "<group>"; };
 		619D0B051EA347DE00FDB255 /* BaseControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseControlView.h; sourceTree = "<group>"; };
 		619D0B061EA347DE00FDB255 /* BaseControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseControlView.m; sourceTree = "<group>"; };
 		619D0B0B1EA34AF400FDB255 /* WidgetBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetBaseView.h; sourceTree = "<group>"; };
@@ -1134,6 +1152,9 @@
 		61E099741E3E1A02004ED14E /* VersionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionTableViewCell.h; sourceTree = "<group>"; };
 		61E099751E3E1A02004ED14E /* VersionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersionTableViewCell.m; sourceTree = "<group>"; };
 		61E099761E3E1A02004ED14E /* VersionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VersionTableViewCell.xib; sourceTree = "<group>"; };
+		61E8441A1F0D16AE005D79EE /* ScreentTrackerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreentTrackerProtocol.swift; sourceTree = "<group>"; };
+		61E8441C1F0D18D5005D79EE /* EventTrackerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTrackerProtocol.swift; sourceTree = "<group>"; };
+		61E8441E1F0D203A005D79EE /* TrackerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerManager.swift; sourceTree = "<group>"; };
 		61EA56691EDE8BC20093EAD4 /* Ext+UIAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Ext+UIAlertView.swift"; sourceTree = "<group>"; };
 		61EA566B1EDEC75E0093EAD4 /* MainTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
 		61EE798D1EC0395C0036F93E /* CatalogCategoryFilterItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogCategoryFilterItem.swift; sourceTree = "<group>"; };
@@ -2738,6 +2759,7 @@
 				8720C33D1EE2A8CC00404378 /* App.swift */,
 				610C68AC1EC87F2A008FB66C /* Translations.swift */,
 				87865FD01EE2D3B2009505C7 /* Notifications.swift */,
+				611E23DF1F10CFB500E5C3AC /* EventSelectors.swift */,
 			);
 			name = Constants;
 			sourceTree = "<group>";
@@ -2778,6 +2800,24 @@
 				61148E071E47250A00E2540B /* StepperViewControl.m */,
 			);
 			name = Controls;
+			sourceTree = "<group>";
+		};
+		611C1B2B1F0B756600C57E4D /* FilterSearchEvent */ = {
+			isa = PBXGroup;
+			children = (
+				611C1B2C1F0B757E00C57E4D /* FilterSearchEvent.h */,
+				611C1B2D1F0B757E00C57E4D /* FilterSearchEvent.m */,
+			);
+			name = FilterSearchEvent;
+			sourceTree = "<group>";
+		};
+		611C1B2F1F0BA9E300C57E4D /* SearchBarSearchEvent */ = {
+			isa = PBXGroup;
+			children = (
+				611C1B301F0BAA0900C57E4D /* SearchBarSearchEvent.h */,
+				611C1B311F0BAA0900C57E4D /* SearchBarSearchEvent.m */,
+			);
+			name = SearchBarSearchEvent;
 			sourceTree = "<group>";
 		};
 		611FF46B1E8BDBCB006F0064 /* EmarsysPredictManager */ = {
@@ -3082,6 +3122,15 @@
 			name = SearchFilterItem;
 			sourceTree = "<group>";
 		};
+		61626BF21F1117F8008F2463 /* EmarsysBaseTracker */ = {
+			isa = PBXGroup;
+			children = (
+				61626BF31F111818008F2463 /* EmarsysBaseTracker.h */,
+				61626BF41F111818008F2463 /* EmarsysBaseTracker.m */,
+			);
+			name = EmarsysBaseTracker;
+			sourceTree = "<group>";
+		};
 		616D65E81E670963008B07EA /* OrderProductListTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -3170,6 +3219,7 @@
 		617F77AB1EB85B94000A2A6C /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				6193F3D81F0CF5E000DA3CDE /* Trackers */,
 				61C8604A1ECB3BD900F2C571 /* Extensions */,
 				617F77AC1EB85B9A000A2A6C /* Managers */,
 				61C860401ECAF94400F2C571 /* AppUtitlity.swift */,
@@ -3330,6 +3380,57 @@
 				619351AF1ECACA1F00330E5C /* CatalogListCollectionViewCell.xib */,
 			);
 			name = CatalogListCollectionViewCell;
+			sourceTree = "<group>";
+		};
+		6193F3D81F0CF5E000DA3CDE /* Trackers */ = {
+			isa = PBXGroup;
+			children = (
+				6193F3D91F0CF5F400DA3CDE /* Base */,
+				61E8441E1F0D203A005D79EE /* TrackerManager.swift */,
+			);
+			name = Trackers;
+			sourceTree = "<group>";
+		};
+		6193F3D91F0CF5F400DA3CDE /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				6193F3DF1F0CF9A400DA3CDE /* GoogleAnalyticsTracker */,
+				6193F3DA1F0CF60A00DA3CDE /* Class */,
+			);
+			name = Base;
+			sourceTree = "<group>";
+		};
+		6193F3DA1F0CF60A00DA3CDE /* Class */ = {
+			isa = PBXGroup;
+			children = (
+				61E844191F0D1684005D79EE /* Protocols */,
+				6193F3DB1F0CF61000DA3CDE /* Events */,
+			);
+			name = Class;
+			sourceTree = "<group>";
+		};
+		6193F3DB1F0CF61000DA3CDE /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				6193F3DC1F0CF62400DA3CDE /* EventAttributes */,
+			);
+			name = Events;
+			sourceTree = "<group>";
+		};
+		6193F3DC1F0CF62400DA3CDE /* EventAttributes */ = {
+			isa = PBXGroup;
+			children = (
+				6193F3DD1F0CF67100DA3CDE /* EventAttributes.swift */,
+			);
+			name = EventAttributes;
+			sourceTree = "<group>";
+		};
+		6193F3DF1F0CF9A400DA3CDE /* GoogleAnalyticsTracker */ = {
+			isa = PBXGroup;
+			children = (
+				6193F3E01F0CF9D600DA3CDE /* GoogleAnalyticsTracker.swift */,
+			);
+			name = GoogleAnalyticsTracker;
 			sourceTree = "<group>";
 		};
 		619D0B081EA34A3600FDB255 /* FeatureBoxCollectionViewWidget */ = {
@@ -3732,6 +3833,15 @@
 			name = VersionTableViewCell;
 			sourceTree = "<group>";
 		};
+		61E844191F0D1684005D79EE /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				61E8441A1F0D16AE005D79EE /* ScreentTrackerProtocol.swift */,
+				61E8441C1F0D18D5005D79EE /* EventTrackerProtocol.swift */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
 		61FE97D31EC9BB3F00DF233D /* CollectionViewFlowLayout */ = {
 			isa = PBXGroup;
 			children = (
@@ -3830,6 +3940,8 @@
 		8702FBC41E99196A001D1AA9 /* UserEvents */ = {
 			isa = PBXGroup;
 			children = (
+				611C1B2F1F0BA9E300C57E4D /* SearchBarSearchEvent */,
+				611C1B2B1F0B756600C57E4D /* FilterSearchEvent */,
 				612880691F0A2C5D006F5240 /* VisitRecommendationEvent */,
 				8702FBB31E98E6F9001D1AA9 /* LoginEvent */,
 				8702FBC31E991963001D1AA9 /* SignUpEvent */,
@@ -3916,13 +4028,6 @@
 				8702FBE81E9A3458001D1AA9 /* ViewProductEvent.m */,
 			);
 			name = ViewProductEvent;
-			sourceTree = "<group>";
-		};
-		8702FBEE1E9A3736001D1AA9 /* Tags */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Tags;
 			sourceTree = "<group>";
 		};
 		8702FBF01E9A4A52001D1AA9 /* ProductDataManager */ = {
@@ -4352,7 +4457,6 @@
 			isa = PBXGroup;
 			children = (
 				871BA8521E867F29007680C5 /* Events */,
-				8702FBEE1E9A3736001D1AA9 /* Tags */,
 			);
 			name = Class;
 			sourceTree = "<group>";
@@ -4698,6 +4802,7 @@
 		875435141E77ECC400B5D6B4 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				61626BF21F1117F8008F2463 /* EmarsysBaseTracker */,
 				871BA8511E867F1C007680C5 /* Class */,
 				8754351C1E77ECE900B5D6B4 /* Protocols */,
 				875435151E77ECD000B5D6B4 /* BaseTracker.h */,
@@ -7533,6 +7638,7 @@
 				9AE766E21CBFF31D00B63D8E /* JACartTableViewCell.m in Sources */,
 				615E796C1EF6BE58008E661D /* UILabel+WhiteUIDatePickerLabels.m in Sources */,
 				612553471E4EE5B500975C6F /* InputTextField.m in Sources */,
+				611E23E01F10CFB500E5C3AC /* EventSelectors.swift in Sources */,
 				CE9ADF301AB6D78200D56481 /* JAShippingViewController.m in Sources */,
 				612FE51B1EDC0D6300C2AFA0 /* ProfileUserTableViewCell.swift in Sources */,
 				CE59BF241AE906180057F4E2 /* JATopSellersTeaserView.m in Sources */,
@@ -7545,11 +7651,13 @@
 				87C69DAE1E38B7A50026018F /* UIColor+Format.m in Sources */,
 				87D3DD271E8A962C00C960FF /* EmarsysRequestManager.m in Sources */,
 				875AD5781E38C0C900584ABF /* RISpecificationAttribute.m in Sources */,
+				61E8441B1F0D16AE005D79EE /* ScreentTrackerProtocol.swift in Sources */,
 				61E0996C1E3E117F004ED14E /* BaseTableViewCell.m in Sources */,
 				9A38765D1BCD0DE00088B186 /* JAProductSpecificationView.m in Sources */,
 				9AEF74151CD20F0C00A5D574 /* JAStepByStepTabViewController.m in Sources */,
 				61BA9B4B1E9A009E004E9DE8 /* EmarsysRecommendationCarouselWidget.m in Sources */,
 				61A62CAD1E98FB0600E78D81 /* NSArray+Extension.m in Sources */,
+				6193F3E11F0CF9D600DA3CDE /* GoogleAnalyticsTracker.swift in Sources */,
 				875AD55B1E38C0C900584ABF /* RICartItem.m in Sources */,
 				CE9ADF361AB6D78200D56481 /* JAGradientLayer.m in Sources */,
 				CEA2A1B71B25D20C00E5973F /* JADynamicField.m in Sources */,
@@ -7655,6 +7763,7 @@
 				9A3D21881CA4057A00FE41B6 /* JAChooseCountryTableViewCell.m in Sources */,
 				CE9ADF581AB6D78200D56481 /* JAEditAddressViewController.m in Sources */,
 				61832FDE1ED2DC0D006F01FE /* RateStarControl.swift in Sources */,
+				61E8441D1F0D18D5005D79EE /* EventTrackerProtocol.swift in Sources */,
 				8702FBCC1E991C9A001D1AA9 /* LogoutEvent.m in Sources */,
 				8702FBD01E99FDD2001D1AA9 /* UserDefaultsManager.m in Sources */,
 				87AFF6831EE68018001EBC4D /* CartDataManager.swift in Sources */,
@@ -7663,6 +7772,7 @@
 				CE9ADF5B1AB6D78200D56481 /* JAGenericFiltersView.m in Sources */,
 				875AD5591E38C0C900584ABF /* RICampaign.m in Sources */,
 				CE9ADF5C1AB6D78200D56481 /* JAEmailNotificationsViewController.m in Sources */,
+				611C1B321F0BAA0900C57E4D /* SearchBarSearchEvent.m in Sources */,
 				CE9ADF601AB6D78200D56481 /* JANoConnectionView.m in Sources */,
 				617AAA441E503AB9004D9430 /* FormItemModel.m in Sources */,
 				871BA8561E867F4A007680C5 /* AppEvent.m in Sources */,
@@ -7713,6 +7823,7 @@
 				875AD56E1E38C0C900584ABF /* RIProductSimple.m in Sources */,
 				870BEA851E73F6BC00C5B615 /* ThemeFont.m in Sources */,
 				610ED5831E742947000D5BEC /* UITextField+Extensions.m in Sources */,
+				6193F3DE1F0CF67100DA3CDE /* EventAttributes.swift in Sources */,
 				619D0B121EA34B3500FDB255 /* FeatureBoxWidgetView.m in Sources */,
 				875AD5801E38C0C900584ABF /* RITrackingWrapper.m in Sources */,
 				CE9ADF7D1AB6D78200D56481 /* JAPDVImageSection.m in Sources */,
@@ -7737,6 +7848,7 @@
 				8976FB321C0F3F4300483651 /* JATextFilterCell.m in Sources */,
 				875AD5521E38C0C900584ABF /* RITeaserComponent.m in Sources */,
 				61C8604C1ECB3C0F00F2C571 /* Ext+String.swift in Sources */,
+				61E8441F1F0D203A005D79EE /* TrackerManager.swift in Sources */,
 				875AD5661E38C0C900584ABF /* RIPaymentInformation.m in Sources */,
 				875081B91E53309A0031ECBF /* AddressEditViewController.m in Sources */,
 				CEE558661AFCC2FB00FC87D4 /* JARadioRelatedComponent.m in Sources */,
@@ -7804,6 +7916,7 @@
 				CED620511BEA5EE800FA8403 /* JACollectionSeparator.m in Sources */,
 				61BA9B3D1E99FDEE004E9DE8 /* WidgetBase.m in Sources */,
 				870680B81E62DF20000368D5 /* AddressTableViewHeaderCell.m in Sources */,
+				611C1B2E1F0B757E00C57E4D /* FilterSearchEvent.m in Sources */,
 				870BEA7D1E73F4CC00C5B615 /* ThemeManager.m in Sources */,
 				61DBCCB61E46128300BA8251 /* IconButton.m in Sources */,
 				CE9ADFBA1AB6D78200D56481 /* JAUtils.m in Sources */,
@@ -7982,6 +8095,7 @@
 				CE9ADFFD1AB6D78200D56481 /* JATeaserPageView.m in Sources */,
 				9AEF73F41CD20E1C00A5D574 /* JACheckoutStepByStepModel.m in Sources */,
 				87B685071E4AFB6B0042C09F /* ReceiptView.m in Sources */,
+				61626BF51F111818008F2463 /* EmarsysBaseTracker.m in Sources */,
 				873369DF1E5AF48500B0B5E5 /* AppConsts.m in Sources */,
 				61148E081E47250A00E2540B /* StepperViewControl.m in Sources */,
 				61E099711E3E18F0004ED14E /* NotificationTableViewCell.m in Sources */,

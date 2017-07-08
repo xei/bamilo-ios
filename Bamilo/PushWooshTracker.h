@@ -8,10 +8,10 @@
 
 #import "BaseTracker.h"
 #import "PushNotificationTrackerProtocol.h"
-#import "EventTrackerProtocol.h"
 #import "TagTrackerProtocol.h"
+#import "EmarsysBaseTracker.h"
 
-@interface PushWooshTracker : BaseTracker <PushNotificationTrackerProtocol, EventTrackerProtocol, TagTrackerProtocol>
+@interface PushWooshTracker : EmarsysBaseTracker <PushNotificationTrackerProtocol, TagTrackerProtocol>
 
 -(void) setUserID:(NSString *)userId;
 

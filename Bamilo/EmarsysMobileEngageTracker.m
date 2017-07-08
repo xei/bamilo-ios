@@ -8,9 +8,6 @@
 
 #import "EmarsysMobileEngageTracker.h"
 
-@interface EmarsysMobileEngageTracker()
-@property (nonatomic, strong) NSArray<NSString *>* eligableEventNames;
-@end
 
 @implementation EmarsysMobileEngageTracker
 
@@ -25,26 +22,10 @@ static EmarsysMobileEngageTracker *instance;
     return instance;
 }
 
-- (NSArray<NSString *> *)eligableEventNames {
-    return @[[LoginEvent name],
-             [LogoutEvent name],
-             [SignUpEvent name],
-             [OpenAppEvent name],
-             [AddToFavoritesEvent name],
-             [AddToCartEvent name],
-             [AbandonCartEvent name],
-             [PurchaseEvent name],
-             [SearchEvent name],
-             [ViewProductEvent name]];
-}
 
-#pragma mark - EventTrackerProtocol
--(void)postEvent:(NSDictionary *)attributes forName:(NSString *)name {
-    [[EmarsysMobileEngage sharedInstance] sendCustomEvent:name attributes:attributes completion:nil];
-}
-
--(BOOL)isEventEligable:(NSString *)eventName {
-    return [self.eligableEventNames indexOfObjectIdenticalTo: eventName] != NSNotFound;;
+//Override
+- (void)postEventByName:(NSString *)eventName attributes:(NSDictionary *)attributes {
+    [[EmarsysMobileEngage sharedInstance] sendCustomEvent:eventName attributes:attributes completion:nil];
 }
 
 @end

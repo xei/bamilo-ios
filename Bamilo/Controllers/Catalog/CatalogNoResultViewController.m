@@ -17,6 +17,7 @@
 #import "NSArray+Extension.h"
 #import "RecommendItem.h"
 #import "ThreadManager.h"
+#import "Bamilo-Swift.h"
 
 @interface CatalogNoResultViewController () <EmarsysPredictProtocol, FeatureBoxCollectionViewWidgetViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *noResultMessageUILabel;
@@ -95,7 +96,8 @@
 #pragma mark - FeatureBoxCollectionViewWidgetViewDelegate
 - (void)selectFeatureItem:(NSObject *)item widgetBox:(id)widgetBox {
     if ([item isKindOfClass:[RecommendItem class]]) {
-        [TrackerManager postEvent:[EventFactory tapRecommectionInScreenName:@"SEARCH" logic:@"PERSONAL"] forName:[TapRecommendationEvent name]];
+//        [EventSelectors ]
+//        [TrackerManager postEvent:[EventFactory tapRecommectionInScreenName:@"SEARCH" logic:@"PERSONAL"] forName:[TapRecommendationEvent name]];
         [[NSNotificationCenter defaultCenter] postNotificationName: kDidSelectTeaserWithPDVUrlNofication
                                                             object: nil
                                                           userInfo: @{@"sku": ((RecommendItem *)item).sku}];

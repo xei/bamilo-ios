@@ -13,6 +13,7 @@
 #import "ThreadManager.h"
 #import "NSArray+Extension.h"
 #import "EmarsysPredictManager.h"
+#import "Bamilo-Swift.h"
 
 @interface EmptyViewController() <EmarsysRecommendationsProtocol, FeatureBoxCollectionViewWidgetViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -80,7 +81,7 @@
 #pragma mark - FeatureBoxCollectionViewWidgetViewDelegate
 - (void)selectFeatureItem:(NSObject *)item widgetBox:(id)widgetBox {
     if ([item isKindOfClass:[RecommendItem class]]) {
-        [TrackerManager postEvent:[EventFactory tapRecommectionInScreenName:self.parentScreenName logic:self.recommendationLogic ?: @"PERSONAL"] forName:[TapRecommendationEvent name]];
+        [TrackerManager postEventWithSelector:[EventSelectors recommendationTappedSelector] attributes:[EventAttributes tapEmarsysRecommendationWithScreenName:self.parentScreenName logic:self.recommendationLogic ?: @"PERSONAL"]];
         [[NSNotificationCenter defaultCenter] postNotificationName: kDidSelectTeaserWithPDVUrlNofication
                                                             object: nil
                                                           userInfo: @{@"sku": ((RecommendItem *)item).sku}];

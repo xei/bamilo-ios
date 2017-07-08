@@ -91,7 +91,10 @@ typedef void (^ProcessActionBlock)(void);
 
 @end
 
+static NSString *recommendationLogic = @"RELATED";
+
 @implementation JAPDVViewController
+
 
 @synthesize selectedBundles = _selectedBundles;
 @synthesize viewLoaded = _viewLoaded;
@@ -503,7 +506,7 @@ typedef void (^ProcessActionBlock)(void);
     
 //###################
     //EVENT : VIEW PRODUCT
-    [TrackerManager postEvent:[EventFactory viewProduct:product.categoryUrlKey price:[product.price longValue]] forName:[ViewProductEvent name]];
+    [TrackerManager postEventWithSelector:[EventSelectors viewProductSelector] attributes:[EventAttributes viewProductWithProduct:product]];
 }
 
 - (void)retryAddToCart {
@@ -801,77 +804,6 @@ typedef void (^ProcessActionBlock)(void);
 
     }
 
-    /****************
-     Related Items
-     ***************/
-
-//    if (self.product.relatedProducts.count > 1) {
-//        if (self.relatedItemsView) {
-//            for (UIView *view in self.relatedItemsView.subviews) {
-//                [view removeFromSuperview];
-//            }
-//        }
-//
-//        if (self.product.richRelevanceTitle.length) {
-//            [self.relatedItemsView setHeaderText:self.product.richRelevanceTitle];
-//        } else {
-//            [self.relatedItemsView setHeaderText:[STRING_YOU_MAY_ALSO_LIKE uppercaseString]];
-//        }
-//
-//        CGFloat relatedItemX = .0f;
-//        CGFloat relatedItemY = 0;
-//
-//        NSArray* relatedProducts = [self.product.relatedProducts allObjects];
-//
-//        CGFloat singleItemHeight = 245;
-//        NSInteger numberOfCols = 2;
-//        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-//            if (!isiPadInLandscape) {
-//                numberOfCols = 4;
-//                singleItemHeight = 285;
-//            } else {
-//                singleItemHeight = 355;
-//            }
-//        }
-//
-//        CGFloat singleItemWidth = self.mainScrollView.width/numberOfCols;
-//        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && !isiPadInLandscape) {
-//            singleItemWidth = self.mainScrollView.width/numberOfCols;
-//        }
-//
-//        for (int i = 0; i < relatedProducts.count; i++) {
-//            RIProduct* product = [relatedProducts objectAtIndex:i];
-//
-//            JAPDVSingleRelatedItem *singleItem = [[JAPDVSingleRelatedItem alloc] initWithFrame:CGRectMake(0, 0, singleItemWidth, singleItemHeight)];
-//            singleItem.tag = i;
-//            [singleItem addTarget:self
-//                           action:@selector(goToSelectedRelatedItem:)
-//                 forControlEvents:UIControlEventTouchUpInside];
-//
-//            CGRect tempFrame = singleItem.frame;
-//            tempFrame.origin.x = relatedItemX;
-//            tempFrame.origin.y = relatedItemY;
-//            singleItem.frame = tempFrame;
-//            singleItem.product = product;
-//
-//            [self.relatedItemsView addRelatedItemView:singleItem];
-//
-//            if ((i+1)%numberOfCols==0) {
-//                relatedItemX = 0.0f;
-//                relatedItemY += singleItem.frame.size.height;
-//            }else{
-//                relatedItemX += singleItem.frame.size.width;
-//            }
-//
-//        }
-//        self.relatedItemsView.frame = CGRectMake(0.0f,
-//                                                 scrollViewY,
-//                                                 self.relatedItemsView.frame.size.width,
-//                                                 self.relatedItemsView.frame.size.height);
-//
-//        scrollViewY += (6.0f + self.relatedItemsView.frame.size.height);
-//
-//    }
 
     self.mainScrollView.contentSize = CGSizeMake(self.mainScrollView.frame.size.width, scrollViewY);
     self.landscapeScrollView.contentSize = CGSizeMake(self.landscapeScrollView.frame.size.width, landscapeScrollViewY);
@@ -1115,7 +1047,7 @@ typedef void (^ProcessActionBlock)(void);
                 [self bind:data forRequestId:0];
 
                 //EVENT: ADD TO CART
-                [TrackerManager postEvent:[EventFactory addToCart:self.currentSimple.sku basketValue:[self.cart.cartEntity.cartValue longValue] success:YES] forName:[AddToCartEvent name]];
+                [TrackerManager postEventWithSelector:[EventSelectors addToCartEventSelector] attributes:[EventAttributes addToCardWithProduct:self.product success:YES]];
 
                 if (VALID_NOTEMPTY(self.teaserTrackingInfo, NSString)) {
                     NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
@@ -1141,7 +1073,7 @@ typedef void (^ProcessActionBlock)(void);
                 
             } else {
                 //EVENT: ADD TO CART
-                [TrackerManager postEvent:[EventFactory addToCart:self.currentSimple.sku basketValue:[self.cart.cartEntity.cartValue intValue] success:NO] forName:[AddToCartEvent name]];
+                [TrackerManager postEventWithSelector:[EventSelectors addToCartEventSelector] attributes:[EventAttributes addToCardWithProduct:self.product success:NO]];
 
                 [self onErrorResponse:error.code messages:[error.userInfo objectForKey:kErrorMessages] showAsMessage:YES selector:@selector(addToCart) objects:nil];
                 //[self hideLoading];
@@ -1411,8 +1343,8 @@ typedef void (^ProcessActionBlock)(void);
         [DataAggregator addToWishListWithTarget:self sku:self.product.sku completion:^(id data, NSError *error) {
             if(error == nil) {
                 //EVENT: ADD TO FAVORITES
-                [TrackerManager postEvent:[EventFactory addToFavorites:self.product.categoryUrlKey success:YES] forName:[AddToFavoritesEvent name]];
-
+                [TrackerManager postEventWithSelector:[EventSelectors addToWishListSelector] attributes:[EventAttributes addToFavoriteWithProduct:self.product success:YES]];
+                
                 //[self hideLoading];
                 button.selected = YES;
 
@@ -1434,7 +1366,7 @@ typedef void (^ProcessActionBlock)(void);
                 //[self hideLoading];
                 
                 //EVENT: ADD TO FAVORITES
-                [TrackerManager postEvent:[EventFactory addToFavorites:self.product.categoryUrlKey success:NO] forName:[AddToFavoritesEvent name]];
+                [TrackerManager postEventWithSelector:[EventSelectors addToWishListSelector] attributes:[EventAttributes addToFavoriteWithProduct:self.product success:NO]];
             }
         }];
     }
@@ -1481,7 +1413,7 @@ typedef void (^ProcessActionBlock)(void);
                 //[self hideLoading];
                 
                 //EVENT: ADD TO FAVORITES
-                [TrackerManager postEvent:[EventFactory addToFavorites:self.product.categoryUrlKey success:NO] forName:[AddToFavoritesEvent name]];
+                [TrackerManager postEventWithSelector:[EventSelectors addToWishListSelector] attributes:[EventAttributes addToFavoriteWithProduct:self.product success:NO]];
             }
         }];
     }
@@ -1994,7 +1926,7 @@ typedef void (^ProcessActionBlock)(void);
 }
 
 #pragma mark - DataTrackerProtocol
--(NSString *)getDataTrackerAlias {
+-(NSString *)getScreenName {
     return @"PRODUCT";
 }
 
@@ -2023,7 +1955,7 @@ typedef void (^ProcessActionBlock)(void);
 }
 
 - (NSArray<EMRecommendationRequest *> *)getRecommendations {
-    EMRecommendationRequest *recommend = [EMRecommendationRequest requestWithLogic:@"RELATED"];
+    EMRecommendationRequest *recommend = [EMRecommendationRequest requestWithLogic:recommendationLogic];
     recommend.limit = 4;
     recommend.completionHandler = ^(EMRecommendationResult *_Nonnull result) {
         [self renderRecommendations:result];
@@ -2059,7 +1991,7 @@ typedef void (^ProcessActionBlock)(void);
 #pragma mark - FeatureBoxCollectionViewWidgetViewDelegate
 - (void)selectFeatureItem:(NSObject *)item widgetBox:(id)widgetBox {
     if ([item isKindOfClass:[RecommendItem class]]) {
-        [TrackerManager postEvent:[EventFactory tapRecommectionInScreenName:@"PDV" logic:@"RELATED"] forName:[TapRecommendationEvent name]];
+        [TrackerManager postEventWithSelector:[EventSelectors recommendationTappedSelector] attributes:[EventAttributes tapEmarsysRecommendationWithScreenName:[self getScreenName] logic:recommendationLogic]];
         [[NSNotificationCenter defaultCenter] postNotificationName: kDidSelectTeaserWithPDVUrlNofication
                                                             object: nil
                                                           userInfo: @{@"sku": ((RecommendItem *)item).sku}];

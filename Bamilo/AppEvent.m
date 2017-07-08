@@ -14,7 +14,7 @@
 @implementation AppEvent
 
 +(NSString *)name {
-    return nil;
+    return NSStringFromClass(self);
 }
 
 +(NSMutableDictionary *)attributes {

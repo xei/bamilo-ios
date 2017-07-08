@@ -313,7 +313,7 @@
 }
 
 #pragma mark - DataTrackerProtocol
--(NSString *)getDataTrackerAlias {
+-(NSString *)getScreenName {
     return @"CART";
 }
 

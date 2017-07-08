@@ -80,9 +80,10 @@
             [self bind:data forRequestId:0];
             
             //EVENT: SIGNUP / SUCCESS
-            [TrackerManager postEvent:[EventFactory signup:cSignUpMethodEmail success:YES] forName:[SignUpEvent name]];
+            RICustomer *customer = [RICustomer getCurrentCustomer];
             
-            [EmarsysPredictManager setCustomer:[RICustomer getCurrentCustomer]];
+            [TrackerManager postEventWithSelector:[EventSelectors signupEventSelector] attributes:[EventAttributes signupWithMethod:cSignUpMethodEmail user:customer success:YES]];
+            [EmarsysPredictManager setCustomer: customer];
             
             [[PushWooshTracker sharedTracker] setUserID:[RICustomer getCurrentCustomer].email];
             
@@ -93,8 +94,6 @@
             }
         } else {
             //EVENT: SIGNUP / FAILURE
-            [TrackerManager postEvent:[EventFactory signup:cSignUpMethodEmail success:NO] forName:[SignUpEvent name]];
-            
             BaseViewController *baseViewController = (BaseViewController *)self.delegate;
             if(![baseViewController showNotificationBar:error isSuccess:NO]) {
                 for(NSDictionary* errorField in [error.userInfo objectForKey:kErrorMessages]) {

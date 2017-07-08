@@ -10,9 +10,4 @@
 
 @implementation LogoutEvent
 
-#pragma mark - Overrides
-+(NSString *)name {
-    return @"Logout";
-}
-
 @end

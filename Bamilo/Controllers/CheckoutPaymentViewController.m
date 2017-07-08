@@ -119,7 +119,8 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
                 [self showNotificationBar:error isSuccess:NO];
                 
                 //EVENT : PURCHASE
-                [TrackerManager postEvent:[EventFactory purchase:[EventUtilities getEventCategories:self.cart] basketValue:[self.cart.cartEntity.cartValue longValue] success:NO] forName:[PurchaseEvent name]];
+                [TrackerManager postEventWithSelector:[EventSelectors purchaseSelector]
+                                           attributes:[EventAttributes purchaseWithCart:self.cart success:YES]];
                 
                 completion(nil, NO);
             }

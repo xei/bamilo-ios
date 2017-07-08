@@ -22,7 +22,7 @@ typedef void(^DataCompletion)(id data, NSError *error);
 
 + (instancetype)sharedInstance;
 
-- (void) processResponse:(RIApiResponse)response ofClass:(Class)aClass forData:(ResponseData *)data errorMessages:(NSArray *)errorMessages completion:(DataCompletion)completion;
+- (void)processResponse:(RIApiResponse)response ofClass:(Class)aClass forData:(ResponseData *)data errorMessages:(NSArray *)errorMessages completion:(DataCompletion)completion;
 - (NSError *)getErrorFrom:(RIApiResponse)response errorMessages:(NSArray *)errorMessages;
 
 @end

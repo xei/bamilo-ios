@@ -11,9 +11,4 @@
 
 @implementation SearchEvent
 
-#pragma mark - Overrides
-+(NSString *)name {
-    return @"Search";
-}
-
 @end

@@ -136,7 +136,7 @@
             [self bind:data forRequestId:0];
             
             //EVENT: ADD TO CART
-            [TrackerManager postEvent:[EventFactory addToCart:item.sku basketValue:[self.cart.cartEntity.cartValue longValue] success:YES] forName:[AddToCartEvent name]];
+//            [TrackerManager postEvent:[EventFactory addToCart:item.sku basketValue:[self.cart.cartEntity.cartValue longValue] success:YES] forName:[AddToCartEvent name]];
             
             NSDictionary *userInfo = [NSDictionary dictionaryWithObject:self.cart forKey:kUpdateCartNotificationValue];
             [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
@@ -144,7 +144,7 @@
             //[self.parent hideLoading];
         } else {
             //EVENT: ADD TO CART
-            [TrackerManager postEvent:[EventFactory addToCart:item.sku basketValue:[self.cart.cartEntity.cartValue intValue] success:NO] forName:[AddToCartEvent name]];
+//            [TrackerManager postEvent:[EventFactory addToCart:item.sku basketValue:[self.cart.cartEntity.cartValue intValue] success:NO] forName:[AddToCartEvent name]];
             
             [self onErrorResponse:error.code messages:[error.userInfo objectForKey:kErrorMessages] showAsMessage:YES selector:@selector(addToCart:) objects:@[sender]];
             //[self hideLoading];

@@ -33,6 +33,7 @@
 #import "GoogleAnalyticsTracker.h"
 #import "EmarsysPredictManager.h"
 #import "CartDataManager.h"
+#import "Bamilo-Swift.h"
 
 @interface JAAppDelegate () <RIAdjustTrackerDelegate>
 
@@ -150,15 +151,15 @@
     
     //SETUP TRACKERS
     //********************************************************************
-    [TrackerManager addTracker:[PushWooshTracker sharedTracker]];
-    [TrackerManager addTracker:[EmarsysMobileEngageTracker sharedTracker]];
-    [TrackerManager addTracker:[GoogleAnalyticsTracker sharedTracker]];
+    [TrackerManager addTrackerWithTracker:[EmarsysMobileEngageTracker sharedTracker]];
+    [TrackerManager addTrackerWithTracker:[PushWooshTracker sharedTracker]];
+    [TrackerManager addTrackerWithTracker:[GoogleAnalyticsTracker sharedTracker]];
     
     NSDictionary *configs = [[NSBundle mainBundle] objectForInfoDictionaryKey:kConfigs];
     if(configs) {
         NSString *isPushWooshBeta = [configs objectForKey:@"Pushwoosh_BETA"];
         if([isPushWooshBeta isEqualToString:@"1"]) {
-            [TrackerManager sendTags:@{ @"Beta": isPushWooshBeta } completion:^(NSError *error) {
+            [TrackerManager sendTagWithTags:@{ @"Beta": isPushWooshBeta } completion:^(NSError *error) {
                 if(error == nil) {
                     NSLog(@"TrackerManager > Beta > %@", isPushWooshBeta);
                 }
@@ -227,20 +228,20 @@
     
     OpenAppEventSourceType openAppEventSourceType = [[AppManager sharedInstance] getOpenAppEventSource];
     
-    if(openAppEventSourceType != OPEN_APP_SOURCE_PUSH_NOTIFICATION &&
-       openAppEventSourceType != OPEN_APP_SOURCE_DEEPLINK) {
+    if(openAppEventSourceType != OpenAppEventSourceTypePushNotification &&
+       openAppEventSourceType != OpenAppEventSourceTypeDeeplink) {
         //EVENT: OPEN APP / DIRECT
-        [TrackerManager postEvent:[EventFactory openApp:[[AppManager sharedInstance] updateOpenAppEventSource:OPEN_APP_SOURCE_DIRECT]] forName:[OpenAppEvent name]];
+        [TrackerManager postEventWithSelector:[EventSelectors openAppSelector] attributes:[EventAttributes openAppWithSource:OpenAppEventSourceTypeDirect]];
     }
     
-    [TrackerManager sendTags:@{ @"AppOpenCount": @([UserDefaultsManager incrementCounter:kUDMAppOpenCount]) } completion:^(NSError *error) {
+    [TrackerManager sendTagWithTags:@{ @"AppOpenCount": @([UserDefaultsManager incrementCounter:kUDMAppOpenCount]) } completion:^(NSError *error) {
         if(error == nil) {
             NSLog(@"TrackerManager > AppOpenCount > %d", [UserDefaultsManager getCounter:kUDMAppOpenCount]);
         }
     }];
     
     //Reset to none for next app open
-    [[AppManager sharedInstance] updateOpenAppEventSource:OPEN_APP_SOURCE_NONE];
+    [[AppManager sharedInstance] updateOpenAppEventSource:OpenAppEventSourceTypeNone];
     
     [[AppManager sharedInstance] updateScheduledAppIcons];
     [[AppManager sharedInstance] executeScheduledAppIcons];
@@ -343,7 +344,7 @@
         [DeepLinkManager handleUrl:url];
     
         //EVENT: OPEN APP / DEEP LINK
-        [TrackerManager postEvent:[EventFactory openApp:[[AppManager sharedInstance] updateOpenAppEventSource:OPEN_APP_SOURCE_DEEPLINK]] forName:[OpenAppEvent name]];
+        [TrackerManager postEventWithSelector:[EventSelectors openAppSelector] attributes:[EventAttributes openAppWithSource:OpenAppEventSourceTypeDeeplink]];
         
         return YES;
     }

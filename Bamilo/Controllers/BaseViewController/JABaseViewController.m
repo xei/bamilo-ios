@@ -383,9 +383,8 @@
 }
 
 #pragma mark Search Bar && Search Results View Delegate
-
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    
+    NSLog(@"%@", searchBar.text);
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {

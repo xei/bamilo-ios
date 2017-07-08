@@ -1,15 +1,15 @@
+////
+////  ScreenTrackerProtocol.h
+////  Bamilo
+////
+////  Created by Ali Saeedifar on 5/1/17.
+////  Copyright © 2017 Rocket Internet. All rights reserved.
+////
 //
-//  ScreenTrackerProtocol.h
-//  Bamilo
+//#import <Foundation/Foundation.h>
 //
-//  Created by Ali Saeedifar on 5/1/17.
-//  Copyright © 2017 Rocket Internet. All rights reserved.
+//@protocol ScreenTrackerProtocol <NSObject>
 //
-
-#import <Foundation/Foundation.h>
-
-@protocol ScreenTrackerProtocol <NSObject>
-
-- (void)trackScreenName:(NSString *)screenName;
-
-@end
+//- (void)trackScreenName:(NSString *)screenName;
+//
+//@end

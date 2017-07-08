@@ -10,9 +10,4 @@
 
 @implementation AddToCartEvent
 
-#pragma mark - Overrides
-+(NSString *)name {
-    return @"AddToCart";
-}
-
 @end

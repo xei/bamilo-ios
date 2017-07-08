@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "OpenAppEvent.h"
 
+
 @interface AppManager : NSObject
 
 +(instancetype) sharedInstance;
