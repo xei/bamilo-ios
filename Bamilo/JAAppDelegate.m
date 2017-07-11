@@ -30,7 +30,6 @@
 #import "PushWooshTracker.h"
 #import "EmarsysMobileEngage.h"
 #import "EmarsysMobileEngageTracker.h"
-#import "GoogleAnalyticsTracker.h"
 #import "EmarsysPredictManager.h"
 #import "CartDataManager.h"
 #import "Bamilo-Swift.h"

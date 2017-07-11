@@ -6,9 +6,9 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-class GoogleAnalyticsTracker: BaseTracker, EventTrackerProtocol {
+@objc class GoogleAnalyticsTracker: BaseTracker, EventTrackerProtocol, ScreenTrackerProtocol {
 
-    var campaginDataString: String?
+    private var campaginDataString: String?
     
     //TODO: Must be changed when we migrate all Trackers
     private static var sharedInstance: GoogleAnalyticsTracker? // = GoogleAnalyticsTracker()
@@ -36,7 +36,7 @@ class GoogleAnalyticsTracker: BaseTracker, EventTrackerProtocol {
         GAI.sharedInstance().defaultTracker.allowIDFACollection = true
     }
     
-    func travckScreenName(screenName:String) {
+    func trackScreenName(screenName:String) {
         let tracker = GAI.sharedInstance().defaultTracker
         tracker?.set(kGAIScreenName, value: screenName)
         var builder = GAIDictionaryBuilder.createScreenView()
@@ -97,7 +97,7 @@ class GoogleAnalyticsTracker: BaseTracker, EventTrackerProtocol {
         if let screenName = attributes[kEventScreenName] as? String, let searchString = attributes[kEventKeywords] as? String {
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: screenName,
-                action: "Search",
+                action: "SearchBarSearch",
                 label: searchString,
                 value: nil
             )
@@ -114,10 +114,34 @@ class GoogleAnalyticsTracker: BaseTracker, EventTrackerProtocol {
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: "Catalog",
                 action: "Filters",
-                label:filterKeys,
+                label: filterKeys,
                 value: nil
             )
             
+            self.sendParamsToGA(params: params)
+        }
+    }
+    
+    func catalogSortChanged(attributes: EventAttributeType) {
+        if let sortMethod = attributes[kEventCatalogSortMethod] as? String {
+            let params = GAIDictionaryBuilder.createEvent(
+                withCategory: "Catalog",
+                action: "CatalogSort",
+                label:sortMethod,
+                value: nil
+            )
+            self.sendParamsToGA(params: params)
+        }
+    }
+    
+    func catalogViewChanged(attributes: EventAttributeType) {
+        if let listType = attributes[kEventCatalogListViewType] as? String {
+            let params = GAIDictionaryBuilder.createEvent(
+                withCategory: "Catalog",
+                action: "CatalogViewChanged",
+                label: listType,
+                value: nil
+            )
             self.sendParamsToGA(params: params)
         }
     }
@@ -129,6 +153,57 @@ class GoogleAnalyticsTracker: BaseTracker, EventTrackerProtocol {
                 action: "Click",
                 label: "\(screenName)-\(logic)",
                 value: nil
+            )
+            self.sendParamsToGA(params: params)
+        }
+    }
+    
+    func addToWishList(attributes: EventAttributeType) {
+        
+    }
+    
+    func addToCart(attributes: EventAttributeType) {
+        
+    }
+    
+    func purchased(attributes: EventAttributeType) {
+        
+    }
+    
+    func viewProduct(attributes: EventAttributeType) {
+        
+    }
+    
+    
+    func login(attributes: EventAttributeType) {
+        if let loginMethod = attributes[kEventMethod] as? String, let user = attributes[kEventUser] as? RICustomer {
+            let params = GAIDictionaryBuilder.createEvent(
+                withCategory: "Account",
+                action: "Login",
+                label: "\(loginMethod)",
+                value: user.customerId
+            )
+            self.sendParamsToGA(params: params)
+        }
+    }
+    
+    func logout(attributes: EventAttributeType) {
+        let params = GAIDictionaryBuilder.createEvent(
+            withCategory: "Account",
+            action: "Logout",
+            label: nil,
+            value: nil
+        )
+        self.sendParamsToGA(params: params)
+    }
+    
+    func signup(attributes: EventAttributeType) {
+        if let loginMethod = attributes[kEventMethod] as? String, let user = attributes[kEventUser] as? RICustomer, let success = attributes[kEventSuccess] as? Bool {
+            let params = GAIDictionaryBuilder.createEvent(
+                withCategory: "Account",
+                action: success ? "SignupSuccess" : "SignupFailed",
+                label: "\(loginMethod)",
+                value: user.customerId
             )
             self.sendParamsToGA(params: params)
         }

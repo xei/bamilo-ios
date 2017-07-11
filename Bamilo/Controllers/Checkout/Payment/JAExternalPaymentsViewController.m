@@ -221,7 +221,7 @@
 }
 
 #pragma mark - PerformanceTrackerProtocol
--(NSString *)getPerformanceTrackerScreenName {
+-(NSString *)getScreenName {
     return @"ExternalPayment";
 }
 

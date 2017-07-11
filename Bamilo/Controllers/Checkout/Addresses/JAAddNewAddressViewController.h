@@ -1,18 +1,18 @@
+////
+////  JAAddNewAddressViewController.h
+////  Jumia
+////
+////  Created by Pedro Lopes on 02/09/14.
+////  Copyright (c) 2014 Rocket Internet. All rights reserved.
+////
 //
-//  JAAddNewAddressViewController.h
-//  Jumia
+//#import <UIKit/UIKit.h>
 //
-//  Created by Pedro Lopes on 02/09/14.
-//  Copyright (c) 2014 Rocket Internet. All rights reserved.
+//@class RICart;
 //
-
-#import <UIKit/UIKit.h>
-
-@class RICart;
-
-@interface JAAddNewAddressViewController : JABaseViewController
-
-@property (assign, nonatomic) BOOL fromCheckout;
-@property (strong, nonatomic) RICart *cart;
-
-@end
+//@interface JAAddNewAddressViewController : JABaseViewController
+//
+//@property (assign, nonatomic) BOOL fromCheckout;
+//@property (strong, nonatomic) RICart *cart;
+//
+//@end

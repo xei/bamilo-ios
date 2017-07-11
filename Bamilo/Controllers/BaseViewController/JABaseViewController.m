@@ -144,7 +144,7 @@
     
     self.loadingView.alpha = 0.0f;
     
-    //self.accengageAlias = [self getDataTrackerAlias];
+    [TrackerManager trackScreenNameWithScreenName:[self getScreenName]];
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -758,16 +758,20 @@
     }
 }
 
--(NSString *) getPerformanceTrackerScreenName {
-    return nil;
-}
-
 -(NSString *)getPerformanceTrackerLabel {
     return nil;
 }
 
+- (NSString *)getPerformanceTrackerScreenName {
+    return [self getScreenName];
+}
+
 #pragma mark - DataTrackerProtocol
 -(NSString *)getDataTrackerAlias {
+    return nil;
+}
+
+- (NSString *)getScreenName {
     return nil;
 }
 

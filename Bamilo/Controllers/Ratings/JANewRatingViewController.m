@@ -800,8 +800,8 @@ UIAlertViewDelegate
     [self.reviewsDynamicForm resignResponder];
 }
 
-#pragma mark - PerformanceTrackerProtocol
--(NSString *)getPerformanceTrackerScreenName {
+#pragma mark - DataTrackerProtocol
+-(NSString *)getScreenName {
     if(VALID_NOTEMPTY(self.product.sku, NSString)) {
         return [NSString stringWithFormat:@"WriteRatingScreen / %@", self.product.sku];
     } else {

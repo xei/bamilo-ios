@@ -1,17 +1,17 @@
+////
+////  JASignInViewController.h
+////  Jumia
+////
+////  Created by Miguel Chaves on 13/Aug/14.
+////  Copyright (c) 2014 Rocket Internet. All rights reserved.
+////
 //
-//  JASignInViewController.h
-//  Jumia
+//#import <UIKit/UIKit.h>
 //
-//  Created by Miguel Chaves on 13/Aug/14.
-//  Copyright (c) 2014 Rocket Internet. All rights reserved.
+//@interface JASignInViewController : JABaseViewController
 //
-
-#import <UIKit/UIKit.h>
-
-@interface JASignInViewController : JABaseViewController
-
-@property (nonatomic, assign) BOOL fromSideMenu;
-@property (nonatomic, strong) void(^nextStepBlock)(void);
-@property (nonatomic, strong) NSString *authenticationEmail;
-
-@end
+//@property (nonatomic, assign) BOOL fromSideMenu;
+//@property (nonatomic, strong) void(^nextStepBlock)(void);
+//@property (nonatomic, strong) NSString *authenticationEmail;
+//
+//@end

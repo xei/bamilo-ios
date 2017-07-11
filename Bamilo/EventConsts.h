@@ -48,5 +48,8 @@ FOUNDATION_EXPORT NSString *const kUTMTerm;
 FOUNDATION_EXPORT NSString *const kEventSearchTarget;
 FOUNDATION_EXPORT NSString *const kEventScreenName;
 FOUNDATION_EXPORT NSString *const kEventRecommendationLogic;
+FOUNDATION_EXPORT NSString *const kEventCatalogSortMethod;
+FOUNDATION_EXPORT NSString *const kEventCatalogListViewType;
+
 
 @end

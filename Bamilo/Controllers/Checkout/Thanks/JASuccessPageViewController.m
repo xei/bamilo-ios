@@ -574,8 +574,8 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowMyOrdersScreenNotification object:self.cart.orderNr];
 }
 
-#pragma mark - PerformanceTrackerProtocol
--(NSString *)getPerformanceTrackerScreenName {
+#pragma mark - DataTrackerProtocol
+-(NSString *)getScreenName {
     return @"CheckoutFinish";
 }
 

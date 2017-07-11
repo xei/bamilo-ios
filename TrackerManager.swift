@@ -28,7 +28,7 @@
         }
     }
     
-    static func  sendTag(tags: [String:Any], completion: @escaping TagTrackerCompletion) {
+    static func sendTag(tags: [String:Any], completion: @escaping TagTrackerCompletion) {
         self.trackers.forEach { (tracker) in
             (tracker as? TagTrackerProtocol)?.sendTags(tags, completion: completion)
         }

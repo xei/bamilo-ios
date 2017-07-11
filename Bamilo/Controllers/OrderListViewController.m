@@ -170,5 +170,9 @@
     }
 }
 
+#pragma mark - DataTrackerProtocol
+- (NSString *)getScreenName {
+    return @"OrderListView";
+}
 
 @end

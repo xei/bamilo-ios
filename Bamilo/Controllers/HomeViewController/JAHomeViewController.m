@@ -34,7 +34,7 @@
 #import "DeepLinkManager.h"
 #import "Bamilo-Swift.h"
 
-@interface JAHomeViewController () <JAPickerDelegate, JANewsletterGenderProtocol, EmarsysRecommendationsProtocol, FeatureBoxCollectionViewWidgetViewDelegate>
+@interface JAHomeViewController () <JAPickerDelegate, JANewsletterGenderProtocol, EmarsysRecommendationsProtocol, FeatureBoxCollectionViewWidgetViewDelegate, SearchBarListener>
 @property (strong, nonatomic) JATeaserPageView* teaserPageView;
 @property (nonatomic, assign) BOOL isLoaded;
 @property (nonatomic, assign) BOOL isReturningHome;
@@ -116,11 +116,6 @@
     // notify the InAppNotification SDK that this view controller in no more active
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self.teaserPageView];
-}
-
--(void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"HomeShop"];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
@@ -297,14 +292,9 @@
     }];
 }
 
-#pragma mark - PerformanceTrackerProtocol
--(NSString *)getPerformanceTrackerScreenName {
-    return @"Home";
-}
-
 #pragma mark - DataTrackerProtocol
 -(NSString *)getScreenName {
-    return @"HOME";
+    return @"HomePage";
 }
 
 #pragma EmarsysRecommendationsProtocol
@@ -343,5 +333,11 @@
                                                           userInfo: @{@"sku": ((RecommendItem *)item).sku}];
     }
 }
+
+#pragma mark: - searchBarSearched Protocol
+- (void)searchBarSearched:(UISearchBar *)searchBar {
+    [TrackerManager postEventWithSelector:[EventSelectors searchBarSearchedSelector] attributes:[EventAttributes searchBarSearchedWithSearchString:searchBar.text screenName:[self getScreenName]]];
+}
+
 
 @end

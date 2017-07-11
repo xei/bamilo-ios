@@ -239,8 +239,8 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
     }
 }
 
-#pragma mark - PerformanceTrackerProtocol
--(NSString *)getPerformanceTrackerScreenName {
+#pragma mark - DataTrackerProtocol
+-(NSString *)getScreenName {
     return @"CheckoutPayment";
 }
 

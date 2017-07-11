@@ -20,4 +20,7 @@
     @objc optional func logout(attributes: EventAttributeType)
     @objc optional func login(attributes: EventAttributeType)
     @objc optional func signup(attributes: EventAttributeType)
+    @objc optional func catalogViewChanged(attributes: EventAttributeType)
+    @objc optional func catalogSortChanged(attributes: EventAttributeType)
+    
 }

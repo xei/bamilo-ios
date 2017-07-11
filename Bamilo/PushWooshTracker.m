@@ -84,7 +84,7 @@ static PushWooshTracker *instance;
     }];
     
     if (utmDictionary.allKeys.count) {
-        [[RITrackingWrapper sharedInstance] trackCampaignData:utmDictionary];
+        [[GoogleAnalyticsTracker sharedTracker] trackCampaignDataWithCampaignDictionary:utmDictionary];
     }
 }
 

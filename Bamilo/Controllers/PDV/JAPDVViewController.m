@@ -1912,22 +1912,13 @@ static NSString *recommendationLogic = @"RELATED";
     [self publishScreenLoadTime];
 }
 
-#pragma mark - PerformanceTrackerProtocol
--(NSString *)getPerformanceTrackerScreenName {
-    if (self.product.sku.length) {
-        return [NSString stringWithFormat:@"PDS / %@", self.product.sku];
-    } else {
-        return @"PDV";
-    }
+#pragma mark - DataTrackerProtocol
+-(NSString *)getScreenName {
+    return @"PDVView";
 }
 
 -(NSString *)getPerformanceTrackerLabel {
     return self.productSku;
-}
-
-#pragma mark - DataTrackerProtocol
--(NSString *)getScreenName {
-    return @"PRODUCT";
 }
 
 #pragma mark - DataServiceProtocol

@@ -302,11 +302,6 @@
     }
 }
 
-#pragma mark - PerformanceTrackerProtocol
-- (NSString *)getPerformanceTrackerScreenName {
-    return @"Cart";
-}
-
 - (NSString *)getPerformanceTrackerLabel {
      NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
     return [NSString stringWithFormat:@"%@", [skusFromTeaserInCart allKeys]];

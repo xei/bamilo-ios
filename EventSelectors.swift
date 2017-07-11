@@ -48,6 +48,13 @@ import Foundation
         return Selector(("appOpendWithAttributes:"))
     }
     class func recommendationTappedSelector() -> Selector {
-        return Selector(("recommendationTappedAttributes:"))
+        return Selector(("recommendationTappedWithAttributes:"))
+    }
+    
+    class func catalogViewChangedSelector() -> Selector {
+        return Selector(("catalogViewChangedWithAttributes:"))
+    }
+    class func catalogSortChangedSelector() -> Selector {
+        return Selector(("catalogSortChangedWithAttributes:"))
     }
 }

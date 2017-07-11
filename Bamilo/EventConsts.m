@@ -48,5 +48,7 @@ NSString *const kUTMTerm = @"utm_term";
 NSString *const kEventSearchTarget = @"searchTarget";
 NSString *const kEventScreenName = @"screnName";
 NSString *const kEventRecommendationLogic = @"RecommendationLogic";
+NSString *const kEventCatalogSortMethod = @"CatalogSortMethod";
+NSString *const kEventCatalogListViewType = @"CatalogListViewType";
 
 @end

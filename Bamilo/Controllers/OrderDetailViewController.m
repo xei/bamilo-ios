@@ -223,4 +223,11 @@
     return progressViewControlContent;
 }
 
+#pragma mark: -DataTrackerProtocol
+
+- (NSString *)getScreenName {
+    return @"OrderDetailView";
+}
+
+
 @end

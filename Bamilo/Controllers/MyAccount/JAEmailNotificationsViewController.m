@@ -288,8 +288,8 @@ JADynamicFormDelegate
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
-#pragma mark - PerformanceTrackerProtocol
--(NSString *)getPerformanceTrackerScreenName {
+#pragma mark - DataTrackerProtocol
+-(NSString *)getScreenName {
     return @"CustomerEmailNotifications";
 }
 

@@ -115,8 +115,8 @@
     [self publishScreenLoadTime];
 }
 
-#pragma mark - PerformanceTrackerProtocol
--(NSString *)getPerformanceTrackerScreenName {
+#pragma mark - DataTrackerProtocol
+-(NSString *)getScreenName {
     if(self.pagemenu.currentPageIndex == 0) {
         return @"SignUp";
     } else {

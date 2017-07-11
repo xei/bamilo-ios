@@ -169,6 +169,11 @@ import SwiftyJSON
     
     //MARK: - CatalogHeaderViewDelegate
     func sortTypeSelected(type: Catalog.CatalogSortType) {
+        TrackerManager.postEvent(
+            selector: EventSelectors.catalogSortChangedSelector(),
+            attributes: EventAttributes.catalogSortChanged(sortMethod: self.sortingMethod)
+        )
+        
         self.sortingMethod = type
         self.loadData()
     }
@@ -181,6 +186,10 @@ import SwiftyJSON
     
     func changeListViewType(type: CatalogListViewType) {
         self.listViewType = type
+        TrackerManager.postEvent(
+            selector: EventSelectors.catalogViewChangedSelector(),
+            attributes: EventAttributes.catalogViewChanged(listViewType: type)
+        )
         self.collectionView.reloadData()
         UIView.animate(withDuration: 0.15, animations: { 
             self.collectionView.collectionViewLayout.invalidateLayout()
@@ -498,6 +507,18 @@ import SwiftyJSON
                     }
                     self.showNotificationBar(error, isSuccess: false)
                 })
+                
+                
+                let translatedProduct = RIProduct()
+                translatedProduct.sku = product.sku
+                if let price = product.price {
+                    translatedProduct.price = NSNumber(value: price)
+                }
+                TrackerManager.postEvent(
+                    selector: EventSelectors.addToWishListSelector(),
+                    attributes: EventAttributes.addToFavorite(product: translatedProduct, success: true)
+                )
+                
             } else {
                 DeleteEntityDataManager.sharedInstance().removeFromWishList(self, sku: product.sku, completion: { (data, error) in
                     guard error != nil else {
@@ -555,7 +576,12 @@ import SwiftyJSON
     func searchBarSearched(_ searchBar: UISearchBar!) {
         TrackerManager.postEvent(
             selector: EventSelectors.searchBarSearchedSelector(),
-            attributes: EventAttributes.searchBarSearched(searchString: searchBar.text ?? "", screenName: "Catalog")
+            attributes: EventAttributes.searchBarSearched(searchString: searchBar.text ?? "", screenName: self.getScreenName())
         )
+    }
+    
+    //MARK: -DataTrackerProtocol
+    override func getScreenName() -> String! {
+        return "Catalog"
     }
 }

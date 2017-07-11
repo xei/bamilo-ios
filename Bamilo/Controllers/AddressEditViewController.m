@@ -287,8 +287,8 @@
     }];
 }
 
-#pragma mark - PerformanceTrackerProtocol
--(NSString *)getPerformanceTrackerScreenName {
+#pragma mark - DataTrackerProtocol
+-(NSString *)getScreenName {
     if(self.address.uid) {
         return @"EditAddress";
     } else {

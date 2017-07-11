@@ -1,32 +1,32 @@
+////
+////  ContinueWitoutLoginViewController.m
+////  Bamilo
+////
+////  Created by Ali Saeedifar on 2/13/17.
+////  Copyright © 2017 Rocket Internet. All rights reserved.
+////
 //
-//  ContinueWitoutLoginViewController.m
-//  Bamilo
+//#import "ContinueWitoutLoginViewController.h"
 //
-//  Created by Ali Saeedifar on 2/13/17.
-//  Copyright © 2017 Rocket Internet. All rights reserved.
+//@interface ContinueWitoutLoginViewController ()
 //
-
-#import "ContinueWitoutLoginViewController.h"
-
-@interface ContinueWitoutLoginViewController ()
-
-@end
-
-@implementation ContinueWitoutLoginViewController
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-#pragma mark - PerformanceTrackerProtocol
--(NSString *)getPerformanceTrackerScreenName {
-    return @"ContinueWithoutLogin";
-}
-
-@end
+//@end
+//
+//@implementation ContinueWitoutLoginViewController
+//
+//- (void)viewDidLoad {
+//    [super viewDidLoad];
+//    // Do any additional setup after loading the view.
+//}
+//
+//- (void)didReceiveMemoryWarning {
+//    [super didReceiveMemoryWarning];
+//    // Dispose of any resources that can be recreated.
+//}
+//
+//#pragma mark - DataTrackerProtocol
+//-(NSString *)getPerformanceTrackerScreenName {
+//    return @"ContinueWithoutLogin";
+//}
+//
+//@end

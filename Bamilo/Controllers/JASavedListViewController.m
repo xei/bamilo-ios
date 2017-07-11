@@ -603,15 +603,11 @@
     }
 }
 
-#pragma mark - PerformanceTrackerProtocol
-- (NSString *)getPerformanceTrackerScreenName {
-    return @"SavedList";
-}
-
 #pragma mark - DataTrackerProtocol
 - (NSString *)getScreenName {
-    return @"MYFAVOURITES";
+    return @"WishList";
 }
+
 
 #pragma mark - DataServiceProtocol
 - (void)bind:(id)data forRequestId:(int)rid {

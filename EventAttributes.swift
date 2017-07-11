@@ -112,4 +112,16 @@ public typealias EventAttributeType = [String:Any]
         attributes[kEventFilterQuery] = filterQueryString
         return attributes
     }
+    
+    static func catalogViewChanged(listViewType: CatalogListViewType) -> EventAttributeType {
+        var attributes = self.getCommonAttributes()
+        attributes[kEventCatalogListViewType] = listViewType.rawValue
+        return attributes
+    }
+    
+    static func catalogSortChanged(sortMethod: Catalog.CatalogSortType) -> EventAttributeType {
+        var attributes = self.getCommonAttributes()
+        attributes[kEventCatalogSortMethod] = sortMethod
+        return attributes
+    }
 }

@@ -91,8 +91,8 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-#pragma mark - PerformanceTrackerProtocol
--(NSString *)getPerformanceTrackerScreenName {
+#pragma mark - DataTrackerProtocol
+-(NSString *)getScreenName {
     return @"ForgetPassword";
 }
 

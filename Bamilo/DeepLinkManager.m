@@ -34,7 +34,7 @@ static BOOL isListenersReady;
             [queryDictionary objectForKey:kUTMCampaign] ||
             [queryDictionary objectForKey:kUTMTerm] ||
             [queryDictionary objectForKey:kUTMContent]) {
-            [[RITrackingWrapper sharedInstance] trackCampaignData:queryDictionary];
+            [[GoogleAnalyticsTracker sharedTracker] trackCampaignDataWithCampaignDictionary:queryDictionary];
         }
         
         NSArray *pathComponents = [[url.path componentsSeparatedByString:@"/"] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"length > 0"]];

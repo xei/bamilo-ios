@@ -481,17 +481,17 @@
 
 #pragma mark Track Order Detail Screen
 - (void)showMyOrderDetailViewController:(NSNotification*)notification {
-    UIViewController *topViewController = [self topViewController];
-    if ([topViewController isKindOfClass:[JAMyOrdersViewController class]]) {
-        
-        NSDictionary *userInfo = notification.userInfo;
-        if(VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"order"], RITrackOrder)) {
-            JAMyOrderDetailViewController *myOrderVC = [JAMyOrderDetailViewController new];
-            myOrderVC.trackingOrder = [userInfo objectForKey:@"order"];
-            
-            [self pushViewController:myOrderVC animated:YES];
-        }
-    }
+//    UIViewController *topViewController = [self topViewController];
+//    if ([topViewController isKindOfClass:[JAMyOrdersViewController class]]) {
+//        
+//        NSDictionary *userInfo = notification.userInfo;
+//        if(VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"order"], RITrackOrder)) {
+//            JAMyOrderDetailViewController *myOrderVC = [JAMyOrderDetailViewController new];
+//            myOrderVC.trackingOrder = [userInfo objectForKey:@"order"];
+//            
+//            [self pushViewController:myOrderVC animated:YES];
+//        }
+//    }
 }
 
 #pragma mark User Data Screen

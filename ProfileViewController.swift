@@ -273,4 +273,9 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         RICommunicationWrapper.deleteSessionCookie()
         ViewControllerManager.sharedInstance().clearCache()
     }
+    
+    //MARK: - DataTrackerProtocol
+    override func getScreenName() -> String! {
+        return "ProfileView"
+    }
 }

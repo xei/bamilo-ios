@@ -1,15 +1,15 @@
+////
+////  JAMyOrdersViewController.h
+////  Jumia
+////
+////  Created by Miguel Chaves on 30/Jul/14.
+////  Copyright (c) 2014 Rocket Internet. All rights reserved.
+////
 //
-//  JAMyOrdersViewController.h
-//  Jumia
+//#import "JABaseViewController.h"
 //
-//  Created by Miguel Chaves on 30/Jul/14.
-//  Copyright (c) 2014 Rocket Internet. All rights reserved.
+//@interface JAMyOrdersViewController : JABaseViewController
 //
-
-#import "JABaseViewController.h"
-
-@interface JAMyOrdersViewController : JABaseViewController
-
-@property (nonatomic, strong) NSString *orderNumber;
-
-@end
+//@property (nonatomic, strong) NSString *orderNumber;
+//
+//@end

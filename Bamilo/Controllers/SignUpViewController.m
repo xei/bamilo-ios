@@ -140,9 +140,4 @@
     }
 }
 
-#pragma mark - PerformanceTrackerProtocol
--(NSString *)getPerformanceTrackerScreenName {
-    return @"SignUp";
-}
-
 @end
