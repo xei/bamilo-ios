@@ -506,7 +506,11 @@ static NSString *recommendationLogic = @"RELATED";
     
 //###################
     //EVENT : VIEW PRODUCT
-    [TrackerManager postEventWithSelector:[EventSelectors viewProductSelector] attributes:[EventAttributes viewProductWithProduct:product]];
+    NSUInteger lenght = self.navigationController.viewControllers.count;
+    UIViewController<DataTrackerProtocol> *previousViewController = self.navigationController.viewControllers[lenght - 2];
+    
+    [TrackerManager postEventWithSelector:[EventSelectors viewProductSelector]
+                               attributes:[EventAttributes viewProductWithParentViewScreenName:[previousViewController getScreenName] product:product]];
 }
 
 - (void)retryAddToCart {
@@ -1047,7 +1051,8 @@ static NSString *recommendationLogic = @"RELATED";
                 [self bind:data forRequestId:0];
 
                 //EVENT: ADD TO CART
-                [TrackerManager postEventWithSelector:[EventSelectors addToCartEventSelector] attributes:[EventAttributes addToCardWithProduct:self.product success:YES]];
+                [TrackerManager postEventWithSelector:[EventSelectors addToCartEventSelector]
+                                           attributes:[EventAttributes addToCardWithProduct:self.product screenName:[self getScreenName] success:YES]];
 
                 if (VALID_NOTEMPTY(self.teaserTrackingInfo, NSString)) {
                     NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
@@ -1073,7 +1078,8 @@ static NSString *recommendationLogic = @"RELATED";
                 
             } else {
                 //EVENT: ADD TO CART
-                [TrackerManager postEventWithSelector:[EventSelectors addToCartEventSelector] attributes:[EventAttributes addToCardWithProduct:self.product success:NO]];
+                [TrackerManager postEventWithSelector:[EventSelectors addToCartEventSelector]
+                                           attributes:[EventAttributes addToCardWithProduct:self.product screenName:[self getScreenName] success:NO]];
 
                 [self onErrorResponse:error.code messages:[error.userInfo objectForKey:kErrorMessages] showAsMessage:YES selector:@selector(addToCart) objects:nil];
                 //[self hideLoading];
@@ -1343,7 +1349,8 @@ static NSString *recommendationLogic = @"RELATED";
         [DataAggregator addToWishListWithTarget:self sku:self.product.sku completion:^(id data, NSError *error) {
             if(error == nil) {
                 //EVENT: ADD TO FAVORITES
-                [TrackerManager postEventWithSelector:[EventSelectors addToWishListSelector] attributes:[EventAttributes addToFavoriteWithProduct:self.product success:YES]];
+                [TrackerManager postEventWithSelector:[EventSelectors addToWishListSelector]
+                                           attributes:[EventAttributes addToWishListWithProduct:self.product screenName:[self getScreenName] success:YES]];
                 
                 //[self hideLoading];
                 button.selected = YES;
@@ -1366,7 +1373,8 @@ static NSString *recommendationLogic = @"RELATED";
                 //[self hideLoading];
                 
                 //EVENT: ADD TO FAVORITES
-                [TrackerManager postEventWithSelector:[EventSelectors addToWishListSelector] attributes:[EventAttributes addToFavoriteWithProduct:self.product success:NO]];
+                [TrackerManager postEventWithSelector:[EventSelectors addToWishListSelector]
+                                           attributes:[EventAttributes addToWishListWithProduct:self.product screenName:[self getScreenName] success:NO]];
             }
         }];
     }
@@ -1407,13 +1415,15 @@ static NSString *recommendationLogic = @"RELATED";
                 [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
                                                                     object:self.product.sku
                                                                   userInfo:userInfo];
+                
+                [TrackerManager postEventWithSelector:[EventSelectors removeFromWishListSelector] attributes:[EventAttributes removeToWishListWithProduct:self.product screenName:[self getScreenName]]];
+                
                 [self.delegate addToWishList:self.product.sku add:NO];
             } else {
                 [self onErrorResponse:error.code messages:[error.userInfo objectForKey:kErrorMessages] showAsMessage:YES selector:@selector(removeFromFavorites:) objects:@[button]];
                 //[self hideLoading];
                 
-                //EVENT: ADD TO FAVORITES
-                [TrackerManager postEventWithSelector:[EventSelectors addToWishListSelector] attributes:[EventAttributes addToFavoriteWithProduct:self.product success:NO]];
+                //EVENT: Remove FROM FAVORITES
             }
         }];
     }

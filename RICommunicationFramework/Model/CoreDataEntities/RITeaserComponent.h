@@ -36,8 +36,6 @@
 
 + (RITeaserComponent*)parseTeaserComponent:(NSDictionary*)teaserComponentJSON country:(RICountryConfiguration*)country;
 
-//+ (void)saveTeaserComponent:(RITeaserComponent *)teaserComponent andContext:(BOOL)save;
-
 - (void)sendNotificationForTeaseTarget:(NSString *) optionalTrackingInfo;
 
 @end

@@ -10,6 +10,7 @@
 #import "AppConsts.h"
 #import "RIApi.h"
 #import "RITarget.h"
+#import "RICartItem.h"
 #import "RICustomer.h"
 #import "JAStrings.h"
 #import "JANavigationBarLayout.h"

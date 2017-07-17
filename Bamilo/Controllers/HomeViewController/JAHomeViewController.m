@@ -61,6 +61,7 @@
     return _recommendationView;
 }
 
+
 #pragma mark - View lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];

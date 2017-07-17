@@ -110,14 +110,12 @@
             let arrayOfFilterKeysAndValues = filterQuery.components(separatedBy: "/")
             let filterKeys = arrayOfFilterKeysAndValues.enumerated().flatMap { $0 % 2 == 0 ? $1 : nil}.joined(separator: ", ")
             //let filterValues = arrayOfFilterKeysAndValues.enumerated().flatMap { $0 % 2 != 0 ? $1 : nil}.joined(separator: ", ")
-            
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: "Catalog",
                 action: "Filters",
                 label: filterKeys,
                 value: nil
             )
-            
             self.sendParamsToGA(params: params)
         }
     }
@@ -159,19 +157,71 @@
     }
     
     func addToWishList(attributes: EventAttributeType) {
-        
+        if let screenName = attributes[kEventScreenName] as? String,
+            let product = attributes[kEventProduct] as? RIProduct {
+            let params = GAIDictionaryBuilder.createEvent(
+                withCategory: screenName,
+                action: "RemoveFromWishList",
+                label: product.sku,
+                value: product.price
+            )
+            self.sendParamsToGA(params: params)
+        }
+    }
+    
+    func removeFromWishList(attributes: EventAttributeType) {
+        if let screenName = attributes[kEventScreenName] as? String,
+            let product = attributes[kEventProduct] as? RIProduct {
+            let params = GAIDictionaryBuilder.createEvent(
+                withCategory: screenName,
+                action: "AddToWishList",
+                label: product.sku,
+                value: product.price
+            )
+            self.sendParamsToGA(params: params)
+        }
     }
     
     func addToCart(attributes: EventAttributeType) {
-        
-    }
-    
-    func purchased(attributes: EventAttributeType) {
-        
+        if let screenName = attributes[kEventScreenName] as? String,
+            let product = attributes[kEventProduct] as? RIProduct {
+            let params = GAIDictionaryBuilder.createEvent(
+                withCategory: screenName,
+                action: "AddToCard",
+                label: product.sku,
+                value: product.price
+            )
+            self.sendParamsToGA(params: params)
+        }
     }
     
     func viewProduct(attributes: EventAttributeType) {
-        
+        if let parentScreenName = attributes[kEventScreenName] as? String,
+            let product = attributes[kEventProduct] as? RIProduct {
+            let params = GAIDictionaryBuilder.createEvent(
+                withCategory: "\(parentScreenName)",
+                action: "ViewProduct",
+                label: product.sku,
+                value: product.price
+            )
+            self.sendParamsToGA(params: params)
+        }
+    }
+    
+    
+    
+    func teaserTapped(attributes: EventAttributeType) {
+        if let screenName = attributes[kEventScreenName] as? String,
+            let teaserName = attributes[kEventTeaser] as? String,
+            let teaserTarget = attributes[kEventTargetString] as? String {
+            let params = GAIDictionaryBuilder.createEvent(
+                withCategory: "\(screenName)+\(teaserName)",
+                action: "TeaserTapped",
+                label: teaserTarget,
+                value: nil
+            )
+            self.sendParamsToGA(params: params)
+        }
     }
     
     
@@ -204,6 +254,51 @@
                 action: success ? "SignupSuccess" : "SignupFailed",
                 label: "\(loginMethod)",
                 value: user.customerId
+            )
+            self.sendParamsToGA(params: params)
+        }
+    }
+    
+    func checkoutStart(attributes: EventAttributeType) {
+        if let cart = attributes[kEventCart] as? RICart {
+            cart.cartEntity.cartItems.forEach({ (cartItem) in
+                if let cartItem = cartItem as? RICartItem {
+                    let params = GAIDictionaryBuilder.createEvent(
+                        withCategory: "Checkout",
+                        action: "CheckoutStart",
+                        label: cartItem.sku,
+                        value: cartItem.price
+                    )
+                    self.sendParamsToGA(params: params)
+                }
+            })
+        }
+    }
+    
+    func checkoutFinished(attributes: EventAttributeType) {
+        if let cart = attributes[kEventCart] as? RICart {
+            cart.cartEntity.cartItems.forEach({ (cartItem) in
+                if let cartItem = cartItem as? RICartItem {
+                    let params = GAIDictionaryBuilder.createEvent(
+                        withCategory: "Checkout",
+                        action: "CheckoutFinish",
+                        label: cartItem.sku,
+                        value: cartItem.price
+                    )
+                    self.sendParamsToGA(params: params)
+                }
+            })
+        }
+    }
+    
+    func teaserPurchased(attributes: EventAttributeType) {
+        if let screenName = attributes[kEventScreenName] as? String,
+            let teaserName = attributes[kEventTeaser] as? String {
+            let params = GAIDictionaryBuilder.createEvent(
+                withCategory: "\(screenName)+\(teaserName)",
+                action: "TeaserPurchase",
+                label: nil,
+                value: nil
             )
             self.sendParamsToGA(params: params)
         }

@@ -21,6 +21,8 @@ FOUNDATION_EXPORT NSString *const kEventMethod;
 FOUNDATION_EXPORT NSString *const kEventUser;
 FOUNDATION_EXPORT NSString *const kEventProduct;
 FOUNDATION_EXPORT NSString *const kEventCart;
+FOUNDATION_EXPORT NSString *const kEventTeaser;
+FOUNDATION_EXPORT NSString *const kEventTargetString;
 FOUNDATION_EXPORT NSString *const kEventEmailDomain;
 FOUNDATION_EXPORT NSString *const kEventUserGender;
 FOUNDATION_EXPORT NSString *const kEventSuccess;

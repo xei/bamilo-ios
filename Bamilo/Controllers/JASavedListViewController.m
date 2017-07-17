@@ -347,7 +347,7 @@
             [self bind:data forRequestId:0];
             
             //EVENT: ADD TO CART
-            [TrackerManager postEventWithSelector:[EventSelectors addToCartEventSelector] attributes:[EventAttributes addToCardWithProduct:product success:YES]];
+            [TrackerManager postEventWithSelector:[EventSelectors addToCartEventSelector] attributes:[EventAttributes addToCardWithProduct:product screenName:[self getScreenName] success:YES]];
             
             NSNumber *price = (VALID_NOTEMPTY(product.specialPriceEuroConverted, NSNumber) && [product.specialPriceEuroConverted longValue] > 0.0f) ? product.specialPriceEuroConverted :product.priceEuroConverted;
             
@@ -437,7 +437,7 @@
             //[self hideLoading];
         } else {
             //EVENT: ADD TO CART
-            [TrackerManager postEventWithSelector:[EventSelectors addToCartEventSelector] attributes:[EventAttributes addToCardWithProduct:product success:NO]];
+            [TrackerManager postEventWithSelector:[EventSelectors addToCartEventSelector] attributes:[EventAttributes addToCardWithProduct:product screenName:[self getScreenName] success:NO]];
             [self showNotificationBar:[error.userInfo objectForKey:kErrorMessages] isSuccess:NO];
             //[self hideLoading];
         }
@@ -543,6 +543,8 @@
             
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInteger:RIEventAddFromWishlistToCart]
                                                       data:[NSDictionary dictionaryWithObject:product.sku forKey:kRIEventProductFavToCartKey]];
+            
+            [TrackerManager postEventWithSelector:[EventSelectors removeFromWishListSelector] attributes:[EventAttributes removeToWishListWithProduct:product screenName:[self getScreenName]]];
             
             [[NSUserDefaults standardUserDefaults] setObject:product.sku forKey:kRIEventProductFavToCartKey];
             [[NSUserDefaults standardUserDefaults] synchronize];

@@ -14,8 +14,11 @@
     @objc optional func viewProduct(attributes: EventAttributeType)
     @objc optional func search(attributes: EventAttributeType)
     @objc optional func purchased(attributes: EventAttributeType)
+    @objc optional func teaserPurchased(attributes: EventAttributeType)
+    @objc optional func teaserTapped(attributes: EventAttributeType)
     @objc optional func addToCart(attributes: EventAttributeType)
     @objc optional func addToWishList(attributes: EventAttributeType)
+    @objc optional func removeFromWishList(attributes: EventAttributeType)
     @objc optional func appOpend(attributes: EventAttributeType)
     @objc optional func logout(attributes: EventAttributeType)
     @objc optional func login(attributes: EventAttributeType)
@@ -23,4 +26,6 @@
     @objc optional func catalogViewChanged(attributes: EventAttributeType)
     @objc optional func catalogSortChanged(attributes: EventAttributeType)
     
+    @objc optional func checkoutStart(attributes: EventAttributeType)
+    @objc optional func checkoutFinished(attributes: EventAttributeType)
 }

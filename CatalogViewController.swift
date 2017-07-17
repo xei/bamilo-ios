@@ -33,6 +33,7 @@ import SwiftyJSON
     var sortingMethod: Catalog.CatalogSortType = .populaity
     var pushFilterQueryString : String?
     var startCatalogStackIndexInNavigationViewController: Int?
+    var teaserTrackingInfo: String? //For tracking teaser (purchase) journeys (optional)
     
     private var selectedProduct: Product? //TODO: it's not necessary to keep it, but we should do it for now because
                                           // we need to know which product (may) has been changed by PDVViewController (add to wish list)
@@ -393,12 +394,10 @@ import SwiftyJSON
     }
     
     private func trackSearch(searchTarget: RITarget) {
-        if searchTarget.type == "catalog_category" || searchTarget.type == "catalog_query" {
-            TrackerManager.postEvent(
-                selector: EventSelectors.searchActionSelector(),
-                attributes: EventAttributes.searchAction(searchTarget: searchTarget)
-            )
-        }
+        TrackerManager.postEvent(
+            selector: EventSelectors.searchActionSelector(),
+            attributes: EventAttributes.searchAction(searchTarget: searchTarget)
+        )
     }
     
     func loadAvaiableSubCategories() {
@@ -498,6 +497,12 @@ import SwiftyJSON
     //MARK: - BaseCatallogCollectionViewCellDelegate
     func addOrRemoveFromWishList(product: Product, cell: BaseCatallogCollectionViewCell, add: Bool) {
         (self.navigationController as? JACenterNavigationController)?.performProtectedBlock({ (userHadSession) in
+            
+            let translatedProduct = RIProduct()
+            translatedProduct.sku = product.sku
+            if let price = product.price {
+                translatedProduct.price = NSNumber(value: price)
+            }
             if add {
                 ProductDataManager.sharedInstance.addToWishList(self, sku: product.sku, completion: { (data, error) in
                     guard error != nil else {
@@ -508,15 +513,9 @@ import SwiftyJSON
                     self.showNotificationBar(error, isSuccess: false)
                 })
                 
-                
-                let translatedProduct = RIProduct()
-                translatedProduct.sku = product.sku
-                if let price = product.price {
-                    translatedProduct.price = NSNumber(value: price)
-                }
                 TrackerManager.postEvent(
                     selector: EventSelectors.addToWishListSelector(),
-                    attributes: EventAttributes.addToFavorite(product: translatedProduct, success: true)
+                    attributes: EventAttributes.addToWishList(product: translatedProduct, screenName: self.getScreenName(), success: true)
                 )
                 
             } else {
@@ -524,6 +523,12 @@ import SwiftyJSON
                     guard error != nil else {
                         product.isInWishList.toggle()
                         cell.updateWithProduct(product: product)
+                        
+                        TrackerManager.postEvent(
+                            selector: EventSelectors.removeFromWishListSelector(),
+                            attributes: EventAttributes.removeToWishList(product: translatedProduct, screenName: self.getScreenName())
+                        )
+                        
                         return
                     }
                     self.showNotificationBar(error, isSuccess: false)
@@ -550,6 +555,7 @@ import SwiftyJSON
             destinationViewCtrl?.delegate = self
         } else if segueName == "pushPDVViewController" {
             let destinationViewCtrl = segue.destination as? JAPDVViewController
+            destinationViewCtrl?.teaserTrackingInfo = self.teaserTrackingInfo
             destinationViewCtrl?.productSku = self.selectedProduct?.sku
             destinationViewCtrl?.delegate = self
         }

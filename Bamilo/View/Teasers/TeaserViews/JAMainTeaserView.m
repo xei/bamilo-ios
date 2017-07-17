@@ -10,8 +10,7 @@
 #import "JAClickableView.h"
 #import "JAPageControl.h"
 
-@interface JAMainTeaserView()
-{
+@interface JAMainTeaserView() {
     NSMutableArray *_teasersArray;
 }
 

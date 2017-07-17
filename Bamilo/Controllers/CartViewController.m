@@ -150,8 +150,7 @@
         NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
         [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
         
-        
-//        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
+    
         [LoadingManager hideLoading];
         
         self.cart = cart;

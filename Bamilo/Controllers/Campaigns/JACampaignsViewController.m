@@ -544,7 +544,8 @@ withCampaignTargetString:(NSString*)campaignTargetString
     product.sku = self.backupSimpleSku;
     product.price = self.cart.cartEntity.cartValue;
     //EVENT : ADD TO CART
-    [TrackerManager postEventWithSelector:[EventSelectors addToCartEventSelector] attributes:[EventAttributes addToCardWithProduct:product success:success]];
+    [TrackerManager postEventWithSelector:[EventSelectors addToCartEventSelector]
+                               attributes:[EventAttributes addToCardWithProduct:product screenName:[self getScreenName] success:success]];
 }
 
 #pragma mark - UIScrollViewDelegate

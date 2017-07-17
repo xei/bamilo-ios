@@ -32,6 +32,8 @@
     _addressTableViewController.options = (ADDRESS_CELL_EDIT | ADDRESS_CELL_SELECT);
     _addressTableViewController.delegate = self;
     [_addressTableViewController addInto:self ofView:self.addressListContainerView];
+    
+    [TrackerManager postEventWithSelector:[EventSelectors checkoutStartSelector] attributes:[EventAttributes checkoutStartWithCart:self.cart]];
 }
 
 -(void)viewWillAppear:(BOOL)animated {

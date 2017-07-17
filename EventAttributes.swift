@@ -60,15 +60,24 @@ public typealias EventAttributeType = [String:Any]
         return attributes
     }
     
-    static func addToFavorite(product: RIProduct, success: Bool) -> EventAttributeType {
+    static func addToWishList(product: RIProduct, screenName: String, success: Bool) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
+        attributes[kEventScreenName] = screenName
         attributes[kEventSuccess] = success
         attributes[kEventProduct] = product
         return attributes
     }
     
-    static func addToCard(product: RIProduct, success: Bool) -> EventAttributeType {
+    static func removeToWishList(product: RIProduct, screenName: String) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
+        attributes[kEventScreenName] = screenName
+        attributes[kEventProduct] = product
+        return attributes
+    }
+    
+    static func addToCard(product: RIProduct, screenName: String, success: Bool) -> EventAttributeType {
+        var attributes = self.getCommonAttributes()
+        attributes[kEventScreenName] = screenName
         attributes[kEventSuccess] = success
         attributes[kEventProduct] = product
         return attributes
@@ -81,8 +90,24 @@ public typealias EventAttributeType = [String:Any]
         return attributes
     }
     
-    static func viewProduct(product: RIProduct) -> EventAttributeType {
+    static func teaserPurchase(teaserName: String, screenName: String) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
+        attributes[kEventTeaser] = teaserName
+        attributes[kEventScreenName] = screenName
+        return attributes
+    }
+    
+    static func teaserTapped(teaserName: String, screenName: String, teaserTargetNode: String) -> EventAttributeType {
+        var attributes = self.getCommonAttributes()
+        attributes[kEventTeaser] = teaserName
+        attributes[kEventScreenName] = screenName
+        attributes[kEventTargetString] = teaserTargetNode
+        return attributes
+    }
+    
+    static func viewProduct(parentViewScreenName: String, product: RIProduct) -> EventAttributeType {
+        var attributes = self.getCommonAttributes()
+        attributes[kEventScreenName] = parentViewScreenName
         attributes[kEventProduct] = product
         return attributes
     }
@@ -124,4 +149,17 @@ public typealias EventAttributeType = [String:Any]
         attributes[kEventCatalogSortMethod] = sortMethod
         return attributes
     }
+    
+    static func checkoutStart(cart :RICart) -> EventAttributeType {
+        var attributes = self.getCommonAttributes()
+        attributes[kEventCart] = cart
+        return attributes
+    }
+    
+    static func chekcoutFinish(cart: RICart) -> EventAttributeType {
+        var attributes = self.getCommonAttributes()
+        attributes[kEventCart] = cart
+        return attributes
+    }
+    
 }

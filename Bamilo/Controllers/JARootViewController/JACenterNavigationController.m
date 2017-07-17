@@ -955,12 +955,11 @@
         } else {
             [catalog.navBarLayout setShowBackButton:YES];;
         }
-//        if ([notification.userInfo objectForKey:@"teaserTrackingInfo"]) {
-//            catalog.teaserTrackingInfo = [notification.userInfo objectForKey:@"teaserTrackingInfo"];
-//        }
+        if ([notification.userInfo objectForKey:@"teaserTrackingInfo"]) {
+            catalog.teaserTrackingInfo = [notification.userInfo objectForKey:@"teaserTrackingInfo"];
+        }
         
         [[MainTabBarViewController topNavigationController] pushViewController:catalog animated:YES];
-//        [self pushViewController:catalog animated:YES];
     }
 }
 

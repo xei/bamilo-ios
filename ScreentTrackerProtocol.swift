@@ -7,6 +7,6 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-protocol ScreenTrackerProtocol : class {
+@objc protocol ScreenTrackerProtocol : class {
     func trackScreenName(screenName: String)
 }
