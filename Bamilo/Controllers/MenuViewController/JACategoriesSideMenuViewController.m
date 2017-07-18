@@ -12,8 +12,9 @@
 #import "JAAppDelegate.h"
 #import "RIExternalCategory.h"
 #import "JAButton.h"
+#import "Bamilo-Swift.h"
 
-@interface JACategoriesSideMenuViewController ()
+@interface JACategoriesSideMenuViewController () <SearchBarListener>
 
 @property (nonatomic, strong) NSArray* categoriesArray;
 @property (nonatomic, strong) RIExternalCategory *externalCategory;
@@ -24,9 +25,7 @@
 @property (nonatomic, strong) UIImageView *loadingAnimation;
 
 @property (nonatomic, strong) NSLock *reloadLock;
-
 @property (nonatomic) BOOL categoriesLoadingError;
-
 @property (nonatomic, strong) JAMessageView *messageView;
 
 @end
@@ -480,23 +479,8 @@
     [self.tableView endUpdates];
 }
 
-/*
--(void) updateChildrenInTableView:(NSOrderedSet *)children index:(NSInteger)index toClose:(BOOL)toClose {
-    if(toClose) {
-        //Close Down
-        NSMutableArray* deleteIndexPaths = [NSMutableArray new];
-        for (NSInteger i = index+[children count]; i > index; i--) {
-            //this for goes backwards so that we can remove the items from the arrays without the index problems
-            
-            [self.tableViewCategoriesArray removeObjectAtIndex:i];
-            
-            [deleteIndexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
-        }
-        [self.tableView beginUpdates];
-        [self.tableView deleteRowsAtIndexPaths:deleteIndexPaths withRowAnimation:animationDelete];
-        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
-        [self.tableView endUpdates];
-    } else {
-            }
-}*/
+#pragma mark: - searchBarSearched Protocol
+- (void)searchBarSearched:(UISearchBar *)searchBar {
+    [TrackerManager postEventWithSelector:[EventSelectors searchBarSearchedSelector] attributes:[EventAttributes searchBarSearchedWithSearchString:searchBar.text screenName:[self getScreenName]]];
+}
 @end

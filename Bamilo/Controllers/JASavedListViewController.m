@@ -154,8 +154,6 @@
 
     
     [self.emptyViewContainer setFrame:self.collectionView.frame];
-//    [self.bottomView setWidth:self.viewBounds.size.width];
-//    [self.bottomView setYBottomAligned:48.f];
 }
 
 - (void)onOrientationChanged {
@@ -165,7 +163,6 @@
 }
 
 #pragma mark - Load Data
-
 - (void)loadProducts {
     [LoadingManager showLoading];
     [RIProduct getFavoriteProductsForPage:self.currentPage.integerValue+1 maxItems:self.maxPerPage.integerValue SuccessBlock:^(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages) {
@@ -175,7 +172,7 @@
             if (currentPage == totalPages) {
                 self.lastPage = YES;
             }
-            
+            [self.productsArray removeAllObjects];
             for (RIProduct *product in favoriteProducts) {
                 if ([self.productsArray containsObject:product.sku]) {
                     [self.productsArray removeObject:product.sku];
@@ -183,19 +180,15 @@
                 [self.productsArray addObject:product.sku];
                 [self.productsDictionary setObject:product forKey:product.sku];
             }
-            
             self.chosenSimples = [NSMutableDictionary new];
-            
             [self reloadData];
-            
             self.currentPage = [NSNumber numberWithInteger:self.currentPage.integerValue+1];
-            
             [self publishScreenLoadTime];
         } else {
             self.productsDictionary = nil;
+            [self.productsArray removeAllObjects];
             [self reloadData];
         }
-        
         [LoadingManager hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
         [self showNotificationBar:error isSuccess:NO];
@@ -220,11 +213,9 @@
         [self.emptyViewContainer fadeIn:0.15];
         [self.emptyViewController getSuggestions];
         self.collectionView.hidden = YES;
-//        [self.bottomView setHidden:YES];
     } else {
         [self.emptyViewContainer hide];
         self.collectionView.hidden = NO;
-//        [self.bottomView setHidden:NO];
         [EmarsysPredictManager sendTransactionsOf:self];
     }
     [LoadingManager hideLoading];

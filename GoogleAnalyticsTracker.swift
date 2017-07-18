@@ -121,11 +121,11 @@
     }
     
     func catalogSortChanged(attributes: EventAttributeType) {
-        if let sortMethod = attributes[kEventCatalogSortMethod] as? String {
+        if let sortMethod = attributes[kEventCatalogSortMethod] as? Catalog.CatalogSortType {
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: "Catalog",
                 action: "CatalogSort",
-                label:sortMethod,
+                label:sortMethod.rawValue,
                 value: nil
             )
             self.sendParamsToGA(params: params)
@@ -161,7 +161,7 @@
             let product = attributes[kEventProduct] as? RIProduct {
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: screenName,
-                action: "RemoveFromWishList",
+                action: "AddToWishList",
                 label: product.sku,
                 value: product.price
             )
@@ -174,7 +174,7 @@
             let product = attributes[kEventProduct] as? RIProduct {
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: screenName,
-                action: "AddToWishList",
+                action: "RemoveFromWishList",
                 label: product.sku,
                 value: product.price
             )
@@ -248,12 +248,13 @@
     }
     
     func signup(attributes: EventAttributeType) {
-        if let loginMethod = attributes[kEventMethod] as? String, let user = attributes[kEventUser] as? RICustomer, let success = attributes[kEventSuccess] as? Bool {
+        if let loginMethod = attributes[kEventMethod] as? String, let success = attributes[kEventSuccess] as? Bool {
+            let user = attributes[kEventUser] as? RICustomer
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: "Account",
                 action: success ? "SignupSuccess" : "SignupFailed",
                 label: "\(loginMethod)",
-                value: user.customerId
+                value: user?.customerId
             )
             self.sendParamsToGA(params: params)
         }
@@ -290,7 +291,7 @@
             })
         }
     }
-    
+
     func teaserPurchased(attributes: EventAttributeType) {
         if let screenName = attributes[kEventScreenName] as? String,
             let teaserName = attributes[kEventTeaser] as? String {

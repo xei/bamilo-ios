@@ -37,7 +37,7 @@ public typealias EventAttributeType = [String:Any]
         return attributes
     }
     
-    static func signup(method: String, user: RICustomer,success: Bool) -> EventAttributeType {
+    static func signup(method: String, user: RICustomer?,success: Bool) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventMethod] = method
         attributes[kEventUser] = user

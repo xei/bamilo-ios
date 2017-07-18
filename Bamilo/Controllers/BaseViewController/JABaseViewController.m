@@ -143,19 +143,16 @@
     self.loadingAnimation.center = self.loadingView.center;
     
     self.loadingView.alpha = 0.0f;
-    
-    [TrackerManager trackScreenNameWithScreenName:[self getScreenName]];
+    if ([self getScreenName].length) {
+        [TrackerManager trackScreenNameWithScreenName:[self getScreenName]];
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
-    //[Accengage trackScreenDisplay:[self getPerformanceTrackerScreenName] ?: @""];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
-    //[Accengage trackScreenDismiss:[self getPerformanceTrackerScreenName] ?: @""];
-    
     [super viewDidDisappear:animated];
 }
 

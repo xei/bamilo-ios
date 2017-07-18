@@ -99,8 +99,7 @@ import SwiftyJSON
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-    
-        
+
         //if previous view controller has tab bar then reset it
         if let navController = self.navigationController, navController.viewControllers.count >= 1 {
             let previousViewController = navController.viewControllers[navController.viewControllers.count - 1]
@@ -122,7 +121,6 @@ import SwiftyJSON
             self.requestNavigationBarReload()
         }
     }
-    
     
     //MARK: - DataServiceProtocol
     func bind(_ data: Any!, forRequestId rid: Int32) {
@@ -162,11 +160,9 @@ import SwiftyJSON
         }
     }
     
-    
     func subCategorySelected(_ subCategoryUrlKey: String!) {
         self.pushToSearchByCateory(catalogUrl: subCategoryUrlKey)
     }
-    
     
     //MARK: - CatalogHeaderViewDelegate
     func sortTypeSelected(type: Catalog.CatalogSortType) {

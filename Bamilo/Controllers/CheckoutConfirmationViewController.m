@@ -291,7 +291,7 @@
                 ((DiscountCodeView *)sender).state = DISCOUNT_CODE_VIEW_STATE_CONTAINS_CODE;
                 
                 NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
-                [trackingDictionary setValue:self.cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+                [trackingDictionary setValue:self.cart.cartEntity.cartValue forKey:kRIEventTotalCartKey];
                 [trackingDictionary setValue:self.cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
                 [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart] data:[trackingDictionary copy]];
                 
@@ -349,7 +349,7 @@
         
         case 2:
         case 3: {
-            self.cart = (RICart *)data;
+            self.cart = (RICart *)data[kDataContent];
         }
         break;
     }

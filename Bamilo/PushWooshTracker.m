@@ -116,9 +116,9 @@ static PushWooshTracker *instance;
     }
 }
 
-
 //Override
 - (void)postEventByName:(NSString *)eventName attributes:(NSDictionary *)attributes {
+    [super postEventByName:eventName attributes:attributes];
     [[PWInAppManager sharedManager] postEvent:eventName withAttributes:attributes];
 }
 

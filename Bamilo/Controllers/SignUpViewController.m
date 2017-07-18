@@ -93,6 +93,8 @@
                 [((UIViewController *)self.delegate).navigationController popViewControllerAnimated:YES];
             }
         } else {
+            [TrackerManager postEventWithSelector:[EventSelectors signupEventSelector]
+                                       attributes:[EventAttributes signupWithMethod:cSignUpMethodEmail user:nil success:NO]];
             //EVENT: SIGNUP / FAILURE
             BaseViewController *baseViewController = (BaseViewController *)self.delegate;
             if(![baseViewController showNotificationBar:error isSuccess:NO]) {

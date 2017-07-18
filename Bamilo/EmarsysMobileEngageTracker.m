@@ -18,13 +18,13 @@ static EmarsysMobileEngageTracker *instance;
     dispatch_once(&onceToken, ^{
         instance = [EmarsysMobileEngageTracker new];
     });
-    
     return instance;
 }
 
 
 //Override
 - (void)postEventByName:(NSString *)eventName attributes:(NSDictionary *)attributes {
+    [super postEventByName:eventName attributes:attributes];
     [[EmarsysMobileEngage sharedInstance] sendCustomEvent:eventName attributes:attributes completion:nil];
 }
 

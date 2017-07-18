@@ -34,8 +34,9 @@
     self.navigationItem.hidesBackButton = YES;
     self.title = nil;
     self.view.backgroundColor = JABackgroundGrey;
-    
-    [TrackerManager trackScreenNameWithScreenName:[self getScreenName]];
+    if ([self getScreenName].length) {
+        [TrackerManager trackScreenNameWithScreenName:[self getScreenName]];
+    }
 }
 
 - (JANavigationBarLayout *)navBarLayout {

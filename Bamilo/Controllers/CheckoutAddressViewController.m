@@ -32,8 +32,6 @@
     _addressTableViewController.options = (ADDRESS_CELL_EDIT | ADDRESS_CELL_SELECT);
     _addressTableViewController.delegate = self;
     [_addressTableViewController addInto:self ofView:self.addressListContainerView];
-    
-    [TrackerManager postEventWithSelector:[EventSelectors checkoutStartSelector] attributes:[EventAttributes checkoutStartWithCart:self.cart]];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -43,15 +41,15 @@
         if(error == nil) {
             [self bind:data forRequestId:0];
             [self setIsStepValid:_addresses.count];
-            
             if(self.cart.cartEntity.shippingAddress) {
                 Address *_addressToSelect = [self getAddressById:self.cart.cartEntity.shippingAddress.uid];
                 [self updateSelectedAddress:_addressToSelect];
             }
             
             [_addressTableViewController updateWithModel:_addresses];
-            
             [self publishScreenLoadTime];
+            
+            [TrackerManager postEventWithSelector:[EventSelectors checkoutStartSelector] attributes:[EventAttributes checkoutStartWithCart:data]];
         }
     }];
 }
@@ -67,7 +65,6 @@
 
 -(void)updateNavBar {
     [super updateNavBar];
-
     self.navBarLayout.title = STRING_CHOOSE_ADDRESS;
 }
 
