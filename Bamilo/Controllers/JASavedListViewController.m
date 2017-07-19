@@ -120,9 +120,7 @@
     [self.collectionView setBackgroundColor:[UIColor whiteColor]];
     [self.collectionView registerClass:[JARecentlyViewedCell class] forCellWithReuseIdentifier:@"CellWithLines"];
     
-    
-    
-    CGRect frame = self.view.bounds; //  CGRectMake(self.viewBounds.origin.x, self.viewBounds.origin.y, self.view.frame.size.width, self.viewBounds.size.height);
+    CGRect frame = self.view.bounds;
     self.collectionView.collectionViewLayout = self.flowLayout;
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;

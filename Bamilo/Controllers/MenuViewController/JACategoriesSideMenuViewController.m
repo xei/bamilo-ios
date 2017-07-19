@@ -483,4 +483,10 @@
 - (void)searchBarSearched:(UISearchBar *)searchBar {
     [TrackerManager postEventWithSelector:[EventSelectors searchBarSearchedSelector] attributes:[EventAttributes searchBarSearchedWithSearchString:searchBar.text screenName:[self getScreenName]]];
 }
+
+
+- (NSString *)getScreenName {
+    return @"CategoryMenu";
+}
+
 @end
