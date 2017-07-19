@@ -122,7 +122,10 @@
     
     
     
-    CGRect frame = self.view.bounds; //  CGRectMake(self.viewBounds.origin.x, self.viewBounds.origin.y, self.view.frame.size.width, self.viewBounds.size.height);
+    CGRect frame = CGRectMake(self.view.bounds.origin.x,
+                              self.view.bounds.origin.y + [self statusAndNavbarHeight],
+                              self.view.bounds.size.width,
+                              self.view.bounds.size.height - [self statusAndNavbarHeight]);
     self.collectionView.collectionViewLayout = self.flowLayout;
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
@@ -446,7 +449,11 @@
         [self.picker removeFromSuperview];
     }
     
-    self.picker = [[JAPicker alloc] initWithFrame:self.view.frame];
+    self.picker = [[JAPicker alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x,
+                                                             self.view.bounds.origin.y + [self statusAndNavbarHeight],
+                                                             self.view.bounds.size.width,
+                                                             self.view.bounds.size.height - [self statusAndNavbarHeight])];
+    
     [self.picker setTag:button.tag];
     [self.picker setDelegate:self];
     

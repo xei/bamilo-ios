@@ -50,8 +50,6 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         
         self.updateTableViewDataSource()
         self.tableView.reloadData()
-        
-        //TODO: these codes must be removed when tab bar is ok and there is no need for JABaseViewController
     }
     
     override func viewWillAppear(_ animated: Bool) {

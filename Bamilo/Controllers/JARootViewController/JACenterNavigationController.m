@@ -126,15 +126,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.neeedsExternalPaymentMethod = NO;
-    [self loadNavigationViews];
     self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCart:) name:kUpdateCartNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeEditButtonState:) name:kEditShouldChangeStateNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeDoneButtonState:) name:kDoneShouldChangeStateNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeNavigationWithNotification:) name:kChangeNavigationBarNotification object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didLoggedIn) name:kUserLoggedInNotification object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didLoggedOut) name:kUserLoggedOutNotification object:nil];
 }
 
 - (void)registerObservingOnNotifications {
@@ -212,10 +209,10 @@
     
 }
 
-- (void)loadNavigationViews {
-    [self.navigationBarView removeFromSuperview];
-    [self customizeNavigationBar];
-}
+//- (void)loadNavigationViews {
+//    [self.navigationBarView removeFromSuperview];
+//    [self customizeNavigationBar];
+//}
 
 - (void)openTargetString:(NSString *)targetString {
     JAScreenTarget *screenTarget = [JAScreenTarget new];
@@ -793,8 +790,7 @@
         }
         
         BOOL animated = YES;
-        if([notification.userInfo objectForKey:@"animated"] && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber))
-        {
+        if([notification.userInfo objectForKey:@"animated"] && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber)) {
             animated = [[notification.userInfo objectForKey:@"animated"] boolValue];
         }
         
@@ -804,8 +800,7 @@
 
 - (void)showSizeGuide:(NSNotification*)notification {
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JASizeGuideViewController class]])
-    {
+    if (![topViewController isKindOfClass:[JASizeGuideViewController class]]) {
         JASizeGuideViewController* viewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"sizeGuideViewController"];
         
         if ([notification.userInfo objectForKey:@"sizeGuideUrl"]) {
@@ -903,14 +898,12 @@
             newSellerRatingViewController.product = [notification.userInfo objectForKey:@"product"];
         }
         
-        if([notification.userInfo objectForKey:@"sellerAverageReviews"])
-        {
+        if([notification.userInfo objectForKey:@"sellerAverageReviews"]) {
             newSellerRatingViewController.sellerAverageReviews = [notification.userInfo objectForKey:@"sellerAverageReviews"];
         }
         
         BOOL animated = YES;
-        if([notification.userInfo objectForKey:@"animated"] && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber))
-        {
+        if([notification.userInfo objectForKey:@"animated"] && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber)) {
             animated = [[notification.userInfo objectForKey:@"animated"] boolValue];
         }
         
@@ -922,8 +915,7 @@
     NSString* targetString = [notification.userInfo objectForKey:@"targetString"];
     NSString* title = [notification.userInfo objectForKey:@"name"];
     
-    if(VALID_NOTEMPTY(targetString, NSString))
-    {
+    if(VALID_NOTEMPTY(targetString, NSString)) {
         CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
         RITarget *target = [RITarget parseTarget:targetString];
         catalog.searchTarget = target;
@@ -1059,15 +1051,13 @@
     
     NSString* targetString = [notification.userInfo objectForKey:@"targetString"];
     JAShopWebViewController* viewController = [[JAShopWebViewController alloc] init];
-    if([notification.userInfo objectForKey:@"show_back_button"])
-    {
+    if([notification.userInfo objectForKey:@"show_back_button"]) {
         [viewController.navBarLayout setShowBackButton:YES];
     }
     if ([notification.userInfo objectForKey:@"show_back_button_title"]) {
         [viewController.navBarLayout setShowBackButton:YES];
     }
-    if([notification.userInfo objectForKey:@"title"])
-    {
+    if([notification.userInfo objectForKey:@"title"]) {
         viewController.navBarLayout.title = [notification.userInfo objectForKey:@"title"];
     }
     if ([notification.userInfo objectForKey:@"teaserTrackingInfo"]) {
@@ -1116,8 +1106,7 @@
         UIViewController* thirdToLastViewController = [self.viewControllers objectAtIndex:thirdToLastIndex];
         
         BOOL animated = YES;
-        if(VALID_NOTEMPTY(notification.userInfo, NSDictionary) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"animated"], NSNumber))
-        {
+        if(VALID_NOTEMPTY(notification.userInfo, NSDictionary) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"animated"], NSNumber)) {
             animated = [[notification.userInfo objectForKey:@"animated"] boolValue];
         }
         [self popToViewController:thirdToLastViewController animated:YES];
@@ -1132,7 +1121,6 @@
             [screenTarget.screenInfo setObject:[RICountryConfiguration getCurrentConfiguration].redirectHtml forKey:@"html"];
             [screenTarget.screenInfo setObject:[RICountryConfiguration getCurrentConfiguration].redirectStringTarget forKey:@"action"];
             [screenTarget.navBarLayout setShowBackButton:NO];
-//            [screenTarget.navBarLayout setShowMenuButton:NO];
             [screenTarget.navBarLayout setShowCartButton:NO];
             [screenTarget.navBarLayout setShowSearchButton:NO];
             [[MainTabBarViewController topNavigationController] openScreenTarget:screenTarget];
@@ -1199,38 +1187,32 @@
 }
 
 - (void)goToStep:(UIViewController *)viewController forStepByStepViewController:(JAStepByStepTabViewController *)stepByStepViewController {
-    if ([self.viewControllers indexOfObject:stepByStepViewController] == NSNotFound)
-    {
+    if ([self.viewControllers indexOfObject:stepByStepViewController] == NSNotFound) {
         if (stepByStepViewController == self.checkoutStepByStepViewController) {
             stepByStepViewController = [self getNewCheckoutStepByStepViewController];
             self.checkoutStepByStepViewController = stepByStepViewController;
-        }else if (stepByStepViewController == self.returnsStepByStepViewController) {
+        } else if (stepByStepViewController == self.returnsStepByStepViewController) {
             stepByStepViewController = [self getNewReturnsStepByStepViewController];
-            if ([viewController respondsToSelector:@selector(items)])
-            {
+            if ([viewController respondsToSelector:@selector(items)]) {
                 [(JAReturnStepByStepModel *)stepByStepViewController.stepByStepModel setItems:[viewController performSelector:@selector(items) withObject:nil]];
             }
-            if ([viewController respondsToSelector:@selector(order)])
-            {
+            if ([viewController respondsToSelector:@selector(order)]) {
                 [(JAReturnStepByStepModel *)stepByStepViewController.stepByStepModel setOrder:[viewController performSelector:@selector(order) withObject:nil]];
             }
             self.returnsStepByStepViewController = stepByStepViewController;
         }
     }
-    if ([viewController respondsToSelector:@selector(setStateInfoValues:)])
-    {
+    if ([viewController respondsToSelector:@selector(setStateInfoValues:)]) {
         [viewController performSelector:@selector(setStateInfoValues:) withObject:stepByStepViewController.stepByStepModel.stepByStepValues];
     }
-    if ([viewController respondsToSelector:@selector(setStateInfoLabels:)])
-    {
+    if ([viewController respondsToSelector:@selector(setStateInfoLabels:)]) {
         [viewController performSelector:@selector(setStateInfoLabels:) withObject:stepByStepViewController.stepByStepModel.stepByStepLabels];
     }
     [self closeScreensToStackClass:[JAStepByStepTabViewController class] animated:YES];
     JAStepByStepTabViewController *stepByStepTabViewController = (JAStepByStepTabViewController *)[self topViewController];
-    if ([stepByStepTabViewController isKindOfClass:[JAStepByStepTabViewController class]] && [stepByStepTabViewController.stepByStepModel isKindOfClass:[stepByStepViewController.stepByStepModel class]])
-    {
+    if ([stepByStepTabViewController isKindOfClass:[JAStepByStepTabViewController class]] && [stepByStepTabViewController.stepByStepModel isKindOfClass:[stepByStepViewController.stepByStepModel class]]) {
         [stepByStepTabViewController goToViewController:viewController];
-    }else{
+    } else {
         [self pushViewController:stepByStepViewController animated:YES];
         [stepByStepViewController goToViewController:viewController];
     }
@@ -1265,49 +1247,49 @@
 #pragma mark - Navigation Bar
 
 - (void)customizeNavigationBar {
-    [self.navigationItem setHidesBackButton:YES
-                                   animated:NO];
-    
-    self.navigationBarView = [[JACustomNavigationBarView alloc] initWithFrame:CGRectMake(0, 0, 320, kNavigationBarHeight)];
-    [self.navigationBarView initialSetup];
-
-    
-    [self.navigationBar.viewForBaselineLayout addSubview:self.navigationBarView];
-
-    //this removes the shadow line under the navbar
-    [self.navigationBar setBackgroundImage:[UIImage new]
-                            forBarPosition:UIBarPositionAny
-                                barMetrics:UIBarMetricsDefault];
-    [self.navigationBar setShadowImage:[UIImage new]];
-    
-    [self.navigationBarView.cartButton addTarget:self action:@selector(openCart:) forControlEvents:UIControlEventTouchUpInside];
-//    [self.navigationBarView.leftButton addTarget:self action:@selector(openMenu) forControlEvents:UIControlEventTouchUpInside];
-    [self.navigationBarView.doneButton addTarget:self action:@selector(done) forControlEvents:UIControlEventTouchUpInside];
-    [self.navigationBarView.editButton addTarget:self action:@selector(edit) forControlEvents:UIControlEventTouchUpInside];
-    [self.navigationBarView.backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
-    [self.navigationBarView.searchButton addTarget:self action:@selector(search) forControlEvents:UIControlEventTouchUpInside];
-    
-    self.navigationBarView.titleLabel.userInteractionEnabled = YES;
-    UITapGestureRecognizer *touched = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goTop)];
-    [self.navigationBarView.titleLabel addGestureRecognizer:touched];
+//    [self.navigationItem setHidesBackButton:YES
+//                                   animated:NO];
+//    
+//    self.navigationBarView = [[JACustomNavigationBarView alloc] initWithFrame:CGRectMake(0, 0, 320, kNavigationBarHeight)];
+//    [self.navigationBarView initialSetup];
+//
+//    
+//    [self.navigationBar.viewForBaselineLayout addSubview:self.navigationBarView];
+//
+//    //this removes the shadow line under the navbar
+//    [self.navigationBar setBackgroundImage:[UIImage new]
+//                            forBarPosition:UIBarPositionAny
+//                                barMetrics:UIBarMetricsDefault];
+//    [self.navigationBar setShadowImage:[UIImage new]];
+//    
+//    [self.navigationBarView.cartButton addTarget:self action:@selector(openCart:) forControlEvents:UIControlEventTouchUpInside];
+////    [self.navigationBarView.leftButton addTarget:self action:@selector(openMenu) forControlEvents:UIControlEventTouchUpInside];
+//    [self.navigationBarView.doneButton addTarget:self action:@selector(done) forControlEvents:UIControlEventTouchUpInside];
+//    [self.navigationBarView.editButton addTarget:self action:@selector(edit) forControlEvents:UIControlEventTouchUpInside];
+//    [self.navigationBarView.backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+//    [self.navigationBarView.searchButton addTarget:self action:@selector(search) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    self.navigationBarView.titleLabel.userInteractionEnabled = YES;
+//    UITapGestureRecognizer *touched = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goTop)];
+//    [self.navigationBarView.titleLabel addGestureRecognizer:touched];
     
 }
 
 - (void)changeNavigationWithNotification:(NSNotification*)notification {
-    JANavigationBarLayout* layout = notification.object;
-    if (VALID_NOTEMPTY(layout, JANavigationBarLayout)) {
-        [self.navigationBarView setupWithNavigationBarLayout:layout];
-    }
+//    JANavigationBarLayout* layout = notification.object;
+//    if (VALID_NOTEMPTY(layout, JANavigationBarLayout)) {
+//        [self.navigationBarView setupWithNavigationBarLayout:layout];
+//    }
 }
 
 - (void)changeEditButtonState:(NSNotification *)notification {
-    NSNumber* state = [notification.userInfo objectForKey:@"enabled"];
-    self.navigationBarView.editButton.enabled = [state boolValue];
+//    NSNumber* state = [notification.userInfo objectForKey:@"enabled"];
+//    self.navigationBarView.editButton.enabled = [state boolValue];
 }
 
 - (void)changeDoneButtonState:(NSNotification *)notification {
-    NSNumber* state = [notification.userInfo objectForKey:@"enabled"];
-    self.navigationBarView.doneButton.enabled = [state boolValue];
+//    NSNumber* state = [notification.userInfo objectForKey:@"enabled"];
+//    self.navigationBarView.doneButton.enabled = [state boolValue];
 }
 
 - (void)updateCart:(NSNotification*) notification {
@@ -1322,16 +1304,16 @@
         }
         
         if(self.cart) {
-            [self.navigationBarView updateCartProductCount:self.cart.cartEntity.cartCount];
+//            [self.navigationBarView updateCartProductCount:self.cart.cartEntity.cartCount];
             [MainTabBarViewController updateCartValueWithCartItemsCount:[self.cart.cartEntity.cartCount integerValue]];
         } else {
             [userInfo removeObjectForKey:kUpdateCartNotificationValue];
-            [self.navigationBarView updateCartProductCount:0];
+//            [self.navigationBarView updateCartProductCount:0];
             [MainTabBarViewController updateCartValueWithCartItemsCount:0];
         }
     } else {
         self.cart = nil;
-        [self.navigationBarView updateCartProductCount:0];
+//        [self.navigationBarView updateCartProductCount:0];
         [MainTabBarViewController updateCartValueWithCartItemsCount:0];
     }
 }

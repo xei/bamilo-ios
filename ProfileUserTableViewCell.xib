@@ -31,7 +31,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ورود‌ /‌ ثبت‌نام" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rh8-xe-aWt">
-                        <rect key="frame" x="15" y="60.5" width="400" height="27"/>
+                        <rect key="frame" x="15" y="60" width="400" height="27"/>
                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="14"/>
                         <color key="textColor" red="0.31372549019607843" green="0.31372549019607843" blue="0.31372549019607843" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -40,7 +40,7 @@
                         <rect key="frame" x="430" y="33.5" width="50" height="50"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oDS-bo-yCi">
-                                <rect key="frame" x="1" y="1" width="50" height="50"/>
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="oDS-bo-yCi" secondAttribute="height" multiplier="1:1" id="jvY-C3-aHD"/>
                                 </constraints>
@@ -70,7 +70,7 @@
                     <constraint firstItem="Rh8-xe-aWt" firstAttribute="right" secondItem="PjM-RD-hnT" secondAttribute="right" id="Ga0-C5-gY9"/>
                     <constraint firstItem="Rh8-xe-aWt" firstAttribute="centerY" secondItem="Ndj-4S-wRB" secondAttribute="centerY" constant="15" id="Qdt-nj-d2e"/>
                     <constraint firstAttribute="centerY" secondItem="Ndj-4S-wRB" secondAttribute="centerY" id="gWu-Y0-ie5"/>
-                    <constraint firstItem="Ndj-4S-wRB" firstAttribute="leading" secondItem="PjM-RD-hnT" secondAttribute="trailing" constant="15" id="jmZ-4d-MSD"/>
+                    <constraint firstItem="Ndj-4S-wRB" firstAttribute="left" secondItem="PjM-RD-hnT" secondAttribute="right" constant="15" id="jmZ-4d-MSD"/>
                     <constraint firstItem="Ndj-4S-wRB" firstAttribute="centerY" secondItem="PjM-RD-hnT" secondAttribute="centerY" constant="15" id="vL0-EA-5bW"/>
                     <constraint firstItem="PjM-RD-hnT" firstAttribute="left" secondItem="H2p-sc-9uM" secondAttribute="left" constant="15" id="yoz-gB-B8v"/>
                     <constraint firstAttribute="right" secondItem="Ndj-4S-wRB" secondAttribute="right" constant="10" id="zkV-CZ-lsD"/>

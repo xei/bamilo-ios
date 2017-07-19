@@ -49,16 +49,25 @@
     BOOL _hasAppeared;
 }
 
+
+- (CGFloat) statusAndNavbarHeight {
+    return self.navigationController.navigationBar.height + [UIApplication sharedApplication].statusBarFrame.size.height;
+}
+
 - (CGRect)viewBounds {
     CGFloat topOffset = 0.0f;
-    CGFloat bottomOffset = 0.0f;
+    
+    if (self.navigationController.navigationBar) {
+        topOffset += [self statusAndNavbarHeight];
+    }
+    
     if (self.searchBarIsVisible) {
         topOffset += kSearchViewBarHeight;
     }
     return CGRectMake(self.view.bounds.origin.x,
                       self.view.bounds.origin.y + topOffset,
                       self.view.bounds.size.width,
-                      self.view.bounds.size.height - topOffset - bottomOffset);
+                      self.view.bounds.size.height - topOffset);
 }
 
 - (CGRect)bounds {
@@ -73,7 +82,7 @@
     return CGRectMake(self.view.bounds.origin.x,
                       self.view.bounds.origin.y + offset,
                       self.view.bounds.size.width,
-                      self.view.bounds.size.height - offset - heightOffset);
+                      self.view.bounds.size.height - offset);
 }
 
 -(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
@@ -106,13 +115,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    
     //PerformanceTrackerProtocol
     [self recordStartLoadTime];
     
     self.orientation = [[UIApplication sharedApplication] statusBarOrientation];
     
-    [self.navigationController.navigationBar setTranslucent:NO];
-    self.navigationItem.hidesBackButton = YES;
+    [self.navigationController.navigationBar setTranslucent:YES];
+    self.navigationController.navigationBar.topItem.title = @"";
+//    self.navigationItem.hidesBackButton = YES;
 //    self.title = @"";
     
     self.view.backgroundColor = JABackgroundGrey;
@@ -146,6 +158,8 @@
     if ([self getScreenName].length) {
         [TrackerManager trackScreenNameWithScreenName:[self getScreenName]];
     }
+    
+    [self.navigationController.interactivePopGestureRecognizer setEnabled:YES];
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -350,7 +364,7 @@
 
 - (void)reloadSearchBar {
     self.searchBarBackground.frame = CGRectMake(self.view.bounds.origin.x,
-                                                self.view.bounds.origin.y,
+                                                self.view.bounds.origin.y + [self statusAndNavbarHeight],
                                                 self.view.bounds.size.width,
                                                 kSearchViewBarHeight);
     CGFloat horizontalMargin = 3.0f; //adjustment to native searchbar margin

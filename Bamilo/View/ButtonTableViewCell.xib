@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -15,7 +15,7 @@
             <rect key="frame" x="0.0" y="0.0" width="366" height="97"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="366" height="96"/>
+                <rect key="frame" x="0.0" y="0.0" width="366" height="96.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WdB-Ho-b3r" customClass="BlueButton">
@@ -30,10 +30,10 @@
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="WdB-Ho-b3r" secondAttribute="trailing" constant="30" id="HEH-99-XFq"/>
+                    <constraint firstAttribute="right" secondItem="WdB-Ho-b3r" secondAttribute="right" constant="30" id="HEH-99-XFq"/>
                     <constraint firstItem="WdB-Ho-b3r" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="hKu-eB-T8P"/>
                     <constraint firstItem="WdB-Ho-b3r" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="jXW-8S-mcU"/>
-                    <constraint firstItem="WdB-Ho-b3r" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="30" id="pJc-6W-FtG"/>
+                    <constraint firstItem="WdB-Ho-b3r" firstAttribute="left" secondItem="H2p-sc-9uM" secondAttribute="left" constant="30" id="pJc-6W-FtG"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

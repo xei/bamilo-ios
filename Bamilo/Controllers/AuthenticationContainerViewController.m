@@ -49,7 +49,7 @@
                                  CAPSPageMenuOptionScrollAnimationDurationOnMenuItemTap: @(150)
                                  };
     
-    self.pagemenu = [[CAPSPageMenu alloc] initWithViewControllers:@[ self.signUpViewController, self.signInViewController ] frame:CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height) options:parameters];
+    self.pagemenu = [[CAPSPageMenu alloc] initWithViewControllers:@[ self.signUpViewController, self.signInViewController ] frame:self.viewBounds options:parameters];
     self.pagemenu.delegate = self;
     
     if (!self.startWithSignUpViewController){
@@ -73,27 +73,6 @@
     self.navBarLayout.showBackButton = !self.isForcedToLogin;
     self.navBarLayout.showLogo = NO;
 }
-
-#pragma mark - Legacy codes
-/*
-+ (void)goToCheckoutWithBlock:(AuthenticationBlock)authenticatedBlock {
-    [self authenticateAndExecuteBlock:authenticatedBlock showBackButtonForAuthentication:YES showContinueWithoutLogin:YES];
-}
-
-+ (void)authenticateAndExecuteBlock:(AuthenticationBlock)authenticatedBlock showBackButtonForAuthentication:(BOOL)backButton {
-    [self authenticateAndExecuteBlock:authenticatedBlock showBackButtonForAuthentication:backButton showContinueWithoutLogin:NO];
-}
-
-+ (void)authenticateAndExecuteBlock:(AuthenticationBlock)authenticatedBlock showBackButtonForAuthentication:(BOOL)backButton showContinueWithoutLogin:(BOOL)continueButton {
-    if([RICustomer checkIfUserIsLogged]) {
-        authenticatedBlock();
-    } else {
-        NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];
-        [userInfo setObject:[NSNumber numberWithBool:continueButton] forKey:@"continue_button"];
-        [userInfo setObject:[NSNumber numberWithBool:backButton] forKey:@"shows_back_button"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShowAuthenticationScreenNotification object:authenticatedBlock userInfo:userInfo];
-    }
-}*/
 
 #pragma mark - AuthenticationDelegate
 - (void)wantsToContinueWithoutLogin {

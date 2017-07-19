@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -15,7 +15,7 @@
             <rect key="frame" x="0.0" y="0.0" width="431" height="117"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="431" height="116"/>
+                <rect key="frame" x="0.0" y="0.0" width="431" height="116.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="foy-oN-Gf9" userLabel="container">
@@ -35,13 +35,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="J2v-1M-3CC" firstAttribute="leading" secondItem="foy-oN-Gf9" secondAttribute="leading" id="6m4-a1-CCo"/>
-                            <constraint firstItem="seV-hv-I49" firstAttribute="leading" secondItem="foy-oN-Gf9" secondAttribute="leading" id="Vk4-0O-sCW"/>
+                            <constraint firstItem="J2v-1M-3CC" firstAttribute="left" secondItem="foy-oN-Gf9" secondAttribute="left" id="6m4-a1-CCo"/>
+                            <constraint firstItem="seV-hv-I49" firstAttribute="left" secondItem="foy-oN-Gf9" secondAttribute="left" id="Vk4-0O-sCW"/>
                             <constraint firstItem="seV-hv-I49" firstAttribute="top" secondItem="foy-oN-Gf9" secondAttribute="top" id="fuu-Bn-9xN"/>
                             <constraint firstAttribute="bottom" secondItem="J2v-1M-3CC" secondAttribute="bottom" id="psz-Ct-ddW"/>
                             <constraint firstItem="J2v-1M-3CC" firstAttribute="top" secondItem="seV-hv-I49" secondAttribute="bottom" id="s1P-yM-dme"/>
-                            <constraint firstAttribute="trailing" secondItem="seV-hv-I49" secondAttribute="trailing" id="wRH-g2-imb"/>
-                            <constraint firstAttribute="trailing" secondItem="J2v-1M-3CC" secondAttribute="trailing" id="yc9-fI-IRd"/>
+                            <constraint firstAttribute="right" secondItem="seV-hv-I49" secondAttribute="right" id="wRH-g2-imb"/>
+                            <constraint firstAttribute="right" secondItem="J2v-1M-3CC" secondAttribute="right" id="yc9-fI-IRd"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
@@ -67,9 +67,9 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="foy-oN-Gf9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="0e7-GL-Zcr"/>
-                    <constraint firstItem="foy-oN-Gf9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="DJN-5o-dLR"/>
+                    <constraint firstItem="foy-oN-Gf9" firstAttribute="left" secondItem="H2p-sc-9uM" secondAttribute="left" id="DJN-5o-dLR"/>
                     <constraint firstAttribute="bottom" secondItem="foy-oN-Gf9" secondAttribute="bottom" constant="10" id="cjg-7R-QfS"/>
-                    <constraint firstAttribute="trailing" secondItem="foy-oN-Gf9" secondAttribute="trailing" id="lOc-9N-9fe"/>
+                    <constraint firstAttribute="right" secondItem="foy-oN-Gf9" secondAttribute="right" id="lOc-9N-9fe"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

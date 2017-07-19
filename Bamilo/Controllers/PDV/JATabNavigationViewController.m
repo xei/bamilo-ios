@@ -15,7 +15,6 @@
 @interface JATabNavigationViewController () <UIScrollViewDelegate, JATopTabsViewDelegate>
 
 @property (nonatomic, strong) UIScrollView *contentScrollView;
-
 @property (nonatomic, strong) JATopTabsView* topTabsView;
 
 @property (nonatomic) JAProductDescriptionView *descriptionView;
@@ -27,7 +26,7 @@
 @implementation JATabNavigationViewController
 
 - (JATopTabsView *)topTabsView {
-    CGRect frame = CGRectMake(0, 0, self.view.width, kTabsHeight);
+    CGRect frame = CGRectMake(0, [self viewBounds].origin.y, self.view.width, kTabsHeight);
     if (!VALID_NOTEMPTY(_topTabsView, JATopTabsView)) {
         _topTabsView = [[JATopTabsView alloc] initWithFrame:frame];
         _topTabsView.delegate = self;
@@ -62,7 +61,7 @@
         [_contentScrollView setPagingEnabled:YES];
         [_contentScrollView setShowsHorizontalScrollIndicator:NO];
         [_contentScrollView setContentSize:CGSizeMake(_contentScrollView.width*3, _contentScrollView.height)];
-    }else{
+    } else {
         if (!CGRectEqualToRect(frame, _contentScrollView.frame)) {
             [_contentScrollView setFrame:frame];
             [self descriptionView];
@@ -129,6 +128,7 @@
     if (self.product && !_reviewsView.product) {
         _reviewsView.product = self.product;
     }
+    
     return _reviewsView;
 }
 
@@ -142,8 +142,7 @@
     [self.view addSubview:self.contentScrollView];
 }
 
-- (void)scrollToX:(CGFloat)x
-{
+- (void)scrollToX:(CGFloat)x {
     if (CGPointEqualToPoint(CGPointMake(x, self.contentScrollView.contentOffset.y), self.contentScrollView.contentOffset)) {
         return;
     }
@@ -152,14 +151,12 @@
     }];
 }
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     NSInteger index = scrollView.contentOffset.x / self.view.frame.size.width;
     self.topTabsView.selectedIndex = index;
 }
 
-- (void)viewWillLayoutSubviews
-{
+- (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     
     [self topTabsView];
@@ -168,8 +165,7 @@
 
 #pragma mark JATopTabsViewDelegate
 
-- (void)selectedIndex:(NSInteger)index animated:(BOOL)animated;
-{
+- (void)selectedIndex:(NSInteger)index animated:(BOOL)animated {
     [self scrollToX:index*self.view.frame.size.width];
 }
 

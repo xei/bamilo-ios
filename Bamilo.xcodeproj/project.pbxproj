@@ -24,7 +24,6 @@
 		61036B681E65B5F5006E12A9 /* OrderList.m in Sources */ = {isa = PBXBuildFile; fileRef = 61036B671E65B5F5006E12A9 /* OrderList.m */; };
 		61036B6C1E65B638006E12A9 /* OrderProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 61036B6B1E65B638006E12A9 /* OrderProduct.m */; };
 		61037CBE1EB72C7600A461E0 /* EmarsysMobileEngageTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 61037CBD1EB72C7600A461E0 /* EmarsysMobileEngageTracker.m */; };
-		6106620F1EE6D54D00842674 /* UIBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6106620E1EE6D54D00842674 /* UIBarItem.swift */; };
 		610C68A31EC74292008FB66C /* CatalogHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610C68A21EC74292008FB66C /* CatalogHeaderView.swift */; };
 		610C68A51EC742E3008FB66C /* CatalogHeaderControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610C68A41EC742E3008FB66C /* CatalogHeaderControl.swift */; };
 		610C68A71EC7442B008FB66C /* CatalogHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 610C68A61EC7442B008FB66C /* CatalogHeaderView.xib */; };
@@ -152,6 +151,11 @@
 		61CBA0571E51FF2F005673F7 /* ButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61CBA0551E51FF2F005673F7 /* ButtonTableViewCell.xib */; };
 		61D10E6C1EAE22C6009A0865 /* SuccessPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D10E6B1EAE22C6009A0865 /* SuccessPaymentViewController.m */; };
 		61D8D8DE1E656FE0006650F5 /* OrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D8D8DD1E656FE0006650F5 /* OrderDetailViewController.m */; };
+		61D929341F1642C100716D4C /* Ext+CAShapreLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D929331F1642C100716D4C /* Ext+CAShapreLayer.swift */; };
+		61D929381F164CC200716D4C /* Ext+UIBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D929371F164CC200716D4C /* Ext+UIBarButtonItem.swift */; };
+		61D9293B1F16572000716D4C /* NavigationBarProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D9293A1F16572000716D4C /* NavigationBarProtocol.swift */; };
+		61D9293F1F16585500716D4C /* NavbarUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D9293E1F16585500716D4C /* NavbarUtility.swift */; };
+		61D929481F165AF700716D4C /* NavbarItemTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D929471F165AF700716D4C /* NavbarItemTypes.m */; };
 		61DBCCB61E46128300BA8251 /* IconButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 61DBCCB51E46128300BA8251 /* IconButton.m */; };
 		61E099641E3E0E21004ED14E /* IconTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E099621E3E0E21004ED14E /* IconTableViewCell.m */; };
 		61E099651E3E0E21004ED14E /* IconTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E099631E3E0E21004ED14E /* IconTableViewCell.xib */; };
@@ -936,8 +940,7 @@
 		61036B6B1E65B638006E12A9 /* OrderProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderProduct.m; sourceTree = "<group>"; };
 		61037CBC1EB72C7600A461E0 /* EmarsysMobileEngageTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysMobileEngageTracker.h; sourceTree = "<group>"; };
 		61037CBD1EB72C7600A461E0 /* EmarsysMobileEngageTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysMobileEngageTracker.m; sourceTree = "<group>"; };
-		61037CC31EB7416200A461E0 /* ScreenTrackerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenTrackerProtocol.h; sourceTree = "<group>"; };
-		6106620E1EE6D54D00842674 /* UIBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBarItem.swift; sourceTree = "<group>"; };
+		61037CC31EB7416200A461E0 /* ScreenTrackingProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenTrackingProtocol.h; sourceTree = "<group>"; };
 		610C68A21EC74292008FB66C /* CatalogHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogHeaderView.swift; sourceTree = "<group>"; };
 		610C68A41EC742E3008FB66C /* CatalogHeaderControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogHeaderControl.swift; sourceTree = "<group>"; };
 		610C68A61EC7442B008FB66C /* CatalogHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CatalogHeaderView.xib; sourceTree = "<group>"; };
@@ -1135,6 +1138,12 @@
 		61D10E6B1EAE22C6009A0865 /* SuccessPaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuccessPaymentViewController.m; sourceTree = "<group>"; };
 		61D8D8DC1E656FE0006650F5 /* OrderDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDetailViewController.h; sourceTree = "<group>"; };
 		61D8D8DD1E656FE0006650F5 /* OrderDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDetailViewController.m; sourceTree = "<group>"; };
+		61D929331F1642C100716D4C /* Ext+CAShapreLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Ext+CAShapreLayer.swift"; sourceTree = "<group>"; };
+		61D929371F164CC200716D4C /* Ext+UIBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Ext+UIBarButtonItem.swift"; sourceTree = "<group>"; };
+		61D9293A1F16572000716D4C /* NavigationBarProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBarProtocol.swift; sourceTree = "<group>"; };
+		61D9293E1F16585500716D4C /* NavbarUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavbarUtility.swift; sourceTree = "<group>"; };
+		61D929461F165AF700716D4C /* NavbarItemTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavbarItemTypes.h; sourceTree = "<group>"; };
+		61D929471F165AF700716D4C /* NavbarItemTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavbarItemTypes.m; sourceTree = "<group>"; };
 		61DBCCB41E46128300BA8251 /* IconButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconButton.h; sourceTree = "<group>"; };
 		61DBCCB51E46128300BA8251 /* IconButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconButton.m; sourceTree = "<group>"; };
 		61E099611E3E0E21004ED14E /* IconTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconTableViewCell.h; sourceTree = "<group>"; };
@@ -1954,7 +1963,6 @@
 		B510B00A19AE466B00A9754A /* JARadioComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JARadioComponent.h; sourceTree = "<group>"; };
 		B510B00B19AE466B00A9754A /* JARadioComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JARadioComponent.m; sourceTree = "<group>"; };
 		B5210E8719C4863400FDB0D1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/RIStrings.strings; sourceTree = "<group>"; };
-		B5210E8919C4863D00FDB0D1 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/RIStrings.strings; sourceTree = "<group>"; };
 		B5210E8A19C48F1700FDB0D1 /* JAStrings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JAStrings.h; sourceTree = "<group>"; };
 		B5240E461A496E59006264E9 /* JAMyOrderDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMyOrderDetailView.h; sourceTree = "<group>"; };
 		B5240E471A496E59006264E9 /* JAMyOrderDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMyOrderDetailView.m; sourceTree = "<group>"; };
@@ -2100,7 +2108,6 @@
 		CE88F7B51A1F88FB00A3A586 /* JAGrayButtonCell_ipad_portrait.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAGrayButtonCell_ipad_portrait.xib; sourceTree = "<group>"; };
 		CE88F7BB1A23886100A3A586 /* JAOrderSummaryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAOrderSummaryView.h; path = OrderSummaryView/JAOrderSummaryView.h; sourceTree = "<group>"; };
 		CE88F7BC1A23886100A3A586 /* JAOrderSummaryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAOrderSummaryView.m; path = OrderSummaryView/JAOrderSummaryView.m; sourceTree = "<group>"; };
-		CE8BF04D1BF4DD28001F20D1 /* ur */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ur; path = ur.lproj/RIStrings.strings; sourceTree = "<group>"; };
 		CE8C92AA1B8B555600C77706 /* JAMainFilterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMainFilterCell.h; sourceTree = "<group>"; };
 		CE8C92AB1B8B555600C77706 /* JAMainFilterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMainFilterCell.m; sourceTree = "<group>"; };
 		CE9193BB19F503FB00F89840 /* JAFallbackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAFallbackView.h; sourceTree = "<group>"; };
@@ -2109,7 +2116,6 @@
 		CE97D2EC19AE1ED50090D01C /* JANavigationBarLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JANavigationBarLayout.h; sourceTree = "<group>"; };
 		CE97D2ED19AE1ED50090D01C /* JANavigationBarLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JANavigationBarLayout.m; sourceTree = "<group>"; };
 		CE9AE11F1AB6D78200D56481 /* Bamilo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bamilo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE9AE1211AB823C100D56481 /* my */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = my; path = my.lproj/RIStrings.strings; sourceTree = "<group>"; };
 		CE9AE1271AB8281400D56481 /* JAFont.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JAFont.h; sourceTree = "<group>"; };
 		CE9AE12C1AB84C2300D56481 /* Bamilo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Bamilo-Info.plist"; sourceTree = "<group>"; };
 		CE9AE1341AB8994F00D56481 /* Bamilo.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Bamilo.xcassets; sourceTree = "<group>"; };
@@ -2133,7 +2139,6 @@
 		CEA86DFA1A49D247000032AD /* JACampaignProductCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACampaignProductCell.m; sourceTree = "<group>"; };
 		CEA86DFE1A49D247000032AD /* JAPercentageBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPercentageBarView.h; sourceTree = "<group>"; };
 		CEA86DFF1A49D247000032AD /* JAPercentageBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPercentageBarView.m; sourceTree = "<group>"; };
-		CEAB62D11A7FE32B00B6F26E /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/RIStrings.strings; sourceTree = "<group>"; };
 		CEABEEB81A1118A1000D0CF8 /* JAPriceFiltersView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JAPriceFiltersView.xib; path = Filters/JAPriceFiltersView.xib; sourceTree = "<group>"; };
 		CEABEEBA1A1119AB000D0CF8 /* JAPriceFiltersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAPriceFiltersView.h; path = Filters/JAPriceFiltersView.h; sourceTree = "<group>"; };
 		CEABEEBB1A1119AB000D0CF8 /* JAPriceFiltersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAPriceFiltersView.m; path = Filters/JAPriceFiltersView.m; sourceTree = "<group>"; };
@@ -2176,7 +2181,6 @@
 		CEED47281A7B973B006D9CE7 /* JAPDVBundleSingleItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAPDVBundleSingleItem.h; path = Bundles/JAPDVBundleSingleItem.h; sourceTree = "<group>"; };
 		CEED47291A7B973B006D9CE7 /* JAPDVBundleSingleItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAPDVBundleSingleItem.m; path = Bundles/JAPDVBundleSingleItem.m; sourceTree = "<group>"; };
 		CEED472A1A7B973B006D9CE7 /* JAPDVBundleSingleItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JAPDVBundleSingleItem.xib; path = Bundles/JAPDVBundleSingleItem.xib; sourceTree = "<group>"; };
-		CEF0C4891BE8C391005B5B12 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/RIStrings.strings; sourceTree = "<group>"; };
 		FF4383DD1C6CD4AC003BA957 /* JASwitchRadioComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASwitchRadioComponent.h; sourceTree = "<group>"; };
 		FF4383DE1C6CD4AC003BA957 /* JASwitchRadioComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASwitchRadioComponent.m; sourceTree = "<group>"; };
 		FF4383E41C6E1F49003BA957 /* JAScreenRadioComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAScreenRadioComponent.h; sourceTree = "<group>"; };
@@ -3205,6 +3209,8 @@
 			isa = PBXGroup;
 			children = (
 				6193F3D81F0CF5E000DA3CDE /* Trackers */,
+				61D9293C1F16582B00716D4C /* Utility */,
+				61D929391F16564F00716D4C /* Protocols */,
 				61C8604A1ECB3BD900F2C571 /* Extensions */,
 				617F77AC1EB85B9A000A2A6C /* Managers */,
 				61C860401ECAF94400F2C571 /* AppUtitlity.swift */,
@@ -3634,7 +3640,8 @@
 				61143A581ED55C2300C53BA8 /* Ext+Bool.swift */,
 				617D7F381EDC16DC00F36CF7 /* Ext+UILabel.swift */,
 				61EA56691EDE8BC20093EAD4 /* Ext+UIAlertView.swift */,
-				6106620E1EE6D54D00842674 /* UIBarItem.swift */,
+				61D929331F1642C100716D4C /* Ext+CAShapreLayer.swift */,
+				61D929371F164CC200716D4C /* Ext+UIBarButtonItem.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -3739,6 +3746,47 @@
 				61D8D8DD1E656FE0006650F5 /* OrderDetailViewController.m */,
 			);
 			name = OrderDetailViewController;
+			sourceTree = "<group>";
+		};
+		61D929391F16564F00716D4C /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				61D9293A1F16572000716D4C /* NavigationBarProtocol.swift */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
+		61D9293C1F16582B00716D4C /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				61D9293E1F16585500716D4C /* NavbarUtility.swift */,
+			);
+			name = Utility;
+			sourceTree = "<group>";
+		};
+		61D929401F16597000716D4C /* NavbarItemsType */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = NavbarItemsType;
+			sourceTree = "<group>";
+		};
+		61D929421F165A1C00716D4C /* NavbarItemTypes */ = {
+			isa = PBXGroup;
+			children = (
+				61D929461F165AF700716D4C /* NavbarItemTypes.h */,
+				61D929471F165AF700716D4C /* NavbarItemTypes.m */,
+			);
+			name = NavbarItemTypes;
+			sourceTree = "<group>";
+		};
+		61D929431F165A2800716D4C /* NavBar */ = {
+			isa = PBXGroup;
+			children = (
+				61D929421F165A1C00716D4C /* NavbarItemTypes */,
+				61D929401F16597000716D4C /* NavbarItemsType */,
+			);
+			name = NavBar;
 			sourceTree = "<group>";
 		};
 		61DBCCB31E46127600BA8251 /* IconButton */ = {
@@ -4654,6 +4702,7 @@
 		874AAB5B1E3C775900B3F8FE /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				61716BA41E86595200F4E65F /* DeepLinkManager */,
 				87D3DD171E8A2DE300C960FF /* Base */,
 				874AAB661E3CE9F400B3F8FE /* AppManager */,
 				87DAABF01E55DDE300445EBB /* AlertManager */,
@@ -4800,7 +4849,7 @@
 				8754351D1E77ED1100B5D6B4 /* PushNotificationTrackerProtocol.h */,
 				871BA8501E8678DE007680C5 /* EventTrackerProtocol.h */,
 				8702FBEF1E9A3758001D1AA9 /* TagTrackerProtocol.h */,
-				61037CC31EB7416200A461E0 /* ScreenTrackerProtocol.h */,
+				61037CC31EB7416200A461E0 /* ScreenTrackingProtocol.h */,
 				61800CE61F0924E40036F5CD /* CampaginTrackerProtocol.h */,
 			);
 			name = Protocols;
@@ -5340,6 +5389,7 @@
 		879F87F61E5069ED0033FE87 /* Local */ = {
 			isa = PBXGroup;
 			children = (
+				61D929431F165A2800716D4C /* NavBar */,
 				617AAA401E503A71004D9430 /* Form */,
 			);
 			name = Local;
@@ -6293,7 +6343,6 @@
 		B50B03A8198A883D002046DF /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				61716BA41E86595200F4E65F /* DeepLinkManager */,
 				874AAB741E3DD30400B3F8FE /* URLUtility */,
 				870F8D031E3397400021F87B /* IntUtility */,
 				8702FBB71E98FE25001D1AA9 /* EmailUtility */,
@@ -7155,12 +7204,7 @@
 			knownRegions = (
 				en,
 				Base,
-				fr,
-				pt,
-				my,
 				fa,
-				ar,
-				ur,
 			);
 			mainGroup = B5A3019F19811D0700F71726;
 			productRefGroup = B5A301A919811D0700F71726 /* Products */;
@@ -7716,7 +7760,9 @@
 				613A7E8F1EBF0F6B00E1AB3F /* CategoryProduct.swift in Sources */,
 				875AD57E1E38C0C900584ABF /* RIDataBaseWrapper.m in Sources */,
 				875AD5761E38C0C900584ABF /* RIShippingMethodPickupStationOption.m in Sources */,
+				61D929341F1642C100716D4C /* Ext+CAShapreLayer.swift in Sources */,
 				61716BA71E865B3D00F4E65F /* DeepLinkManager.m in Sources */,
+				61D9293F1F16585500716D4C /* NavbarUtility.swift in Sources */,
 				617D7F431EDC341B00F36CF7 /* BaseProfileTableViewCell.swift in Sources */,
 				9A7EE9C91B5557C9004E2505 /* UIButton+Extensions.m in Sources */,
 				61036B501E65897D006E12A9 /* MutualTitleHeaderCell.m in Sources */,
@@ -7842,9 +7888,11 @@
 				875AD5621E38C0C900584ABF /* RIHtmlShop.m in Sources */,
 				9AE766BF1CBBF01C00B63D8E /* JAEmptyCartView.m in Sources */,
 				9AEF741C1CD27C1400A5D574 /* JACheckoutButton.m in Sources */,
+				61D929381F164CC200716D4C /* Ext+UIBarButtonItem.swift in Sources */,
 				CE9ADF9C1AB6D78200D56481 /* JAAddNewAddressViewController.m in Sources */,
 				875AD5481E38C0C900584ABF /* RIFieldOption.m in Sources */,
 				FFF900871C6B5BDF00DDF538 /* JARadioGroupComponent.m in Sources */,
+				61D929481F165AF700716D4C /* NavbarItemTypes.m in Sources */,
 				875AD56B1E38C0C900584ABF /* RIProduct.m in Sources */,
 				618204991E6D465500322937 /* SearchCategoryFilter.m in Sources */,
 				CEA107011BD78CE500EF88B1 /* JATabBarView.m in Sources */,
@@ -7977,6 +8025,7 @@
 				CE9ADFD91AB6D78200D56481 /* JAPromotionPopUp.m in Sources */,
 				9A55A68B1BBECB09008EF4A6 /* JABottomBar.m in Sources */,
 				874AAB6D1E3DCEDB00B3F8FE /* SessionManager.m in Sources */,
+				61D9293B1F16572000716D4C /* NavigationBarProtocol.swift in Sources */,
 				6125534C1E4EF63000975C6F /* InputTextFieldControl.m in Sources */,
 				875AD5541E38C0C900584ABF /* RIURLCache.m in Sources */,
 				875AD5651E38C0C900584ABF /* RIOrder.m in Sources */,
@@ -8036,7 +8085,6 @@
 				9A4077251CE0CDA600313D20 /* NSString+Size.m in Sources */,
 				879F87F51E5058060033FE87 /* PlainTableViewHeaderCell.m in Sources */,
 				61143A641ED5BCB000C53BA8 /* FilteredListNoResultViewController.swift in Sources */,
-				6106620F1EE6D54D00842674 /* UIBarItem.swift in Sources */,
 				9A38764E1BCD0CDC0088B186 /* JATabNavigationViewController.m in Sources */,
 				CE9ADFF41AB6D78200D56481 /* JAActivityViewController.m in Sources */,
 				619351AB1ECAC9DD00330E5C /* CatalogCardCollectionViewCell.swift in Sources */,
@@ -8154,12 +8202,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				B5210E8719C4863400FDB0D1 /* en */,
-				B5210E8919C4863D00FDB0D1 /* fr */,
-				CEAB62D11A7FE32B00B6F26E /* pt */,
-				CE9AE1211AB823C100D56481 /* my */,
 				CE3F81411AC5743000EB3916 /* fa */,
-				CEF0C4891BE8C391005B5B12 /* ar */,
-				CE8BF04D1BF4DD28001F20D1 /* ur */,
 			);
 			name = RIStrings.strings;
 			sourceTree = "<group>";

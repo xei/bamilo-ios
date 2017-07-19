@@ -37,6 +37,7 @@
 #import "AuthenticationDataManager.h"
 #import "EmarsysPredictProtocol.h"
 #import "EmarsysPredictManager.h"
+#import "NavbarItemTypes.h"
 
 #import "BaseControlView.h"
 #import "BaseViewControl.h"

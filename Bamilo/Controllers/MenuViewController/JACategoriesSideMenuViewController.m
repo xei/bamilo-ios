@@ -122,6 +122,7 @@
     self.tableView = [UITableView new];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.view addSubview:self.tableView];
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -136,6 +137,7 @@
         animationDelete = UITableViewRowAnimationLeft;
     }
 
+    self.title = @"Categories";
     [self reloadData];
 }
 
@@ -146,6 +148,7 @@
     self.navBarLayout.showCartButton = YES;
     self.navBarLayout.showSearchButton = YES;
 }
+
 
 - (void)reloadData {
     [self reloadCategories];
@@ -234,11 +237,14 @@
     [super viewWillAppear:animated];
     
     //manually add the status bar height into the calculations
-    CGFloat statusBarHeight = 0.0f;
+    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+    CGFloat navbarHeight = self.navigationController.navigationBar.height;
+    
+    
     [self.tableView setFrame:CGRectMake(self.view.bounds.origin.x,
-                                        self.view.bounds.origin.y + statusBarHeight,
+                                        self.view.bounds.origin.y + statusBarHeight + navbarHeight,
                                         self.view.bounds.size.width,
-                                        self.view.bounds.size.height - statusBarHeight)];
+                                        self.view.bounds.size.height - statusBarHeight - navbarHeight)];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {

@@ -57,7 +57,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aPI-2d-kOH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3117" y="-898"/>
+            <point key="canvasLocation" x="-2981" y="-898"/>
         </scene>
         <!--Sub Categories View Controller-->
         <scene sceneID="DkP-k9-TEh">
@@ -67,7 +67,7 @@
                         <viewControllerLayoutGuide type="top" id="9SN-5P-fsR"/>
                         <viewControllerLayoutGuide type="bottom" id="34t-u1-28L"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" misplaced="YES" id="0V6-zY-rSO">
+                    <view key="view" contentMode="scaleToFill" id="0V6-zY-rSO">
                         <rect key="frame" x="0.0" y="64" width="414" height="672"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -119,7 +119,7 @@
                                         <rect key="frame" x="147" y="137" width="120" height="57"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SSz-D5-qwc">
-                                        <rect key="frame" x="193" y="69" width="28" height="23"/>
+                                        <rect key="frame" x="193.66666666666663" y="69" width="27.333333333333343" height="23"/>
                                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -264,12 +264,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vA9-VB-bkS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-164" y="-1792"/>
+            <point key="canvasLocation" x="-1394" y="-2017"/>
         </scene>
         <!--Saved List View Controller-->
         <scene sceneID="mE4-xH-bbS">
             <objects>
-                <viewController storyboardIdentifier="JASavedListViewController" id="cs2-Bj-Ghr" customClass="JASavedListViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="JASavedListViewController" automaticallyAdjustsScrollViewInsets="NO" id="cs2-Bj-Ghr" customClass="JASavedListViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bb7-Kf-C55"/>
                         <viewControllerLayoutGuide type="bottom" id="gu1-Cz-8er"/>
@@ -322,7 +322,7 @@
         <!--Empty View Controller-->
         <scene sceneID="Ime-lj-bpF">
             <objects>
-                <viewController id="5e7-2X-NOR" customClass="EmptyViewController" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="5e7-2X-NOR" customClass="EmptyViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="rnV-yn-1ur"/>
                         <viewControllerLayoutGuide type="bottom" id="xNg-2A-UaD"/>
@@ -352,7 +352,7 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="شما هیچ کالایی در سبد خرید ندارید." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DCm-py-rHJ">
-                                                <rect key="frame" x="0.0" y="62" width="180" height="58"/>
+                                                <rect key="frame" x="0.0" y="62.666666666666657" width="180" height="57.333333333333343"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="15"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -405,7 +405,7 @@
         <!--Cart View Controller-->
         <scene sceneID="x2b-dV-MkH">
             <objects>
-                <viewController storyboardIdentifier="CartViewController" id="9Ss-pC-YRE" customClass="CartViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CartViewController" automaticallyAdjustsScrollViewInsets="NO" id="9Ss-pC-YRE" customClass="CartViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Onn-cX-YGc"/>
                         <viewControllerLayoutGuide type="bottom" id="wSM-EL-UVj"/>
@@ -563,7 +563,7 @@
                                 <rect key="frame" x="0.0" y="28" width="414" height="160"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pgz-Vl-RXA" id="cNm-Dn-ldr">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="159"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="159.66666666666666"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -576,7 +576,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gq8-rW-Dfl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2275" y="-1792"/>
+            <point key="canvasLocation" x="-3504" y="-2017"/>
         </scene>
         <!--Address View Controller-->
         <scene sceneID="FEU-Av-x5d">
@@ -609,7 +609,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yhh-r8-b5J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1599" y="-1791"/>
+            <point key="canvasLocation" x="-2829" y="-2015"/>
         </scene>
         <!--Address Edit View Controller-->
         <scene sceneID="aNg-a7-B1B">
@@ -642,12 +642,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4TC-fp-edr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-875" y="-1793"/>
+            <point key="canvasLocation" x="-2104" y="-2018"/>
         </scene>
         <!--Profile View Controller-->
         <scene sceneID="NYZ-t3-48H">
             <objects>
-                <viewController storyboardIdentifier="ProfileViewController" id="pli-78-2P8" customClass="ProfileViewController" customModule="Bamilo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProfileViewController" automaticallyAdjustsScrollViewInsets="NO" id="pli-78-2P8" customClass="ProfileViewController" customModule="Bamilo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8r3-Ys-pKd"/>
                         <viewControllerLayoutGuide type="bottom" id="ANy-w8-leu"/>
@@ -664,8 +664,8 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="Y9Y-N4-eD7" secondAttribute="trailing" id="1rS-pg-0Nc"/>
-                            <constraint firstItem="Y9Y-N4-eD7" firstAttribute="leading" secondItem="3V5-qp-6m5" secondAttribute="leading" id="Kgv-Dy-YHi"/>
+                            <constraint firstAttribute="right" secondItem="Y9Y-N4-eD7" secondAttribute="right" id="1rS-pg-0Nc"/>
+                            <constraint firstItem="Y9Y-N4-eD7" firstAttribute="left" secondItem="3V5-qp-6m5" secondAttribute="left" id="Kgv-Dy-YHi"/>
                             <constraint firstItem="ANy-w8-leu" firstAttribute="top" secondItem="Y9Y-N4-eD7" secondAttribute="bottom" id="RUJ-iX-Fnk"/>
                             <constraint firstItem="Y9Y-N4-eD7" firstAttribute="top" secondItem="8r3-Ys-pKd" secondAttribute="bottom" id="gPt-kj-D2F"/>
                         </constraints>
@@ -829,7 +829,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="✔︎ از صحت نگارش عبارت مورد نظر خود اطمینان حاصل نموده و مجدد جستجو نمایید." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A5u-Np-HlN">
-                                                <rect key="frame" x="29" y="135" width="232" height="40"/>
+                                                <rect key="frame" x="29" y="135.33333333333331" width="232" height="39.666666666666686"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="11"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -940,7 +940,7 @@
         <!--Filters View Controller-->
         <scene sceneID="sPO-lR-OuH">
             <objects>
-                <viewController id="L8G-Sy-CpX" customClass="JAFiltersViewController" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="L8G-Sy-CpX" customClass="JAFiltersViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="tuE-rI-FwY"/>
                         <viewControllerLayoutGuide type="bottom" id="HYd-hM-YQ6"/>
@@ -1128,14 +1128,14 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="NoS-CJ-sO6" secondAttribute="trailing" id="5iH-xi-USK"/>
+                                    <constraint firstAttribute="right" secondItem="NoS-CJ-sO6" secondAttribute="right" id="5iH-xi-USK"/>
                                     <constraint firstItem="QpC-j4-Mbn" firstAttribute="height" secondItem="Nqx-02-VzU" secondAttribute="height" id="LES-RS-Ba3"/>
                                     <constraint firstItem="QpC-j4-Mbn" firstAttribute="width" secondItem="Nqx-02-VzU" secondAttribute="width" id="MGt-DQ-nKp"/>
                                     <constraint firstItem="NoS-CJ-sO6" firstAttribute="width" secondItem="Nqx-02-VzU" secondAttribute="width" id="Wtj-WN-wG9"/>
                                     <constraint firstAttribute="bottom" secondItem="NoS-CJ-sO6" secondAttribute="bottom" id="XqJ-wW-edN"/>
-                                    <constraint firstItem="alL-tK-6wv" firstAttribute="leading" secondItem="Nqx-02-VzU" secondAttribute="leading" constant="15" id="Y6w-AN-Clt"/>
-                                    <constraint firstAttribute="trailing" secondItem="io5-BR-mvJ" secondAttribute="trailing" constant="15" id="duy-My-9nG"/>
-                                    <constraint firstItem="QpC-j4-Mbn" firstAttribute="leading" secondItem="Nqx-02-VzU" secondAttribute="leading" id="dyt-5L-j2f"/>
+                                    <constraint firstItem="alL-tK-6wv" firstAttribute="left" secondItem="Nqx-02-VzU" secondAttribute="left" constant="15" id="Y6w-AN-Clt"/>
+                                    <constraint firstAttribute="right" secondItem="io5-BR-mvJ" secondAttribute="right" constant="15" id="duy-My-9nG"/>
+                                    <constraint firstItem="QpC-j4-Mbn" firstAttribute="left" secondItem="Nqx-02-VzU" secondAttribute="left" id="dyt-5L-j2f"/>
                                     <constraint firstItem="io5-BR-mvJ" firstAttribute="centerY" secondItem="Nqx-02-VzU" secondAttribute="centerY" id="eg7-F1-8os"/>
                                     <constraint firstItem="alL-tK-6wv" firstAttribute="width" secondItem="alL-tK-6wv" secondAttribute="height" multiplier="1:1" id="f1A-pr-1Lr"/>
                                     <constraint firstItem="alL-tK-6wv" firstAttribute="centerY" secondItem="io5-BR-mvJ" secondAttribute="centerY" id="kZr-2k-JYQ"/>
@@ -1146,22 +1146,22 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="yiD-2c-iVq" firstAttribute="leading" secondItem="rtR-Wz-pvw" secondAttribute="leading" id="1df-DM-eJg"/>
+                            <constraint firstItem="yiD-2c-iVq" firstAttribute="left" secondItem="rtR-Wz-pvw" secondAttribute="left" id="1df-DM-eJg"/>
                             <constraint firstItem="xAc-ga-3ha" firstAttribute="top" secondItem="h20-4O-G0a" secondAttribute="top" id="2tK-sv-hCz"/>
                             <constraint firstItem="26i-ZR-oTf" firstAttribute="top" secondItem="yiD-2c-iVq" secondAttribute="bottom" id="2uE-uh-1dy"/>
-                            <constraint firstItem="kZM-mp-Uo9" firstAttribute="leading" secondItem="rtR-Wz-pvw" secondAttribute="leading" id="5GS-KD-I41"/>
+                            <constraint firstItem="kZM-mp-Uo9" firstAttribute="left" secondItem="rtR-Wz-pvw" secondAttribute="left" id="5GS-KD-I41"/>
                             <constraint firstAttribute="right" secondItem="h20-4O-G0a" secondAttribute="right" id="6lG-nh-l48"/>
                             <constraint firstItem="kZM-mp-Uo9" firstAttribute="top" secondItem="usu-Ff-Z7y" secondAttribute="bottom" id="7Ev-Cx-Rmp"/>
                             <constraint firstItem="Nqx-02-VzU" firstAttribute="top" secondItem="kZM-mp-Uo9" secondAttribute="bottom" id="FkC-MF-gHg"/>
                             <constraint firstItem="26i-ZR-oTf" firstAttribute="top" secondItem="h20-4O-G0a" secondAttribute="bottom" id="IeO-Ht-tQd"/>
-                            <constraint firstItem="Nqx-02-VzU" firstAttribute="leading" secondItem="rtR-Wz-pvw" secondAttribute="leading" id="U6I-GM-dbR"/>
+                            <constraint firstItem="Nqx-02-VzU" firstAttribute="left" secondItem="rtR-Wz-pvw" secondAttribute="left" id="U6I-GM-dbR"/>
                             <constraint firstItem="xAc-ga-3ha" firstAttribute="height" secondItem="h20-4O-G0a" secondAttribute="height" id="UFL-yq-zHh"/>
-                            <constraint firstAttribute="trailing" secondItem="Nqx-02-VzU" secondAttribute="trailing" id="XAy-Ld-Y4g"/>
+                            <constraint firstAttribute="right" secondItem="Nqx-02-VzU" secondAttribute="right" id="XAy-Ld-Y4g"/>
                             <constraint firstItem="h20-4O-G0a" firstAttribute="top" secondItem="yiD-2c-iVq" secondAttribute="top" id="YWJ-qG-iOA"/>
-                            <constraint firstAttribute="trailing" secondItem="26i-ZR-oTf" secondAttribute="trailing" id="aGb-2Q-Z5I"/>
+                            <constraint firstAttribute="right" secondItem="26i-ZR-oTf" secondAttribute="right" id="aGb-2Q-Z5I"/>
                             <constraint firstItem="h20-4O-G0a" firstAttribute="left" secondItem="xAc-ga-3ha" secondAttribute="right" id="cYy-EM-XpQ"/>
-                            <constraint firstItem="26i-ZR-oTf" firstAttribute="leading" secondItem="rtR-Wz-pvw" secondAttribute="leading" id="fyp-uW-9Bh"/>
-                            <constraint firstAttribute="trailing" secondItem="kZM-mp-Uo9" secondAttribute="trailing" id="kNw-Jy-AbM"/>
+                            <constraint firstItem="26i-ZR-oTf" firstAttribute="left" secondItem="rtR-Wz-pvw" secondAttribute="left" id="fyp-uW-9Bh"/>
+                            <constraint firstAttribute="right" secondItem="kZM-mp-Uo9" secondAttribute="right" id="kNw-Jy-AbM"/>
                             <constraint firstAttribute="right" secondItem="usu-Ff-Z7y" secondAttribute="right" id="mFu-dL-k7m"/>
                             <constraint firstItem="HYd-hM-YQ6" firstAttribute="top" secondItem="26i-ZR-oTf" secondAttribute="bottom" id="mHB-zW-Laa"/>
                             <constraint firstItem="xAc-ga-3ha" firstAttribute="left" secondItem="yiD-2c-iVq" secondAttribute="right" id="pU0-ub-rYP"/>
@@ -1262,11 +1262,11 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="3lk-K0-wUO" kind="relationship" relationship="viewControllers" id="rGE-48-rxg"/>
-                        <segue destination="UNH-3a-fvq" kind="relationship" relationship="viewControllers" id="V0J-MU-mdd"/>
-                        <segue destination="LF3-PT-6bx" kind="relationship" relationship="viewControllers" id="Mjn-Rv-8er"/>
-                        <segue destination="QoD-0G-T5X" kind="relationship" relationship="viewControllers" id="Kwg-AN-uIg"/>
-                        <segue destination="cs8-hA-jLu" kind="relationship" relationship="viewControllers" id="FlE-pH-y3r"/>
+                        <segue destination="cs8-hA-jLu" kind="relationship" relationship="viewControllers" id="IW9-1m-uEc"/>
+                        <segue destination="QoD-0G-T5X" kind="relationship" relationship="viewControllers" id="r38-AT-ytX"/>
+                        <segue destination="LF3-PT-6bx" kind="relationship" relationship="viewControllers" id="E35-3l-VRN"/>
+                        <segue destination="UNH-3a-fvq" kind="relationship" relationship="viewControllers" id="tR9-2U-43H"/>
+                        <segue destination="3lk-K0-wUO" kind="relationship" relationship="viewControllers" id="utH-Y6-xc2"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vk6-XN-Nt4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1276,7 +1276,7 @@
         <!--سبد خرید-->
         <scene sceneID="9ps-59-SOz">
             <objects>
-                <navigationController id="3lk-K0-wUO" customClass="JACenterNavigationController" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="3lk-K0-wUO" customClass="JACenterNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="سبد خرید" image="tabbar_button_cart" selectedImage="tabbar_button_cart_highlighted" id="vOP-LE-mfP"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="JSG-7a-gu8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1293,7 +1293,7 @@
         <!--Empty View Controller-->
         <scene sceneID="7DM-WZ-vkX">
             <objects>
-                <viewController id="160-dK-6zH" customClass="EmptyViewController" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="160-dK-6zH" customClass="EmptyViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3B-T4-eac"/>
                         <viewControllerLayoutGuide type="bottom" id="bg7-v5-VYq"/>
@@ -1313,17 +1313,17 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="376"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aHK-zt-d1F">
-                                        <rect key="frame" x="86" y="123" width="244" height="130"/>
+                                        <rect key="frame" x="85.333333333333343" y="123" width="243.66666666666666" height="130"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img_emptyCart" translatesAutoresizingMaskIntoConstraints="NO" id="6mZ-Dq-aV9">
-                                                <rect key="frame" x="88" y="10" width="67" height="60"/>
+                                                <rect key="frame" x="87.666666666666671" y="10" width="67.000000000000014" height="60"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="6mZ-Dq-aV9" secondAttribute="height" multiplier="51:46" id="GUi-v4-g6M"/>
                                                     <constraint firstAttribute="height" constant="60" id="qQQ-zu-ESG"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="شما هیچ کالایی در سبد خرید ندارید." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uxT-zy-g4F">
-                                                <rect key="frame" x="0.0" y="101" width="244" height="29"/>
+                                                <rect key="frame" x="0.0" y="101.33333333333334" width="243.66666666666669" height="28.666666666666657"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="15"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1425,7 +1425,7 @@
         <!--حساب کاربری-->
         <scene sceneID="maa-G4-bvT">
             <objects>
-                <navigationController id="UNH-3a-fvq" customClass="JACenterNavigationController" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="UNH-3a-fvq" customClass="JACenterNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="حساب کاربری" image="tabbar_button_user" selectedImage="tabbar_button_user_highlighted" id="kQT-G5-igf"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="j53-XG-u4H">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1442,7 +1442,7 @@
         <!--دسته بندی-->
         <scene sceneID="6GI-gm-hb3">
             <objects>
-                <navigationController id="LF3-PT-6bx" customClass="JACenterNavigationController" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="LF3-PT-6bx" customClass="JACenterNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="دسته بندی" image="tabbar_category" selectedImage="tabbar_category_highlighted" id="VQI-YI-REh"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="P9F-Ev-iJz">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1478,7 +1478,7 @@
         <!--علاقه مندی-->
         <scene sceneID="lMW-tl-kMg">
             <objects>
-                <navigationController id="QoD-0G-T5X" customClass="JACenterNavigationController" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="QoD-0G-T5X" customClass="JACenterNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="علاقه مندی" image="tabbar_button_wishlist" selectedImage="tabbar_button_wishlist_highlighted" id="4Pl-fC-rbr"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="1fp-kM-BWq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1495,7 +1495,7 @@
         <!--خانه-->
         <scene sceneID="i0f-Pj-fzK">
             <objects>
-                <navigationController id="cs8-hA-jLu" customClass="JACenterNavigationController" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cs8-hA-jLu" customClass="JACenterNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="خانه" image="tabbar_button_home" selectedImage="tabbar_button_home_highlighted" id="30f-xb-6Gv"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="8ul-e7-QlM">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1512,7 +1512,7 @@
         <!--Home View Controller-->
         <scene sceneID="lcM-gh-Vda">
             <objects>
-                <viewController id="VmC-ac-7fx" customClass="JAHomeViewController" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="VmC-ac-7fx" customClass="JAHomeViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="EsA-aZ-NPd"/>
                         <viewControllerLayoutGuide type="bottom" id="XSt-cb-U18"/>

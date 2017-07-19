@@ -89,7 +89,7 @@
                 <constraint firstItem="AgW-dN-lg1" firstAttribute="centerY" secondItem="SyC-qT-Pj5" secondAttribute="centerY" id="8Zl-eC-vgK"/>
                 <constraint firstItem="SyC-qT-Pj5" firstAttribute="centerY" secondItem="PBW-95-Jat" secondAttribute="centerY" id="99h-Sn-5aT"/>
                 <constraint firstItem="Lkt-pv-HeV" firstAttribute="left" secondItem="PBW-95-Jat" secondAttribute="right" id="DXN-KJ-wKk"/>
-                <constraint firstItem="PBW-95-Jat" firstAttribute="leading" secondItem="SyC-qT-Pj5" secondAttribute="trailing" id="J7w-Ru-gtA"/>
+                <constraint firstItem="PBW-95-Jat" firstAttribute="left" secondItem="SyC-qT-Pj5" secondAttribute="right" id="J7w-Ru-gtA"/>
                 <constraint firstItem="SyC-qT-Pj5" firstAttribute="height" secondItem="PBW-95-Jat" secondAttribute="height" id="RuF-40-kev"/>
                 <constraint firstItem="AgW-dN-lg1" firstAttribute="height" secondItem="SyC-qT-Pj5" secondAttribute="height" id="aDU-c6-pqH"/>
                 <constraint firstItem="PBW-95-Jat" firstAttribute="height" secondItem="Lkt-pv-HeV" secondAttribute="height" id="g7i-0Z-pPG"/>
@@ -100,7 +100,7 @@
                 <constraint firstItem="Lkt-pv-HeV" firstAttribute="centerY" secondItem="nEW-7h-XXI" secondAttribute="centerY" id="ogh-c5-6QR"/>
                 <constraint firstAttribute="right" secondItem="nEW-7h-XXI" secondAttribute="right" id="s29-jn-cYt"/>
                 <constraint firstItem="nEW-7h-XXI" firstAttribute="left" secondItem="Lkt-pv-HeV" secondAttribute="right" id="uDJ-o3-5pa"/>
-                <constraint firstItem="SyC-qT-Pj5" firstAttribute="leading" secondItem="AgW-dN-lg1" secondAttribute="trailing" id="y9l-0v-uqX"/>
+                <constraint firstItem="SyC-qT-Pj5" firstAttribute="left" secondItem="AgW-dN-lg1" secondAttribute="right" id="y9l-0v-uqX"/>
                 <constraint firstItem="AgW-dN-lg1" firstAttribute="width" secondItem="SyC-qT-Pj5" secondAttribute="width" id="ylY-c6-3s1"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>

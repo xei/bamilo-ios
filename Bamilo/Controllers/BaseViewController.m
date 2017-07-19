@@ -27,16 +27,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.automaticallyAdjustsScrollViewInsets = NO;
+//    self.navigationController.interactivePopGestureRecognizer.state //.enabled = NO;
+    
     //PerformanceTrackerProtocol
     [self recordStartLoadTime];
-    
-    self.navigationController.navigationBar.translucent = NO;
-    self.navigationItem.hidesBackButton = YES;
     self.title = nil;
     self.view.backgroundColor = JABackgroundGrey;
+
     if ([self getScreenName].length) {
         [TrackerManager trackScreenNameWithScreenName:[self getScreenName]];
     }
+    
+    [self.navigationController.navigationBar setTranslucent:YES];
+    self.navigationController.navigationBar.topItem.title = @"";
 }
 
 - (JANavigationBarLayout *)navBarLayout {
@@ -51,7 +55,6 @@
     [self updateNavBar];
     
     [self requestNavigationBarReload];
-//    [self requestTabBarReload];
     
     if ([self conformsToProtocol:@protocol(EmarsysPredictProtocolBase)]) {
         if ([self respondsToSelector:@selector(isPreventSendTransactionInViewWillAppear)]) {
@@ -86,10 +89,16 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kChangeNavigationBarNotification object:self.navBarLayout];
 }
 
-//#pragma mark - Private Methods
-//- (void)requestTabBarReload {
-//    [[NSNotificationCenter defaultCenter] postNotificationName:kChangeTabBarVisibility object:[NSNumber numberWithBool:[self getTabBarVisible]]];
-//}
+- (CGFloat) statusAndNavbarHeight {
+    return self.navigationController.navigationBar.height + [UIApplication sharedApplication].statusBarFrame.size.height;
+}
+
+- (CGRect)viewBounds {
+    return CGRectMake(self.view.bounds.origin.x,
+                      self.view.bounds.origin.y + [self statusAndNavbarHeight],
+                      self.view.bounds.size.width,
+                      self.view.bounds.size.height);
+}
 
 #pragma mark - Public Methods
 - (void)updateNavBar {

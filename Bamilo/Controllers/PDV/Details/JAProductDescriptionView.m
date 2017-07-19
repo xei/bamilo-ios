@@ -17,8 +17,7 @@
 
 @implementation JAProductDescriptionView
 
-- (instancetype)init
-{
+- (instancetype)init {
     self = [super init];
     if (self) {
         [self setDefaults];
@@ -26,8 +25,7 @@
     return self;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
+- (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         [self setDefaults];
@@ -43,7 +41,7 @@
         [_descriptionLabel setNumberOfLines:0];
         [_descriptionLabel setTextAlignment:NSTextAlignmentLeft];
         [self.contentScrollView addSubview:_descriptionLabel];
-    }else{
+    } else {
         if (width != _descriptionLabel.width) {
             [_descriptionLabel setX:16.f];
             [_descriptionLabel setWidth:width];
@@ -55,8 +53,7 @@
     return _descriptionLabel;
 }
 
-- (void)setDefaults
-{
+- (void)setDefaults {
     [self addSubview:self.contentScrollView];
 }
 
@@ -73,14 +70,13 @@
     CGRect frame = CGRectMake(0, 0, self.width, self.height);
     if (!VALID_NOTEMPTY(_contentScrollView, UIScrollView)) {
         _contentScrollView = [[UIScrollView alloc] initWithFrame:frame];
-    }else if (!CGRectEqualToRect(frame, _contentScrollView.frame)) {
+    } else if (!CGRectEqualToRect(frame, _contentScrollView.frame)) {
         [_contentScrollView setFrame:frame];
     }
     return _contentScrollView;
 }
 
-- (void)setFrame:(CGRect)frame
-{
+- (void)setFrame:(CGRect)frame {
     [super setFrame:frame];
     [self contentScrollView];
     [self descriptionLabel];

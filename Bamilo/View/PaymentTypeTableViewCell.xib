@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,7 +21,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VRZ-pI-jdd" id="iN0-l3-epB">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="39"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="39.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A8N-hy-ncA" customClass="RadioButtonViewControl">
@@ -41,9 +41,9 @@
                 </subviews>
                 <color key="backgroundColor" red="0.40699419390000002" green="0.82547861280000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="A8N-hy-ncA" secondAttribute="trailing" constant="15" id="1n7-5A-T1A"/>
-                    <constraint firstItem="A8N-hy-ncA" firstAttribute="leading" secondItem="1uu-54-rPa" secondAttribute="trailing" constant="15" id="3ED-YS-6Z4"/>
-                    <constraint firstItem="1uu-54-rPa" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="hoR-JG-xwE"/>
+                    <constraint firstAttribute="right" secondItem="A8N-hy-ncA" secondAttribute="right" constant="15" id="1n7-5A-T1A"/>
+                    <constraint firstItem="A8N-hy-ncA" firstAttribute="left" secondItem="1uu-54-rPa" secondAttribute="right" constant="15" id="3ED-YS-6Z4"/>
+                    <constraint firstItem="1uu-54-rPa" firstAttribute="left" secondItem="iN0-l3-epB" secondAttribute="left" constant="15" id="hoR-JG-xwE"/>
                     <constraint firstItem="A8N-hy-ncA" firstAttribute="centerY" secondItem="1uu-54-rPa" secondAttribute="centerY" id="iUr-ro-Os3"/>
                     <constraint firstItem="A8N-hy-ncA" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="r3o-1n-qG7"/>
                 </constraints>

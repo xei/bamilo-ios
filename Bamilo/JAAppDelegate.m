@@ -47,6 +47,8 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [[NSUserDefaults standardUserDefaults] setObject:[NSArray arrayWithObjects:@"fa", @"en", nil] forKey:@"AppleLanguages"];
+    
     self.startLoadingTime = [NSDate date];
     
     //SET THE LANGUAGE

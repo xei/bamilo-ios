@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="580" height="152"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="580" height="151"/>
+                <rect key="frame" x="0.0" y="0.0" width="580" height="151.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a5Y-UX-U8u">
@@ -46,16 +46,16 @@
                     </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="qyR-pw-DAL" secondAttribute="trailing" constant="15" id="ADa-UM-zDb"/>
+                    <constraint firstAttribute="right" secondItem="qyR-pw-DAL" secondAttribute="right" constant="15" id="ADa-UM-zDb"/>
                     <constraint firstItem="qyR-pw-DAL" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="CNU-GU-ic7"/>
                     <constraint firstItem="G8D-W2-dGC" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="NLf-xE-F7g"/>
                     <constraint firstItem="G8D-W2-dGC" firstAttribute="width" secondItem="G8D-W2-dGC" secondAttribute="height" multiplier="1:1" id="QCa-3c-idr"/>
-                    <constraint firstItem="a5Y-UX-U8u" firstAttribute="trailing" secondItem="qyR-pw-DAL" secondAttribute="trailing" id="XQa-cs-iYK"/>
-                    <constraint firstItem="G8D-W2-dGC" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="dhg-pd-hKZ"/>
+                    <constraint firstItem="a5Y-UX-U8u" firstAttribute="right" secondItem="qyR-pw-DAL" secondAttribute="right" id="XQa-cs-iYK"/>
+                    <constraint firstItem="G8D-W2-dGC" firstAttribute="left" secondItem="H2p-sc-9uM" secondAttribute="left" constant="15" id="dhg-pd-hKZ"/>
                     <constraint firstItem="a5Y-UX-U8u" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="gdc-3q-qzC"/>
                     <constraint firstItem="J1X-zc-CGK" firstAttribute="top" secondItem="qyR-pw-DAL" secondAttribute="bottom" constant="5" id="jDz-94-OKg"/>
                     <constraint firstItem="qyR-pw-DAL" firstAttribute="top" secondItem="a5Y-UX-U8u" secondAttribute="bottom" constant="5" id="nE8-pV-FP2"/>
-                    <constraint firstItem="J1X-zc-CGK" firstAttribute="trailing" secondItem="qyR-pw-DAL" secondAttribute="trailing" id="rEI-0p-yZI"/>
+                    <constraint firstItem="J1X-zc-CGK" firstAttribute="right" secondItem="qyR-pw-DAL" secondAttribute="right" id="rEI-0p-yZI"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -20,7 +20,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="120"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8AD-zH-MXu" id="iN0-l3-epB">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="119"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="119.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="baz-Zd-nHT" userLabel="ContainerView">
@@ -33,9 +33,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="dWZ-Rg-fdU" firstAttribute="top" secondItem="baz-Zd-nHT" secondAttribute="top" constant="8" id="1uw-KV-E1w"/>
-                            <constraint firstAttribute="trailing" secondItem="dWZ-Rg-fdU" secondAttribute="trailing" constant="10" id="4kj-uG-wYo"/>
+                            <constraint firstAttribute="right" secondItem="dWZ-Rg-fdU" secondAttribute="right" constant="10" id="4kj-uG-wYo"/>
                             <constraint firstAttribute="height" constant="40" id="B3z-dp-iWz"/>
-                            <constraint firstItem="dWZ-Rg-fdU" firstAttribute="leading" secondItem="baz-Zd-nHT" secondAttribute="leading" constant="10" id="DPb-Wj-q2g"/>
+                            <constraint firstItem="dWZ-Rg-fdU" firstAttribute="left" secondItem="baz-Zd-nHT" secondAttribute="left" constant="10" id="DPb-Wj-q2g"/>
                             <constraint firstAttribute="bottom" secondItem="dWZ-Rg-fdU" secondAttribute="bottom" constant="8" id="wTk-ro-C9E"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
@@ -61,11 +61,11 @@
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="Nlm-50-b9h" secondAttribute="bottom" constant="10" id="5aK-iW-0UY"/>
                     <constraint firstItem="baz-Zd-nHT" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="6bU-o4-8jG"/>
-                    <constraint firstAttribute="trailing" secondItem="baz-Zd-nHT" secondAttribute="trailing" constant="40" id="ave-xC-Lek"/>
-                    <constraint firstAttribute="trailing" secondItem="Nlm-50-b9h" secondAttribute="trailing" constant="40" id="cbM-j3-RHc"/>
-                    <constraint firstItem="Nlm-50-b9h" firstAttribute="leading" secondItem="baz-Zd-nHT" secondAttribute="leading" id="g6R-Kg-kYc"/>
+                    <constraint firstAttribute="right" secondItem="baz-Zd-nHT" secondAttribute="right" constant="40" id="ave-xC-Lek"/>
+                    <constraint firstAttribute="right" secondItem="Nlm-50-b9h" secondAttribute="right" constant="40" id="cbM-j3-RHc"/>
+                    <constraint firstItem="Nlm-50-b9h" firstAttribute="left" secondItem="baz-Zd-nHT" secondAttribute="left" id="g6R-Kg-kYc"/>
                     <constraint firstItem="Nlm-50-b9h" firstAttribute="top" secondItem="baz-Zd-nHT" secondAttribute="bottom" constant="10" id="j2o-3c-6zE"/>
-                    <constraint firstItem="baz-Zd-nHT" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="40" id="opJ-YF-PUh"/>
+                    <constraint firstItem="baz-Zd-nHT" firstAttribute="left" secondItem="iN0-l3-epB" secondAttribute="left" constant="40" id="opJ-YF-PUh"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -24,7 +24,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uy4-87-4XC" id="iN0-l3-epB">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="159"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="159.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="نغمه حیامنش" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qvy-0u-gkK">
@@ -89,20 +89,20 @@
                 </subviews>
                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
-                    <constraint firstItem="42A-p9-Ncc" firstAttribute="trailing" secondItem="qvy-0u-gkK" secondAttribute="trailing" id="3KJ-KR-H5t"/>
+                    <constraint firstItem="42A-p9-Ncc" firstAttribute="right" secondItem="qvy-0u-gkK" secondAttribute="right" id="3KJ-KR-H5t"/>
                     <constraint firstItem="kl6-R4-pkZ" firstAttribute="top" secondItem="42A-p9-Ncc" secondAttribute="bottom" constant="10" id="8kh-M5-0EI"/>
                     <constraint firstAttribute="bottom" secondItem="kl6-R4-pkZ" secondAttribute="bottom" constant="45" id="9yP-iJ-KTs"/>
                     <constraint firstAttribute="bottom" secondItem="HWJ-Ix-ALr" secondAttribute="bottom" constant="5" id="IyC-Yn-O1B"/>
-                    <constraint firstItem="STm-Hv-b7h" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="SEw-BE-rrM"/>
-                    <constraint firstAttribute="trailing" secondItem="iSG-39-dvH" secondAttribute="trailing" constant="10" id="SaP-gb-Z7m"/>
+                    <constraint firstItem="STm-Hv-b7h" firstAttribute="left" secondItem="iN0-l3-epB" secondAttribute="left" constant="15" id="SEw-BE-rrM"/>
+                    <constraint firstAttribute="right" secondItem="iSG-39-dvH" secondAttribute="right" constant="10" id="SaP-gb-Z7m"/>
                     <constraint firstItem="iSG-39-dvH" firstAttribute="centerY" secondItem="qvy-0u-gkK" secondAttribute="centerY" id="aTV-6F-Urb"/>
                     <constraint firstAttribute="bottom" secondItem="STm-Hv-b7h" secondAttribute="bottom" constant="5" id="aYi-v6-ssb"/>
-                    <constraint firstItem="qvy-0u-gkK" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="cNv-Jk-huo"/>
-                    <constraint firstItem="HWJ-Ix-ALr" firstAttribute="leading" secondItem="STm-Hv-b7h" secondAttribute="trailing" constant="5" id="fhb-B4-hr6"/>
-                    <constraint firstItem="kl6-R4-pkZ" firstAttribute="trailing" secondItem="42A-p9-Ncc" secondAttribute="trailing" id="jfm-JO-HnC"/>
-                    <constraint firstItem="42A-p9-Ncc" firstAttribute="leading" secondItem="qvy-0u-gkK" secondAttribute="leading" id="kPk-Hl-Pmz"/>
-                    <constraint firstItem="iSG-39-dvH" firstAttribute="leading" secondItem="qvy-0u-gkK" secondAttribute="trailing" constant="15" id="kj4-PB-bJX"/>
-                    <constraint firstItem="kl6-R4-pkZ" firstAttribute="leading" secondItem="42A-p9-Ncc" secondAttribute="leading" id="qRJ-YB-StZ"/>
+                    <constraint firstItem="qvy-0u-gkK" firstAttribute="left" secondItem="iN0-l3-epB" secondAttribute="left" constant="15" id="cNv-Jk-huo"/>
+                    <constraint firstItem="HWJ-Ix-ALr" firstAttribute="left" secondItem="STm-Hv-b7h" secondAttribute="right" constant="5" id="fhb-B4-hr6"/>
+                    <constraint firstItem="kl6-R4-pkZ" firstAttribute="right" secondItem="42A-p9-Ncc" secondAttribute="right" id="jfm-JO-HnC"/>
+                    <constraint firstItem="42A-p9-Ncc" firstAttribute="left" secondItem="qvy-0u-gkK" secondAttribute="left" id="kPk-Hl-Pmz"/>
+                    <constraint firstItem="iSG-39-dvH" firstAttribute="left" secondItem="qvy-0u-gkK" secondAttribute="right" constant="15" id="kj4-PB-bJX"/>
+                    <constraint firstItem="kl6-R4-pkZ" firstAttribute="left" secondItem="42A-p9-Ncc" secondAttribute="left" id="qRJ-YB-StZ"/>
                     <constraint firstItem="42A-p9-Ncc" firstAttribute="top" secondItem="qvy-0u-gkK" secondAttribute="bottom" constant="5" id="sJ8-dr-TT7"/>
                     <constraint firstItem="iSG-39-dvH" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="vsF-WZ-G5D"/>
                 </constraints>

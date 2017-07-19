@@ -1545,24 +1545,24 @@ static NSString *recommendationLogic = @"RELATED";
 }
 
 - (void)trackingEventAddToCart:(RICart *)cart {
-    CGRect addToCartEventCoachMark = CGRectMake([MainTabBarViewController topNavigationController].navigationBarView.cartButton.frame.origin.x, [MainTabBarViewController topNavigationController].navigationBarView.cartButton.frame.origin.y+20,35, 35);
+//    CGRect addToCartEventCoachMark = CGRectMake([MainTabBarViewController topNavigationController].navigationBarView.cartButton.frame.origin.x, [MainTabBarViewController topNavigationController].navigationBarView.cartButton.frame.origin.y+20,35, 35);
 
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"FirtTimeAddToCart"]) {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"FirtTimeAddToCart"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        NSArray *coachMarks = @[
-                                @{
-                                    @"rect": [NSValue valueWithCGRect:addToCartEventCoachMark],
-                                    @"caption": @"مشاهده سبد خرید و تکمیل سفارش",
-                                    @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
-                                    @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
-                                    @"position":[NSNumber numberWithInteger:LABEL_POSITION_RIGHT]
-                                    },
-                                ];
-        MPCoachMarks *coachMarksView = [[MPCoachMarks alloc] initWithFrame:self.navigationController.view.bounds coachMarks:coachMarks];
-        [self.navigationController.view addSubview:coachMarksView];
-        [coachMarksView start];
-    }
+//    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"FirtTimeAddToCart"]) {
+//        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"FirtTimeAddToCart"];
+//        [[NSUserDefaults standardUserDefaults] synchronize];
+//        NSArray *coachMarks = @[
+//                                @{
+//                                    @"rect": [NSValue valueWithCGRect:addToCartEventCoachMark],
+//                                    @"caption": @"مشاهده سبد خرید و تکمیل سفارش",
+//                                    @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
+//                                    @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
+//                                    @"position":[NSNumber numberWithInteger:LABEL_POSITION_RIGHT]
+//                                    },
+//                                ];
+//        MPCoachMarks *coachMarksView = [[MPCoachMarks alloc] initWithFrame:self.navigationController.view.bounds coachMarks:coachMarks];
+//        [self.navigationController.view addSubview:coachMarksView];
+//        [coachMarksView start];
+//    }
 
     NSNumber *price = [self getPrice];
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];

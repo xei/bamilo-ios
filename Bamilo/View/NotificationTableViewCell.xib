@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="389" height="82"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="389" height="81"/>
+                <rect key="frame" x="0.0" y="0.0" width="389" height="81.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KKq-Z9-Wfe">
@@ -42,11 +42,11 @@
                 <constraints>
                     <constraint firstItem="LxS-AV-SoF" firstAttribute="centerY" secondItem="KKq-Z9-Wfe" secondAttribute="centerY" id="4gd-kv-Ecf"/>
                     <constraint firstItem="KKq-Z9-Wfe" firstAttribute="centerY" secondItem="noh-Xs-e3O" secondAttribute="centerY" id="GDH-eB-vzE"/>
-                    <constraint firstAttribute="trailing" secondItem="noh-Xs-e3O" secondAttribute="trailing" constant="16" id="GmG-To-1Rx"/>
+                    <constraint firstAttribute="right" secondItem="noh-Xs-e3O" secondAttribute="right" constant="16" id="GmG-To-1Rx"/>
                     <constraint firstItem="noh-Xs-e3O" firstAttribute="width" secondItem="noh-Xs-e3O" secondAttribute="height" multiplier="1:1" id="LBN-fb-DJe"/>
                     <constraint firstItem="noh-Xs-e3O" firstAttribute="left" secondItem="KKq-Z9-Wfe" secondAttribute="right" constant="8" id="LlA-KE-ooV"/>
                     <constraint firstItem="noh-Xs-e3O" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Njq-Xq-Uqq"/>
-                    <constraint firstItem="LxS-AV-SoF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="XAU-AK-7np"/>
+                    <constraint firstItem="LxS-AV-SoF" firstAttribute="left" secondItem="H2p-sc-9uM" secondAttribute="left" constant="16" id="XAU-AK-7np"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

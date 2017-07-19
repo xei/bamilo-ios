@@ -14,7 +14,8 @@ import UIKit
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.setRTL()
+        
         self.tabBar.isTranslucent = false
         self.delegate = self
         
@@ -32,8 +33,8 @@ import UIKit
         let attributes: [String : Any] = [NSFontAttributeName: Theme.font(kFontVariationRegular, size: 13)]
 
         if #available(iOS 10.0, *) {
-            self.tabBar.items?.first?.setBadgeTextAttributes(attributes, for: .normal)
-            self.tabBar.items?.first?.badgeColor = Theme.color(kColorOrange)
+            self.tabBar.items?.last?.setBadgeTextAttributes(attributes, for: .normal)
+            self.tabBar.items?.last?.badgeColor = Theme.color(kColorOrange)
         } else {
             
         }
@@ -50,6 +51,15 @@ import UIKit
     
     static func sharedInstance() -> MainTabBarViewController? {
         return UIApplication.shared.delegate?.window??.rootViewController as? MainTabBarViewController
+    }
+    
+    private func setRTL() {
+        if #available(iOS 9.0, *) {
+            UIView.appearance().semanticContentAttribute = .forceRightToLeft
+            UINavigationBar.appearance().semanticContentAttribute = .forceRightToLeft
+        } else {
+            // Fallback on earlier versions
+        }
     }
     
     //MARk: - UITabBarControllerDelegate
@@ -97,7 +107,7 @@ import UIKit
     }
     
     static func updateCartValue(cartItemsCount: Int) {
-        MainTabBarViewController.sharedInstance()?.tabBar.items?.first?.badgeValue = cartItemsCount == 0 ? nil : "\(cartItemsCount)".convertTo(language: .arabic)
+        MainTabBarViewController.sharedInstance()?.tabBar.items?.last?.badgeValue = cartItemsCount == 0 ? nil : "\(cartItemsCount)".convertTo(language: .arabic)
     }
     
     
