@@ -104,6 +104,12 @@
     if (self.address.uid) {
         [self getAddressByID:self.address.uid];
     }
+    
+    
+    //pop this view controller if user is not logged in
+    if ([RICustomer checkIfUserIsLogged]) {
+        [self.navigationController popViewControllerAnimated:NO];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

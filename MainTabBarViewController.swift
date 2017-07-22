@@ -59,7 +59,9 @@ import UIKit
             MainTabBarViewController.previousSelectedViewController?.removeObservingNotifications()
             MainTabBarViewController.previousSelectedViewController = centerNav
             
-            if centerNav.viewControllers.last is SuccessPaymentViewController {
+            
+            //Whenever we go to cart tab bar item, we need to go to the root of this tab bar item
+            if centerNav.viewControllers.first is CartViewController {
                centerNav.popToRootViewController(animated: false)
             }
         }
