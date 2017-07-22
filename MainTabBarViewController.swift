@@ -58,6 +58,10 @@ import UIKit
             centerNav.registerObservingOnNotifications()
             MainTabBarViewController.previousSelectedViewController?.removeObservingNotifications()
             MainTabBarViewController.previousSelectedViewController = centerNav
+            
+            if centerNav.viewControllers.last is SuccessPaymentViewController {
+               centerNav.popToRootViewController(animated: false)
+            }
         }
     }
     
