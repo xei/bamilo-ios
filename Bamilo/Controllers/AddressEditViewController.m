@@ -107,7 +107,7 @@
     
     
     //pop this view controller if user is not logged in
-    if ([RICustomer checkIfUserIsLogged]) {
+    if (![RICustomer checkIfUserIsLogged]) {
         [self.navigationController popViewControllerAnimated:NO];
     }
 }

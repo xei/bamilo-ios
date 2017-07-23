@@ -7,7 +7,7 @@
 //
 
 #import "EmarsysMobileEngageTracker.h"
-
+#import "RICustomer.h"
 
 @implementation EmarsysMobileEngageTracker
 
