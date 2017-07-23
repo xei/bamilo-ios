@@ -59,6 +59,14 @@
     [self.view addSubview:_pagemenu.view];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if ([RICustomer checkIfUserIsLogged]) {
+        [self.navigationController popViewControllerAnimated:NO];
+    }
+}
+
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self publishScreenLoadTime];

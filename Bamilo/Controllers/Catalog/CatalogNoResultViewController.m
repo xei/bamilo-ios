@@ -96,8 +96,8 @@
 #pragma mark - FeatureBoxCollectionViewWidgetViewDelegate
 - (void)selectFeatureItem:(NSObject *)item widgetBox:(id)widgetBox {
     if ([item isKindOfClass:[RecommendItem class]]) {
-//        [EventSelectors ]
-//        [TrackerManager postEvent:[EventFactory tapRecommectionInScreenName:@"SEARCH" logic:@"PERSONAL"] forName:[TapRecommendationEvent name]];
+        [TrackerManager postEventWithSelector:[EventSelectors recommendationTappedSelector]
+                                   attributes:[EventAttributes tapEmarsysRecommendationWithScreenName:@"Catalog" logic:@"PERSONAL"]];
         [[NSNotificationCenter defaultCenter] postNotificationName: kDidSelectTeaserWithPDVUrlNofication
                                                             object: nil
                                                           userInfo: @{@"sku": ((RecommendItem *)item).sku}];

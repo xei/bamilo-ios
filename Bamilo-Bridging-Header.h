@@ -57,6 +57,7 @@
 #import "CartViewController.h"
 #import "JASavedListViewController.h"
 #import "MultistepEntity.h"
+#import "SuccessPaymentViewController.h"
 
 #import "GAIDictionaryBuilder.h"
 #import "GAI.h"

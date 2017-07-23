@@ -168,7 +168,7 @@ import SwiftyJSON
     func sortTypeSelected(type: Catalog.CatalogSortType) {
         TrackerManager.postEvent(
             selector: EventSelectors.catalogSortChangedSelector(),
-            attributes: EventAttributes.catalogSortChanged(sortMethod: self.sortingMethod)
+            attributes: EventAttributes.catalogSortChanged(sortMethod: type)
         )
         
         self.sortingMethod = type
