@@ -34,7 +34,7 @@
 #import "DeepLinkManager.h"
 #import "Bamilo-Swift.h"
 
-@interface JAHomeViewController () <JAPickerDelegate, JANewsletterGenderProtocol, EmarsysRecommendationsProtocol, FeatureBoxCollectionViewWidgetViewDelegate, SearchBarListener>
+@interface JAHomeViewController () <JAPickerDelegate, JANewsletterGenderProtocol, EmarsysRecommendationsProtocol, FeatureBoxCollectionViewWidgetViewDelegate, SearchBarListener, NavigationBarProtocol>
 @property (strong, nonatomic) JATeaserPageView* teaserPageView;
 @property (nonatomic, assign) BOOL isLoaded;
 @property (nonatomic, assign) BOOL isReturningHome;
@@ -340,5 +340,18 @@
     [TrackerManager postEventWithSelector:[EventSelectors searchBarSearchedSelector] attributes:[EventAttributes searchBarSearchedWithSearchString:searchBar.text screenName:[self getScreenName]]];
 }
 
+
+#pragma mark: -NavigationBarProtocol
+- (UIView *)navbarTitleView {
+    return [NavbarUtility navbarLogo];
+}
+
+- (NavbarLeftButtonType)navbarleftButton {
+    return NavbarLeftButtonTypeSearch;
+}
+
+- (void)searchIconButtonTapped {
+    return;
+}
 
 @end

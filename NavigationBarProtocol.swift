@@ -13,7 +13,6 @@ import Foundation
     @objc optional func navbarTitleView() -> UIView
     @objc optional func navbarTitleString() -> String
     @objc optional func navbarleftButton() -> NavbarLeftButtonType
-    @objc optional func navbarShowBackButton() -> Bool
-    
+    @objc optional func navbarhideBackButton() -> Bool
     @objc optional func searchIconButtonTapped()
 }

@@ -14,7 +14,7 @@
 #import "EmarsysPredictManager.h"
 #import "Bamilo-Swift.h"
 
-@interface BaseViewController()
+@interface BaseViewController() <NavigationBarProtocol>
 @property (strong, nonatomic) JAMessageView *messageView;
 @end
 
@@ -26,9 +26,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.automaticallyAdjustsScrollViewInsets = NO;
-//    self.navigationController.interactivePopGestureRecognizer.state //.enabled = NO;
     
     //PerformanceTrackerProtocol
     [self recordStartLoadTime];
@@ -39,8 +37,24 @@
         [TrackerManager trackScreenNameWithScreenName:[self getScreenName]];
     }
     
+    
+    //navigation bar configs
     [self.navigationController.navigationBar setTranslucent:YES];
     self.navigationController.navigationBar.topItem.title = @"";
+    
+    if ([self respondsToSelector:@selector(navbarTitleView)]){
+        self.navigationItem.titleView = [self navbarTitleView];
+    } else if ([self respondsToSelector:@selector(navbarTitleString)]) {
+        self.title = [self navbarTitleString];
+    }
+    if ([self respondsToSelector:@selector(navbarhideBackButton)]) {
+        self.navigationItem.hidesBackButton = [self navbarhideBackButton];
+    }
+    if ([self respondsToSelector:@selector(navbarleftButton)]) {
+        if ([self navbarleftButton] == NavbarLeftButtonTypeSearch && [self respondsToSelector:@selector(searchIconButtonTapped)]) {
+            self.navigationItem.rightBarButtonItem = [NavbarUtility navbarSearchButtonWithViewController:self];
+        }
+    }
 }
 
 - (JANavigationBarLayout *)navBarLayout {
@@ -65,20 +79,6 @@
             [EmarsysPredictManager sendTransactionsOf:self];
         }
     }
-}
-
--(void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    //[Accengage trackScreenDismiss:[self getPerformanceTrackerScreenName] ?: @""];
-    
-    [super viewDidDisappear:animated];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {

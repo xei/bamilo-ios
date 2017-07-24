@@ -23,7 +23,7 @@
 #define kSearchViewBarHeight 44.0f
 
 
-@interface JABaseViewController () {
+@interface JABaseViewController () <NavigationBarProtocol> {
     CGRect _noConnectionViewFrame;
     NSString* _searchBarText;
 }
@@ -124,8 +124,6 @@
     
     [self.navigationController.navigationBar setTranslucent:YES];
     self.navigationController.navigationBar.topItem.title = @"";
-//    self.navigationItem.hidesBackButton = YES;
-//    self.title = @"";
     
     self.view.backgroundColor = JABackgroundGrey;
     
@@ -140,7 +138,6 @@
     [self.loadingView addGestureRecognizer:tap];
     
     UIImage *image = [UIImage imageNamed:@"loadingAnimationFrame1"];
-    
     int lastFrame = 8;
   
     self.loadingAnimation = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, image.size.width, image.size.height)];
@@ -158,8 +155,25 @@
     if ([self getScreenName].length) {
         [TrackerManager trackScreenNameWithScreenName:[self getScreenName]];
     }
-    
     [self.navigationController.interactivePopGestureRecognizer setEnabled:YES];
+    
+    //navigation bar configs
+    [self.navigationController.navigationBar setTranslucent:YES];
+    self.navigationController.navigationBar.topItem.title = @"";
+    
+    if ([self respondsToSelector:@selector(navbarTitleView)]){
+        self.navigationItem.titleView = [self navbarTitleView];
+    } else if ([self respondsToSelector:@selector(navbarTitleString)]) {
+        self.title = [self navbarTitleString];
+    }
+    if ([self respondsToSelector:@selector(navbarhideBackButton)]) {
+        self.navigationItem.hidesBackButton = [self navbarhideBackButton];
+    }
+    if ([self respondsToSelector:@selector(navbarleftButton)]) {
+        if ([self navbarleftButton] == NavbarLeftButtonTypeSearch && [self respondsToSelector:@selector(searchIconButtonTapped)]) {
+            self.navigationItem.rightBarButtonItem = [NavbarUtility navbarSearchButtonWithViewController:self];
+        }
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated {

@@ -21,7 +21,8 @@ import SwiftyJSON
                                     UICollectionViewDelegateFlowLayout,
                                     FilteredListNoResultViewControllerDelegate,
                                     JAPDVViewControllerDelegate,
-                                    SearchBarListener {
+                                    SearchBarListener,
+                                    NavigationBarProtocol {
     
     @IBOutlet private weak var catalogHeader: CatalogHeaderControl!
     @IBOutlet private weak var collectionView: UICollectionView!
@@ -92,8 +93,9 @@ import SwiftyJSON
         super.viewDidAppear(animated)
         
         if let navTitle = self.navBarTitle {
-            self.navBarLayout.title = navTitle
-            self.requestNavigationBarReload()
+            self.title = navTitle
+//            self.navBarLayout.title = navTitle
+//            self.requestNavigationBarReload()
         }
     }
     
@@ -117,8 +119,9 @@ import SwiftyJSON
         self.navBarLayout.showBackButton = true
         if let navTitle = self.catalogData?.title {
             self.navBarTitle = navTitle
-            self.navBarLayout.title = navTitle
-            self.requestNavigationBarReload()
+            self.title = navTitle
+//            self.navBarLayout.title = navTitle
+//            self.requestNavigationBarReload()
         }
     }
     
@@ -585,5 +588,10 @@ import SwiftyJSON
     //MARK: -DataTrackerProtocol
     override func getScreenName() -> String! {
         return "Catalog"
+    }
+    
+    //MARK: -NavigationBarProtocol
+    func navbarTitleString() -> String {
+        return STRING_SEARCHING;
     }
 }

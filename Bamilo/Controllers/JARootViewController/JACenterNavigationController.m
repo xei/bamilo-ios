@@ -126,6 +126,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.neeedsExternalPaymentMethod = NO;
+    self.navigationBar.titleTextAttributes = @{NSFontAttributeName: [Theme font:kFontVariationRegular size:13]}; 
     self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCart:) name:kUpdateCartNotification object:nil];
