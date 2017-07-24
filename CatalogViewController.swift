@@ -69,6 +69,7 @@ import SwiftyJSON
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = Theme.color(kColorVeryLightGray)
+        self.collectionView.backgroundColor = Theme.color(kColorVeryLightGray)
     
         self.catalogHeader.delegate = self
         self.setSortingMethodToHeader()

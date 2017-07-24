@@ -69,8 +69,8 @@
     self.navBarLayout.title = STRING_CART;
     self.navBarLayout.showBackButton = NO;
     self.navBarLayout.showCartButton = NO;
-//    self.tabBarIsVisible = YES;
-    [self.view setBackgroundColor:JAWhiteColor];
+    [self.view setBackgroundColor:[Theme color:kColorVeryLightGray]];
+    [self.tableView setBackgroundColor:[Theme color:kColorVeryLightGray]];
     
     //TableView registerations
     self.tableView.delegate = self;

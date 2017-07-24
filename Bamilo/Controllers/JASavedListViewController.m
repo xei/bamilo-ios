@@ -24,7 +24,7 @@
 #define kMaxProducts 20
 #define kMaxProducts_ipad 34
 
-@interface JASavedListViewController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, JAPickerDelegate>
+@interface JASavedListViewController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, JAPickerDelegate, UINavigationControllerDelegate>
 
 //@property (strong, nonatomic) UIView *emptyListView;
 //@property (strong, nonatomic) UILabel *emptyListLabel;
@@ -70,6 +70,7 @@
     }
     return _productsArray;
 }
+
 - (JAProductCollectionViewFlowLayout *)flowLayout {
     if (!VALID_NOTEMPTY(_flowLayout, JAProductCollectionViewFlowLayout)) {
         
@@ -85,15 +86,6 @@
     }
     return _flowLayout;
 }
-
-//- (UIView *)bottomView {
-//    if (!VALID(_bottomView, UIView)) {
-//        _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.viewBounds.size.height - 49.f, self.viewBounds.size.width, 1.f)];
-//        [_bottomView setBackgroundColor:JABlack700Color];
-//        [self.view addSubview:_bottomView];
-//    }
-//    return _bottomView;
-//}
 
 - (NSNumber *)currentPage {
     if (!VALID(_currentPage, NSNumber)) {
@@ -126,10 +118,18 @@
     self.collectionView.dataSource = self;
     [self.collectionView setFrame:frame];
     [self.emptyViewContainer hide];
-    
+    self.navigationController.delegate = self;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didLoggedOut) name:kUserLoggedOutNotification object:nil];
 }
 
+// TODO: In some wierd cases! viewWillAppear is not getting called! (Scenario: with logged out user >
+// come to SavedListViewController (authneticationViewcontorller will be pushed) > got to profile >
+// go to OrderListViewcontroller (authneticationViewcontorller will be pushed) > login >
+// Switch to SavedListViewContorller (tab item) > atuhenticationViewController will be poped >
+// and comes to SavedListViewController > but !!!! viewWillAppear will not be called!
+- (void)navigationController:(UINavigationController *)navigationController  willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    [viewController viewWillAppear:animated];
+}
 
 - (void)updateNavBar {
     self.navBarLayout.showLogo = NO;
