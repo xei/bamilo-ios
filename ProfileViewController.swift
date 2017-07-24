@@ -202,6 +202,8 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
             )
             EmarsysPredictManager.userLoggedOut()
         }
+        
+        NotificationCenter.default.post(name: NSNotification.Name("NOTIFICATION_USER_LOGGED_OUT"), object: nil, userInfo: nil)
     }
     
     func showFAQ() {

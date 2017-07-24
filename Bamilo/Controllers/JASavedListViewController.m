@@ -130,6 +130,8 @@
     self.collectionView.dataSource = self;
     [self.collectionView setFrame:frame];
     [self.emptyViewContainer hide];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didLoggedOut) name:kUserLoggedOutNotification object:nil];
 }
 
 
@@ -222,30 +224,6 @@
     }
     [LoadingManager hideLoading];
 }
-
-#pragma mark - kProductChangedNotification
-//- (void)updatedProduct:(NSNotification *)notification {
-//    [self showLoading];
-//    __block NSString *sku = notification.object;
-//    [RIProduct getCompleteProductWithSku:sku successBlock:^(RIProduct *product) {
-//        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
-//        if (VALID_NOTEMPTY([product favoriteAddDate], NSDate)) {
-//            if (![self.productsArray containsObject:product.sku]) {
-//                [self.productsArray addObject:product.sku];
-//            }
-//        }else{
-//            if ([self.productsArray containsObject:product.sku]) {
-//                [self.productsArray removeObject:product.sku];
-//            }
-//        }
-//        [self.productsDictionary setObject:product forKey:sku];
-//        [self reloadData];
-//        [self hideLoading];
-//    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
-//        [self onErrorResponse:apiResponse messages:error showAsMessage:NO selector:@selector(updatedProduct:) objects:@[notification]];
-//        [self hideLoading];
-//    }];
-//}
 
 #pragma mark - collectionView methods
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -397,8 +375,6 @@
             
             NSDictionary* userInfo = [NSDictionary dictionaryWithObject:self.cart forKey:kUpdateCartNotificationValue];
             [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
-            
-//            [self showNotificationBar:[self extractSuccessMessages:[data objectForKey:kDataMessages]] isSuccess:YES];
 
             
             NSMutableDictionary *tracking = [NSMutableDictionary new];
@@ -631,6 +607,13 @@
         
         [self.emptyViewController updateImage:[UIImage imageNamed:@"emptyFavoritesIcon"]];
     }
+}
+
+- (void)didLoggedOut {
+    [self.productsDictionary removeAllObjects];
+    [self.productsArray removeAllObjects];
+    
+    [self.collectionView reloadData];
 }
 
 @end
