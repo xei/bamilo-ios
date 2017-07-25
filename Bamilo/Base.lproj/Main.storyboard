@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="kvV-JZ-EK2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="kvV-JZ-EK2">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -425,25 +425,25 @@
                                         <rect key="frame" x="0.0" y="578" width="414" height="75"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="مجموع خرید:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iiG-ZB-Lk2">
-                                                <rect key="frame" x="326" y="10" width="68" height="22"/>
+                                                <rect key="frame" x="326.33333333333326" y="10" width="67.666666666666686" height="21.333333333333371"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <color key="textColor" red="0.33725490196078434" green="0.33725490196078434" blue="0.33725490196078434" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="مجموع تخفیف:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QIn-JG-WlR">
-                                                <rect key="frame" x="316" y="43" width="78" height="22"/>
+                                                <rect key="frame" x="316" y="43.666666666666629" width="78" height="21.333333333333371"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="در حال محاسبه" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vgt-Lp-1Ci" userLabel="total price">
-                                                <rect key="frame" x="20" y="10" width="296" height="22"/>
+                                                <rect key="frame" x="20" y="10" width="296.33333333333331" height="21.333333333333371"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="در حال محاسبه" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Co6-Dd-SGv" userLabel="total discounted Price">
-                                                <rect key="frame" x="20" y="43" width="286" height="22"/>
+                                                <rect key="frame" x="20" y="43.666666666666629" width="286" height="21.333333333333371"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -744,7 +744,7 @@
                                         </collectionReusableView>
                                     </collectionView>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="CDQ-8E-fbn" firstAttribute="leading" secondItem="wP7-Pc-1Pj" secondAttribute="leading" constant="5" id="Cl6-x0-IDS"/>
                                     <constraint firstItem="CDQ-8E-fbn" firstAttribute="top" secondItem="wP7-Pc-1Pj" secondAttribute="top" constant="5" id="Xnd-MA-eYf"/>
@@ -891,7 +891,7 @@
             <objects>
                 <navigationController storyboardIdentifier="menuViewController" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="tA5-pZ-pB4" userLabel="Side Menu Navigation Controller" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="UvQ-KB-VPd">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="UvQ-KB-VPd">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -976,7 +976,7 @@
                                                 </connections>
                                             </switch>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="فقط با تخفیف ها" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gEn-nz-ntR">
-                                                <rect key="frame" x="59" y="15" width="86" height="22"/>
+                                                <rect key="frame" x="59.666666666666686" y="15.666666666666664" width="85.333333333333314" height="21.333333333333336"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1239,7 +1239,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="0V7-j2-mJV" userLabel="Application Navigation Controller" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="S2r-Lu-SWl">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="S2r-Lu-SWl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1278,7 +1278,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="3lk-K0-wUO" customClass="JACenterNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="سبد خرید" image="tabbar_button_cart" selectedImage="tabbar_button_cart_highlighted" id="vOP-LE-mfP"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="JSG-7a-gu8">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="JSG-7a-gu8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1388,7 +1388,7 @@
                                 <rect key="frame" x="187" y="100" width="40" height="40"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="فیلترهای کمتری را برای جستجو انتخاب نمایید" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SU1-vf-mKc">
-                                <rect key="frame" x="83" y="165" width="248" height="23"/>
+                                <rect key="frame" x="83.666666666666657" y="165" width="247.33333333333334" height="23"/>
                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -1427,7 +1427,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="UNH-3a-fvq" customClass="JACenterNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="حساب کاربری" image="tabbar_button_user" selectedImage="tabbar_button_user_highlighted" id="kQT-G5-igf"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="j53-XG-u4H">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="j53-XG-u4H">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1444,7 +1444,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="LF3-PT-6bx" customClass="JACenterNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="دسته بندی" image="tabbar_category" selectedImage="tabbar_category_highlighted" id="VQI-YI-REh"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="P9F-Ev-iJz">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="P9F-Ev-iJz">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1480,7 +1480,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="QoD-0G-T5X" customClass="JACenterNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="علاقه مندی" image="tabbar_button_wishlist" selectedImage="tabbar_button_wishlist_highlighted" id="4Pl-fC-rbr"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="1fp-kM-BWq">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="1fp-kM-BWq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1497,7 +1497,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cs8-hA-jLu" customClass="JACenterNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="خانه" image="tabbar_button_home" selectedImage="tabbar_button_home_highlighted" id="30f-xb-6Gv"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="8ul-e7-QlM">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="8ul-e7-QlM">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

@@ -1962,7 +1962,6 @@
 		B510B00919AE466B00A9754A /* JADynamicForm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JADynamicForm.m; sourceTree = "<group>"; };
 		B510B00A19AE466B00A9754A /* JARadioComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JARadioComponent.h; sourceTree = "<group>"; };
 		B510B00B19AE466B00A9754A /* JARadioComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JARadioComponent.m; sourceTree = "<group>"; };
-		B5210E8719C4863400FDB0D1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/RIStrings.strings; sourceTree = "<group>"; };
 		B5210E8A19C48F1700FDB0D1 /* JAStrings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JAStrings.h; sourceTree = "<group>"; };
 		B5240E461A496E59006264E9 /* JAMyOrderDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMyOrderDetailView.h; sourceTree = "<group>"; };
 		B5240E471A496E59006264E9 /* JAMyOrderDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMyOrderDetailView.m; sourceTree = "<group>"; };
@@ -7202,7 +7201,6 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
 				fa,
 			);
@@ -8201,7 +8199,6 @@
 		B5210E8819C4863400FDB0D1 /* RIStrings.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				B5210E8719C4863400FDB0D1 /* en */,
 				CE3F81411AC5743000EB3916 /* fa */,
 			);
 			name = RIStrings.strings;
