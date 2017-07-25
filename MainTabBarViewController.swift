@@ -34,15 +34,21 @@ import UIKit
         if #available(iOS 10.0, *) {
             self.tabBar.items?.first?.setBadgeTextAttributes(attributes, for: .normal)
             self.tabBar.items?.first?.badgeColor = Theme.color(kColorOrange)
-        } else {
-            
-        }
+        } else {}
         
+        self.updateUserSessionAndCart()
+        NotificationCenter.default.addObserver(self, selector: #selector(updateUserSessionAndCart), name: NSNotification.Name("appDidEnterForeground"), object: nil)
+    }
+    
+    func updateUserSessionAndCart() {
         //Get user and cart to refresh from server
         if (RICustomer.checkIfUserIsLogged()) {
             RICustomer.autoLogin(nil)
         }
-        
+        self.getAndUpdateCart()
+    }
+    
+    func getAndUpdateCart() {
         CartDataManager.sharedInstance.getUserCart(self) { data, errorMessages in
             self.bind(data, forRequestId: 0)
         };
