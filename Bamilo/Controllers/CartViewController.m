@@ -58,7 +58,7 @@
 
 - (void)setCartEmpty:(BOOL)empty {
     [self.emptyCartViewContainer setHidden:!empty];
-    if (empty && [MainTabBarViewController topViewController] == self)a {
+    if (empty && [MainTabBarViewController topViewController] == self) {
         [self.emptyCartViewController getSuggestions];
     }
 }
