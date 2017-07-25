@@ -118,16 +118,6 @@
     [self.formController unregisterForKeyboardNotifications];
 }
 
-#pragma mark - Overrides
-- (void)updateNavBar {
-    [super updateNavBar];
-    
-    self.navBarLayout.title = STRING_MY_ADDRESSES;
-    self.navBarLayout.showCartButton = NO;
-    self.navBarLayout.showBackButton = YES;
-    self.navBarLayout.showLogo = NO;
-}
-
 #pragma mark - FormViewControlDelegate
 - (void)formSubmitButtonTapped {
     if (![self.formController isFormValid]) {
@@ -300,6 +290,11 @@
     } else {
         return @"AddAddress";
     }
+}
+
+#pragma mark - NavigationBarProtocol
+- (NSString *)navbarTitleString {
+    return STRING_MY_ADDRESSES;
 }
 
 @end

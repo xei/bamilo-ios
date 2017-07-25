@@ -166,11 +166,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    self.navBarLayout.showBackButton = YES;
-    self.navBarLayout.showCartButton = NO;
-    self.navBarLayout.title = STRING_MY_ORDERS;
-    
     [self.view setBackgroundColor:JAWhiteColor];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -444,6 +439,10 @@
     }
 }
 
+#pragma mark - NavigationBarProtocol
+- (NSString *)navbarTitleString {
+    return STRING_MY_ORDERS;
+}
 
 
 @end

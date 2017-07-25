@@ -70,14 +70,6 @@
     [self.view setBackgroundColor:[UIColor whiteColor]];
 }
 
-- (void)updateNavBar {
-    [super updateNavBar];
-
-    self.navBarLayout.showLogo = NO;
-    self.navBarLayout.title = STRING_ORDER_STATUS;
-    self.navBarLayout.showBackButton = YES;
-}
-
 #pragma mark - UITableViewDataSource & UITableViewDelegate
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     NSString *headerTitle = section == 0 ? STRING_ORDER_DETAILS : STRING_ORDER_PRODUCT_DETAIL;
@@ -229,5 +221,9 @@
     return @"OrderDetailView";
 }
 
+#pragma mark - NavigationBarProtocol
+- (NSString *)navbarTitleString {
+    return STRING_ORDER_STATUS;
+}
 
 @end

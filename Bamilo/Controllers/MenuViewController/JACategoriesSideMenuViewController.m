@@ -136,17 +136,7 @@
         animationInsert = UITableViewRowAnimationRight;
         animationDelete = UITableViewRowAnimationLeft;
     }
-
-    self.title = @"Categories";
     [self reloadData];
-}
-
-- (void)updateNavBar {
-    self.navBarLayout.title = STRING_CATEGORIES;
-    self.navBarLayout.showDoneButton = NO;
-    self.navBarLayout.showBackButton = NO;
-    self.navBarLayout.showCartButton = YES;
-    self.navBarLayout.showSearchButton = YES;
 }
 
 
@@ -493,6 +483,16 @@
 
 - (NSString *)getScreenName {
     return @"CategoryMenu";
+}
+
+
+#pragma mark - NavigationBarProtocol
+- (NSString *)navbarTitleString {
+    return STRING_CATEGORIES;
+}
+
+- (NavbarLeftButtonType)navbarleftButton {
+    return NavbarLeftButtonTypeSearch;
 }
 
 @end

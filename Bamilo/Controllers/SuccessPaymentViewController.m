@@ -150,4 +150,9 @@
     return NO;
 }
 
+- (BOOL)navbarhideBackButton {
+    return YES;
+}
+
+
 @end

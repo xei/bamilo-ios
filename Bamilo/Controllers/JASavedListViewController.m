@@ -135,13 +135,6 @@
     [viewController viewWillAppear:animated];
 }
 
-- (void)updateNavBar {
-    self.navBarLayout.showLogo = NO;
-    self.navBarLayout.title = STRING_MY_FAVOURITES;
-    self.navBarLayout.showCartButton = NO;
-    self.navBarLayout.showBackButton = NO;
-}
-
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if ([RICustomer checkIfUserIsLogged]) {
@@ -614,6 +607,11 @@
     [self.productsArray removeAllObjects];
     
     [self.collectionView reloadData];
+}
+
+#pragma mark - NavigationBarProtocol
+- (NSString *)navbarTitleString {
+    return STRING_MY_FAVOURITES;
 }
 
 @end

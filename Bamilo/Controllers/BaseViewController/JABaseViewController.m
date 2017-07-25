@@ -13,7 +13,6 @@
 #import "JAKickoutView.h"
 #import "JAFallbackView.h"
 #import "RICustomer.h"
-#import "JAAuthenticationViewController.h"
 #import "JACenterNavigationController.h"
 #import "ViewControllerManager.h"
 #import "NotificationBarView.h"
@@ -23,7 +22,7 @@
 #define kSearchViewBarHeight 44.0f
 
 
-@interface JABaseViewController () <NavigationBarProtocol> {
+@interface JABaseViewController () {
     CGRect _noConnectionViewFrame;
     NSString* _searchBarText;
 }
@@ -121,12 +120,7 @@
     [self recordStartLoadTime];
     
     self.orientation = [[UIApplication sharedApplication] statusBarOrientation];
-    
-    [self.navigationController.navigationBar setTranslucent:YES];
-    self.navigationController.navigationBar.topItem.title = @"";
-    
     self.view.backgroundColor = JABackgroundGrey;
-    
     self.requestNumber = 0;
     
     self.loadingView = [[UIImageView alloc] initWithFrame:((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame];
@@ -159,11 +153,10 @@
     
     //navigation bar configs
     [self.navigationController.navigationBar setTranslucent:YES];
-    self.navigationController.navigationBar.topItem.title = @"";
-    
     if ([self respondsToSelector:@selector(navbarTitleView)]){
         self.navigationItem.titleView = [self navbarTitleView];
-    } else if ([self respondsToSelector:@selector(navbarTitleString)]) {
+    }
+    if ([self respondsToSelector:@selector(navbarTitleString)]) {
         self.title = [self navbarTitleString];
     }
     if ([self respondsToSelector:@selector(navbarhideBackButton)]) {
@@ -415,8 +408,7 @@
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
 }
 
-- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar;
-{
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
     [[MainTabBarViewController topNavigationController] showSearchView];
     return NO;
 }
@@ -798,6 +790,11 @@
 
 - (NSString *)getScreenName {
     return nil;
+}
+
+#pragma mark - NavigationBarProtocol
+- (void)searchIconButtonTapped {
+    [[MainTabBarViewController topNavigationController] showSearchView];
 }
 
 @end

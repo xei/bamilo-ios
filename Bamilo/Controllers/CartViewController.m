@@ -14,7 +14,6 @@
 #import "RICartItem.h"
 #import "CartTableViewCell.h"
 #import "RecieptViewCartTableViewCell.h"
-#import "JAAuthenticationViewController.h"
 #import "NSString+Extensions.h"
 #import "RIAddress.h"
 #import "ViewControllerManager.h"
@@ -65,10 +64,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.navBarLayout.title = STRING_CART;
-    self.navBarLayout.showBackButton = NO;
-    self.navBarLayout.showCartButton = NO;
     [self.view setBackgroundColor:[Theme color:kColorVeryLightGray]];
     [self.tableView setBackgroundColor:[Theme color:kColorVeryLightGray]];
     
@@ -378,6 +373,12 @@
 
 - (void)didLoggedOut {
     self.cart = nil;
+}
+
+#pragma mark - navigationBarProtocol
+
+- (NSString *)navbarTitleString {
+    return STRING_CART;
 }
 
 @end

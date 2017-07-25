@@ -112,9 +112,6 @@
 {
     [super viewDidLoad];
     [self.view setBackgroundColor:JAWhiteColor];
-    self.navBarLayout.showBackButton = YES;
-    self.navBarLayout.showCartButton = NO;
-    [self.navBarLayout setTitle:STRING_CALL_TO_RETURN];
     
     [self.view setBackgroundColor:JAWhiteColor];
     
@@ -228,5 +225,11 @@
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCallToOrder]
                                               data:[trackingDictionary copy]];
 }
+
+#pragma mark - NavigationBarProtocol
+- (NSString *)navbarTitleString {
+    return STRING_CALL_TO_RETURN;
+}
+
 
 @end

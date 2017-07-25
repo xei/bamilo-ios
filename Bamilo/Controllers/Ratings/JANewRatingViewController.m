@@ -74,15 +74,10 @@ UIAlertViewDelegate
 }
 
 #pragma mark - View lifecycle
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     self.apiResponse = RIApiResponseSuccess;
-    
-    self.navBarLayout.showBackButton = YES;
-    self.navBarLayout.showLogo = NO;
-    
     self.brandLabel.font = [UIFont fontWithName:kFontMediumName size:self.brandLabel.font.pointSize];
     self.nameLabel.font = [UIFont fontWithName:kFontRegularName size:self.nameLabel.font.pointSize];
     
@@ -92,8 +87,7 @@ UIAlertViewDelegate
     
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     [[NSNotificationCenter defaultCenter] addObserver:self

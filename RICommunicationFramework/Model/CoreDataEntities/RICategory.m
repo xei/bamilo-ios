@@ -195,8 +195,7 @@
     }
 }
 
-+ (RICategory *)parseCategory:(NSDictionary *)category
-{
++ (RICategory *)parseCategory:(NSDictionary *)category {
     return [RICategory parseCategory:category level:0];
 }
 
@@ -204,7 +203,7 @@
     
     RICategory* newCategory;
     newCategory = (RICategory*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RICategory class])];
-    
+
     newCategory.level = [NSNumber numberWithInteger:level];
     
     if ([category objectForKey:@"label"]) {

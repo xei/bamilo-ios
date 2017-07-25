@@ -84,9 +84,6 @@ UITableViewDataSource
     
     self.maxReviews = 15;
     
-    self.navBarLayout.showBackButton = YES;
-    self.navBarLayout.showLogo = NO;
-    
     self.sellerNameLabel.font = [UIFont fontWithName:kFontMediumName size:self.sellerNameLabel.font.pointSize];
     self.labelUsedProduct.font = [UIFont fontWithName:kFontLightName size:self.labelUsedProduct.font.pointSize];
     self.writeReviewButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:self.writeReviewButton.titleLabel.font.pointSize];

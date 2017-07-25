@@ -166,8 +166,6 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
-    self.navBarLayout.showBackButton = YES;
-    self.navBarLayout.title = STRING_COMBOS;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -590,4 +588,8 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLastAddedToCart] data:tracking];
 }
 
+#pragma mark - NavigationBarProtocol
+- (NSString *)navbarTitleString {
+    return STRING_COMBOS;
+}
 @end

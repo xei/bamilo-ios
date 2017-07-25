@@ -53,11 +53,6 @@
     [super viewDidLoad];
     
     self.campaignIndex = -1;
-    
-    self.navBarLayout.title = STRING_CAMPAIGNS;
-    [self.navBarLayout setShowBackButton:YES];
-    
-    
     self.pickerNamesAlreadySet = NO;
     
     CGRect bounds = [self viewBounds];
@@ -609,4 +604,8 @@ withCampaignTargetString:(NSString*)campaignTargetString
     }
 }
 
+#pragma mark - NavigationBarProtocol
+- (NSString *)navbarTitleString {
+    return STRING_CAMPAIGNS;
+}
 @end

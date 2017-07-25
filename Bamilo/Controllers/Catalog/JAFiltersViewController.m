@@ -51,13 +51,6 @@ const int subCatButtonVisibleHeight = 50;
     }
 }
 
-- (void)updateNavBar {
-    [super updateNavBar];
-    
-    self.navBarLayout.title = STRING_FILTERS;
-    self.navBarLayout.showBackButton = YES;
-}
-
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
@@ -98,11 +91,8 @@ const int subCatButtonVisibleHeight = 50;
     } else {
         newTitle = [[NSString stringWithFormat:@"%@ (%ld)", STRING_FILTERS, (long)self.totalSelected] numbersToPersian];
     }
-    if (![newTitle isEqualToString:self.navBarLayout.title]) {
-        
-        //the title changed, force a reload
-        self.navBarLayout.title = newTitle;
-        //[self reloadNavBar];
+    if (![newTitle isEqualToString:self.title]) {
+        self.title = newTitle;
     }
 }
 
@@ -303,4 +293,8 @@ const int subCatButtonVisibleHeight = 50;
     return YES;
 }
 
+#pragma mark - NavigationBarProtocol
+- (NSString *)navbarTitleString {
+    return STRING_FILTERS;
+}
 @end

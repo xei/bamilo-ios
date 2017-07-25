@@ -119,23 +119,20 @@
                                              yPosition);
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
     [self.webView loadHTMLString:self.htmlShop.html baseURL:[NSURL URLWithString:[RITarget getURLStringforTargetString:self.targetString]]];
 }
 
 - (BOOL)webView:(UIWebView *)webView
 shouldStartLoadWithRequest:(NSURLRequest *)request
- navigationType:(UIWebViewNavigationType)navigationType
-{
+ navigationType:(UIWebViewNavigationType)navigationType {
     RITarget *target = [RITarget parseTarget:[request.URL absoluteString]];
     JAScreenTarget *screenTarget = [[JAScreenTarget alloc] initWithTarget:target];
     return ![[MainTabBarViewController topNavigationController] openScreenTarget:screenTarget];
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView
-{
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
     [self hideLoading];
     [self publishScreenLoadTime];
 

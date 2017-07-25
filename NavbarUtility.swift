@@ -17,6 +17,7 @@ import Foundation
     
     static func navbarSearchButton(viewController: NavigationBarProtocol) -> UIBarButtonItem {
         let button = IconButton(type: .custom)
+        button.imageHeightToButtonHeightRatio = 0.8
         button.setImage(UIImage(named: "btn_search"), for: UIControlState.normal)
         button.addTarget(viewController, action:#selector(viewController.searchIconButtonTapped), for: UIControlEvents.touchUpInside)
         button.frame.size = CGSize(width: 30, height: 30)

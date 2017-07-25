@@ -34,7 +34,7 @@ import UIKit
 
         if #available(iOS 10.0, *) {
             self.tabBar.items?.first?.setBadgeTextAttributes(attributes, for: .normal)
-            self.tabBar.items?.first?.badgeColor = Theme.color(kColorOrange)
+            UITabBarItem.appearance().badgeColor = Theme.color(kColorOrange)
         } else {}
         
         self.updateUserSessionAndCart()

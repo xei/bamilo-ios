@@ -121,12 +121,6 @@
     return @"pushConfirmationToPayment";
 }
 
--(void)updateNavBar {
-    [super updateNavBar];
-    
-    self.navBarLayout.title = STRING_FINAL_REVIEW;
-}
-
 -(void)performPreDepartureAction:(CheckoutActionCompletion)completion {
     completion(nil, YES);
 }
@@ -414,5 +408,11 @@
 -(NSString *)getScreenName {
     return @"CheckoutConfirmation";
 }
+
+#pragma mark - NavigationBarProtocol
+- (NSString *)navbarTitleString {
+    return STRING_FINAL_REVIEW;
+}
+
 
 @end

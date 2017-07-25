@@ -21,10 +21,6 @@ class FilteredListNoResultViewController: BaseViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
     }
-    
-    override func updateNavBar() {
-        self.navBarLayout.showBackButton = true;
-    }
 
     @IBAction func editFilterbuttonTapped(_ sender: Any) {
         self.delegate?.editFilterByNoResultView()

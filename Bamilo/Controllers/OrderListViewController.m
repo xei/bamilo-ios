@@ -104,14 +104,6 @@
     self.emptyListMessageLabel.text = STRING_NO_ORDERS_TITLE;
 }
 
-- (void)updateNavBar {
-    [super updateNavBar];
-    
-    self.navBarLayout.showLogo = NO;
-    self.navBarLayout.title = STRING_MY_ORDERS;
-    self.navBarLayout.showBackButton = YES;
-}
-
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [DataAggregator getOrders:self page:self.currentOrdersPage perPageCount:kOrdersPerPage completion:^(id data, NSError *error) {
@@ -173,6 +165,11 @@
 #pragma mark - DataTrackerProtocol
 - (NSString *)getScreenName {
     return @"OrderListView";
+}
+
+#pragma mark - NavigationBarProtocol
+- (NSString *)navbarTitleString {
+    return STRING_MY_ORDERS;
 }
 
 @end

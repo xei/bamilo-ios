@@ -62,19 +62,7 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         self.viewWillApearedOnceOrMore = true
     }
     
-    override func updateNavBar() {
-        super.updateNavBar()
-
-        self.navBarLayout.showSearchButton = false
-        self.navBarLayout.showBackButton = false
-        self.navBarLayout.showCartButton = false
-        self.navBarLayout.showDoneButton = false
-        self.navBarLayout.showLogo = false
-        self.navBarLayout.title = STRING_PROFILE
-    }
-    
     func updateTableViewDataSource() {
-        
         self.tableViewDataSource = [
             [ProfileViewDataModel(cellType: .profileUserTableViewCell, title: nil, iconName: nil, notificationName: nil, selector: #selector(showLogin))],
             [ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_ORDER_HISTORY, iconName: "order-tracking-profile", notificationName: "NOTIFICATION_SHOW_MY_ORDERS_SCREEN", selector: nil)],
@@ -277,5 +265,10 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
     //MARK: - DataTrackerProtocol
     override func getScreenName() -> String! {
         return "ProfileView"
+    }
+    
+    //MARK: - NavigationBarProtocol
+    override func navbarTitleString() -> String! {
+        return STRING_PROFILE
     }
 }

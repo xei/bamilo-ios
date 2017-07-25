@@ -34,7 +34,7 @@
 #import "DeepLinkManager.h"
 #import "Bamilo-Swift.h"
 
-@interface JAHomeViewController () <JAPickerDelegate, JANewsletterGenderProtocol, EmarsysRecommendationsProtocol, FeatureBoxCollectionViewWidgetViewDelegate, SearchBarListener, NavigationBarProtocol>
+@interface JAHomeViewController () <JAPickerDelegate, JANewsletterGenderProtocol, EmarsysRecommendationsProtocol, FeatureBoxCollectionViewWidgetViewDelegate, SearchBarListener>
 @property (strong, nonatomic) JATeaserPageView* teaserPageView;
 @property (nonatomic, assign) BOOL isLoaded;
 @property (nonatomic, assign) BOOL isReturningHome;
@@ -46,7 +46,6 @@
 @end
 
 @implementation JAHomeViewController
-
 
 - (EmarsysRecommendationCarouselView *)recommendationView {
     if (!self.isLoaded) return nil;
@@ -337,7 +336,8 @@
 
 #pragma mark: - searchBarSearched Protocol
 - (void)searchBarSearched:(UISearchBar *)searchBar {
-    [TrackerManager postEventWithSelector:[EventSelectors searchBarSearchedSelector] attributes:[EventAttributes searchBarSearchedWithSearchString:searchBar.text screenName:[self getScreenName]]];
+    [TrackerManager postEventWithSelector:[EventSelectors searchBarSearchedSelector]
+                               attributes:[EventAttributes searchBarSearchedWithSearchString:searchBar.text screenName:[self getScreenName]]];
 }
 
 
@@ -346,12 +346,8 @@
     return [NavbarUtility navbarLogo];
 }
 
-- (NavbarLeftButtonType)navbarleftButton {
-    return NavbarLeftButtonTypeSearch;
-}
-
-- (void)searchIconButtonTapped {
-    return;
+- (NSString *)navbarTitleString {
+    return STRING_HOME;
 }
 
 @end

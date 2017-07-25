@@ -40,14 +40,6 @@
     [self fetchAddressList];
 }
 
-#pragma mark - Overrides
-- (void)updateNavBar {
-    [super updateNavBar];
-    
-    self.navBarLayout.title = STRING_MY_ADDRESSES;
-    self.navBarLayout.showBackButton = YES;
-}
-
 #pragma mark - AddressTableViewControllerDelegate
 - (BOOL)addressSelected:(Address *)address {
     
@@ -140,6 +132,12 @@
 
 -(NSString *)getPerformanceTrackerLabel {
     return [RICustomer getCustomerId];
+}
+
+
+#pragma mark - NavigationBarProtocol
+- (NSString *)navbarTitleString {
+    return STRING_MY_ADDRESSES;
 }
 
 @end

@@ -15,10 +15,6 @@
 #import "JARecentSearchesViewController.h"
 #import "JARecentlyViewedViewController.h"
 #import "JAUserDataViewController.h"
-#import "JAMyOrdersViewController.h"
-#import "JAMyOrderDetailViewController.h"
-#import "JASignInViewController.h"
-#import "JARegisterViewController.h"
 #import "JAPDVViewController.h"
 #import "JAExternalPaymentsViewController.h"
 #import "RIProduct.h"
@@ -40,7 +36,6 @@
 #import "JANewsletterViewController.h"
 #import "JANewsletterSubscriptionViewController.h"
 
-#import "JAAuthenticationViewController.h"
 #import "JASearchView.h"
 #import "JAActionWebViewController.h"
 
@@ -126,7 +121,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.neeedsExternalPaymentMethod = NO;
-    self.navigationBar.titleTextAttributes = @{NSFontAttributeName: [Theme font:kFontVariationRegular size:13]}; 
+    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil]
+     setTitleTextAttributes: @{
+                               NSFontAttributeName: [Theme font:kFontVariationRegular size:10],
+                               NSForegroundColorAttributeName: [Theme color:kColorOrange]
+                               } forState:UIControlStateNormal];
+
+    self.navigationBar.titleTextAttributes = @{NSFontAttributeName: [Theme font:kFontVariationRegular size:13]};
     self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCart:) name:kUpdateCartNotification object:nil];
@@ -1233,49 +1234,6 @@
     }
 }
 
-#pragma mark - Tab Bar
-
-//- (void)customizeTabBar {
-//    self.tabBarView = [[JATabBarView alloc] initWithFrame:CGRectMake(0.0,
-//                                                                     self.view.frame.size.height - kTabBarHeight,
-//                                                                     self.view.bounds.size.width,
-//                                                                     kTabBarHeight)];
-//    self.tabBarView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
-//    [self.tabBarView initialSetup];
-//    [self.view addSubview:self.tabBarView];
-//}
-
-#pragma mark - Navigation Bar
-
-- (void)customizeNavigationBar {
-//    [self.navigationItem setHidesBackButton:YES
-//                                   animated:NO];
-//    
-//    self.navigationBarView = [[JACustomNavigationBarView alloc] initWithFrame:CGRectMake(0, 0, 320, kNavigationBarHeight)];
-//    [self.navigationBarView initialSetup];
-//
-//    
-//    [self.navigationBar.viewForBaselineLayout addSubview:self.navigationBarView];
-//
-//    //this removes the shadow line under the navbar
-//    [self.navigationBar setBackgroundImage:[UIImage new]
-//                            forBarPosition:UIBarPositionAny
-//                                barMetrics:UIBarMetricsDefault];
-//    [self.navigationBar setShadowImage:[UIImage new]];
-//    
-//    [self.navigationBarView.cartButton addTarget:self action:@selector(openCart:) forControlEvents:UIControlEventTouchUpInside];
-////    [self.navigationBarView.leftButton addTarget:self action:@selector(openMenu) forControlEvents:UIControlEventTouchUpInside];
-//    [self.navigationBarView.doneButton addTarget:self action:@selector(done) forControlEvents:UIControlEventTouchUpInside];
-//    [self.navigationBarView.editButton addTarget:self action:@selector(edit) forControlEvents:UIControlEventTouchUpInside];
-//    [self.navigationBarView.backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
-//    [self.navigationBarView.searchButton addTarget:self action:@selector(search) forControlEvents:UIControlEventTouchUpInside];
-//    
-//    self.navigationBarView.titleLabel.userInteractionEnabled = YES;
-//    UITapGestureRecognizer *touched = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goTop)];
-//    [self.navigationBarView.titleLabel addGestureRecognizer:touched];
-    
-}
-
 - (void)changeNavigationWithNotification:(NSNotification*)notification {
 //    JANavigationBarLayout* layout = notification.object;
 //    if (VALID_NOTEMPTY(layout, JANavigationBarLayout)) {
@@ -1305,16 +1263,13 @@
         }
         
         if(self.cart) {
-//            [self.navigationBarView updateCartProductCount:self.cart.cartEntity.cartCount];
             [MainTabBarViewController updateCartValueWithCartItemsCount:[self.cart.cartEntity.cartCount integerValue]];
         } else {
             [userInfo removeObjectForKey:kUpdateCartNotificationValue];
-//            [self.navigationBarView updateCartProductCount:0];
             [MainTabBarViewController updateCartValueWithCartItemsCount:0];
         }
     } else {
         self.cart = nil;
-//        [self.navigationBarView updateCartProductCount:0];
         [MainTabBarViewController updateCartValueWithCartItemsCount:0];
     }
 }
@@ -1344,23 +1299,9 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressEditNotification object:nil];
 }
 
-- (void)search {
-    [self showSearchView];
-}
-
 - (void)openCart:(NSNotification*) notification {
     [MainTabBarViewController showCart];
 }
-
-//- (void)didLoggedIn {
-//    //remove existing ones from database
-//    [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RITeaserGrouping class])];
-//}
-//
-//- (void)didLoggedOut {
-//    //remove existing ones from database
-//    [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RITeaserGrouping class])];
-//}
 
 - (void)viewWillLayoutSubviews {
     [self.searchView resetFrame:self.view.bounds];

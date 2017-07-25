@@ -54,15 +54,6 @@
     [self.formController unregisterForKeyboardNotifications];
 }
 
-#pragma mark - Overrides
--(void)updateNavBar {
-    [super updateNavBar];
-    self.navBarLayout.title = @"بازیابی کلمه عبور";
-    self.navBarLayout.showBackButton = YES;
-    self.navBarLayout.showLogo = NO;
-    self.navBarLayout.showCartButton = NO;
-}
-
 #pragma mark - FormControlDelegate
 - (void)formSubmitButtonTapped {
     if (![self.formController isFormValid]) {
@@ -94,6 +85,12 @@
 #pragma mark - DataTrackerProtocol
 -(NSString *)getScreenName {
     return @"ForgetPassword";
+}
+
+#pragma mark - NavigationBarProtocol
+
+- (NSString *)navbarTitleString {
+    return STRING_FORGET_PASS;
 }
 
 @end

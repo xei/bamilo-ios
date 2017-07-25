@@ -95,11 +95,6 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
     return nil;
 }
 
--(void)updateNavBar {
-    [super updateNavBar];
-    self.navBarLayout.title = STRING_PAYMENT_OPTION;
-}
-
 -(void)performPreDepartureAction:(CheckoutActionCompletion)completion {
     if([_multistepEntity.nextStep isEqualToString:@"finish"] && completion != nil) {
         [DataAggregator setMultistepConfirmation:self cart:self.cart completion:^(id data, NSError *error) {
@@ -313,5 +308,11 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
         }];
     }
 }
+
+#pragma mark - NavigationBarProtocol
+- (NSString *)navbarTitleString {
+    return STRING_PAYMENT_OPTION;
+}
+
 
 @end

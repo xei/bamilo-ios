@@ -142,7 +142,6 @@
 		61C860491ECB370300F2C571 /* BaseCatallogCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C860481ECB370300F2C571 /* BaseCatallogCollectionViewCell.swift */; };
 		61C8604C1ECB3C0F00F2C571 /* Ext+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C8604B1ECB3C0F00F2C571 /* Ext+String.swift */; };
 		61CBA0391E51A72A005673F7 /* ForgetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA0381E51A72A005673F7 /* ForgetPasswordViewController.m */; };
-		61CBA03D1E51A75C005673F7 /* ContinueWitoutLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA03C1E51A75C005673F7 /* ContinueWitoutLoginViewController.m */; };
 		61CBA0421E51BA33005673F7 /* FormViewControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA0411E51BA33005673F7 /* FormViewControl.m */; };
 		61CBA04A1E51D18F005673F7 /* FormTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA0481E51D18F005673F7 /* FormTableViewCell.m */; };
 		61CBA04B1E51D18F005673F7 /* FormTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61CBA0491E51D18F005673F7 /* FormTableViewCell.xib */; };
@@ -153,7 +152,6 @@
 		61D8D8DE1E656FE0006650F5 /* OrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D8D8DD1E656FE0006650F5 /* OrderDetailViewController.m */; };
 		61D929341F1642C100716D4C /* Ext+CAShapreLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D929331F1642C100716D4C /* Ext+CAShapreLayer.swift */; };
 		61D929381F164CC200716D4C /* Ext+UIBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D929371F164CC200716D4C /* Ext+UIBarButtonItem.swift */; };
-		61D9293B1F16572000716D4C /* NavigationBarProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D9293A1F16572000716D4C /* NavigationBarProtocol.swift */; };
 		61D9293F1F16585500716D4C /* NavbarUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D9293E1F16585500716D4C /* NavbarUtility.swift */; };
 		61D929481F165AF700716D4C /* NavbarItemTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D929471F165AF700716D4C /* NavbarItemTypes.m */; };
 		61DBCCB61E46128300BA8251 /* IconButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 61DBCCB51E46128300BA8251 /* IconButton.m */; };
@@ -552,7 +550,6 @@
 		87EA032D1E6D993C00B1E062 /* ProgressItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87EA032C1E6D993C00B1E062 /* ProgressItemView.m */; };
 		87EA032F1E6D994800B1E062 /* ProgressItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87EA032E1E6D994800B1E062 /* ProgressItemView.xib */; };
 		87EA03331E6DA27D00B1E062 /* ProgressItemViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 87EA03321E6DA27D00B1E062 /* ProgressItemViewModel.m */; };
-		893AADD11C1F1A54006314FB /* JAMyOrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 893AADCD1C1F1A54006314FB /* JAMyOrderDetailViewController.m */; };
 		8968FE731C3AE33E00B28207 /* JAUserDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4431E91C242BA8005A8B4A /* JAUserDataViewController.m */; };
 		897460DE1C19DDFD00A38073 /* JACollectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 897460DA1C19DDFD00A38073 /* JACollectionHeaderView.m */; };
 		8976FB2C1C0F323700483651 /* JARatingFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8976FB281C0F323700483651 /* JARatingFilterCell.m */; };
@@ -616,7 +613,6 @@
 		9AC4D6A01B46A50000036F1C /* JACatalogCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AC4D69B1B4699B800036F1C /* JACatalogCollectionViewCell.m */; };
 		9AC4D6A71B4A926800036F1C /* JACatalogGridCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AC4D6A21B4A903100036F1C /* JACatalogGridCollectionViewCell.m */; };
 		9ADEA09F1C9C0E6D00B2A605 /* JAProductInfoSizeLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ADEA09A1C9C0E6D00B2A605 /* JAProductInfoSizeLine.m */; };
-		9AE03A971C0CB225003CBEF1 /* JAAuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE03A8A1C076CE1003CBEF1 /* JAAuthenticationViewController.m */; };
 		9AE766A21CB3CF5300B63D8E /* JAAccountServicesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE7669D1CB3CF5300B63D8E /* JAAccountServicesView.m */; };
 		9AE766B11CBBB28E00B63D8E /* JACartProductsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766AC1CBBB28E00B63D8E /* JACartProductsView.m */; };
 		9AE766BF1CBBF01C00B63D8E /* JAEmptyCartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766BA1CBBF01C00B63D8E /* JAEmptyCartView.m */; };
@@ -624,7 +620,6 @@
 		9AE766D41CBD2E0300B63D8E /* JAProductInfoPriceDescriptionLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766CF1CBD2E0300B63D8E /* JAProductInfoPriceDescriptionLine.m */; };
 		9AE766E21CBFF31D00B63D8E /* JACartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766DD1CBFF31D00B63D8E /* JACartTableViewCell.m */; };
 		9AEA3B291B15DD9C00771EEA /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEA3B251B15D4AC00771EEA /* UIView+Frame.m */; };
-		9AEADDCD1C0EF9370074034A /* JARegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEADDC81C0DEA450074034A /* JARegisterViewController.m */; };
 		9AED08341C74CA0E00B5FDF0 /* JASuccessPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AED082F1C74CA0E00B5FDF0 /* JASuccessPageViewController.m */; };
 		9AEF73F41CD20E1C00A5D574 /* JACheckoutStepByStepModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF73EB1CD20E1C00A5D574 /* JACheckoutStepByStepModel.m */; };
 		9AEF73F91CD20E1C00A5D574 /* JAReturnStepByStepModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF73ED1CD20E1C00A5D574 /* JAReturnStepByStepModel.m */; };
@@ -636,7 +631,6 @@
 		9AEF742C1CD8A8BD00A5D574 /* JAORConfirmationScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF74271CD8A8BD00A5D574 /* JAORConfirmationScreenViewController.m */; };
 		9DBD0C211C7F1CBB00F60374 /* JAProductInfoSISLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DBD0C1C1C7F1CBB00F60374 /* JAProductInfoSISLine.m */; };
 		CE0F13111AF277F700F99356 /* JAKickoutView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0F130C1AF277F700F99356 /* JAKickoutView.m */; };
-		CE28A79B1BD9475100B1FADA /* JAMoreMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7961BD9475100B1FADA /* JAMoreMenuViewController.m */; };
 		CE28A7A31BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A79E1BDA30B400B1FADA /* JAGenericMenuCell.m */; };
 		CE28A7AA1BDE987400B1FADA /* JATabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7A51BDE987400B1FADA /* JATabBarButton.m */; };
 		CE59BEFA1AE7EF0B0057F4E2 /* JAShopTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE59BEF51AE7EEF30057F4E2 /* JAShopTeaserView.m */; };
@@ -658,7 +652,6 @@
 		CE9ADF421AB6D78200D56481 /* JACatalogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3FC5AD1990E25C003B4A27 /* JACatalogViewController.m */; };
 		CE9ADF451AB6D78200D56481 /* JAPickupStationInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B501E88B19BEF7DE00BE51DD /* JAPickupStationInfoCell.m */; };
 		CE9ADF471AB6D78200D56481 /* JAOfferCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E741A72B42000F3E92D /* JAOfferCollectionViewCell.m */; };
-		CE9ADF491AB6D78200D56481 /* JAForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A454F49199CE67500B44821 /* JAForgotPasswordViewController.m */; };
 		CE9ADF4C1AB6D78200D56481 /* UIImageView+JA.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C1E33619BA1E73009C422C /* UIImageView+JA.m */; };
 		CE9ADF531AB6D78200D56481 /* JALoadCountryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B55BFB9419E6A83E0098467E /* JALoadCountryViewController.m */; };
 		CE9ADF541AB6D78200D56481 /* JAClickableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376D219EBCA5800558B98 /* JAClickableView.m */; };
@@ -671,9 +664,7 @@
 		CE9ADF5C1AB6D78200D56481 /* JAEmailNotificationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE865BF19C9D7F100406159 /* JAEmailNotificationsViewController.m */; };
 		CE9ADF601AB6D78200D56481 /* JANoConnectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A19C51819D01ABE0070D194 /* JANoConnectionView.m */; };
 		CE9ADF621AB6D78200D56481 /* JASellerRatingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E911A77899F00F3E92D /* JASellerRatingsViewController.m */; };
-		CE9ADF631AB6D78200D56481 /* JASignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFC7F90199BC0BE007D67F4 /* JASignInViewController.m */; };
 		CE9ADF681AB6D78200D56481 /* JAShippingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B58767FC19BB62B3001651D6 /* JAShippingCell.m */; };
-		CE9ADF691AB6D78200D56481 /* JAMyOrdersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 520A37CC1A48904B0046C8B1 /* JAMyOrdersViewController.m */; };
 		CE9ADF6B1AB6D78200D56481 /* JAFiltersView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4848961A161979003C3D53 /* JAFiltersView.m */; };
 		CE9ADF6F1AB6D78200D56481 /* JAPDVProductInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2FD840199119D900C65C1D /* JAPDVProductInfo.m */; };
 		CE9ADF731AB6D78200D56481 /* JAPaymentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DBF3719C0AF9600D4678A /* JAPaymentCell.m */; };
@@ -893,8 +884,6 @@
 		4A3921191988E27A00B70A9C /* JAConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JAConstants.h; sourceTree = "<group>"; };
 		4A39212B19891F6D00B70A9C /* JARecentSearchesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JARecentSearchesViewController.h; sourceTree = "<group>"; };
 		4A39212C19891F6D00B70A9C /* JARecentSearchesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JARecentSearchesViewController.m; sourceTree = "<group>"; };
-		4A454F48199CE67500B44821 /* JAForgotPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAForgotPasswordViewController.h; path = SignInViewController/JAForgotPasswordViewController.h; sourceTree = "<group>"; };
-		4A454F49199CE67500B44821 /* JAForgotPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAForgotPasswordViewController.m; path = SignInViewController/JAForgotPasswordViewController.m; sourceTree = "<group>"; };
 		4A4ABF0D198B9DE600342D92 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4A7F747F198A4EDA00621C0D /* JACenterNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACenterNavigationController.h; sourceTree = "<group>"; };
 		4A7F7480198A4EDA00621C0D /* JACenterNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACenterNavigationController.m; sourceTree = "<group>"; };
@@ -915,12 +904,8 @@
 		4AE730C6198F8B05000CA1DD /* JAPDVViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPDVViewController.m; sourceTree = "<group>"; };
 		4AE865BE19C9D7F100406159 /* JAEmailNotificationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAEmailNotificationsViewController.h; sourceTree = "<group>"; };
 		4AE865BF19C9D7F100406159 /* JAEmailNotificationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAEmailNotificationsViewController.m; sourceTree = "<group>"; };
-		4AFC7F8F199BC0BE007D67F4 /* JASignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JASignInViewController.h; path = SignInViewController/JASignInViewController.h; sourceTree = "<group>"; };
-		4AFC7F90199BC0BE007D67F4 /* JASignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JASignInViewController.m; path = SignInViewController/JASignInViewController.m; sourceTree = "<group>"; };
 		520A37C61A4444CC0046C8B1 /* JAFilteredNoResultsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAFilteredNoResultsView.h; sourceTree = "<group>"; };
 		520A37C71A4444CC0046C8B1 /* JAFilteredNoResultsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAFilteredNoResultsView.m; sourceTree = "<group>"; };
-		520A37CB1A48904B0046C8B1 /* JAMyOrdersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMyOrdersViewController.h; sourceTree = "<group>"; };
-		520A37CC1A48904B0046C8B1 /* JAMyOrdersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMyOrdersViewController.m; sourceTree = "<group>"; };
 		52AC8FDA1A4056CB00E7C874 /* JASizeGuideWizardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASizeGuideWizardView.h; sourceTree = "<group>"; };
 		52AC8FDB1A4056CB00E7C874 /* JASizeGuideWizardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASizeGuideWizardView.m; sourceTree = "<group>"; };
 		5D35AAC06173E4696653CF50 /* Pods-Bamilo.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bamilo.adhoc.xcconfig"; path = "Pods/Target Support Files/Pods-Bamilo/Pods-Bamilo.adhoc.xcconfig"; sourceTree = "<group>"; };
@@ -1121,8 +1106,6 @@
 		61C8604B1ECB3C0F00F2C571 /* Ext+String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Ext+String.swift"; sourceTree = "<group>"; };
 		61CBA0371E51A72A005673F7 /* ForgetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetPasswordViewController.h; sourceTree = "<group>"; };
 		61CBA0381E51A72A005673F7 /* ForgetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgetPasswordViewController.m; sourceTree = "<group>"; };
-		61CBA03B1E51A75C005673F7 /* ContinueWitoutLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContinueWitoutLoginViewController.h; sourceTree = "<group>"; };
-		61CBA03C1E51A75C005673F7 /* ContinueWitoutLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContinueWitoutLoginViewController.m; sourceTree = "<group>"; };
 		61CBA0401E51BA33005673F7 /* FormViewControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormViewControl.h; sourceTree = "<group>"; };
 		61CBA0411E51BA33005673F7 /* FormViewControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormViewControl.m; sourceTree = "<group>"; };
 		61CBA0471E51D18F005673F7 /* FormTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormTableViewCell.h; sourceTree = "<group>"; };
@@ -1138,9 +1121,9 @@
 		61D10E6B1EAE22C6009A0865 /* SuccessPaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuccessPaymentViewController.m; sourceTree = "<group>"; };
 		61D8D8DC1E656FE0006650F5 /* OrderDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDetailViewController.h; sourceTree = "<group>"; };
 		61D8D8DD1E656FE0006650F5 /* OrderDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDetailViewController.m; sourceTree = "<group>"; };
+		61D8FA0A1F25F69600B04200 /* NavigationBarProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationBarProtocol.h; sourceTree = "<group>"; };
 		61D929331F1642C100716D4C /* Ext+CAShapreLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Ext+CAShapreLayer.swift"; sourceTree = "<group>"; };
 		61D929371F164CC200716D4C /* Ext+UIBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Ext+UIBarButtonItem.swift"; sourceTree = "<group>"; };
-		61D9293A1F16572000716D4C /* NavigationBarProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBarProtocol.swift; sourceTree = "<group>"; };
 		61D9293E1F16585500716D4C /* NavbarUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavbarUtility.swift; sourceTree = "<group>"; };
 		61D929461F165AF700716D4C /* NavbarItemTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavbarItemTypes.h; sourceTree = "<group>"; };
 		61D929471F165AF700716D4C /* NavbarItemTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavbarItemTypes.m; sourceTree = "<group>"; };
@@ -1773,8 +1756,6 @@
 		87EA032E1E6D994800B1E062 /* ProgressItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProgressItemView.xib; sourceTree = "<group>"; };
 		87EA03311E6DA27D00B1E062 /* ProgressItemViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressItemViewModel.h; sourceTree = "<group>"; };
 		87EA03321E6DA27D00B1E062 /* ProgressItemViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressItemViewModel.m; sourceTree = "<group>"; };
-		893AADCC1C1F1A54006314FB /* JAMyOrderDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMyOrderDetailViewController.h; sourceTree = "<group>"; };
-		893AADCD1C1F1A54006314FB /* JAMyOrderDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMyOrderDetailViewController.m; sourceTree = "<group>"; };
 		897460D91C19DDFD00A38073 /* JACollectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACollectionHeaderView.h; path = Bamilo/View/Headers/JACollectionHeaderView.h; sourceTree = SOURCE_ROOT; };
 		897460DA1C19DDFD00A38073 /* JACollectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACollectionHeaderView.m; path = Bamilo/View/Headers/JACollectionHeaderView.m; sourceTree = SOURCE_ROOT; };
 		8976FB271C0F323700483651 /* JARatingFilterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JARatingFilterCell.h; sourceTree = "<group>"; };
@@ -1899,8 +1880,6 @@
 		9AD15D4A1BE7C21D00DD60DD /* JAProductCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAProductCollectionViewFlowLayout.m; path = CollectionViewLayouts/JAProductCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 		9ADEA0991C9C0E6D00B2A605 /* JAProductInfoSizeLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAProductInfoSizeLine.h; sourceTree = "<group>"; };
 		9ADEA09A1C9C0E6D00B2A605 /* JAProductInfoSizeLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAProductInfoSizeLine.m; sourceTree = "<group>"; };
-		9AE03A891C076CE1003CBEF1 /* JAAuthenticationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAAuthenticationViewController.h; path = Authentication/JAAuthenticationViewController.h; sourceTree = "<group>"; };
-		9AE03A8A1C076CE1003CBEF1 /* JAAuthenticationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAAuthenticationViewController.m; path = Authentication/JAAuthenticationViewController.m; sourceTree = "<group>"; };
 		9AE7669C1CB3CF5300B63D8E /* JAAccountServicesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAAccountServicesView.h; sourceTree = "<group>"; };
 		9AE7669D1CB3CF5300B63D8E /* JAAccountServicesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAAccountServicesView.m; sourceTree = "<group>"; };
 		9AE766AB1CBBB28E00B63D8E /* JACartProductsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACartProductsView.h; path = ../Controllers/Checkout/Cart/JACartProductsView.h; sourceTree = "<group>"; };
@@ -1915,8 +1894,6 @@
 		9AE766DD1CBFF31D00B63D8E /* JACartTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACartTableViewCell.m; path = ../../Controllers/Checkout/Cart/JACartTableViewCell.m; sourceTree = "<group>"; };
 		9AEA3B241B15D4AC00771EEA /* UIView+Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Frame.h"; path = "Categories/UIView+Frame.h"; sourceTree = "<group>"; };
 		9AEA3B251B15D4AC00771EEA /* UIView+Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Frame.m"; path = "Categories/UIView+Frame.m"; sourceTree = "<group>"; };
-		9AEADDC71C0DEA450074034A /* JARegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JARegisterViewController.h; path = Authentication/JARegisterViewController.h; sourceTree = "<group>"; };
-		9AEADDC81C0DEA450074034A /* JARegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JARegisterViewController.m; path = Authentication/JARegisterViewController.m; sourceTree = "<group>"; };
 		9AED082E1C74CA0E00B5FDF0 /* JASuccessPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JASuccessPageViewController.h; path = Thanks/JASuccessPageViewController.h; sourceTree = "<group>"; };
 		9AED082F1C74CA0E00B5FDF0 /* JASuccessPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JASuccessPageViewController.m; path = Thanks/JASuccessPageViewController.m; sourceTree = "<group>"; };
 		9AEF73EA1CD20E1C00A5D574 /* JACheckoutStepByStepModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACheckoutStepByStepModel.h; path = Models/JACheckoutStepByStepModel.h; sourceTree = "<group>"; };
@@ -2055,8 +2032,6 @@
 		CE283E741A72B42000F3E92D /* JAOfferCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAOfferCollectionViewCell.m; path = OfferCell/JAOfferCollectionViewCell.m; sourceTree = "<group>"; };
 		CE283E901A77899F00F3E92D /* JASellerRatingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASellerRatingsViewController.h; sourceTree = "<group>"; };
 		CE283E911A77899F00F3E92D /* JASellerRatingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASellerRatingsViewController.m; sourceTree = "<group>"; };
-		CE28A7951BD9475100B1FADA /* JAMoreMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMoreMenuViewController.h; sourceTree = "<group>"; };
-		CE28A7961BD9475100B1FADA /* JAMoreMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMoreMenuViewController.m; sourceTree = "<group>"; };
 		CE28A79D1BDA30B400B1FADA /* JAGenericMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAGenericMenuCell.h; path = GenericMenuCell/JAGenericMenuCell.h; sourceTree = "<group>"; };
 		CE28A79E1BDA30B400B1FADA /* JAGenericMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAGenericMenuCell.m; path = GenericMenuCell/JAGenericMenuCell.m; sourceTree = "<group>"; };
 		CE28A7A41BDE987400B1FADA /* JATabBarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JATabBarButton.h; path = GlobalTabBar/JATabBarButton.h; sourceTree = "<group>"; };
@@ -2473,8 +2448,6 @@
 			children = (
 				CEA106EB1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.h */,
 				CEA106EC1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m */,
-				CE28A7951BD9475100B1FADA /* JAMoreMenuViewController.h */,
-				CE28A7961BD9475100B1FADA /* JAMoreMenuViewController.m */,
 			);
 			path = MenuViewController;
 			sourceTree = "<group>";
@@ -2557,13 +2530,6 @@
 			path = Variations;
 			sourceTree = "<group>";
 		};
-		4AFC7F8E199BC0B2007D67F4 /* SignInViewController */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = SignInViewController;
-			sourceTree = "<group>";
-		};
 		520A37BF1A4444110046C8B1 /* FilteredNoResultsView */ = {
 			isa = PBXGroup;
 			children = (
@@ -2571,17 +2537,6 @@
 				520A37C71A4444CC0046C8B1 /* JAFilteredNoResultsView.m */,
 			);
 			name = FilteredNoResultsView;
-			sourceTree = "<group>";
-		};
-		520A37CA1A48904B0046C8B1 /* MyOrders */ = {
-			isa = PBXGroup;
-			children = (
-				520A37CB1A48904B0046C8B1 /* JAMyOrdersViewController.h */,
-				520A37CC1A48904B0046C8B1 /* JAMyOrdersViewController.m */,
-				893AADCC1C1F1A54006314FB /* JAMyOrderDetailViewController.h */,
-				893AADCD1C1F1A54006314FB /* JAMyOrderDetailViewController.m */,
-			);
-			path = MyOrders;
 			sourceTree = "<group>";
 		};
 		520A37CF1A4890CD0046C8B1 /* Search */ = {
@@ -3654,15 +3609,6 @@
 			name = ForgetPasswordViewController;
 			sourceTree = "<group>";
 		};
-		61CBA03E1E51A765005673F7 /* ContinueWitoutLoginViewController */ = {
-			isa = PBXGroup;
-			children = (
-				61CBA03B1E51A75C005673F7 /* ContinueWitoutLoginViewController.h */,
-				61CBA03C1E51A75C005673F7 /* ContinueWitoutLoginViewController.m */,
-			);
-			name = ContinueWitoutLoginViewController;
-			sourceTree = "<group>";
-		};
 		61CBA03F1E51BA1D005673F7 /* FormViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -3750,7 +3696,6 @@
 		61D929391F16564F00716D4C /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				61D9293A1F16572000716D4C /* NavigationBarProtocol.swift */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -4244,6 +4189,7 @@
 		870F8CD01E3356F90021F87B /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				61D8FA0A1F25F69600B04200 /* NavigationBarProtocol.h */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -5436,7 +5382,6 @@
 				879F88011E50B24C0033FE87 /* AuthenticationBaseViewController */,
 				613FF2B01E4B281A008660CF /* SignInViewController */,
 				613FF2B11E4B2825008660CF /* SignUpViewController */,
-				61CBA03E1E51A765005673F7 /* ContinueWitoutLoginViewController */,
 				61CBA03A1E51A72E005673F7 /* ForgetPasswordViewController */,
 			);
 			name = Controllers;
@@ -5644,7 +5589,6 @@
 				B5A303001981218E00F71726 /* JABaseViewController */,
 				9AEF741E1CD8A81700A5D574 /* OnlineReturns */,
 				9AEF741D1CD8A7FB00A5D574 /* StepByStep */,
-				9AE03A881C076CB3003CBEF1 /* Authentication */,
 				CEBE2A7D1A9E31E800F457FA /* Web */,
 				CE283E6E1A7296AE00F3E92D /* OtherOffers */,
 				CE3AF8FD19DBF4FB00D8C51B /* Campaigns */,
@@ -5658,12 +5602,10 @@
 				4AE242E2198656F500E37C90 /* MenuViewController */,
 				4A39211B19891F1500B70A9C /* MyAccount */,
 				9A59E7EF1C3A8D2300F37D3F /* SavedList */,
-				520A37CA1A48904B0046C8B1 /* MyOrders */,
 				4AE730AF198F88CB000CA1DD /* PDV */,
 				4A944FF2199273E000C02734 /* Ratings */,
 				4A39211D19891F1500B70A9C /* RecentlyViewed */,
 				4A39211E19891F1500B70A9C /* RecentSearches */,
-				4AFC7F8E199BC0B2007D67F4 /* SignInViewController */,
 				CEA86D9B1A3756A6000032AD /* SizeGuide */,
 			);
 			name = JA;
@@ -6213,21 +6155,6 @@
 				9A59E7F11C3A8D5100F37D3F /* JASavedListViewController.m */,
 			);
 			name = SavedList;
-			sourceTree = "<group>";
-		};
-		9AE03A881C076CB3003CBEF1 /* Authentication */ = {
-			isa = PBXGroup;
-			children = (
-				9AE03A891C076CE1003CBEF1 /* JAAuthenticationViewController.h */,
-				9AE03A8A1C076CE1003CBEF1 /* JAAuthenticationViewController.m */,
-				9AEADDC71C0DEA450074034A /* JARegisterViewController.h */,
-				9AEADDC81C0DEA450074034A /* JARegisterViewController.m */,
-				4AFC7F8F199BC0BE007D67F4 /* JASignInViewController.h */,
-				4AFC7F90199BC0BE007D67F4 /* JASignInViewController.m */,
-				4A454F48199CE67500B44821 /* JAForgotPasswordViewController.h */,
-				4A454F49199CE67500B44821 /* JAForgotPasswordViewController.m */,
-			);
-			name = Authentication;
 			sourceTree = "<group>";
 		};
 		9AE7669B1CB3CF2300B63D8E /* Authentication */ = {
@@ -7742,7 +7669,6 @@
 				CE8C92B01B8B555600C77706 /* JAMainFilterCell.m in Sources */,
 				610C68AD1EC87F2A008FB66C /* Translations.swift in Sources */,
 				87B684F51E4A04030042C09F /* ReceiptItemModel.m in Sources */,
-				CE9ADF491AB6D78200D56481 /* JAForgotPasswordViewController.m in Sources */,
 				879F88291E51CF140033FE87 /* CartEntity.m in Sources */,
 				61FFD5861EB8CE17004A3518 /* CatalogDataManager.swift in Sources */,
 				61E099641E3E0E21004ED14E /* IconTableViewCell.m in Sources */,
@@ -7811,11 +7737,9 @@
 				613A7E8D1EBF069100E1AB3F /* Product.swift in Sources */,
 				875AD58B1E38C0C900584ABF /* RIURLCacheWrapper.m in Sources */,
 				87C69DAB1E38B78E0026018F /* NSString+Extensions.m in Sources */,
-				CE9ADF631AB6D78200D56481 /* JASignInViewController.m in Sources */,
 				FFF900801C6A5D2000DDF538 /* JATitleComponent.m in Sources */,
 				CE9ADF681AB6D78200D56481 /* JAShippingCell.m in Sources */,
 				61832FDA1ED2D145006F01FE /* Ext+Double.swift in Sources */,
-				CE9ADF691AB6D78200D56481 /* JAMyOrdersViewController.m in Sources */,
 				871BA8591E867FE0007680C5 /* SearchEvent.m in Sources */,
 				CE9ADF6B1AB6D78200D56481 /* JAFiltersView.m in Sources */,
 				CE9ADF6F1AB6D78200D56481 /* JAPDVProductInfo.m in Sources */,
@@ -7996,7 +7920,6 @@
 				617D7F3C1EDC2F3E00F36CF7 /* ProfileOrderTableViewCell.swift in Sources */,
 				9AC4D6A71B4A926800036F1C /* JACatalogGridCollectionViewCell.m in Sources */,
 				875AD5571E38C0C900584ABF /* RIAlgolia.m in Sources */,
-				9AE03A971C0CB225003CBEF1 /* JAAuthenticationViewController.m in Sources */,
 				9A4077411CE60E3300313D20 /* JABottomSubmitView.m in Sources */,
 				FF4383E31C6CD4AC003BA957 /* JASwitchRadioComponent.m in Sources */,
 				9A189E811BB54C2D0039BC14 /* JAScrolledImageGalleryView.m in Sources */,
@@ -8017,13 +7940,11 @@
 				875AD5771E38C0C900584ABF /* RISpecification.m in Sources */,
 				CE9ADFD61AB6D78200D56481 /* JAFilteredNoResultsView.m in Sources */,
 				CE9ADFD71AB6D78200D56481 /* JAProductListFlowLayout.m in Sources */,
-				9AEADDCD1C0EF9370074034A /* JARegisterViewController.m in Sources */,
 				873369C21E589FEC00B0B5E5 /* ShippingMethodForm.m in Sources */,
 				875AD55A1E38C0C900584ABF /* RICart.m in Sources */,
 				CE9ADFD91AB6D78200D56481 /* JAPromotionPopUp.m in Sources */,
 				9A55A68B1BBECB09008EF4A6 /* JABottomBar.m in Sources */,
 				874AAB6D1E3DCEDB00B3F8FE /* SessionManager.m in Sources */,
-				61D9293B1F16572000716D4C /* NavigationBarProtocol.swift in Sources */,
 				6125534C1E4EF63000975C6F /* InputTextFieldControl.m in Sources */,
 				875AD5541E38C0C900584ABF /* RIURLCache.m in Sources */,
 				875AD5651E38C0C900584ABF /* RIOrder.m in Sources */,
@@ -8077,7 +7998,6 @@
 				61FE97D51EC9BB7700DF233D /* GridCollectionViewFlowLayout.swift in Sources */,
 				875AD5411E38C0C900584ABF /* RIApi.m in Sources */,
 				CE9ADFF11AB6D78200D56481 /* JARecentSearchesViewController.m in Sources */,
-				CE28A79B1BD9475100B1FADA /* JAMoreMenuViewController.m in Sources */,
 				87EA03261E6D98A900B1E062 /* ProgressView.m in Sources */,
 				616D65EC1E670984008B07EA /* OrderProductListTableViewCell.m in Sources */,
 				9A4077251CE0CDA600313D20 /* NSString+Size.m in Sources */,
@@ -8097,7 +8017,6 @@
 				CE9ADFF71AB6D78200D56481 /* JASidePanelController.m in Sources */,
 				9AC4D6A01B46A50000036F1C /* JACatalogCollectionViewCell.m in Sources */,
 				61D8D8DE1E656FE0006650F5 /* OrderDetailViewController.m in Sources */,
-				893AADD11C1F1A54006314FB /* JAMyOrderDetailViewController.m in Sources */,
 				9A7A77321B2F182E002F530F /* JAPDVGallery.m in Sources */,
 				61036B5A1E6599FC006E12A9 /* OrderListTableViewCell.m in Sources */,
 				612FE5171EDC062500C2AFA0 /* ProfileViewController.swift in Sources */,
@@ -8138,7 +8057,6 @@
 				CE9AE0081AB6D78200D56481 /* JAMaintenancePage.m in Sources */,
 				87D07D781E4097FF00C00AC6 /* CheckoutAddressViewController.m in Sources */,
 				87AFF6871EE69E61001EBC4D /* DataAggregator.swift in Sources */,
-				61CBA03D1E51A75C005673F7 /* ContinueWitoutLoginViewController.m in Sources */,
 				87D07D801E4099E800C00AC6 /* CheckoutPaymentViewController.m in Sources */,
 				875AD5551E38C0C900584ABF /* Model.xcdatamodeld in Sources */,
 				CE9AE00C1AB6D78200D56481 /* JAWizardView.m in Sources */,

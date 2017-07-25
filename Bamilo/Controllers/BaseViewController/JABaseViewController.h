@@ -15,8 +15,9 @@
 #import "DataTrackerProtocol.h"
 //#######
 #import "DataMessageList.h"
+#import "NavigationBarProtocol.h"
 
-@interface JABaseViewController : UIViewController <PerformanceTrackerProtocol, DataTrackerProtocol, UISearchBarDelegate>
+@interface JABaseViewController : UIViewController <PerformanceTrackerProtocol, DataTrackerProtocol, UISearchBarDelegate, NavigationBarProtocol>
 
 @property (nonatomic, strong)JANavigationBarLayout* navBarLayout;
 

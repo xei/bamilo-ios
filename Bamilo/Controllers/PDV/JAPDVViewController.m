@@ -117,11 +117,6 @@ static NSString *recommendationLogic = @"RELATED";
     [self.view setBackgroundColor:[UIColor whiteColor]];
     self.apiResponse = RIApiResponseSuccess;
 
-    //self.A4SViewControllerAlias = @"PRODUCT";
-
-    self.navBarLayout.showBackButton = YES;
-    self.navBarLayout.showCartButton = YES;
-
     self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     [self.mainScrollView setHidden:YES];
     [self.view addSubview:self.mainScrollView];
@@ -452,7 +447,6 @@ static NSString *recommendationLogic = @"RELATED";
                                          successBlock:^(id product) {
                                              _needRefreshProduct = NO;
                                              self.apiResponse = RIApiResponseSuccess;
-
                                              [self loadedProduct:product];
                                              [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
                                          } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
@@ -487,8 +481,7 @@ static NSString *recommendationLogic = @"RELATED";
     self.product = product;
     self.productSku = product.sku;
 
-    [self.navBarLayout setTitle:product.brand];
-    [self reloadNavBar];
+    self.title = product.brand;
 
     [self trackingEventViewProduct:product];
     [self trackingEventLoadingTime];
@@ -1164,10 +1157,7 @@ static NSString *recommendationLogic = @"RELATED";
 
     [UIView animateWithDuration:0.4f
                      animations:^{
-                         [self.picker setFrame:CGRectMake(0.0f,
-                                                          0.0f,
-                                                          pickerViewWidth,
-                                                          pickerViewHeight)];
+                         [self.picker setFrame:CGRectMake(0.0f, 0.0f, pickerViewWidth, pickerViewHeight)];
                      }];
 }
 
@@ -1247,7 +1237,6 @@ static NSString *recommendationLogic = @"RELATED";
 }
 
 #pragma mark JAPDVImageSectionDelegate
-
 - (void)imageClickedAtIndex:(NSInteger)index {
     [self presentGalleryAtIndex:index];
 }
@@ -2004,5 +1993,9 @@ static NSString *recommendationLogic = @"RELATED";
     return YES;
 }
 
+#pragma mark - NavigationBarProtocol
+- (NSString *)navbarTitleString {
+    return STRING_LOADING;
+}
 
 @end

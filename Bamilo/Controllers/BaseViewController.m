@@ -14,7 +14,7 @@
 #import "EmarsysPredictManager.h"
 #import "Bamilo-Swift.h"
 
-@interface BaseViewController() <NavigationBarProtocol>
+@interface BaseViewController()
 @property (strong, nonatomic) JAMessageView *messageView;
 @end
 
@@ -32,19 +32,16 @@
     [self recordStartLoadTime];
     self.title = nil;
     self.view.backgroundColor = JABackgroundGrey;
-
     if ([self getScreenName].length) {
         [TrackerManager trackScreenNameWithScreenName:[self getScreenName]];
     }
     
-    
     //navigation bar configs
     [self.navigationController.navigationBar setTranslucent:YES];
-    self.navigationController.navigationBar.topItem.title = @"";
-    
     if ([self respondsToSelector:@selector(navbarTitleView)]){
         self.navigationItem.titleView = [self navbarTitleView];
-    } else if ([self respondsToSelector:@selector(navbarTitleString)]) {
+    }
+    if ([self respondsToSelector:@selector(navbarTitleString)]) {
         self.title = [self navbarTitleString];
     }
     if ([self respondsToSelector:@selector(navbarhideBackButton)]) {
@@ -66,9 +63,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self updateNavBar];
-    
-    [self requestNavigationBarReload];
     
     if ([self conformsToProtocol:@protocol(EmarsysPredictProtocolBase)]) {
         if ([self respondsToSelector:@selector(isPreventSendTransactionInViewWillAppear)]) {
@@ -85,10 +79,6 @@
     [self.view endEditing:YES];
 }
 
-- (void)requestNavigationBarReload {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kChangeNavigationBarNotification object:self.navBarLayout];
-}
-
 - (CGFloat) statusAndNavbarHeight {
     return self.navigationController.navigationBar.height + [UIApplication sharedApplication].statusBarFrame.size.height;
 }
@@ -98,16 +88,6 @@
                       self.view.bounds.origin.y + [self statusAndNavbarHeight],
                       self.view.bounds.size.width,
                       self.view.bounds.size.height);
-}
-
-#pragma mark - Public Methods
-- (void)updateNavBar {
-    //reset to Default state for nav bar
-    self.navBarLayout.showSearchButton = NO;
-    self.navBarLayout.showBackButton = NO;
-    self.navBarLayout.showDoneButton = NO;
-    self.navBarLayout.showCartButton = NO;
-    self.navBarLayout.showSeparatorView = NO;
 }
 
 #pragma mark - SideMenuProtocol
@@ -186,4 +166,8 @@
     return nil;
 }
 
+#pragma mark - NavigationBarProtocol
+- (void)searchIconButtonTapped {
+    [[MainTabBarViewController topNavigationController] showSearchView];
+}
 @end

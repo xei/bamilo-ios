@@ -63,11 +63,6 @@
     return @"pushAddressToConfirmation";
 }
 
--(void)updateNavBar {
-    [super updateNavBar];
-    self.navBarLayout.title = STRING_CHOOSE_ADDRESS;
-}
-
 -(void)performPreDepartureAction:(CheckoutActionCompletion)completion {
     if(_addresses.count == 0) {
         completion(nil, NO);
@@ -166,6 +161,11 @@
     }
     
     return nil;
+}
+
+#pragma mark - NavigationBarProtocol
+- (NSString *)navbarTitleString {
+    return STRING_CHOOSE_ADDRESS;
 }
 
 @end

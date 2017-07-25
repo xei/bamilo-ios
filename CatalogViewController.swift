@@ -21,8 +21,7 @@ import SwiftyJSON
                                     UICollectionViewDelegateFlowLayout,
                                     FilteredListNoResultViewControllerDelegate,
                                     JAPDVViewControllerDelegate,
-                                    SearchBarListener,
-                                    NavigationBarProtocol {
+                                    SearchBarListener {
     
     @IBOutlet private weak var catalogHeader: CatalogHeaderControl!
     @IBOutlet private weak var collectionView: UICollectionView!
@@ -113,16 +112,10 @@ import SwiftyJSON
         }
     }
     
-    override func updateNavBar() {
-        super.updateNavBar()
-        self.navBarLayout.showCartButton = true
-        self.navBarLayout.showSearchButton = true
-        self.navBarLayout.showBackButton = true
+    func updateNavBar() {
         if let navTitle = self.catalogData?.title {
             self.navBarTitle = navTitle
             self.title = navTitle
-//            self.navBarLayout.title = navTitle
-//            self.requestNavigationBarReload()
         }
     }
     
@@ -174,7 +167,6 @@ import SwiftyJSON
             selector: EventSelectors.catalogSortChangedSelector(),
             attributes: EventAttributes.catalogSortChanged(sortMethod: type)
         )
-        
         self.sortingMethod = type
         self.loadData()
     }
@@ -592,7 +584,10 @@ import SwiftyJSON
     }
     
     //MARK: -NavigationBarProtocol
-    func navbarTitleString() -> String {
+    override func navbarTitleString() -> String {
         return STRING_SEARCHING;
+    }
+    override func navbarleftButton() -> NavbarLeftButtonType {
+        return .search
     }
 }

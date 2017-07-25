@@ -72,16 +72,6 @@
     [self publishScreenLoadTime];
 }
 
-#pragma mark - Overrides
-- (void)updateNavBar {
-    [super updateNavBar];
-
-    self.navBarLayout.title = STRING_LOGIN_OR_SIGNUP;
-    self.navBarLayout.showCartButton = NO;
-    self.navBarLayout.showBackButton = !self.isForcedToLogin;
-    self.navBarLayout.showLogo = NO;
-}
-
 #pragma mark - AuthenticationDelegate
 - (void)wantsToContinueWithoutLogin {
     [self performSegueWithIdentifier:@"showContinueWithoutLoginViewCtrl" sender:nil];
@@ -113,6 +103,16 @@
 
 -(BOOL)forcePublishScreenLoadTime {
     return YES;
+}
+
+
+#pragma mark - NavigationBarProtocol
+- (NSString *)navbarTitleString {
+    return STRING_LOGIN_OR_SIGNUP;
+}
+
+- (BOOL)navbarhideBackButton {
+    return self.isForcedToLogin;
 }
 
 @end
