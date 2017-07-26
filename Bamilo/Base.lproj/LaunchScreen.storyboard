@@ -35,7 +35,7 @@
                                 <constraints>
                                     <constraint firstItem="Hvu-5x-KRd" firstAttribute="centerX" secondItem="Ar3-6x-00D" secondAttribute="centerX" id="BQv-4W-RA7"/>
                                     <constraint firstAttribute="height" constant="43" id="Cjb-aV-waz"/>
-                                    <constraint firstItem="Hvu-5x-KRd" firstAttribute="centerY" secondItem="Ar3-6x-00D" secondAttribute="centerY" id="uFA-xW-nNp"/>
+                                    <constraint firstItem="Hvu-5x-KRd" firstAttribute="centerY" secondItem="Ar3-6x-00D" secondAttribute="centerY" constant="0.5" id="uFA-xW-nNp"/>
                                 </constraints>
                             </view>
                         </subviews>
