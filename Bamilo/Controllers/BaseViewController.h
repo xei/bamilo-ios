@@ -14,8 +14,6 @@
 @interface BaseViewController : UIViewController <SideMenuProtocol, TabBarProtocol, PerformanceTrackerProtocol, DataTrackerProtocol, NavigationBarProtocol>
 
 @property (strong, nonatomic) JANavigationBarLayout *navBarLayout;
-
-- (CGFloat) statusAndNavbarHeight;
 - (CGRect)viewBounds;
 - (BOOL)showNotificationBar:(id)message isSuccess:(BOOL)success;
 - (BOOL)showNotificationBarFromMessageDictionary:(NSDictionary *)messageDict isSuccess:(BOOL)success;

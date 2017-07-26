@@ -37,7 +37,7 @@
     }
     
     //navigation bar configs
-    [self.navigationController.navigationBar setTranslucent:YES];
+    
     if ([self respondsToSelector:@selector(navbarTitleView)]){
         self.navigationItem.titleView = [self navbarTitleView];
     }
@@ -79,15 +79,8 @@
     [self.view endEditing:YES];
 }
 
-- (CGFloat) statusAndNavbarHeight {
-    return self.navigationController.navigationBar.height + [UIApplication sharedApplication].statusBarFrame.size.height;
-}
-
 - (CGRect)viewBounds {
-    return CGRectMake(self.view.bounds.origin.x,
-                      self.view.bounds.origin.y + [self statusAndNavbarHeight],
-                      self.view.bounds.size.width,
-                      self.view.bounds.size.height);
+    return self.view.bounds;
 }
 
 #pragma mark - SideMenuProtocol

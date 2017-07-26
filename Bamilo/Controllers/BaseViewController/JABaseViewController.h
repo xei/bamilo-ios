@@ -39,7 +39,6 @@
  */
 - (CGRect)viewBounds;
 - (CGRect)bounds;
-- (CGFloat) statusAndNavbarHeight;
 /**
  * Method to force Nav bar to reload. This is called in viewWillAppear
  */

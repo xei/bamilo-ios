@@ -56,22 +56,17 @@
 
 - (void)setupWithFrame:(CGRect)frame product:(RIProduct*)product preSelectedSize:(NSString*)preSelectedSize {
     [self setFrame:frame];
-    
     if (product == nil) {
         return;
     }
-    
     BOOL isiPadInLandscape = NO;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-        if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation)
-        {
+        if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation) {
             isiPadInLandscape = YES;
         }
     }
-    
     CGFloat yOffset = 0;
-    
     /*
      *  PRICE
      */
@@ -177,16 +172,14 @@
                 [self addSubview:specificationsContentLabel];
                 yOffset = CGRectGetMaxY(specificationsContentLabel.frame);
             }
-            
             if (i==5)
                 break;
         }
         yOffset += 16.f;
-        
         if (i == 0) {
             [headerSpecifications removeFromSuperview];
             yOffset = preSpecificationOffset;
-        }else{
+        } else {
             if (needMoreSpecifications) {
                 JAProductInfoSubLine *subSpecificationReadMore = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
                 [subSpecificationReadMore setTopSeparatorVisibility:YES];
@@ -198,13 +191,10 @@
             }
         }
     }
-    
     /*
      *  SIZES
      */
-    
-    if (VALID_NOTEMPTY(product.productSimples, NSArray) && product.productSimples.count > 1)
-    {
+    if (VALID_NOTEMPTY(product.productSimples, NSArray) && product.productSimples.count > 1) {
         NSString *sizesText = @"";
         if (VALID_NOTEMPTY(preSelectedSize, NSString)) {
             sizesText = [NSString stringWithFormat:STRING_SIZE_WITH_VALUE, preSelectedSize];
@@ -223,11 +213,9 @@
         [self addSubview:singleSizes];
         yOffset = CGRectGetMaxY(singleSizes.frame);
     }
-    
     /*
      *  VARIATIONS
      */
-    
     if (VALID_NOTEMPTY(product.variations, NSArray)) {
         JAProductInfoSubLine *singleVariations = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSubLineHeight)];
         [singleVariations setTopSeparatorVisibility:YES];
@@ -241,11 +229,9 @@
         [self addSubview:singleVariations];
         yOffset = CGRectGetMaxY(singleVariations.frame);
     }
-    
     /*
      *  SIS
      */
-    
     if (VALID_NOTEMPTY(product.brandTarget, NSString)) {
         JAProductInfoSISLine *sis = [[JAProductInfoSISLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSISLineHeight)];
         [sis setTitle:[NSString stringWithFormat:STRING_VISIT_THE_OFFICIAL_BRAND_STORE, product.brand]];
@@ -334,8 +320,7 @@
     [self setHeight:yOffset];
 }
 
-- (void)addTargetToSellerInfoView:(JAPDVProductInfoSellerInfo *)sellerInfoView seller:(RISeller*)seller
-{
+- (void)addTargetToSellerInfoView:(JAPDVProductInfoSellerInfo *)sellerInfoView seller:(RISeller*)seller {
     if (VALID_NOTEMPTY(seller.targetString, NSString)) {
         [sellerInfoView addTarget:self action:@selector(tapSellerCatalogLine)];
         [sellerInfoView addLinkTarget:self action:@selector(tapSellerLink)];
@@ -343,16 +328,14 @@
 }
 
 
-- (void)setSizesText:(NSString *)sizesText
-{
+- (void)setSizesText:(NSString *)sizesText {
     _sizesText = sizesText;
     if (VALID_NOTEMPTY(_sizesLabel, UILabel)) {
         [_sizesLabel setText:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, sizesText]];
     }
 }
 
-- (void)setSpecialPrice:(NSString*)special andPrice:(NSString*)price andMaxSavingPercentage:(NSString*)maxSavingPercentage shouldForceFlip:(BOOL)forceFlip
-{
+- (void)setSpecialPrice:(NSString*)special andPrice:(NSString*)price andMaxSavingPercentage:(NSString*)maxSavingPercentage shouldForceFlip:(BOOL)forceFlip {
     [_priceLine setPrice:price];
     
     if (VALID_NOTEMPTY(special, NSString)) {
@@ -375,13 +358,11 @@
     }
 }
 
-- (CGFloat)getSellerInfoYPosition
-{
+- (CGFloat)getSellerInfoYPosition {
     return _sellerYPosition;
 }
 
-- (int)lineCountForText:(UILabel *)label
-{
+- (int)lineCountForText:(UILabel *)label {
     UIFont *font = label.font;
     
     CGRect rect = label.frame;
@@ -389,132 +370,112 @@
     return ceil(rect.size.height / font.lineHeight);
 }
 
-- (void)tapVariationsLine
-{
+- (void)tapVariationsLine {
     if (self.variationsTarget && [self.variationsTarget respondsToSelector:self.variationsSelector]) {
         ((void (*)(id, SEL))[self.variationsTarget methodForSelector:self.variationsSelector])(self.variationsTarget, self.variationsSelector);
     }
 }
 
-- (void)tapSizeLine
-{
+- (void)tapSizeLine {
     if (self.sizeTarget && [self.sizeTarget respondsToSelector:self.sizeSelector]) {
         ((void (*)(id, SEL))[self.sizeTarget methodForSelector:self.sizeSelector])(self.sizeTarget, self.sizeSelector);
     }
 }
 
-- (void)tapReviewsLine
-{
+- (void)tapReviewsLine {
     if (self.reviewsTarget && [self.reviewsTarget respondsToSelector:self.reviewsSelector]) {
         ((void (*)(id, SEL))[self.reviewsTarget methodForSelector:self.reviewsSelector])(self.reviewsTarget, self.reviewsSelector);
     }
 }
 
-- (void)tapSellerCatalogLine
-{
+- (void)tapSellerCatalogLine {
     if (self.sellerCatalogTarget && [self.sellerCatalogTarget respondsToSelector:self.sellerCatalogSelector]) {
         ((void (*)(id, SEL))[self.sellerCatalogTarget methodForSelector:self.sellerCatalogSelector])(self.sellerCatalogTarget, self.sellerCatalogSelector);
     }
 }
 
-- (void)tapSellerLink
-{
+- (void)tapSellerLink {
     if (self.sellerLinkTarget && [self.sellerLinkTarget respondsToSelector:self.sellerLinkSelector]) {
         ((void (*)(id, SEL))[self.sellerLinkTarget methodForSelector:self.sellerLinkSelector])(self.sellerLinkTarget, self.sellerLinkSelector);
     }
 }
 
-- (void)tapSellerReviewsLine
-{
+- (void)tapSellerReviewsLine {
     if (self.sellerReviewsTarget && [self.sellerReviewsTarget respondsToSelector:self.sellerReviewsSelector]) {
         ((void (*)(id, SEL))[self.sellerReviewsTarget methodForSelector:self.sellerReviewsSelector])(self.sellerReviewsTarget, self.sellerReviewsSelector);
     }
 }
 
-- (void)tapOffersLine
-{
+- (void)tapOffersLine {
     if (self.otherOffersTarget && [self.otherOffersTarget respondsToSelector:self.otherOffersSelector]) {
         ((void (*)(id, SEL))[self.otherOffersTarget methodForSelector:self.otherOffersSelector])(self.otherOffersTarget, self.otherOffersSelector);
     }
 }
 
-- (void)tapSpecificationsLine
-{
+- (void)tapSpecificationsLine {
     if (self.specificationsTarget && [self.specificationsTarget respondsToSelector:self.specificationsSelector]) {
         ((void (*)(id, SEL))[self.specificationsTarget methodForSelector:self.specificationsSelector])(self.specificationsTarget, self.specificationsSelector);
     }
 }
 
-- (void)tapDescriptionLine
-{
+- (void)tapDescriptionLine {
     if (self.descriptionTarget && [self.descriptionTarget respondsToSelector:self.descriptionSelector]) {
         ((void (*)(id, SEL))[self.descriptionTarget methodForSelector:self.descriptionSelector])(self.descriptionTarget, self.descriptionSelector);
     }
 }
 
-- (void)tapSisLine
-{
+- (void)tapSisLine {
     if (self.sisTarget && [self.sisTarget respondsToSelector:self.sisSelector]) {
         ((void (*)(id, SEL))[self.sisTarget methodForSelector:self.sisSelector])(self.sisTarget, self.sisSelector);
     }
 }
 
-- (void)addVariationsTarget:(id)target action:(SEL)action
-{
+- (void)addVariationsTarget:(id)target action:(SEL)action {
     self.variationsTarget = target;
     self.variationsSelector = action;
 }
 
-- (void)addSizeTarget:(id)target action:(SEL)action
-{
+- (void)addSizeTarget:(id)target action:(SEL)action {
     self.sizeTarget = target;
     self.sizeSelector = action;
 }
 
-- (void)addReviewsTarget:(id)target action:(SEL)action
-{
+- (void)addReviewsTarget:(id)target action:(SEL)action {
     self.reviewsTarget = target;
     self.reviewsSelector = action;
 }
 
-- (void)addSellerCatalogTarget:(id)target action:(SEL)action
-{
+- (void)addSellerCatalogTarget:(id)target action:(SEL)action {
     self.sellerCatalogTarget = target;
     self.sellerCatalogSelector = action;
 }
 
-- (void)addSellerLinkTarget:(id)target action:(SEL)action
-{
+- (void)addSellerLinkTarget:(id)target action:(SEL)action {
     self.sellerLinkTarget = target;
     self.sellerLinkSelector = action;
 }
 
-- (void)addSellerReviewsTarget:(id)target action:(SEL)action
-{
+- (void)addSellerReviewsTarget:(id)target action:(SEL)action {
     self.sellerReviewsTarget = target;
     self.sellerReviewsSelector = action;
 }
 
-- (void)addOtherOffersTarget:(id)target action:(SEL)action
-{
+- (void)addOtherOffersTarget:(id)target action:(SEL)action {
     self.otherOffersTarget = target;
     self.otherOffersSelector = action;
 }
 
-- (void)addSpecificationsTarget:(id)target action:(SEL)action
-{
+- (void)addSpecificationsTarget:(id)target action:(SEL)action {
     self.specificationsTarget = target;
     self.specificationsSelector = action;
 }
 
-- (void)addDescriptionTarget:(id)target action:(SEL)action
-{
+- (void)addDescriptionTarget:(id)target action:(SEL)action {
     self.descriptionTarget = target;
     self.descriptionSelector = action;
 }
 
-- (void)addSisTarget:(id)target action:(SEL)action
-{
+- (void)addSisTarget:(id)target action:(SEL)action {
     self.sisTarget = target;
     self.sisSelector = action;
 }

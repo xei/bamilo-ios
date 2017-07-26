@@ -48,17 +48,8 @@
     BOOL _hasAppeared;
 }
 
-
-- (CGFloat) statusAndNavbarHeight {
-    return self.navigationController.navigationBar.height + [UIApplication sharedApplication].statusBarFrame.size.height;
-}
-
 - (CGRect)viewBounds {
     CGFloat topOffset = 0.0f;
-    
-    if (self.navigationController.navigationBar) {
-        topOffset += [self statusAndNavbarHeight];
-    }
     
     if (self.searchBarIsVisible) {
         topOffset += kSearchViewBarHeight;
@@ -152,7 +143,6 @@
     [self.navigationController.interactivePopGestureRecognizer setEnabled:YES];
     
     //navigation bar configs
-    [self.navigationController.navigationBar setTranslucent:YES];
     if ([self respondsToSelector:@selector(navbarTitleView)]){
         self.navigationItem.titleView = [self navbarTitleView];
     }
@@ -371,7 +361,7 @@
 
 - (void)reloadSearchBar {
     self.searchBarBackground.frame = CGRectMake(self.view.bounds.origin.x,
-                                                self.view.bounds.origin.y + [self statusAndNavbarHeight],
+                                                self.view.bounds.origin.y,
                                                 self.view.bounds.size.width,
                                                 kSearchViewBarHeight);
     CGFloat horizontalMargin = 3.0f; //adjustment to native searchbar margin

@@ -170,10 +170,6 @@
                                                object:nil];
     
     self.apiResponse = RIApiResponseSuccess;
-    self.navBarLayout.title = STRING_PROFILE;
-    self.navBarLayout.showBackButton = YES;
-//    self.navBarLayout.showCartButton = YES;
-    self.navBarLayout.showSearchButton = NO;
     self.isOpeningPicker = NO;
     
     [self.view addSubview:self.mainScrollView];
@@ -496,8 +492,7 @@
 }
 
 #pragma mark JADatePickerDelegate
-- (void)openDatePicker:(JABirthDateComponent *)birthdayComponent
-{
+- (void)openDatePicker:(JABirthDateComponent *)birthdayComponent {
     [self hideKeyboard];
     if (!self.isOpeningPicker) {
         self.isOpeningPicker = YES;
@@ -521,12 +516,8 @@
         
         CGFloat pickerViewHeight = self.view.frame.size.height;
         CGFloat pickerViewWidth = self.view.frame.size.width;
-        [self.datePicker setFrame:CGRectMake(0.0f,
-                                             pickerViewHeight,
-                                             pickerViewWidth,
-                                             pickerViewHeight)];
-        [UIView animateWithDuration:0.4f
-                         animations:^{
+        [self.datePicker setFrame:CGRectMake(0.0f, pickerViewHeight, pickerViewWidth, pickerViewHeight)];
+        [UIView animateWithDuration:0.4f animations:^{
                              [self.datePicker setFrame:CGRectMake(0.0f,
                                                                   0.0f,
                                                                   pickerViewWidth,
@@ -538,8 +529,7 @@
     }
 }
 
-- (void)selectedDate:(NSDate*)selectedDate
-{
+- (void)selectedDate:(NSDate*)selectedDate {
     if (VALID_NOTEMPTY(self.birthdayComponent, JABirthDateComponent)) {
         [self.birthdayComponent setValue:selectedDate];
     }
@@ -548,8 +538,7 @@
 }
 
 #pragma mark JAPickerDelegate
-- (void)openPicker:(JARadioComponent *)radioComponent
-{
+- (void)openPicker:(JARadioComponent *)radioComponent {
     [self hideKeyboard];
     
     self.radioComponent = radioComponent;
@@ -610,15 +599,13 @@
     [self.view addSubview:self.picker];
 }
 
-- (void)selectedRow:(NSInteger)selectedRow
-{   
+- (void)selectedRow:(NSInteger)selectedRow {
     if (VALID_NOTEMPTY(self.radioComponent, JARadioComponent)) {
         if ([self.radioComponent isComponentWithKey:@"gender"]) {
             NSString *selectedValue = [self.genders objectAtIndex:selectedRow];
             if([selectedValue isEqualToString:@"زن"]){
                 [self.radioComponent setValue:@"female"];
-            }
-            else{
+            } else {
                 [self.radioComponent setValue:@"male"];
             }
 
@@ -634,8 +621,7 @@
     [self closePickers];
 }
 
-- (NSString*)getPickerSelectedRow
-{
+- (NSString*)getPickerSelectedRow {
     NSString *selectedValue = [self.radioComponent getSelectedValue];
     NSString *selectedRow = @"";
     if (VALID_NOTEMPTY(selectedValue, NSString)) {
@@ -656,8 +642,7 @@
     return selectedRow;
 }
 
-- (void)closePickers
-{
+- (void)closePickers {
     CGRect frameDatePicker = self.datePicker.frame;
     CGRect framePhonePrefix = self.picker.frame;
     frameDatePicker.origin.y = self.view.frame.size.height;
@@ -675,8 +660,7 @@
                      }];
 }
 
-- (void)downloadLocalesForComponents:(NSDictionary *)componentDictionary
-{
+- (void)downloadLocalesForComponents:(NSDictionary *)componentDictionary {
     if (VALID_NOTEMPTY([componentDictionary objectForKey:@"phonePrefixComponent"], JARadioComponent)) {
         self.radioComponent = [componentDictionary objectForKey:@"phonePrefixComponent"];
         
@@ -702,8 +686,7 @@
 }
 
 #pragma mark - Keyboard notifications
-- (void)keyboardWillShow:(NSNotification *)notification
-{
+- (void)keyboardWillShow:(NSNotification *)notification {
     NSDictionary *userInfo = [notification userInfo];
     CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
@@ -720,22 +703,19 @@
     }];
 }
 
-- (void)keyboardWillHide:(NSNotification *)notification
-{
+- (void)keyboardWillHide:(NSNotification *)notification {
     [UIView animateWithDuration:0.3 animations:^{
         [self.mainScrollView setFrame:self.mainScrollViewInitialRect];
     }];
 }
 
-- (void)hideKeyboard
-{
+- (void)hideKeyboard {
     [self.userForm resignResponder];
     [self.changePasswordForm resignResponder];
 }
 
 #pragma mark - Helper functions
-- (void)resetValues:(JADynamicForm *)form
-{
+- (void)resetValues:(JADynamicForm *)form {
     if (VALID_NOTEMPTY(form.formViews, NSMutableArray)) {
         for (UIView *view in form.formViews) {
             if ([view isKindOfClass:[JATextFieldComponent class]]) {
@@ -748,6 +728,11 @@
 
 #pragma mark - DataTrackerProtocol
 -(NSString *)getScreenName {
+    return STRING_PROFILE;
+}
+
+#pragma mark - NavigationBarPrtocol
+- (NSString *)navbarTitleString {
     return STRING_PROFILE;
 }
 

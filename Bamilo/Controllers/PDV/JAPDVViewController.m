@@ -268,8 +268,7 @@ static NSString *recommendationLogic = @"RELATED";
     [coachMarksView start];
 }
 
-- (void)viewDidDisappear:(BOOL)animated
-{
+- (void)viewDidDisappear:(BOOL)animated {
     // notify the InAppNotification SDK that this view controller in no more active
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
 
@@ -347,8 +346,7 @@ static NSString *recommendationLogic = @"RELATED";
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context)
-     {
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
          UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
          // do whatever
          [self fillTheViews];
@@ -379,11 +377,8 @@ static NSString *recommendationLogic = @"RELATED";
              [self.view bringSubviewToFront:self.galleryPaged];
          }
 
-     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context)
-     {
-
+     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
      }];
-
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
 
@@ -395,17 +390,14 @@ static NSString *recommendationLogic = @"RELATED";
 - (void) removeSuperviews {
     [self.mainScrollView setHidden:YES];
     [self.landscapeScrollView setHidden:YES];
-
     for(UIView *subView in self.mainScrollView.subviews) {
         [subView removeFromSuperview];
     }
-
     if(self.landscapeScrollView) {
         for(UIView *subView in self.landscapeScrollView.subviews) {
             [subView removeFromSuperview];
         }
     }
-
     if (self.ctaView) {
         [self.ctaView removeFromSuperview];
     }
@@ -579,7 +571,6 @@ static NSString *recommendationLogic = @"RELATED";
     } else {
         [self.ctaView addButton:STRING_BUY_NOW target:self action:@selector(addToCart)];
     }
-
     [self.view bringSubviewToFront:self.picker];
 }
 
@@ -618,12 +609,9 @@ static NSString *recommendationLogic = @"RELATED";
     if (self.product == nil) {
         return;
     }
-
     [self productLoaded];
-
     CGFloat scrollViewY = .0f;
     CGFloat landscapeScrollViewY = 0.0f;
-
     BOOL isiPadInLandscape = NO;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
@@ -632,19 +620,15 @@ static NSString *recommendationLogic = @"RELATED";
             isiPadInLandscape = YES;
         }
     }
-
     /*******
      Image Section
      *******/
-
     self.productImageSection.frame = CGRectMake(0.0f, scrollViewY, self.productImageSection.frame.size.width, self.productImageSection.frame.size.height);
-
     CGRect imageSectionFrame = self.mainScrollView.bounds;
     [self.productImageSection setupWithFrame:imageSectionFrame product:self.product preSelectedSize:self.preSelectedSize];
     if (self.product.seller && [self.product.seller isGlobal]) {
         [self.productImageSection addGlobalButtonTarget:self action:@selector(showSeller)];
     }
-
     if(isiPadInLandscape) {
         [self.landscapeScrollView addSubview:self.productImageSection];
         landscapeScrollViewY = CGRectGetMaxY(self.productImageSection.frame) + 6.0f;
@@ -665,7 +649,6 @@ static NSString *recommendationLogic = @"RELATED";
     self.productInfoSection = [[JAPDVProductInfo alloc] init];
     CGRect productInfoSectionFrame = CGRectMake(0, 6, self.mainScrollView.width, 0);
     [self.productInfoSection setupWithFrame:productInfoSectionFrame product:self.product preSelectedSize:self.preSelectedSize];
-
     if (self.currentSimple) {
         [self.productInfoSection setSpecialPrice:self.currentSimple.specialPriceFormatted andPrice:self.currentSimple.priceFormatted andMaxSavingPercentage:self.product.maxSavingPercentage shouldForceFlip:NO];
     }
@@ -678,9 +661,7 @@ static NSString *recommendationLogic = @"RELATED";
     [self.productInfoSection addVariationsTarget:self action:@selector(goToVariationsScreen)];
     [self.productInfoSection addOtherOffersTarget:self action:@selector(goToOtherSellersScreen)];
     [self.productInfoSection addSisTarget:self action:@selector(goToSisScreen)];
-
     [self.productInfoSection setY:scrollViewY];
-
     [self.mainScrollView addSubview:self.productInfoSection];
 
     scrollViewY += (self.productInfoSection.frame.size.height);
@@ -816,8 +797,7 @@ static NSString *recommendationLogic = @"RELATED";
     }
     if(_viewLoaded){
         _viewLoaded = FALSE;
-        if (![[NSUserDefaults standardUserDefaults] boolForKey:@"FirtTimeProductDetailPage"])
-        {
+        if (![[NSUserDefaults standardUserDefaults] boolForKey:@"FirtTimeProductDetailPage"]) {
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"FirtTimeProductDetailPage"];
             [[NSUserDefaults standardUserDefaults] synchronize];
             [self presentCoachMarks];
@@ -884,12 +864,10 @@ static NSString *recommendationLogic = @"RELATED";
     [[RITrackingWrapper sharedInstance] trackScreenWithName:@"SellerPage"];
 }
 
-- (void)goToSellerLink
-{
+- (void)goToSellerLink {
     NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];
 
-    if(VALID_NOTEMPTY(self.product.seller, RISeller))
-    {
+    if(VALID_NOTEMPTY(self.product.seller, RISeller)) {
         if ([self.product.seller isGlobal]) {
             [userInfo setObject:self.product.seller.linkTextGlobal forKey:@"title"];
             [userInfo setObject:self.product.seller.linkTargetStringGlobal forKey:@"targetString"];
@@ -902,63 +880,50 @@ static NSString *recommendationLogic = @"RELATED";
     }
 }
 
-- (void)goToSpecifications
-{
+- (void)goToSpecifications {
     [self goToDetails:@"specifications"];
 }
 
-- (void)goToReviews
-{
+- (void)goToReviews {
     [self goToDetails:@"reviews"];
 }
 
-- (void)goToDetails:(NSString *)screen
-{
+- (void)goToDetails:(NSString *)screen {
     NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
-    if(VALID_NOTEMPTY(self.product, RIProduct))
-    {
+    if(VALID_NOTEMPTY(self.product, RIProduct)) {
         [userInfo setObject:self.product forKey:@"product"];
     }
     [userInfo setObject:screen forKey:@"product.screen"];
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowProductSpecificationScreenNotification object:nil userInfo:userInfo];
 }
 
-- (void)goToBundlesScreen
-{
+- (void)goToBundlesScreen {
     NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
     id obj = nil;
-    if(VALID_NOTEMPTY(self.product, RIProduct))
-    {
+    if(VALID_NOTEMPTY(self.product, RIProduct)) {
         obj = self.product;
         if (VALID_NOTEMPTY(self.productBundle.bundleProducts, NSArray)) {
             [userInfo setObject:self.productBundle.bundleProducts forKeyedSubscript:@"product.bundles"];
         }
     }
-
     __weak typeof(self) weakSelf = self;
     id block = ^(NSMutableDictionary *bundles){
         weakSelf.selectedBundles = [bundles mutableCopy];
     };
-
     [userInfo setObject:block forKeyedSubscript:@"product.bundles.onChange"];
-
     if (self.selectedBundles) {
         [userInfo setObject:self.selectedBundles forKeyedSubscript:@"product.bundles.selected"];
     }
-
     if (self.productBundle) {
         [userInfo setObject:self.productBundle forKeyedSubscript:@"product.bundle"];
     }
-
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenProductBundlesScreen object:obj userInfo:userInfo];
 }
 
-- (void)goToVariationsScreen
-{
+- (void)goToVariationsScreen {
     NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
     id obj = nil;
-    if(VALID_NOTEMPTY(self.product, RIProduct))
-    {
+    if(VALID_NOTEMPTY(self.product, RIProduct)) {
         obj = self.product;
         if (VALID_NOTEMPTY(self.product.variations, NSArray)) {
             [userInfo setObject:self.product.variations forKeyedSubscript:@"product.variations"];
@@ -967,13 +932,11 @@ static NSString *recommendationLogic = @"RELATED";
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenProductVariationsScreen object:obj userInfo:userInfo];
 }
 
-- (void)goToSisScreen
-{
+- (void)goToSisScreen {
     [[MainTabBarViewController topNavigationController] openTargetString:self.product.brandTarget];
 }
 
-- (void)goToOtherSellersScreen
-{
+- (void)goToOtherSellersScreen {
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenOtherOffers object:self.product];
 }
 
@@ -1534,25 +1497,6 @@ static NSString *recommendationLogic = @"RELATED";
 }
 
 - (void)trackingEventAddToCart:(RICart *)cart {
-//    CGRect addToCartEventCoachMark = CGRectMake([MainTabBarViewController topNavigationController].navigationBarView.cartButton.frame.origin.x, [MainTabBarViewController topNavigationController].navigationBarView.cartButton.frame.origin.y+20,35, 35);
-
-//    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"FirtTimeAddToCart"]) {
-//        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"FirtTimeAddToCart"];
-//        [[NSUserDefaults standardUserDefaults] synchronize];
-//        NSArray *coachMarks = @[
-//                                @{
-//                                    @"rect": [NSValue valueWithCGRect:addToCartEventCoachMark],
-//                                    @"caption": @"مشاهده سبد خرید و تکمیل سفارش",
-//                                    @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
-//                                    @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
-//                                    @"position":[NSNumber numberWithInteger:LABEL_POSITION_RIGHT]
-//                                    },
-//                                ];
-//        MPCoachMarks *coachMarksView = [[MPCoachMarks alloc] initWithFrame:self.navigationController.view.bounds coachMarks:coachMarks];
-//        [self.navigationController.view addSubview:coachMarksView];
-//        [coachMarksView start];
-//    }
-
     NSNumber *price = [self getPrice];
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:((RIProduct *)[self.product.productSimples firstObject]).sku forKey:kRIEventLabelKey];
@@ -1566,7 +1510,6 @@ static NSString *recommendationLogic = @"RELATED";
     [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
 
     // Since we're sending the converted price, we have to send the currency as EUR.
-    // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
     [trackingDictionary setValue:price forKey:kRIEventPriceKey];
     [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
 
@@ -1652,7 +1595,6 @@ static NSString *recommendationLogic = @"RELATED";
 
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookAddToCart]
                                               data:[trackingDictionary copy]];
-
     [self trackingEventCart:cart];
 }
 
@@ -1662,7 +1604,6 @@ static NSString *recommendationLogic = @"RELATED";
     [trackingDictionary setValue:cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
                                               data:[trackingDictionary copy]];
-
     [self trackingEventLastAddedToCart];
 }
 
@@ -1816,13 +1757,7 @@ static NSString *recommendationLogic = @"RELATED";
     {
         type = @"Email";
         eventType = [NSNumber numberWithInt:RIEventShareEmail];
-    }
-    /*else if ([activityType isEqualToString:UIActivityTypePostToFacebook])
-    {
-        type = @"Facebook";
-        eventType = [NSNumber numberWithInt:RIEventShareFacebook];
-    }*/
-    else if ([activityType isEqualToString:UIActivityTypePostToTwitter]) {
+    } else if ([activityType isEqualToString:UIActivityTypePostToTwitter]) {
         type = @"Twitter";
         eventType = [NSNumber numberWithInt:RIEventShareTwitter];
     } else if([activityType isEqualToString:UIActivityTypeMessage]) {
@@ -1852,9 +1787,7 @@ static NSString *recommendationLogic = @"RELATED";
             }
             categoryName = parent.label;
             subCategoryName = self.category.label;
-        }
-        else
-        {
+        } else {
             categoryName = self.category.label;
         }
     } else if(VALID_NOTEMPTY(self.product.categoryIds, NSArray)) {

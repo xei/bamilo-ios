@@ -121,11 +121,31 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.neeedsExternalPaymentMethod = NO;
-    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil]
-     setTitleTextAttributes: @{
-                               NSFontAttributeName: [Theme font:kFontVariationRegular size:10],
-                               NSForegroundColorAttributeName: [Theme color:kColorOrange]
-                               } forState:UIControlStateNormal];
+    
+    self.navigationBar.tintColor = [Theme color:kColorExtraDarkGray];
+    
+    //To remove the back button title
+    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(-60, -60) forBarMetrics:UIBarMetricsDefault];
+    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:
+     @{NSFontAttributeName: [Theme font:kFontVariationRegular size:1]} forState:UIControlStateNormal];
+    
+    //To change back button icon
+    UIImage *myImage = [UIImage imageNamed:@"btn_back"]; //set your backbutton imagename
+    UIImage *backButtonImage = [myImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+    //To remove navbar bottom border
+    [self.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationBar setShadowImage:[UIImage new]];
+    
+    // now use the new backButtomImage
+    [[UINavigationBar appearance] setBackIndicatorImage:backButtonImage];
+    [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:backButtonImage];
+    [[UINavigationBar appearance] setTranslucent:NO];
+    
+    //To set navigation bar background color
+    self.navigationBar.barTintColor = [Theme color:kColorVeryLightGray];
+    self.navigationBar.tintColor = [UIColor whiteColor];
+//    self.navigationBar.translucent = NO;
 
     self.navigationBar.titleTextAttributes = @{NSFontAttributeName: [Theme font:kFontVariationRegular size:13]};
     self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];

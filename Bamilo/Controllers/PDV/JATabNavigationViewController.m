@@ -36,16 +36,13 @@
         } else {
             content = @[STRING_DESCRIPTION, STRING_SPECIFICATIONS, STRING_REVIEWS_RATINGS];
         }
-        
         _topTabsView.startingIndex = RI_IS_RTL ? self.tabScreenEnum - 2 : self.tabScreenEnum;
         [_topTabsView setupWithTabNames:content];
-
     } else {
         if (!CGRectEqualToRect(frame, _topTabsView.frame)) {
             [_topTabsView setFrame:frame];
         }
     }
-
     return _topTabsView;
 }
 
@@ -60,7 +57,7 @@
         [self.reviewsView setViewControllerEvents:self];
         [_contentScrollView setPagingEnabled:YES];
         [_contentScrollView setShowsHorizontalScrollIndicator:NO];
-        [_contentScrollView setContentSize:CGSizeMake(_contentScrollView.width*3, _contentScrollView.height)];
+        [_contentScrollView setContentSize:CGSizeMake(_contentScrollView.width * 3, _contentScrollView.height)];
     } else {
         if (!CGRectEqualToRect(frame, _contentScrollView.frame)) {
             [_contentScrollView setFrame:frame];

@@ -73,8 +73,7 @@
     return lineView;
 }
 
-- (void)setProduct:(RIProduct *)product
-{
+- (void)setProduct:(RIProduct *)product {
     _product = product;
     CGFloat yOffset = 0;
     for (RISpecification *spec in product.specifications) {
@@ -97,13 +96,11 @@
     [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.width, yOffset + 16.f)];
 }
 
-- (UIScrollView *)contentScrollView
-{
+- (UIScrollView *)contentScrollView {
     CGRect frame = CGRectMake(0, 0, self.width, self.height);
     if (!VALID_NOTEMPTY(_contentScrollView, UIScrollView)) {
         _contentScrollView = [[UIScrollView alloc] initWithFrame:frame];
-    }else if (!CGRectEqualToRect(frame, _contentScrollView.frame))
-    {
+    } else if (!CGRectEqualToRect(frame, _contentScrollView.frame)) {
         [_contentScrollView setFrame:frame];
         for (UIView *subView in _contentScrollView.subviews) {
             [subView removeFromSuperview];
@@ -115,12 +112,12 @@
     return _contentScrollView;
 }
 
-- (void)setFrame:(CGRect)frame
-{
+- (void)setFrame:(CGRect)frame {
     [super setFrame:frame];
     [self contentScrollView];
     if (RI_IS_RTL) {
-        [self flipAllSubviews];
+        [self flipViewAlignment];
+//        [self flipAllSubviews];
     }
 }
 

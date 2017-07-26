@@ -64,10 +64,7 @@
 
 -(UIView *)emptyListView {
     if (!VALID_NOTEMPTY(_emptyListView, UIView)) {
-        _emptyListView = [[UIView alloc]initWithFrame:CGRectMake(self.viewBounds.origin.x,
-                                                                 self.viewBounds.origin.y + [self statusAndNavbarHeight],
-                                                                 self.viewBounds.size.width,
-                                                                 self.viewBounds.size.height - [self statusAndNavbarHeight])];
+        _emptyListView = [[UIView alloc]initWithFrame:[self viewBounds]];
         [_emptyListView setBackgroundColor:[UIColor whiteColor]];
         [_emptyListView addSubview:self.emptyTitleLabel];
         [_emptyListView addSubview:self.emptyListImageView];

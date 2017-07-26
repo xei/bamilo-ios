@@ -112,10 +112,7 @@
     [self.collectionView setBackgroundColor:[UIColor whiteColor]];
     [self.collectionView registerClass:[JARecentlyViewedCell class] forCellWithReuseIdentifier:@"CellWithLines"];
     
-    CGRect frame = CGRectMake(self.view.bounds.origin.x,
-                              self.view.bounds.origin.y + [self statusAndNavbarHeight],
-                              self.view.bounds.size.width,
-                              self.view.bounds.size.height - [self statusAndNavbarHeight]);
+    CGRect frame = self.view.bounds;
     
     self.collectionView.collectionViewLayout = self.flowLayout;
     self.collectionView.delegate = self;
@@ -412,15 +409,11 @@
     RIProduct *product = [self getProductFromIndex:button.tag];
     RIProductSimple* prevSimple = [self.chosenSimples objectForKey:product.sku];
     
-    if(VALID(self.picker, JAPicker))
-    {
+    if(VALID(self.picker, JAPicker)) {
         [self.picker removeFromSuperview];
     }
     
-    self.picker = [[JAPicker alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x,
-                                                             self.view.bounds.origin.y + [self statusAndNavbarHeight],
-                                                             self.view.bounds.size.width,
-                                                             self.view.bounds.size.height - [self statusAndNavbarHeight])];
+    self.picker = [[JAPicker alloc] initWithFrame: self.view.bounds];
     
     [self.picker setTag:button.tag];
     [self.picker setDelegate:self];

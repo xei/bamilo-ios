@@ -225,23 +225,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    //manually add the status bar height into the calculations
-    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
-    CGFloat navbarHeight = self.navigationController.navigationBar.height;
-    
-    
-    [self.tableView setFrame:CGRectMake(self.view.bounds.origin.x,
-                                        self.view.bounds.origin.y + statusBarHeight + navbarHeight,
-                                        self.view.bounds.size.width,
-                                        self.view.bounds.size.height - statusBarHeight - navbarHeight)];
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-    //manually add the status bar height into the calculations
-    CGFloat statusBarHeight = 0.0f;
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    [self.tableView setFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y + statusBarHeight, self.view.bounds.size.width, self.view.bounds.size.height - statusBarHeight)];
+    [self.tableView setFrame:self.view.bounds];
 }
 
 #pragma mark - UITableView
@@ -249,9 +233,7 @@
     if ((self.categoriesLoadingError && indexPath.row > self.tableViewCategoriesArray.count-1) || self.tableViewCategoriesArray.count == 0) {
         return [JACategoriesSideMenuCell heightForCategory:nil];
     }
-    
     id category = [self.tableViewCategoriesArray objectAtIndex:indexPath.row];
-    
     return [JACategoriesSideMenuCell heightForCategory:category];
 }
 
@@ -259,7 +241,6 @@
     if (self.categoriesLoadingError) {
         return self.tableViewCategoriesArray.count + 1;
     }
-    
     return self.tableViewCategoriesArray.count;
 }
 
@@ -301,7 +282,7 @@
         NSNumber *nextLevel = nil;
         if ([nextCategory isKindOfClass:[RICategory class]]) {
             nextLevel = [(RICategory *)nextCategory level];
-        }else if ([category isKindOfClass:[RIExternalCategory class]]) {
+        } else if ([category isKindOfClass:[RIExternalCategory class]]) {
             nextLevel = [(RIExternalCategory *)nextCategory level];
         }
         if ([nextLevel integerValue] > [level integerValue]) {

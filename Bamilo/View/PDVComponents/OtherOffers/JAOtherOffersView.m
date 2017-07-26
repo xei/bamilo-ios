@@ -25,8 +25,7 @@
 
 @implementation JAOtherOffersView
 
-+ (JAOtherOffersView *)getNewOtherOffersView
-{
++ (JAOtherOffersView *)getNewOtherOffersView {
     NSArray *xib = [[NSBundle mainBundle] loadNibNamed:@"JAOtherOffersView_Landscape~iPad"
                                                  owner:nil
                                                options:nil];
@@ -41,18 +40,14 @@
     return nil;
 }
 
-- (void)setupWithFrame:(CGRect)frame product:(RIProduct*)product
-{
+- (void)setupWithFrame:(CGRect)frame product:(RIProduct*)product {
     self.product = product;
     
     self.layer.cornerRadius = 5.0f;
     
     CGFloat width = frame.size.width - 6.0f;
     
-    [self setFrame:CGRectMake(self.frame.origin.x,
-                              self.frame.origin.y,
-                              width,
-                              self.frame.size.height)];
+    [self setFrame:[self bounds]];
     
     [self.otherOffersLabel setTextColor:JAGreyColor];
 
