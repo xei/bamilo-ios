@@ -8225,9 +8225,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Bamilo/Bamilo.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Ramtin Monazahian (33W53692YU)";
 				CURRENT_PROJECT_VERSION = 14;
-				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -8237,10 +8236,10 @@
 				INFOPLIST_FILE = "Bamilo/Bamilo-Staging-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.app.ios;
 				PRODUCT_NAME = Bamilo;
-				PROVISIONING_PROFILE = "718587df-6281-4f01-8556-bfc43c8e3df4";
-				PROVISIONING_PROFILE_SPECIFIER = "BLO AdHoc";
+				PROVISIONING_PROFILE = "055a0505-d499-4975-ae4f-a765be139a88";
+				PROVISIONING_PROFILE_SPECIFIER = "BMLO AdHoc";
 				SWIFT_OBJC_BRIDGING_HEADER = "Bamilo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -8257,10 +8256,8 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Narbeh Mirzaei (8KGZNNMRW6)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Ramtin Monazahian (5GPRV57UKD)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -8269,10 +8266,10 @@
 				INFOPLIST_FILE = NotificationService/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios.NotificationService;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.app.ios.NotificationService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "55257571-cb7b-48c9-bbf2-597ba091c68a";
-				PROVISIONING_PROFILE_SPECIFIER = "BLO NotificationService Development";
+				PROVISIONING_PROFILE = "c7beec1b-e674-4535-b861-a1a193664c0f";
+				PROVISIONING_PROFILE_SPECIFIER = "BMLO NotificationService Development";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -8284,19 +8281,17 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Ramtin Monazahian (33W53692YU)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = NotificationService/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios.NotificationService;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.app.ios.NotificationService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ba80c0dc-fd57-46ca-8bcb-85db811e2af2";
-				PROVISIONING_PROFILE_SPECIFIER = "BLO NotificationService Distribution";
+				PROVISIONING_PROFILE = "82ae87da-af2f-44d1-a661-4c7993f7f4e4";
+				PROVISIONING_PROFILE_SPECIFIER = "BMLO NotificationService Production";
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -8308,19 +8303,17 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Ramtin Monazahian (33W53692YU)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = NotificationService/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios.NotificationService;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.app.ios.NotificationService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6a1d092e-50a4-4610-9c0f-c35698cb1533";
-				PROVISIONING_PROFILE_SPECIFIER = "BLO NotificationService AdHoc";
+				PROVISIONING_PROFILE = "5c500aeb-39c6-4946-9af2-a52d11d136c5";
+				PROVISIONING_PROFILE_SPECIFIER = "BMLO NotificationService AdHoc";
 				SKIP_INSTALL = YES;
 			};
 			name = AdHoc;
@@ -8498,9 +8491,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Bamilo/Bamilo.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Narbeh Mirzaei (8KGZNNMRW6)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Ramtin Monazahian (5GPRV57UKD)";
 				CURRENT_PROJECT_VERSION = 14;
-				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -8510,10 +8502,10 @@
 				INFOPLIST_FILE = "Bamilo/Bamilo-Debug-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.app.ios;
 				PRODUCT_NAME = Bamilo;
-				PROVISIONING_PROFILE = "7fdbd164-cea3-4b58-9a5b-dcded3772e5d";
-				PROVISIONING_PROFILE_SPECIFIER = "BLO Development";
+				PROVISIONING_PROFILE = "16e4e5cf-3ec9-4ece-9ebe-feeb25ab10ce";
+				PROVISIONING_PROFILE_SPECIFIER = "BMLO Development";
 				SWIFT_OBJC_BRIDGING_HEADER = "Bamilo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -8533,9 +8525,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Bamilo/Bamilo.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Ramtin Monazahian (33W53692YU)";
 				CURRENT_PROJECT_VERSION = 14;
-				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -8544,10 +8535,10 @@
 				GCC_PREFIX_HEADER = "Bamilo/Bamilo-Prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.app.ios;
 				PRODUCT_NAME = Bamilo;
-				PROVISIONING_PROFILE = "f926cf4c-9911-47c4-860c-d2810ac0299f";
-				PROVISIONING_PROFILE_SPECIFIER = "BLO Distribution";
+				PROVISIONING_PROFILE = "b8772c30-7dca-4728-b353-5733eed76f5f";
+				PROVISIONING_PROFILE_SPECIFIER = "BMLO Production";
 				SWIFT_OBJC_BRIDGING_HEADER = "Bamilo-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -17,5 +17,5 @@ struct AppKeys {
 }
 
 struct AppValues {
-    static let Domain = "com.bamilo.ios"
+    static let Domain = "com.bamilo.app.ios"
 }
