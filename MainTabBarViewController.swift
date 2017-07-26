@@ -49,7 +49,7 @@ import UIKit
     }
     
     func getAndUpdateCart() {
-        CartDataManager.sharedInstance.getUserCart(self) { data, errorMessages in
+        CartDataManager.sharedInstance.getUserCart(self, type: .background) { data, errorMessages in
             self.bind(data, forRequestId: 0)
         };
     }

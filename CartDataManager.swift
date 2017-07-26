@@ -22,8 +22,8 @@ class CartDataManager: DataManagerSwift {
         }
     }
     
-    func getUserCart(_ target: DataServiceProtocol, completion:@escaping DataClosure) {
-        CartDataManager.requestManager.async(.post, target: target, path: RI_API_GET_CART_DATA, params: nil, type: .foreground) { (responseType, data, errorMessages) in
+    func getUserCart(_ target: DataServiceProtocol, type: ApiRequestExecutionType, completion:@escaping DataClosure) {
+        CartDataManager.requestManager.async(.post, target: target, path: RI_API_GET_CART_DATA, params: nil, type: type) { (responseType, data, errorMessages) in
             self.processResponse(responseType, aClass: RICart.self, data: data, errorMessages: errorMessages, completion: completion)
         }
     }
