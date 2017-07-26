@@ -11,7 +11,7 @@ import Foundation
 class CatalogDataManager: DataManagerSwift {
     static let sharedInstance = CatalogDataManager()
     
-    func getCatalog(_ target:DataServiceProtocol, searchTarget:RITarget? = nil, filtersQueryString:String? = nil, sortingMethod:Catalog.CatalogSortType = .populaity, page:Int = 1, completion: @escaping DataClosure) {
+    func getCatalog(_ target:DataServiceProtocol, searchTarget:RITarget? = nil, filtersQueryString:String? = nil, sortingMethod:Catalog.CatalogSortType? = nil, page:Int = 1, completion: @escaping DataClosure) {
         var path = "\(RI_API_CATALOG)"
         if let target = searchTarget, let urlForTarget = RITarget.getRelativeUrlStringforTarget(target) {
             path = "\(urlForTarget)/"
@@ -21,7 +21,7 @@ class CatalogDataManager: DataManagerSwift {
             path += filters
         }
         
-        if let sortUrl = Catalog.urlForSortType(type: sortingMethod) {
+        if let sortingMethod = sortingMethod, let sortUrl = Catalog.urlForSortType(type: sortingMethod) {
             path += "\(sortUrl)/"
         }
         
