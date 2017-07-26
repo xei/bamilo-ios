@@ -222,6 +222,7 @@
 -(void)applicationDidBecomeActive:(UIApplication *)application {
     [application setApplicationIconBadgeNumber:0];
 
+    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"appDidEnterForeground" object:nil]];
     PushNotificationManager *pushManager = [PushNotificationManager pushManager];
     [[EmarsysMobileEngage sharedInstance] sendLogin:[pushManager getPushToken] completion:nil];
     

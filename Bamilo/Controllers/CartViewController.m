@@ -58,7 +58,7 @@
 
 - (void)setCartEmpty:(BOOL)empty {
     [self.emptyCartViewContainer setHidden:!empty];
-    if (empty) {
+    if (empty && [MainTabBarViewController topViewController] == self) {
         [self.emptyCartViewController getSuggestions];
     }
 }
@@ -78,6 +78,8 @@
     [self.tableView registerNib:[UINib nibWithNibName: [CartTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[CartTableViewCell nibName]];
     [self.tableView registerNib:[UINib nibWithNibName: [RecieptViewCartTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[RecieptViewCartTableViewCell nibName]];
     self.summeryView.delegate = self;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didLoggedOut) name:kUserLoggedOutNotification object:nil];
 }
 
 - (void)viewWillLayoutSubviews {
@@ -160,8 +162,6 @@
         });
         
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-        
-//        [self onErrorResponse:apiResponse messages:@[STRING_NO_NETWORK_DETAILS] showAsMessage:YES selector:@selector(removeCartItem:) objects:@[cartItem]];
         [LoadingManager hideLoading];
     }];
 }
@@ -241,16 +241,13 @@
     NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
     if (networkStatus == NotReachable) {
         [self showNotificationBarMessage:STRING_NO_NETWORK_DETAILS isSuccess:NO];
-//        [self onErrorResponse:RIApiResponseUnknownError messages:@[STRING_NO_NETWORK_DETAILS] showAsMessage:YES selector:nil objects:nil];
     } else {
-//        [self onErrorResponse:RIApiResponseUnknownError messages:errorMsgs showAsMessage:YES selector:nil objects:nil];
     }
 }
 
 #pragma mark - CartTableViewCellDelegate
 
 - (void)wantsToLikeCartItem:(RICartItem *)cartItem byCell:(id)cartCell {
-    
 }
 
 - (void)wantToIncreaseCartItemCountMoreThanMax:(RICartItem *)cartItem byCell:(id)cartCell {
@@ -290,7 +287,6 @@
 #pragma mark - DataServiceProtocol
 - (void)bind:(id)data forRequestId:(int)rid {
     RICart *cart = (RICart *)data;
-    [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo: @{kUpdateCartNotificationValue: cart}];
     self.cart = cart;
     [self.tableView reloadData];
     [self checkIfSummeryViewsMustBeVisibleOrNot];
@@ -299,6 +295,8 @@
     if (cart.cartEntity.cartCount.integerValue) {
         [EmarsysPredictManager sendTransactionsOf:self];
     }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo: @{kUpdateCartNotificationValue: cart}];
 }
 
 - (NSString *)getPerformanceTrackerLabel {
@@ -375,6 +373,11 @@
 
 - (BOOL)isPreventSendTransactionInViewWillAppear {
     return YES;
+}
+
+
+- (void)didLoggedOut {
+    self.cart = nil;
 }
 
 @end
