@@ -505,6 +505,7 @@
 		87A681711E41FCF300D252AC /* CheckoutProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A681701E41FCF300D252AC /* CheckoutProgressView.m */; };
 		87A6ACEF1E38919C00C0E7DC /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A6ACE81E38919C00C0E7DC /* GTMNSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		87A6ACF21E38919C00C0E7DC /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 87A6ACEC1E38919C00C0E7DC /* NSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		87AE50D21F2DAB9F00125473 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 87AE50D11F2DAB9F00125473 /* Default-568h@2x.png */; };
 		87AFF6831EE68018001EBC4D /* CartDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AFF6821EE68018001EBC4D /* CartDataManager.swift */; };
 		87AFF6851EE686FE001EBC4D /* CheckoutDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AFF6841EE686FE001EBC4D /* CheckoutDataManager.swift */; };
 		87AFF6871EE69E61001EBC4D /* DataAggregator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AFF6861EE69E61001EBC4D /* DataAggregator.swift */; };
@@ -1691,6 +1692,7 @@
 		87A6ACE81E38919C00C0E7DC /* GTMNSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+HTML.m"; sourceTree = "<group>"; };
 		87A6ACEB1E38919C00C0E7DC /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HTML.h"; sourceTree = "<group>"; };
 		87A6ACEC1E38919C00C0E7DC /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HTML.m"; sourceTree = "<group>"; };
+		87AE50D11F2DAB9F00125473 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
 		87AFF6821EE68018001EBC4D /* CartDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartDataManager.swift; sourceTree = "<group>"; };
 		87AFF6841EE686FE001EBC4D /* CheckoutDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckoutDataManager.swift; sourceTree = "<group>"; };
 		87AFF6861EE69E61001EBC4D /* DataAggregator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataAggregator.swift; sourceTree = "<group>"; };
@@ -4178,6 +4180,7 @@
 			isa = PBXGroup;
 			children = (
 				870BF7DB1EA4F10100A0982E /* Alternatives */,
+				87AE50D11F2DAB9F00125473 /* Default-568h@2x.png */,
 				B5A301BB19811D0700F71726 /* Images.xcassets */,
 				CE9AE1341AB8994F00D56481 /* Bamilo.xcassets */,
 			);
@@ -7204,6 +7207,7 @@
 				875743691EA60DA5001B518A /* Birthday-76@2x.png in Resources */,
 				61148E0A1E47255F00E2540B /* StepperView.xib in Resources */,
 				CEDBF8971B0DF5D00073971A /* JANewsletterComponent~iPad_RTL.xib in Resources */,
+				87AE50D21F2DAB9F00125473 /* Default-568h@2x.png in Resources */,
 				87459CA11E4F159E00743120 /* PaymentTypeTableViewCell.xib in Resources */,
 				875743BE1EA60DFD001B518A /* SpecialOffer.png in Resources */,
 				875743841EA60DB9001B518A /* National-Small-50@2x.png in Resources */,
@@ -7495,7 +7499,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"${CONFIGURATION}\" = \"AdHoc\" ]; then\n./Pods/Fabric/iOS/Fabric.framework/run ddde4ad6ad210575fdac10a908040d1a93e74833 c37b1e5c603fb0fd9b71f1bf627d92f87718c6efd4aada50d724ab8ad126fe35\nfi";
+			shellScript = "if [ \"${CONFIGURATION}\" = \"AdHoc\" ]; then\n./Pods/Fabric/iOS/Fabric.framework/run ddde4ad6ad210575fdac10a908040d1a93e74833\nelif [ \"${CONFIGURATION}\" = \"Release\" ]; then\n./Pods/Fabric/iOS/Fabric.framework/run 93ef3db21e524147cf9702fd4dc34e7169e372d1\nfi";
 		};
 		A496F8EDC748088D90A309BD /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -8246,7 +8250,6 @@
 				GCC_PREFIX_HEADER = "Bamilo/Bamilo-Prefix.pch";
 				INFOPLIST_FILE = "Bamilo/Bamilo-Staging-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.app.ios;
 				PRODUCT_NAME = Bamilo;
 				PROVISIONING_PROFILE = "055a0505-d499-4975-ae4f-a765be139a88";
@@ -8511,7 +8514,6 @@
 				GCC_PREFIX_HEADER = "Bamilo/Bamilo-Prefix.pch";
 				INFOPLIST_FILE = "Bamilo/Bamilo-Debug-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.app.ios;
 				PRODUCT_NAME = Bamilo;
 				PROVISIONING_PROFILE = "16e4e5cf-3ec9-4ece-9ebe-feeb25ab10ce";
@@ -8543,7 +8545,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bamilo/Bamilo-Prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.app.ios;
 				PRODUCT_NAME = Bamilo;
 				PROVISIONING_PROFILE = "b8772c30-7dca-4728-b353-5733eed76f5f";
