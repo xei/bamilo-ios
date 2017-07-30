@@ -598,7 +598,7 @@
                         <constraints>
                             <constraint firstItem="4Pd-zP-fHK" firstAttribute="top" secondItem="MgM-J1-S4V" secondAttribute="bottom" id="7dr-pt-7Ys"/>
                             <constraint firstAttribute="right" secondItem="4Pd-zP-fHK" secondAttribute="right" id="HrJ-fF-h8n"/>
-                            <constraint firstItem="4Pd-zP-fHK" firstAttribute="leading" secondItem="bXV-Zd-zMh" secondAttribute="leading" id="Kha-mY-vAc"/>
+                            <constraint firstItem="4Pd-zP-fHK" firstAttribute="left" secondItem="bXV-Zd-zMh" secondAttribute="left" id="Kha-mY-vAc"/>
                             <constraint firstItem="EHG-v7-Nv7" firstAttribute="top" secondItem="4Pd-zP-fHK" secondAttribute="bottom" id="ev7-xE-MBd"/>
                         </constraints>
                     </view>
