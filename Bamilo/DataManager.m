@@ -73,7 +73,7 @@ static DataManager *instance;
 }
 
 - (NSError *)getErrorFrom:(RIApiResponse)response errorMessages:(NSArray *)errorMessages {
-    return [NSError errorWithDomain:@"com.bamilo.ios" code:response userInfo:(errorMessages ? @{ kErrorMessages: errorMessages } : nil)];
+    return [NSError errorWithDomain:@"com.bamilo.app.ios" code:response userInfo:(errorMessages ? @{ kErrorMessages: errorMessages } : nil)];
 }
 
 -(void) handlePayload:(NSMutableDictionary *)payload completion:(DataCompletion)completion {

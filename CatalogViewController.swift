@@ -30,7 +30,7 @@ import SwiftyJSON
     
     var navBarTitle: String?
     var searchTarget: RITarget!
-    var sortingMethod: Catalog.CatalogSortType = .populaity
+    var sortingMethod: Catalog.CatalogSortType? = nil
     var pushFilterQueryString : String?
     var startCatalogStackIndexInNavigationViewController: Int?
     var teaserTrackingInfo: String? //For tracking teaser (purchase) journeys (optional)
@@ -194,8 +194,8 @@ import SwiftyJSON
     
     //MARK: - helpers 
     private func setSortingMethodToHeader() {
-        if self.sortingMethod != .populaity {
-            self.catalogHeader.setSortingType(type: self.sortingMethod)
+        if self.sortingMethod != .populaity && self.sortingMethod != nil {
+            self.catalogHeader.setSortingType(type: self.sortingMethod ?? .populaity)
         }
     }
     

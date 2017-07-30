@@ -10,32 +10,11 @@
 	<dict>
 		<key>CFBundleAlternateIcons</key>
 		<dict>
-			<key>Spring</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>Spring</string>
-				</array>
-			</dict>
-			<key>Summer</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>Summer</string>
-				</array>
-			</dict>
 			<key>Autumn</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
 					<string>Autumn</string>
-				</array>
-			</dict>
-			<key>Winter</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>Winter</string>
 				</array>
 			</dict>
 			<key>Birthday</key>
@@ -66,11 +45,32 @@
 					<string>SpecialOffer</string>
 				</array>
 			</dict>
+			<key>Spring</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>Spring</string>
+				</array>
+			</dict>
+			<key>Summer</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>Summer</string>
+				</array>
+			</dict>
 			<key>Tragedy</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
 					<string>Tragedy</string>
+				</array>
+			</dict>
+			<key>Winter</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>Winter</string>
 				</array>
 			</dict>
 			<key>Yalda</key>
@@ -89,42 +89,12 @@
 			</array>
 		</dict>
 	</dict>
-	<key>Pushwoosh_APPID</key>
-	<string>82449-6B792</string>
-	<key>Pushwoosh_APPNAME</key>
-	<string>Bamilo</string>
-	<key>Pushwoosh_LOG_LEVEL</key>
-	<string>NONE</string>
-	<key>PW_USE_GPS</key>
-	<true/>
-	<key>Configs</key>
-	<dict>
-		<key>API_BaseUrl</key>
-		<string>http://www.bamilo.com/mobapi/</string>
-		<key>API_Version</key>
-		<string>2.4</string>
-		<key>EMMerchantID</key>
-		<string>18146DE34FE0B8C9</string>
-		<key>GoogleAnalyticsID</key>
-		<string>UA-57415371-2</string>
-		<key>Emarsys</key>
-		<dict>
-			<key>Application_CODE</key>
-			<string>82449-6B792</string>
-			<key>Application_PASSWORD</key>
-			<string>oKjusj5sk9ebqCYgi38XdM/PtPCPqLTl</string>
-		</dict>
-		<key>Pushwoosh_BETA</key>
-		<string>0</string>
-	</dict>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
-	<key>CFBundleVersion</key>
-	<string>14</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -134,10 +104,10 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
-			<key>CFBundleURLName</key>
-			<string>com.pushwoosh.scheme</string>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.pushwoosh.scheme</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>pw-82449-6B792</string>
@@ -145,17 +115,17 @@
 		</dict>
 		<dict>
 			<key>CFBundleURLName</key>
-			<string>com.bamilo.ios</string>
+			<string>com.bamilo.app.ios</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>tagmanager.c.com.bamilo.ios</string>
+				<string>tagmanager.c.com.bamilo.app.ios</string>
 			</array>
 		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.bamilo.ios</string>
+			<string>com.bamilo.app.ios</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>bamilo</string>
@@ -163,6 +133,28 @@
 			</array>
 		</dict>
 	</array>
+	<key>CFBundleVersion</key>
+	<string>16</string>
+	<key>Configs</key>
+	<dict>
+		<key>API_BaseUrl</key>
+		<string>http://www.bamilo.com/mobapi/</string>
+		<key>API_Version</key>
+		<string>2.4</string>
+		<key>EMMerchantID</key>
+		<string>18146DE34FE0B8C9</string>
+		<key>Emarsys</key>
+		<dict>
+			<key>Application_CODE</key>
+			<string>82449-6B792</string>
+			<key>Application_PASSWORD</key>
+			<string>oKjusj5sk9ebqCYgi38XdM/PtPCPqLTl</string>
+		</dict>
+		<key>GoogleAnalyticsID</key>
+		<string>UA-57415371-2</string>
+		<key>Pushwoosh_BETA</key>
+		<string>0</string>
+	</dict>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -218,12 +210,20 @@
 	<string>Bamilo would like to access your camera</string>
 	<key>NSContactsUsageDescription</key>
 	<string>Bamilo would like to access your contacts</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Bamilo would like to access your photos</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Bamilo would like to access your location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Bamilo would like to access your location</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Bamilo would like to access your photos</string>
+	<key>PW_USE_GPS</key>
+	<true/>
+	<key>Pushwoosh_APPID</key>
+	<string>82449-6B792</string>
+	<key>Pushwoosh_APPNAME</key>
+	<string>Bamilo</string>
+	<key>Pushwoosh_LOG_LEVEL</key>
+	<string>NONE</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Bamilosans Reg.ttf</string>
@@ -238,6 +238,8 @@
 		<string>location</string>
 		<string>remote-notification</string>
 	</array>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -247,7 +249,7 @@
 	<key>UIRequiresFullScreen</key>
 	<true/>
 	<key>UIStatusBarHidden</key>
-	<true/>
+	<false/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

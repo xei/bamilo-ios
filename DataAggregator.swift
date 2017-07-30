@@ -122,7 +122,7 @@ import Foundation
     }
     
     static func getUserCart(_ target: DataServiceProtocol, completion:@escaping DataClosure) {
-        CartDataManager.sharedInstance.getUserCart(target, completion: completion)
+        CartDataManager.sharedInstance.getUserCart(target, type: .foreground, completion: completion)
     }
 
 //######## MARK: - OrderDataManager

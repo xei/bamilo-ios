@@ -146,7 +146,7 @@ static EmarsysDataManager *instance;
         completion(data, nil);
     } else {
         if(errorMessages && errorMessages.count) {
-            completion(nil, [NSError errorWithDomain:@"com.bamilo.ios" code:statusCode userInfo:@{ NSUnderlyingErrorKey: errorMessages[0] }]);
+            completion(nil, [NSError errorWithDomain:@"com.bamilo.app.ios" code:statusCode userInfo:@{ NSUnderlyingErrorKey: errorMessages[0] }]);
         } else {
             completion(nil, nil);
         }

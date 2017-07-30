@@ -28,7 +28,7 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
 
     @IBOutlet private weak var tableView: UITableView!
     private var tableViewDataSource: [[ProfileViewDataModel]]?
-    private let footerSectionHeight: CGFloat = 10
+    private let footerSectionHeight: CGFloat = 7
     private var viewWillApearedOnceOrMore = false
     
     
@@ -133,7 +133,7 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         let startColor = Theme.color(kColorVeryLightGray).cgColor
         
         gradient.colors = [stopColor,startColor]
-        gradient.locations = [0.0,0.4]
+        gradient.locations = [0.0,0.5]
         shadowView.layer.addSublayer(gradient)
         
         return shadowView

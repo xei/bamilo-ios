@@ -487,6 +487,7 @@
 		877762D11E9BB39300B73140 /* DataMessageList.m in Sources */ = {isa = PBXBuildFile; fileRef = 877762D01E9BB39300B73140 /* DataMessageList.m */; };
 		87865FD11EE2D3B2009505C7 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87865FD01EE2D3B2009505C7 /* Notifications.swift */; };
 		87865FD41EE2E468009505C7 /* AuthenticationDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87865FD31EE2E468009505C7 /* AuthenticationDataManager.swift */; };
+		8796675D1F28D4A600FCEA4D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8796675B1F28D4A600FCEA4D /* LaunchScreen.storyboard */; };
 		879E57841E9E0BAB001C4C71 /* EventUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 879E57831E9E0BAB001C4C71 /* EventUtilities.m */; };
 		879F87EF1E5048790033FE87 /* NSMutableArray+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 879F87EE1E5048790033FE87 /* NSMutableArray+Extensions.m */; };
 		879F87F21E5057F10033FE87 /* PlainTableViewHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 879F87F11E5057F10033FE87 /* PlainTableViewHeaderCell.xib */; };
@@ -1637,6 +1638,7 @@
 		877762D01E9BB39300B73140 /* DataMessageList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataMessageList.m; sourceTree = "<group>"; };
 		87865FD01EE2D3B2009505C7 /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		87865FD31EE2E468009505C7 /* AuthenticationDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationDataManager.swift; sourceTree = "<group>"; };
+		8796675C1F28D4A600FCEA4D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Bamilo/Base.lproj/LaunchScreen.storyboard; sourceTree = SOURCE_ROOT; };
 		879E57821E9E0BAB001C4C71 /* EventUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventUtilities.h; sourceTree = "<group>"; };
 		879E57831E9E0BAB001C4C71 /* EventUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventUtilities.m; sourceTree = "<group>"; };
 		879F87ED1E5048790033FE87 /* NSMutableArray+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Extensions.h"; sourceTree = "<group>"; };
@@ -2418,6 +2420,7 @@
 				8716987A1E38A94C0027B34A /* Main.storyboard */,
 				87D07D6E1E40939100C00AC6 /* Checkout.storyboard */,
 				613FF2C01E4B3D1B008660CF /* Authentication.storyboard */,
+				8796675B1F28D4A600FCEA4D /* LaunchScreen.storyboard */,
 			);
 			name = Storyboards;
 			path = View/Storyboard;
@@ -7322,6 +7325,7 @@
 				CE9AE0CD1AB6D78200D56481 /* JAOrangeButtonCell.xib in Resources */,
 				875743621EA60DA5001B518A /* Birthday-Small@3x.png in Resources */,
 				CE9AE0D51AB6D78200D56481 /* JAPDVBundleSingleItem.xib in Resources */,
+				8796675D1F28D4A600FCEA4D /* LaunchScreen.storyboard in Resources */,
 				875743C81EA60DFD001B518A /* SpecialOffer-72@2x.png in Resources */,
 				CE9AE0D91AB6D78200D56481 /* JAOtherOffersView_Landscape~iPad.xib in Resources */,
 				617D7F3D1EDC2F3E00F36CF7 /* ProfileOrderTableViewCell.xib in Resources */,
@@ -8114,6 +8118,14 @@
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
+		8796675B1F28D4A600FCEA4D /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8796675C1F28D4A600FCEA4D /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
 		B5210E8819C4863400FDB0D1 /* RIStrings.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -8180,12 +8192,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Bamilo/Bamilo.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
-				CURRENT_PROJECT_VERSION = 14;
-				DEVELOPMENT_TEAM = 3GCCEEQ32X;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Ramtin Monazahian (33W53692YU)";
+				CURRENT_PROJECT_VERSION = 16;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -8195,10 +8205,10 @@
 				INFOPLIST_FILE = "Bamilo/Bamilo-Staging-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.app.ios;
 				PRODUCT_NAME = Bamilo;
-				PROVISIONING_PROFILE = "718587df-6281-4f01-8556-bfc43c8e3df4";
-				PROVISIONING_PROFILE_SPECIFIER = "BLO AdHoc";
+				PROVISIONING_PROFILE = "055a0505-d499-4975-ae4f-a765be139a88";
+				PROVISIONING_PROFILE_SPECIFIER = "BMLO AdHoc";
 				SWIFT_OBJC_BRIDGING_HEADER = "Bamilo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -8215,10 +8225,8 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Narbeh Mirzaei (8KGZNNMRW6)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Ramtin Monazahian (5GPRV57UKD)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -8227,10 +8235,10 @@
 				INFOPLIST_FILE = NotificationService/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios.NotificationService;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.app.ios.NotificationService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "55257571-cb7b-48c9-bbf2-597ba091c68a";
-				PROVISIONING_PROFILE_SPECIFIER = "BLO NotificationService Development";
+				PROVISIONING_PROFILE = "c7beec1b-e674-4535-b861-a1a193664c0f";
+				PROVISIONING_PROFILE_SPECIFIER = "BMLO NotificationService Development";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -8242,19 +8250,17 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Ramtin Monazahian (33W53692YU)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = NotificationService/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios.NotificationService;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.app.ios.NotificationService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ba80c0dc-fd57-46ca-8bcb-85db811e2af2";
-				PROVISIONING_PROFILE_SPECIFIER = "BLO NotificationService Distribution";
+				PROVISIONING_PROFILE = "82ae87da-af2f-44d1-a661-4c7993f7f4e4";
+				PROVISIONING_PROFILE_SPECIFIER = "BMLO NotificationService Production";
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -8266,19 +8272,17 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Ramtin Monazahian (33W53692YU)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = NotificationService/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios.NotificationService;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.app.ios.NotificationService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6a1d092e-50a4-4610-9c0f-c35698cb1533";
-				PROVISIONING_PROFILE_SPECIFIER = "BLO NotificationService AdHoc";
+				PROVISIONING_PROFILE = "5c500aeb-39c6-4946-9af2-a52d11d136c5";
+				PROVISIONING_PROFILE_SPECIFIER = "BMLO NotificationService AdHoc";
 				SKIP_INSTALL = YES;
 			};
 			name = AdHoc;
@@ -8453,12 +8457,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Bamilo/Bamilo.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Narbeh Mirzaei (8KGZNNMRW6)";
-				CURRENT_PROJECT_VERSION = 14;
-				DEVELOPMENT_TEAM = 3GCCEEQ32X;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Ramtin Monazahian (5GPRV57UKD)";
+				CURRENT_PROJECT_VERSION = 16;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -8468,10 +8470,10 @@
 				INFOPLIST_FILE = "Bamilo/Bamilo-Debug-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.app.ios;
 				PRODUCT_NAME = Bamilo;
-				PROVISIONING_PROFILE = "7fdbd164-cea3-4b58-9a5b-dcded3772e5d";
-				PROVISIONING_PROFILE_SPECIFIER = "BLO Development";
+				PROVISIONING_PROFILE = "16e4e5cf-3ec9-4ece-9ebe-feeb25ab10ce";
+				PROVISIONING_PROFILE_SPECIFIER = "BMLO Development";
 				SWIFT_OBJC_BRIDGING_HEADER = "Bamilo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -8488,12 +8490,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Bamilo/Bamilo.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
-				CURRENT_PROJECT_VERSION = 14;
-				DEVELOPMENT_TEAM = 3GCCEEQ32X;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Ramtin Monazahian (33W53692YU)";
+				CURRENT_PROJECT_VERSION = 16;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -8502,10 +8502,10 @@
 				GCC_PREFIX_HEADER = "Bamilo/Bamilo-Prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.app.ios;
 				PRODUCT_NAME = Bamilo;
-				PROVISIONING_PROFILE = "f926cf4c-9911-47c4-860c-d2810ac0299f";
-				PROVISIONING_PROFILE_SPECIFIER = "BLO Distribution";
+				PROVISIONING_PROFILE = "b8772c30-7dca-4728-b353-5733eed76f5f";
+				PROVISIONING_PROFILE_SPECIFIER = "BMLO Production";
 				SWIFT_OBJC_BRIDGING_HEADER = "Bamilo-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
