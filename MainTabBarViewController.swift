@@ -21,8 +21,8 @@ import UIKit
         
         MainTabBarViewController.activateTabItem(rootViewClassType: JAHomeViewController.self)
         
-        self.tabBar.tintColor = Theme.color(kColorOrange)
-        UITabBarItem.appearance().setTitleTextAttributes([NSFontAttributeName: Theme.font(kFontVariationRegular, size: 9), NSForegroundColorAttributeName: Theme.color(kColorOrange)], for: .selected)
+        self.tabBar.tintColor = Theme.color(kColorExtraDarkBlue)
+        UITabBarItem.appearance().setTitleTextAttributes([NSFontAttributeName: Theme.font(kFontVariationRegular, size: 9), NSForegroundColorAttributeName: Theme.color(kColorExtraDarkBlue)], for: .selected)
         UITabBarItem.appearance().setTitleTextAttributes([NSFontAttributeName: Theme.font(kFontVariationRegular, size: 8), NSForegroundColorAttributeName: Theme.color(kColorExtraDarkGray)], for: UIControlState())
         
         self.tabBar.layer.borderWidth = 0.50

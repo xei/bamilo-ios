@@ -81,7 +81,7 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
         let doneBtn = UIBarButtonItem(title:"تایید", style: .plain, target: self, action: #selector(doneButtonPickerTapped(sender:)))
         doneBtn.setTitleTextAttributes([
             NSFontAttributeName: Theme.font(kFontVariationRegular, size: 13),
-            NSForegroundColorAttributeName: Theme.color(kColorBlue)
+            NSForegroundColorAttributeName: Theme.color(kColorExtraDarkBlue)
             ], for: .normal)
         return doneBtn
         

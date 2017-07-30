@@ -71,8 +71,8 @@
 }
 
 - (void)resetBtnsColor {
-    [self.minusBtn setTitleColor:[Theme color:kColorBlue] forState:UIControlStateNormal];
-    [self.plusBtn setTitleColor:[Theme color:kColorBlue] forState:UIControlStateNormal];
+    [self.minusBtn setTitleColor:[Theme color:kColorExtraDarkBlue] forState:UIControlStateNormal];
+    [self.plusBtn setTitleColor:[Theme color:kColorExtraDarkBlue] forState:UIControlStateNormal];
     
     if (self.quantity == self.maxQuantity) {
         [self.plusBtn setTitleColor:[Theme color:kColorExtraLightGray] forState:UIControlStateNormal];

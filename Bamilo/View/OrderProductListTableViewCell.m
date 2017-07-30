@@ -33,7 +33,7 @@
     [self.commentButton applyStyle:[Theme font:kFontVariationBold size:11.0f] color:[UIColor whiteColor]];
     [self.statusLabel applyStyle:[Theme font:kFontVariationBold size:11.0f] color:[Theme color:kColorExtraDarkGray]];
     
-    [self.commentButton setBackgroundColor:[Theme color:kColorBlue]];
+    [self.commentButton setBackgroundColor:[Theme color:kColorExtraDarkBlue]];
 }
 
 - (void)updateWithModel:(id)model {

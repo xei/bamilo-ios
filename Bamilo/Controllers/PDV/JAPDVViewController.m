@@ -163,7 +163,7 @@ static NSString *recommendationLogic = @"RELATED";
     if ([[device model] isEqualToString:@"iPhone"] || [[device model] isEqualToString:@"iPhone Simulator"]) {
         UIButton *callToOrderButton = [self.ctaView.smallButtonsArray objectAtIndex:1];
         UIButton *addToCartButton = [self.ctaView.buttonsArray objectAtIndex:0];
-
+        
         // Setup coach marks
         CGRect coachmark1 = CGRectMake( wishListButtonFrame.origin.x-15, wishListButtonFrame.origin.y + 44, wishListButtonFrame.size.width +35, wishListButtonFrame.size.height + 35);
         CGRect coachmark2 = CGRectMake(callToOrderButton.frame.origin.x, self.view.height+15, callToOrderButton.width, callToOrderButton.height+12);
@@ -537,9 +537,7 @@ static NSString *recommendationLogic = @"RELATED";
     /*******
      CTA Buttons
      *******/
-
     self.ctaView = [[JABottomBar alloc] initWithFrame:CGRectMake(0, self.view.height, self.view.width, kBottomDefaultHeight)];
-
     BOOL isiPadInLandscape = NO;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
@@ -547,20 +545,18 @@ static NSString *recommendationLogic = @"RELATED";
             isiPadInLandscape = YES;
         }
     }
-
     [self.ctaView setFrame:CGRectMake(self.mainScrollView.x,
                                       self.view.frame.size.height - self.ctaView.frame.size.height,
                                       self.mainScrollView.frame.size.width,
                                       self.ctaView.frame.size.height)];
-
     [self.view addSubview:self.ctaView];
     [self.ctaView setYBottomAligned:0.f];
     self.mainScrollView.height -= self.ctaView.height;
 
-    [self.ctaView addSmallButton:[UIImage imageNamed:@"btn_share"] target:self action:@selector(shareProduct)];
+    [[self.ctaView addSmallButton:[UIImage imageNamed:@"btn_share"] target:self action:@selector(shareProduct)] setBackgroundColor:[Theme color:kColorExtraDarkBlue]];
     UIDevice *device = [UIDevice currentDevice];
     if ([[device model] isEqualToString:@"iPhone"] || [[device model] isEqualToString:@"iPhone Simulator"]) {
-        [self.ctaView addSmallButton:[UIImage imageNamed:@"ic_calltoorder"] target:self action:@selector(callToOrder)];
+        [[self.ctaView addSmallButton:[UIImage imageNamed:@"ic_calltoorder"] target:self action:@selector(callToOrder)] setBackgroundColor:[Theme color:kColorExtraDarkBlue]];
     }
 
     if (!self.product.hasStock) {
@@ -615,8 +611,7 @@ static NSString *recommendationLogic = @"RELATED";
     BOOL isiPadInLandscape = NO;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-        if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation)
-        {
+        if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation) {
             isiPadInLandscape = YES;
         }
     }

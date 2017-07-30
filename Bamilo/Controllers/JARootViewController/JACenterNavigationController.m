@@ -120,10 +120,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setNavigationBarConfigs];
     self.neeedsExternalPaymentMethod = NO;
+    [self setNeedsStatusBarAppearanceUpdate];
     
-    self.navigationBar.tintColor = [Theme color:kColorExtraDarkGray];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCart:) name:kUpdateCartNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeEditButtonState:) name:kEditShouldChangeStateNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeDoneButtonState:) name:kDoneShouldChangeStateNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeNavigationWithNotification:) name:kChangeNavigationBarNotification object:nil];
+}
+
+- (void)setNavigationBarConfigs {
+    self.navigationBar.titleTextAttributes = @{NSFontAttributeName: [Theme font:kFontVariationRegular size:13],
+                                               NSForegroundColorAttributeName: [UIColor whiteColor]};
+    self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     //To remove the back button title
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(-60, -60) forBarMetrics:UIBarMetricsDefault];
     [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:
@@ -143,17 +153,8 @@
     [[UINavigationBar appearance] setTranslucent:NO];
     
     //To set navigation bar background color
-    self.navigationBar.barTintColor = [Theme color:kColorVeryLightGray];
+    self.navigationBar.barTintColor = [Theme color:kColorExtraDarkBlue];
     self.navigationBar.tintColor = [UIColor whiteColor];
-//    self.navigationBar.translucent = NO;
-
-    self.navigationBar.titleTextAttributes = @{NSFontAttributeName: [Theme font:kFontVariationRegular size:13]};
-    self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCart:) name:kUpdateCartNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeEditButtonState:) name:kEditShouldChangeStateNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeDoneButtonState:) name:kDoneShouldChangeStateNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeNavigationWithNotification:) name:kChangeNavigationBarNotification object:nil];
 }
 
 - (void)registerObservingOnNotifications {
@@ -1430,6 +1431,13 @@
 
 - (void)pushAuthenticationViewController:(void (^)(void))completion byAniamtion:(BOOL)animation {
     [self pushAuthenticationViewController:completion byAniamtion:animation byForce:NO];
+}
+
+
+
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
 }
 
 @end
