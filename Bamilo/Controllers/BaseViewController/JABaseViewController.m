@@ -304,46 +304,34 @@
                                                         object:self.navBarLayout];
 }
 
-//- (void)reloadTabBar {
-//    [[NSNotificationCenter defaultCenter] postNotificationName:kChangeTabBarVisibility
-//                                                        object:[NSNumber numberWithBool:self.tabBarIsVisible]];
-//}
-
 - (void)showSearchBar {
+    if (self.searchBarBackground) return; //if has been shown previously
     self.searchBarBackground = [[UIView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, kSearchViewBarHeight)];
     
-    self.searchBarBackground.backgroundColor = JABlack300Color;
+    self.searchBarBackground.backgroundColor = [Theme color:kColorExtraDarkBlue];
     [self.view addSubview:self.searchBarBackground];
     
-    UIView* separatorView = [UIView new];
-    [separatorView setBackgroundColor:JABlack400Color];
-    [separatorView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    [separatorView setFrame:CGRectMake(self.searchBarBackground.bounds.origin.x, self.searchBarBackground.bounds.size.height - 1.0f, self.searchBarBackground.bounds.size.width, 1.0f)];
-
-    [self.searchBarBackground addSubview:separatorView];
+    CGFloat horizontalMargin = 3.0f;
     
-    CGFloat horizontalMargin = 3.0f; //adjustment to native searchbar margin
+    //adjustment to native searchbar margin
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         horizontalMargin = 10.0f;
     }
-    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(self.searchBarBackground.bounds.origin.x + horizontalMargin, self.searchBarBackground.bounds.origin.y, self.searchBarBackground.bounds.size.width - horizontalMargin * 2, self.searchBarBackground.bounds.size.height - 1.0f)];
+    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(self.searchBarBackground.bounds.origin.x + horizontalMargin, self.searchBarBackground.bounds.origin.y, self.searchBarBackground.bounds.size.width, self.searchBarBackground.bounds.size.height)];
     
     self.searchBar.delegate = self;
-    self.searchBar.barTintColor = JABlack300Color;
+    self.searchBar.barTintColor = [Theme color:kColorExtraDarkBlue];
     self.searchBar.placeholder = STRING_SEARCH_PLACEHOLDER;
     self.searchBar.showsCancelButton = NO;
-    
     [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTintColor: [Theme color:kColorOrange]];
     
     UITextField *textFieldSearch = [self.searchBar valueForKey:@"_searchField"];
     textFieldSearch.font = [UIFont fontWithName:kFontRegularName size:textFieldSearch.font.pointSize];
     textFieldSearch.backgroundColor = JAWhiteColor;
+    textFieldSearch.textAlignment = NSTextAlignmentRight;
+    
     //remove magnifying lens
     [textFieldSearch setLeftViewMode:UITextFieldViewModeNever];
-    
-    self.searchBar.layer.borderWidth = 1;
-    self.searchBar.layer.borderColor = [JABlack300Color CGColor];
-    
     [self.searchBarBackground addSubview:self.searchBar];
     UIImage *searchIcon = [UIImage imageNamed:@"searchIcon"];
     
@@ -351,7 +339,6 @@
     self.searchIconImageView.frame = CGRectMake(self.searchBar.frame.size.width - horizontalMargin - searchIcon.size.width,(self.searchBar.frame.size.height - searchIcon.size.height) / 2, searchIcon.size.width, searchIcon.size.height);
     
     [self.searchBar addSubview:self.searchIconImageView];
-    
     [self reloadSearchBar];
 }
 
@@ -378,16 +365,8 @@
                                                 self.searchIconImageView.frame.size.width,
                                                 self.searchIconImageView.frame.size.height);
     
-    UITextField *textFieldSearch = [self.searchBar valueForKey:@"_searchField"];
-    textFieldSearch.textAlignment = NSTextAlignmentLeft;
-    
-    if(RI_IS_RTL){
-        
-        [textFieldSearch flipViewAlignment];
-        [self.searchIconImageView flipViewPositionInsideSuperview];
-        [self.searchBar setPositionAdjustment:UIOffsetMake(-self.searchBar.frame.size.width + 48.0f, 0) forSearchBarIcon:UISearchBarIconClear];
-        [self.searchBar setSearchTextPositionAdjustment:UIOffsetMake(24.0f, 0)];
-    }
+    [self.searchBar setSearchBarStyle:UISearchBarStyleDefault];
+    [self.searchBar setBackgroundImage:[[UIImage alloc]init]];
 }
 
 #pragma mark Search Bar && Search Results View Delegate
