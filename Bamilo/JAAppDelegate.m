@@ -166,7 +166,6 @@
         }
     }
     [EmarsysPredictManager setConfigs];
-    [[PushNotificationManager pushManager] startLocationTracking];
     
     return YES;
 }
@@ -196,6 +195,8 @@
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
+    
+    [[PushNotificationManager pushManager] stopLocationTracking];
     id topViewController = [ViewControllerManager topViewController];
     NSString *screenName;
 
@@ -245,23 +246,11 @@
     
     [[AppManager sharedInstance] updateScheduledAppIcons];
     [[AppManager sharedInstance] executeScheduledAppIcons];
+    
+    [[PushNotificationManager pushManager] startLocationTracking];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-//    [RIApi startApiWithCountry:nil reloadAPI:NO successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory){
-//        if(hasUpdate) {
-//            if(isUpdateMandatory) {
-//                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_NECESSARY_TITLE message:[NSString stringWithFormat:STRING_UPDATE_NECESSARY_MESSAGE, APP_NAME] delegate:self cancelButtonTitle:STRING_OK_UPDATE otherButtonTitles:nil];
-//                [alert setTag:kForceUpdateAlertViewTag];
-//                [alert show];
-//            } else {
-//                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_AVAILABLE_TITLE message:[NSString stringWithFormat:STRING_UPDATE_AVAILABLE_MESSAGE, APP_NAME] delegate:self cancelButtonTitle:STRING_NO_THANKS otherButtonTitles:STRING_UPDATE, nil];
-//                [alert setTag:kUpdateAvailableAlertViewTag];
-//                [alert show];
-//            }
-//        }
-//    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage){
-//    }];
     
     self.startLoadingTime = [NSDate date];
 
@@ -281,33 +270,6 @@
                                               data:[trackingDictionary copy]];
 
     [[NSNotificationCenter defaultCenter] postNotificationName:kAppWillEnterForeground object:nil];
-}
-
-- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
-    NSUInteger supportedInterfaceOrientationsForWindow = -1;
-
-//    UINavigationController *rootViewController = (UINavigationController*)self.window.rootViewController;
-//    JARootViewController* mainController = (JARootViewController*) [rootViewController topViewController];
-//    if(VALID_NOTEMPTY(mainController, JARootViewController)) {
-//        UINavigationController* centerPanel = (UINavigationController*) [mainController centerPanel];
-//        if(VALID_NOTEMPTY(centerPanel, UINavigationController)) {
-//            NSArray *viewControllers = centerPanel.viewControllers;
-//            if(VALID_NOTEMPTY(viewControllers, NSArray)) {
-//                JABaseViewController *rootViewController = (JABaseViewController *) OBJECT_AT_INDEX(viewControllers, [viewControllers count] - 1);
-//                supportedInterfaceOrientationsForWindow = [rootViewController supportedInterfaceOrientations];
-//            }
-//        }
-//    }
-
-    // This should not happen.
-    if(-1 == supportedInterfaceOrientationsForWindow) {
-        supportedInterfaceOrientationsForWindow = UIInterfaceOrientationMaskPortrait;
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-        {
-            supportedInterfaceOrientationsForWindow = UIInterfaceOrientationMaskAll;
-        }
-    }
-    return supportedInterfaceOrientationsForWindow;
 }
 
 #pragma mark - Push Notification
