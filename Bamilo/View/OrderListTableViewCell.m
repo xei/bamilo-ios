@@ -30,7 +30,7 @@
     if (![model isKindOfClass:[Order class]]) {
         return;
     }
-    self.priceLabel.text = [NSString stringWithFormat:@"%@: %@", STRING_TOTAL_COST, ((Order *)model).formattedPrice];
+    self.priceLabel.text = [NSString stringWithFormat:@"%@: %@", STRING_TOTAL_COST, ((Order *)model).formattedPrice ?: STRING_ZERO_COST];
     
     self.order = model;
     self.orderNumLabel.text = [[NSString stringWithFormat:@"%@: %@", STRING_ORDER_ID ,self.order.orderId] numbersToPersian];

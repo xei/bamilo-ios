@@ -191,7 +191,6 @@
 #pragma ArgsReceiverProtocol
 -(void)updateWithArgs:(NSDictionary *)args {
     Address *address = [args objectForKey:kAddress];
-    
     if(address) {
         self.address = address;
     }
@@ -210,11 +209,9 @@
 - (void)updateSelectOptionModelForFieldIndex:(NSUInteger)fieldIndex withData:(id)data {
     [self.formController updateFieldIndex:fieldIndex WithUpdateModelBlock:^FormItemModel *(FormItemModel *model) {
         model.selectOption = data;
-        
         if ([model getValue] == nil) {
             model.inputTextValue = nil;
         }
-        
         return model;
     }];
     [self.formController refreshView];
