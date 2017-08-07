@@ -10,6 +10,7 @@ import Foundation
 
 class AddressDataManager: DataManagerSwift {
     static let sharedInstance = AddressDataManager()
+    
 
     //MARK: - Address List API
     func getUserAddressList(_ target: DataServiceProtocol, completion: @escaping DataClosure) {
@@ -55,14 +56,34 @@ class AddressDataManager: DataManagerSwift {
 //            self.processResponse(responseType, aClass: nil, data: data, errorMessages: errorMesssages, completion: completion)
 //        }
 //    }
-    
+    static var sharedRegions: Any?
+    static var sharedCities: [String: Any] = [String: Any]()
     func getRegions(_ target: DataServiceProtocol, completion:@escaping DataClosure) {
+        if let regions = AddressDataManager.sharedRegions {
+            completion(regions, nil)
+            return
+        }
+        self.getAreaZone(target, type: .background, path: RI_API_GET_CUSTOMER_REGIONS) { (data, error) in
+            if error == nil {
+                AddressDataManager.sharedRegions = data
+            }
+            completion(data, error)
+        }
         self.getAreaZone(target, type: .background, path: RI_API_GET_CUSTOMER_REGIONS, completion: completion)
     }
     
     func getCities(_ target: DataServiceProtocol, regionId:String, completion:@escaping DataClosure) {
+        if let cityResponse = AddressDataManager.sharedCities[regionId] {
+            completion(cityResponse, nil)
+            return
+        }
         let path = "\(RI_API_GET_CUSTOMER_CITIES)region/\(regionId)"
-        self.getAreaZone(target, type: .background, path: path, completion: completion)
+        self.getAreaZone(target, type: .background, path: path) { (data, error) in
+            if error == nil {
+                AddressDataManager.sharedCities[regionId] = data
+            }
+            completion(data, error)
+        }
     }
     
     func getVicinity(_ target: DataServiceProtocol, cityId: String, completion:@escaping DataClosure) {

@@ -111,6 +111,7 @@ NSString *const RI_API_GET_CUSTOMER_ADDDRESS = @"customer/getaddressbyid/";
 NSString *const RI_API_GET_CATEGORIES_BY_URLKEY = @"catalog/categoryByUrlKey/?urlkey=";
 
 NSString *const RI_API_BUNDLE = @"catalog/bundle/sku/";
+NSString *const RI_API_DELIVERY_TIME = @"catalog/deliverytime/";
 
 NSString *const RI_API_GET_WISHLIST = @"wishlist/getproducts/";
 NSString *const RI_API_ADD_TO_WISHLIST = @"wishlist/addproduct/";

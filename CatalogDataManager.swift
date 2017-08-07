@@ -24,9 +24,7 @@ class CatalogDataManager: DataManagerSwift {
         if let sortingMethod = sortingMethod, let sortUrl = Catalog.urlForSortType(type: sortingMethod) {
             path += "\(sortUrl)/"
         }
-        
         path += "maxItems/36/page/\(page)"
-        
         if let urlPath = path.addingPercentEncoding( withAllowedCharacters: .urlQueryAllowed) {
             CatalogDataManager.requestManager.async(.get, target: target, path: urlPath, params: nil, type: .background, completion: { (responseType, data, errorMessages) in
                 self.processResponse(responseType, aClass: Catalog.self, data: data, errorMessages: errorMessages, completion: completion)

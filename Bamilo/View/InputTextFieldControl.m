@@ -129,6 +129,8 @@
     if (model.inputTextValue.length) {
         self.input.textField.text = (model.type == InputTextFieldControlTypeNumerical) ? [model.inputTextValue numbersToPersian] : model.inputTextValue;
         [self checkValidation];
+    } else {
+        self.input.textField.text = nil;
     }
     
     if (model.selectOption) {

@@ -20,6 +20,7 @@
 #import "JAPDVProductInfoSellerInfo.h"
 #import "JAProductInfoSISLine.h"
 #import "JAProductInfoSizeLine.h"
+#import "Bamilo-Swift.h"
 
 @interface JAPDVProductInfo() {
     UILabel *_sizesLabel;
@@ -261,6 +262,15 @@
         [headerSeller setTitle:[STRING_SELLER_INFORMATION uppercaseString]];
         [self addSubview:headerSeller];
         yOffset = CGRectGetMaxY(headerSeller.frame);
+        
+        DeliveryTimeView *deliveryView = [DeliveryTimeView nibInstance];
+        deliveryView.productSku = product.sku;
+        [deliveryView setFrame:CGRectMake(0, yOffset, frame.size.width, 200)];
+        [deliveryView fillTheView];
+        [deliveryView switchTheTextALignMents];
+        [self addSubview:deliveryView];
+        yOffset += 200;
+        
         
         JAPDVProductInfoSellerInfo *sellerInfoView = [[JAPDVProductInfoSellerInfo alloc] initWithFrame:CGRectMake(0, yOffset, self.width, 50)];
         [sellerInfoView setIsShopFirst:product.shopFirst];

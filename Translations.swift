@@ -38,4 +38,5 @@ let STRING_ORDER_HISTORY = RILocalizationWrapper.localizedString("my_order_histo
 let STRING_PASSWORD = RILocalizationWrapper.localizedString("password")!
 let STRING_EMAIL_TO_CS = RILocalizationWrapper.localizedString("send_email_to_CS")!
 let STRING_SEARCHING = RILocalizationWrapper.localizedString("searching")!
-
+let STRING_TEHRAN = RILocalizationWrapper.localizedString("tehran")!
+let STRING_MINICITY = RILocalizationWrapper.localizedString("minicity")!

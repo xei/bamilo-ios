@@ -24,6 +24,7 @@
 		61036B681E65B5F5006E12A9 /* OrderList.m in Sources */ = {isa = PBXBuildFile; fileRef = 61036B671E65B5F5006E12A9 /* OrderList.m */; };
 		61036B6C1E65B638006E12A9 /* OrderProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 61036B6B1E65B638006E12A9 /* OrderProduct.m */; };
 		61037CBE1EB72C7600A461E0 /* EmarsysMobileEngageTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 61037CBD1EB72C7600A461E0 /* EmarsysMobileEngageTracker.m */; };
+		610519421F370DA4004695BD /* DeliveryTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610519411F370DA4004695BD /* DeliveryTime.swift */; };
 		610C68A31EC74292008FB66C /* CatalogHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610C68A21EC74292008FB66C /* CatalogHeaderView.swift */; };
 		610C68A51EC742E3008FB66C /* CatalogHeaderControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610C68A41EC742E3008FB66C /* CatalogHeaderControl.swift */; };
 		610C68A71EC7442B008FB66C /* CatalogHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 610C68A61EC7442B008FB66C /* CatalogHeaderView.xib */; };
@@ -106,6 +107,9 @@
 		61840B631EA397FF006739EB /* EmarsysRecommendationGridWidgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61840B621EA397FF006739EB /* EmarsysRecommendationGridWidgetView.m */; };
 		61840B651EA3981E006739EB /* EmarsysRecommendationGridWidgetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61840B641EA3981E006739EB /* EmarsysRecommendationGridWidgetView.xib */; };
 		61840B681EA39941006739EB /* EmarsysRecommendationGridWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 61840B671EA39941006739EB /* EmarsysRecommendationGridWidget.m */; };
+		618B256C1F35D80700B39440 /* DeliveryTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618B256B1F35D80700B39440 /* DeliveryTimeView.swift */; };
+		618B256E1F35D81800B39440 /* DeliveryTimeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 618B256D1F35D81800B39440 /* DeliveryTimeView.xib */; };
+		618B25701F35D85900B39440 /* DeliveryTimeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618B256F1F35D85900B39440 /* DeliveryTimeControl.swift */; };
 		6190E9E61ED4263600163F6D /* BreadcrumbsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6190E9E51ED4263600163F6D /* BreadcrumbsItem.swift */; };
 		619351A51ECAC9A900330E5C /* CatalogGridCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619351A31ECAC9A900330E5C /* CatalogGridCollectionViewCell.swift */; };
 		619351A61ECAC9A900330E5C /* CatalogGridCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 619351A41ECAC9A900330E5C /* CatalogGridCollectionViewCell.xib */; };
@@ -928,6 +932,7 @@
 		61037CBC1EB72C7600A461E0 /* EmarsysMobileEngageTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysMobileEngageTracker.h; sourceTree = "<group>"; };
 		61037CBD1EB72C7600A461E0 /* EmarsysMobileEngageTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysMobileEngageTracker.m; sourceTree = "<group>"; };
 		61037CC31EB7416200A461E0 /* ScreenTrackingProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenTrackingProtocol.h; sourceTree = "<group>"; };
+		610519411F370DA4004695BD /* DeliveryTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeliveryTime.swift; sourceTree = "<group>"; };
 		610C68A21EC74292008FB66C /* CatalogHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogHeaderView.swift; sourceTree = "<group>"; };
 		610C68A41EC742E3008FB66C /* CatalogHeaderControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogHeaderControl.swift; sourceTree = "<group>"; };
 		610C68A61EC7442B008FB66C /* CatalogHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CatalogHeaderView.xib; sourceTree = "<group>"; };
@@ -1051,6 +1056,9 @@
 		61840B641EA3981E006739EB /* EmarsysRecommendationGridWidgetView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmarsysRecommendationGridWidgetView.xib; sourceTree = "<group>"; };
 		61840B661EA39941006739EB /* EmarsysRecommendationGridWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysRecommendationGridWidget.h; sourceTree = "<group>"; };
 		61840B671EA39941006739EB /* EmarsysRecommendationGridWidget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysRecommendationGridWidget.m; sourceTree = "<group>"; };
+		618B256B1F35D80700B39440 /* DeliveryTimeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeliveryTimeView.swift; sourceTree = "<group>"; };
+		618B256D1F35D81800B39440 /* DeliveryTimeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeliveryTimeView.xib; sourceTree = "<group>"; };
+		618B256F1F35D85900B39440 /* DeliveryTimeControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeliveryTimeControl.swift; sourceTree = "<group>"; };
 		6190E9E51ED4263600163F6D /* BreadcrumbsItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BreadcrumbsItem.swift; sourceTree = "<group>"; };
 		619351A31ECAC9A900330E5C /* CatalogGridCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogGridCollectionViewCell.swift; sourceTree = "<group>"; };
 		619351A41ECAC9A900330E5C /* CatalogGridCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CatalogGridCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -2669,6 +2677,7 @@
 		610C689E1EC7423B008FB66C /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				618B25681F35D6C400B39440 /* DeliveryTime */,
 				61832FD21ED2BFFD006F01FE /* RateStars */,
 				610C689F1EC74244008FB66C /* CatalogHeader */,
 			);
@@ -3137,6 +3146,7 @@
 				8720C3341EDEE19900404378 /* Data */,
 				613A7E921EBF64EB00E1AB3F /* CatalogFiltes */,
 				613A7E8C1EBF069100E1AB3F /* Product.swift */,
+				610519411F370DA4004695BD /* DeliveryTime.swift */,
 				613A7E8E1EBF0F6B00E1AB3F /* CategoryProduct.swift */,
 				613A7E901EBF2B0600E1AB3F /* Catalog.swift */,
 				6190E9E51ED4263600163F6D /* BreadcrumbsItem.swift */,
@@ -3283,6 +3293,32 @@
 				61840B671EA39941006739EB /* EmarsysRecommendationGridWidget.m */,
 			);
 			name = Control;
+			sourceTree = "<group>";
+		};
+		618B25681F35D6C400B39440 /* DeliveryTime */ = {
+			isa = PBXGroup;
+			children = (
+				618B256A1F35D72700B39440 /* View */,
+				618B25691F35D72100B39440 /* Control */,
+			);
+			name = DeliveryTime;
+			sourceTree = "<group>";
+		};
+		618B25691F35D72100B39440 /* Control */ = {
+			isa = PBXGroup;
+			children = (
+				618B256F1F35D85900B39440 /* DeliveryTimeControl.swift */,
+			);
+			name = Control;
+			sourceTree = "<group>";
+		};
+		618B256A1F35D72700B39440 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				618B256B1F35D80700B39440 /* DeliveryTimeView.swift */,
+				618B256D1F35D81800B39440 /* DeliveryTimeView.xib */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 		6193519F1ECAC92800330E5C /* CollectionViewCell */ = {
@@ -7414,6 +7450,7 @@
 				875744031EA60E2D001B518A /* Summer-Small-40.png in Resources */,
 				619351AC1ECAC9DD00330E5C /* CatalogCardCollectionViewCell.xib in Resources */,
 				87D07D6F1E40939100C00AC6 /* Checkout.storyboard in Resources */,
+				618B256E1F35D81800B39440 /* DeliveryTimeView.xib in Resources */,
 				875743C61EA60DFD001B518A /* SpecialOffer-76@2x.png in Resources */,
 				875743651EA60DA5001B518A /* Birthday-Small-50@2x.png in Resources */,
 				8716987D1E38A94C0027B34A /* Main.storyboard in Resources */,
@@ -7698,6 +7735,7 @@
 				61D929341F1642C100716D4C /* Ext+CAShapreLayer.swift in Sources */,
 				61716BA71E865B3D00F4E65F /* DeepLinkManager.m in Sources */,
 				61D9293F1F16585500716D4C /* NavbarUtility.swift in Sources */,
+				618B256C1F35D80700B39440 /* DeliveryTimeView.swift in Sources */,
 				617D7F431EDC341B00F36CF7 /* BaseProfileTableViewCell.swift in Sources */,
 				9A7EE9C91B5557C9004E2505 /* UIButton+Extensions.m in Sources */,
 				61036B501E65897D006E12A9 /* MutualTitleHeaderCell.m in Sources */,
@@ -7768,6 +7806,7 @@
 				CE9ADF7A1AB6D78200D56481 /* JAPercentageBarView.m in Sources */,
 				613FF2BA1E4B2858008660CF /* SignUpViewController.m in Sources */,
 				87EA03091E6C695D00B1E062 /* IconTableViewHeaderCell.m in Sources */,
+				610519421F370DA4004695BD /* DeliveryTime.swift in Sources */,
 				87865FD11EE2D3B2009505C7 /* Notifications.swift in Sources */,
 				875AD56F1E38C0C900584ABF /* RIPromotion.m in Sources */,
 				9A6BC0831C43CBB900DD9492 /* JAMyOrderResumeView.m in Sources */,
@@ -7929,6 +7968,7 @@
 				CE9ADFCB1AB6D78200D56481 /* JAAddRatingView.m in Sources */,
 				FF4465291CEF1376003A65EA /* JAORPickupStationWebViewController.m in Sources */,
 				617D7F3C1EDC2F3E00F36CF7 /* ProfileOrderTableViewCell.swift in Sources */,
+				618B25701F35D85900B39440 /* DeliveryTimeControl.swift in Sources */,
 				9AC4D6A71B4A926800036F1C /* JACatalogGridCollectionViewCell.m in Sources */,
 				875AD5571E38C0C900584ABF /* RIAlgolia.m in Sources */,
 				9A4077411CE60E3300313D20 /* JABottomSubmitView.m in Sources */,

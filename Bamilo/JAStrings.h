@@ -508,4 +508,5 @@
 #define STRING_GENDER RILocalizedString(@"gender", nil)
 #define STRING_EMAIL_TO_CS RILocalizedString(@"send_email_to_CS", nil)
 #define STRING_ZERO_COST RILocalizedString(@"zero_cost", nil)
+#define STRING_SELLER RILocalizedString(@"seller", nil)
 #endif

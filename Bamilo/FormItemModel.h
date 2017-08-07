@@ -10,14 +10,15 @@
 #import "FormItemValidation.h"
 #import "FormElementProtocol.h"
 
-typedef enum : NSUInteger {
-    InputTextFieldControlTypePassword,
-    InputTextFieldControlTypeNumerical,
+
+typedef NS_ENUM(NSUInteger, InputTextFieldControlType) {
+    InputTextFieldControlTypePassword = 0,
+    InputTextFieldControlTypeNumerical = 1,
     InputTextFieldControlTypeEmail,
     InputTextFieldControlTypeString,
     InputTextFieldControlTypeOptions,
     InputTextFieldControlTypeDatePicker
-} InputTextFieldControlType;
+};
 
 @interface FormItemModel : NSObject <FormElementProtocol>
 @property (nonatomic, copy) NSString *inputTextValue;
