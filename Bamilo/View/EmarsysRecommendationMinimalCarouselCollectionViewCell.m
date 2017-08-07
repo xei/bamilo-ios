@@ -20,7 +20,7 @@
 }
 
 + (CGSize)preferedSize {
-    return CGSizeMake(134, 197);
+    return CGSizeMake(133, 197);
 }
 
 @end

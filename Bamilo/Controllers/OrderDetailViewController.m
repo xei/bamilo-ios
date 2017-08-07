@@ -8,7 +8,7 @@
 
 #import "OrderDetailViewController.h"
 #import "PlainTableViewHeaderCell.h"
-#import "DataManager.h"
+#import "Bamilo-Swift.h"
 #import "OrderProductListTableViewCell.h"
 #import "OrderDetailInformationTableViewCell.h"
 #import "NSDate+Extensions.h"
@@ -53,8 +53,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-
-    [[DataManager sharedInstance] getOrder:self forOrderId:self.order.orderId completion:^(id data, NSError *error) {
+    [DataAggregator getOrder:self orderId:self.order.orderId completion:^(id data, NSError *error) {
         if (error == nil) {
             [self bind:data forRequestId:0];
             NSArray *progressViewContent = [self getProgressViewControlContentForOrder:self.order];
@@ -125,7 +124,10 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary *userInfo = @{@"sku": ((OrderProduct *)self.order.products[indexPath.row]).sku};
+    if (indexPath.section == 0 ) return;
+    NSString *targetSku = ((OrderProduct *)self.order.products[indexPath.row]).sku;
+    if (targetSku == nil) return;
+    NSDictionary *userInfo = @{@"sku": targetSku};
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication object:nil userInfo:userInfo];
     [self.tableview deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -156,9 +158,9 @@
 #pragma mark - OrderProductListTableViewCellDelegate
 
 - (void)needsToShowProductReviewForProduct:(OrderProduct *)product {
-    [[LoadingManager sharedInstance] showLoading];
+    [LoadingManager showLoading];
     [RIProduct getCompleteProductWithSku:product.sku successBlock:^(id product) {
-        [[LoadingManager sharedInstance] hideLoading];
+        [LoadingManager hideLoading];
         NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
         if(VALID_NOTEMPTY(product, RIProduct)) {
             [userInfo setObject:product forKey:@"product"];
@@ -166,7 +168,7 @@
         [userInfo setObject:@"reviews" forKey:@"product.screen"];
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowProductSpecificationScreenNotification object:nil userInfo:userInfo];
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-        [[LoadingManager sharedInstance] hideLoading];
+        [LoadingManager hideLoading];
         if (error.count && ![self showNotificationBarMessage:error[0] isSuccess:NO]) {
 
         }
@@ -220,5 +222,12 @@
 
     return progressViewControlContent;
 }
+
+#pragma mark: -DataTrackerProtocol
+
+- (NSString *)getScreenName {
+    return @"OrderDetailView";
+}
+
 
 @end

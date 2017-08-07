@@ -15,7 +15,8 @@ typedef enum : NSUInteger {
     InputTextFieldControlTypeNumerical,
     InputTextFieldControlTypeEmail,
     InputTextFieldControlTypeString,
-    InputTextFieldControlTypeOptions
+    InputTextFieldControlTypeOptions,
+    InputTextFieldControlTypeDatePicker
 } InputTextFieldControlType;
 
 @interface FormItemModel : NSObject <FormElementProtocol>
@@ -26,6 +27,9 @@ typedef enum : NSUInteger {
 @property (nonatomic, copy) NSDictionary *selectOption;
 @property (nonatomic, strong) FormItemValidation *validation;
 @property (assign, nonatomic) InputTextFieldControlType type;
+@property (nonatomic, copy) NSString *lastErrorMessage;
+@property (nonatomic, strong) NSDateFormatter *visibleDateFormat;
+@property (nonatomic, strong) NSDateFormatter *outpuutDateFormat;
 
 - (instancetype)initWithTextValue:(NSString *)title
                             fieldName: (NSString *)fieldName
@@ -43,6 +47,7 @@ typedef enum : NSUInteger {
 + (FormItemModel *)emailWithFieldName: (NSString *)fieldName;
 + (FormItemModel *)passWordWithFieldName: (NSString *)fieldName;
 + (FormItemModel *)genderWithFieldName: (NSString *)fieldName;
++ (FormItemModel *)birthdayFieldName: (NSString *)fieldName;
 
 - (NSString *)getValue;
 @end

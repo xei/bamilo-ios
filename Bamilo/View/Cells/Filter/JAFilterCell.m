@@ -7,10 +7,11 @@
 //
 
 #import "JAFilterCell.h"
+#import "Bamilo-Swift.h"
 
 @implementation JAFilterCell
 
-- (void)setupWithFilter:(BaseSearchFilterItem*)filter
+- (void)setupWithFilter:(BaseCatalogFilterItem*)filter
          cellIsSelected:(BOOL)cellIsSelected
                   width:(CGFloat)width
                  margin:(CGFloat)margin {
@@ -41,15 +42,15 @@
     
     //find number of selected options
     NSInteger numberOfSelectedOptions = 0;
-    if ([filter isKindOfClass:[SearchFilterItem class]]) {
-        for (SearchFilterItemOption *option in ((SearchFilterItem *)filter).options) {
+    if ([filter isKindOfClass:[CatalogFilterItem class]]) {
+        for (CatalogFilterOption *option in ((CatalogFilterItem *)filter).options) {
             if (option.selected) numberOfSelectedOptions++;
         }
-    } else if ([filter isKindOfClass:[SearchPriceFilter class]]) {
-        SearchPriceFilter *priceFilter = (SearchPriceFilter *)filter;
-        if (priceFilter.lowerValue > priceFilter.minPrice || priceFilter.upperValue < priceFilter.maxPrice || YES == priceFilter.discountOnly) {
-            numberOfSelectedOptions = 1;
-        }
+    } else if ([filter isKindOfClass:[CatalogPriceFilterItem class]]) {
+        CatalogPriceFilterItem *priceFilter = (CatalogPriceFilterItem *)filter;
+//        if (priceFilter.lowerValue > priceFilter.minPrice || priceFilter.upperValue < priceFilter.maxPrice || YES == priceFilter.discountOnly) {
+//            numberOfSelectedOptions = 1;
+//        }
     }
     
     NSString* cellText = [NSString stringWithFormat:@"%@",filter.name];

@@ -20,6 +20,7 @@
 #import "RIShippingMethod.h"
 #import "DeliveryTimeTableViewCell.h"
 #import "CheckoutDataManager.h"
+#import "Bamilo-Swift.h"
 
 @interface CheckoutConfirmationViewController() <DiscountCodeViewDelegate, DiscountSwitcherViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -76,7 +77,7 @@
     [super viewWillAppear:animated];
     
     if(self.isCompleteFetch == NO) {
-        [[CheckoutDataManager sharedInstance] getMultistepConfirmation:self type:REQUEST_EXEC_AS_CONTAINER completion:^(id data, NSError *error) {
+        [DataAggregator getMultistepConfirmation:self type:RequestExecutionTypeContainer completion:^(id data, NSError *error) {
             if(error == nil) {
                 [self bind:data forRequestId:0];
                 
@@ -86,7 +87,7 @@
                 }
                 
                 //Delivery Time
-                [[CheckoutDataManager sharedInstance] getMultistepShipping:self completion:^(id data, NSError *error) {
+                [DataAggregator getMultistepShipping:self completion:^(id data, NSError *error) {
                     if(error == nil) {
                         [self bind:data forRequestId:1];
                         
@@ -283,14 +284,14 @@
 #pragma mark - DiscountCodeViewDelegate
 -(void)discountCodeViewDidFinish:(id)sender withCode:(NSString *)discountCode {
     if(self.cart.cartEntity.couponCode == nil && discountCode && discountCode.length) {
-        [[CheckoutDataManager sharedInstance] applyVoucher:self voucherCode:discountCode completion:^(id data, NSError *error) {
+        [DataAggregator applyVoucher:self voucher:discountCode completion:^(id data, NSError *error) {
             if(error == nil) {
                 [self bind:data forRequestId:2];
                 
                 ((DiscountCodeView *)sender).state = DISCOUNT_CODE_VIEW_STATE_CONTAINS_CODE;
                 
                 NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
-                [trackingDictionary setValue:self.cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+                [trackingDictionary setValue:self.cart.cartEntity.cartValue forKey:kRIEventTotalCartKey];
                 [trackingDictionary setValue:self.cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
                 [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart] data:[trackingDictionary copy]];
                 
@@ -348,7 +349,7 @@
         
         case 2:
         case 3: {
-            self.cart = (RICart *)data;
+            self.cart = (RICart *)data[kDataContent];
         }
         break;
     }
@@ -395,7 +396,7 @@
 }
 
 -(void) requestRemovalOfVoucherCode {
-    [[CheckoutDataManager sharedInstance] removeVoucher:self voucherCode:self.cart.cartEntity.couponCode completion:^(id data, NSError *error) {
+    [DataAggregator removeVoucher:self voucher:self.cart.cartEntity.couponCode completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:3];
             
@@ -409,8 +410,8 @@
     }];
 }
 
-#pragma mark - PerformanceTrackerProtocol
--(NSString *)getPerformanceTrackerScreenName {
+#pragma mark - DataTrackerProtocol
+-(NSString *)getScreenName {
     return @"CheckoutConfirmation";
 }
 

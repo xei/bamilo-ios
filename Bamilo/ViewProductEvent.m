@@ -10,9 +10,4 @@
 
 @implementation ViewProductEvent
 
-#pragma mark - Overrides
-+(NSString *)name {
-    return @"ViewProduct";
-}
-
 @end

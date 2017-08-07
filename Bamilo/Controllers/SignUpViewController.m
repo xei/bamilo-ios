@@ -14,6 +14,7 @@
 #import "RICustomer.h"
 #import "JAUtils.h"
 
+#import "Bamilo-Swift.h"
 
 #define cSignUpMethodEmail @"email"
 #define cSignUpMethodGoogle @"sso-google"
@@ -44,15 +45,17 @@
                                 selectOptions:nil];
     
     
+    FormItemModel *birthday = [FormItemModel birthdayFieldName:@"customer[birthday]"];
     FormItemModel *email = [FormItemModel emailWithFieldName:@"customer[email]"];
     FormItemModel *firstName = [FormItemModel firstNameFieldWithFiedName:@"customer[first_name]"];
     FormItemModel *lastName = [FormItemModel lastNameWithFieldName:@"customer[last_name]"];
     FormItemModel *phone = [FormItemModel phoneWithFieldName:@"customer[phone]"];
     FormItemModel *password = [FormItemModel passWordWithFieldName:@"customer[password]"];
+    FormItemModel *gender = [FormItemModel genderWithFieldName:@"customer[gender]"];
     
     self.formController.submitTitle = @"ثبت نام";
     self.title = STRING_SIGNUP;
-    self.formController.formModelList = [NSMutableArray arrayWithArray:@[ melliCode, firstName, lastName, email, password, phone]];
+    self.formController.formModelList = [NSMutableArray arrayWithArray:@[  firstName, lastName, melliCode, gender, birthday, email, password, phone]];
     
     [self.formController setupTableView];
 }
@@ -72,14 +75,15 @@
         return;
     }
     
-    [[AuthenticationDataManager sharedInstance] signupUser:self withFieldsDictionary:[self.formController getMutableDictionaryOfForm] completion:^(id data, NSError *error) {
+    [DataAggregator signupUser:self with:[self.formController getMutableDictionaryOfForm] completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
             
             //EVENT: SIGNUP / SUCCESS
-            [TrackerManager postEvent:[EventFactory signup:cSignUpMethodEmail success:YES] forName:[SignUpEvent name]];
+            RICustomer *customer = [RICustomer getCurrentCustomer];
             
-            [EmarsysPredictManager setCustomer:[RICustomer getCurrentCustomer]];
+            [TrackerManager postEventWithSelector:[EventSelectors signupEventSelector] attributes:[EventAttributes signupWithMethod:cSignUpMethodEmail user:customer success:YES]];
+            [EmarsysPredictManager setCustomer: customer];
             
             [[PushWooshTracker sharedTracker] setUserID:[RICustomer getCurrentCustomer].email];
             
@@ -89,9 +93,9 @@
                 [((UIViewController *)self.delegate).navigationController popViewControllerAnimated:YES];
             }
         } else {
+            [TrackerManager postEventWithSelector:[EventSelectors signupEventSelector]
+                                       attributes:[EventAttributes signupWithMethod:cSignUpMethodEmail user:nil success:NO]];
             //EVENT: SIGNUP / FAILURE
-            [TrackerManager postEvent:[EventFactory signup:cSignUpMethodEmail success:NO] forName:[SignUpEvent name]];
-            
             BaseViewController *baseViewController = (BaseViewController *)self.delegate;
             if(![baseViewController showNotificationBar:error isSuccess:NO]) {
                 for(NSDictionary* errorField in [error.userInfo objectForKey:kErrorMessages]) {
@@ -136,11 +140,6 @@
     if (self.fromSideMenu) {
         [userInfo setObject:@YES forKey:@"from_side_menu"];
     }
-}
-
-#pragma mark - PerformanceTrackerProtocol
--(NSString *)getPerformanceTrackerScreenName {
-    return @"SignUp";
 }
 
 @end

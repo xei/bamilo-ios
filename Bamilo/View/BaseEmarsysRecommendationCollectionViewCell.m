@@ -47,6 +47,11 @@
     [self.brandLabel setText:item.brandName];
     [self.discountedPriceLabel setText:item.formattedPrice];
     self.priceLabel.attributedText = (NSAttributedString *)[item.formattedDiscountedPrice struckThroughText];
+    if ([item.price isEqualToString:item.dicountedPrice]) {
+        [self.priceLabel setHidden:YES];
+    } else {
+        [self.priceLabel setHidden:NO];
+    }
 }
 
 - (void)prepareForReuse {

@@ -19,7 +19,7 @@
                             isLandscape:(BOOL)isLandscape
                                   frame:(CGRect)frame;
 
-- (void)setFilterOption:(SearchFilterItemOption*)option;
+- (void)setFilterOption:(id)option;
 
 - (void)setupIsLandscape:(BOOL)landscape;
 

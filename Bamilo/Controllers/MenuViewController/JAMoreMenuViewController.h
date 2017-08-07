@@ -1,13 +1,13 @@
+////
+////  JAMoreMenuViewController.h
+////  Jumia
+////
+////  Created by Telmo Pinto on 22/10/15.
+////  Copyright © 2015 Rocket Internet. All rights reserved.
+////
 //
-//  JAMoreMenuViewController.h
-//  Jumia
+//#import <UIKit/UIKit.h>
 //
-//  Created by Telmo Pinto on 22/10/15.
-//  Copyright © 2015 Rocket Internet. All rights reserved.
+//@interface JAMoreMenuViewController : JABaseViewController <UITableViewDelegate, UITableViewDataSource>
 //
-
-#import <UIKit/UIKit.h>
-
-@interface JAMoreMenuViewController : JABaseViewController <UITableViewDelegate, UITableViewDataSource>
-
-@end
+//@end

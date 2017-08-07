@@ -12,21 +12,20 @@
 #import "JAAppDelegate.h"
 #import "RIExternalCategory.h"
 #import "JAButton.h"
+#import "Bamilo-Swift.h"
 
-@interface JACategoriesSideMenuViewController ()
+@interface JACategoriesSideMenuViewController () <SearchBarListener>
 
-@property (nonatomic, strong)NSArray* categoriesArray;
+@property (nonatomic, strong) NSArray* categoriesArray;
 @property (nonatomic, strong) RIExternalCategory *externalCategory;
-@property (nonatomic, strong)UITableView* tableView;
-@property (nonatomic, strong)NSMutableArray* tableViewCategoriesArray;
+@property (nonatomic, strong) UITableView* tableView;
+@property (nonatomic, strong) NSMutableArray* tableViewCategoriesArray;
 
 @property (strong, nonatomic) UIView *loadingView;
 @property (nonatomic, strong) UIImageView *loadingAnimation;
 
 @property (nonatomic, strong) NSLock *reloadLock;
-
 @property (nonatomic) BOOL categoriesLoadingError;
-
 @property (nonatomic, strong) JAMessageView *messageView;
 
 @end
@@ -140,6 +139,14 @@
     [self reloadData];
 }
 
+- (void)updateNavBar {
+    self.navBarLayout.title = STRING_CATEGORIES;
+    self.navBarLayout.showDoneButton = NO;
+    self.navBarLayout.showBackButton = NO;
+    self.navBarLayout.showCartButton = YES;
+    self.navBarLayout.showSearchButton = YES;
+}
+
 - (void)reloadData {
     [self reloadCategories];
     [self reloadExternalLinks];
@@ -227,7 +234,7 @@
     [super viewWillAppear:animated];
     
     //manually add the status bar height into the calculations
-    CGFloat statusBarHeight = 20.0f;
+    CGFloat statusBarHeight = 0.0f;
     [self.tableView setFrame:CGRectMake(self.view.bounds.origin.x,
                                         self.view.bounds.origin.y + statusBarHeight,
                                         self.view.bounds.size.width,
@@ -236,7 +243,7 @@
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
     //manually add the status bar height into the calculations
-    CGFloat statusBarHeight = 20.0f;
+    CGFloat statusBarHeight = 0.0f;
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
     [self.tableView setFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y + statusBarHeight, self.view.bounds.size.width, self.view.bounds.size.height - statusBarHeight)];
 }
@@ -310,7 +317,7 @@
         
     }
     
-    [cell setupWithCategory:category width:256.0f hasSeparator:hasSeparator isOpen:isOpen];
+    [cell setupWithCategory:category width:self.tableView.width hasSeparator:hasSeparator isOpen:isOpen];
     
     return cell;
 }
@@ -472,23 +479,14 @@
     [self.tableView endUpdates];
 }
 
-/*
--(void) updateChildrenInTableView:(NSOrderedSet *)children index:(NSInteger)index toClose:(BOOL)toClose {
-    if(toClose) {
-        //Close Down
-        NSMutableArray* deleteIndexPaths = [NSMutableArray new];
-        for (NSInteger i = index+[children count]; i > index; i--) {
-            //this for goes backwards so that we can remove the items from the arrays without the index problems
-            
-            [self.tableViewCategoriesArray removeObjectAtIndex:i];
-            
-            [deleteIndexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
-        }
-        [self.tableView beginUpdates];
-        [self.tableView deleteRowsAtIndexPaths:deleteIndexPaths withRowAnimation:animationDelete];
-        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
-        [self.tableView endUpdates];
-    } else {
-            }
-}*/
+#pragma mark: - searchBarSearched Protocol
+- (void)searchBarSearched:(UISearchBar *)searchBar {
+    [TrackerManager postEventWithSelector:[EventSelectors searchBarSearchedSelector] attributes:[EventAttributes searchBarSearchedWithSearchString:searchBar.text screenName:[self getScreenName]]];
+}
+
+
+- (NSString *)getScreenName {
+    return @"CategoryMenu";
+}
+
 @end

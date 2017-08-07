@@ -10,9 +10,4 @@
 
 @implementation AddToFavoritesEvent
 
-#pragma mark - Overrides
-+(NSString *)name {
-    return @"AddToFavorites";
-}
-
 @end

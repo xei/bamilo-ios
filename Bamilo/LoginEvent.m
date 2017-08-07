@@ -12,11 +12,6 @@
 
 @implementation LoginEvent
 
-#pragma mark - Overrides
-+(NSString *)name {
-    return @"Login";
-}
-
 +(NSMutableDictionary *)attributes {
     NSMutableDictionary *attributes = [super attributes];
     

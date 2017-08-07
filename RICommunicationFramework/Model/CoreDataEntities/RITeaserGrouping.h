@@ -7,11 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
 
 @class RITeaserComponent;
 
-@interface RITeaserGrouping : NSManagedObject
+@interface RITeaserGrouping : NSObject
 
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSString * type;

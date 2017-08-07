@@ -48,7 +48,7 @@ const CGFloat marginBottom = 6.0f;
     
     self.accessibilityLabel = @"teaserPageScrollView";
     
-    self.backgroundColor = JAHomePageBackgroundGrey;
+    self.backgroundColor = [Theme color:kColorVeryLightGray];
     
     self.mainTeaserLastIndex = self.mainTeaserView.currentPage;
     
@@ -87,13 +87,13 @@ const CGFloat marginBottom = 6.0f;
     _needsRefresh = YES;
 }
 
-- (void)layoutSubviews {
-    if (!_keyboardEvent) {
-        _needsRefresh = YES;
-        [self loadTeasersForFrame:self.frame];
-    }
-    _keyboardEvent = NO;
-}
+//- (void)layoutSubviews {
+//    if (!_keyboardEvent) {
+//        _needsRefresh = YES;
+//        [self loadTeasersForFrame:self.frame];
+//    }
+//    _keyboardEvent = NO;
+//}
 
 - (void)addCustomViewToScrollView:(UIView *)view {
     currentMainScrollY -= marginBottom;

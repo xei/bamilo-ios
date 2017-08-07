@@ -14,9 +14,15 @@
 #import "MPCoachMarks.h"
 #import "EmarsysPredictProtocol.h"
 #import "ProductDataManager.h"
+#import "DataServiceProtocol.h"
+
+@protocol JAPDVViewControllerDelegate <NSObject>
+- (void)addToWishList:(NSString *)sku add:(BOOL)add;
+@end
 
 @interface JAPDVViewController : JABaseViewController <JAPDVImageSectionDelegate, EmarsysPredictProtocol, DataServiceProtocol>
 
+@property (nonatomic, weak) id<JAPDVViewControllerDelegate> delegate;
 @property (strong, nonatomic) RIProduct *product;
 @property (strong, nonatomic) NSString *productSku;
 @property (strong, nonatomic) RICategory *category;
@@ -24,7 +30,6 @@
 @property (strong, nonatomic) NSString *previousCategory;
 @property (strong, nonatomic) NSString *preSelectedSize;
 @property (strong, nonatomic) NSString *richRelevanceParameter;
-
 @property (nonatomic, strong) NSString *teaserTrackingInfo;
 
 @end

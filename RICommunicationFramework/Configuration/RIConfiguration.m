@@ -63,7 +63,7 @@ NSString *const RI_UNIQUE_COUNTRY_NAME_BAMILO = @"Iran";
 NSString *const RI_UNIQUE_COUNTRY_ISO_BAMILO = @"IR";
 
 NSString *const RI_MOBAPI_PREFIX = @"mobapi/";
-NSString *const RI_API_VERSION = @"v2.3/"; // ||| DO NOT CHANGE |||
+NSString *const RI_API_VERSION = @"v2.4/"; // ||| DO NOT CHANGE |||
 
 NSString *const RI_API_INFO = @"main/md5/";
 NSString *const RI_API_IMAGE_RESOLUTIONS = @"main/imageresolutions/";
@@ -78,6 +78,7 @@ NSString *const RI_API_PRODUCT_DETAIL = @"catalog/detail/sku/";
 NSString *const RI_API_PROD_VALIDATE = @"catalog/validate/";
 NSString *const RI_CATALOG_CATEGORIES = @"catalog/categories/";
 NSString *const RI_API_CATALOG = @"search/find/";
+NSString *const RI_API_CATALOG_QUERY_SEARCH = @"search/find/q/";
 NSString *const RI_API_CATALOG_CATEGORY = @"search/find/category/";
 NSString *const RI_API_SEARCH_SUGGESTIONS = @"search/suggester/q/";
 
@@ -92,7 +93,7 @@ NSString *const RI_API_ADD_VOUCHER_TO_CART = @"cart/addvoucher/";
 NSString *const RI_API_REMOVE_VOUCHER_FROM_CART = @"cart/removevoucher/";
 
 NSString *const RI_API_GET_ORDERS = @"customer/orderlist/";
-NSString *const RI_API_TRACK_ORDER = @"customer/trackingorder/ordernr/%@/";
+NSString *const RI_API_TRACK_ORDER = @"customer/trackingorder/ordernr/";
 NSString *const RI_API_GET_CUSTOMER = @"customer/getdetails/";
 NSString *const RI_API_REGISTER_CUSTOMER = @"customer/create/";
 NSString *const RI_API_LOGIN_CUSTOMER = @"customer/login/";
@@ -107,7 +108,7 @@ NSString *const RI_API_GET_CUSTOMER_POSTCODES = @"customer/getaddresspostcodes/"
 NSString *const RI_API_POST_CUSTOMER_ADDDRESS_CREATE = @"customer/addresscreate/";
 NSString *const RI_API_POST_CUSTOMER_ADDDRESS_EDIT = @"customer/addressedit/";
 NSString *const RI_API_GET_CUSTOMER_ADDDRESS = @"customer/getaddressbyid/";
-NSString *const RI_API_GET_CATEGORIES_BY_URLKEY = @"catalog/categoryByUrlKey/?urlkey=%@";
+NSString *const RI_API_GET_CATEGORIES_BY_URLKEY = @"catalog/categoryByUrlKey/?urlkey=";
 
 NSString *const RI_API_BUNDLE = @"catalog/bundle/sku/";
 

@@ -7,7 +7,7 @@
 //
 
 #import "RequestManager.h"
-#import "LoadingManager.h"
+#import "Bamilo-Swift.h"
 
 @implementation RequestManager {
 @private
@@ -45,9 +45,9 @@
 -(void)asyncRequest:(HttpVerb)method path:(NSString *)path params:(NSDictionary *)params type:(RequestExecutionType)type target:(id<DataServiceProtocol>)target completion:(RequestCompletion)completion {
     
     switch (type) {
-        case REQUEST_EXEC_IN_FOREGROUND:
-        case REQUEST_EXEC_AS_CONTAINER:
-            [[LoadingManager sharedInstance] showLoading];
+        case RequestExecutionTypeContainer:
+        case RequestExecutionTypeForeground:
+            [LoadingManager showLoading];
         break;
             
         default: break;
@@ -64,7 +64,7 @@
      userAgentInjection:[RIApi getCountryUserAgentInjection] successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
          
          NSError *error;
-         Data *data = [Data new];
+         ResponseData *data = [ResponseData new];
          [data mergeFromDictionary:jsonObject useKeyMapping:NO error:&error];
          
          if (data.success) {
@@ -74,8 +74,8 @@
          }
          
          switch (type) {
-            case REQUEST_EXEC_IN_FOREGROUND:
-                 [[LoadingManager sharedInstance] hideLoading];
+            case RequestExecutionTypeForeground:
+                 [LoadingManager hideLoading];
             break;
                  
             default: break;
@@ -91,7 +91,7 @@
             completion(apiResponse, nil, nil);
         }
         
-        [[LoadingManager sharedInstance] hideLoading];
+        [LoadingManager hideLoading];
     }];
 }
 

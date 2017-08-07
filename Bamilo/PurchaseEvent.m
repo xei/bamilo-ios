@@ -10,9 +10,4 @@
 
 @implementation PurchaseEvent
 
-#pragma mark - Overrides
-+(NSString *)name {
-    return @"Purchase";
-}
-
 @end

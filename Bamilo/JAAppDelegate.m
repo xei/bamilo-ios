@@ -30,8 +30,9 @@
 #import "PushWooshTracker.h"
 #import "EmarsysMobileEngage.h"
 #import "EmarsysMobileEngageTracker.h"
-#import "GoogleAnalyticsTracker.h"
 #import "EmarsysPredictManager.h"
+#import "CartDataManager.h"
+#import "Bamilo-Swift.h"
 
 @interface JAAppDelegate () <RIAdjustTrackerDelegate>
 
@@ -47,7 +48,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.startLoadingTime = [NSDate date];
-
+    
+    //SET THE LANGUAGE
+    RICountry *country = [RICountry getUniqueCountry];
+    [RILocalizationWrapper setLocalization:country.selectedLanguage.langCode];
+    
     //SETUP THEME
     ThemeFont *themeFont = [ThemeFont fontWithVariations:@{
         kFontVariationRegular: cFontVariationNone,
@@ -66,6 +71,7 @@
         kColorDarkGray: [UIColor withRepeatingRGBA:115 alpha:1.0f],
         kColorExtraDarkGray: [UIColor withRepeatingRGBA:80 alpha:1.0f],
         kColorLightGray: [UIColor withRepeatingRGBA:146 alpha:1.0f],
+        kColorVeryLightGray: [UIColor withRepeatingRGBA:238 alpha:1.0f],
         kColorExtraLightGray: [UIColor withRepeatingRGBA:186 alpha:1.0f],
         kColorExtraExtraLightGray: [UIColor withRepeatingRGBA:222 alpha:1.0f],
         kColorRed: [UIColor withRGBA:185 green:15 blue:0 alpha:1.0f],
@@ -105,11 +111,11 @@
     }
 
     if ([launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey] != nil) {
-        UINavigationController *rootViewController = (UINavigationController*)self.window.rootViewController;
-        JARootViewController* mainController = (JARootViewController*) [rootViewController topViewController];
-        if(VALID_NOTEMPTY(mainController, JARootViewController)) {
-            mainController.notification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-        }
+//        UINavigationController *rootViewController = (UINavigationController*)self.window.rootViewController;
+//        JARootViewController* mainController = (JARootViewController*) [rootViewController topViewController];
+//        if(VALID_NOTEMPTY(mainController, JARootViewController)) {
+//            mainController.notification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+//        }
 
         [[RITrackingWrapper sharedInstance] applicationDidReceiveRemoteNotification:[launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey]];
     }
@@ -144,15 +150,15 @@
     
     //SETUP TRACKERS
     //********************************************************************
-    [TrackerManager addTracker:[PushWooshTracker sharedTracker]];
-    [TrackerManager addTracker:[EmarsysMobileEngageTracker sharedTracker]];
-    [TrackerManager addTracker:[GoogleAnalyticsTracker sharedTracker]];
+    [TrackerManager addTrackerWithTracker:[EmarsysMobileEngageTracker sharedTracker]];
+    [TrackerManager addTrackerWithTracker:[PushWooshTracker sharedTracker]];
+    [TrackerManager addTrackerWithTracker:[GoogleAnalyticsTracker sharedTracker]];
     
     NSDictionary *configs = [[NSBundle mainBundle] objectForInfoDictionaryKey:kConfigs];
     if(configs) {
         NSString *isPushWooshBeta = [configs objectForKey:@"Pushwoosh_BETA"];
         if([isPushWooshBeta isEqualToString:@"1"]) {
-            [TrackerManager sendTags:@{ @"Beta": isPushWooshBeta } completion:^(NSError *error) {
+            [TrackerManager sendTagWithTags:@{ @"Beta": isPushWooshBeta } completion:^(NSError *error) {
                 if(error == nil) {
                     NSLog(@"TrackerManager > Beta > %@", isPushWooshBeta);
                 }
@@ -160,7 +166,6 @@
         }
     }
     [EmarsysPredictManager setConfigs];
-    [[PushNotificationManager pushManager] startLocationTracking];
     
     return YES;
 }
@@ -190,6 +195,8 @@
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
+    
+    [[PushNotificationManager pushManager] stopLocationTracking];
     id topViewController = [ViewControllerManager topViewController];
     NSString *screenName;
 
@@ -216,46 +223,35 @@
 -(void)applicationDidBecomeActive:(UIApplication *)application {
     [application setApplicationIconBadgeNumber:0];
 
+    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"appDidEnterForeground" object:nil]];
     PushNotificationManager *pushManager = [PushNotificationManager pushManager];
     [[EmarsysMobileEngage sharedInstance] sendLogin:[pushManager getPushToken] completion:nil];
     
     OpenAppEventSourceType openAppEventSourceType = [[AppManager sharedInstance] getOpenAppEventSource];
     
-    if(openAppEventSourceType != OPEN_APP_SOURCE_PUSH_NOTIFICATION &&
-       openAppEventSourceType != OPEN_APP_SOURCE_DEEPLINK) {
+    if(openAppEventSourceType != OpenAppEventSourceTypePushNotification &&
+       openAppEventSourceType != OpenAppEventSourceTypeDeeplink) {
         //EVENT: OPEN APP / DIRECT
-        [TrackerManager postEvent:[EventFactory openApp:[[AppManager sharedInstance] updateOpenAppEventSource:OPEN_APP_SOURCE_DIRECT]] forName:[OpenAppEvent name]];
+        [TrackerManager postEventWithSelector:[EventSelectors openAppSelector] attributes:[EventAttributes openAppWithSource:OpenAppEventSourceTypeDirect]];
     }
     
-    [TrackerManager sendTags:@{ @"AppOpenCount": @([UserDefaultsManager incrementCounter:kUDMAppOpenCount]) } completion:^(NSError *error) {
+    [TrackerManager sendTagWithTags:@{ @"AppOpenCount": @([UserDefaultsManager incrementCounter:kUDMAppOpenCount]) } completion:^(NSError *error) {
         if(error == nil) {
             NSLog(@"TrackerManager > AppOpenCount > %d", [UserDefaultsManager getCounter:kUDMAppOpenCount]);
         }
     }];
     
     //Reset to none for next app open
-    [[AppManager sharedInstance] updateOpenAppEventSource:OPEN_APP_SOURCE_NONE];
+    [[AppManager sharedInstance] updateOpenAppEventSource:OpenAppEventSourceTypeNone];
     
     [[AppManager sharedInstance] updateScheduledAppIcons];
     [[AppManager sharedInstance] executeScheduledAppIcons];
+    
+    [[PushNotificationManager pushManager] startLocationTracking];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    [RIApi startApiWithCountry:nil reloadAPI:NO successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory){
-        if(hasUpdate) {
-            if(isUpdateMandatory) {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_NECESSARY_TITLE message:[NSString stringWithFormat:STRING_UPDATE_NECESSARY_MESSAGE, APP_NAME] delegate:self cancelButtonTitle:STRING_OK_UPDATE otherButtonTitles:nil];
-                [alert setTag:kForceUpdateAlertViewTag];
-                [alert show];
-            } else {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_AVAILABLE_TITLE message:[NSString stringWithFormat:STRING_UPDATE_AVAILABLE_MESSAGE, APP_NAME] delegate:self cancelButtonTitle:STRING_NO_THANKS otherButtonTitles:STRING_UPDATE, nil];
-                [alert setTag:kUpdateAvailableAlertViewTag];
-                [alert show];
-            }
-        }
-    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage){
-    }];
-
+    
     self.startLoadingTime = [NSDate date];
 
     [[SessionManager sharedInstance] evaluateActiveSessions];
@@ -274,33 +270,6 @@
                                               data:[trackingDictionary copy]];
 
     [[NSNotificationCenter defaultCenter] postNotificationName:kAppWillEnterForeground object:nil];
-}
-
-- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
-    NSUInteger supportedInterfaceOrientationsForWindow = -1;
-
-    UINavigationController *rootViewController = (UINavigationController*)self.window.rootViewController;
-    JARootViewController* mainController = (JARootViewController*) [rootViewController topViewController];
-    if(VALID_NOTEMPTY(mainController, JARootViewController)) {
-        UINavigationController* centerPanel = (UINavigationController*) [mainController centerPanel];
-        if(VALID_NOTEMPTY(centerPanel, UINavigationController)) {
-            NSArray *viewControllers = centerPanel.viewControllers;
-            if(VALID_NOTEMPTY(viewControllers, NSArray)) {
-                JABaseViewController *rootViewController = (JABaseViewController *) OBJECT_AT_INDEX(viewControllers, [viewControllers count] - 1);
-                supportedInterfaceOrientationsForWindow = [rootViewController supportedInterfaceOrientations];
-            }
-        }
-    }
-
-    // This should not happen.
-    if(-1 == supportedInterfaceOrientationsForWindow) {
-        supportedInterfaceOrientationsForWindow = UIInterfaceOrientationMaskPortrait;
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-        {
-            supportedInterfaceOrientationsForWindow = UIInterfaceOrientationMaskAll;
-        }
-    }
-    return supportedInterfaceOrientationsForWindow;
 }
 
 #pragma mark - Push Notification
@@ -337,7 +306,7 @@
         [DeepLinkManager handleUrl:url];
     
         //EVENT: OPEN APP / DEEP LINK
-        [TrackerManager postEvent:[EventFactory openApp:[[AppManager sharedInstance] updateOpenAppEventSource:OPEN_APP_SOURCE_DEEPLINK]] forName:[OpenAppEvent name]];
+        [TrackerManager postEventWithSelector:[EventSelectors openAppSelector] attributes:[EventAttributes openAppWithSource:OpenAppEventSourceTypeDeeplink]];
         
         return YES;
     }

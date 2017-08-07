@@ -36,7 +36,7 @@
 
 "home" = "خانه";
 
-"categories" = "مجموعه ها";
+"categories" = "دسته بندی‌ها";
 
 "favourites" = "علاقه‌مندی‌ها";
 
@@ -558,7 +558,7 @@
 
 "my_orders_label" = "سفارشات من";
 
-"my_order_history_label" = "سوابق سفارشات من";
+"my_order_history_label" = "پیگیری سفارشات";
 
 "my_order_tracking_label" = "رهگیری سفارش";
 
@@ -684,7 +684,7 @@
 
 "user_reviews" = "نظرات و پیشنهادهای کاربر";
 
-"profile" = "اطلاعات کاربر";
+"profile" = "اطلاعات کاربری من";
 
 "favourites_no_saved_items" = "شما هیچ کالای ذخیره شده ای در علاقه مندی ها ندارید";
 
@@ -846,3 +846,21 @@
 "already_logged_in" = "شما قبلا وارد سیستم شده اید";
 
 "bamilo_recommendation" = "پیشنهادهای بامیلو برای شما";
+
+"send_ideas_and_reports" = "ارسال مشکلات و ایده‌ها";
+
+"guid" = "راهنما";
+
+"call_to_bamilo_customer_service" = "تماس با تیم خدمات مشتریان بامیلو";
+
+"please_dont_remove_information_from_email" = "لطفا برای پیگیری بهتر, اطلاعات مندرج در انتهای ایمیل را پاک نکنید.";
+
+"report_bug" = "گزارش مشکلات برنامه";
+
+"share_ideas" = "اشتراک‌گذاری ایده‌های نو";
+
+"gender" = "جنسیت";
+
+"send_email_to_CS" = "ایمیل به خدمات مشتریان";
+
+"zero_cost" = "۰ ریال";

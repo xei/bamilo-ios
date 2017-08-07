@@ -112,13 +112,13 @@
  *
  * @return a string with the operationID that can be used to cancel the operation
  */
-+ (NSString *)getResultsForSearch:(NSString *)query
-                             page:(NSString *)page
-                         maxItems:(NSString *)maxItems
-                    sortingMethod:(RICatalogSortingEnum)sortingMethod
-                          filters:(NSArray*)filters
-                     successBlock:(void (^)(RICatalog *catalog))successBlock
-                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm))failureBlock;
+//+ (NSString *)getResultsForSearch:(NSString *)query
+//                             page:(NSString *)page
+//                         maxItems:(NSString *)maxItems
+//                    sortingMethod:(RICatalogSortingEnum)sortingMethod
+//                          filters:(NSArray*)filters
+//                     successBlock:(void (^)(RICatalog *catalog))successBlock
+//                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm))failureBlock;
 
 /**
  * Method to put a recent search in top

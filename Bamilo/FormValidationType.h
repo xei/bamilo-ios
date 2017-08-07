@@ -10,5 +10,5 @@
 
 @interface FormValidationType : NSObject
 @property (nonatomic, strong) NSString *errorMsg;
-@property (nonatomic) Boolean boolValue;
+@property (nonatomic) BOOL boolValue;
 @end

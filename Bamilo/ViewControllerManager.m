@@ -7,6 +7,7 @@
 //
 
 #import "ViewControllerManager.h"
+#import "Bamilo-Swift.h"
 
 @implementation ViewControllerManager {
 @private
@@ -16,16 +17,17 @@
 }
 
 //EXTENSION
-+(JARootViewController *)rootViewController {
-    return (JARootViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Main" nibName:@"JARootViewController" resetCache:NO];
-}
+//+(JARootViewController *)rootViewController {
+//    return (JARootViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Main" nibName:@"JARootViewController" resetCache:NO];
+//}
 
-+(JACenterNavigationController *)centerViewController {
-    return (JACenterNavigationController *)[[ViewControllerManager sharedInstance] loadViewController:@"Main" nibName:@"JACenterNavigationController" resetCache:NO];
-}
+//+(JACenterNavigationController *)centerViewController {
+//    return [MainTabBarViewController topNavigationController];
+////    return (JACenterNavigationController *)[[ViewControllerManager sharedInstance] loadViewController:@"Main" nibName:@"JACenterNavigationController" resetCache:NO];
+//}
 
 +(id)topViewController {
-    return [[ViewControllerManager centerViewController] topViewController];
+    return [[MainTabBarViewController topNavigationController] topViewController];
 }
 //EXTENSION
 
@@ -111,7 +113,7 @@ static ViewControllerManager *instance;
 
 - (void)clearCache {
     [_viewControllerCache enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-        if (![obj isKindOfClass:[JARootViewController class]] && ![obj isKindOfClass:[JACenterNavigationController class]]) {
+        if (/*![obj isKindOfClass:[JARootViewController class]] &&*/ ![obj isKindOfClass:[JACenterNavigationController class]]) {
             [_viewControllerCache removeObjectForKey:key];
         }
     }];

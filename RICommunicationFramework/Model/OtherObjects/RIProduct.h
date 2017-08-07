@@ -127,14 +127,14 @@
  *
  *  @return a string with the operationID that can be used to cancel the operation
  */
-+ (NSString *)getProductsWithCatalogUrl:(NSString*)url
-                          sortingMethod:(RICatalogSortingEnum)sortingMethod
-                                   page:(NSInteger)page
-                               maxItems:(NSInteger)maxItems
-                                filters:(NSArray*)filters
-                             filterPush:(NSString*)filterPush
-                           successBlock:(void (^)(RICatalog *catalog))successBlock
-                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error, RIUndefinedSearchTerm *undefSearchTerm))failureBlock;
+//+ (NSString *)getProductsWithCatalogUrl:(NSString*)url
+//                          sortingMethod:(RICatalogSortingEnum)sortingMethod
+//                                   page:(NSInteger)page
+//                               maxItems:(NSInteger)maxItems
+//                                filters:(NSArray*)filters
+//                             filterPush:(NSString*)filterPush
+//                           successBlock:(void (^)(RICatalog *catalog))successBlock
+//                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error, RIUndefinedSearchTerm *undefSearchTerm))failureBlock;
 
 /**
  *  Method to load a set of products given an url
@@ -145,9 +145,9 @@
  *
  *  @return a string with the operationID that can be used to cancel the operation
  */
-+ (NSString *)getProductsWithFullUrl:(NSString*)url
-                        successBlock:(void (^)(RICatalog *catalog))successBlock
-                     andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error, RIUndefinedSearchTerm *undefSearchTerm))failureBlock;
+//+ (NSString *)getProductsWithFullUrl:(NSString*)url
+//                        successBlock:(void (^)(RICatalog *catalog))successBlock
+//                     andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error, RIUndefinedSearchTerm *undefSearchTerm))failureBlock;
 
 /**
  *  Method to load a the favorite products from coredata
@@ -179,7 +179,7 @@
  *  @param the success block containing the favorite products list updated
  *
  */
-+ (void)removeFromFavorites:(RIProduct*)product successBlock:(void (^)(RIApiResponse apiResponse, NSArray *success))successBlock andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
+//+ (void)removeFromFavorites:(RIProduct*)product successBlock:(void (^)(RIApiResponse apiResponse, NSArray *success))successBlock andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 /**
  *  Method to load a the recently viewed products from coredata

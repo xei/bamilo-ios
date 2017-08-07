@@ -39,5 +39,6 @@ typedef enum {
 + (NSString *)getTargetKey:(TargetType)type;
 + (NSString *)getTargetString:(TargetType)type node:(NSString *)string;
 + (RITarget *)getTarget:(TargetType)type node:(NSString *)string;
++ (NSString*)getRelativeUrlStringforTarget:(RITarget*)target;
 
 @end

@@ -503,4 +503,7 @@
 #define STRING_CANCELLED RILocalizedString(@"cancelled", nil)
 #define STRING_ALREADY_LOGGED_IN RILocalizedString(@"already_logged_in", nil)
 #define STRING_BAMILO_RECOMMENDATION RILocalizedString(@"bamilo_recommendation", nil)
+#define STRING_GENDER RILocalizedString(@"gender", nil)
+#define STRING_EMAIL_TO_CS RILocalizedString(@"send_email_to_CS", nil)
+#define STRING_ZERO_COST RILocalizedString(@"zero_cost", nil)
 #endif

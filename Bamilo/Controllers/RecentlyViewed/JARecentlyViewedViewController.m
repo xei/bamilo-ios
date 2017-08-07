@@ -15,6 +15,7 @@
 #import "JAPicker.h"
 #import "JAUtils.h"
 #import "RICart.h"
+#import "Bamilo-Swift.h"
 
 @interface JARecentlyViewedViewController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, JAPickerDelegate, DataServiceProtocol>
 
@@ -350,12 +351,13 @@
         }
     }
     
-    [[CartDataManager sharedInstance] addProductToCart:self simpleSku:productSimple.sku completion:^(id data, NSError *error) {
+    [DataAggregator addProductToCart:self simpleSku:productSimple.sku completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
             
             //EVENT: ADD TO CART
-            [TrackerManager postEvent:[EventFactory addToCart:productSimple.sku basketValue:[self.cart.cartEntity.cartValue longValue] success:YES] forName:[AddToCartEvent name]];
+            [TrackerManager postEventWithSelector:[EventSelectors addToCartEventSelector]
+                                       attributes:[EventAttributes addToCardWithProduct:product screenName:[self getScreenName] success:YES]];
             
             NSNumber *price = (VALID_NOTEMPTY(product.specialPriceEuroConverted, NSNumber) && [product.specialPriceEuroConverted longValue] > 0.0f) ? product.specialPriceEuroConverted : product.priceEuroConverted;
             
@@ -447,7 +449,8 @@
             //[self hideLoading];
         } else {
             //EVENT: ADD TO CART
-            [TrackerManager postEvent:[EventFactory addToCart:productSimple.sku basketValue:[self.cart.cartEntity.cartValue intValue] success:NO] forName:[AddToCartEvent name]];
+            [TrackerManager postEventWithSelector:[EventSelectors addToCartEventSelector]
+                                       attributes:[EventAttributes addToCardWithProduct:product screenName:[self getScreenName] success:NO]];
             
             [self onErrorResponse:error.code messages:[error.userInfo objectForKey:kErrorMessages] showAsMessage:YES selector:@selector(finishAddToCartWithButton:) objects:@[button]];
             //[self hideLoading];
@@ -560,8 +563,8 @@
     }
 }
 
-#pragma mark - PerformanceTrackerProtocol
--(NSString *)getPerformanceTrackerScreenName {
+#pragma mark - DataTrackerProtocol
+-(NSString *)getScreenName {
     return @"RecentlyViewed";
 }
 

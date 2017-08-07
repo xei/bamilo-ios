@@ -14,17 +14,24 @@
 @implementation AppEvent
 
 +(NSString *)name {
-    return nil;
+    return NSStringFromClass(self);
 }
 
 +(NSMutableDictionary *)attributes {
-    NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithObjects:@[ [[AppManager sharedInstance] getAppFullFormattedVersion], @"ios", [DeviceManager getConnectionType], [NSDate date] ] forKeys:@[ kEventAppVersion, kEventPlatform, kEventConnection, kEventDate ]];
+    NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithDictionary:
+                                       @{
+                                         kEventName: [self name],
+                                         kEventAppVersion: [[AppManager sharedInstance] getAppFullFormattedVersion],
+                                         kEventPlatform: @"ios",
+                                         kEventConnection: [DeviceManager getConnectionType],
+                                         kEventDate:  [NSDate date]
+                                         }];
     
-        NSString *userGender = [RICustomer getCustomerGender];
-        if(userGender) {
-            [attributes setObject:userGender forKey:kEventUserGender]; //male OR female
-        }
-
+    NSString *userGender = [RICustomer getCustomerGender];
+    if(userGender) {
+        [attributes setObject:userGender forKey:kEventUserGender]; //male OR female
+    }
+    
     return attributes;
 }
 

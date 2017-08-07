@@ -1,13 +1,13 @@
+////
+////  JAMyAccountViewController.h
+////  Jumia
+////
+////  Created by Jose Mota on 15/12/15.
+////  Copyright © 2015 Rocket Internet. All rights reserved.
+////
 //
-//  JAMyAccountViewController.h
-//  Jumia
+//#import <UIKit/UIKit.h>
 //
-//  Created by Jose Mota on 15/12/15.
-//  Copyright © 2015 Rocket Internet. All rights reserved.
+//@interface JAMyAccountViewController : JABaseViewController <UITableViewDelegate, UITableViewDataSource>
 //
-
-#import <UIKit/UIKit.h>
-
-@interface JAMyAccountViewController : JABaseViewController <UITableViewDelegate, UITableViewDataSource>
-
-@end
+//@end

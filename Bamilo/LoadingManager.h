@@ -1,19 +1,19 @@
+////
+////  LoadingManager.h
+////  Bamilo
+////
+////  Created by Narbeh Mirzaei on 2/12/17.
+////  Copyright © 2017 Rocket Internet. All rights reserved.
+////
 //
-//  LoadingManager.h
-//  Bamilo
+//#import <Foundation/Foundation.h>
 //
-//  Created by Narbeh Mirzaei on 2/12/17.
-//  Copyright © 2017 Rocket Internet. All rights reserved.
+//@interface LoadingManager : NSObject
 //
-
-#import <Foundation/Foundation.h>
-
-@interface LoadingManager : NSObject
-
-+(instancetype) sharedInstance;
-
--(void) showLoading;
--(void) showLoadingOn:(id)viewcontroller;
--(void) hideLoading;
-
-@end
+//+(instancetype) sharedInstance;
+//
+//-(void) showLoading;
+//-(void) showLoadingOn:(id)viewcontroller;
+//-(void) hideLoading;
+//
+//@end

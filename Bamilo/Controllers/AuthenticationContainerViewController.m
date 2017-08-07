@@ -59,6 +59,14 @@
     [self.view addSubview:_pagemenu.view];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if ([RICustomer checkIfUserIsLogged]) {
+        [self.navigationController popViewControllerAnimated:NO];
+    }
+}
+
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self publishScreenLoadTime];
@@ -70,7 +78,7 @@
 
     self.navBarLayout.title = STRING_LOGIN_OR_SIGNUP;
     self.navBarLayout.showCartButton = NO;
-    self.navBarLayout.showBackButton = YES;
+    self.navBarLayout.showBackButton = !self.isForcedToLogin;
     self.navBarLayout.showLogo = NO;
 }
 
@@ -115,8 +123,8 @@
     [self publishScreenLoadTime];
 }
 
-#pragma mark - PerformanceTrackerProtocol
--(NSString *)getPerformanceTrackerScreenName {
+#pragma mark - DataTrackerProtocol
+-(NSString *)getScreenName {
     if(self.pagemenu.currentPageIndex == 0) {
         return @"SignUp";
     } else {

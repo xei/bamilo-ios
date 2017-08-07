@@ -19,7 +19,7 @@ const CGFloat summeryViewHeight = 45;
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    [self.contentView setBackgroundColor:[UIColor withHexString:@"EEF2F6"]];
+    [self.contentView setBackgroundColor:[Theme color:kColorVeryLightGray]];
 }
 
 - (void)updateWithModel:(id)model {

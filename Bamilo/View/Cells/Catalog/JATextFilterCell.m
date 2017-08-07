@@ -7,6 +7,7 @@
 //
 
 #import "JATextFilterCell.h"
+#import "Bamilo-Swift.h"
 
 @implementation JATextFilterCell
 
@@ -115,9 +116,9 @@
 
 }
 
--(void)setFilterOption:(SearchFilterItemOption *)filterOption {
+-(void)setFilterOption:(CatalogFilterOption *)filterOption {
     self.nameLabel.text = filterOption.name;
-    self.quantityLabel.text = filterOption.productsCount ? [[NSString stringWithFormat:@"(%d)", filterOption.productsCount] numbersToPersian] : @"";
+    self.quantityLabel.text = filterOption.productsCount ? [[NSString stringWithFormat:@"(%ld)", (long)filterOption.productsCount] numbersToPersian] : @"";
     [self.customAccessoryView setHighlighted:filterOption.selected];
 }
 

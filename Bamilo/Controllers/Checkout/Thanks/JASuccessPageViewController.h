@@ -1,17 +1,17 @@
+////
+////  JASuccessPageViewController.h
+////  Jumia
+////
+////  Created by Jose Mota on 17/02/16.
+////  Copyright © 2016 Rocket Internet. All rights reserved.
+////
 //
-//  JASuccessPageViewController.h
-//  Jumia
+//#import "JABaseViewController.h"
+//#import "RICart.h"
+//#import "EmarsysPredictProtocol.h"
 //
-//  Created by Jose Mota on 17/02/16.
-//  Copyright © 2016 Rocket Internet. All rights reserved.
+//@interface JASuccessPageViewController : JABaseViewController <EmarsysWebExtendProtocol>
 //
-
-#import "JABaseViewController.h"
-#import "RICart.h"
-#import "EmarsysPredictProtocol.h"
-
-@interface JASuccessPageViewController : JABaseViewController <EmarsysWebExtendProtocol>
-
-@property (strong, nonatomic) RICart *cart;
-
-@end
+//@property (strong, nonatomic) RICart *cart;
+//
+//@end

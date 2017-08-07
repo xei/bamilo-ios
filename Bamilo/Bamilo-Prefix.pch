@@ -68,7 +68,6 @@
     #import "AppManager.h"
     #import "Categories.pch"
     #import "ThemeManager.h"
-    #import "TrackerManager.h"
     #import "UserDefaultsManager.h"
 
 #define sSUCCESSFUL @"SUCCESSFUL"
@@ -76,11 +75,11 @@
 #define kConfigs @"Configs"
 #define cWebNormalizedDateTimeFormat @"yyyy-MM-dd HH:mm:ss"
 
-#define kUTMSource @"utm_source"
-#define kUTMMedium  @"utm_medium"
-#define kUTMCampaign @"utm_campaign"
-#define kUTMContent @"utm_content"
-#define kUTMTerm @"utm_term"
+//#define kUTMSource @"utm_source"
+//#define kUTMMedium  @"utm_medium"
+//#define kUTMCampaign @"utm_campaign"
+//#define kUTMContent @"utm_content"
+//#define kUTMTerm @"utm_term"
 
 
 #define SYSTEM_VERSION(v) [[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch]

@@ -13,14 +13,16 @@
 #import "ThreadManager.h"
 #import "NSArray+Extension.h"
 #import "EmarsysPredictManager.h"
+#import "Bamilo-Swift.h"
 
 @interface EmptyViewController() <EmarsysRecommendationsProtocol, FeatureBoxCollectionViewWidgetViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *topImageView;
 @property (weak, nonatomic) IBOutlet EmarsysRecommendationMinimalCarouselWidget *carouselWidget;
 
-@property (strong, nonatomic) NSString *titleString;
+@property (copy, nonatomic) NSString *titleString;
 @property (strong, nonatomic) UIImage *topImage;
+
 @end
 
 @implementation EmptyViewController
@@ -28,9 +30,8 @@
     [super viewDidLoad];
     
     [self.view setBackgroundColor:[UIColor whiteColor]];
-    self.tabBarIsVisible = YES;
     
-    [self.carouselWidget setBackgroundColor:JAHomePageBackgroundGrey];
+    [self.carouselWidget setBackgroundColor:[Theme color:kColorVeryLightGray]];
     self.carouselWidget.delegate = self;
     [self.carouselWidget updateTitle:STRING_BAMILO_RECOMMENDATION];
     
@@ -80,6 +81,7 @@
 #pragma mark - FeatureBoxCollectionViewWidgetViewDelegate
 - (void)selectFeatureItem:(NSObject *)item widgetBox:(id)widgetBox {
     if ([item isKindOfClass:[RecommendItem class]]) {
+        [TrackerManager postEventWithSelector:[EventSelectors recommendationTappedSelector] attributes:[EventAttributes tapEmarsysRecommendationWithScreenName:self.parentScreenName logic:self.recommendationLogic ?: @"PERSONAL"]];
         [[NSNotificationCenter defaultCenter] postNotificationName: kDidSelectTeaserWithPDVUrlNofication
                                                             object: nil
                                                           userInfo: @{@"sku": ((RecommendItem *)item).sku}];

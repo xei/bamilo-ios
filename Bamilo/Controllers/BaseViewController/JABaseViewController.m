@@ -18,6 +18,7 @@
 #import "ViewControllerManager.h"
 #import "NotificationBarView.h"
 #import "EmarsysPredictManager.h"
+#import "Bamilo-Swift.h"
 
 #define kSearchViewBarHeight 44.0f
 
@@ -53,9 +54,6 @@
     CGFloat bottomOffset = 0.0f;
     if (self.searchBarIsVisible) {
         topOffset += kSearchViewBarHeight;
-    }
-    if (self.tabBarIsVisible) {
-        bottomOffset += kTabBarHeight;
     }
     return CGRectMake(self.view.bounds.origin.x,
                       self.view.bounds.origin.y + topOffset,
@@ -115,7 +113,7 @@
     
     [self.navigationController.navigationBar setTranslucent:NO];
     self.navigationItem.hidesBackButton = YES;
-    self.title = @"";
+//    self.title = @"";
     
     self.view.backgroundColor = JABackgroundGrey;
     
@@ -145,19 +143,16 @@
     self.loadingAnimation.center = self.loadingView.center;
     
     self.loadingView.alpha = 0.0f;
-    
-    //self.accengageAlias = [self getDataTrackerAlias];
+    if ([self getScreenName].length) {
+        [TrackerManager trackScreenNameWithScreenName:[self getScreenName]];
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
-    //[Accengage trackScreenDisplay:[self getPerformanceTrackerScreenName] ?: @""];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
-    //[Accengage trackScreenDismiss:[self getPerformanceTrackerScreenName] ?: @""];
-    
     [super viewDidDisappear:animated];
 }
 
@@ -249,7 +244,7 @@
     [super viewWillAppear:animated];
     
     [self reloadNavBar];
-    [self reloadTabBar];
+//    [self reloadTabBar];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sideMenuIsOpening) name:kOpenMenuNotification object:nil];
     
@@ -298,10 +293,10 @@
                                                         object:self.navBarLayout];
 }
 
-- (void)reloadTabBar {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kChangeTabBarVisibility
-                                                        object:[NSNumber numberWithBool:self.tabBarIsVisible]];
-}
+//- (void)reloadTabBar {
+//    [[NSNotificationCenter defaultCenter] postNotificationName:kChangeTabBarVisibility
+//                                                        object:[NSNumber numberWithBool:self.tabBarIsVisible]];
+//}
 
 - (void)showSearchBar {
     self.searchBarBackground = [[UIView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, kSearchViewBarHeight)];
@@ -385,9 +380,8 @@
 }
 
 #pragma mark Search Bar && Search Results View Delegate
-
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    
+    NSLog(@"%@", searchBar.text);
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
@@ -395,7 +389,7 @@
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar;
 {
-    [[ViewControllerManager centerViewController] showSearchView];
+    [[MainTabBarViewController topNavigationController] showSearchView];
     return NO;
 }
 
@@ -593,17 +587,17 @@
         [RICustomer autoLogin:^(BOOL success, NSDictionary *entities, NSString *loginMethod) {
             if (success) {
                 block();
-            }else{
+            } else {
                 [RICustomer cleanCustomerFromDB];
-                [JAAuthenticationViewController authenticateAndExecuteBlock:^{
+                [(JACenterNavigationController *)self.navigationController performProtectedBlock:^(BOOL userHadSession) {
                     block();
-                } showBackButtonForAuthentication:YES];
+                }];
             }
         }];
-    }else{
-        [JAAuthenticationViewController authenticateAndExecuteBlock:^{
+    } else{
+        [(JACenterNavigationController *)self.navigationController performProtectedBlock:^(BOOL userHadSession) {
             block();
-        } showBackButtonForAuthentication:YES];
+        }];
     }
 }
 
@@ -725,11 +719,20 @@
 
 
 //TEMP FUNCTION
--(NSArray *) extractSuccessMessages:(DataMessageList *)dataMessages {
+-(NSArray *) extractSuccessMessages:(id)dataMessages {
     NSMutableArray *messages = [NSMutableArray array];
     
-    for(DataMessage *msgObject in dataMessages.success) {
-        [messages addObject:msgObject.message];
+    if ([dataMessages isKindOfClass:DataMessageList.class]) {
+        for(DataMessage *msgObject in ((DataMessageList *)dataMessages).success) {
+            [messages addObject:msgObject.message];
+        }
+    }
+    
+
+    if ([dataMessages isKindOfClass:ApiDataMessageList.class]) {
+        for(ApiDataMessage *msgObject in ((ApiDataMessageList *)dataMessages).success) {
+            [messages addObject:msgObject.message];
+        }
     }
     
     return messages;
@@ -752,16 +755,20 @@
     }
 }
 
--(NSString *) getPerformanceTrackerScreenName {
-    return nil;
-}
-
 -(NSString *)getPerformanceTrackerLabel {
     return nil;
 }
 
+- (NSString *)getPerformanceTrackerScreenName {
+    return [self getScreenName];
+}
+
 #pragma mark - DataTrackerProtocol
 -(NSString *)getDataTrackerAlias {
+    return nil;
+}
+
+- (NSString *)getScreenName {
     return nil;
 }
 

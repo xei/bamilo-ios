@@ -1,15 +1,15 @@
+////
+////  JAForgotPasswordViewController.h
+////  Jumia
+////
+////  Created by Miguel Chaves on 14/Aug/14.
+////  Copyright (c) 2014 Rocket Internet. All rights reserved.
+////
 //
-//  JAForgotPasswordViewController.h
-//  Jumia
+//#import <UIKit/UIKit.h>
 //
-//  Created by Miguel Chaves on 14/Aug/14.
-//  Copyright (c) 2014 Rocket Internet. All rights reserved.
+//@interface JAForgotPasswordViewController : JABaseViewController
 //
-
-#import <UIKit/UIKit.h>
-
-@interface JAForgotPasswordViewController : JABaseViewController
-
-@property (strong, nonatomic) NSString *loginEmail;
-
-@end
+//@property (strong, nonatomic) NSString *loginEmail;
+//
+//@end

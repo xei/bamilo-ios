@@ -30,7 +30,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    [self.contentView setBackgroundColor: [UIColor withHexString:@"EEF2F6"]];
+    [self.contentView setBackgroundColor:[Theme color:kColorVeryLightGray]];
     self.stepper.delegate = self;
 }
 

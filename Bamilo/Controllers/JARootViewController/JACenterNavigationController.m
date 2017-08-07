@@ -14,16 +14,13 @@
 #import "JASavedListViewController.h"
 #import "JARecentSearchesViewController.h"
 #import "JARecentlyViewedViewController.h"
-#import "JAMyAccountViewController.h"
 #import "JAUserDataViewController.h"
 #import "JAMyOrdersViewController.h"
 #import "JAMyOrderDetailViewController.h"
 #import "JASignInViewController.h"
 #import "JARegisterViewController.h"
-#import "JACatalogViewController.h"
 #import "JAPDVViewController.h"
 #import "JAExternalPaymentsViewController.h"
-//#import "JASuccessPageViewController.h"
 #import "RIProduct.h"
 #import "RISeller.h"
 #import "JANavigationBarLayout.h"
@@ -38,7 +35,7 @@
 #import "JAShopWebViewController.h"
 #import "JABundlesViewController.h"
 #import "JAPDVVariationsViewController.h"
-#import "JAMoreMenuViewController.h"
+//#import "JAMoreMenuViewController.h"
 #import "RICountry.h"
 #import "JANewsletterViewController.h"
 #import "JANewsletterSubscriptionViewController.h"
@@ -71,6 +68,7 @@
 #import "ProtectedViewControllerProtocol.h"
 #import "ArgsReceiverProtocol.h"
 #import "SuccessPaymentViewController.h"
+#import "Bamilo-Swift.h"
 
 @interface JACenterNavigationController ()
 
@@ -95,7 +93,7 @@
 
 - (JAStepByStepTabViewController *)getNewCheckoutStepByStepViewController {
     JAStepByStepTabViewController *checkoutStepByStepViewController = [JAStepByStepTabViewController new];
-    [checkoutStepByStepViewController setStepByStepModel:[JACheckoutStepByStepModel new]];
+//    [checkoutStepByStepViewController setStepByStepModel:[JACheckoutStepByStepModel new]];
     checkoutStepByStepViewController.navBarLayout.showCartButton = NO;
     [checkoutStepByStepViewController.navBarLayout setShowBackButton:YES];
     checkoutStepByStepViewController.navBarLayout.showLogo = NO;
@@ -131,233 +129,92 @@
     [self loadNavigationViews];
     self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showLoadCountryScreen:)
-                                                 name:kSelectedCountryNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showChooseCountry:)
-                                                 name:kShowChooseCountryScreenNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showHomeScreen:)
-                                                 name:kShowHomeScreenNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showSavedListViewController:)
-                                                 name:kShowSavedListScreenNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showRecentSearchesController:)
-                                                 name:kShowRecentSearchesScreenNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showRecentlyViewedController)
-                                                 name:kShowRecentlyViewedScreenNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showMyAccountController)
-                                                 name:kShowMyAccountScreenNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showUserData:)
-                                                 name:kShowUserDataScreenNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showEmailNotificaitons:)
-                                                 name:kShowEmailNotificationsScreenNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showNewsletterSubscritions:)
-                                                 name:kShowNewsletterSubscriptionsScreenNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showMyOrdersViewController:)
-                                                 name:kShowMyOrdersScreenNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showMyOrderDetailViewController:)
-                                                 name:kShowMyOrderDetailScreenNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showAuthenticationScreen:)
-                                                 name:kShowAuthenticationScreenNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showSignUpScreen:)
-                                                 name:kShowSignUpScreenNotification
-                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCart:) name:kUpdateCartNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeEditButtonState:) name:kEditShouldChangeStateNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeDoneButtonState:) name:kDoneShouldChangeStateNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeNavigationWithNotification:) name:kChangeNavigationBarNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didLoggedIn) name:kUserLoggedInNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didLoggedOut) name:kUserLoggedOutNotification object:nil];
+}
 
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showCheckoutExternalPaymentsScreen:)
-                                                 name:kShowCheckoutExternalPaymentsScreenNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showCheckoutThanksScreen:)
-                                                 name:kShowCheckoutThanksScreenNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didSelectRecentSearch:)
-                                                 name:kSelectedRecentSearchNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didSelectItemInMenu:)
-                                                 name:kMenuDidSelectOptionNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didSelectLeafCategoryInMenu:)
-                                                 name:kMenuDidSelectLeafCategoryNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(openCart:)
-                                                 name:kOpenCartNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(updateCart:)
-                                                 name:kUpdateCartNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(changeEditButtonState:)
-                                                 name:kEditShouldChangeStateNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(changeDoneButtonState:)
-                                                 name:kDoneShouldChangeStateNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didSelectTeaserWithCatalogUrl:)
-                                                 name:kDidSelectTeaserWithCatalogUrlNofication
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didSelectCampaign:)
-                                                 name:kDidSelectCampaignNofication
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didSelectTeaserWithPDVUrl:)
-                                                 name:kDidSelectTeaserWithPDVUrlNofication
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didSelectTeaserWithShopUrl:)
-                                                 name:kDidSelectTeaserWithShopUrlNofication
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(closeCurrentScreenNotificaion:)
-                                                 name:kCloseCurrentScreenNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(closeTopTwoScreensNotificaion:)
-                                                 name:kCloseTopTwoScreensNotification
-                                               object:nil];
+- (void)registerObservingOnNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showHomeScreen:) name:kShowHomeScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showSavedListViewController:) name:kShowSavedListScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showRecentSearchesController:) name:kShowRecentSearchesScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showRecentlyViewedController) name:kShowRecentlyViewedScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showMyAccountController) name:kShowMyAccountScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showUserData:) name:kShowUserDataScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showEmailNotificaitons:) name:kShowEmailNotificationsScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showNewsletterSubscritions:) name:kShowNewsletterSubscriptionsScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showMyOrdersViewController:) name:kShowMyOrdersScreenNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showMyOrderDetailViewController:) name:kShowMyOrderDetailScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showAuthenticationScreen:) name:kShowAuthenticationScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showSignUpScreen:) name:kShowSignUpScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showCheckoutExternalPaymentsScreen:) name:kShowCheckoutExternalPaymentsScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showCheckoutThanksScreen:) name:kShowCheckoutThanksScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectRecentSearch:) name:kSelectedRecentSearchNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectItemInMenu:) name:kMenuDidSelectOptionNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectLeafCategoryInMenu:) name:kMenuDidSelectLeafCategoryNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openCart:) name:kOpenCartNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectTeaserWithCatalogUrl:) name:kDidSelectTeaserWithCatalogUrlNofication object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectCampaign:) name:kDidSelectCampaignNofication object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectTeaserWithPDVUrl:) name:kDidSelectTeaserWithPDVUrlNofication object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectTeaserWithShopUrl:) name:kDidSelectTeaserWithShopUrlNofication object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeCurrentScreenNotificaion:) name:kCloseCurrentScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeTopTwoScreensNotificaion:) name:kCloseTopTwoScreensNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showProductSpecificationScreen:) name:kShowProductSpecificationScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showNewRatingScreen:) name:kShowNewRatingScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showProductBundlesScreen:) name:kOpenProductBundlesScreen object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showProductVariationsScreen:) name:kOpenProductVariationsScreen object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showSizeGuide:) name:kShowSizeGuideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showOtherOffers:) name:kOpenOtherOffers object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showSellerReviews:) name:kOpenSellerReviews object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showNewSellerReview:) name:kOpenNewSellerReview object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showSellerCatalog:) name:kOpenSellerPage object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkRedirectInfo) name:kCheckRedirectInfoNotification object:nil];
+}
 
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(changeTabBarWithNotification:)
-                                                 name:kChangeTabBarVisibility
-                                               object:nil];
+- (void)removeObservingNotifications {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowHomeScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowSavedListScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowRecentSearchesScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowRecentlyViewedScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowMyAccountScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowUserDataScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowEmailNotificationsScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowNewsletterSubscriptionsScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowMyOrdersScreenNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowMyOrderDetailScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowAuthenticationScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowSignUpScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowCheckoutExternalPaymentsScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowCheckoutThanksScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kSelectedRecentSearchNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kMenuDidSelectOptionNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kMenuDidSelectLeafCategoryNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kOpenCartNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kDidSelectTeaserWithCatalogUrlNofication object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kDidSelectCampaignNofication object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kDidSelectTeaserWithPDVUrlNofication object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kDidSelectTeaserWithShopUrlNofication object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kCloseCurrentScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kCloseTopTwoScreensNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowProductSpecificationScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowNewRatingScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kOpenProductBundlesScreen object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kOpenProductVariationsScreen object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowSizeGuideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kOpenOtherOffers object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kOpenSellerReviews object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kOpenNewSellerReview object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kOpenSellerPage object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kCheckRedirectInfoNotification object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(changeNavigationWithNotification:)
-                                                 name:kChangeNavigationBarNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showProductSpecificationScreen:)
-                                                 name:kShowProductSpecificationScreenNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showNewRatingScreen:)
-                                                 name:kShowNewRatingScreenNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showProductBundlesScreen:)
-                                                 name:kOpenProductBundlesScreen
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showProductVariationsScreen:)
-                                                 name:kOpenProductVariationsScreen
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showSizeGuide:)
-                                                 name:kShowSizeGuideNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showOtherOffers:)
-                                                 name:kOpenOtherOffers
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showSellerReviews:)
-                                                 name:kOpenSellerReviews
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showNewSellerReview:)
-                                                 name:kOpenNewSellerReview
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showSellerCatalog:)
-                                                 name:kOpenSellerPage
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showMoreMenu)
-                                                 name:kShowMoreMenuScreenNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didLoggedIn)
-                                                 name:kUserLoggedInNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didLoggedOut)
-                                                 name:kUserLoggedOutNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(checkRedirectInfo)
-                                                 name:kCheckRedirectInfoNotification
-                                               object:nil];
 }
 
 - (void)loadNavigationViews {
     [self.navigationBarView removeFromSuperview];
-    [self.tabBarView removeFromSuperview];
-    
     [self customizeNavigationBar];
-    [self customizeTabBar];
 }
 
 - (void)openTargetString:(NSString *)targetString {
@@ -378,17 +235,16 @@
             return YES;
         }
         case CATALOG_SEARCH: {
-            JACatalogViewController *viewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
-            //JACatalogViewController *viewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];;
-            [self loadScreenTarget:screenTarget forBaseViewController:viewController];
-            [viewController setSearchString:screenTarget.target.node];
+            CatalogViewController *viewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+            viewController.searchTarget = screenTarget.target;
             [self pushViewController:viewController animated:screenTarget.pushAnimation];
             return YES;
         }
         case CATALOG_HASH:
+        case CATALOG_BRAND:
         case CATALOG_CATEGORY: {
-            JACatalogViewController *viewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];;
-            [self loadScreenTarget:screenTarget forBaseViewController:viewController];
+            CatalogViewController *viewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];;
+            viewController.searchTarget = screenTarget.target;
             [self pushViewController:viewController animated:screenTarget.pushAnimation];
             return YES;
         }
@@ -405,12 +261,6 @@
             JAActionWebViewController* viewController = [[JAActionWebViewController alloc] init];
             [self loadScreenTarget:screenTarget forBaseViewController:viewController];
             [viewController setHtmlString:VALID_NOTEMPTY_VALUE([screenTarget.screenInfo objectForKey:@"html"], NSString)];
-            [self pushViewController:viewController animated:screenTarget.pushAnimation];
-            return YES;
-        }
-        case CATALOG_BRAND: {
-            JACatalogViewController *viewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];;
-            [self loadScreenTarget:screenTarget forBaseViewController:viewController];
             [self pushViewController:viewController animated:screenTarget.pushAnimation];
             return YES;
         }
@@ -440,74 +290,13 @@
 
 #pragma mark Home Screen
 - (void)showHomeScreen:(NSNotification*)notification {
-    if (![[self topViewController] isKindOfClass:[JAHomeViewController class]]) {
-        if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification object], NSDictionary)){
-            [self showRootViewController];
-        } else {
-            [self popToRootViewControllerAnimated:NO];
-        }
-        
-        [self.tabBarView selectButtonAtIndex:0];
-        JAHomeViewController *home = (JAHomeViewController *)[[ViewControllerManager sharedInstance] loadViewControllerWithoutStoryBoard:NSStringFromClass([JAHomeViewController class])];
-        [self pushViewController:home animated:NO];
-    }
+    [MainTabBarViewController showHome];
 }
 
 - (void)showRootViewController {
-    JABaseViewController* rootViewController = [[JABaseViewController alloc] init];
-    [self setViewControllers:@[rootViewController]];
+    [self popToRootViewControllerAnimated:YES];
 }
 
-- (void)showChooseCountry:(NSNotification*)notification {
-    UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAChooseCountryViewController class]])
-    {
-        JAChooseCountryViewController *country = [JAChooseCountryViewController new];
-        
-        country.navBarLayout.showMenuButton = NO;
-        if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY(notification.object, NSDictionary))
-        {
-            country.navBarLayout.showMenuButton = [[notification.object objectForKey:@"show_menu_button"] boolValue];
-        }
-        
-        BOOL animated = NO;
-        country.navBarLayout.showBackButton = NO;
-        if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY(notification.object, NSDictionary))
-        {
-            country.navBarLayout.showBackButton = [[notification.object objectForKey:@"show_back_button"] boolValue];
-            animated = YES;
-        } else {
-            [self popToRootViewControllerAnimated:NO];
-        }
-        
-        [self pushViewController:country animated:animated];
-    }
-}
-
-- (void)showLoadCountryScreen:(NSNotification*)notification {
-    RICountry* country = notification.object;
-    
-    if (VALID_NOTEMPTY(country, RICountry) && VALID_NOTEMPTY(country.selectedLanguage, RILanguage)) {
-        
-        NSString *locale = [[NSUserDefaults standardUserDefaults] stringForKey:kLanguageCodeKey];
-        
-        if ([locale isEqualToString:country.selectedLanguage.langCode]) {
-            //DO NOTHING
-        } else {
-            //save new language
-            [RILocalizationWrapper setLocalization:country.selectedLanguage.langCode];
-            //reload tab and nav
-            [self loadNavigationViews];
-        }
-    }
-    
-    JALoadCountryViewController *loadCountry = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"loadCountryViewController"];
-    
-    loadCountry.selectedCountry = country;
-    loadCountry.pushNotification = notification.userInfo;
-    
-    [self setViewControllers:@[loadCountry]];
-}
 
 #pragma mark - Left Menu Actions
 
@@ -524,7 +313,7 @@
                 // It's to perform a search
                 [self pushCatalogToShowSearchResults:[selectedItem objectForKey:@"text"]];
             } else if ([index isEqual:@(98)]) {
-                [self pushCatalogForUndefinedSearchWithBrandTargetString:[selectedItem objectForKey:@"targetString"]
+                [self  pushCatalogForUndefinedSearchWithBrandTargetString:[selectedItem objectForKey:@"targetString"]
                                                    andBrandName:[selectedItem objectForKey:@"name"]];
             } else {
                 [self changeCenterPanel:[selectedItem objectForKey:@"name"] notification:notification];
@@ -537,11 +326,12 @@
 - (void)changeCenterPanel:(NSString *)newScreenName notification:(NSNotification *)notification {
     if ([newScreenName isEqualToString:STRING_HOME]) {
         [self showHomeScreen:nil];
-    } else if ([newScreenName isEqualToString:STRING_MY_FAVOURITES]) {
-        [self showSavedListViewController:nil];
-    } else if ([newScreenName isEqualToString:STRING_CHOOSE_COUNTRY]) {
-        [self showChooseCountry:[NSNotification notificationWithName:kShowChooseCountryScreenNotification object:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"show_menu_button"]]];
-    } else if ([newScreenName isEqualToString:STRING_RECENT_SEARCHES]) {
+//    } else if ([newScreenName isEqualToString:STRING_MY_FAVOURITES]) {
+//        [self showSavedListViewController:nil];
+    }
+//    else if ([newScreenName isEqualToString:STRING_CHOOSE_COUNTRY]) {
+//        [self showChooseCountry:[NSNotification notificationWithName:kShowChooseCountryScreenNotification object:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"show_menu_button"]]];
+    else if ([newScreenName isEqualToString:STRING_RECENT_SEARCHES]) {
         [self showRecentSearchesController:nil];
     } else if ([newScreenName isEqualToString:STRING_LOGIN]) {
         [self showSignInScreen:nil];
@@ -567,21 +357,18 @@
 
 #pragma mark Favorites Screen
 - (void)showSavedListViewController:(NSNotification*)notification {
-    UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JASavedListViewController class]]) {
-        [self requestNavigateToNib:NSStringFromClass([JASavedListViewController class]) args:nil];
-    }
+    [MainTabBarViewController showWishList];
 }
 
 #pragma mark MoreMenu
-- (void)showMoreMenu {
-    UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAMoreMenuViewController class]]) {
-        JAMoreMenuViewController *moreMenuViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"moreMenuViewController"];
-        [self popToRootViewControllerAnimated:NO];
-        [self pushViewController:moreMenuViewController animated:NO];
-    }
-}
+//- (void)showMoreMenu {
+//    UIViewController *topViewController = [self topViewController];
+//    if (![topViewController isKindOfClass:[JAMoreMenuViewController class]]) {
+//        JAMoreMenuViewController *moreMenuViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"moreMenuViewController"];
+//        [self popToRootViewControllerAnimated:NO];
+//        [self pushViewController:moreMenuViewController animated:NO];
+//    }
+//}
 
 #pragma mark Recent Searches Screen
 - (void)showRecentSearchesController:(NSNotification*)notification {
@@ -671,11 +458,12 @@
 
 #pragma mark My Account Screen
 - (void)showMyAccountController {
-    UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAMyAccountViewController class]]) {
-        JAMyAccountViewController *myAccountViewCtrl = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"myAccountViewController"];
-        [self pushViewController:myAccountViewCtrl animated:NO];
-    }
+    [MainTabBarViewController showProfile];
+//    UIViewController *topViewController = [self topViewController];
+//    if (![topViewController isKindOfClass:[ProfileViewController class]]) {
+//        ProfileViewController *myAccountViewCtrl = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
+//        [self pushViewController:myAccountViewCtrl animated:NO];
+//    }
 }
 
 #pragma mark Track Order Screen
@@ -693,38 +481,39 @@
 
 #pragma mark Track Order Detail Screen
 - (void)showMyOrderDetailViewController:(NSNotification*)notification {
-    UIViewController *topViewController = [self topViewController];
-    if ([topViewController isKindOfClass:[JAMyOrdersViewController class]]) {
-        
-        NSDictionary *userInfo = notification.userInfo;
-        if(VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"order"], RITrackOrder)) {
-            JAMyOrderDetailViewController *myOrderVC = [JAMyOrderDetailViewController new];
-            myOrderVC.trackingOrder = [userInfo objectForKey:@"order"];
-            
-            [self pushViewController:myOrderVC animated:YES];
-        }
-    }
+//    UIViewController *topViewController = [self topViewController];
+//    if ([topViewController isKindOfClass:[JAMyOrdersViewController class]]) {
+//        
+//        NSDictionary *userInfo = notification.userInfo;
+//        if(VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"order"], RITrackOrder)) {
+//            JAMyOrderDetailViewController *myOrderVC = [JAMyOrderDetailViewController new];
+//            myOrderVC.trackingOrder = [userInfo objectForKey:@"order"];
+//            
+//            [self pushViewController:myOrderVC animated:YES];
+//        }
+//    }
 }
 
 #pragma mark User Data Screen
 - (void)showUserData:(NSNotification*)notification {
-    UIViewController *topViewController = [self topViewController];
-    if([RICustomer checkIfUserIsLogged]) {
-        if (![topViewController isKindOfClass:[JAUserDataViewController class]]) {
-            BOOL animated = NO;
-            if(VALID_NOTEMPTY(notification.object, NSDictionary) && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber)) {
-                animated = [[notification.object objectForKey:@"animated"] boolValue];
-            }
-            
-            JAUserDataViewController *userData = [[JAUserDataViewController alloc] init];
-            
-            [self pushViewController:userData animated:animated];
-        }
-    } else {
-        [self performProtectedBlock:^(BOOL userHadSession) {
-            [[NSNotificationCenter defaultCenter] postNotification:notification];
-        }];
-    }
+    [[MainTabBarViewController topNavigationController] requestNavigateToClass:@"JAUserDataViewController" args:nil];
+//    UIViewController *topViewController = [self topViewController];
+//    if([RICustomer checkIfUserIsLogged]) {
+//        if (![topViewController isKindOfClass:[JAUserDataViewController class]]) {
+//            BOOL animated = NO;
+//            if(VALID_NOTEMPTY(notification.object, NSDictionary) && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber)) {
+//                animated = [[notification.object objectForKey:@"animated"] boolValue];
+//            }
+//            
+//            JAUserDataViewController *userData = [[JAUserDataViewController alloc] init];
+//            
+//            [self pushViewController:userData animated:animated];
+//        }
+//    } else {
+//        [self performProtectedBlock:^(BOOL userHadSession) {
+//            [[NSNotificationCenter defaultCenter] postNotification:notification];
+//        }];
+//    }
 }
 
 #pragma mark Email Notifications Screen
@@ -925,21 +714,19 @@
 
 #pragma mark Catalog Screen
 - (void)pushCatalogToShowSearchResults:(NSString *)query {
-    JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
-    catalog.searchString = query;
+    CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+    catalog.searchTarget = [RITarget getTarget:CATALOG_SEARCH node:query];
     
-    catalog.navBarLayout.title = query;
+//    catalog.navBarLayout.title = query;
     
     [self pushViewController:catalog animated:YES];
 }
 
 - (void)pushCatalogForUndefinedSearchWithBrandTargetString:(NSString *)brandTargetString andBrandName:(NSString *)brandName {
-    JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
-    catalog.targetString = brandTargetString;
-    catalog.forceShowBackButton = YES;
+    CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+    catalog.searchTarget = [RITarget parseTarget:brandTargetString];
     
-    catalog.navBarLayout.title = brandName;
-    
+//    catalog.navBarLayout.title = brandName;
     [self pushViewController:catalog animated:YES];
 }
 
@@ -948,20 +735,21 @@
     RICategory* category = [selectedItem objectForKey:@"category"];
     NSString* categoryUrlKey = [selectedItem objectForKey:@"category_url_key"];
     NSString* filterPush = [selectedItem objectForKey:@"filter"];
-    NSNumber* sorting = [selectedItem objectForKey:@"sorting"];
+    NSString* sorting = [selectedItem objectForKey:@"sorting"];
     
     if (category) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification object:nil];
-        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+        CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
         catalog.navBarLayout.title = category.label;
-        catalog.category = category;
+        catalog.searchTarget = [RITarget getTarget:CATALOG_CATEGORY node:category.urlKey];
         
         [self pushViewController:catalog animated:YES];
     } else if (categoryUrlKey.length) {
-        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
-        catalog.categoryUrlKey = categoryUrlKey;
-        catalog.filterPush = filterPush;
-        catalog.sortingMethodFromPush = sorting;
+        CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+        catalog.searchTarget = [RITarget getTarget:CATALOG_CATEGORY node:categoryUrlKey];
+        catalog.pushFilterQueryString = filterPush;
+
+        catalog.sortingMethodString = sorting;
         [self pushViewController:catalog animated:YES];
     }
 }
@@ -1130,15 +918,15 @@
     }
 }
 
--(void)showSellerCatalog: (NSNotification *)notification
-{
+-(void)showSellerCatalog: (NSNotification *)notification {
     NSString* targetString = [notification.userInfo objectForKey:@"targetString"];
     NSString* title = [notification.userInfo objectForKey:@"name"];
     
     if(VALID_NOTEMPTY(targetString, NSString))
     {
-        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
-        catalog.targetString = targetString;
+        CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+        RITarget *target = [RITarget parseTarget:targetString];
+        catalog.searchTarget = target;
         catalog.navBarLayout.title = title;
         catalog.navBarLayout.showBackButton = YES;
         
@@ -1155,9 +943,11 @@
     NSString* title = [notification.userInfo objectForKey:@"title"];
     
     if (targetString.length) {
-        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+        CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
         
-        catalog.targetString = targetString;
+        RITarget *target = [RITarget parseTarget:targetString];
+        catalog.searchTarget = target;
+
         catalog.navBarLayout.title = title;
         
         if ([notification.userInfo objectForKey:@"show_back_button_title"]) {
@@ -1169,7 +959,7 @@
             catalog.teaserTrackingInfo = [notification.userInfo objectForKey:@"teaserTrackingInfo"];
         }
         
-        [self pushViewController:catalog animated:YES];
+        [[MainTabBarViewController topNavigationController] pushViewController:catalog animated:YES];
     }
 }
 
@@ -1342,10 +1132,10 @@
             [screenTarget.screenInfo setObject:[RICountryConfiguration getCurrentConfiguration].redirectHtml forKey:@"html"];
             [screenTarget.screenInfo setObject:[RICountryConfiguration getCurrentConfiguration].redirectStringTarget forKey:@"action"];
             [screenTarget.navBarLayout setShowBackButton:NO];
-            [screenTarget.navBarLayout setShowMenuButton:NO];
+//            [screenTarget.navBarLayout setShowMenuButton:NO];
             [screenTarget.navBarLayout setShowCartButton:NO];
             [screenTarget.navBarLayout setShowSearchButton:NO];
-            [[ViewControllerManager centerViewController] openScreenTarget:screenTarget];
+            [[MainTabBarViewController topNavigationController] openScreenTarget:screenTarget];
             return;
         }
     }
@@ -1452,9 +1242,8 @@
     RISearchSuggestion *recentSearch = notification.object;
     
     if (recentSearch) {
-        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
-        catalog.searchString = recentSearch.item;
-        
+        CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+        catalog.searchTarget = [RITarget getTarget:CATALOG_SEARCH node:recentSearch.item];
         catalog.navBarLayout.title = recentSearch.item;
         
         [self pushViewController:catalog animated:YES];
@@ -1463,15 +1252,15 @@
 
 #pragma mark - Tab Bar
 
-- (void)customizeTabBar {
-    self.tabBarView = [[JATabBarView alloc] initWithFrame:CGRectMake(0.0,
-                                                                     self.view.frame.size.height - kTabBarHeight,
-                                                                     self.view.bounds.size.width,
-                                                                     kTabBarHeight)];
-    self.tabBarView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
-    [self.tabBarView initialSetup];
-    [self.view addSubview:self.tabBarView];
-}
+//- (void)customizeTabBar {
+//    self.tabBarView = [[JATabBarView alloc] initWithFrame:CGRectMake(0.0,
+//                                                                     self.view.frame.size.height - kTabBarHeight,
+//                                                                     self.view.bounds.size.width,
+//                                                                     kTabBarHeight)];
+//    self.tabBarView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
+//    [self.tabBarView initialSetup];
+//    [self.view addSubview:self.tabBarView];
+//}
 
 #pragma mark - Navigation Bar
 
@@ -1492,7 +1281,7 @@
     [self.navigationBar setShadowImage:[UIImage new]];
     
     [self.navigationBarView.cartButton addTarget:self action:@selector(openCart:) forControlEvents:UIControlEventTouchUpInside];
-    [self.navigationBarView.leftButton addTarget:self action:@selector(openMenu) forControlEvents:UIControlEventTouchUpInside];
+//    [self.navigationBarView.leftButton addTarget:self action:@selector(openMenu) forControlEvents:UIControlEventTouchUpInside];
     [self.navigationBarView.doneButton addTarget:self action:@selector(done) forControlEvents:UIControlEventTouchUpInside];
     [self.navigationBarView.editButton addTarget:self action:@selector(edit) forControlEvents:UIControlEventTouchUpInside];
     [self.navigationBarView.backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
@@ -1502,11 +1291,6 @@
     UITapGestureRecognizer *touched = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goTop)];
     [self.navigationBarView.titleLabel addGestureRecognizer:touched];
     
-}
-
-- (void)changeTabBarWithNotification:(NSNotification*)notification {
-    NSNumber* isVisible = notification.object;
-    self.tabBarView.hidden = ![isVisible boolValue];
 }
 
 - (void)changeNavigationWithNotification:(NSNotification*)notification {
@@ -1539,24 +1323,22 @@
         
         if(self.cart) {
             [self.navigationBarView updateCartProductCount:self.cart.cartEntity.cartCount];
-            [self.tabBarView updateCartNumber:[self.cart.cartEntity.cartCount integerValue]];
+            [MainTabBarViewController updateCartValueWithCartItemsCount:[self.cart.cartEntity.cartCount integerValue]];
         } else {
             [userInfo removeObjectForKey:kUpdateCartNotificationValue];
             [self.navigationBarView updateCartProductCount:0];
-            [self.tabBarView updateCartNumber:0];
+            [MainTabBarViewController updateCartValueWithCartItemsCount:0];
         }
     } else {
         self.cart = nil;
         [self.navigationBarView updateCartProductCount:0];
-        [self.tabBarView updateCartNumber:0];
+        [MainTabBarViewController updateCartValueWithCartItemsCount:0];
     }
 }
 
 #pragma mark - Navbar Button actions
 - (void)back {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressBackNotification
-                                                        object:nil];
-    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressBackNotification object:nil];
     JAStepByStepTabViewController *topViewController = (JAStepByStepTabViewController *)[self topViewController];
     if ([topViewController isKindOfClass:[JAStepByStepTabViewController class]] && !topViewController.stackIsEmpty) {
         if ([topViewController sendBack]) {
@@ -1584,52 +1366,18 @@
 }
 
 - (void)openCart:(NSNotification*) notification {
-    
-    typedef void (^GoToCartBlock)(void);
-        GoToCartBlock goToCartBlock = ^void {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification object:nil];
-            if (![[self topViewController] isKindOfClass:[CartViewController class]]) {
-            CartViewController *cartViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"CartViewController"];
-            [cartViewController setCart:self.cart];
-            [self popToRootViewControllerAnimated:NO];
-            [self.tabBarView selectButtonAtIndex:2];
-            [self pushViewController:cartViewController animated:NO];
-        }
-    };
-    
-    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY(notification.object, NSString)) {
-        [RICart addMultipleProducts:[notification.object componentsSeparatedByString:@"_"] withSuccessBlock:^(RICart *cart, NSArray *productsNotAdded) {
-            goToCartBlock();
-        } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages, BOOL outOfStock) {
-            goToCartBlock();
-        }];
-    } else {
-        goToCartBlock();
-    }
-    
+    [MainTabBarViewController showCart];
 }
 
-- (void)openMenu {
-    if ([[self topViewController] isKindOfClass:[JALoadCountryViewController class]]) { return; }
-    NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];
-    
-    if(self.cart) {
-        [userInfo setObject:self.cart forKey:kUpdateCartNotificationValue];
-    }
-    
-    [userInfo setObject:[NSNumber numberWithBool:self.neeedsExternalPaymentMethod] forKey:kExternalPaymentValue];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenMenuNotification object:nil userInfo:[userInfo copy]];
-}
-
-- (void)didLoggedIn {
-    //remove existing ones from database
-    [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RITeaserGrouping class])];
-}
-
-- (void)didLoggedOut {
-    //remove existing ones from database
-    [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RITeaserGrouping class])];
-}
+//- (void)didLoggedIn {
+//    //remove existing ones from database
+//    [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RITeaserGrouping class])];
+//}
+//
+//- (void)didLoggedOut {
+//    //remove existing ones from database
+//    [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RITeaserGrouping class])];
+//}
 
 - (void)viewWillLayoutSubviews {
     [self.searchView resetFrame:self.view.bounds];
@@ -1668,7 +1416,7 @@
     [self requestNavigateToViewController:destViewController args:args];
 }
 
-- (void) requestNavigateToClass:(NSString *)destClass args:(NSDictionary *)args {
+- (void)requestNavigateToClass:(NSString *)destClass args:(NSDictionary *)args {
     UIViewController *destViewController = (UIViewController *)[NSClassFromString(destClass) new];
     
     [self requestNavigateToViewController:destViewController args:args];
@@ -1678,34 +1426,40 @@
     if(block && ![RICustomer checkIfUserIsLogged]) {
         [self pushAuthenticationViewController:^{
             block(NO);
-        }];
+        } byAniamtion:YES];
     } else {
         block(YES);
     }
 }
 
 #pragma mark - Helpers
-- (void) requestNavigateToViewController:(UIViewController *)viewController args:(NSDictionary *)args {
+- (void)requestNavigateToViewController:(UIViewController *)viewController args:(NSDictionary *)args {
     if(viewController) {
         if([viewController conformsToProtocol:@protocol(ProtectedViewControllerProtocol)] && ![RICustomer checkIfUserIsLogged]) {
             [self pushAuthenticationViewController:^{
                 [self pushViewController:[self setArgsForViewController:viewController args:args] animated:YES];
-            }];
+            } byAniamtion:YES];
         } else {
             [self pushViewController:[self setArgsForViewController:viewController args:args] animated:YES];
         }
     }
 }
 
-- (UIViewController *) setArgsForViewController:(UIViewController *)viewController args:(NSDictionary *)args {
+//In existing navigation view controller force the user to login (no back button) e.g. in root of navigation view controllers
+- (void)requestForcedLogin {
+    if (![RICustomer checkIfUserIsLogged]) {
+        [self pushAuthenticationViewController:nil byAniamtion:NO byForce:YES];
+    }
+}
+
+- (UIViewController *)setArgsForViewController:(UIViewController *)viewController args:(NSDictionary *)args {
     if([viewController conformsToProtocol:@protocol(ArgsReceiverProtocol)]) {
         [viewController performSelectorOnMainThread:@selector(updateWithArgs:) withObject:args waitUntilDone:YES];
     }
-    
     return viewController;
 }
 
-- (void) pushAuthenticationViewController:(void (^)(void))completion {
+- (void)pushAuthenticationViewController:(void (^)(void))completion byAniamtion:(BOOL)animation byForce:(BOOL)force {
     AuthenticationCompletion _authenticationCompletion = ^(AuthenticationStatus status) {
         switch (status) {
             case AUTHENTICATION_FINISHED_WITH_LOGIN:
@@ -1723,10 +1477,15 @@
     
     AuthenticationContainerViewController *authViewController = (AuthenticationContainerViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Authentication" nibName:@"AuthenticationContainerViewController" resetCache:YES];
     authViewController.fromSideMenu = NO;
+    authViewController.isForcedToLogin = force;
     authViewController.signInViewController.completion = _authenticationCompletion;
     authViewController.signUpViewController.completion = _authenticationCompletion;
     
-    [self pushViewController:authViewController animated:YES];
+    [self pushViewController:authViewController animated:animation];
+}
+
+- (void)pushAuthenticationViewController:(void (^)(void))completion byAniamtion:(BOOL)animation {
+    [self pushAuthenticationViewController:completion byAniamtion:animation byForce:NO];
 }
 
 @end

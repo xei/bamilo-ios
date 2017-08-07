@@ -12,11 +12,6 @@
 
 @implementation SignUpEvent
 
-#pragma mark - Overrides
-+(NSString *)name {
-    return @"SignUp";
-}
-
 +(NSMutableDictionary *)attributes {
     NSMutableDictionary *attributes = [super attributes];
     

@@ -384,8 +384,7 @@
     }
 }
 
-- (NSString*)teaserTrackingInfoForIndex:(NSInteger)index;
-{
+- (NSString*)teaserTrackingInfoForIndex:(NSInteger)index {
     NSString* teaserTrackingInfo = @"Campaigns_Teaser";
     return teaserTrackingInfo;
 }

@@ -16,7 +16,7 @@
 #import "JAUtils.h"
 #import "JAProductListFlowLayout.h"
 #import "JAPicker.h"
-#import "CartDataManager.h"
+#import "Bamilo-Swift.h"
 
 @interface JAOtherOffersViewController () <JAPickerDelegate>
 {
@@ -290,16 +290,16 @@
 #pragma mark - Button Actions
 
 - (void)addToCartButtonPressed:(UIButton*)sender {
-    RIProductOffer* offer = [self.productOffers objectAtIndex:sender.tag];
-    RIProductSimple* simp =[self.selectedProductSimple objectForKey:offer.productSku];
-    NSString* simpleSku = simp.sku;
+    RIProductOffer *offer = [self.productOffers objectAtIndex:sender.tag];
+    RIProductSimple *simpleProduct =[self.selectedProductSimple objectForKey:offer.productSku];
+    NSString *simpleSku = simpleProduct.sku;
     
-    [[CartDataManager sharedInstance] addProductToCart:self simpleSku:simpleSku completion:^(id data, NSError *error) {
+    [DataAggregator addProductToCart:self simpleSku:simpleSku completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
             
             //EVENT: ADD TO CART
-            [TrackerManager postEvent:[EventFactory addToCart:simpleSku basketValue:[self.cart.cartEntity.cartValue longValue] success:YES] forName:[AddToCartEvent name]];
+//            [TrackerManager postEvent:[EventFactory addToCart:simpleSku basketValue:[self.cart.cartEntity.cartValue longValue] success:YES] forName:[AddToCartEvent name]];
             
             NSNumber *price = offer.priceEuroConverted;
             
@@ -364,7 +364,7 @@
             //[self hideLoading];
         } else {
             //EVENT: ADD TO CART
-            [TrackerManager postEvent:[EventFactory addToCart:simpleSku basketValue:[self.cart.cartEntity.cartValue intValue] success:NO] forName:[AddToCartEvent name]];
+//            [TrackerManager postEvent:[EventFactory addToCart:simpleSku basketValue:[self.cart.cartEntity.cartValue intValue] success:NO] forName:[AddToCartEvent name]];
             
             [self onErrorResponse:error.code messages:[error.userInfo objectForKey:kErrorMessages] showAsMessage:YES selector:@selector(addToCartButtonPressed:) objects:@[sender]];
             //[self hideLoading];

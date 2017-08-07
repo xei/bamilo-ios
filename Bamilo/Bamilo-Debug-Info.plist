@@ -91,59 +91,43 @@
 			<false/>
 		</dict>
 	</dict>
-	<key>Pushwoosh_APPID</key>
-	<string>A9EF7-6FDD2</string>
-	<key>Pushwoosh_APPNAME</key>
-	<string>Bamilo (Debugging)</string>
-	<key>Pushwoosh_LOG_LEVEL</key>
-	<string>NONE</string>
-	<key>PW_USE_GPS</key>
-	<true/>
-	<key>Configs</key>
-	<dict>
-		<key>EMMerchantID</key>
-		<string>18146DE34FE0B8C9</string>
-		<key>GoogleAnalyticsID</key>
-		<string>UA-52004541-5</string>
-		<key>Emarsys</key>
-		<dict>
-			<key>Application_CODE</key>
-			<string>A9EF7-6FDD2</string>
-			<key>Application_PASSWORD</key>
-			<string>+xhBaMoKRjc3SAHLsgqKTIodKWXJFhM/</string>
-		</dict>
-		<key>Pushwoosh_BETA</key>
-		<string>1</string>
-	</dict>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
-	<key>CFBundleVersion</key>
-	<string>36</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.0.1</string>
+	<string>3.0.1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.bamilo.ios</string>
+			<string>com.pushwoosh.scheme</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>tagmanager.c.com.bamilo.ios</string>
+				<string>pw-A9EF7-6FDD2</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.bamilo.app.ios</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>tagmanager.c.com.bamilo.app.ios</string>
 			</array>
 		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.bamilo.ios</string>
+			<string>com.bamilo.app.ios</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>bamilo</string>
@@ -151,6 +135,28 @@
 			</array>
 		</dict>
 	</array>
+	<key>CFBundleVersion</key>
+	<string>18</string>
+	<key>Configs</key>
+	<dict>
+		<key>API_BaseUrl</key>
+		<string>http://staging.bamilo.com/mobapi/</string>
+		<key>API_Version</key>
+		<string>2.4</string>
+		<key>EMMerchantID</key>
+		<string>18146DE34FE0B8C9</string>
+		<key>Emarsys</key>
+		<dict>
+			<key>Application_CODE</key>
+			<string>A9EF7-6FDD2</string>
+			<key>Application_PASSWORD</key>
+			<string>+xhBaMoKRjc3SAHLsgqKTIodKWXJFhM/</string>
+		</dict>
+		<key>GoogleAnalyticsID</key>
+		<string>UA-52004541-5</string>
+		<key>Pushwoosh_BETA</key>
+		<string>1</string>
+	</dict>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -206,12 +212,18 @@
 	<string>Bamilo would like to access your camera</string>
 	<key>NSContactsUsageDescription</key>
 	<string>Bamilo would like to access your contacts</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Bamilo would like to access your location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Bamilo would like to access your location</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Bamilo would like to access your photos</string>
+	<key>PW_USE_GPS</key>
+	<true/>
+	<key>Pushwoosh_APPID</key>
+	<string>A9EF7-6FDD2</string>
+	<key>Pushwoosh_APPNAME</key>
+	<string>Bamilo (Staging)</string>
+	<key>Pushwoosh_LOG_LEVEL</key>
+	<string>NONE</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Bamilosans Reg.ttf</string>
@@ -220,12 +232,8 @@
 		<string>Bamilosans Bold.ttf</string>
 		<string>Bamilosans Black.ttf</string>
 	</array>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>fetch</string>
-		<string>location</string>
-		<string>remote-notification</string>
-	</array>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -235,13 +243,10 @@
 	<key>UIRequiresFullScreen</key>
 	<true/>
 	<key>UIStatusBarHidden</key>
-	<true/>
+	<false/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>

@@ -85,8 +85,7 @@
     return _priceOffLabel;
 }
 
-- (UILabel *)oldPriceLabel
-{
+- (UILabel *)oldPriceLabel {
     if (!VALID_NOTEMPTY(_oldPriceLabel, UILabel)) {
         _oldPriceLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.label.frame) + 10.f, self.label.y, 60, 30)];
         [_oldPriceLabel setTextColor:JABlack800Color];
@@ -96,8 +95,7 @@
     return _oldPriceLabel;
 }
 
-- (void)setPriceOff:(NSInteger)priceOff
-{
+- (void)setPriceOff:(NSInteger)priceOff {
     _priceOff = priceOff;
     [self.priceOffLabel setText:[NSString stringWithFormat:STRING_FORMAT_OFF, (long)priceOff]];
     [self.priceOffLabel sizeToFit];
@@ -123,8 +121,7 @@
     [self.priceOffLabel.layer setBorderColor:JAOrange1Color.CGColor];
 }
 
-- (void)setOldPrice:(NSString *)oldPrice
-{
+- (void)setOldPrice:(NSString *)oldPrice {
     _oldPrice = oldPrice;
     [self.priceLabel setY:self.height/2 - self.priceLabel.height/2];
     [self.oldPriceLabel setText:oldPrice];
@@ -159,7 +156,7 @@
     _price = price;
     [self.priceLabel setText:price];
     [self.priceLabel sizeToFit];
-    [self.priceLabel setFrame:CGRectMake(self.lineContentXOffset, self.height/2 - self.priceLabel.height/2,
+    [self.priceLabel setFrame:CGRectMake(self.lineContentXOffset, self.height/2 - self.priceLabel.height / 2,
                                          self.priceLabel.width, self.priceLabel.height)];
     [self setOldPrice:self.oldPrice];
 }

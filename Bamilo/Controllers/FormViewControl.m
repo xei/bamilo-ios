@@ -175,7 +175,7 @@
         if (![obj isKindOfClass:[FormItemModel class]]) {
             return;
         }
-        if(![obj.validation checkValiditionOfString:[obj getValue]].boolValue) {
+        if(obj.validation && ![obj.validation checkValiditionOfString:[obj getValue]].boolValue) {
             result = NO;
             *stop = YES;
         }

@@ -17,6 +17,7 @@
 #import "NSArray+Extension.h"
 #import "RecommendItem.h"
 #import "ThreadManager.h"
+#import "Bamilo-Swift.h"
 
 @interface CatalogNoResultViewController () <EmarsysPredictProtocol, FeatureBoxCollectionViewWidgetViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *noResultMessageUILabel;
@@ -30,7 +31,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.carouselWidget setBackgroundColor:JAHomePageBackgroundGrey];
+    [self.carouselWidget setBackgroundColor:[Theme color:kColorVeryLightGray]];
     self.carouselWidget.delegate = self;
     
     [self.carouselWidget updateTitle:STRING_BAMILO_RECOMMENDATION];
@@ -95,6 +96,8 @@
 #pragma mark - FeatureBoxCollectionViewWidgetViewDelegate
 - (void)selectFeatureItem:(NSObject *)item widgetBox:(id)widgetBox {
     if ([item isKindOfClass:[RecommendItem class]]) {
+        [TrackerManager postEventWithSelector:[EventSelectors recommendationTappedSelector]
+                                   attributes:[EventAttributes tapEmarsysRecommendationWithScreenName:@"Catalog" logic:@"PERSONAL"]];
         [[NSNotificationCenter defaultCenter] postNotificationName: kDidSelectTeaserWithPDVUrlNofication
                                                             object: nil
                                                           userInfo: @{@"sku": ((RecommendItem *)item).sku}];

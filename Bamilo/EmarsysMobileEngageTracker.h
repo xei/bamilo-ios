@@ -7,9 +7,9 @@
 //
 
 #import "BaseTracker.h"
-#import "EventTrackerProtocol.h"
 #import "EmarsysMobileEngage.h"
+#import "EmarsysBaseTracker.h"
 
-@interface EmarsysMobileEngageTracker : BaseTracker <EventTrackerProtocol>
+@interface EmarsysMobileEngageTracker : EmarsysBaseTracker
 
 @end

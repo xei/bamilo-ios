@@ -11,10 +11,9 @@
 #import "JAClickableView.h"
 #import "JACenterNavigationController.h"
 #import "RITarget.h"
-#import "ViewControllerManager.h"
+#import "Bamilo-Swift.h"
 
-@interface JASearchView()
-{
+@interface JASearchView() {
     BOOL _newSearch;
     NSInteger _randomNumber;
 }
@@ -32,17 +31,14 @@
 
 @implementation JASearchView
 
-- (NSLock *)refreshLock
-{
-    if (!VALID
-        (_refreshLock, NSLock)) {
+- (NSLock *)refreshLock {
+    if (!VALID(_refreshLock, NSLock)) {
         _refreshLock = [NSLock new];
     }
     return _refreshLock;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame andText:(NSString *)text
-{
+- (instancetype)initWithFrame:(CGRect)frame andText:(NSString *)text {
     self = [super initWithFrame:frame];
     if (self) {
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -139,10 +135,9 @@
     return self;
 }
 
-- (void)resetFrame:(CGRect)frame
-{
-    self.frame = frame;
+- (void)resetFrame:(CGRect)frame {
     
+    self.frame = frame;
     self.backView.frame = CGRectMake(self.bounds.origin.x,
                                      self.bounds.origin.y + 20.0f,
                                      self.bounds.size.width,
@@ -166,28 +161,24 @@
     }];
 }
 
-- (void)setHidden:(BOOL)hidden
-{
+- (void)setHidden:(BOOL)hidden {
     [super setHidden:hidden];
     if (!hidden) {
         [self resetFrame:self.frame];
         [self refreshData];
-    }else{
+    } else {
         [self popAnimated:YES];
     }
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)popAnimated:(BOOL)animated
-{
+- (void)popAnimated:(BOOL)animated {
     [self.searchBar resignFirstResponder];
-    
     [self removeResultsTableViewFromView];
-    
+
     CGFloat duration = animated?0.3f:0.0f;
     [UIView animateWithDuration:duration animations:^{
         self.backView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.0f];
@@ -200,43 +191,36 @@
 }
 
 #pragma mark - searchBar
-
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
-{
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    UIViewController *topViewController = [MainTabBarViewController topViewController];
+    if ([topViewController conformsToProtocol:@protocol(SearchBarListener)]) {
+        [(UIViewController<SearchBarListener> *)topViewController searchBarSearched:searchBar];
+    }
     RISearchSuggestion *searchSuggestion = [RISearchSuggestion getSearchSuggestionWithQuery:searchBar.text isRecentSearch:YES andContext:YES];
     [searchSuggestion setTargetString:[RITarget getTargetString:CATALOG_SEARCH node:searchBar.text]];
     [self searchForSuggestion:searchSuggestion];
 }
 
-- (void)searchForSuggestion:(RISearchSuggestion *)suggestion
-{
-    
-    if (_newSearch)
-    {
-        [RISearchSuggestion saveSearchSuggestionOnDB:suggestion
-                                      isRecentSearch:YES
-                                          andContext:YES];
+- (void)searchForSuggestion:(RISearchSuggestion *)suggestion {
+    if (_newSearch) {
+        [RISearchSuggestion saveSearchSuggestionOnDB:suggestion isRecentSearch:YES andContext:YES];
     }
-    [[ViewControllerManager centerViewController] openTargetString:suggestion.targetString];
+    [[MainTabBarViewController topNavigationController] openTargetString:suggestion.targetString];
     [self setHidden:YES];
 }
 
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
-{
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     [self setHidden:YES];
 }
 
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
-{
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     [self refreshData];
 }
 
-- (void)refreshData
-{
+- (void)refreshData {
     NSInteger randomNumber = arc4random() % NSIntegerMax;
     _randomNumber = randomNumber;
-    if (self.searchBar.text.length > 1)
-    {
+    if (self.searchBar.text.length > 1) {
         [RISearchSuggestion getSuggestionsForQuery:self.searchBar.text
                                       successBlock:^(NSArray *suggestions) {
                                           if (randomNumber != _randomNumber) {
@@ -264,8 +248,7 @@
 
 #pragma mark - resultsTableView
 
-- (void)addResultsTableViewToView
-{
+- (void)addResultsTableViewToView {
     [self.resultsTableView reloadData];
     
     if (self.resultsTableView.hidden) {
@@ -287,8 +270,7 @@
     }
 }
 
-- (void)removeResultsTableViewFromView
-{
+- (void)removeResultsTableViewFromView {
     if (NO == self.resultsTableView.hidden) {
         CGRect startFrame = CGRectMake(self.resultsTableOriginalFrame.origin.x,
                                        CGRectGetMaxY(self.searchBar.frame) + self.separatorView.frame.size.height,
@@ -311,22 +293,18 @@
 
 #pragma mark - Tableview datasource and delegate
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.resultsArray.count;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 44.f;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     
-    if(VALID([self.resultsArray objectAtIndex:indexPath.row], RISearchSuggestion))
-    {
+    if(VALID([self.resultsArray objectAtIndex:indexPath.row], RISearchSuggestion)) {
         CGFloat heightLabel = 44.0f;
         //remove the clickable view
         for (UIView* view in cell.subviews) {
@@ -348,10 +326,7 @@
                                   self.resultsTableView.frame.size.width,
                                   cell.frame.size.height)];
         
-        JAClickableView* clickView = [[JAClickableView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                                       0.0f,
-                                                                                       self.resultsTableView.frame.size.width,
-                                                                                       cellHeight)];
+        JAClickableView* clickView = [[JAClickableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.resultsTableView.frame.size.width, cellHeight)];
         clickView.tag = indexPath.row;
         [cell addSubview:clickView];
         
@@ -370,9 +345,9 @@
             value = [value stringByReplacingCharactersInRange:NSMakeRange(0,1)
                                                                    withString:[[value substringToIndex:1] capitalizedString]];
             label = [NSString stringWithFormat:@"Visit our %@ Store", value];
-        }else if ([RITarget parseTarget:sugestion.targetString].targetType == CATALOG_CATEGORY || [RITarget parseTarget:sugestion.targetString].targetType == CATALOG_HASH) {
+        } else if ([RITarget parseTarget:sugestion.targetString].targetType == CATALOG_CATEGORY || [RITarget parseTarget:sugestion.targetString].targetType == CATALOG_HASH) {
             label = [NSString stringWithFormat:@"%@ in %@", sugestion.queryString, value];
-        }else{
+        } else{
             label = value;
             value = @"";
         }
@@ -395,8 +370,7 @@
         UIImageView *recentSearchImageView = [UIImageView new];
         
         
-        if (1 == sugestion.isRecentSearch)
-        {
+        if (1 == sugestion.isRecentSearch) {
             recentSearchImage = [UIImage imageNamed:@"ico_recentsearchsuggestion"];
             [recentSearchImageView setHidden:NO];
             [recentSearchImageView setImage:recentSearchImage];
@@ -434,7 +408,6 @@
         [clickView addSubview:line2];
         
         if(RI_IS_RTL){
-            
             [cell flipSubviewPositions];
             [line2 flipViewPositionInsideSuperview];
             [recentSearchImageView flipViewPositionInsideSuperview];
@@ -447,31 +420,26 @@
     return cell;
 }
 
-- (void)resultCellWasPressed:(UIControl*)sender
-{
+- (void)resultCellWasPressed:(UIControl*)sender {
     [self tableView:self.resultsTableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-{
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     return [[UIView alloc] initWithFrame:CGRectZero];
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     RISearchSuggestion *suggestion = [self.resultsArray objectAtIndex:indexPath.row];
     [suggestion setDate:[NSDate new]];
     [self searchForSuggestion:suggestion];
 }
 
 #pragma mark - Keyboard
-- (void) keyboardWillShow:(NSNotification *)notification
-{
+- (void) keyboardWillShow:(NSNotification *)notification {
     NSDictionary *userInfo = [notification userInfo];
     CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
     CGFloat height = kbSize.height;
-    if(self.frame.size.width == kbSize.height)
-    {
+    if(self.frame.size.width == kbSize.height) {
         height = kbSize.width;
     }
     self.keyboardHeight = height;
@@ -484,18 +452,13 @@
     }];
 }
 
-- (void) keyboardWillHide:(NSNotification *)notification
-{
+- (void) keyboardWillHide:(NSNotification *)notification {
     [UIView animateWithDuration:0.3 animations:^{
-        [self.resultsTableView setFrame:CGRectMake(self.resultsTableOriginalFrame.origin.x,
-                                                   self.resultsTableOriginalFrame.origin.y,
-                                                   self.frame.size.width,
-                                                   self.frame.size.height)];
+        [self.resultsTableView setFrame:CGRectMake(self.resultsTableOriginalFrame.origin.x, self.resultsTableOriginalFrame.origin.y, self.frame.size.width, self.frame.size.height)];
     }];
 }
 
-- (void)updateCountry:(NSNotification *)notification
-{
+- (void)updateCountry:(NSNotification *)notification {
     [self refreshData];
     for (UIView *subView in self.searchBar.subviews[0].subviews) {
         if ([subView isKindOfClass:NSClassFromString(@"UINavigationButton")]) {

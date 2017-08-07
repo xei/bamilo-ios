@@ -6,11 +6,11 @@
 //  Copyright © 2016 Rocket Internet. All rights reserved.
 //
 
-#import "JABaseViewController.h"
+#import "BaseViewController.h"
 #import "JAPicker.h"
 #import "ProtectedViewControllerProtocol.h"
 #import "DataServiceProtocol.h"
 
-@interface JASavedListViewController : JABaseViewController <ProtectedViewControllerProtocol, DataServiceProtocol>
+@interface JASavedListViewController : BaseViewController <ProtectedViewControllerProtocol, DataServiceProtocol>
 
 @end

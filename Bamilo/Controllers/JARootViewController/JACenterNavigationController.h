@@ -20,7 +20,7 @@ typedef void(^ProtectedBlock)(BOOL userHadSession);
 @property (strong, nonatomic) RICart *cart;
 
 @property (strong, nonatomic) JACustomNavigationBarView *navigationBarView;
-@property (strong, nonatomic) JATabBarView *tabBarView;
+//@property (strong, nonatomic) JATabBarView *tabBarView;
 @property (nonatomic, assign)BOOL searchViewAlwaysHidden;
 
 - (void)openTargetString:(NSString *)targetString;
@@ -48,7 +48,10 @@ typedef void(^ProtectedBlock)(BOOL userHadSession);
 - (BOOL)closeScreensToStackClass:(Class)classKind animated:(BOOL)animated;
 
 //#####################################################################################################################
+-(void) registerObservingOnNotifications;
+-(void) removeObservingNotifications;
 -(void) requestNavigateToNib:(NSString *)destNib args:(NSDictionary *)args;
+-(void) requestForcedLogin;
 -(void) requestNavigateToNib:(NSString *)destNib ofStoryboard:(NSString *)storyboard useCache:(BOOL)useCache args:(NSDictionary *)args;
 -(void) requestNavigateToClass:(NSString *)destClass args:(NSDictionary *)args;
 -(void) performProtectedBlock:(ProtectedBlock)block;

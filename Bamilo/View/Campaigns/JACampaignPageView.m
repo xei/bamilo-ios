@@ -246,22 +246,9 @@
     return size;
 }
 
-- (CGSize)getCellLayoutForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    CGFloat width = 0.0f;
-    CGFloat height = 482.f;
-    
-    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        
-        if(UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
-            width = 384.0f;
-        } else {
-            width = 341.0f;
-        }
-    } else {
-        width = 320;
-    }
-    
+- (CGSize)getCellLayoutForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    CGFloat width = self.bounds.size.width;
+    CGFloat height = 482.f;    
     return CGSizeMake(width, height);
 }
 

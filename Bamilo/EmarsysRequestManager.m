@@ -8,7 +8,7 @@
 
 #import "EmarsysRequestManager.h"
 #import "AFHTTPRequestOperationManager.h"
-#import "LoadingManager.h"
+#import "Bamilo-Swift.h"
 
 #define kApplicationCode @"Application_CODE"
 #define kApplicationPassword @"Application_PASSWORD"
@@ -19,8 +19,8 @@
 -(void)asyncRequest:(HttpVerb)method path:(NSString *)path params:(NSDictionary *)params type:(RequestExecutionType)type target:(id<DataServiceProtocol>)target completion:(RequestCompletion)completion {
     
     switch (type) {
-        case REQUEST_EXEC_IN_FOREGROUND:
-            [[LoadingManager sharedInstance] showLoading];
+        case RequestExecutionTypeForeground:
+            [LoadingManager showLoading];
             break;
             
         default:
@@ -68,7 +68,7 @@
         break;
     }
     
-    [[LoadingManager sharedInstance] hideLoading];
+    [LoadingManager hideLoading];
 }
 
 -(NSArray *)extractErrors:(id)responseObject {

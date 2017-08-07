@@ -29,8 +29,7 @@
     JADynamicFormDelegate,
     JAPickerDelegate,
     JADatePickerDelegate
->
-{
+> {
     UIView *_firstResponder;
     UIImageView *_userIconView;
 }
@@ -173,8 +172,8 @@
     self.apiResponse = RIApiResponseSuccess;
     self.navBarLayout.title = STRING_PROFILE;
     self.navBarLayout.showBackButton = YES;
-    self.navBarLayout.showCartButton = YES;
-    self.navBarLayout.showSearchButton = YES;
+//    self.navBarLayout.showCartButton = YES;
+    self.navBarLayout.showSearchButton = NO;
     self.isOpeningPicker = NO;
     
     [self.view addSubview:self.mainScrollView];
@@ -747,8 +746,8 @@
     }
 }
 
-#pragma mark - PerformanceTrackerProtocol
--(NSString *)getPerformanceTrackerScreenName {
+#pragma mark - DataTrackerProtocol
+-(NSString *)getScreenName {
     return STRING_PROFILE;
 }
 

@@ -84,7 +84,7 @@
 - (void)onOrientationChanged;
 
 //TEMP FUNCTION
--(NSArray *) extractSuccessMessages:(DataMessageList *)dataMessages;
+-(NSArray *) extractSuccessMessages:(id)dataMessages;
 
 @end
 

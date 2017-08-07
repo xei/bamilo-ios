@@ -9,9 +9,10 @@
 #import "CheckoutDataManager.h"
 #import "CheckoutAddressViewController.h"
 #import "CheckoutProgressViewButtonModel.h"
-#import "ViewControllerManager.h"
+#import "Bamilo-Swift.h"
 #import "AddressTableViewController.h"
 #import "AddressList.h"
+#import "Bamilo-Swift.h"
 
 @interface CheckoutAddressViewController() <AddressTableViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *addressListContainerView;
@@ -36,19 +37,19 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[CheckoutDataManager sharedInstance] getMultistepAddressList:self completion:^(id data, NSError *error) {
+    [DataAggregator getMultistepAddressList:self completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
             [self setIsStepValid:_addresses.count];
-            
             if(self.cart.cartEntity.shippingAddress) {
                 Address *_addressToSelect = [self getAddressById:self.cart.cartEntity.shippingAddress.uid];
                 [self updateSelectedAddress:_addressToSelect];
             }
             
             [_addressTableViewController updateWithModel:_addresses];
-            
             [self publishScreenLoadTime];
+            
+            [TrackerManager postEventWithSelector:[EventSelectors checkoutStartSelector] attributes:[EventAttributes checkoutStartWithCart:data]];
         }
     }];
 }
@@ -64,7 +65,6 @@
 
 -(void)updateNavBar {
     [super updateNavBar];
-
     self.navBarLayout.title = STRING_CHOOSE_ADDRESS;
 }
 
@@ -73,7 +73,7 @@
         completion(nil, NO);
     } else {
         Address *_selectedAddress = [self getSelectedAddress];
-        [[CheckoutDataManager sharedInstance] setMultistepAddress:self forShipping:_selectedAddress.uid billing:_selectedAddress.uid completion:^(id data, NSError *error) {
+        [DataAggregator setMultistepAddress:self shipping:_selectedAddress.uid billing:_selectedAddress.uid completion:^(id data, NSError *error) {
             if(error == nil && completion != nil) {
                 MultistepEntity *multistepEntity = (MultistepEntity *)data;
                 completion(multistepEntity.nextStep, YES);
@@ -96,7 +96,7 @@
 
 #pragma mark - AddressTableViewControllerDelegate
 -(void)addressEditButtonTapped:(id)sender {
-    [[ViewControllerManager centerViewController] requestNavigateToNib:@"AddressEditViewController" ofStoryboard:@"Main" useCache:NO args:@{ kAddress: (Address *)sender }];
+    [[MainTabBarViewController topNavigationController] requestNavigateToNib:@"AddressEditViewController" ofStoryboard:@"Main" useCache:NO args:@{ kAddress: (Address *)sender }];
 }
 
 -(BOOL)addressSelected:(Address *)address {
@@ -109,7 +109,7 @@
 }
 
 - (void)addAddressTapped {
-    [[ViewControllerManager centerViewController] requestNavigateToNib:@"AddressEditViewController" ofStoryboard:@"Main" useCache:NO args:nil];
+    [[MainTabBarViewController topNavigationController] requestNavigateToNib:@"AddressEditViewController" ofStoryboard:@"Main" useCache:NO args:nil];
 }
 
 #pragma mark - DataServiceProtocol
@@ -124,8 +124,8 @@
     }
 }
 
-#pragma mark - PerformanceTrackerProtocol
--(NSString *)getPerformanceTrackerScreenName {
+#pragma mark - DataTrackerProtocol
+-(NSString *)getScreenName {
     return @"CheckoutAddresses";
 }
 

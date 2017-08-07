@@ -19,6 +19,7 @@
 #import "EventUtilities.h"
 #import "SuccessPaymentViewController.h"
 #import "ThreadManager.h"
+#import "Bamilo-Swift.h"
 
 typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
     PAYMENT_METHOD_ONLINE = 1 << 0,
@@ -101,7 +102,7 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
 
 -(void)performPreDepartureAction:(CheckoutActionCompletion)completion {
     if([_multistepEntity.nextStep isEqualToString:@"finish"] && completion != nil) {
-        [[CheckoutDataManager sharedInstance] setMultistepConfirmation:self cart:self.cart completion:^(id data, NSError *error) {
+        [DataAggregator setMultistepConfirmation:self cart:self.cart completion:^(id data, NSError *error) {
             if(error == nil) {
                 [self bind:data forRequestId:1];
                 
@@ -118,7 +119,8 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
                 [self showNotificationBar:error isSuccess:NO];
                 
                 //EVENT : PURCHASE
-                [TrackerManager postEvent:[EventFactory purchase:[EventUtilities getEventCategories:self.cart] basketValue:[self.cart.cartEntity.cartValue longValue] success:NO] forName:[PurchaseEvent name]];
+                [TrackerManager postEventWithSelector:[EventSelectors purchaseSelector]
+                                           attributes:[EventAttributes purchaseWithCart:self.cart success:YES]];
                 
                 completion(nil, NO);
             }
@@ -237,8 +239,8 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
     }
 }
 
-#pragma mark - PerformanceTrackerProtocol
--(NSString *)getPerformanceTrackerScreenName {
+#pragma mark - DataTrackerProtocol
+-(NSString *)getScreenName {
     return @"CheckoutPayment";
 }
 
@@ -252,7 +254,7 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
 
 #pragma mark - Helpers
 -(void) getPaymentMethods:(GetPaymentMethodsCompletion)completion {
-    [[CheckoutDataManager sharedInstance] getMultistepPayment:self completion:^(id data, NSError *error) {
+    [DataAggregator getMultistepPayment:self completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
             [self.cartEntitySummaryViewControl updateWithModel:self.cart.cartEntity];
@@ -281,7 +283,7 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
         JACheckoutForms *checkoutFormForPaymentMethod = [[JACheckoutForms alloc] initWithPaymentMethodForm:self.cart.formEntity.paymentMethodForm width:0.0];
         [params addEntriesFromDictionary:[checkoutFormForPaymentMethod getValuesForPaymentMethod:selectedPaymentMethod]];
         
-        [[CheckoutDataManager sharedInstance] setMultistepPayment:self params:params completion:^(id data, NSError *error) {
+        [DataAggregator setMultistepPayment:self params:params completion:^(id data, NSError *error) {
             if(error == nil) {
                 NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
                 [trackingDictionary setValue:selectedPaymentMethod.label forKey:kRIEventPaymentMethodKey];
@@ -289,7 +291,7 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
                 
                 _multistepEntity = (MultistepEntity *)data;
                 
-                [[CheckoutDataManager sharedInstance] getMultistepConfirmation:self type:REQUEST_EXEC_IN_FOREGROUND completion:^(id data, NSError *error) {
+                [DataAggregator getMultistepConfirmation:self type:RequestExecutionTypeForeground completion:^(id data, NSError *error) {
                     if(error == nil) {
                         [self bind:data forRequestId:2];
                         _selectedPaymentMethodIndex = selectedPaymentMethodIndex;

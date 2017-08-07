@@ -16,35 +16,38 @@
     return [RITarget getURLStringforTarget:self];
 }
 
-- (TargetType)targetType
-{
+- (void)setTargetType:(TargetType)targetType {
+    self.type = [RITarget getTargetKey:targetType];
+}
+
+- (TargetType)targetType {
     if ([self.type isEqualToString:[RITarget getTargetKey:PRODUCT_DETAIL]]) {
         return PRODUCT_DETAIL;
-    }else if ([self.type isEqualToString:[RITarget getTargetKey:CATALOG_HASH]]) {
+    } else if ([self.type isEqualToString:[RITarget getTargetKey:CATALOG_HASH]]) {
         return CATALOG_HASH;
-    }else if ([self.type isEqualToString:[RITarget getTargetKey:CATALOG_SEARCH]]) {
+    } else if ([self.type isEqualToString:[RITarget getTargetKey:CATALOG_SEARCH]]) {
         return CATALOG_SEARCH;
-    }else if ([self.type isEqualToString:[RITarget getTargetKey:CATALOG_CATEGORY]]) {
+    } else if ([self.type isEqualToString:[RITarget getTargetKey:CATALOG_CATEGORY]]) {
         return CATALOG_CATEGORY;
-    }else if ([self.type isEqualToString:[RITarget getTargetKey:CATALOG_BRAND]]) {
+    } else if ([self.type isEqualToString:[RITarget getTargetKey:CATALOG_BRAND]]) {
         return CATALOG_BRAND;
-    }else if ([self.type isEqualToString:[RITarget getTargetKey:CATALOG_SELLER]]) {
+    } else if ([self.type isEqualToString:[RITarget getTargetKey:CATALOG_SELLER]]) {
         return CATALOG_SELLER;
-    }else if ([self.type isEqualToString:[RITarget getTargetKey:CAMPAIGN]]) {
+    } else if ([self.type isEqualToString:[RITarget getTargetKey:CAMPAIGN]]) {
         return CAMPAIGN;
-    }else if ([self.type isEqualToString:[RITarget getTargetKey:STATIC_PAGE]]) {
+    } else if ([self.type isEqualToString:[RITarget getTargetKey:STATIC_PAGE]]) {
         return STATIC_PAGE;
-    }else if ([self.type isEqualToString:[RITarget getTargetKey:SHOP_IN_SHOP]]) {
+    } else if ([self.type isEqualToString:[RITarget getTargetKey:SHOP_IN_SHOP]]) {
         return SHOP_IN_SHOP;
-    }else if ([self.type isEqualToString:[RITarget getTargetKey:FORM_SUBMIT]]) {
+    } else if ([self.type isEqualToString:[RITarget getTargetKey:FORM_SUBMIT]]) {
         return FORM_SUBMIT;
-    }else if ([self.type isEqualToString:[RITarget getTargetKey:FORM_GET]]) {
+    } else if ([self.type isEqualToString:[RITarget getTargetKey:FORM_GET]]) {
         return FORM_GET;
-    }else if ([self.type isEqualToString:[RITarget getTargetKey:RR_RECOMENDATION]]) {
+    } else if ([self.type isEqualToString:[RITarget getTargetKey:RR_RECOMENDATION]]) {
         return RR_RECOMENDATION;
-    }else if ([self.type isEqualToString:[RITarget getTargetKey:RR_CLICK]]) {
+    } else if ([self.type isEqualToString:[RITarget getTargetKey:RR_CLICK]]) {
         return RR_CLICK;
-    }else if ([self.type isEqualToString:[RITarget getTargetKey:EXTERNAL_LINK]]) {
+    } else if ([self.type isEqualToString:[RITarget getTargetKey:EXTERNAL_LINK]]) {
         return EXTERNAL_LINK;
     }
     return UNKNOWN;
@@ -75,8 +78,7 @@
     return newTarget;
 }
 
-+ (NSString*)getURLStringforTargetString:(NSString*)targetString;
-{
++ (NSString*)getURLStringforTargetString:(NSString*)targetString {
     NSString* type;
     NSString* node;
     if (VALID_NOTEMPTY(targetString, NSString)) {
@@ -92,22 +94,28 @@
 }
 
 
-+ (NSString*)getURLStringforTarget:(RITarget*)target
-{
++ (NSString*)getURLStringforTarget:(RITarget*)target {
     return [RITarget getURLStringforType:target.type node:target.node];
 }
 
-+ (NSString*)getURLStringforType:(NSString*)type
-                            node:(NSString*)node;
-{
++ (NSString*)getRelativeUrlStringforTarget:(RITarget*)target {
+    return [RITarget getRelativeUrlForType:target.type node:target.node];
+}
+
++ (NSString*)getURLStringforType:(NSString*)type node:(NSString*)node {
     NSString* urlString = [NSString stringWithFormat:@"%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION];
+    return [NSString stringWithFormat:@"%@%@", urlString, [RITarget getRelativeUrlForType:type node:node]];
+}
+
++ (NSString *)getRelativeUrlForType:(NSString *)type node: (NSString *)node {
+    NSString *urlString = @"";
     if (VALID_NOTEMPTY(type, NSString)) {
         if ([type isEqualToString:[self getTargetKey:PRODUCT_DETAIL]]) {
             urlString = [urlString stringByAppendingString:RI_API_PRODUCT_DETAIL];
         } else if ([type isEqualToString:[self getTargetKey:CATALOG_HASH]]) {
             urlString = [urlString stringByAppendingString:RI_API_CATALOG_HASH];
         } else if ([type isEqualToString:[self getTargetKey:CATALOG_SEARCH]]) {
-            urlString = [urlString stringByAppendingString:RI_API_CATALOG];
+            urlString = [urlString stringByAppendingString:RI_API_CATALOG_QUERY_SEARCH];
         }else if ([type isEqualToString:[self getTargetKey:CATALOG_CATEGORY]]) {
             urlString = [urlString stringByAppendingString:RI_API_CATALOG_CATEGORY];
         } else if ([type isEqualToString:[self getTargetKey:CATALOG_BRAND]]) {
@@ -138,8 +146,7 @@
     return urlString;
 }
 
-+ (NSString *)getTargetString:(TargetType)type node:(NSString *)node
-{
++ (NSString *)getTargetString:(TargetType)type node:(NSString *)node {
     NSString *key = [self getTargetKey:type];
     if (key) {
         return [NSString stringWithFormat:@"%@::%@", key, node];
@@ -185,13 +192,11 @@
     }
 }
 
-+ (RITarget *)getTarget:(TargetType)type node:(NSString *)node
-{
-    NSString *targetString = [self getTargetString:type node:node];
-    if (targetString) {
-        return [self parseTarget:targetString];
-    }
-    return nil;
++ (RITarget *)getTarget:(TargetType)type node:(NSString *)node {
+    RITarget *target = [RITarget new];
+    target.targetType = type;
+    target.node = node;
+    return target;
 }
 
 @end

@@ -19,6 +19,8 @@
 #import "RICustomer.h"
 #import "JAUtils.h"
 
+#import "Bamilo-Swift.h"
+
 #define cLoginMethodEmail @"email"
 #define cLoginMethodGoogle @"sso-google"
 
@@ -27,16 +29,14 @@
 @property (weak, nonatomic) IBOutlet InputTextFieldControl *passwordControl;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *continueWithoutLoginBtn;
-
+@property (weak, nonatomic) id ali;
 @end
 
 @implementation SignInViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self setupView];
-    
     self.scrollView.delegate = self;
 }
 
@@ -80,15 +80,15 @@
         return;
     }
     
-    [[AuthenticationDataManager sharedInstance] loginUser:self withUsername:[self.emailControl getStringValue] password:[self.passwordControl getStringValue] completion:^(id data, NSError *error) {
+    [DataAggregator loginUser:self username:[self.emailControl getStringValue] password:[self.passwordControl getStringValue] completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
             
             //EVENT: LOGIN / SUCCESS
-            [TrackerManager postEvent:[EventFactory login:cLoginMethodEmail success:YES] forName:[LoginEvent name]];
+
             
             RICustomer *customer = [RICustomer getCurrentCustomer];
-            
+            [TrackerManager postEventWithSelector:[EventSelectors loginEventSelector] attributes:[EventAttributes loginWithLoginMethod:cLoginMethodEmail user:customer]];
             [[EmarsysMobileEngage sharedInstance] sendLogin:[[PushNotificationManager pushManager] getPushToken] completion:nil];
             [EmarsysPredictManager setCustomer:customer];
         
@@ -102,14 +102,15 @@
             }
         } else {
             //EVENT: LOGIN / FAILURE
-            [TrackerManager postEvent:[EventFactory login:cLoginMethodEmail success:NO] forName:[LoginEvent name]];
-            
-            for(NSDictionary* errorField in [error.userInfo objectForKey:@"errorMessages"]) {
-                NSString *fieldName = errorField[@"field"];
-                if ([fieldName isEqualToString:@"password"]) {
-                    [self.passwordControl showErrorMsg:errorField[@"message"]];
-                } else if ([fieldName isEqualToString:@"email"]) {
-                    [self.emailControl showErrorMsg:errorField[@"message"]];
+            BaseViewController *baseViewController = (BaseViewController *)self.delegate;
+            if(![baseViewController showNotificationBar:error isSuccess:NO]) {
+                for(NSDictionary* errorField in [error.userInfo objectForKey:@"errorMessages"]) {
+                    NSString *fieldName = errorField[@"field"];
+                    if ([fieldName isEqualToString:@"password"]) {
+                        [self.passwordControl showErrorMsg:errorField[@"message"]];
+                    } else if ([fieldName isEqualToString:@"email"]) {
+                        [self.emailControl showErrorMsg:errorField[@"message"]];
+                    }
                 }
             }
         }
@@ -118,13 +119,12 @@
 
 #pragma mark - DataServiceProtocol
 - (void)bind:(id)data forRequestId:(int)rid {
+    
     // Legacy actions after login
     [RICustomer resetCustomerAsGuest];
-    if ([data isKindOfClass:[NSDictionary class]]) {
-        NSDictionary* responseDictionary = (NSDictionary*)data;
-        
-        RICustomer *customerObject = [responseDictionary objectForKey:@"customer"];
-        
+    NSDictionary *metadata = ((ApiResponseData *)data).metadata;
+    if ([metadata isKindOfClass:[NSDictionary class]]) {
+        RICustomer *customerObject = [RICustomer parseCustomerWithJson:[metadata objectForKey:@"customer_entity"]];
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:customerObject.customerId forKey:kRIEventLabelKey];
         [trackingDictionary setValue:@"LoginSuccess" forKey:kRIEventActionKey];

@@ -22,7 +22,8 @@ typedef NS_ENUM(NSInteger, RICatalogSortingEnum) {
     RICatalogSortingPriceUp,
     RICatalogSortingPriceDown,
     RICatalogSortingName,
-    RICatalogSortingBrand
+    RICatalogSortingBrand,
+    RICatalogSortingNone
 };
 
 + (NSString*)urlComponentForSortingMethod:(RICatalogSortingEnum)sortingMethod;

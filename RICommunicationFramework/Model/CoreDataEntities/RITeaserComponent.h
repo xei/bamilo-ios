@@ -7,11 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
 
 @class RITeaserGrouping;
 
-@interface RITeaserComponent : NSManagedObject
+@interface RITeaserComponent: NSObject
 
 @property (nonatomic, retain) NSString * imageLandscapeUrl;
 @property (nonatomic, retain) NSString * imagePortraitUrl;
@@ -30,14 +29,12 @@
 @property (nonatomic, retain) NSNumber * maxPriceEuroConverted;
 @property (nonatomic, retain) NSNumber * maxPrice;
 @property (nonatomic, retain) NSString * maxPriceFormatted;
-@property (nonatomic, retain) RITeaserGrouping *teaserGrouping;
+@property (nonatomic, weak) RITeaserGrouping *teaserGrouping;
 @property (nonatomic, retain) NSNumber * specialPrice;
 @property (nonatomic, retain) NSNumber * specialPriceEuroConverted;
 @property (nonatomic, retain) NSString * specialPriceFormatted;
 
 + (RITeaserComponent*)parseTeaserComponent:(NSDictionary*)teaserComponentJSON country:(RICountryConfiguration*)country;
-
-+ (void)saveTeaserComponent:(RITeaserComponent *)teaserComponent andContext:(BOOL)save;
 
 - (void)sendNotificationForTeaseTarget:(NSString *) optionalTrackingInfo;
 

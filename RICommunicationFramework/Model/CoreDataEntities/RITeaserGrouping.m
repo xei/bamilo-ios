@@ -13,17 +13,19 @@
 
 @implementation RITeaserGrouping
 
-@dynamic title;
-@dynamic type;
-@dynamic teaserComponents;
+- (NSMutableOrderedSet *)teaserComponents {
+    if (!_teaserComponents) {
+        _teaserComponents = [NSMutableOrderedSet new];
+    }
+    return _teaserComponents;
+}
 
 + (NSString*)loadTeasersIntoDatabaseForCountryUrl:(NSString*)countryUrl
                         countryUserAgentInjection:(NSString *)countryUserAgentInjection
                                  withSuccessBlock:(void (^)(NSDictionary* teaserGroupings, BOOL richTeasers))successBlock
-                                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
-{
+                                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock {
     //remove existing ones from database
-    [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RITeaserGrouping class])];
+//    [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RITeaserGrouping class])];
     
     NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", countryUrl, RI_API_VERSION, RI_API_GET_TEASERS]];
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
@@ -77,14 +79,12 @@
                                       rickBlock:(void (^)(RITeaserGrouping * richTeaserGrouping))richBlock
 {
     NSString *operationID = nil;
-    NSArray *allTeaserGroupings = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RITeaserGrouping
-                                                                                                          class])];
+//    NSArray *allTeaserGroupings = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RITeaserGrouping class])];
     
-    if (VALID_NOTEMPTY(allTeaserGroupings, NSArray)) {
-        NSDictionary* allTeaserGroupingsDict = [NSDictionary dictionaryWithObjects:allTeaserGroupings
-                                                         forKeys:[allTeaserGroupings valueForKey:@"type"]];
-        successBlock(allTeaserGroupingsDict,NO);
-    } else {
+//    if (VALID_NOTEMPTY(allTeaserGroupings, NSArray)) {
+//        NSDictionary* allTeaserGroupingsDict = [NSDictionary dictionaryWithObjects:allTeaserGroupings forKeys:[allTeaserGroupings valueForKey:@"type"]];
+//        successBlock(allTeaserGroupingsDict,NO);
+//    } else {
         operationID = [RITeaserGrouping loadTeasersIntoDatabaseForCountryUrl:[RIApi getCountryUrlInUse]
                                                    countryUserAgentInjection:[RIApi getCountryUserAgentInjection]
                                                             withSuccessBlock:^(NSDictionary* teaserGroupings, BOOL richTeasers) {
@@ -104,7 +104,7 @@
                                                                     failureBlock(RIApiResponseUnknownError, nil);
                                                                 }
                                                             } andFailureBlock:failureBlock];
-    }
+//    }
 
     return operationID;
 }
@@ -216,13 +216,15 @@
 + (RITeaserGrouping*)parseTeaserGrouping:(NSDictionary*)teaserGroupingJSON
                                  country:(RICountryConfiguration*)country {
     RITeaserGrouping *newTeaserGrouping = [RITeaserGrouping parseTeaserGroupingWithoutSave:teaserGroupingJSON country:country];
-    [RITeaserGrouping saveTeaserGrouping:newTeaserGrouping andContext:YES];
+//    [RITeaserGrouping saveTeaserGrouping:newTeaserGrouping andContext:YES];
     return newTeaserGrouping;
 }
 
 + (RITeaserGrouping*)parseTeaserGroupingWithoutSave:(NSDictionary*)teaserGroupingJSON
                                  country:(RICountryConfiguration*)country {
-    RITeaserGrouping* newTeaserGrouping = (RITeaserGrouping*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RITeaserGrouping class])];
+//    RITeaserGrouping* newTeaserGrouping = (RITeaserGrouping*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RITeaserGrouping class])];
+    
+    RITeaserGrouping* newTeaserGrouping = [[RITeaserGrouping alloc] init];
     
     if (teaserGroupingJSON) {
 
@@ -259,16 +261,16 @@
     return newTeaserGrouping;
 }
 
-+ (void)saveTeaserGrouping:(RITeaserGrouping *)teaserGrouping andContext:(BOOL)save {
-    for (RITeaserComponent *teaserComponent in teaserGrouping.teaserComponents) {
-        [RITeaserComponent saveTeaserComponent:teaserComponent andContext:NO];
-    }
-    
-    [[RIDataBaseWrapper sharedInstance] insertManagedObject:teaserGrouping];
-    
-    if (save) {
-        [[RIDataBaseWrapper sharedInstance] saveContext];
-    }
-}
+//+ (void)saveTeaserGrouping:(RITeaserGrouping *)teaserGrouping andContext:(BOOL)save {
+//    for (RITeaserComponent *teaserComponent in teaserGrouping.teaserComponents) {
+//        [RITeaserComponent saveTeaserComponent:teaserComponent andContext:NO];
+//    }
+//    
+//    [[RIDataBaseWrapper sharedInstance] insertManagedObject:teaserGrouping];
+//    
+//    if (save) {
+//        [[RIDataBaseWrapper sharedInstance] saveContext];
+//    }
+//}
 
 @end

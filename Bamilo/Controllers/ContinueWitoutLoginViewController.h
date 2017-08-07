@@ -1,14 +1,14 @@
+////
+////  ContinueWitoutLoginViewController.h
+////  Bamilo
+////
+////  Created by Ali Saeedifar on 2/13/17.
+////  Copyright © 2017 Rocket Internet. All rights reserved.
+////
 //
-//  ContinueWitoutLoginViewController.h
-//  Bamilo
+//#import <UIKit/UIKit.h>
+//#import "AuthenticationBaseViewController.h"
 //
-//  Created by Ali Saeedifar on 2/13/17.
-//  Copyright © 2017 Rocket Internet. All rights reserved.
+//@interface ContinueWitoutLoginViewController : AuthenticationBaseViewController
 //
-
-#import <UIKit/UIKit.h>
-#import "AuthenticationBaseViewController.h"
-
-@interface ContinueWitoutLoginViewController : AuthenticationBaseViewController
-
-@end
+//@end

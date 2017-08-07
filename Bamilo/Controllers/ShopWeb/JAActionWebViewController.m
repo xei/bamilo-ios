@@ -58,8 +58,8 @@
         [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         [self.webView loadHTMLString:self.htmlString baseURL:nil];
     }
-    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffMenuSwipePanelNotification
-                                                         object:nil];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffMenuSwipePanelNotification
+//                                                         object:nil];
 }
 
 - (void)viewWillLayoutSubviews

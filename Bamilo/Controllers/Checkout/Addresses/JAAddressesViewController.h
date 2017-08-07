@@ -1,19 +1,19 @@
+////
+////  JAAddressesViewController.h
+////  Jumia
+////
+////  Created by Pedro Lopes on 31/07/14.
+////  Copyright (c) 2014 Rocket Internet. All rights reserved.
+////
 //
-//  JAAddressesViewController.h
-//  Jumia
+//#import <UIKit/UIKit.h>
+//#import "JABaseViewController.h"
 //
-//  Created by Pedro Lopes on 31/07/14.
-//  Copyright (c) 2014 Rocket Internet. All rights reserved.
+//@class RICart;
 //
-
-#import <UIKit/UIKit.h>
-#import "JABaseViewController.h"
-
-@class RICart;
-
-@interface JAAddressesViewController : JABaseViewController
-
-@property (nonatomic, strong) RICart *cart;
-@property (nonatomic, assign) BOOL fromCheckout;
-
-@end
+//@interface JAAddressesViewController : JABaseViewController
+//
+//@property (nonatomic, strong) RICart *cart;
+//@property (nonatomic, assign) BOOL fromCheckout;
+//
+//@end

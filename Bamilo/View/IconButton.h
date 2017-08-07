@@ -10,5 +10,5 @@
 #import "BaseButton.h"
 
 @interface IconButton : BaseButton
-
+@property (nonatomic) IBInspectable CGFloat imageHeightToButtonHeightRatio;
 @end

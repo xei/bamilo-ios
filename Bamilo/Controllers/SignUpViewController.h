@@ -7,8 +7,8 @@
 //
 
 #import "AuthenticationBaseViewController.h"
+#import "DataServiceProtocol.h"
 #import "FormViewControl.h"
-#import "AuthenticationDataManager.h"
 #import "AuthenticationDelegate.h"
 
 @interface SignUpViewController : AuthenticationBaseViewController <DataServiceProtocol, FormViewControlDelegate>

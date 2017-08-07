@@ -12,6 +12,7 @@
 #import "ViewControllerManager.h"
 #import "NotificationBarView.h"
 #import "EmarsysPredictManager.h"
+#import "Bamilo-Swift.h"
 
 @interface BaseViewController()
 @property (strong, nonatomic) JAMessageView *messageView;
@@ -33,8 +34,9 @@
     self.navigationItem.hidesBackButton = YES;
     self.title = nil;
     self.view.backgroundColor = JABackgroundGrey;
-    
-    [TrackerManager trackScreenName:[self getDataTrackerAlias]];
+    if ([self getScreenName].length) {
+        [TrackerManager trackScreenNameWithScreenName:[self getScreenName]];
+    }
 }
 
 - (JANavigationBarLayout *)navBarLayout {
@@ -46,11 +48,10 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     [self updateNavBar];
     
     [self requestNavigationBarReload];
-    [self requestTabBarReload];
+//    [self requestTabBarReload];
     
     if ([self conformsToProtocol:@protocol(EmarsysPredictProtocolBase)]) {
         if ([self respondsToSelector:@selector(isPreventSendTransactionInViewWillAppear)]) {
@@ -81,18 +82,23 @@
     [self.view endEditing:YES];
 }
 
-#pragma mark - Private Methods
 - (void)requestNavigationBarReload {
     [[NSNotificationCenter defaultCenter] postNotificationName:kChangeNavigationBarNotification object:self.navBarLayout];
 }
 
-- (void)requestTabBarReload {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kChangeTabBarVisibility object:[NSNumber numberWithBool:[self getTabBarVisible]]];
-}
+//#pragma mark - Private Methods
+//- (void)requestTabBarReload {
+//    [[NSNotificationCenter defaultCenter] postNotificationName:kChangeTabBarVisibility object:[NSNumber numberWithBool:[self getTabBarVisible]]];
+//}
 
 #pragma mark - Public Methods
 - (void)updateNavBar {
-    return;
+    //reset to Default state for nav bar
+    self.navBarLayout.showSearchButton = NO;
+    self.navBarLayout.showBackButton = NO;
+    self.navBarLayout.showDoneButton = NO;
+    self.navBarLayout.showCartButton = NO;
+    self.navBarLayout.showSeparatorView = NO;
 }
 
 #pragma mark - SideMenuProtocol
@@ -127,48 +133,18 @@
             return [self showNotificationBarMessage:errorMessage isSuccess:success];
         }
     }
-    
     return NO;
 }
 
 - (BOOL)showNotificationBarMessage:(NSString *)message isSuccess:(BOOL)success {
     UIViewController *rootViewController = [ViewControllerManager topViewController];
-    
     [[NotificationBarView sharedInstance] show:rootViewController text:message isSuccess:success];
-    
     return YES;
-    
-    /*
-    UIViewController *rootViewController = [ViewControllerManager topViewController];
-     
-    float messageViewY = 64;
-    
-    if(self.messageView == nil) {
-        self.messageView = [[JAMessageView alloc] initWithFrame:CGRectMake(0, messageViewY, self.view.bounds.size.width, kMessageViewHeight)];
-        [self.messageView setupView];
-    }
-    
-    if(self.navigationController && self.navigationController.navigationBar) {
-        messageViewY = 0;
-    }
-    [self.messageView setFrame:CGRectMake(0, messageViewY, self.view.bounds.size.width, kMessageViewHeight)];
-    
-    if (!VALID_NOTEMPTY([self.messageView superview], UIView)) {
-        [rootViewController.view addSubview:self.messageView];
-    }
-    
-    [self.messageView setTitle:message success:success];
-    
-    return YES;
-     */
 }
 
 - (void)removeMessageView {
     [[NotificationBarView sharedInstance] dismiss];
     
-    /*
-    [self.messageView removeFromSuperview];
-     */
 }
 
 #pragma mark - PerformanceTrackerProtocol
@@ -197,7 +173,7 @@
 }
 
 #pragma mark - DataTrackerProtocol
--(NSString *)getDataTrackerAlias {
+-(NSString *)getScreenName {
     return nil;
 }
 

@@ -7,7 +7,7 @@
 //
 
 #import "CartViewController.h"
-#import "DataManager.h"
+#import "CartDataManager.h"
 #import "JAEmptyCartView.h"
 #import "RICustomer.h"
 #import "JAUtils.h"
@@ -22,6 +22,8 @@
 #import "CartEntitySummaryViewControl.h"
 #import "EmptyViewController.h"
 #import "EmarsysPredictManager.h"
+#import "LoadingManager.h"
+#import "Bamilo-Swift.h"
 
 
 @interface CartViewController() <CartTableViewCellDelegate>
@@ -56,7 +58,7 @@
 
 - (void)setCartEmpty:(BOOL)empty {
     [self.emptyCartViewContainer setHidden:!empty];
-    if (empty) {
+    if (empty && [MainTabBarViewController topViewController] == self) {
         [self.emptyCartViewController getSuggestions];
     }
 }
@@ -67,8 +69,8 @@
     self.navBarLayout.title = STRING_CART;
     self.navBarLayout.showBackButton = NO;
     self.navBarLayout.showCartButton = NO;
-    self.tabBarIsVisible = YES;
-    [self.view setBackgroundColor:JAWhiteColor];
+    [self.view setBackgroundColor:[Theme color:kColorVeryLightGray]];
+    [self.tableView setBackgroundColor:[Theme color:kColorVeryLightGray]];
     
     //TableView registerations
     self.tableView.delegate = self;
@@ -76,11 +78,12 @@
     [self.tableView registerNib:[UINib nibWithNibName: [CartTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[CartTableViewCell nibName]];
     [self.tableView registerNib:[UINib nibWithNibName: [RecieptViewCartTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[RecieptViewCartTableViewCell nibName]];
     self.summeryView.delegate = self;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didLoggedOut) name:kUserLoggedOutNotification object:nil];
 }
 
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
-    self.contentWrapper.frame = self.viewBounds;
 }
 
 - (void)goToHomeScreen {
@@ -108,11 +111,11 @@
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutStart] data:[trackingDictionary copy]];
     [[RITrackingWrapper sharedInstance] trackScreenWithName:@"CheckoutAddress"];
     
-    [[ViewControllerManager centerViewController] requestNavigateToNib:@"CheckoutAddressViewController" ofStoryboard:@"Checkout" useCache:NO args:nil];
+    [[MainTabBarViewController topNavigationController] requestNavigateToNib:@"CheckoutAddressViewController" ofStoryboard:@"Checkout" useCache:NO args:nil];
 }
 
 - (void)removeCartItem:(RICartItem *)cartItem {
-    [self showLoading];
+    [LoadingManager showLoading];
     [RICart removeProductWithSku:cartItem.simpleSku withSuccessBlock:^(RICart *cart) {
         
         NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
@@ -149,8 +152,8 @@
         NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
         [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
         
-        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
-        [self hideLoading];
+    
+        [LoadingManager hideLoading];
         
         self.cart = cart;
         
@@ -159,8 +162,7 @@
         });
         
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-        [self onErrorResponse:apiResponse messages:@[STRING_NO_NETWORK_DETAILS] showAsMessage:YES selector:@selector(removeCartItem:) objects:@[cartItem]];
-        [self hideLoading];
+        [LoadingManager hideLoading];
     }];
 }
 
@@ -216,11 +218,11 @@
 #pragma CartTableViewCell Delegate
 
 - (void)quantityWillChangeTo:(int)newValue withCell:(id)cartCell {
-    [self showLoading];
+    [LoadingManager showLoading];
 }
 
 - (void)quantityHasBeenChangedTo:(int)newValue withNewCart:(RICart *)cart withCell:(id)cartCell {
-    [self hideLoading];
+    [LoadingManager hideLoading];
     
     NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
     [trackingDictionary setValue:cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
@@ -234,24 +236,22 @@
 }
 
 - (void)quantityHasBeenChangedTo:(int)newValue withErrorMessages:(NSArray *)errorMsgs withCell:(id)cartCell {
-    [self hideLoading];
+    [LoadingManager hideLoading];
     Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
     if (networkStatus == NotReachable) {
-        [self onErrorResponse:RIApiResponseUnknownError messages:@[STRING_NO_NETWORK_DETAILS] showAsMessage:YES selector:nil objects:nil];
+        [self showNotificationBarMessage:STRING_NO_NETWORK_DETAILS isSuccess:NO];
     } else {
-        [self onErrorResponse:RIApiResponseUnknownError messages:errorMsgs showAsMessage:YES selector:nil objects:nil];
     }
 }
 
 #pragma mark - CartTableViewCellDelegate
 
 - (void)wantsToLikeCartItem:(RICartItem *)cartItem byCell:(id)cartCell {
-    
 }
 
 - (void)wantToIncreaseCartItemCountMoreThanMax:(RICartItem *)cartItem byCell:(id)cartCell {
-    [self showMessage:[[NSString stringWithFormat:@"سقف خرید %@ عدد می باشد", cartItem.maxQuantity] numbersToPersian] success:NO];
+    [self showNotificationBarMessage:[[NSString stringWithFormat:@"سقف خرید %@ عدد می باشد", cartItem.maxQuantity] numbersToPersian] isSuccess:NO];
 }
 
 - (void)wantsToRemoveCartItem:(RICartItem *)cartItem byCell:(id)cartCell {
@@ -272,7 +272,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[DataManager sharedInstance] getUserCart:self completion:^(id data, NSError *error) {
+    [DataAggregator getUserCart:self completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
         }
@@ -287,7 +287,6 @@
 #pragma mark - DataServiceProtocol
 - (void)bind:(id)data forRequestId:(int)rid {
     RICart *cart = (RICart *)data;
-    [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo: @{kUpdateCartNotificationValue: cart}];
     self.cart = cart;
     [self.tableView reloadData];
     [self checkIfSummeryViewsMustBeVisibleOrNot];
@@ -296,11 +295,8 @@
     if (cart.cartEntity.cartCount.integerValue) {
         [EmarsysPredictManager sendTransactionsOf:self];
     }
-}
-
-#pragma mark - PerformanceTrackerProtocol
-- (NSString *)getPerformanceTrackerScreenName {
-    return @"Cart";
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo: @{kUpdateCartNotificationValue: cart}];
 }
 
 - (NSString *)getPerformanceTrackerLabel {
@@ -309,7 +305,7 @@
 }
 
 #pragma mark - DataTrackerProtocol
--(NSString *)getDataTrackerAlias {
+-(NSString *)getScreenName {
     return @"CART";
 }
 
@@ -369,6 +365,7 @@
     if ([segueName isEqualToString: @"embedEmptyViewController"]) {
         self.emptyCartViewController = (EmptyViewController *) [segue destinationViewController];
         self.emptyCartViewController.recommendationLogic = @"PERSONAL";
+        self.emptyCartViewController.parentScreenName = @"EmptyCart";
         [self.emptyCartViewController updateTitle:STRING_NO_ITEMS_IN_CART];
         [self.emptyCartViewController updateImage:[UIImage imageNamed:@"img_emptyCart"]];
     }
@@ -376,6 +373,11 @@
 
 - (BOOL)isPreventSendTransactionInViewWillAppear {
     return YES;
+}
+
+
+- (void)didLoggedOut {
+    self.cart = nil;
 }
 
 @end

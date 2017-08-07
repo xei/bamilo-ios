@@ -14,7 +14,7 @@
 
 @interface CartEntity : BaseModel <JSONVerboseModel>
 
-@property (strong, nonatomic) NSArray *cartItems;
+@property (strong, nonatomic) NSArray  *cartItems;
 @property (strong, nonatomic) NSNumber *cartUnreducedValue;
 @property (copy  , nonatomic) NSString *cartUnreducedValueFormatted;
 @property (strong, nonatomic) NSNumber *subTotal;

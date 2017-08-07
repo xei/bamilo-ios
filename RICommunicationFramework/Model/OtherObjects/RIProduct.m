@@ -233,86 +233,86 @@
                                                           }];
 }
 
-+ (NSString *)getProductsWithCatalogUrl:(NSString*)url
-                          sortingMethod:(RICatalogSortingEnum)sortingMethod
-                                   page:(NSInteger)page
-                               maxItems:(NSInteger)maxItems
-                                filters:(NSArray*)filters
-                             filterPush:(NSString*)filterPush
-                           successBlock:(void (^)(RICatalog *catalog))successBlock
-                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error, RIUndefinedSearchTerm *undefSearchTerm))failureBlock
-{
-    NSString* fullUrl = @"";
-    NSString *filtersString = [BaseSearchFilterItem urlWithFiltersArray:filters];
-    
-
-    NSString *sortingString = [RICatalogSorting urlComponentForSortingMethod:sortingMethod];
-    if (sortingString.length) {
-        sortingString = [NSString stringWithFormat:@"/%@", sortingString];
-    }
-    
-    if(filtersString.length) {
-        fullUrl = [NSString stringWithFormat:@"%@/page/%ld/maxitems/%ld%@%@", url, (long)page, (long)maxItems, sortingString, [NSString stringWithFormat:@"/%@" ,filtersString]];
-    } else {
-        fullUrl = [NSString stringWithFormat:@"%@/page/%ld/maxitems/%ld%@", url, (long)page, (long)maxItems, sortingString];
-    }
-    
-    if (filterPush.length) {
-        fullUrl = [NSString stringWithFormat:@"%@/%@", fullUrl, filterPush];
-    }
-    
-    return [RIProduct getProductsWithFullUrl:fullUrl successBlock:successBlock andFailureBlock:failureBlock];
-}
-
-+ (NSString *)getProductsWithFullUrl:(NSString*)url
-                        successBlock:(void (^)(RICatalog *catalog))successBlock
-                     andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error,  RIUndefinedSearchTerm *undefSearchTerm))failureBlock
-{
-    url = [url  stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSURL *finalURL = [NSURL URLWithString:url];
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:finalURL
-                                                            parameters:nil
-                                                            httpMethod:HttpVerbGET
-                                                             cacheType:RIURLCacheDBCache
-                                                             cacheTime:RIURLCacheDefaultTime
-                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
-                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-                                                              [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
-                                                                  
-                                                                  NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
-                                                                  if (metadata) {
-                                                                      RICatalog *catalog = [RICatalog parseCatalog:metadata forCountryConfiguration:configuration];
-                                                                      
-                                                                      if (catalog.products.count) {
-                                                                          dispatch_async(dispatch_get_main_queue(), ^{
-                                                                              successBlock(catalog);
-                                                                          });
-                                                                      } else {
-                                                                          failureBlock(RIApiResponseAPIError, nil, nil);
-                                                                      }
-                                                                  } else {
-                                                                      failureBlock(RIApiResponseAPIError, nil, nil);
-                                                                  }
-                                                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-                                                                  failureBlock(apiResponse, nil, nil);
-                                                              }];
-                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
-                                                              dispatch_async(dispatch_get_main_queue(), ^{
-                                                                  if ([errorJsonObject objectForKey:@"metadata"]) {
-                                                                      failureBlock(apiResponse, nil, [RISearchSuggestion parseUndefinedSearchTerm:[errorJsonObject objectForKey:@"metadata"]]);
-                                                                  } else {
-                                                                      if(errorJsonObject) {
-                                                                          failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject], nil);
-                                                                      } else if(errorObject) {
-                                                                          NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                          failureBlock(apiResponse, errorArray, nil);
-                                                                      } else {
-                                                                          failureBlock(apiResponse, nil, nil);
-                                                                      }
-                                                                  }
-                                                              });
-                                                          }];
-}
+//+ (NSString *)getProductsWithCatalogUrl:(NSString*)url
+//                          sortingMethod:(RICatalogSortingEnum)sortingMethod
+//                                   page:(NSInteger)page
+//                               maxItems:(NSInteger)maxItems
+//                                filters:(NSArray*)filters
+//                             filterPush:(NSString*)filterPush
+//                           successBlock:(void (^)(RICatalog *catalog))successBlock
+//                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error, RIUndefinedSearchTerm *undefSearchTerm))failureBlock
+//{
+//    NSString* fullUrl = @"";
+//    NSString *filtersString = [BaseSearchFilterItem urlWithFiltersArray:filters];
+//    
+//
+//    NSString *sortingString = [RICatalogSorting urlComponentForSortingMethod:sortingMethod];
+//    if (sortingString.length) {
+//        sortingString = [NSString stringWithFormat:@"/%@", sortingString];
+//    }
+//    
+//    if(filtersString.length) {
+//        fullUrl = [NSString stringWithFormat:@"%@/page/%ld/maxitems/%ld%@%@", url, (long)page, (long)maxItems, sortingString, [NSString stringWithFormat:@"/%@" ,filtersString]];
+//    } else {
+//        fullUrl = [NSString stringWithFormat:@"%@/page/%ld/maxitems/%ld%@", url, (long)page, (long)maxItems, sortingString];
+//    }
+//    
+//    if (filterPush.length) {
+//        fullUrl = [NSString stringWithFormat:@"%@/%@", fullUrl, filterPush];
+//    }
+//    
+//    return [RIProduct getProductsWithFullUrl:fullUrl successBlock:successBlock andFailureBlock:failureBlock];
+//}
+//
+//+ (NSString *)getProductsWithFullUrl:(NSString*)url
+//                        successBlock:(void (^)(RICatalog *catalog))successBlock
+//                     andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error,  RIUndefinedSearchTerm *undefSearchTerm))failureBlock
+//{
+//    url = [url  stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+//    NSURL *finalURL = [NSURL URLWithString:url];
+//    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:finalURL
+//                                                            parameters:nil
+//                                                            httpMethod:HttpVerbGET
+//                                                             cacheType:RIURLCacheDBCache
+//                                                             cacheTime:RIURLCacheDefaultTime
+//                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
+//                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+//                                                              [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+//                                                                  
+//                                                                  NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
+//                                                                  if (metadata) {
+//                                                                      RICatalog *catalog = [RICatalog parseCatalog:metadata forCountryConfiguration:configuration];
+//                                                                      
+//                                                                      if (catalog.products.count) {
+//                                                                          dispatch_async(dispatch_get_main_queue(), ^{
+//                                                                              successBlock(catalog);
+//                                                                          });
+//                                                                      } else {
+//                                                                          failureBlock(RIApiResponseAPIError, nil, nil);
+//                                                                      }
+//                                                                  } else {
+//                                                                      failureBlock(RIApiResponseAPIError, nil, nil);
+//                                                                  }
+//                                                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+//                                                                  failureBlock(apiResponse, nil, nil);
+//                                                              }];
+//                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
+//                                                              dispatch_async(dispatch_get_main_queue(), ^{
+//                                                                  if ([errorJsonObject objectForKey:@"metadata"]) {
+//                                                                      failureBlock(apiResponse, nil, [RISearchSuggestion parseUndefinedSearchTerm:[errorJsonObject objectForKey:@"metadata"]]);
+//                                                                  } else {
+//                                                                      if(errorJsonObject) {
+//                                                                          failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject], nil);
+//                                                                      } else if(errorObject) {
+//                                                                          NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+//                                                                          failureBlock(apiResponse, errorArray, nil);
+//                                                                      } else {
+//                                                                          failureBlock(apiResponse, nil, nil);
+//                                                                      }
+//                                                                  }
+//                                                              });
+//                                                          }];
+//}
 
 + (void)getRecentlyViewedProductsWithSuccessBlock:(void (^)(NSArray *recentlyViewedProducts))successBlock
                                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
@@ -889,52 +889,52 @@
                                                    }];
 }
 
-+ (void)removeFromFavorites:(RIProduct*)product
-               successBlock:(void (^)(RIApiResponse apiResponse, NSArray *success))successBlock
-            andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
-{
-    NSString *finalUrl = [NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_REMOVE_FOM_WISHLIST];
-    NSDictionary *parameters = [NSDictionary dictionaryWithObject:product.sku forKey:@"sku"];
-    [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:finalUrl]
-                                                     parameters:parameters httpMethod:HttpVerbDELETE
-                                                      cacheType:RIURLCacheNoCache
-                                                      cacheTime:RIURLCacheDefaultTime
-                                             userAgentInjection:[RIApi getCountryUserAgentInjection]
-                                                   successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-                                                       if (VALID_NOTEMPTY([jsonObject objectForKey:@"messages"], NSDictionary)) {
-                                                           NSDictionary *messages = [jsonObject objectForKey:@"messages"];
-                                                           if (VALID_NOTEMPTY([messages objectForKey:@"success"], NSArray)) {
-                                                               NSArray *success = [messages objectForKey:@"success"];
-                                                               if (VALID_NOTEMPTY([success valueForKey:@"message"], NSArray)) {
-                                                                   NSArray *successMessage = [success valueForKey:@"message"];
-                                                                   successBlock(apiResponse, successMessage);
-                                                                   return;
-                                                               }
-                                                               
-                                                           }
-                                                       }
-                                                       successBlock(apiResponse, nil);
-                                                       
-                                                   } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObject) {
-                                                       if (errorObject) {
-                                                           failureBlock(apiResponse, [NSArray arrayWithObject:[errorObject localizedDescription]]);
-                                                       }else{
-                                                           if (VALID_NOTEMPTY([errorJsonObject objectForKey:@"messages"], NSDictionary)) {
-                                                               NSDictionary *messages = [errorJsonObject objectForKey:@"messages"];
-                                                               if (VALID_NOTEMPTY([messages objectForKey:@"error"], NSArray)) {
-                                                                   NSArray *error = [messages objectForKey:@"error"];
-                                                                   if (VALID_NOTEMPTY([error valueForKey:@"message"], NSArray)) {
-                                                                       NSArray *errorMessage = [error valueForKey:@"message"];
-                                                                       failureBlock(apiResponse, errorMessage);
-                                                                       return;
-                                                                   }
-                                                                   
-                                                               }
-                                                           }
-                                                           failureBlock(apiResponse, nil);
-                                                       }
-                                                   }];
-}
+//+ (void)removeFromFavorites:(RIProduct*)product
+//               successBlock:(void (^)(RIApiResponse apiResponse, NSArray *success))successBlock
+//            andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
+//{
+//    NSString *finalUrl = [NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_REMOVE_FOM_WISHLIST];
+//    NSDictionary *parameters = [NSDictionary dictionaryWithObject:product.sku forKey:@"sku"];
+//    [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:finalUrl]
+//                                                     parameters:parameters httpMethod:HttpVerbDELETE
+//                                                      cacheType:RIURLCacheNoCache
+//                                                      cacheTime:RIURLCacheDefaultTime
+//                                             userAgentInjection:[RIApi getCountryUserAgentInjection]
+//                                                   successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+//                                                       if (VALID_NOTEMPTY([jsonObject objectForKey:@"messages"], NSDictionary)) {
+//                                                           NSDictionary *messages = [jsonObject objectForKey:@"messages"];
+//                                                           if (VALID_NOTEMPTY([messages objectForKey:@"success"], NSArray)) {
+//                                                               NSArray *success = [messages objectForKey:@"success"];
+//                                                               if (VALID_NOTEMPTY([success valueForKey:@"message"], NSArray)) {
+//                                                                   NSArray *successMessage = [success valueForKey:@"message"];
+//                                                                   successBlock(apiResponse, successMessage);
+//                                                                   return;
+//                                                               }
+//                                                               
+//                                                           }
+//                                                       }
+//                                                       successBlock(apiResponse, nil);
+//                                                       
+//                                                   } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObject) {
+//                                                       if (errorObject) {
+//                                                           failureBlock(apiResponse, [NSArray arrayWithObject:[errorObject localizedDescription]]);
+//                                                       }else{
+//                                                           if (VALID_NOTEMPTY([errorJsonObject objectForKey:@"messages"], NSDictionary)) {
+//                                                               NSDictionary *messages = [errorJsonObject objectForKey:@"messages"];
+//                                                               if (VALID_NOTEMPTY([messages objectForKey:@"error"], NSArray)) {
+//                                                                   NSArray *error = [messages objectForKey:@"error"];
+//                                                                   if (VALID_NOTEMPTY([error valueForKey:@"message"], NSArray)) {
+//                                                                       NSArray *errorMessage = [error valueForKey:@"message"];
+//                                                                       failureBlock(apiResponse, errorMessage);
+//                                                                       return;
+//                                                                   }
+//                                                                   
+//                                                               }
+//                                                           }
+//                                                           failureBlock(apiResponse, nil);
+//                                                       }
+//                                                   }];
+//}
 
 + (NSDate*)productIsFavoriteInDatabase:(RIProduct*)product
 {

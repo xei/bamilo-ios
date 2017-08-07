@@ -9,14 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "JAFiltersView.h"
 #import "TTRangeSlider.h"
-#import "SearchPriceFilter.h"
 
 @interface JAPriceFiltersView : JAFiltersView <TTRangeSliderDelegate, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *contentViewVerticalCenterContstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *centeredContentHeightConstraint;
 
-- (void)initializeWithPriceFilterOption:(SearchPriceFilter*)priceFilter;
+- (void)initializeWithPriceFilterOption:(id)priceFilter;
 - (void)saveOptions;
 
 @end

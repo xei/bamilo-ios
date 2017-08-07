@@ -12,7 +12,7 @@
 #import "JAORReasonsViewController.h"
 #import "JAORWaysViewController.h"
 #import "JAORPaymentViewController.h"
-#import "ViewControllerManager.h"
+#import "Bamilo-Swift.h"
 
 @implementation JAReturnStepByStepModel
 
@@ -57,13 +57,13 @@
     Class classKind = [self.viewControllersArray objectAtIndex:index];
     
     if (classKind == [JAORReasonsViewController class]) {
-        [[ViewControllerManager centerViewController] goToOnlineReturnsReasonsScreenForItems:self.items order:self.order];
+        [[MainTabBarViewController topNavigationController] goToOnlineReturnsReasonsScreenForItems:self.items order:self.order];
     } else if (classKind == [JAORWaysViewController class]) {
-        [[ViewControllerManager centerViewController] goToOnlineReturnsWaysScreenForItems:self.items order:self.order];
+        [[MainTabBarViewController topNavigationController] goToOnlineReturnsWaysScreenForItems:self.items order:self.order];
     } else if (classKind == [JAORPaymentViewController class]) {
-        [[ViewControllerManager centerViewController] goToOnlineReturnsPaymentScreenForItems:self.items order:self.order];
+        [[MainTabBarViewController topNavigationController] goToOnlineReturnsPaymentScreenForItems:self.items order:self.order];
     } else if (classKind == [JAORConfirmationScreenViewController class]) {
-        [[ViewControllerManager centerViewController] goToOnlineReturnsConfirmScreenForItems:self.items order:self.order];
+        [[MainTabBarViewController topNavigationController] goToOnlineReturnsConfirmScreenForItems:self.items order:self.order];
     }
 }
 

@@ -19,6 +19,7 @@
 #import "JABottomSubmitView.h"
 #import "JAORProductView.h"
 #import "ViewControllerManager.h"
+#import "Bamilo-Swift.h"
 
 @interface JAORReasonsViewController () <JADynamicFormDelegate, JAPickerDelegate>
 
@@ -292,7 +293,7 @@
         }
     }
     
-    [[ViewControllerManager centerViewController] goToOnlineReturnsWaysScreenForItems:self.items order:self.order];
+    [[MainTabBarViewController topNavigationController] goToOnlineReturnsWaysScreenForItems:self.items order:self.order];
 }
 
 #pragma mark - PICKER

@@ -8,36 +8,14 @@
 
 #import "RITeaserComponent.h"
 #import "RITeaserGrouping.h"
+#import "Bamilo-Swift.h"
 
 
 @implementation RITeaserComponent
 
-@dynamic imageLandscapeUrl;
-@dynamic imagePortraitUrl;
-@dynamic name;
-@dynamic endingDate;
-@dynamic subTitle;
-@dynamic targetString;
-@dynamic title;
-@dynamic brand;
-@dynamic richRelevance;
-@dynamic maxSavingPercentage;
-@dynamic sku;
-@dynamic price;
-@dynamic priceEuroConverted;
-@dynamic priceFormatted;
-@dynamic maxPriceEuroConverted;
-@dynamic maxPrice;
-@dynamic maxPriceFormatted;
-@dynamic teaserGrouping;
-@dynamic specialPrice;
-@dynamic specialPriceEuroConverted;
-@dynamic specialPriceFormatted;
-
 + (RITeaserComponent*)parseTeaserComponent:(NSDictionary*)teaserComponentJSON
 country:(RICountryConfiguration*)country {
-    RITeaserComponent* newTeaserComponent = (RITeaserComponent*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RITeaserComponent class])];
-    
+    RITeaserComponent* newTeaserComponent = [RITeaserComponent new];
     if (teaserComponentJSON) {
         
         if ([teaserComponentJSON objectForKey:@"image"]) {
@@ -116,23 +94,12 @@ country:(RICountryConfiguration*)country {
         if ([teaserComponentJSON objectForKey:@"special_price"]) {
             newTeaserComponent.specialPrice = [NSNumber numberWithLongLong:[[teaserComponentJSON objectForKey:@"special_price"] longLongValue]];
             newTeaserComponent.specialPriceFormatted = [RICountryConfiguration formatPrice:newTeaserComponent.specialPrice country:country];
-        }
-        
+        }   
         if ([teaserComponentJSON objectForKey:@"special_price_converted"]) {
             newTeaserComponent.specialPriceEuroConverted = [NSNumber numberWithLongLong:[[teaserComponentJSON objectForKey:@"special_price_converted"] longLongValue]];
         }
-
     }
-    
     return newTeaserComponent;
-}
-
-+ (void)saveTeaserComponent:(RITeaserComponent *)teaserComponent andContext:(BOOL)save {
-    [[RIDataBaseWrapper sharedInstance] insertManagedObject:teaserComponent];
-    if (save) {
-        [[RIDataBaseWrapper sharedInstance] saveContext];
-    }
-    
 }
 
 - (void)sendNotificationForTeaseTarget:(NSString *)optionalTrackingInfo {
@@ -181,13 +148,7 @@ country:(RICountryConfiguration*)country {
         [userInfo setObject:self.targetString forKey:@"targetString"];
         [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:userInfo];
         
-        //tracking click
-        NSMutableDictionary* teaserTrackingDictionary = [NSMutableDictionary new];
-        [teaserTrackingDictionary setValue:optionalTrackingInfo forKey:kRIEventCategoryKey];
-        [teaserTrackingDictionary setValue:@"BannerClick" forKey:kRIEventActionKey];
-        [teaserTrackingDictionary setValue:teaserTarget.node forKey:kRIEventLabelKey];
-        
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventTeaserClick] data:[teaserTrackingDictionary copy]];
+        [TrackerManager postEventWithSelector:[EventSelectors teaserTappedSelector] attributes:[EventAttributes teaserTappedWithTeaserName:optionalTrackingInfo screenName:@"HomePage" teaserTargetNode:teaserTarget.node]];
     }
 }
 

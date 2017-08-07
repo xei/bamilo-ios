@@ -105,4 +105,9 @@
     }
 }
 
+#pragma mark - hide tabbar in this view controller 
+- (BOOL)hidesBottomBarWhenPushed {
+    return YES;
+}
+
 @end
