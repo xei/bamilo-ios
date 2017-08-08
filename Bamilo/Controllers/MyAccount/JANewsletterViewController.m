@@ -59,9 +59,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    self.navBarLayout.title = STRING_NEWSLETTER_PREFERENCES;
-    self.navBarLayout.showBackButton = YES;
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self loadForms];
@@ -166,6 +163,11 @@
 - (void)newsletterSubscriptionSelected:(BOOL)selected;
 {
     [self.dynamicForm unsubscribedNewsletters];
+}
+
+#pragma mark: -NavigationBarProtocol 
+- (NSString *)navbarTitleString {
+    return STRING_NEWSLETTER_PREFERENCES;
 }
 
 @end

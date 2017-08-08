@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -76,28 +76,28 @@
                     <constraints>
                         <constraint firstItem="KEe-C2-McQ" firstAttribute="width" secondItem="sNJ-uO-icl" secondAttribute="width" id="149-A9-mZ0"/>
                         <constraint firstItem="sNJ-uO-icl" firstAttribute="top" secondItem="Vgd-q1-5fi" secondAttribute="bottom" constant="15" id="2NL-n0-CF0"/>
-                        <constraint firstItem="sNJ-uO-icl" firstAttribute="trailing" secondItem="Vgd-q1-5fi" secondAttribute="trailing" id="62W-EB-9KW"/>
+                        <constraint firstItem="sNJ-uO-icl" firstAttribute="right" secondItem="Vgd-q1-5fi" secondAttribute="right" id="62W-EB-9KW"/>
                         <constraint firstItem="Vgd-q1-5fi" firstAttribute="top" secondItem="hjF-u9-yTY" secondAttribute="top" constant="30" id="CeE-g4-t3M"/>
-                        <constraint firstItem="9xR-AT-4xc" firstAttribute="trailing" secondItem="sNJ-uO-icl" secondAttribute="trailing" id="Hwb-la-6eC"/>
+                        <constraint firstItem="9xR-AT-4xc" firstAttribute="right" secondItem="sNJ-uO-icl" secondAttribute="right" id="Hwb-la-6eC"/>
                         <constraint firstItem="sNJ-uO-icl" firstAttribute="height" secondItem="Vgd-q1-5fi" secondAttribute="height" id="JQI-ld-MYD"/>
-                        <constraint firstItem="KEe-C2-McQ" firstAttribute="trailing" secondItem="9xR-AT-4xc" secondAttribute="trailing" id="NYW-Ya-nSB"/>
+                        <constraint firstItem="KEe-C2-McQ" firstAttribute="right" secondItem="9xR-AT-4xc" secondAttribute="right" id="NYW-Ya-nSB"/>
                         <constraint firstItem="0Py-CW-4wp" firstAttribute="top" secondItem="KEe-C2-McQ" secondAttribute="bottom" constant="5" id="fY1-UP-avf"/>
-                        <constraint firstAttribute="trailing" secondItem="Vgd-q1-5fi" secondAttribute="trailing" constant="30" id="hVn-hq-XgS"/>
+                        <constraint firstAttribute="right" secondItem="Vgd-q1-5fi" secondAttribute="right" constant="30" id="hVn-hq-XgS"/>
                         <constraint firstItem="KEe-C2-McQ" firstAttribute="top" secondItem="9xR-AT-4xc" secondAttribute="bottom" constant="20" id="nGt-vt-8Io"/>
                         <constraint firstAttribute="bottom" secondItem="0Py-CW-4wp" secondAttribute="bottom" constant="10" id="ndE-7V-cv4"/>
                         <constraint firstItem="9xR-AT-4xc" firstAttribute="top" secondItem="sNJ-uO-icl" secondAttribute="bottom" constant="5" id="sA2-dj-sPe"/>
                         <constraint firstItem="sNJ-uO-icl" firstAttribute="width" secondItem="Vgd-q1-5fi" secondAttribute="width" id="uVh-Nb-ByQ"/>
-                        <constraint firstItem="0Py-CW-4wp" firstAttribute="trailing" secondItem="KEe-C2-McQ" secondAttribute="trailing" id="vfc-Rm-kFm"/>
-                        <constraint firstItem="Vgd-q1-5fi" firstAttribute="leading" secondItem="hjF-u9-yTY" secondAttribute="leading" constant="30" id="ym7-Tb-frh"/>
+                        <constraint firstItem="0Py-CW-4wp" firstAttribute="right" secondItem="KEe-C2-McQ" secondAttribute="right" id="vfc-Rm-kFm"/>
+                        <constraint firstItem="Vgd-q1-5fi" firstAttribute="left" secondItem="hjF-u9-yTY" secondAttribute="left" constant="30" id="ym7-Tb-frh"/>
                     </constraints>
                 </scrollView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="Vgd-q1-5fi" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="0rY-rY-6so"/>
-                <constraint firstItem="hjF-u9-yTY" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="5tm-ys-Roo"/>
-                <constraint firstAttribute="trailing" secondItem="hjF-u9-yTY" secondAttribute="trailing" id="XJC-Qe-Zr2"/>
-                <constraint firstAttribute="trailing" secondItem="Vgd-q1-5fi" secondAttribute="trailing" constant="30" id="rac-TA-EVD"/>
+                <constraint firstItem="Vgd-q1-5fi" firstAttribute="left" secondItem="i5M-Pr-FkT" secondAttribute="left" constant="30" id="0rY-rY-6so"/>
+                <constraint firstItem="hjF-u9-yTY" firstAttribute="left" secondItem="i5M-Pr-FkT" secondAttribute="left" id="5tm-ys-Roo"/>
+                <constraint firstAttribute="right" secondItem="hjF-u9-yTY" secondAttribute="right" id="XJC-Qe-Zr2"/>
+                <constraint firstAttribute="right" secondItem="Vgd-q1-5fi" secondAttribute="right" constant="30" id="rac-TA-EVD"/>
                 <constraint firstItem="hjF-u9-yTY" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="sIG-xP-EsA"/>
                 <constraint firstAttribute="bottom" secondItem="hjF-u9-yTY" secondAttribute="bottom" id="uAH-5e-J6S"/>
             </constraints>

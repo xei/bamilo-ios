@@ -25,6 +25,8 @@
 @property (nonatomic, strong) NSIndexPath* selectedIndexPath;
 @property (weak, nonatomic) IBOutlet UIButton *subCatButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *subCatButtonHeightConstraint;
+@property (weak, nonatomic) IBOutlet UIButton *submitButton;
+
 @property (nonatomic) NSUInteger totalSelected;
 @property (nonatomic) BOOL filterHasBeenChanged;
 @end
@@ -44,6 +46,8 @@ const int subCatButtonVisibleHeight = 50;
     
     [self.subCatButton applyStyle:kFontRegularName fontSize:11 color:[UIColor blackColor]];
     [self.subCatButton setTitle:STRING_SUBCATEGORIES forState:UIControlStateNormal];
+    [self.submitButton setBackgroundColor:[Theme color:kColorExtraDarkBlue]];
+    
     if (self.subCatsFilter && ((CatalogCategoryFilterItem *)self.subCatsFilter).options.count) {
         self.subCatButtonHeightConstraint.constant = subCatButtonVisibleHeight;
     } else{

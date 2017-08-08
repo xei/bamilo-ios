@@ -132,9 +132,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
-    self.navBarLayout.showBackButton = YES;
-    self.navBarLayout.title = self.product.brand;
-    
     [self.view addSubview:self.topTabsView];
     [self.view addSubview:self.contentScrollView];
 }
@@ -164,6 +161,12 @@
 
 - (void)selectedIndex:(NSInteger)index animated:(BOOL)animated {
     [self scrollToX:index*self.view.frame.size.width];
+}
+
+#pragma mark: - NavigationBarProtocol
+
+- (NSString *)navbarTitleString {
+    return self.product.brand;
 }
 
 @end

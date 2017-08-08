@@ -30,7 +30,7 @@ import Foundation
     
 //######## MARK: - AddressDataManager
     static func getUserAddressList(_ target: DataServiceProtocol, completion: @escaping DataClosure) {
-        AddressDataManager.sharedInstance.getUserAddressList(target, completion: completion)
+        AddressDataManager.sharedInstance.getUserAddressList(target, requestType: .foreground, completion: completion)
     }
     
     static func setDefaultAddress(_ target: DataServiceProtocol, address: Address, isBilling: Bool, completion: @escaping DataClosure) {
@@ -46,7 +46,7 @@ import Foundation
     }
     
     static func getAddress(_ target: DataServiceProtocol, id: String, completion:@escaping DataClosure) {
-        AddressDataManager.sharedInstance.getAddress(target, id: id, completion: completion)
+        AddressDataManager.sharedInstance.getAddress(target, id: id, requestType: .foreground, completion: completion)
     }
     
 //    static func deleteAddress(_ target: DataServiceProtocol, address: Address, completion: @escaping DataClosure) {

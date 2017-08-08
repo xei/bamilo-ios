@@ -56,19 +56,15 @@
 
 +(NSMutableArray *) bindAddresses:(AddressList *)addressList {
     NSMutableArray *_addresses = [NSMutableArray new];
-    
     if(addressList) {
         if(addressList.shipping) {
             [_addresses addObject:addressList.shipping];
         }
-        
         for(Address *otherAddress in addressList.other) {
             [_addresses addObject:otherAddress];
         }
-        
         return _addresses;
     }
-    
     return nil;
 }
 

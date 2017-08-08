@@ -176,7 +176,7 @@
 
 - (void)setSeller:(RISeller *)seller {
     _seller = seller;
-    [self.sellerNameLabel setText: [NSString stringWithFormat:@"%@: %@", STRING_SELLER, seller.name]];
+    [self.sellerNameLabel setText: [NSString stringWithFormat:@"%@   : %@", STRING_SELLER, seller.name]];
     [self.sellerNameLabel sizeToFit];
     if (CGRectGetMaxX(self.sellerNameLabel.frame) > self.width - self.sellerNameLabel.x) {
         [self.sellerNameLabel setWidth:self.width - 2*self.sellerNameLabel.x];
@@ -189,10 +189,10 @@
 //    [self.sellerDeliveryLabel setY:CGRectGetMaxY(self.sellerNameLabel.frame) + 16.f];
     
     if (VALID_NOTEMPTY(seller.warranty, NSString)) {
-        [self.sellerWarrantyLabel setText:[NSString stringWithFormat:@"%@: %@", STRING_SELLER_INFO_WARRANTY, [seller.warranty uppercaseString]]];
+        [self.sellerWarrantyLabel setText:[NSString stringWithFormat:@"%@   :      %@", STRING_SELLER_INFO_WARRANTY, [seller.warranty uppercaseString]]];
         
-        [self.sellerWarrantyLabel setFrame:CGRectMake(CGRectGetMaxX(self.warrantyIcon.frame)+10.f, CGRectGetMaxY(self.sellerNameLabel.frame) + 16.f, self.width - (CGRectGetMaxX(self.warrantyIcon.frame) + 10 + (self.width - self.arrow.x)), [self.sellerWarrantyLabel sizeThatFits:CGSizeMake(self.sellerWarrantyLabel.width, CGFLOAT_MAX)].height)];
-        
+        [self.sellerWarrantyLabel setFrame:CGRectMake(self.sellerNameLabel.x, CGRectGetMaxY(self.sellerNameLabel.frame) + 16.f, self.width + (self.width - self.arrow.x), [self.sellerWarrantyLabel sizeThatFits:CGSizeMake(self.sellerWarrantyLabel.width, CGFLOAT_MAX)].height)];
+        [self.warrantyIcon setX:70];
         [self.warrantyIcon setY:CGRectGetMidY(self.sellerWarrantyLabel.frame) - self.warrantyIcon.height/2];
         [self.warrantyIcon setHidden:NO];
         [self setHeight:CGRectGetMaxY(self.sellerWarrantyLabel.frame) + 16.f];

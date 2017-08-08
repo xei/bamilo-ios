@@ -9,12 +9,30 @@
 import Foundation
 
 class AddressDataManager: DataManagerSwift {
+    
     static let sharedInstance = AddressDataManager()
     
-
+    private static var defaultAddressUser: Address?
+    func getUserDefaultAddress(target: DataServiceProtocol,completion: @escaping (Address) -> Void) {
+        if let defaultAddress = AddressDataManager.defaultAddressUser {
+            completion(defaultAddress)
+            return
+        }
+        self.getUserAddressList(target, requestType: .background) { (data, error) in
+            if let addressList = data as? AddressList {
+                self.getAddress(target, id: addressList.shipping.uid, requestType: .background, completion: { (data, error) in
+                    if let defaultAddress = data as? Address {
+                        AddressDataManager.defaultAddressUser = defaultAddress
+                        completion(defaultAddress)
+                    }
+                })
+            }
+        }
+    }
+    
     //MARK: - Address List API
-    func getUserAddressList(_ target: DataServiceProtocol, completion: @escaping DataClosure) {
-        AddressDataManager.requestManager.async(.post, target: target, path: RI_API_GET_CUSTOMER_ADDRESS_LIST, params: nil, type: .foreground) { (responseType, data, errorMessages) in
+    func getUserAddressList(_ target: DataServiceProtocol, requestType: ApiRequestExecutionType, completion: @escaping DataClosure) {
+        AddressDataManager.requestManager.async(.post, target: target, path: RI_API_GET_CUSTOMER_ADDRESS_LIST, params: nil, type: requestType) { (responseType, data, errorMessages) in
             self.processResponse(responseType, aClass: AddressList.self, data: data, errorMessages: errorMessages, completion: completion)
         }
     }
@@ -43,9 +61,9 @@ class AddressDataManager: DataManagerSwift {
         }
     }
     
-    func getAddress(_ target: DataServiceProtocol, id: String, completion:@escaping DataClosure) {
+    func getAddress(_ target: DataServiceProtocol, id: String, requestType: ApiRequestExecutionType, completion:@escaping DataClosure) {
         let path = "\(RI_API_GET_CUSTOMER_ADDDRESS)?id=\(id)"
-        AddressDataManager.requestManager.async(.get, target: target, path: path, params: nil, type: .foreground) { (responseType, data, errorMessages) in
+        AddressDataManager.requestManager.async(.get, target: target, path: path, params: nil, type: requestType) { (responseType, data, errorMessages) in
             self.processResponse(responseType, aClass: Address.self, data: data, errorMessages: errorMessages, completion: completion)
         }
     }
@@ -56,6 +74,7 @@ class AddressDataManager: DataManagerSwift {
 //            self.processResponse(responseType, aClass: nil, data: data, errorMessages: errorMesssages, completion: completion)
 //        }
 //    }
+    
     static var sharedRegions: Any?
     static var sharedCities: [String: Any] = [String: Any]()
     func getRegions(_ target: DataServiceProtocol, completion:@escaping DataClosure) {

@@ -19,7 +19,7 @@
 
 @interface JABaseViewController : UIViewController <PerformanceTrackerProtocol, DataTrackerProtocol, UISearchBarDelegate, NavigationBarProtocol>
 
-@property (nonatomic, strong)JANavigationBarLayout* navBarLayout;
+//@property (nonatomic, strong)JANavigationBarLayout* navBarLayout;
 
 //@property (nonatomic, strong)NSString *screenName;
 //@property (nonatomic, strong)NSDate *startLoadingTime;

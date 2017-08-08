@@ -458,7 +458,7 @@ static NSString *recommendationLogic = @"RELATED";
     self.product = product;
     self.productSku = product.sku;
 
-    self.title = product.brand;
+//    self.title = product.brand;
 
     [self trackingEventViewProduct:product];
     [self trackingEventLoadingTime];
@@ -1882,11 +1882,6 @@ static NSString *recommendationLogic = @"RELATED";
 #pragma mark - hide tabbar in this view controller
 - (BOOL)hidesBottomBarWhenPushed {
     return YES;
-}
-
-#pragma mark - NavigationBarProtocol
-- (NSString *)navbarTitleString {
-    return STRING_LOADING;
 }
 
 @end

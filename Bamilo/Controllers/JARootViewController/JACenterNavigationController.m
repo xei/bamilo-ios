@@ -89,11 +89,11 @@
 - (JAStepByStepTabViewController *)getNewCheckoutStepByStepViewController {
     JAStepByStepTabViewController *checkoutStepByStepViewController = [JAStepByStepTabViewController new];
 //    [checkoutStepByStepViewController setStepByStepModel:[JACheckoutStepByStepModel new]];
-    checkoutStepByStepViewController.navBarLayout.showCartButton = NO;
-    [checkoutStepByStepViewController.navBarLayout setShowBackButton:YES];
-    checkoutStepByStepViewController.navBarLayout.showLogo = NO;
-    [checkoutStepByStepViewController.navBarLayout setTitle:STRING_CHECKOUT];
-    [checkoutStepByStepViewController setIndexInit:0];
+//    checkoutStepByStepViewController.navBarLayout.showCartButton = NO;
+//    [checkoutStepByStepViewController.navBarLayout setShowBackButton:YES];
+//    checkoutStepByStepViewController.navBarLayout.showLogo = NO;
+//    [checkoutStepByStepViewController.navBarLayout setTitle:STRING_CHECKOUT];
+//    [checkoutStepByStepViewController setIndexInit:0];
     return checkoutStepByStepViewController;
 }
 
@@ -108,10 +108,10 @@
     JAStepByStepTabViewController *returnsStepByStepViewController = [JAStepByStepTabViewController new];
     
     [returnsStepByStepViewController setStepByStepModel:[JAReturnStepByStepModel new]];
-    returnsStepByStepViewController.navBarLayout.showCartButton = NO;
-    [returnsStepByStepViewController.navBarLayout setShowBackButton:YES];
-    returnsStepByStepViewController.navBarLayout.showLogo = NO;
-    [returnsStepByStepViewController.navBarLayout setTitle:STRING_MY_ORDERS];
+//    returnsStepByStepViewController.navBarLayout.showCartButton = NO;
+//    [returnsStepByStepViewController.navBarLayout setShowBackButton:YES];
+//    returnsStepByStepViewController.navBarLayout.showLogo = NO;
+//    [returnsStepByStepViewController.navBarLayout setTitle:STRING_MY_ORDERS];
     [returnsStepByStepViewController setIndexInit:0];
     return returnsStepByStepViewController;
 }
@@ -272,8 +272,7 @@
         case SHOP_IN_SHOP: {
             JAShopWebViewController* viewController = [[JAShopWebViewController alloc] init];
             [self loadScreenTarget:screenTarget forBaseViewController:viewController];
-            [viewController.navBarLayout setShowBackButton:YES];
-            [viewController.navBarLayout setTitle:screenTarget.target.node];
+            [viewController setTitle:screenTarget.target.node];
             [self pushViewController:viewController animated:screenTarget.pushAnimation];
             return YES;
         }
@@ -302,9 +301,6 @@
 }
 
 - (void)loadScreenTarget:(JAScreenTarget *)screenTarget forBaseViewController:(JABaseViewController *)viewController {
-    if (VALID(screenTarget.navBarLayout, JANavigationBarLayout)) {
-        [viewController setNavBarLayout:screenTarget.navBarLayout];
-    }
     [viewController setTargetString:screenTarget.target.targetString];
 }
 
@@ -1069,24 +1065,17 @@
 }
 
 - (void)didSelectTeaserWithShopUrl:(NSNotification*)notification {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
-                                                        object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification object:nil];
     
     NSString* targetString = [notification.userInfo objectForKey:@"targetString"];
     JAShopWebViewController* viewController = [[JAShopWebViewController alloc] init];
-    if([notification.userInfo objectForKey:@"show_back_button"]) {
-        [viewController.navBarLayout setShowBackButton:YES];
-    }
-    if ([notification.userInfo objectForKey:@"show_back_button_title"]) {
-        [viewController.navBarLayout setShowBackButton:YES];
-    }
+    
     if([notification.userInfo objectForKey:@"title"]) {
-        viewController.navBarLayout.title = [notification.userInfo objectForKey:@"title"];
+        viewController.title = [notification.userInfo objectForKey:@"title"];
     }
     if ([notification.userInfo objectForKey:@"teaserTrackingInfo"]) {
         viewController.teaserTrackingInfo = [notification.userInfo objectForKey:@"teaserTrackingInfo"];
     }
-    
     if (targetString.length) {
         viewController.targetString = targetString;
         [self pushViewController:viewController animated:YES];

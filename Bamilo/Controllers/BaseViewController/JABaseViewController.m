@@ -78,8 +78,8 @@
 -(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        JANavigationBarLayout *defaultLayout = [[JANavigationBarLayout alloc] init];
-        self.navBarLayout = defaultLayout;
+//        JANavigationBarLayout *defaultLayout = [[JANavigationBarLayout alloc] init];
+//        self.navBarLayout = defaultLayout;
     }
     return self;
 }
@@ -87,8 +87,8 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        JANavigationBarLayout *defaultLayout = [[JANavigationBarLayout alloc] init];
-        self.navBarLayout = defaultLayout;
+//        JANavigationBarLayout *defaultLayout = [[JANavigationBarLayout alloc] init];
+//        self.navBarLayout = defaultLayout;
     }
     return self;
 }
@@ -96,8 +96,8 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        JANavigationBarLayout *defaultLayout = [[JANavigationBarLayout alloc] init];
-        self.navBarLayout = defaultLayout;
+//        JANavigationBarLayout *defaultLayout = [[JANavigationBarLayout alloc] init];
+//        self.navBarLayout = defaultLayout;
     }
     return self;
 }
@@ -300,8 +300,8 @@
 }
 
 - (void)reloadNavBar {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kChangeNavigationBarNotification
-                                                        object:self.navBarLayout];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:kChangeNavigationBarNotification
+//                                                        object:self.navBarLayout];
 }
 
 - (void)showSearchBar {

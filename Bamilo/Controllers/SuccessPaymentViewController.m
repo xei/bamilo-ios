@@ -33,6 +33,7 @@
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     [self.carouselWidget hide];
+    STRING_CHECKOUT
     [self.carouselWidget setBackgroundColor:[Theme color:kColorVeryLightGray]];
     self.carouselWidget.delegate = self;
     [self setupView];
@@ -138,8 +139,7 @@
         [TrackerManager postEventWithSelector:[EventSelectors recommendationTappedSelector] attributes:[EventAttributes tapEmarsysRecommendationWithScreenName:[self getScreenName] logic:self.cart.cartEntity.cartCount.integerValue == 1 ? @"ALSO_BOUGHT" : @"PERSONAL"]];
         [[NSNotificationCenter defaultCenter] postNotificationName: kDidSelectTeaserWithPDVUrlNofication
                                                             object: nil
-                                                          userInfo: @{
-                                                                      @"sku": ((RecommendItem *)item).sku,
+                                                          userInfo: @{@"sku": ((RecommendItem *)item).sku,
                                                                       @"show_back_button": @(YES)
                                                                       }];
     }

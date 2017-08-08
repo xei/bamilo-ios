@@ -36,12 +36,14 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
     }
     
     func fillTheView() {
-        self.regionInputView.model = FormItemModel.init(textValue: STRING_TEHRAN, fieldName: "", andIcon: nil, placeholder: "استان", type: .options, validation: nil, selectOptions: nil)
+        self.regionInputView.model = FormItemModel.init(textValue: nil, fieldName: "", andIcon: nil, placeholder: "استان", type: .options, validation: nil, selectOptions: nil)
         self.cityInputView.model = FormItemModel.init(textValue: nil, fieldName: "", andIcon: nil, placeholder: "شهر", type: .options, validation: nil, selectOptions: nil)
-        self.getRegionsWithCompletion {
-            self.getCitiesOfRegion(regionId: self.regionInputView.model.getValue())
-        }
+        self.getRegionsWithCompletion(completion: nil)
         self.getTimeDeliveryForCityId(cityID: nil)
+        
+        if RICustomer.checkIfUserIsLogged() {
+            self.getDefaulAddress()
+        }
     }
     
     private func updateOptionInField(inputField: InputTextFieldControl, withData: Any) {
@@ -55,11 +57,11 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
         }
     }
     
-    private func getRegionsWithCompletion(completion: @escaping ()-> Void) {
+    private func getRegionsWithCompletion(completion: (()-> Void)? = nil) {
         AddressDataManager.sharedInstance.getRegions(self) { (data, error) in
             if (error == nil) {
                 self.bind(data, forRequestId: 0)
-                completion()
+                completion?()
             }
         }
     }
@@ -76,6 +78,21 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
         ProductDataManager.sharedInstance.getDeliveryTime(self, sku: self.productSku, cityId: cityID) { (data, error) in
             if error == nil {
                 self.bind(data, forRequestId: 2)
+            }
+        }
+    }
+    
+    private func getDefaulAddress() {
+        AddressDataManager.sharedInstance.getUserDefaultAddress(target: self) { (address) in
+            let cityModel = self.cityInputView.model
+            let regionModel = self.regionInputView.model
+            cityModel?.inputTextValue = address.city
+            regionModel?.inputTextValue = address.region
+            self.cityInputView.model = cityModel
+            self.regionInputView.model = regionModel
+            
+            self.getRegionsWithCompletion {
+                self.getCitiesOfRegion(regionId: self.regionInputView.model.getValue())
             }
         }
     }

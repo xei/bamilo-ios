@@ -251,11 +251,9 @@
         [self addSubview:sis];
         yOffset = CGRectGetMaxY(sis.frame);
     }
-    
     /*
      *  SELLER
      */
-    
     if (VALID_NOTEMPTY(product.seller, RISeller)) {
         _sellerYPosition = yOffset;
         JAProductInfoHeaderLine *headerSeller = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoHeaderLineHeight)];

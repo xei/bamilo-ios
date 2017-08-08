@@ -94,8 +94,6 @@ import SwiftyJSON
         
         if let navTitle = self.navBarTitle {
             self.title = navTitle
-//            self.navBarLayout.title = navTitle
-//            self.requestNavigationBarReload()
         }
     }
     

@@ -263,9 +263,7 @@
             
             lastTextFieldIndex = [self.formViews count];
             [self.formViews addObject:textField];
-        }
-        else if ([@"password" isEqualToString:field.type] || [@"password2" isEqualToString:field.type])
-        {
+        } else if ([@"password" isEqualToString:field.type] || [@"password2" isEqualToString:field.type]) {
             JATextFieldComponent *textField = [[JATextFieldComponent alloc] init];
             [textField setupWithField:field];
             [textField.textField setDelegate:self];
@@ -283,17 +281,17 @@
             UIImage *eyeImage = [UIImage imageNamed:@"btn_eye_closed"];
             eyeView = [[UIImageView alloc] initWithImage:eyeImage];
             [eyeView setFrame:CGRectMake(0, 0, eyeImage.size.width, eyeImage.size.height)];
-            
+        
             [eyeView setUserInteractionEnabled:YES];
             [eyeView addGestureRecognizer:eyeGestureRecognizer];
             
-            if (RI_IS_RTL) {
-                textField.textField.leftViewMode = UITextFieldViewModeAlways;
-                textField.textField.leftView = eyeView;
-            } else {
-                textField.textField.rightViewMode = UITextFieldViewModeAlways;
-                textField.textField.rightView = eyeView;
-            }
+//            if (RI_IS_RTL) {
+//                textField.textField.leftViewMode = UITextFieldViewModeAlways;
+//                textField.textField.leftView = eyeView;
+//            } else {
+//                textField.textField.rightViewMode = UITextFieldViewModeAlways;
+//                textField.textField.rightView = eyeView;
+//            }
             
             startingY += textField.frame.size.height;
             
@@ -302,9 +300,7 @@
             
             lastTextFieldIndex = [self.formViews count];
             [self.formViews addObject:textField];
-        }
-        else if ([field.type isEqualToString:@"integer"] || [field.type isEqualToString:@"number"])
-        {
+        } else if ([field.type isEqualToString:@"integer"] || [field.type isEqualToString:@"number"]) {
             JATextFieldComponent *textField = [[JATextFieldComponent alloc] init];
             [textField setupWithField:field];
             [textField.textField setDelegate:self];
@@ -327,9 +323,7 @@
             
             lastTextFieldIndex = [self.formViews count];
             [self.formViews addObject:textField];
-        }
-        else if ([field.type isEqualToString:@"date"])
-        {
+        } else if ([field.type isEqualToString:@"date"]) {
             JABirthDateComponent *birthDateComponent = [[JABirthDateComponent alloc] init];
             [birthDateComponent setupWithField:field];
             [birthDateComponent.textField setDelegate:self];
@@ -344,9 +338,7 @@
             [birthDateComponent setTag:tag];
             lastTextFieldIndex = [self.formViews count];
             [self.formViews addObject:birthDateComponent];
-        }
-        else if ([@"radio" isEqualToString:field.type] || [@"list" isEqualToString:field.type])
-        {
+        } else if ([@"radio" isEqualToString:field.type] || [@"list" isEqualToString:field.type]) {
             JARadioComponent *radioComponent = [[JARadioComponent alloc] init];
             [radioComponent setupWithField:field];
             [radioComponent.textField setDelegate:self];
@@ -364,25 +356,16 @@
             lastTextFieldIndex = [self.formViews count];
             [self.formViews addObject:radioComponent];
             
-            if([radioComponent isComponentWithKey:@"region"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
-            {
+            if([radioComponent isComponentWithKey:@"region"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString)) {
                 self.regionComponent = radioComponent;
-            }
-            else if([radioComponent isComponentWithKey:@"city"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
-            {
+            } else if([radioComponent isComponentWithKey:@"city"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString)) {
                 self.cityComponent = radioComponent;
-            }
-            else if([radioComponent isComponentWithKey:@"postcode"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
-            {
+            } else if([radioComponent isComponentWithKey:@"postcode"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString)) {
                 self.postcodeComponent = radioComponent;
-            }
-            else if([radioComponent isComponentWithKey:@"newsletter_categories_subscribed"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
-            {
+            } else if([radioComponent isComponentWithKey:@"newsletter_categories_subscribed"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString)) {
                 self.newsletterGenderComponent = radioComponent;
             }
-        }
-        else if ([@"related_number" isEqualToString:field.type])
-        {
+        } else if ([@"related_number" isEqualToString:field.type]) {
             
             JATextFieldComponent *textField = [[JATextFieldComponent alloc] init];
             [textField setupWithField:field];
@@ -410,11 +393,7 @@
             
             if (1 == field.relatedFields.count) {
                 //must be list type
-                
-//                CGFloat phoneOffset = 80.f;
                 CGFloat prefixWidth = 0.f;
-                
-//                [textField setFixedX:phoneOffset];
                 
                 JARadioComponent* radioRelated = [[JARadioComponent alloc] initWithFrame:CGRectMake(8.f, 0, prefixWidth, 48.f)];
                 [radioRelated.textField setDelegate:self];
