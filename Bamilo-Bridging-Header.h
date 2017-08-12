@@ -29,6 +29,7 @@
 
 #import <Masonry/Masonry.h>
 #import <RGB/RRGB.h>
+#import "UIBarButtonItem+Badge.h"
 
 #import "DataManager.h"
 #import "OrderList.h"

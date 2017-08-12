@@ -146,11 +146,13 @@
     //To remove navbar bottom border
     [self.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     [self.navigationBar setShadowImage:[UIImage new]];
-    
-    // now use the new backButtomImage
-    [[UINavigationBar appearance] setBackIndicatorImage:backButtonImage];
-    [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:backButtonImage];
-    [[UINavigationBar appearance] setTranslucent:NO];
+
+    if (SYSTEM_VERSION_GREATER_THAN(@"9.0")) {
+        // now use the new backButtomImage
+        [[UINavigationBar appearance] setBackIndicatorImage:backButtonImage];
+        [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:backButtonImage];
+        [[UINavigationBar appearance] setTranslucent:NO];
+    }
     
     //To set navigation bar background color
     self.navigationBar.barTintColor = [Theme color:kColorExtraDarkBlue];

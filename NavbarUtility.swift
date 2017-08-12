@@ -15,13 +15,28 @@ import Foundation
         return logoView
     }
     
-    static func navbarSearchButton(viewController: NavigationBarProtocol) -> UIBarButtonItem {
+    static func navbarLeftButton(type: NavbarLeftButtonType, viewController: NavigationBarProtocol) -> UIBarButtonItem {
         let button = IconButton(type: .custom)
         button.imageHeightToButtonHeightRatio = 0.8
-        button.setImage(UIImage(named: "btn_search"), for: UIControlState.normal)
-        button.addTarget(viewController, action:#selector(viewController.searchIconButtonTapped), for: UIControlEvents.touchUpInside)
+        
+        button.setImage(UIImage(named: type ==  .search ? "btn_search" : "btn_cart"), for: UIControlState.normal)
+        button.addTarget(viewController, action: type == .search ? #selector(viewController.searchIconButtonTapped): #selector(viewController.cartIconButtonTapped), for: UIControlEvents.touchUpInside)
         button.frame.size = CGSize(width: 30, height: 30)
         let barButton = UIBarButtonItem(customView: button)
+        
+        if type == .cart {
+            barButton.badgeValue = "\(RICart.sharedInstance().cartEntity.cartCount!)".convertTo(language: .arabic)
+            barButton.badgeFont = Theme.font(kFontVariationRegular, size: 8)
+            barButton.badgeBGColor = Theme.color(kColorOrange)
+        }
         return barButton
+    }
+    
+    static func changeStatusBarColor(color: UIColor) {
+        (UIApplication.shared.value(forKey: "statusBar") as? UIView)?.backgroundColor = color
+    }
+    
+    static func getStatusBarHeight() -> CGFloat {
+        return UIApplication.shared.statusBarFrame.size.height
     }
 }

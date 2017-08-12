@@ -33,7 +33,7 @@
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     [self.carouselWidget hide];
-    STRING_CHECKOUT
+    
     [self.carouselWidget setBackgroundColor:[Theme color:kColorVeryLightGray]];
     self.carouselWidget.delegate = self;
     [self setupView];

@@ -49,7 +49,10 @@
     }
     if ([self respondsToSelector:@selector(navbarleftButton)]) {
         if ([self navbarleftButton] == NavbarLeftButtonTypeSearch && [self respondsToSelector:@selector(searchIconButtonTapped)]) {
-            self.navigationItem.rightBarButtonItem = [NavbarUtility navbarSearchButtonWithViewController:self];
+            self.navigationItem.rightBarButtonItem = [NavbarUtility navbarLeftButtonWithType:NavbarLeftButtonTypeSearch viewController:self];
+        }
+        if ([self navbarleftButton] == NavbarLeftButtonTypeCart && [self respondsToSelector:@selector(searchIconButtonTapped)]) {
+            self.navigationItem.rightBarButtonItem = [NavbarUtility navbarLeftButtonWithType:NavbarLeftButtonTypeCart viewController:self];
         }
     }
 }
@@ -163,4 +166,15 @@
 - (void)searchIconButtonTapped {
     [[MainTabBarViewController topNavigationController] showSearchView];
 }
+
+- (void)cartIconButtonTapped {
+    [MainTabBarViewController showCart];
+}
+
+- (void)updateCartInNavbar {
+    if (self.navbarleftButton == NavbarLeftButtonTypeCart) {
+        self.navigationItem.rightBarButtonItem.badgeValue = [[NSString stringWithFormat:@"%@", [RICart sharedInstance].cartEntity.cartCount] numbersToPersian];
+    }
+}
+
 @end

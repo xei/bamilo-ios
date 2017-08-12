@@ -83,6 +83,8 @@
 
 - (void)onOrientationChanged;
 
+- (void)updateCartInNavbar;
+
 //TEMP FUNCTION
 -(NSArray *) extractSuccessMessages:(id)dataMessages;
 

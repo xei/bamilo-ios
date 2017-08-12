@@ -990,6 +990,7 @@ static NSString *recommendationLogic = @"RELATED";
                 //##############
                 [EmarsysPredictManager sendTransactionsOf:self];
                 
+                [self updateCartInNavbar];
             } else {
                 //EVENT: ADD TO CART
                 [TrackerManager postEventWithSelector:[EventSelectors addToCartEventSelector]
@@ -1050,9 +1051,7 @@ static NSString *recommendationLogic = @"RELATED";
     }
 }
 
-- (void)loadSizePickerWithOptions:(NSArray*)options
-                     previousText:(NSString*)previousText
-                  leftButtonTitle:(NSString*)leftButtonTitle {
+- (void)loadSizePickerWithOptions:(NSArray*)options previousText:(NSString*)previousText leftButtonTitle:(NSString*)leftButtonTitle {
     if (!VALID_NOTEMPTY(self.picker, JAPicker)) {
 
         self.picker = [[JAPicker alloc] initWithFrame:self.view.frame];
@@ -1063,21 +1062,14 @@ static NSString *recommendationLogic = @"RELATED";
         [self.view addSubview:self.picker];
     }
 
-    [self.picker setDataSourceArray:options
-                       previousText:previousText
-                    leftButtonTitle:leftButtonTitle];
-
+    [self.picker setDataSourceArray:options previousText:previousText leftButtonTitle:leftButtonTitle];
     CGFloat pickerViewHeight = self.view.frame.size.height;
     CGFloat pickerViewWidth = self.view.frame.size.width;
-    [self.picker setFrame:CGRectMake(0.0f,
-                                     pickerViewHeight,
-                                     pickerViewWidth,
-                                     pickerViewHeight)];
+    [self.picker setFrame:CGRectMake(0.0f, pickerViewHeight, pickerViewWidth, pickerViewHeight)];
 
     [self.view bringSubviewToFront:self.picker];
 
-    [UIView animateWithDuration:0.4f
-                     animations:^{
+    [UIView animateWithDuration:0.4f animations:^{
                          [self.picker setFrame:CGRectMake(0.0f, 0.0f, pickerViewWidth, pickerViewHeight)];
                      }];
 }
@@ -1128,9 +1120,7 @@ static NSString *recommendationLogic = @"RELATED";
                      animations:^{
                          self.picker.frame = frame;
                      } completion:^(BOOL finished) {
-
-                         if (self.openPickerFromCart)
-                         {
+                         if (self.openPickerFromCart) {
                              self.openPickerFromCart = NO;
                              [self addToCart];
                          }
@@ -1141,8 +1131,7 @@ static NSString *recommendationLogic = @"RELATED";
     CGRect frame = self.picker.frame;
     frame.origin.y = self.view.frame.size.height;
 
-    [UIView animateWithDuration:0.4f
-                     animations:^{
+    [UIView animateWithDuration:0.4f animations:^{
                          self.picker.frame = frame;
                      } completion:^(BOOL finished) {
                          [self.picker removeFromSuperview];
@@ -1783,8 +1772,7 @@ static NSString *recommendationLogic = @"RELATED";
     [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
     [trackingDictionary setValue:product.priceEuroConverted forKey:kRIEventValueKey];
 
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRelatedItem]
-                                              data:[trackingDictionary copy]];
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRelatedItem] data:[trackingDictionary copy]];
 }
 
 - (void)trackingEventMostViewedBrand {
@@ -1882,6 +1870,12 @@ static NSString *recommendationLogic = @"RELATED";
 #pragma mark - hide tabbar in this view controller
 - (BOOL)hidesBottomBarWhenPushed {
     return YES;
+}
+
+#pragma mark - NavigationBarProtocol
+
+- (NavbarLeftButtonType)navbarleftButton {
+    return NavbarLeftButtonTypeCart;
 }
 
 @end

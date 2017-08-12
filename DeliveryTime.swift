@@ -17,7 +17,6 @@ class DeliveryTime: NSObject, Mappable {
     var deliveryTimeZone2: String?
     var deliveryTime: Date?
     var deliveryTimeMessage: String?
-    var cityId: String?
     
     required init?(map: Map) {
         if map.JSON["sku"] == nil {

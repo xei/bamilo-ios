@@ -17,4 +17,5 @@
 - (NavbarLeftButtonType)navbarleftButton;
 - (BOOL)navbarhideBackButton;
 - (void)searchIconButtonTapped;
+- (void)cartIconButtonTapped;
 @end

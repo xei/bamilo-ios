@@ -39,6 +39,7 @@
 		61148E051E4724FC00E2540B /* StepperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61148E041E4724FC00E2540B /* StepperView.m */; };
 		61148E081E47250A00E2540B /* StepperViewControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 61148E071E47250A00E2540B /* StepperViewControl.m */; };
 		61148E0A1E47255F00E2540B /* StepperView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61148E091E47255F00E2540B /* StepperView.xib */; };
+		611BB3C11F3EDEEB00022906 /* UIBarButtonItem+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = 611BB3C01F3EDEEB00022906 /* UIBarButtonItem+Badge.m */; };
 		611C1B2E1F0B757E00C57E4D /* FilterSearchEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 611C1B2D1F0B757E00C57E4D /* FilterSearchEvent.m */; };
 		611C1B321F0BAA0900C57E4D /* SearchBarSearchEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 611C1B311F0BAA0900C57E4D /* SearchBarSearchEvent.m */; };
 		611E23E01F10CFB500E5C3AC /* EventSelectors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611E23DF1F10CFB500E5C3AC /* EventSelectors.swift */; };
@@ -90,6 +91,7 @@
 		616D65EC1E670984008B07EA /* OrderProductListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 616D65EA1E670984008B07EA /* OrderProductListTableViewCell.m */; };
 		616D65ED1E670984008B07EA /* OrderProductListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 616D65EB1E670984008B07EA /* OrderProductListTableViewCell.xib */; };
 		61716BA71E865B3D00F4E65F /* DeepLinkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 61716BA61E865B3D00F4E65F /* DeepLinkManager.m */; };
+		6171F3681F3A021700B3B212 /* Ext+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6171F3671F3A021700B3B212 /* Ext+UIView.swift */; };
 		617AAA441E503AB9004D9430 /* FormItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 617AAA431E503AB9004D9430 /* FormItemModel.m */; };
 		617D7F391EDC16DC00F36CF7 /* Ext+UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617D7F381EDC16DC00F36CF7 /* Ext+UILabel.swift */; };
 		617D7F3C1EDC2F3E00F36CF7 /* ProfileOrderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617D7F3A1EDC2F3E00F36CF7 /* ProfileOrderTableViewCell.swift */; };
@@ -155,7 +157,6 @@
 		61D10E6C1EAE22C6009A0865 /* SuccessPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D10E6B1EAE22C6009A0865 /* SuccessPaymentViewController.m */; };
 		61D8D8DE1E656FE0006650F5 /* OrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D8D8DD1E656FE0006650F5 /* OrderDetailViewController.m */; };
 		61D929341F1642C100716D4C /* Ext+CAShapreLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D929331F1642C100716D4C /* Ext+CAShapreLayer.swift */; };
-		61D929381F164CC200716D4C /* Ext+UIBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D929371F164CC200716D4C /* Ext+UIBarButtonItem.swift */; };
 		61D9293F1F16585500716D4C /* NavbarUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D9293E1F16585500716D4C /* NavbarUtility.swift */; };
 		61D929481F165AF700716D4C /* NavbarItemTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D929471F165AF700716D4C /* NavbarItemTypes.m */; };
 		61DBCCB61E46128300BA8251 /* IconButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 61DBCCB51E46128300BA8251 /* IconButton.m */; };
@@ -951,6 +952,8 @@
 		61148E061E47250A00E2540B /* StepperViewControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepperViewControl.h; sourceTree = "<group>"; };
 		61148E071E47250A00E2540B /* StepperViewControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StepperViewControl.m; sourceTree = "<group>"; };
 		61148E091E47255F00E2540B /* StepperView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StepperView.xib; sourceTree = "<group>"; };
+		611BB3BF1F3EDEEB00022906 /* UIBarButtonItem+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+Badge.h"; sourceTree = "<group>"; };
+		611BB3C01F3EDEEB00022906 /* UIBarButtonItem+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+Badge.m"; sourceTree = "<group>"; };
 		611C1B2C1F0B757E00C57E4D /* FilterSearchEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterSearchEvent.h; sourceTree = "<group>"; };
 		611C1B2D1F0B757E00C57E4D /* FilterSearchEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterSearchEvent.m; sourceTree = "<group>"; };
 		611C1B301F0BAA0900C57E4D /* SearchBarSearchEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchBarSearchEvent.h; sourceTree = "<group>"; };
@@ -1032,6 +1035,7 @@
 		616D65EB1E670984008B07EA /* OrderProductListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OrderProductListTableViewCell.xib; sourceTree = "<group>"; };
 		61716BA51E865B3D00F4E65F /* DeepLinkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeepLinkManager.h; sourceTree = "<group>"; };
 		61716BA61E865B3D00F4E65F /* DeepLinkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeepLinkManager.m; sourceTree = "<group>"; };
+		6171F3671F3A021700B3B212 /* Ext+UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Ext+UIView.swift"; sourceTree = "<group>"; };
 		617AAA421E503AB9004D9430 /* FormItemModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormItemModel.h; sourceTree = "<group>"; };
 		617AAA431E503AB9004D9430 /* FormItemModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormItemModel.m; sourceTree = "<group>"; };
 		617D7F381EDC16DC00F36CF7 /* Ext+UILabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Ext+UILabel.swift"; sourceTree = "<group>"; };
@@ -1133,7 +1137,6 @@
 		61D8D8DD1E656FE0006650F5 /* OrderDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDetailViewController.m; sourceTree = "<group>"; };
 		61D8FA0A1F25F69600B04200 /* NavigationBarProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationBarProtocol.h; sourceTree = "<group>"; };
 		61D929331F1642C100716D4C /* Ext+CAShapreLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Ext+CAShapreLayer.swift"; sourceTree = "<group>"; };
-		61D929371F164CC200716D4C /* Ext+UIBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Ext+UIBarButtonItem.swift"; sourceTree = "<group>"; };
 		61D9293E1F16585500716D4C /* NavbarUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavbarUtility.swift; sourceTree = "<group>"; };
 		61D929461F165AF700716D4C /* NavbarItemTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavbarItemTypes.h; sourceTree = "<group>"; };
 		61D929471F165AF700716D4C /* NavbarItemTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavbarItemTypes.m; sourceTree = "<group>"; };
@@ -3636,7 +3639,7 @@
 				617D7F381EDC16DC00F36CF7 /* Ext+UILabel.swift */,
 				61EA56691EDE8BC20093EAD4 /* Ext+UIAlertView.swift */,
 				61D929331F1642C100716D4C /* Ext+CAShapreLayer.swift */,
-				61D929371F164CC200716D4C /* Ext+UIBarButtonItem.swift */,
+				6171F3671F3A021700B3B212 /* Ext+UIView.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -6683,6 +6686,8 @@
 				9A40772E1CE0CFD700313D20 /* UIButton+Size.m */,
 				615E796A1EF6BE58008E661D /* UILabel+WhiteUIDatePickerLabels.h */,
 				615E796B1EF6BE58008E661D /* UILabel+WhiteUIDatePickerLabels.m */,
+				611BB3BF1F3EDEEB00022906 /* UIBarButtonItem+Badge.h */,
+				611BB3C01F3EDEEB00022906 /* UIBarButtonItem+Badge.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -7830,6 +7835,7 @@
 				61BA9B4E1E9A00D7004E9DE8 /* EmarsysRecommendationCarouselView.m in Sources */,
 				CE9ADF8E1AB6D78200D56481 /* JACatalogTopView.m in Sources */,
 				CE9ADF8F1AB6D78200D56481 /* JAPDVBundles.m in Sources */,
+				611BB3C11F3EDEEB00022906 /* UIBarButtonItem+Badge.m in Sources */,
 				87DAABF71E55EA9200445EBB /* BMLAlertView.m in Sources */,
 				CE9ADF911AB6D78200D56481 /* JAPDVRelatedItem.m in Sources */,
 				875AD5861E38C0C900584ABF /* RIAdjustTracker.m in Sources */,
@@ -7860,7 +7866,6 @@
 				875AD5621E38C0C900584ABF /* RIHtmlShop.m in Sources */,
 				9AE766BF1CBBF01C00B63D8E /* JAEmptyCartView.m in Sources */,
 				9AEF741C1CD27C1400A5D574 /* JACheckoutButton.m in Sources */,
-				61D929381F164CC200716D4C /* Ext+UIBarButtonItem.swift in Sources */,
 				CE9ADF9C1AB6D78200D56481 /* JAAddNewAddressViewController.m in Sources */,
 				875AD5481E38C0C900584ABF /* RIFieldOption.m in Sources */,
 				FFF900871C6B5BDF00DDF538 /* JARadioGroupComponent.m in Sources */,
@@ -8004,6 +8009,7 @@
 				9A0BBE951BFE2482007D35CE /* JACustomNavigationBarView.m in Sources */,
 				8720C3331EDEE19200404378 /* RequestManager.swift in Sources */,
 				875AD5471E38C0C900584ABF /* RIFieldDataSetComponent.m in Sources */,
+				6171F3681F3A021700B3B212 /* Ext+UIView.swift in Sources */,
 				CE9ADFDE1AB6D78200D56481 /* JABaseViewController.m in Sources */,
 				8702FBDD1E9A32D3001D1AA9 /* AddToCartEvent.m in Sources */,
 				9AEF74051CD20E5700A5D574 /* JAScreenTarget.m in Sources */,

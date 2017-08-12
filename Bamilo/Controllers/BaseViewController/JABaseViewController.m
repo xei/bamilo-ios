@@ -154,7 +154,10 @@
     }
     if ([self respondsToSelector:@selector(navbarleftButton)]) {
         if ([self navbarleftButton] == NavbarLeftButtonTypeSearch && [self respondsToSelector:@selector(searchIconButtonTapped)]) {
-            self.navigationItem.rightBarButtonItem = [NavbarUtility navbarSearchButtonWithViewController:self];
+            self.navigationItem.rightBarButtonItem = [NavbarUtility navbarLeftButtonWithType:NavbarLeftButtonTypeSearch viewController:self];
+        }
+        if ([self navbarleftButton] == NavbarLeftButtonTypeCart && [self respondsToSelector:@selector(cartIconButtonTapped)]) {
+            self.navigationItem.rightBarButtonItem = [NavbarUtility navbarLeftButtonWithType:NavbarLeftButtonTypeCart viewController:self];
         }
     }
 }
@@ -311,7 +314,7 @@
     self.searchBarBackground.backgroundColor = [Theme color:kColorExtraDarkBlue];
     [self.view addSubview:self.searchBarBackground];
     
-    CGFloat horizontalMargin = 3.0f;
+    CGFloat horizontalMargin = 0.0f;
     
     //adjustment to native searchbar margin
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
@@ -764,6 +767,16 @@
 #pragma mark - NavigationBarProtocol
 - (void)searchIconButtonTapped {
     [[MainTabBarViewController topNavigationController] showSearchView];
+}
+
+- (void)cartIconButtonTapped {
+    [MainTabBarViewController showCart];
+}
+
+- (void)updateCartInNavbar {
+    if (self.navbarleftButton == NavbarLeftButtonTypeCart) {
+        self.navigationItem.rightBarButtonItem.badgeValue = [[NSString stringWithFormat:@"%@", [RICart sharedInstance].cartEntity.cartCount] numbersToPersian];
+    }
 }
 
 @end
