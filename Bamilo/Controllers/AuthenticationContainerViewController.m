@@ -107,11 +107,11 @@
 
 
 #pragma mark - NavigationBarProtocol
-- (NSString *)navbarTitleString {
+- (NSString *)navBarTitleString {
     return STRING_LOGIN_OR_SIGNUP;
 }
 
-- (BOOL)navbarhideBackButton {
+- (BOOL)navBarhideBackButton {
     return self.isForcedToLogin;
 }
 

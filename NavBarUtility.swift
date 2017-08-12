@@ -1,5 +1,5 @@
 //
-//  NavbarUtility.swift
+//  NavBarUtility.swift
 //  Bamilo
 //
 //  Created by Ali Saeedifar on 7/12/17.
@@ -8,20 +8,24 @@
 
 import Foundation
 
-@objc class NavbarUtility: NSObject {
-    static func navbarLogo() -> UIImageView {
+@objc class NavBarUtility: NSObject {
+    
+    static let navbarLogoFrame = CGSize(width: 83, height: 20)
+    static let barButtonItemFrame = CGSize(width: 30, height: 30)
+    
+    static func navBarLogo() -> UIImageView {
         let logoView = UIImageView(image: UIImage(named: "img_navbar_logo"))
-        logoView.frame.size = CGSize(width: 83, height: 20)
+        logoView.frame.size = navbarLogoFrame
         return logoView
     }
     
-    static func navbarLeftButton(type: NavbarLeftButtonType, viewController: NavigationBarProtocol) -> UIBarButtonItem {
+    static func navBarLeftButton(type: NavBarLeftButtonType, viewController: NavigationBarProtocol) -> UIBarButtonItem {
         let button = IconButton(type: .custom)
         button.imageHeightToButtonHeightRatio = 0.8
         
         button.setImage(UIImage(named: type ==  .search ? "btn_search" : "btn_cart"), for: UIControlState.normal)
         button.addTarget(viewController, action: type == .search ? #selector(viewController.searchIconButtonTapped): #selector(viewController.cartIconButtonTapped), for: UIControlEvents.touchUpInside)
-        button.frame.size = CGSize(width: 30, height: 30)
+        button.frame.size = barButtonItemFrame
         let barButton = UIBarButtonItem(customView: button)
         
         if type == .cart {

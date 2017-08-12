@@ -44,6 +44,7 @@ import SwiftyJSON
     private var listViewType: CatalogListViewType = .grid
     private var listFullyLoaded = false
     private var lastContentOffset: CGFloat = 0
+    private var initialNavBarAndStatusBarHeight: CGFloat!
     
     //TODO: this property is only used for passing enum (swift type) property from objective c
     // so we have to remove it after migration those who wanna pass this property
@@ -86,14 +87,16 @@ import SwiftyJSON
         self.loadData()
         
         
-        NotificationCenter.default.addObserver(self, selector: #selector(updateListWithUserLoginNotification(notification:)), name: NSNotification.Name("NOTIFICATION_USER_LOGGED_IN"), object: nil)
-        if let navbar = self.navigationController?.navigationBar {
-            self.initialCatalogHeaderTopConstraint = navbar.frame.height + NavbarUtility.getStatusBarHeight()
+        NotificationCenter.default.addObserver(self, selector: #selector(updateListWithUserLoginNotification(notification:)), name: NSNotification.Name(NotificationKeys.UserLogin), object: nil)
+        if let navBar = self.navigationController?.navigationBar {
+            self.initialCatalogHeaderTopConstraint = navBar.frame.height + NavBarUtility.getStatusBarHeight()
             self.catalogHeaderTopConstraint.constant = self.initialCatalogHeaderTopConstraint
         }
         
         self.navBarBlurView = self.navigationController?.navigationBar.addBlurView()
         self.navBarBlurView?.alpha = 0
+        
+        self.initialNavBarAndStatusBarHeight = self.navigationController!.navigationBar.frame.height + UIApplication.shared.statusBarFrame.height
     }
     
     deinit {
@@ -111,21 +114,21 @@ import SwiftyJSON
         if let tabBar = self.tabBarController?.tabBar {
             self.tabbarInitialFrame = tabBar.frame
         }
-        if let navbar = self.navigationController?.navigationBar {
-             self.navBarInitialFrame = navbar.frame
+        if let navBar = self.navigationController?.navigationBar {
+             self.navBarInitialFrame = navBar.frame
         }
-        NavbarUtility.changeStatusBarColor(color: Theme.color(kColorExtraDarkBlue))
+        NavBarUtility.changeStatusBarColor(color: Theme.color(kColorExtraDarkBlue))
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
-        //reset all states of tabbar and navbar, status bar
+        //reset all states of tabbar and navBar, status bar
         self.resetTabarFrame(animated: true)
-        self.resetNavbar(animated: false)
+        self.resetNavBar(animated: false)
         self.setNavigationBarAlpha(alpha: 0, animated: true)
         self.catalogHeaderTopConstraint.constant = self.initialCatalogHeaderTopConstraint
-        NavbarUtility.changeStatusBarColor(color: .clear)
+        NavBarUtility.changeStatusBarColor(color: .clear)
     }
     
     func updateNavBar() {
@@ -339,7 +342,7 @@ import SwiftyJSON
     
     private var navBarInitialFrame: CGRect?
     private var navBarIsHidding = true
-    private func changeNavbarPositionY(difference: CGFloat) {
+    private func changeNavBarPositionY(difference: CGFloat) {
         self.navBarIsHidding = difference < 0
         if let navBar = self.navigationController?.navigationBar,let navBarInitialFrame = self.navBarInitialFrame {
             navBar.boundedStickyVerticalMove(difference: -difference, direction: .top, initialFrame: navBarInitialFrame)
@@ -352,7 +355,7 @@ import SwiftyJSON
             if movedTransitionWidth == 0 {
                 self.catalogHeaderTopConstraint.constant = self.initialCatalogHeaderTopConstraint
             } else if movedTransitionWidth == totalTransitionWidth {
-                self.catalogHeaderTopConstraint.constant = NavbarUtility.getStatusBarHeight()
+                self.catalogHeaderTopConstraint.constant = NavBarUtility.getStatusBarHeight()
             } else {
                 self.catalogHeaderTopConstraint.constant = self.initialCatalogHeaderTopConstraint - movedTransitionWidth
             }
@@ -371,7 +374,7 @@ import SwiftyJSON
         }
     }
     
-    private func hideNavbar(animated: Bool) {
+    private func hideNavBar(animated: Bool) {
         if let navBar = self.navigationController?.navigationBar,let navBarInitialFrame = self.navBarInitialFrame {
             var hiddenRect = navBarInitialFrame
             hiddenRect.origin.y -= hiddenRect.size.height
@@ -379,9 +382,9 @@ import SwiftyJSON
         }
     }
     
-    private func resetNavbar(animated: Bool) {
-        if let navbar = self.navigationController?.navigationBar,let navBarInitialFrame = self.navBarInitialFrame {
-            navbar.setFrame(frame: navBarInitialFrame, animated: animated)
+    private func resetNavBar(animated: Bool) {
+        if let navBar = self.navigationController?.navigationBar,let navBarInitialFrame = self.navBarInitialFrame {
+            navBar.setFrame(frame: navBarInitialFrame, animated: animated)
         }
     }
     
@@ -493,7 +496,7 @@ import SwiftyJSON
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return  UIEdgeInsetsMake(self.catalogHeader.frame.height + 65, 0, 0, 0)
+        return  UIEdgeInsetsMake(self.catalogHeader.frame.height + self.initialNavBarAndStatusBarHeight , 0, 0, 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -542,14 +545,14 @@ import SwiftyJSON
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (scrollView.contentOffset.y < 10) {
             self.resetTabarFrame(animated: false)
-            self.resetNavbar(animated: false)
+            self.resetNavBar(animated: false)
             self.setNavigationBarAlpha(alpha: 0, animated: false)
             return
         }
         
         let scrollChanage = self.lastContentOffset - scrollView.contentOffset.y
         self.changeTabbarPositionY(difference: scrollChanage)
-        self.changeNavbarPositionY(difference: scrollChanage)
+        self.changeNavBarPositionY(difference: scrollChanage)
         
         self.lastContentOffset = scrollView.contentOffset.y;
     }
@@ -558,11 +561,11 @@ import SwiftyJSON
         if !decelerate {
             self.tabbarIsHidding ? self.hideTabbar(animated: true) : self.resetTabarFrame(animated: true)
             if self.navBarIsHidding {
-                self.hideNavbar(animated: true)
+                self.hideNavBar(animated: true)
                 self.setNavigationBarAlpha(alpha: 1, animated: true)
-                self.catalogHeaderTopConstraint.constant = NavbarUtility.getStatusBarHeight()
+                self.catalogHeaderTopConstraint.constant = NavBarUtility.getStatusBarHeight()
             } else {
-                self.resetNavbar(animated: true)
+                self.resetNavBar(animated: true)
                 self.setNavigationBarAlpha(alpha: 0, animated: true)
                 self.catalogHeaderTopConstraint.constant = self.initialCatalogHeaderTopConstraint
             }
@@ -673,10 +676,10 @@ import SwiftyJSON
     }
     
     //MARK: -NavigationBarProtocol
-    override func navbarTitleString() -> String {
+    override func navBarTitleString() -> String {
         return STRING_SEARCHING;
     }
-    override func navbarleftButton() -> NavbarLeftButtonType {
+    override func navBarleftButton() -> NavBarLeftButtonType {
         return .search
     }
 }

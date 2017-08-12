@@ -291,7 +291,7 @@ JADynamicFormDelegate
 
 #pragma mark: -NavigationBarProtocol
 
-- (NSString *)navbarTitleString {
+- (NSString *)navBarTitleString {
     return STRING_USER_EMAIL_NOTIFICATIONS;
 }
 

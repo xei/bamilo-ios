@@ -377,7 +377,7 @@
 
 #pragma mark - navigationBarProtocol
 
-- (NSString *)navbarTitleString {
+- (NSString *)navBarTitleString {
     return STRING_CART;
 }
 

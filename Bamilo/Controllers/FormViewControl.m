@@ -190,7 +190,7 @@
 }
 
 #pragma mark - InputTextFieldControlDelegate
-- (void)inputValueHasBeenChanged:(id)inputTextFieldControl byNewValue:(NSString *)value inFieldIndex:(NSUInteger)fieldIndex {
+- (void)inputValueChanged:(id)inputTextFieldControl byNewValue:(NSString *)value inFieldIndex:(NSUInteger)fieldIndex {
     
     FormItemModel *model = self.formModelList[fieldIndex];
     model.inputTextValue = value;

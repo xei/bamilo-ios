@@ -38,7 +38,7 @@ import UIKit
         } else {}
         
         self.updateUserSessionAndCart()
-        NotificationCenter.default.addObserver(self, selector: #selector(updateUserSessionAndCart), name: NSNotification.Name("appDidEnterForeground"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateUserSessionAndCart), name: NSNotification.Name(NotificationKeys.EnterForground), object: nil)
     }
     
     func updateUserSessionAndCart() {
@@ -144,7 +144,7 @@ import UIKit
     //MARK: - DataServiceProtocol 
     func bind(_ data: Any!, forRequestId rid: Int32) {
         if let cart = data as? RICart {
-            NotificationCenter.default.post(name: NSNotification.Name("NOTIFICATION_UPDATE_CART"), object: nil, userInfo: ["NOTIFICATION_UPDATE_CART_VALUE" : cart])
+            NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.UpdateCart), object: nil, userInfo: ["NOTIFICATION_UPDATE_CART_VALUE" : cart])
         }
     }
 }

@@ -96,7 +96,7 @@
 #define kDidSelectCampaignNofication @"NOTIFICATION_DID_SELECT_CAMPAING"
 //#define kDidSelectCategoryFromCenterPanelNotification @"NOTIFICATION_SELECTED_CATEGORY_FROM_CENTER_PANEL"
 
-//navbar notification
+//navBar notification
 //#define kChangeTabBarVisibility @"NOTIFICATION_CHANGE_TAB_BAR_VISIBILITY"
 #define kChangeNavigationBarNotification @"NOTIFICATION_CHANGE_NAVIGATION_BAR"
 #define kEditShouldChangeStateNotification @"EDIT_SHOULD_CHANGE_NOTIFICATION"

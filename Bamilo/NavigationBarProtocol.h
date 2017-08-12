@@ -7,15 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NavbarItemTypes.h"
+#import "NavBarItemTypes.h"
 
 @protocol NavigationBarProtocol <NSObject>
 
 @optional
-- (UIView *)navbarTitleView;
-- (NSString *)navbarTitleString;
-- (NavbarLeftButtonType)navbarleftButton;
-- (BOOL)navbarhideBackButton;
+- (UIView *)navBarTitleView;
+- (NSString *)navBarTitleString;
+- (NavBarLeftButtonType)navBarleftButton;
+- (BOOL)navBarhideBackButton;
 - (void)searchIconButtonTapped;
 - (void)cartIconButtonTapped;
 @end

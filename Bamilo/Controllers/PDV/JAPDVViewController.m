@@ -990,7 +990,7 @@ static NSString *recommendationLogic = @"RELATED";
                 //##############
                 [EmarsysPredictManager sendTransactionsOf:self];
                 
-                [self updateCartInNavbar];
+                [self updateCartInNavBar];
             } else {
                 //EVENT: ADD TO CART
                 [TrackerManager postEventWithSelector:[EventSelectors addToCartEventSelector]
@@ -1874,8 +1874,8 @@ static NSString *recommendationLogic = @"RELATED";
 
 #pragma mark - NavigationBarProtocol
 
-- (NavbarLeftButtonType)navbarleftButton {
-    return NavbarLeftButtonTypeCart;
+- (NavBarLeftButtonType)navBarleftButton {
+    return NavBarLeftButtonTypeCart;
 }
 
 @end

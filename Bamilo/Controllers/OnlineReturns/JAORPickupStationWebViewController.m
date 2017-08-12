@@ -45,7 +45,7 @@
 
 
 #pragma mark - NavigationBarProtocol
-- (NSString *)navbarTitleString {
+- (NSString *)navBarTitleString {
     return STRING_MY_ORDERS;
 }
 @end

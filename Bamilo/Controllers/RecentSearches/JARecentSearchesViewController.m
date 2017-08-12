@@ -297,7 +297,7 @@
 }
 
 #pragma mark - NavigationBarProtocol
-- (NSString *)navbarTitleString {
+- (NSString *)navBarTitleString {
     return STRING_RECENT_SEARCHES;
 }
 

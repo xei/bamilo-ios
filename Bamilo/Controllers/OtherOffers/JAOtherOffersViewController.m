@@ -464,7 +464,7 @@
 }
 
 #pragma mark - NavigationBarProtocol
-- (NSString *)navbarTitleString {
+- (NSString *)navBarTitleString {
     return STRING_OTHER_SELLERS;
 }
 

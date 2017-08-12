@@ -27,7 +27,7 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
     
     //TODO: this function is unnecessary but we need it for now!,
     //because in PDVVIew we have to !! change the alignment (with previous implmentations)
-    func switchTheTextALignMents() {
+    func switchTheTextAlignments() {
         self.regionInputView.input.textField.textAlignment = .left
         self.cityInputView.input.textField.textAlignment = .left
         
@@ -36,8 +36,8 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
     }
     
     func fillTheView() {
-        self.regionInputView.model = FormItemModel.init(textValue: nil, fieldName: "", andIcon: nil, placeholder: "استان", type: .options, validation: nil, selectOptions: nil)
-        self.cityInputView.model = FormItemModel.init(textValue: nil, fieldName: "", andIcon: nil, placeholder: "شهر", type: .options, validation: nil, selectOptions: nil)
+        self.regionInputView.model = FormItemModel.init(textValue: nil, fieldName: "", andIcon: nil, placeholder: STRING_PROVINCE, type: .options, validation: nil, selectOptions: nil)
+        self.cityInputView.model = FormItemModel.init(textValue: nil, fieldName: "", andIcon: nil, placeholder: STRING_CITY, type: .options, validation: nil, selectOptions: nil)
         self.getRegionsWithCompletion(completion: nil)
         self.getTimeDeliveryForCityId(cityID: nil)
         
@@ -98,7 +98,7 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
     }
     
     //MARK: -InputTextFieldControlDelegate
-    func inputValueHasBeenChanged(_ inputTextFieldControl: Any!, byNewValue value: String!, inFieldIndex fieldIndex: UInt) {
+    func inputValueChanged(_ inputTextFieldControl: Any!, byNewValue value: String!, inFieldIndex fieldIndex: UInt) {
         if let inputControl = inputTextFieldControl as? InputTextFieldControl, inputControl == self.regionInputView {
             self.getCitiesOfRegion(regionId: self.regionInputView.model.getValue())
         } else if let inputControl = inputTextFieldControl as? InputTextFieldControl, inputControl == self.cityInputView {

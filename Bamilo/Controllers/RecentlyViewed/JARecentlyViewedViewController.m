@@ -576,7 +576,7 @@
 }
 
 #pragma mark - NavigationBarProtocol
-- (NSString *)navbarTitleString {
+- (NSString *)navBarTitleString {
     return STRING_RECENTLY_VIEWED_TITLE;
 }
 

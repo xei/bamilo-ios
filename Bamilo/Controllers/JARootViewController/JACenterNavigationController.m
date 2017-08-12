@@ -143,7 +143,7 @@
     UIImage *myImage = [UIImage imageNamed:@"btn_back"]; //set your backbutton imagename
     UIImage *backButtonImage = [myImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
-    //To remove navbar bottom border
+    //To remove navBar bottom border
     [self.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     [self.navigationBar setShadowImage:[UIImage new]];
 
@@ -1286,7 +1286,7 @@
     }
 }
 
-#pragma mark - Navbar Button actions
+#pragma mark - NavBar Button actions
 - (void)back {
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressBackNotification object:nil];
     JAStepByStepTabViewController *topViewController = (JAStepByStepTabViewController *)[self topViewController];

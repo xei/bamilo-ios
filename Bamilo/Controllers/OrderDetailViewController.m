@@ -222,7 +222,7 @@
 }
 
 #pragma mark - NavigationBarProtocol
-- (NSString *)navbarTitleString {
+- (NSString *)navBarTitleString {
     return STRING_ORDER_STATUS;
 }
 

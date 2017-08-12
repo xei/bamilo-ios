@@ -166,7 +166,7 @@
 }
 
 #pragma mark: -NavigationBarProtocol 
-- (NSString *)navbarTitleString {
+- (NSString *)navBarTitleString {
     return STRING_NEWSLETTER_PREFERENCES;
 }
 

@@ -468,12 +468,12 @@
 
 
 #pragma mark - NavigationBarProtocol
-- (NSString *)navbarTitleString {
+- (NSString *)navBarTitleString {
     return STRING_CATEGORIES;
 }
 
-- (NavbarLeftButtonType)navbarleftButton {
-    return NavbarLeftButtonTypeSearch;
+- (NavBarLeftButtonType)navBarleftButton {
+    return NavBarLeftButtonTypeSearch;
 }
 
 @end

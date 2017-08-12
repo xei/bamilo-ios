@@ -152,7 +152,7 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
     //MARK: - helper functions
     func showLogin() {
         if !RICustomer.checkIfUserIsLogged() {
-            NotificationCenter.default.post(name: NSNotification.Name("NOTIFICATION_SHOW_AUTHENTICATION_SCREEN"), object: nil, userInfo: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.ShowAthenticationScreen), object: nil, userInfo: nil)
         }
     }
     
@@ -190,12 +190,11 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
             )
             EmarsysPredictManager.userLoggedOut()
         }
-        
-        NotificationCenter.default.post(name: NSNotification.Name("NOTIFICATION_USER_LOGGED_OUT"), object: nil, userInfo: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.UserLoggedOut), object: nil, userInfo: nil)
     }
     
     func showFAQ() {
-        NotificationCenter.default.post(name: NSNotification.Name("NOTIFICATION_DID_SELECT_TEASER_WITH_SHOP_URL"), object: nil, userInfo: ["title": STRING_GUID, "targetString": "shop_in_shop::help-ios", "show_back_button_title": ""])
+        NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.SelectTeaserWithShopURL), object: nil, userInfo: ["title": STRING_GUID, "targetString": "shop_in_shop::help-ios", "show_back_button_title": ""])
     }
     
     func sendIdeaOrReport() {
@@ -255,7 +254,7 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
     func bind(_ data: Any!, forRequestId rid: Int32) {
         
         //TODO: handle these legacy code with another way (when tab bar is ready)
-        NotificationCenter.default.post(name: NSNotification.Name("NOTIFICATION_UPDATE_CART"), object: nil, userInfo: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.UpdateCart), object: nil, userInfo: nil)
         MainTabBarViewController.activateTabItem(rootViewClassType: JAHomeViewController.self)
         
         RICommunicationWrapper.deleteSessionCookie()
@@ -268,7 +267,7 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
     }
     
     //MARK: - NavigationBarProtocol
-    override func navbarTitleString() -> String! {
+    override func navBarTitleString() -> String! {
         return STRING_PROFILE
     }
 }

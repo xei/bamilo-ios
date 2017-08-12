@@ -83,7 +83,7 @@
 
 #pragma mark - NavigationBarProtocol
 
-- (NSString *)navbarTitleString {
+- (NSString *)navBarTitleString {
     return STRING_FORGET_PASS;
 }
 

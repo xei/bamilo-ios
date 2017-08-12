@@ -22,6 +22,8 @@
 #import "JAProductInfoSizeLine.h"
 #import "Bamilo-Swift.h"
 
+const CGFloat deliveryTimeViewHeight = 200;
+
 @interface JAPDVProductInfo() {
     UILabel *_sizesLabel;
     JAProductInfoPriceLine *_priceLine;
@@ -263,11 +265,11 @@
         
         DeliveryTimeView *deliveryView = [DeliveryTimeView nibInstance];
         deliveryView.productSku = product.sku;
-        [deliveryView setFrame:CGRectMake(0, yOffset, frame.size.width, 200)];
+        [deliveryView setFrame:CGRectMake(0, yOffset, frame.size.width, deliveryTimeViewHeight)];
         [deliveryView fillTheView];
-        [deliveryView switchTheTextALignMents];
+        [deliveryView switchTheTextAlignments];
         [self addSubview:deliveryView];
-        yOffset += 200;
+        yOffset += deliveryTimeViewHeight;
         
         
         JAPDVProductInfoSellerInfo *sellerInfoView = [[JAPDVProductInfoSellerInfo alloc] initWithFrame:CGRectMake(0, yOffset, self.width, 50)];

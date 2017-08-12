@@ -227,7 +227,7 @@
 }
 
 #pragma mark - NavigationBarProtocol
-- (NSString *)navbarTitleString {
+- (NSString *)navBarTitleString {
     return STRING_CALL_TO_RETURN;
 }
 

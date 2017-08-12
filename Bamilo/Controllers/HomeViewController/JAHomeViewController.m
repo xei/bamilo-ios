@@ -340,11 +340,11 @@
 
 
 #pragma mark: -NavigationBarProtocol
-- (UIView *)navbarTitleView {
-    return [NavbarUtility navbarLogo];
+- (UIView *)navBarTitleView {
+    return [NavBarUtility navBarLogo];
 }
 
-- (NSString *)navbarTitleString {
+- (NSString *)navBarTitleString {
     return STRING_HOME;
 }
 

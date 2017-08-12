@@ -108,7 +108,7 @@
 - (void)updateModel {
     if (![self.model.inputTextValue isEqualToString:[self getStringValue]]) {
         self.model.inputTextValue = [self getStringValue];
-        [self.delegate inputValueHasBeenChanged:self byNewValue:[self getStringValue] inFieldIndex:self.fieldIndex];
+        [self.delegate inputValueChanged:self byNewValue:[self getStringValue] inFieldIndex:self.fieldIndex];
     }
 }
 

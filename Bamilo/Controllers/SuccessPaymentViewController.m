@@ -150,7 +150,7 @@
     return NO;
 }
 
-- (BOOL)navbarhideBackButton {
+- (BOOL)navBarhideBackButton {
     return YES;
 }
 

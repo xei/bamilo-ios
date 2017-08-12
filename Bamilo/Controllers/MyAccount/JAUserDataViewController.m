@@ -732,7 +732,7 @@
 }
 
 #pragma mark - NavigationBarPrtocol
-- (NSString *)navbarTitleString {
+- (NSString *)navBarTitleString {
     return STRING_PROFILE;
 }
 

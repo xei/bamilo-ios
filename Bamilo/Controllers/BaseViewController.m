@@ -38,21 +38,21 @@
     
     //navigation bar configs
     
-    if ([self respondsToSelector:@selector(navbarTitleView)]){
-        self.navigationItem.titleView = [self navbarTitleView];
+    if ([self respondsToSelector:@selector(navBarTitleView)]){
+        self.navigationItem.titleView = [self navBarTitleView];
     }
-    if ([self respondsToSelector:@selector(navbarTitleString)]) {
-        self.title = [self navbarTitleString];
+    if ([self respondsToSelector:@selector(navBarTitleString)]) {
+        self.title = [self navBarTitleString];
     }
-    if ([self respondsToSelector:@selector(navbarhideBackButton)]) {
-        self.navigationItem.hidesBackButton = [self navbarhideBackButton];
+    if ([self respondsToSelector:@selector(navBarhideBackButton)]) {
+        self.navigationItem.hidesBackButton = [self navBarhideBackButton];
     }
-    if ([self respondsToSelector:@selector(navbarleftButton)]) {
-        if ([self navbarleftButton] == NavbarLeftButtonTypeSearch && [self respondsToSelector:@selector(searchIconButtonTapped)]) {
-            self.navigationItem.rightBarButtonItem = [NavbarUtility navbarLeftButtonWithType:NavbarLeftButtonTypeSearch viewController:self];
+    if ([self respondsToSelector:@selector(navBarleftButton)]) {
+        if ([self navBarleftButton] == NavBarLeftButtonTypeSearch && [self respondsToSelector:@selector(searchIconButtonTapped)]) {
+            self.navigationItem.rightBarButtonItem = [NavBarUtility navBarLeftButtonWithType:NavBarLeftButtonTypeSearch viewController:self];
         }
-        if ([self navbarleftButton] == NavbarLeftButtonTypeCart && [self respondsToSelector:@selector(searchIconButtonTapped)]) {
-            self.navigationItem.rightBarButtonItem = [NavbarUtility navbarLeftButtonWithType:NavbarLeftButtonTypeCart viewController:self];
+        if ([self navBarleftButton] == NavBarLeftButtonTypeCart && [self respondsToSelector:@selector(searchIconButtonTapped)]) {
+            self.navigationItem.rightBarButtonItem = [NavBarUtility navBarLeftButtonWithType:NavBarLeftButtonTypeCart viewController:self];
         }
     }
 }
@@ -171,8 +171,8 @@
     [MainTabBarViewController showCart];
 }
 
-- (void)updateCartInNavbar {
-    if (self.navbarleftButton == NavbarLeftButtonTypeCart) {
+- (void)updateCartInNavBar {
+    if (self.navBarleftButton == NavBarLeftButtonTypeCart) {
         self.navigationItem.rightBarButtonItem.badgeValue = [[NSString stringWithFormat:@"%@", [RICart sharedInstance].cartEntity.cartCount] numbersToPersian];
     }
 }

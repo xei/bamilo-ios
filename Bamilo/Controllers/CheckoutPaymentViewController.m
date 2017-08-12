@@ -310,7 +310,7 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
 }
 
 #pragma mark - NavigationBarProtocol
-- (NSString *)navbarTitleString {
+- (NSString *)navBarTitleString {
     return STRING_PAYMENT_OPTION;
 }
 

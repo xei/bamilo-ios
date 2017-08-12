@@ -165,7 +165,7 @@
 
 #pragma mark: - NavigationBarProtocol
 
-- (NSString *)navbarTitleString {
+- (NSString *)navBarTitleString {
     return self.product.brand;
 }
 
