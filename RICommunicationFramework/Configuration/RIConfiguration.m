@@ -93,7 +93,7 @@ NSString *const RI_API_ADD_VOUCHER_TO_CART = @"cart/addvoucher/";
 NSString *const RI_API_REMOVE_VOUCHER_FROM_CART = @"cart/removevoucher/";
 
 NSString *const RI_API_GET_ORDERS = @"customer/orderlist/";
-NSString *const RI_API_TRACK_ORDER = @"customer/trackingorder/ordernr/";
+NSString *const RI_API_TRACK_ORDER = @"customer/trackingorder/";
 NSString *const RI_API_GET_CUSTOMER = @"customer/getdetails/";
 NSString *const RI_API_REGISTER_CUSTOMER = @"customer/create/";
 NSString *const RI_API_LOGIN_CUSTOMER = @"customer/login/";

@@ -24,9 +24,10 @@
 @property (nonatomic, strong) RIForm *addressForm;
 
 //CHECKOUT FINISH
-@property (nonatomic, strong) NSString *orderNr;
-@property (nonatomic, strong) NSString *customerFirstMame;
-@property (nonatomic, strong) NSString *customerLastName;
+@property (nonatomic, copy) NSString *orderNr;
+@property (nonatomic, copy) NSString *customerFirstMame;
+@property (nonatomic, copy) NSString *customerLastName;
+@property (nonatomic, copy) NSString *estimatedDeliveryTime;
 @property (nonatomic, strong) RIPaymentInformation *paymentInformation;
 
 + (instancetype)sharedInstance;

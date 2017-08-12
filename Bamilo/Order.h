@@ -32,4 +32,5 @@ typedef NS_ENUM(NSUInteger, OrderStatusType) {
 @property (nonatomic, strong) Address *billingAddress;
 @property (assign, nonatomic) OrderStatusType orderStatus;
 @property (nonatomic, copy) NSString *translatedStringOrderStatus;
+
 @end

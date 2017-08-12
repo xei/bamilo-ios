@@ -331,13 +331,16 @@
             
         case 1: {
             RICart *_tmpCartWithShippingInfo = (RICart *)data;
-            if(_tmpCartWithShippingInfo.formEntity.shippingMethodForm.fields.count > 0) {
-                ShippingMethod *defaultShippingMethod = _tmpCartWithShippingInfo.formEntity.shippingMethodForm.fields[0];
-                if(defaultShippingMethod.options.count > 0) {
-                    ShippingMethodOption *defaultShippingMethodOption = defaultShippingMethod.options[0];
-                    _deliveryTime = defaultShippingMethodOption.deliveryTime;
-                }
+            if (_tmpCartWithShippingInfo.estimatedDeliveryTime.length) {
+                _deliveryTime = _tmpCartWithShippingInfo.estimatedDeliveryTime;
             }
+//            if(_tmpCartWithShippingInfo.formEntity.shippingMethodForm.fields.count > 0) {
+//                ShippingMethod *defaultShippingMethod = _tmpCartWithShippingInfo.formEntity.shippingMethodForm.fields[0];
+//                if(defaultShippingMethod.options.count > 0) {
+//                    ShippingMethodOption *defaultShippingMethodOption = defaultShippingMethod.options[0];
+//                    _deliveryTime = defaultShippingMethodOption.deliveryTime;
+//                }
+//            }
         }
         break;
         

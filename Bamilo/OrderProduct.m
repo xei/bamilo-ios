@@ -41,7 +41,8 @@
           @"price":@"price",
           @"formatedPrice": @"price",
           @"quantity":@"quantity",
-          @"actions":@"actions"
+          @"actions":@"actions",
+          @"caculatedDeliveryTime":@"calculated_delivery_time"
           }];
 }
 

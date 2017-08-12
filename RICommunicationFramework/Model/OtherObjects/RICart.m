@@ -17,7 +17,6 @@
 
 @implementation RICart
 
-
 static RICart *instance;
 
 + (instancetype)sharedInstance {
@@ -879,6 +878,10 @@ static RICart *instance;
         [RICart sharedInstance].customerEntity = [RICustomer parseToDataModelWithObjects:@[ _customerEntity ]];
     }
     
+    NSDictionary *_estimatedDeliveryTime = [dict objectForKey:@"estimated_delivery_time"];
+    if (_estimatedDeliveryTime) {
+        [RICart sharedInstance].estimatedDeliveryTime = _estimatedDeliveryTime[@"delivery_message"];
+    }
     //SHIPPING METHOD FORM
     /*if (VALID_NOTEMPTY([dict objectForKey:@"shippingMethodForm"], NSDictionary)) {
         cart.formEntity.shippingMethodForm = [ShippingMethodForm new];
