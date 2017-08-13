@@ -130,15 +130,7 @@ static NSString *recommendationLogic = @"RELATED";
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-//
     if(!self.hasLoaddedProduct) {
-//        [self removeSuperviews];
-//        if (_needRefreshProduct) {
-//            [self loadCompleteProduct];
-//        } else {
-//            [self fillTheViews];
-//        }
-//    } else {
         if (self.targetString.length || self.productSku.length) {
             [self loadCompleteProduct];
         } else {
@@ -146,126 +138,12 @@ static NSString *recommendationLogic = @"RELATED";
         }
     }
     if (_needAddToFavBlock) {
-
         if (_processActionBlock) {
             _processActionBlock();
         }
     }
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductChangedNotification object:self.product.sku];
-//    _needRefreshProduct = NO;
-}
-
-- (void)presentCoachMarks {
-
-//    CGRect wishListButtonFrame = _productImageSection.wishListButton.frame; //search button
-//    UIDevice *device = [UIDevice currentDevice];
-//    NSArray *coachMarks;
-//    if ([[device model] isEqualToString:@"iPhone"] || [[device model] isEqualToString:@"iPhone Simulator"]) {
-//        UIButton *callToOrderButton = [self.ctaView.smallButtonsArray objectAtIndex:1];
-//        UIButton *addToCartButton = [self.ctaView.buttonsArray objectAtIndex:0];
-//        
-//        // Setup coach marks
-//        CGRect coachmark1 = CGRectMake( wishListButtonFrame.origin.x-15, wishListButtonFrame.origin.y + 44, wishListButtonFrame.size.width +35, wishListButtonFrame.size.height + 35);
-//        CGRect coachmark2 = CGRectMake(callToOrderButton.frame.origin.x, self.view.height+15, callToOrderButton.width, callToOrderButton.height+12);
-//        CGRect coachmark3 = CGRectMake( self.view.center.x, self.view.center.y,0,0);
-//        CGRect coachmark4 = CGRectMake( self.productImageSection.center.x, self.productImageSection.center.y,0,0);
-//        CGRect coachmark6 = CGRectMake(addToCartButton.frame.origin.x, self.view.height+20, addToCartButton.width, addToCartButton.height);
-//
-//        // Setup coach marks
-//        coachMarks = @[
-//                       @{
-//                           @"rect": [NSValue valueWithCGRect:coachmark4],
-//                           @"caption": @"مشاهده گالری تصاویر بزرگ کالا",
-//                           @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
-//                           @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
-//                           @"position":[NSNumber numberWithInteger:LABEL_POSITION_RIGHT],
-//                           @"showArrow":[NSNumber numberWithBool:YES],
-//                           @"productDetailPage":[NSNumber numberWithBool:YES]
-//                           },
-//                       @{
-//                           @"rect": [NSValue valueWithCGRect:coachmark1],
-//                           @"caption": @"افزودن به لیست علاقه مندی ها\n(لیست خریدهای آینده)",
-//                           @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
-//                           @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
-//                           @"position":[NSNumber numberWithInteger:LABEL_POSITION_RIGHT]
-//                           },
-//                       @{
-//                           @"rect": [NSValue valueWithCGRect:coachmark2],
-//                           @"caption":@"تماس با خدمات مشتریان بامیلو",
-//                           @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
-//                           @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
-//                           @"position":[NSNumber numberWithInteger:LABEL_POSITION_TOP]
-//                           },
-//                       @{
-//                           @"rect": [NSValue valueWithCGRect:coachmark6],
-//                           @"caption": @"افزودن کالا به سبد خرید",
-//                           @"shape": [NSNumber numberWithInteger:SHAPE_SQUARE],
-//                           @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
-//                           @"position":[NSNumber numberWithInteger:LABEL_POSITION_RIGHT],
-//                           @"showArrow":[NSNumber numberWithBool:YES],
-//                           @"addToCart":[NSNumber numberWithBool:YES]
-//                           },
-//                       @{
-//                           @"rect": [NSValue valueWithCGRect:coachmark3],
-//                           @"caption": @"حرکت عمودی برای مشاهده اطلاعات کالا",
-//                           @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
-//                           @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
-//                           @"position":[NSNumber numberWithInteger:LABEL_POSITION_BOTTOM],
-//                           @"showArrow":[NSNumber numberWithBool:YES],
-//                           @"productDetailPage":[NSNumber numberWithBool:YES]
-//                           }
-//                       ];
-//    } else {
-//        UIButton *addToCartButton = [self.ctaView.buttonsArray objectAtIndex:0];
-//
-//        // Setup coach marks
-//        CGRect coachmark1 = CGRectMake( wishListButtonFrame.origin.x-15, wishListButtonFrame.origin.y + 44, wishListButtonFrame.size.width +35, wishListButtonFrame.size.height + 35);
-//        CGRect coachmark3 = CGRectMake( self.view.center.x, self.view.center.y,0,0);
-//        CGRect coachmark4 = CGRectMake( self.productImageSection.center.x, self.productImageSection.center.y,0,0);
-//        CGRect coachmark6 = CGRectMake(addToCartButton.frame.origin.x, self.view.height+20, addToCartButton.width, addToCartButton.height);
-//
-//        // Setup coach marks
-//        coachMarks = @[
-//                       @{
-//                           @"rect": [NSValue valueWithCGRect:coachmark4],
-//                           @"caption": @"مشاهده گالری تصاویر بزرگ کالا",
-//                           @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
-//                           @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
-//                           @"position":[NSNumber numberWithInteger:LABEL_POSITION_RIGHT],
-//                           @"showArrow":[NSNumber numberWithBool:YES],
-//                           @"productDetailPage":[NSNumber numberWithBool:YES]
-//                           },
-//                       @{
-//                           @"rect": [NSValue valueWithCGRect:coachmark1],
-//                           @"caption": @"افزودن به لیست علاقه مندی ها\n(لیست خریدهای آینده)",
-//                           @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
-//                           @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
-//                           @"position":[NSNumber numberWithInteger:LABEL_POSITION_RIGHT]
-//                           },
-//                       @{
-//                           @"rect": [NSValue valueWithCGRect:coachmark6],
-//                           @"caption": @"افزودن کالا به سبد خرید",
-//                           @"shape": [NSNumber numberWithInteger:SHAPE_SQUARE],
-//                           @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
-//                           @"position":[NSNumber numberWithInteger:LABEL_POSITION_RIGHT],
-//                           @"showArrow":[NSNumber numberWithBool:YES],
-//                           @"addToCart":[NSNumber numberWithBool:YES]
-//                           },
-//                       @{
-//                           @"rect": [NSValue valueWithCGRect:coachmark3],
-//                           @"caption": @"حركت عمودي براي مشاهده اطلاعات كالا",
-//                           @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
-//                           @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
-//                           @"position":[NSNumber numberWithInteger:LABEL_POSITION_BOTTOM],
-//                           @"showArrow":[NSNumber numberWithBool:YES],
-//                           @"productDetailPage":[NSNumber numberWithBool:YES]
-//                           }
-//                       ];
-//    }
-//
-//    MPCoachMarks *coachMarksView = [[MPCoachMarks alloc] initWithFrame:self.navigationController.view.bounds coachMarks:coachMarks];
-//    [self.navigationController.view addSubview:coachMarksView];
-//    [coachMarksView start];
+    
+    [self updateCartInNavBar];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -762,7 +640,6 @@ static NSString *recommendationLogic = @"RELATED";
         if (![[NSUserDefaults standardUserDefaults] boolForKey:@"FirtTimeProductDetailPage"]) {
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"FirtTimeProductDetailPage"];
             [[NSUserDefaults standardUserDefaults] synchronize];
-            //[self presentCoachMarks];
         }
         
         //################ when product is fully loaded & rendered

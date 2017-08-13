@@ -42,3 +42,4 @@ let STRING_TEHRAN = RILocalizationWrapper.localizedString("tehran")!
 let STRING_MINICITY = RILocalizationWrapper.localizedString("minicity")!
 let STRING_CITY = RILocalizationWrapper.localizedString("city")!
 let STRING_PROVINCE = RILocalizationWrapper.localizedString("province")!
+let STRING_FOUND_PRODUCT_COUNT = RILocalizationWrapper.localizedString("founded_product_count")!

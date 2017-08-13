@@ -31,7 +31,7 @@
     [self.priceLabel applyStyle:[Theme font:kFontVariationRegular size:11.0f] color:[Theme color:kColorLightGray]];
     [self.quantityLabel applyStyle:[Theme font:kFontVariationRegular size:11.0f] color:[Theme color:kColorLightGray]];
     [self.productTitleLabel applyStyle:[Theme font:kFontVariationRegular size:11.0f] color:[Theme color:kColorLightGray]];
-    [self.estimatedDeliveryTimeLabel applyStyle:[Theme font:kFontVariationRegular size:11.0f] color:[Theme color:kColorDarkGray]];
+    [self.estimatedDeliveryTimeLabel applyStyle:[Theme font:kFontVariationRegular size:10.0f] color:[Theme color:kColorExtraDarkGray]];
     
     [self.commentButton applyStyle:[Theme font:kFontVariationBold size:11.0f] color:[UIColor whiteColor]];
     [self.statusLabel applyStyle:[Theme font:kFontVariationBold size:11.0f] color:[Theme color:kColorExtraDarkGray]];
@@ -54,7 +54,7 @@
     if (product.caculatedDeliveryTime.length) {
         [self.estimatedDeliveryTimeLabel setHidden: NO];
         [self.commentButton setHidden:YES];
-        self.estimatedDeliveryTimeLabel.text = product.caculatedDeliveryTime;
+        self.estimatedDeliveryTimeLabel.text = [NSString stringWithFormat:@"%@: %@", STRING_DELIVERY_TIME, product.caculatedDeliveryTime];
     } else {
         [self.commentButton setHidden:NO];
         [self.estimatedDeliveryTimeLabel setHidden: YES];

@@ -225,7 +225,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self.tableView setFrame:self.view.bounds];
+    [self.tableView setFrame:self.viewBounds];
 }
 
 #pragma mark - UITableView

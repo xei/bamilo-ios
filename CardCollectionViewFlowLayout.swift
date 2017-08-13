@@ -10,10 +10,10 @@ import UIKit
 
 class CardCollectionViewFlowLayout: BaseCatalogCollectionFlowLayout {
     
-    let otherContentHeight: CGFloat = 90
-    let cellSpacing: CGFloat = 5
-    let imageRatio: CGFloat = 1.25
-    let imageWidthProportionalToParentWidth: CGFloat = 176 / 348
+    private let otherContentHeight: CGFloat = 122
+    private let cellSpacing: CGFloat = 5
+    private let imageRatio: CGFloat = 1.25
+    private let imageWidthProportionalToParentWidth: CGFloat = 176 / 348
     
     
     override func setupLayout() {

@@ -509,4 +509,12 @@
 #define STRING_EMAIL_TO_CS RILocalizedString(@"send_email_to_CS", nil)
 #define STRING_ZERO_COST RILocalizedString(@"zero_cost", nil)
 #define STRING_SELLER RILocalizedString(@"seller", nil)
+#define STRING_MALE RILocalizedString(@"male", nil)
+#define STRING_FEMALE RILocalizedString(@"female", nil)
+#define STRING_OPTIONAL RILocalizedString(@"optional", nil)
+#define STRING_EMAIL RILocalizedString(@"email", nil)
+#define STRING_CELLPHONE RILocalizedString(@"cellphone", nil)
+#define STRING_POSTALCODE RILocalizedString(@"postal_code", nil)
+#define STRING_LASTNAME RILocalizedString(@"last_name", nil)
+#define STRING_IN_PERSIAN RILocalizedString(@"in_persian", nil)
 #endif

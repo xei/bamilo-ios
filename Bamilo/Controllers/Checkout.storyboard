@@ -258,6 +258,9 @@
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="با تشکر از شما!" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tr4-mC-OYm">
                                                 <rect key="frame" x="23.5" y="11.5" width="133.5" height="38.5"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="133.5" id="Ekl-Q2-L5u"/>
+                                                </constraints>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="20"/>
                                                 <color key="textColor" red="0.63921568627450975" green="0.81176470588235294" blue="0.38431372549019605" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -287,13 +290,14 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
+                                            <constraint firstAttribute="right" secondItem="aqz-cZ-E7n" secondAttribute="right" constant="23" id="3gy-O8-ikb"/>
                                             <constraint firstAttribute="right" secondItem="fcY-30-Vag" secondAttribute="right" id="Gpl-fw-UTm"/>
                                             <constraint firstAttribute="width" constant="240" id="VBz-N5-ig9"/>
                                             <constraint firstItem="Tr4-mC-OYm" firstAttribute="centerY" secondItem="aqz-cZ-E7n" secondAttribute="centerY" id="cKO-IC-Wb7"/>
                                             <constraint firstAttribute="bottom" secondItem="fcY-30-Vag" secondAttribute="bottom" id="clE-yD-FO9"/>
-                                            <constraint firstAttribute="centerX" secondItem="Tr4-mC-OYm" secondAttribute="centerX" constant="30" id="ez7-eo-Gep"/>
                                             <constraint firstItem="aqz-cZ-E7n" firstAttribute="top" secondItem="JMC-xp-BYm" secondAttribute="top" constant="5" id="ld7-eA-s9K"/>
                                             <constraint firstAttribute="height" constant="170" id="mUd-be-4TZ"/>
+                                            <constraint firstItem="Tr4-mC-OYm" firstAttribute="left" secondItem="JMC-xp-BYm" secondAttribute="left" constant="23.5" id="q50-7R-rRm"/>
                                             <constraint firstItem="aqz-cZ-E7n" firstAttribute="left" secondItem="Tr4-mC-OYm" secondAttribute="right" constant="10" id="ugU-bw-p7B"/>
                                             <constraint firstItem="fcY-30-Vag" firstAttribute="left" secondItem="JMC-xp-BYm" secondAttribute="left" id="zks-Rg-VbD"/>
                                         </constraints>

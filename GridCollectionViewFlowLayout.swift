@@ -10,11 +10,11 @@ import UIKit
 
 class GridCollectionViewFlowLayout: BaseCatalogCollectionFlowLayout {
     
-    let imageRatio: CGFloat = 1.25
-    let numberOfColumns: CGFloat = 2
-    let otherContentOfCellHeight: CGFloat = 107
-    let righLeftImagePadding: CGFloat = 18 * 2
-    let cellSpacing:CGFloat = 5
+    private let imageRatio: CGFloat = 1.25
+    private let numberOfColumns: CGFloat = 2
+    private let otherContentOfCellHeight: CGFloat = 128
+    private let righLeftImagePadding: CGFloat = 10 * 2
+    private let cellSpacing:CGFloat = 5
     
     
     override func setupLayout() {

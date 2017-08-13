@@ -68,15 +68,21 @@
         completion(nil, NO);
     } else {
         Address *_selectedAddress = [self getSelectedAddress];
-        [DataAggregator setMultistepAddress:self shipping:_selectedAddress.uid billing:_selectedAddress.uid completion:^(id data, NSError *error) {
-            if(error == nil && completion != nil) {
-                MultistepEntity *multistepEntity = (MultistepEntity *)data;
-                completion(multistepEntity.nextStep, YES);
-            } else {
-                [self showNotificationBar:error isSuccess:NO];
-                completion(nil, NO);
+        
+        [DataAggregator setDefaultAddress:self address:_selectedAddress isBilling:NO completion:^(id _Nullable data , NSError * _Nullable error) {
+            if(error == nil) {
+                [DataAggregator setMultistepAddress:self shipping:_selectedAddress.uid billing:_selectedAddress.uid completion:^(id data, NSError *error) {
+                    if(error == nil && completion != nil) {
+                        MultistepEntity *multistepEntity = (MultistepEntity *)data;
+                        completion(multistepEntity.nextStep, YES);
+                    } else {
+                        [self showNotificationBar:error isSuccess:NO];
+                        completion(nil, NO);
+                    }
+                }];
             }
         }];
+
     }
 }
 
@@ -99,7 +105,6 @@
     if(_indexPathsToRefresh) {
         [self updateSelectedAddressAppearance:_indexPathsToRefresh];
     }
-    
     return YES;
 }
 

@@ -44,7 +44,6 @@
 - (BOOL)addressSelected:(Address *)address {
     
     //TODO: this action has been ignored for now, because of endpoint issues (sed default address endpoint)
-    return NO;
     if(_currentAddress.uid == address.uid) {
         return NO;
     }

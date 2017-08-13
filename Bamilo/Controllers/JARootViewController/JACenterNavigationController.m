@@ -128,6 +128,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeEditButtonState:) name:kEditShouldChangeStateNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeDoneButtonState:) name:kDoneShouldChangeStateNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeNavigationWithNotification:) name:kChangeNavigationBarNotification object:nil];
+    
+    
 }
 
 - (void)setNavigationBarConfigs {
@@ -143,11 +145,12 @@
     UIImage *myImage = [UIImage imageNamed:@"btn_back"]; //set your backbutton imagename
     UIImage *backButtonImage = [myImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
-    //To remove navBar bottom border
-    [self.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-    [self.navigationBar setShadowImage:[UIImage new]];
 
     if (SYSTEM_VERSION_GREATER_THAN(@"9.0")) {
+        //To remove navBar bottom border
+        [self.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+        [self.navigationBar setShadowImage:[UIImage new]];
+        
         // now use the new backButtomImage
         [[UINavigationBar appearance] setBackIndicatorImage:backButtonImage];
         [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:backButtonImage];
@@ -1275,7 +1278,7 @@
         }
         
         if(self.cart) {
-            [MainTabBarViewController updateCartValueWithCartItemsCount:[self.cart.cartEntity.cartCount integerValue]];
+            [MainTabBarViewController updateCartValueWithCartItemsCount:self.cart.cartEntity.cartItems.count];
         } else {
             [userInfo removeObjectForKey:kUpdateCartNotificationValue];
             [MainTabBarViewController updateCartValueWithCartItemsCount:0];

@@ -264,7 +264,7 @@ const CGFloat deliveryTimeViewHeight = 200;
         yOffset = CGRectGetMaxY(headerSeller.frame);
         
         DeliveryTimeView *deliveryView = [DeliveryTimeView nibInstance];
-        deliveryView.productSku = product.sku;
+        deliveryView.productSku = ((RIProductSimple *)product.productSimples.firstObject).sku;
         [deliveryView setFrame:CGRectMake(0, yOffset, frame.size.width, deliveryTimeViewHeight)];
         [deliveryView fillTheView];
         [deliveryView switchTheTextAlignments];

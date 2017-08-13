@@ -28,6 +28,9 @@ import SwiftyJSON
     @IBOutlet private weak var noResultViewContainer: UIView!
     @IBOutlet private weak var filteredNoResultContainer: UIView!
     @IBOutlet private weak var catalogHeaderTopConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var productCountLabel: UILabel!
+    @IBOutlet private weak var productCountLabelHeight: NSLayoutConstraint!
+    @IBOutlet private weak var productCountLabelTopConstraint: NSLayoutConstraint!
     
     var navBarTitle: String?
     var searchTarget: RITarget!
@@ -45,6 +48,9 @@ import SwiftyJSON
     private var listFullyLoaded = false
     private var lastContentOffset: CGFloat = 0
     private var initialNavBarAndStatusBarHeight: CGFloat!
+    private let loadingFooterViewHeight: CGFloat = 50
+    private let productCountViewHeight: CGFloat = 30
+    private let cardViewNewTagElementHeight: CGFloat = 26
     
     //TODO: this property is only used for passing enum (swift type) property from objective c
     // so we have to remove it after migration those who wanna pass this property
@@ -74,7 +80,8 @@ import SwiftyJSON
         super.viewDidLoad()
     
         self.view.backgroundColor = Theme.color(kColorVeryLightGray)
-        self.collectionView.backgroundColor = Theme.color(kColorVeryLightGray)
+        
+        self.productCountLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 11), color: UIColor.black)
     
         self.catalogHeader.delegate = self
         self.setSortingMethodToHeader()
@@ -93,10 +100,9 @@ import SwiftyJSON
             self.catalogHeaderTopConstraint.constant = self.initialCatalogHeaderTopConstraint
         }
         
-        self.navBarBlurView = self.navigationController?.navigationBar.addBlurView()
-        self.navBarBlurView?.alpha = 0
-        
         self.initialNavBarAndStatusBarHeight = self.navigationController!.navigationBar.frame.height + UIApplication.shared.statusBarFrame.height
+        self.productCountLabelTopConstraint.constant = self.initialNavBarAndStatusBarHeight + catalogHeader.frame.height
+        self.productCountLabelHeight.constant = self.productCountViewHeight
     }
     
     deinit {
@@ -106,11 +112,9 @@ import SwiftyJSON
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         if let navTitle = self.navBarTitle {
             self.title = navTitle
         }
-        
         if let tabBar = self.tabBarController?.tabBar {
             self.tabbarInitialFrame = tabBar.frame
         }
@@ -118,6 +122,9 @@ import SwiftyJSON
              self.navBarInitialFrame = navBar.frame
         }
         NavBarUtility.changeStatusBarColor(color: Theme.color(kColorExtraDarkBlue))
+        
+        self.navBarBlurView = self.navigationController?.navigationBar.addBlurView()
+        self.navBarBlurView?.alpha = 0
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -129,6 +136,9 @@ import SwiftyJSON
         self.setNavigationBarAlpha(alpha: 0, animated: true)
         self.catalogHeaderTopConstraint.constant = self.initialCatalogHeaderTopConstraint
         NavBarUtility.changeStatusBarColor(color: .clear)
+        
+        
+        self.navBarBlurView?.removeFromSuperview()
     }
     
     func updateNavBar() {
@@ -149,8 +159,11 @@ import SwiftyJSON
             } else if rid == 1, receivedCatalogData.products.count > 0 {
                 self.catalogData?.products.append(contentsOf: receivedCatalogData.products)
             }
-            if let totalProducts = receivedCatalogData.totalProductsCount, totalProducts <= receivedCatalogData.products.count {
-                self.listFullyLoaded = true
+            if let totalProducts = receivedCatalogData.totalProductsCount {
+                if totalProducts <= receivedCatalogData.products.count {
+                    self.listFullyLoaded = true
+                }
+                self.productCountLabel.text = "\(totalProducts) \(STRING_FOUND_PRODUCT_COUNT)".convertTo(language: .arabic)
             }
             self.collectionView.reloadData()
         }
@@ -350,6 +363,7 @@ import SwiftyJSON
             let totalTransitionWidth = navBarInitialFrame.size.height
             let movedTransitionWidth = navBarInitialFrame.origin.y - navBar.frame.origin.y
             let alpha = movedTransitionWidth/totalTransitionWidth
+            
             self.setNavigationBarAlpha(alpha: alpha, animated: false)
             
             if movedTransitionWidth == 0 {
@@ -363,7 +377,7 @@ import SwiftyJSON
     }
     
     private func setNavigationBarAlpha(alpha: CGFloat, animated: Bool) {
-        let navigationBackgroundView = self.navBarBlurView //self.navigationController?.navigationBar.subviews.first
+        let navigationBackgroundView = self.navBarBlurView
         if animated {
             UIView.animate(withDuration: 0.15, animations: {
                 navigationBackgroundView?.alpha = alpha
@@ -385,6 +399,7 @@ import SwiftyJSON
     private func resetNavBar(animated: Bool) {
         if let navBar = self.navigationController?.navigationBar,let navBarInitialFrame = self.navBarInitialFrame {
             navBar.setFrame(frame: navBarInitialFrame, animated: animated)
+            self.catalogHeaderTopConstraint.constant = self.initialCatalogHeaderTopConstraint
         }
     }
     
@@ -496,7 +511,7 @@ import SwiftyJSON
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return  UIEdgeInsetsMake(self.catalogHeader.frame.height + self.initialNavBarAndStatusBarHeight , 0, 0, 0)
+        return  UIEdgeInsetsMake(self.catalogHeader.frame.height + self.initialNavBarAndStatusBarHeight + productCountViewHeight, 0, self.tabBarController!.tabBar.frame.height, 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -534,22 +549,34 @@ import SwiftyJSON
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        return CGSize(width: self.collectionView.frame.width, height: self.loadingDataInProgress ? 50 : 0)
+        return CGSize(width: self.collectionView.frame.width, height: self.loadingDataInProgress ? loadingFooterViewHeight : 0)
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if (self.listViewType == .card && self.catalogData!.products[indexPath.row].isNew) {
+            let normalCellSize = self.getProperCollectionViewFlowLayout().itemSize
+            return CGSize(width: normalCellSize.width, height: normalCellSize.height + cardViewNewTagElementHeight)
+        } else {
+            return self.getProperCollectionViewFlowLayout().itemSize
+        }
+    }
+    
     //MARK: -ScrollViewDelegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (scrollView.contentOffset.y < 10) {
+        if (scrollView.contentOffset.y < productCountViewHeight) {
             self.resetTabarFrame(animated: false)
             self.resetNavBar(animated: false)
             self.setNavigationBarAlpha(alpha: 0, animated: false)
+            self.lastContentOffset = scrollView.contentOffset.y
+            self.productCountLabel.alpha = 1
             return
         }
         
+        self.productCountLabel.alpha = 0
         let scrollChanage = self.lastContentOffset - scrollView.contentOffset.y
         self.changeTabbarPositionY(difference: scrollChanage)
         self.changeNavBarPositionY(difference: scrollChanage)
@@ -580,8 +607,13 @@ import SwiftyJSON
     
     //MARK: - BaseCatallogCollectionViewCellDelegate
     func addOrRemoveFromWishList(product: Product, cell: BaseCatallogCollectionViewCell, add: Bool) {
+        
+        if !RICustomer.checkIfUserIsLogged() {
+            product.isInWishList.toggle()
+            cell.updateWithProduct(product: product)
+        }
+        
         (self.navigationController as? JACenterNavigationController)?.performProtectedBlock({ (userHadSession) in
-            
             let translatedProduct = RIProduct()
             translatedProduct.sku = product.sku
             if let price = product.price {
@@ -589,10 +621,14 @@ import SwiftyJSON
             }
             if add {
                 ProductDataManager.sharedInstance.addToWishList(self, sku: product.sku, completion: { (data, error) in
-                    guard error != nil else {
+                    if error != nil {
                         product.isInWishList.toggle()
                         cell.updateWithProduct(product: product)
                         return
+                    }
+                    if product.isInWishList != true {
+                        product.isInWishList.toggle()
+                        cell.updateWithProduct(product: product)
                     }
                     self.showNotificationBar(error, isSuccess: false)
                 })
@@ -604,16 +640,19 @@ import SwiftyJSON
                 
             } else {
                 DeleteEntityDataManager.sharedInstance().removeFromWishList(self, sku: product.sku, completion: { (data, error) in
-                    guard error != nil else {
+                    if error != nil {
                         product.isInWishList.toggle()
                         cell.updateWithProduct(product: product)
-                        
                         TrackerManager.postEvent(
                             selector: EventSelectors.removeFromWishListSelector(),
                             attributes: EventAttributes.removeToWishList(product: translatedProduct, screenName: self.getScreenName())
                         )
-                        
                         return
+                    }
+                    
+                    if product.isInWishList != false {
+                        product.isInWishList.toggle()
+                        cell.updateWithProduct(product: product)
                     }
                     self.showNotificationBar(error, isSuccess: false)
                 })

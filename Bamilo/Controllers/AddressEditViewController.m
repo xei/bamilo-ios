@@ -76,9 +76,7 @@
         FormItemModel *gender = [FormItemModel genderWithFieldName:@"address_form[gender]"];
         [self.formController.formModelList addObject:gender];
     }
-    
     [self.formController setupTableView];
-    
     if (!self.address.uid) {
         // Get regions and citiies for region defualt value (if exists)
         [self getRegionsByCompletion:^{

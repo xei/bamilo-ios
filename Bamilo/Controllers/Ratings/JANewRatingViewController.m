@@ -65,8 +65,7 @@ UIAlertViewDelegate
 @implementation JANewRatingViewController
 
 @synthesize numberOfRequests=_numberOfRequests;
--(void)setNumberOfRequests:(NSInteger)numberOfRequests
-{
+-(void)setNumberOfRequests:(NSInteger)numberOfRequests {
     _numberOfRequests=numberOfRequests;
     if (0 == numberOfRequests) {
         [self finishedRequests];
@@ -76,95 +75,63 @@ UIAlertViewDelegate
 #pragma mark - View lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     self.apiResponse = RIApiResponseSuccess;
     self.brandLabel.font = [UIFont fontWithName:kFontMediumName size:self.brandLabel.font.pointSize];
     self.nameLabel.font = [UIFont fontWithName:kFontRegularName size:self.nameLabel.font.pointSize];
-    
     self.brandLabel.text = self.product.brand;
-    
     self.nameLabel.text = self.product.name;
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow:)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillHide:)
-                                                 name:UIKeyboardWillHideNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(hideKeyboards)
-                                                 name:kOpenMenuNotification
-                                               object:nil];
-    
-    if (!self.ratingsForm)
-        [self ratingsRequests];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideKeyboards) name:kOpenMenuNotification object:nil];
+    [self ratingsRequests];
 }
 
--(void) viewWillDisappear:(BOOL)animated
-{
-    //[super viewWillDisappear:animated];
-    
+-(void) viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)viewDidDisappear:(BOOL)animated
-{
+- (void)viewDidDisappear:(BOOL)animated {
     _didAppeared = NO;
     _didSubViews = NO;
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
+- (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    _didAppeared = YES;
-    
-    if(_didSubViews)
-    {
-        [self setupViews];
-    }
+//    _didAppeared = YES;
+//    if (_didSubViews) {
+//        [self setupViews];
+//    }
 }
 
-- (void)viewWillLayoutSubviews
-{
+- (void)viewWillLayoutSubviews {
     [super viewDidLayoutSubviews];
-    _didSubViews = YES;
-    if(_didAppeared)
-       [self setupViews];
+//    _didSubViews = YES;
+//    if(_didAppeared) [self setupViews];
 }
 
-- (void)ratingsRequests
-{
+- (void)ratingsRequests {
     _numberOfRequests = 0;
-    
     [self hideViews];
-    if(RIApiResponseSuccess != self.apiResponse)
-    {
+    if(RIApiResponseSuccess != self.apiResponse) {
         if(VALID_NOTEMPTY(self.ratingsDynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.ratingsDynamicForm.formViews, NSMutableArray) &&
-           VALID_NOTEMPTY(self.reviewsDynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.reviewsDynamicForm.formViews, NSMutableArray))
-        {
+           VALID_NOTEMPTY(self.reviewsDynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.reviewsDynamicForm.formViews, NSMutableArray)) {
             [self showLoading];
         }
         
         self.apiResponse = RIApiResponseSuccess;
-    }
-    else
-    {
+    } else {
         [self showLoading];
     }
     typedef void (^GetReviewDynamicFormBlock)(void);
     GetReviewDynamicFormBlock getReviewFormBlock = ^void{
-        [RIForm getForm:@"review"
-           successBlock:^(RIForm *form)
-         {
+        [RIForm getForm:@"review" successBlock:^(RIForm *form) {
              self.reviewsForm = form;
              self.numberOfRequests--;
          } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
@@ -174,9 +141,7 @@ UIAlertViewDelegate
     };
     typedef void (^GetRatingDynamicFormBlock)(void);
     GetRatingDynamicFormBlock getRatingFormBlock = ^void{
-        [RIForm getForm:@"rating"
-           successBlock:^(RIForm *form)
-         {
+        [RIForm getForm:@"rating" successBlock:^(RIForm *form) {
              self.ratingsForm = form;
              self.numberOfRequests--;
          } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
@@ -201,15 +166,13 @@ UIAlertViewDelegate
     
 }
 
-- (void)hideViews
-{
+- (void)hideViews {
     [self.topView setHidden:YES];
     [self.scrollView setHidden:YES];
 }
 
 -(void)finishedRequests {
     [self publishScreenLoadTime];
-    
     if(RIApiResponseSuccess == self.apiResponse) {
         if (VALID_NOTEMPTY(self.ratingsForm, RIForm)) {
             self.isShowingRating = YES;
@@ -227,6 +190,7 @@ UIAlertViewDelegate
     }
     
     [self hideLoading];
+    [self setupViews];
 }
 
 -(void)setupTopView {
@@ -269,14 +233,11 @@ UIAlertViewDelegate
     }
     topViewMinHeight += 6.0f;
     
-    [self.topView setFrame:CGRectMake(0.0f,
-                                      0.0f,
-                                      self.view.frame.size.width,
-                                      topViewMinHeight)];
+    [self.topView setFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, topViewMinHeight)];
     [self.topView setHidden:NO];
 }
 
--(void)setupViews {
+- (void)setupViews {
     [self setupTopView];
     
     CGFloat verticalMargin = 6.0f;
@@ -288,10 +249,7 @@ UIAlertViewDelegate
     }
     CGFloat scrollViewWidth = self.view.frame.size.width;
     
-    [self.scrollView setFrame:CGRectMake(0.0f,
-                                         CGRectGetMaxY(self.topView.frame),
-                                         scrollViewWidth,
-                                         self.view.frame.size.height - CGRectGetMaxY(self.topView.frame))];
+    [self.scrollView setFrame:CGRectMake(0.0f, CGRectGetMaxY(self.topView.frame), scrollViewWidth, self.view.frame.size.height - CGRectGetMaxY(self.topView.frame))];
     self.scrollViewInitialRect = self.scrollView.frame;
 
     if (!self.centerView) {
@@ -308,10 +266,7 @@ UIAlertViewDelegate
     }
     
     if(!VALID_NOTEMPTY(self.fixedLabel, UILabel)) {
-        self.fixedLabel = [[UILabel alloc] initWithFrame:CGRectMake(dynamicFormHorizontalMargin,
-                                                                    verticalMargin,
-                                                                    centerViewWidth - (2 * dynamicFormHorizontalMargin),
-                                                                    16.0f)];
+        self.fixedLabel = [[UILabel alloc] initWithFrame:CGRectMake(dynamicFormHorizontalMargin, verticalMargin, centerViewWidth - (2 * dynamicFormHorizontalMargin), 16.0f)];
         self.fixedLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
         self.fixedLabel.text = STRING_RATE_PRODUCT;
         self.fixedLabel.textColor = JAGreyColor;
@@ -333,14 +288,9 @@ UIAlertViewDelegate
         
         if (!self.ratingsContentView) {
             
-            self.ratingsDynamicForm = [[JADynamicForm alloc] initWithForm:self.ratingsForm
-                                                         startingPosition:initialContentY
-                                                                widthSize:centerViewWidth
-                                                       hasFieldNavigation:YES];
-            
+            self.ratingsDynamicForm = [[JADynamicForm alloc] initWithForm:self.ratingsForm startingPosition:initialContentY widthSize:centerViewWidth hasFieldNavigation:YES];
             self.ratingsContentView = [UIView new];
             [self.centerView addSubview:self.ratingsContentView];
-            
             _dynamicRatingsViewsFrames = [NSMutableArray new];
         }
         
@@ -348,8 +298,7 @@ UIAlertViewDelegate
             view.tag = count;
             
             CGRect frame = view.frame;
-            if(isiPad)
-            {
+            if(isiPad) {
                 frame.origin.x = dynamicFormHorizontalMargin;
             }
             view.frame = frame;
@@ -370,8 +319,7 @@ UIAlertViewDelegate
     if (self.reviewsForm) {
         CGFloat initialContentY = 0;
         BOOL isNew = NO;
-        if (!self.reviewsContentView)
-        {
+        if (!self.reviewsContentView) {
             self.reviewsDynamicForm = [[JADynamicForm alloc] initWithForm:self.reviewsForm
                                                          startingPosition:initialContentY
                                                                 widthSize:centerViewWidth
@@ -383,19 +331,15 @@ UIAlertViewDelegate
             _dynamicReviewsViewsFrames = [NSMutableArray new];
         }
         
-        for (int i = 0; i < self.reviewsDynamicForm.formViews.count; i++)
-        {
+        for (int i = 0; i < self.reviewsDynamicForm.formViews.count; i++) {
             UIView* view = [self.reviewsDynamicForm.formViews objectAtIndex:i];
 
             view.tag = i;
             CGRect frame = view.frame;
-            if(isiPad)
-            {
+            if(isiPad) {
                 frame.origin.x = dynamicFormHorizontalMargin;
                 frame.size.width = centerViewWidth - (2 * dynamicFormHorizontalMargin);
-            }
-            else
-            {
+            } else {
                 frame.size.width = centerViewWidth;
             }
             
@@ -419,10 +363,7 @@ UIAlertViewDelegate
             //has switch
             initialContentY += kDistanceBetweenStarsAndText;
         }
-        [self.reviewsContentView setFrame:CGRectMake(0.0,
-                                                     currentY,
-                                                     centerViewWidth,
-                                                     initialContentY)];
+        [self.reviewsContentView setFrame:CGRectMake(0.0, currentY, centerViewWidth, initialContentY)];
     }
 
     CGFloat modeSwitchY = currentY + self.ratingsContentView.frame.size.height;
@@ -463,16 +404,9 @@ UIAlertViewDelegate
             finalWidth = maxWriteReviewWidth;
             finalHeight *= 2;
             yOffset = 0.0f;
-        }
-        
-        [self.writeReviewLabel setFrame:CGRectMake(writeReviewLabelX,
-                                                   self.modeSwitch.frame.origin.y + yOffset,
-                                                   finalWidth,
-                                                   finalHeight)];
-        
-        
-        
-        
+        }    
+        [self.writeReviewLabel setFrame:CGRectMake(writeReviewLabelX, self.modeSwitch.frame.origin.y + yOffset, finalWidth, finalHeight)];
+    
         //CHECK
         if (_didPressSendReviewOrKeyboard) {
             currentY -= 70.0f;
@@ -565,8 +499,7 @@ UIAlertViewDelegate
 
 #pragma mark - Send review
 
-- (void)sendReview:(id)sender
-{
+- (void)sendReview:(id)sender {
     _didPressSendReviewOrKeyboard = TRUE;
     [self showLoading];
     

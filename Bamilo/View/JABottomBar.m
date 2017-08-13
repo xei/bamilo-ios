@@ -41,7 +41,7 @@
 
 - (void)reloadFrame:(CGRect)frame
 {
-    [self setBackgroundColor:JABlackColor];
+    [self setBackgroundColor:[Theme color:kColorExtraDarkBlue]];
     CGFloat xOffset = 0;
     for (UIButton *smallButton in self.smallButtonsArray) {
         [smallButton setFrame:CGRectMake(xOffset, 0, kSmallButtonWidth, self.height)];

@@ -871,6 +871,8 @@
 
 "zero_cost" = "۰ ریال";
 
+"postal_code" = "کد پستی";
+
 "tehran" = "تهران";
 
 "minicity" = "شهرستان";
@@ -880,3 +882,15 @@
 "city" = "شهر";
 
 "province" = "استان";
+
+"founded_product_count" = "کالا یافت شد";
+
+"optional" = "اختیاری";
+
+"email" = "ایمیل";
+
+"cellphone" = "تلفن همراه";
+
+"last_name" = "نام خانوادگی";
+
+"in_persian" = "به فارسی";

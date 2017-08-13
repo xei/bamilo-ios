@@ -29,9 +29,12 @@ import Foundation
         let barButton = UIBarButtonItem(customView: button)
         
         if type == .cart {
-            barButton.badgeValue = "\(RICart.sharedInstance().cartEntity.cartCount!)".convertTo(language: .arabic)
-            barButton.badgeFont = Theme.font(kFontVariationRegular, size: 8)
+            let cartItems = RICart.sharedInstance().cartEntity.cartItems
+            barButton.badgeValue = "\((cartItems != nil) ? cartItems!.count : 0)" //.convertTo(language: .arabic)
+            barButton.badgeFont = Theme.font(kFontVariationRegular, size: 11)
+            barButton.badgePadding = 0
             barButton.badgeBGColor = Theme.color(kColorOrange)
+            barButton.badgeOriginX -= 5
         }
         return barButton
     }

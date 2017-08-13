@@ -40,20 +40,20 @@
 
 + (FormItemModel *)firstNameFieldWithFiedName:(NSString *)fieldName {
     return [[FormItemModel alloc] initWithTextValue:nil
-                                      fieldName:fieldName
-                                        andIcon:nil
-                                    placeholder:@"نام"
-                                           type:InputTextFieldControlTypeString
-                                     validation:[[FormItemValidation alloc] initWithRequired:YES max:50 min:2 withRegxPatter:nil]
-                                  selectOptions:nil];
+                                      fieldName: fieldName
+                                        andIcon: nil
+                                    placeholder: STRING_NAME
+                                           type: InputTextFieldControlTypeString
+                                     validation: [[FormItemValidation alloc] initWithRequired:YES max:50 min:2 withRegxPatter:nil]
+                                  selectOptions: nil];
 }
 
 + (FormItemModel *)lastNameWithFieldName:(NSString *)fieldName {
     return [[FormItemModel alloc] initWithTextValue:nil
                                       fieldName: fieldName
-                                        andIcon:nil
-                                    placeholder:@"نام خانوادگی"
-                                           type:InputTextFieldControlTypeString
+                                        andIcon: nil
+                                    placeholder: STRING_LASTNAME
+                                           type: InputTextFieldControlTypeString
                                      validation: [[FormItemValidation alloc] initWithRequired:YES max:50 min:2 withRegxPatter:nil]
                                   selectOptions:nil];
 }
@@ -61,19 +61,19 @@
 + (FormItemModel *)phoneWithFieldName:(NSString *)fieldName {
     return [[FormItemModel alloc] initWithTextValue:nil
                                       fieldName: fieldName
-                                        andIcon:nil
-                                    placeholder:@"تلفن همراه"
-                                           type:InputTextFieldControlTypeNumerical
+                                        andIcon: nil
+                                    placeholder: STRING_CELLPHONE
+                                           type: InputTextFieldControlTypeNumerical
                                      validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:[NSString mobileRegxPattern]]
-                                  selectOptions:nil];
+                                  selectOptions: nil];
 }
 
 + (FormItemModel *)addressWithFieldName:(NSString *)fieldName {
     return [[FormItemModel alloc] initWithTextValue:nil
                                       fieldName: fieldName
-                                        andIcon:nil
-                                    placeholder:@"نشانی به فارسی"
-                                           type:InputTextFieldControlTypeString
+                                        andIcon: nil
+                                    placeholder: [NSString stringWithFormat:@"%@ %@", STRING_ADDRESS, STRING_IN_PERSIAN]
+                                           type: InputTextFieldControlTypeString
                                      validation: [[FormItemValidation alloc] initWithRequired:YES max:255 min:2 withRegxPatter:nil]
                                   selectOptions:nil];
 }
@@ -81,9 +81,9 @@
 + (FormItemModel *)postalCodeWithFieldName:(NSString *)fieldName {
     return [[FormItemModel alloc] initWithTextValue:nil
                                       fieldName: fieldName
-                                        andIcon:nil
-                                    placeholder:@"کد پستی"
-                                           type:InputTextFieldControlTypeNumerical
+                                        andIcon: nil
+                                    placeholder: STRING_POSTALCODE
+                                           type: InputTextFieldControlTypeNumerical
                                      validation: [[FormItemValidation alloc] initWithRequired:NO max:10 min:10 withRegxPatter:nil]
                                   selectOptions:nil];
 }
@@ -91,18 +91,18 @@
 + (FormItemModel *)emailWithFieldName: (NSString *)fieldName {
     return [[FormItemModel alloc] initWithTextValue:nil
                                       fieldName: fieldName
-                                        andIcon:nil
-                                    placeholder:@"ایمیل"
-                                           type:InputTextFieldControlTypeEmail
+                                        andIcon: nil
+                                    placeholder: STRING_EMAIL
+                                           type: InputTextFieldControlTypeEmail
                                      validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:[EmailUtility emailRegexPattern]]
-                                  selectOptions:nil];
+                                  selectOptions: nil];
 }
 
 + (FormItemModel *)passWordWithFieldName: (NSString *)fieldName {
     return [[FormItemModel alloc] initWithTextValue:nil
                                       fieldName: fieldName
                                         andIcon: nil
-                                    placeholder: @"کلمه عبور"
+                                    placeholder: STRING_PASSWORD
                                            type: InputTextFieldControlTypePassword
                                      validation: [[FormItemValidation alloc] initWithRequired:YES max:50 min:6 withRegxPatter:nil]
                                   selectOptions: nil];
@@ -115,14 +115,14 @@
                                     placeholder: STRING_GENDER
                                            type: InputTextFieldControlTypeOptions
                                      validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil]
-                                  selectOptions: @{@"مرد": @"male", @"زن":@"female"}];
+                                  selectOptions: @{STRING_MALE: @"male", STRING_FEMALE:@"female"}];
 }
 
 + (FormItemModel *)birthdayFieldName: (NSString *)fieldName {
     FormItemModel *model = [[FormItemModel alloc] initWithTextValue: nil
                                           fieldName: fieldName
                                             andIcon: nil
-                                        placeholder: @"تاریخ تولد"
+                                        placeholder: [NSString stringWithFormat:@"%@%@", STRING_BIRTHDAY, STRING_OPTIONAL]
                                                type: InputTextFieldControlTypeDatePicker
                                          validation: nil
                                       selectOptions: nil];

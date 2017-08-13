@@ -76,6 +76,11 @@
         textFieldSearch.font = [UIFont fontWithName:kFontRegularName size:textFieldSearch.font.pointSize];
         textFieldSearch.backgroundColor = JAWhiteColor;
         textFieldSearch.textAlignment = NSTextAlignmentRight;
+        
+        UIImage *searchIcon = [UIImage imageNamed:@"searchIcon"];
+        UIImageView *searchIconImageView = [[UIImageView alloc] initWithImage:searchIcon];
+        [textFieldSearch setLeftView:searchIconImageView];
+        
 
         [self addSubview:self.searchBar];
         [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
@@ -84,7 +89,7 @@
                                                                                                       JABodyFont,
                                                                                                       NSFontAttributeName,
                                                                                                       nil]
-                                                                                            forState:UIControlStateNormal];
+                                                                                            forState: UIControlStateNormal];
 
         [self.backView addSubview:self.separatorView];
         

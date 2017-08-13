@@ -24,6 +24,7 @@ import SwiftyJSON
     var target:String?
     var reviewsAverage: Double?
     var ratingsCount: Int?
+    var isNew: Bool = false
     var isInWishList: Bool = false
     var reviewsCount: Int?
     
@@ -49,5 +50,6 @@ import SwiftyJSON
         reviewsAverage      <- map["rating_reviews_summary.average"]
         ratingsCount        <- map["rating_reviews_summary.ratings_total"]
         reviewsCount        <- map["rating_reviews_summary.reviews_total"]
+        isNew               <- map["is_new"]
     }
 }

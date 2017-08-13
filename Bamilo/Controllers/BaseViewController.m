@@ -83,7 +83,17 @@
 }
 
 - (CGRect)viewBounds {
-    return self.view.bounds;
+    if (SYSTEM_VERSION_GREATER_THAN(@"9.0")) {
+        return self.view.bounds;
+    }
+    CGFloat statusBarHeight = UIApplication.sharedApplication.statusBarFrame.size.height;
+    CGFloat navBarHeight = self.navigationController.navigationBar.height;
+    
+    return CGRectMake(self.view.bounds.origin.x,
+                      self.view.bounds.origin.y + navBarHeight + statusBarHeight,
+                      self.view.bounds.size.width,
+                      self.view.bounds.size.height - navBarHeight - statusBarHeight);
+    
 }
 
 #pragma mark - SideMenuProtocol
@@ -173,7 +183,7 @@
 
 - (void)updateCartInNavBar {
     if (self.navBarleftButton == NavBarLeftButtonTypeCart) {
-        self.navigationItem.rightBarButtonItem.badgeValue = [[NSString stringWithFormat:@"%@", [RICart sharedInstance].cartEntity.cartCount] numbersToPersian];
+        self.navigationItem.rightBarButtonItem.badgeValue = [NSString stringWithFormat:@"%lu", (unsigned long)[RICart sharedInstance].cartEntity.cartItems.count];
     }
 }
 

@@ -119,7 +119,7 @@ import UIKit
     }
     
     static func updateCartValue(cartItemsCount: Int) {
-        MainTabBarViewController.sharedInstance()?.tabBar.items?.last?.badgeValue = cartItemsCount == 0 ? nil : "\(cartItemsCount)".convertTo(language: .arabic)
+        MainTabBarViewController.sharedInstance()?.tabBar.items?.last?.badgeValue = cartItemsCount == 0 ? nil : "\(cartItemsCount)" //.convertTo(language: .arabic)
     }
     
     
