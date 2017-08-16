@@ -666,7 +666,7 @@
 
 "see_other_variations" = "مشاهده تنوع محصول";
 
-"seller_information" = "مشخصات فروشنده";
+"seller_and_deliveryTime_information" = "فروشنده و زمان تحویل";
 
 "other_sellers_starting_from" = "قیمت دیگر فروشندگان از: %@";
 
@@ -894,3 +894,6 @@
 "last_name" = "نام خانوادگی";
 
 "in_persian" = "به فارسی";
+
+"error_email_support" = "آدرس ایمیلی در سیستم شما ذخیره نشده است";
+

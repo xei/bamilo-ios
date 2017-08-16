@@ -48,6 +48,7 @@ import SwiftyJSON
     private var listFullyLoaded = false
     private var lastContentOffset: CGFloat = 0
     private var initialNavBarAndStatusBarHeight: CGFloat!
+    private var initialTabBarHeight: CGFloat!
     private let loadingFooterViewHeight: CGFloat = 50
     private let productCountViewHeight: CGFloat = 30
     private let cardViewNewTagElementHeight: CGFloat = 26
@@ -80,9 +81,12 @@ import SwiftyJSON
         super.viewDidLoad()
     
         self.view.backgroundColor = Theme.color(kColorVeryLightGray)
-        
         self.productCountLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 11), color: UIColor.black)
-    
+        
+        if let savedListViewType = UserDefaults.standard.string(forKey: "CatalogListViewType") {
+            self.listViewType = CatalogListViewType(rawValue: savedListViewType) ?? .grid
+        }
+        
         self.catalogHeader.delegate = self
         self.setSortingMethodToHeader()
         self.collectionView.delegate = self
@@ -100,6 +104,7 @@ import SwiftyJSON
             self.catalogHeaderTopConstraint.constant = self.initialCatalogHeaderTopConstraint
         }
         
+        self.initialTabBarHeight = self.tabBarController!.tabBar.frame.height
         self.initialNavBarAndStatusBarHeight = self.navigationController!.navigationBar.frame.height + UIApplication.shared.statusBarFrame.height
         self.productCountLabelTopConstraint.constant = self.initialNavBarAndStatusBarHeight + catalogHeader.frame.height
         self.productCountLabelHeight.constant = self.productCountViewHeight
@@ -211,6 +216,7 @@ import SwiftyJSON
     
     func changeListViewType(type: CatalogListViewType) {
         self.listViewType = type
+        UserDefaults.standard.set(type.rawValue, forKey: "CatalogListViewType")
         TrackerManager.postEvent(
             selector: EventSelectors.catalogViewChangedSelector(),
             attributes: EventAttributes.catalogViewChanged(listViewType: type)
@@ -511,7 +517,7 @@ import SwiftyJSON
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return  UIEdgeInsetsMake(self.catalogHeader.frame.height + self.initialNavBarAndStatusBarHeight + productCountViewHeight, 0, self.tabBarController!.tabBar.frame.height, 0)
+        return  UIEdgeInsetsMake(self.catalogHeader.frame.height + self.initialNavBarAndStatusBarHeight + productCountViewHeight, 0, initialTabBarHeight, 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

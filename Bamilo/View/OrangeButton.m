@@ -26,7 +26,7 @@
 -(void)setupButtonAppearance {
     [super setupButtonAppearance];
     
-    [self setBackgroundColor:[Theme color:kColorOrange]];
+    [self setBackgroundColor:[Theme color:kColorDarkOrange]];
     [self.titleLabel applyStyle:[Theme font:kFontVariationBold size:15] color:[Theme color:kColorOrange]];
     [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 }

@@ -25,6 +25,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.formController.submissionButtonColor = [Theme color:kColorDarkGreen];
     
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = STRING_ADDRESS;    

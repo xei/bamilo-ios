@@ -18,6 +18,7 @@
             <connections>
                 <outlet property="continueWithoutLoginBtn" destination="0Py-CW-4wp" id="sou-Dh-LAC"/>
                 <outlet property="emailControl" destination="Vgd-q1-5fi" id="Ze6-Bx-m16"/>
+                <outlet property="forgetPasswordButton" destination="9xR-AT-4xc" id="jh7-kE-wnD"/>
                 <outlet property="passwordControl" destination="sNJ-uO-icl" id="eyk-sm-dS6"/>
                 <outlet property="scrollView" destination="hjF-u9-yTY" id="WTA-IC-I1Q"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -52,7 +53,7 @@
                                 <action selector="forgotPasswordButtonPressed:" destination="-1" eventType="touchUpInside" id="8Mh-iQ-ssP"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KEe-C2-McQ" customClass="BlueButton">
+                        <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KEe-C2-McQ" customClass="OrangeButton">
                             <rect key="frame" x="30" y="192" width="315" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="oTI-F2-sqd"/>

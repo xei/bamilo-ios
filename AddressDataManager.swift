@@ -30,6 +30,10 @@ class AddressDataManager: DataManagerSwift {
         }
     }
     
+    func clearDefaultAddress() {
+        AddressDataManager.defaultAddressUser = nil
+    }
+    
     //MARK: - Address List API
     func getUserAddressList(_ target: DataServiceProtocol, requestType: ApiRequestExecutionType, completion: @escaping DataClosure) {
         AddressDataManager.requestManager.async(.post, target: target, path: RI_API_GET_CUSTOMER_ADDRESS_LIST, params: nil, type: requestType) { (responseType, data, errorMessages) in
@@ -42,6 +46,7 @@ class AddressDataManager: DataManagerSwift {
             "id"   : address.uid,
             "type" : isBilling ? "billing" : "shipping"
         ]
+        AddressDataManager.defaultAddressUser = address
         AddressDataManager.requestManager.async(.put, target: target, path: RI_API_GET_CUSTOMER_SELECT_DEFAULT, params: params, type: .foreground) { (responseType, data, errorMessages) in
             self.processResponse(responseType, aClass: AddressList.self, data: data, errorMessages: errorMessages, completion: completion)
         }
@@ -109,6 +114,7 @@ class AddressDataManager: DataManagerSwift {
         let path = "\(RI_API_GET_CUSTOMER_POSTCODES)city_id/\(cityId)"
         self.getAreaZone(target, type: .background, path:path, completion: completion)
     }
+
     
     // MARK: - Helpers
     private func getAreaZone(_ tagret: DataServiceProtocol, type: ApiRequestExecutionType, path: String, completion:@escaping DataClosure) {

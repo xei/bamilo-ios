@@ -51,6 +51,7 @@ class AuthenticationDataManager: DataManagerSwift {
         AuthenticationDataManager.requestManager.async(.post, target: target, path: RI_API_LOGOUT_CUSTOMER, params: nil, type: .foreground) { (responseType, data, errorMessages) in
             self.processResponse(responseType, aClass: nil, data: data, errorMessages: errorMessages) { (data, error) in
                 RICustomer.cleanFromDB()
+                AddressDataManager.sharedInstance.clearDefaultAddress()
                 completion(data, error)
             }
         }

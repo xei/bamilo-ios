@@ -122,7 +122,7 @@
     FormItemModel *model = [[FormItemModel alloc] initWithTextValue: nil
                                           fieldName: fieldName
                                             andIcon: nil
-                                        placeholder: [NSString stringWithFormat:@"%@%@", STRING_BIRTHDAY, STRING_OPTIONAL]
+                                        placeholder: [NSString stringWithFormat:@"%@ (%@)", STRING_BIRTHDAY, STRING_OPTIONAL]
                                                type: InputTextFieldControlTypeDatePicker
                                          validation: nil
                                       selectOptions: nil];

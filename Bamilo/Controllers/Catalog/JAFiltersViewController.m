@@ -18,7 +18,6 @@
 @property (nonatomic, strong) JAFiltersView* currentFilterView;
 @property (nonatomic, weak) IBOutlet UITableView* tableView;
 @property (nonatomic, weak) IBOutlet UIButton* clearAllUIButton;
-@property (nonatomic, weak) IBOutlet UIButton* applyUIButton;
 @property (nonatomic, weak) IBOutlet UILabel* discountOnlyUILabel;
 @property (weak, nonatomic) IBOutlet UISwitch *discountOnlyUISwitch;
 @property (weak, nonatomic) IBOutlet UIView *currentFilterContainerView;
@@ -46,7 +45,7 @@ const int subCatButtonVisibleHeight = 50;
     
     [self.subCatButton applyStyle:kFontRegularName fontSize:11 color:[UIColor blackColor]];
     [self.subCatButton setTitle:STRING_SUBCATEGORIES forState:UIControlStateNormal];
-    [self.submitButton setBackgroundColor:[Theme color:kColorExtraDarkBlue]];
+    [self.submitButton setBackgroundColor:[Theme color:kColorDarkGreen]];
     
     if (self.subCatsFilter && ((CatalogCategoryFilterItem *)self.subCatsFilter).options.count) {
         self.subCatButtonHeightConstraint.constant = subCatButtonVisibleHeight;
@@ -234,12 +233,11 @@ const int subCatButtonVisibleHeight = 50;
 #pragma Keyboard delegate notification 
 
 - (void) keyboardWillShow:(NSNotification *)notification {
-    
     if ([self.currentFilterView isKindOfClass: JAPriceFiltersView.class]) {
         CGFloat keyboardHeight = [self getKeyboardHeight:notification];
         CGFloat priceFilterCenteredContentHeight = ((JAPriceFiltersView *)self.currentFilterView).centeredContentHeightConstraint.constant;
         
-        CGFloat properMaxKeyboardHeight = self.applyUIButton.frame.size.height + (self.currentFilterContainerView.frame.size.height / 2) - (priceFilterCenteredContentHeight/2);
+        CGFloat properMaxKeyboardHeight = self.submitButton.frame.size.height + (self.currentFilterContainerView.frame.size.height / 2) - (priceFilterCenteredContentHeight/2);
         
         if (keyboardHeight > properMaxKeyboardHeight) {
             [UIView animateWithDuration:0.5 animations:^{

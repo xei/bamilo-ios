@@ -41,20 +41,9 @@
 - (instancetype)initWithFrame:(CGRect)frame andText:(NSString *)text {
     self = [super initWithFrame:frame];
     if (self) {
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(keyboardWillShow:)
-                                                     name:UIKeyboardWillShowNotification
-                                                   object:nil];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(keyboardWillHide:)
-                                                     name:UIKeyboardWillHideNotification
-                                                   object:nil];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(updateCountry:)
-                                                     name:kUpdateCountryNotification
-                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCountry:) name:kUpdateCountryNotification object:nil];
         
         self.backView = [[UIView alloc] initWithFrame:CGRectMake(self.bounds.origin.x,
                                                                  self.bounds.origin.y + 20.0f,
@@ -125,16 +114,8 @@
 - (void)resetFrame:(CGRect)frame {
     
     self.frame = frame;
-    self.backView.frame = CGRectMake(self.bounds.origin.x,
-                                     self.bounds.origin.y + 20.0f,
-                                     self.bounds.size.width,
-                                     self.bounds.size.height - 20.0f);
-    
-    self.searchBar.frame = CGRectMake(0.0f,
-                                      20.0f,
-                                      frame.size.width,
-                                      44.0f);
-    
+    self.backView.frame = CGRectMake(self.bounds.origin.x, self.bounds.origin.y + 20.0f, self.bounds.size.width, self.bounds.size.height - 20.0f);
+    self.searchBar.frame = CGRectMake(0.0f, 20.0f, frame.size.width, 44.0f);
     self.resultsTableView.frame = CGRectMake(0.0f,
                                              CGRectGetMaxY(self.searchBar.frame) + self.separatorView.frame.size.height,
                                              self.frame.size.width,

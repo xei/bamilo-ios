@@ -23,6 +23,7 @@
 #import "EmarsysPredictManager.h"
 #import "LoadingManager.h"
 #import "Bamilo-Swift.h"
+#import "OrangeButton.h"
 
 
 @interface CartViewController() <CartTableViewCellDelegate>
@@ -36,6 +37,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *costSummeryContainerTopToWholeCostTopConstraint;
 @property (weak, nonatomic) IBOutlet CartEntitySummaryViewControl *summeryView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *summeryViewToBottomConstraint;
+@property (weak, nonatomic) IBOutlet OrangeButton *submitButton;
 @property (weak, nonatomic) EmptyViewController *emptyCartViewController;
 @property (weak, nonatomic) IBOutlet UIView *emptyCartViewContainer;
 @end

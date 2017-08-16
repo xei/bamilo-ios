@@ -29,7 +29,7 @@
 @property (weak, nonatomic) IBOutlet InputTextFieldControl *passwordControl;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *continueWithoutLoginBtn;
-@property (weak, nonatomic) id ali;
+@property (weak, nonatomic) IBOutlet UIButton *forgetPasswordButton;
 @end
 
 @implementation SignInViewController
@@ -54,6 +54,8 @@
 
     self.emailControl.input.textField.delegate = self;
     self.passwordControl.input.textField.delegate = self;
+    
+    [self.forgetPasswordButton applyStyle:[Theme font:kFontVariationRegular size:10] color:[Theme color:kColorDarkGreen]];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {

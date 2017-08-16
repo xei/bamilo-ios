@@ -1278,7 +1278,7 @@
         }
         
         if(self.cart) {
-            [MainTabBarViewController updateCartValueWithCartItemsCount:self.cart.cartEntity.cartItems.count];
+            [MainTabBarViewController updateCartValueWithCartItemsCount:[self.cart.cartEntity.cartCount integerValue]];
         } else {
             [userInfo removeObjectForKey:kUpdateCartNotificationValue];
             [MainTabBarViewController updateCartValueWithCartItemsCount:0];

@@ -259,7 +259,7 @@ const CGFloat deliveryTimeViewHeight = 200;
     if (VALID_NOTEMPTY(product.seller, RISeller)) {
         _sellerYPosition = yOffset;
         JAProductInfoHeaderLine *headerSeller = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoHeaderLineHeight)];
-        [headerSeller setTitle:[STRING_SELLER_INFORMATION uppercaseString]];
+        [headerSeller setTitle:[STRING_SELLER_DELIVERTY_TIME_INFO uppercaseString]];
         [self addSubview:headerSeller];
         yOffset = CGRectGetMaxY(headerSeller.frame);
         

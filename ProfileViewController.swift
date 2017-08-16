@@ -226,7 +226,7 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
     
     func sendEmail(subject: String?, recipient: String) {
         if !MFMailComposeViewController.canSendMail() {
-            print("Mail services are not available")
+            AlertManager.sharedInstance().simpleAlert(STRING_ERROR, text: STRING_ERROR_SUPPORTING_EMAIL, confirm: STRING_OK)
             return
         } else {
             var messageBody = "\n\(STRING_DONT_REMOVE_INFO_EMAIL)\n\n"

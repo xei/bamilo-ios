@@ -117,6 +117,7 @@
         
         //Reset the shared Cart entities
         [RICart sharedInstance].cartEntity.cartItems = @[];
+        [RICart sharedInstance].cartEntity.cartCount = 0;
     };
     
     return @[recommend];

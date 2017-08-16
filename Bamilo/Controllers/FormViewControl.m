@@ -81,6 +81,7 @@
     if (indexPath.row == self.numberOfRowsOfTableView - 1) {
         ButtonTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:[ButtonTableViewCell nibName] forIndexPath:indexPath];
         [cell.button setTitle:self.submitTitle forState:UIControlStateNormal];
+        [cell.button setBackgroundColor:self.submissionButtonColor ?: [Theme color:kColorDarkOrange]];
         cell.delegate = self;
         return cell;
     } else {
@@ -102,7 +103,6 @@
             return formHeaderItemTableViewCell;
         }
     }
-    
     return nil;
 }
 
