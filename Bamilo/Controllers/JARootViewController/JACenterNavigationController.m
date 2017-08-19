@@ -1343,15 +1343,18 @@
     [self requestNavigateToNib:destNib ofStoryboard:@"Main" useCache:YES args:args];
 }
 
-- (void) requestNavigateToNib:(NSString *)destNib ofStoryboard:(NSString *)storyboard useCache:(BOOL)useCache args:(NSDictionary *)args {
+- (UIViewController *)requestViewController:(NSString *)destNib ofStoryboard:(NSString *)storyboard useCache:(BOOL)useCache {
     UIViewController *destViewController;
-    
     if(storyboard == nil) {
         destViewController = [[ViewControllerManager sharedInstance] loadNib:destNib resetCache:!useCache];
     } else {
         destViewController = [[ViewControllerManager sharedInstance] loadViewController:storyboard nibName:destNib resetCache:!useCache];
     }
-    
+    return destViewController;
+}
+
+- (void) requestNavigateToNib:(NSString *)destNib ofStoryboard:(NSString *)storyboard useCache:(BOOL)useCache args:(NSDictionary *)args {
+    UIViewController *destViewController = [self requestViewController:destNib ofStoryboard:storyboard useCache:useCache];
     [self requestNavigateToViewController:destViewController args:args];
 }
 
@@ -1373,13 +1376,14 @@
 
 #pragma mark - Helpers
 - (void)requestNavigateToViewController:(UIViewController *)viewController args:(NSDictionary *)args {
+    NSNumber *animation  = [args objectForKey:kAnimation] ?: @(YES);
     if(viewController) {
         if([viewController conformsToProtocol:@protocol(ProtectedViewControllerProtocol)] && ![RICustomer checkIfUserIsLogged]) {
             [self pushAuthenticationViewController:^{
-                [self pushViewController:[self setArgsForViewController:viewController args:args] animated:YES];
+                [self pushViewController:[self setArgsForViewController:viewController args:args] animated: animation.boolValue];
             } byAniamtion:YES];
         } else {
-            [self pushViewController:[self setArgsForViewController:viewController args:args] animated:YES];
+            [self pushViewController:[self setArgsForViewController:viewController args:args] animated: animation.boolValue];
         }
     }
 }

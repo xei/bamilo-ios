@@ -143,17 +143,12 @@
         NSMutableDictionary *tracking = [NSMutableDictionary new];
         [tracking setValue:cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
         [tracking setValue:cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
-                                                  data:[tracking copy]];
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart] data:[tracking copy]];
         
         NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
         [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
-        
-    
         [LoadingManager hideLoading];
-        
         self.cart = cart;
-        
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];
         });
@@ -171,7 +166,6 @@
         [receiptView updateWithModel:self.cart.cartEntity];
         return receiptView;
     }
-    
     CartTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:[CartTableViewCell nibName] forIndexPath:indexPath];
     cell.cartItem = self.cart.cartEntity.cartItems[indexPath.row];
     cell.delegate = self;
@@ -213,7 +207,6 @@
 }
 
 #pragma CartTableViewCell Delegate
-
 - (void)quantityWillChangeTo:(int)newValue withCell:(id)cartCell {
     [LoadingManager showLoading];
 }
@@ -243,7 +236,6 @@
 }
 
 #pragma mark - CartTableViewCellDelegate
-
 - (void)wantsToLikeCartItem:(RICartItem *)cartItem byCell:(id)cartCell {
 }
 

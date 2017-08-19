@@ -72,6 +72,8 @@
                         <outlet property="checkoutProgressViewControl" destination="RaY-Nc-0ZR" id="zW7-UC-yur"/>
                         <outlet property="continueButton" destination="2Sh-o6-mCT" id="Gah-em-65h"/>
                         <segue destination="RR0-PB-qTp" kind="show" identifier="pushAddressToConfirmation" id="Vuf-MV-Cbd"/>
+                        <segue destination="QRG-Sd-VGg" kind="show" identifier="showCreateEditAddress" id="Ab1-v9-Rfd"/>
+                        <segue destination="QRG-Sd-VGg" kind="show" identifier="showCreateEditAddressNoAnimation" animates="NO" id="RNc-id-AMC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qrc-mW-Y1H" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -141,6 +143,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c6o-Zu-FYQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="550" y="-72"/>
+        </scene>
+        <!--AddressEditViewController-->
+        <scene sceneID="aQC-5P-9hg">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="showAddressEdit" storyboardName="Main" referencedIdentifier="AddressEditViewController" id="QRG-Sd-VGg" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7Np-vu-lA9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-312" y="369"/>
         </scene>
         <!--Checkout Payment View Controller-->
         <scene sceneID="6Dw-Fn-eYF">
@@ -359,4 +369,7 @@
     <resources>
         <image name="successIcon" width="50" height="50"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="RNc-id-AMC"/>
+    </inferredMetricsTieBreakers>
 </document>

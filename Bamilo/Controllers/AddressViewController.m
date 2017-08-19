@@ -87,8 +87,15 @@
 
 - (void)addAddressTapped {
     _currentAddress = nil;
-    
-    [self performSegueWithIdentifier:@"pushAddressListToAddressEdit" sender:nil];
+    [self showAddressCreateWithAnimation:YES];
+}
+
+- (void)showAddressCreateWithAnimation:(BOOL)animated {
+    if (animated) {
+        [self performSegueWithIdentifier:@"pushAddressListToAddressEdit" sender:nil];
+    } else {
+        [self performSegueWithIdentifier:@"pushCreateNewAddressWithoutAnimation" sender:nil];
+    }
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -97,6 +104,9 @@
         if(_currentAddress) {
             addressEditViewController.address = _currentAddress;
         }
+    } else if ([segue.identifier isEqualToString:@"pushCreateNewAddressWithoutAnimation"]) {
+        AddressEditViewController *addressEditViewController = (AddressEditViewController *)segue.destinationViewController;
+        addressEditViewController.comesFromEmptyList = YES;
     }
 }
 
@@ -107,6 +117,9 @@
             [self bind:data forRequestId:0];
             [self publishScreenLoadTime];
         } else if ([data isKindOfClass:ApiResponseData.class]) {
+            if (((ApiResponseData *)data).messages.errors.count == 0) {
+                [self showAddressCreateWithAnimation:NO];
+            }
             //TODO: we can show error messages
         }
     }];
@@ -118,6 +131,10 @@
         case 0:
         case 1: {
             AddressList *addressList = (AddressList *)data;
+            NSArray *addresses = [AddressTableViewController bindAddresses:addressList];
+            if (!addresses.count) {
+                [self addAddressTapped];
+            }
             [_addressTableViewController updateWithModel:[AddressTableViewController bindAddresses:addressList]];
         }
         break;

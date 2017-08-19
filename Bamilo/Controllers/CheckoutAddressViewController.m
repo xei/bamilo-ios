@@ -13,6 +13,7 @@
 #import "AddressTableViewController.h"
 #import "AddressList.h"
 #import "Bamilo-Swift.h"
+#import "AddressEditViewController.h"
 
 @interface CheckoutAddressViewController() <AddressTableViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *addressListContainerView;
@@ -34,9 +35,8 @@
     [_addressTableViewController addInto:self ofView:self.addressListContainerView];
 }
 
--(void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     [DataAggregator getMultistepAddressList:self completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
@@ -45,7 +45,6 @@
                 Address *_addressToSelect = [self getAddressById:self.cart.cartEntity.shippingAddress.uid];
                 [self updateSelectedAddress:_addressToSelect];
             }
-            
             [_addressTableViewController updateWithModel:_addresses];
             [self publishScreenLoadTime];
             
@@ -67,8 +66,7 @@
     if(_addresses.count == 0) {
         completion(nil, NO);
     } else {
-        Address *_selectedAddress = [self getSelectedAddress];
-        
+        Address *_selectedAddress = [self getSelectedAddress]; 
         [DataAggregator setDefaultAddress:self address:_selectedAddress isBilling:NO completion:^(id _Nullable data , NSError * _Nullable error) {
             if(error == nil) {
                 [DataAggregator setMultistepAddress:self shipping:_selectedAddress.uid billing:_selectedAddress.uid completion:^(id data, NSError *error) {
@@ -97,7 +95,7 @@
 
 #pragma mark - AddressTableViewControllerDelegate
 -(void)addressEditButtonTapped:(id)sender {
-    [[MainTabBarViewController topNavigationController] requestNavigateToNib:@"AddressEditViewController" ofStoryboard:@"Main" useCache:NO args:@{ kAddress: (Address *)sender }];
+    [self performSegueWithIdentifier:@"showCreateEditAddress" sender:sender];
 }
 
 -(BOOL)addressSelected:(Address *)address {
@@ -109,7 +107,15 @@
 }
 
 - (void)addAddressTapped {
-    [[MainTabBarViewController topNavigationController] requestNavigateToNib:@"AddressEditViewController" ofStoryboard:@"Main" useCache:NO args:nil];
+    [self showAddNewAddressWithAnimation:YES];
+}
+
+- (void)showAddNewAddressWithAnimation:(BOOL)animated {
+    if (animated) {
+        [self performSegueWithIdentifier:@"showCreateEditAddress" sender:nil];
+    } else {
+        [self performSegueWithIdentifier:@"showCreateEditAddressNoAnimation" sender:nil];
+    }
 }
 
 #pragma mark - DataServiceProtocol
@@ -119,6 +125,9 @@
         case 0: {
             self.cart = (RICart *)data;
             _addresses = [AddressTableViewController bindAddresses:self.cart.customerEntity.addressList];
+            if (!_addresses.count) {
+                [self showAddNewAddressWithAnimation:NO];
+            }
         }
         break;
     }
@@ -166,6 +175,18 @@
     }
     
     return nil;
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([segue.identifier isEqualToString:@"showCreateEditAddress"]) {
+        AddressEditViewController *addressEditViewController = (AddressEditViewController *)segue.destinationViewController;
+        if(sender) {
+            addressEditViewController.address = sender;
+        }
+    } else {
+        AddressEditViewController *addressEditViewController = (AddressEditViewController *)segue.destinationViewController;
+        addressEditViewController.comesFromEmptyList = YES;
+    }
 }
 
 #pragma mark - NavigationBarProtocol

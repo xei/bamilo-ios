@@ -135,6 +135,11 @@
     
     if (model.selectOption) {
         self.type = InputTextFieldControlTypeOptions;
+        //when we have only one option!
+        if (model.selectOption.count == 1) {
+            model.inputTextValue = model.selectOption.allKeys.firstObject;
+            self.input.textField.enabled = NO;
+        }
     } else if (self.type == InputTextFieldControlTypeOptions) {
         //When we have no selectOption model but it's `Option` type
         self.input.textField.enabled = NO;

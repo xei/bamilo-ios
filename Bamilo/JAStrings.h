@@ -173,7 +173,6 @@
 #define STRING_ERROR_INVALID_FIELDS RILocalizedString(@"validation_errortext", nil)
 
 #define STRING_CHECKOUT_SHIPPING RILocalizedString(@"checkout_header_step_3", nil)
-#define STRING_CITY RILocalizedString(@"string_city", nil)
 #define STRING_ADDRESS RILocalizedString(@"string_address", nil)
 #define STRING_OPENING_HOURS RILocalizedString(@"string_opening_hours", nil)
 #define STRING_PLEASE_SELECT RILocalizedString(@"string_please_select", nil)
@@ -517,4 +516,8 @@
 #define STRING_POSTALCODE RILocalizedString(@"postal_code", nil)
 #define STRING_LASTNAME RILocalizedString(@"last_name", nil)
 #define STRING_IN_PERSIAN RILocalizedString(@"in_persian", nil)
+#define STRING_TEHRAN RILocalizedString(@"tehran", nil)
+#define STRING_PROVINCE RILocalizedString(@"province", nil)
+#define STRING_CITY RILocalizedString(@"city", nil)
+#define STRING_NEIGHBOURHOOD RILocalizedString(@"neighbourhood", nil)
 #endif

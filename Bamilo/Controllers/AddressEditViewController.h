@@ -15,5 +15,6 @@
 @interface AddressEditViewController : BaseViewController <ProtectedViewControllerProtocol, ArgsReceiverProtocol, FormViewControlDelegate>
 
 @property (strong, nonatomic) Address *address;
+@property (nonatomic) BOOL comesFromEmptyList;
 
 @end

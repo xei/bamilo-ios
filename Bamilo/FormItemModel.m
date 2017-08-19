@@ -82,7 +82,7 @@
     return [[FormItemModel alloc] initWithTextValue:nil
                                       fieldName: fieldName
                                         andIcon: nil
-                                    placeholder: STRING_POSTALCODE
+                                    placeholder: [NSString stringWithFormat:@"%@ (%@)", STRING_POSTALCODE, STRING_OPTIONAL]
                                            type: InputTextFieldControlTypeNumerical
                                      validation: [[FormItemValidation alloc] initWithRequired:NO max:10 min:10 withRegxPatter:nil]
                                   selectOptions:nil];

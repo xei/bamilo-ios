@@ -288,8 +288,6 @@
 
 "checkout_header_step_3" = "۳- ارسال";
 
-"string_city" = "شهر:";
-
 "string_address" = "نشانی";
 
 "string_opening_hours" = "ساعت های کاری:";
@@ -881,6 +879,8 @@
 
 "city" = "شهر";
 
+"neighbourhood" = "محله";
+
 "province" = "استان";
 
 "founded_product_count" = "کالا یافت شد";
@@ -896,4 +896,3 @@
 "in_persian" = "به فارسی";
 
 "error_email_support" = "آدرس ایمیلی در سیستم شما ذخیره نشده است";
-
