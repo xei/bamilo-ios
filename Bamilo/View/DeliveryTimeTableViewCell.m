@@ -7,6 +7,8 @@
 //
 
 #import "DeliveryTimeTableViewCell.h"
+#import "ThreadManager.h"
+
 @interface DeliveryTimeTableViewCell()
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @end
@@ -21,8 +23,14 @@
 }
 
 - (void)updateTitle:(NSString *)title {
-    self.titleLabel.text = title;
-    [self.activityIndicator stopAnimating];
+    [ThreadManager executeOnMainThread:^{
+        self.titleLabel.text = title;
+        if ([title length]) {
+            [self.activityIndicator stopAnimating];
+        } else {
+            [self.activityIndicator startAnimating];
+        }
+    }];
 }
 
 #pragma mark - Overrides

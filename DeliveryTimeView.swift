@@ -56,8 +56,8 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
                 self.getDefaulAddress()
             } else {
                 self.getRegionsWithCompletion(completion: nil)
-                self.getTimeDeliveryForCityId(cityID: nil)
             }
+            self.getTimeDeliveryForCityId(cityID: nil)
         }
     }
     
