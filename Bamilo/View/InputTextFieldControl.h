@@ -28,5 +28,6 @@
 - (void)showErrorMsg:(NSString *)msg;
 - (void)resetAndClear;
 - (void)checkValidation;
+- (void)updateModel:(FormItemModel *(^)(FormItemModel *))updateBlock;
 
 @end

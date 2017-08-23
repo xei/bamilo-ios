@@ -57,37 +57,13 @@
 - (UILabel *)sellerNameLabel {
     if (!VALID_NOTEMPTY(_sellerNameLabel, UILabel)) {
         _sellerNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(16, 16, self.width - 32, 20)];
-        [_sellerNameLabel setFont:JATitleFont];
+        [_sellerNameLabel setFont:[Theme font:kFontVariationRegular size:12]];
         [_sellerNameLabel setTextColor:JABlackColor];
         [_sellerNameLabel setTextAlignment:NSTextAlignmentLeft];
         [self.clickableView addSubview:_sellerNameLabel];
     }
     return _sellerNameLabel;
 }
-
-//- (UILabel *)sellerDeliveryLabel {
-//    if (!VALID_NOTEMPTY(_sellerDeliveryLabel, UILabel)) {
-//        _sellerDeliveryLabel = [[UILabel alloc] initWithFrame:CGRectMake(16, CGRectGetMaxY(self.sellerNameLabel.frame) + 8.f, self.width-32, 20)];
-//        [_sellerDeliveryLabel setNumberOfLines:0];
-//        [_sellerDeliveryLabel setTextAlignment:NSTextAlignmentLeft];
-//        [_sellerDeliveryLabel setFont:JABodyFont];
-//        [_sellerDeliveryLabel setTextColor:JABlackColor];
-//        [self.clickableView addSubview:_sellerDeliveryLabel];
-//    }
-//    return _sellerDeliveryLabel;
-//}
-
-//- (UILabel *)sellerDeliveryTimeLabel {
-//    if (!VALID_NOTEMPTY(_sellerDeliveryTimeLabel, UILabel)) {
-//        _sellerDeliveryTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(16, CGRectGetMaxY(self.sellerDeliveryLabel.frame) + 8.f, self.width-32, 20)];
-//        _sellerDeliveryTimeLabel.numberOfLines = 0;
-//        [_sellerDeliveryTimeLabel setFont:JABodyFont];
-//        [_sellerDeliveryTimeLabel setTextColor:JABlackColor];
-//        [_sellerDeliveryTimeLabel setTextAlignment:NSTextAlignmentLeft];
-//        [self.clickableView addSubview:_sellerDeliveryTimeLabel];
-//    }
-//    return _sellerDeliveryTimeLabel;
-//}
 
 - (UILabel *)shippingGlobalLabel {
     if (!VALID_NOTEMPTY(_shippingGlobalLabel, UILabel)) {
@@ -139,7 +115,7 @@
         [_warrantyIcon setX:16.f];
         [_warrantyIcon setY:CGRectGetMaxY(self.sellerNameLabel.frame)+16.f];
         if (RI_IS_RTL) {
-            [_warrantyIcon flipViewImage];
+//            [_warrantyIcon flipViewImage];
         }
         [self.clickableView addSubview:_warrantyIcon];
         [_warrantyIcon setHidden:YES];
@@ -151,7 +127,7 @@
     if (!VALID_NOTEMPTY(_sellerWarrantyLabel, UILabel)) {
         _sellerWarrantyLabel = [[UILabel alloc] initWithFrame:CGRectMake(16, CGRectGetMaxY(self.shippingGlobalLabel.frame) + 16.f, self.width-32, 20)];
         [_sellerWarrantyLabel setNumberOfLines:2];
-        [_sellerWarrantyLabel setFont:JABodyFont];
+        [_sellerWarrantyLabel setFont:[Theme font:kFontVariationRegular size:12]];
         [_sellerWarrantyLabel setTextColor:JABlackColor];
         [_sellerWarrantyLabel setTextAlignment:NSTextAlignmentLeft];
         [self.clickableView addSubview:_sellerWarrantyLabel];
@@ -176,7 +152,7 @@
 
 - (void)setSeller:(RISeller *)seller {
     _seller = seller;
-    [self.sellerNameLabel setText: [NSString stringWithFormat:@"%@   : %@", STRING_SELLER, seller.name]];
+    [self.sellerNameLabel setText: [NSString stringWithFormat:@"%@:  %@", STRING_SELLER, seller.name]];
     [self.sellerNameLabel sizeToFit];
     if (CGRectGetMaxX(self.sellerNameLabel.frame) > self.width - self.sellerNameLabel.x) {
         [self.sellerNameLabel setWidth:self.width - 2*self.sellerNameLabel.x];
@@ -189,7 +165,7 @@
 //    [self.sellerDeliveryLabel setY:CGRectGetMaxY(self.sellerNameLabel.frame) + 16.f];
     
     if (VALID_NOTEMPTY(seller.warranty, NSString)) {
-        [self.sellerWarrantyLabel setText:[NSString stringWithFormat:@"%@   :      %@", STRING_SELLER_INFO_WARRANTY, [seller.warranty uppercaseString]]];
+        [self.sellerWarrantyLabel setText:[NSString stringWithFormat:@"%@:         %@", STRING_SELLER_INFO_WARRANTY, [seller.warranty uppercaseString]]];
         
         [self.sellerWarrantyLabel setFrame:CGRectMake(self.sellerNameLabel.x, CGRectGetMaxY(self.sellerNameLabel.frame) + 16.f, self.width + (self.width - self.arrow.x), [self.sellerWarrantyLabel sizeThatFits:CGSizeMake(self.sellerWarrantyLabel.width, CGFLOAT_MAX)].height)];
         [self.warrantyIcon setX:70];

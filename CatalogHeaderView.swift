@@ -81,7 +81,7 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
         let doneBtn = UIBarButtonItem(title:"تایید", style: .plain, target: self, action: #selector(doneButtonPickerTapped(sender:)))
         doneBtn.setTitleTextAttributes([
             NSFontAttributeName: Theme.font(kFontVariationRegular, size: 13),
-            NSForegroundColorAttributeName: Theme.color(kColorExtraDarkBlue)
+            NSForegroundColorAttributeName: Theme.color(kColorDarkGreen)
             ], for: .normal)
         return doneBtn
         
@@ -92,7 +92,7 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
         let cancelBtn = UIBarButtonItem(title:"لغو", style: .plain, target: self, action: #selector(cancelButtonPickerTapped(sender:)))
         cancelBtn.setTitleTextAttributes([
             NSFontAttributeName: Theme.font(kFontVariationRegular, size: 13),
-            NSForegroundColorAttributeName: Theme.color(kColorDarkGray)
+            NSForegroundColorAttributeName: Theme.color(kColorDarkGreen)
             ], for: .normal)
         return cancelBtn
         
@@ -153,8 +153,8 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
     }
     
     private func setSortingButtonActive() {
-        self.sortingTitleLabel.textColor = UIColor.init(colorLiteralRed: 0/255, green: 145/255, blue: 255/255, alpha: 1)
-        self.sortingDescLabel.textColor = UIColor.init(colorLiteralRed: 117/255, green: 189/255, blue: 243/255, alpha: 1)
+        self.sortingTitleLabel.textColor = Theme.color(kColorGreen3)
+        self.sortingDescLabel.textColor = Theme.color(kColorGreen5)
         self.sortIconImage.image = UIImage(named: "sortingIcon_highlighted")
     }
     
@@ -183,8 +183,8 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
     }
     
     func setFilterButtonActive () {
-        self.filterTitleLabel.textColor = UIColor.init(colorLiteralRed: 0/255, green: 145/255, blue: 255/255, alpha: 1)
-        self.filterDescLabel.textColor = UIColor.init(colorLiteralRed: 117/255, green: 189/255, blue: 243/255, alpha: 1)
+        self.filterTitleLabel.textColor = Theme.color(kColorGreen3)
+        self.filterDescLabel.textColor = Theme.color(kColorGreen5)
         self.filterIconImage.image = UIImage(named: "filterIcon_highlighted")
     }
     

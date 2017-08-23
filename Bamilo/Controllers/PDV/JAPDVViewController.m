@@ -336,8 +336,6 @@ static NSString *recommendationLogic = @"RELATED";
     self.product = product;
     self.productSku = product.sku;
 
-//    self.title = product.brand;
-
     [self trackingEventViewProduct:product];
     [self trackingEventLoadingTime];
 
@@ -421,10 +419,10 @@ static NSString *recommendationLogic = @"RELATED";
         [saveButton setTitleColor:JAOrange1Color forState:UIControlStateNormal];
     } else if (self.product.preOrder) {
         JAButton *button = [self.ctaView addButton:STRING_PRE_ORDER target:self action:@selector(addToCart)];
-        [button setBackgroundColor:[Theme color:kColorDarkOrange]];
+        [button setBackgroundColor:[Theme color:kColorOrange1]];
     } else {
         JAButton *button = [self.ctaView addButton:STRING_BUY_NOW target:self action:@selector(addToCart)];
-        [button setBackgroundColor:[Theme color:kColorDarkOrange]];
+        [button setBackgroundColor:[Theme color:kColorOrange1]];
     }
     [self.view bringSubviewToFront:self.picker];
 }

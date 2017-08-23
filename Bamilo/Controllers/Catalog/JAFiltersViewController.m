@@ -43,9 +43,9 @@ const int subCatButtonVisibleHeight = 50;
     CatalogPriceFilterItem *priceFilter = (CatalogPriceFilterItem *)[self.filtersArray objectAtIndex:self.priceFilterIndex];
     self.discountOnlyUISwitch.on = priceFilter.discountOnly;
     
-    [self.subCatButton applyStyle:kFontRegularName fontSize:11 color:[UIColor blackColor]];
+    [self.subCatButton applyStyle:kFontRegularName fontSize:11 color: [UIColor blackColor]];
     [self.subCatButton setTitle:STRING_SUBCATEGORIES forState:UIControlStateNormal];
-    [self.submitButton setBackgroundColor:[Theme color:kColorDarkGreen]];
+    [self.submitButton setBackgroundColor:[Theme color:kColorGreen3]];
     
     if (self.subCatsFilter && ((CatalogCategoryFilterItem *)self.subCatsFilter).options.count) {
         self.subCatButtonHeightConstraint.constant = subCatButtonVisibleHeight;
@@ -65,12 +65,6 @@ const int subCatButtonVisibleHeight = 50;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-//    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffMenuSwipePanelNotification object:nil];
-}
-
 
 - (void)updateTitle {
     self.totalSelected = 0;

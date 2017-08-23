@@ -242,7 +242,7 @@
 {
     if (!VALID_NOTEMPTY(_buyButton, JAButton)) {
         _buyButton = [[JAButton alloc] initButtonWithTitle:[STRING_BUY uppercaseString] target:self action:@selector(buyButtonPressed)];
-        [_buyButton setBackgroundColor:[Theme color:kColorDarkOrange]];
+        [_buyButton setBackgroundColor:[Theme color:kColorOrange1]];
         [_buyButton setFrame:CGRectMake(self.bottomContentView.width/2, 0, self.bottomContentView.width/2, self.bottomContentView.height)];
     }
     return _buyButton;

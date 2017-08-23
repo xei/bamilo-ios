@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "JAClickableView.h"
 
-#define kBottomDefaultHeight 48
+#define kBottomDefaultHeight 50
 
 @interface JAButton : JAClickableView
 

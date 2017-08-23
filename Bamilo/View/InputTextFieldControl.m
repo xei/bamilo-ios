@@ -149,6 +149,11 @@
         [self showErrorMsg:model.lastErrorMessage];
     }
 }
+
+- (void)updateModel:(FormItemModel *(^)(FormItemModel *))updateBlock {
+    FormItemModel *model = self.model;
+    [self setModel:updateBlock(model)];
+}
     
 - (void)checkValidation {
     if ([self isValid]) {

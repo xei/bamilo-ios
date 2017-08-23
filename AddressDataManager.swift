@@ -41,13 +41,13 @@ class AddressDataManager: DataManagerSwift {
         }
     }
     
-    func setDefaultAddress(_ target: DataServiceProtocol, address: Address, isBilling: Bool, completion: @escaping DataClosure) {
+    func setDefaultAddress(_ target: DataServiceProtocol, address: Address, isBilling: Bool, type: ApiRequestExecutionType, completion: @escaping DataClosure) {
         let params : [String: String] = [
             "id"   : address.uid,
             "type" : isBilling ? "billing" : "shipping"
         ]
         AddressDataManager.defaultAddressUser = address
-        AddressDataManager.requestManager.async(.put, target: target, path: RI_API_GET_CUSTOMER_SELECT_DEFAULT, params: params, type: .foreground) { (responseType, data, errorMessages) in
+        AddressDataManager.requestManager.async(.put, target: target, path: RI_API_GET_CUSTOMER_SELECT_DEFAULT, params: params, type: type) { (responseType, data, errorMessages) in
             self.processResponse(responseType, aClass: AddressList.self, data: data, errorMessages: errorMessages, completion: completion)
         }
     }

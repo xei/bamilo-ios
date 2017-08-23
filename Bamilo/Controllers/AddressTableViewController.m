@@ -27,7 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.tableView registerNib:[UINib nibWithNibName:[AddressTableViewHeaderCell nibName] bundle:nil] forCellReuseIdentifier:[AddressTableViewHeaderCell nibName]];
+    [self.tableView registerNib:[UINib nibWithNibName:[AddressTableViewHeaderCell nibName] bundle:nil] forHeaderFooterViewReuseIdentifier:[AddressTableViewHeaderCell nibName]];
     [self.tableView registerNib:[UINib nibWithNibName:[AddressTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[AddressTableViewCell nibName]];
     
     self.tableView.separatorInset = UIEdgeInsetsZero;
@@ -54,7 +54,7 @@
     [self didMoveToParentViewController:viewController];
 }
 
-+(NSMutableArray *) bindAddresses:(AddressList *)addressList {
++ (NSMutableArray *)bindAddresses:(AddressList *)addressList {
     NSMutableArray *_addresses = [NSMutableArray new];
     if(addressList) {
         if(addressList.shipping) {
@@ -74,7 +74,7 @@
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    AddressTableViewHeaderCell *addressTableViewHeaderCell = [self.tableView dequeueReusableCellWithIdentifier:[AddressTableViewHeaderCell nibName]];
+    AddressTableViewHeaderCell *addressTableViewHeaderCell = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:[AddressTableViewHeaderCell nibName]];
     addressTableViewHeaderCell.titleString = self.titleHeaderText;
     addressTableViewHeaderCell.delegate = self;
     return addressTableViewHeaderCell;

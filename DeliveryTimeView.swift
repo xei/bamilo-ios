@@ -32,17 +32,32 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
         self.cityInputView.input.textField.textAlignment = .left
         
         self.titleLabel.textAlignment = .left
-        self.deliveryTimeLabel.textAlignment = .center
+        self.deliveryTimeLabel.textAlignment = .left
     }
     
     func fillTheView() {
         self.regionInputView.model = FormItemModel.init(textValue: nil, fieldName: "", andIcon: nil, placeholder: STRING_PROVINCE, type: .options, validation: nil, selectOptions: nil)
         self.cityInputView.model = FormItemModel.init(textValue: nil, fieldName: "", andIcon: nil, placeholder: STRING_CITY, type: .options, validation: nil, selectOptions: nil)
-        self.getRegionsWithCompletion(completion: nil)
-        self.getTimeDeliveryForCityId(cityID: nil)
         
-        if RICustomer.checkIfUserIsLogged() {
-            self.getDefaulAddress()
+        if let savedSelectedArea = UserDefaults.standard.object(forKey: "SelectedAreaByUser") as? [String: [String: String]] {
+            self.regionInputView.updateModel({ (model) -> FormItemModel? in
+                model?.inputTextValue = savedSelectedArea["region"]?["name"]
+                return model
+            })
+            self.cityInputView.updateModel({ (model) -> FormItemModel? in
+                model?.inputTextValue = savedSelectedArea["city"]?["name"]
+                return model
+            })
+            self.getRegionsWithCompletion()
+            self.getCitiesOfRegion(regionId: savedSelectedArea["region"]?["id"])
+            self.getTimeDeliveryForCityId(cityID: savedSelectedArea["city"]?["id"])
+        } else {
+            if RICustomer.checkIfUserIsLogged() {
+                self.getDefaulAddress()
+            } else {
+                self.getRegionsWithCompletion(completion: nil)
+                self.getTimeDeliveryForCityId(cityID: nil)
+            }
         }
     }
     
@@ -66,7 +81,10 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
         }
     }
     
-    private func getCitiesOfRegion(regionId: String) {
+    private func getCitiesOfRegion(regionId: String?) {
+        guard let regionId = regionId else {
+            return
+        }
         AddressDataManager.sharedInstance.getCities(self, regionId: regionId) { (data, error) in
             if error == nil {
                 self.bind(data, forRequestId: 1)
@@ -84,13 +102,14 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
     
     private func getDefaulAddress() {
         AddressDataManager.sharedInstance.getUserDefaultAddress(target: self) { (address) in
-            let cityModel = self.cityInputView.model
-            let regionModel = self.regionInputView.model
-            cityModel?.inputTextValue = address.city
-            regionModel?.inputTextValue = address.region
-            self.cityInputView.model = cityModel
-            self.regionInputView.model = regionModel
-            
+            self.regionInputView.updateModel({ (model) -> FormItemModel? in
+                model?.inputTextValue = address.region
+                return model
+            })
+            self.cityInputView.updateModel({ (model) -> FormItemModel? in
+                model?.inputTextValue = address.city
+                return model
+            });
             self.getRegionsWithCompletion {
                 self.getCitiesOfRegion(regionId: self.regionInputView.model.getValue())
             }
@@ -102,7 +121,21 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
         if let inputControl = inputTextFieldControl as? InputTextFieldControl, inputControl == self.regionInputView {
             self.getCitiesOfRegion(regionId: self.regionInputView.model.getValue())
         } else if let inputControl = inputTextFieldControl as? InputTextFieldControl, inputControl == self.cityInputView {
-            self.getTimeDeliveryForCityId(cityID: inputControl.model.getValue())
+            self.getTimeDeliveryForCityId(cityID: self.cityInputView.model.getValue())
+            if let regionId = self.regionInputView.model.getValue(),
+               let cityId = self.cityInputView.model.getValue() {
+                let selectedAreaByUser = [
+                    "region" : [
+                        "id": regionId,
+                        "name": self.regionInputView.getStringValue()
+                    ],
+                    "city": [
+                        "id": cityId,
+                        "name": self.cityInputView.getStringValue()
+                    ]
+                ]
+                UserDefaults.standard.set(selectedAreaByUser, forKey: "SelectedAreaByUser")
+            }
         }
     }
     
@@ -110,7 +143,7 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
     func bind(_ data: Any!, forRequestId rid: Int32) {
         if rid == 2 {
             if let deliveryTimes = data as? DeliveryTimes, deliveryTimes.array!.count > 0, let deliveryTime = deliveryTimes.array?.first {
-                self.deliveryTimeLabel.text = (deliveryTime.deliveryTimeMessage ?? "\(STRING_TEHRAN) \(deliveryTime.deliveryTimeZone1!) \n \(STRING_MINICITY) \(deliveryTime.deliveryTimeZone2!)").convertTo(language: .arabic)
+                self.deliveryTimeLabel.text = (deliveryTime.deliveryTimeMessage ?? "\(STRING_TEHRAN) \(deliveryTime.deliveryTimeZone1!)\n\(STRING_MINICITY) \(deliveryTime.deliveryTimeZone2!)").convertTo(language: .arabic)
             }
             return
         }

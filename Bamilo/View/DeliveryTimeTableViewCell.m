@@ -7,13 +7,22 @@
 //
 
 #import "DeliveryTimeTableViewCell.h"
+@interface DeliveryTimeTableViewCell()
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@end
 
 @implementation DeliveryTimeTableViewCell
 
 -(void)awakeFromNib {
     [super awakeFromNib];
-    
     [self.titleLabel applyStyle:kFontBoldName fontSize:self.titleLabel.font.pointSize color:self.titleLabel.textColor];
+    [self.activityIndicator startAnimating];
+    [self.activityIndicator setHidden:NO];
+}
+
+- (void)updateTitle:(NSString *)title {
+    self.titleLabel.text = title;
+    [self.activityIndicator stopAnimating];
 }
 
 #pragma mark - Overrides

@@ -40,7 +40,7 @@
     [super viewDidLoad];
     
     //Header And Footer Cells
-    [self.tableView registerNib:[UINib nibWithNibName:[PlainTableViewHeaderCell nibName] bundle:nil]  forCellReuseIdentifier:[PlainTableViewHeaderCell nibName]];
+    [self.tableView registerNib:[UINib nibWithNibName:[PlainTableViewHeaderCell nibName] bundle:nil]  forHeaderFooterViewReuseIdentifier:[PlainTableViewHeaderCell nibName]];
     
     //DiscountSwitcherView
     [self.tableView registerNib:[UINib nibWithNibName:[DiscountSwitcherView nibName] bundle:nil]  forCellReuseIdentifier:[DiscountSwitcherView nibName]];
@@ -102,7 +102,7 @@
                 
                 //Products
                 _products = self.cart.cartEntity.cartItems;
-                [_cellsIndexPaths setObject:[NSMutableArray indexPathArrayOfLength:(int)_products.count forSection:1] atIndexedSubscript:1];
+                [_cellsIndexPaths setObject:[NSMutableArray indexPathArrayOfLength:(int)_products.count forSection:2] atIndexedSubscript:2];
                 
                 [self.tableView reloadData];
                 
@@ -193,21 +193,20 @@
                     
                     return receiptItemView;
                 }
-                    
-                //Delivery Time Cell
-                case 4: {
-                    DeliveryTimeTableViewCell *deliveryTimeTableViewCell = [tableView dequeueReusableCellWithIdentifier:[DeliveryTimeTableViewCell nibName] forIndexPath:indexPath];
-                    NSMutableString *deliveryTimeString = [NSMutableString stringWithFormat:@"%@: ", STRING_DELIVERY_TIME];
-                    [deliveryTimeString smartAppend:_deliveryTime replacer:@"-"];
-                    deliveryTimeTableViewCell.titleLabel.text = [deliveryTimeString numbersToPersian];
-                    return deliveryTimeTableViewCell;
-                }
             }
         }
         break;
           
-        //Purchase Summary Section
+        //Delivery Time Cell
         case 1: {
+            DeliveryTimeTableViewCell *deliveryTimeTableViewCell = [tableView dequeueReusableCellWithIdentifier:[DeliveryTimeTableViewCell nibName] forIndexPath:indexPath];
+            [deliveryTimeTableViewCell updateTitle:[_deliveryTime numbersToPersian]];
+            return deliveryTimeTableViewCell;
+        }
+        break;
+            
+        //Purchase Summary Section
+        case 2: {
             CartListItemTableViewCell *cartListItemTableViewCell = [tableView dequeueReusableCellWithIdentifier:[CartListItemTableViewCell nibName] forIndexPath:indexPath];
             [cartListItemTableViewCell updateWithModel:[_products objectAtIndex:indexPath.row]];
             return cartListItemTableViewCell;
@@ -215,7 +214,7 @@
         break;
             
         //Recipient Address Section
-        case 2: {
+        case 3: {
             AddressTableViewCell *customerAddressTableViewCell = [tableView dequeueReusableCellWithIdentifier:[AddressTableViewCell nibName] forIndexPath:indexPath];
             customerAddressTableViewCell.options = ADDRESS_CELL_NONE;
             [customerAddressTableViewCell updateWithModel:_shippingAddress];
@@ -234,18 +233,20 @@
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    PlainTableViewHeaderCell *plainTableViewHeaderCell = [self.tableView dequeueReusableCellWithIdentifier:[PlainTableViewHeaderCell nibName]];
+    PlainTableViewHeaderCell *plainTableViewHeaderCell = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:[PlainTableViewHeaderCell nibName]];
     
     switch (section) {
         case 0:
             plainTableViewHeaderCell.titleString = STRING_TOTAL_SUM;
         break;
-            
         case 1:
+            plainTableViewHeaderCell.titleString = STRING_DELIVERY_TIME;
+        break;
+        case 2:
             plainTableViewHeaderCell.titleString = STRING_PURCHASE_SUMMARY;
         break;
             
-        case 2:
+        case 3:
             plainTableViewHeaderCell.titleString = STRING_RECIPIENT_ADDRESS;
         break;
     }
@@ -261,11 +262,11 @@
             switch (_cellIndexPath.row) {
                 case 2: return _receiptViewItems.count * [ReceiptItemView cellHeight]; //Receipt Items View
                 case 3: return 40.0f; //Receipt Total View
-                case 4: return 50.0f; //Delivery Time Cell
             }
             break;
         }
-        case 1: return [CartListItemTableViewCell cellHeight];
+        case 1: return 50.0f; //Delivery Time Cell
+        case 2: return [CartListItemTableViewCell cellHeight];
     }
     
     return UITableViewAutomaticDimension;
@@ -334,13 +335,6 @@
             if (_tmpCartWithShippingInfo.estimatedDeliveryTime.length) {
                 _deliveryTime = _tmpCartWithShippingInfo.estimatedDeliveryTime;
             }
-//            if(_tmpCartWithShippingInfo.formEntity.shippingMethodForm.fields.count > 0) {
-//                ShippingMethod *defaultShippingMethod = _tmpCartWithShippingInfo.formEntity.shippingMethodForm.fields[0];
-//                if(defaultShippingMethod.options.count > 0) {
-//                    ShippingMethodOption *defaultShippingMethodOption = defaultShippingMethod.options[0];
-//                    _deliveryTime = defaultShippingMethodOption.deliveryTime;
-//                }
-//            }
         }
         break;
         
@@ -360,13 +354,14 @@
                          [NSIndexPath indexPathForRow:0 inSection:0],
                          //[NSIndexPath indexPathForRow:1 inSection:0], //Code View is initially hidden
                          [NSIndexPath indexPathForRow:2 inSection:0],
-                         [NSIndexPath indexPathForRow:3 inSection:0],
-                         [NSIndexPath indexPathForRow:4 inSection:0], nil],
+                         [NSIndexPath indexPathForRow:3 inSection:0], nil],
+                        //Delivery Time
+                        @[[NSIndexPath indexPathForRow:0 inSection:1]],
                         //Cart Items
                         @[],
                         //Shipping Address
                         [NSMutableArray arrayWithObjects:
-                         [NSIndexPath indexPathForRow:0 inSection:2], nil],
+                         [NSIndexPath indexPathForRow:0 inSection:3], nil],
                         nil];
 }
 
@@ -378,8 +373,8 @@
     } else {
         [[_cellsIndexPaths objectAtIndex:discountCodeViewIndexPath.section] removeObjectAtIndex:discountCodeViewIndexPath.row];
     }
-    
-    if(animated) {
+    [UIView animateWithDuration:0.25
+                     animations:^{
         [self.tableView beginUpdates];
         if(isOn) {
             [self.tableView insertRowsAtIndexPaths:@[discountCodeViewIndexPath] withRowAnimation:UITableViewRowAnimationBottom];
@@ -387,9 +382,21 @@
             [self.tableView deleteRowsAtIndexPaths:@[discountCodeViewIndexPath] withRowAnimation:UITableViewRowAnimationTop];
         }
         [self.tableView endUpdates];
-    } else {
+    } completion:^(BOOL finished) {
+        if (finished)
         [self.tableView reloadData];
-    }
+    }];
+    
+//    if(animated) {
+//        if(isOn) {
+//            [self.tableView insertRowsAtIndexPaths:@[discountCodeViewIndexPath] withRowAnimation:UITableViewRowAnimationBottom];
+//        } else {
+//            [self.tableView deleteRowsAtIndexPaths:@[discountCodeViewIndexPath] withRowAnimation:UITableViewRowAnimationTop];
+//        }
+//        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:discountCodeViewIndexPath.section] withRowAnimation:UITableViewRowAnimationBottom];
+//    } else {
+//        [self.tableView reloadData];
+//    }
 }
 
 -(void) requestRemovalOfVoucherCode {

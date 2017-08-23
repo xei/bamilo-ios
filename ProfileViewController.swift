@@ -188,7 +188,14 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
                 selector: EventSelectors.logoutEventSelector(),
                 attributes: EventAttributes.logout(success: true)
             )
+            
+            //Reset some actions
             EmarsysPredictManager.userLoggedOut()
+            RICustomer.cleanFromDB()
+            RICart.sharedInstance().cartEntity.cartItems = [];
+            RICart.sharedInstance().cartEntity.cartCount = nil;
+            AddressDataManager.sharedInstance.clearDefaultAddress()
+            UserDefaults.standard.removeObject(forKey: "SelectedAreaByUser")
         }
         NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.UserLoggedOut), object: nil, userInfo: nil)
     }

@@ -44,7 +44,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="در حال محاسبه " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zHr-gn-9pZ">
-                    <rect key="frame" x="18" y="140" width="326.5" height="23"/>
+                    <rect key="frame" x="18" y="140" width="321.5" height="23"/>
                     <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -74,7 +74,7 @@
                 <constraint firstItem="Vfu-NF-add" firstAttribute="right" secondItem="hOO-Sb-EyN" secondAttribute="right" id="Y3h-fB-Wj8"/>
                 <constraint firstItem="Vfu-NF-add" firstAttribute="top" secondItem="hOO-Sb-EyN" secondAttribute="bottom" id="b1w-ec-KGe"/>
                 <constraint firstItem="gAg-Jd-fBh" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="18" id="cnV-NO-UWe"/>
-                <constraint firstItem="Vfu-NF-add" firstAttribute="left" secondItem="zHr-gn-9pZ" secondAttribute="right" constant="5" id="fIq-IC-Jj3"/>
+                <constraint firstItem="Vfu-NF-add" firstAttribute="left" secondItem="zHr-gn-9pZ" secondAttribute="right" constant="10" id="fIq-IC-Jj3"/>
                 <constraint firstItem="gAg-Jd-fBh" firstAttribute="left" secondItem="iN0-l3-epB" secondAttribute="left" constant="18" id="iYb-hM-7wH"/>
                 <constraint firstItem="PYX-tG-r1D" firstAttribute="right" secondItem="gAg-Jd-fBh" secondAttribute="right" id="mF6-0o-t3m"/>
             </constraints>

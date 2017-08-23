@@ -608,4 +608,9 @@ withCampaignTargetString:(NSString*)campaignTargetString
 - (NSString *)navBarTitleString {
     return STRING_CAMPAIGNS;
 }
+
+- (NavBarLeftButtonType)navBarleftButton {
+    return NavBarLeftButtonTypeSearch;
+}
+
 @end

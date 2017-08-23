@@ -22,10 +22,10 @@ enum ApiResponseType: Int {
     case kickoutView            = 9008
 }
 
-enum ApiRequestExecutionType {
-    case foreground
-    case background
-    case container
+enum ApiRequestExecutionType: Int {
+    case foreground = 0
+    case background = 1
+    case container  = 2
 }
 
 typealias ResponseClosure = (_ responseType: ApiResponseType, _ data: ApiResponseData?, _ errorMessages: [Any]?) -> Void
@@ -64,7 +64,7 @@ class RequestManagerSwift {
                             }
                         }
                     
-                        if(type == .container || type == .foreground) {
+                        if(type == .foreground) {
                             LoadingManager.hideLoading()
                         }
                     case .failure(let error):

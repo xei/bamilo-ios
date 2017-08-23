@@ -21,7 +21,7 @@ class ProductDataManager: DataManagerSwift {
     
     func getDeliveryTime(_ target: DataServiceProtocol, sku: String, cityId: String? = nil, completion:@escaping DataClosure) {
         var params: [String: Any] = ["skus": [sku]];
-        if cityId != nil {
+        if let cityId = cityId {
             params["city-id"] = cityId
         }
         ProductDataManager.requestManager.async(.post, target: target, path: RI_API_DELIVERY_TIME, params: params, type: .foreground) { (responseType, data, errorMessages) in

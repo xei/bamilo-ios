@@ -8,8 +8,10 @@
 
 #import "BaseTableViewCell.h"
 
-@interface PlainTableViewHeaderCell : BaseTableViewCell
+@interface PlainTableViewHeaderCell : UITableViewHeaderFooterView
 
 @property (copy, nonatomic) NSString *titleString;
++ (NSString *)nibName;
++ (CGFloat)cellHeight;
 
 @end

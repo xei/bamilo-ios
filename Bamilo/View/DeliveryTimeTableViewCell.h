@@ -9,5 +9,5 @@
 #import "BasicTableViewCell.h"
 
 @interface DeliveryTimeTableViewCell : BasicTableViewCell
-
+- (void)updateTitle:(NSString *)title;
 @end

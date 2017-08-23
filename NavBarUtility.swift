@@ -30,9 +30,9 @@ import Foundation
         
         if type == .cart {
             let cartEntity = RICart.sharedInstance().cartEntity
-            barButton.badgeValue = "\((cartEntity != nil) ? cartEntity!.cartCount.intValue : 0)" //.convertTo(language: .arabic)
-            barButton.badgeFont = Theme.font(kFontVariationRegular, size: 11)
-            barButton.badgePadding = 0
+            barButton.badgeValue = "\((cartEntity != nil && cartEntity!.cartCount != nil) ? cartEntity!.cartCount.intValue : 0)"
+            barButton.badgeFont = Theme.font(kFontVariationRegular, size: 15)
+            barButton.badgePadding = -9
             barButton.badgeBGColor = Theme.color(kColorOrange)
             barButton.badgeOriginX -= 5
         }

@@ -100,8 +100,6 @@
     
     [addressText smartAppend:addressObj.address];
     [addressText smartAppend:addressObj.address1];
-    //[addressText smartAppend:addressObj.city];
-    //[addressText smartAppend:addressObj.postcode];
     
     self.addressLabel.text = [addressText numbersToPersian];
     
@@ -110,9 +108,7 @@
     [phoneText smartAppend:[addressObj.phone numbersToPersian] replacer:@"-"];
     
     self.addressPhoneLabel.text = phoneText;
-    
     self.checkmarkIconImageView.image = addressObj.isDefaultShipping ? [UIImage imageNamed:@"BlueTick"] : nil;
-    
     _model = model;
 }
 

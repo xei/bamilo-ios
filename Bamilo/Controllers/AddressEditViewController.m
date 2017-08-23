@@ -1,4 +1,4 @@
-	//
+//
 //  AddressEditViewController.m
 //  Bamilo
 //
@@ -9,6 +9,7 @@
 
 #import "AddressEditViewController.h"
 #import "Bamilo-Swift.h"
+#import "CheckoutAddressViewController.h"
 
 @interface AddressEditViewController () <DataServiceProtocol>
 @property (nonatomic, weak) IBOutlet UITableView* tableView;
@@ -25,22 +26,28 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.formController.submissionButtonColor = [Theme color:kColorDarkGreen];
+    
     self.view.backgroundColor = [UIColor whiteColor];
-    self.title = STRING_ADDRESS;    
+    self.title = STRING_ADDRESS;
     [self setupView];
-    if (self.comesFromEmptyList) {
-        self.navigationItem.hidesBackButton = YES;
-        UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"btn_back"] style:UIBarButtonItemStylePlain target:self action:@selector(twoStepBackNavigation)];
-        self.navigationItem.leftBarButtonItem = newBackButton;
-    }
+
+    //custom back button to behave customly
+    self.navigationItem.hidesBackButton = YES;
+    UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"btn_back"] style:UIBarButtonItemStylePlain target:self action: self.comesFromEmptyList ? @selector(twoStepBackNavigation): @selector(backAction)];
+    self.navigationItem.leftBarButtonItem = newBackButton;
+    
+}
+
+- (void)backAction {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)twoStepBackNavigation {
-    if(self.navigationController.viewControllers.count > 2) {
-        [self.navigationController popToViewController: [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 3] animated:YES];
-    }
-    
+    CheckoutAddressViewController *parentViewController = (CheckoutAddressViewController *)[[MainTabBarViewController topNavigationController] topViewController];
+    parentViewController.viewIsDisappearing = YES;
+    [self dismissViewControllerAnimated:NO completion:^{
+        [[MainTabBarViewController topNavigationController] popViewControllerAnimated:YES];
+    }];
 }
 
 - (void)setupView {
@@ -48,16 +55,17 @@
     self.formController.submitTitle = @"ذخیره آدرس";
     self.formController.delegate = self;
     self.formController.tableView = self.tableView;
+    self.formController.submissionButtonColor = [Theme color:kColorDarkGreen];
     
     self.formController.formModelList = [NSMutableArray new];
     
     //ADDRESS - USER ADDRESS SECTION
     FormHeaderModel *addressHeader = [[FormHeaderModel alloc] initWithHeaderTitle:STRING_ADDRESS];
-    region = [[FormItemModel alloc] initWithTextValue: (self.address.uid) ? @"": STRING_TEHRAN fieldName: @"address_form[region]" andIcon: nil placeholder: STRING_PROVINCE type: InputTextFieldControlTypeOptions validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil] selectOptions: nil];
+    region = [[FormItemModel alloc] initWithTextValue: (self.address.uid) ? @"": @"تهران" fieldName: @"address_form[region]" andIcon: nil placeholder: @"استان" type: InputTextFieldControlTypeOptions validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil] selectOptions: nil];
     
-    city = [[FormItemModel alloc] initWithTextValue:nil fieldName: @"address_form[city]" andIcon:nil placeholder: STRING_CITY type: InputTextFieldControlTypeOptions validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil] selectOptions:nil];
-
-    vicinity = [[FormItemModel alloc] initWithTextValue: nil fieldName: @"address_form[postcode]" andIcon: nil placeholder: STRING_NEIGHBOURHOOD type: InputTextFieldControlTypeOptions validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil] selectOptions: nil];
+    city = [[FormItemModel alloc] initWithTextValue:nil fieldName: @"address_form[city]" andIcon:nil placeholder: @"شهر" type: InputTextFieldControlTypeOptions validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil] selectOptions:nil];
+    
+    vicinity = [[FormItemModel alloc] initWithTextValue: nil fieldName: @"address_form[postcode]" andIcon: nil placeholder: @"محله" type: InputTextFieldControlTypeOptions validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil] selectOptions: nil];
     vicinity.validation.isRequired = NO;
     
     FormItemModel *address = [FormItemModel addressWithFieldName:@"address_form[address1]"];
@@ -115,10 +123,9 @@
         [self getAddressByID:self.address.uid];
     }
     
-    
     //pop this view controller if user is not logged in
     if (![RICustomer checkIfUserIsLogged]) {
-        [self.navigationController popViewControllerAnimated:NO];
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
@@ -141,7 +148,7 @@
         params[@"address_form[id]"] = self.address.uid;
         [DataAggregator updateAddress:self params:params addressId:self.address.uid completion:^(id data, NSError *error) {
             if (error == nil) {
-                [self.navigationController popViewControllerAnimated:YES];
+                [self dismissViewControllerAnimated:YES completion:nil];
             } else {
                 if(![self showNotificationBar:error isSuccess:NO]) {
                     for(NSDictionary* errorField in [error.userInfo objectForKey:@"errorMessages"]) {
@@ -156,7 +163,7 @@
         params[@"address_form[id]"] = @"";
         [DataAggregator addAddress:self params:params completion:^(id data, NSError *error) {
             if (error == nil) {
-                [self.navigationController popViewControllerAnimated:YES];
+                [self dismissViewControllerAnimated:YES completion:nil];
             } else {
                 if(![self showNotificationBar:error isSuccess:NO]) {
                     for(NSDictionary* errorField in [error.userInfo objectForKey:kErrorMessages]) {
@@ -229,15 +236,15 @@
 
 - (void)updateFormValuesWithAddress:(Address *)address {
     NSDictionary <NSString*, NSString*> *addressFieldMapValues = @{
-                                      @"address_form[first_name]"   : address.firstName ?: @"",
-                                      @"address_form[last_name]"    : address.lastName ?: @"",
-                                      @"address_form[phone]"        : address.phone ?: @"",
-                                      @"address_form[address1]"     : address.address ?: @"",
-                                      @"address_form[address2]"     : address.address1 ?: @"",
-                                      @"address_form[region]"       : address.region ?: @"",
-                                      @"address_form[city]"         : address.city ?: @"",
-                                      @"address_form[postcode]"     : address.postcode ?: @""
-                                    };
+                                                                   @"address_form[first_name]"   : address.firstName ?: @"",
+                                                                   @"address_form[last_name]"    : address.lastName ?: @"",
+                                                                   @"address_form[phone]"        : address.phone ?: @"",
+                                                                   @"address_form[address1]"     : address.address ?: @"",
+                                                                   @"address_form[address2]"     : address.address1 ?: @"",
+                                                                   @"address_form[region]"       : address.region ?: @"",
+                                                                   @"address_form[city]"         : address.city ?: @"",
+                                                                   @"address_form[postcode]"     : address.postcode ?: @""
+                                                                   };
     
     [self.formController.formModelList enumerateObjectsUsingBlock:^(id _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if([obj isKindOfClass:[FormItemModel class]]) {

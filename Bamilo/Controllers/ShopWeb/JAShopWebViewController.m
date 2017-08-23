@@ -26,15 +26,13 @@
 
 @implementation JAShopWebViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     self.scrollView = [UIScrollView new];
     [self.view addSubview:self.scrollView];
     
     self.webView = [UIWebView new];
-//    self.webView = [[UIWebView alloc] initWithFrame:self.viewBounds];
     self.webView.delegate = self;
     self.webView.scrollView.scrollEnabled = NO;
     [self.scrollView addSubview:self.webView];
@@ -42,8 +40,7 @@
     self.isLoaded = NO;
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     [[RITrackingWrapper sharedInstance] trackStaticPage:self.targetString];
@@ -150,6 +147,10 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
 #pragma mark - DataTrackerProtocol
 -(NSString *)getScreenName {
     return @"StaticPage";
+}
+
+- (NavBarLeftButtonType)navBarleftButton {
+    return NavBarLeftButtonTypeSearch;
 }
 
 @end

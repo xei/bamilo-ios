@@ -33,8 +33,11 @@ import Foundation
         AddressDataManager.sharedInstance.getUserAddressList(target, requestType: .foreground, completion: completion)
     }
     
-    static func setDefaultAddress(_ target: DataServiceProtocol, address: Address, isBilling: Bool, completion: @escaping DataClosure) {
-        AddressDataManager.sharedInstance.setDefaultAddress(target, address: address, isBilling: isBilling, completion: completion)
+    static func setDefaultAddress(_ target: DataServiceProtocol, address: Address, isBilling: Bool, type: RequestExecutionType = .foreground, completion: @escaping DataClosure) {
+        if let requestType = ApiRequestExecutionType(rawValue: Int(type.rawValue)) {
+          AddressDataManager.sharedInstance.setDefaultAddress(target, address: address, isBilling: isBilling, type: requestType, completion: completion)
+        }
+//
     }
     
     static func addAddress(_ target: DataServiceProtocol, params: [String:String], completion:@escaping DataClosure) {
