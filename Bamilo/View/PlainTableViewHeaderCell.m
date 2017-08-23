@@ -9,6 +9,7 @@
 #import "PlainTableViewHeaderCell.h"
 
 @interface PlainTableViewHeaderCell()
+@property (weak, nonatomic) IBOutlet UIView *container;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @end
 
@@ -18,7 +19,7 @@
     [super awakeFromNib];
     
     //Content View Setup
-    self.contentView.backgroundColor = [UIColor withRepeatingRGBA:244 alpha:1.0f];
+    self.container.backgroundColor = [UIColor withRepeatingRGBA:244 alpha:1.0f];
     
     //Title Label Setup
     [self.titleLabel applyStyle:kFontBoldName fontSize:12 color:[UIColor withRepeatingRGBA:80 alpha:1.0f]];

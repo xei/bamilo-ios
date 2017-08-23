@@ -47,7 +47,8 @@
     switch (type) {
         case RequestExecutionTypeContainer:
         case RequestExecutionTypeForeground:
-            [LoadingManager showLoading];
+            
+            [LoadingManager showLoadingOn:target];
         break;
             
         default: break;

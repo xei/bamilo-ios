@@ -9,13 +9,17 @@
 #import "AddressTableViewHeaderCell.h"
 
 @interface AddressTableViewHeaderCell()
+
 @property (weak, nonatomic) IBOutlet UIButton *addAddressButton;
+@property (weak, nonatomic) IBOutlet UIView *container;
+
 @end
 
 @implementation AddressTableViewHeaderCell
 
 -(void)awakeFromNib {
     [super awakeFromNib];
+    self.container.backgroundColor = [UIColor withRepeatingRGBA:244 alpha:1.0f];
     
     //Add Addres Button Setup
     [self.addAddressButton applyStyle:kFontBoldName fontSize:12 color: [Theme color:kColorGreen5]];

@@ -102,16 +102,18 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
     
     private func getDefaulAddress() {
         AddressDataManager.sharedInstance.getUserDefaultAddress(target: self) { (address) in
-            self.regionInputView.updateModel({ (model) -> FormItemModel? in
-                model?.inputTextValue = address.region
-                return model
-            })
-            self.cityInputView.updateModel({ (model) -> FormItemModel? in
-                model?.inputTextValue = address.city
-                return model
-            });
-            self.getRegionsWithCompletion {
-                self.getCitiesOfRegion(regionId: self.regionInputView.model.getValue())
+            if let address = address {
+                self.regionInputView.updateModel({ (model) -> FormItemModel? in
+                    model?.inputTextValue = address.region
+                    return model
+                })
+                self.cityInputView.updateModel({ (model) -> FormItemModel? in
+                    model?.inputTextValue = address.city
+                    return model
+                });
+                self.getRegionsWithCompletion {
+                    self.getCitiesOfRegion(regionId: self.regionInputView.model.getValue())
+                }
             }
         }
     }

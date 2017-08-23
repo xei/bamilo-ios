@@ -9,6 +9,7 @@
 
 #import "AddressEditViewController.h"
 #import "Bamilo-Swift.h"
+#import "LoadingManager.h"
 #import "CheckoutAddressViewController.h"
 
 @interface AddressEditViewController () <DataServiceProtocol>
@@ -27,6 +28,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self setNavigationBarConfigs];
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = STRING_ADDRESS;
     [self setupView];
@@ -36,6 +38,36 @@
     UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"btn_back"] style:UIBarButtonItemStylePlain target:self action: self.comesFromEmptyList ? @selector(twoStepBackNavigation): @selector(backAction)];
     self.navigationItem.leftBarButtonItem = newBackButton;
     
+}
+
+
+- (void)setNavigationBarConfigs {
+    self.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName: [Theme font:kFontVariationRegular size:13],
+                                               NSForegroundColorAttributeName: [UIColor whiteColor]};
+    //To remove the back button title
+    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(-60, -60) forBarMetrics:UIBarMetricsDefault];
+    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:
+     @{NSFontAttributeName: [Theme font:kFontVariationRegular size:1]} forState:UIControlStateNormal];
+    
+    //To change back button icon
+    UIImage *myImage = [UIImage imageNamed:@"btn_back"]; //set your backbutton imagename
+    UIImage *backButtonImage = [myImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+    
+    if (SYSTEM_VERSION_GREATER_THAN(@"9.0")) {
+        //To remove navBar bottom border
+        [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+        [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+        
+        // now use the new backButtomImage
+        [[UINavigationBar appearance] setBackIndicatorImage:backButtonImage];
+        [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:backButtonImage];
+        [[UINavigationBar appearance] setTranslucent:NO];
+    }
+    
+    //To set navigation bar background color
+    self.navigationController.navigationBar.barTintColor = [Theme color:kColorExtraDarkBlue];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 }
 
 - (void)backAction {
@@ -118,11 +150,9 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     if (self.address.uid) {
         [self getAddressByID:self.address.uid];
     }
-    
     //pop this view controller if user is not logged in
     if (![RICustomer checkIfUserIsLogged]) {
         [self dismissViewControllerAnimated:YES completion:nil];
@@ -141,7 +171,6 @@
         [self.formController showAnyErrorInForm];
         return;
     }
-    
     NSMutableDictionary *params = [self.formController getMutableDictionaryOfForm];
     if(self.address.uid) {
         //EDIT / UPDATE ADDRESS
@@ -310,5 +339,4 @@
 - (NSString *)navBarTitleString {
     return STRING_MY_ADDRESSES;
 }
-
 @end

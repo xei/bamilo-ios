@@ -13,7 +13,7 @@ class AddressDataManager: DataManagerSwift {
     static let sharedInstance = AddressDataManager()
     
     private static var defaultAddressUser: Address?
-    func getUserDefaultAddress(target: DataServiceProtocol,completion: @escaping (Address) -> Void) {
+    func getUserDefaultAddress(target: DataServiceProtocol,completion: @escaping (Address?) -> Void) {
         if let defaultAddress = AddressDataManager.defaultAddressUser {
             completion(defaultAddress)
             return
