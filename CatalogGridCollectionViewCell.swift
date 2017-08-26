@@ -9,9 +9,5 @@
 import UIKit
 
 class CatalogGridCollectionViewCell: BaseCatallogCollectionViewCell {
-
-    override func setupView() {
-      super.setupView()
-    }
     
 }

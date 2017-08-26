@@ -17,10 +17,6 @@ class CatalogCardCollectionViewCell: BaseCatallogCollectionViewCell {
     let discountedPriceTopConstaintForAvaiableSpecialPrice: CGFloat = 15
     let discountedPriceTopConstaintForNotAvaiableSpecialPrice: CGFloat = 33
     
-    override func setupView() {
-        super.setupView()
-    }
-    
     override func updateWithProduct(product: Product) {
         super.updateWithProduct(product: product)
         self.discountedPriceTopConstaint.constant = product.specialPrice != nil ? discountedPriceTopConstaintForAvaiableSpecialPrice: discountedPriceTopConstaintForNotAvaiableSpecialPrice

@@ -52,6 +52,12 @@ class BaseCatallogCollectionViewCell: UICollectionViewCell {
     func setupView() {
         self.rateView?.enableButtons(enable: false)
         self.newTagView?.backgroundColor = Theme.color(kColorOrange)
+        
+
+        self.rateCountLabel?.textColor = Theme.color(kColorSecondaryGray1)
+        self.brandLabel?.textColor = Theme.color(kColorSecondaryGray1)
+        self.priceLabel?.textColor = Theme.color(kColorSecondaryGray1)
+        self.dicountPrecentageLabel?.textColor = Theme.color(kColorSecondaryGray1)
     }
     
     @IBAction func addToWishListButtonTapped(_ sender: DOFavoriteButton) {

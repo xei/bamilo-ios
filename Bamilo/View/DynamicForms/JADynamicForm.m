@@ -225,8 +225,7 @@
             lastTextFieldIndex = [self.formViews count];
             [self.formViews addObject:titleField];
             
-        } else if ([@"string" isEqualToString:field.type] || [@"text" isEqualToString:field.type] || [@"email" isEqualToString:field.type])
-        {
+        } else if ([@"string" isEqualToString:field.type] || [@"text" isEqualToString:field.type] || [@"email" isEqualToString:field.type]) {
             JATextFieldComponent *textField = [[JATextFieldComponent alloc] init];
             [textField setupWithField:field];
             [textField.textField setDelegate:self];
@@ -248,8 +247,7 @@
                 textField.textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
             }
             
-            if([@"address" isEqualToString:[self.form type]] && [textField isComponentWithKey:@"city"] && VALID_NOTEMPTY([values objectForKey:@"city"], NSString))
-            {
+            if([@"address" isEqualToString:[self.form type]] && [textField isComponentWithKey:@"city"] && VALID_NOTEMPTY([values objectForKey:@"city"], NSString)) {
                 [textField setValue:[values objectForKey:@"city"]];
             }
             
@@ -433,11 +431,8 @@
                 [self.formViews addObject:radioRelatedComp];
                 textField.relatedComponent = radioRelatedComp;                
             }
-        }
-        else if (0 != [field.type rangeOfString:@"checkbox"].length)
-        {
-            if([@"register" isEqualToString:self.form.type] && [@"newsletter_categories_subscribed" isEqualToString:field.key])
-            {
+        } else if (0 != [field.type rangeOfString:@"checkbox"].length) {
+            if([@"register" isEqualToString:self.form.type] && [@"newsletter_categories_subscribed" isEqualToString:field.key]) {
                 JACheckBoxComponent *check = [JACheckBoxComponent getNewJACheckBoxComponent];
                 [check setupWithField:field];
                 
@@ -448,26 +443,18 @@
                 
                 [check setTag:tag];
                 [self.formViews addObject:check];
-            }
-            else
-            {
-                if(VALID_NOTEMPTY(field.options, NSOrderedSet))
-                {
-                    
+            } else {
+                if(VALID_NOTEMPTY(field.options, NSOrderedSet)) {
                     JACheckBoxWithOptionsComponent *checkWithOptions = [[JACheckBoxWithOptionsComponent alloc] initWithFrame:CGRectMake(0.0f, startingY, widthComponent, 0.0f)];
                     [checkWithOptions setupWithField:field];
-                    
                     CGRect frame = checkWithOptions.frame;
                     frame.origin.y = startingY;
                     checkWithOptions.frame = frame;
                     startingY += checkWithOptions.frame.size.height;
-                    
                     [checkWithOptions setTag:tag];
                     [self.formViews addObject:checkWithOptions];
-                    
-                }
-                else
-                {
+
+                } else {
                     JACheckBoxComponent *check = [JACheckBoxComponent getNewJACheckBoxComponent];
                     [check setupWithField:field];
                     
@@ -634,20 +621,16 @@
     NSString* genderFieldName = [self getFieldNameForKey:@"gender"];
     self.firstErrorInFields = nil;
     BOOL hasErrors = NO;
-    if(VALID_NOTEMPTY(self.formViews, NSMutableArray))
-    {
-        for (id obj in self.formViews)
-        {
+    if(VALID_NOTEMPTY(self.formViews, NSMutableArray)) {
+        for (id obj in self.formViews) {
             if ([obj isKindOfClass:[JATextFieldComponent class]] ||
                 [obj isKindOfClass:[JABirthDateComponent class]] ||
                 [obj isKindOfClass:[JARadioComponent class]] ||
                 [obj isKindOfClass:[JARadioRelatedComponent class]] ||
-                [obj isKindOfClass:[JARadioExpandableComponent class]])
-            {
+                [obj isKindOfClass:[JARadioExpandableComponent class]]) {
                 //ignore gender as an error, can't evaluate it here because the billing address form has it but it isn't shown on screen.
                 if (NO == [[obj getFieldName] isEqualToString:genderFieldName]) {
-                    if (![obj isValid]) //ignore gender
-                    {
+                    if (![obj isValid]) { //ignore gender
                         hasErrors = YES;
                         if (ISEMPTY(self.firstErrorInFields)) {
                             if ([obj respondsToSelector:@selector(currentErrorMessage)]) {
@@ -662,8 +645,7 @@
     return hasErrors;
 }
 
--(NSDictionary*)getValuesReplacingPlaceHolder:(NSString *)placeHolder forString:(NSString *)replaceString
-{
+-(NSDictionary*)getValuesReplacingPlaceHolder:(NSString *)placeHolder forString:(NSString *)replaceString {
     NSDictionary *values = [self getValues];
     NSMutableDictionary *valuesToSave = [NSMutableDictionary new];
     for (NSString *key in [values allKeys]) {
@@ -673,18 +655,14 @@
     return valuesToSave;
 }
 
--(NSDictionary*)getValues
-{
+-(NSDictionary*)getValues {
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     JARadioComponent *genderComponent = nil;
     JACheckBoxComponent *categoriesNewsletterComponent = nil;
     
-    if(VALID_NOTEMPTY(self.formViews, NSMutableArray))
-    {
-        for (JADynamicField *view in self.formViews)
-        {
-            if ([view isKindOfClass:[JARadioComponent class]])
-            {
+    if(VALID_NOTEMPTY(self.formViews, NSMutableArray)) {
+        for (JADynamicField *view in self.formViews) {
+            if ([view isKindOfClass:[JARadioComponent class]]) {
                 JARadioComponent *radioComponent = (JARadioComponent*) view;
                 if(([@"register" isEqualToString:[self.form type]]
                     || [@"address" isEqualToString:[self.form type]]
@@ -693,18 +671,14 @@
                     genderComponent = radioComponent;
                 }
                 [parameters addEntriesFromDictionary:[view getValues]];
-            } else if ([view isKindOfClass:[JACheckBoxComponent class]])
-            {
+            } else if ([view isKindOfClass:[JACheckBoxComponent class]]) {
                 JACheckBoxComponent *checkBoxComponent = (JACheckBoxComponent*) view;
                 
-                if([@"register" isEqualToString:[self.form type]] && [checkBoxComponent isComponentWithKey:@"newsletter_categories_subscribed"])
-                {
+                if([@"register" isEqualToString:[self.form type]] && [checkBoxComponent isComponentWithKey:@"newsletter_categories_subscribed"]) {
                     categoriesNewsletterComponent = checkBoxComponent;
                 }
                 [parameters addEntriesFromDictionary:[view getValues]];
-            }
-            else if ([view isKindOfClass:[JATextFieldComponent class]])
-            {
+            } else if ([view isKindOfClass:[JATextFieldComponent class]]) {
                 JATextFieldComponent *textFieldComponent = (JATextFieldComponent *) view;
                 if([@"address" isEqualToString:[self.form type]] && [textFieldComponent isComponentWithKey:@"city"])
                 {

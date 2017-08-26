@@ -105,7 +105,7 @@
                                                                     CGRectGetMaxY(self.personalDataHeader.frame) + kButtonsMargin,
                                                                     self.viewBounds.size.width - (2 * kSideMargin),
                                                                     kBottomDefaultHeight)];
-        [_saveButton addButton:[STRING_SAVE_LABEL uppercaseString] target:self action:@selector(saveButtonPressed)];
+        [[_saveButton addButton:[STRING_SAVE_LABEL uppercaseString] target:self action:@selector(saveButtonPressed)] setBackgroundColor:[Theme color:kColorDarkGreen]];
     }
     return _saveButton;
 }
@@ -131,7 +131,7 @@
                                                                     CGRectGetMaxY(self.passwordHeader.frame) + kButtonsMargin,
                                                                     self.viewBounds.size.width - (2 * kSideMargin),
                                                                     kBottomDefaultHeight)];
-        [_changePasswordButton addButton:[STRING_CHANGE_PASSWORD uppercaseString] target:self action:@selector(changePasswordButtonPressed)];
+        [[_changePasswordButton addButton:[STRING_CHANGE_PASSWORD uppercaseString] target:self action:@selector(changePasswordButtonPressed)] setBackgroundColor:[Theme color:kColorDarkGreen]];
     }
     return _changePasswordButton;
 }
