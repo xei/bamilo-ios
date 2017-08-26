@@ -287,7 +287,7 @@
     [self.formController refreshView];
     [self getRegionsByCompletion:^{
         if (addressFieldMapValues[@"address_form[region]"].length) {
-            [self getCitiesForRegionId:[region getValue]  completion:^{
+            [self getCitiesForRegionId:[region getValue] completion:^{
                 if (addressFieldMapValues[@"address_form[city]"]) {
                     [self getVicinitiesForCityId:[city getValue] completion:nil];
                 }
@@ -302,8 +302,10 @@
 - (void)getRegionsByCompletion:(void (^)(void))completion {
     [DataAggregator getRegions:self completion:^(id data, NSError *error) {
         if (!error)  {
-            [self bind:data forRequestId:0];
-            if(completion) completion();
+            [ThreadManager executeOnMainThread:^{
+                [self bind:data forRequestId:0];
+                if(completion) completion();
+            }];
         }
     }];
 }

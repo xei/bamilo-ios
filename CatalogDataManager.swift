@@ -21,7 +21,7 @@ class CatalogDataManager: DataManagerSwift {
             path += filters
         }
         
-        if let sortingMethod = sortingMethod, let sortUrl = Catalog.urlForSortType(type: sortingMethod) {
+        if sortingMethod != .popularity, let sortingMethod = sortingMethod, let sortUrl = Catalog.urlForSortType(type: sortingMethod) {
             path += "\(sortUrl)/"
         }
         path += "maxItems/36/page/\(page)"

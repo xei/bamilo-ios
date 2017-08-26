@@ -30,7 +30,7 @@ import SwiftyJSON
     
     enum CatalogSortType: String {
         case bestRating = "BEST_RATING"
-        case populaity = "POPULARITY"
+        case popularity = "POPULARITY"
         case newest = "NEW_IN"
         case priceUp = "PRICE_UP"
         case priceDown = "PRICE_DOWN"
@@ -96,7 +96,7 @@ import SwiftyJSON
             urlComponent = "sort/name/dir/asc";
         case .brand:
             urlComponent = "sort/brand/dir/asc";
-        case .populaity:
+        case .popularity:
             urlComponent = "sort/popularity";
         }
         

@@ -205,6 +205,7 @@ import SwiftyJSON
             attributes: EventAttributes.catalogSortChanged(sortMethod: type)
         )
         self.sortingMethod = type
+        self.setSortingMethodToHeader()
         self.loadData()
     }
     
@@ -232,8 +233,8 @@ import SwiftyJSON
     
     //MARK: - helpers 
     private func setSortingMethodToHeader() {
-        if self.sortingMethod != .populaity && self.sortingMethod != nil {
-            self.catalogHeader.setSortingType(type: self.sortingMethod ?? .populaity)
+        if self.sortingMethod != nil {
+            self.catalogHeader.setSortingType(type: self.sortingMethod ?? .popularity)
         }
     }
     
@@ -306,8 +307,8 @@ import SwiftyJSON
         }
         
         //Sequence of these functions are important
-        self.sortingMethod = self.catalogData?.sortType ?? .populaity
-        self.setSortingMethodToHeader()
+//        self.sortingMethod = self.catalogData?.sortType
+//        self.setSortingMethodToHeader()
         let activeFilters = self.findActiveFilters(filters: self.catalogData?.filters)
         self.setActiveFiltersToHeader(activeFilters: activeFilters)
     }

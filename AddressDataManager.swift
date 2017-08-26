@@ -93,7 +93,6 @@ class AddressDataManager: DataManagerSwift {
             }
             completion(data, error)
         }
-        self.getAreaZone(target, type: .background, path: RI_API_GET_CUSTOMER_REGIONS, completion: completion)
     }
     
     func getCities(_ target: DataServiceProtocol, regionId:String, completion:@escaping DataClosure) {

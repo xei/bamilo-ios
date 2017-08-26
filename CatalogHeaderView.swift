@@ -41,7 +41,7 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
     private var pickerViewTextFiled: UITextField?
     
     private let sortOptionTranslation: [Catalog.CatalogSortType: String] = [
-        .populaity: STRING_POPULARITY,
+        .popularity: STRING_POPULARITY,
         .bestRating: STRING_BEST_RATING,
         .brand: STRING_BRAND,
         .name: STRING_NAME,
@@ -49,13 +49,12 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
         .priceUp: STRING_PRICE_UP,
         .priceDown: STRING_PRICE_DOWN
     ]
-    private let sortingOptions: [Catalog.CatalogSortType] = [ .populaity, .bestRating, .brand, .name, .newest, .priceUp, .priceDown ]
+    private let sortingOptions: [Catalog.CatalogSortType] = [ .popularity, .bestRating, .brand, .name, .newest, .priceUp, .priceDown ]
     private let listViewTypeSequence: [CatalogListViewType] = [.grid, .list, .card]
     
     weak var delegate: CatalogHeaderViewDelegate?
-    var sortType: Catalog.CatalogSortType = .populaity {
+    var sortType: Catalog.CatalogSortType = .popularity {
         didSet {
-            if self.sortType == .populaity { return }
             self.setSortingButtonActive()
             self.sortingDescLabel.text = self.sortOptionTranslation[self.sortType]
         }
