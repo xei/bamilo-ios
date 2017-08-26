@@ -194,7 +194,6 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
             RICustomer.cleanFromDB()
             RICart.sharedInstance().cartEntity.cartItems = [];
             RICart.sharedInstance().cartEntity.cartCount = nil;
-            AddressDataManager.sharedInstance.clearDefaultAddress()
             UserDefaults.standard.removeObject(forKey: "SelectedAreaByUser")
         }
         NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.UserLoggedOut), object: nil, userInfo: nil)

@@ -30,11 +30,24 @@
         return [self.inputTextValue numbersToEnglish];
     } else if (self.type == InputTextFieldControlTypeOptions) {
         return self.selectOption[self.inputTextValue];
-    } else if (self.type == InputTextFieldControlTypeDatePicker && self.visibleDateFormat && self.outpuutDateFormat ) {
+    } else if (self.type == InputTextFieldControlTypeDatePicker && self.visibleDateFormat && self.outputDateFormat ) {
         NSDate *date = [self.visibleDateFormat dateFromString:[self.inputTextValue numbersToEnglish]];
-        return [self.outpuutDateFormat stringFromDate:date];
+        return [self.outputDateFormat stringFromDate:date];
     } else {
         return self.inputTextValue;
+    }
+}
+
+- (void)setValue:(NSString *)value {
+    if (self.type == InputTextFieldControlTypeNumerical) {
+        self.inputTextValue = [value numbersToPersian];
+    } else if (self.type == InputTextFieldControlTypeOptions) {
+         self.inputTextValue = [[self.selectOption allKeysForObject:value] lastObject];
+    } else if (self.type == InputTextFieldControlTypeDatePicker && self.visibleDateFormat && self.outputDateFormat ) {
+        NSDate *date = [self.outputDateFormat dateFromString: [value numbersToEnglish]];
+        [self.outputDateFormat setDefaultDate: date];
+    } else {
+        self.inputTextValue = value;
     }
 }
 
@@ -137,7 +150,7 @@
     outputFormatter.dateFormat = @"yyyy-MM-dd";
     outputFormatter.calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierPersian];
     outputFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
-    model.outpuutDateFormat = outputFormatter;
+    model.outputDateFormat = outputFormatter;
     
     return model;
 }

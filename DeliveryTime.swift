@@ -37,12 +37,17 @@ import SwiftyJSON
 
 
 class DeliveryTimes: NSObject, Mappable {
+    
     var array: [DeliveryTime]?
+    var cityId: String?
+    var regionId: String?
     
     required init?(map: Map) {
     }
 
     func mapping(map: Map) {
         array <- map["data"]
+        cityId <- map["city_id"]
+        regionId <- map["region"]
     }
 }

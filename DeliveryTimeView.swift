@@ -52,11 +52,6 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
             self.getCitiesOfRegion(regionId: savedSelectedArea["region"]?["id"])
             self.getTimeDeliveryForCityId(cityID: savedSelectedArea["city"]?["id"])
         } else {
-            if RICustomer.checkIfUserIsLogged() {
-                self.getDefaulAddress()
-            } else {
-                self.getRegionsWithCompletion(completion: nil)
-            }
             self.getTimeDeliveryForCityId(cityID: nil)
         }
     }
@@ -81,13 +76,14 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
         }
     }
     
-    private func getCitiesOfRegion(regionId: String?) {
+    private func getCitiesOfRegion(regionId: String?, completion: (() -> Void)? = nil ) {
         guard let regionId = regionId else {
             return
         }
         AddressDataManager.sharedInstance.getCities(self, regionId: regionId) { (data, error) in
             if error == nil {
                 self.bind(data, forRequestId: 1)
+                completion?()
             }
         }
     }
@@ -96,24 +92,6 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
         ProductDataManager.sharedInstance.getDeliveryTime(self, sku: self.productSku, cityId: cityID) { (data, error) in
             if error == nil {
                 self.bind(data, forRequestId: 2)
-            }
-        }
-    }
-    
-    private func getDefaulAddress() {
-        AddressDataManager.sharedInstance.getUserDefaultAddress(target: self) { (address) in
-            if let address = address {
-                self.regionInputView.updateModel({ (model) -> FormItemModel? in
-                    model?.inputTextValue = address.region
-                    return model
-                })
-                self.cityInputView.updateModel({ (model) -> FormItemModel? in
-                    model?.inputTextValue = address.city
-                    return model
-                });
-                self.getRegionsWithCompletion {
-                    self.getCitiesOfRegion(regionId: self.regionInputView.model.getValue())
-                }
             }
         }
     }
@@ -146,6 +124,24 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
         if rid == 2 {
             if let deliveryTimes = data as? DeliveryTimes, deliveryTimes.array!.count > 0, let deliveryTime = deliveryTimes.array?.first {
                 self.deliveryTimeLabel.text = (deliveryTime.deliveryTimeMessage ?? "\(STRING_TEHRAN) \(deliveryTime.deliveryTimeZone1!)\n\(STRING_MINICITY) \(deliveryTime.deliveryTimeZone2!)").convertTo(language: .arabic)
+                
+                
+                if let cityId = deliveryTimes.cityId, let regionId = deliveryTimes.regionId {
+                    self.getRegionsWithCompletion {
+                        self.getCitiesOfRegion(regionId: regionId, completion: { 
+                            self.regionInputView.updateModel({ (model) -> FormItemModel? in
+                                model?.setValue(regionId)
+                                return model
+                            })
+                            self.cityInputView.updateModel({ (model) -> FormItemModel? in
+                                model?.setValue(cityId)
+                                return model
+                            });
+                        })
+                    }
+                } else {
+                    self.getRegionsWithCompletion()
+                }
             }
             return
         }

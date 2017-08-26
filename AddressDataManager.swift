@@ -12,28 +12,6 @@ class AddressDataManager: DataManagerSwift {
     
     static let sharedInstance = AddressDataManager()
     
-    private static var defaultAddressUser: Address?
-    func getUserDefaultAddress(target: DataServiceProtocol,completion: @escaping (Address?) -> Void) {
-        if let defaultAddress = AddressDataManager.defaultAddressUser {
-            completion(defaultAddress)
-            return
-        }
-        self.getUserAddressList(target, requestType: .background) { (data, error) in
-            if let addressList = data as? AddressList {
-                self.getAddress(target, id: addressList.shipping.uid, requestType: .background, completion: { (data, error) in
-                    if let defaultAddress = data as? Address {
-                        AddressDataManager.defaultAddressUser = defaultAddress
-                        completion(defaultAddress)
-                    }
-                })
-            }
-        }
-    }
-    
-    func clearDefaultAddress() {
-        AddressDataManager.defaultAddressUser = nil
-    }
-    
     //MARK: - Address List API
     func getUserAddressList(_ target: DataServiceProtocol, requestType: ApiRequestExecutionType, completion: @escaping DataClosure) {
         AddressDataManager.requestManager.async(.post, target: target, path: RI_API_GET_CUSTOMER_ADDRESS_LIST, params: nil, type: requestType) { (responseType, data, errorMessages) in
@@ -46,7 +24,6 @@ class AddressDataManager: DataManagerSwift {
             "id"   : address.uid,
             "type" : isBilling ? "billing" : "shipping"
         ]
-        AddressDataManager.defaultAddressUser = address
         AddressDataManager.requestManager.async(.put, target: target, path: RI_API_GET_CUSTOMER_SELECT_DEFAULT, params: params, type: type) { (responseType, data, errorMessages) in
             self.processResponse(responseType, aClass: AddressList.self, data: data, errorMessages: errorMessages, completion: completion)
         }
