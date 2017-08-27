@@ -29,11 +29,13 @@ const CGFloat summeryViewHeight = 45;
     [self.summeryView updateWithModel:model];
     NSMutableArray *receiptViewItems = [NSMutableArray arrayWithArray:@[
                                                                         [ReceiptItemModel withName:@"جمع کل:"
-                                                                                             value: [((CartEntity *)model).cartUnreducedValueFormatted numbersToPersian]],
-                                                                        [ReceiptItemModel withName:@"تخفیف کالاها:"
-                                                                                             value:[((CartEntity *)model).onlyProductsDiscountFormated numbersToPersian]]
+                                                                                             value: [((CartEntity *)model).cartUnreducedValueFormatted numbersToPersian]]
                                                                         ]];
-
+    
+    if (((CartEntity *)model).onlyProductsDiscount.intValue != 0) {
+        [receiptViewItems addObject:[ReceiptItemModel withName:@"تخفیف کالاها:" value:[((CartEntity *)model).onlyProductsDiscountFormated numbersToPersian]]];
+    }
+    
     [((CartEntity *)model).priceRules enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
         [receiptViewItems addObject:[ReceiptItemModel withName:[(NSString *)key numbersToPersian] value:[(NSString *)obj numbersToPersian]]];
     }];
@@ -51,7 +53,7 @@ const CGFloat summeryViewHeight = 45;
 
 
 + (CGFloat)cellHeightByModel:(CartEntity *)cartEntity {
-    int reciptItemViewCount = (int)((cartEntity.priceRules.allKeys.count) + (cartEntity.couponCode.length > 0) + (cartEntity.shippingValue.intValue > 0) + 2);
+    int reciptItemViewCount = (int)((cartEntity.priceRules.allKeys.count) + (cartEntity.couponCode.length > 0) + (cartEntity.shippingValue.intValue > 0) + 1 + (cartEntity.onlyProductsDiscount.intValue != 0));
     return ([ReceiptItemView cellHeight] * reciptItemViewCount) + summeryViewHeight + cellBottomPadding;
 }
 

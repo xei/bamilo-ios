@@ -166,6 +166,7 @@
                     [_receiptViewItems addObject:[ReceiptItemModel withName:STRING_SUM_OF_PRODUCTS value:self.cart.cartEntity.cartUnreducedValueFormatted]];
                     
                     //Sum of Discounts
+                    if (self.cart.cartEntity.discountValue.intValue)
                     [_receiptViewItems addObject:[ReceiptItemModel withName:STRING_SUM_OF_DISCOUNTS value:self.cart.cartEntity.discountValueFormated]];
                     
                     //Discount Code (If user inserted)
