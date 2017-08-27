@@ -103,6 +103,10 @@
     if (self.isLoaded && self.isReturningHome) {
         [EmarsysPredictManager sendTransactionsOf:self];
     }
+    
+    if (!self.isLoaded && self.isReturningHome) {
+        [self requestTeasers];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

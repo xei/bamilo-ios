@@ -302,10 +302,10 @@
 - (void)getRegionsByCompletion:(void (^)(void))completion {
     [DataAggregator getRegions:self completion:^(id data, NSError *error) {
         if (!error)  {
-            [ThreadManager executeOnMainThread:^{
+//            [ThreadManager executeOnMainThread:^{
                 [self bind:data forRequestId:0];
                 if(completion) completion();
-            }];
+//            }];
         }
     }];
 }

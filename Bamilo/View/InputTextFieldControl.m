@@ -117,42 +117,40 @@
     _model = model;
     
     //update UI
-    [ThreadManager executeOnMainThread:^{
-        self.input.icon.image = model.icon;
-        self.input.textField.placeholder = model.placeholder;
-        self.validation = model.validation;
-        [self setType: model.type];
-        self.input.textField.enabled = YES;
-        
-        if (model.icon) {
-            self.input.hasIcon = YES;
-        } else {
-            self.input.hasIcon = NO;
-        }
-        
-        if (model.inputTextValue.length) {
-            self.input.textField.text = (model.type == InputTextFieldControlTypeNumerical) ? [model.inputTextValue numbersToPersian] : model.inputTextValue;
-            [self checkValidation];
-        } else {
-            self.input.textField.text = nil;
-        }
-        
-        if (model.selectOption) {
-            self.type = InputTextFieldControlTypeOptions;
-            //when we have only one option!
-            if (model.selectOption.count == 1) {
-                model.inputTextValue = model.selectOption.allKeys.firstObject;
-                self.input.textField.enabled = NO;
-            }
-        } else if (self.type == InputTextFieldControlTypeOptions) {
-            //When we have no selectOption model but it's `Option` type
+    self.input.icon.image = model.icon;
+    self.input.textField.placeholder = model.placeholder;
+    self.validation = model.validation;
+    [self setType: model.type];
+    self.input.textField.enabled = YES;
+    
+    if (model.icon) {
+        self.input.hasIcon = YES;
+    } else {
+        self.input.hasIcon = NO;
+    }
+    
+    if (model.inputTextValue.length) {
+        self.input.textField.text = (model.type == InputTextFieldControlTypeNumerical) ? [model.inputTextValue numbersToPersian] : model.inputTextValue;
+        [self checkValidation];
+    } else {
+        self.input.textField.text = nil;
+    }
+    
+    if (model.selectOption) {
+        self.type = InputTextFieldControlTypeOptions;
+        //when we have only one option!
+        if (model.selectOption.count == 1) {
+            model.inputTextValue = model.selectOption.allKeys.firstObject;
             self.input.textField.enabled = NO;
         }
-        
-        if (model.lastErrorMessage.length) {
-            [self showErrorMsg:model.lastErrorMessage];
-        }
-    }];
+    } else if (self.type == InputTextFieldControlTypeOptions) {
+        //When we have no selectOption model but it's `Option` type
+        self.input.textField.enabled = NO;
+    }
+    
+    if (model.lastErrorMessage.length) {
+        [self showErrorMsg:model.lastErrorMessage];
+    }
 }
 
 - (void)updateModel:(FormItemModel *(^)(FormItemModel *))updateBlock {

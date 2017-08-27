@@ -85,6 +85,7 @@ import SwiftyJSON
         
         if let savedListViewType = UserDefaults.standard.string(forKey: "CatalogListViewType") {
             self.listViewType = CatalogListViewType(rawValue: savedListViewType) ?? .grid
+            self.catalogHeader.headerView?.listViewType = self.listViewType
         }
         
         self.catalogHeader.delegate = self

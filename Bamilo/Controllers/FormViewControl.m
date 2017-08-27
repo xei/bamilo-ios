@@ -111,12 +111,13 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row < self.formModelList.count &&
-        [[self.formModelList objectAtIndex:indexPath.row] isKindOfClass:[FormItemModel class]] &&
-        ((FormItemModel *) [self.formModelList objectAtIndex:indexPath.row]).type == InputTextFieldControlTypeOptions &&
-        ((FormItemModel *) [self.formModelList objectAtIndex:indexPath.row]).selectOption.count == 1) {
-        return 0;
-    } else if(indexPath.row < self.formModelList.count && [[self.formModelList objectAtIndex:indexPath.row] isKindOfClass:[FormHeaderModel class]]) {
+//    if (indexPath.row < self.formModelList.count &&
+//        [[self.formModelList objectAtIndex:indexPath.row] isKindOfClass:[FormItemModel class]] &&
+//        ((FormItemModel *) [self.formModelList objectAtIndex:indexPath.row]).type == InputTextFieldControlTypeOptions &&
+//        ((FormItemModel *) [self.formModelList objectAtIndex:indexPath.row]).selectOption.count == 1) {
+//        return 0;
+//    } else
+    if (indexPath.row < self.formModelList.count && [[self.formModelList objectAtIndex:indexPath.row] isKindOfClass:[FormHeaderModel class]]) {
         return [FormHeaderTableViewCell cellHeight];
     } else {
         return UITableViewAutomaticDimension;
