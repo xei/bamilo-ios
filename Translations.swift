@@ -45,3 +45,5 @@ let STRING_PROVINCE = RILocalizationWrapper.localizedString("province")!
 let STRING_FOUND_PRODUCT_COUNT = RILocalizationWrapper.localizedString("founded_product_count")!
 let STRING_ERROR = RILocalizationWrapper.localizedString("string_error")!
 let STRING_ERROR_SUPPORTING_EMAIL = RILocalizationWrapper.localizedString("error_email_support")!
+let STRING_ESTIMATED_TIME = RILocalizationWrapper.localizedString("estimated_time")!
+let STRING_DELIVERY_TIME = RILocalizationWrapper.localizedString("delivery_time")!

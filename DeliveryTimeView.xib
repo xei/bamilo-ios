@@ -85,6 +85,7 @@
             <connections>
                 <outlet property="cityInputView" destination="hOO-Sb-EyN" id="XrV-8f-wU8"/>
                 <outlet property="deliveryTimeLabel" destination="zHr-gn-9pZ" id="vJB-Fa-1zg"/>
+                <outlet property="deliveryTimeTitleLabel" destination="Vfu-NF-add" id="qwe-1P-ehF"/>
                 <outlet property="regionInputView" destination="PYX-tG-r1D" id="y4H-57-M3w"/>
                 <outlet property="titleLabel" destination="gAg-Jd-fBh" id="pof-uv-ADb"/>
             </connections>

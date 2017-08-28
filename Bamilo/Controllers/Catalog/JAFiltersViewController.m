@@ -45,7 +45,7 @@ const int subCatButtonVisibleHeight = 50;
     
     [self.subCatButton applyStyle:kFontRegularName fontSize:11 color: [UIColor blackColor]];
     [self.subCatButton setTitle:STRING_SUBCATEGORIES forState:UIControlStateNormal];
-    [self.submitButton setBackgroundColor:[Theme color:kColorGreen3]];
+    [self.submitButton setBackgroundColor:[Theme color:kColorDarkGreen]];
     
     if (self.subCatsFilter && ((CatalogCategoryFilterItem *)self.subCatsFilter).options.count) {
         self.subCatButtonHeightConstraint.constant = subCatButtonVisibleHeight;

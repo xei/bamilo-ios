@@ -11,7 +11,6 @@ import UIKit
 class CardCollectionViewFlowLayout: BaseCatalogCollectionFlowLayout {
     
     private let otherContentHeight: CGFloat = 122
-    private let cellSpacing: CGFloat = 5
     private let imageRatio: CGFloat = 1.25
     private let imageWidthProportionalToParentWidth: CGFloat = 176 / 348
     
@@ -31,6 +30,4 @@ class CardCollectionViewFlowLayout: BaseCatalogCollectionFlowLayout {
         let imageHeight = itemWidth() * imageWidthProportionalToParentWidth * imageRatio
         return imageHeight + otherContentHeight
     }
-    
-    
 }

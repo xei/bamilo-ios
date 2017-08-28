@@ -10,6 +10,8 @@ import UIKit
 
 class BaseCatalogCollectionFlowLayout: UICollectionViewFlowLayout {
     
+    let cellSpacing: CGFloat = 5
+    
     override init() {
         super.init()
         setupLayout()

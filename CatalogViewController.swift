@@ -51,7 +51,7 @@ import SwiftyJSON
     private var initialTabBarHeight: CGFloat!
     private let loadingFooterViewHeight: CGFloat = 50
     private let productCountViewHeight: CGFloat = 30
-    private let cardViewNewTagElementHeight: CGFloat = 26
+    private let cardViewNewTagElementHeight: CGFloat = 16
     
     //TODO: this property is only used for passing enum (swift type) property from objective c
     // so we have to remove it after migration those who wanna pass this property
@@ -248,7 +248,7 @@ import SwiftyJSON
     private(set) lazy var cardFlowLayout: CardCollectionViewFlowLayout = {
         return CardCollectionViewFlowLayout()
     }()
-    private func getProperCollectionViewFlowLayout () -> UICollectionViewFlowLayout {
+    private func getProperCollectionViewFlowLayout () -> BaseCatalogCollectionFlowLayout {
         if self.listViewType == .grid {
             return gridFlowLayout
         } else if self.listViewType == .list {
@@ -519,7 +519,8 @@ import SwiftyJSON
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return  UIEdgeInsetsMake(self.catalogHeader.frame.height + self.initialNavBarAndStatusBarHeight + productCountViewHeight, 0, initialTabBarHeight, 0)
+        return  UIEdgeInsetsMake(self.catalogHeader.frame.height + self.initialNavBarAndStatusBarHeight + productCountViewHeight - self.getProperCollectionViewFlowLayout().cellSpacing , 0, initialTabBarHeight, 0)
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

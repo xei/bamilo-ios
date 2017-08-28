@@ -105,23 +105,23 @@
                         </connections>
                     </button>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P19-Jw-twT" customClass="RateStarControl" customModule="Bamilo" customModuleProvider="target">
-                        <rect key="frame" x="10" y="317" width="70" height="14"/>
+                        <rect key="frame" x="16" y="317" width="70" height="14"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="70" id="8uH-4M-sHJ"/>
                             <constraint firstAttribute="width" secondItem="P19-Jw-twT" secondAttribute="height" multiplier="5:1" id="I5Y-NA-s57"/>
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(۱۲)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ohl-pD-oTx">
-                        <rect key="frame" x="82" y="314" width="18.5" height="21.5"/>
+                        <rect key="frame" x="88" y="313.5" width="18.5" height="21.5"/>
                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="esd-BH-8bf" userLabel="new tag view">
-                        <rect key="frame" x="10" y="336" width="30" height="14"/>
+                        <rect key="frame" x="16" y="336" width="30" height="14"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="جدید" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pNx-z3-YA3">
-                                <rect key="frame" x="3" y="-2" width="24.5" height="19.5"/>
+                                <rect key="frame" x="3" y="-2.5" width="24.5" height="19.5"/>
                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="10"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -148,7 +148,6 @@
                 <constraint firstItem="P19-Jw-twT" firstAttribute="centerY" secondItem="ccm-PA-g8T" secondAttribute="centerY" priority="750" id="6k2-eo-3lA"/>
                 <constraint firstItem="ccm-PA-g8T" firstAttribute="right" secondItem="1Kb-O5-coX" secondAttribute="right" id="DGz-qT-W3f"/>
                 <constraint firstItem="1Kb-O5-coX" firstAttribute="right" secondItem="rgw-q7-MKo" secondAttribute="right" id="GNi-pk-71N"/>
-                <constraint firstItem="P19-Jw-twT" firstAttribute="left" secondItem="9Q5-K5-pJ4" secondAttribute="left" id="GU2-eF-kik"/>
                 <constraint firstItem="eof-2J-ngd" firstAttribute="width" secondItem="gTV-IL-0wX" secondAttribute="width" multiplier="176:348" id="Ov5-3j-7rL"/>
                 <constraint firstItem="eof-2J-ngd" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="16" id="QrB-jU-MVP"/>
                 <constraint firstItem="n3a-c3-4e1" firstAttribute="left" secondItem="gTV-IL-0wX" secondAttribute="left" constant="16" id="RND-vj-NI7"/>
@@ -164,6 +163,7 @@
                 <constraint firstItem="1Kb-O5-coX" firstAttribute="top" secondItem="rgw-q7-MKo" secondAttribute="bottom" constant="15" id="q3s-MW-MZW"/>
                 <constraint firstItem="9Q5-K5-pJ4" firstAttribute="top" secondItem="eof-2J-ngd" secondAttribute="top" id="qA3-fK-Il4"/>
                 <constraint firstItem="n3a-c3-4e1" firstAttribute="top" secondItem="eof-2J-ngd" secondAttribute="bottom" constant="5" id="r8R-gS-ZzO"/>
+                <constraint firstItem="P19-Jw-twT" firstAttribute="left" secondItem="n3a-c3-4e1" secondAttribute="left" id="riZ-8z-CM9"/>
                 <constraint firstItem="rgw-q7-MKo" firstAttribute="top" secondItem="n3a-c3-4e1" secondAttribute="bottom" constant="5" id="sHX-Nl-GhE"/>
                 <constraint firstItem="Ohl-pD-oTx" firstAttribute="left" secondItem="P19-Jw-twT" secondAttribute="right" constant="2" id="tMf-sa-oCu"/>
                 <constraint firstItem="P19-Jw-twT" firstAttribute="width" secondItem="P19-Jw-twT" secondAttribute="height" multiplier="5:1" id="wCE-g7-i8Q"/>

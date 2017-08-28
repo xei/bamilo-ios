@@ -14,8 +14,6 @@ class GridCollectionViewFlowLayout: BaseCatalogCollectionFlowLayout {
     private let numberOfColumns: CGFloat = 2
     private let otherContentOfCellHeight: CGFloat = 128
     private let righLeftImagePadding: CGFloat = 10 * 2
-    private let cellSpacing:CGFloat = 5
-    
     
     override func setupLayout() {
         minimumInteritemSpacing = cellSpacing / 2
