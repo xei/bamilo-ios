@@ -8260,7 +8260,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Bamilo/Bamilo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Ramtin Monazahian (33W53692YU)";
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -8524,7 +8524,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Bamilo/Bamilo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Ramtin Monazahian (5GPRV57UKD)";
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -8556,7 +8556,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Bamilo/Bamilo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Ramtin Monazahian (33W53692YU)";
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
