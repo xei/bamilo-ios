@@ -103,7 +103,7 @@
         <!--Order List View Controller-->
         <scene sceneID="wIx-ck-Xt4">
             <objects>
-                <viewController storyboardIdentifier="OrderListViewController" automaticallyAdjustsScrollViewInsets="NO" id="eiJ-mx-0zt" customClass="OrderListViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="OrderListViewController" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="eiJ-mx-0zt" customClass="OrderListViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0FG-cd-7Wf"/>
                         <viewControllerLayoutGuide type="bottom" id="8JC-JN-ffR"/>
@@ -155,6 +155,7 @@
                         <outlet property="emptyListMessageLabel" destination="SSz-D5-qwc" id="axc-QO-qgg"/>
                         <outlet property="emptyListMessageView" destination="Ld4-CV-Qn4" id="qA3-NW-gH1"/>
                         <outlet property="tableview" destination="uZt-Lu-fZW" id="cv0-6Q-lI9"/>
+                        <outlet property="tableviewBottomConstraint" destination="Vcb-nL-6hD" id="PLp-ug-L8C"/>
                         <segue destination="ZPJ-GH-qpJ" kind="show" identifier="OrderDetailViewController" id="qW5-JI-edk"/>
                     </connections>
                 </viewController>
@@ -165,7 +166,7 @@
         <!--Order Detail View Controller-->
         <scene sceneID="076-yi-3o3">
             <objects>
-                <viewController id="ZPJ-GH-qpJ" customClass="OrderDetailViewController" sceneMemberID="viewController">
+                <viewController extendedLayoutIncludesOpaqueBars="YES" id="ZPJ-GH-qpJ" customClass="OrderDetailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="YIT-h9-H01"/>
                         <viewControllerLayoutGuide type="bottom" id="fMd-d8-qCL"/>
@@ -201,6 +202,7 @@
                     <connections>
                         <outlet property="progressViewControl" destination="ckZ-6C-ygP" id="vJ2-Z6-gmX"/>
                         <outlet property="tableview" destination="mEm-H8-v4G" id="Pbi-Ul-hgi"/>
+                        <outlet property="tableviewBottomConstraint" destination="WNl-55-3iC" id="wWa-bq-3jn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jsm-mz-2fa" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -895,6 +897,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="carouselBottomConstraint" destination="coa-nB-q95" id="Djp-dr-snS"/>
                         <outlet property="carouselWidget" destination="ceu-wQ-Ooa" id="gZi-vS-BrB"/>
                         <outlet property="noResultMessageUILabel" destination="lwx-IM-0oN" id="oXZ-91-GHF"/>
                         <outlet property="warningMessageUILabel" destination="A5u-Np-HlN" id="yJq-Bo-HK2"/>

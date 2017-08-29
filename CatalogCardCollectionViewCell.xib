@@ -41,7 +41,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="چرم مشهد" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rgw-q7-MKo">
-                        <rect key="frame" x="275.5" y="265" width="56.5" height="15"/>
+                        <rect key="frame" x="288.5" y="265" width="43.5" height="15"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="hlY-gw-8E3"/>
                         </constraints>
@@ -50,7 +50,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۲۷۰،۰۰۰ ریال" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Kb-O5-coX">
-                        <rect key="frame" x="247" y="295" width="85.5" height="17"/>
+                        <rect key="frame" x="258" y="295" width="74.5" height="17"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="17" id="h5o-i0-4iw"/>
                         </constraints>
@@ -59,7 +59,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۱۰،۰۰۰ ریال" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ccm-PA-g8T">
-                        <rect key="frame" x="276" y="317" width="57" height="14"/>
+                        <rect key="frame" x="280.5" y="317" width="52.5" height="14"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="14" id="evX-ID-adr"/>
                         </constraints>
@@ -68,7 +68,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="٪۱۰۰" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r2F-AZ-0gw">
-                        <rect key="frame" x="241" y="312.5" width="30" height="23"/>
+                        <rect key="frame" x="245.5" y="317" width="30" height="14"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="30" id="pAB-KJ-GX4"/>
                         </constraints>
@@ -112,7 +112,7 @@
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(۱۲)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ohl-pD-oTx">
-                        <rect key="frame" x="88" y="313.5" width="18.5" height="21.5"/>
+                        <rect key="frame" x="88" y="318" width="17" height="13"/>
                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
@@ -121,7 +121,7 @@
                         <rect key="frame" x="16" y="336" width="30" height="14"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="جدید" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pNx-z3-YA3">
-                                <rect key="frame" x="3" y="-2.5" width="24.5" height="19.5"/>
+                                <rect key="frame" x="6.5" y="1.5" width="17.5" height="12"/>
                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="10"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>

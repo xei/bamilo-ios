@@ -19,6 +19,7 @@
 @interface OrderDetailViewController () <OrderProductListTableViewCellDelegate>
 @property (weak, nonatomic) IBOutlet ProgressViewControl *progressViewControl;
 @property (nonatomic, weak) IBOutlet UITableView *tableview;
+    @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableviewBottomConstraint;
 @property (nonatomic, strong) NSArray *orderDetailInoArray;
 @end
 
@@ -49,6 +50,10 @@
     _orderDeliveredImageSet = [ProgressItemImageSet setWith:@"order-delivered-pending" active:@"order-delivered-active" done:@"order-delivered-done" error:@"order-delivered-error"];
 
     [self.tableview setHidden:YES];
+    
+    //it's possible that previous view controllers hides bottom bar so content edges will be disturbed
+    //by this trick this view always shows proper boundary
+    self.tableviewBottomConstraint.constant = [MainTabBarViewController sharedInstance].tabBar.height;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -215,8 +220,13 @@
     return progressViewControlContent;
 }
 
+    
+#pragma mark - hide tabbar in this view controller
+- (BOOL)hidesBottomBarWhenPushed {
+    return NO;
+}
+    
 #pragma mark: -DataTrackerProtocol
-
 - (NSString *)getScreenName {
     return @"OrderDetailView";
 }

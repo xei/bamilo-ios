@@ -19,6 +19,7 @@
 @property (nonatomic, weak) IBOutlet UITableView *tableview;
 @property (weak, nonatomic) IBOutlet UILabel *emptyListMessageLabel;
 @property (weak, nonatomic) IBOutlet UIView *emptyListMessageView;
+    @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableviewBottomConstraint;
 
 
 @property (nonatomic, strong) OrderList *list;
@@ -102,6 +103,10 @@
     
     [self.emptyListMessageLabel applyStyle:[Theme font:kFontVariationRegular size:15] color:[UIColor blackColor]];
     self.emptyListMessageLabel.text = STRING_NO_ORDERS_TITLE;
+    
+    //it's possible that previous view controllers hides bottom bar so content edges will be disturbed
+    //by this trick this view always shows proper boundary
+    self.tableviewBottomConstraint.constant = [MainTabBarViewController sharedInstance].tabBar.height;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -161,6 +166,12 @@
         orderDetailViewCtrl.order = ((Order *)sender);
     }
 }
+    
+#pragma mark - hide tabbar in this view controller
+- (BOOL)hidesBottomBarWhenPushed {
+    return NO;
+}
+
 
 #pragma mark - DataTrackerProtocol
 - (NSString *)getScreenName {

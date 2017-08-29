@@ -86,11 +86,11 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
 }
 
 #pragma mark - Overrides
--(NSString *)getTitleForContinueButton {
+- (NSString *)getTitleForContinueButton {
     return STRING_CONFIRM_AND_PAY;
 }
 
--(NSString *)getNextStepViewControllerSegueIdentifier:(NSString *)serviceIdentifier {
+- (NSString *)getNextStepViewControllerSegueIdentifier:(NSString *)serviceIdentifier {
     return nil;
 }
 
@@ -101,21 +101,21 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
                 [self bind:data forRequestId:1];
                 
                 NSDictionary *userInfo = @{ kCart : self.cart };
-                
+    
                 if(self.cart.paymentInformation.type == RIPaymentInformationCheckoutEnded) {
+                    [self setHidesBottomBarWhenPushed:NO];
                     [self performSegueWithIdentifier:NSStringFromClass([SuccessPaymentViewController class]) sender:nil];
+                    [self setHidesBottomBarWhenPushed:YES];
                 } else {
                     [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutExternalPaymentsScreenNotification object:nil userInfo:userInfo];
                 }
-                
+
                 completion(_multistepEntity.nextStep, YES);
             } else {
                 [self showNotificationBar:error isSuccess:NO];
                 
                 //EVENT : PURCHASE
-                [TrackerManager postEventWithSelector:[EventSelectors purchaseSelector]
-                                           attributes:[EventAttributes purchaseWithCart:self.cart success:YES]];
-                
+                [TrackerManager postEventWithSelector:[EventSelectors purchaseSelector] attributes:[EventAttributes purchaseWithCart:self.cart success:YES]];
                 completion(nil, NO);
             }
         }];

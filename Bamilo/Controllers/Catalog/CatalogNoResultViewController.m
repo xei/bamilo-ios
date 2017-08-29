@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *warningMessageUILabel;
 @property (strong, nonatomic) RITeaserGrouping *teaserGroup;
 @property (nonatomic, copy) NSString *searchTerm;
+    @property (weak, nonatomic) IBOutlet NSLayoutConstraint *carouselBottomConstraint;
 @property (strong, nonatomic) IBOutlet EmarsysRecommendationCarouselWidget *carouselWidget;
 @end
 
@@ -41,6 +42,8 @@
     
     [self.carouselWidget hide];
     [self.view setBackgroundColor:[UIColor whiteColor]];
+    
+    self.carouselBottomConstraint.constant = [MainTabBarViewController sharedInstance].tabBar.height;
 }
 
 - (void)getSuggestions {

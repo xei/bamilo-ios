@@ -39,6 +39,15 @@
     [self setupView];
     [self trackPurchase];
     [self.carouselWidget updateTitle:STRING_BAMILO_RECOMMENDATION];
+    
+    //Reset the shared Cart entities
+    [RICart sharedInstance].cartEntity.cartItems = @[];
+    [RICart sharedInstance].cartEntity.cartCount = 0;
+    
+    [self.tabBarController.tabBar setTranslucent:NO];
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.extendedLayoutIncludesOpaqueBars = NO;
+    self.automaticallyAdjustsScrollViewInsets = NO;
 }
 
 - (void)setupView {
@@ -114,12 +123,7 @@
                 return [RecommendItem instanceWithEMRecommendationItem:item];
             }]];
         }];
-        
-        //Reset the shared Cart entities
-        [RICart sharedInstance].cartEntity.cartItems = @[];
-        [RICart sharedInstance].cartEntity.cartCount = 0;
     };
-    
     return @[recommend];
 }
 
