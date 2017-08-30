@@ -213,9 +213,9 @@
     if (!VALID_NOTEMPTY(_writeReviewButton, UIButton)) {
         _writeReviewButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_writeReviewButton.titleLabel setFont:JABUTTONFont];
-        [_writeReviewButton setTitleColor:JABlue1Color forState:UIControlStateNormal];
-        [_writeReviewButton setTitleColor:JABlack800Color forState:UIControlStateHighlighted];
-        CGRect frame = CGRectMake(self.writeReviewView.width/2, 16, self.writeReviewView.width/2, self.writeReviewView.height);
+
+        [_writeReviewButton setTitleColor:[Theme color:kColorOrange1] forState:UIControlStateNormal];
+        CGRect frame = CGRectMake(self.writeReviewView.width/2, 16, self.writeReviewView.width / 2, self.writeReviewView.height);
         [_writeReviewButton setFrame:frame];
         [_writeReviewButton setTitle:STRING_WRITE_REVIEW forState:UIControlStateNormal];
         [_writeReviewButton addTarget:self action:@selector(goToNewReview:) forControlEvents:UIControlEventTouchUpInside];

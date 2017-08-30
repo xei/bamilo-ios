@@ -55,7 +55,7 @@
     self.emailControl.input.textField.delegate = self;
     self.passwordControl.input.textField.delegate = self;
     
-    [self.forgetPasswordButton applyStyle:[Theme font:kFontVariationRegular size:10] color:[Theme color:kColorDarkGreen]];
+    [self.forgetPasswordButton applyStyle:[Theme font:kFontVariationRegular size:10] color:[Theme color:kColorOrange1]];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
