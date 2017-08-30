@@ -518,10 +518,7 @@
         CGFloat pickerViewWidth = self.view.frame.size.width;
         [self.datePicker setFrame:CGRectMake(0.0f, pickerViewHeight, pickerViewWidth, pickerViewHeight)];
         [UIView animateWithDuration:0.4f animations:^{
-                             [self.datePicker setFrame:CGRectMake(0.0f,
-                                                                  0.0f,
-                                                                  pickerViewWidth,
-                                                                  pickerViewHeight)];
+                             [self.datePicker setFrame:CGRectMake(0.0f, 0.0f, pickerViewWidth,pickerViewHeight)];
                          } completion:^(BOOL finished) {
                              self.isOpeningPicker = NO;
                          }];
