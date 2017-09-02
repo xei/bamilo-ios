@@ -12,6 +12,7 @@
 #import "RIField.h"
 #import "ViewControllerManager.h"
 #import "EmarsysPredictManager.h"
+#import "Bamilo-Swift.h"
 
 #define kUserIsGuestFlagKey [NSString stringWithFormat:@"%@_user_is_guest", [RIApi getCountryIsoInUse]]
 
@@ -155,49 +156,59 @@
     
     if (customers.count > 0) {
         __block RICustomer *customerObject = [customers lastObject];
-        if (customerObject) {
-            if([@"normal" isEqualToString:customerObject.loginMethod]) {
-                return [RIForm getForm:@"login" successBlock:^(RIForm *form) {
-                    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-                    for (RIField *field in form.fields) {
-                        if ([field.key isEqualToString:@"email"]) {
-                            [parameters setValue:customerObject.email forKey:field.name];
-                        }else
-                            if ([field.key isEqualToString:@"password"]) {
-                                [parameters setValue:customerObject.plainPassword forKey:field.name];
-                            }
-                    }
-                    [RIForm sendForm:form parameters:parameters
-                        successBlock:^(id jsonObject, NSArray* successMessages) {
-                            [RICustomer resetCustomerAsGuest];
-                            if (returnBlock != nil) {
-                                dispatch_async(dispatch_get_main_queue(), ^{
-                                    returnBlock(YES, jsonObject, customerObject.loginMethod);
-                                });
-                            }
-                            //##########
-                            [EmarsysPredictManager setCustomer:customerObject];
-                            
-                        } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject) {
-                            if (returnBlock != nil) {
-                                dispatch_async(dispatch_get_main_queue(), ^{
-                                    returnBlock(NO, nil, customerObject.loginMethod);
-                                });
-                            }
-                        }];
-                } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
-                    if (returnBlock != nil) {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            returnBlock(NO, nil, customerObject.loginMethod);
-                        });
-                    }
-                }];
-            } else {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    returnBlock(NO, nil, customerObject.loginMethod);
-                });
-            }
+        
+        if (customerObject && customerObject.email.length && customerObject.plainPassword.length) {
+            [DataAggregator loginUser:nil username:customerObject.email password:customerObject.plainPassword completion:^(id _Nullable data, NSError * _Nullable error) {
+                if (returnBlock != nil) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        returnBlock(YES, nil, customerObject.loginMethod);
+                    });
+                }
+            }];
         }
+//        if (customerObject) {
+//            if([@"normal" isEqualToString:customerObject.loginMethod]) {
+//                return [RIForm getForm:@"login" successBlock:^(RIForm *form) {
+//                    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+//                    for (RIField *field in form.fields) {
+//                        if ([field.key isEqualToString:@"email"]) {
+//                            [parameters setValue:customerObject.email forKey:field.name];
+//                        }else
+//                            if ([field.key isEqualToString:@"password"]) {
+//                                [parameters setValue:customerObject.plainPassword forKey:field.name];
+//                            }
+//                    }
+//                    [RIForm sendForm:form parameters:parameters
+//                        successBlock:^(id jsonObject, NSArray* successMessages) {
+//                            [RICustomer resetCustomerAsGuest];
+//                            if (returnBlock != nil) {
+//                                dispatch_async(dispatch_get_main_queue(), ^{
+//                                    returnBlock(YES, jsonObject, customerObject.loginMethod);
+//                                });
+//                            }
+//                            //##########
+//                            [EmarsysPredictManager setCustomer:customerObject];
+//                            
+//                        } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject) {
+//                            if (returnBlock != nil) {
+//                                dispatch_async(dispatch_get_main_queue(), ^{
+//                                    returnBlock(NO, nil, customerObject.loginMethod);
+//                                });
+//                            }
+//                        }];
+//                } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
+//                    if (returnBlock != nil) {
+//                        dispatch_async(dispatch_get_main_queue(), ^{
+//                            returnBlock(NO, nil, customerObject.loginMethod);
+//                        });
+//                    }
+//                }];
+//            } else {
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    returnBlock(NO, nil, customerObject.loginMethod);
+//                });
+//            }
+//        }
     } else {
         dispatch_async(dispatch_get_main_queue(), ^{
             returnBlock(NO, nil, nil);

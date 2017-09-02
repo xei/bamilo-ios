@@ -177,7 +177,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.cart.cartEntity.cartItems.count + 1;
+    return self.cart.cartEntity.cartItems.count > 0 ? self.cart.cartEntity.cartItems.count + 1 : 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

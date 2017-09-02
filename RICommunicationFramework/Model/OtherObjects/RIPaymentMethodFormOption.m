@@ -41,8 +41,8 @@
         if (VALID_NOTEMPTY([descriptionObject objectForKey:@"icons"], NSDictionary)) {
             NSDictionary *icons = [descriptionObject objectForKey:@"icons"];
             newOption.icon = [PaymentMethodIcon new];
-            newOption.icon.imageUrlForEnabled = [[icons objectForKey:@"enable"] objectAtIndex:0];
-            newOption.icon.imageUrlForDisabled = [[icons objectForKey:@"disable"] objectAtIndex:0];
+            newOption.icon.imageUrlForEnabled = [[icons objectForKey:@"enable"] count] ? [[icons objectForKey:@"enable"] objectAtIndex:0] : nil ;
+            newOption.icon.imageUrlForDisabled = [[icons objectForKey:@"enable"] count] ? [[icons objectForKey:@"disable"] objectAtIndex:0] : nil;
         }
         
         if (VALID_NOTEMPTY([descriptionObject objectForKey:@"display_name"], NSString)) {
