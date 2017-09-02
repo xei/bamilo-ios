@@ -13,7 +13,6 @@
 #import "JAKickoutView.h"
 #import "JAFallbackView.h"
 #import "RICustomer.h"
-#import "JAAuthenticationViewController.h"
 #import "JACenterNavigationController.h"
 #import "ViewControllerManager.h"
 #import "NotificationBarView.h"
@@ -51,14 +50,23 @@
 
 - (CGRect)viewBounds {
     CGFloat topOffset = 0.0f;
-    CGFloat bottomOffset = 0.0f;
     if (self.searchBarIsVisible) {
         topOffset += kSearchViewBarHeight;
     }
+    if (SYSTEM_VERSION_GREATER_THAN(@"9.0")) {
+        return CGRectMake(self.view.bounds.origin.x,
+                          self.view.bounds.origin.y + topOffset,
+                          self.view.bounds.size.width,
+                          self.view.bounds.size.height - topOffset);
+    }
+    
+    CGFloat statusBarHeight = UIApplication.sharedApplication.statusBarFrame.size.height;
+    CGFloat navBarHeight = self.navigationController.navigationBar.height;
+    
     return CGRectMake(self.view.bounds.origin.x,
-                      self.view.bounds.origin.y + topOffset,
+                      self.view.bounds.origin.y + topOffset + navBarHeight + statusBarHeight,
                       self.view.bounds.size.width,
-                      self.view.bounds.size.height - topOffset - bottomOffset);
+                      self.view.bounds.size.height - topOffset - navBarHeight - statusBarHeight);
 }
 
 - (CGRect)bounds {
@@ -73,14 +81,14 @@
     return CGRectMake(self.view.bounds.origin.x,
                       self.view.bounds.origin.y + offset,
                       self.view.bounds.size.width,
-                      self.view.bounds.size.height - offset - heightOffset);
+                      self.view.bounds.size.height - offset);
 }
 
 -(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        JANavigationBarLayout *defaultLayout = [[JANavigationBarLayout alloc] init];
-        self.navBarLayout = defaultLayout;
+//        JANavigationBarLayout *defaultLayout = [[JANavigationBarLayout alloc] init];
+//        self.navBarLayout = defaultLayout;
     }
     return self;
 }
@@ -88,8 +96,8 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        JANavigationBarLayout *defaultLayout = [[JANavigationBarLayout alloc] init];
-        self.navBarLayout = defaultLayout;
+//        JANavigationBarLayout *defaultLayout = [[JANavigationBarLayout alloc] init];
+//        self.navBarLayout = defaultLayout;
     }
     return self;
 }
@@ -97,8 +105,8 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        JANavigationBarLayout *defaultLayout = [[JANavigationBarLayout alloc] init];
-        self.navBarLayout = defaultLayout;
+//        JANavigationBarLayout *defaultLayout = [[JANavigationBarLayout alloc] init];
+//        self.navBarLayout = defaultLayout;
     }
     return self;
 }
@@ -106,17 +114,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    
     //PerformanceTrackerProtocol
     [self recordStartLoadTime];
     
     self.orientation = [[UIApplication sharedApplication] statusBarOrientation];
-    
-    [self.navigationController.navigationBar setTranslucent:NO];
-    self.navigationItem.hidesBackButton = YES;
-//    self.title = @"";
-    
     self.view.backgroundColor = JABackgroundGrey;
-    
     self.requestNumber = 0;
     
     self.loadingView = [[UIImageView alloc] initWithFrame:((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame];
@@ -128,7 +132,6 @@
     [self.loadingView addGestureRecognizer:tap];
     
     UIImage *image = [UIImage imageNamed:@"loadingAnimationFrame1"];
-    
     int lastFrame = 8;
   
     self.loadingAnimation = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, image.size.width, image.size.height)];
@@ -145,6 +148,26 @@
     self.loadingView.alpha = 0.0f;
     if ([self getScreenName].length) {
         [TrackerManager trackScreenNameWithScreenName:[self getScreenName]];
+    }
+    [self.navigationController.interactivePopGestureRecognizer setEnabled:YES];
+    
+    //navigation bar configs
+    if ([self respondsToSelector:@selector(navBarTitleView)]){
+        self.navigationItem.titleView = [self navBarTitleView];
+    }
+    if ([self respondsToSelector:@selector(navBarTitleString)]) {
+        self.title = [self navBarTitleString];
+    }
+    if ([self respondsToSelector:@selector(navBarhideBackButton)]) {
+        self.navigationItem.hidesBackButton = [self navBarhideBackButton];
+    }
+    if ([self respondsToSelector:@selector(navBarleftButton)]) {
+        if ([self navBarleftButton] == NavBarLeftButtonTypeSearch && [self respondsToSelector:@selector(searchIconButtonTapped)]) {
+            self.navigationItem.rightBarButtonItem = [NavBarUtility navBarLeftButtonWithType:NavBarLeftButtonTypeSearch viewController:self];
+        }
+        if ([self navBarleftButton] == NavBarLeftButtonTypeCart && [self respondsToSelector:@selector(cartIconButtonTapped)]) {
+            self.navigationItem.rightBarButtonItem = [NavBarUtility navBarLeftButtonWithType:NavBarLeftButtonTypeCart viewController:self];
+        }
     }
 }
 
@@ -289,50 +312,36 @@
 }
 
 - (void)reloadNavBar {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kChangeNavigationBarNotification
-                                                        object:self.navBarLayout];
 }
 
-//- (void)reloadTabBar {
-//    [[NSNotificationCenter defaultCenter] postNotificationName:kChangeTabBarVisibility
-//                                                        object:[NSNumber numberWithBool:self.tabBarIsVisible]];
-//}
-
 - (void)showSearchBar {
+    if (self.searchBarBackground) return; //if has been shown previously
     self.searchBarBackground = [[UIView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, kSearchViewBarHeight)];
     
-    self.searchBarBackground.backgroundColor = JABlack300Color;
+    self.searchBarBackground.backgroundColor = [Theme color:kColorExtraDarkBlue];
     [self.view addSubview:self.searchBarBackground];
     
-    UIView* separatorView = [UIView new];
-    [separatorView setBackgroundColor:JABlack400Color];
-    [separatorView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    [separatorView setFrame:CGRectMake(self.searchBarBackground.bounds.origin.x, self.searchBarBackground.bounds.size.height - 1.0f, self.searchBarBackground.bounds.size.width, 1.0f)];
-
-    [self.searchBarBackground addSubview:separatorView];
+    CGFloat horizontalMargin = 0.0f;
     
-    CGFloat horizontalMargin = 3.0f; //adjustment to native searchbar margin
+    //adjustment to native searchbar margin
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         horizontalMargin = 10.0f;
     }
-    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(self.searchBarBackground.bounds.origin.x + horizontalMargin, self.searchBarBackground.bounds.origin.y, self.searchBarBackground.bounds.size.width - horizontalMargin * 2, self.searchBarBackground.bounds.size.height - 1.0f)];
+    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(self.searchBarBackground.bounds.origin.x + horizontalMargin, self.searchBarBackground.bounds.origin.y, self.searchBarBackground.bounds.size.width, self.searchBarBackground.bounds.size.height)];
     
     self.searchBar.delegate = self;
-    self.searchBar.barTintColor = JABlack300Color;
+    self.searchBar.barTintColor = [Theme color:kColorExtraDarkBlue];
     self.searchBar.placeholder = STRING_SEARCH_PLACEHOLDER;
     self.searchBar.showsCancelButton = NO;
-    
     [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTintColor: [Theme color:kColorOrange]];
     
     UITextField *textFieldSearch = [self.searchBar valueForKey:@"_searchField"];
     textFieldSearch.font = [UIFont fontWithName:kFontRegularName size:textFieldSearch.font.pointSize];
     textFieldSearch.backgroundColor = JAWhiteColor;
+    textFieldSearch.textAlignment = NSTextAlignmentRight;
+    
     //remove magnifying lens
     [textFieldSearch setLeftViewMode:UITextFieldViewModeNever];
-    
-    self.searchBar.layer.borderWidth = 1;
-    self.searchBar.layer.borderColor = [JABlack300Color CGColor];
-    
     [self.searchBarBackground addSubview:self.searchBar];
     UIImage *searchIcon = [UIImage imageNamed:@"searchIcon"];
     
@@ -340,7 +349,6 @@
     self.searchIconImageView.frame = CGRectMake(self.searchBar.frame.size.width - horizontalMargin - searchIcon.size.width,(self.searchBar.frame.size.height - searchIcon.size.height) / 2, searchIcon.size.width, searchIcon.size.height);
     
     [self.searchBar addSubview:self.searchIconImageView];
-    
     [self reloadSearchBar];
 }
 
@@ -349,9 +357,9 @@
 }
 
 - (void)reloadSearchBar {
-    self.searchBarBackground.frame = CGRectMake(self.view.bounds.origin.x,
-                                                self.view.bounds.origin.y,
-                                                self.view.bounds.size.width,
+    self.searchBarBackground.frame = CGRectMake(self.viewBounds.origin.x,
+                                                self.viewBounds.origin.y - kSearchViewBarHeight,
+                                                self.viewBounds.size.width,
                                                 kSearchViewBarHeight);
     CGFloat horizontalMargin = 3.0f; //adjustment to native searchbar margin
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
@@ -367,16 +375,8 @@
                                                 self.searchIconImageView.frame.size.width,
                                                 self.searchIconImageView.frame.size.height);
     
-    UITextField *textFieldSearch = [self.searchBar valueForKey:@"_searchField"];
-    textFieldSearch.textAlignment = NSTextAlignmentLeft;
-    
-    if(RI_IS_RTL){
-        
-        [textFieldSearch flipViewAlignment];
-        [self.searchIconImageView flipViewPositionInsideSuperview];
-        [self.searchBar setPositionAdjustment:UIOffsetMake(-self.searchBar.frame.size.width + 48.0f, 0) forSearchBarIcon:UISearchBarIconClear];
-        [self.searchBar setSearchTextPositionAdjustment:UIOffsetMake(24.0f, 0)];
-    }
+    [self.searchBar setSearchBarStyle:UISearchBarStyleDefault];
+    [self.searchBar setBackgroundImage:[[UIImage alloc]init]];
 }
 
 #pragma mark Search Bar && Search Results View Delegate
@@ -387,8 +387,7 @@
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
 }
 
-- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar;
-{
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
     [[MainTabBarViewController topNavigationController] showSearchView];
     return NO;
 }
@@ -770,6 +769,21 @@
 
 - (NSString *)getScreenName {
     return nil;
+}
+
+#pragma mark - NavigationBarProtocol
+- (void)searchIconButtonTapped {
+    [[MainTabBarViewController topNavigationController] showSearchView];
+}
+
+- (void)cartIconButtonTapped {
+    [MainTabBarViewController showCart];
+}
+
+- (void)updateCartInNavBar {
+    if (self.navBarleftButton == NavBarLeftButtonTypeCart) {
+        self.navigationItem.rightBarButtonItem.badgeValue = [NSString stringWithFormat:@"%lu", (unsigned long)[[RICart sharedInstance].cartEntity.cartCount integerValue]];
+    }
 }
 
 @end

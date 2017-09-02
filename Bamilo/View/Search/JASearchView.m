@@ -41,20 +41,9 @@
 - (instancetype)initWithFrame:(CGRect)frame andText:(NSString *)text {
     self = [super initWithFrame:frame];
     if (self) {
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(keyboardWillShow:)
-                                                     name:UIKeyboardWillShowNotification
-                                                   object:nil];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(keyboardWillHide:)
-                                                     name:UIKeyboardWillHideNotification
-                                                   object:nil];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(updateCountry:)
-                                                     name:kUpdateCountryNotification
-                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCountry:) name:kUpdateCountryNotification object:nil];
         
         self.backView = [[UIView alloc] initWithFrame:CGRectMake(self.bounds.origin.x,
                                                                  self.bounds.origin.y + 20.0f,
@@ -63,47 +52,34 @@
         self.backView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.0f];
         [self addSubview:self.backView];
         
-        self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0.0f,
-                                                                       0.0f - 64.0f,
-                                                                       frame.size.width,
-                                                                       44.0f)];
-        CGRect finalFrame = CGRectMake(0.0f,
-                                       20.0f,
-                                       frame.size.width,
-                                       44.0f);
+        self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0.0f, 0.0f - 64.0f, frame.size.width, 44.0f)];
+        CGRect finalFrame = CGRectMake(0.0f, 20.0f, frame.size.width, 44.0f);
         self.searchBar.delegate = self;
-        self.searchBar.barTintColor = JABlack300Color;
         self.searchBar.placeholder = STRING_SEARCH;
         [self.searchBar setValue:STRING_CANCEL forKey:@"_cancelButtonText"];
         self.searchBar.showsCancelButton = YES;
         [self.searchBar setSearchBarStyle:UISearchBarStyleDefault];
+        self.searchBar.barTintColor = [Theme color:kColorExtraDarkBlue];
         
-        self.searchBar.layer.borderWidth = 1;
-        self.searchBar.layer.borderColor = [JABlack300Color CGColor];
-                
         UITextField *textFieldSearch = [self.searchBar valueForKey:@"_searchField"];
         textFieldSearch.font = [UIFont fontWithName:kFontRegularName size:textFieldSearch.font.pointSize];
         textFieldSearch.backgroundColor = JAWhiteColor;
         textFieldSearch.textAlignment = NSTextAlignmentRight;
         
+        UIImage *searchIcon = [UIImage imageNamed:@"searchIcon"];
+        UIImageView *searchIconImageView = [[UIImageView alloc] initWithImage:searchIcon];
+        [textFieldSearch setLeftView:searchIconImageView];
         
+
         [self addSubview:self.searchBar];
-        
         [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                                                      JASysBlueColor,
+                                                                                                      [UIColor whiteColor],
                                                                                                       NSForegroundColorAttributeName,
                                                                                                       JABodyFont,
                                                                                                       NSFontAttributeName,
                                                                                                       nil]
-                                                                                            forState:UIControlStateNormal];
+                                                                                            forState: UIControlStateNormal];
 
-        
-        self.separatorView = [[UIView alloc] initWithFrame:CGRectMake(self.searchBar.frame.origin.x,
-                                                                      44.0f,
-                                                                      self.searchBar.frame.size.width,
-                                                                      1.0f)];
-        self.separatorView.backgroundColor = JABlack400Color;
-        [self.separatorView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
         [self.backView addSubview:self.separatorView];
         
         
@@ -138,16 +114,8 @@
 - (void)resetFrame:(CGRect)frame {
     
     self.frame = frame;
-    self.backView.frame = CGRectMake(self.bounds.origin.x,
-                                     self.bounds.origin.y + 20.0f,
-                                     self.bounds.size.width,
-                                     self.bounds.size.height - 20.0f);
-    
-    self.searchBar.frame = CGRectMake(0.0f,
-                                      20.0f,
-                                      frame.size.width,
-                                      44.0f);
-    
+    self.backView.frame = CGRectMake(self.bounds.origin.x, self.bounds.origin.y + 20.0f, self.bounds.size.width, self.bounds.size.height - 20.0f);
+    self.searchBar.frame = CGRectMake(0.0f, 20.0f, frame.size.width, 44.0f);
     self.resultsTableView.frame = CGRectMake(0.0f,
                                              CGRectGetMaxY(self.searchBar.frame) + self.separatorView.frame.size.height,
                                              self.frame.size.width,
@@ -205,6 +173,7 @@
     if (_newSearch) {
         [RISearchSuggestion saveSearchSuggestionOnDB:suggestion isRecentSearch:YES andContext:YES];
     }
+    self.searchBar.text = @"";
     [[MainTabBarViewController topNavigationController] openTargetString:suggestion.targetString];
     [self setHidden:YES];
 }

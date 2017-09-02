@@ -12,7 +12,7 @@
 
 NSString *const kErrorMessages = @"errorMessages";
 NSString *const kMessage = @"message";
-
 NSString *const kCart = @"cart";
+NSString *const kAnimation = @"animation";
 
 @end

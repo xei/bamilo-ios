@@ -64,10 +64,7 @@
 
 -(UIView *)emptyListView {
     if (!VALID_NOTEMPTY(_emptyListView, UIView)) {
-        _emptyListView = [[UIView alloc]initWithFrame:CGRectMake(self.viewBounds.origin.x,
-                                                                 self.viewBounds.origin.y,
-                                                                 self.viewBounds.size.width,
-                                                                 self.viewBounds.size.height)];
+        _emptyListView = [[UIView alloc]initWithFrame:[self viewBounds]];
         [_emptyListView setBackgroundColor:[UIColor whiteColor]];
         [_emptyListView addSubview:self.emptyTitleLabel];
         [_emptyListView addSubview:self.emptyListImageView];
@@ -134,7 +131,7 @@
 }
 
 - (UICollectionView *)collectionView {
-    CGRect frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.viewBounds.size.height - self.bottomView.height-self.clearAllButton.height);
+    CGRect frame = self.viewBounds;
     if (!VALID_NOTEMPTY(_collectionView, UICollectionView)) {
         _collectionView = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:self.flowLayout];
         _collectionView.delegate = self;
@@ -153,7 +150,7 @@
 
 - (UIView *)bottomView {
     if (!VALID(_bottomView, UIView)) {
-        _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.viewBounds.size.height - 49.f, self.viewBounds.size.width, 1.f)];
+        _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.viewBounds.size.height , self.viewBounds.size.width, 1.f)];
         [_bottomView setBackgroundColor:JABlack700Color];
         [self.view addSubview:_bottomView];
     }
@@ -176,9 +173,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.collectionView setBackgroundColor:[UIColor whiteColor]];
-    self.navBarLayout.showBackButton = YES;
     [self.collectionView registerClass:[JARecentlyViewedCell class] forCellWithReuseIdentifier:@"CellWithLines"];
-    self.navBarLayout.title = STRING_RECENTLY_VIEWED_TITLE;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -578,6 +573,11 @@
         default:
             break;
     }
+}
+
+#pragma mark - NavigationBarProtocol
+- (NSString *)navBarTitleString {
+    return STRING_RECENTLY_VIEWED_TITLE;
 }
 
 @end

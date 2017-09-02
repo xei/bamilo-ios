@@ -29,6 +29,7 @@
 
 #import <Masonry/Masonry.h>
 #import <RGB/RRGB.h>
+#import "UIBarButtonItem+Badge.h"
 
 #import "DataManager.h"
 #import "OrderList.h"
@@ -37,6 +38,7 @@
 #import "AuthenticationDataManager.h"
 #import "EmarsysPredictProtocol.h"
 #import "EmarsysPredictManager.h"
+#import "InputTextFieldControl.h"
 
 #import "BaseControlView.h"
 #import "BaseViewControl.h"

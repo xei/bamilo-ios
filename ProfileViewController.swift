@@ -50,8 +50,6 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         
         self.updateTableViewDataSource()
         self.tableView.reloadData()
-        
-        //TODO: these codes must be removed when tab bar is ok and there is no need for JABaseViewController
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -64,19 +62,7 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         self.viewWillApearedOnceOrMore = true
     }
     
-    override func updateNavBar() {
-        super.updateNavBar()
-
-        self.navBarLayout.showSearchButton = false
-        self.navBarLayout.showBackButton = false
-        self.navBarLayout.showCartButton = false
-        self.navBarLayout.showDoneButton = false
-        self.navBarLayout.showLogo = false
-        self.navBarLayout.title = STRING_PROFILE
-    }
-    
     func updateTableViewDataSource() {
-        
         self.tableViewDataSource = [
             [ProfileViewDataModel(cellType: .profileUserTableViewCell, title: nil, iconName: nil, notificationName: nil, selector: #selector(showLogin))],
             [ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_ORDER_HISTORY, iconName: "order-tracking-profile", notificationName: "NOTIFICATION_SHOW_MY_ORDERS_SCREEN", selector: nil)],
@@ -166,7 +152,7 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
     //MARK: - helper functions
     func showLogin() {
         if !RICustomer.checkIfUserIsLogged() {
-            NotificationCenter.default.post(name: NSNotification.Name("NOTIFICATION_SHOW_AUTHENTICATION_SCREEN"), object: nil, userInfo: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.ShowAthenticationScreen), object: nil, userInfo: nil)
         }
     }
     
@@ -202,14 +188,19 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
                 selector: EventSelectors.logoutEventSelector(),
                 attributes: EventAttributes.logout(success: true)
             )
+            
+            //Reset some actions
             EmarsysPredictManager.userLoggedOut()
+            RICustomer.cleanFromDB()
+            RICart.sharedInstance().cartEntity.cartItems = [];
+            RICart.sharedInstance().cartEntity.cartCount = nil;
+            UserDefaults.standard.removeObject(forKey: "SelectedAreaByUser")
         }
-        
-        NotificationCenter.default.post(name: NSNotification.Name("NOTIFICATION_USER_LOGGED_OUT"), object: nil, userInfo: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.UserLoggedOut), object: nil, userInfo: nil)
     }
     
     func showFAQ() {
-        NotificationCenter.default.post(name: NSNotification.Name("NOTIFICATION_DID_SELECT_TEASER_WITH_SHOP_URL"), object: nil, userInfo: ["title": STRING_GUID, "targetString": "shop_in_shop::help-ios", "show_back_button_title": ""])
+        NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.SelectTeaserWithShopURL), object: nil, userInfo: ["title": STRING_GUID, "targetString": "shop_in_shop::help-ios", "show_back_button_title": ""])
     }
     
     func sendIdeaOrReport() {
@@ -241,7 +232,7 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
     
     func sendEmail(subject: String?, recipient: String) {
         if !MFMailComposeViewController.canSendMail() {
-            print("Mail services are not available")
+            AlertManager.sharedInstance().simpleAlert(STRING_ERROR, text: STRING_ERROR_SUPPORTING_EMAIL, confirm: STRING_OK)
             return
         } else {
             var messageBody = "\n\(STRING_DONT_REMOVE_INFO_EMAIL)\n\n"
@@ -269,7 +260,7 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
     func bind(_ data: Any!, forRequestId rid: Int32) {
         
         //TODO: handle these legacy code with another way (when tab bar is ready)
-        NotificationCenter.default.post(name: NSNotification.Name("NOTIFICATION_UPDATE_CART"), object: nil, userInfo: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.UpdateCart), object: nil, userInfo: nil)
         MainTabBarViewController.activateTabItem(rootViewClassType: JAHomeViewController.self)
         
         RICommunicationWrapper.deleteSessionCookie()
@@ -279,5 +270,10 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
     //MARK: - DataTrackerProtocol
     override func getScreenName() -> String! {
         return "ProfileView"
+    }
+    
+    //MARK: - NavigationBarProtocol
+    override func navBarTitleString() -> String! {
+        return STRING_PROFILE
     }
 }

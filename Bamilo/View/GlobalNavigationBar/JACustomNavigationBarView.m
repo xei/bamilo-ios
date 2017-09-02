@@ -91,7 +91,7 @@
 
 - (UIImageView *)logoImageView {
     if (!_logoImageView) {
-        _logoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"img_navbar_logo"]];
+        _logoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"img_navBar_logo"]];
         [_logoImageView setFrame:CGRectMake(119, 12, 83, 20)];
     }
     return _logoImageView;

@@ -22,7 +22,7 @@ class OrderDataManager: DataManagerSwift {
     }
     
     func getOrder(_ target: DataServiceProtocol, orderId: String, completion:@escaping DataClosure) {
-        OrderDataManager.requestManager.async(.post, target: target, path: "\(RI_API_TRACK_ORDER)\(orderId)", params: nil, type: .foreground) { (responseType, data, errorMessages) in
+        OrderDataManager.requestManager.async(.post, target: target, path: "\(RI_API_TRACK_ORDER)", params: ["ordernr" :orderId], type: .foreground) { (responseType, data, errorMessages) in
             self.processResponse(responseType, aClass: Order.self, data: data, errorMessages: errorMessages, completion: completion)
         }
     }

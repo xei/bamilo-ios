@@ -24,6 +24,7 @@
 @property (copy  , nonatomic) NSString *onlyProductsDiscountFormated;
 @property (strong, nonatomic) NSNumber *cartValue;
 @property (copy  , nonatomic) NSString *cartValueFormatted;
+@property (strong, nonatomic) NSNumber *discountValue;
 @property (copy  , nonatomic) NSString *discountValueFormated;
 @property (strong, nonatomic) NSNumber *cartValueEuroConverted;
 @property (strong, nonatomic) NSNumber *shippingValue;

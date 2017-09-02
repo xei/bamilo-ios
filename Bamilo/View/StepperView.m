@@ -21,7 +21,8 @@
     [super awakeFromNib];
     
     self.label.text = @"۰";
-    [self.label setTextColor:[Theme color:kColorBlue]];
+    [self.label setFont:[Theme font:kFontVariationRegular size:11]];
+    [self.label setTextColor:[Theme color:kColorPrimaryGray1]];
 }
 
 - (IBAction)IncrementBtnTapped:(id)sender {
@@ -71,8 +72,8 @@
 }
 
 - (void)resetBtnsColor {
-    [self.minusBtn setTitleColor:[Theme color:kColorBlue] forState:UIControlStateNormal];
-    [self.plusBtn setTitleColor:[Theme color:kColorBlue] forState:UIControlStateNormal];
+    [self.minusBtn setTitleColor:[Theme color:kColorPrimaryGray1] forState:UIControlStateNormal];
+    [self.plusBtn setTitleColor:[Theme color:kColorPrimaryGray1] forState:UIControlStateNormal];
     
     if (self.quantity == self.maxQuantity) {
         [self.plusBtn setTitleColor:[Theme color:kColorExtraLightGray] forState:UIControlStateNormal];

@@ -22,6 +22,18 @@ static AlertManager *instance;
     return instance;
 }
 
+
+- (void)simpleAlert:(NSString *)title text:(NSString *)body confirm: (NSString *)confirm {
+    BMLAlertView *alertView = [[BMLAlertView alloc] initWithStyle:ConfirmAlert width:0.8];
+    alertView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+    [self configure:alertView];
+    
+    alertView.headerTitleLabel.text = title;
+    alertView.contentTextLabel.text = body;
+    [alertView.confirmButton setTitle:confirm forState:UIControlStateNormal];
+}
+
+
 -(void) confirmAlert:(NSString *)title text:(NSString *)text confirm:(NSString *)confirm cancel:(NSString *)cancel completion:(AlertCompletion)completion {
     BMLAlertView *alertView = [[BMLAlertView alloc] initWithStyle:CancelAndConfirmAlert width:0.8];
     alertView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];

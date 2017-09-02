@@ -21,15 +21,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.view.backgroundColor = [UIColor whiteColor];
     
     self.formController = [[FormViewControl alloc] init];
     self.formController.delegate = self;
     self.formController.tableView = self.tableView;
-    
     self.topSeperatorView.backgroundColor = [Theme color:kColorLightGray];
-    
+
     FormItemModel *email = [FormItemModel emailWithFieldName:@"forgot_password[email]"];
     email.icon = [UIImage imageNamed:@"Email"];
     
@@ -43,24 +41,13 @@
     
     self.descLabel.text = STRING_ENTER_YOUR_EMAIL_ADDRESS;
 }
-
 - (void)viewDidAppear:(BOOL)animated {
     [self.formController registerForKeyboardNotifications];
     
     [self publishScreenLoadTime];
 }
-
 - (void)viewDidDisappear:(BOOL)animated {
     [self.formController unregisterForKeyboardNotifications];
-}
-
-#pragma mark - Overrides
--(void)updateNavBar {
-    [super updateNavBar];
-    self.navBarLayout.title = @"بازیابی کلمه عبور";
-    self.navBarLayout.showBackButton = YES;
-    self.navBarLayout.showLogo = NO;
-    self.navBarLayout.showCartButton = NO;
 }
 
 #pragma mark - FormControlDelegate
@@ -69,7 +56,6 @@
         [self.formController showAnyErrorInForm];
         return;
     }
-    
     [DataAggregator forgetPassword:self with:[self.formController getMutableDictionaryOfForm] completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
@@ -87,13 +73,18 @@
 #pragma mark - DataServiceProtocol
 - (void)bind:(id)data forRequestId:(int)rid {
     [self showNotificationBarMessage:STRING_EMAIL_SENT isSuccess:YES];
-    
-    [self.navigationController popViewControllerAnimated:YES];
+//    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - DataTrackerProtocol
 -(NSString *)getScreenName {
     return @"ForgetPassword";
+}
+
+#pragma mark - NavigationBarProtocol
+
+- (NSString *)navBarTitleString {
+    return STRING_FORGET_PASS;
 }
 
 @end

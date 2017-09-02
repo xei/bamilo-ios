@@ -288,8 +288,6 @@
 
 "checkout_header_step_3" = "۳- ارسال";
 
-"string_city" = "شهر:";
-
 "string_address" = "نشانی";
 
 "string_opening_hours" = "ساعت های کاری:";
@@ -666,7 +664,7 @@
 
 "see_other_variations" = "مشاهده تنوع محصول";
 
-"seller_information" = "مشخصات فروشنده";
+"seller_and_deliveryTime_information" = "فروشنده و زمان تحویل";
 
 "other_sellers_starting_from" = "قیمت دیگر فروشندگان از: %@";
 
@@ -863,4 +861,42 @@
 
 "send_email_to_CS" = "ایمیل به خدمات مشتریان";
 
+"searching" = "در حال جستجو";
+
+"Loading" = "در حال بارگذاری";
+
+"forget_pass" = "بازیابی کلمه عبور";
+
 "zero_cost" = "۰ ریال";
+
+"postal_code" = "کد پستی";
+
+"tehran" = "تهران";
+
+"minicity" = "شهرستان";
+
+"seller" = "فروشنده";
+
+"city" = "شهر";
+
+"neighbourhood" = "محله";
+
+"province" = "استان";
+
+"founded_product_count" = "کالا یافت شد";
+
+"optional" = "اختیاری";
+
+"email" = "ایمیل";
+
+"cellphone" = "تلفن همراه";
+
+"last_name" = "نام خانوادگی";
+
+"in_persian" = "به فارسی";
+
+"seller_information" = "فروشنده و زمان تحویل";
+
+"error_email_support" = "آدرس ایمیلی در سیستم شما ذخیره نشده است";
+
+"estimated_time" = "زمان حدودی";

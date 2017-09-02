@@ -36,44 +36,31 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     [self fetchAddressList];
-}
-
-#pragma mark - Overrides
-- (void)updateNavBar {
-    [super updateNavBar];
-    
-    self.navBarLayout.title = STRING_MY_ADDRESSES;
-    self.navBarLayout.showBackButton = YES;
 }
 
 #pragma mark - AddressTableViewControllerDelegate
 - (BOOL)addressSelected:(Address *)address {
-    
-    //TODO: this action has been ignored for now, because of endpoint issues (sed default address endpoint)
-    return NO;
     if(_currentAddress.uid == address.uid) {
         return NO;
     }
-    _currentAddress = address;
     [[AlertManager sharedInstance] confirmAlert:@"تغییر آدرس" text:@"از تغییر آدرس پیش فرض خود اطمینان دارید؟" confirm:@"بله" cancel:@"خیر" completion:^(BOOL OK) {
         if(OK) {
-            [DataAggregator setDefaultAddress:self address:address isBilling:NO completion:^(id _Nullable data , NSError * _Nullable error) {
+            [DataAggregator setDefaultAddress:self address:address isBilling:NO type: RequestExecutionTypeForeground completion:^(id _Nullable data , NSError * _Nullable error) {
                 if(error == nil) {
                     [self bind:data[kDataContent] forRequestId:1];
                     [_addressTableViewController scrollToTop];
                 }
+                _currentAddress = address;
             }];
         }
     }];
-    
     return YES;
 }
 
 -(void)addressEditButtonTapped:(id)sender {
     _currentAddress = (Address *)sender;
-    [self performSegueWithIdentifier:@"pushAddressListToAddressEdit" sender:nil];
+    [self performSegueWithIdentifier:@"showCreateEditAddress" sender:nil];
 }
 
 -(void)addressDeleteButtonTapped:(id)sender {
@@ -96,13 +83,13 @@
 
 - (void)addAddressTapped {
     _currentAddress = nil;
-    
-    [self performSegueWithIdentifier:@"pushAddressListToAddressEdit" sender:nil];
+    [self performSegueWithIdentifier:@"showCreateEditAddress" sender:nil];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([segue.identifier isEqualToString:@"pushAddressListToAddressEdit"]) {
-        AddressEditViewController *addressEditViewController = (AddressEditViewController *)segue.destinationViewController;
+    if([segue.identifier isEqualToString:@"showCreateEditAddress"]) {
+        UINavigationController *navController = (UINavigationController *)segue.destinationViewController;
+        AddressEditViewController *addressEditViewController = navController.viewControllers.firstObject;
         if(_currentAddress) {
             addressEditViewController.address = _currentAddress;
         }
@@ -116,6 +103,9 @@
             [self bind:data forRequestId:0];
             [self publishScreenLoadTime];
         } else if ([data isKindOfClass:ApiResponseData.class]) {
+            if (((ApiResponseData *)data).messages.errors.count == 0) {
+                
+            }
             //TODO: we can show error messages
         }
     }];
@@ -127,6 +117,10 @@
         case 0:
         case 1: {
             AddressList *addressList = (AddressList *)data;
+            NSArray *addresses = [AddressTableViewController bindAddresses:addressList];
+            if (!addresses.count) {
+                [self addAddressTapped];
+            }
             [_addressTableViewController updateWithModel:[AddressTableViewController bindAddresses:addressList]];
         }
         break;
@@ -140,6 +134,12 @@
 
 -(NSString *)getPerformanceTrackerLabel {
     return [RICustomer getCustomerId];
+}
+
+
+#pragma mark - NavigationBarProtocol
+- (NSString *)navBarTitleString {
+    return STRING_MY_ADDRESSES;
 }
 
 @end

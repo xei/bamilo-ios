@@ -21,11 +21,6 @@
     self.backgroundColor = [UIColor whiteColor];
     
     //Initial Setup
-    [self.switcherView setBackgroundColor:[Theme color:kColorDarkGray]];
-    [self.switcherView setTintColor:[Theme color:kColorDarkGray]];
-    self.switcherView.layer.cornerRadius = 16.0;
-    [self.switcherView setOnTintColor:[Theme color:kColorGreen]];
-    
     [self.descriptionLabel applyStyle:[Theme font:kFontVariationRegular size:12] color:[Theme color:kColorDarkGray]];
     self.descriptionLabel.text = STRING_COUPON;
 }

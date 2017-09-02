@@ -43,8 +43,7 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    //Header And Footer Cells
-    [self.tableView registerNib:[UINib nibWithNibName:[PaymentTypeTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[PaymentTypeTableViewCell nibName]];
+    [self.tableView registerNib:[UINib nibWithNibName:[PlainTableViewHeaderCell nibName] bundle:nil]  forHeaderFooterViewReuseIdentifier:[PlainTableViewHeaderCell nibName]];
     
     //PaymentTypeTableViewCell
     [self.tableView registerNib:[UINib nibWithNibName:[PaymentTypeTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[PaymentTypeTableViewCell nibName]];
@@ -87,17 +86,12 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
 }
 
 #pragma mark - Overrides
--(NSString *)getTitleForContinueButton {
+- (NSString *)getTitleForContinueButton {
     return STRING_CONFIRM_AND_PAY;
 }
 
--(NSString *)getNextStepViewControllerSegueIdentifier:(NSString *)serviceIdentifier {
+- (NSString *)getNextStepViewControllerSegueIdentifier:(NSString *)serviceIdentifier {
     return nil;
-}
-
--(void)updateNavBar {
-    [super updateNavBar];
-    self.navBarLayout.title = STRING_PAYMENT_OPTION;
 }
 
 -(void)performPreDepartureAction:(CheckoutActionCompletion)completion {
@@ -107,21 +101,21 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
                 [self bind:data forRequestId:1];
                 
                 NSDictionary *userInfo = @{ kCart : self.cart };
-                
+    
                 if(self.cart.paymentInformation.type == RIPaymentInformationCheckoutEnded) {
+                    [self setHidesBottomBarWhenPushed:NO];
                     [self performSegueWithIdentifier:NSStringFromClass([SuccessPaymentViewController class]) sender:nil];
+                    [self setHidesBottomBarWhenPushed:YES];
                 } else {
                     [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutExternalPaymentsScreenNotification object:nil userInfo:userInfo];
                 }
-                
+
                 completion(_multistepEntity.nextStep, YES);
             } else {
                 [self showNotificationBar:error isSuccess:NO];
                 
                 //EVENT : PURCHASE
-                [TrackerManager postEventWithSelector:[EventSelectors purchaseSelector]
-                                           attributes:[EventAttributes purchaseWithCart:self.cart success:YES]];
-                
+                [TrackerManager postEventWithSelector:[EventSelectors purchaseSelector] attributes:[EventAttributes purchaseWithCart:self.cart success:YES]];
                 completion(nil, NO);
             }
         }];
@@ -194,7 +188,7 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     switch (section) {
         case 0: {
-            PlainTableViewHeaderCell *plainTableViewHeaderCell = [self.tableView dequeueReusableCellWithIdentifier:[PlainTableViewHeaderCell nibName]];
+            PlainTableViewHeaderCell *plainTableViewHeaderCell = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:[PlainTableViewHeaderCell nibName]];
             plainTableViewHeaderCell.titleString = STRING_PAYMENT_OPTION;
             return plainTableViewHeaderCell;
         }
@@ -313,5 +307,11 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
         }];
     }
 }
+
+#pragma mark - NavigationBarProtocol
+- (NSString *)navBarTitleString {
+    return STRING_PAYMENT_OPTION;
+}
+
 
 @end

@@ -55,7 +55,7 @@
                     <constraint firstItem="ZS0-ls-IYH" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Vhj-W7-FDh"/>
                     <constraint firstAttribute="right" secondItem="ZS0-ls-IYH" secondAttribute="right" constant="15" id="W7y-CM-ecz"/>
                     <constraint firstItem="IBm-Hp-UUv" firstAttribute="centerY" secondItem="ZS0-ls-IYH" secondAttribute="centerY" id="i3O-Yk-kVa"/>
-                    <constraint firstItem="ZS0-ls-IYH" firstAttribute="leading" secondItem="IBm-Hp-UUv" secondAttribute="trailing" constant="15" id="vCi-oz-XRY"/>
+                    <constraint firstItem="ZS0-ls-IYH" firstAttribute="left" secondItem="IBm-Hp-UUv" secondAttribute="right" constant="15" id="vCi-oz-XRY"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

@@ -14,7 +14,6 @@
 #import "RICartItem.h"
 #import "CartTableViewCell.h"
 #import "RecieptViewCartTableViewCell.h"
-#import "JAAuthenticationViewController.h"
 #import "NSString+Extensions.h"
 #import "RIAddress.h"
 #import "ViewControllerManager.h"
@@ -24,6 +23,7 @@
 #import "EmarsysPredictManager.h"
 #import "LoadingManager.h"
 #import "Bamilo-Swift.h"
+#import "OrangeButton.h"
 
 
 @interface CartViewController() <CartTableViewCellDelegate>
@@ -37,6 +37,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *costSummeryContainerTopToWholeCostTopConstraint;
 @property (weak, nonatomic) IBOutlet CartEntitySummaryViewControl *summeryView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *summeryViewToBottomConstraint;
+@property (weak, nonatomic) IBOutlet OrangeButton *submitButton;
 @property (weak, nonatomic) EmptyViewController *emptyCartViewController;
 @property (weak, nonatomic) IBOutlet UIView *emptyCartViewContainer;
 @end
@@ -65,10 +66,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.navBarLayout.title = STRING_CART;
-    self.navBarLayout.showBackButton = NO;
-    self.navBarLayout.showCartButton = NO;
     [self.view setBackgroundColor:[Theme color:kColorVeryLightGray]];
     [self.tableView setBackgroundColor:[Theme color:kColorVeryLightGray]];
     
@@ -146,17 +143,12 @@
         NSMutableDictionary *tracking = [NSMutableDictionary new];
         [tracking setValue:cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
         [tracking setValue:cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
-                                                  data:[tracking copy]];
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart] data:[tracking copy]];
         
         NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
         [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
-        
-    
         [LoadingManager hideLoading];
-        
         self.cart = cart;
-        
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];
         });
@@ -174,7 +166,6 @@
         [receiptView updateWithModel:self.cart.cartEntity];
         return receiptView;
     }
-    
     CartTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:[CartTableViewCell nibName] forIndexPath:indexPath];
     cell.cartItem = self.cart.cartEntity.cartItems[indexPath.row];
     cell.delegate = self;
@@ -216,7 +207,6 @@
 }
 
 #pragma CartTableViewCell Delegate
-
 - (void)quantityWillChangeTo:(int)newValue withCell:(id)cartCell {
     [LoadingManager showLoading];
 }
@@ -246,7 +236,6 @@
 }
 
 #pragma mark - CartTableViewCellDelegate
-
 - (void)wantsToLikeCartItem:(RICartItem *)cartItem byCell:(id)cartCell {
 }
 
@@ -378,6 +367,12 @@
 
 - (void)didLoggedOut {
     self.cart = nil;
+}
+
+#pragma mark - navigationBarProtocol
+
+- (NSString *)navBarTitleString {
+    return STRING_CART;
 }
 
 @end

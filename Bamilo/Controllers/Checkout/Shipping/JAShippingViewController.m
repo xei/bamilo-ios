@@ -80,9 +80,9 @@ UITableViewDelegate
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutShipping]
                                               data:[trackingDictionary copy]];
     
-    self.navBarLayout.title = STRING_CHECKOUT;
-    self.navBarLayout.showBackButton = YES;
-    self.navBarLayout.showCartButton = NO;
+    self.title = STRING_CHECKOUT;
+//    self.navBarLayout.showBackButton = YES;
+//    self.navBarLayout.showCartButton = NO;
     
     self.view.backgroundColor = JAWhiteColor;
     

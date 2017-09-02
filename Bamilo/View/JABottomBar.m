@@ -41,7 +41,7 @@
 
 - (void)reloadFrame:(CGRect)frame
 {
-    [self setBackgroundColor:JABlackColor];
+    [self setBackgroundColor:[Theme color:kColorExtraDarkBlue]];
     CGFloat xOffset = 0;
     for (UIButton *smallButton in self.smallButtonsArray) {
         [smallButton setFrame:CGRectMake(xOffset, 0, kSmallButtonWidth, self.height)];
@@ -56,10 +56,10 @@
     }
 }
 
-- (JAButton *)addButton:(NSString *)name target:(id)target action:(SEL)action
-{
+- (JAButton *)addButton:(NSString *)name target:(id)target action:(SEL)action {
     JAButton *button = [[JAButton alloc] initButtonWithTitle:name target:target action:action];
     [self addSubview:button];
+    [button setBackgroundColor:[Theme color:kColorDarkGreen]];
     [self.buttonsArray addObject:button];
     [self reloadFrame:self.frame];
     return button;

@@ -14,14 +14,15 @@ import UIKit
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.setRTL()
+        
         self.tabBar.isTranslucent = false
         self.delegate = self
         
         MainTabBarViewController.activateTabItem(rootViewClassType: JAHomeViewController.self)
         
-        self.tabBar.tintColor = Theme.color(kColorOrange)
-        UITabBarItem.appearance().setTitleTextAttributes([NSFontAttributeName: Theme.font(kFontVariationRegular, size: 9), NSForegroundColorAttributeName: Theme.color(kColorOrange)], for: .selected)
+        self.tabBar.tintColor = Theme.color(kColorExtraDarkBlue)
+        UITabBarItem.appearance().setTitleTextAttributes([NSFontAttributeName: Theme.font(kFontVariationRegular, size: 9), NSForegroundColorAttributeName: Theme.color(kColorExtraDarkBlue)], for: .selected)
         UITabBarItem.appearance().setTitleTextAttributes([NSFontAttributeName: Theme.font(kFontVariationRegular, size: 8), NSForegroundColorAttributeName: Theme.color(kColorExtraDarkGray)], for: UIControlState())
         
         self.tabBar.layer.borderWidth = 0.50
@@ -33,11 +34,11 @@ import UIKit
 
         if #available(iOS 10.0, *) {
             self.tabBar.items?.first?.setBadgeTextAttributes(attributes, for: .normal)
-            self.tabBar.items?.first?.badgeColor = Theme.color(kColorOrange)
+            UITabBarItem.appearance().badgeColor = Theme.color(kColorOrange)
         } else {}
         
         self.updateUserSessionAndCart()
-        NotificationCenter.default.addObserver(self, selector: #selector(updateUserSessionAndCart), name: NSNotification.Name("appDidEnterForeground"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateUserSessionAndCart), name: NSNotification.Name(NotificationKeys.EnterForground), object: nil)
     }
     
     func updateUserSessionAndCart() {
@@ -56,6 +57,15 @@ import UIKit
     
     static func sharedInstance() -> MainTabBarViewController? {
         return UIApplication.shared.delegate?.window??.rootViewController as? MainTabBarViewController
+    }
+    
+    private func setRTL() {
+        if #available(iOS 9.0, *) {
+            UIView.appearance().semanticContentAttribute = .forceRightToLeft
+            UINavigationBar.appearance().semanticContentAttribute = .forceRightToLeft
+        } else {
+            // Fallback on earlier versions
+        }
     }
     
     //MARk: - UITabBarControllerDelegate
@@ -109,7 +119,7 @@ import UIKit
     }
     
     static func updateCartValue(cartItemsCount: Int) {
-        MainTabBarViewController.sharedInstance()?.tabBar.items?.first?.badgeValue = cartItemsCount == 0 ? nil : "\(cartItemsCount)".convertTo(language: .arabic)
+        MainTabBarViewController.sharedInstance()?.tabBar.items?.last?.badgeValue = cartItemsCount == 0 ? nil : "\(cartItemsCount)" //.convertTo(language: .arabic)
     }
     
     
@@ -134,7 +144,7 @@ import UIKit
     //MARK: - DataServiceProtocol 
     func bind(_ data: Any!, forRequestId rid: Int32) {
         if let cart = data as? RICart {
-            NotificationCenter.default.post(name: NSNotification.Name("NOTIFICATION_UPDATE_CART"), object: nil, userInfo: ["NOTIFICATION_UPDATE_CART_VALUE" : cart])
+            NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.UpdateCart), object: nil, userInfo: ["NOTIFICATION_UPDATE_CART_VALUE" : cart])
         }
     }
 }

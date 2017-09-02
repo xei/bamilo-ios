@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="333" height="102"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="333" height="101"/>
+                <rect key="frame" x="0.0" y="0.0" width="333" height="101.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3bm-Fz-2Y6">
@@ -47,10 +47,10 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="LdG-da-kzY" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="AkP-j2-qwL"/>
-                    <constraint firstItem="99H-Uc-yUU" firstAttribute="leading" secondItem="RuV-cn-oil" secondAttribute="leading" id="KNt-jq-CUV"/>
+                    <constraint firstItem="99H-Uc-yUU" firstAttribute="left" secondItem="RuV-cn-oil" secondAttribute="left" id="KNt-jq-CUV"/>
                     <constraint firstItem="99H-Uc-yUU" firstAttribute="centerY" secondItem="3bm-Fz-2Y6" secondAttribute="centerY" constant="8" id="KvT-4f-yf0"/>
-                    <constraint firstAttribute="trailing" secondItem="LdG-da-kzY" secondAttribute="trailing" constant="16" id="PS2-Sr-C6X"/>
-                    <constraint firstItem="RuV-cn-oil" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="QxU-t1-DAQ"/>
+                    <constraint firstAttribute="right" secondItem="LdG-da-kzY" secondAttribute="right" constant="16" id="PS2-Sr-C6X"/>
+                    <constraint firstItem="RuV-cn-oil" firstAttribute="left" secondItem="H2p-sc-9uM" secondAttribute="left" constant="16" id="QxU-t1-DAQ"/>
                     <constraint firstItem="3bm-Fz-2Y6" firstAttribute="centerY" secondItem="LdG-da-kzY" secondAttribute="centerY" id="VsR-0K-2Id"/>
                     <constraint firstItem="3bm-Fz-2Y6" firstAttribute="centerY" secondItem="RuV-cn-oil" secondAttribute="centerY" constant="8" id="b8l-Cj-CdF"/>
                     <constraint firstItem="LdG-da-kzY" firstAttribute="left" secondItem="3bm-Fz-2Y6" secondAttribute="right" constant="8" id="uHF-Qp-d0D"/>

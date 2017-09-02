@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="3BH-rN-hyO">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="3BH-rN-hyO">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -92,17 +92,17 @@
                             <constraint firstItem="A6b-Ry-wvy" firstAttribute="top" secondItem="gPW-dc-MAH" secondAttribute="bottom" constant="10" id="7p4-yA-Rm1"/>
                             <constraint firstItem="IwQ-6G-1pU" firstAttribute="width" secondItem="oAQ-an-H3x" secondAttribute="width" multiplier="1.5:1" id="Blz-HC-XjX"/>
                             <constraint firstItem="ORQ-Dt-1TX" firstAttribute="top" secondItem="A6b-Ry-wvy" secondAttribute="bottom" id="DFL-Rw-iSM"/>
-                            <constraint firstAttribute="trailing" secondItem="A6b-Ry-wvy" secondAttribute="trailing" id="DuN-g1-8c2"/>
-                            <constraint firstAttribute="trailing" secondItem="kkh-UA-ocK" secondAttribute="trailing" id="MSg-zY-p2O"/>
-                            <constraint firstItem="A6b-Ry-wvy" firstAttribute="leading" secondItem="vef-ce-f3P" secondAttribute="leading" id="PZo-kP-9d7"/>
+                            <constraint firstAttribute="right" secondItem="A6b-Ry-wvy" secondAttribute="right" id="DuN-g1-8c2"/>
+                            <constraint firstAttribute="right" secondItem="kkh-UA-ocK" secondAttribute="right" id="MSg-zY-p2O"/>
+                            <constraint firstItem="A6b-Ry-wvy" firstAttribute="left" secondItem="vef-ce-f3P" secondAttribute="left" id="PZo-kP-9d7"/>
                             <constraint firstItem="gPW-dc-MAH" firstAttribute="top" secondItem="kkh-UA-ocK" secondAttribute="bottom" constant="10" id="QNV-ye-bH0"/>
                             <constraint firstItem="IwQ-6G-1pU" firstAttribute="centerX" secondItem="oAQ-an-H3x" secondAttribute="centerX" id="XMW-Go-OLw"/>
                             <constraint firstItem="kkh-UA-ocK" firstAttribute="top" secondItem="IwQ-6G-1pU" secondAttribute="bottom" id="ZmY-uz-mI5"/>
-                            <constraint firstItem="kkh-UA-ocK" firstAttribute="leading" secondItem="vef-ce-f3P" secondAttribute="leading" id="bu1-pi-76z"/>
-                            <constraint firstAttribute="trailing" secondItem="oAQ-an-H3x" secondAttribute="trailing" constant="30" id="fgA-Vx-ppV"/>
-                            <constraint firstAttribute="trailing" secondItem="gPW-dc-MAH" secondAttribute="trailing" constant="20" id="flX-U5-R2B"/>
+                            <constraint firstItem="kkh-UA-ocK" firstAttribute="left" secondItem="vef-ce-f3P" secondAttribute="left" id="bu1-pi-76z"/>
+                            <constraint firstAttribute="right" secondItem="oAQ-an-H3x" secondAttribute="right" constant="30" id="fgA-Vx-ppV"/>
+                            <constraint firstAttribute="right" secondItem="gPW-dc-MAH" secondAttribute="right" constant="20" id="flX-U5-R2B"/>
                             <constraint firstItem="kkh-UA-ocK" firstAttribute="top" secondItem="oAQ-an-H3x" secondAttribute="bottom" constant="5" id="jj7-fE-RPs"/>
-                            <constraint firstItem="gPW-dc-MAH" firstAttribute="leading" secondItem="vef-ce-f3P" secondAttribute="leading" constant="20" id="wmv-fO-80B"/>
+                            <constraint firstItem="gPW-dc-MAH" firstAttribute="left" secondItem="vef-ce-f3P" secondAttribute="left" constant="20" id="wmv-fO-80B"/>
                         </constraints>
                     </view>
                     <connections>

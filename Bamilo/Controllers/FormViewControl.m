@@ -81,17 +81,18 @@
     if (indexPath.row == self.numberOfRowsOfTableView - 1) {
         ButtonTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:[ButtonTableViewCell nibName] forIndexPath:indexPath];
         [cell.button setTitle:self.submitTitle forState:UIControlStateNormal];
+        [cell.button setBackgroundColor:self.submissionButtonColor ?: [Theme color:kColorOrange1]];
         cell.delegate = self;
         return cell;
     } else {
         id<FormElementProtocol> formElement = self.formModelList[indexPath.row];
         if([formElement isKindOfClass:[FormItemModel class]]) {
             FormTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:[FormTableViewCell nibName] forIndexPath:indexPath];
-            cell.formItemControl.input.textField.delegate = self;
             cell.formItemControl.model = self.formModelList[indexPath.row];
             cell.formItemControl.fieldIndex = indexPath.row;
             self.inputControlsDictionary[((FormItemModel *)formElement).fieldName] = cell.formItemControl;
             cell.formItemControl.delegate = self;
+            cell.formItemControl.input.textField.delegate = self;
             if (allErrorsHaveBeenShown) {
                 [cell.formItemControl checkValidation];
             }
@@ -102,7 +103,6 @@
             return formHeaderItemTableViewCell;
         }
     }
-    
     return nil;
 }
 
@@ -111,7 +111,13 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(indexPath.row < self.formModelList.count && [[self.formModelList objectAtIndex:indexPath.row] isKindOfClass:[FormHeaderModel class]]) {
+//    if (indexPath.row < self.formModelList.count &&
+//        [[self.formModelList objectAtIndex:indexPath.row] isKindOfClass:[FormItemModel class]] &&
+//        ((FormItemModel *) [self.formModelList objectAtIndex:indexPath.row]).type == InputTextFieldControlTypeOptions &&
+//        ((FormItemModel *) [self.formModelList objectAtIndex:indexPath.row]).selectOption.count == 1) {
+//        return 0;
+//    } else
+    if (indexPath.row < self.formModelList.count && [[self.formModelList objectAtIndex:indexPath.row] isKindOfClass:[FormHeaderModel class]]) {
         return [FormHeaderTableViewCell cellHeight];
     } else {
         return UITableViewAutomaticDimension;
@@ -190,7 +196,7 @@
 }
 
 #pragma mark - InputTextFieldControlDelegate
-- (void)inputValueHasBeenChanged:(id)inputTextFieldControl byNewValue:(NSString *)value inFieldIndex:(NSUInteger)fieldIndex {
+- (void)inputValueChanged:(id)inputTextFieldControl byNewValue:(NSString *)value inFieldIndex:(NSUInteger)fieldIndex {
     
     FormItemModel *model = self.formModelList[fieldIndex];
     model.inputTextValue = value;

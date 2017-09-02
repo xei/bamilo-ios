@@ -37,4 +37,13 @@ let STRING_OOPS = RILocalizationWrapper.localizedString("string_oops")!
 let STRING_ORDER_HISTORY = RILocalizationWrapper.localizedString("my_order_history_label")!
 let STRING_PASSWORD = RILocalizationWrapper.localizedString("password")!
 let STRING_EMAIL_TO_CS = RILocalizationWrapper.localizedString("send_email_to_CS")!
-
+let STRING_SEARCHING = RILocalizationWrapper.localizedString("searching")!
+let STRING_TEHRAN = RILocalizationWrapper.localizedString("tehran")!
+let STRING_MINICITY = RILocalizationWrapper.localizedString("minicity")!
+let STRING_CITY = RILocalizationWrapper.localizedString("city")!
+let STRING_PROVINCE = RILocalizationWrapper.localizedString("province")!
+let STRING_FOUND_PRODUCT_COUNT = RILocalizationWrapper.localizedString("founded_product_count")!
+let STRING_ERROR = RILocalizationWrapper.localizedString("string_error")!
+let STRING_ERROR_SUPPORTING_EMAIL = RILocalizationWrapper.localizedString("error_email_support")!
+let STRING_ESTIMATED_TIME = RILocalizationWrapper.localizedString("estimated_time")!
+let STRING_DELIVERY_TIME = RILocalizationWrapper.localizedString("delivery_time")!

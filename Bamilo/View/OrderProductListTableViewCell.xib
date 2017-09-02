@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -50,7 +50,7 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="نام کالا" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BiP-qS-J4S">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="نام کالا" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BiP-qS-J4S">
                         <rect key="frame" x="10" y="50.5" width="168" height="17.5"/>
                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="9"/>
                         <nil key="textColor"/>
@@ -65,8 +65,14 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w2x-mI-gCG" userLabel="estimated label">
+                        <rect key="frame" x="10" y="148" width="168" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pzv-C1-0oc" customClass="IconButton">
-                        <rect key="frame" x="10" y="144" width="100" height="25"/>
+                        <rect key="frame" x="78" y="144" width="100" height="25"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="100" id="G2V-VU-uhg"/>
                             <constraint firstAttribute="height" constant="25" id="oIQ-Bd-wMo"/>
@@ -89,26 +95,30 @@
                     </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="Pzv-C1-0oc" firstAttribute="right" secondItem="ThD-LB-ofp" secondAttribute="right" id="2Nj-op-zvs"/>
                     <constraint firstItem="yOx-Z6-S3F" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="3gW-uD-NOm"/>
                     <constraint firstItem="yOx-Z6-S3F" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="3nw-DJ-0ak"/>
-                    <constraint firstItem="slS-Kc-FjF" firstAttribute="trailing" secondItem="BiP-qS-J4S" secondAttribute="trailing" id="5Hy-Ow-mxY"/>
+                    <constraint firstItem="slS-Kc-FjF" firstAttribute="right" secondItem="BiP-qS-J4S" secondAttribute="right" id="5Hy-Ow-mxY"/>
+                    <constraint firstItem="w2x-mI-gCG" firstAttribute="left" secondItem="H2p-sc-9uM" secondAttribute="left" constant="10" id="5ki-sy-DRs"/>
                     <constraint firstItem="yOx-Z6-S3F" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="1:3" id="9DO-JG-JgP"/>
-                    <constraint firstItem="ThD-LB-ofp" firstAttribute="trailing" secondItem="slS-Kc-FjF" secondAttribute="trailing" id="En8-og-AwJ"/>
+                    <constraint firstItem="w2x-mI-gCG" firstAttribute="right" secondItem="ThD-LB-ofp" secondAttribute="right" id="A5i-Rb-R9c"/>
+                    <constraint firstItem="ThD-LB-ofp" firstAttribute="right" secondItem="slS-Kc-FjF" secondAttribute="right" id="En8-og-AwJ"/>
                     <constraint firstItem="BiP-qS-J4S" firstAttribute="top" secondItem="4i5-AP-qxI" secondAttribute="bottom" constant="8" id="Fee-2z-uN7"/>
                     <constraint firstItem="slS-Kc-FjF" firstAttribute="top" secondItem="BiP-qS-J4S" secondAttribute="bottom" constant="3" id="MTM-Er-Lwz"/>
                     <constraint firstItem="4i5-AP-qxI" firstAttribute="top" secondItem="yOx-Z6-S3F" secondAttribute="top" id="Sof-hM-wOg"/>
-                    <constraint firstItem="Pzv-C1-0oc" firstAttribute="leading" secondItem="4i5-AP-qxI" secondAttribute="leading" id="UvI-sb-rvf"/>
+                    <constraint firstItem="w2x-mI-gCG" firstAttribute="bottom" secondItem="yOx-Z6-S3F" secondAttribute="bottom" id="YbP-V8-cdA"/>
                     <constraint firstItem="ThD-LB-ofp" firstAttribute="top" secondItem="slS-Kc-FjF" secondAttribute="bottom" constant="3" id="bIV-Ns-H88"/>
                     <constraint firstItem="Pzv-C1-0oc" firstAttribute="bottom" secondItem="yOx-Z6-S3F" secondAttribute="bottom" id="dDQ-pm-DJP"/>
-                    <constraint firstItem="BiP-qS-J4S" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="dkC-S4-oOh"/>
-                    <constraint firstItem="4i5-AP-qxI" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="lR8-dW-3nF"/>
-                    <constraint firstItem="BiP-qS-J4S" firstAttribute="trailing" secondItem="4i5-AP-qxI" secondAttribute="trailing" id="tMn-o2-5k2"/>
-                    <constraint firstAttribute="trailing" secondItem="yOx-Z6-S3F" secondAttribute="trailing" constant="15" id="vOw-zP-soo"/>
-                    <constraint firstItem="4i5-AP-qxI" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="y4Q-cJ-gmG"/>
+                    <constraint firstItem="BiP-qS-J4S" firstAttribute="left" secondItem="H2p-sc-9uM" secondAttribute="left" constant="10" id="dkC-S4-oOh"/>
+                    <constraint firstItem="4i5-AP-qxI" firstAttribute="right" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="lR8-dW-3nF"/>
+                    <constraint firstItem="BiP-qS-J4S" firstAttribute="right" secondItem="4i5-AP-qxI" secondAttribute="right" id="tMn-o2-5k2"/>
+                    <constraint firstAttribute="right" secondItem="yOx-Z6-S3F" secondAttribute="right" constant="15" id="vOw-zP-soo"/>
+                    <constraint firstItem="4i5-AP-qxI" firstAttribute="left" secondItem="H2p-sc-9uM" secondAttribute="left" constant="10" id="y4Q-cJ-gmG"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="commentButton" destination="Pzv-C1-0oc" id="wd3-Ck-QSK"/>
+                <outlet property="estimatedDeliveryTimeLabel" destination="w2x-mI-gCG" id="aa9-7w-a9m"/>
                 <outlet property="priceLabel" destination="slS-Kc-FjF" id="nqC-fF-poJ"/>
                 <outlet property="productImage" destination="yOx-Z6-S3F" id="Ybs-eV-jm2"/>
                 <outlet property="productTitleLabel" destination="BiP-qS-J4S" id="Mc3-Um-sh6"/>
@@ -120,6 +130,6 @@
     </objects>
     <resources>
         <image name="commentPen" width="20" height="20"/>
-        <image name="placeholder_pdv" width="146" height="182"/>
+        <image name="placeholder_pdv" width="146" height="183"/>
     </resources>
 </document>

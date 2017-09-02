@@ -29,13 +29,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.navBarLayout.showBackButton = YES;
-    self.navBarLayout.showCartButton = NO;
-    self.navBarLayout.title = STRING_MY_ORDERS;
-    
     [self.view setBackgroundColor:JAWhiteColor];
-    
     [self.view addSubview:self.webView];
 }
 
@@ -49,4 +43,9 @@
     }
 }
 
+
+#pragma mark - NavigationBarProtocol
+- (NSString *)navBarTitleString {
+    return STRING_MY_ORDERS;
+}
 @end

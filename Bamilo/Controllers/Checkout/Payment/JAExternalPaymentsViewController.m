@@ -22,11 +22,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.navBarLayout.showCartButton = NO;
-    self.navBarLayout.showBackButton = YES;
-    self.navBarLayout.title = STRING_CHECKOUT;
-    
     self.webView.translatesAutoresizingMaskIntoConstraints = YES;
     [self.webView setDelegate:self];
 }
@@ -225,4 +220,8 @@
     return @"ExternalPayment";
 }
 
+#pragma mark: -NavigationBarProtocol
+- (NSString *)navBarTitleString {
+    return STRING_CHECKOUT;
+}
 @end

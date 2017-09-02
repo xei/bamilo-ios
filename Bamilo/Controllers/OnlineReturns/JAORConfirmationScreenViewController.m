@@ -11,8 +11,6 @@
 #import "JAOptionResumeView.h"
 #import "JAProductInfoHeaderLine.h"
 #import "JAORProductView.h"
-#import "JAMyOrdersViewController.h"
-#import "JAMyOrderDetailViewController.h"
 #import "Bamilo-Swift.h"
 
 #define kLateralMargin 16.f
@@ -120,14 +118,8 @@
     return _submitView;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.navBarLayout.showBackButton = YES;
-    self.navBarLayout.showCartButton = NO;
-    self.navBarLayout.title = STRING_MY_ORDERS;
-    
     [self.view setBackgroundColor:JAWhiteColor];
 }
 
@@ -272,5 +264,11 @@
 {
     [[MainTabBarViewController topNavigationController] goToOnlineReturnsPaymentScreenForItems:self.items order:self.order];
 }
+
+#pragma mark - NavigationBarProtocol
+- (NSString *)navBarTitleString {
+    return STRING_MY_ORDERS;
+}
+
 
 @end

@@ -117,8 +117,8 @@
     }
     
     if (cartEntity.cartValue && cartEntity.cartUnreducedValue) {
-        NSNumber *discountValue = [NSNumber numberWithInt: cartEntity.cartUnreducedValue.intValue - cartEntity.cartValue.intValue + cartEntity.shippingValue.intValue];
-        cartEntity.discountValueFormated = [RICountryConfiguration formatPrice:discountValue country:country];
+        cartEntity.discountValue = [NSNumber numberWithInt: cartEntity.cartUnreducedValue.intValue - cartEntity.cartValue.intValue + cartEntity.shippingValue.intValue];
+        cartEntity.discountValueFormated = [RICountryConfiguration formatPrice:cartEntity.discountValue country:country];
     }
     
     if ([dict objectForKey:@"extra_costs"]) {

@@ -50,7 +50,6 @@ class AuthenticationDataManager: DataManagerSwift {
     func logoutUser(_ target:DataServiceProtocol, completion: @escaping DataClosure) {
         AuthenticationDataManager.requestManager.async(.post, target: target, path: RI_API_LOGOUT_CUSTOMER, params: nil, type: .foreground) { (responseType, data, errorMessages) in
             self.processResponse(responseType, aClass: nil, data: data, errorMessages: errorMessages) { (data, error) in
-                RICustomer.cleanFromDB()
                 completion(data, error)
             }
         }

@@ -36,10 +36,6 @@ JADynamicFormDelegate
     [super viewDidLoad];
     self.apiResponse = RIApiResponseSuccess;
     
-    self.navBarLayout.showBackButton = YES;
-    self.navBarLayout.showLogo = NO;
-    self.navBarLayout.title = STRING_USER_EMAIL_NOTIFICATIONS;
-    
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(6.0f,
                                                                      6.0f,
                                                                      self.view.frame.size.width - 12.0f,
@@ -291,6 +287,12 @@ JADynamicFormDelegate
 #pragma mark - DataTrackerProtocol
 -(NSString *)getScreenName {
     return @"CustomerEmailNotifications";
+}
+
+#pragma mark: -NavigationBarProtocol
+
+- (NSString *)navBarTitleString {
+    return STRING_USER_EMAIL_NOTIFICATIONS;
 }
 
 @end

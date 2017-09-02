@@ -55,5 +55,6 @@
 @property (copy, nonatomic)   NSString *formatedPrice;
 @property (strong, nonatomic) NSNumber *quantity;
 @property (strong, nonatomic) NSMutableArray<OrderProductAction> *actions;
+@property (nonatomic, copy) NSString *caculatedDeliveryTime;
 
 @end

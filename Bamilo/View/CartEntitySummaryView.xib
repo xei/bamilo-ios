@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -26,7 +26,7 @@
                     <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="در حال محاسبه" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DaZ-wR-8kZ">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="در حال محاسبه" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DaZ-wR-8kZ">
                     <rect key="frame" x="20" y="26" width="297" height="23"/>
                     <fontDescription key="fontDescription" name="Bamilo-Sans-Bold" family="Bamilo-Sans" pointSize="12"/>
                     <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -48,18 +48,18 @@
             </subviews>
             <color key="backgroundColor" red="0.85098039219999999" green="0.85098039219999999" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="Z5K-gI-5sT" secondAttribute="trailing" id="5rm-ZT-NeT"/>
+                <constraint firstAttribute="right" secondItem="Z5K-gI-5sT" secondAttribute="right" id="5rm-ZT-NeT"/>
                 <constraint firstItem="Z5K-gI-5sT" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="DYJ-aO-uAk"/>
-                <constraint firstAttribute="trailing" secondItem="jhS-Sk-MvV" secondAttribute="trailing" constant="20" id="Oxm-N2-hXS"/>
-                <constraint firstItem="Z5K-gI-5sT" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="dDi-cS-VcB"/>
-                <constraint firstItem="DaZ-wR-8kZ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="gAH-bC-1Fd"/>
+                <constraint firstAttribute="right" secondItem="jhS-Sk-MvV" secondAttribute="right" constant="20" id="Oxm-N2-hXS"/>
+                <constraint firstItem="Z5K-gI-5sT" firstAttribute="left" secondItem="iN0-l3-epB" secondAttribute="left" id="dDi-cS-VcB"/>
+                <constraint firstItem="DaZ-wR-8kZ" firstAttribute="left" secondItem="iN0-l3-epB" secondAttribute="left" constant="20" id="gAH-bC-1Fd"/>
                 <constraint firstItem="jhS-Sk-MvV" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="mHh-DT-7b4"/>
                 <constraint firstItem="vg9-ZU-JBr" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="obv-Ju-ekj"/>
-                <constraint firstItem="jhS-Sk-MvV" firstAttribute="leading" secondItem="DaZ-wR-8kZ" secondAttribute="trailing" constant="10" id="qJ0-jN-r0s"/>
-                <constraint firstItem="vg9-ZU-JBr" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="uHL-ol-T8e"/>
+                <constraint firstItem="jhS-Sk-MvV" firstAttribute="left" secondItem="DaZ-wR-8kZ" secondAttribute="right" constant="10" id="qJ0-jN-r0s"/>
+                <constraint firstItem="vg9-ZU-JBr" firstAttribute="left" secondItem="iN0-l3-epB" secondAttribute="left" id="uHL-ol-T8e"/>
                 <constraint firstItem="DaZ-wR-8kZ" firstAttribute="centerY" secondItem="jhS-Sk-MvV" secondAttribute="centerY" id="uis-WX-22W"/>
                 <constraint firstAttribute="bottom" secondItem="vg9-ZU-JBr" secondAttribute="bottom" id="ujA-ou-3bK"/>
-                <constraint firstAttribute="trailing" secondItem="vg9-ZU-JBr" secondAttribute="trailing" id="ztA-gi-5wa"/>
+                <constraint firstAttribute="right" secondItem="vg9-ZU-JBr" secondAttribute="right" id="ztA-gi-5wa"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>

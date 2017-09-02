@@ -26,16 +26,34 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.automaticallyAdjustsScrollViewInsets = NO;
     
     //PerformanceTrackerProtocol
     [self recordStartLoadTime];
-    
-    self.navigationController.navigationBar.translucent = NO;
-    self.navigationItem.hidesBackButton = YES;
     self.title = nil;
     self.view.backgroundColor = JABackgroundGrey;
     if ([self getScreenName].length) {
         [TrackerManager trackScreenNameWithScreenName:[self getScreenName]];
+    }
+    
+    //navigation bar configs
+    
+    if ([self respondsToSelector:@selector(navBarTitleView)]){
+        self.navigationItem.titleView = [self navBarTitleView];
+    }
+    if ([self respondsToSelector:@selector(navBarTitleString)]) {
+        self.title = [self navBarTitleString];
+    }
+    if ([self respondsToSelector:@selector(navBarhideBackButton)]) {
+        self.navigationItem.hidesBackButton = [self navBarhideBackButton];
+    }
+    if ([self respondsToSelector:@selector(navBarleftButton)]) {
+        if ([self navBarleftButton] == NavBarLeftButtonTypeSearch && [self respondsToSelector:@selector(searchIconButtonTapped)]) {
+            self.navigationItem.rightBarButtonItem = [NavBarUtility navBarLeftButtonWithType:NavBarLeftButtonTypeSearch viewController:self];
+        }
+        if ([self navBarleftButton] == NavBarLeftButtonTypeCart && [self respondsToSelector:@selector(searchIconButtonTapped)]) {
+            self.navigationItem.rightBarButtonItem = [NavBarUtility navBarLeftButtonWithType:NavBarLeftButtonTypeCart viewController:self];
+        }
     }
 }
 
@@ -48,10 +66,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self updateNavBar];
-    
-    [self requestNavigationBarReload];
-//    [self requestTabBarReload];
     
     if ([self conformsToProtocol:@protocol(EmarsysPredictProtocolBase)]) {
         if ([self respondsToSelector:@selector(isPreventSendTransactionInViewWillAppear)]) {
@@ -64,41 +78,22 @@
     }
 }
 
--(void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    //[Accengage trackScreenDismiss:[self getPerformanceTrackerScreenName] ?: @""];
-    
-    [super viewDidDisappear:animated];
-}
-
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:YES];
 }
 
-- (void)requestNavigationBarReload {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kChangeNavigationBarNotification object:self.navBarLayout];
-}
-
-//#pragma mark - Private Methods
-//- (void)requestTabBarReload {
-//    [[NSNotificationCenter defaultCenter] postNotificationName:kChangeTabBarVisibility object:[NSNumber numberWithBool:[self getTabBarVisible]]];
-//}
-
-#pragma mark - Public Methods
-- (void)updateNavBar {
-    //reset to Default state for nav bar
-    self.navBarLayout.showSearchButton = NO;
-    self.navBarLayout.showBackButton = NO;
-    self.navBarLayout.showDoneButton = NO;
-    self.navBarLayout.showCartButton = NO;
-    self.navBarLayout.showSeparatorView = NO;
+- (CGRect)viewBounds {
+    if (SYSTEM_VERSION_GREATER_THAN(@"9.0")) {
+        return self.view.bounds;
+    }
+    CGFloat statusBarHeight = UIApplication.sharedApplication.statusBarFrame.size.height;
+    CGFloat navBarHeight = self.navigationController.navigationBar.height;
+    
+    return CGRectMake(self.view.bounds.origin.x,
+                      self.view.bounds.origin.y + navBarHeight + statusBarHeight,
+                      self.view.bounds.size.width,
+                      self.view.bounds.size.height - navBarHeight - statusBarHeight);
+    
 }
 
 #pragma mark - SideMenuProtocol
@@ -175,6 +170,21 @@
 #pragma mark - DataTrackerProtocol
 -(NSString *)getScreenName {
     return nil;
+}
+
+#pragma mark - NavigationBarProtocol
+- (void)searchIconButtonTapped {
+    [[MainTabBarViewController topNavigationController] showSearchView];
+}
+
+- (void)cartIconButtonTapped {
+    [MainTabBarViewController showCart];
+}
+
+- (void)updateCartInNavBar {
+    if (self.navBarleftButton == NavBarLeftButtonTypeCart) {
+        self.navigationItem.rightBarButtonItem.badgeValue = [NSString stringWithFormat:@"%lu", (unsigned long)[[RICart sharedInstance].cartEntity.cartCount integerValue]];
+    }
 }
 
 @end

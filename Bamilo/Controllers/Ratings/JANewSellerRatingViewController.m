@@ -64,15 +64,9 @@ UIAlertViewDelegate
 }
 
 #pragma mark - View lifecycle
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.apiResponse = RIApiResponseSuccess;
-    
-    self.navBarLayout.showBackButton = YES;
-    self.navBarLayout.showLogo = NO;
-    
     self.sellerNameLabel.font = [UIFont fontWithName:kFontMediumName size:self.sellerNameLabel.font.pointSize];
     
     self.topView.translatesAutoresizingMaskIntoConstraints = YES;

@@ -87,8 +87,8 @@
     product.sku = teaserComponent.sku;
     product.name = teaserComponent.name;
     product.brand = teaserComponent.brand;
-    RIImage *image = [RIImage parseImage:@{@"url" : teaserComponent.imagePortraitUrl}];
-    product.images = @[image];
+    RIImage *image = teaserComponent.imagePortraitUrl ? [RIImage parseImage:@{@"url" : teaserComponent.imagePortraitUrl}] : nil;
+    product.images = image ? @[image] : nil;
     product.specialPrice = teaserComponent.specialPrice;
     product.priceFormatted = teaserComponent.priceFormatted;
     product.specialPriceFormatted = teaserComponent.specialPriceFormatted;

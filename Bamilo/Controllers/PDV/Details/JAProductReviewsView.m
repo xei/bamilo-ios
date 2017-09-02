@@ -46,8 +46,7 @@
 @implementation JAProductReviewsView
 
 
-- (instancetype)init
-{
+- (instancetype)init {
     self = [super init];
     if (self) {
         [self setDefaults];
@@ -55,8 +54,7 @@
     return self;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
+- (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         [self setDefaults];
@@ -64,8 +62,7 @@
     return self;
 }
 
-- (UIView *)topView
-{
+- (UIView *)topView {
     if (!VALID_NOTEMPTY(_topView, UIView)) {
         CGRect frame = CGRectMake(0, 0, self.collectionView.width, CGRectGetMaxY(_reviewsHeaderLine.frame));
         _topView = [[UIView alloc] initWithFrame:frame];
@@ -78,8 +75,7 @@
     return _topView;
 }
 
-- (UICollectionView *)collectionView
-{
+- (UICollectionView *)collectionView {
     if (!VALID_NOTEMPTY(_collectionView, UICollectionView)) {
         UICollectionViewFlowLayout* layout = [[UICollectionViewFlowLayout alloc] init];
         [layout setMinimumInteritemSpacing:0];
@@ -94,20 +90,17 @@
         [_collectionView registerClass:[JAReviewCollectionCell class] forCellWithReuseIdentifier:@"JAReviewCollectionCell"];
         [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"topView"];
         [self addSubview:_collectionView];
-    }else if (!CGRectEqualToRect(_collectionView.frame, self.bounds))
-    {
+    } else if (!CGRectEqualToRect(_collectionView.frame, self.bounds)) {
         [_collectionView setFrame:self.bounds];
         [_collectionView reloadData];
     }
     return _collectionView;
 }
 
-- (void)setDefaults
-{
+- (void)setDefaults {
 }
 
-- (UIView *)ratingsView
-{
+- (UIView *)ratingsView {
     if (!VALID_NOTEMPTY(_ratingsView, UIView)) {
         CGRect frame = CGRectMake(0, CGRectGetMaxY(self.ratingsHeaderLine.frame) + 16.f, _topView.width - 32, 180);
         _ratingsView = [[UIView alloc] initWithFrame:frame];
@@ -121,8 +114,7 @@
     return _ratingsView;
 }
 
-- (UILabel *)averageTitleLabel
-{
+- (UILabel *)averageTitleLabel {
     if (!VALID_NOTEMPTY(_averageTitleLabel, UIView)) {
         CGRect frame = CGRectMake(_ratingsView.width * kLeftSidePercentage - 150, 0, 150, 30);
         _averageTitleLabel = [[UILabel alloc] initWithFrame:frame];
@@ -134,8 +126,7 @@
     return _averageTitleLabel;
 }
 
-- (UILabel *)averageValueLabel
-{
+- (UILabel *)averageValueLabel {
     if (!VALID_NOTEMPTY(_averageValueLabel, UILabel)) {
         CGRect frame = CGRectMake(_ratingsView.width*kLeftSidePercentage - 150, CGRectGetMaxY(_averageTitleLabel.frame), 150, 40);
         _averageValueLabel = [[UILabel alloc] initWithFrame:frame];
@@ -147,8 +138,7 @@
     return _averageValueLabel;
 }
 
-- (UILabel *)totalUsersLabel
-{
+- (UILabel *)totalUsersLabel {
     if (!VALID_NOTEMPTY(_totalUsersLabel, UILabel)) {
         CGRect frame = CGRectMake(_ratingsView.width*kLeftSidePercentage - 150, CGRectGetMaxY(_averageValueLabel.frame), 150, 30);
         _totalUsersLabel = [[UILabel alloc] initWithFrame:frame];
@@ -160,8 +150,7 @@
     return _totalUsersLabel;
 }
 
-- (UIView *)verticalSeparator
-{
+- (UIView *)verticalSeparator {
     if (!VALID_NOTEMPTY(_verticalSeparator, UIView)) {
         CGRect frame = CGRectMake(_ratingsView.width*kLeftSidePercentage, 0, 1.f, CGRectGetMaxY(_totalUsersLabel.frame));
         _verticalSeparator = [[UIView alloc] initWithFrame:frame];
@@ -170,8 +159,7 @@
     return _verticalSeparator;
 }
 
-- (UIView *)ratingsRightSideView
-{
+- (UIView *)ratingsRightSideView {
     if (!VALID_NOTEMPTY(_ratingsRightSideView, UIView)) {
         CGRect frame = CGRectMake(_ratingsView.width*kLeftSidePercentage, 0, _ratingsView.width - _ratingsView.width*kLeftSidePercentage, _ratingsView.height);
         _ratingsRightSideView = [[UIView alloc] initWithFrame:frame];
@@ -180,8 +168,7 @@
     return _ratingsRightSideView;
 }
 
-- (JAProductInfoHeaderLine *)ratingsHeaderLine
-{
+- (JAProductInfoHeaderLine *)ratingsHeaderLine {
     if (!VALID_NOTEMPTY(_ratingsHeaderLine, JAProductInfoHeaderLine)) {
         CGRect frame = CGRectMake(0, 0, self.topView.width, kProductInfoHeaderLineHeight);
         _ratingsHeaderLine = [[JAProductInfoHeaderLine alloc] initWithFrame:frame];
@@ -190,8 +177,7 @@
     return _ratingsHeaderLine;
 }
 
-- (JAProductInfoHeaderLine *)reviewsHeaderLine
-{
+- (JAProductInfoHeaderLine *)reviewsHeaderLine {
     if (!VALID_NOTEMPTY(_reviewsHeaderLine, JAProductInfoHeaderLine)) {
         CGRect frame = CGRectMake(0, CGRectGetMaxY(self.ratingsView.frame), _topView.width, kProductInfoHeaderLineHeight);
         _reviewsHeaderLine = [[JAProductInfoHeaderLine alloc] initWithFrame:frame];
@@ -200,8 +186,7 @@
     return _reviewsHeaderLine;
 }
 
-- (UIView *)writeReviewView
-{
+- (UIView *)writeReviewView {
     if (!VALID_NOTEMPTY(_writeReviewView, UIView)) {
         CGRect frame = CGRectMake(_topView.width/2 - 160, CGRectGetMaxY(self.verticalSeparator.frame), 320, 80);
         _writeReviewView = [[UIView alloc] initWithFrame:frame];
@@ -211,8 +196,7 @@
     return _writeReviewView;
 }
 
-- (UILabel *)writeReviewLabel
-{
+- (UILabel *)writeReviewLabel {
     if (!VALID_NOTEMPTY(_writeReviewLabel, UILabel)) {
         CGRect frame = CGRectMake(0, 10, 16, self.writeReviewView.height);
         _writeReviewLabel = [[UILabel alloc] initWithFrame:frame];
@@ -225,14 +209,13 @@
     return _writeReviewLabel;
 }
 
-- (UIButton *)writeReviewButton
-{
+- (UIButton *)writeReviewButton {
     if (!VALID_NOTEMPTY(_writeReviewButton, UIButton)) {
         _writeReviewButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_writeReviewButton.titleLabel setFont:JABUTTONFont];
-        [_writeReviewButton setTitleColor:JABlue1Color forState:UIControlStateNormal];
-        [_writeReviewButton setTitleColor:JABlack800Color forState:UIControlStateHighlighted];
-        CGRect frame = CGRectMake(self.writeReviewView.width/2, 16, self.writeReviewView.width/2, self.writeReviewView.height);
+
+        [_writeReviewButton setTitleColor:[Theme color:kColorOrange1] forState:UIControlStateNormal];
+        CGRect frame = CGRectMake(self.writeReviewView.width/2, 16, self.writeReviewView.width / 2, self.writeReviewView.height);
         [_writeReviewButton setFrame:frame];
         [_writeReviewButton setTitle:STRING_WRITE_REVIEW forState:UIControlStateNormal];
         [_writeReviewButton addTarget:self action:@selector(goToNewReview:) forControlEvents:UIControlEventTouchUpInside];
@@ -240,8 +223,7 @@
     return _writeReviewButton;
 }
 
-- (void)setGraphicSide
-{
+- (void)setGraphicSide {
     UILabel *label5 = [self getNumbersLabel];
     [label5 setText:@"5"];
     [_ratingsRightSideView addSubview:label5];
@@ -324,15 +306,11 @@
     }
 }
 
-- (void)setProduct:(RIProduct *)product
-{
+- (void)setProduct:(RIProduct *)product {
     _product = product;
-    
     [self setBackgroundColor:[UIColor whiteColor]];
-
     [self requestRatings];
     [self requestReviews];
-    
     CGFloat yOffset = 0.f;
     [self.ratingsHeaderLine setTitle:[NSString stringWithFormat:STRING_NRATINGS, _product.sum.intValue]];
     [self.ratingsHeaderLine setY:yOffset];
@@ -352,53 +330,46 @@
     }
 }
 
-- (void)setProductRatings:(RIProductRatings *)productRatings
-{
+- (void)setProductRatings:(RIProductRatings *)productRatings {
     _productRatings = productRatings;
     [self.collectionView reloadData];
 }
 
-- (UILabel *)getNumbersLabel
-{
+- (UILabel *)getNumbersLabel {
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(16.f, 14, 10.f, 15.f)];
     [label setFont:JACaptionFont];
     [label setTextColor:JABlackColor];
     return label;
 }
 
-- (UILabel *)getNumbersTotalLabel
-{
+- (UILabel *)getNumbersTotalLabel {
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX([self getEmptyGraphic].frame) + 16.f, 14, 20.f, 15.f)];
     [label setFont:JACaptionFont];
     [label setTextColor:JABlackColor];
     return label;
 }
 
-- (UIView *)getEmptyGraphic
-{
+- (UIView *)getEmptyGraphic {
     UIView *graphic = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX([self getNumbersLabel].frame) + 6.f, 0, kBarWidth, 6.f)];
     [graphic setBackgroundColor:JABlack300Color];
     return graphic;
 }
 
-- (UIView *)getGraphic
-{
+- (UIView *)getGraphic {
     UIView *graphic = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX([self getNumbersLabel].frame) + 6.f, 0, /*RI_IS_RTL ? 0 : */kBarWidth, 6.f)];
     [graphic setBackgroundColor:JAYellow1Color];
     [graphic setHidden:YES];
     return graphic;
 }
 
-- (NSMutableArray *)reviewsArray
-{
+- (NSMutableArray *)reviewsArray {
     if (!VALID(_reviewsArray, NSMutableArray)) {
         _reviewsArray = [NSMutableArray new];
     }
     return _reviewsArray;
 }
 
-- (void)requestRatings
-{
+- (void)requestRatings {
     [self.viewControllerEvents showLoading];
     [RIProductRatings getRatingsDetails:_product.sku successBlock:^(NSDictionary *ratingsDictionary) {
         _ratingsDictionary = ratingsDictionary;
@@ -415,8 +386,7 @@
     }];
 }
 
-- (void)requestReviews
-{
+- (void)requestReviews {
     [self.viewControllerEvents showLoading];
     [RIProductRatings getRatingsForProductWithSku:self.product.sku allowRating:1 pageNumber:(VALID_NOTEMPTY(self.productRatings, RIProductRatings)?self.productRatings.currentPage.intValue+1:1) successBlock:^(RIProductRatings *ratings) {
         self.productRatings = ratings;
@@ -435,8 +405,7 @@
     }];
 }
 
-- (void)fillGraphics
-{
+- (void)fillGraphics {
     for (NSNumber *starNumber in [self.starsViewDictionary allKeys]) {
         UIView *graphic = [self.starsViewDictionary objectForKey:starNumber];
         UILabel *label = [self.starsTotalLabelDictionary objectForKey:starNumber];
@@ -459,10 +428,8 @@
     }
 }
 
-- (void)layoutSubviews
-{
+- (void)layoutSubviews {
     [super layoutSubviews];
-    
     CGRect topViewFrame = CGRectMake(0, 0, self.collectionView.width, CGRectGetMaxY(self.reviewsHeaderLine.frame));
     [self.topView setFrame:topViewFrame];
     CGRect ratingsHeaderLineFrame = CGRectMake(0, 0, self.topView.width, kProductInfoHeaderLineHeight);
@@ -504,17 +471,12 @@
 }
 
 #pragma mark - Action
-
-- (void)goToNewReview:(id)sender
-{
+- (void)goToNewReview:(id)sender {
     NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
-    if(VALID_NOTEMPTY(self.product, RIProduct))
-    {
+    if(VALID_NOTEMPTY(self.product, RIProduct)) {
         [userInfo setObject:self.product forKey:@"product"];
     }
-    
-    if(VALID_NOTEMPTY(self.productRatings, RIProductRatings))
-    {
+    if(VALID_NOTEMPTY(self.productRatings, RIProductRatings)) {
         [userInfo setObject:self.productRatings forKey:@"productRatings"];
     }
     
@@ -522,9 +484,7 @@
 }
 
 #pragma mark - CollectionView
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger arrayIndex = indexPath.row;
     if (indexPath.row == 0) {
         UICollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"topView" forIndexPath:indexPath];
@@ -541,8 +501,7 @@
     RIReview *productReview = [self.reviewsArray objectAtIndex:arrayIndex];
     
     
-    if((indexPath.row == ([self.reviewsArray count] - 1)) && (self.productRatings.currentPage != self.productRatings.totalPages))
-    {
+    if((indexPath.row == ([self.reviewsArray count] - 1)) && (self.productRatings.currentPage != self.productRatings.totalPages)) {
         [self requestReviews];
     }
     
@@ -557,8 +516,7 @@
     return cell;
 }
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger arrayIndex = indexPath.row;
     if (indexPath.row == 0) {
         return self.topView.frame.size;
@@ -568,36 +526,30 @@
     return [self getCellSizeForReview:productReview indexPath:indexPath];
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.reviewsArray.count + 1;
 }
 
-- (CGFloat)getCellWidth
-{
+- (CGFloat)getCellWidth {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         
         return 640.f;
-    }else{
+    } else {
         return self.collectionView.width - 32;
     }
 }
 
-- (CGSize)getCellSizeForReview:(RIReview *)review indexPath:(NSIndexPath *)indexPath
-{
+- (CGSize)getCellSizeForReview:(RIReview *)review indexPath:(NSIndexPath *)indexPath {
     CGSize size = CGSizeMake([self getCellWidth], [JAReviewCollectionCell cellHeightWithReview:review width:[self getCellWidth]]);
     return size;
 }
 
-- (BOOL)isLandscape
-{
+- (BOOL)isLandscape {
     UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
     
-    if(orientation == UIInterfaceOrientationLandscapeLeft)
-    {
+    if(orientation == UIInterfaceOrientationLandscapeLeft) {
         return YES;
-    }else if(orientation == UIInterfaceOrientationLandscapeRight)
-    {
+    } else if(orientation == UIInterfaceOrientationLandscapeRight) {
         return YES;
     }
     return NO;

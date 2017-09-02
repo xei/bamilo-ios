@@ -186,9 +186,9 @@
 //    [viewController viewDidAppear:YES];
     
     self.actualViewController = viewController;
-    if ([viewController isKindOfClass:[JABaseViewController class]]) {
-        [self setNavBarLayout:[(JABaseViewController *)viewController navBarLayout]];
-    }
+//    if ([viewController isKindOfClass:[JABaseViewController class]]) {
+//        [self setNavBarLayout:[(JABaseViewController *)viewController navBarLayout]];
+//    }
     [self hideLoading];
 }
 

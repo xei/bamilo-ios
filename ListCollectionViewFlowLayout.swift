@@ -10,8 +10,7 @@ import UIKit
 
 class ListCollectionViewFlowLayout: BaseCatalogCollectionFlowLayout {
     
-    let cellHeight: CGFloat = 115
-    let cellSpacing: CGFloat = 5
+    private let cellHeight: CGFloat = 145
     
     override func setupLayout() {
         super.setupLayout()

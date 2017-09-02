@@ -12,7 +12,7 @@ import Kingfisher
 @objc protocol BaseCatallogCollectionViewCellDelegate {
     @objc optional func addOrRemoveFromWishList(product: Product, cell: BaseCatallogCollectionViewCell, add: Bool)
 }
-
+ 
 class BaseCatallogCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var productImage: UIImageView?
@@ -23,7 +23,8 @@ class BaseCatallogCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var dicountPrecentageLabel: UILabel?
     @IBOutlet weak var rateView: RateStarControl?
     @IBOutlet weak var rateCountLabel: UILabel?
-    @IBOutlet weak var addToWishListButton: UIButton?
+    @IBOutlet weak var addToWishListButton: DOFavoriteButton?
+    @IBOutlet weak var newTagView: UIView?
     
     weak var delegate: BaseCatallogCollectionViewCellDelegate?
     private var product: Product?
@@ -50,11 +51,23 @@ class BaseCatallogCollectionViewCell: UICollectionViewCell {
     
     func setupView() {
         self.rateView?.enableButtons(enable: false)
+        self.newTagView?.backgroundColor = Theme.color(kColorOrange)
+
+        self.rateCountLabel?.textColor = Theme.color(kColorGray3)
+        self.brandLabel?.textColor = Theme.color(kColorGray3)
+        self.priceLabel?.textColor = Theme.color(kColorGray3)
+        self.dicountPrecentageLabel?.textColor = Theme.color(kColorGray3)
     }
     
-    @IBAction func addToWishListButtonTapped(_ sender: Any) {
+    @IBAction func addToWishListButtonTapped(_ sender: DOFavoriteButton) {
+        if sender.isSelected {
+            sender.deselect()
+        } else {
+            sender.select()
+        }
         if let avaiableProduct = self.product {
-            self.delegate?.addOrRemoveFromWishList?(product: avaiableProduct, cell: self, add: !avaiableProduct.isInWishList)
+            avaiableProduct.isInWishList.toggle()
+            self.delegate?.addOrRemoveFromWishList?(product: avaiableProduct, cell: self, add: avaiableProduct.isInWishList)
         }
     }
     
@@ -72,6 +85,7 @@ class BaseCatallogCollectionViewCell: UICollectionViewCell {
             priceLabel?.text = nil
             dicountPrecentageLabel?.text = nil
         }
+        self.newTagView?.isHidden = !product.isNew
         if let rateCount = product.ratingsCount, let reviewAverage = product.reviewsAverage {
             self.rateCountLabel?.isHidden = false
             self.rateView?.isHidden = false

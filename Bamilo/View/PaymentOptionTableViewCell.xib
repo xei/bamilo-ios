@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -20,7 +20,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kSs-Qt-hZW" id="iN0-l3-epB">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="79"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text=" مبلغ را به پیک تحویل دهیدمبلغ را به پیک تحویل دهیدمبلغ را به پیک تحویل دهیدمبلغ را به پیک تحویل دهید" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WeM-Z5-fXw">
@@ -33,9 +33,9 @@
                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="WeM-Z5-fXw" secondAttribute="bottom" constant="10" id="6Pi-ON-ze5"/>
-                    <constraint firstAttribute="trailing" secondItem="WeM-Z5-fXw" secondAttribute="trailing" constant="40" id="cfc-be-v1y"/>
+                    <constraint firstAttribute="right" secondItem="WeM-Z5-fXw" secondAttribute="right" constant="40" id="cfc-be-v1y"/>
                     <constraint firstItem="WeM-Z5-fXw" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="mDB-vz-CEm"/>
-                    <constraint firstItem="WeM-Z5-fXw" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="40" id="qDT-1w-OkJ"/>
+                    <constraint firstItem="WeM-Z5-fXw" firstAttribute="left" secondItem="iN0-l3-epB" secondAttribute="left" constant="40" id="qDT-1w-OkJ"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

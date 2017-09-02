@@ -19,6 +19,7 @@
 @interface OrderDetailViewController () <OrderProductListTableViewCellDelegate>
 @property (weak, nonatomic) IBOutlet ProgressViewControl *progressViewControl;
 @property (nonatomic, weak) IBOutlet UITableView *tableview;
+    @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableviewBottomConstraint;
 @property (nonatomic, strong) NSArray *orderDetailInoArray;
 @end
 
@@ -39,7 +40,7 @@
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
 
-    [self.tableview registerNib:[UINib nibWithNibName:[PlainTableViewHeaderCell nibName] bundle:nil] forCellReuseIdentifier: [PlainTableViewHeaderCell nibName]];
+    [self.tableview registerNib:[UINib nibWithNibName:[PlainTableViewHeaderCell nibName] bundle:nil] forHeaderFooterViewReuseIdentifier:[PlainTableViewHeaderCell nibName]];
     [self.tableview registerNib:[UINib nibWithNibName:[OrderProductListTableViewCell nibName] bundle:nil] forCellReuseIdentifier: [OrderProductListTableViewCell nibName]];
 
     [self.tableview registerNib:[UINib nibWithNibName:[OrderDetailInformationTableViewCell nibName] bundle:nil] forCellReuseIdentifier: [OrderDetailInformationTableViewCell nibName]];
@@ -49,6 +50,10 @@
     _orderDeliveredImageSet = [ProgressItemImageSet setWith:@"order-delivered-pending" active:@"order-delivered-active" done:@"order-delivered-done" error:@"order-delivered-error"];
 
     [self.tableview setHidden:YES];
+    
+    //it's possible that previous view controllers hides bottom bar so content edges will be disturbed
+    //by this trick this view always shows proper boundary
+    self.tableviewBottomConstraint.constant = [MainTabBarViewController sharedInstance].tabBar.height;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -70,18 +75,10 @@
     [self.view setBackgroundColor:[UIColor whiteColor]];
 }
 
-- (void)updateNavBar {
-    [super updateNavBar];
-
-    self.navBarLayout.showLogo = NO;
-    self.navBarLayout.title = STRING_ORDER_STATUS;
-    self.navBarLayout.showBackButton = YES;
-}
-
 #pragma mark - UITableViewDataSource & UITableViewDelegate
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     NSString *headerTitle = section == 0 ? STRING_ORDER_DETAILS : STRING_ORDER_PRODUCT_DETAIL;
-    PlainTableViewHeaderCell *headerCell = [self.tableview dequeueReusableCellWithIdentifier:[PlainTableViewHeaderCell nibName]];
+    PlainTableViewHeaderCell *headerCell = [self.tableview dequeueReusableHeaderFooterViewWithIdentifier:[PlainTableViewHeaderCell nibName]];
     headerCell.titleString = headerTitle;
     return headerCell;
 }
@@ -223,11 +220,20 @@
     return progressViewControlContent;
 }
 
+    
+#pragma mark - hide tabbar in this view controller
+- (BOOL)hidesBottomBarWhenPushed {
+    return NO;
+}
+    
 #pragma mark: -DataTrackerProtocol
-
 - (NSString *)getScreenName {
     return @"OrderDetailView";
 }
 
+#pragma mark - NavigationBarProtocol
+- (NSString *)navBarTitleString {
+    return STRING_ORDER_STATUS;
+}
 
 @end

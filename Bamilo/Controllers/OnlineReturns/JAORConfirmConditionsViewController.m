@@ -58,13 +58,8 @@
     return _submitView;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    self.navBarLayout.showBackButton = YES;
-    self.navBarLayout.showCartButton = NO;
-    [self.navBarLayout setTitle:STRING_MY_ORDERS];
-    
     [self.view setBackgroundColor:JAWhiteColor];
     
     [self.view addSubview:self.titleHeaderView];
@@ -114,6 +109,11 @@
 {
     [self hideLoading];
     [self onErrorResponse:RIApiResponseUnknownError messages:nil showAsMessage:NO selector:@selector(viewWillAppear:) objects:nil];
+}
+
+#pragma mark: -NavigationBarProtocol 
+- (NSString *)navBarTitleString {
+    return STRING_MY_ORDERS;
 }
 
 @end

@@ -33,14 +33,10 @@
 @implementation JANoConnectionView
 
 + (JANoConnectionView *)getNewJANoConnectionViewWithFrame:(CGRect)frame {
-    NSArray *xib = [[NSBundle mainBundle] loadNibNamed:@"JANoConnectionView"
-                                                 owner:self
-                                               options:nil];
-    
+    NSArray *xib = [[NSBundle mainBundle] loadNibNamed:@"JANoConnectionView" owner:self options:nil];
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         xib = [[NSBundle mainBundle] loadNibNamed:@"JANoConnectionView~iPad" owner:nil options:nil];
     }
-    
     for (NSObject *obj in xib) {
         if ([obj isKindOfClass:[JANoConnectionView class]]) {
             [((JANoConnectionView *)obj) setFrame:frame];

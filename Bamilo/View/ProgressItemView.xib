@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -61,21 +61,21 @@
                             </subviews>
                             <color key="backgroundColor" red="0.0" green="0.62931185960000002" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
-                                <constraint firstItem="9m6-wG-z0f" firstAttribute="leading" secondItem="G0F-DY-v6p" secondAttribute="leading" constant="1" id="Lkt-sP-VyM"/>
+                                <constraint firstItem="9m6-wG-z0f" firstAttribute="left" secondItem="G0F-DY-v6p" secondAttribute="left" constant="1" id="Lkt-sP-VyM"/>
                                 <constraint firstAttribute="bottom" secondItem="9m6-wG-z0f" secondAttribute="bottom" constant="1" id="bX3-b8-JmN"/>
                                 <constraint firstItem="9m6-wG-z0f" firstAttribute="top" secondItem="G0F-DY-v6p" secondAttribute="top" constant="1" id="dxk-vj-VhA"/>
-                                <constraint firstAttribute="trailing" secondItem="9m6-wG-z0f" secondAttribute="trailing" constant="1" id="hAH-0O-3mD"/>
+                                <constraint firstAttribute="right" secondItem="9m6-wG-z0f" secondAttribute="right" constant="1" id="hAH-0O-3mD"/>
                             </constraints>
                         </view>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="46" id="8K6-UR-GLE"/>
-                        <constraint firstItem="G0F-DY-v6p" firstAttribute="leading" secondItem="rdF-VH-zwh" secondAttribute="leading" constant="8" id="Lum-xI-Y79"/>
+                        <constraint firstItem="G0F-DY-v6p" firstAttribute="left" secondItem="rdF-VH-zwh" secondAttribute="left" constant="8" id="Lum-xI-Y79"/>
                         <constraint firstAttribute="bottom" secondItem="G0F-DY-v6p" secondAttribute="bottom" constant="5" id="awA-gG-GWz"/>
                         <constraint firstItem="G0F-DY-v6p" firstAttribute="top" secondItem="rdF-VH-zwh" secondAttribute="top" constant="5" id="blE-NV-Ojj"/>
                         <constraint firstAttribute="height" constant="40" id="iM2-Z4-EaR"/>
-                        <constraint firstAttribute="trailing" secondItem="G0F-DY-v6p" secondAttribute="trailing" constant="8" id="ivh-1X-PEJ"/>
+                        <constraint firstAttribute="right" secondItem="G0F-DY-v6p" secondAttribute="right" constant="8" id="ivh-1X-PEJ"/>
                     </constraints>
                 </view>
             </subviews>

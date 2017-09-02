@@ -38,12 +38,6 @@
     self.subCatsFilter = (CatalogCategoryFilterItem *)[filterView getFilter];
 }
 
-#pragma override from BaseViewController
-- (void)updateNavBar {
-    self.navBarLayout.title = STRING_SUBCATEGORIES;
-    self.navBarLayout.showBackButton = YES;
-}
-
 - (IBAction)submitButtonTapped:(id)sender {
     for(CatalogFilterOption *catFilterOption in self.subCatsFilter.options) {
         if (catFilterOption.selected) {
@@ -53,5 +47,8 @@
     }
 }
 
-
+#pragma mark - NavigationBarProtocol
+- (NSString *)navBarTitleString {
+    return STRING_SUBCATEGORIES;
+}
 @end

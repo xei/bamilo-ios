@@ -72,9 +72,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.collectionView setBackgroundColor:[UIColor whiteColor]];
-    self.navBarLayout.showBackButton = YES;
     [self.collectionView registerClass:[JACatalogListCollectionViewCell class] forCellWithReuseIdentifier:@"CellWithLines"];
-    self.navBarLayout.title = STRING_VARIATIONS;
 }
 
 - (void)viewWillLayoutSubviews {
@@ -165,5 +163,8 @@
     // Dispose of any resources that can be recreated.
 }
 
-
+#pragma mark - NavigationBarProtocol
+- (NSString *)navBarTitleString {
+    return STRING_VARIATIONS;
+}
 @end

@@ -8,6 +8,7 @@
 
 #import "InputTextFieldControl.h"
 #import "UILabel+WhiteUIDatePickerLabels.h"
+#import "ThreadManager.h"
 
 @interface InputTextFieldControl() <UIPickerViewDelegate, UIPickerViewDataSource>
 @property (nonatomic, copy) NSString *errorMsg;
@@ -108,12 +109,14 @@
 - (void)updateModel {
     if (![self.model.inputTextValue isEqualToString:[self getStringValue]]) {
         self.model.inputTextValue = [self getStringValue];
-        [self.delegate inputValueHasBeenChanged:self byNewValue:[self getStringValue] inFieldIndex:self.fieldIndex];
+        [self.delegate inputValueChanged:self byNewValue:[self getStringValue] inFieldIndex:self.fieldIndex];
     }
 }
 
 - (void)setModel:(FormItemModel *)model {
     _model = model;
+    
+    //update UI
     self.input.icon.image = model.icon;
     self.input.textField.placeholder = model.placeholder;
     self.validation = model.validation;
@@ -129,10 +132,17 @@
     if (model.inputTextValue.length) {
         self.input.textField.text = (model.type == InputTextFieldControlTypeNumerical) ? [model.inputTextValue numbersToPersian] : model.inputTextValue;
         [self checkValidation];
+    } else {
+        self.input.textField.text = nil;
     }
     
     if (model.selectOption) {
         self.type = InputTextFieldControlTypeOptions;
+        //when we have only one option!
+        if (model.selectOption.count == 1) {
+            model.inputTextValue = model.selectOption.allKeys.firstObject;
+            self.input.textField.enabled = NO;
+        }
     } else if (self.type == InputTextFieldControlTypeOptions) {
         //When we have no selectOption model but it's `Option` type
         self.input.textField.enabled = NO;
@@ -141,6 +151,11 @@
     if (model.lastErrorMessage.length) {
         [self showErrorMsg:model.lastErrorMessage];
     }
+}
+
+- (void)updateModel:(FormItemModel *(^)(FormItemModel *))updateBlock {
+    FormItemModel *model = self.model;
+    [self setModel:updateBlock(model)];
 }
     
 - (void)checkValidation {

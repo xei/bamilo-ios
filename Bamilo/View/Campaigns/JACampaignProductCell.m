@@ -223,13 +223,11 @@
     return _sizeLine;
 }
 
-- (void)setChosenSize:(NSString *)chosenSize
-{
+- (void)setChosenSize:(NSString *)chosenSize {
     _chosenSize = chosenSize;
 }
 
-- (UIView *)bottomContentView
-{
+- (UIView *)bottomContentView {
     if (!VALID_NOTEMPTY(_bottomContentView, UIView)) {
         _bottomContentView = [[UIView alloc] initWithFrame:CGRectMake(kLateralMargin, self.height - kTopMargin - 48, (self.width - 2*kLateralMargin), kBottomDefaultHeight)];
         [_bottomContentView setBackgroundColor:JABlack300Color];
@@ -244,13 +242,13 @@
 {
     if (!VALID_NOTEMPTY(_buyButton, JAButton)) {
         _buyButton = [[JAButton alloc] initButtonWithTitle:[STRING_BUY uppercaseString] target:self action:@selector(buyButtonPressed)];
+        [_buyButton setBackgroundColor:[Theme color:kColorOrange1]];
         [_buyButton setFrame:CGRectMake(self.bottomContentView.width/2, 0, self.bottomContentView.width/2, self.bottomContentView.height)];
     }
     return _buyButton;
 }
 
-- (JAPercentageBarView *)percentageBarView
-{
+- (JAPercentageBarView *)percentageBarView {
     if (!VALID_NOTEMPTY(_percentageBarView, JAPercentageBarView)) {
         _percentageBarView = [[JAPercentageBarView alloc] initWithFrame:CGRectMake(10.f, 10.f, self.bottomContentView.width/2 - 2*10.f, 6.f)];
     }

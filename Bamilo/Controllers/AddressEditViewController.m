@@ -1,4 +1,4 @@
-	//
+//
 //  AddressEditViewController.m
 //  Bamilo
 //
@@ -9,6 +9,8 @@
 
 #import "AddressEditViewController.h"
 #import "Bamilo-Swift.h"
+#import "LoadingManager.h"
+#import "CheckoutAddressViewController.h"
 
 @interface AddressEditViewController () <DataServiceProtocol>
 @property (nonatomic, weak) IBOutlet UITableView* tableView;
@@ -26,9 +28,58 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self setNavigationBarConfigs];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.title = STRING_ADDRESS;    
+    self.title = STRING_ADDRESS;
     [self setupView];
+
+    //custom back button to behave customly
+    self.navigationItem.hidesBackButton = YES;
+    UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"btn_back"] style:UIBarButtonItemStylePlain target:self action: self.comesFromEmptyList ? @selector(twoStepBackNavigation): @selector(backAction)];
+    self.navigationItem.leftBarButtonItem = newBackButton;
+    
+}
+
+
+- (void)setNavigationBarConfigs {
+    self.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName: [Theme font:kFontVariationRegular size:13],
+                                               NSForegroundColorAttributeName: [UIColor whiteColor]};
+    //To remove the back button title
+    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(-60, -60) forBarMetrics:UIBarMetricsDefault];
+    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:
+     @{NSFontAttributeName: [Theme font:kFontVariationRegular size:1]} forState:UIControlStateNormal];
+    
+    //To change back button icon
+    UIImage *myImage = [UIImage imageNamed:@"btn_back"]; //set your backbutton imagename
+    UIImage *backButtonImage = [myImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+    
+    if (SYSTEM_VERSION_GREATER_THAN(@"9.0")) {
+        //To remove navBar bottom border
+        [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+        [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+        
+        // now use the new backButtomImage
+        [[UINavigationBar appearance] setBackIndicatorImage:backButtonImage];
+        [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:backButtonImage];
+        [[UINavigationBar appearance] setTranslucent:NO];
+    }
+    
+    //To set navigation bar background color
+    self.navigationController.navigationBar.barTintColor = [Theme color:kColorExtraDarkBlue];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+}
+
+- (void)backAction {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)twoStepBackNavigation {
+    CheckoutAddressViewController *parentViewController = (CheckoutAddressViewController *)[[MainTabBarViewController topNavigationController] topViewController];
+    parentViewController.viewIsDisappearing = YES;
+    [self dismissViewControllerAnimated:NO completion:^{
+        [[MainTabBarViewController topNavigationController] popViewControllerAnimated:YES];
+    }];
 }
 
 - (void)setupView {
@@ -36,6 +87,7 @@
     self.formController.submitTitle = @"ذخیره آدرس";
     self.formController.delegate = self;
     self.formController.tableView = self.tableView;
+    self.formController.submissionButtonColor = [Theme color:kColorDarkGreen];
     
     self.formController.formModelList = [NSMutableArray new];
     
@@ -44,7 +96,7 @@
     region = [[FormItemModel alloc] initWithTextValue: (self.address.uid) ? @"": @"تهران" fieldName: @"address_form[region]" andIcon: nil placeholder: @"استان" type: InputTextFieldControlTypeOptions validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil] selectOptions: nil];
     
     city = [[FormItemModel alloc] initWithTextValue:nil fieldName: @"address_form[city]" andIcon:nil placeholder: @"شهر" type: InputTextFieldControlTypeOptions validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil] selectOptions:nil];
-
+    
     vicinity = [[FormItemModel alloc] initWithTextValue: nil fieldName: @"address_form[postcode]" andIcon: nil placeholder: @"محله" type: InputTextFieldControlTypeOptions validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil] selectOptions: nil];
     vicinity.validation.isRequired = NO;
     
@@ -76,9 +128,7 @@
         FormItemModel *gender = [FormItemModel genderWithFieldName:@"address_form[gender]"];
         [self.formController.formModelList addObject:gender];
     }
-    
     [self.formController setupTableView];
-    
     if (!self.address.uid) {
         // Get regions and citiies for region defualt value (if exists)
         [self getRegionsByCompletion:^{
@@ -100,15 +150,12 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     if (self.address.uid) {
         [self getAddressByID:self.address.uid];
     }
-    
-    
     //pop this view controller if user is not logged in
     if (![RICustomer checkIfUserIsLogged]) {
-        [self.navigationController popViewControllerAnimated:NO];
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
@@ -118,30 +165,19 @@
     [self.formController unregisterForKeyboardNotifications];
 }
 
-#pragma mark - Overrides
-- (void)updateNavBar {
-    [super updateNavBar];
-    
-    self.navBarLayout.title = STRING_MY_ADDRESSES;
-    self.navBarLayout.showCartButton = NO;
-    self.navBarLayout.showBackButton = YES;
-    self.navBarLayout.showLogo = NO;
-}
-
 #pragma mark - FormViewControlDelegate
 - (void)formSubmitButtonTapped {
     if (![self.formController isFormValid]) {
         [self.formController showAnyErrorInForm];
         return;
     }
-    
     NSMutableDictionary *params = [self.formController getMutableDictionaryOfForm];
     if(self.address.uid) {
         //EDIT / UPDATE ADDRESS
         params[@"address_form[id]"] = self.address.uid;
         [DataAggregator updateAddress:self params:params addressId:self.address.uid completion:^(id data, NSError *error) {
             if (error == nil) {
-                [self.navigationController popViewControllerAnimated:YES];
+                [self dismissViewControllerAnimated:YES completion:nil];
             } else {
                 if(![self showNotificationBar:error isSuccess:NO]) {
                     for(NSDictionary* errorField in [error.userInfo objectForKey:@"errorMessages"]) {
@@ -156,7 +192,7 @@
         params[@"address_form[id]"] = @"";
         [DataAggregator addAddress:self params:params completion:^(id data, NSError *error) {
             if (error == nil) {
-                [self.navigationController popViewControllerAnimated:YES];
+                [self dismissViewControllerAnimated:YES completion:nil];
             } else {
                 if(![self showNotificationBar:error isSuccess:NO]) {
                     for(NSDictionary* errorField in [error.userInfo objectForKey:kErrorMessages]) {
@@ -201,7 +237,6 @@
 #pragma ArgsReceiverProtocol
 -(void)updateWithArgs:(NSDictionary *)args {
     Address *address = [args objectForKey:kAddress];
-    
     if(address) {
         self.address = address;
     }
@@ -220,11 +255,9 @@
 - (void)updateSelectOptionModelForFieldIndex:(NSUInteger)fieldIndex withData:(id)data {
     [self.formController updateFieldIndex:fieldIndex WithUpdateModelBlock:^FormItemModel *(FormItemModel *model) {
         model.selectOption = data;
-        
         if ([model getValue] == nil) {
             model.inputTextValue = nil;
         }
-        
         return model;
     }];
     [self.formController refreshView];
@@ -232,15 +265,15 @@
 
 - (void)updateFormValuesWithAddress:(Address *)address {
     NSDictionary <NSString*, NSString*> *addressFieldMapValues = @{
-                                      @"address_form[first_name]"   : address.firstName ?: @"",
-                                      @"address_form[last_name]"    : address.lastName ?: @"",
-                                      @"address_form[phone]"        : address.phone ?: @"",
-                                      @"address_form[address1]"     : address.address ?: @"",
-                                      @"address_form[address2]"     : address.address1 ?: @"",
-                                      @"address_form[region]"       : address.region ?: @"",
-                                      @"address_form[city]"         : address.city ?: @"",
-                                      @"address_form[postcode]"     : address.postcode ?: @""
-                                    };
+                                                                   @"address_form[first_name]"   : address.firstName ?: @"",
+                                                                   @"address_form[last_name]"    : address.lastName ?: @"",
+                                                                   @"address_form[phone]"        : address.phone ?: @"",
+                                                                   @"address_form[address1]"     : address.address ?: @"",
+                                                                   @"address_form[address2]"     : address.address1 ?: @"",
+                                                                   @"address_form[region]"       : address.region ?: @"",
+                                                                   @"address_form[city]"         : address.city ?: @"",
+                                                                   @"address_form[postcode]"     : address.postcode ?: @""
+                                                                   };
     
     [self.formController.formModelList enumerateObjectsUsingBlock:^(id _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if([obj isKindOfClass:[FormItemModel class]]) {
@@ -254,7 +287,7 @@
     [self.formController refreshView];
     [self getRegionsByCompletion:^{
         if (addressFieldMapValues[@"address_form[region]"].length) {
-            [self getCitiesForRegionId:[region getValue]  completion:^{
+            [self getCitiesForRegionId:[region getValue] completion:^{
                 if (addressFieldMapValues[@"address_form[city]"]) {
                     [self getVicinitiesForCityId:[city getValue] completion:nil];
                 }
@@ -269,8 +302,10 @@
 - (void)getRegionsByCompletion:(void (^)(void))completion {
     [DataAggregator getRegions:self completion:^(id data, NSError *error) {
         if (!error)  {
-            [self bind:data forRequestId:0];
-            if(completion) completion();
+//            [ThreadManager executeOnMainThread:^{
+                [self bind:data forRequestId:0];
+                if(completion) completion();
+//            }];
         }
     }];
 }
@@ -302,4 +337,8 @@
     }
 }
 
+#pragma mark - NavigationBarProtocol
+- (NSString *)navBarTitleString {
+    return STRING_MY_ADDRESSES;
+}
 @end

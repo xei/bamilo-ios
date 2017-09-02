@@ -10,4 +10,6 @@
 
 @interface CheckoutAddressViewController : CheckoutBaseViewController
 
+@property (nonatomic) BOOL viewIsDisappearing;
+
 @end

@@ -22,10 +22,10 @@ enum ApiResponseType: Int {
     case kickoutView            = 9008
 }
 
-enum ApiRequestExecutionType {
-    case foreground
-    case background
-    case container
+enum ApiRequestExecutionType: Int {
+    case foreground = 0
+    case background = 1
+    case container  = 2
 }
 
 typealias ResponseClosure = (_ responseType: ApiResponseType, _ data: ApiResponseData?, _ errorMessages: [Any]?) -> Void
@@ -40,7 +40,7 @@ class RequestManagerSwift {
     func async(_ method: HTTPMethod, target: Any, path: String, params: Parameters?, type: ApiRequestExecutionType, completion: @escaping ResponseClosure) {
         if let baseUrl = self.baseUrl {
             if(type == .container || type == .foreground) {
-                LoadingManager.showLoading()
+                LoadingManager.showLoading(on: target)
             }
             print("------------ Start request for : \(baseUrl)/\(path)")
             if let params = params {
@@ -64,7 +64,7 @@ class RequestManagerSwift {
                             }
                         }
                     
-                        if(type == .container || type == .foreground) {
+                        if(type == .foreground) {
                             LoadingManager.hideLoading()
                         }
                     case .failure(let error):

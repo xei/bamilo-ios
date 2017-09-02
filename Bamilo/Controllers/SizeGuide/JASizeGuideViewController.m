@@ -14,75 +14,44 @@
 
 @property (nonatomic, strong)UIImageView* imageView;
 @property (nonatomic, strong)UIScrollView* scrollView;
-//$WIZ$
-//@property (nonatomic, strong) JASizeGuideWizardView *wizardView;
-
 @end
 
-@implementation JASizeGuideViewController
-{
+@implementation JASizeGuideViewController {
     UIImage *sizeGuideImage;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self.navBarLayout setShowBackButton:YES];
-    self.navBarLayout.title = STRING_SIZE_GUIDE;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     [self positionViews];
 }
 
 
--(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    //$WIZ$
-//    if(VALID_NOTEMPTY(self.wizardView, JASizeGuideWizardView))
-//    {
-//        CGRect newFrame = CGRectMake(self.wizardView.frame.origin.x,
-//                                     self.wizardView.frame.origin.y,
-//                                     self.view.frame.size.height + self.view.frame.origin.y,
-//                                     self.view.frame.size.width - self.view.frame.origin.y);
-//        [self.wizardView reloadForFrame:newFrame];
-//    }
-    
+-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
     [self positionViews];
-    
-    //$WIZ$
-//    if(VALID_NOTEMPTY(self.wizardView, JASizeGuideWizardView))
-//    {
-//        [self.wizardView reloadForFrame:self.view.bounds];
-//        [self.view bringSubviewToFront:self.wizardView];
-//    }
-    
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
 
-- (void)positionViews
-{
-    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
-    {
+- (void)positionViews {
+    if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus]) {
         [self onErrorResponse:RIApiResponseNoInternetConnection messages:nil showAsMessage:NO selector:@selector(positionViews) objects:nil];
         [self hideLoading];
     } else {
-        if(sizeGuideImage == nil)
-        {
+        if(sizeGuideImage == nil) {
             if (!self.sizeGuideUrl) {
                 [self onErrorResponse:RIApiResponseUnknownError messages:nil showAsMessage:NO selector:@selector(positionViews) objects:nil];
                 return ;
@@ -106,27 +75,13 @@
                     UIImage *image = [UIImage imageWithData:imageData];
                     sizeGuideImage = image;
                     [self setupScrollViewBasedOnImage:sizeGuideImage];
-
-                    //$WIZ$
-//                    if(VALID_NOTEMPTY(self.wizardView, JASizeGuideWizardView))
-//                    {
-//                        [self.wizardView reloadForFrame:self.view.bounds];
-//                        [self.view bringSubviewToFront:self.wizardView];
-//                    }
                 });
             });
-        }
-        else
-        {
+        } else {
             [self setupScrollViewBasedOnImage:sizeGuideImage];
         }
-        
-        if([[NSUserDefaults standardUserDefaults] boolForKey:kJASizeGuideWizardUserDefaultsKey] == NO)
-        {
+        if([[NSUserDefaults standardUserDefaults] boolForKey:kJASizeGuideWizardUserDefaultsKey] == NO) {
             [self hideLoading];
-            //$WIZ$
-//            self.wizardView = [[JASizeGuideWizardView alloc] initWithFrame:self.view.bounds];
-//            [self setupWizardView:self.wizardView];
         }
     }
 }
@@ -137,8 +92,7 @@
  *
  * @param: UIImage image    image to add to the scroll view
  */
--(void)setupScrollViewBasedOnImage:(UIImage *)image
-{
+-(void)setupScrollViewBasedOnImage:(UIImage *)image {
     [self.scrollView removeFromSuperview];
     self.scrollView = [UIScrollView new];
     self.scrollView.delegate = self;
@@ -175,26 +129,19 @@
  * centered in the scroll view
  *
  */
--(void)centerScrollViewContents
-{
+-(void)centerScrollViewContents {
     CGSize boundsSize = self.scrollView.bounds.size;
     CGRect contentsFrame = self.imageView.frame;
     
-    if(contentsFrame.size.width < boundsSize.width)
-    {
+    if(contentsFrame.size.width < boundsSize.width) {
         contentsFrame.origin.x = (boundsSize.width - contentsFrame.size.width) / 2.0f;
-    }
-    else
-    {
+    } else {
         contentsFrame.origin.x = 0.0f;
     }
     
-    if(contentsFrame.size.height < boundsSize.height)
-    {
+    if(contentsFrame.size.height < boundsSize.height) {
         contentsFrame.origin.y = (boundsSize.height - contentsFrame.size.height) / 2.0f;
-    }
-    else
-    {
+    } else {
         contentsFrame.origin.y = 0.0f;
     }
     
@@ -202,8 +149,7 @@
 }
 
 
--(void)setupWizardView:(JAWizardView *)wizardView
-{
+-(void)setupWizardView:(JAWizardView *)wizardView {
     [self.view addSubview:wizardView];
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJASizeGuideWizardUserDefaultsKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -212,9 +158,12 @@
 
 #pragma mark - UIScrollView
 
--(UIView *) viewForZoomingInScrollView:(UIScrollView *)scrollView
-{
+-(UIView *) viewForZoomingInScrollView:(UIScrollView *)scrollView {
     return self.imageView;
 }
 
+#pragma mark - NavigationBarProtocol
+- (NSString *)navBarTitleString {
+    return STRING_SIZE_GUIDE;
+}
 @end

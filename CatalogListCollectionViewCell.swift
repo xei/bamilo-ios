@@ -13,5 +13,15 @@ class CatalogListCollectionViewCell: BaseCatallogCollectionViewCell {
     override func setupView() {
         super.setupView()
     }
-
+    
+    override func updateWithProduct(product: Product) {
+        super.updateWithProduct(product: product)
+        
+        if let name = product.name {
+            let style = NSMutableParagraphStyle()
+            style.minimumLineHeight = 18
+            style.maximumLineHeight = 18
+            self.titleLabel?.attributedText = NSAttributedString(string: name, attributes: [NSParagraphStyleAttributeName: style])
+        }
+    }
 }

@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 @property (weak, nonatomic) IBOutlet IconButton *commentButton;
+@property (weak, nonatomic) IBOutlet UILabel *estimatedDeliveryTimeLabel;
 
 @end
 
@@ -30,10 +31,12 @@
     [self.priceLabel applyStyle:[Theme font:kFontVariationRegular size:11.0f] color:[Theme color:kColorLightGray]];
     [self.quantityLabel applyStyle:[Theme font:kFontVariationRegular size:11.0f] color:[Theme color:kColorLightGray]];
     [self.productTitleLabel applyStyle:[Theme font:kFontVariationRegular size:11.0f] color:[Theme color:kColorLightGray]];
+    [self.estimatedDeliveryTimeLabel applyStyle:[Theme font:kFontVariationRegular size:10.0f] color:[Theme color:kColorExtraDarkGray]];
+    
     [self.commentButton applyStyle:[Theme font:kFontVariationBold size:11.0f] color:[UIColor whiteColor]];
     [self.statusLabel applyStyle:[Theme font:kFontVariationBold size:11.0f] color:[Theme color:kColorExtraDarkGray]];
     
-    [self.commentButton setBackgroundColor:[Theme color:kColorBlue]];
+    [self.commentButton setBackgroundColor:[Theme color:kColorDarkGreen]];
 }
 
 - (void)updateWithModel:(id)model {
@@ -47,6 +50,15 @@
     self.priceLabel.text = [product.formatedPrice numbersToPersian];
     self.quantityLabel.text = [[NSString stringWithFormat:@"%@: %@", STRING_ORDER_QUANTITY, product.quantity] numbersToPersian];
     [self.productImage sd_setImageWithURL:[ImageManager getCorrectedUrlForCartItemImageUrl:product.imageURL] placeholderImage:[ImageManager defaultPlaceholder]];
+    
+    if (product.caculatedDeliveryTime.length) {
+        [self.estimatedDeliveryTimeLabel setHidden: NO];
+        [self.commentButton setHidden:YES];
+        self.estimatedDeliveryTimeLabel.text = [NSString stringWithFormat:@"%@: %@", STRING_DELIVERY_TIME, product.caculatedDeliveryTime];
+    } else {
+        [self.commentButton setHidden:NO];
+        [self.estimatedDeliveryTimeLabel setHidden: YES];
+    }
 }
 - (IBAction)reviewButtonTapped:(id)sender {
     [self.delegate needsToShowProductReviewForProduct:product];

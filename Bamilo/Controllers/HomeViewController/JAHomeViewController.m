@@ -47,7 +47,6 @@
 
 @implementation JAHomeViewController
 
-
 - (EmarsysRecommendationCarouselView *)recommendationView {
     if (!self.isLoaded) return nil;
     if (!_recommendationView) {
@@ -67,8 +66,6 @@
     [super viewDidLoad];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"newsletter_subscribed"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    self.navBarLayout.showCartButton = NO;
-    self.navBarLayout.showSeparatorView = NO;
     self.searchBarIsVisible = YES;
     self.tabBarIsVisible = YES;
     self.isLoaded = NO;
@@ -105,6 +102,10 @@
     
     if (self.isLoaded && self.isReturningHome) {
         [EmarsysPredictManager sendTransactionsOf:self];
+    }
+    
+    if (!self.isLoaded && self.isReturningHome) {
+        [self requestTeasers];
     }
 }
 
@@ -337,8 +338,18 @@
 
 #pragma mark: - searchBarSearched Protocol
 - (void)searchBarSearched:(UISearchBar *)searchBar {
-    [TrackerManager postEventWithSelector:[EventSelectors searchBarSearchedSelector] attributes:[EventAttributes searchBarSearchedWithSearchString:searchBar.text screenName:[self getScreenName]]];
+    [TrackerManager postEventWithSelector:[EventSelectors searchBarSearchedSelector]
+                               attributes:[EventAttributes searchBarSearchedWithSearchString:searchBar.text screenName:[self getScreenName]]];
 }
 
+
+#pragma mark: -NavigationBarProtocol
+- (UIView *)navBarTitleView {
+    return [NavBarUtility navBarLogo];
+}
+
+- (NSString *)navBarTitleString {
+    return STRING_HOME;
+}
 
 @end

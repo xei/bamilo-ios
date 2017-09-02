@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -59,14 +59,14 @@
                         <constraint firstAttribute="bottom" secondItem="GiY-9V-qjX" secondAttribute="bottom" id="8Cy-wi-Rmd"/>
                         <constraint firstItem="ZZk-q2-461" firstAttribute="top" secondItem="6Fa-Ht-d6l" secondAttribute="top" id="AEm-xi-88P"/>
                         <constraint firstItem="KsS-gh-5m4" firstAttribute="width" secondItem="KsS-gh-5m4" secondAttribute="height" multiplier="1:1" id="LjN-7g-Rxb"/>
-                        <constraint firstAttribute="trailing" secondItem="GiY-9V-qjX" secondAttribute="trailing" id="NC3-yf-8Ga"/>
+                        <constraint firstAttribute="right" secondItem="GiY-9V-qjX" secondAttribute="right" id="NC3-yf-8Ga"/>
                         <constraint firstItem="KsS-gh-5m4" firstAttribute="centerY" secondItem="ZZk-q2-461" secondAttribute="centerY" id="U6P-za-nU8"/>
-                        <constraint firstItem="GiY-9V-qjX" firstAttribute="leading" secondItem="6Fa-Ht-d6l" secondAttribute="leading" id="VUY-OK-jQa"/>
-                        <constraint firstItem="bPy-SO-qhD" firstAttribute="leading" secondItem="6Fa-Ht-d6l" secondAttribute="leading" constant="10" id="XUM-iu-GgF"/>
-                        <constraint firstItem="ZZk-q2-461" firstAttribute="leading" secondItem="6Fa-Ht-d6l" secondAttribute="leading" id="Y8k-6p-3gO"/>
+                        <constraint firstItem="GiY-9V-qjX" firstAttribute="left" secondItem="6Fa-Ht-d6l" secondAttribute="left" id="VUY-OK-jQa"/>
+                        <constraint firstItem="bPy-SO-qhD" firstAttribute="left" secondItem="6Fa-Ht-d6l" secondAttribute="left" constant="10" id="XUM-iu-GgF"/>
+                        <constraint firstItem="ZZk-q2-461" firstAttribute="left" secondItem="6Fa-Ht-d6l" secondAttribute="left" id="Y8k-6p-3gO"/>
                         <constraint firstItem="KsS-gh-5m4" firstAttribute="width" secondItem="6Fa-Ht-d6l" secondAttribute="height" multiplier="1:2" id="d8h-XS-LdZ"/>
                         <constraint firstItem="bPy-SO-qhD" firstAttribute="centerY" secondItem="ZZk-q2-461" secondAttribute="centerY" id="fd9-8z-24M"/>
-                        <constraint firstAttribute="trailing" secondItem="KsS-gh-5m4" secondAttribute="trailing" constant="-31" id="lFj-GL-qVW"/>
+                        <constraint firstAttribute="right" secondItem="KsS-gh-5m4" secondAttribute="right" constant="-31" id="lFj-GL-qVW"/>
                         <constraint firstItem="GiY-9V-qjX" firstAttribute="top" secondItem="ZZk-q2-461" secondAttribute="bottom" id="tFR-C9-8Na"/>
                         <constraint firstItem="KsS-gh-5m4" firstAttribute="left" secondItem="ZZk-q2-461" secondAttribute="right" constant="8" id="ubK-Vl-Vrz"/>
                     </constraints>
@@ -74,12 +74,12 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="6Fa-Ht-d6l" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="BFS-N1-yfA"/>
+                <constraint firstItem="6Fa-Ht-d6l" firstAttribute="left" secondItem="iN0-l3-epB" secondAttribute="left" id="BFS-N1-yfA"/>
                 <constraint firstItem="d2O-YV-59p" firstAttribute="top" secondItem="6Fa-Ht-d6l" secondAttribute="bottom" constant="-15" id="W8b-tV-9pC"/>
-                <constraint firstAttribute="trailing" secondItem="6Fa-Ht-d6l" secondAttribute="trailing" id="co1-pp-TQK"/>
+                <constraint firstAttribute="right" secondItem="6Fa-Ht-d6l" secondAttribute="right" id="co1-pp-TQK"/>
                 <constraint firstAttribute="bottom" secondItem="6Fa-Ht-d6l" secondAttribute="bottom" constant="15" id="ikf-Gf-9r6"/>
                 <constraint firstItem="6Fa-Ht-d6l" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="lPd-09-f9F"/>
-                <constraint firstAttribute="trailing" secondItem="d2O-YV-59p" secondAttribute="trailing" constant="8" id="q72-Q0-hUh"/>
+                <constraint firstAttribute="right" secondItem="d2O-YV-59p" secondAttribute="right" constant="8" id="q72-Q0-hUh"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>

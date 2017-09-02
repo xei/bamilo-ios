@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -69,18 +69,18 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="RAy-em-oT2" firstAttribute="top" secondItem="iBh-VX-LnF" secondAttribute="bottom" constant="5" id="5Kp-o7-dCu"/>
-                <constraint firstItem="eeJ-5C-nJu" firstAttribute="trailing" secondItem="EZV-fE-ZZg" secondAttribute="trailing" id="5q3-uA-Lfk"/>
-                <constraint firstItem="eeJ-5C-nJu" firstAttribute="leading" secondItem="EZV-fE-ZZg" secondAttribute="leading" id="803-Fy-yce"/>
+                <constraint firstItem="eeJ-5C-nJu" firstAttribute="right" secondItem="EZV-fE-ZZg" secondAttribute="right" id="5q3-uA-Lfk"/>
+                <constraint firstItem="eeJ-5C-nJu" firstAttribute="left" secondItem="EZV-fE-ZZg" secondAttribute="left" id="803-Fy-yce"/>
                 <constraint firstItem="zXR-e4-MGd" firstAttribute="top" secondItem="RAy-em-oT2" secondAttribute="bottom" id="DFX-L3-Mdl"/>
-                <constraint firstItem="EZV-fE-ZZg" firstAttribute="trailing" secondItem="zXR-e4-MGd" secondAttribute="trailing" id="J5G-Rx-SLX"/>
-                <constraint firstItem="RAy-em-oT2" firstAttribute="leading" secondItem="iBh-VX-LnF" secondAttribute="leading" id="XPG-Ri-hgR"/>
-                <constraint firstItem="EZV-fE-ZZg" firstAttribute="leading" secondItem="zXR-e4-MGd" secondAttribute="leading" id="bSh-y8-73D"/>
+                <constraint firstItem="EZV-fE-ZZg" firstAttribute="right" secondItem="zXR-e4-MGd" secondAttribute="right" id="J5G-Rx-SLX"/>
+                <constraint firstItem="RAy-em-oT2" firstAttribute="left" secondItem="iBh-VX-LnF" secondAttribute="left" id="XPG-Ri-hgR"/>
+                <constraint firstItem="EZV-fE-ZZg" firstAttribute="left" secondItem="zXR-e4-MGd" secondAttribute="left" id="bSh-y8-73D"/>
                 <constraint firstAttribute="right" secondItem="iBh-VX-LnF" secondAttribute="right" constant="10" id="dXt-jb-dmc"/>
                 <constraint firstItem="iBh-VX-LnF" firstAttribute="left" secondItem="gTV-IL-0wX" secondAttribute="left" constant="10" id="eSS-wg-2nX"/>
-                <constraint firstItem="zXR-e4-MGd" firstAttribute="leading" secondItem="RAy-em-oT2" secondAttribute="leading" id="fat-SN-KnU"/>
-                <constraint firstItem="zXR-e4-MGd" firstAttribute="trailing" secondItem="RAy-em-oT2" secondAttribute="trailing" id="fsT-SC-k5x"/>
+                <constraint firstItem="zXR-e4-MGd" firstAttribute="left" secondItem="RAy-em-oT2" secondAttribute="left" id="fat-SN-KnU"/>
+                <constraint firstItem="zXR-e4-MGd" firstAttribute="right" secondItem="RAy-em-oT2" secondAttribute="right" id="fsT-SC-k5x"/>
                 <constraint firstItem="EZV-fE-ZZg" firstAttribute="top" secondItem="zXR-e4-MGd" secondAttribute="bottom" constant="5" id="j05-Ch-Egz"/>
-                <constraint firstItem="RAy-em-oT2" firstAttribute="trailing" secondItem="iBh-VX-LnF" secondAttribute="trailing" id="oDt-mu-gQc"/>
+                <constraint firstItem="RAy-em-oT2" firstAttribute="right" secondItem="iBh-VX-LnF" secondAttribute="right" id="oDt-mu-gQc"/>
                 <constraint firstItem="eeJ-5C-nJu" firstAttribute="top" secondItem="EZV-fE-ZZg" secondAttribute="bottom" id="tgK-1n-pec"/>
                 <constraint firstItem="iBh-VX-LnF" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="wEd-2q-5Jq"/>
             </constraints>

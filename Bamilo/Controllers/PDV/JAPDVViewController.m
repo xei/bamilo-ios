@@ -117,11 +117,6 @@ static NSString *recommendationLogic = @"RELATED";
     [self.view setBackgroundColor:[UIColor whiteColor]];
     self.apiResponse = RIApiResponseSuccess;
 
-    //self.A4SViewControllerAlias = @"PRODUCT";
-
-    self.navBarLayout.showBackButton = YES;
-    self.navBarLayout.showCartButton = YES;
-
     self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     [self.mainScrollView setHidden:YES];
     [self.view addSubview:self.mainScrollView];
@@ -135,15 +130,7 @@ static NSString *recommendationLogic = @"RELATED";
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-//
     if(!self.hasLoaddedProduct) {
-//        [self removeSuperviews];
-//        if (_needRefreshProduct) {
-//            [self loadCompleteProduct];
-//        } else {
-//            [self fillTheViews];
-//        }
-//    } else {
         if (self.targetString.length || self.productSku.length) {
             [self loadCompleteProduct];
         } else {
@@ -151,147 +138,20 @@ static NSString *recommendationLogic = @"RELATED";
         }
     }
     if (_needAddToFavBlock) {
-
         if (_processActionBlock) {
             _processActionBlock();
         }
     }
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductChangedNotification object:self.product.sku];
-//    _needRefreshProduct = NO;
+    
+    [self updateCartInNavBar];
 }
 
-- (void)presentCoachMarks {
-
-    CGRect wishListButtonFrame = _productImageSection.wishListButton.frame; //search button
-    UIDevice *device = [UIDevice currentDevice];
-    NSArray *coachMarks;
-    if ([[device model] isEqualToString:@"iPhone"] || [[device model] isEqualToString:@"iPhone Simulator"]) {
-        UIButton *callToOrderButton = [self.ctaView.smallButtonsArray objectAtIndex:1];
-        UIButton *addToCartButton = [self.ctaView.buttonsArray objectAtIndex:0];
-
-        // Setup coach marks
-        CGRect coachmark1 = CGRectMake( wishListButtonFrame.origin.x-15, wishListButtonFrame.origin.y + 44, wishListButtonFrame.size.width +35, wishListButtonFrame.size.height + 35);
-        CGRect coachmark2 = CGRectMake(callToOrderButton.frame.origin.x, self.view.height+15, callToOrderButton.width, callToOrderButton.height+12);
-        CGRect coachmark3 = CGRectMake( self.view.center.x, self.view.center.y,0,0);
-        CGRect coachmark4 = CGRectMake( self.productImageSection.center.x, self.productImageSection.center.y,0,0);
-        CGRect coachmark6 = CGRectMake(addToCartButton.frame.origin.x, self.view.height+20, addToCartButton.width, addToCartButton.height);
-
-        // Setup coach marks
-        coachMarks = @[
-                       @{
-                           @"rect": [NSValue valueWithCGRect:coachmark4],
-                           @"caption": @"مشاهده گالری تصاویر بزرگ کالا",
-                           @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
-                           @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
-                           @"position":[NSNumber numberWithInteger:LABEL_POSITION_RIGHT],
-                           @"showArrow":[NSNumber numberWithBool:YES],
-                           @"productDetailPage":[NSNumber numberWithBool:YES]
-                           },
-                       @{
-                           @"rect": [NSValue valueWithCGRect:coachmark1],
-                           @"caption": @"افزودن به لیست علاقه مندی ها\n(لیست خریدهای آینده)",
-                           @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
-                           @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
-                           @"position":[NSNumber numberWithInteger:LABEL_POSITION_RIGHT]
-                           },
-                       @{
-                           @"rect": [NSValue valueWithCGRect:coachmark2],
-                           @"caption":@"تماس با خدمات مشتریان بامیلو",
-                           @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
-                           @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
-                           @"position":[NSNumber numberWithInteger:LABEL_POSITION_TOP]
-                           },
-                       @{
-                           @"rect": [NSValue valueWithCGRect:coachmark6],
-                           @"caption": @"افزودن کالا به سبد خرید",
-                           @"shape": [NSNumber numberWithInteger:SHAPE_SQUARE],
-                           @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
-                           @"position":[NSNumber numberWithInteger:LABEL_POSITION_RIGHT],
-                           @"showArrow":[NSNumber numberWithBool:YES],
-                           @"addToCart":[NSNumber numberWithBool:YES]
-                           },
-                       @{
-                           @"rect": [NSValue valueWithCGRect:coachmark3],
-                           @"caption": @"حرکت عمودی برای مشاهده اطلاعات کالا",
-                           @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
-                           @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
-                           @"position":[NSNumber numberWithInteger:LABEL_POSITION_BOTTOM],
-                           @"showArrow":[NSNumber numberWithBool:YES],
-                           @"productDetailPage":[NSNumber numberWithBool:YES]
-                           }
-                       ];
-    } else {
-        UIButton *addToCartButton = [self.ctaView.buttonsArray objectAtIndex:0];
-
-        // Setup coach marks
-        CGRect coachmark1 = CGRectMake( wishListButtonFrame.origin.x-15, wishListButtonFrame.origin.y + 44, wishListButtonFrame.size.width +35, wishListButtonFrame.size.height + 35);
-        CGRect coachmark3 = CGRectMake( self.view.center.x, self.view.center.y,0,0);
-        CGRect coachmark4 = CGRectMake( self.productImageSection.center.x, self.productImageSection.center.y,0,0);
-        CGRect coachmark6 = CGRectMake(addToCartButton.frame.origin.x, self.view.height+20, addToCartButton.width, addToCartButton.height);
-
-        // Setup coach marks
-        coachMarks = @[
-                       @{
-                           @"rect": [NSValue valueWithCGRect:coachmark4],
-                           @"caption": @"مشاهده گالری تصاویر بزرگ کالا",
-                           @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
-                           @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
-                           @"position":[NSNumber numberWithInteger:LABEL_POSITION_RIGHT],
-                           @"showArrow":[NSNumber numberWithBool:YES],
-                           @"productDetailPage":[NSNumber numberWithBool:YES]
-                           },
-                       @{
-                           @"rect": [NSValue valueWithCGRect:coachmark1],
-                           @"caption": @"افزودن به لیست علاقه مندی ها\n(لیست خریدهای آینده)",
-                           @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
-                           @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
-                           @"position":[NSNumber numberWithInteger:LABEL_POSITION_RIGHT]
-                           },
-                       @{
-                           @"rect": [NSValue valueWithCGRect:coachmark6],
-                           @"caption": @"افزودن کالا به سبد خرید",
-                           @"shape": [NSNumber numberWithInteger:SHAPE_SQUARE],
-                           @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
-                           @"position":[NSNumber numberWithInteger:LABEL_POSITION_RIGHT],
-                           @"showArrow":[NSNumber numberWithBool:YES],
-                           @"addToCart":[NSNumber numberWithBool:YES]
-                           },
-                       @{
-                           @"rect": [NSValue valueWithCGRect:coachmark3],
-                           @"caption": @"حركت عمودي براي مشاهده اطلاعات كالا",
-                           @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
-                           @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
-                           @"position":[NSNumber numberWithInteger:LABEL_POSITION_BOTTOM],
-                           @"showArrow":[NSNumber numberWithBool:YES],
-                           @"productDetailPage":[NSNumber numberWithBool:YES]
-                           }
-                       ];
-    }
-
-    MPCoachMarks *coachMarksView = [[MPCoachMarks alloc] initWithFrame:self.navigationController.view.bounds coachMarks:coachMarks];
-    [self.navigationController.view addSubview:coachMarksView];
-    [coachMarksView start];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
+- (void)viewDidDisappear:(BOOL)animated {
     // notify the InAppNotification SDK that this view controller in no more active
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(updatedProduct:)
-                                                 name:kProductChangedNotification
-                                               object:nil];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(updatedProduct:)
-                                                 name:kUserLoggedInNotification
-                                               object:nil];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(updatedProduct:)
-                                                 name:kUserLoggedOutNotification
-                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatedProduct:) name:kProductChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatedProduct:) name:kUserLoggedInNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatedProduct:) name:kUserLoggedOutNotification object:nil];
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -352,12 +212,10 @@ static NSString *recommendationLogic = @"RELATED";
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context)
-     {
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
          UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
          // do whatever
          [self fillTheViews];
-
          if(self.galleryPaged) {
              UIView *gallerySuperView = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
 
@@ -384,11 +242,8 @@ static NSString *recommendationLogic = @"RELATED";
              [self.view bringSubviewToFront:self.galleryPaged];
          }
 
-     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context)
-     {
-
+     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
      }];
-
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
 
@@ -400,17 +255,14 @@ static NSString *recommendationLogic = @"RELATED";
 - (void) removeSuperviews {
     [self.mainScrollView setHidden:YES];
     [self.landscapeScrollView setHidden:YES];
-
     for(UIView *subView in self.mainScrollView.subviews) {
         [subView removeFromSuperview];
     }
-
     if(self.landscapeScrollView) {
         for(UIView *subView in self.landscapeScrollView.subviews) {
             [subView removeFromSuperview];
         }
     }
-
     if (self.ctaView) {
         [self.ctaView removeFromSuperview];
     }
@@ -436,9 +288,7 @@ static NSString *recommendationLogic = @"RELATED";
     if(self.apiResponse == RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess) {
         [self showLoading];
     }
-
     self.hasLoaddedProduct = NO;
-
     NSDictionary *richParameter;
     if (VALID_NOTEMPTY(self.richRelevanceParameter, NSString)) {
         richParameter = [NSDictionary dictionaryWithObject:self.richRelevanceParameter forKey:@"rich_parameter"];
@@ -452,7 +302,6 @@ static NSString *recommendationLogic = @"RELATED";
                                          successBlock:^(id product) {
                                              _needRefreshProduct = NO;
                                              self.apiResponse = RIApiResponseSuccess;
-
                                              [self loadedProduct:product];
                                              [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
                                          } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
@@ -486,9 +335,6 @@ static NSString *recommendationLogic = @"RELATED";
 
     self.product = product;
     self.productSku = product.sku;
-
-    [self.navBarLayout setTitle:product.brand];
-    [self reloadNavBar];
 
     [self trackingEventViewProduct:product];
     [self trackingEventLoadingTime];
@@ -529,16 +375,10 @@ static NSString *recommendationLogic = @"RELATED";
         if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation) {
             CGRect bounds = [self viewBounds];
             CGFloat scrollViewsWidth = bounds.size.width / 2;
-            [self.mainScrollView setFrame:CGRectMake(scrollViewsWidth,
-                                                     bounds.origin.y,
-                                                     scrollViewsWidth,
-                                                     bounds.size.height)];
+            [self.mainScrollView setFrame:CGRectMake(scrollViewsWidth, bounds.origin.y, scrollViewsWidth, bounds.size.height)];
             [self.mainScrollView setHidden:NO];
 
-            [self.landscapeScrollView setFrame:CGRectMake(bounds.origin.x,
-                                                          bounds.origin.y,
-                                                          scrollViewsWidth,
-                                                          bounds.size.height)];
+            [self.landscapeScrollView setFrame:CGRectMake(bounds.origin.x, bounds.origin.y, scrollViewsWidth, bounds.size.height)];
             [self.landscapeScrollView setHidden:NO];
         } else {
             [self.mainScrollView setHidden:NO];
@@ -552,9 +392,7 @@ static NSString *recommendationLogic = @"RELATED";
     /*******
      CTA Buttons
      *******/
-
     self.ctaView = [[JABottomBar alloc] initWithFrame:CGRectMake(0, self.view.height, self.view.width, kBottomDefaultHeight)];
-
     BOOL isiPadInLandscape = NO;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
@@ -562,38 +400,36 @@ static NSString *recommendationLogic = @"RELATED";
             isiPadInLandscape = YES;
         }
     }
-
     [self.ctaView setFrame:CGRectMake(self.mainScrollView.x,
                                       self.view.frame.size.height - self.ctaView.frame.size.height,
                                       self.mainScrollView.frame.size.width,
                                       self.ctaView.frame.size.height)];
-
     [self.view addSubview:self.ctaView];
     [self.ctaView setYBottomAligned:0.f];
     self.mainScrollView.height -= self.ctaView.height;
 
-    [self.ctaView addSmallButton:[UIImage imageNamed:@"btn_share"] target:self action:@selector(shareProduct)];
+    [[self.ctaView addSmallButton:[UIImage imageNamed:@"btn_share"] target:self action:@selector(shareProduct)] setBackgroundColor:[Theme color:kColorExtraDarkBlue]];
     UIDevice *device = [UIDevice currentDevice];
     if ([[device model] isEqualToString:@"iPhone"] || [[device model] isEqualToString:@"iPhone Simulator"]) {
-        [self.ctaView addSmallButton:[UIImage imageNamed:@"ic_calltoorder"] target:self action:@selector(callToOrder)];
+        [[self.ctaView addSmallButton:[UIImage imageNamed:@"ic_calltoorder"] target:self action:@selector(callToOrder)] setBackgroundColor:[Theme color:kColorExtraDarkBlue]];
     }
 
     if (!self.product.hasStock) {
         JAButton *saveButton = [self.ctaView addAlternativeButton:STRING_SAVE_ITEM target:self action:@selector(addToWishList)];
         [saveButton setTitleColor:JAOrange1Color forState:UIControlStateNormal];
     } else if (self.product.preOrder) {
-        [self.ctaView addButton:STRING_PRE_ORDER target:self action:@selector(addToCart)];
+        JAButton *button = [self.ctaView addButton:STRING_PRE_ORDER target:self action:@selector(addToCart)];
+        [button setBackgroundColor:[Theme color:kColorOrange1]];
     } else {
-        [self.ctaView addButton:STRING_BUY_NOW target:self action:@selector(addToCart)];
+        JAButton *button = [self.ctaView addButton:STRING_BUY_NOW target:self action:@selector(addToCart)];
+        [button setBackgroundColor:[Theme color:kColorOrange1]];
     }
-
     [self.view bringSubviewToFront:self.picker];
 }
 
 - (void)requestBundles {
     //fill the views
-    [RIProduct getBundleWithSku:self.product.sku
-                   successBlock:^(RIBundle* bundle) {
+    [RIProduct getBundleWithSku:self.product.sku successBlock:^(RIBundle* bundle) {
                        self.productBundle = bundle;
                        _viewLoaded = TRUE;
                        [self fillTheViews];
@@ -625,33 +461,25 @@ static NSString *recommendationLogic = @"RELATED";
     if (self.product == nil) {
         return;
     }
-
     [self productLoaded];
-
     CGFloat scrollViewY = .0f;
     CGFloat landscapeScrollViewY = 0.0f;
-
     BOOL isiPadInLandscape = NO;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-        if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation)
-        {
+        if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation) {
             isiPadInLandscape = YES;
         }
     }
-
     /*******
      Image Section
      *******/
-
     self.productImageSection.frame = CGRectMake(0.0f, scrollViewY, self.productImageSection.frame.size.width, self.productImageSection.frame.size.height);
-
     CGRect imageSectionFrame = self.mainScrollView.bounds;
     [self.productImageSection setupWithFrame:imageSectionFrame product:self.product preSelectedSize:self.preSelectedSize];
     if (self.product.seller && [self.product.seller isGlobal]) {
         [self.productImageSection addGlobalButtonTarget:self action:@selector(showSeller)];
     }
-
     if(isiPadInLandscape) {
         [self.landscapeScrollView addSubview:self.productImageSection];
         landscapeScrollViewY = CGRectGetMaxY(self.productImageSection.frame) + 6.0f;
@@ -672,7 +500,6 @@ static NSString *recommendationLogic = @"RELATED";
     self.productInfoSection = [[JAPDVProductInfo alloc] init];
     CGRect productInfoSectionFrame = CGRectMake(0, 6, self.mainScrollView.width, 0);
     [self.productInfoSection setupWithFrame:productInfoSectionFrame product:self.product preSelectedSize:self.preSelectedSize];
-
     if (self.currentSimple) {
         [self.productInfoSection setSpecialPrice:self.currentSimple.specialPriceFormatted andPrice:self.currentSimple.priceFormatted andMaxSavingPercentage:self.product.maxSavingPercentage shouldForceFlip:NO];
     }
@@ -685,9 +512,7 @@ static NSString *recommendationLogic = @"RELATED";
     [self.productInfoSection addVariationsTarget:self action:@selector(goToVariationsScreen)];
     [self.productInfoSection addOtherOffersTarget:self action:@selector(goToOtherSellersScreen)];
     [self.productInfoSection addSisTarget:self action:@selector(goToSisScreen)];
-
     [self.productInfoSection setY:scrollViewY];
-
     [self.mainScrollView addSubview:self.productInfoSection];
 
     scrollViewY += (self.productInfoSection.frame.size.height);
@@ -785,23 +610,12 @@ static NSString *recommendationLogic = @"RELATED";
             [self.bundleLayout addBundleItemView:singleItem];
         }
 
-        self.bundleLayout.frame = CGRectMake(6.0f,
-                                             scrollViewY,
-                                             self.bundleLayout.frame.size.width,
-                                             self.bundleLayout.frame.size.height);
+        self.bundleLayout.frame = CGRectMake(6.0f, scrollViewY, self.bundleLayout.frame.size.width, self.bundleLayout.frame.size.height);
 
         [self.mainScrollView addSubview:self.bundleLayout];
-
         [self.bundleLayout addBuyingBundleTarget:self action:@selector(goToBundlesScreen)];
 
-
-
-
-
-        self.bundleLayout.frame = CGRectMake(.0f,
-                                             scrollViewY,
-                                             self.bundleLayout.frame.size.width,
-                                             self.bundleLayout.frame.size.height);
+        self.bundleLayout.frame = CGRectMake(.0f, scrollViewY, self.bundleLayout.frame.size.width, self.bundleLayout.frame.size.height);
         [self.mainScrollView addSubview:self.bundleLayout];
 
         scrollViewY += (self.bundleLayout.frame.size.height);
@@ -823,11 +637,9 @@ static NSString *recommendationLogic = @"RELATED";
     }
     if(_viewLoaded){
         _viewLoaded = FALSE;
-        if (![[NSUserDefaults standardUserDefaults] boolForKey:@"FirtTimeProductDetailPage"])
-        {
+        if (![[NSUserDefaults standardUserDefaults] boolForKey:@"FirtTimeProductDetailPage"]) {
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"FirtTimeProductDetailPage"];
             [[NSUserDefaults standardUserDefaults] synchronize];
-            [self presentCoachMarks];
         }
         
         //################ when product is fully loaded & rendered
@@ -861,11 +673,7 @@ static NSString *recommendationLogic = @"RELATED";
     } else if (VALID_NOTEMPTY(tempProduct.sku, NSString)) {
         [userInfo setObject:tempProduct.sku forKey:@"sku"];
     }
-
-    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
-                                                        object:nil
-                                                      userInfo:userInfo];
-
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication object:nil userInfo:userInfo];
     [self trackingEventRelatedItemSelection:tempProduct];
     [self trackingEventScreenName:[NSString stringWithFormat:@"related_item_%@",tempProduct.name]];
 }
@@ -891,12 +699,10 @@ static NSString *recommendationLogic = @"RELATED";
     [[RITrackingWrapper sharedInstance] trackScreenWithName:@"SellerPage"];
 }
 
-- (void)goToSellerLink
-{
+- (void)goToSellerLink {
     NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];
 
-    if(VALID_NOTEMPTY(self.product.seller, RISeller))
-    {
+    if(VALID_NOTEMPTY(self.product.seller, RISeller)) {
         if ([self.product.seller isGlobal]) {
             [userInfo setObject:self.product.seller.linkTextGlobal forKey:@"title"];
             [userInfo setObject:self.product.seller.linkTargetStringGlobal forKey:@"targetString"];
@@ -909,63 +715,50 @@ static NSString *recommendationLogic = @"RELATED";
     }
 }
 
-- (void)goToSpecifications
-{
+- (void)goToSpecifications {
     [self goToDetails:@"specifications"];
 }
 
-- (void)goToReviews
-{
+- (void)goToReviews {
     [self goToDetails:@"reviews"];
 }
 
-- (void)goToDetails:(NSString *)screen
-{
+- (void)goToDetails:(NSString *)screen {
     NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
-    if(VALID_NOTEMPTY(self.product, RIProduct))
-    {
+    if(VALID_NOTEMPTY(self.product, RIProduct)) {
         [userInfo setObject:self.product forKey:@"product"];
     }
     [userInfo setObject:screen forKey:@"product.screen"];
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowProductSpecificationScreenNotification object:nil userInfo:userInfo];
 }
 
-- (void)goToBundlesScreen
-{
+- (void)goToBundlesScreen {
     NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
     id obj = nil;
-    if(VALID_NOTEMPTY(self.product, RIProduct))
-    {
+    if(VALID_NOTEMPTY(self.product, RIProduct)) {
         obj = self.product;
         if (VALID_NOTEMPTY(self.productBundle.bundleProducts, NSArray)) {
             [userInfo setObject:self.productBundle.bundleProducts forKeyedSubscript:@"product.bundles"];
         }
     }
-
     __weak typeof(self) weakSelf = self;
     id block = ^(NSMutableDictionary *bundles){
         weakSelf.selectedBundles = [bundles mutableCopy];
     };
-
     [userInfo setObject:block forKeyedSubscript:@"product.bundles.onChange"];
-
     if (self.selectedBundles) {
         [userInfo setObject:self.selectedBundles forKeyedSubscript:@"product.bundles.selected"];
     }
-
     if (self.productBundle) {
         [userInfo setObject:self.productBundle forKeyedSubscript:@"product.bundle"];
     }
-
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenProductBundlesScreen object:obj userInfo:userInfo];
 }
 
-- (void)goToVariationsScreen
-{
+- (void)goToVariationsScreen {
     NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
     id obj = nil;
-    if(VALID_NOTEMPTY(self.product, RIProduct))
-    {
+    if(VALID_NOTEMPTY(self.product, RIProduct)) {
         obj = self.product;
         if (VALID_NOTEMPTY(self.product.variations, NSArray)) {
             [userInfo setObject:self.product.variations forKeyedSubscript:@"product.variations"];
@@ -974,13 +767,11 @@ static NSString *recommendationLogic = @"RELATED";
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenProductVariationsScreen object:obj userInfo:userInfo];
 }
 
-- (void)goToSisScreen
-{
+- (void)goToSisScreen {
     [[MainTabBarViewController topNavigationController] openTargetString:self.product.brandTarget];
 }
 
-- (void)goToOtherSellersScreen
-{
+- (void)goToOtherSellersScreen {
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenOtherOffers object:self.product];
 }
 
@@ -1076,6 +867,7 @@ static NSString *recommendationLogic = @"RELATED";
                 //##############
                 [EmarsysPredictManager sendTransactionsOf:self];
                 
+                [self updateCartInNavBar];
             } else {
                 //EVENT: ADD TO CART
                 [TrackerManager postEventWithSelector:[EventSelectors addToCartEventSelector]
@@ -1136,9 +928,7 @@ static NSString *recommendationLogic = @"RELATED";
     }
 }
 
-- (void)loadSizePickerWithOptions:(NSArray*)options
-                     previousText:(NSString*)previousText
-                  leftButtonTitle:(NSString*)leftButtonTitle {
+- (void)loadSizePickerWithOptions:(NSArray*)options previousText:(NSString*)previousText leftButtonTitle:(NSString*)leftButtonTitle {
     if (!VALID_NOTEMPTY(self.picker, JAPicker)) {
 
         self.picker = [[JAPicker alloc] initWithFrame:self.view.frame];
@@ -1149,25 +939,15 @@ static NSString *recommendationLogic = @"RELATED";
         [self.view addSubview:self.picker];
     }
 
-    [self.picker setDataSourceArray:options
-                       previousText:previousText
-                    leftButtonTitle:leftButtonTitle];
-
+    [self.picker setDataSourceArray:options previousText:previousText leftButtonTitle:leftButtonTitle];
     CGFloat pickerViewHeight = self.view.frame.size.height;
     CGFloat pickerViewWidth = self.view.frame.size.width;
-    [self.picker setFrame:CGRectMake(0.0f,
-                                     pickerViewHeight,
-                                     pickerViewWidth,
-                                     pickerViewHeight)];
+    [self.picker setFrame:CGRectMake(0.0f, pickerViewHeight, pickerViewWidth, pickerViewHeight)];
 
     [self.view bringSubviewToFront:self.picker];
 
-    [UIView animateWithDuration:0.4f
-                     animations:^{
-                         [self.picker setFrame:CGRectMake(0.0f,
-                                                          0.0f,
-                                                          pickerViewWidth,
-                                                          pickerViewHeight)];
+    [UIView animateWithDuration:0.4f animations:^{
+                         [self.picker setFrame:CGRectMake(0.0f, 0.0f, pickerViewWidth, pickerViewHeight)];
                      }];
 }
 
@@ -1217,9 +997,7 @@ static NSString *recommendationLogic = @"RELATED";
                      animations:^{
                          self.picker.frame = frame;
                      } completion:^(BOOL finished) {
-
-                         if (self.openPickerFromCart)
-                         {
+                         if (self.openPickerFromCart) {
                              self.openPickerFromCart = NO;
                              [self addToCart];
                          }
@@ -1230,8 +1008,7 @@ static NSString *recommendationLogic = @"RELATED";
     CGRect frame = self.picker.frame;
     frame.origin.y = self.view.frame.size.height;
 
-    [UIView animateWithDuration:0.4f
-                     animations:^{
+    [UIView animateWithDuration:0.4f animations:^{
                          self.picker.frame = frame;
                      } completion:^(BOOL finished) {
                          [self.picker removeFromSuperview];
@@ -1247,7 +1024,6 @@ static NSString *recommendationLogic = @"RELATED";
 }
 
 #pragma mark JAPDVImageSectionDelegate
-
 - (void)imageClickedAtIndex:(NSInteger)index {
     [self presentGalleryAtIndex:index];
 }
@@ -1545,25 +1321,6 @@ static NSString *recommendationLogic = @"RELATED";
 }
 
 - (void)trackingEventAddToCart:(RICart *)cart {
-    CGRect addToCartEventCoachMark = CGRectMake([MainTabBarViewController topNavigationController].navigationBarView.cartButton.frame.origin.x, [MainTabBarViewController topNavigationController].navigationBarView.cartButton.frame.origin.y+20,35, 35);
-
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"FirtTimeAddToCart"]) {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"FirtTimeAddToCart"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        NSArray *coachMarks = @[
-                                @{
-                                    @"rect": [NSValue valueWithCGRect:addToCartEventCoachMark],
-                                    @"caption": @"مشاهده سبد خرید و تکمیل سفارش",
-                                    @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
-                                    @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
-                                    @"position":[NSNumber numberWithInteger:LABEL_POSITION_RIGHT]
-                                    },
-                                ];
-        MPCoachMarks *coachMarksView = [[MPCoachMarks alloc] initWithFrame:self.navigationController.view.bounds coachMarks:coachMarks];
-        [self.navigationController.view addSubview:coachMarksView];
-        [coachMarksView start];
-    }
-
     NSNumber *price = [self getPrice];
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:((RIProduct *)[self.product.productSimples firstObject]).sku forKey:kRIEventLabelKey];
@@ -1577,7 +1334,6 @@ static NSString *recommendationLogic = @"RELATED";
     [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
 
     // Since we're sending the converted price, we have to send the currency as EUR.
-    // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
     [trackingDictionary setValue:price forKey:kRIEventPriceKey];
     [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
 
@@ -1663,7 +1419,6 @@ static NSString *recommendationLogic = @"RELATED";
 
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookAddToCart]
                                               data:[trackingDictionary copy]];
-
     [self trackingEventCart:cart];
 }
 
@@ -1673,7 +1428,6 @@ static NSString *recommendationLogic = @"RELATED";
     [trackingDictionary setValue:cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
                                               data:[trackingDictionary copy]];
-
     [self trackingEventLastAddedToCart];
 }
 
@@ -1827,13 +1581,7 @@ static NSString *recommendationLogic = @"RELATED";
     {
         type = @"Email";
         eventType = [NSNumber numberWithInt:RIEventShareEmail];
-    }
-    /*else if ([activityType isEqualToString:UIActivityTypePostToFacebook])
-    {
-        type = @"Facebook";
-        eventType = [NSNumber numberWithInt:RIEventShareFacebook];
-    }*/
-    else if ([activityType isEqualToString:UIActivityTypePostToTwitter]) {
+    } else if ([activityType isEqualToString:UIActivityTypePostToTwitter]) {
         type = @"Twitter";
         eventType = [NSNumber numberWithInt:RIEventShareTwitter];
     } else if([activityType isEqualToString:UIActivityTypeMessage]) {
@@ -1863,9 +1611,7 @@ static NSString *recommendationLogic = @"RELATED";
             }
             categoryName = parent.label;
             subCategoryName = self.category.label;
-        }
-        else
-        {
+        } else {
             categoryName = self.category.label;
         }
     } else if(VALID_NOTEMPTY(self.product.categoryIds, NSArray)) {
@@ -1903,8 +1649,7 @@ static NSString *recommendationLogic = @"RELATED";
     [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
     [trackingDictionary setValue:product.priceEuroConverted forKey:kRIEventValueKey];
 
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRelatedItem]
-                                              data:[trackingDictionary copy]];
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRelatedItem] data:[trackingDictionary copy]];
 }
 
 - (void)trackingEventMostViewedBrand {
@@ -2004,5 +1749,10 @@ static NSString *recommendationLogic = @"RELATED";
     return YES;
 }
 
+#pragma mark - NavigationBarProtocol
+
+- (NavBarLeftButtonType)navBarleftButton {
+    return NavBarLeftButtonTypeCart;
+}
 
 @end

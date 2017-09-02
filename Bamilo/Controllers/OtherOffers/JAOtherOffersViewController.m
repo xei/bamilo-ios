@@ -47,10 +47,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.view setBackgroundColor:JAWhiteColor];
-    self.navBarLayout.showBackButton = YES;
+    self.cellIdentifier = @"offerCell";
     
-    self.navBarLayout.title = STRING_OTHER_SELLERS;
+    [self.view setBackgroundColor:JAWhiteColor];
     
     self.flowLayout = [JAProductListFlowLayout new];
     self.flowLayout.manualCellSpacing = 6.0f;
@@ -65,7 +64,7 @@
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     
-    [self.collectionView registerClass:[JAOfferCollectionViewCell class] forCellWithReuseIdentifier:@"offerCell"];
+    [self.collectionView registerClass:[JAOfferCollectionViewCell class] forCellWithReuseIdentifier: self.cellIdentifier];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -74,7 +73,7 @@
     
     [self loadAllOffers];
     
-    [self willRotateToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0.0f];
+//    [self willRotateToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0.0f];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -89,10 +88,8 @@
         self.topView.backgroundColor = [UIColor whiteColor];
         [self.view addSubview:self.topView];
     }
-    [self.topView setFrame:CGRectMake(0.0f,
-                                      0.0f,
-                                      self.view.frame.size.width,
-                                      1)];
+    [self.topView setFrame: [self viewBounds]];
+    [self.topView setHeight:1];
     
     CGFloat currentY = 10.0f;
     CGFloat horizontalMargin = 10.0f;
@@ -149,7 +146,7 @@
     //ADJUST COLLECTIONVIEW ACCORDINGLY
     
     [self.collectionView setFrame:CGRectMake(0.0f,
-                                             CGRectGetMaxY(self.topView.frame),
+                                             [self viewBounds].origin.y + self.topView.height,
                                              self.view.frame.size.width,
                                              [self viewBounds].size.height  - CGRectGetMaxY(self.topView.frame))];
     
@@ -158,8 +155,7 @@
     }
 }
 
-- (void)readjustOffersFromLabel
-{
+- (void)readjustOffersFromLabel {
     CGFloat lastWidth = self.offersFromLabel.width;
     self.offersFromLabel.text = [NSString stringWithFormat:STRING_NUMBER_OFFERS_FROM, self.productOffers.count];
     [self.offersFromLabel sizeToFit];
@@ -197,13 +193,6 @@
         [self hideLoading];
         
     }];
-}
-
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    self.cellIdentifier = @"offerCell";
-    
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
@@ -407,7 +396,7 @@
         [self.picker removeFromSuperview];
     }
     
-    self.picker = [[JAPicker alloc] initWithFrame:self.view.frame];
+    self.picker = [[JAPicker alloc] initWithFrame: [self viewBounds]];
     [self.picker setDelegate:self];
     
     [self.picker setDataSourceArray:options
@@ -472,6 +461,11 @@
         default:
             break;
     }
+}
+
+#pragma mark - NavigationBarProtocol
+- (NSString *)navBarTitleString {
+    return STRING_OTHER_SELLERS;
 }
 
 @end

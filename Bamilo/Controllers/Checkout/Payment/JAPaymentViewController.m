@@ -89,9 +89,7 @@ UITextFieldDelegate>
     
     self.apiResponse = RIApiResponseSuccess;
     
-    self.navBarLayout.title = STRING_CHECKOUT;
-    self.navBarLayout.showBackButton = YES;
-    self.navBarLayout.showCartButton = NO;
+    self.title = STRING_CHECKOUT;
     
     self.isLoaded = NO;
     

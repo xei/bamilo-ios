@@ -18,13 +18,14 @@
 @property (nonatomic, strong) JAFiltersView* currentFilterView;
 @property (nonatomic, weak) IBOutlet UITableView* tableView;
 @property (nonatomic, weak) IBOutlet UIButton* clearAllUIButton;
-@property (nonatomic, weak) IBOutlet UIButton* applyUIButton;
 @property (nonatomic, weak) IBOutlet UILabel* discountOnlyUILabel;
 @property (weak, nonatomic) IBOutlet UISwitch *discountOnlyUISwitch;
 @property (weak, nonatomic) IBOutlet UIView *currentFilterContainerView;
 @property (nonatomic, strong) NSIndexPath* selectedIndexPath;
 @property (weak, nonatomic) IBOutlet UIButton *subCatButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *subCatButtonHeightConstraint;
+@property (weak, nonatomic) IBOutlet UIButton *submitButton;
+
 @property (nonatomic) NSUInteger totalSelected;
 @property (nonatomic) BOOL filterHasBeenChanged;
 @end
@@ -42,20 +43,15 @@ const int subCatButtonVisibleHeight = 50;
     CatalogPriceFilterItem *priceFilter = (CatalogPriceFilterItem *)[self.filtersArray objectAtIndex:self.priceFilterIndex];
     self.discountOnlyUISwitch.on = priceFilter.discountOnly;
     
-    [self.subCatButton applyStyle:kFontRegularName fontSize:11 color:[UIColor blackColor]];
+    [self.subCatButton applyStyle:kFontRegularName fontSize:11 color: [UIColor blackColor]];
     [self.subCatButton setTitle:STRING_SUBCATEGORIES forState:UIControlStateNormal];
+    [self.submitButton setBackgroundColor:[Theme color:kColorDarkGreen]];
+    
     if (self.subCatsFilter && ((CatalogCategoryFilterItem *)self.subCatsFilter).options.count) {
         self.subCatButtonHeightConstraint.constant = subCatButtonVisibleHeight;
     } else{
         self.subCatButtonHeightConstraint.constant = 0;
     }
-}
-
-- (void)updateNavBar {
-    [super updateNavBar];
-    
-    self.navBarLayout.title = STRING_FILTERS;
-    self.navBarLayout.showBackButton = YES;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -69,12 +65,6 @@ const int subCatButtonVisibleHeight = 50;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-//    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffMenuSwipePanelNotification object:nil];
-}
-
 
 - (void)updateTitle {
     self.totalSelected = 0;
@@ -98,11 +88,8 @@ const int subCatButtonVisibleHeight = 50;
     } else {
         newTitle = [[NSString stringWithFormat:@"%@ (%ld)", STRING_FILTERS, (long)self.totalSelected] numbersToPersian];
     }
-    if (![newTitle isEqualToString:self.navBarLayout.title]) {
-        
-        //the title changed, force a reload
-        self.navBarLayout.title = newTitle;
-        //[self reloadNavBar];
+    if (![newTitle isEqualToString:self.title]) {
+        self.title = newTitle;
     }
 }
 
@@ -240,12 +227,11 @@ const int subCatButtonVisibleHeight = 50;
 #pragma Keyboard delegate notification 
 
 - (void) keyboardWillShow:(NSNotification *)notification {
-    
     if ([self.currentFilterView isKindOfClass: JAPriceFiltersView.class]) {
         CGFloat keyboardHeight = [self getKeyboardHeight:notification];
         CGFloat priceFilterCenteredContentHeight = ((JAPriceFiltersView *)self.currentFilterView).centeredContentHeightConstraint.constant;
         
-        CGFloat properMaxKeyboardHeight = self.applyUIButton.frame.size.height + (self.currentFilterContainerView.frame.size.height / 2) - (priceFilterCenteredContentHeight/2);
+        CGFloat properMaxKeyboardHeight = self.submitButton.frame.size.height + (self.currentFilterContainerView.frame.size.height / 2) - (priceFilterCenteredContentHeight/2);
         
         if (keyboardHeight > properMaxKeyboardHeight) {
             [UIView animateWithDuration:0.5 animations:^{
@@ -303,4 +289,8 @@ const int subCatButtonVisibleHeight = 50;
     return YES;
 }
 
+#pragma mark - NavigationBarProtocol
+- (NSString *)navBarTitleString {
+    return STRING_FILTERS;
+}
 @end

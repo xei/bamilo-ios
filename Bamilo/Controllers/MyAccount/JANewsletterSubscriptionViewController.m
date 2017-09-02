@@ -33,9 +33,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.navBarLayout.title = STRING_NEWSLETTER_PREFERENCES;
-    self.navBarLayout.showBackButton = YES;
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self loadForms];
@@ -129,6 +126,12 @@
         
         [self onErrorResponse:apiResponse messages:nil showAsMessage:YES selector:@selector(submitButtonPressed) objects:nil];
     }];
+}
+
+#pragma mark: -NavigationBarProtocol
+
+- (NSString *)navBarTitleString {
+    return STRING_NEWSLETTER_PREFERENCES;
 }
 
 @end

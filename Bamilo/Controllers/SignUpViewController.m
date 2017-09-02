@@ -55,8 +55,7 @@
     
     self.formController.submitTitle = @"ثبت نام";
     self.title = STRING_SIGNUP;
-    self.formController.formModelList = [NSMutableArray arrayWithArray:@[  firstName, lastName, melliCode, gender, birthday, email, password, phone]];
-    
+    self.formController.formModelList = [NSMutableArray arrayWithArray:@[ firstName, lastName, melliCode, gender, birthday, email, password, phone]];
     [self.formController setupTableView];
 }
 
@@ -84,9 +83,7 @@
             
             [TrackerManager postEventWithSelector:[EventSelectors signupEventSelector] attributes:[EventAttributes signupWithMethod:cSignUpMethodEmail user:customer success:YES]];
             [EmarsysPredictManager setCustomer: customer];
-            
             [[PushWooshTracker sharedTracker] setUserID:[RICustomer getCurrentCustomer].email];
-            
             if (self.completion) {
                 self.completion(AUTHENTICATION_FINISHED_WITH_REGISTER);
             } else {
@@ -109,9 +106,6 @@
 
 #pragma mark - DataServiceProtocol
 - (void)bind:(id)data forRequestId:(int)rid {
-    
-    
-    
     // --------------- Legacy actions --------------
     RICustomer *customerObject = [(NSDictionary*)data objectForKey:@"customer"];
     [[NSUserDefaults standardUserDefaults] synchronize];

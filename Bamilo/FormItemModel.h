@@ -10,14 +10,15 @@
 #import "FormItemValidation.h"
 #import "FormElementProtocol.h"
 
-typedef enum : NSUInteger {
-    InputTextFieldControlTypePassword,
-    InputTextFieldControlTypeNumerical,
+
+typedef NS_ENUM(NSUInteger, InputTextFieldControlType) {
+    InputTextFieldControlTypePassword = 0,
+    InputTextFieldControlTypeNumerical = 1,
     InputTextFieldControlTypeEmail,
     InputTextFieldControlTypeString,
     InputTextFieldControlTypeOptions,
     InputTextFieldControlTypeDatePicker
-} InputTextFieldControlType;
+};
 
 @interface FormItemModel : NSObject <FormElementProtocol>
 @property (nonatomic, copy) NSString *inputTextValue;
@@ -29,7 +30,7 @@ typedef enum : NSUInteger {
 @property (assign, nonatomic) InputTextFieldControlType type;
 @property (nonatomic, copy) NSString *lastErrorMessage;
 @property (nonatomic, strong) NSDateFormatter *visibleDateFormat;
-@property (nonatomic, strong) NSDateFormatter *outpuutDateFormat;
+@property (nonatomic, strong) NSDateFormatter *outputDateFormat;
 
 - (instancetype)initWithTextValue:(NSString *)title
                             fieldName: (NSString *)fieldName
@@ -50,4 +51,6 @@ typedef enum : NSUInteger {
 + (FormItemModel *)birthdayFieldName: (NSString *)fieldName;
 
 - (NSString *)getValue;
+- (void)setValue:(NSString *)value;
+
 @end

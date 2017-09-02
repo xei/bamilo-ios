@@ -157,7 +157,7 @@
                                          currentY,
                                          width - (kJAReviewCellHorizontalMargins*2),
                                          self.titleLabel.frame.size.height)];
-    [self.titleLabel setTextAlignment:RI_IS_RTL?NSTextAlignmentRight:NSTextAlignmentLeft];
+    [self.titleLabel setTextAlignment: RI_IS_RTL ? NSTextAlignmentRight : NSTextAlignmentLeft];
     
     [self addSubview:self.titleLabel];
     

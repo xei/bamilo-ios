@@ -13,7 +13,7 @@ typedef void(^AlertCompletion)(BOOL OK);
 @interface AlertManager : NSObject
 
 +(instancetype) sharedInstance;
-
--(void) confirmAlert:(NSString *)title text:(NSString *)text confirm:(NSString *)confirm cancel:(NSString *)cancel completion:(AlertCompletion)completion;
+- (void)simpleAlert:(NSString *)title text:(NSString *)body confirm: (NSString *)confirm;
+- (void)confirmAlert:(NSString *)title text:(NSString *)text confirm:(NSString *)confirm cancel:(NSString *)cancel completion:(AlertCompletion)completion;
 
 @end

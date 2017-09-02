@@ -28,11 +28,8 @@
 
 #pragma mark - View Lifecycle
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.navBarLayout.title = STRING_RECENT_SEARCHES;
     
     self.noSearchesView.layer.cornerRadius = 5.0f;
     self.noSearchesLabel.font = [UIFont fontWithName:kFontRegularName size:self.noSearchesLabel.font.pointSize];
@@ -297,6 +294,11 @@
 #pragma mark - DataTrackerProtocol
 -(NSString *)getScreenName {
     return @"RecentSearches";
+}
+
+#pragma mark - NavigationBarProtocol
+- (NSString *)navBarTitleString {
+    return STRING_RECENT_SEARCHES;
 }
 
 @end

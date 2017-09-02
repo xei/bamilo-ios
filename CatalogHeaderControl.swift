@@ -10,7 +10,7 @@ import UIKit
 
 class CatalogHeaderControl: BaseViewControl {
     
-    private var headerView: CatalogHeaderView?
+    var headerView: CatalogHeaderView?
     weak var delegate: CatalogHeaderViewDelegate? {
         didSet {
             self.headerView?.delegate = self.delegate

@@ -15,10 +15,11 @@
 #import "DataTrackerProtocol.h"
 //#######
 #import "DataMessageList.h"
+#import "NavigationBarProtocol.h"
 
-@interface JABaseViewController : UIViewController <PerformanceTrackerProtocol, DataTrackerProtocol, UISearchBarDelegate>
+@interface JABaseViewController : UIViewController <PerformanceTrackerProtocol, DataTrackerProtocol, UISearchBarDelegate, NavigationBarProtocol>
 
-@property (nonatomic, strong)JANavigationBarLayout* navBarLayout;
+//@property (nonatomic, strong)JANavigationBarLayout* navBarLayout;
 
 //@property (nonatomic, strong)NSString *screenName;
 //@property (nonatomic, strong)NSDate *startLoadingTime;
@@ -38,7 +39,6 @@
  */
 - (CGRect)viewBounds;
 - (CGRect)bounds;
-
 /**
  * Method to force Nav bar to reload. This is called in viewWillAppear
  */
@@ -82,6 +82,8 @@
 - (void)appDidEnterBackground;
 
 - (void)onOrientationChanged;
+
+- (void)updateCartInNavBar;
 
 //TEMP FUNCTION
 -(NSArray *) extractSuccessMessages:(id)dataMessages;

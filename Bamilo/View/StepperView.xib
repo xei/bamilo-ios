@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -73,21 +73,21 @@
                 <constraint firstItem="Dhb-eX-v5q" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="5R7-Ar-ynx"/>
                 <constraint firstItem="BeW-ba-h4W" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" multiplier="2:3" id="5ir-eT-uWd"/>
                 <constraint firstAttribute="bottom" secondItem="k36-K5-e4c" secondAttribute="bottom" id="6PN-eT-JT6"/>
-                <constraint firstItem="Dhb-eX-v5q" firstAttribute="leading" secondItem="vHl-ND-FAQ" secondAttribute="trailing" id="6PS-qQ-3LC"/>
+                <constraint firstItem="Dhb-eX-v5q" firstAttribute="left" secondItem="vHl-ND-FAQ" secondAttribute="right" id="6PS-qQ-3LC"/>
                 <constraint firstItem="Dhb-eX-v5q" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" multiplier="4:3" id="7lO-Z5-cpT"/>
-                <constraint firstItem="vHl-ND-FAQ" firstAttribute="leading" secondItem="BeW-ba-h4W" secondAttribute="trailing" id="892-cy-jzu"/>
+                <constraint firstItem="vHl-ND-FAQ" firstAttribute="left" secondItem="BeW-ba-h4W" secondAttribute="right" id="892-cy-jzu"/>
                 <constraint firstAttribute="bottom" secondItem="vHl-ND-FAQ" secondAttribute="bottom" id="CeF-hC-ODH"/>
                 <constraint firstItem="BeW-ba-h4W" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Dk8-vF-Sng"/>
-                <constraint firstItem="BeW-ba-h4W" firstAttribute="leading" secondItem="k36-K5-e4c" secondAttribute="trailing" id="LEz-yN-T9Z"/>
+                <constraint firstItem="BeW-ba-h4W" firstAttribute="left" secondItem="k36-K5-e4c" secondAttribute="right" id="LEz-yN-T9Z"/>
                 <constraint firstItem="k36-K5-e4c" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="MBU-KV-SxS"/>
                 <constraint firstItem="vHl-ND-FAQ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="S6p-rH-Uiz"/>
                 <constraint firstItem="6A2-Zl-aLJ" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="2" id="Td5-i5-5iN"/>
                 <constraint firstItem="Dhb-eX-v5q" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Zx0-1s-iic"/>
                 <constraint firstAttribute="bottom" secondItem="Dhb-eX-v5q" secondAttribute="bottom" id="ha3-Di-zrp"/>
-                <constraint firstItem="6A2-Zl-aLJ" firstAttribute="leading" secondItem="Dhb-eX-v5q" secondAttribute="trailing" id="hvA-XI-3HS"/>
+                <constraint firstItem="6A2-Zl-aLJ" firstAttribute="left" secondItem="Dhb-eX-v5q" secondAttribute="right" id="hvA-XI-3HS"/>
                 <constraint firstAttribute="bottom" secondItem="BeW-ba-h4W" secondAttribute="bottom" id="nAd-cK-bgz"/>
-                <constraint firstAttribute="trailing" secondItem="6A2-Zl-aLJ" secondAttribute="trailing" id="oxU-lS-bKc"/>
-                <constraint firstItem="k36-K5-e4c" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="vaA-2V-svP"/>
+                <constraint firstAttribute="right" secondItem="6A2-Zl-aLJ" secondAttribute="right" id="oxU-lS-bKc"/>
+                <constraint firstItem="k36-K5-e4c" firstAttribute="left" secondItem="iN0-l3-epB" secondAttribute="left" id="vaA-2V-svP"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>

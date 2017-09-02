@@ -113,6 +113,7 @@
     [self.collectionView registerClass:[JARecentlyViewedCell class] forCellWithReuseIdentifier:@"CellWithLines"];
     
     CGRect frame = self.view.bounds;
+    
     self.collectionView.collectionViewLayout = self.flowLayout;
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
@@ -129,13 +130,6 @@
 // and comes to SavedListViewController > but !!!! viewWillAppear will not be called!
 - (void)navigationController:(UINavigationController *)navigationController  willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
     [viewController viewWillAppear:animated];
-}
-
-- (void)updateNavBar {
-    self.navBarLayout.showLogo = NO;
-    self.navBarLayout.title = STRING_MY_FAVOURITES;
-    self.navBarLayout.showCartButton = NO;
-    self.navBarLayout.showBackButton = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -415,12 +409,12 @@
     RIProduct *product = [self getProductFromIndex:button.tag];
     RIProductSimple* prevSimple = [self.chosenSimples objectForKey:product.sku];
     
-    if(VALID(self.picker, JAPicker))
-    {
+    if(VALID(self.picker, JAPicker)) {
         [self.picker removeFromSuperview];
     }
     
-    self.picker = [[JAPicker alloc] initWithFrame:self.view.frame];
+    self.picker = [[JAPicker alloc] initWithFrame: self.view.bounds];
+    
     [self.picker setTag:button.tag];
     [self.picker setDelegate:self];
     
@@ -606,6 +600,11 @@
     [self.productsArray removeAllObjects];
     
     [self.collectionView reloadData];
+}
+
+#pragma mark - NavigationBarProtocol
+- (NSString *)navBarTitleString {
+    return STRING_MY_FAVOURITES;
 }
 
 @end

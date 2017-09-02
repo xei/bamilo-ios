@@ -41,7 +41,7 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
     private var pickerViewTextFiled: UITextField?
     
     private let sortOptionTranslation: [Catalog.CatalogSortType: String] = [
-        .populaity: STRING_POPULARITY,
+        .popularity: STRING_POPULARITY,
         .bestRating: STRING_BEST_RATING,
         .brand: STRING_BRAND,
         .name: STRING_NAME,
@@ -49,13 +49,12 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
         .priceUp: STRING_PRICE_UP,
         .priceDown: STRING_PRICE_DOWN
     ]
-    private let sortingOptions: [Catalog.CatalogSortType] = [ .populaity, .bestRating, .brand, .name, .newest, .priceUp, .priceDown ]
+    private let sortingOptions: [Catalog.CatalogSortType] = [ .popularity, .bestRating, .brand, .name, .newest, .priceUp, .priceDown ]
     private let listViewTypeSequence: [CatalogListViewType] = [.grid, .list, .card]
     
     weak var delegate: CatalogHeaderViewDelegate?
-    var sortType: Catalog.CatalogSortType = .populaity {
+    var sortType: Catalog.CatalogSortType = .popularity {
         didSet {
-            if self.sortType == .populaity { return }
             self.setSortingButtonActive()
             self.sortingDescLabel.text = self.sortOptionTranslation[self.sortType]
         }
@@ -81,7 +80,7 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
         let doneBtn = UIBarButtonItem(title:"تایید", style: .plain, target: self, action: #selector(doneButtonPickerTapped(sender:)))
         doneBtn.setTitleTextAttributes([
             NSFontAttributeName: Theme.font(kFontVariationRegular, size: 13),
-            NSForegroundColorAttributeName: Theme.color(kColorBlue)
+            NSForegroundColorAttributeName: Theme.color(kColorDarkGreen)
             ], for: .normal)
         return doneBtn
         
@@ -92,7 +91,7 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
         let cancelBtn = UIBarButtonItem(title:"لغو", style: .plain, target: self, action: #selector(cancelButtonPickerTapped(sender:)))
         cancelBtn.setTitleTextAttributes([
             NSFontAttributeName: Theme.font(kFontVariationRegular, size: 13),
-            NSForegroundColorAttributeName: Theme.color(kColorDarkGray)
+            NSForegroundColorAttributeName: Theme.color(kColorDarkGreen)
             ], for: .normal)
         return cancelBtn
         
@@ -153,8 +152,8 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
     }
     
     private func setSortingButtonActive() {
-        self.sortingTitleLabel.textColor = UIColor.init(colorLiteralRed: 0/255, green: 145/255, blue: 255/255, alpha: 1)
-        self.sortingDescLabel.textColor = UIColor.init(colorLiteralRed: 117/255, green: 189/255, blue: 243/255, alpha: 1)
+        self.sortingTitleLabel.textColor = Theme.color(kColorGreen3)
+        self.sortingDescLabel.textColor = Theme.color(kColorGreen5)
         self.sortIconImage.image = UIImage(named: "sortingIcon_highlighted")
     }
     
@@ -183,8 +182,8 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
     }
     
     func setFilterButtonActive () {
-        self.filterTitleLabel.textColor = UIColor.init(colorLiteralRed: 0/255, green: 145/255, blue: 255/255, alpha: 1)
-        self.filterDescLabel.textColor = UIColor.init(colorLiteralRed: 117/255, green: 189/255, blue: 243/255, alpha: 1)
+        self.filterTitleLabel.textColor = Theme.color(kColorGreen3)
+        self.filterDescLabel.textColor = Theme.color(kColorGreen5)
         self.filterIconImage.image = UIImage(named: "filterIcon_highlighted")
     }
     
