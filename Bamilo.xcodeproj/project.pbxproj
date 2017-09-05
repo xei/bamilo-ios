@@ -24,6 +24,7 @@
 		61036B681E65B5F5006E12A9 /* OrderList.m in Sources */ = {isa = PBXBuildFile; fileRef = 61036B671E65B5F5006E12A9 /* OrderList.m */; };
 		61036B6C1E65B638006E12A9 /* OrderProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 61036B6B1E65B638006E12A9 /* OrderProduct.m */; };
 		61037CBE1EB72C7600A461E0 /* EmarsysMobileEngageTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 61037CBD1EB72C7600A461E0 /* EmarsysMobileEngageTracker.m */; };
+		6104C5CD1F5C24D300C0F5E3 /* ScrollerBarFollower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6104C5CC1F5C24D300C0F5E3 /* ScrollerBarFollower.swift */; };
 		610519421F370DA4004695BD /* DeliveryTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610519411F370DA4004695BD /* DeliveryTime.swift */; };
 		610C68A31EC74292008FB66C /* CatalogHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610C68A21EC74292008FB66C /* CatalogHeaderView.swift */; };
 		610C68A51EC742E3008FB66C /* CatalogHeaderControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610C68A41EC742E3008FB66C /* CatalogHeaderControl.swift */; };
@@ -934,6 +935,7 @@
 		61037CBC1EB72C7600A461E0 /* EmarsysMobileEngageTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysMobileEngageTracker.h; sourceTree = "<group>"; };
 		61037CBD1EB72C7600A461E0 /* EmarsysMobileEngageTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysMobileEngageTracker.m; sourceTree = "<group>"; };
 		61037CC31EB7416200A461E0 /* ScreenTrackingProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenTrackingProtocol.h; sourceTree = "<group>"; };
+		6104C5CC1F5C24D300C0F5E3 /* ScrollerBarFollower.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollerBarFollower.swift; sourceTree = "<group>"; };
 		610519411F370DA4004695BD /* DeliveryTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeliveryTime.swift; sourceTree = "<group>"; };
 		610C68A21EC74292008FB66C /* CatalogHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogHeaderView.swift; sourceTree = "<group>"; };
 		610C68A41EC742E3008FB66C /* CatalogHeaderControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogHeaderControl.swift; sourceTree = "<group>"; };
@@ -3759,6 +3761,7 @@
 			isa = PBXGroup;
 			children = (
 				611BB3C21F3F4DBD00022906 /* NavBarUtility.swift */,
+				6104C5CC1F5C24D300C0F5E3 /* ScrollerBarFollower.swift */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -7780,6 +7783,7 @@
 				CE9ADF5B1AB6D78200D56481 /* JAGenericFiltersView.m in Sources */,
 				875AD5591E38C0C900584ABF /* RICampaign.m in Sources */,
 				CE9ADF5C1AB6D78200D56481 /* JAEmailNotificationsViewController.m in Sources */,
+				6104C5CD1F5C24D300C0F5E3 /* ScrollerBarFollower.swift in Sources */,
 				611C1B321F0BAA0900C57E4D /* SearchBarSearchEvent.m in Sources */,
 				CE9ADF601AB6D78200D56481 /* JANoConnectionView.m in Sources */,
 				617AAA441E503AB9004D9430 /* FormItemModel.m in Sources */,

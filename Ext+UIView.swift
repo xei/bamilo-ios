@@ -14,15 +14,14 @@ enum VerticalMoveDirection {
 }
 
 extension UIView {
-    func boundedStickyVerticalMove(difference: CGFloat, direction: VerticalMoveDirection, initialFrame: CGRect) {
+    
+    func boundedVerticalMove(difference: CGFloat, direction: VerticalMoveDirection, boundFrame: CGRect) {
         let positionY = self.frame.origin.y
-        let goalPositionY = positionY +  (direction == .down ? difference: -difference)
-        if direction == .down && goalPositionY < initialFrame.origin.y || direction == .top && goalPositionY > initialFrame.origin.y {
-            self.frame = initialFrame
-        } else if direction == .down && goalPositionY > initialFrame.origin.y + initialFrame.size.height {
-            self.frame.origin.y = initialFrame.origin.y + initialFrame.size.height
-        } else if direction == .top && goalPositionY < initialFrame.origin.y - initialFrame.size.height {
-            self.frame.origin.y = initialFrame.origin.y - initialFrame.size.height
+        let goalPositionY = positionY + (direction == .down ? difference: -difference)
+        if goalPositionY < boundFrame.origin.y {
+            self.frame.origin.y = boundFrame.origin.y
+        } else if goalPositionY + self.frame.height > boundFrame.origin.y + boundFrame.height {
+            self.frame.origin.y = boundFrame.origin.y + boundFrame.height - self.frame.height
         } else {
             self.frame = self.frame.offsetBy(dx: 0, dy: direction == .down ? difference : -difference)
         }

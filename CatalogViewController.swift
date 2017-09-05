@@ -46,12 +46,15 @@ import SwiftyJSON
     private var navBarBlurView: UIVisualEffectView?
     private var listViewType: CatalogListViewType = .grid
     private var listFullyLoaded = false
-    private var lastContentOffset: CGFloat = 0
     private var initialNavBarAndStatusBarHeight: CGFloat!
     private var initialTabBarHeight: CGFloat!
     private let loadingFooterViewHeight: CGFloat = 50
     private let productCountViewHeight: CGFloat = 30
     private let cardViewNewTagElementHeight: CGFloat = 16
+    private var navBarScrollFollower: ScrollerBarFollower?
+    private var tabBarScrollFollower: ScrollerBarFollower?
+    private var searchBarScrollFollower: ScrollerBarFollower?
+    
     
     //TODO: this property is only used for passing enum (swift type) property from objective c
     // so we have to remove it after migration those who wanna pass this property
@@ -75,7 +78,6 @@ import SwiftyJSON
             self.collectionView.collectionViewLayout.invalidateLayout()
         }
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -103,10 +105,13 @@ import SwiftyJSON
         if let navBar = self.navigationController?.navigationBar {
             self.initialCatalogHeaderTopConstraint = navBar.frame.height + NavBarUtility.getStatusBarHeight()
             self.catalogHeaderTopConstraint.constant = self.initialCatalogHeaderTopConstraint
+            self.initialNavBarAndStatusBarHeight = navBar.frame.height + UIApplication.shared.statusBarFrame.height
         }
         
-        self.initialTabBarHeight = self.tabBarController!.tabBar.frame.height
-        self.initialNavBarAndStatusBarHeight = self.navigationController!.navigationBar.frame.height + UIApplication.shared.statusBarFrame.height
+        if let tabBar = self.tabBarController?.tabBar {
+            self.initialTabBarHeight = tabBar.frame.height
+        }
+        
         self.productCountLabelTopConstraint.constant = self.initialNavBarAndStatusBarHeight + catalogHeader.frame.height
         self.productCountLabelHeight.constant = self.productCountViewHeight
     }
@@ -121,29 +126,38 @@ import SwiftyJSON
         if let navTitle = self.navBarTitle {
             self.title = navTitle
         }
-        if let tabBar = self.tabBarController?.tabBar {
-            self.tabbarInitialFrame = tabBar.frame
-        }
-        if let navBar = self.navigationController?.navigationBar {
-             self.navBarInitialFrame = navBar.frame
-        }
         NavBarUtility.changeStatusBarColor(color: Theme.color(kColorExtraDarkBlue))
-        
         self.navBarBlurView = self.navigationController?.navigationBar.addBlurView()
         self.navBarBlurView?.alpha = 0
+        
+        //asign scroll followers in this view
+        self.searchBarScrollFollower = ScrollerBarFollower(withBarView: catalogHeader, moveDirection: .top)
+        if let navBar = self.navigationController?.navigationBar {
+            self.navBarScrollFollower = ScrollerBarFollower(withBarView: navBar, moveDirection: .top)
+            self.navBarScrollFollower?.followScrollView(scrollView: collectionView, delay: productCountViewHeight, permittedMoveDistance: navBar.frame.height)
+            self.searchBarScrollFollower?.followScrollView(scrollView: collectionView, delay: productCountViewHeight, permittedMoveDistance: navBar.frame.height)
+        }
+        if let tabBar = self.tabBarController?.tabBar {
+            self.tabBarScrollFollower = ScrollerBarFollower(withBarView: tabBar, moveDirection: .down)
+            self.tabBarScrollFollower?.followScrollView(scrollView: self.collectionView, delay: productCountViewHeight, permittedMoveDistance: tabBar.frame.height)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
         //reset all states of tabbar and navBar, status bar
-        self.resetTabarFrame(animated: true)
-        self.resetNavBar(animated: false)
+        self.navBarScrollFollower?.resetBarFrame(animated: true)
+        self.tabBarScrollFollower?.resetBarFrame(animated: true)
+        self.searchBarScrollFollower?.resetBarFrame(animated: true)
+        self.navBarScrollFollower?.stopFollowing()
+        self.tabBarScrollFollower?.stopFollowing()
+        self.searchBarScrollFollower?.stopFollowing()
+        
         self.setNavigationBarAlpha(alpha: 0, animated: true)
         self.catalogHeaderTopConstraint.constant = self.initialCatalogHeaderTopConstraint
         NavBarUtility.changeStatusBarColor(color: .clear)
-        
-        
+
         self.navBarBlurView?.removeFromSuperview()
     }
     
@@ -284,7 +298,6 @@ import SwiftyJSON
         if filtersToString.characters.count > 0 {
             filterQuery = filtersToString + "/"
         }
-
         return filterQuery
     }
     
@@ -337,53 +350,6 @@ import SwiftyJSON
         self.collectionView.reloadData()
     }
     
-    
-    private var tabbarInitialFrame: CGRect?
-    private var tabbarIsHidding = true
-    private func changeTabbarPositionY(difference: CGFloat) {
-        self.tabbarIsHidding = difference < 0
-        if let tabBar = self.tabBarController?.tabBar,let tabbarInitialFrame = self.tabbarInitialFrame {
-            tabBar.boundedStickyVerticalMove(difference: -difference, direction: .down, initialFrame: tabbarInitialFrame)
-        }
-    }
-    
-    private func hideTabbar(animated: Bool) {
-        if let tabBar = self.tabBarController?.tabBar,let tabbarInitialFrame = self.tabbarInitialFrame {
-            var hiddenRect = tabbarInitialFrame
-            hiddenRect.origin.y += hiddenRect.size.height
-            tabBar.setFrame(frame: hiddenRect, animated: animated)
-        }
-    }
-    
-    private func resetTabarFrame(animated: Bool) {
-        if let tabBar = self.tabBarController?.tabBar,let tabbarInitialFrame = self.tabbarInitialFrame {
-            tabBar.setFrame(frame: tabbarInitialFrame, animated: animated)
-        }
-    }
-    
-    private var navBarInitialFrame: CGRect?
-    private var navBarIsHidding = true
-    private func changeNavBarPositionY(difference: CGFloat) {
-        self.navBarIsHidding = difference < 0
-        if let navBar = self.navigationController?.navigationBar,let navBarInitialFrame = self.navBarInitialFrame {
-            navBar.boundedStickyVerticalMove(difference: -difference, direction: .top, initialFrame: navBarInitialFrame)
-            
-            let totalTransitionWidth = navBarInitialFrame.size.height
-            let movedTransitionWidth = navBarInitialFrame.origin.y - navBar.frame.origin.y
-            let alpha = movedTransitionWidth/totalTransitionWidth
-            
-            self.setNavigationBarAlpha(alpha: alpha, animated: false)
-            
-            if movedTransitionWidth == 0 {
-                self.catalogHeaderTopConstraint.constant = self.initialCatalogHeaderTopConstraint
-            } else if movedTransitionWidth == totalTransitionWidth {
-                self.catalogHeaderTopConstraint.constant = NavBarUtility.getStatusBarHeight()
-            } else {
-                self.catalogHeaderTopConstraint.constant = self.initialCatalogHeaderTopConstraint - movedTransitionWidth
-            }
-        }
-    }
-    
     private func setNavigationBarAlpha(alpha: CGFloat, animated: Bool) {
         let navigationBackgroundView = self.navBarBlurView
         if animated {
@@ -393,21 +359,6 @@ import SwiftyJSON
             }, completion: nil)
         } else {
             navigationBackgroundView?.alpha = alpha
-        }
-    }
-    
-    private func hideNavBar(animated: Bool) {
-        if let navBar = self.navigationController?.navigationBar,let navBarInitialFrame = self.navBarInitialFrame {
-            var hiddenRect = navBarInitialFrame
-            hiddenRect.origin.y -= hiddenRect.size.height
-            navBar.setFrame(frame: hiddenRect, animated: animated)
-        }
-    }
-    
-    private func resetNavBar(animated: Bool) {
-        if let navBar = self.navigationController?.navigationBar,let navBarInitialFrame = self.navBarInitialFrame {
-            navBar.setFrame(frame: navBarInitialFrame, animated: animated)
-            self.catalogHeaderTopConstraint.constant = self.initialCatalogHeaderTopConstraint
         }
     }
     
@@ -576,36 +527,22 @@ import SwiftyJSON
     
     //MARK: -ScrollViewDelegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.navBarScrollFollower?.scrollViewDidScroll(scrollView)
+        self.tabBarScrollFollower?.scrollViewDidScroll(scrollView)
+        self.searchBarScrollFollower?.scrollViewDidScroll(scrollView)
         if (scrollView.contentOffset.y < productCountViewHeight) {
-            self.resetTabarFrame(animated: false)
-            self.resetNavBar(animated: false)
             self.setNavigationBarAlpha(alpha: 0, animated: false)
-            self.lastContentOffset = scrollView.contentOffset.y
             self.productCountLabel.alpha = 1
             return
         }
         
         self.productCountLabel.alpha = 0
-        let scrollChanage = self.lastContentOffset - scrollView.contentOffset.y
-        self.changeTabbarPositionY(difference: scrollChanage)
-        self.changeNavBarPositionY(difference: scrollChanage)
-        
-        self.lastContentOffset = scrollView.contentOffset.y;
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if !decelerate {
-            self.tabbarIsHidding ? self.hideTabbar(animated: true) : self.resetTabarFrame(animated: true)
-            if self.navBarIsHidding {
-                self.hideNavBar(animated: true)
-                self.setNavigationBarAlpha(alpha: 1, animated: true)
-                self.catalogHeaderTopConstraint.constant = NavBarUtility.getStatusBarHeight()
-            } else {
-                self.resetNavBar(animated: true)
-                self.setNavigationBarAlpha(alpha: 0, animated: true)
-                self.catalogHeaderTopConstraint.constant = self.initialCatalogHeaderTopConstraint
-            }
-        }
+        self.navBarScrollFollower?.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
+        self.tabBarScrollFollower?.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
+        self.searchBarScrollFollower?.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
     }
     
     //MARK: - JAPDVViewControllerDelegate

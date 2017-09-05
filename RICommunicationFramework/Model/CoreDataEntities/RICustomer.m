@@ -165,6 +165,11 @@
                     });
                 }
             }];
+        } else {
+            [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RICustomer class])];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                returnBlock(NO, nil, customerObject.loginMethod);
+            });
         }
 //        if (customerObject) {
 //            if([@"normal" isEqualToString:customerObject.loginMethod]) {
