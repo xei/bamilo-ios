@@ -10,9 +10,16 @@
 #import "RITeaserGrouping.h"
 #import "JACampaignsTeaserView.h"
 
+@protocol JATeaserPageViewDelegate <NSObject>
+
+- (void)teaserPageIsReady:(id)teaserPage;
+
+@end
+
 @interface JATeaserPageView : UIView
 @property (nonatomic, strong) UIScrollView* mainScrollView;
 @property (nonatomic, strong) NSDictionary* teaserGroupings;
+@property (nonatomic, weak) id<JATeaserPageViewDelegate> delegate;
 
 // Newsletter
 @property (nonatomic, strong) RIForm *newsletterForm;

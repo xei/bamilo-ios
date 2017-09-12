@@ -57,12 +57,12 @@
     }
 }
 
-- (JANavigationBarLayout *)navBarLayout {
-    if (!_navBarLayout) {
-        _navBarLayout = [[JANavigationBarLayout alloc] init];
-    }
-    return _navBarLayout;
-}
+//- (JANavigationBarLayout *)navBarLayout {
+//    if (!_navBarLayout) {
+//        _navBarLayout = [[JANavigationBarLayout alloc] init];
+//    }
+//    return _navBarLayout;
+//}
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];

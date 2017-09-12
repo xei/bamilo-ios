@@ -47,3 +47,7 @@ let STRING_ERROR = RILocalizationWrapper.localizedString("string_error")!
 let STRING_ERROR_SUPPORTING_EMAIL = RILocalizationWrapper.localizedString("error_email_support")!
 let STRING_ESTIMATED_TIME = RILocalizationWrapper.localizedString("estimated_time")!
 let STRING_DELIVERY_TIME = RILocalizationWrapper.localizedString("delivery_time")!
+let STRING_SEARCH_PLACEHOLDER = RILocalizationWrapper.localizedString("search_placeholder")!
+let STRING_HOME = RILocalizationWrapper.localizedString("home")!
+let STRING_MY_BAMILO = RILocalizationWrapper.localizedString("my_bamilo")!
+

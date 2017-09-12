@@ -10,13 +10,10 @@
 #import "JAPickerScrollView.h"
 #import "JAShopWebViewController.h"
 #import "MPCoachMarks.h"
+#import "JATeaserPageView.h"
 
-@interface JAHomeViewController : JABaseViewController
-<
-JAPickerScrollViewDelegate,
-UIScrollViewDelegate
->
-
+@interface JAHomeViewController : JABaseViewController <JAPickerScrollViewDelegate, UIScrollViewDelegate>
+@property (strong, nonatomic) JATeaserPageView* teaserPageView;
 - (void)stopLoading;
 
 @end

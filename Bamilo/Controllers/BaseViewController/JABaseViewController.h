@@ -25,7 +25,7 @@
 //@property (nonatomic, strong)NSDate *startLoadingTime;
 //@property (nonatomic, assign)BOOL firstLoading;
 @property (nonatomic, assign)BOOL searchBarIsVisible;
-@property (nonatomic, assign)BOOL tabBarIsVisible;
+//@property (nonatomic, assign)BOOL tabBarIsVisible;
 
 @property (nonatomic, strong) UIImageView *searchIconImageView;
 

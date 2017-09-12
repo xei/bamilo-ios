@@ -261,7 +261,7 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         
         //TODO: handle these legacy code with another way (when tab bar is ready)
         NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.UpdateCart), object: nil, userInfo: nil)
-        MainTabBarViewController.activateTabItem(rootViewClassType: JAHomeViewController.self)
+        MainTabBarViewController.activateTabItem(rootViewClassType: HomeViewController.self)
         
         RICommunicationWrapper.deleteSessionCookie()
         ViewControllerManager.sharedInstance().clearCache()

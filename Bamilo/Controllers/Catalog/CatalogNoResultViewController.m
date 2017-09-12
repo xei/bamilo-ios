@@ -50,10 +50,6 @@
     [EmarsysPredictManager sendTransactionsOf:self];
 }
 
-- (void)updateNavBar {
-    self.navBarLayout.showBackButton = YES;
-}
-
 - (void)setSearchQuery:(NSString *)searchQuery {
     self.searchTerm = searchQuery;
     NSString* msgToShow;

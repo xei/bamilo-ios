@@ -18,7 +18,7 @@ class ScrollerBarFollower:NSObject {
     private var barViewInitialFrame: CGRect?
     private var barIsHidding = false
     private var lastContentOffset: CGFloat = 0
-    private var shouldFollower = true
+    private var shouldFollower = false
     
     init(withBarView barView: UIView, moveDirection: VerticalMoveDirection) {
         self.barView = barView
@@ -80,7 +80,8 @@ class ScrollerBarFollower:NSObject {
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if !decelerate || !self.shouldFollower {
-            self.barIsHidding ? self.hideBar(animated: true) : self.resetBarFrame(animated: true)
+            self.barIsHidding ? self.hideBar(animated: false) : self.resetBarFrame(animated: true)
+            
         }
     }
 }

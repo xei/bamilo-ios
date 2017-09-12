@@ -80,6 +80,7 @@ const CGFloat marginBottom = 6.0f;
         currentMainScrollY += marginBottom;
         [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.frame.size.width, currentMainScrollY)];
     }
+    [self.delegate teaserPageIsReady:self];
 }
 
 - (void)setNewsletterForm:(RIForm *)newsletterForm {
@@ -245,8 +246,7 @@ const CGFloat marginBottom = 6.0f;
 - (CGFloat)loadFeatureStoresTeasersInScrollView:(UIScrollView*)scrollView
                                       xPosition:(CGFloat)xPosition
                                       yPosition:(CGFloat)yPosition
-                                          width:(CGFloat)width
-{
+                                          width:(CGFloat)width {
     if ([self.teaserGroupings objectForKey:@"featured_stores"]) {
         RITeaserGrouping* teaserGrouping = [self.teaserGroupings objectForKey:@"featured_stores"];
         

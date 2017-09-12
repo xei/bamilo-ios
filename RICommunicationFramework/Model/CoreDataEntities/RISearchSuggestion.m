@@ -67,16 +67,12 @@
     return newSearchSuggestion;
 }
 
-+ (void)saveSearchSuggestionOnDB:(RISearchSuggestion *)searchSuggestion
-                  isRecentSearch:(BOOL)isRecentSearch andContext:(BOOL)save
-{
-    if(VALID_NOTEMPTY(searchSuggestion.item, NSString))
-    {
-        if ([RISearchSuggestion checkIfSuggestionsExistsOnDB:searchSuggestion.targetString])
-        {
++ (void)saveSearchSuggestionOnDB:(RISearchSuggestion *)searchSuggestion isRecentSearch:(BOOL)isRecentSearch andContext:(BOOL)save {
+    
+    if(VALID_NOTEMPTY(searchSuggestion.item, NSString)) {    
+        if ([RISearchSuggestion checkIfSuggestionsExistsOnDB:searchSuggestion.targetString]) {
             [RISearchSuggestion deleteSearchSuggestionByTargetString:searchSuggestion.targetString];
         }
-        
         [searchSuggestion setIsRecentSearch:isRecentSearch];
         [searchSuggestion setDate:[NSDate date]];
         

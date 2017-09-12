@@ -42,6 +42,11 @@
 		61148E0A1E47255F00E2540B /* StepperView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61148E091E47255F00E2540B /* StepperView.xib */; };
 		611BB3C11F3EDEEB00022906 /* UIBarButtonItem+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = 611BB3C01F3EDEEB00022906 /* UIBarButtonItem+Badge.m */; };
 		611BB3C31F3F4DBD00022906 /* NavBarUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611BB3C21F3F4DBD00022906 /* NavBarUtility.swift */; };
+		611C19141F5E88DD0073940C /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611C19131F5E88DD0073940C /* SearchBarView.swift */; };
+		611C19161F5E89010073940C /* SearchBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 611C19151F5E89010073940C /* SearchBarView.xib */; };
+		611C19181F5EA1DA0073940C /* SearchBarControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611C19171F5EA1DA0073940C /* SearchBarControl.swift */; };
+		611C191A1F5EC27B0073940C /* MyBamiloPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611C19191F5EC27B0073940C /* MyBamiloPageViewController.swift */; };
+		611C19201F5FCEEB0073940C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611C191F1F5FCEEB0073940C /* HomeViewController.swift */; };
 		611C1B2E1F0B757E00C57E4D /* FilterSearchEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 611C1B2D1F0B757E00C57E4D /* FilterSearchEvent.m */; };
 		611C1B321F0BAA0900C57E4D /* SearchBarSearchEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 611C1B311F0BAA0900C57E4D /* SearchBarSearchEvent.m */; };
 		611E23E01F10CFB500E5C3AC /* EventSelectors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611E23DF1F10CFB500E5C3AC /* EventSelectors.swift */; };
@@ -958,6 +963,11 @@
 		611BB3BF1F3EDEEB00022906 /* UIBarButtonItem+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+Badge.h"; sourceTree = "<group>"; };
 		611BB3C01F3EDEEB00022906 /* UIBarButtonItem+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+Badge.m"; sourceTree = "<group>"; };
 		611BB3C21F3F4DBD00022906 /* NavBarUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavBarUtility.swift; sourceTree = "<group>"; };
+		611C19131F5E88DD0073940C /* SearchBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
+		611C19151F5E89010073940C /* SearchBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchBarView.xib; sourceTree = "<group>"; };
+		611C19171F5EA1DA0073940C /* SearchBarControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarControl.swift; sourceTree = "<group>"; };
+		611C19191F5EC27B0073940C /* MyBamiloPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyBamiloPageViewController.swift; sourceTree = "<group>"; };
+		611C191F1F5FCEEB0073940C /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		611C1B2C1F0B757E00C57E4D /* FilterSearchEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterSearchEvent.h; sourceTree = "<group>"; };
 		611C1B2D1F0B757E00C57E4D /* FilterSearchEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterSearchEvent.m; sourceTree = "<group>"; };
 		611C1B301F0BAA0900C57E4D /* SearchBarSearchEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchBarSearchEvent.h; sourceTree = "<group>"; };
@@ -2685,6 +2695,7 @@
 		610C689E1EC7423B008FB66C /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				611C19101F5E88910073940C /* SearchBarView */,
 				618B25681F35D6C400B39440 /* DeliveryTime */,
 				61832FD21ED2BFFD006F01FE /* RateStars */,
 				610C689F1EC74244008FB66C /* CatalogHeader */,
@@ -2765,6 +2776,32 @@
 				61148E071E47250A00E2540B /* StepperViewControl.m */,
 			);
 			name = Controls;
+			sourceTree = "<group>";
+		};
+		611C19101F5E88910073940C /* SearchBarView */ = {
+			isa = PBXGroup;
+			children = (
+				611C19121F5E88B80073940C /* Control */,
+				611C19111F5E88B40073940C /* View */,
+			);
+			name = SearchBarView;
+			sourceTree = "<group>";
+		};
+		611C19111F5E88B40073940C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				611C19131F5E88DD0073940C /* SearchBarView.swift */,
+				611C19151F5E89010073940C /* SearchBarView.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		611C19121F5E88B80073940C /* Control */ = {
+			isa = PBXGroup;
+			children = (
+				611C19171F5EA1DA0073940C /* SearchBarControl.swift */,
+			);
+			name = Control;
 			sourceTree = "<group>";
 		};
 		611C1B2B1F0B756600C57E4D /* FilterSearchEvent */ = {
@@ -2946,6 +2983,8 @@
 				61143A631ED5BCB000C53BA8 /* FilteredListNoResultViewController.swift */,
 				612FE5161EDC062500C2AFA0 /* ProfileViewController.swift */,
 				61EA566B1EDEC75E0093EAD4 /* MainTabBarViewController.swift */,
+				611C19191F5EC27B0073940C /* MyBamiloPageViewController.swift */,
+				611C191F1F5FCEEB0073940C /* HomeViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -7313,6 +7352,7 @@
 				87EA030B1E6C697F00B1E062 /* IconTableViewHeaderCell.xib in Resources */,
 				875743821EA60DB9001B518A /* National-Small@2x.png in Resources */,
 				875743451EA60D8E001B518A /* Autumn-Small.png in Resources */,
+				611C19161F5E89010073940C /* SearchBarView.xib in Resources */,
 				875743EA1EA60E13001B518A /* Spring-60@2x.png in Resources */,
 				875AD5841E38C0C900584ABF /* RITrackingDebug_Bamilo.plist in Resources */,
 				875743FD1EA60E2D001B518A /* Summer-Small@3x.png in Resources */,
@@ -7982,6 +8022,7 @@
 				FFF900721C6A5CC700DDF538 /* JATextFieldComponent.m in Sources */,
 				61148E051E4724FC00E2540B /* StepperView.m in Sources */,
 				875AD54F1E38C0C900584ABF /* RISearchSuggestion.m in Sources */,
+				611C191A1F5EC27B0073940C /* MyBamiloPageViewController.swift in Sources */,
 				87A681711E41FCF300D252AC /* CheckoutProgressView.m in Sources */,
 				CE9ADFC71AB6D78200D56481 /* JAButtonWithBlur.m in Sources */,
 				FFB1B08E1CE5E163000F60AD /* JAORWaysViewController.m in Sources */,
@@ -8007,6 +8048,7 @@
 				876869A71E5C97FA004B4333 /* NotificationBarView.m in Sources */,
 				61CBA0391E51A72A005673F7 /* ForgetPasswordViewController.m in Sources */,
 				8702FBF41E9A4A7A001D1AA9 /* ProductDataManager.m in Sources */,
+				611C19181F5EA1DA0073940C /* SearchBarControl.swift in Sources */,
 				9A59E7F61C3A8D5100F37D3F /* JASavedListViewController.m in Sources */,
 				875AD5771E38C0C900584ABF /* RISpecification.m in Sources */,
 				CE9ADFD61AB6D78200D56481 /* JAFilteredNoResultsView.m in Sources */,
@@ -8031,6 +8073,7 @@
 				CE59BF081AE8057A0057F4E2 /* JAShopsWeekTeaserView.m in Sources */,
 				875AD5431E38C0C900584ABF /* RICountryConfiguration.m in Sources */,
 				CE9ADFDF1AB6D78200D56481 /* JAMyOrderCell.m in Sources */,
+				611C19141F5E88DD0073940C /* SearchBarView.swift in Sources */,
 				619D0B1A1EA34B9900FDB255 /* FeatureBoxCollectionViewWidgetView.m in Sources */,
 				61EA566A1EDE8BC20093EAD4 /* Ext+UIAlertView.swift in Sources */,
 				8714E06D1E47949D004C9B1D /* CheckoutProgressViewControl.m in Sources */,
@@ -8080,6 +8123,7 @@
 				619351AB1ECAC9DD00330E5C /* CatalogCardCollectionViewCell.swift in Sources */,
 				CE9ADFF61AB6D78200D56481 /* JAShippingInfoCell.m in Sources */,
 				87459C8D1E4F04AD00743120 /* RadioButtonViewControl.m in Sources */,
+				611C19201F5FCEEB0073940C /* HomeViewController.swift in Sources */,
 				9AC4D6991B45A51A00036F1C /* JACatalogListCollectionViewCell.m in Sources */,
 				9AEF73F91CD20E1C00A5D574 /* JAReturnStepByStepModel.m in Sources */,
 				61CBA0421E51BA33005673F7 /* FormViewControl.m in Sources */,

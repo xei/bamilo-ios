@@ -8,7 +8,6 @@
 
 #import "JAHomeViewController.h"
 #import "RITeaserGrouping.h"
-#import "JATeaserPageView.h"
 #import "JATeaserView.h"
 #import "JAUtils.h"
 #import "RICustomer.h"
@@ -16,7 +15,6 @@
 #import "JAAppDelegate.h"
 #import "JAFallbackView.h"
 #import "RIAddress.h"
-//#import "RIForm.h"
 #import "JAPicker.h"
 #import "JANewsletterTeaserView.h"
 #import "JACenterNavigationController.h"
@@ -35,7 +33,6 @@
 #import "Bamilo-Swift.h"
 
 @interface JAHomeViewController () <JAPickerDelegate, JANewsletterGenderProtocol, EmarsysRecommendationsProtocol, FeatureBoxCollectionViewWidgetViewDelegate, SearchBarListener>
-@property (strong, nonatomic) JATeaserPageView* teaserPageView;
 @property (nonatomic, assign) BOOL isLoaded;
 @property (nonatomic, assign) BOOL isReturningHome;
 @property (nonatomic, strong) JAFallbackView *fallbackView;
@@ -66,8 +63,7 @@
     [super viewDidLoad];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"newsletter_subscribed"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    self.searchBarIsVisible = YES;
-    self.tabBarIsVisible = YES;
+    self.searchBarIsVisible = NO;
     self.isLoaded = NO;
     self.isReturningHome = NO;
     
@@ -137,7 +133,7 @@
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     if (self.isLoaded) {
-        [self.teaserPageView setFrame:[self viewBounds]];
+        [self.teaserPageView setFrame:self.view.bounds];
     }
     [self hideLoading];
     if(self.fallbackView && self.fallbackView.superview) {
@@ -342,14 +338,5 @@
                                attributes:[EventAttributes searchBarSearchedWithSearchString:searchBar.text screenName:[self getScreenName]]];
 }
 
-
-#pragma mark: -NavigationBarProtocol
-- (UIView *)navBarTitleView {
-    return [NavBarUtility navBarLogo];
-}
-
-- (NSString *)navBarTitleString {
-    return STRING_HOME;
-}
 
 @end

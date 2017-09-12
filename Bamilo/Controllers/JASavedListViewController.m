@@ -107,8 +107,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navBarLayout.showCartButton = NO;
-    self.navBarLayout.showSeparatorView = NO;
     [self.collectionView setBackgroundColor:[UIColor whiteColor]];
     [self.collectionView registerClass:[JARecentlyViewedCell class] forCellWithReuseIdentifier:@"CellWithLines"];
     

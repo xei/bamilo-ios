@@ -19,7 +19,7 @@ import UIKit
         self.tabBar.isTranslucent = false
         self.delegate = self
         
-        MainTabBarViewController.activateTabItem(rootViewClassType: JAHomeViewController.self)
+        MainTabBarViewController.activateTabItem(rootViewClassType: HomeViewController.self)
         
         self.tabBar.tintColor = Theme.color(kColorExtraDarkBlue)
         UITabBarItem.appearance().setTitleTextAttributes([NSFontAttributeName: Theme.font(kFontVariationRegular, size: 9), NSForegroundColorAttributeName: Theme.color(kColorExtraDarkBlue)], for: .selected)
@@ -125,7 +125,7 @@ import UIKit
     
     //TODO: Temprory helper functions (for objective c codes)
     static func showHome() {
-        MainTabBarViewController.activateTabItem(rootViewClassType: JAHomeViewController.self)
+        MainTabBarViewController.activateTabItem(rootViewClassType: HomeViewController.self)
     }
     
     static func showWishList() {

@@ -30,6 +30,7 @@
 #import <Masonry/Masonry.h>
 #import <RGB/RRGB.h>
 #import "UIBarButtonItem+Badge.h"
+#import "CAPSPageMenu.h"
 
 #import "DataManager.h"
 #import "OrderList.h"
@@ -54,9 +55,9 @@
 #import "BaseTracker.h"
 #import "TagTrackerProtocol.h"
 
-#import "JAHomeViewController.h"
 #import "CartViewController.h"
 #import "JASavedListViewController.h"
+#import "JAHomeViewController.h"
 #import "MultistepEntity.h"
 #import "SuccessPaymentViewController.h"
 
