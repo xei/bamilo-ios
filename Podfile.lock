@@ -48,6 +48,11 @@ PODS:
   - RAlertView (0.1.1):
     - Masonry
     - RGB
+  - Realm (2.10.0):
+    - Realm/Headers (= 2.10.0)
+  - Realm/Headers (2.10.0)
+  - RealmSwift (2.10.0):
+    - Realm (= 2.10.0)
   - RGB (0.0.2)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
@@ -74,6 +79,7 @@ DEPENDENCIES:
   - ObjectMapper (~> 2.2)
   - Pushwoosh
   - RAlertView
+  - RealmSwift
   - SDWebImage (~> 3.8)
   - SwiftyJSON
   - TTRangeSlider (~> 1.0.5)
@@ -99,11 +105,13 @@ SPEC CHECKSUMS:
   ObjectMapper: 3d571bb5af471c779e1160828cd9ad5c4ef90958
   Pushwoosh: c5a1324778f4195d95f7e3f7435140a36a5bfed0
   RAlertView: b9996eb63ceb64c7d1879a1d1846af5e386a1808
+  Realm: 98b3a25643cf6b3e07d2b99fb43fe0eb9c801dec
+  RealmSwift: 34073ad3a31232bbaf7c0db898c037940284cba2
   RGB: 21cf4b60ef3501c6b7cbb268a30045905dd90995
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   TTRangeSlider: 2f2ce4a33b32bb323c6575b9f5161c4664459c58
 
-PODFILE CHECKSUM: dda2872dfa4bca2416dcfb52847acda8a474c05a
+PODFILE CHECKSUM: 2a09d940c1d1627a22c400f477fc05a8227f2750
 
 COCOAPODS: 1.2.1

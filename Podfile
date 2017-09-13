@@ -30,6 +30,7 @@ target 'Bamilo' do
   pod 'Kingfisher', '~> 3.0'
   pod 'Alamofire', '~> 4.4'
   pod 'AlamofireObjectMapper', '~> 4.0'
+  pod 'RealmSwift'
 
   target 'BamiloUITests' do
     inherit! :search_paths

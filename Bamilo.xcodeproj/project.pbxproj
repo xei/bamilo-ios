@@ -164,6 +164,9 @@
 		61CBA0561E51FF2F005673F7 /* ButtonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA0541E51FF2F005673F7 /* ButtonTableViewCell.m */; };
 		61CBA0571E51FF2F005673F7 /* ButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61CBA0551E51FF2F005673F7 /* ButtonTableViewCell.xib */; };
 		61CBA8861F691D05009F0EEF /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA8851F691D05009F0EEF /* SearchViewController.swift */; };
+		61CBA8881F695633009F0EEF /* SearchSuggestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA8871F695633009F0EEF /* SearchSuggestion.swift */; };
+		61CBA88A1F6959A9009F0EEF /* CategorySuggestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA8891F6959A9009F0EEF /* CategorySuggestion.swift */; };
+		61CBA88C1F696013009F0EEF /* SearchSuggestionDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA88B1F696013009F0EEF /* SearchSuggestionDataManager.swift */; };
 		61D10E6C1EAE22C6009A0865 /* SuccessPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D10E6B1EAE22C6009A0865 /* SuccessPaymentViewController.m */; };
 		61D8D8DE1E656FE0006650F5 /* OrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D8D8DD1E656FE0006650F5 /* OrderDetailViewController.m */; };
 		61D929341F1642C100716D4C /* Ext+CAShapreLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D929331F1642C100716D4C /* Ext+CAShapreLayer.swift */; };
@@ -1148,6 +1151,9 @@
 		61CBA0551E51FF2F005673F7 /* ButtonTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ButtonTableViewCell.xib; sourceTree = "<group>"; };
 		61CBA0581E5204D8005673F7 /* ButtonTableViewCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonTableViewCellDelegate.h; sourceTree = "<group>"; };
 		61CBA8851F691D05009F0EEF /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		61CBA8871F695633009F0EEF /* SearchSuggestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchSuggestion.swift; sourceTree = "<group>"; };
+		61CBA8891F6959A9009F0EEF /* CategorySuggestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategorySuggestion.swift; sourceTree = "<group>"; };
+		61CBA88B1F696013009F0EEF /* SearchSuggestionDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchSuggestionDataManager.swift; sourceTree = "<group>"; };
 		61D10E6A1EAE22C6009A0865 /* SuccessPaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuccessPaymentViewController.h; sourceTree = "<group>"; };
 		61D10E6B1EAE22C6009A0865 /* SuccessPaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuccessPaymentViewController.m; sourceTree = "<group>"; };
 		61D8D8DC1E656FE0006650F5 /* OrderDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDetailViewController.h; sourceTree = "<group>"; };
@@ -3197,6 +3203,8 @@
 				613A7E8E1EBF0F6B00E1AB3F /* CategoryProduct.swift */,
 				613A7E901EBF2B0600E1AB3F /* Catalog.swift */,
 				6190E9E51ED4263600163F6D /* BreadcrumbsItem.swift */,
+				61CBA8871F695633009F0EEF /* SearchSuggestion.swift */,
+				61CBA8891F6959A9009F0EEF /* CategorySuggestion.swift */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -4580,6 +4588,7 @@
 				612544051EBA1075007F9350 /* OrderDataManager.swift */,
 				61F946B21ED4502100F341A6 /* ProductDataManager.swift */,
 				61583DDC1EF92100007107C1 /* DeleteEntityDataManager.swift */,
+				61CBA88B1F696013009F0EEF /* SearchSuggestionDataManager.swift */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -8000,6 +8009,7 @@
 				9AE766D41CBD2E0300B63D8E /* JAProductInfoPriceDescriptionLine.m in Sources */,
 				9AE766B11CBBB28E00B63D8E /* JACartProductsView.m in Sources */,
 				FFB1B0951CE61D96000F60AD /* JARadioExpandableComponent.m in Sources */,
+				61CBA8881F695633009F0EEF /* SearchSuggestion.swift in Sources */,
 				CE28A7A31BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */,
 				879E57841E9E0BAB001C4C71 /* EventUtilities.m in Sources */,
 				8702FC001E9A4CB5001D1AA9 /* OBJAddressDataManager.m in Sources */,
@@ -8043,6 +8053,7 @@
 				875AD5771E38C0C900584ABF /* RISpecification.m in Sources */,
 				CE9ADFD61AB6D78200D56481 /* JAFilteredNoResultsView.m in Sources */,
 				CE9ADFD71AB6D78200D56481 /* JAProductListFlowLayout.m in Sources */,
+				61CBA88A1F6959A9009F0EEF /* CategorySuggestion.swift in Sources */,
 				873369C21E589FEC00B0B5E5 /* ShippingMethodForm.m in Sources */,
 				875AD55A1E38C0C900584ABF /* RICart.m in Sources */,
 				CE9ADFD91AB6D78200D56481 /* JAPromotionPopUp.m in Sources */,
@@ -8084,6 +8095,7 @@
 				9AEF74251CD8A86900A5D574 /* JAORConfirmConditionsViewController.m in Sources */,
 				6CF4AE881ADEABBB0024EC34 /* JACatalogBannerCell.m in Sources */,
 				61143A591ED55C2300C53BA8 /* Ext+Bool.swift in Sources */,
+				61CBA88C1F696013009F0EEF /* SearchSuggestionDataManager.swift in Sources */,
 				9AEF742C1CD8A8BD00A5D574 /* JAORConfirmationScreenViewController.m in Sources */,
 				CE9ADFE51AB6D78200D56481 /* JANewsletterComponent.m in Sources */,
 				610C68A51EC742E3008FB66C /* CatalogHeaderControl.swift in Sources */,
