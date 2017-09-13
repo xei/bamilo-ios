@@ -119,7 +119,7 @@
                                         <rect key="frame" x="147" y="137" width="120" height="57"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SSz-D5-qwc">
-                                        <rect key="frame" x="193.33333333333334" y="69" width="27.333333333333314" height="23"/>
+                                        <rect key="frame" x="194" y="69" width="27.333333333333343" height="23"/>
                                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -403,6 +403,76 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SqE-sE-5i7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1394" y="-2799"/>
+        </scene>
+        <!--Search View Controller-->
+        <scene sceneID="zC8-eD-KLZ">
+            <objects>
+                <viewController id="CdM-AJ-ErQ" customClass="SearchViewController" customModule="Bamilo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1yC-h8-nL9"/>
+                        <viewControllerLayoutGuide type="bottom" id="pay-XS-BaW"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="6To-D3-LCh">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ogq-Tp-4DC">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="62"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="right" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="جستجو نام، برند یا دسته بندی" textAlignment="right" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="1Dr-cf-c2K">
+                                        <rect key="frame" x="64" y="24" width="342" height="30"/>
+                                        <nil key="textColor"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bRp-ka-tI1">
+                                        <rect key="frame" x="8" y="29.333333333333336" width="46" height="20.000000000000007"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="cGi-Zh-U9h"/>
+                                            <constraint firstAttribute="width" constant="46" id="ymc-h6-qfa"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="13"/>
+                                        <state key="normal" title="بازگشت"/>
+                                        <connections>
+                                            <action selector="backButtonTapped:" destination="CdM-AJ-ErQ" eventType="touchUpInside" id="BFG-eH-Qh7"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.50588235290000005" green="0.70588235290000001" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="1Dr-cf-c2K" secondAttribute="bottom" constant="8" id="4wd-BS-XU1"/>
+                                    <constraint firstAttribute="right" secondItem="1Dr-cf-c2K" secondAttribute="right" constant="8" id="Fv5-rN-QE7"/>
+                                    <constraint firstItem="1Dr-cf-c2K" firstAttribute="left" secondItem="bRp-ka-tI1" secondAttribute="right" constant="10" id="PnL-Nx-FH5"/>
+                                    <constraint firstAttribute="height" constant="62" id="X5e-6R-EhN"/>
+                                    <constraint firstItem="bRp-ka-tI1" firstAttribute="centerY" secondItem="1Dr-cf-c2K" secondAttribute="centerY" id="gqt-FE-xoK"/>
+                                    <constraint firstItem="bRp-ka-tI1" firstAttribute="left" secondItem="Ogq-Tp-4DC" secondAttribute="left" constant="8" id="xzu-jL-lPe"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="q9c-Vj-HyQ">
+                                <rect key="frame" x="0.0" y="62" width="414" height="674"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Ogq-Tp-4DC" firstAttribute="top" secondItem="6To-D3-LCh" secondAttribute="top" id="C4o-nO-vDa"/>
+                            <constraint firstAttribute="trailing" secondItem="q9c-Vj-HyQ" secondAttribute="trailing" id="EAr-oB-nIy"/>
+                            <constraint firstItem="q9c-Vj-HyQ" firstAttribute="leading" secondItem="6To-D3-LCh" secondAttribute="leading" id="FTl-w3-zjZ"/>
+                            <constraint firstItem="Ogq-Tp-4DC" firstAttribute="leading" secondItem="6To-D3-LCh" secondAttribute="leading" id="Uvb-1i-3e8"/>
+                            <constraint firstItem="pay-XS-BaW" firstAttribute="top" secondItem="q9c-Vj-HyQ" secondAttribute="bottom" id="fsh-Co-GV4"/>
+                            <constraint firstAttribute="trailing" secondItem="Ogq-Tp-4DC" secondAttribute="trailing" id="kSp-SS-MMz"/>
+                            <constraint firstItem="q9c-Vj-HyQ" firstAttribute="top" secondItem="Ogq-Tp-4DC" secondAttribute="bottom" id="mOM-Yp-wKl"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="returnButton" destination="bRp-ka-tI1" id="rUS-NT-7l4"/>
+                        <outlet property="searchBarContainer" destination="Ogq-Tp-4DC" id="qd5-tC-He8"/>
+                        <outlet property="searchTextField" destination="1Dr-cf-c2K" id="hmZ-3n-ULw"/>
+                        <outlet property="tableView" destination="q9c-Vj-HyQ" id="3tY-Xi-cg7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Yw6-tE-8Q0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-568.1159420289855" y="-2799.4565217391305"/>
         </scene>
         <!--Cart View Controller-->
         <scene sceneID="x2b-dV-MkH">
@@ -912,7 +982,7 @@
             <objects>
                 <navigationController storyboardIdentifier="menuViewController" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="tA5-pZ-pB4" userLabel="Side Menu Navigation Controller" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="UvQ-KB-VPd">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="UvQ-KB-VPd">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1004,7 +1074,7 @@
                                                 </connections>
                                             </switch>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="فقط با تخفیف ها" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gEn-nz-ntR">
-                                                <rect key="frame" x="59.666666666666686" y="15" width="85.333333333333314" height="21.333333333333336"/>
+                                                <rect key="frame" x="59.666666666666686" y="15.666666666666664" width="85.333333333333314" height="21.333333333333336"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1269,7 +1339,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="0V7-j2-mJV" userLabel="Application Navigation Controller" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="S2r-Lu-SWl">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="S2r-Lu-SWl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1308,7 +1378,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="3lk-K0-wUO" customClass="JACenterNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="سبد خرید" image="tabbar_button_cart" selectedImage="tabbar_button_cart_highlighted" id="vOP-LE-mfP"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="JSG-7a-gu8">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="JSG-7a-gu8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1418,7 +1488,7 @@
                                 <rect key="frame" x="187" y="100" width="40" height="40"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="فیلترهای کمتری را برای جستجو انتخاب نمایید" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SU1-vf-mKc">
-                                <rect key="frame" x="83.333333333333314" y="165" width="247.33333333333337" height="23"/>
+                                <rect key="frame" x="84" y="165" width="247.33333333333331" height="23"/>
                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -1457,7 +1527,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="UNH-3a-fvq" customClass="JACenterNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="حساب کاربری" image="tabbar_button_user" selectedImage="tabbar_button_user_highlighted" id="kQT-G5-igf"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="j53-XG-u4H">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="j53-XG-u4H">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1474,7 +1544,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="LF3-PT-6bx" customClass="JACenterNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="دسته بندی" image="tabbar_category" selectedImage="tabbar_category_highlighted" id="VQI-YI-REh"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="P9F-Ev-iJz">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="P9F-Ev-iJz">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1510,7 +1580,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="QoD-0G-T5X" customClass="JACenterNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="علاقه مندی" image="tabbar_button_wishlist" selectedImage="tabbar_button_wishlist_highlighted" id="4Pl-fC-rbr"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="1fp-kM-BWq">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="1fp-kM-BWq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1527,7 +1597,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cs8-hA-jLu" customClass="JACenterNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="خانه" image="tabbar_button_home" selectedImage="tabbar_button_home_highlighted" id="30f-xb-6Gv"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="8ul-e7-QlM">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="8ul-e7-QlM">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1578,6 +1648,7 @@
                     <connections>
                         <outlet property="contentContainer" destination="dyL-OM-a0v" id="S0S-ov-xrr"/>
                         <outlet property="searchBar" destination="VXG-cT-GiY" id="RTz-tO-seN"/>
+                        <segue destination="CdM-AJ-ErQ" kind="presentation" identifier="ShowSearchView" id="aMS-rc-aBM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KuD-hl-zvw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1589,7 +1660,7 @@
             <objects>
                 <navigationController storyboardIdentifier="AddressEditNavigation" automaticallyAdjustsScrollViewInsets="NO" id="JXE-5G-TBZ" customClass="JACenterNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="8o8-eG-J2H">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="8o8-eG-J2H">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

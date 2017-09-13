@@ -63,7 +63,6 @@
     [super viewDidLoad];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"newsletter_subscribed"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    self.searchBarIsVisible = NO;
     self.isLoaded = NO;
     self.isReturningHome = NO;
     

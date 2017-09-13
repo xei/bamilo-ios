@@ -50,4 +50,4 @@ let STRING_DELIVERY_TIME = RILocalizationWrapper.localizedString("delivery_time"
 let STRING_SEARCH_PLACEHOLDER = RILocalizationWrapper.localizedString("search_placeholder")!
 let STRING_HOME = RILocalizationWrapper.localizedString("home")!
 let STRING_MY_BAMILO = RILocalizationWrapper.localizedString("my_bamilo")!
-
+let STRING_BACK_LABEL = RILocalizationWrapper.localizedString("back_label")!

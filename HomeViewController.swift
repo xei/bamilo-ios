@@ -6,7 +6,7 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-class HomeViewController: BaseViewController, CAPSPageMenuDelegate, UIScrollViewDelegate, JATeaserPageViewDelegate {
+class HomeViewController: BaseViewController, CAPSPageMenuDelegate, UIScrollViewDelegate, JATeaserPageViewDelegate, UITextFieldDelegate {
     
     @IBOutlet private weak var searchBar: SearchBarControl!
     @IBOutlet private weak var contentContainer: UIView!
@@ -38,6 +38,8 @@ class HomeViewController: BaseViewController, CAPSPageMenuDelegate, UIScrollView
         //Sign Up View Controller
         self.myBamiloPage = JAHomeViewController()
         self.myBamiloPage?.title = STRING_MY_BAMILO
+        
+        self.searchBar.searchView?.textField.delegate = self
         
         self.view.bringSubview(toFront: self.searchBar)
     }
@@ -133,6 +135,12 @@ class HomeViewController: BaseViewController, CAPSPageMenuDelegate, UIScrollView
             }
         }
         
+    }
+    
+    //MARK: - UITextFieldDelegate
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.resignFirstResponder()
+        self.performSegue(withIdentifier: "ShowSearchView", sender: nil)
     }
     
     //MARK:- NavigationBarProtocol

@@ -43,10 +43,8 @@
 @dynamic targetString;
 @dynamic queryString;
 
-+ (void)deleteSearchSuggestionByTargetString:(NSString *)targetString
-{
++ (void)deleteSearchSuggestionByTargetString:(NSString *)targetString {
     NSArray *searches = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RISearchSuggestion class])];
-    
     for (RISearchSuggestion *tempSearch in searches) {
         if ([tempSearch.targetString isEqualToString:targetString]) {
             [[RIDataBaseWrapper sharedInstance] deleteObject:tempSearch];
@@ -57,8 +55,7 @@
     }
 }
 
-+ (RISearchSuggestion *)getSearchSuggestionWithQuery:(NSString *)query isRecentSearch:(BOOL)isRecentSearch andContext:(BOOL)save
-{
++ (RISearchSuggestion *)getSearchSuggestionWithQuery:(NSString *)query isRecentSearch:(BOOL)isRecentSearch andContext:(BOOL)save {
     RISearchSuggestion *newSearchSuggestion = (RISearchSuggestion*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RISearchSuggestion class])];
     newSearchSuggestion.item = query;
     newSearchSuggestion.relevance = @(0);
@@ -68,27 +65,20 @@
 }
 
 + (void)saveSearchSuggestionOnDB:(RISearchSuggestion *)searchSuggestion isRecentSearch:(BOOL)isRecentSearch andContext:(BOOL)save {
-    
     if(VALID_NOTEMPTY(searchSuggestion.item, NSString)) {    
         if ([RISearchSuggestion checkIfSuggestionsExistsOnDB:searchSuggestion.targetString]) {
             [RISearchSuggestion deleteSearchSuggestionByTargetString:searchSuggestion.targetString];
         }
         [searchSuggestion setIsRecentSearch:isRecentSearch];
         [searchSuggestion setDate:[NSDate date]];
-        
-        // The limit for recent search is 5, if there is > 5 it's necessary to delete the old one
-        if (isRecentSearch)
-        {
+        //The limit for recent search is 5, if there is > 5 it's necessary to delete the old one
+        if (isRecentSearch) {
             NSMutableArray *searches = [[[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RISearchSuggestion class])] mutableCopy];
             
-            if (searches.count > 4)
-            {
-                [searches sortUsingComparator:^(RISearchSuggestion *obj1, RISearchSuggestion *obj2)
-                 {
+            if (searches.count > 4) {
+                [searches sortUsingComparator:^(RISearchSuggestion *obj1, RISearchSuggestion *obj2) {
                      NSComparisonResult result = [obj1.date compare:obj2.date];
-                     
-                     switch (result)
-                     {
+                     switch (result) {
                          case NSOrderedAscending: return (NSComparisonResult)NSOrderedDescending; break;
                          case NSOrderedDescending: return (NSComparisonResult)NSOrderedAscending; break;
                          case NSOrderedSame: return (NSComparisonResult)NSOrderedSame; break;
@@ -96,14 +86,11 @@
                          default: return (NSComparisonResult)NSOrderedSame; break;
                      }
                  }];
-                
                 [[RIDataBaseWrapper sharedInstance] deleteObject:[searches lastObject]];
                 if (save) {
                     [[RIDataBaseWrapper sharedInstance] saveContext];
                 }
-                
             }
-
             [[RIDataBaseWrapper sharedInstance] insertManagedObject:searchSuggestion];
             if (save) {
                 [[RIDataBaseWrapper sharedInstance] saveContext];
@@ -114,12 +101,10 @@
 
 + (NSString *)getSuggestionsForQuery:(NSString *)query
                        successBlock:(void (^)(NSArray *suggestions))successBlock
-                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
-{
+                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock {
        if([RICountryConfiguration getCurrentConfiguration].suggesterProviderEnum == ALGOLIA &&
            VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].algoliaAppId, NSString) &&
-           VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].algoliaApiKey, NSString))
-    {
+           VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].algoliaApiKey, NSString)) {
         __block NSLock *searchLock = [NSLock new];
         __block NSArray *outsideBlockProductsResultsArray;
         __block NSArray *outsideBlockShopInShopResultsArray;

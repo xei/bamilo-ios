@@ -36,7 +36,7 @@
 #import "JANewsletterViewController.h"
 #import "JANewsletterSubscriptionViewController.h"
 
-#import "JASearchView.h"
+//#import "JASearchView.h"
 #import "JAActionWebViewController.h"
 
 #import "JAStepByStepTabViewController.h"
@@ -70,7 +70,7 @@
 @property (assign, nonatomic) BOOL neeedsExternalPaymentMethod;
 @property (strong, nonatomic) UIStoryboard *mainStoryboard;
 
-@property (nonatomic, strong) JASearchView *searchView;
+//@property (nonatomic, strong) JASearchView *searchView;
 
 @property (nonatomic, strong) JAStepByStepTabViewController *checkoutStepByStepViewController;
 @property (nonatomic, strong) JAStepByStepTabViewController *returnsStepByStepViewController;
@@ -895,7 +895,7 @@
     return NO;
 }
 
-- (void) closeTopTwoScreensNotificaion:(NSNotification*)notification {
+- (void)closeTopTwoScreensNotificaion:(NSNotification*)notification {
     NSInteger thirdToLastIndex = self.viewControllers.count-3;
     if (0 <= thirdToLastIndex) {
         UIViewController* thirdToLastViewController = [self.viewControllers objectAtIndex:thirdToLastIndex];
@@ -1049,25 +1049,29 @@
     }
 }
 
+- (void)openCart:(NSNotification*) notification {
+    [MainTabBarViewController showCart];
+}
+
 - (void)viewWillLayoutSubviews {
-    [self.searchView resetFrame:self.view.bounds];
+//    [self.searchView resetFrame:self.view.bounds];
 }
 
 #pragma mark - Search Bar
-- (JASearchView *)searchView {
-    if (!VALID(_searchView, JASearchView)) {
-        _searchView = [[JASearchView alloc] initWithFrame:self.view.bounds andText:@""];
-        [_searchView setHidden:YES];
-        [self.view addSubview:_searchView];
-    }
-    return _searchView;
-}
-
-- (void)showSearchView {
-    if (!self.searchViewAlwaysHidden) {
-        [self.searchView setHidden:NO];
-    }
-}
+//- (JASearchView *)searchView {
+//    if (!VALID(_searchView, JASearchView)) {
+//        _searchView = [[JASearchView alloc] initWithFrame:self.view.bounds andText:@""];
+//        [_searchView setHidden:YES];
+//        [self.view addSubview:_searchView];
+//    }
+//    return _searchView;
+//}
+//
+//- (void)showSearchView {
+//    if (!self.searchViewAlwaysHidden) {
+//        [self.searchView setHidden:NO];
+//    }
+//}
 
 //#####################################################################################################################
 - (void) requestNavigateToNib:(NSString *)destNib args:(NSDictionary *)args {
