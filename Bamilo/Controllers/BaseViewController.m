@@ -174,7 +174,7 @@
 
 #pragma mark - NavigationBarProtocol
 - (void)searchIconButtonTapped {
-//    [[MainTabBarViewController topNavigationController] showSearchView];
+    [[MainTabBarViewController topNavigationController] showSearchView];
 }
 
 - (void)cartIconButtonTapped {

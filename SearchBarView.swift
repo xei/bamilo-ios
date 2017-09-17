@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchBarView: BaseControlView {
+@objc class SearchBarView: BaseControlView {
 
     @IBOutlet weak var textField: UITextField!
     

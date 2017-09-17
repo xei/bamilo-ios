@@ -10,6 +10,7 @@ class HomeViewController: BaseViewController, CAPSPageMenuDelegate, UIScrollView
     
     @IBOutlet private weak var searchBar: SearchBarControl!
     @IBOutlet private weak var contentContainer: UIView!
+    @IBOutlet private weak var contentContainerTopConstraint: NSLayoutConstraint!
     
     
     private var pagemenu: CAPSPageMenu?
@@ -28,7 +29,7 @@ class HomeViewController: BaseViewController, CAPSPageMenuDelegate, UIScrollView
         super.viewDidLoad()
         
         if let navBar = self.navigationController?.navigationBar {
-            self.navBarFollower = ScrollerBarFollower(withBarView: navBar, moveDirection: .top)
+            self.navBarFollower = ScrollerBarFollower(barView: navBar, moveDirection: .top)
             self.navBarInitialHeight = navBar.frame.height
         }
         //Sign In View Controller
@@ -47,10 +48,14 @@ class HomeViewController: BaseViewController, CAPSPageMenuDelegate, UIScrollView
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         if (!isLoaded) {
+            if let navBarHeight = self.navBarInitialHeight {
+                self.contentContainerTopConstraint.constant = -navBarHeight
+            }
+            
             let parameters: [AnyHashable: Any] = [  CAPSPageMenuOptionUseMenuLikeSegmentedControl: (true),
-                                                    CAPSPageMenuOptionSelectionIndicatorHeight: 2,
+                                                    CAPSPageMenuOptionSelectionIndicatorHeight: 3,
                                                     CAPSPageMenuOptionMenuItemFont: Theme.font(kFontVariationRegular, size: 14),
-                                                    CAPSPageMenuOptionSelectionIndicatorColor: Theme.color(kColorOrange),
+                                                    CAPSPageMenuOptionSelectionIndicatorColor: Theme.color(kColorOrange1),
                                                     CAPSPageMenuOptionScrollMenuBackgroundColor: Theme.color(kColorExtraDarkBlue),
                                                     CAPSPageMenuOptionMenuHeight: 40,
                                                     CAPSPageMenuOptionBottomMenuHairlineColor: UIColor.clear,
@@ -69,15 +74,23 @@ class HomeViewController: BaseViewController, CAPSPageMenuDelegate, UIScrollView
             self.homePage.teaserPageView.delegate = self
             self.myBamiloPage.teaserPageView.delegate = self
             
-            self.searchBarFollower = ScrollerBarFollower(withBarView: self.searchBar, moveDirection: .top)
-            self.topTabBarFollower = ScrollerBarFollower(withBarView: self.pagemenu!.menuScrollView, moveDirection: .top)
+            if let navBarHeight = self.navBarInitialHeight {
+                //update the menuScrollview top constraint to super view
+                self.pagemenu?.view.constraints.filter({ $0.firstAttribute == .top }).last?.constant = navBarHeight
+                
+                // -- update the frame of menuScrollView --
+                // After updating the top constraint of this view
+                // the frame of this view will not be updated instantly, so we do it manualy to use it in ScrollVarFollower
+                self.pagemenu?.menuScrollView.frame.origin.y += navBarHeight
+            }
+            
+            self.searchBarFollower = ScrollerBarFollower(barView: self.searchBar, moveDirection: .top)
+            self.topTabBarFollower = ScrollerBarFollower(barView: self.pagemenu!.menuScrollView, moveDirection: .top)
             
             self.isLoaded = true
         }
         
-        if let navBarHeight = self.navBarInitialHeight {
-            self.pagemenu?.view.constraints.filter({ $0.firstAttribute == .top }).first?.constant = -navBarHeight
-        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -93,17 +106,17 @@ class HomeViewController: BaseViewController, CAPSPageMenuDelegate, UIScrollView
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
-        self.navBarFollower?.resetBarFrame(animated: true)
-        self.searchBarFollower?.resetBarFrame(animated: true)
-        self.topTabBarFollower?.resetBarFrame(animated: true)
-        
         NavBarUtility.changeStatusBarColor(color: UIColor.clear)
+
+        self.navBarFollower?.resetBarFrame(animated: false)
+        self.searchBarFollower?.resetBarFrame(animated: false)
+        self.topTabBarFollower?.resetBarFrame(animated: false)
     }
     
     //MARK:- CAPSPageMenuDelegate
     func didMove(toPage controller: UIViewController!, index: Int) {
         self.navBarFollower?.resetBarFrame(animated: true)
+        
         self.searchBarFollower?.resetBarFrame(animated: true)
         self.topTabBarFollower?.resetBarFrame(animated: true)
     }
@@ -134,12 +147,15 @@ class HomeViewController: BaseViewController, CAPSPageMenuDelegate, UIScrollView
                 self.topTabBarFollower?.followScrollView(scrollView: teaserPage.mainScrollView, delay: -navBarHeight, permittedMoveDistance: navBarHeight)
             }
         }
-        
     }
     
     //MARK: - UITextFieldDelegate
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.resignFirstResponder()
+        
+        self.navBarFollower?.resetBarFrame(animated: false)
+        self.searchBarFollower?.resetBarFrame(animated: false)
+        self.topTabBarFollower?.resetBarFrame(animated: false)
         self.performSegue(withIdentifier: "ShowSearchView", sender: nil)
     }
     

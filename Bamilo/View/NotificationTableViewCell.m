@@ -1,45 +1,45 @@
+////
+////  NotificationTableViewCell.m
+////  Bamilo
+////
+////  Created by Ali Saeedifar on 1/29/17.
+////  Copyright © 2017 Rocket Internet. All rights reserved.
+////
 //
-//  NotificationTableViewCell.m
-//  Bamilo
+//#import "NotificationTableViewCell.h"
 //
-//  Created by Ali Saeedifar on 1/29/17.
-//  Copyright © 2017 Rocket Internet. All rights reserved.
 //
-
-#import "NotificationTableViewCell.h"
-
-
-@interface NotificationTableViewCell()
-@property (weak, nonatomic) IBOutlet UISwitch *notificationSwitch;
-@end
-
-@implementation NotificationTableViewCell {
-    @private Boolean notificationIsOn;
-}
-
-- (void)prepareForReuse {
-    notificationIsOn = [[NSUserDefaults standardUserDefaults] boolForKey: kChangeNotificationsOptions];
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
-}
-
-- (IBAction)changeSwitch:(id)sender {
-        if (self.notificationSwitch.on) {
-            [[NSUserDefaults standardUserDefaults] setBool:YES forKey: kChangeNotificationsOptions];
-        } else {
-            [[UIApplication sharedApplication] unregisterForRemoteNotifications];
-            [[NSUserDefaults standardUserDefaults] setBool:NO forKey: kChangeNotificationsOptions];
-        }
-        [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-#pragma mark - Overrides
-+ (NSString *)nibName {
-    return @"NotificationTableViewCell";
-}
-
-@end
+//@interface NotificationTableViewCell()
+//@property (weak, nonatomic) IBOutlet UISwitch *notificationSwitch;
+//@end
+//
+//@implementation NotificationTableViewCell {
+//    @private Boolean notificationIsOn;
+//}
+//
+//- (void)prepareForReuse {
+//    notificationIsOn = [[NSUserDefaults standardUserDefaults] boolForKey: kChangeNotificationsOptions];
+//}
+//
+//- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+//    [super setSelected:selected animated:animated];
+//
+//    // Configure the view for the selected state
+//}
+//
+//- (IBAction)changeSwitch:(id)sender {
+//        if (self.notificationSwitch.on) {
+//            [[NSUserDefaults standardUserDefaults] setBool:YES forKey: kChangeNotificationsOptions];
+//        } else {
+//            [[UIApplication sharedApplication] unregisterForRemoteNotifications];
+//            [[NSUserDefaults standardUserDefaults] setBool:NO forKey: kChangeNotificationsOptions];
+//        }
+//        [[NSUserDefaults standardUserDefaults] synchronize];
+//}
+//
+//#pragma mark - Overrides
+//+ (NSString *)nibName {
+//    return @"NotificationTableViewCell";
+//}
+//
+//@end

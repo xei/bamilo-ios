@@ -21,18 +21,17 @@ import SwiftyJSON
     var categoryIds: [String]?
     var category: CategoryProduct?
     var imageUrl: URL?
-    var target:String?
+    var target: String?
     var reviewsAverage: Double?
     var ratingsCount: Int?
     var isNew: Bool = false
     var isInWishList: Bool = false
     var reviewsCount: Int?
     
+    override init() {    
+    }
     
     required init?(map: Map) {
-        if map.JSON["sku"] == nil {
-            return nil;
-        }
     }
     
     func mapping(map: Map) {

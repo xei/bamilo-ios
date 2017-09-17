@@ -13,7 +13,7 @@
 #import "JAUtils.h"
 #import "RITeaserComponent.h"
 
-@interface JACampaignsViewController ()
+@interface JACampaignsViewController () <SearchViewControllerDelegate>
 
 @property (nonatomic, strong)NSMutableArray* campaignPages;
 @property (nonatomic, strong)JATopTabsView* topTabsView;

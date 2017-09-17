@@ -10,9 +10,9 @@
 
 @interface RITarget : NSObject
 
-typedef enum {
-    UNKNOWN,
-    PRODUCT_DETAIL,
+typedef NS_ENUM(NSUInteger, TargetType) {
+    UNKNOWN = 0,
+    PRODUCT_DETAIL = 1,
     CATALOG_SEARCH,
     CATALOG_HASH,
     CATALOG_CATEGORY,
@@ -26,7 +26,25 @@ typedef enum {
     RR_RECOMENDATION,
     RR_CLICK,
     EXTERNAL_LINK
-} TargetType;
+};
+
+//typedef enum {
+//    UNKNOWN,
+//    PRODUCT_DETAIL,
+//    CATALOG_SEARCH,
+//    CATALOG_HASH,
+//    CATALOG_CATEGORY,
+//    CATALOG_BRAND,
+//    CATALOG_SELLER,
+//    CAMPAIGN,
+//    STATIC_PAGE,
+//    SHOP_IN_SHOP,
+//    FORM_SUBMIT,
+//    FORM_GET,
+//    RR_RECOMENDATION,
+//    RR_CLICK,
+//    EXTERNAL_LINK
+//} TargetType;
 
 @property (nonatomic, strong) NSString* type;
 @property (nonatomic) TargetType targetType;

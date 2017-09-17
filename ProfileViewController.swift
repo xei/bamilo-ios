@@ -192,8 +192,10 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
             //Reset some actions
             EmarsysPredictManager.userLoggedOut()
             RICustomer.cleanFromDB()
-            RICart.sharedInstance().cartEntity.cartItems = [];
-            RICart.sharedInstance().cartEntity.cartCount = nil;
+            RICart.sharedInstance().cartEntity.cartItems = []
+            RICart.sharedInstance().cartEntity.cartCount = nil
+            LocalSearchSuggestion().clearAllHistories()
+            
             UserDefaults.standard.removeObject(forKey: "SelectedAreaByUser")
         }
         NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.UserLoggedOut), object: nil, userInfo: nil)

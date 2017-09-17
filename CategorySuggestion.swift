@@ -8,22 +8,20 @@
 
 import UIKit
 import ObjectMapper
-import SwiftyJSON
 
 class CategorySuggestion: NSObject, Mappable {
     
     var name: String?
-    var target: RITarget?
+    var target: String?
+    
+    override init() {
+    }
     
     required init?(map: Map) {
-        
     }
     
     func mapping(map: Map) {
-        
-        let json = JSON(map.JSON)
-        
         name <- map["name"]
-        target = RITarget.parseTarget(json["target"].string)
+        target <- map["target"]
     }
 }

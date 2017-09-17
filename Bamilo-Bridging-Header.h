@@ -49,6 +49,7 @@
 #import "JABaseViewController.h"
 #import "BaseViewController.h"
 #import "BaseTableViewCell.h"
+#import "PlainTableViewHeaderCell.h"
 #import "CatalogNoResultViewController.h"
 #import "JAFiltersViewController.h"
 #import "JAPDVViewController.h"

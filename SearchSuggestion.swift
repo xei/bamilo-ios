@@ -14,11 +14,14 @@ class SearchSuggestion: NSObject, Mappable {
     var products: [Product]?
     var categories: [CategorySuggestion]?
     
+    override init() {
+    }
+    
     required init?(map: Map) {
     }
     
     func mapping(map: Map) {
-        products <- map["products"]
+        self.products <- map["products"]
         categories <- map["categories"]
     }
 

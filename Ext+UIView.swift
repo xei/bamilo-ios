@@ -8,9 +8,9 @@
 
 import Foundation
 
-enum VerticalMoveDirection {
-    case top
-    case down
+enum VerticalMoveDirection: String {
+    case top = "TOP"
+    case down = "DOWN"
 }
 
 extension UIView {

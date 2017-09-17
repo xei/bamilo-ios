@@ -45,10 +45,7 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCountry:) name:kUpdateCountryNotification object:nil];
         
-        self.backView = [[UIView alloc] initWithFrame:CGRectMake(self.bounds.origin.x,
-                                                                 self.bounds.origin.y + 20.0f,
-                                                                 self.bounds.size.width,
-                                                                 self.bounds.size.height - 20.0f)];
+        self.backView = [[UIView alloc] initWithFrame:CGRectMake(self.bounds.origin.x, self.bounds.origin.y + 20.0f, self.bounds.size.width, self.bounds.size.height - 20.0f)];
         self.backView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.0f];
         [self addSubview:self.backView];
         
@@ -90,9 +87,7 @@
         }];
         
         self.resultsTableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                              CGRectGetMaxY(self.searchBar.frame) + self.separatorView.frame.size.height,
-                                                                              self.frame.size.width,
-                                                                              self.frame.size.height - CGRectGetMaxY(self.searchBar.frame) - self.separatorView.frame.size.height)
+                                                                              CGRectGetMaxY(self.searchBar.frame) + self.separatorView.frame.size.height, self.frame.size.width, self.frame.size.height - CGRectGetMaxY(self.searchBar.frame) - self.separatorView.frame.size.height)
                                                              style:UITableViewStyleGrouped];
         self.resultsTableOriginalFrame = self.resultsTableView.frame;
         

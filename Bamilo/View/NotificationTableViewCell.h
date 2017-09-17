@@ -1,14 +1,13 @@
+////
+////  NotificationTableViewCell.h
+////  Bamilo
+////
+////  Created by Ali Saeedifar on 1/29/17.
+////  Copyright © 2017 Rocket Internet. All rights reserved.
+////
 //
-//  NotificationTableViewCell.h
-//  Bamilo
+//#import <UIKit/UIKit.h>
 //
-//  Created by Ali Saeedifar on 1/29/17.
-//  Copyright © 2017 Rocket Internet. All rights reserved.
+//@interface NotificationTableViewCell : IconTableViewCell
 //
-
-#import <UIKit/UIKit.h>
-#import "IconTableViewCell.h"
-
-@interface NotificationTableViewCell : IconTableViewCell
-
-@end
+//@end

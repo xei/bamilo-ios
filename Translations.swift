@@ -51,3 +51,6 @@ let STRING_SEARCH_PLACEHOLDER = RILocalizationWrapper.localizedString("search_pl
 let STRING_HOME = RILocalizationWrapper.localizedString("home")!
 let STRING_MY_BAMILO = RILocalizationWrapper.localizedString("my_bamilo")!
 let STRING_BACK_LABEL = RILocalizationWrapper.localizedString("back_label")!
+let STRING_CATEGORIES = RILocalizationWrapper.localizedString("categories")!
+let STRING_PRODUCTS = RILocalizationWrapper.localizedString("products")!
+let STRING_IN = RILocalizationWrapper.localizedString("in")!

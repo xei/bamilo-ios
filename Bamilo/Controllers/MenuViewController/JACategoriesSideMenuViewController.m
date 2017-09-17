@@ -14,11 +14,14 @@
 #import "JAButton.h"
 #import "Bamilo-Swift.h"
 
-@interface JACategoriesSideMenuViewController () <SearchBarListener>
+@interface JACategoriesSideMenuViewController () <UITextFieldDelegate, UIScrollViewDelegate>
+
+@property (nonatomic, strong) IBOutlet UITableView* tableView;
+@property (weak, nonatomic) IBOutlet SearchBarControl *searchbar;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchBarHeight;
 
 @property (nonatomic, strong) NSArray* categoriesArray;
 @property (nonatomic, strong) RIExternalCategory *externalCategory;
-@property (nonatomic, strong) UITableView* tableView;
 @property (nonatomic, strong) NSMutableArray* tableViewCategoriesArray;
 
 @property (strong, nonatomic) UIView *loadingView;
@@ -27,6 +30,9 @@
 @property (nonatomic, strong) NSLock *reloadLock;
 @property (nonatomic) BOOL categoriesLoadingError;
 @property (nonatomic, strong) JAMessageView *messageView;
+
+@property (nonatomic, strong) ScrollerBarFollower *navbarFollower;
+@property (nonatomic, strong) ScrollerBarFollower *searchBarFollower;
 
 @end
 
@@ -118,7 +124,6 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popToRoot) name:kSideMenuShouldReload object:nil];
     
-    self.tableView = [UITableView new];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
 
@@ -129,6 +134,22 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCategories) name:kSideMenuShouldReload object:nil];
     animationInsert = UITableViewRowAnimationRight;
     animationDelete = UITableViewRowAnimationLeft;
+    
+    self.searchbar.searchView.textField.delegate = self;
+    CGFloat tableViewTopOffset = self.navigationController.navigationBar.height + self.searchBarHeight.constant + [[UIApplication sharedApplication] statusBarFrame].size.height;
+    [self.tableView setContentInset:UIEdgeInsetsMake(tableViewTopOffset, 0, 0, 0)];
+    [self.view bringSubviewToFront:self.searchbar];
+    
+    //assign scrollbar follower to bar views
+    self.navbarFollower = [ScrollerBarFollower new];
+    [self.navbarFollower setWithBarView:self.navigationController.navigationBar moveDirection:@"TOP"];
+    self.searchBarFollower = [ScrollerBarFollower new];
+    [self.searchBarFollower setWithBarView:self.searchbar moveDirection:@"TOP"];
+    
+    
+    [self.navbarFollower followScrollViewWithScrollView:self.tableView delay:-tableViewTopOffset permittedMoveDistance: self.navigationController.navigationBar.height];
+    [self.searchBarFollower followScrollViewWithScrollView:self.tableView delay:-tableViewTopOffset permittedMoveDistance:self.navigationController.navigationBar.height];
+    
     [self reloadData];
 }
 
@@ -155,7 +176,6 @@
 
 - (void)reloadExternalLinks {
     [self showLoading];
-    
     [RIExternalCategory getExternalCategoryWithSuccessBlock:^(RIExternalCategory *externalCategory) {
         self.externalCategory = externalCategory;
         [self categoriesLoaded];
@@ -212,13 +232,20 @@
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
-    // notify the InAppNotification SDK that this view controller in no more active
-    [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
+    [NavBarUtility changeStatusBarColorWithColor:[UIColor clearColor]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.tableView setFrame:self.viewBounds];
+    [NavBarUtility changeStatusBarColorWithColor:[Theme color:kColorExtraDarkBlue]];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [self.navbarFollower resetBarFrameWithAnimated:NO];
+    [self.searchBarFollower resetBarFrameWithAnimated:NO];
 }
 
 #pragma mark - UITableView
@@ -448,12 +475,28 @@
     [self.tableView endUpdates];
 }
 
-#pragma mark: - searchBarSearched Protocol
-- (void)searchBarSearched:(UISearchBar *)searchBar {
-    [TrackerManager postEventWithSelector:[EventSelectors searchBarSearchedSelector] attributes:[EventAttributes searchBarSearchedWithSearchString:searchBar.text screenName:[self getScreenName]]];
+#pragma mark: - UITextFieldDelegate
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    [textField resignFirstResponder];
+    
+    [self.navbarFollower resetBarFrameWithAnimated:NO];
+    [self.searchBarFollower resetBarFrameWithAnimated:NO];
+    
+    [self performSegueWithIdentifier:@"ShowSearchView" sender:nil];
 }
 
+#pragma mark: - UIScrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [self.navbarFollower scrollViewDidScroll:scrollView];
+    [self.searchBarFollower scrollViewDidScroll:scrollView];
+}
 
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    [self.navbarFollower scrollViewDidEndDragging:scrollView willDecelerate:decelerate];
+    [self.searchBarFollower scrollViewDidEndDragging:scrollView willDecelerate:decelerate];
+}
+
+#pragma mark: DataTrackerProtocol
 - (NSString *)getScreenName {
     return @"CategoryMenu";
 }
@@ -463,9 +506,9 @@
 - (NSString *)navBarTitleString {
     return STRING_CATEGORIES;
 }
-
-- (NavBarLeftButtonType)navBarleftButton {
-    return NavBarLeftButtonTypeSearch;
-}
+//
+//- (NavBarLeftButtonType)navBarleftButton {
+//    return NavBarLeftButtonTypeSearch;
+//}
 
 @end

@@ -12,6 +12,13 @@ extension String {
     
     static let EMPTY = ""
     
+    func forceLTR() -> String {
+        return "\u{200E}".appending(self)
+    }
+    func forceRTL() -> String {
+        return "\u{200F}".appending(self)
+    }
+    
     func convertTo(language: LocalLang) -> String {
         let characters = self.characters
         var converted: String = ""

@@ -90,6 +90,7 @@
 		61432ECB1E9B60DE001F7930 /* RecommendItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 61432ECA1E9B60DE001F7930 /* RecommendItem.m */; };
 		61583DDD1EF92100007107C1 /* DeleteEntityDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61583DDC1EF92100007107C1 /* DeleteEntityDataManager.swift */; };
 		615E796C1EF6BE58008E661D /* UILabel+WhiteUIDatePickerLabels.m in Sources */ = {isa = PBXBuildFile; fileRef = 615E796B1EF6BE58008E661D /* UILabel+WhiteUIDatePickerLabels.m */; };
+		615EDF541F697DA600454A10 /* LocalSearchSuggestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615EDF531F697DA600454A10 /* LocalSearchSuggestion.swift */; };
 		615F96ED1E9E11FD00614644 /* NotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 615F96EC1E9E11FD00614644 /* NotificationService.m */; };
 		615F96F11E9E11FD00614644 /* NotificationService.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 615F96E91E9E11FD00614644 /* NotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		616058E61E6AD8D50079B2CD /* SearchFilterItemOption.m in Sources */ = {isa = PBXBuildFile; fileRef = 616058E51E6AD8D50079B2CD /* SearchFilterItemOption.m */; };
@@ -98,6 +99,8 @@
 		6167C1AE1F431578009293B2 /* JANoConnectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6167C1AD1F431578009293B2 /* JANoConnectionView.xib */; };
 		616D65EC1E670984008B07EA /* OrderProductListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 616D65EA1E670984008B07EA /* OrderProductListTableViewCell.m */; };
 		616D65ED1E670984008B07EA /* OrderProductListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 616D65EB1E670984008B07EA /* OrderProductListTableViewCell.xib */; };
+		616F7D121F6D172100085B64 /* IconTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616F7D101F6D172100085B64 /* IconTableViewCell.swift */; };
+		616F7D131F6D172100085B64 /* IconTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 616F7D111F6D172100085B64 /* IconTableViewCell.xib */; };
 		61716BA71E865B3D00F4E65F /* DeepLinkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 61716BA61E865B3D00F4E65F /* DeepLinkManager.m */; };
 		6171F3681F3A021700B3B212 /* Ext+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6171F3671F3A021700B3B212 /* Ext+UIView.swift */; };
 		617AAA441E503AB9004D9430 /* FormItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 617AAA431E503AB9004D9430 /* FormItemModel.m */; };
@@ -172,8 +175,6 @@
 		61D929341F1642C100716D4C /* Ext+CAShapreLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D929331F1642C100716D4C /* Ext+CAShapreLayer.swift */; };
 		61D929481F165AF700716D4C /* NavBarItemTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D929471F165AF700716D4C /* NavBarItemTypes.m */; };
 		61DBCCB61E46128300BA8251 /* IconButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 61DBCCB51E46128300BA8251 /* IconButton.m */; };
-		61E099641E3E0E21004ED14E /* IconTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E099621E3E0E21004ED14E /* IconTableViewCell.m */; };
-		61E099651E3E0E21004ED14E /* IconTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E099631E3E0E21004ED14E /* IconTableViewCell.xib */; };
 		61E0996C1E3E117F004ED14E /* BaseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E0996B1E3E117F004ED14E /* BaseTableViewCell.m */; };
 		61E099711E3E18F0004ED14E /* NotificationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E0996F1E3E18F0004ED14E /* NotificationTableViewCell.m */; };
 		61E099721E3E18F0004ED14E /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E099701E3E18F0004ED14E /* NotificationTableViewCell.xib */; };
@@ -1037,6 +1038,7 @@
 		61583DDC1EF92100007107C1 /* DeleteEntityDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteEntityDataManager.swift; sourceTree = "<group>"; };
 		615E796A1EF6BE58008E661D /* UILabel+WhiteUIDatePickerLabels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+WhiteUIDatePickerLabels.h"; sourceTree = "<group>"; };
 		615E796B1EF6BE58008E661D /* UILabel+WhiteUIDatePickerLabels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+WhiteUIDatePickerLabels.m"; sourceTree = "<group>"; };
+		615EDF531F697DA600454A10 /* LocalSearchSuggestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalSearchSuggestion.swift; sourceTree = "<group>"; };
 		615F96E91E9E11FD00614644 /* NotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		615F96EB1E9E11FD00614644 /* NotificationService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationService.h; sourceTree = "<group>"; };
 		615F96EC1E9E11FD00614644 /* NotificationService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationService.m; sourceTree = "<group>"; };
@@ -1051,6 +1053,8 @@
 		616D65E91E670983008B07EA /* OrderProductListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderProductListTableViewCell.h; sourceTree = "<group>"; };
 		616D65EA1E670984008B07EA /* OrderProductListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderProductListTableViewCell.m; sourceTree = "<group>"; };
 		616D65EB1E670984008B07EA /* OrderProductListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OrderProductListTableViewCell.xib; sourceTree = "<group>"; };
+		616F7D101F6D172100085B64 /* IconTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconTableViewCell.swift; sourceTree = "<group>"; };
+		616F7D111F6D172100085B64 /* IconTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IconTableViewCell.xib; sourceTree = "<group>"; };
 		61716BA51E865B3D00F4E65F /* DeepLinkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeepLinkManager.h; sourceTree = "<group>"; };
 		61716BA61E865B3D00F4E65F /* DeepLinkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeepLinkManager.m; sourceTree = "<group>"; };
 		6171F3671F3A021700B3B212 /* Ext+UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Ext+UIView.swift"; sourceTree = "<group>"; };
@@ -1164,9 +1168,6 @@
 		61D929471F165AF700716D4C /* NavBarItemTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavBarItemTypes.m; sourceTree = "<group>"; };
 		61DBCCB41E46128300BA8251 /* IconButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconButton.h; sourceTree = "<group>"; };
 		61DBCCB51E46128300BA8251 /* IconButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconButton.m; sourceTree = "<group>"; };
-		61E099611E3E0E21004ED14E /* IconTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconTableViewCell.h; sourceTree = "<group>"; };
-		61E099621E3E0E21004ED14E /* IconTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconTableViewCell.m; sourceTree = "<group>"; };
-		61E099631E3E0E21004ED14E /* IconTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IconTableViewCell.xib; sourceTree = "<group>"; };
 		61E0996A1E3E117F004ED14E /* BaseTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTableViewCell.h; sourceTree = "<group>"; };
 		61E0996B1E3E117F004ED14E /* BaseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTableViewCell.m; sourceTree = "<group>"; };
 		61E0996E1E3E18F0004ED14E /* NotificationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationTableViewCell.h; sourceTree = "<group>"; };
@@ -2915,6 +2916,7 @@
 		612FE5181EDC0A8400C2AFA0 /* TableViewCell */ = {
 			isa = PBXGroup;
 			children = (
+				616F7D0F1F6D170200085B64 /* IconTableViewCell */,
 				612FE51D1EDC0D6700C2AFA0 /* Profile */,
 			);
 			name = TableViewCell;
@@ -3151,6 +3153,15 @@
 			name = OrderProductListTableViewCell;
 			sourceTree = "<group>";
 		};
+		616F7D0F1F6D170200085B64 /* IconTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				616F7D101F6D172100085B64 /* IconTableViewCell.swift */,
+				616F7D111F6D172100085B64 /* IconTableViewCell.xib */,
+			);
+			name = IconTableViewCell;
+			sourceTree = "<group>";
+		};
 		61716BA41E86595200F4E65F /* DeepLinkManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -3212,6 +3223,7 @@
 		617D7F451EDC3DF700F36CF7 /* Local */ = {
 			isa = PBXGroup;
 			children = (
+				615EDF531F697DA600454A10 /* LocalSearchSuggestion.swift */,
 			);
 			name = Local;
 			sourceTree = "<group>";
@@ -3857,7 +3869,6 @@
 				61CBA0521E51FEFA005673F7 /* ButtonTableviewCell */,
 				612FDC331E45E08500A9D0BD /* CartTableViewCell */,
 				87A681721E42003100D252AC /* AddressTableViewCell */,
-				61E099681E3E114E004ED14E /* IconTableViewCell */,
 				61E0996D1E3E18B7004ED14E /* NotificationTableViewCell */,
 				61E099731E3E19CF004ED14E /* VersionTableViewCell */,
 				87459C7F1E4EF2AD00743120 /* CartListItemTableViewCell */,
@@ -3874,16 +3885,6 @@
 				611195811E3CB14B00D06690 /* PlainTableViewCell.xib */,
 			);
 			name = PlainTableViewCell;
-			sourceTree = "<group>";
-		};
-		61E099681E3E114E004ED14E /* IconTableViewCell */ = {
-			isa = PBXGroup;
-			children = (
-				61E099611E3E0E21004ED14E /* IconTableViewCell.h */,
-				61E099621E3E0E21004ED14E /* IconTableViewCell.m */,
-				61E099631E3E0E21004ED14E /* IconTableViewCell.xib */,
-			);
-			name = IconTableViewCell;
 			sourceTree = "<group>";
 		};
 		61E099691E3E1163004ED14E /* BaseTableViewCell */ = {
@@ -7293,7 +7294,6 @@
 				8757445E1EA60E8D001B518A /* Yalda-Small-50.png in Resources */,
 				875743881EA60DB9001B518A /* National-76@2x.png in Resources */,
 				61C5C40F1E545C7500F22130 /* CartEntitySummaryView.xib in Resources */,
-				61E099651E3E0E21004ED14E /* IconTableViewCell.xib in Resources */,
 				875743FF1EA60E2D001B518A /* Summer-Small.png in Resources */,
 				87459C841E4EF37D00743120 /* CartListItemTableViewCell.xib in Resources */,
 				875744641EA60E8E001B518A /* Yalda-72.png in Resources */,
@@ -7392,6 +7392,7 @@
 				875743A71EA60DE0001B518A /* Ramadan-76@2x.png in Resources */,
 				875744621EA60E8E001B518A /* Yalda-76.png in Resources */,
 				8757441E1EA60E48001B518A /* Tragedy-Small.png in Resources */,
+				616F7D131F6D172100085B64 /* IconTableViewCell.xib in Resources */,
 				875743C01EA60DFD001B518A /* SpecialOffer-Small@2x.png in Resources */,
 				8757438C1EA60DB9001B518A /* National-60@3x.png in Resources */,
 				8757443C1EA60E71001B518A /* Winter-Small@2x.png in Resources */,
@@ -7777,7 +7778,6 @@
 				87B684F51E4A04030042C09F /* ReceiptItemModel.m in Sources */,
 				879F88291E51CF140033FE87 /* CartEntity.m in Sources */,
 				61FFD5861EB8CE17004A3518 /* CatalogDataManager.swift in Sources */,
-				61E099641E3E0E21004ED14E /* IconTableViewCell.m in Sources */,
 				CE59BEFA1AE7EF0B0057F4E2 /* JAShopTeaserView.m in Sources */,
 				9A86F80A1C281F8F001A91D5 /* JARecentlyViewedViewController.m in Sources */,
 				61FE97D71EC9C19300DF233D /* ListCollectionViewFlowLayout.swift in Sources */,
@@ -7920,6 +7920,7 @@
 				875AD5621E38C0C900584ABF /* RIHtmlShop.m in Sources */,
 				9AE766BF1CBBF01C00B63D8E /* JAEmptyCartView.m in Sources */,
 				9AEF741C1CD27C1400A5D574 /* JACheckoutButton.m in Sources */,
+				616F7D121F6D172100085B64 /* IconTableViewCell.swift in Sources */,
 				CE9ADF9C1AB6D78200D56481 /* JAAddNewAddressViewController.m in Sources */,
 				875AD5481E38C0C900584ABF /* RIFieldOption.m in Sources */,
 				FFF900871C6B5BDF00DDF538 /* JARadioGroupComponent.m in Sources */,
@@ -7974,6 +7975,7 @@
 				CE9ADFBA1AB6D78200D56481 /* JAUtils.m in Sources */,
 				873369C61E58A12E00B0B5E5 /* ShippingMethod.m in Sources */,
 				875AD5811E38C0C900584ABF /* RIOpenURLHandler.m in Sources */,
+				615EDF541F697DA600454A10 /* LocalSearchSuggestion.swift in Sources */,
 				613A7E981EBF692E00E1AB3F /* CatalogFilterOption.swift in Sources */,
 				9A3876641BCD0DFD0088B186 /* JAProductReviewsView.m in Sources */,
 				9A189E6A1BB31AF70039BC14 /* JAProductInfoRatingLine.m in Sources */,

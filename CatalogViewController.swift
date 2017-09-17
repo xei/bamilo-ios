@@ -21,7 +21,7 @@ import SwiftyJSON
                                     UICollectionViewDelegateFlowLayout,
                                     FilteredListNoResultViewControllerDelegate,
                                     JAPDVViewControllerDelegate,
-                                    SearchBarListener {
+                                    SearchViewControllerDelegate {
     
     @IBOutlet private weak var catalogHeader: CatalogHeaderControl!
     @IBOutlet private weak var collectionView: UICollectionView!
@@ -131,14 +131,14 @@ import SwiftyJSON
         self.navBarBlurView?.alpha = 0
         
         //asign scroll followers in this view
-        self.searchBarScrollFollower = ScrollerBarFollower(withBarView: catalogHeader, moveDirection: .top)
+        self.searchBarScrollFollower = ScrollerBarFollower(barView: catalogHeader, moveDirection: .top)
         if let navBar = self.navigationController?.navigationBar {
-            self.navBarScrollFollower = ScrollerBarFollower(withBarView: navBar, moveDirection: .top)
+            self.navBarScrollFollower = ScrollerBarFollower(barView: navBar, moveDirection: .top)
             self.navBarScrollFollower?.followScrollView(scrollView: collectionView, delay: productCountViewHeight, permittedMoveDistance: navBar.frame.height)
             self.searchBarScrollFollower?.followScrollView(scrollView: collectionView, delay: productCountViewHeight, permittedMoveDistance: navBar.frame.height)
         }
         if let tabBar = self.tabBarController?.tabBar {
-            self.tabBarScrollFollower = ScrollerBarFollower(withBarView: tabBar, moveDirection: .down)
+            self.tabBarScrollFollower = ScrollerBarFollower(barView: tabBar, moveDirection: .down)
             self.tabBarScrollFollower?.followScrollView(scrollView: self.collectionView, delay: productCountViewHeight, permittedMoveDistance: tabBar.frame.height)
         }
     }
@@ -645,14 +645,6 @@ import SwiftyJSON
     
     func isPreventSendTransactionInViewWillAppear() -> Bool {
         return true
-    }
-    
-    //MARK: -SearchBarListener protocol
-    func searchBarSearched(_ searchBar: UISearchBar!) {
-        TrackerManager.postEvent(
-            selector: EventSelectors.searchBarSearchedSelector(),
-            attributes: EventAttributes.searchBarSearched(searchString: searchBar.text ?? "", screenName: self.getScreenName())
-        )
     }
     
     //MARK: -DataTrackerProtocol

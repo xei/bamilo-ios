@@ -1053,25 +1053,13 @@
     [MainTabBarViewController showCart];
 }
 
-- (void)viewWillLayoutSubviews {
-//    [self.searchView resetFrame:self.view.bounds];
+- (void)showSearchView {
+    SearchViewController *searchViewController = (SearchViewController *)[self requestViewController:@"SearchViewController" ofStoryboard:@"Main" useCache:NO];
+    if ([[MainTabBarViewController topViewController] conformsToProtocol:@protocol(SearchViewControllerDelegate)]) {
+        searchViewController.delegate = (id<SearchViewControllerDelegate>)[MainTabBarViewController topViewController];
+    }
+    [self presentViewController:searchViewController animated:true completion:nil];
 }
-
-#pragma mark - Search Bar
-//- (JASearchView *)searchView {
-//    if (!VALID(_searchView, JASearchView)) {
-//        _searchView = [[JASearchView alloc] initWithFrame:self.view.bounds andText:@""];
-//        [_searchView setHidden:YES];
-//        [self.view addSubview:_searchView];
-//    }
-//    return _searchView;
-//}
-//
-//- (void)showSearchView {
-//    if (!self.searchViewAlwaysHidden) {
-//        [self.searchView setHidden:NO];
-//    }
-//}
 
 //#####################################################################################################################
 - (void) requestNavigateToNib:(NSString *)destNib args:(NSDictionary *)args {

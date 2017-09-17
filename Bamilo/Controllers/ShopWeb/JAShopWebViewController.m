@@ -14,7 +14,7 @@
 #import "JACenterNavigationController.h"
 #import "Bamilo-Swift.h"
 
-@interface JAShopWebViewController ()
+@interface JAShopWebViewController () <SearchViewControllerDelegate>
 
 @property (nonatomic, strong)RIHtmlShop* htmlShop;
 @property (nonatomic, strong)UIScrollView* scrollView;

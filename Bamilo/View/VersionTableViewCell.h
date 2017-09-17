@@ -1,16 +1,16 @@
+////
+////  VersionTableViewCell.h
+////  Bamilo
+////
+////  Created by Ali Saeedifar on 1/29/17.
+////  Copyright © 2017 Rocket Internet. All rights reserved.
+////
 //
-//  VersionTableViewCell.h
-//  Bamilo
+//#import <UIKit/UIKit.h>
+//#import "IconTableViewCell.h"
 //
-//  Created by Ali Saeedifar on 1/29/17.
-//  Copyright © 2017 Rocket Internet. All rights reserved.
+//@interface VersionTableViewCell : IconTableViewCell
 //
-
-#import <UIKit/UIKit.h>
-#import "IconTableViewCell.h"
-
-@interface VersionTableViewCell : IconTableViewCell
-
-@property (nonatomic) NSNumber *isLastVersion;
-
-@end
+//@property (nonatomic) NSNumber *isLastVersion;
+//
+//@end

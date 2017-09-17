@@ -32,7 +32,7 @@
 #import "DeepLinkManager.h"
 #import "Bamilo-Swift.h"
 
-@interface JAHomeViewController () <JAPickerDelegate, JANewsletterGenderProtocol, EmarsysRecommendationsProtocol, FeatureBoxCollectionViewWidgetViewDelegate, SearchBarListener>
+@interface JAHomeViewController () <JAPickerDelegate, JANewsletterGenderProtocol, EmarsysRecommendationsProtocol, FeatureBoxCollectionViewWidgetViewDelegate>
 @property (nonatomic, assign) BOOL isLoaded;
 @property (nonatomic, assign) BOOL isReturningHome;
 @property (nonatomic, strong) JAFallbackView *fallbackView;
@@ -330,12 +330,5 @@
                                                           userInfo: @{@"sku": ((RecommendItem *)item).sku}];
     }
 }
-
-#pragma mark: - searchBarSearched Protocol
-- (void)searchBarSearched:(UISearchBar *)searchBar {
-    [TrackerManager postEventWithSelector:[EventSelectors searchBarSearchedSelector]
-                               attributes:[EventAttributes searchBarSearchedWithSearchString:searchBar.text screenName:[self getScreenName]]];
-}
-
 
 @end

@@ -9,7 +9,7 @@
 import UIKit
 
 
-class ScrollerBarFollower:NSObject {
+@objc class ScrollerBarFollower:NSObject {
     
     private var barView: UIView?
     private var delay: CGFloat!
@@ -20,13 +20,23 @@ class ScrollerBarFollower:NSObject {
     private var lastContentOffset: CGFloat = 0
     private var shouldFollower = false
     
-    init(withBarView barView: UIView, moveDirection: VerticalMoveDirection) {
+    override init() {
+        super.init()
+    }
+    
+    init(barView: UIView, moveDirection: VerticalMoveDirection) {
+        super.init()
+        self.set(barView: barView, moveDirection: moveDirection.rawValue)
+    }
+    
+    //This function is unnecessary we've just used it in objective c codes!
+    func set(barView: UIView, moveDirection: String) {
         self.barView = barView
         self.barViewInitialFrame = barView.frame
-        self.direction = moveDirection
+        self.direction = VerticalMoveDirection(rawValue: moveDirection) ?? .top
     }
       
-    func followScrollView(scrollView: UIScrollView, delay: CGFloat? = 0, permittedMoveDistance: CGFloat) {
+    func followScrollView(scrollView: UIScrollView, delay: CGFloat, permittedMoveDistance: CGFloat) {
         self.delay = delay
         self.distance = permittedMoveDistance
         self.lastContentOffset = scrollView.contentOffset.y
@@ -67,7 +77,7 @@ class ScrollerBarFollower:NSObject {
     //these two methods must be called in mutaul UIScrollViewDelegate methods 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if !self.shouldFollower { return }
-        if (scrollView.contentOffset.y < self.delay) {
+        if scrollView.contentOffset.y < self.delay {
             self.resetBarFrame(animated: false)
             self.lastContentOffset = scrollView.contentOffset.y
             return
