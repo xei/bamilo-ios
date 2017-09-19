@@ -31,6 +31,7 @@ target 'Bamilo' do
   pod 'Alamofire', '~> 4.4'
   pod 'AlamofireObjectMapper', '~> 4.0'
   pod 'RealmSwift'
+  pod 'FSPagerView'
 
   target 'BamiloUITests' do
     inherit! :search_paths

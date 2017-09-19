@@ -33,6 +33,7 @@ PODS:
     - Fabric (~> 1.6.3)
   - EmarsysPredictSDK (1.0.32)
   - Fabric (1.6.12)
+  - FSPagerView (0.5.5)
   - FXBlurView (1.6.4)
   - GoogleAnalytics (3.14.0)
   - GoogleAppIndexing (2.0.3)
@@ -68,6 +69,7 @@ DEPENDENCIES:
   - Crashlytics (~> 3.8)
   - EmarsysPredictSDK
   - Fabric
+  - FSPagerView
   - FXBlurView (~> 1.6.4)
   - GoogleAnalytics (= 3.14.0)
   - GoogleAppIndexing (~> 2.0.3)
@@ -93,6 +95,7 @@ SPEC CHECKSUMS:
   Crashlytics: dfbae35ef22ca189240d230ad501feea4ee85d2d
   EmarsysPredictSDK: 8267726b1e8b3d5621a67d68b3c123060dde3639
   Fabric: f050464eac45a2ce5a8e6e6a07e977c0df32fe28
+  FSPagerView: 3ec72e6b201d77a48adab5ed1d33b43a8cc153d6
   FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
   GoogleAnalytics: 9be1afdb8deeac4bb5f13ca7f7d3b9db2a1f43dc
   GoogleAppIndexing: 176146164d14b30a403f5ba394fc2b51855025da
@@ -112,6 +115,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   TTRangeSlider: 2f2ce4a33b32bb323c6575b9f5161c4664459c58
 
-PODFILE CHECKSUM: 2a09d940c1d1627a22c400f477fc05a8227f2750
+PODFILE CHECKSUM: 39cb17bff0789bc35994d5b8deeb57d35c331513
 
 COCOAPODS: 1.2.1

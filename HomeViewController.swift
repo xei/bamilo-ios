@@ -6,7 +6,12 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-class HomeViewController: BaseViewController, CAPSPageMenuDelegate, UIScrollViewDelegate, JATeaserPageViewDelegate, UITextFieldDelegate {
+class HomeViewController:   BaseViewController,
+                            CAPSPageMenuDelegate,
+                            UIScrollViewDelegate,
+                            JATeaserPageViewDelegate,
+                            UITextFieldDelegate,
+                            HomePageViewControllerDelegate {
     
     @IBOutlet private weak var searchBar: SearchBarControl!
     @IBOutlet private weak var contentContainer: UIView!
@@ -20,7 +25,7 @@ class HomeViewController: BaseViewController, CAPSPageMenuDelegate, UIScrollView
     
     private var navBarInitialHeight: CGFloat?
     
-    private var homePage: JAHomeViewController!
+    private var homePage: HomePageViewController!
     private var myBamiloPage: JAHomeViewController!
     private var isLoaded = false
     
@@ -33,8 +38,9 @@ class HomeViewController: BaseViewController, CAPSPageMenuDelegate, UIScrollView
             self.navBarInitialHeight = navBar.frame.height
         }
         //Sign In View Controller
-        self.homePage = JAHomeViewController()
+        self.homePage = HomePageViewController(nibName: "HomePageViewController", bundle: nil)
         self.homePage?.title = STRING_HOME
+    
         
         //Sign Up View Controller
         self.myBamiloPage = JAHomeViewController()
@@ -71,8 +77,9 @@ class HomeViewController: BaseViewController, CAPSPageMenuDelegate, UIScrollView
             }
             self.pagemenu?.move(toPage: 1)
             
-            self.homePage.teaserPageView.delegate = self
             self.myBamiloPage.teaserPageView.delegate = self
+        
+            self.homePage.delegate = self
             
             if let navBarHeight = self.navBarInitialHeight {
                 //update the menuScrollview top constraint to super view
@@ -86,6 +93,9 @@ class HomeViewController: BaseViewController, CAPSPageMenuDelegate, UIScrollView
             
             self.searchBarFollower = ScrollerBarFollower(barView: self.searchBar, moveDirection: .top)
             self.topTabBarFollower = ScrollerBarFollower(barView: self.pagemenu!.menuScrollView, moveDirection: .top)
+            
+            
+            self.setAndFollowerScrollView(scrollView: self.homePage.tableView)
             
             self.isLoaded = true
         }
@@ -116,7 +126,6 @@ class HomeViewController: BaseViewController, CAPSPageMenuDelegate, UIScrollView
     //MARK:- CAPSPageMenuDelegate
     func didMove(toPage controller: UIViewController!, index: Int) {
         self.navBarFollower?.resetBarFrame(animated: true)
-        
         self.searchBarFollower?.resetBarFrame(animated: true)
         self.topTabBarFollower?.resetBarFrame(animated: true)
     }
@@ -138,14 +147,18 @@ class HomeViewController: BaseViewController, CAPSPageMenuDelegate, UIScrollView
     func teaserPageIsReady(_ teaserPage: Any!) {
         if let teaserPage = teaserPage as? JATeaserPageView {
             teaserPage.mainScrollView.delegate = self
-            if let navBarHeight = self.navBarInitialHeight {
-                teaserPage.mainScrollView.contentInset = UIEdgeInsetsMake(navBarHeight, 0.0, 0.0, 0.0)
-                teaserPage.mainScrollView.setContentOffset(CGPoint(x: 0, y: -navBarHeight), animated: false)
-                
-                self.navBarFollower?.followScrollView(scrollView: teaserPage.mainScrollView, delay: -navBarHeight, permittedMoveDistance: navBarHeight)
-                self.searchBarFollower?.followScrollView(scrollView: teaserPage.mainScrollView, delay: -navBarHeight, permittedMoveDistance: navBarHeight)
-                self.topTabBarFollower?.followScrollView(scrollView: teaserPage.mainScrollView, delay: -navBarHeight, permittedMoveDistance: navBarHeight)
-            }
+            self.setAndFollowerScrollView(scrollView: teaserPage.mainScrollView)
+        }
+    }
+    
+    private func setAndFollowerScrollView(scrollView: UIScrollView) {
+        if let navBarHeight = self.navBarInitialHeight {
+            scrollView.contentInset = UIEdgeInsetsMake(navBarHeight, 0.0, 0.0, 0.0)
+            scrollView.setContentOffset(CGPoint(x: 0, y: -navBarHeight), animated: false)
+            
+            self.navBarFollower?.followScrollView(scrollView: scrollView, delay: -navBarHeight, permittedMoveDistance: navBarHeight)
+            self.searchBarFollower?.followScrollView(scrollView: scrollView, delay: -navBarHeight, permittedMoveDistance: navBarHeight)
+            self.topTabBarFollower?.followScrollView(scrollView: scrollView, delay: -navBarHeight, permittedMoveDistance: navBarHeight)
         }
     }
     
