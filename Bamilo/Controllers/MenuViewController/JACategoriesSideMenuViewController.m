@@ -231,18 +231,19 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)viewDidDisappear:(BOOL)animated {
-    [NavBarUtility changeStatusBarColorWithColor:[UIColor clearColor]];
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [NavBarUtility changeStatusBarColorWithColor:[Theme color:kColorExtraDarkBlue]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.tableView setFrame:self.viewBounds];
-    [NavBarUtility changeStatusBarColorWithColor:[Theme color:kColorExtraDarkBlue]];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [NavBarUtility changeStatusBarColorWithColor:[UIColor clearColor]];
     
     [self.navbarFollower resetBarFrameWithAnimated:NO];
     [self.searchBarFollower resetBarFrameWithAnimated:NO];

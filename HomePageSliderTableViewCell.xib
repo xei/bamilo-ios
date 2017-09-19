@@ -19,24 +19,24 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hOz-zy-jZX" customClass="FSPagerView" customModule="FSPagerView">
-                        <rect key="frame" x="0.0" y="8" width="537" height="263.5"/>
+                        <rect key="frame" x="0.0" y="0.0" width="537" height="279.5"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kyF-We-FRR" customClass="FSPageControl" customModule="FSPagerView">
-                        <rect key="frame" x="0.0" y="271.5" width="537" height="16"/>
+                        <rect key="frame" x="0.0" y="279.5" width="537" height="8"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="16" id="7MV-wM-Ym7"/>
+                            <constraint firstAttribute="height" constant="8" id="7MV-wM-Ym7"/>
                         </constraints>
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="hOz-zy-jZX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="2Eh-vn-LE9"/>
-                    <constraint firstItem="kyF-We-FRR" firstAttribute="top" secondItem="hOz-zy-jZX" secondAttribute="bottom" id="4bV-LW-djP"/>
+                    <constraint firstItem="hOz-zy-jZX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="2Eh-vn-LE9"/>
                     <constraint firstAttribute="right" secondItem="kyF-We-FRR" secondAttribute="right" id="Ej2-LU-SRk"/>
                     <constraint firstItem="hOz-zy-jZX" firstAttribute="left" secondItem="H2p-sc-9uM" secondAttribute="left" id="JsC-Fl-YZH"/>
                     <constraint firstAttribute="bottom" secondItem="kyF-We-FRR" secondAttribute="bottom" id="V0w-0b-S4x"/>
                     <constraint firstAttribute="right" secondItem="hOz-zy-jZX" secondAttribute="right" id="jUa-1U-Al4"/>
+                    <constraint firstAttribute="bottom" secondItem="hOz-zy-jZX" secondAttribute="bottom" constant="8" id="rI5-QZ-ryU"/>
                     <constraint firstItem="kyF-We-FRR" firstAttribute="left" secondItem="H2p-sc-9uM" secondAttribute="left" id="zDa-cj-Onh"/>
                 </constraints>
             </tableViewCellContentView>

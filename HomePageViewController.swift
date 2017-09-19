@@ -13,7 +13,11 @@ protocol HomePageViewControllerDelegate: class {
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool)
 }
 
-class HomePageViewController: BaseViewController, UITableViewDataSource, DataServiceProtocol, UITableViewDelegate {
+class HomePageViewController:   BaseViewController,
+                                UITableViewDataSource,
+                                DataServiceProtocol,
+                                UITableViewDelegate,
+                                BaseHomePageTeaserBoxTableViewCellDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
@@ -49,7 +53,8 @@ class HomePageViewController: BaseViewController, UITableViewDataSource, DataSer
     //MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cellType = self.homePage?.teasers[indexPath.row].type {
-            let cell = self.tableView.dequeueReusableCell(withIdentifier: cellType.rawValue, for: indexPath) as! BaseTableViewCell
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: cellType.rawValue, for: indexPath) as! BaseHomePageTeaserBoxTableViewCell
+            cell.delegate = self
             cell.update(withModel: self.homePage?.teasers[indexPath.row])
             return cell
         }
@@ -77,6 +82,10 @@ class HomePageViewController: BaseViewController, UITableViewDataSource, DataSer
         self.delegate?.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
     }
     
+    //MARK: - BaseHomePageTeaserBoxTableViewCellDelegate
+    func teaserItemTappedWithTargetString(target: String) {
+        MainTabBarViewController.topNavigationController()?.openTargetString(target)
+    }
     
     //MARK: - DataServiceProtocol
     func bind(_ data: Any!, forRequestId rid: Int32) {

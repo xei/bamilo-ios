@@ -118,16 +118,28 @@ class HomeViewController:   BaseViewController,
         super.viewWillDisappear(animated)
         NavBarUtility.changeStatusBarColor(color: UIColor.clear)
 
-        self.navBarFollower?.resetBarFrame(animated: false)
-        self.searchBarFollower?.resetBarFrame(animated: false)
-        self.topTabBarFollower?.resetBarFrame(animated: false)
+        
     }
     
     //MARK:- CAPSPageMenuDelegate
-    func didMove(toPage controller: UIViewController!, index: Int) {
-        self.navBarFollower?.resetBarFrame(animated: true)
-        self.searchBarFollower?.resetBarFrame(animated: true)
-        self.topTabBarFollower?.resetBarFrame(animated: true)
+    func willMove(toPage controller: UIViewController!, index: Int) {
+        if let homePage = controller as? HomePageViewController,let navBarInitialHeight = self.navBarInitialHeight, let tableView = homePage.tableView {
+            if tableView.contentOffset.y <= navBarInitialHeight {
+                self.resetAllBarFrames()
+            }
+        }
+        
+        if let myBamilo = controller as? JAHomeViewController ,let navBarInitialHeight = self.navBarInitialHeight, let scrollView = myBamilo.teaserPageView.mainScrollView {
+            if scrollView.contentOffset.y <= navBarInitialHeight {
+                self.resetAllBarFrames()
+            }
+        }
+    }
+    
+    private func resetAllBarFrames() {
+        self.navBarFollower?.resetBarFrame(animated: false)
+        self.searchBarFollower?.resetBarFrame(animated: false)
+        self.topTabBarFollower?.resetBarFrame(animated: false)
     }
     
     //MARK:- UIScrollViewDelegate
@@ -165,10 +177,7 @@ class HomeViewController:   BaseViewController,
     //MARK: - UITextFieldDelegate
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.resignFirstResponder()
-        
-        self.navBarFollower?.resetBarFrame(animated: false)
-        self.searchBarFollower?.resetBarFrame(animated: false)
-        self.topTabBarFollower?.resetBarFrame(animated: false)
+        self.resetAllBarFrames()
         self.performSegue(withIdentifier: "ShowSearchView", sender: nil)
     }
     

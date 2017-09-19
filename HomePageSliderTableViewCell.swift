@@ -10,10 +10,10 @@ import UIKit
 import FSPagerView
 import Kingfisher
 
-class HomePageSliderTableViewCell: BaseTableViewCell, FSPagerViewDataSource, FSPagerViewDelegate {
+class HomePageSliderTableViewCell: BaseHomePageTeaserBoxTableViewCell, FSPagerViewDataSource, FSPagerViewDelegate {
     
     var sliderContent: HomePageSlider?
-    
+
     @IBOutlet weak var sliderPager: FSPageControl!
     @IBOutlet private weak var pagerView: FSPagerView! {
         didSet {
@@ -60,7 +60,7 @@ class HomePageSliderTableViewCell: BaseTableViewCell, FSPagerViewDataSource, FSP
     
     func pagerView(_ pagerView: FSPagerView, cellForItemAt index: Int) -> FSPagerViewCell {
         let cell = pagerView.dequeueReusableCell(withReuseIdentifier: "cell", at: index)
-        cell.imageView?.kf.setImage(with: self.sliderContent?.sliders?[index].imagePortraitUrl ,options: [.transition(.fade(0.20))])
+        cell.imageView?.kf.setImage(with: self.sliderContent?.sliders?[index].imagePortraitUrl, placeholder: UIImage(named: "homepage_slider_placeholder"),options: [.transition(.fade(0.20))])
         
         cell.imageView?.layer.cornerRadius = 3
         cell.imageView?.layer.masksToBounds = true
@@ -85,12 +85,15 @@ class HomePageSliderTableViewCell: BaseTableViewCell, FSPagerViewDataSource, FSP
     
     func pagerView(_ pagerView: FSPagerView, didSelectItemAt index: Int) {
         pagerView.deselectItem(at: index, animated: true)
+        if let sliderItem = self.sliderContent?.sliders?[index], let target = sliderItem.target {
+            self.delegate?.teaserItemTappedWithTargetString(target: target)
+        }
     }
     
     override static func cellHeight() -> CGFloat {
         let itemWidth = (UIApplication.shared.statusBarFrame.width - 16) / 1.052
         let itemHeight = itemWidth / 2.1375  //ratio:  342*160
-        return itemHeight + 8 * 3 //8 point padding from bottom of slider (for slider control)
+        return itemHeight + 8 * 3 //8 point padding from top & 16 point bottom of slider (for slider control)
     }
     
     override static func nibName() -> String {

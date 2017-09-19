@@ -220,14 +220,10 @@
     
 }
 
-//- (void)loadNavigationViews {
-//    [self.navigationBarView removeFromSuperview];
-//    [self customizeNavigationBar];
-//}
-
 - (void)openTargetString:(NSString *)targetString {
     JAScreenTarget *screenTarget = [JAScreenTarget new];
     screenTarget.target = [RITarget parseTarget:targetString];
+    screenTarget.pushAnimation = YES;
     [self openScreenTarget:screenTarget];
 }
 
