@@ -11,6 +11,7 @@ import ObjectMapper
 
 enum HomePageTeaserType: String {
     case slider = "main_teasers"
+    case featuredStores = "featured_stores"
 }
 
 class HomePageTeaserBox: NSObject, Mappable {

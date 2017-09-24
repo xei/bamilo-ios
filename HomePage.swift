@@ -14,21 +14,29 @@ class HomePage: NSObject, Mappable {
     
     lazy var teasers = [HomePageTeaserBox]()
     
-    required init?(map: Map) {
-    }
+    let teaserBoxTypeMapper: [HomePageTeaserType: Any] = [
+        HomePageTeaserType.slider            : HomePageSlider.self,
+        HomePageTeaserType.featuredStores    : HomePageFeaturedStores.self
+    ]
+    
+    required init?(map: Map) {}
     
     func mapping(map: Map) {
         
         let json = JSON(map.JSON)
+        var teasersToParse = [Any]()
         json["data"].array?.forEach({ (teaserJSon) in
             if let typeName = teaserJSon["type"].string, let teaserDictionary = teaserJSon.dictionaryObject ,let knownType = HomePageTeaserType(rawValue: typeName) {
-//                if let newTeaser = self.teaserTypeMapper[knownType]?.init(JSON: teaserDictionary) {
-//                    self.teasers.append(newTeaser)
-//                }
-                if knownType == .slider, let newTeaser = HomePageSlider(JSON: teaserDictionary) {
-                    self.teasers.append(newTeaser)
+                if let teaserType = self.teaserBoxTypeMapper[knownType] as? Mappable.Type {
+                    if let newTeaser = teaserType.init(JSON: teaserDictionary) {
+                        teasersToParse.append(newTeaser)
+                    }
                 }
             }
         })
+        
+        if let teasersToParse = teasersToParse as? [HomePageTeaserBox] {
+            self.teasers = teasersToParse
+        }
     }
 }

@@ -1,0 +1,54 @@
+//
+//  FeaturedStoresCollectionViewCell.swift
+//  Bamilo
+//
+//  Created by Ali Saeedifar on 9/23/17.
+//  Copyright © 2017 Rocket Internet. All rights reserved.
+//
+
+import UIKit
+import Kingfisher
+
+class FeaturedStoresCollectionViewCell: UICollectionViewCell {
+
+    @IBOutlet private weak var imageWidthConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var imageIcon: UIImageView!
+    
+    private let imageWithSmallSize: CGFloat = 54
+    private let imageWithBigSize: CGFloat = 54 * 1.15
+    
+    var indexPath: IndexPath? {
+        didSet {
+            self.layer.shadowOffset = CGSize(width:1 , height: 1)
+            if indexPath?.row != 0 {
+                self.layer.shadowOffset = CGSize(width:0 , height: 1)
+            }
+        }
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.setupView()
+    }
+    
+    func setupView() {
+        self.titleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 8), color: UIColor.black)
+        self.backgroundColor = .white
+        
+        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.shadowOpacity = 0.1
+        self.layer.shadowRadius = 0
+        self.imageWidthConstraint.constant = UIDevice.current.userInterfaceIdiom == .pad ? imageWithBigSize : imageWithSmallSize
+        self.imageIcon.layer.cornerRadius = self.imageWidthConstraint.constant / 2
+    }
+    
+    func update(withModel model: HomePageFeaturedStoreItem) {
+        self.titleLabel.text = model.title
+        self.imageIcon.kf.setImage(with: model.imageUrl, placeholder: UIImage(named: "homepage_slider_placeholder"),options: [.transition(.fade(0.20))])
+    }
+    
+    static func nibName() -> String {
+        return AppUtility.getStringFromClass(for: self)!
+    }
+}

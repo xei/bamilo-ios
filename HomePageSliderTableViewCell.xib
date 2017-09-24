@@ -23,10 +23,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kyF-We-FRR" customClass="FSPageControl" customModule="FSPagerView">
-                        <rect key="frame" x="0.0" y="279.5" width="537" height="8"/>
+                        <rect key="frame" x="0.0" y="271.5" width="537" height="16"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="8" id="7MV-wM-Ym7"/>
+                            <constraint firstAttribute="height" constant="16" id="7MV-wM-Ym7"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -44,7 +44,7 @@
                 <outlet property="pagerView" destination="hOz-zy-jZX" id="YMb-oS-hkN"/>
                 <outlet property="sliderPager" destination="kyF-We-FRR" id="10V-aW-dTD"/>
             </connections>
-            <point key="canvasLocation" x="-359.5" y="-207"/>
+            <point key="canvasLocation" x="-917" y="-408"/>
         </tableViewCell>
     </objects>
 </document>

@@ -15,5 +15,8 @@ protocol BaseHomePageTeaserBoxTableViewCellDelegate: class {
 class BaseHomePageTeaserBoxTableViewCell: BaseTableViewCell {
 
     weak var delegate: BaseHomePageTeaserBoxTableViewCellDelegate?
-
+    
+    override static func nibName() -> String {
+        return AppUtility.getStringFromClass(for: self)!
+    }
 }

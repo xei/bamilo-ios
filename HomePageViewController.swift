@@ -25,16 +25,19 @@ class HomePageViewController:   BaseViewController,
     weak var delegate: HomePageViewControllerDelegate?
     private var homePage: HomePage?
     private let cellTypeMapper: [HomePageTeaserType: String] = [
-        .slider: HomePageSliderTableViewCell.nibName()
+        .slider: HomePageSliderTableViewCell.nibName(),
+        .featuredStores: HomePageFeaturedStoresTableViewCell.nibName()
     ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.view.backgroundColor = Theme.color(kColorGray10)
+        self.tableView.backgroundColor = UIColor.clear
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.tableView.register(UINib(nibName: HomePageSliderTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: HomePageTeaserType.slider.rawValue)
+        self.tableView.register(UINib(nibName: HomePageFeaturedStoresTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: HomePageTeaserType.featuredStores.rawValue)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,6 +59,7 @@ class HomePageViewController:   BaseViewController,
             let cell = self.tableView.dequeueReusableCell(withIdentifier: cellType.rawValue, for: indexPath) as! BaseHomePageTeaserBoxTableViewCell
             cell.delegate = self
             cell.update(withModel: self.homePage?.teasers[indexPath.row])
+            
             return cell
         }
         return UITableViewCell()

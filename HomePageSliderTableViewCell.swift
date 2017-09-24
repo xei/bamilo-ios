@@ -18,7 +18,7 @@ class HomePageSliderTableViewCell: BaseHomePageTeaserBoxTableViewCell, FSPagerVi
     @IBOutlet private weak var pagerView: FSPagerView! {
         didSet {
             self.pagerView.register(FSPagerViewCell.self, forCellWithReuseIdentifier: "cell")
-            self.pagerView.backgroundColor = UIColor.clear
+            self.pagerView.backgroundColor = .clear
             self.pagerView.dataSource = self
             self.pagerView.delegate = self
             self.pagerView.isInfinite = true
@@ -34,7 +34,9 @@ class HomePageSliderTableViewCell: BaseHomePageTeaserBoxTableViewCell, FSPagerVi
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // --- The formulla of slider itemWidth calculation -- 
+        self.backgroundColor = .clear
+        self.contentView.backgroundColor = .clear
+        // --- The formulla of slider itemWidth calculation --
         // WidthWholeView = sliderItemWidth + 2 * (0.026) * sliderItemWidth + 2 * (interitemSpacing = 8)
         let itemWidth = (UIApplication.shared.statusBarFrame.width - 16) / 1.052
         let itemHeight = itemWidth / 2.1375  //ratio:  342*160
@@ -94,9 +96,5 @@ class HomePageSliderTableViewCell: BaseHomePageTeaserBoxTableViewCell, FSPagerVi
         let itemWidth = (UIApplication.shared.statusBarFrame.width - 16) / 1.052
         let itemHeight = itemWidth / 2.1375  //ratio:  342*160
         return itemHeight + 8 * 3 //8 point padding from top & 16 point bottom of slider (for slider control)
-    }
-    
-    override static func nibName() -> String {
-        return AppUtility.getStringFromClass(for: self)!
     }
 }
