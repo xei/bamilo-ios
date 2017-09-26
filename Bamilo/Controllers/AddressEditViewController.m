@@ -44,10 +44,6 @@
 - (void)setNavigationBarConfigs {
     self.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName: [Theme font:kFontVariationRegular size:13],
                                                NSForegroundColorAttributeName: [UIColor whiteColor]};
-    //To remove the back button title
-    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(-60, -60) forBarMetrics:UIBarMetricsDefault];
-    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:
-     @{NSFontAttributeName: [Theme font:kFontVariationRegular size:1]} forState:UIControlStateNormal];
     
     //To change back button icon
     UIImage *myImage = [UIImage imageNamed:@"btn_back"]; //set your backbutton imagename

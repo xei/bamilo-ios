@@ -37,6 +37,7 @@
     }
     
     //navigation bar configs
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil];
     
     if ([self respondsToSelector:@selector(navBarTitleView)]){
         self.navigationItem.titleView = [self navBarTitleView];

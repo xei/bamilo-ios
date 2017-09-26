@@ -1,16 +1,16 @@
 //
-//  DeviceManager.m
+//  DeviceStatusManager.m
 //  Bamilo
 //
 //  Created by Narbeh Mirzaei on 3/29/17.
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import "DeviceManager.h"
+#import "DeviceStatusManager.h"
 #include <sys/types.h>
 #include <sys/sysctl.h>
 
-@implementation DeviceManager
+@implementation DeviceStatusManager
 
 +(NSString *)getDeviceModel {
     size_t size;
@@ -34,7 +34,7 @@
 }
 
 +(NSString *)getOSVersionFormatted {
-    NSOperatingSystemVersion osVersion = [DeviceManager getOSVersion];
+    NSOperatingSystemVersion osVersion = [DeviceStatusManager getOSVersion];
     NSMutableString *osVersionFormatted = [NSMutableString stringWithFormat:@"%d.%d", (int)osVersion.majorVersion, (int)osVersion.minorVersion];
     if(osVersion.patchVersion) {
         [osVersionFormatted appendFormat:@".%d", (int)osVersion.patchVersion];

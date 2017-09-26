@@ -24,7 +24,7 @@
 #import "RICommunicationWrapper.h"
 #import "RIGoogleAnalyticsTracker.h"
 #import "AppManager.h"
-#import "DeviceManager.h"
+#import "DeviceStatusManager.h"
 
 
 #import <Masonry/Masonry.h>
@@ -52,6 +52,7 @@
 #import "PlainTableViewHeaderCell.h"
 #import "CatalogNoResultViewController.h"
 #import "JAFiltersViewController.h"
+#import "JACategoriesSideMenuViewController.h"
 #import "JAPDVViewController.h"
 #import "BaseTracker.h"
 #import "TagTrackerProtocol.h"

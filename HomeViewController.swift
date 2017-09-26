@@ -33,6 +33,8 @@ class HomeViewController:   BaseViewController,
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.backgroundColor = Theme.color(kColorGray10)
+        
         if let navBar = self.navigationController?.navigationBar {
             self.navBarFollower = ScrollerBarFollower(barView: navBar, moveDirection: .top)
             self.navBarInitialHeight = navBar.frame.height
@@ -93,14 +95,10 @@ class HomeViewController:   BaseViewController,
             
             self.searchBarFollower = ScrollerBarFollower(barView: self.searchBar, moveDirection: .top)
             self.topTabBarFollower = ScrollerBarFollower(barView: self.pagemenu!.menuScrollView, moveDirection: .top)
-            
-            
+        
             self.setAndFollowerScrollView(scrollView: self.homePage.tableView)
-            
             self.isLoaded = true
         }
-        
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -117,23 +115,30 @@ class HomeViewController:   BaseViewController,
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NavBarUtility.changeStatusBarColor(color: UIColor.clear)
-
-        
     }
     
     //MARK:- CAPSPageMenuDelegate
     func willMove(toPage controller: UIViewController!, index: Int) {
+        self.setProperTopTabbarAndNavbarStateInTransitions(to: controller)
+    }
+    
+    func didMove(toPage controller: UIViewController!, index: Int) {
+        self.setProperTopTabbarAndNavbarStateInTransitions(to: controller)
+    }
+    
+    private func setProperTopTabbarAndNavbarStateInTransitions(to controller: UIViewController!) {
         if let homePage = controller as? HomePageViewController,let navBarInitialHeight = self.navBarInitialHeight, let tableView = homePage.tableView {
             if tableView.contentOffset.y <= navBarInitialHeight {
                 self.resetAllBarFrames()
             }
         }
-        
         if let myBamilo = controller as? JAHomeViewController ,let navBarInitialHeight = self.navBarInitialHeight, let scrollView = myBamilo.teaserPageView.mainScrollView {
             if scrollView.contentOffset.y <= navBarInitialHeight {
                 self.resetAllBarFrames()
             }
         }
+        self.homePage.tableView?.killScroll()
+        self.myBamiloPage.teaserPageView.mainScrollView?.killScroll()
     }
     
     private func resetAllBarFrames() {

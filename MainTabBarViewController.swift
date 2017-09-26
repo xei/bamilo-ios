@@ -140,6 +140,10 @@ import UIKit
         MainTabBarViewController.activateTabItem(rootViewClassType: CartViewController.self)
     }
     
+    static func showCategories() {
+        MainTabBarViewController.activateTabItem(rootViewClassType: JACategoriesSideMenuViewController.self)
+    }
+    
     
     //MARK: - DataServiceProtocol 
     func bind(_ data: Any!, forRequestId rid: Int32) {

@@ -33,6 +33,7 @@
 
 @property (nonatomic, strong) ScrollerBarFollower *navbarFollower;
 @property (nonatomic, strong) ScrollerBarFollower *searchBarFollower;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchBarBottomToTopTableViewConstraint;
 
 @end
 
@@ -68,10 +69,7 @@
     
     int lastFrame = 8;
     
-    self.loadingAnimation = [[UIImageView alloc] initWithFrame:CGRectMake(0,
-                                                                          0,
-                                                                          image.size.width,
-                                                                          image.size.height)];
+    self.loadingAnimation = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, image.size.width, image.size.height)];
     self.loadingAnimation.animationDuration = 1.0f;
     NSMutableArray *animationFrames = [NSMutableArray new];
     for (int i = 1; i <= lastFrame; i++) {
@@ -136,19 +134,7 @@
     animationDelete = UITableViewRowAnimationLeft;
     
     self.searchbar.searchView.textField.delegate = self;
-    CGFloat tableViewTopOffset = self.navigationController.navigationBar.height + self.searchBarHeight.constant + [[UIApplication sharedApplication] statusBarFrame].size.height;
-    [self.tableView setContentInset:UIEdgeInsetsMake(tableViewTopOffset, 0, 0, 0)];
     [self.view bringSubviewToFront:self.searchbar];
-    
-    //assign scrollbar follower to bar views
-    self.navbarFollower = [ScrollerBarFollower new];
-    [self.navbarFollower setWithBarView:self.navigationController.navigationBar moveDirection:@"TOP"];
-    self.searchBarFollower = [ScrollerBarFollower new];
-    [self.searchBarFollower setWithBarView:self.searchbar moveDirection:@"TOP"];
-    
-    
-    [self.navbarFollower followScrollViewWithScrollView:self.tableView delay:-tableViewTopOffset permittedMoveDistance: self.navigationController.navigationBar.height];
-    [self.searchBarFollower followScrollViewWithScrollView:self.tableView delay:-tableViewTopOffset permittedMoveDistance:self.navigationController.navigationBar.height];
     
     [self reloadData];
 }
@@ -221,6 +207,22 @@
     
     [self.tableView reloadData];
     [self.reloadLock unlock];
+    
+    
+    //assign scrollbar follower to bar views
+    self.navbarFollower = [ScrollerBarFollower new];
+    [self.navbarFollower setWithBarView:self.navigationController.navigationBar moveDirection:@"TOP"];
+    self.searchBarFollower = [ScrollerBarFollower new];
+    [self.searchBarFollower setWithBarView:self.searchbar moveDirection:@"TOP"];
+    
+    CGFloat tableViewTopOffset = self.navigationController.navigationBar.height;
+    self.searchBarBottomToTopTableViewConstraint.constant = -tableViewTopOffset;
+    
+    [self.tableView setContentInset:UIEdgeInsetsMake(tableViewTopOffset, 0, 0, 0)];
+    [self.tableView setContentOffset:CGPointMake(0, -tableViewTopOffset)];
+    
+    [self.navbarFollower followScrollViewWithScrollView:self.tableView delay: -tableViewTopOffset permittedMoveDistance: self.navigationController.navigationBar.height];
+    [self.searchBarFollower followScrollViewWithScrollView:self.tableView delay: -tableViewTopOffset permittedMoveDistance:self.navigationController.navigationBar.height];
 }
 
 - (void)popToRoot {

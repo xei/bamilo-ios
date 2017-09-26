@@ -1,5 +1,5 @@
 //
-//  DeviceManager.h
+//  DeviceStatusManager.h
 //  Bamilo
 //
 //  Created by Narbeh Mirzaei on 3/29/17.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface DeviceManager : NSObject
+@interface DeviceStatusManager : NSObject
 
 +(NSString *) getDeviceModel;
 +(NSOperatingSystemVersion) getOSVersion;

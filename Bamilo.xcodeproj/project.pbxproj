@@ -201,6 +201,7 @@
 		61F705401F766EB200DCD77C /* FeaturedStoresCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F7053E1F766EB200DCD77C /* FeaturedStoresCollectionViewCell.swift */; };
 		61F705411F766EB200DCD77C /* FeaturedStoresCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61F7053F1F766EB200DCD77C /* FeaturedStoresCollectionViewCell.xib */; };
 		61F946B31ED4502100F341A6 /* ProductDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F946B21ED4502100F341A6 /* ProductDataManager.swift */; };
+		61FB25121F791C980002CD87 /* Ext+UISCrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FB25111F791C980002CD87 /* Ext+UISCrollView.swift */; };
 		61FDE3331F72705D00153A74 /* BaseHomePageTeaserBoxTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FDE3321F72705D00153A74 /* BaseHomePageTeaserBoxTableViewCell.swift */; };
 		61FE97D51EC9BB7700DF233D /* GridCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FE97D41EC9BB7600DF233D /* GridCollectionViewFlowLayout.swift */; };
 		61FE97D71EC9C19300DF233D /* ListCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FE97D61EC9C19300DF233D /* ListCollectionViewFlowLayout.swift */; };
@@ -563,7 +564,7 @@
 		87D3DD1C1E8A323000C960FF /* BaseDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D3DD1B1E8A323000C960FF /* BaseDataManager.m */; };
 		87D3DD211E8A32D900C960FF /* EmarsysDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D3DD201E8A32D900C960FF /* EmarsysDataManager.m */; };
 		87D3DD271E8A962C00C960FF /* EmarsysRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D3DD261E8A962C00C960FF /* EmarsysRequestManager.m */; };
-		87D3DD2B1E8B810B00C960FF /* DeviceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D3DD2A1E8B810B00C960FF /* DeviceManager.m */; };
+		87D3DD2B1E8B810B00C960FF /* DeviceStatusManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D3DD2A1E8B810B00C960FF /* DeviceStatusManager.m */; };
 		87D3DD301E8BA11600C960FF /* EmarsysMobileEngage.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D3DD2F1E8BA11600C960FF /* EmarsysMobileEngage.m */; };
 		87DAABE31E54430D00445EBB /* PaymentOptionWithLogoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DAABE21E54430D00445EBB /* PaymentOptionWithLogoTableViewCell.m */; };
 		87DAABE51E54431A00445EBB /* PaymentOptionWithLogoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87DAABE41E54431A00445EBB /* PaymentOptionWithLogoTableViewCell.xib */; };
@@ -1211,6 +1212,7 @@
 		61F7053E1F766EB200DCD77C /* FeaturedStoresCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeaturedStoresCollectionViewCell.swift; sourceTree = "<group>"; };
 		61F7053F1F766EB200DCD77C /* FeaturedStoresCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeaturedStoresCollectionViewCell.xib; sourceTree = "<group>"; };
 		61F946B21ED4502100F341A6 /* ProductDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductDataManager.swift; sourceTree = "<group>"; };
+		61FB25111F791C980002CD87 /* Ext+UISCrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UISCrollView.swift"; sourceTree = "<group>"; };
 		61FDE3321F72705D00153A74 /* BaseHomePageTeaserBoxTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseHomePageTeaserBoxTableViewCell.swift; sourceTree = "<group>"; };
 		61FE97D41EC9BB7600DF233D /* GridCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		61FE97D61EC9C19300DF233D /* ListCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
@@ -1785,8 +1787,8 @@
 		87D3DD201E8A32D900C960FF /* EmarsysDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysDataManager.m; sourceTree = "<group>"; };
 		87D3DD251E8A962C00C960FF /* EmarsysRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysRequestManager.h; sourceTree = "<group>"; };
 		87D3DD261E8A962C00C960FF /* EmarsysRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysRequestManager.m; sourceTree = "<group>"; };
-		87D3DD291E8B810B00C960FF /* DeviceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceManager.h; sourceTree = "<group>"; };
-		87D3DD2A1E8B810B00C960FF /* DeviceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceManager.m; sourceTree = "<group>"; };
+		87D3DD291E8B810B00C960FF /* DeviceStatusManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceStatusManager.h; sourceTree = "<group>"; };
+		87D3DD2A1E8B810B00C960FF /* DeviceStatusManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceStatusManager.m; sourceTree = "<group>"; };
 		87D3DD2E1E8BA11600C960FF /* EmarsysMobileEngage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysMobileEngage.h; sourceTree = "<group>"; };
 		87D3DD2F1E8BA11600C960FF /* EmarsysMobileEngage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysMobileEngage.m; sourceTree = "<group>"; };
 		87DAABE11E54430D00445EBB /* PaymentOptionWithLogoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentOptionWithLogoTableViewCell.h; sourceTree = "<group>"; };
@@ -3745,6 +3747,7 @@
 				61EA56691EDE8BC20093EAD4 /* Ext+UIAlertView.swift */,
 				61D929331F1642C100716D4C /* Ext+CAShapreLayer.swift */,
 				6171F3671F3A021700B3B212 /* Ext+UIView.swift */,
+				61FB25111F791C980002CD87 /* Ext+UISCrollView.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -4858,7 +4861,7 @@
 				874AAB661E3CE9F400B3F8FE /* AppManager */,
 				87DAABF01E55DDE300445EBB /* AlertManager */,
 				8714E0521E471DDB004C9B1D /* DataManager */,
-				87D3DD281E8B80CA00C960FF /* DeviceManager */,
+				87D3DD281E8B80CA00C960FF /* DeviceStatusManager */,
 				873369BB1E58375900B0B5E5 /* ImageManager */,
 				879F87FC1E5095CF0033FE87 /* LoadingManager */,
 				8714E05E1E474015004C9B1D /* RequestManager */,
@@ -6054,13 +6057,13 @@
 			name = EmarsysRequestManager;
 			sourceTree = "<group>";
 		};
-		87D3DD281E8B80CA00C960FF /* DeviceManager */ = {
+		87D3DD281E8B80CA00C960FF /* DeviceStatusManager */ = {
 			isa = PBXGroup;
 			children = (
-				87D3DD291E8B810B00C960FF /* DeviceManager.h */,
-				87D3DD2A1E8B810B00C960FF /* DeviceManager.m */,
+				87D3DD291E8B810B00C960FF /* DeviceStatusManager.h */,
+				87D3DD2A1E8B810B00C960FF /* DeviceStatusManager.m */,
 			);
-			name = DeviceManager;
+			name = DeviceStatusManager;
 			sourceTree = "<group>";
 		};
 		87D3DD2C1E8B9D5200C960FF /* BML */ = {
@@ -7770,7 +7773,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A08B1131CC7C377003282CB /* JAActionWebViewController.m in Sources */,
-				87D3DD2B1E8B810B00C960FF /* DeviceManager.m in Sources */,
+				87D3DD2B1E8B810B00C960FF /* DeviceStatusManager.m in Sources */,
 				873369CA1E58A1D200B0B5E5 /* ShippingMethodOption.m in Sources */,
 				61F705361F76544D00DCD77C /* HomePageFeaturedStore.swift in Sources */,
 				61D10E6C1EAE22C6009A0865 /* SuccessPaymentViewController.m in Sources */,
@@ -7838,6 +7841,7 @@
 				8702FBBE1E9901AE001D1AA9 /* EventFactory.m in Sources */,
 				617D7F401EDC334900F36CF7 /* ProfileSimpleTableViewCell.swift in Sources */,
 				8702FBBA1E98FE3A001D1AA9 /* EmailUtility.m in Sources */,
+				61FB25121F791C980002CD87 /* Ext+UISCrollView.swift in Sources */,
 				616058E61E6AD8D50079B2CD /* SearchFilterItemOption.m in Sources */,
 				870BF7D61EA37D4600A0982E /* TimerManager.m in Sources */,
 				61B161D41E6BF9520032C5C6 /* BaseSearchFilterItem.m in Sources */,

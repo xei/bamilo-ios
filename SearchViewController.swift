@@ -16,6 +16,7 @@ import Kingfisher
 
 class SearchViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, DataServiceProtocol, UITextFieldDelegate, UIScrollViewDelegate, SearchViewControllerDelegate {
 
+    @IBOutlet private weak var dummyStatusbarView: UIView!
     @IBOutlet private weak var searchBarContainer: UIView!
     @IBOutlet private weak var returnButton: UIButton!
     @IBOutlet private weak var searchTextField: UITextField!
@@ -64,6 +65,8 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
         self.returnButton.setTitle(STRING_BACK_LABEL, for: .normal)
         self.returnButton.setTitleColor(UIColor.white, for: .normal)
         self.returnButton.titleLabel?.font = Theme.font(kFontVariationRegular, size: 13)
+        
+        self.dummyStatusbarView.backgroundColor = Theme.color(kColorExtraDarkBlue)
     }
     
     @IBAction func backButtonTapped(_ sender: Any) {

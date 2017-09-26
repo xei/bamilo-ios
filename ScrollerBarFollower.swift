@@ -89,7 +89,7 @@ import UIKit
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if !decelerate || !self.shouldFollower {
+        if !decelerate {
             self.barIsHidding ? self.hideBar(animated: false) : self.resetBarFrame(animated: true)
             
         }

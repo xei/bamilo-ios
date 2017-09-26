@@ -20,9 +20,10 @@ class FeaturedStoresCollectionViewCell: UICollectionViewCell {
     
     var indexPath: IndexPath? {
         didSet {
-            self.layer.shadowOffset = CGSize(width:1 , height: 1)
             if indexPath?.row != 0 {
                 self.layer.shadowOffset = CGSize(width:0 , height: 1)
+            } else {
+                self.layer.shadowOffset = CGSize(width:1 , height: 1)
             }
         }
     }
@@ -32,8 +33,20 @@ class FeaturedStoresCollectionViewCell: UICollectionViewCell {
         self.setupView()
     }
     
+    var title: String? {
+        didSet {
+            self.titleLabel.setTitle(title: title ?? "", lineHeight: 13 ,lineSpaceing: 0, alignment: .center)
+        }
+    }
+    
+    var image: UIImage? {
+        didSet {
+            self.imageIcon.image = image
+        }
+    }
+    
     func setupView() {
-        self.titleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 8), color: UIColor.black)
+        self.titleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 10), color: UIColor.black)
         self.backgroundColor = .white
         
         self.layer.shadowColor = UIColor.black.cgColor
@@ -44,11 +57,19 @@ class FeaturedStoresCollectionViewCell: UICollectionViewCell {
     }
     
     func update(withModel model: HomePageFeaturedStoreItem) {
-        self.titleLabel.text = model.title
+        self.title = model.title
         self.imageIcon.kf.setImage(with: model.imageUrl, placeholder: UIImage(named: "homepage_slider_placeholder"),options: [.transition(.fade(0.20))])
     }
     
     static func nibName() -> String {
         return AppUtility.getStringFromClass(for: self)!
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.layer.shadowOffset = .zero
+        self.titleLabel.text = nil
+        self.titleLabel.attributedText = nil
+        self.imageIcon.image = nil
     }
 }

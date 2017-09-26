@@ -15,7 +15,7 @@ public typealias EventAttributeType = [String:Any]
         var attributes = [
             kEventAppVersion: AppManager.sharedInstance().getAppFullFormattedVersion(),
             kEventPlatform: "ios",
-            kEventConnection: DeviceManager.getConnectionType(),
+            kEventConnection: DeviceStatusManager.getConnectionType(),
             kEventDate:  Date()
         ] as [String: Any]
         if let userGender = RICustomer.getGender() {
