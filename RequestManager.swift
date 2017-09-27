@@ -37,7 +37,7 @@ class RequestManagerSwift {
         self.baseUrl = baseUrl
     }
     
-    func async(_ method: HTTPMethod, target: Any, path: String, params: Parameters?, type: ApiRequestExecutionType, completion: @escaping ResponseClosure) {
+    func async(_ method: HTTPMethod, target: Any?, path: String, params: Parameters?, type: ApiRequestExecutionType, completion: @escaping ResponseClosure) {
         if let baseUrl = self.baseUrl {
             if(type == .container || type == .foreground) {
                 LoadingManager.showLoading(on: target)

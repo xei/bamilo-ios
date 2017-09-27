@@ -224,7 +224,7 @@
 #pragma mark - UITableView
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if ((self.categoriesLoadingError && indexPath.row > self.tableViewCategoriesArray.count-1) || self.tableViewCategoriesArray.count == 0) {
-        return [JACategoriesSideMenuCell heightForCategory:nil];
+        return 40;
     }
     id category = [self.tableViewCategoriesArray objectAtIndex:indexPath.row];
     return [JACategoriesSideMenuCell heightForCategory:category];

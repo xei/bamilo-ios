@@ -11,20 +11,20 @@ import Foundation
 @objc class DataAggregator: NSObject {
     
 //######## MARK: - AuthenticationDataManager
-    static func loginUser(_ target:DataServiceProtocol, username:String, password:String, completion: @escaping DataClosure) {
+    static func loginUser(_ target:DataServiceProtocol?, username:String, password:String, completion: @escaping DataClosure) {
         AuthenticationDataManager.sharedInstance.loginUser(target, username: username, password: password, completion: completion)
     }
     
-    static func signupUser(_ target:DataServiceProtocol, with fields: [String : String], completion: @escaping DataClosure) {
+    static func signupUser(_ target:DataServiceProtocol?, with fields: [String : String], completion: @escaping DataClosure) {
         var fields = fields //Hack!
         AuthenticationDataManager.sharedInstance.signupUser(target, with: &fields, completion: completion)
     }
     
-    static func forgetPassword(_ target:DataServiceProtocol, with fields:[String : String], completion: @escaping DataClosure) {
+    static func forgetPassword(_ target:DataServiceProtocol?, with fields:[String : String], completion: @escaping DataClosure) {
         AuthenticationDataManager.sharedInstance.forgetPassword(target, with: fields, completion: completion)
     }
     
-    static func logoutUser(_ target:DataServiceProtocol, completion: @escaping DataClosure) {
+    static func logoutUser(_ target:DataServiceProtocol?, completion: @escaping DataClosure) {
         AuthenticationDataManager.sharedInstance.logoutUser(target, completion: completion)
     }
     

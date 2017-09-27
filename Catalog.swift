@@ -23,8 +23,8 @@ import SwiftyJSON
     var breadcrumbsFullPath: String? {
         get {
             return self.breadcrumbs?.map({ (item) -> String in
-                return item.title!
-            }).joined(separator: " > ")
+                return item.title ?? ""
+            }).filter { $0.characters.count > 0 }.joined(separator: " > ")
         }
     }
     

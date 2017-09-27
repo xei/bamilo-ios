@@ -11,7 +11,7 @@ import Foundation
 class AuthenticationDataManager: DataManagerSwift {
     static let sharedInstance = AuthenticationDataManager()
 
-    func loginUser(_ target:DataServiceProtocol, username:String, password:String, completion: @escaping DataClosure) {
+    func loginUser(_ target:DataServiceProtocol?, username:String, password:String, completion: @escaping DataClosure) {
         let params : [String: String] = [
             "login[email]" : username,
             "login[password]" : password
@@ -27,7 +27,7 @@ class AuthenticationDataManager: DataManagerSwift {
         }
     }
     
-    func signupUser(_ target:DataServiceProtocol, with fields: inout [String : String], completion: @escaping DataClosure) {
+    func signupUser(_ target:DataServiceProtocol?, with fields: inout [String : String], completion: @escaping DataClosure) {
         fields["customer[phone_prefix]"] = "100"
         let customerPassword = fields["customer[password]"]
         
@@ -41,13 +41,13 @@ class AuthenticationDataManager: DataManagerSwift {
         }
     }
     
-    func forgetPassword(_ target:DataServiceProtocol, with fields:[String : String], completion: @escaping DataClosure) {
+    func forgetPassword(_ target:DataServiceProtocol?, with fields:[String : String], completion: @escaping DataClosure) {
         AuthenticationDataManager.requestManager.async(.post, target: target, path:RI_API_FORGET_PASS_CUSTOMER, params: fields, type: .foreground) { (responseType, data, errorMessages) in
             self.processResponse(responseType, aClass: nil, data: data, errorMessages: errorMessages, completion: completion)
         }
     }
     
-    func logoutUser(_ target:DataServiceProtocol, completion: @escaping DataClosure) {
+    func logoutUser(_ target:DataServiceProtocol?, completion: @escaping DataClosure) {
         AuthenticationDataManager.requestManager.async(.post, target: target, path: RI_API_LOGOUT_CUSTOMER, params: nil, type: .foreground) { (responseType, data, errorMessages) in
             self.processResponse(responseType, aClass: nil, data: data, errorMessages: errorMessages) { (data, error) in
                 completion(data, error)
