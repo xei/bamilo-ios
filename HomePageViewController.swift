@@ -20,7 +20,7 @@ class HomePageViewController:   BaseViewController,
                                 BaseHomePageTeaserBoxTableViewCellDelegate {
 
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
+    @IBOutlet weak private var loadingIndicator: UIActivityIndicatorView!
     
     weak var delegate: HomePageViewControllerDelegate?
     private var homePage: HomePage?
@@ -78,6 +78,7 @@ class HomePageViewController:   BaseViewController,
         return self.homePage?.teasers.count ?? 0
     }
     
+    //MARK: - UIScrollViewDelegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.delegate?.scrollViewDidScroll(scrollView)
     }
@@ -101,6 +102,7 @@ class HomePageViewController:   BaseViewController,
         }
     }
     
+    //MARK: - NavigationBarProtocol
     override func navBarTitleString() -> String! {
         return STRING_HOME
     }

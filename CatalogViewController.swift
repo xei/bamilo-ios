@@ -161,6 +161,8 @@ import SwiftyJSON
         NavBarUtility.changeStatusBarColor(color: .clear)
 
         self.navBarBlurView?.removeFromSuperview()
+        
+        self.collectionView.killScroll()
     }
     
     func updateNavBar() {
@@ -451,8 +453,7 @@ import SwiftyJSON
     }
     
     func loadAvaiableSubCategories() {
-        //TODO: type of Target must be enum not string (the enum of RITarget can not be reusded in swift)
-        if self.searchTarget.type == "catalog_category" {
+        if self.searchTarget.targetType == .CATALOG_CATEGORY {
             CatalogDataManager.sharedInstance.getSubCategoriesFilter(self, categoryUrlKey: self.searchTarget.node, completion: { (data, errorMessages) in
                 self.subCategoryFilterItem = data as? CatalogCategoryFilterItem
             })
@@ -646,7 +647,7 @@ import SwiftyJSON
     
     //MARK: - EmarsysWebExtendProtocol
     func getDataCollection(_ transaction: EMTransaction!) -> EMTransaction! {
-        if self.searchTarget.type == "catalog_query" {
+        if self.searchTarget.targetType == .CATALOG_SEARCH {
             transaction.setSearchTerm(self.searchTarget.node)
         }
         if let breadcrumbsFullPath = self.catalogData?.breadcrumbsFullPath {

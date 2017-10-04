@@ -307,7 +307,6 @@
     recommend.completionHandler = ^(EMRecommendationResult *_Nonnull result) {
         [self renderRecommendations:result];
     };
-    
     return @[recommend];
 }
 

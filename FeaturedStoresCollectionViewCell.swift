@@ -35,7 +35,7 @@ class FeaturedStoresCollectionViewCell: UICollectionViewCell {
     
     var title: String? {
         didSet {
-            self.titleLabel.setTitle(title: title ?? "", lineHeight: 13 ,lineSpaceing: 0, alignment: .center)
+            self.titleLabel.setTitle(title: title ?? "", lineHeight: 14 ,lineSpaceing: 0, alignment: .center)
         }
     }
     

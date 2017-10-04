@@ -11,8 +11,7 @@ import UIKit
 protocol FilteredListNoResultViewControllerDelegate: class {
     func editFilterByNoResultView()
 }
-
-class FilteredListNoResultViewController: BaseViewController {
+ class FilteredListNoResultViewController: BaseViewController {
 
     @IBOutlet weak var filterviewDescLabel: UILabel!
     weak var delegate: FilteredListNoResultViewControllerDelegate?
