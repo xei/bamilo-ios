@@ -31,9 +31,9 @@
     return [self.dicountedPrice formatPriceWithCurrency];
 }
 
-+ (RecommendItem *)instanceWithEMRecommendationItem:(EMRecommendationItem *)item {
++ (instancetype)instanceWithEMRecommendationItem:(EMRecommendationItem *)item {
     NSError *error;
-    RecommendItem *instance = [[RecommendItem alloc] init];
+    id instance = [[self alloc] init];
     [instance mergeFromDictionary:item.data useKeyMapping:YES error:&error];
     return instance;
 }

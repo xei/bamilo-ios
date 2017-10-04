@@ -81,7 +81,7 @@ class HomePageFeaturedStoresTableViewCell: BaseHomePageTeaserBoxTableViewCell, U
     
     private static func cellSize() -> CGSize {
         let cellWidth: CGFloat = round(UIScreen.main.bounds.width / (UIDevice.current.userInterfaceIdiom == .pad ? 6.5 :  4.5))
-        let cellHeight: CGFloat = 96
+        let cellHeight: CGFloat = 106
         return CGSize(width: cellWidth, height: cellHeight)
     }
 }

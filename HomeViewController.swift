@@ -9,9 +9,9 @@
 class HomeViewController:   BaseViewController,
                             CAPSPageMenuDelegate,
                             UIScrollViewDelegate,
-                            JATeaserPageViewDelegate,
                             UITextFieldDelegate,
-                            HomePageViewControllerDelegate {
+                            HomePageViewControllerDelegate,
+                            MyBamiloViewControllerDelegate {
     
     @IBOutlet private weak var searchBar: SearchBarControl!
     @IBOutlet private weak var contentContainer: UIView!
@@ -26,7 +26,7 @@ class HomeViewController:   BaseViewController,
     private var navBarInitialHeight: CGFloat?
     
     private var homePage: HomePageViewController!
-    private var myBamiloPage: JAHomeViewController!
+    private var myBamiloPage: MyBamiloViewController!
     private var isLoaded = false
     
     
@@ -39,13 +39,13 @@ class HomeViewController:   BaseViewController,
             self.navBarFollower = ScrollerBarFollower(barView: navBar, moveDirection: .top)
             self.navBarInitialHeight = navBar.frame.height
         }
-        //Sign In View Controller
+        //homePage View Controller
         self.homePage = HomePageViewController(nibName: "HomePageViewController", bundle: nil)
         self.homePage?.title = STRING_HOME
     
         
-        //Sign Up View Controller
-        self.myBamiloPage = JAHomeViewController()
+        //my bamilo View Controller
+        self.myBamiloPage = MyBamiloViewController(nibName: "MyBamiloViewController", bundle: nil)
         self.myBamiloPage?.title = STRING_MY_BAMILO
         
         self.searchBar.searchView?.textField.delegate = self
@@ -78,10 +78,10 @@ class HomeViewController:   BaseViewController,
                 self.contentContainer.addSubview(view)
             }
             self.pagemenu?.move(toPage: 1)
-            
-            self.myBamiloPage.teaserPageView.delegate = self
+    
         
             self.homePage.delegate = self
+            self.myBamiloPage.delegate = self
             
             if let navBarHeight = self.navBarInitialHeight {
                 //update the menuScrollview top constraint to super view
@@ -89,7 +89,8 @@ class HomeViewController:   BaseViewController,
                 
                 // -- update the frame of menuScrollView --
                 // After updating the top constraint of this view
-                // the frame of this view will not be updated instantly, so we do it manualy to use it in ScrollVarFollower
+                // the frame of this view will not be updated instantly,
+                // so we do it manualy to use it in ScrollVarFollower
                 self.pagemenu?.menuScrollView.frame.origin.y += navBarHeight
             }
             
@@ -97,6 +98,7 @@ class HomeViewController:   BaseViewController,
             self.topTabBarFollower = ScrollerBarFollower(barView: self.pagemenu!.menuScrollView, moveDirection: .top)
         
             self.setAndFollowerScrollView(scrollView: self.homePage.tableView)
+            self.setAndFollowerScrollView(scrollView: self.myBamiloPage.collectionView)
             self.isLoaded = true
         }
     }
@@ -115,6 +117,7 @@ class HomeViewController:   BaseViewController,
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NavBarUtility.changeStatusBarColor(color: UIColor.clear)
+        self.resetAllBarFrames()
     }
     
     //MARK:- CAPSPageMenuDelegate
@@ -128,17 +131,19 @@ class HomeViewController:   BaseViewController,
     
     private func setProperTopTabbarAndNavbarStateInTransitions(to controller: UIViewController!) {
         if let homePage = controller as? HomePageViewController,let navBarInitialHeight = self.navBarInitialHeight, let tableView = homePage.tableView {
-            if tableView.contentOffset.y <= navBarInitialHeight {
+            if tableView.contentOffset.y <= 2 * navBarInitialHeight {
                 self.resetAllBarFrames()
             }
         }
-        if let myBamilo = controller as? JAHomeViewController ,let navBarInitialHeight = self.navBarInitialHeight, let scrollView = myBamilo.teaserPageView.mainScrollView {
-            if scrollView.contentOffset.y <= navBarInitialHeight {
+        if let myBamilo = controller as? MyBamiloViewController ,let navBarInitialHeight = self.navBarInitialHeight, let scrollView = myBamilo.collectionView {
+            if scrollView.contentOffset.y <= 2 * navBarInitialHeight {
                 self.resetAllBarFrames()
             }
         }
+        
+        //Stop all scrolling views
         self.homePage.tableView?.killScroll()
-        self.myBamiloPage.teaserPageView.mainScrollView?.killScroll()
+        self.myBamiloPage.collectionView.killScroll()
     }
     
     private func resetAllBarFrames() {
@@ -147,7 +152,7 @@ class HomeViewController:   BaseViewController,
         self.topTabBarFollower?.resetBarFrame(animated: false)
     }
     
-    //MARK:- UIScrollViewDelegate
+    //MARK:- MyBamiloViewControllerDelegate, HomePageViewControllerDelegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.navBarFollower?.scrollViewDidScroll(scrollView)
         self.searchBarFollower?.scrollViewDidScroll(scrollView)
@@ -160,12 +165,8 @@ class HomeViewController:   BaseViewController,
         self.topTabBarFollower?.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
     }
     
-    //MARK: -JATeaserPageViewDelegate
-    func teaserPageIsReady(_ teaserPage: Any!) {
-        if let teaserPage = teaserPage as? JATeaserPageView {
-            teaserPage.mainScrollView.delegate = self
-            self.setAndFollowerScrollView(scrollView: teaserPage.mainScrollView)
-        }
+    func didSelectProductSku(productSku: String) {
+        self.performSegue(withIdentifier: "pushPDVViewController", sender: productSku)
     }
     
     private func setAndFollowerScrollView(scrollView: UIScrollView) {
@@ -193,5 +194,13 @@ class HomeViewController:   BaseViewController,
     
     override func navBarTitleString() -> String! {
         return STRING_HOME
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let segueName = segue.identifier
+        if segueName == "pushPDVViewController" {
+            let destinationViewCtrl = segue.destination as? JAPDVViewController
+            destinationViewCtrl?.productSku = sender as! String
+        }
     }
 }

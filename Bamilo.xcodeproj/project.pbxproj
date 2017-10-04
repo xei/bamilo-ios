@@ -45,7 +45,6 @@
 		611C19141F5E88DD0073940C /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611C19131F5E88DD0073940C /* SearchBarView.swift */; };
 		611C19161F5E89010073940C /* SearchBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 611C19151F5E89010073940C /* SearchBarView.xib */; };
 		611C19181F5EA1DA0073940C /* SearchBarControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611C19171F5EA1DA0073940C /* SearchBarControl.swift */; };
-		611C191A1F5EC27B0073940C /* MyBamiloPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611C19191F5EC27B0073940C /* MyBamiloPageViewController.swift */; };
 		611C19201F5FCEEB0073940C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611C191F1F5FCEEB0073940C /* HomeViewController.swift */; };
 		611C1B2E1F0B757E00C57E4D /* FilterSearchEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 611C1B2D1F0B757E00C57E4D /* FilterSearchEvent.m */; };
 		611C1B321F0BAA0900C57E4D /* SearchBarSearchEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 611C1B311F0BAA0900C57E4D /* SearchBarSearchEvent.m */; };
@@ -88,6 +87,9 @@
 		613FF2C11E4B3D1B008660CF /* Authentication.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 613FF2C01E4B3D1B008660CF /* Authentication.storyboard */; };
 		61432EC61E9B5DD7001F7930 /* BaseCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61432EC51E9B5DD7001F7930 /* BaseCollectionViewCell.m */; };
 		61432ECB1E9B60DE001F7930 /* RecommendItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 61432ECA1E9B60DE001F7930 /* RecommendItem.m */; };
+		6157A3EE1F83865800B8D501 /* MyBamiloViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6157A3EC1F83865800B8D501 /* MyBamiloViewController.swift */; };
+		6157A3EF1F83865800B8D501 /* MyBamiloViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6157A3ED1F83865800B8D501 /* MyBamiloViewController.xib */; };
+		6157A3F31F83974100B8D501 /* MyBamiloModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6157A3F21F83974100B8D501 /* MyBamiloModel.swift */; };
 		61583DDD1EF92100007107C1 /* DeleteEntityDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61583DDC1EF92100007107C1 /* DeleteEntityDataManager.swift */; };
 		615E796C1EF6BE58008E661D /* UILabel+WhiteUIDatePickerLabels.m in Sources */ = {isa = PBXBuildFile; fileRef = 615E796B1EF6BE58008E661D /* UILabel+WhiteUIDatePickerLabels.m */; };
 		615EDF541F697DA600454A10 /* LocalSearchSuggestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615EDF531F697DA600454A10 /* LocalSearchSuggestion.swift */; };
@@ -985,7 +987,6 @@
 		611C19131F5E88DD0073940C /* SearchBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
 		611C19151F5E89010073940C /* SearchBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchBarView.xib; sourceTree = "<group>"; };
 		611C19171F5EA1DA0073940C /* SearchBarControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarControl.swift; sourceTree = "<group>"; };
-		611C19191F5EC27B0073940C /* MyBamiloPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyBamiloPageViewController.swift; sourceTree = "<group>"; };
 		611C191F1F5FCEEB0073940C /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		611C1B2C1F0B757E00C57E4D /* FilterSearchEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterSearchEvent.h; sourceTree = "<group>"; };
 		611C1B2D1F0B757E00C57E4D /* FilterSearchEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterSearchEvent.m; sourceTree = "<group>"; };
@@ -1050,6 +1051,9 @@
 		61432EC51E9B5DD7001F7930 /* BaseCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseCollectionViewCell.m; sourceTree = "<group>"; };
 		61432EC91E9B60DE001F7930 /* RecommendItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecommendItem.h; sourceTree = "<group>"; };
 		61432ECA1E9B60DE001F7930 /* RecommendItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommendItem.m; sourceTree = "<group>"; };
+		6157A3EC1F83865800B8D501 /* MyBamiloViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBamiloViewController.swift; sourceTree = "<group>"; };
+		6157A3ED1F83865800B8D501 /* MyBamiloViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyBamiloViewController.xib; sourceTree = "<group>"; };
+		6157A3F21F83974100B8D501 /* MyBamiloModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBamiloModel.swift; sourceTree = "<group>"; };
 		61583DDC1EF92100007107C1 /* DeleteEntityDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteEntityDataManager.swift; sourceTree = "<group>"; };
 		615E796A1EF6BE58008E661D /* UILabel+WhiteUIDatePickerLabels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+WhiteUIDatePickerLabels.h"; sourceTree = "<group>"; };
 		615E796B1EF6BE58008E661D /* UILabel+WhiteUIDatePickerLabels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+WhiteUIDatePickerLabels.m"; sourceTree = "<group>"; };
@@ -3017,15 +3021,12 @@
 		613A7E8A1EBF033400E1AB3F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				6157A3DD1F8376B700B8D501 /* Home */,
 				61C5BAF01EC1F40300F3A796 /* CatalogViewController.swift */,
 				61143A631ED5BCB000C53BA8 /* FilteredListNoResultViewController.swift */,
 				612FE5161EDC062500C2AFA0 /* ProfileViewController.swift */,
 				61EA566B1EDEC75E0093EAD4 /* MainTabBarViewController.swift */,
-				611C19191F5EC27B0073940C /* MyBamiloPageViewController.swift */,
-				611C191F1F5FCEEB0073940C /* HomeViewController.swift */,
 				61CBA8851F691D05009F0EEF /* SearchViewController.swift */,
-				61D474891F6FDF7A001DA6A6 /* HomePageViewController.swift */,
-				61D4748A1F6FDF7A001DA6A6 /* HomePageViewController.xib */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -3139,6 +3140,51 @@
 			name = RecommendItem;
 			sourceTree = "<group>";
 		};
+		6157A3DD1F8376B700B8D501 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				6157A3EB1F83863D00B8D501 /* MyBamiloViewController */,
+				6157A3DE1F8376C500B8D501 /* HomePageViewController */,
+				611C191F1F5FCEEB0073940C /* HomeViewController.swift */,
+			);
+			name = Home;
+			sourceTree = "<group>";
+		};
+		6157A3DE1F8376C500B8D501 /* HomePageViewController */ = {
+			isa = PBXGroup;
+			children = (
+				61D474891F6FDF7A001DA6A6 /* HomePageViewController.swift */,
+				61D4748A1F6FDF7A001DA6A6 /* HomePageViewController.xib */,
+			);
+			name = HomePageViewController;
+			sourceTree = "<group>";
+		};
+		6157A3EB1F83863D00B8D501 /* MyBamiloViewController */ = {
+			isa = PBXGroup;
+			children = (
+				6157A3EC1F83865800B8D501 /* MyBamiloViewController.swift */,
+				6157A3ED1F83865800B8D501 /* MyBamiloViewController.xib */,
+			);
+			name = MyBamiloViewController;
+			sourceTree = "<group>";
+		};
+		6157A3F01F8390F700B8D501 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				6157A3F11F8390FD00B8D501 /* MyBamilo */,
+				61D4747E1F6FBC0B001DA6A6 /* HomePage */,
+			);
+			name = Home;
+			sourceTree = "<group>";
+		};
+		6157A3F11F8390FD00B8D501 /* MyBamilo */ = {
+			isa = PBXGroup;
+			children = (
+				6157A3F21F83974100B8D501 /* MyBamiloModel.swift */,
+			);
+			name = MyBamilo;
+			sourceTree = "<group>";
+		};
 		615F96EA1E9E11FD00614644 /* NotificationService */ = {
 			isa = PBXGroup;
 			children = (
@@ -3240,7 +3286,7 @@
 		617D7F441EDC3DE400F36CF7 /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				61D4747E1F6FBC0B001DA6A6 /* HomePage */,
+				6157A3F01F8390F700B8D501 /* Home */,
 				8720C3341EDEE19900404378 /* Data */,
 				613A7E921EBF64EB00E1AB3F /* CatalogFiltes */,
 				613A7E8C1EBF069100E1AB3F /* Product.swift */,
@@ -7438,6 +7484,7 @@
 				CE9AE06F1AB6D78200D56481 /* JANewsletterComponent.xib in Resources */,
 				875743441EA60D8E001B518A /* Autumn-Small@2x.png in Resources */,
 				8757434D1EA60D8E001B518A /* Autumn-72.png in Resources */,
+				6157A3EF1F83865800B8D501 /* MyBamiloViewController.xib in Resources */,
 				875743A21EA60DE0001B518A /* Ramadan-Small.png in Resources */,
 				875744251EA60E48001B518A /* Tragedy-72@2x.png in Resources */,
 				CE9AE0751AB6D78200D56481 /* JAFallbackView.xib in Resources */,
@@ -7639,13 +7686,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Bamilo-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		875AD58C1E38C62A00584ABF /* ShellScript */ = {
@@ -7680,9 +7730,50 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Bamilo/Pods-Bamilo-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
+				"${BUILT_PRODUCTS_DIR}/Adjust/Adjust.framework",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/AlamofireObjectMapper/AlamofireObjectMapper.framework",
+				"${BUILT_PRODUCTS_DIR}/AlgoliaSearch-Client/AlgoliaSearch_Client.framework",
+				"${BUILT_PRODUCTS_DIR}/EmarsysPredictSDK/EmarsysPredictSDK.framework",
+				"${BUILT_PRODUCTS_DIR}/FSPagerView/FSPagerView.framework",
+				"${BUILT_PRODUCTS_DIR}/FXBlurView/FXBlurView.framework",
+				"${BUILT_PRODUCTS_DIR}/JBWhatsAppActivity/JBWhatsAppActivity.framework",
+				"${BUILT_PRODUCTS_DIR}/JSONModel/JSONModel.framework",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
+				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
+				"${BUILT_PRODUCTS_DIR}/RAlertView/RAlertView.framework",
+				"${BUILT_PRODUCTS_DIR}/RGB/RGB.framework",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/TTRangeSlider/TTRangeSlider.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Adjust.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireObjectMapper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlgoliaSearch_Client.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EmarsysPredictSDK.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FSPagerView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FXBlurView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JBWhatsAppActivity.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JSONModel.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RAlertView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RGB.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TTRangeSlider.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -7695,9 +7786,12 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Bamilo/Pods-Bamilo-resources.sh",
+				"${PODS_ROOT}/GoogleAppIndexing/Resources/GoogleAppIndexingResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -7740,13 +7834,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BamiloUITests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -7836,6 +7933,7 @@
 				61432ECB1E9B60DE001F7930 /* RecommendItem.m in Sources */,
 				617F77AF1EB85BEC000A2A6C /* AddressDataManager.swift in Sources */,
 				CE9ADF3A1AB6D78200D56481 /* JAButtonCell.m in Sources */,
+				6157A3EE1F83865800B8D501 /* MyBamiloViewController.swift in Sources */,
 				8720C33E1EE2A8CC00404378 /* App.swift in Sources */,
 				61D4748B1F6FDF7A001DA6A6 /* HomePageViewController.swift in Sources */,
 				8702FBBE1E9901AE001D1AA9 /* EventFactory.m in Sources */,
@@ -7861,6 +7959,7 @@
 				8754351B1E77ECE500B5D6B4 /* PushWooshTracker.m in Sources */,
 				9ADEA09F1C9C0E6D00B2A605 /* JAProductInfoSizeLine.m in Sources */,
 				8702FBE11E9A3377001D1AA9 /* AbandonCartEvent.m in Sources */,
+				6157A3F31F83974100B8D501 /* MyBamiloModel.swift in Sources */,
 				FF4383EA1C6E1F49003BA957 /* JAScreenRadioComponent.m in Sources */,
 				871BA85C1E8680A1007680C5 /* EventConsts.m in Sources */,
 				8720C33A1EE2808800404378 /* ApiDataMessage.swift in Sources */,
@@ -8140,7 +8239,6 @@
 				FFF900721C6A5CC700DDF538 /* JATextFieldComponent.m in Sources */,
 				61148E051E4724FC00E2540B /* StepperView.m in Sources */,
 				875AD54F1E38C0C900584ABF /* RISearchSuggestion.m in Sources */,
-				611C191A1F5EC27B0073940C /* MyBamiloPageViewController.swift in Sources */,
 				87A681711E41FCF300D252AC /* CheckoutProgressView.m in Sources */,
 				CE9ADFC71AB6D78200D56481 /* JAButtonWithBlur.m in Sources */,
 				FFB1B08E1CE5E163000F60AD /* JAORWaysViewController.m in Sources */,
