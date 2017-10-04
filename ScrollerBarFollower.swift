@@ -77,13 +77,21 @@ import UIKit
     //these two methods must be called in mutaul UIScrollViewDelegate methods 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if !self.shouldFollower { return }
+        
         if scrollView.contentOffset.y < self.delay {
             self.resetBarFrame(animated: false)
             self.lastContentOffset = scrollView.contentOffset.y
             return
         }
-
+        
         let scrollChanage =  scrollView.contentOffset.y - self.lastContentOffset
+        
+        let bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height;
+        if bottomEdge >= (scrollView.contentSize.height - 10) && scrollChanage < 0 && scrollView.contentSize.height > scrollView.frame.height {
+            // we are approaching at the end of scrollview
+            return
+        }
+        
         self.changeBarPositionY(difference: scrollChanage)
         self.lastContentOffset = scrollView.contentOffset.y
     }

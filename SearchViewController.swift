@@ -25,6 +25,7 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
     private var previousRequestTask: URLSessionTask?
     private var suggestion: SearchSuggestion?
     private var localSavedSuggestion = LocalSearchSuggestion()
+    private var keyboardCanBeDismissed = false
     
     weak var delegate: SearchViewControllerDelegate?
     
@@ -44,6 +45,11 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
         self.tableView.tableFooterView = UIView()
         
         self.suggestion = self.localSavedSuggestion.load()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.keyboardCanBeDismissed = true
+        self.searchTextField.resignFirstResponder()
     }
     
     func setupView() {
@@ -100,6 +106,10 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
             headerView.titleString = section == 0 ? STRING_CATEGORIES : STRING_PRODUCTS
         }
         return headerView
+    }
+    
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        return self.keyboardCanBeDismissed
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
