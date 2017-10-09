@@ -49,7 +49,7 @@ class HomeViewController:   BaseViewController,
         self.myBamiloPage?.title = STRING_MY_BAMILO
         
         self.searchBar.searchView?.textField.delegate = self
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(setProperTopTabbarAndNavbarStateInTransitions), name: NSNotification.Name(NotificationKeys.EnterForground), object: nil)
         self.view.bringSubview(toFront: self.searchBar)
     }
     
@@ -129,7 +129,7 @@ class HomeViewController:   BaseViewController,
         self.setProperTopTabbarAndNavbarStateInTransitions(to: controller)
     }
     
-    private func setProperTopTabbarAndNavbarStateInTransitions(to controller: UIViewController!) {
+    @objc private func setProperTopTabbarAndNavbarStateInTransitions(to controller: UIViewController!) {
         self.resetAllBarFrames()
 //        if let homePage = controller as? HomePageViewController,let navBarInitialHeight = self.navBarInitialHeight, let tableView = homePage.tableView {
 //            if tableView.contentOffset.y <= 2 * navBarInitialHeight {

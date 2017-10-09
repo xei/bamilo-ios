@@ -71,10 +71,14 @@ class BaseCatallogCollectionViewCell: BaseCollectionViewCellSwift {
         brandLabel?.text = product.brand
         productImage?.kf.indicatorType = .activity
         productImage?.kf.setImage(with: product.imageUrl, options: [.transition(.fade(0.20))])
-        if let specialPrice = product.specialPrice, let price = product.price, let precentage = product.maxSavingPrecentage {
+        if let specialPrice = product.specialPrice, let price = product.price {
             discountedPriceLabel?.text = "\(specialPrice)".formatPriceWithCurrency()
             priceLabel?.attributedText = "\(price)".formatPriceWithCurrency().strucThroughPriceFormat()
-            dicountPrecentageLabel?.text = "%\(precentage)".convertTo(language: .arabic)
+            if let precentage = product.maxSavingPrecentage {
+                dicountPrecentageLabel?.text = "%\(precentage)".convertTo(language: .arabic)
+            } else {
+                dicountPrecentageLabel?.text = ""
+            }
         } else if let price = product.price {
             discountedPriceLabel?.text = "\(price)".formatPriceWithCurrency()
             priceLabel?.text = nil
