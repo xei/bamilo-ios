@@ -1,5 +1,5 @@
 //
-//  BaseCatalogCollectionFlowLayout.swift
+//  BaseCollectionFlowLayout.swift
 //  Bamilo
 //
 //  Created by Ali Saeedifar on 5/24/17.
@@ -8,9 +8,9 @@
 
 import UIKit
 
-class BaseCatalogCollectionFlowLayout: UICollectionViewFlowLayout {
+class BaseCollectionFlowLayout: UICollectionViewFlowLayout {
     
-    let cellSpacing: CGFloat = 5
+    var cellSpacing: CGFloat = 5
     
     override init() {
         super.init()
@@ -38,9 +38,7 @@ class BaseCatalogCollectionFlowLayout: UICollectionViewFlowLayout {
     }
     
     override var itemSize: CGSize {
-        set {
-            self.itemSize = CGSize(width: itemWidth(), height: itemHeight())
-        }
+        set {}
         get {
             return CGSize(width: itemWidth(), height: itemHeight())
         }

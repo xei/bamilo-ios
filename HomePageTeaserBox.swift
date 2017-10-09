@@ -12,12 +12,15 @@ import ObjectMapper
 enum HomePageTeaserType: String {
     case slider = "main_teasers"
     case featuredStores = "featured_stores"
+    case dailyDeals = "daily_deals"
 }
 
 class HomePageTeaserBox: NSObject, Mappable {
     
     var type: HomePageTeaserType?
     var hasData: Bool?
+    override init() {}
+    
     
     required init?(map: Map) {
     }

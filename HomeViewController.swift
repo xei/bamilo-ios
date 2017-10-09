@@ -130,16 +130,17 @@ class HomeViewController:   BaseViewController,
     }
     
     private func setProperTopTabbarAndNavbarStateInTransitions(to controller: UIViewController!) {
-        if let homePage = controller as? HomePageViewController,let navBarInitialHeight = self.navBarInitialHeight, let tableView = homePage.tableView {
-            if tableView.contentOffset.y <= 2 * navBarInitialHeight {
-                self.resetAllBarFrames()
-            }
-        }
-        if let myBamilo = controller as? MyBamiloViewController ,let navBarInitialHeight = self.navBarInitialHeight, let scrollView = myBamilo.collectionView {
-            if scrollView.contentOffset.y <= 2 * navBarInitialHeight {
-                self.resetAllBarFrames()
-            }
-        }
+        self.resetAllBarFrames()
+//        if let homePage = controller as? HomePageViewController,let navBarInitialHeight = self.navBarInitialHeight, let tableView = homePage.tableView {
+//            if tableView.contentOffset.y <= 2 * navBarInitialHeight {
+//                self.resetAllBarFrames()
+//            }
+//        }
+//        if let myBamilo = controller as? MyBamiloViewController ,let navBarInitialHeight = self.navBarInitialHeight, let scrollView = myBamilo.collectionView {
+//            if scrollView.contentOffset.y <= 2 * navBarInitialHeight {
+//                self.resetAllBarFrames()
+//            }
+//        }
         
         //Stop all scrolling views
         self.homePage.tableView?.killScroll()

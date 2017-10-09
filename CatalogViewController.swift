@@ -279,7 +279,7 @@ import SwiftyJSON
     private(set) lazy var cardFlowLayout: CardCollectionViewFlowLayout = {
         return CardCollectionViewFlowLayout()
     }()
-    private func getProperCollectionViewFlowLayout () -> BaseCatalogCollectionFlowLayout {
+    private func getProperCollectionViewFlowLayout () -> BaseCollectionFlowLayout {
         if self.listViewType == .grid {
             return gridFlowLayout
         } else if self.listViewType == .list {
@@ -548,8 +548,7 @@ import SwiftyJSON
             self.setNavigationBarAlpha(alpha: 0, animated: false)
             self.productCountLabel.alpha = 1
             return
-        }
-        
+        } 
         self.productCountLabel.alpha = 0
     }
     

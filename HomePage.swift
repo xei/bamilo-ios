@@ -15,8 +15,9 @@ class HomePage: NSObject, Mappable {
     lazy var teasers = [HomePageTeaserBox]()
     
     let teaserBoxTypeMapper: [HomePageTeaserType: Any] = [
-        HomePageTeaserType.slider            : HomePageSlider.self,
-        HomePageTeaserType.featuredStores    : HomePageFeaturedStores.self
+        .slider            : HomePageSlider.self,
+        .featuredStores    : HomePageFeaturedStores.self,
+        .dailyDeals        : HomePageDailyDeals.self
     ]
     
     required init?(map: Map) {}
@@ -34,6 +35,31 @@ class HomePage: NSObject, Mappable {
                 }
             }
         })
+        
+        //mock for daily deals
+        let deals = HomePageDailyDeals()
+        deals.title = "پرفروش ها"
+        deals.type = .dailyDeals
+//        deals.countDown = 30
+        let sampleProduct = Product()
+        sampleProduct.name = "کفش مامان دوز"
+        sampleProduct.brand = "نام برند"
+        sampleProduct.imageUrl = URL(string: "http://zpvliimg.bamilo.com/p/goliran-9726-5009012-1-product.jpg")
+        sampleProduct.price = 300000
+        sampleProduct.maxSavingPrecentage = 30
+        sampleProduct.target = "product_detail::IK259HL0YW7P2NAFAMZ"
+        sampleProduct.specialPrice = 299999
+        let moreOption = MoreButtonObject()
+        moreOption.title = "بیشتر"
+        moreOption.color = UIColor.red
+        moreOption.target = "campaign::flash-sale2"
+        deals.moreOption = moreOption
+        
+        
+        deals.products = [sampleProduct, sampleProduct, sampleProduct, sampleProduct, sampleProduct, sampleProduct, sampleProduct, sampleProduct, sampleProduct, sampleProduct, sampleProduct, sampleProduct]
+        teasersToParse.append(deals)
+        //end of mock for daily deals
+        
         
         if let teasersToParse = teasersToParse as? [HomePageTeaserBox] {
             self.teasers = teasersToParse

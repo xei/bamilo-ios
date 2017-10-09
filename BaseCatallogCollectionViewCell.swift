@@ -13,7 +13,7 @@ import Kingfisher
     @objc optional func addOrRemoveFromWishList(product: Product, cell: BaseCatallogCollectionViewCell, add: Bool)
 }
  
-class BaseCatallogCollectionViewCell: UICollectionViewCell {
+class BaseCatallogCollectionViewCell: BaseCollectionViewCellSwift {
     
     @IBOutlet weak var productImage: UIImageView?
     @IBOutlet weak var titleLabel: UILabel?
@@ -44,12 +44,7 @@ class BaseCatallogCollectionViewCell: UICollectionViewCell {
         UIColor.init(red: 236/255, green: 235/255, blue: 222/255, alpha: 1)
     ]
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        self.setupView()
-    }
-    
-    func setupView() {
+    override func setupView() {
         self.rateView?.enableButtons(enable: false)
         self.newTagView?.backgroundColor = Theme.color(kColorOrange)
 
@@ -97,9 +92,5 @@ class BaseCatallogCollectionViewCell: UICollectionViewCell {
         }
         self.addToWishListButton?.isSelected = product.isInWishList
         self.product = product
-    }
-    
-    static var nibName: String {
-        return AppUtility.getStringFromClass(for: self)!
     }
 }

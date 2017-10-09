@@ -12,6 +12,7 @@ class HomePageFeaturedStoresTableViewCell: BaseHomePageTeaserBoxTableViewCell, U
     
     @IBOutlet weak var collectionView: UICollectionView!
     private var featuredStores: HomePageFeaturedStores?
+    private static var bottomPadding: CGFloat = 10
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -21,7 +22,7 @@ class HomePageFeaturedStoresTableViewCell: BaseHomePageTeaserBoxTableViewCell, U
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         
-        self.collectionView.register(UINib(nibName: FeaturedStoresCollectionViewCell.nibName(), bundle: nil), forCellWithReuseIdentifier: FeaturedStoresCollectionViewCell.nibName())
+        self.collectionView.register(UINib(nibName: FeaturedStoresCollectionViewCell.nibName, bundle: nil), forCellWithReuseIdentifier: FeaturedStoresCollectionViewCell.nibName)
         
         let collectionFlowLayout = UICollectionViewFlowLayout()
         collectionFlowLayout.itemSize = HomePageFeaturedStoresTableViewCell.cellSize()
@@ -32,10 +33,6 @@ class HomePageFeaturedStoresTableViewCell: BaseHomePageTeaserBoxTableViewCell, U
         self.collectionView.collectionViewLayout = collectionFlowLayout
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-    }
-    
     override func update(withModel model: Any!) {
         if let receivedFeaturedStore = model as? HomePageFeaturedStores {
             self.featuredStores = receivedFeaturedStore
@@ -44,7 +41,7 @@ class HomePageFeaturedStoresTableViewCell: BaseHomePageTeaserBoxTableViewCell, U
     }
     
     override static func cellHeight() -> CGFloat {
-        return HomePageFeaturedStoresTableViewCell.cellSize().height + 4 //4 point for shadow
+        return HomePageFeaturedStoresTableViewCell.cellSize().height + 4 + self.bottomPadding //4 point for shadow
     }
     
     //MARK: - UICollectionViewDelegate
@@ -57,7 +54,7 @@ class HomePageFeaturedStoresTableViewCell: BaseHomePageTeaserBoxTableViewCell, U
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: FeaturedStoresCollectionViewCell.nibName(), for: indexPath) as? FeaturedStoresCollectionViewCell {
+        if let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: FeaturedStoresCollectionViewCell.nibName, for: indexPath) as? FeaturedStoresCollectionViewCell {
             if indexPath.row == 0 {
                 cell.title = STRING_ALL
                 cell.image = UIImage(named: "all_cats")

@@ -23,10 +23,15 @@ class HomePageViewController:   BaseViewController,
     @IBOutlet weak private var loadingIndicator: UIActivityIndicatorView!
     
     weak var delegate: HomePageViewControllerDelegate?
+    
+    private var timer: Timer?
     private var homePage: HomePage?
+    private var dailyDealsIndex: Int?
+    
     private let cellTypeMapper: [HomePageTeaserType: String] = [
         .slider: HomePageSliderTableViewCell.nibName(),
-        .featuredStores: HomePageFeaturedStoresTableViewCell.nibName()
+        .featuredStores: HomePageFeaturedStoresTableViewCell.nibName(),
+        .dailyDeals: DailyDealsTableViewCell.nibName()
     ]
     
     override func viewDidLoad() {
@@ -38,6 +43,7 @@ class HomePageViewController:   BaseViewController,
         self.tableView.delegate = self
         self.tableView.register(UINib(nibName: HomePageSliderTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: HomePageTeaserType.slider.rawValue)
         self.tableView.register(UINib(nibName: HomePageFeaturedStoresTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: HomePageTeaserType.featuredStores.rawValue)
+        self.tableView.register(UINib(nibName: DailyDealsTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: HomePageTeaserType.dailyDeals.rawValue)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -92,6 +98,15 @@ class HomePageViewController:   BaseViewController,
         MainTabBarViewController.topNavigationController()?.openTargetString(target)
     }
     
+    func teaserMustBeRemoved(at indexPath: IndexPath) {
+        self.homePage?.teasers.remove(at: indexPath.row)
+        UIView.animate(withDuration: 0.25, animations: {
+            self.tableView.beginUpdates()
+            self.tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.top)
+            self.tableView.endUpdates()
+        })
+    }
+    
     //MARK: - DataServiceProtocol
     func bind(_ data: Any!, forRequestId rid: Int32) {
         if let homePage = data as? HomePage {
@@ -99,11 +114,43 @@ class HomePageViewController:   BaseViewController,
             ThreadManager.execute(onMainThread: { 
                 self.tableView.reloadData()
             })
+            
+            if let index = self.homePage?.teasers.index(where: { $0.type == .dailyDeals }) {
+                self.dailyDealsIndex = index
+                if let countDown = (self.homePage?.teasers[index] as? HomePageDailyDeals)?.countDown, countDown > 0 {
+                    self.runTimer(seconds: countDown)
+                }
+            }
         }
     }
     
     //MARK: - NavigationBarProtocol
     override func navBarTitleString() -> String! {
         return STRING_HOME
+    }
+    
+    
+    //MARK: - helper functions for timer
+    private func runTimer(seconds: Int) {
+        self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(updateTimer)), userInfo: nil, repeats: true)
+    }
+    
+    func updateTimer() {
+        if let index = self.dailyDealsIndex, let interval = (self.homePage?.teasers[index] as? HomePageDailyDeals)?.countDown {
+            (self.homePage?.teasers[index] as? HomePageDailyDeals)?.countDown = interval - 1
+            self.updateCellTimer(with: interval)
+            if interval - 1 < 1 {
+                self.timer?.invalidate()
+                self.teaserMustBeRemoved(at: IndexPath(row: index, section: 0))
+            }
+        } else {
+            self.timer?.invalidate()
+        }
+    }
+    
+    private func updateCellTimer(with seconds: Int) {
+        if let index = self.dailyDealsIndex, let cell = self.tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? DailyDealsTableViewCell {
+            cell.updateTimer(seconds: seconds)
+        }
     }
 }
