@@ -31,6 +31,9 @@ class HomePageFeaturedStoresTableViewCell: BaseHomePageTeaserBoxTableViewCell, U
         collectionFlowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         collectionFlowLayout.scrollDirection = .horizontal
         self.collectionView.collectionViewLayout = collectionFlowLayout
+        
+        self.collectionView.layer.cornerRadius = 5
+        self.collectionView.clipsToBounds = true
     }
     
     override func update(withModel model: Any!) {

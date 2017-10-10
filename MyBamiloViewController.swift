@@ -48,6 +48,11 @@ class MyBamiloViewController:   BaseViewController,
         self.collectionView.collectionViewLayout = GridCollectionViewFlowLayout()
         EmarsysPredictManager.sendTransactions(of: self)
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.collectionView.killScroll()
+    }
+    
     //MARK: - EmarsysPredictProtocolBase
     func getRecommendations() -> [EMRecommendationRequest]! {
         var recommendsRequest = [EMRecommendationRequest]()

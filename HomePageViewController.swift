@@ -133,6 +133,7 @@ class HomePageViewController:   BaseViewController,
     //MARK: - helper functions for timer
     private func runTimer(seconds: Int) {
         self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(updateTimer)), userInfo: nil, repeats: true)
+        RunLoop.main.add(self.timer!, forMode: .commonModes)
     }
     
     func updateTimer() {

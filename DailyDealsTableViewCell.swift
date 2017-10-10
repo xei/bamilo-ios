@@ -39,7 +39,7 @@ class DailyDealsTableViewCell: BaseHomePageTeaserBoxTableViewCell, UICollectionV
         self.teaserTitle.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: UIColor.black)
         self.teaserTitleHeightConstraint.constant = DailyDealsTableViewCell.titleLabelHeight
         self.collectionViewBottomConstraint.constant = DailyDealsTableViewCell.collectionPadding
-        self.countDownLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorRed))
+        self.countDownLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 17), color: Theme.color(kColorRed))
         self.moreButton.titleLabel?.font = Theme.font(kFontVariationRegular, size: 12)
     }
     

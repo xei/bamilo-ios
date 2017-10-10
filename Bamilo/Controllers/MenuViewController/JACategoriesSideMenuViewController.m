@@ -240,7 +240,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self.tableView setFrame:self.viewBounds];
+//    [self.tableView setFrame:self.viewBounds];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

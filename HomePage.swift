@@ -40,7 +40,7 @@ class HomePage: NSObject, Mappable {
         let deals = HomePageDailyDeals()
         deals.title = "پرفروش ها"
         deals.type = .dailyDeals
-//        deals.countDown = 30
+        deals.countDown = 45
         let sampleProduct = Product()
         sampleProduct.name = "کفش مامان دوز"
         sampleProduct.brand = "نام برند"
