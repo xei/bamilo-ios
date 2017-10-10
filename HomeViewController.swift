@@ -70,7 +70,8 @@ class HomeViewController:   BaseViewController,
                                                     CAPSPageMenuOptionAddBottomMenuHairline: (false),
                                                     CAPSPageMenuOptionUnselectedMenuItemLabelColor: Theme.color(kColorExtraLightGray),
                                                     CAPSPageMenuOptionSelectedMenuItemLabelColor: UIColor.white,
-                                                    CAPSPageMenuOptionScrollAnimationDurationOnMenuItemTap: (150)
+                                                    CAPSPageMenuOptionScrollAnimationDurationOnMenuItemTap: (150),
+                                                    CAPSPageMenuOptionEnableHorizontalBounce: (false)
             ]
             self.pagemenu = CAPSPageMenu(viewControllers: [self.myBamiloPage, self.homePage], frame: self.contentContainer.bounds, options: parameters)
             self.pagemenu?.delegate = self
@@ -116,6 +117,9 @@ class HomeViewController:   BaseViewController,
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        self.homePage.tableView.killScroll()
+        self.myBamiloPage.collectionView.killScroll()
+        
         NavBarUtility.changeStatusBarColor(color: UIColor.clear)
         self.resetAllBarFrames()
     }

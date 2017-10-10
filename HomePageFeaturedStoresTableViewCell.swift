@@ -31,9 +31,6 @@ class HomePageFeaturedStoresTableViewCell: BaseHomePageTeaserBoxTableViewCell, U
         collectionFlowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         collectionFlowLayout.scrollDirection = .horizontal
         self.collectionView.collectionViewLayout = collectionFlowLayout
-        
-        self.collectionView.layer.cornerRadius = 5
-        self.collectionView.clipsToBounds = true
     }
     
     override func update(withModel model: Any!) {
@@ -58,13 +55,19 @@ class HomePageFeaturedStoresTableViewCell: BaseHomePageTeaserBoxTableViewCell, U
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: FeaturedStoresCollectionViewCell.nibName, for: indexPath) as? FeaturedStoresCollectionViewCell {
+            cell.indexPath = indexPath
             if indexPath.row == 0 {
-                cell.title = STRING_ALL
+                cell.title = STRING_ALL_CATEGORIES
                 cell.image = UIImage(named: "all_cats")
                 return cell
             } else if let featuredStore = self.featuredStores?.items?[indexPath.row - 1] {
-                cell.indexPath = indexPath
                 cell.update(withModel: featuredStore)
+                
+                if indexPath.row == (self.featuredStores?.items?.count ?? 1) {
+                    //last one
+                    cell.roundCorners([.topLeft, .bottomLeft], radius: 5)
+                }
+                
                 return cell
             }
         }

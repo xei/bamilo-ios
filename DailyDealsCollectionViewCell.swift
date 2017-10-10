@@ -40,11 +40,10 @@ class DailyDealsCollectionViewCell: BaseCollectionViewCellSwift {
     override func setupView() {
         self.layer.cornerRadius = 1
         self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowOpacity = 0.1
-        self.layer.shadowRadius = 0
-        self.layer.shadowOffset = CGSize(width:1 , height: 1)
-        self.layer.borderColor = Theme.color(kColorGray10).cgColor
-        self.layer.borderWidth = 1
+        self.layer.shadowOpacity = 0.2
+        self.layer.shadowRadius = 1
+        self.layer.shadowOffset = CGSize(width:0 , height: 1)
+        self.layer.borderWidth = 0
         self.clipsToBounds = false
         
         self.titleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))

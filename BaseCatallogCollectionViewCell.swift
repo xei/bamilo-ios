@@ -71,7 +71,7 @@ class BaseCatallogCollectionViewCell: BaseCollectionViewCellSwift {
         brandLabel?.text = product.brand
         productImage?.kf.indicatorType = .activity
         productImage?.kf.setImage(with: product.imageUrl, options: [.transition(.fade(0.20))])
-        if let specialPrice = product.specialPrice, let price = product.price {
+        if let specialPrice = product.specialPrice, let price = product.price, product.price != product.specialPrice {
             discountedPriceLabel?.text = "\(specialPrice)".formatPriceWithCurrency()
             priceLabel?.attributedText = "\(price)".formatPriceWithCurrency().strucThroughPriceFormat()
             if let precentage = product.maxSavingPrecentage {

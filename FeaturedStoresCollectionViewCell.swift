@@ -24,6 +24,8 @@ class FeaturedStoresCollectionViewCell: BaseCollectionViewCellSwift {
                 self.layer.shadowOffset = CGSize(width:0 , height: 1)
             } else {
                 self.layer.shadowOffset = CGSize(width:1 , height: 1)
+                self.roundCorners([.topRight, .bottomRight], radius: 5)
+                self.layoutSubviews()
             }
         }
     }
@@ -59,6 +61,7 @@ class FeaturedStoresCollectionViewCell: BaseCollectionViewCellSwift {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        self.roundCorners([.allCorners], radius: 0)
         self.layer.shadowOffset = .zero
         self.titleLabel.text = nil
         self.titleLabel.attributedText = nil

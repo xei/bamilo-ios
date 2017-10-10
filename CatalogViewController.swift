@@ -101,6 +101,9 @@ import SwiftyJSON
         
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateListWithUserLoginNotification(notification:)), name: NSNotification.Name(NotificationKeys.UserLogin), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(resetBarFollowers), name: NSNotification.Name(NotificationKeys.EnterForground), object: nil)
+        
         if let navBar = self.navigationController?.navigationBar {
             self.initialNavBarAndStatusBarHeight = navBar.frame.height + UIApplication.shared.statusBarFrame.height
         }
@@ -153,9 +156,7 @@ import SwiftyJSON
         super.viewWillDisappear(animated)
 
         //reset all states of tabbar and navBar, status bar
-        self.navBarScrollFollower?.resetBarFrame(animated: true)
-        self.tabBarScrollFollower?.resetBarFrame(animated: true)
-        self.searchBarScrollFollower?.resetBarFrame(animated: true)
+        self.resetBarFollowers()
         
         self.setNavigationBarAlpha(alpha: 0, animated: true)
         NavBarUtility.changeStatusBarColor(color: .clear)
@@ -163,6 +164,12 @@ import SwiftyJSON
         self.navBarBlurView?.removeFromSuperview()
         
         self.collectionView.killScroll()
+    }
+    
+    func resetBarFollowers() {
+        self.navBarScrollFollower?.resetBarFrame(animated: true)
+        self.tabBarScrollFollower?.resetBarFrame(animated: true)
+        self.searchBarScrollFollower?.resetBarFrame(animated: true)
     }
     
     func updateNavBar() {
