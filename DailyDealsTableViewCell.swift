@@ -22,7 +22,7 @@ class DailyDealsTableViewCell: BaseHomePageTeaserBoxTableViewCell, UICollectionV
     @IBOutlet weak private var collectionViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak private var teaserTitleHeightConstraint: NSLayoutConstraint!
     
-    private var teaserModelObject: HomePageDailyDeals!
+    private var teaserModelObject: HomePageDailyDeals?
     
     private static let titleLabelHeight: CGFloat = 45
     private static let collectionPadding: CGFloat = 8
@@ -59,14 +59,14 @@ class DailyDealsTableViewCell: BaseHomePageTeaserBoxTableViewCell, UICollectionV
     //MARK: - UICollectionViewDataSource & UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: DailyDealsCollectionViewCell.nibName, for: indexPath) as! DailyDealsCollectionViewCell
-        if let product = teaserModelObject.products?[indexPath.row] {
+        if let product = teaserModelObject?.products?[indexPath.row] {
             cell.updateWithModel(product: product)
         }
         return cell
     }
     
     @IBAction func moreButtonTapped(_ sender: Any) {
-        if let target = self.teaserModelObject.moreOption?.target {
+        if let target = self.teaserModelObject?.moreOption?.target {
             self.delegate?.teaserItemTappedWithTargetString(target: target)
         }
     }
@@ -77,13 +77,13 @@ class DailyDealsTableViewCell: BaseHomePageTeaserBoxTableViewCell, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let product = teaserModelObject.products?[indexPath.row], let target = product.target {
+        if let product = teaserModelObject?.products?[indexPath.row], let target = product.target {
             self.delegate?.teaserItemTappedWithTargetString(target: target)
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.teaserModelObject.products?.count ?? 0
+        return self.teaserModelObject?.products?.count ?? 0
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {

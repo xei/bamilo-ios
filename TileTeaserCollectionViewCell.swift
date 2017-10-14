@@ -22,12 +22,14 @@ class TileTeaserCollectionViewCell: BaseCollectionViewCellSwift {
         super.awakeFromNib()
         self.backgroundColor = .clear
         
-        self.layer.cornerRadius = 1
+        self.contentView.layer.cornerRadius = 3
+        self.contentView.clipsToBounds = true
+        
+        self.clipsToBounds = false
         self.layer.shadowColor = UIColor.black.cgColor
         self.layer.shadowOpacity = 0.2
         self.layer.shadowRadius = 1
-        self.layer.shadowOffset = CGSize(width:0 , height: 1)
-        self.layer.borderWidth = 0
-        self.clipsToBounds = false
+        self.layer.shadowOffset = CGSize(width:1 , height: 1)
+
     }
 }

@@ -18,18 +18,6 @@ class FeaturedStoresCollectionViewCell: BaseCollectionViewCellSwift {
     private let imageWithSmallSize: CGFloat = 54
     private let imageWithBigSize: CGFloat = 54 * 1.15
     
-    var indexPath: IndexPath? {
-        didSet {
-            if indexPath?.row != 0 {
-                self.layer.shadowOffset = CGSize(width:0 , height: 1)
-            } else {
-                self.layer.shadowOffset = CGSize(width:1 , height: 1)
-                self.roundCorners([.topRight, .bottomRight], radius: 5)
-                self.layoutSubviews()
-            }
-        }
-    }
-    
     var title: String? {
         didSet {
             self.titleLabel.setTitle(title: title ?? "", lineHeight: 16 ,lineSpaceing: 0, alignment: .center)
@@ -45,10 +33,6 @@ class FeaturedStoresCollectionViewCell: BaseCollectionViewCellSwift {
     override func setupView() {
         self.titleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 10), color: UIColor.black)
         self.backgroundColor = .white
-        
-        self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowOpacity = 0.1
-        self.layer.shadowRadius = 0
         
         self.imageWidthConstraint.constant = UIDevice.current.userInterfaceIdiom == .pad ? imageWithBigSize : imageWithSmallSize
         self.imageIcon.layer.cornerRadius = self.imageWidthConstraint.constant / 2

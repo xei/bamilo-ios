@@ -124,6 +124,22 @@ class HomeViewController:   BaseViewController,
     //MARK:- CAPSPageMenuDelegate
     func willMove(toPage controller: UIViewController!, index: Int) {
         self.setProperTopTabbarAndNavbarStateInTransitions(to: controller)
+        
+        self.navBarFollower?.stopFollowing()
+        self.searchBarFollower?.stopFollowing()
+        self.topTabBarFollower?.stopFollowing()
+        
+        if let homePage = controller as? HomePageViewController, let navBarHeight = navBarInitialHeight, let scrollView = homePage.tableView {
+            self.followersFollow(scrollView: scrollView, permittedMove: navBarHeight)
+        } else if let myBamilo = controller as? MyBamiloViewController, let navBarHeight = navBarInitialHeight, let scrollView = myBamilo.collectionView {
+            self.followersFollow(scrollView: scrollView, permittedMove: navBarHeight)
+        }
+    }
+    
+    private func followersFollow(scrollView: UIScrollView, permittedMove: CGFloat) {
+        self.navBarFollower?.followScrollView(scrollView: scrollView, delay: -permittedMove, permittedMoveDistance: permittedMove)
+        self.searchBarFollower?.followScrollView(scrollView: scrollView, delay: -permittedMove, permittedMoveDistance: permittedMove)
+        self.topTabBarFollower?.followScrollView(scrollView: scrollView, delay: -permittedMove, permittedMoveDistance: permittedMove)
     }
     
     func didMove(toPage controller: UIViewController!, index: Int) {
@@ -175,10 +191,7 @@ class HomeViewController:   BaseViewController,
         if let navBarHeight = self.navBarInitialHeight {
             scrollView.contentInset = UIEdgeInsetsMake(navBarHeight, 0.0, 0.0, 0.0)
             scrollView.setContentOffset(CGPoint(x: 0, y: -navBarHeight), animated: false)
-            
-            self.navBarFollower?.followScrollView(scrollView: scrollView, delay: -navBarHeight, permittedMoveDistance: navBarHeight)
-            self.searchBarFollower?.followScrollView(scrollView: scrollView, delay: -navBarHeight, permittedMoveDistance: navBarHeight)
-            self.topTabBarFollower?.followScrollView(scrollView: scrollView, delay: -navBarHeight, permittedMoveDistance: navBarHeight)
+            self.followersFollow(scrollView: scrollView, permittedMove: navBarHeight)
         }
     }
     

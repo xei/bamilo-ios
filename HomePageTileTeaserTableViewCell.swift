@@ -44,6 +44,7 @@ class HomePageTileTeaserTableViewCell: BaseHomePageTeaserBoxTableViewCell, UICol
         self.collectionViewRightConstraint.constant = HomePageTileTeaserTableViewCell.collectionPadding
         self.collectionView.isScrollEnabled = false
         self.collectionView.backgroundColor = .clear
+        self.collectionView.clipsToBounds = false
         
         self.collectionView.register(UINib(nibName: TileTeaserCollectionViewCell.nibName, bundle: nil), forCellWithReuseIdentifier: TileTeaserCollectionViewCell.nibName)
     }
