@@ -237,16 +237,14 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [NavBarUtility changeStatusBarColorWithColor:[Theme color:kColorExtraDarkBlue]];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [self resetNavbarStatusBar];
 }
 
 - (void)resetNavbarStatusBar {
-    [NavBarUtility changeStatusBarColorWithColor:[UIColor clearColor]];
-    
     [self.navbarFollower resetBarFrameWithAnimated:NO];
     [self.searchBarFollower resetBarFrameWithAnimated:NO];
 }

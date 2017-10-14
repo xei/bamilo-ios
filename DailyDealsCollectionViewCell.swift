@@ -46,6 +46,7 @@ class DailyDealsCollectionViewCell: BaseCollectionViewCellSwift {
         self.layer.borderWidth = 0
         self.clipsToBounds = false
         
+        
         self.titleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
         self.brandLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorSecondaryGray1))
         self.discountedPriceLabel.applyStype(font: Theme.font(kFontVariationBold, size: 13), color: Theme.color(kColorGray1))

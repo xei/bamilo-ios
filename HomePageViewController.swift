@@ -31,7 +31,8 @@ class HomePageViewController:   BaseViewController,
     private let cellTypeMapper: [HomePageTeaserType: String] = [
         .slider: HomePageSliderTableViewCell.nibName(),
         .featuredStores: HomePageFeaturedStoresTableViewCell.nibName(),
-        .dailyDeals: DailyDealsTableViewCell.nibName()
+        .dailyDeals: DailyDealsTableViewCell.nibName(),
+        .tiles:HomePageTileTeaserTableViewCell.nibName()
     ]
     
     override func viewDidLoad() {
@@ -44,6 +45,7 @@ class HomePageViewController:   BaseViewController,
         self.tableView.register(UINib(nibName: HomePageSliderTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: HomePageTeaserType.slider.rawValue)
         self.tableView.register(UINib(nibName: HomePageFeaturedStoresTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: HomePageTeaserType.featuredStores.rawValue)
         self.tableView.register(UINib(nibName: DailyDealsTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: HomePageTeaserType.dailyDeals.rawValue)
+        self.tableView.register(UINib(nibName: HomePageTileTeaserTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: HomePageTeaserType.tiles.rawValue)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -73,15 +75,20 @@ class HomePageViewController:   BaseViewController,
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if let cellType = self.homePage?.teasers[indexPath.row].type, let cellCalssName = self.cellTypeMapper[cellType] {
-            if let cell = AppUtility.getClassFromName(name: cellCalssName) as? BaseTableViewCell.Type {
-                return cell.cellHeight()
+            if let cell = AppUtility.getClassFromName(name: cellCalssName) as? HomePageTeaserHeightCalculator.Type {
+//                return cell.teaserHeight(withModel model: self.homePage?.teasers[indexPath.row])   //cellHeight(model: self.homePage?.teasers[indexPath.row])
+                return cell.teaserHeight(model: self.homePage?.teasers[indexPath.row])
             }
         }
-        return 0
+        return UITableViewAutomaticDimension
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.homePage?.teasers.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
     }
     
     //MARK: - UIScrollViewDelegate
@@ -117,7 +124,7 @@ class HomePageViewController:   BaseViewController,
             
             if let index = self.homePage?.teasers.index(where: { $0.type == .dailyDeals }) {
                 self.dailyDealsIndex = index
-                if let countDown = (self.homePage?.teasers[index] as? HomePageDailyDeals)?.countDown, countDown > 0 {
+                if let countDown = (self.homePage?.teasers[index] as? HomePageDailyDeals)?.ramainingSeconds, countDown > 0 {
                     self.runTimer(seconds: countDown)
                 }
             }
@@ -137,8 +144,8 @@ class HomePageViewController:   BaseViewController,
     }
     
     func updateTimer() {
-        if let index = self.dailyDealsIndex, let interval = (self.homePage?.teasers[index] as? HomePageDailyDeals)?.countDown {
-            (self.homePage?.teasers[index] as? HomePageDailyDeals)?.countDown = interval - 1
+        if let index = self.dailyDealsIndex, let interval = (self.homePage?.teasers[index] as? HomePageDailyDeals)?.ramainingSeconds {
+            (self.homePage?.teasers[index] as? HomePageDailyDeals)?.ramainingSeconds = interval - 1
             self.updateCellTimer(with: interval)
             if interval - 1 < 1 {
                 self.timer?.invalidate()

@@ -8,14 +8,16 @@
 
 import UIKit
 
-class DailyDealsTableViewCell: BaseHomePageTeaserBoxTableViewCell, UICollectionViewDelegate, UICollectionViewDataSource {
+class DailyDealsTableViewCell: BaseHomePageTeaserBoxTableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, HomePageTeaserHeightCalculator {
 
+    @IBOutlet weak private var contentContainer: UIView!
     @IBOutlet weak private var collectionView: UICollectionView!
     @IBOutlet weak private var teaserTitle: UILabel!
     @IBOutlet weak private var countDownLabel: UILabel!
     @IBOutlet weak private var moreButton: UIButton!
     @IBOutlet weak private var countDownCenterdConstraint: NSLayoutConstraint!
     @IBOutlet weak private var countDownAlignLeftConstraint: NSLayoutConstraint!
+    @IBOutlet weak private var teaserBottomPaddingConstraint: NSLayoutConstraint!
     
     @IBOutlet weak private var collectionViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak private var teaserTitleHeightConstraint: NSLayoutConstraint!
@@ -24,23 +26,34 @@ class DailyDealsTableViewCell: BaseHomePageTeaserBoxTableViewCell, UICollectionV
     
     private static let titleLabelHeight: CGFloat = 45
     private static let collectionPadding: CGFloat = 8
+    private static let teaserBottomPadding: CGFloat = 8
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         self.setupView()
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         self.collectionView.collectionViewLayout = HomePageDailyDealsCollectionFlowLayout()
         self.collectionView.register(UINib(nibName: DailyDealsCollectionViewCell.nibName, bundle: nil), forCellWithReuseIdentifier: DailyDealsCollectionViewCell.nibName)
+        self.teaserBottomPaddingConstraint.constant = DailyDealsTableViewCell.teaserBottomPadding
     }
     
     func setupView() {
+        self.contentContainer.layer.borderColor = Theme.color(kColorExtraExtraLightGray).cgColor
+        self.contentContainer.layer.borderWidth = 1
+        self.contentContainer.layer.cornerRadius = 3
+        self.contentContainer.clipsToBounds = true
+        self.contentContainer.backgroundColor = .white
+        
         self.teaserTitle.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: UIColor.black)
         self.teaserTitleHeightConstraint.constant = DailyDealsTableViewCell.titleLabelHeight
         self.collectionViewBottomConstraint.constant = DailyDealsTableViewCell.collectionPadding
         self.countDownLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 17), color: Theme.color(kColorRed))
         self.moreButton.titleLabel?.font = Theme.font(kFontVariationRegular, size: 12)
+        
+        self.collectionView.backgroundColor = .clear
+        self.backgroundColor = .clear
+        self.contentView.backgroundColor = .clear
     }
     
     //MARK: - UICollectionViewDataSource & UICollectionViewDelegate
@@ -58,8 +71,9 @@ class DailyDealsTableViewCell: BaseHomePageTeaserBoxTableViewCell, UICollectionV
         }
     }
     
-    override static func cellHeight() -> CGFloat {
-        return self.cellSize().height
+    //MARK: - HomePageTeaserHeightCalculator
+    static func teaserHeight(model: Any?) -> CGFloat {
+         return self.cellSize().height + teaserBottomPadding
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -80,7 +94,9 @@ class DailyDealsTableViewCell: BaseHomePageTeaserBoxTableViewCell, UICollectionV
         if let dailyDeals = model as? HomePageDailyDeals {
             self.teaserModelObject = dailyDeals
             ThreadManager.execute(onMainThread: {
+                self.contentContainer.backgroundColor = dailyDeals.backgroundColor ?? .white
                 self.teaserTitle.text = dailyDeals.title
+                self.teaserTitle.textColor = dailyDeals.titleColor ?? .black
                 if let moreOption = dailyDeals.moreOption {
                     self.moreButton.setTitle(moreOption.title, for: .normal)
                     self.moreButton.setTitleColor(moreOption.color, for: .normal)
@@ -91,7 +107,8 @@ class DailyDealsTableViewCell: BaseHomePageTeaserBoxTableViewCell, UICollectionV
                     self.countDownCenterdConstraint.priority = UILayoutPriorityDefaultLow
                 }
                 
-                if let countDown = dailyDeals.countDown {
+                if let countDown = dailyDeals.ramainingSeconds {
+                    self.countDownLabel.textColor = dailyDeals.counterColor ?? .red
                     self.updateTimer(seconds: countDown)
                 } else {
                     self.countDownLabel.isHidden = true

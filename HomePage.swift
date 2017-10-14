@@ -17,7 +17,8 @@ class HomePage: NSObject, Mappable {
     let teaserBoxTypeMapper: [HomePageTeaserType: Any] = [
         .slider            : HomePageSlider.self,
         .featuredStores    : HomePageFeaturedStores.self,
-        .dailyDeals        : HomePageDailyDeals.self
+        .dailyDeals        : HomePageDailyDeals.self,
+        .tiles             : HomePageTileTeaser.self
     ]
     
     required init?(map: Map) {}
@@ -40,7 +41,9 @@ class HomePage: NSObject, Mappable {
         let deals = HomePageDailyDeals()
         deals.title = "پرفروش ها"
         deals.type = .dailyDeals
-        deals.countDown = 45
+        deals.ramainingSeconds = 45
+        deals.counterColor = .red
+        deals.titleColor = .black
         let sampleProduct = Product()
         sampleProduct.name = "کفش مامان دوز"
         sampleProduct.brand = "نام برند"
@@ -51,7 +54,7 @@ class HomePage: NSObject, Mappable {
         sampleProduct.specialPrice = 299999
         let moreOption = MoreButtonObject()
         moreOption.title = "بیشتر"
-        moreOption.color = UIColor.red
+        moreOption.color = .red
         moreOption.target = "campaign::flash-sale2"
         deals.moreOption = moreOption
         
@@ -60,6 +63,16 @@ class HomePage: NSObject, Mappable {
         teasersToParse.append(deals)
         //end of mock for daily deals
         
+        
+        //start of mock of tile teasers
+        let tiles = HomePageTileTeaser()
+        tiles.type = .tiles
+        let tileItem = HomePageTileTeaserItem()
+        tileItem.imageUrl = URL(string: "http://zpvliimg.bamilo.com/p/goliran-9726-5009012-1-product.jpg")
+        tileItem.target = "product_detail::IK259HL0YW7P2NAFAMZ"
+        tiles.items = [tileItem, tileItem, tileItem, tileItem, tileItem]
+        teasersToParse.append(tiles)
+        //end of mock of tile teasers
         
         if let teasersToParse = teasersToParse as? [HomePageTeaserBox] {
             self.teasers = teasersToParse

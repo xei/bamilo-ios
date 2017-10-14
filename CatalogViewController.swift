@@ -128,7 +128,6 @@ import SwiftyJSON
         if let navTitle = self.navBarTitle {
             self.title = navTitle
         }
-        NavBarUtility.changeStatusBarColor(color: Theme.color(kColorExtraDarkBlue))
         self.navBarBlurView = self.navigationController?.navigationBar.addBlurView()
         self.navBarBlurView?.alpha = 0
     }
@@ -159,10 +158,7 @@ import SwiftyJSON
         self.resetBarFollowers()
         
         self.setNavigationBarAlpha(alpha: 0, animated: true)
-        NavBarUtility.changeStatusBarColor(color: .clear)
-
         self.navBarBlurView?.removeFromSuperview()
-        
         self.collectionView.killScroll()
     }
     

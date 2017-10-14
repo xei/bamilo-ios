@@ -112,15 +112,12 @@ class HomeViewController:   BaseViewController,
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        NavBarUtility.changeStatusBarColor(color: Theme.color(kColorExtraDarkBlue))
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.homePage.tableView.killScroll()
         self.myBamiloPage.collectionView.killScroll()
-        
-        NavBarUtility.changeStatusBarColor(color: UIColor.clear)
         self.resetAllBarFrames()
     }
     
@@ -207,5 +204,10 @@ class HomeViewController:   BaseViewController,
             let destinationViewCtrl = segue.destination as? JAPDVViewController
             destinationViewCtrl?.productSku = sender as! String
         }
+    }
+    
+    //MARK: - status bar style
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 }

@@ -12,6 +12,10 @@ protocol BaseHomePageTeaserBoxTableViewCellDelegate: class {
     func teaserItemTappedWithTargetString(target: String)
 }
 
+protocol HomePageTeaserHeightCalculator {
+    static func teaserHeight(model: Any?) -> CGFloat
+}
+
 class BaseHomePageTeaserBoxTableViewCell: BaseTableViewCell {
 
     weak var delegate: BaseHomePageTeaserBoxTableViewCellDelegate?

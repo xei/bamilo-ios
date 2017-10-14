@@ -8,11 +8,11 @@
 
 import UIKit
 
-class HomePageFeaturedStoresTableViewCell: BaseHomePageTeaserBoxTableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class HomePageFeaturedStoresTableViewCell: BaseHomePageTeaserBoxTableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, HomePageTeaserHeightCalculator {
     
     @IBOutlet weak var collectionView: UICollectionView!
     private var featuredStores: HomePageFeaturedStores?
-    private static var bottomPadding: CGFloat = 10
+    private static var bottomPadding: CGFloat = 8
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -39,8 +39,9 @@ class HomePageFeaturedStoresTableViewCell: BaseHomePageTeaserBoxTableViewCell, U
             self.collectionView.reloadData()
         }
     }
-    
-    override static func cellHeight() -> CGFloat {
+ 
+    //MARK: - HomePageTeaserHeightCalculator
+    static func teaserHeight(model: Any?) -> CGFloat {
         return HomePageFeaturedStoresTableViewCell.cellSize().height + 4 + self.bottomPadding //4 point for shadow
     }
     

@@ -32,17 +32,9 @@ class BaseCatallogCollectionViewCell: BaseCollectionViewCellSwift {
     
     var cellIndex: Int = 0 {
         didSet {
-            productImage?.backgroundColor = self.placeholderColors[cellIndex % 6]
+            productImage?.backgroundColor = UIColor.placeholderColors[cellIndex % 6]
         }
     }
-    private let placeholderColors:[UIColor] = [ //Sequence of these colors are important
-        UIColor.init(red: 249/255, green: 239/255, blue: 234/255, alpha: 1),
-        UIColor.init(red: 236/255, green: 236/255, blue: 236/255, alpha: 1),
-        UIColor.init(red: 226/255, green: 232/255, blue: 239/255, alpha: 1),
-        UIColor.init(red: 233/255, green: 247/255, blue: 247/255, alpha: 1),
-        UIColor.init(red: 245/255, green: 241/255, blue: 247/255, alpha: 1),
-        UIColor.init(red: 236/255, green: 235/255, blue: 222/255, alpha: 1)
-    ]
     
     override func setupView() {
         self.rateView?.enableButtons(enable: false)

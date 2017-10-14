@@ -20,72 +20,88 @@
             <rect key="frame" x="0.0" y="0.0" width="468" height="238"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="468" height="237.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="468" height="238"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="پرفروشهای بامیلو" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mwo-x4-6eQ">
-                        <rect key="frame" x="378" y="0.0" width="82" height="45"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="45" id="evN-gO-Rht"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="AEa-H7-8vc">
-                        <rect key="frame" x="8" y="45" width="452" height="184.5"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lhy-Ee-IpY" userLabel="container">
+                        <rect key="frame" x="0.0" y="0.0" width="468" height="229.5"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="پرفروشهای بامیلو" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mwo-x4-6eQ">
+                                <rect key="frame" x="378" y="0.0" width="82" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="evN-gO-Rht"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="AEa-H7-8vc">
+                                <rect key="frame" x="8" y="45" width="452" height="176.5"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Ax3-bh-mSc">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                            </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8or-wd-Gt5" customClass="IconButton">
+                                <rect key="frame" x="8" y="5" width="30" height="34"/>
+                                <state key="normal">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isLTR" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="moreButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="hG7-qg-7fs"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7cQ-g9-6AG">
+                                <rect key="frame" x="213" y="12" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Ax3-bh-mSc">
-                            <size key="itemSize" width="50" height="50"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        </collectionViewFlowLayout>
-                    </collectionView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7cQ-g9-6AG">
-                        <rect key="frame" x="213" y="12" width="42" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8or-wd-Gt5" customClass="IconButton">
-                        <rect key="frame" x="8" y="6" width="30" height="34"/>
-                        <state key="normal">
-                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="boolean" keyPath="isLTR" value="YES"/>
-                        </userDefinedRuntimeAttributes>
-                        <connections>
-                            <action selector="moreButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="hG7-qg-7fs"/>
-                        </connections>
-                    </button>
+                        <constraints>
+                            <constraint firstItem="7cQ-g9-6AG" firstAttribute="left" secondItem="AEa-H7-8vc" secondAttribute="left" priority="250" id="INR-B0-6uU"/>
+                            <constraint firstItem="AEa-H7-8vc" firstAttribute="right" secondItem="mwo-x4-6eQ" secondAttribute="right" id="T7O-b5-4RL"/>
+                            <constraint firstItem="AEa-H7-8vc" firstAttribute="top" secondItem="mwo-x4-6eQ" secondAttribute="bottom" id="Wft-Dx-VNY"/>
+                            <constraint firstItem="8or-wd-Gt5" firstAttribute="centerY" secondItem="mwo-x4-6eQ" secondAttribute="centerY" id="aQH-5W-nOI"/>
+                            <constraint firstItem="7cQ-g9-6AG" firstAttribute="centerY" secondItem="mwo-x4-6eQ" secondAttribute="centerY" id="pMQ-fW-wVX"/>
+                            <constraint firstItem="AEa-H7-8vc" firstAttribute="left" secondItem="Lhy-Ee-IpY" secondAttribute="left" constant="8" id="qnY-3v-1XD"/>
+                            <constraint firstAttribute="right" secondItem="mwo-x4-6eQ" secondAttribute="right" constant="8" id="qyE-JO-NCL"/>
+                            <constraint firstItem="mwo-x4-6eQ" firstAttribute="top" secondItem="Lhy-Ee-IpY" secondAttribute="top" id="rz7-Fh-VJX"/>
+                            <constraint firstItem="7cQ-g9-6AG" firstAttribute="centerX" secondItem="AEa-H7-8vc" secondAttribute="centerX" priority="750" id="w4a-Xo-P1x"/>
+                            <constraint firstItem="8or-wd-Gt5" firstAttribute="left" secondItem="AEa-H7-8vc" secondAttribute="left" id="wiI-1A-paL"/>
+                            <constraint firstAttribute="bottom" secondItem="AEa-H7-8vc" secondAttribute="bottom" constant="8" id="xXt-Xy-vlx"/>
+                        </constraints>
+                    </view>
                 </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 <constraints>
-                    <constraint firstItem="7cQ-g9-6AG" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" priority="750" id="5hl-Xg-8Vc"/>
-                    <constraint firstItem="mwo-x4-6eQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Ch2-rd-oas"/>
-                    <constraint firstAttribute="trailing" secondItem="AEa-H7-8vc" secondAttribute="trailing" constant="8" id="Cy2-Oi-7nY"/>
-                    <constraint firstItem="7cQ-g9-6AG" firstAttribute="centerY" secondItem="mwo-x4-6eQ" secondAttribute="centerY" id="FIO-Z7-9pE"/>
-                    <constraint firstItem="8or-wd-Gt5" firstAttribute="left" secondItem="AEa-H7-8vc" secondAttribute="left" id="J4d-xQ-rFq"/>
-                    <constraint firstItem="AEa-H7-8vc" firstAttribute="top" secondItem="mwo-x4-6eQ" secondAttribute="bottom" id="TAL-Rg-LSe"/>
-                    <constraint firstItem="AEa-H7-8vc" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="TPz-fZ-Rdm"/>
-                    <constraint firstAttribute="bottom" secondItem="AEa-H7-8vc" secondAttribute="bottom" constant="8" id="dca-RJ-zh3"/>
-                    <constraint firstItem="7cQ-g9-6AG" firstAttribute="left" secondItem="AEa-H7-8vc" secondAttribute="left" priority="250" id="ezI-ed-R4d"/>
-                    <constraint firstItem="8or-wd-Gt5" firstAttribute="centerY" secondItem="mwo-x4-6eQ" secondAttribute="centerY" id="kQN-PQ-7Pv"/>
-                    <constraint firstAttribute="right" secondItem="mwo-x4-6eQ" secondAttribute="right" constant="8" id="yCc-Ij-StN"/>
+                    <constraint firstItem="Lhy-Ee-IpY" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="IMh-Zr-eg1"/>
+                    <constraint firstAttribute="trailing" secondItem="Lhy-Ee-IpY" secondAttribute="trailing" id="JPv-en-dbL"/>
+                    <constraint firstAttribute="bottom" secondItem="Lhy-Ee-IpY" secondAttribute="bottom" constant="8" id="bha-8S-yJy"/>
+                    <constraint firstItem="Lhy-Ee-IpY" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="xYj-jd-1eB"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <connections>
                 <outlet property="collectionView" destination="AEa-H7-8vc" id="fZI-IA-dQ4"/>
-                <outlet property="collectionViewBottomConstraint" destination="dca-RJ-zh3" id="8Ka-ie-JKH"/>
-                <outlet property="countDownAlignLeftConstraint" destination="ezI-ed-R4d" id="RvN-Yn-DKa"/>
-                <outlet property="countDownCenterdConstraint" destination="5hl-Xg-8Vc" id="Fgw-OO-3Rj"/>
+                <outlet property="collectionViewBottomConstraint" destination="xXt-Xy-vlx" id="5ZK-kO-qUw"/>
+                <outlet property="contentContainer" destination="Lhy-Ee-IpY" id="aa3-51-HNa"/>
+                <outlet property="countDownAlignLeftConstraint" destination="INR-B0-6uU" id="hBm-vg-HiG"/>
+                <outlet property="countDownCenterdConstraint" destination="w4a-Xo-P1x" id="TIx-nz-eXc"/>
                 <outlet property="countDownLabel" destination="7cQ-g9-6AG" id="GYN-ig-QON"/>
                 <outlet property="moreButton" destination="8or-wd-Gt5" id="Hnn-Fb-Itj"/>
+                <outlet property="teaserBottomPaddingConstraint" destination="bha-8S-yJy" id="Gcg-zg-rYL"/>
                 <outlet property="teaserTitle" destination="mwo-x4-6eQ" id="yjQ-bn-bWe"/>
                 <outlet property="teaserTitleHeightConstraint" destination="evN-gO-Rht" id="p2K-iQ-qMP"/>
             </connections>
-            <point key="canvasLocation" x="-147" y="-41"/>
+            <point key="canvasLocation" x="-539" y="-74"/>
         </tableViewCell>
     </objects>
 </document>

@@ -589,7 +589,7 @@
     
     self.kickoutView = [[JAKickoutView alloc] init];
     [self.kickoutView setupKickoutView:window.frame orientation:[[UIApplication sharedApplication] statusBarOrientation]];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     __block id viewController = target;
     [self.kickoutView setRetryBlock: ^(BOOL dismiss) {
          if ([viewController respondsToSelector:selector]) {
@@ -618,7 +618,7 @@
 }
 
 - (void)removeKickoutView {
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
+//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
     UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
     for (UIView *view in window.rootViewController.view.subviews) {
         if ([view isKindOfClass:[JAKickoutView class]]) {
@@ -725,6 +725,10 @@
     if (self.navBarleftButton == NavBarLeftButtonTypeCart) {
         self.navigationItem.rightBarButtonItem.badgeValue = [NSString stringWithFormat:@"%lu", (unsigned long)[[RICart sharedInstance].cartEntity.cartCount integerValue]];
     }
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
 }
 
 @end

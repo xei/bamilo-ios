@@ -139,6 +139,11 @@
 		619351B11ECACA1F00330E5C /* CatalogListCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 619351AF1ECACA1F00330E5C /* CatalogListCollectionViewCell.xib */; };
 		6193F3DE1F0CF67100DA3CDE /* EventAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6193F3DD1F0CF67100DA3CDE /* EventAttributes.swift */; };
 		6193F3E11F0CF9D600DA3CDE /* GoogleAnalyticsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6193F3E01F0CF9D600DA3CDE /* GoogleAnalyticsTracker.swift */; };
+		619CC2DA1F8E56BF008E4B86 /* HomePageTileTeaser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619CC2D91F8E56BF008E4B86 /* HomePageTileTeaser.swift */; };
+		619CC2DE1F8E58AC008E4B86 /* TileTeaserCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619CC2DC1F8E58AC008E4B86 /* TileTeaserCollectionViewCell.swift */; };
+		619CC2DF1F8E58AC008E4B86 /* TileTeaserCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 619CC2DD1F8E58AC008E4B86 /* TileTeaserCollectionViewCell.xib */; };
+		619CC2E31F8E5A79008E4B86 /* HomePageTileTeaserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619CC2E11F8E5A79008E4B86 /* HomePageTileTeaserTableViewCell.swift */; };
+		619CC2E41F8E5A79008E4B86 /* HomePageTileTeaserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 619CC2E21F8E5A79008E4B86 /* HomePageTileTeaserTableViewCell.xib */; };
 		619D0B071EA347DE00FDB255 /* BaseControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 619D0B061EA347DE00FDB255 /* BaseControlView.m */; };
 		619D0B0D1EA34AF400FDB255 /* WidgetBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 619D0B0C1EA34AF400FDB255 /* WidgetBaseView.m */; };
 		619D0B121EA34B3500FDB255 /* FeatureBoxWidgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 619D0B111EA34B3500FDB255 /* FeatureBoxWidgetView.m */; };
@@ -1128,6 +1133,11 @@
 		619351AF1ECACA1F00330E5C /* CatalogListCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CatalogListCollectionViewCell.xib; sourceTree = "<group>"; };
 		6193F3DD1F0CF67100DA3CDE /* EventAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventAttributes.swift; sourceTree = "<group>"; };
 		6193F3E01F0CF9D600DA3CDE /* GoogleAnalyticsTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleAnalyticsTracker.swift; sourceTree = "<group>"; };
+		619CC2D91F8E56BF008E4B86 /* HomePageTileTeaser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageTileTeaser.swift; sourceTree = "<group>"; };
+		619CC2DC1F8E58AC008E4B86 /* TileTeaserCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileTeaserCollectionViewCell.swift; sourceTree = "<group>"; };
+		619CC2DD1F8E58AC008E4B86 /* TileTeaserCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TileTeaserCollectionViewCell.xib; sourceTree = "<group>"; };
+		619CC2E11F8E5A79008E4B86 /* HomePageTileTeaserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageTileTeaserTableViewCell.swift; sourceTree = "<group>"; };
+		619CC2E21F8E5A79008E4B86 /* HomePageTileTeaserTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomePageTileTeaserTableViewCell.xib; sourceTree = "<group>"; };
 		619D0B051EA347DE00FDB255 /* BaseControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseControlView.h; sourceTree = "<group>"; };
 		619D0B061EA347DE00FDB255 /* BaseControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseControlView.m; sourceTree = "<group>"; };
 		619D0B0B1EA34AF400FDB255 /* WidgetBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetBaseView.h; sourceTree = "<group>"; };
@@ -3605,6 +3615,24 @@
 			name = GoogleAnalyticsTracker;
 			sourceTree = "<group>";
 		};
+		619CC2DB1F8E5870008E4B86 /* TileTeaserCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				619CC2DC1F8E58AC008E4B86 /* TileTeaserCollectionViewCell.swift */,
+				619CC2DD1F8E58AC008E4B86 /* TileTeaserCollectionViewCell.xib */,
+			);
+			name = TileTeaserCollectionViewCell;
+			sourceTree = "<group>";
+		};
+		619CC2E01F8E5A3A008E4B86 /* TileTeaserTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				619CC2E11F8E5A79008E4B86 /* HomePageTileTeaserTableViewCell.swift */,
+				619CC2E21F8E5A79008E4B86 /* HomePageTileTeaserTableViewCell.xib */,
+			);
+			name = TileTeaserTableViewCell;
+			sourceTree = "<group>";
+		};
 		619D0B081EA34A3600FDB255 /* FeatureBoxCollectionViewWidget */ = {
 			isa = PBXGroup;
 			children = (
@@ -3938,6 +3966,7 @@
 				61D4747F1F6FC622001DA6A6 /* HomePageSlider.swift */,
 				61F705351F76544D00DCD77C /* HomePageFeaturedStore.swift */,
 				617585F31F88EEFE00D66541 /* HomePageDailyDeals.swift */,
+				619CC2D91F8E56BF008E4B86 /* HomePageTileTeaser.swift */,
 			);
 			name = HomePage;
 			sourceTree = "<group>";
@@ -3949,6 +3978,7 @@
 				61D474921F6FE1B7001DA6A6 /* Slider */,
 				61F705371F7664C700DCD77C /* FeaturedStores */,
 				619E92C71F8A0B36003885BC /* DailyDeals */,
+				619CC2E01F8E5A3A008E4B86 /* TileTeaserTableViewCell */,
 			);
 			name = HomePage;
 			sourceTree = "<group>";
@@ -4110,6 +4140,7 @@
 			children = (
 				619E92CC1F8A0FFE003885BC /* DailyDealsCollectionViewCell */,
 				61F7053D1F766E7A00DCD77C /* FeaturedStoresCollectionViewCell */,
+				619CC2DB1F8E5870008E4B86 /* TileTeaserCollectionViewCell */,
 			);
 			name = HomePage;
 			sourceTree = "<group>";
@@ -7641,6 +7672,7 @@
 				875743621EA60DA5001B518A /* Birthday-Small@3x.png in Resources */,
 				CE9AE0D51AB6D78200D56481 /* JAPDVBundleSingleItem.xib in Resources */,
 				8796675D1F28D4A600FCEA4D /* LaunchScreen.storyboard in Resources */,
+				619CC2DF1F8E58AC008E4B86 /* TileTeaserCollectionViewCell.xib in Resources */,
 				875743C81EA60DFD001B518A /* SpecialOffer-72@2x.png in Resources */,
 				CE9AE0D91AB6D78200D56481 /* JAOtherOffersView_Landscape~iPad.xib in Resources */,
 				617D7F3D1EDC2F3E00F36CF7 /* ProfileOrderTableViewCell.xib in Resources */,
@@ -7738,6 +7770,7 @@
 				6C18BD741AB87E0A00905FD2 /* Images.xcassets in Resources */,
 				8714E0921E48CD57004C9B1D /* DiscountSwitcherView.xib in Resources */,
 				CE9AE1391AB8997B00D56481 /* Bamilo.xcassets in Resources */,
+				619CC2E41F8E5A79008E4B86 /* HomePageTileTeaserTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8288,6 +8321,7 @@
 				613FF2B51E4B283F008660CF /* SignInViewController.m in Sources */,
 				875AD5451E38C0C900584ABF /* RIExternalCategory.m in Sources */,
 				87AFF6851EE686FE001EBC4D /* CheckoutDataManager.swift in Sources */,
+				619CC2DE1F8E58AC008E4B86 /* TileTeaserCollectionViewCell.swift in Sources */,
 				CE9ADFC21AB6D78200D56481 /* JAPriceFiltersView.m in Sources */,
 				9AEF73FE1CD20E1C00A5D574 /* JAStepByStepModel.m in Sources */,
 				61B161D01E6BF24E0032C5C6 /* SearchPriceFilter.m in Sources */,
@@ -8371,6 +8405,7 @@
 				9A40773A1CE24DF800313D20 /* JAORCallToReturnViewController.m in Sources */,
 				875AD5401E38C0C800584ABF /* RIAddress.m in Sources */,
 				CE9ADFE01AB6D78200D56481 /* JATextField.m in Sources */,
+				619CC2E31F8E5A79008E4B86 /* HomePageTileTeaserTableViewCell.swift in Sources */,
 				CE9ADFE11AB6D78200D56481 /* JASortingView.m in Sources */,
 				61036B681E65B5F5006E12A9 /* OrderList.m in Sources */,
 				875AD5581E38C0C900584ABF /* RIBanner.m in Sources */,
@@ -8488,6 +8523,7 @@
 				9A4F91181B3D5E7200E34C0B /* JAPDVWizardView.m in Sources */,
 				CEF0C48D1BE8EE44005B5B12 /* JAReviewCollectionCell.m in Sources */,
 				875AD5681E38C0C900584ABF /* RIPaymentMethodFormField.m in Sources */,
+				619CC2DA1F8E56BF008E4B86 /* HomePageTileTeaser.swift in Sources */,
 				875AD55C1E38C0C900584ABF /* RICatalog.m in Sources */,
 				877762D11E9BB39300B73140 /* DataMessageList.m in Sources */,
 				8714E0441E45E247004C9B1D /* UILabel+Extensions.m in Sources */,

@@ -31,7 +31,6 @@ extension UIColor {
         )
     }
     
-    
     func toHexString() -> String {
         var r:CGFloat = 0
         var g:CGFloat = 0
@@ -44,4 +43,13 @@ extension UIColor {
         
         return String(format:"#%06x", rgb)
     }
+    
+    static let placeholderColors:[UIColor] = [ //Sequence of these colors are important
+        UIColor.fromHexString(hex: "#f9efea"),
+        UIColor.fromHexString(hex: "#ececec"),
+        UIColor.fromHexString(hex: "#e2e8ef"),
+        UIColor.fromHexString(hex: "#e9f7f7"),
+        UIColor.fromHexString(hex: "#f5f1f7"),
+        UIColor.fromHexString(hex: "#ecebe8")
+    ]
 }
