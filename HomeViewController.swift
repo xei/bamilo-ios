@@ -143,7 +143,9 @@ class HomeViewController:   BaseViewController,
     }
     
     func didMove(toPage controller: UIViewController!, index: Int) {
-        self.setProperTopTabbarAndNavbarStateInTransitions(to: controller)
+        ThreadManager.execute {
+            self.setProperTopTabbarAndNavbarStateInTransitions(to: controller)
+        }
     }
     
     @objc private func setProperTopTabbarAndNavbarStateInTransitions(to controller: UIViewController!) {

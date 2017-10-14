@@ -41,7 +41,7 @@ class DailyDealsTableViewCell: BaseHomePageTeaserBoxTableViewCell, UICollectionV
     func setupView() {
         self.contentContainer.layer.borderColor = Theme.color(kColorExtraExtraLightGray).cgColor
         self.contentContainer.layer.borderWidth = 1
-        self.contentContainer.layer.cornerRadius = 3
+        self.contentContainer.layer.cornerRadius = 2
         self.contentContainer.clipsToBounds = true
         self.contentContainer.backgroundColor = .white
         

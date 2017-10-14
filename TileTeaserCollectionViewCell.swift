@@ -22,7 +22,7 @@ class TileTeaserCollectionViewCell: BaseCollectionViewCellSwift {
         super.awakeFromNib()
         self.backgroundColor = .clear
         
-        self.contentView.layer.cornerRadius = 3
+        self.contentView.layer.cornerRadius = 2
         self.contentView.clipsToBounds = true
         
         self.clipsToBounds = false

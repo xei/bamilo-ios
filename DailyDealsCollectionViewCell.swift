@@ -38,7 +38,9 @@ class DailyDealsCollectionViewCell: BaseCollectionViewCellSwift {
     var product: Product!
     
     override func setupView() {
-        self.layer.cornerRadius = 1
+        self.contentView.layer.cornerRadius = 1
+        self.contentView.clipsToBounds = true
+        
         self.layer.shadowColor = UIColor.black.cgColor
         self.layer.shadowOpacity = 0.2
         self.layer.shadowRadius = 1

@@ -64,7 +64,7 @@ class HomePageSliderTableViewCell: BaseHomePageTeaserBoxTableViewCell, FSPagerVi
         let cell = pagerView.dequeueReusableCell(withReuseIdentifier: "cell", at: index)
         cell.imageView?.kf.setImage(with: self.sliderContent?.sliders?[index].imagePortraitUrl, placeholder: UIImage(named: "homepage_slider_placeholder"),options: [.transition(.fade(0.20))])
         
-        cell.imageView?.layer.cornerRadius = 3
+        cell.imageView?.layer.cornerRadius = 2
         cell.imageView?.layer.masksToBounds = true
         cell.imageView?.clipsToBounds = true
         

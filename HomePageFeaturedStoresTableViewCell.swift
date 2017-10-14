@@ -24,7 +24,7 @@ class HomePageFeaturedStoresTableViewCell: BaseHomePageTeaserBoxTableViewCell, U
         
         self.backgroundColor = .clear
         self.contentView.backgroundColor = .clear
-        self.collectionView.layer.cornerRadius = 3
+        self.collectionView.layer.cornerRadius = 2
         self.collectionView.clipsToBounds = true
         
         self.collectionViewContainer.layer.shadowColor = UIColor.black.cgColor
