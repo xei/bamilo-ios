@@ -322,18 +322,18 @@
 }
 
 
-#pragma mark Search Bar && Search Results View Delegate
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    NSLog(@"%@", searchBar.text);
-}
-
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-}
-
-- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
-//    [[MainTabBarViewController topNavigationController] showSearchView];
-    return NO;
-}
+//#pragma mark Search Bar && Search Results View Delegate
+//- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+//    NSLog(@"%@", searchBar.text);
+//}
+//
+//- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+//}
+//
+//- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
+////    [[MainTabBarViewController topNavigationController] showSearchView];
+//    return NO;
+//}
 
 # pragma mark - Loading View
 - (void)showLoading {
@@ -714,7 +714,7 @@
 
 #pragma mark - NavigationBarProtocol
 - (void)searchIconButtonTapped {
-    [[MainTabBarViewController topNavigationController] showSearchView];
+    [[MainTabBarViewController topNavigationController] showSearchView: [self getScreenName]];
 }
 
 - (void)cartIconButtonTapped {

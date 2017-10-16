@@ -805,8 +805,7 @@ static NSString *recommendationLogic = @"RELATED";
         [self trackingEventShared:activityType];
     };
 
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
-    {
+    if (UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
         CGRect sharePopoverRect = CGRectMake(self.ctaView.frame.size.width,
                                              self.ctaView.frame.size.height / 2,
                                              0.0f,

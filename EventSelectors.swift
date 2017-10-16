@@ -72,4 +72,9 @@ import Foundation
     class func checkoutFinishedSelector() -> Selector {
         return Selector(("checkoutFinishedWithAttributes:"))
     }
+    
+    class func suggestionTappedSelector() -> Selector {
+        return Selector(("searchSuggestionTappedWithAttributes:"))
+    }
+    
 }

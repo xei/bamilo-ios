@@ -17,8 +17,9 @@ enum HomePageTeaserType: String {
 }
 
 class HomePageTeaserBox: NSObject, Mappable {
-    
+
     var type: HomePageTeaserType?
+    var teaserId: String? //teaser name + index of teaser e.g. slider_0, slider_1
     var hasData: Bool?
     override init() {}
     

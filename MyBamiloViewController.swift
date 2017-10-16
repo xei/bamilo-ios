@@ -26,6 +26,8 @@ class MyBamiloViewController:   BaseViewController,
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak private var loadingIndicator: UIActivityIndicatorView!
     
+    var recommendationLogic = "HOME"
+    
     private let recommendationCountPerLogic :Int32 = 300
     private let categoriesCount = 6
     private let paginationThresholdPoint:CGFloat = 30
@@ -57,10 +59,10 @@ class MyBamiloViewController:   BaseViewController,
     func getRecommendations() -> [EMRecommendationRequest]! {
         var recommendsRequest = [EMRecommendationRequest]()
         for i in 0...categoriesCount - 1 {
-            let recommendReq = EMRecommendationRequest.init(logic: "HOME_\(i + 1)")
+            let recommendReq = EMRecommendationRequest.init(logic: "\(recommendationLogic)_\(i + 1)")
             recommendReq.limit = self.recommendationCountPerLogic
             
-            recommendReq.excludeItemsWhere("item", isIn: self.dataSource.filterById(id: "HOME_\(i + 1)").map { $0.sku })
+            recommendReq.excludeItemsWhere("item", isIn: self.dataSource.filterById(id: "\(recommendationLogic)_\(i + 1)").map { $0.sku })
             recommendReq.completionHandler = { receivedRecs in
                 self.processRecommandationResult(result: receivedRecs)
             }
@@ -133,6 +135,11 @@ class MyBamiloViewController:   BaseViewController,
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         self.delegate?.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
+    }
+    
+    //MARK: - DataTrackerProtocol
+    override func getScreenName() -> String! {
+        return "MyBamilo"
     }
     
     //MARK: - NavigationBarProtocol

@@ -186,6 +186,7 @@ class HomeViewController:   BaseViewController,
     }
     
     func didSelectProductSku(productSku: String) {
+        TrackerManager.postEvent(selector: EventSelectors.recommendationTappedSelector(), attributes: EventAttributes.tapEmarsysRecommendation(screenName: myBamiloPage.getScreenName(), logic: myBamiloPage.recommendationLogic))
         self.performSegue(withIdentifier: "pushPDVViewController", sender: productSku)
     }
     
@@ -218,11 +219,20 @@ class HomeViewController:   BaseViewController,
         if segueName == "pushPDVViewController" {
             let destinationViewCtrl = segue.destination as? JAPDVViewController
             destinationViewCtrl?.productSku = sender as! String
+        } else if segueName == "ShowSearchView", let destinationViewCtrl = segue.destination as? SearchViewController {
+            destinationViewCtrl.parentScreenName = self.getScreenName()
         }
+        
+        
     }
     
     //MARK: - status bar style
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+    
+    //MARK: - DataTrackerProtocol
+    override func getScreenName() -> String! {
+        return "Home"
     }
 }

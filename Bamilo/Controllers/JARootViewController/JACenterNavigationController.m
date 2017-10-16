@@ -1051,8 +1051,9 @@
     [MainTabBarViewController showCart];
 }
 
-- (void)showSearchView {
+- (void)showSearchView: (NSString *)screenName {
     SearchViewController *searchViewController = (SearchViewController *)[self requestViewController:@"SearchViewController" ofStoryboard:@"Main" useCache:NO];
+    searchViewController.parentScreenName = screenName;
     if ([[MainTabBarViewController topViewController] conformsToProtocol:@protocol(SearchViewControllerDelegate)]) {
         searchViewController.delegate = (id<SearchViewControllerDelegate>)[MainTabBarViewController topViewController];
     }

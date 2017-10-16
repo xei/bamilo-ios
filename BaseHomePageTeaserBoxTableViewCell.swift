@@ -9,7 +9,7 @@
 import UIKit
 
 protocol BaseHomePageTeaserBoxTableViewCellDelegate: class {
-    func teaserItemTappedWithTargetString(target: String)
+    func teaserItemTappedWithTargetString(target: String, teaserId: String)
 }
 
 protocol HomePageTeaserHeightCalculator {

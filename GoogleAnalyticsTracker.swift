@@ -305,6 +305,18 @@
         }
     }
     
+    func searchSuggestionTapped(attributes: EventAttributeType) {
+        if let suggestionTitle = attributes[kEventSuggestionTitle] as? String {
+            let params = GAIDictionaryBuilder.createEvent(
+                withCategory: "SearchSuggestions",
+                action: "Tapped",
+                label: "\(suggestionTitle)",
+                value: nil
+            )
+            self.sendParamsToGA(params: params)
+        }
+    }
+    
     
     //MARK: - Helper functions
     private func sendParamsToGA(params: GAIDictionaryBuilder?) {

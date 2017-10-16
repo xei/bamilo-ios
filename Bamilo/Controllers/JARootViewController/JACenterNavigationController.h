@@ -25,7 +25,7 @@ typedef void(^ProtectedBlock)(BOOL userHadSession);
 
 - (void)openTargetString:(NSString *)targetString;
 - (BOOL)openScreenTarget:(JAScreenTarget *)target;
-- (void)showSearchView;
+- (void)showSearchView:(NSString *)screenName;
 
 - (void)goToPickupStationWebViewControllerWithCMS:(NSString*)cmsBlock;
 

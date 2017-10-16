@@ -162,4 +162,10 @@ public typealias EventAttributeType = [String:Any]
         return attributes
     }
     
+    static func searchSuggestionTapped(suggestionTitle: String) -> EventAttributeType {
+        var attributes = self.getCommonAttributes()
+        attributes[kEventSuggestionTitle] = suggestionTitle
+        return attributes
+    }
+    
 }

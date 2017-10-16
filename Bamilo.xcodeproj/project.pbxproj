@@ -106,6 +106,7 @@
 		616F7D131F6D172100085B64 /* IconTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 616F7D111F6D172100085B64 /* IconTableViewCell.xib */; };
 		61716BA71E865B3D00F4E65F /* DeepLinkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 61716BA61E865B3D00F4E65F /* DeepLinkManager.m */; };
 		6171F3681F3A021700B3B212 /* Ext+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6171F3671F3A021700B3B212 /* Ext+UIView.swift */; };
+		6172EDFA1F94E70800ED36EE /* PurchaseBehaviourRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6172EDF91F94E70800ED36EE /* PurchaseBehaviourRecorder.swift */; };
 		617585F21F88D96700D66541 /* CarouselCollectionFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617585F11F88D96700D66541 /* CarouselCollectionFlowLayout.swift */; };
 		617585F41F88EEFE00D66541 /* HomePageDailyDeals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617585F31F88EEFE00D66541 /* HomePageDailyDeals.swift */; };
 		617585F61F88FF8D00D66541 /* Ext+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617585F51F88FF8D00D66541 /* Ext+UIColor.swift */; };
@@ -1093,6 +1094,7 @@
 		61716BA51E865B3D00F4E65F /* DeepLinkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeepLinkManager.h; sourceTree = "<group>"; };
 		61716BA61E865B3D00F4E65F /* DeepLinkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeepLinkManager.m; sourceTree = "<group>"; };
 		6171F3671F3A021700B3B212 /* Ext+UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Ext+UIView.swift"; sourceTree = "<group>"; };
+		6172EDF91F94E70800ED36EE /* PurchaseBehaviourRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseBehaviourRecorder.swift; sourceTree = "<group>"; };
 		617585F11F88D96700D66541 /* CarouselCollectionFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCollectionFlowLayout.swift; sourceTree = "<group>"; };
 		617585F31F88EEFE00D66541 /* HomePageDailyDeals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageDailyDeals.swift; sourceTree = "<group>"; };
 		617585F51F88FF8D00D66541 /* Ext+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UIColor.swift"; sourceTree = "<group>"; };
@@ -3351,6 +3353,7 @@
 			isa = PBXGroup;
 			children = (
 				615EDF531F697DA600454A10 /* LocalSearchSuggestion.swift */,
+				6172EDF91F94E70800ED36EE /* PurchaseBehaviourRecorder.swift */,
 			);
 			name = Local;
 			sourceTree = "<group>";
@@ -8351,6 +8354,7 @@
 				617D7F3C1EDC2F3E00F36CF7 /* ProfileOrderTableViewCell.swift in Sources */,
 				618B25701F35D85900B39440 /* DeliveryTimeControl.swift in Sources */,
 				9AC4D6A71B4A926800036F1C /* JACatalogGridCollectionViewCell.m in Sources */,
+				6172EDFA1F94E70800ED36EE /* PurchaseBehaviourRecorder.swift in Sources */,
 				875AD5571E38C0C900584ABF /* RIAlgolia.m in Sources */,
 				9A4077411CE60E3300313D20 /* JABottomSubmitView.m in Sources */,
 				FF4383E31C6CD4AC003BA957 /* JASwitchRadioComponent.m in Sources */,

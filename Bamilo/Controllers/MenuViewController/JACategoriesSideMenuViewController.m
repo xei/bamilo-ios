@@ -507,6 +507,16 @@
 - (NSString *)navBarTitleString {
     return STRING_CATEGORIES;
 }
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    NSString* identifier = segue.identifier;
+    if ([identifier isEqualToString:@"ShowSearchView"]) {
+        SearchViewController* searchView = (SearchViewController *)segue.destinationViewController;
+        searchView.parentScreenName = [self getScreenName];
+    }
+}
+
 //
 //- (NavBarLeftButtonType)navBarleftButton {
 //    return NavBarLeftButtonTypeSearch;

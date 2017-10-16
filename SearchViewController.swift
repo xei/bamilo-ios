@@ -11,7 +11,7 @@ import Kingfisher
 
 @objc protocol SearchViewControllerDelegate {
     @objc optional func searchByString(queryString: String)
-    @objc optional func searchBySuggestion()
+    @objc optional func searchBySuggestion(targetString: String)
 }
 
 class SearchViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, DataServiceProtocol, UITextFieldDelegate, UIScrollViewDelegate, SearchViewControllerDelegate {
@@ -26,6 +26,7 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
     private var suggestion: SearchSuggestion?
     private var localSavedSuggestion = LocalSearchSuggestion()
     private var keyboardCanBeDismissed = false
+    var parentScreenName: String?
     
     weak var delegate: SearchViewControllerDelegate?
     
@@ -157,12 +158,24 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
         if indexPath.section == 0 {
             if let categories = self.suggestion?.categories {
                 self.localSavedSuggestion.add(category: categories[indexPath.row])
-                MainTabBarViewController.topNavigationController()?.openTargetString(categories[indexPath.row].target)
+                if let target = categories[indexPath.row].target {
+                    self.delegate?.searchBySuggestion?(targetString: target)
+                    if let categoryTitle = categories[indexPath.row].name {
+                        TrackerManager.postEvent(selector: EventSelectors.suggestionTappedSelector(), attributes: EventAttributes.searchSuggestionTapped(suggestionTitle: categoryTitle))
+                    }
+                    MainTabBarViewController.topNavigationController()?.openTargetString(target)
+                }
             }
         } else if indexPath.section == 1 {
             if let products = self.suggestion?.products {
                 self.localSavedSuggestion.add(product: products[indexPath.row])
-                MainTabBarViewController.topNavigationController()?.openTargetString(products[indexPath.row].target)
+                if let target = products[indexPath.row].target {
+                    self.delegate?.searchBySuggestion?(targetString: target)
+                    if let productName = products[indexPath.row].name {
+                        TrackerManager.postEvent(selector: EventSelectors.suggestionTappedSelector(), attributes: EventAttributes.searchSuggestionTapped(suggestionTitle: productName))
+                    }
+                    MainTabBarViewController.topNavigationController()?.openTargetString(target)
+                }
             }
         }
         self.dismiss(animated: true, completion: nil)
@@ -176,13 +189,17 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
     //MARK: - UITextFieldDelegate
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         let target = RITarget.getTarget(.CATALOG_SEARCH, node: textField.text)
-        if let parentDataTracker = self.delegate as? DataTrackerProtocol, let searchedString = textField.text {
-            TrackerManager.postEvent(selector: EventSelectors.searchBarSearchedSelector(), attributes: EventAttributes.searchBarSearched(searchString: searchedString, screenName: parentDataTracker.getScreenName()))
+        
+        //Track this action
+        if let parentScreenName = parentScreenName, let searchedString = textField.text {
+            TrackerManager.postEvent(selector: EventSelectors.searchBarSearchedSelector(), attributes: EventAttributes.searchBarSearched(searchString: searchedString, screenName: parentScreenName))
         }
+        
         if let queryString = textField.text {
             self.delegate?.searchByString?(queryString: queryString)
         }
         MainTabBarViewController.topNavigationController()?.openTargetString(target?.targetString)
+        
         self.dismiss(animated: true, completion: nil)
         return true
     }

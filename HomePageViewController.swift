@@ -50,7 +50,6 @@ class HomePageViewController:   BaseViewController,
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         if self.homePage == nil {
             HomeDataManager.sharedInstance.getHomeData(self, requestType: .background) { (data, errors) in
                 self.loadingIndicator.stopAnimating()
@@ -76,7 +75,6 @@ class HomePageViewController:   BaseViewController,
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if let cellType = self.homePage?.teasers[indexPath.row].type, let cellCalssName = self.cellTypeMapper[cellType] {
             if let cell = AppUtility.getClassFromName(name: cellCalssName) as? HomePageTeaserHeightCalculator.Type {
-//                return cell.teaserHeight(withModel model: self.homePage?.teasers[indexPath.row])   //cellHeight(model: self.homePage?.teasers[indexPath.row])
                 return cell.teaserHeight(model: self.homePage?.teasers[indexPath.row])
             }
         }
@@ -101,7 +99,8 @@ class HomePageViewController:   BaseViewController,
     }
     
     //MARK: - BaseHomePageTeaserBoxTableViewCellDelegate
-    func teaserItemTappedWithTargetString(target: String) {
+    func teaserItemTappedWithTargetString(target: String, teaserId: String) {
+        TrackerManager.postEvent(selector: EventSelectors.teaserTappedSelector(), attributes: EventAttributes.teaserPurchase(teaserName: teaserId, screenName: self.getScreenName()))
         MainTabBarViewController.topNavigationController()?.openTargetString(target)
     }
     
