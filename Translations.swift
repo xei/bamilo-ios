@@ -55,3 +55,4 @@ let STRING_CATEGORIES = RILocalizationWrapper.localizedString("categories")!
 let STRING_PRODUCTS = RILocalizationWrapper.localizedString("products")!
 let STRING_IN = RILocalizationWrapper.localizedString("in")!
 let STRING_ALL = RILocalizationWrapper.localizedString("all_label")!
+let STRING_ALL_CATEGORIES = RILocalizationWrapper.localizedString("all_categories")!

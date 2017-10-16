@@ -28,6 +28,7 @@ import UIKit
         self.textField.leftView = searchIconView
         self.textField.textAlignment = .right
         self.textField.placeholder = STRING_SEARCH_PLACEHOLDER
+        self.textField.tintColor = .white
     }
     
     

@@ -137,6 +137,8 @@
     [self.view bringSubviewToFront:self.searchbar];
     
     [self reloadData];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetNavbarStatusBar) name:@"appDidEnterForeground" object:nil];
 }
 
 
@@ -235,18 +237,14 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [NavBarUtility changeStatusBarColorWithColor:[Theme color:kColorExtraDarkBlue]];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self.tableView setFrame:self.viewBounds];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [NavBarUtility changeStatusBarColorWithColor:[UIColor clearColor]];
-    
+    [self resetNavbarStatusBar];
+}
+
+- (void)resetNavbarStatusBar {
     [self.navbarFollower resetBarFrameWithAnimated:NO];
     [self.searchBarFollower resetBarFrameWithAnimated:NO];
 }

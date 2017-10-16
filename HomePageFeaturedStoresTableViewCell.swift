@@ -8,20 +8,35 @@
 
 import UIKit
 
-class HomePageFeaturedStoresTableViewCell: BaseHomePageTeaserBoxTableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class HomePageFeaturedStoresTableViewCell: BaseHomePageTeaserBoxTableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, HomePageTeaserHeightCalculator {
     
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak private var collectionViewContainer: UIView!
+    @IBOutlet weak private var collectionView: UICollectionView!
+    @IBOutlet weak private var collectionViewBottomConstraint: NSLayoutConstraint!
+    
+    
     private var featuredStores: HomePageFeaturedStores?
+    private static var bottomPadding: CGFloat = 8
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.collectionViewBottomConstraint.constant = HomePageFeaturedStoresTableViewCell.bottomPadding
+        
         self.backgroundColor = .clear
         self.contentView.backgroundColor = .clear
+        self.collectionView.layer.cornerRadius = 2
+        self.collectionView.clipsToBounds = true
+        
+        self.collectionViewContainer.layer.shadowColor = UIColor.black.cgColor
+        self.collectionViewContainer.layer.shadowOpacity = 0.1
+        self.collectionViewContainer.layer.shadowRadius = 1
+        self.collectionViewContainer.layer.shadowOffset = CGSize(width:1 , height: 1)
+        self.collectionViewContainer.clipsToBounds = false
         
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         
-        self.collectionView.register(UINib(nibName: FeaturedStoresCollectionViewCell.nibName(), bundle: nil), forCellWithReuseIdentifier: FeaturedStoresCollectionViewCell.nibName())
+        self.collectionView.register(UINib(nibName: FeaturedStoresCollectionViewCell.nibName, bundle: nil), forCellWithReuseIdentifier: FeaturedStoresCollectionViewCell.nibName)
         
         let collectionFlowLayout = UICollectionViewFlowLayout()
         collectionFlowLayout.itemSize = HomePageFeaturedStoresTableViewCell.cellSize()
@@ -32,19 +47,16 @@ class HomePageFeaturedStoresTableViewCell: BaseHomePageTeaserBoxTableViewCell, U
         self.collectionView.collectionViewLayout = collectionFlowLayout
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-    }
-    
     override func update(withModel model: Any!) {
         if let receivedFeaturedStore = model as? HomePageFeaturedStores {
             self.featuredStores = receivedFeaturedStore
             self.collectionView.reloadData()
         }
     }
-    
-    override static func cellHeight() -> CGFloat {
-        return HomePageFeaturedStoresTableViewCell.cellSize().height + 4 //4 point for shadow
+ 
+    //MARK: - HomePageTeaserHeightCalculator
+    static func teaserHeight(model: Any?) -> CGFloat {
+        return HomePageFeaturedStoresTableViewCell.cellSize().height + self.bottomPadding //4 point for shadow
     }
     
     //MARK: - UICollectionViewDelegate
@@ -57,13 +69,12 @@ class HomePageFeaturedStoresTableViewCell: BaseHomePageTeaserBoxTableViewCell, U
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: FeaturedStoresCollectionViewCell.nibName(), for: indexPath) as? FeaturedStoresCollectionViewCell {
+        if let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: FeaturedStoresCollectionViewCell.nibName, for: indexPath) as? FeaturedStoresCollectionViewCell {
             if indexPath.row == 0 {
-                cell.title = STRING_ALL
+                cell.title = STRING_ALL_CATEGORIES
                 cell.image = UIImage(named: "all_cats")
                 return cell
             } else if let featuredStore = self.featuredStores?.items?[indexPath.row - 1] {
-                cell.indexPath = indexPath
                 cell.update(withModel: featuredStore)
                 return cell
             }

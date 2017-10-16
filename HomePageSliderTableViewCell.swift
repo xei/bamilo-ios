@@ -10,7 +10,7 @@ import UIKit
 import FSPagerView
 import Kingfisher
 
-class HomePageSliderTableViewCell: BaseHomePageTeaserBoxTableViewCell, FSPagerViewDataSource, FSPagerViewDelegate {
+class HomePageSliderTableViewCell: BaseHomePageTeaserBoxTableViewCell, FSPagerViewDataSource, FSPagerViewDelegate, HomePageTeaserHeightCalculator {
     
     var sliderContent: HomePageSlider?
 
@@ -64,7 +64,7 @@ class HomePageSliderTableViewCell: BaseHomePageTeaserBoxTableViewCell, FSPagerVi
         let cell = pagerView.dequeueReusableCell(withReuseIdentifier: "cell", at: index)
         cell.imageView?.kf.setImage(with: self.sliderContent?.sliders?[index].imagePortraitUrl, placeholder: UIImage(named: "homepage_slider_placeholder"),options: [.transition(.fade(0.20))])
         
-        cell.imageView?.layer.cornerRadius = 3
+        cell.imageView?.layer.cornerRadius = 2
         cell.imageView?.layer.masksToBounds = true
         cell.imageView?.clipsToBounds = true
         
@@ -92,9 +92,10 @@ class HomePageSliderTableViewCell: BaseHomePageTeaserBoxTableViewCell, FSPagerVi
         }
     }
     
-    override static func cellHeight() -> CGFloat {
+    //MARK: - HomePageTeaserHeightCalculator
+    static func teaserHeight(model: Any?) -> CGFloat {
         let itemWidth = (UIApplication.shared.statusBarFrame.width - 16) / 1.052
         let itemHeight = itemWidth / 2.1375  //ratio:  342*160
-        return itemHeight + 8 * 3 //8 point padding from top & 16 point bottom of slider (for slider control)
+        return itemHeight + 8 * 3 //8 point padding from top & bottom point bottom of slider (for slider control)
     }
 }

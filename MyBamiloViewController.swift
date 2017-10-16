@@ -24,9 +24,10 @@ class MyBamiloViewController:   BaseViewController,
                                 UIScrollViewDelegate {
     
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak private var loadingIndicator: UIActivityIndicatorView!
     
     private let recommendationCountPerLogic :Int32 = 300
-    private let categoriesCount = 5
+    private let categoriesCount = 6
     private let paginationThresholdPoint:CGFloat = 30
     
     private lazy var dataSource = MyBamiloModel()
@@ -47,6 +48,11 @@ class MyBamiloViewController:   BaseViewController,
         self.collectionView.collectionViewLayout = GridCollectionViewFlowLayout()
         EmarsysPredictManager.sendTransactions(of: self)
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.collectionView.killScroll()
+    }
+    
     //MARK: - EmarsysPredictProtocolBase
     func getRecommendations() -> [EMRecommendationRequest]! {
         var recommendsRequest = [EMRecommendationRequest]()
@@ -75,6 +81,7 @@ class MyBamiloViewController:   BaseViewController,
             if newRecommendedItems.count > 0 {
                 if self.recommendationRequestCounts == 0 {
                     //Wait untill all the requests are ready
+                    self.loadingIndicator.stopAnimating()
                     var newIndexPathes = [IndexPath]()
                     for index in 0...self.dataSource.products.count - self.visibleProductCount - 1 {
                         let newIndex = self.visibleProductCount + index

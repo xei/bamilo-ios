@@ -17,8 +17,8 @@
                                                                   @"categoryPath": @"category",
                                                                   @"link": @"link",
                                                                   @"imageUrl": @"image",
-                                                                  @"price": @"price",
-                                                                  @"dicountedPrice":@"msrp",
+                                                                  @"price": @"msrp",
+                                                                  @"dicountedPrice":@"price",
                                                                   @"name":@"title"
                                                                   }];
 }

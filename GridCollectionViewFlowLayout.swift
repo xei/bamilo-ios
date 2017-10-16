@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GridCollectionViewFlowLayout: BaseCatalogCollectionFlowLayout {
+class GridCollectionViewFlowLayout: BaseCollectionFlowLayout {
     
     private let imageRatio: CGFloat = 1.25
     private let numberOfColumns: CGFloat = 2

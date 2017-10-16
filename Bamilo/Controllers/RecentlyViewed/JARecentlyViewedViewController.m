@@ -81,9 +81,7 @@
         [_emptyTitleLabel setTextColor:JABlackColor];
         [_emptyTitleLabel setText:STRING_NO_RECENTLY_VIEWED_PRODUCTS_TITLE];
         [_emptyTitleLabel sizeToFit];
-        [_emptyTitleLabel setFrame:CGRectMake((self.viewBounds.size.width - _emptyTitleLabel.width)/2,
-                                              48.f,
-                                              _emptyTitleLabel.width, _emptyTitleLabel.height)];
+        [_emptyTitleLabel setFrame:CGRectMake((self.viewBounds.size.width - _emptyTitleLabel.width)/2, 48.f, _emptyTitleLabel.width, _emptyTitleLabel.height)];
     }
     return _emptyTitleLabel;
 }
@@ -123,7 +121,7 @@
         [_flowLayout registerClass:[JACollectionSeparator class] forDecorationViewOfKind:@"horizontalSeparator"];
         [_flowLayout registerClass:[JACollectionSeparator class] forDecorationViewOfKind:@"verticalSeparator"];
         
-        //                                              top, left, bottom, right
+        //top, left, bottom, right
         [self.flowLayout setSectionInset:UIEdgeInsetsMake(0.f, 0.0, 0.0, 0.0)];
         self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
     }
@@ -132,6 +130,7 @@
 
 - (UICollectionView *)collectionView {
     CGRect frame = self.viewBounds;
+    frame.size.height -= 48.f;
     if (!VALID_NOTEMPTY(_collectionView, UICollectionView)) {
         _collectionView = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:self.flowLayout];
         _collectionView.delegate = self;

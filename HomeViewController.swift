@@ -49,7 +49,7 @@ class HomeViewController:   BaseViewController,
         self.myBamiloPage?.title = STRING_MY_BAMILO
         
         self.searchBar.searchView?.textField.delegate = self
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(setProperTopTabbarAndNavbarStateInTransitions), name: NSNotification.Name(NotificationKeys.EnterForground), object: nil)
         self.view.bringSubview(toFront: self.searchBar)
     }
     
@@ -70,7 +70,8 @@ class HomeViewController:   BaseViewController,
                                                     CAPSPageMenuOptionAddBottomMenuHairline: (false),
                                                     CAPSPageMenuOptionUnselectedMenuItemLabelColor: Theme.color(kColorExtraLightGray),
                                                     CAPSPageMenuOptionSelectedMenuItemLabelColor: UIColor.white,
-                                                    CAPSPageMenuOptionScrollAnimationDurationOnMenuItemTap: (150)
+                                                    CAPSPageMenuOptionScrollAnimationDurationOnMenuItemTap: (150),
+                                                    CAPSPageMenuOptionEnableHorizontalBounce: (false)
             ]
             self.pagemenu = CAPSPageMenu(viewControllers: [self.myBamiloPage, self.homePage], frame: self.contentContainer.bounds, options: parameters)
             self.pagemenu?.delegate = self
@@ -111,35 +112,54 @@ class HomeViewController:   BaseViewController,
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        NavBarUtility.changeStatusBarColor(color: Theme.color(kColorExtraDarkBlue))
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NavBarUtility.changeStatusBarColor(color: UIColor.clear)
+        self.homePage.tableView.killScroll()
+        self.myBamiloPage.collectionView.killScroll()
         self.resetAllBarFrames()
     }
     
     //MARK:- CAPSPageMenuDelegate
     func willMove(toPage controller: UIViewController!, index: Int) {
         self.setProperTopTabbarAndNavbarStateInTransitions(to: controller)
+        
+        self.navBarFollower?.stopFollowing()
+        self.searchBarFollower?.stopFollowing()
+        self.topTabBarFollower?.stopFollowing()
+        
+        if let homePage = controller as? HomePageViewController, let navBarHeight = navBarInitialHeight, let scrollView = homePage.tableView {
+            self.followersFollow(scrollView: scrollView, permittedMove: navBarHeight)
+        } else if let myBamilo = controller as? MyBamiloViewController, let navBarHeight = navBarInitialHeight, let scrollView = myBamilo.collectionView {
+            self.followersFollow(scrollView: scrollView, permittedMove: navBarHeight)
+        }
+    }
+    
+    private func followersFollow(scrollView: UIScrollView, permittedMove: CGFloat) {
+        self.navBarFollower?.followScrollView(scrollView: scrollView, delay: -permittedMove, permittedMoveDistance: permittedMove)
+        self.searchBarFollower?.followScrollView(scrollView: scrollView, delay: -permittedMove, permittedMoveDistance: permittedMove)
+        self.topTabBarFollower?.followScrollView(scrollView: scrollView, delay: -permittedMove, permittedMoveDistance: permittedMove)
     }
     
     func didMove(toPage controller: UIViewController!, index: Int) {
-        self.setProperTopTabbarAndNavbarStateInTransitions(to: controller)
+        ThreadManager.execute {
+            self.setProperTopTabbarAndNavbarStateInTransitions(to: controller)
+        }
     }
     
-    private func setProperTopTabbarAndNavbarStateInTransitions(to controller: UIViewController!) {
-        if let homePage = controller as? HomePageViewController,let navBarInitialHeight = self.navBarInitialHeight, let tableView = homePage.tableView {
-            if tableView.contentOffset.y <= 2 * navBarInitialHeight {
-                self.resetAllBarFrames()
-            }
-        }
-        if let myBamilo = controller as? MyBamiloViewController ,let navBarInitialHeight = self.navBarInitialHeight, let scrollView = myBamilo.collectionView {
-            if scrollView.contentOffset.y <= 2 * navBarInitialHeight {
-                self.resetAllBarFrames()
-            }
-        }
+    @objc private func setProperTopTabbarAndNavbarStateInTransitions(to controller: UIViewController!) {
+        self.resetAllBarFrames()
+//        if let homePage = controller as? HomePageViewController,let navBarInitialHeight = self.navBarInitialHeight, let tableView = homePage.tableView {
+//            if tableView.contentOffset.y <= 2 * navBarInitialHeight {
+//                self.resetAllBarFrames()
+//            }
+//        }
+//        if let myBamilo = controller as? MyBamiloViewController ,let navBarInitialHeight = self.navBarInitialHeight, let scrollView = myBamilo.collectionView {
+//            if scrollView.contentOffset.y <= 2 * navBarInitialHeight {
+//                self.resetAllBarFrames()
+//            }
+//        }
         
         //Stop all scrolling views
         self.homePage.tableView?.killScroll()
@@ -173,10 +193,7 @@ class HomeViewController:   BaseViewController,
         if let navBarHeight = self.navBarInitialHeight {
             scrollView.contentInset = UIEdgeInsetsMake(navBarHeight, 0.0, 0.0, 0.0)
             scrollView.setContentOffset(CGPoint(x: 0, y: -navBarHeight), animated: false)
-            
-            self.navBarFollower?.followScrollView(scrollView: scrollView, delay: -navBarHeight, permittedMoveDistance: navBarHeight)
-            self.searchBarFollower?.followScrollView(scrollView: scrollView, delay: -navBarHeight, permittedMoveDistance: navBarHeight)
-            self.topTabBarFollower?.followScrollView(scrollView: scrollView, delay: -navBarHeight, permittedMoveDistance: navBarHeight)
+            self.followersFollow(scrollView: scrollView, permittedMove: navBarHeight)
         }
     }
     
@@ -202,5 +219,10 @@ class HomeViewController:   BaseViewController,
             let destinationViewCtrl = segue.destination as? JAPDVViewController
             destinationViewCtrl?.productSku = sender as! String
         }
+    }
+    
+    //MARK: - status bar style
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 }

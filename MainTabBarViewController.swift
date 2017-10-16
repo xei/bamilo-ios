@@ -15,6 +15,7 @@ import UIKit
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setRTL()
+        NavBarUtility.changeStatusBarColor(color: Theme.color(kColorExtraDarkBlue))
         
         self.tabBar.isTranslucent = false
         self.delegate = self
