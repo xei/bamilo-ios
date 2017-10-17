@@ -11,6 +11,7 @@ platform :ios do
   before_all do
     # ensure_git_status_clean
     # ensure_git_branch(branch: 'develop')
+    # update_fastlane(nightly: true)
     sh 'bash ./scripts/xcrun_simctl_erase_all.sh'
     cocoapods
   end
@@ -22,7 +23,16 @@ platform :ios do
 
   ############################## Build Alpha (Crashlytics) ##############################
   lane :alpha do |values|
-    gym(workspace: "Bamilo.xcworkspace", scheme: "Bamilo (Staging)", export_method: "ad-hoc", clean: true)
+    gym(workspace: "Bamilo.xcworkspace", scheme:
+      "Bamilo (Staging)",
+      export_method: "ad-hoc",
+      export_options: {
+        provisioningProfiles: {
+        "com.bamilo.app.ios" => "BMLO AdHoc",
+        "com.bamilo.app.ios.NotificationService" => "BMLO NotificationService AdHoc"
+        }
+      },
+      clean: true)
 
     skip_testing = values[:skip_testing] ? values[:skip_testing] : false
     if skip_testing == false
