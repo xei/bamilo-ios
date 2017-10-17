@@ -162,8 +162,9 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
                     self.delegate?.searchBySuggestion?(targetString: target)
                     if let categoryTitle = categories[indexPath.row].name {
                         TrackerManager.postEvent(selector: EventSelectors.suggestionTappedSelector(), attributes: EventAttributes.searchSuggestionTapped(suggestionTitle: categoryTitle))
+                        
+                        MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: "SearchSuggestions:::\(categoryTitle)")
                     }
-                    MainTabBarViewController.topNavigationController()?.openTargetString(target)
                 }
             }
         } else if indexPath.section == 1 {
@@ -173,8 +174,8 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
                     self.delegate?.searchBySuggestion?(targetString: target)
                     if let productName = products[indexPath.row].name {
                         TrackerManager.postEvent(selector: EventSelectors.suggestionTappedSelector(), attributes: EventAttributes.searchSuggestionTapped(suggestionTitle: productName))
+                        MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: "SearchSuggestions:::\(productName)")
                     }
-                    MainTabBarViewController.topNavigationController()?.openTargetString(target)
                 }
             }
         }
@@ -197,8 +198,9 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
         
         if let queryString = textField.text {
             self.delegate?.searchByString?(queryString: queryString)
+            
+            MainTabBarViewController.topNavigationController()?.openTargetString(target?.targetString, purchaseInfo: "SearchString:::\(queryString)")
         }
-        MainTabBarViewController.topNavigationController()?.openTargetString(target?.targetString)
         
         self.dismiss(animated: true, completion: nil)
         return true

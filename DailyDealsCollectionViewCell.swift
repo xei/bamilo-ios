@@ -74,6 +74,7 @@ class DailyDealsCollectionViewCell: BaseCollectionViewCellSwift {
         imageview.kf.indicatorType = .activity
         imageview.kf.setImage(with: product.imageUrl, options: [.transition(.fade(0.20))])
         if let specialPrice = product.specialPrice, let price = product.price, let precentage = product.maxSavingPrecentage {
+            discountPrecentageView.isHidden = false
             discountedPriceLabel.text = "\(specialPrice)".formatPriceWithCurrency()
             priceLabel.attributedText = "\(price)".formatPriceWithCurrency().strucThroughPriceFormat()
             discountPrecentageLabel.text = "%\(precentage)".convertTo(language: .arabic)
@@ -81,6 +82,7 @@ class DailyDealsCollectionViewCell: BaseCollectionViewCellSwift {
             discountedPriceLabel.text = "\(price)".formatPriceWithCurrency()
             priceLabel.text = nil
             discountPrecentageLabel.text = nil
+            discountPrecentageView.isHidden = true
         }
         self.product = product
     }

@@ -222,20 +222,21 @@
     
 }
 
-- (void)openTargetString:(NSString *)targetString {
+- (void)openTargetString:(NSString *)targetString purchaseInfo:(NSString *)purchaseInfo {
     JAScreenTarget *screenTarget = [JAScreenTarget new];
     screenTarget.target = [RITarget parseTarget:targetString];
     screenTarget.pushAnimation = YES;
-    [self openScreenTarget:screenTarget];
+    [self openScreenTarget:screenTarget purchaseInfo:purchaseInfo];
 }
 
-- (BOOL)openScreenTarget:(JAScreenTarget *)screenTarget {
+- (BOOL)openScreenTarget:(JAScreenTarget *)screenTarget purchaseInfo:(NSString *)purchaseInfo {
     if ([[self topViewController] isKindOfClass:[JABaseViewController class]] && [[(JABaseViewController *)[self topViewController] targetString] isEqualToString:screenTarget.target.targetString]) {
         return NO;
     }
     switch (screenTarget.target.targetType) {
         case PRODUCT_DETAIL: {
             JAPDVViewController *viewController = [JAPDVViewController new];
+            viewController.purchaseTrackingInfo = purchaseInfo;
             [self loadScreenTarget:screenTarget forBaseViewController:viewController];
             [self pushViewController:viewController animated:screenTarget.pushAnimation];
             return YES;
@@ -243,6 +244,7 @@
         case CATALOG_SEARCH: {
             CatalogViewController *viewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
             viewController.searchTarget = screenTarget.target;
+            viewController.purchaseTrackingInfo = purchaseInfo;
             [self pushViewController:viewController animated:screenTarget.pushAnimation];
             return YES;
         }
@@ -251,12 +253,14 @@
         case CATALOG_CATEGORY: {
             CatalogViewController *viewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];;
             viewController.searchTarget = screenTarget.target;
+            viewController.purchaseTrackingInfo = purchaseInfo;
             [self pushViewController:viewController animated:screenTarget.pushAnimation];
             return YES;
         }
         case STATIC_PAGE:
         case SHOP_IN_SHOP: {
             JAShopWebViewController* viewController = [[JAShopWebViewController alloc] init];
+            viewController.purchaseTrackingInfo = purchaseInfo;
             [self loadScreenTarget:screenTarget forBaseViewController:viewController];
             [viewController setTitle:screenTarget.target.node];
             [self pushViewController:viewController animated:screenTarget.pushAnimation];
@@ -271,6 +275,7 @@
         }
         case CAMPAIGN: {
             JACampaignsViewController *viewController = [JACampaignsViewController new];
+            viewController.purchaseTrackingInfo = purchaseInfo;
             [self loadScreenTarget:screenTarget forBaseViewController:viewController];
             [self pushViewController:viewController animated:screenTarget.pushAnimation];
             return YES;
@@ -747,8 +752,8 @@
         catalog.searchTarget = target;
         catalog.title = title;
 
-        if ([notification.userInfo objectForKey:@"teaserTrackingInfo"]) {
-            catalog.teaserTrackingInfo = [notification.userInfo objectForKey:@"teaserTrackingInfo"];
+        if ([notification.userInfo objectForKey:@"purchaseTrackingInfo"]) {
+            catalog.purchaseTrackingInfo = [notification.userInfo objectForKey:@"purchaseTrackingInfo"];
         }
         
         [[MainTabBarViewController topNavigationController] pushViewController:catalog animated:YES];
@@ -770,8 +775,8 @@
     NSString* campaignId = [notification.userInfo objectForKey:@"campaign_id"];
     
     NSString* cameFromTeasers;
-    if ([notification.userInfo objectForKey:@"teaserTrackingInfo"]) {
-        cameFromTeasers = [notification.userInfo objectForKey:@"teaserTrackingInfo"];
+    if ([notification.userInfo objectForKey:@"purchaseTrackingInfo"]) {
+        cameFromTeasers = [notification.userInfo objectForKey:@"purchaseTrackingInfo"];
     }
     
     if (teaserGrouping) {
@@ -779,21 +784,21 @@
         
         campaignsVC.teaserGrouping = teaserGrouping;
         campaignsVC.startingTitle = title;
-        campaignsVC.teaserTrackingInfo = cameFromTeasers;
+        campaignsVC.purchaseTrackingInfo = cameFromTeasers;
         
         [self pushViewController:campaignsVC animated:YES];
     } else if (campaignId.length) {
         JACampaignsViewController* campaignsVC = [JACampaignsViewController new];
         
         campaignsVC.campaignId = campaignId;
-        campaignsVC.teaserTrackingInfo = cameFromTeasers;
+        campaignsVC.purchaseTrackingInfo = cameFromTeasers;
         
         [self pushViewController:campaignsVC animated:YES];
     } else if (campaignTargetString.length) {
         JACampaignsViewController* campaignsVC = [JACampaignsViewController new];
         
         campaignsVC.targetString = campaignTargetString;
-        campaignsVC.teaserTrackingInfo = cameFromTeasers;
+        campaignsVC.purchaseTrackingInfo = cameFromTeasers;
         
         [self pushViewController:campaignsVC animated:YES];
     }
@@ -837,8 +842,8 @@
             pdv.preSelectedSize = [notification.userInfo objectForKey:@"size"];
         }
         
-        if ([notification.userInfo objectForKey:@"teaserTrackingInfo"]) {
-            pdv.teaserTrackingInfo = [notification.userInfo objectForKey:@"teaserTrackingInfo"];
+        if ([notification.userInfo objectForKey:@"purchaseTrackingInfo"]) {
+            pdv.purchaseTrackingInfo = [notification.userInfo objectForKey:@"purchaseTrackingInfo"];
         }
         
         [self pushViewController:pdv animated:YES];
@@ -854,8 +859,8 @@
     if([notification.userInfo objectForKey:@"title"]) {
         viewController.title = [notification.userInfo objectForKey:@"title"];
     }
-    if ([notification.userInfo objectForKey:@"teaserTrackingInfo"]) {
-        viewController.teaserTrackingInfo = [notification.userInfo objectForKey:@"teaserTrackingInfo"];
+    if ([notification.userInfo objectForKey:@"purchaseTrackingInfo"]) {
+        viewController.purchaseTrackingInfo = [notification.userInfo objectForKey:@"purchaseTrackingInfo"];
     }
     if (targetString.length) {
         viewController.targetString = targetString;
@@ -916,7 +921,7 @@
             [screenTarget.navBarLayout setShowBackButton:NO];
             [screenTarget.navBarLayout setShowCartButton:NO];
             [screenTarget.navBarLayout setShowSearchButton:NO];
-            [[MainTabBarViewController topNavigationController] openScreenTarget:screenTarget];
+//            [[MainTabBarViewController topNavigationController] openScreenTarget:screenTarget];
             return;
         }
     }

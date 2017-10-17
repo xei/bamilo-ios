@@ -1,4 +1,4 @@
-//
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  //
 //  JAShopWebViewController.m
 //  Jumia
 //
@@ -126,7 +126,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
  navigationType:(UIWebViewNavigationType)navigationType {
     RITarget *target = [RITarget parseTarget:[request.URL absoluteString]];
     JAScreenTarget *screenTarget = [[JAScreenTarget alloc] initWithTarget:target];
-    return ![[MainTabBarViewController topNavigationController] openScreenTarget:screenTarget];
+    return ![[MainTabBarViewController topNavigationController] openScreenTarget:screenTarget purchaseInfo:self.purchaseTrackingInfo];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {

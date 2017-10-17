@@ -47,8 +47,8 @@ import Foundation
     class func teaserTappedSelector() -> Selector {
         return Selector(("teaserTappedWithAttributes:"))
     }
-    class func teaserPurchasedSelector() -> Selector {
-        return Selector(("teaserPurchasedWithAttributes:"))
+    class func behaviourPurchasedSelector() -> Selector {
+        return Selector(("purchaseBehaviourWithAttributes:"))
     }
     class func viewProductSelector() -> Selector {
         return Selector(("viewProductWithAttributes:"))

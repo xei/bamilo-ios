@@ -168,7 +168,7 @@
         [RISearchSuggestion saveSearchSuggestionOnDB:suggestion isRecentSearch:YES andContext:YES];
     }
     self.searchBar.text = @"";
-    [[MainTabBarViewController topNavigationController] openTargetString:suggestion.targetString];
+//    [[MainTabBarViewController topNavigationController] openTargetString:suggestion.targetString];
     [self setHidden:YES];
 }
 

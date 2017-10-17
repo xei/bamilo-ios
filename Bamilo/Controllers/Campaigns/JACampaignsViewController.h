@@ -21,6 +21,6 @@
 @property (nonatomic, strong)NSString* startingTitle;
 @property (nonatomic, strong)NSString* campaignId;
 
-@property (nonatomic, strong) NSString* teaserTrackingInfo;
+@property (nonatomic, strong) NSString* purchaseTrackingInfo;
 
 @end

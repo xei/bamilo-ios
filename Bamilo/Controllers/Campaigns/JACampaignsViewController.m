@@ -293,7 +293,7 @@ withCampaignTargetString:(NSString*)campaignTargetString
         
         if (apiResponse == RIApiResponseAPIError) {
             for (NSDictionary *error in errors) {
-                if (VALID([error objectForKey:@"reason"], NSString)) {
+                if (VALID(error, NSDictionary) && VALID([error objectForKey:@"reason"], NSString)) {
                     if ([[error objectForKey:@"reason"] isEqualToString:@"CAMPAIGN_NOT_EXIST"]) {
                         if (VALID_NOTEMPTY(self.topTabsView, JATopTabsView) && NO == [self.topTabsView isLoaded]) {
                             [self.topTabsView setupWithTabNames:[NSArray arrayWithObject:STRING_NOT_AVAILABLE]];
@@ -398,8 +398,8 @@ withCampaignTargetString:(NSString*)campaignTargetString
     NSMutableDictionary* userInfo = [NSMutableDictionary new];
     [userInfo setObject:targetString forKey:@"targetString"];
     [userInfo setObject:[NSNumber numberWithBool:YES] forKey:@"show_back_button"];
-    if (self.teaserTrackingInfo) {
-        [userInfo setObject:self.teaserTrackingInfo forKey:@"teaserTrackingInfo"];
+    if (self.purchaseTrackingInfo) {
+        [userInfo setObject:self.purchaseTrackingInfo forKey:@"purchaseTrackingInfo"];
     }
     //the flag shouldPerformButtonActions is used to fix the scrolling, if the campaignPages.count is 1, then it is not needed
     if (self.shouldPerformButtonActions || 1 == self.campaignPages.count) {
@@ -448,15 +448,17 @@ withCampaignTargetString:(NSString*)campaignTargetString
             
             [self trackAddToCartAction:YES];
             
-            if (VALID_NOTEMPTY(self.teaserTrackingInfo, NSString)) {
-                NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
+            if (VALID_NOTEMPTY(self.purchaseTrackingInfo, NSString)) {
+                [[PurchaseBehaviourRecorder sharedInstance] recordAddToCardWithSku:self.backupSimpleSku trackingInfo:self.purchaseTrackingInfo];
                 
-                NSString *obj = [skusFromTeaserInCart objectForKey:self.backupSimpleSku];
-                
-                if (ISEMPTY(obj)) {
-                    [skusFromTeaserInCart setValue:self.teaserTrackingInfo forKey:self.backupSimpleSku];
-                    [[NSUserDefaults standardUserDefaults] setObject:[skusFromTeaserInCart copy] forKey:kSkusFromTeaserInCartKey];
-                }
+//                NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
+//
+//                NSString *obj = [skusFromTeaserInCart objectForKey:self.backupSimpleSku];
+//
+//                if (ISEMPTY(obj)) {
+//                    [skusFromTeaserInCart setValue:self.purchaseTrackingInfo forKey:self.backupSimpleSku];
+//                    [[NSUserDefaults standardUserDefaults] setObject:[skusFromTeaserInCart copy] forKey:kSkusFromTeaserInCartKey];
+//                }
             }
             
             NSNumber *price = self.backupCampaignProduct.priceEuroConverted;

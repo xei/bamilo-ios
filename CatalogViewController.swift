@@ -37,7 +37,7 @@ import SwiftyJSON
     var sortingMethod: Catalog.CatalogSortType? = nil
     var pushFilterQueryString : String?
     var startCatalogStackIndexInNavigationViewController: Int?
-    var teaserTrackingInfo: String? //For tracking teaser (purchase) journeys (optional)
+    var purchaseTrackingInfo: String? //For tracking teaser (purchase) journeys (optional)
     
     private var selectedProduct: Product? //TODO: it's not necessary to keep it, but we should do it for now because
                                           // we need to know which product (may) has been changed by PDVViewController (add to wish list)
@@ -640,7 +640,7 @@ import SwiftyJSON
             destinationViewCtrl?.delegate = self
         } else if segueName == "pushPDVViewController" {
             let destinationViewCtrl = segue.destination as? JAPDVViewController
-            destinationViewCtrl?.teaserTrackingInfo = self.teaserTrackingInfo
+            destinationViewCtrl?.purchaseTrackingInfo = self.purchaseTrackingInfo
             destinationViewCtrl?.productSku = self.selectedProduct?.sku
             destinationViewCtrl?.delegate = self
         }

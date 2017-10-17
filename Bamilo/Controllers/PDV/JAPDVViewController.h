@@ -30,6 +30,6 @@
 @property (strong, nonatomic) NSString *previousCategory;
 @property (strong, nonatomic) NSString *preSelectedSize;
 @property (strong, nonatomic) NSString *richRelevanceParameter;
-@property (nonatomic, strong) NSString *teaserTrackingInfo;
+@property (nonatomic, strong) NSString *purchaseTrackingInfo;
 
 @end

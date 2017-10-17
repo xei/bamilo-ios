@@ -100,8 +100,10 @@ class HomePageViewController:   BaseViewController,
     
     //MARK: - BaseHomePageTeaserBoxTableViewCellDelegate
     func teaserItemTappedWithTargetString(target: String, teaserId: String) {
-        TrackerManager.postEvent(selector: EventSelectors.teaserTappedSelector(), attributes: EventAttributes.teaserPurchase(teaserName: teaserId, screenName: self.getScreenName()))
-        MainTabBarViewController.topNavigationController()?.openTargetString(target)
+        TrackerManager.postEvent(selector: EventSelectors.teaserTappedSelector(), attributes: EventAttributes.teaserTapped(teaserName: teaserId, screenName: getScreenName(), teaserTargetNode: target))
+        if let screenName = getScreenName() {
+            MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: "\(screenName)_\(teaserId):::\(target)")
+        }
     }
     
     func teaserMustBeRemoved(at indexPath: IndexPath) {
@@ -159,5 +161,9 @@ class HomePageViewController:   BaseViewController,
         if let index = self.dailyDealsIndex, let cell = self.tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? DailyDealsTableViewCell {
             cell.updateTimer(seconds: seconds)
         }
+    }
+    
+    override func getScreenName() -> String! {
+        return "HomePage"
     }
 }

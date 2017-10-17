@@ -768,7 +768,7 @@ static NSString *recommendationLogic = @"RELATED";
 }
 
 - (void)goToSisScreen {
-    [[MainTabBarViewController topNavigationController] openTargetString:self.product.brandTarget];
+//    [[MainTabBarViewController topNavigationController] openTargetString:self.product.brandTarget];
 }
 
 - (void)goToOtherSellersScreen {
@@ -844,15 +844,16 @@ static NSString *recommendationLogic = @"RELATED";
                 [TrackerManager postEventWithSelector:[EventSelectors addToCartEventSelector]
                                            attributes:[EventAttributes addToCardWithProduct:self.product screenName:[self getScreenName] success:YES]];
 
-                if (VALID_NOTEMPTY(self.teaserTrackingInfo, NSString)) {
-                    NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
-
-                    NSString *obj = [skusFromTeaserInCart objectForKey:self.product.sku];
-
-                    if (ISEMPTY(obj)) {
-                        [skusFromTeaserInCart setValue:self.teaserTrackingInfo forKey:self.product.sku];
-                        [[NSUserDefaults standardUserDefaults] setObject:[skusFromTeaserInCart copy] forKey:kSkusFromTeaserInCartKey];
-                    }
+                if (VALID_NOTEMPTY(self.purchaseTrackingInfo, NSString)) {
+                    [[PurchaseBehaviourRecorder sharedInstance] recordAddToCardWithSku:self.product.sku trackingInfo:self.purchaseTrackingInfo];
+//                    NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
+//
+//                    NSString *obj = [skusFromTeaserInCart objectForKey:self.product.sku];
+//
+//                    if (ISEMPTY(obj)) {
+//                        [skusFromTeaserInCart setValue:self.purchaseTrackingInfo forKey:self.product.sku];
+//                        [[NSUserDefaults standardUserDefaults] setObject:[skusFromTeaserInCart copy] forKey:kSkusFromTeaserInCartKey];
+//                    }
                 }
 
                 [self trackingEventAddToCart:self.cart];

@@ -219,6 +219,8 @@ class HomeViewController:   BaseViewController,
         if segueName == "pushPDVViewController" {
             let destinationViewCtrl = segue.destination as? JAPDVViewController
             destinationViewCtrl?.productSku = sender as! String
+            //if go to pdv by segue only from Emarsys recommendations (myBamilo)
+            destinationViewCtrl?.purchaseTrackingInfo = "Emarsys:\(getScreenName())"
         } else if segueName == "ShowSearchView", let destinationViewCtrl = segue.destination as? SearchViewController {
             destinationViewCtrl.parentScreenName = self.getScreenName()
         }

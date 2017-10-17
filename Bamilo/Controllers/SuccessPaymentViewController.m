@@ -70,17 +70,14 @@
     }];
     
     //check if came from teasers and track that info
-    NSDictionary* teaserTrackingInfoDictionary = [[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey];
     [self.cart.cartEntity.cartItems enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([obj isKindOfClass:[RICartItem class]]) {
-            NSString *teaserTrackingInfo = [teaserTrackingInfoDictionary objectForKey:((RICartItem *)obj).sku];
-            if (teaserTrackingInfo.length) {
-                [TrackerManager postEventWithSelector:[EventSelectors teaserPurchasedSelector] attributes:[EventAttributes teaserPurchaseWithTeaserName:teaserTrackingInfo screenName:@"HomePage"]];
+            PurchaseBehaviour *behaviour = [[PurchaseBehaviourRecorder sharedInstance] getBehviourBySkuWithSku:((RICartItem *)obj).sku];
+            if (behaviour) {
+                [TrackerManager postEventWithSelector:[EventSelectors behaviourPurchasedSelector] attributes:[EventAttributes purchaseBehaviourWithBehaviour:behaviour]];
             }
         }
     }];
-    
-    
     
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kSkusFromTeaserInCartKey];
     //// ------- START OF LEGACY CODES ------

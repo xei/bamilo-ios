@@ -77,8 +77,8 @@ class DailyDealsTableViewCell: BaseHomePageTeaserBoxTableViewCell, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let product = teaserModelObject?.products?[indexPath.row], let target = product.target, let id = self.teaserModelObject?.teaserId {
-            self.delegate?.teaserItemTappedWithTargetString(target: target, teaserId: id)
+        if let product = teaserModelObject?.products?[indexPath.row], let sku = product.sku, let id = self.teaserModelObject?.teaserId {
+            self.delegate?.teaserItemTappedWithTargetString(target: "product_detail::\(sku)", teaserId: id)
         }
     }
     

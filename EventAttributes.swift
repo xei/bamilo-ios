@@ -90,10 +90,10 @@ public typealias EventAttributeType = [String:Any]
         return attributes
     }
     
-    static func teaserPurchase(teaserName: String, screenName: String) -> EventAttributeType {
+    static func purchaseBehaviour(behaviour: PurchaseBehaviour) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
-        attributes[kEventTeaser] = teaserName
-        attributes[kEventScreenName] = screenName
+        attributes[kGAEventCategory] = behaviour.categoryName
+        attributes[kGAEventLabel] = behaviour.label
         return attributes
     }
     

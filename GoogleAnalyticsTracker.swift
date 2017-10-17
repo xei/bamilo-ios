@@ -292,13 +292,13 @@
         }
     }
 
-    func teaserPurchased(attributes: EventAttributeType) {
-        if let screenName = attributes[kEventScreenName] as? String,
-            let teaserName = attributes[kEventTeaser] as? String {
+    func purchaseBehaviour(attributes: EventAttributeType) {
+        if let category = attributes[kGAEventCategory] as? String,
+            let label = attributes[kGAEventLabel] as? String {
             let params = GAIDictionaryBuilder.createEvent(
-                withCategory: "\(screenName)+\(teaserName)",
-                action: "TeaserPurchase",
-                label: nil,
+                withCategory: category,
+                action: "purchase",
+                label: label,
                 value: nil
             )
             self.sendParamsToGA(params: params)
