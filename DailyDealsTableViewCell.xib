@@ -20,7 +20,7 @@
             <rect key="frame" x="0.0" y="0.0" width="468" height="238"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="468" height="238"/>
+                <rect key="frame" x="0.0" y="0.0" width="468" height="237.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lhy-Ee-IpY" userLabel="container">
@@ -46,7 +46,7 @@
                                 </collectionViewFlowLayout>
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8or-wd-Gt5" customClass="IconButton">
-                                <rect key="frame" x="8" y="5" width="30" height="34"/>
+                                <rect key="frame" x="8" y="-0.5" width="30" height="45"/>
                                 <state key="normal">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -68,6 +68,7 @@
                         <constraints>
                             <constraint firstItem="7cQ-g9-6AG" firstAttribute="left" secondItem="AEa-H7-8vc" secondAttribute="left" priority="250" id="INR-B0-6uU"/>
                             <constraint firstItem="AEa-H7-8vc" firstAttribute="right" secondItem="mwo-x4-6eQ" secondAttribute="right" id="T7O-b5-4RL"/>
+                            <constraint firstItem="8or-wd-Gt5" firstAttribute="height" secondItem="mwo-x4-6eQ" secondAttribute="height" id="Vz8-5x-WI1"/>
                             <constraint firstItem="AEa-H7-8vc" firstAttribute="top" secondItem="mwo-x4-6eQ" secondAttribute="bottom" id="Wft-Dx-VNY"/>
                             <constraint firstItem="8or-wd-Gt5" firstAttribute="centerY" secondItem="mwo-x4-6eQ" secondAttribute="centerY" id="aQH-5W-nOI"/>
                             <constraint firstItem="7cQ-g9-6AG" firstAttribute="centerY" secondItem="mwo-x4-6eQ" secondAttribute="centerY" id="pMQ-fW-wVX"/>

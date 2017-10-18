@@ -9,7 +9,7 @@
 import UIKit
 
 extension UIColor {
-    static func fromHexString (hex:String) -> UIColor {
+    static func fromHexString (hex:String) -> UIColor? {
         var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
         
         if (cString.hasPrefix("#")) {
@@ -17,7 +17,7 @@ extension UIColor {
         }
         
         if ((cString.characters.count) != 6) {
-            return UIColor.gray
+            return nil
         }
         
         var rgbValue:UInt32 = 0
@@ -45,11 +45,11 @@ extension UIColor {
     }
     
     static let placeholderColors:[UIColor] = [ //Sequence of these colors are important
-        UIColor.fromHexString(hex: "#f9efea"),
-        UIColor.fromHexString(hex: "#ececec"),
-        UIColor.fromHexString(hex: "#e2e8ef"),
-        UIColor.fromHexString(hex: "#e9f7f7"),
-        UIColor.fromHexString(hex: "#f5f1f7"),
-        UIColor.fromHexString(hex: "#ecebe8")
+        UIColor.fromHexString(hex: "#f9efea")!,
+        UIColor.fromHexString(hex: "#ececec")!,
+        UIColor.fromHexString(hex: "#e2e8ef")!,
+        UIColor.fromHexString(hex: "#e9f7f7")!,
+        UIColor.fromHexString(hex: "#f5f1f7")!,
+        UIColor.fromHexString(hex: "#ecebe8")!
     ]
 }

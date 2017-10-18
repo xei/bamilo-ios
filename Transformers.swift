@@ -9,4 +9,11 @@
 import UIKit
 import ObjectMapper
 
-public let colorTransformer = TransformOf<UIColor, String>(fromJSON: { UIColor.fromHexString(hex: $0!) }, toJSON: { $0?.toHexString() })
+public let colorTransformer = TransformOf<UIColor?, String?>(fromJSON: { (hexString) -> UIColor?? in
+    guard let hexString = hexString as? String else { return nil }
+    return UIColor.fromHexString(hex: hexString)
+    
+}) { (color) -> String?? in
+    return color??.toHexString()
+}
+

@@ -27,6 +27,7 @@ class HomePageViewController:   BaseViewController,
     private var timer: Timer?
     private var homePage: HomePage?
     private var dailyDealsIndex: Int?
+    private var refreshControl: UIRefreshControl?
     
     private let cellTypeMapper: [HomePageTeaserType: String] = [
         .slider: HomePageSliderTableViewCell.nibName(),
@@ -46,17 +47,55 @@ class HomePageViewController:   BaseViewController,
         self.tableView.register(UINib(nibName: HomePageFeaturedStoresTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: HomePageTeaserType.featuredStores.rawValue)
         self.tableView.register(UINib(nibName: DailyDealsTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: HomePageTeaserType.dailyDeals.rawValue)
         self.tableView.register(UINib(nibName: HomePageTileTeaserTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: HomePageTeaserType.tiles.rawValue)
+        
+        self.refreshControl = UIRefreshControl.init()
+        self.refreshControl?.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        if let refreshControl = self.refreshControl {
+            self.tableView.addSubview(refreshControl)
+        }
+    }
+    
+    func handleRefresh() {
+        self.getHomePage {
+            self.refreshControl?.endRefreshing()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if self.homePage == nil {
-            HomeDataManager.sharedInstance.getHomeData(self, requestType: .background) { (data, errors) in
-                self.loadingIndicator.stopAnimating()
-                if errors == nil {
-                    self.bind(data, forRequestId: 0)
-                }
+            self.getHomePage()
+        }
+    }
+    
+    private func getHomePage(callBack: (()->Void)? = nil) {
+        HomeDataManager.sharedInstance.getHomeData(self, requestType: .background) { (data, errors) in
+            self.loadingIndicator.stopAnimating()
+            callBack?()
+            if errors == nil {
+                self.tableView.backgroundView = nil
+                self.bind(data, forRequestId: 0)
+            } else {
+                self.showErrorMessage()
             }
+        }
+    }
+    
+    private func showErrorMessage() {
+        self.homePage = nil
+        
+        // Display a message when the table is empty
+        let messageLabel = UILabel.init(frame: self.view.bounds)
+        messageLabel.text = STRING_ERROR_MESSAGE
+        messageLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 13), color: .black)
+        messageLabel.numberOfLines = 0
+        messageLabel.textAlignment = .center
+        messageLabel.sizeToFit()
+        
+        ThreadManager.execute {
+            self.tableView.reloadData()
+            self.tableView.backgroundView = messageLabel;
+            self.tableView.separatorStyle = .none;
         }
     }
     
@@ -122,7 +161,6 @@ class HomePageViewController:   BaseViewController,
             ThreadManager.execute(onMainThread: { 
                 self.tableView.reloadData()
             })
-            
             if let index = self.homePage?.teasers.index(where: { $0.type == .dailyDeals }) {
                 self.dailyDealsIndex = index
                 if let countDown = (self.homePage?.teasers[index] as? HomePageDailyDeals)?.ramainingSeconds, countDown > 0 {

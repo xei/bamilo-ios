@@ -44,7 +44,7 @@ class HomePageDailyDeals: HomePageTeaserBox {
         title <- map["data.header.title"]
         titleColor <- (map["data.header.text_color"], colorTransformer)
         moreOption <- map["data.header.more_option"]
-        ramainingSeconds <- map["data.header.counter.ramaining"]
+        ramainingSeconds <- map["data.header.counter.remaining_seconds"]
         counterColor <- (map["data.header.counter.text_color"], colorTransformer)
     }
     

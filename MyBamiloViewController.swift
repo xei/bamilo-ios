@@ -33,8 +33,12 @@ class MyBamiloViewController:   BaseViewController,
     private let paginationThresholdPoint:CGFloat = 30
     
     private lazy var dataSource = MyBamiloModel()
+    private lazy var incomingDataSource = MyBamiloModel()
+    
     private var recommendationRequestCounts = 0
     private var visibleProductCount = 0
+    private var refreshControl: UIRefreshControl?
+    private var isRefreshing: Bool = false
     
     weak var delegate: MyBamiloViewControllerDelegate?
     
@@ -49,10 +53,23 @@ class MyBamiloViewController:   BaseViewController,
         
         self.collectionView.collectionViewLayout = GridCollectionViewFlowLayout()
         EmarsysPredictManager.sendTransactions(of: self)
+        
+        self.refreshControl = UIRefreshControl.init()
+        self.refreshControl?.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        if let refreshControl = self.refreshControl {
+            self.collectionView.addSubview(refreshControl)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         self.collectionView.killScroll()
+    }
+    
+    func handleRefresh() {
+        self.isRefreshing = true
+        self.visibleProductCount = 0
+        self.incomingDataSource = MyBamiloModel()
+        EmarsysPredictManager.sendTransactions(of: self)
     }
     
     //MARK: - EmarsysPredictProtocolBase
@@ -62,7 +79,7 @@ class MyBamiloViewController:   BaseViewController,
             let recommendReq = EMRecommendationRequest.init(logic: "\(recommendationLogic)_\(i + 1)")
             recommendReq.limit = self.recommendationCountPerLogic
             
-            recommendReq.excludeItemsWhere("item", isIn: self.dataSource.filterById(id: "\(recommendationLogic)_\(i + 1)").map { $0.sku })
+            recommendReq.excludeItemsWhere("item", isIn: self.incomingDataSource.filterById(id: "\(recommendationLogic)_\(i + 1)").map { $0.sku })
             recommendReq.completionHandler = { receivedRecs in
                 self.processRecommandationResult(result: receivedRecs)
             }
@@ -79,9 +96,14 @@ class MyBamiloViewController:   BaseViewController,
     private func processRecommandationResult(result: EMRecommendationResult) {
         ThreadManager.execute(onMainThread: {
             self.recommendationRequestCounts -= 1
-            let newRecommendedItems = self.dataSource.embedNewRecommends(result: result)
+            let newRecommendedItems = self.incomingDataSource.embedNewRecommends(result: result)
             if newRecommendedItems.count > 0 {
+                print(self.recommendationRequestCounts)
                 if self.recommendationRequestCounts == 0 {
+                    self.dataSource.topics = self.incomingDataSource.topics
+                    self.dataSource.products = self.incomingDataSource.products
+                    self.refreshControl?.endRefreshing()
+                    
                     //Wait untill all the requests are ready
                     self.loadingIndicator.stopAnimating()
                     var newIndexPathes = [IndexPath]()
@@ -89,11 +111,15 @@ class MyBamiloViewController:   BaseViewController,
                         let newIndex = self.visibleProductCount + index
                         newIndexPathes.append(IndexPath(item: newIndex, section: 0))
                     }
-                    self.collectionView.performBatchUpdates({
-                        self.collectionView.insertItems(at: newIndexPathes)
-                    }, completion: { (finished) in
-                        self.visibleProductCount = self.dataSource.products.count
-                    })
+                    if self.isRefreshing {
+                        self.collectionView.reloadData()
+                    } else {
+                        self.collectionView.performBatchUpdates({
+                            self.collectionView.insertItems(at: newIndexPathes)
+                        }, completion: { (finished) in
+                            self.visibleProductCount = self.dataSource.products.count
+                        })
+                    }
                 }
             }
         })

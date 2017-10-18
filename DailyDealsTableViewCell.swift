@@ -99,7 +99,7 @@ class DailyDealsTableViewCell: BaseHomePageTeaserBoxTableViewCell, UICollectionV
                 self.teaserTitle.textColor = dailyDeals.titleColor ?? .black
                 if let moreOption = dailyDeals.moreOption {
                     self.moreButton.setTitle(moreOption.title, for: .normal)
-                    self.moreButton.setTitleColor(moreOption.color, for: .normal)
+                    self.moreButton.setTitleColor(moreOption.color ?? Theme.color(kColorGray3), for: .normal)
                     self.countDownCenterdConstraint.priority = UILayoutPriorityDefaultHigh
                     self.countDownAlignLeftConstraint.priority = UILayoutPriorityDefaultLow
                 } else {
