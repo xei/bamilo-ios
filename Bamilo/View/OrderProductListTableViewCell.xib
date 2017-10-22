@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -33,7 +33,7 @@
                         <rect key="frame" x="222" y="23" width="118" height="146"/>
                         <constraints>
                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="130" id="0zI-1u-H4F"/>
-                            <constraint firstAttribute="width" secondItem="yOx-Z6-S3F" secondAttribute="height" multiplier="130:160" id="EOz-Od-1TV"/>
+                            <constraint firstAttribute="width" secondItem="yOx-Z6-S3F" secondAttribute="height" multiplier="13:16" id="EOz-Od-1TV"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
@@ -45,19 +45,19 @@
                         </userDefinedRuntimeAttributes>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="وضعیت کالا" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4i5-AP-qxI">
-                        <rect key="frame" x="10" y="23" width="168" height="19.5"/>
+                        <rect key="frame" x="10" y="23" width="168" height="12"/>
                         <fontDescription key="fontDescription" name="Bamilo-Sans-Bold" family="Bamilo-Sans" pointSize="10"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="نام کالا" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BiP-qS-J4S">
-                        <rect key="frame" x="10" y="50.5" width="168" height="17.5"/>
+                        <rect key="frame" x="10" y="43" width="168" height="10.5"/>
                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="9"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۲۵۰۰ ریال" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="slS-Kc-FjF">
-                        <rect key="frame" x="138" y="71" width="40" height="15"/>
+                        <rect key="frame" x="144" y="56.5" width="34" height="15"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="EDI-9B-TRL"/>
                         </constraints>
@@ -85,7 +85,7 @@
                         </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="تعداد:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ThD-LB-ofp">
-                        <rect key="frame" x="154" y="89" width="24" height="15"/>
+                        <rect key="frame" x="159" y="74.5" width="19" height="15"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="Hf8-fQ-yHa"/>
                         </constraints>

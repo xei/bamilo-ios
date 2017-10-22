@@ -9,7 +9,6 @@
 #import "CatalogNoResultViewController.h"
 #import "RITeaserGrouping.h"
 #import "RITeaserComponent.h"
-#import "PopularTeaserTableViewCell.h"
 #import "PlainTableViewHeaderCell.h"
 #import "EmarsysRecommendationCarouselWidget.h"
 #import "EmarsysPredictManager.h"
@@ -24,7 +23,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *warningMessageUILabel;
 @property (strong, nonatomic) RITeaserGrouping *teaserGroup;
 @property (nonatomic, copy) NSString *searchTerm;
-    @property (weak, nonatomic) IBOutlet NSLayoutConstraint *carouselBottomConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *carouselBottomConstraint;
 @property (strong, nonatomic) IBOutlet EmarsysRecommendationCarouselWidget *carouselWidget;
 @end
 

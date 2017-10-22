@@ -9,7 +9,7 @@
 #import "OrderListViewController.h"
 #import "OrderListTableViewCell.h"
 #import "Bamilo-Swift.h"
-#import "OrderDetailViewController.h"
+//#import "OrderDetailViewController.h"
 #import "OrderList.h"
 
 #define kTopSeparatorHight 1.f
@@ -145,7 +145,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableview deselectRowAtIndexPath:indexPath animated:YES];
-    [self performSegueWithIdentifier:NSStringFromClass([OrderDetailViewController class]) sender:self.list.orders[indexPath.row]];
+    
+    [self performSegueWithIdentifier:@"OrderDetailViewController" sender:self.list.orders[indexPath.row]];
 }
 
 #pragma mark - bind to UI
@@ -161,10 +162,10 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([segue.identifier isEqualToString:NSStringFromClass([OrderDetailViewController class])]) {
-        OrderDetailViewController *orderDetailViewCtrl = (OrderDetailViewController *)segue.destinationViewController;
-        orderDetailViewCtrl.order = ((Order *)sender);
-    }
+//    if([segue.identifier isEqualToString:NSStringFromClass([OrderDetailViewController class])]) {
+//        OrderDetailViewController *orderDetailViewCtrl = (OrderDetailViewController *)segue.destinationViewController;
+//        orderDetailViewCtrl.order = ((Order *)sender);
+//    }
 }
     
 #pragma mark - hide tabbar in this view controller

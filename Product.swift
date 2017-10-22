@@ -28,11 +28,8 @@ import SwiftyJSON
     var isInWishList: Bool = false
     var reviewsCount: Int?
     
-    override init() {    
-    }
-    
-    required init?(map: Map) {
-    }
+    override init() {}
+    required init?(map: Map) {}
     
     func mapping(map: Map) {
         sku                 <- map["sku"]

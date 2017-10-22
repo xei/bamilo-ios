@@ -27,7 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _addressTableViewController = (AddressTableViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"AddressTableViewController"];
+    _addressTableViewController = (AddressTableViewController *)[[ViewControllerManager sharedInstance] loadViewController:NSStringFromClass([AddressTableViewController class])];
     _addressTableViewController.titleHeaderText = nil;
     _addressTableViewController.options = (ADDRESS_CELL_EDIT | ADDRESS_CELL_DELETE /*| ADDRESS_CELL_SELECT*/);
     _addressTableViewController.delegate = self;
