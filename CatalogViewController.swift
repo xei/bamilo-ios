@@ -199,7 +199,7 @@ import SwiftyJSON
                         self.collectionView.performBatchUpdates({
                             self.collectionView.insertItems(at: newIndexPathes)
                         }, completion: {(finished) in
-                            self.resetBarFollowers(animated: false)
+                            self.resetBarFollowers(animated: true)
                         })
                     }
                 }
@@ -262,6 +262,7 @@ import SwiftyJSON
             attributes: EventAttributes.catalogViewChanged(listViewType: type)
         )
         self.collectionView.reloadData()
+        self.resetBarFollowers(animated: true)
         UIView.animate(withDuration: 0.15, animations: { 
             self.collectionView.collectionViewLayout.invalidateLayout()
             self.collectionView.setCollectionViewLayout(self.getProperCollectionViewFlowLayout(), animated: true)
