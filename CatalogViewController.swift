@@ -102,7 +102,7 @@ import SwiftyJSON
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateListWithUserLoginNotification(notification:)), name: NSNotification.Name(NotificationKeys.UserLogin), object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(resetBarFollowers), name: NSNotification.Name(NotificationKeys.EnterForground), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resetBarFollowers(animated:)), name: NSNotification.Name(NotificationKeys.EnterForground), object: true)
         
         if let navBar = self.navigationController?.navigationBar {
             self.initialNavBarAndStatusBarHeight = navBar.frame.height + UIApplication.shared.statusBarFrame.height
@@ -155,17 +155,17 @@ import SwiftyJSON
         super.viewWillDisappear(animated)
 
         //reset all states of tabbar and navBar, status bar
-        self.resetBarFollowers()
+        self.resetBarFollowers(animated:true)
         
         self.setNavigationBarAlpha(alpha: 0, animated: true)
         self.navBarBlurView?.removeFromSuperview()
         self.collectionView.killScroll()
     }
     
-    func resetBarFollowers() {
-        self.navBarScrollFollower?.resetBarFrame(animated: true)
-        self.tabBarScrollFollower?.resetBarFrame(animated: true)
-        self.searchBarScrollFollower?.resetBarFrame(animated: true)
+    func resetBarFollowers(animated: Bool) {
+        self.navBarScrollFollower?.resetBarFrame(animated: animated)
+        self.tabBarScrollFollower?.resetBarFrame(animated: animated)
+        self.searchBarScrollFollower?.resetBarFrame(animated: animated)
     }
     
     func updateNavBar() {
@@ -198,7 +198,9 @@ import SwiftyJSON
                         }
                         self.collectionView.performBatchUpdates({
                             self.collectionView.insertItems(at: newIndexPathes)
-                        }, completion: nil)
+                        }, completion: {(finished) in
+                            self.resetBarFollowers(animated: false)
+                        })
                     }
                 }
                 if let totalProducts = receivedCatalogData.totalProductsCount {
