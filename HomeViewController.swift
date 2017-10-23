@@ -98,8 +98,9 @@ class HomeViewController:   BaseViewController,
             self.searchBarFollower = ScrollerBarFollower(barView: self.searchBar, moveDirection: .top)
             self.topTabBarFollower = ScrollerBarFollower(barView: self.pagemenu!.menuScrollView, moveDirection: .top)
         
-            self.setAndFollowerScrollView(scrollView: self.homePage.tableView)
             self.setAndFollowerScrollView(scrollView: self.myBamiloPage.collectionView)
+            self.setAndFollowerScrollView(scrollView: self.homePage.tableView)
+            
             self.isLoaded = true
         }
     }
