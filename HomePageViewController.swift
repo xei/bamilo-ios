@@ -68,6 +68,14 @@ class HomePageViewController:   BaseViewController,
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        //To prevent refresh control to be visible (and it's gap) for the next time
+        self.refreshControl?.endRefreshing()
+        self.tableView.reloadData()
+    }
+    
     private func getHomePage(callBack: (()->Void)? = nil) {
         HomeDataManager.sharedInstance.getHomeData(self, requestType: .background) { (data, errors) in
             self.loadingIndicator.stopAnimating()

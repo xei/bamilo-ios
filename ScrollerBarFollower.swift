@@ -19,6 +19,7 @@ import UIKit
     private var barIsHidding = false
     private var lastContentOffset: CGFloat = 0
     private var shouldFollower = false
+    private weak var followingScrollView: UIScrollView?
     
     override init() {
         super.init()
@@ -41,6 +42,7 @@ import UIKit
         self.distance = permittedMoveDistance
         self.lastContentOffset = scrollView.contentOffset.y
         self.shouldFollower = true
+        self.followingScrollView = scrollView
     }
     
     func stopFollowing() {
@@ -76,7 +78,7 @@ import UIKit
     
     //these two methods must be called in mutaul UIScrollViewDelegate methods 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if !self.shouldFollower { return }
+        if !self.shouldFollower || scrollView != self.followingScrollView { return }
         
         if scrollView.contentOffset.y < self.delay {
             self.resetBarFrame(animated: false)
@@ -97,7 +99,7 @@ import UIKit
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if !decelerate {
+        if !decelerate || scrollView != self.followingScrollView {
             self.barIsHidding ? self.hideBar(animated: false) : self.resetBarFrame(animated: true)
             
         }
