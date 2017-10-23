@@ -71,7 +71,7 @@
 
 - (void)addPageAtIndex:(NSInteger)index;
 - (void)moveToPage:(NSInteger)index;
-
+- (void)moveToPage:(NSInteger)index withAnimated:(BOOL)animated;
 - (instancetype)initWithViewControllers:(NSArray *)viewControllers frame:(CGRect)frame options:(NSDictionary *)options;
 
 extern NSString * const CAPSPageMenuOptionSelectionIndicatorHeight;

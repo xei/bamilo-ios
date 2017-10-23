@@ -78,7 +78,7 @@ class HomeViewController:   BaseViewController,
             if let view = self.pagemenu?.view {
                 self.contentContainer.addSubview(view)
             }
-            self.pagemenu?.move(toPage: 1)
+            self.pagemenu?.move(toPage: 1, withAnimated: false)
     
         
             self.homePage.delegate = self
@@ -129,11 +129,9 @@ class HomeViewController:   BaseViewController,
         self.searchBarFollower?.stopFollowing()
         self.topTabBarFollower?.stopFollowing()
         
-        if let homePage = controller as? HomePageViewController, let navBarHeight = navBarInitialHeight, let scrollView = homePage.tableView {
-            self.followersFollow(scrollView: scrollView, permittedMove: navBarHeight)
-        } else if let myBamilo = controller as? MyBamiloViewController, let navBarHeight = navBarInitialHeight, let scrollView = myBamilo.collectionView {
-            self.followersFollow(scrollView: scrollView, permittedMove: navBarHeight)
-        }
+        //Stop all scrolling views
+        self.homePage.tableView?.killScroll()
+        self.myBamiloPage.collectionView.killScroll()
     }
     
     private func followersFollow(scrollView: UIScrollView, permittedMove: CGFloat) {
@@ -145,6 +143,12 @@ class HomeViewController:   BaseViewController,
     func didMove(toPage controller: UIViewController!, index: Int) {
         ThreadManager.execute {
             self.setProperTopTabbarAndNavbarStateInTransitions(to: controller)
+            
+            if let homePage = controller as? HomePageViewController, let navBarHeight = self.navBarInitialHeight, let scrollView = homePage.tableView {
+                self.followersFollow(scrollView: scrollView, permittedMove: navBarHeight)
+            } else if let myBamilo = controller as? MyBamiloViewController, let navBarHeight = self.navBarInitialHeight, let scrollView = myBamilo.collectionView {
+                self.followersFollow(scrollView: scrollView, permittedMove: navBarHeight)
+            }
         }
     }
     
@@ -161,9 +165,6 @@ class HomeViewController:   BaseViewController,
 //            }
 //        }
         
-        //Stop all scrolling views
-        self.homePage.tableView?.killScroll()
-        self.myBamiloPage.collectionView.killScroll()
     }
     
     private func resetAllBarFrames() {

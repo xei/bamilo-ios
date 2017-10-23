@@ -63,6 +63,13 @@ class MyBamiloViewController:   BaseViewController,
     
     override func viewWillDisappear(_ animated: Bool) {
         self.collectionView.killScroll()
+
+        
+        //To prevent refresh control to be visible (and it's gap) for the next time
+        ThreadManager.execute {
+            self.refreshControl?.endRefreshing()
+            self.collectionView.reloadData()
+        }
     }
     
     func handleRefresh() {
@@ -98,7 +105,6 @@ class MyBamiloViewController:   BaseViewController,
             self.recommendationRequestCounts -= 1
             let newRecommendedItems = self.incomingDataSource.embedNewRecommends(result: result)
             if newRecommendedItems.count > 0 {
-                print(self.recommendationRequestCounts)
                 if self.recommendationRequestCounts == 0 {
                     self.dataSource.topics = self.incomingDataSource.topics
                     self.dataSource.products = self.incomingDataSource.products

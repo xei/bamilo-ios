@@ -876,6 +876,10 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
  */
 - (void)moveToPage:(NSInteger)index
 {
+    [self moveToPage:index withAnimated:YES];
+}
+
+- (void)moveToPage:(NSInteger)index withAnimated:(BOOL)animated {
     if (index >= 0 && index < _controllerArray.count) {
         // Update page if changed
         if (index != _currentPageIndex) {
@@ -906,10 +910,15 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
         // Move controller scroll view when tapping menu item
         double duration = (double)(_scrollAnimationDurationOnMenuItemTap) / (double)(1000);
         
-        [UIView animateWithDuration:duration animations:^{
+        if (animated) {
+            [UIView animateWithDuration:duration animations:^{
+                CGFloat xOffset = (CGFloat)index * self.controllerScrollView.frame.size.width;
+                [self.controllerScrollView setContentOffset:CGPointMake(xOffset, self.controllerScrollView.contentOffset.y) animated:NO];
+            }];
+        } else {
             CGFloat xOffset = (CGFloat)index * self.controllerScrollView.frame.size.width;
             [self.controllerScrollView setContentOffset:CGPointMake(xOffset, self.controllerScrollView.contentOffset.y) animated:NO];
-        }];
+        }
     }
 }
 
