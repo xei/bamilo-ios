@@ -60,3 +60,14 @@ let STRING_ERROR_MESSAGE = RILocalizationWrapper.localizedString("errorMessage")
 let STRING_QUANTITY = RILocalizationWrapper.localizedString("my_order_quantity_label")!
 let STRING_SELLER = RILocalizationWrapper.localizedString("seller")!
 let STRING_SIZE = RILocalizationWrapper.localizedString("string_size")!
+let STRING_FREE = RILocalizationWrapper.localizedString("free_label")!
+let STRING_ORDER_ID = RILocalizationWrapper.localizedString("track_order_hint")!
+let STRING_ORDER_COST = RILocalizationWrapper.localizedString("total_order_cost")!
+let STRING_ORDDER_PRODUCT_QUANTITY = RILocalizationWrapper.localizedString("order_product_quantity")!
+let STRING_CREATION_DATE = RILocalizationWrapper.localizedString("creation_date")!
+let STRING_RECIPIENT = RILocalizationWrapper.localizedString("recipient")!
+let STRING_SHIPPING_ADDRESS = RILocalizationWrapper.localizedString("shipping_address")!
+let STRING_PAYMENT_OPTION = RILocalizationWrapper.localizedString("payment_option")!
+let STRING_SHIPPING_COST = RILocalizationWrapper.localizedString("shipping_cost")!
+let STRING_ORDER_STATUS = RILocalizationWrapper.localizedString("string_order_status")!
+

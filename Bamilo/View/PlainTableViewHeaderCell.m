@@ -32,7 +32,7 @@
 
 #pragma mark - Overrides
 + (NSString *)nibName {
-    return @"PlainTableViewHeaderCell";
+    return NSStringFromClass([self class]);
 }
 
 + (CGFloat)cellHeight {

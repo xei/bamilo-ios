@@ -51,6 +51,7 @@
 #import "BaseViewController.h"
 #import "BaseTableViewCell.h"
 #import "PlainTableViewHeaderCell.h"
+#import "MutualTitleHeaderCell.h"
 #import "CatalogNoResultViewController.h"
 #import "JAFiltersViewController.h"
 #import "JACategoriesSideMenuViewController.h"

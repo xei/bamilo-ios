@@ -8,14 +8,20 @@
 
 import UIKit
 
-class OrderDetailTableViewController: AccordionTableViewController {
+
+
+class OrderDetailTableViewController: AccordionTableViewController, OrderDetailTableViewCellDelegate {
 
     var dataSource: OrderItem?
+    weak var delegate: OrderDetailTableViewCellDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.tableView.register(UINib(nibName: OrderDetailTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: OrderDetailTableViewCell.nibName())
+        self.tableView.register(UINib(nibName: MutualTitleHeaderCell.nibName(), bundle: nil), forHeaderFooterViewReuseIdentifier: MutualTitleHeaderCell.nibName())
+        self.tableView.register(UINib(nibName: OrderOwnerInfoTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: OrderOwnerInfoTableViewCell.nibName())
+        self.tableView.register(UINib(nibName: OrderInfoTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: OrderInfoTableViewCell.nibName())
     }
 
     // MARK: - Table view data source
@@ -33,16 +39,45 @@ class OrderDetailTableViewController: AccordionTableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             //first cell
-            return UITableViewCell()
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: OrderInfoTableViewCell.nibName(), for: indexPath) as! OrderInfoTableViewCell
+            cell.update(withModel: self.dataSource)
+            return cell
         }
         if let packagesCount = self.dataSource?.packages?.count, indexPath.section == packagesCount + 1 {
             //last cell
-            return UITableViewCell()
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: OrderOwnerInfoTableViewCell.nibName(), for: indexPath) as! OrderOwnerInfoTableViewCell
+            cell.update(withModel: self.dataSource)
+            return cell
         }
         let cell = self.tableView.dequeueReusableCell(withIdentifier: OrderDetailTableViewCell.nibName(), for: indexPath) as! OrderDetailTableViewCell
+        cell.delegate = self
         cell.update(withModel: self.dataSource?.packages?[indexPath.section - 1].products?[indexPath.row])
         self.setExpandfor(cell: cell, indexPath: indexPath)
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if let packagesCount = self.dataSource?.packages?.count {
+            if section == 0 || section == packagesCount + 1 { return nil }
+        } else { return nil }
+        
+        let cell = self.tableView.dequeueReusableHeaderFooterView(withIdentifier: MutualTitleHeaderCell.nibName()) as! MutualTitleHeaderCell
+        cell.contentView.backgroundColor = Theme.color(kColorGray9)
+        cell.leftTitleString = self.dataSource?.packages?[section - 1].deliveryTime
+        cell.titleString = self.dataSource?.packages?[section - 1].title
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if let packagesCount = self.dataSource?.packages?.count {
+            if section == 0 || section == packagesCount + 1 { return 0 }
+        } else { return 0 }
+        
+        return 40
+    }
+    
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 300
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -55,4 +90,14 @@ class OrderDetailTableViewController: AccordionTableViewController {
             self.tableView.reloadData()
         }
     }
+    
+    // MARK: - OrderDetailTableViewCellDelegate
+    func opensProductDetailWithSku(sku: String) {
+        self.delegate?.opensProductDetailWithSku(sku: sku)
+    }
+    
+    func openRateViewWithSku(sku: String) {
+        self.delegate?.openRateViewWithSku(sku: sku)
+    }
+    
 }

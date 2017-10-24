@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -20,17 +20,17 @@
             <rect key="frame" x="0.0" y="0.0" width="448" height="67"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="448" height="66.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="448" height="67"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eiG-YF-SeS">
-                        <rect key="frame" x="408.5" y="21" width="29.5" height="25"/>
+                        <rect key="frame" x="402.5" y="21" width="29.5" height="25"/>
                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="13"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tza-sn-rxE">
-                        <rect key="frame" x="10" y="21" width="29.5" height="25"/>
+                        <rect key="frame" x="16" y="21" width="29.5" height="25"/>
                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="13"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -38,14 +38,16 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="eiG-YF-SeS" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Ab3-mL-F82"/>
-                    <constraint firstItem="Tza-sn-rxE" firstAttribute="left" secondItem="H2p-sc-9uM" secondAttribute="left" constant="10" id="e6R-Fq-MKD"/>
+                    <constraint firstItem="Tza-sn-rxE" firstAttribute="left" secondItem="H2p-sc-9uM" secondAttribute="left" constant="16" id="e6R-Fq-MKD"/>
                     <constraint firstItem="Tza-sn-rxE" firstAttribute="centerY" secondItem="eiG-YF-SeS" secondAttribute="centerY" id="qbL-X9-V7l"/>
-                    <constraint firstAttribute="right" secondItem="eiG-YF-SeS" secondAttribute="right" constant="10" id="yGI-fa-5Yz"/>
+                    <constraint firstAttribute="right" secondItem="eiG-YF-SeS" secondAttribute="right" constant="16" id="yGI-fa-5Yz"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="leftTitleLabel" destination="Tza-sn-rxE" id="2yH-Ep-v7C"/>
+                <outlet property="leftTitleLeftPaddingConstraint" destination="e6R-Fq-MKD" id="Hpz-Am-GSX"/>
                 <outlet property="titleLabel" destination="eiG-YF-SeS" id="pFW-DZ-4Bx"/>
+                <outlet property="titleRightPaddingConstraint" destination="yGI-fa-5Yz" id="OTQ-fG-JTj"/>
             </connections>
             <point key="canvasLocation" x="-144" y="22"/>
         </tableViewCell>

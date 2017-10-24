@@ -96,7 +96,7 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
     private func setPropoerConstraints(expanded: Bool) {
         //to set the height of cell via
         self.headreViewBottomConstraint.priority = expanded ?  UILayoutPriorityDefaultLow:UILayoutPriorityDefaultHigh
-        self.rateButtonBottomConstraint.priority = expanded ?UILayoutPriorityDefaultHigh:UILayoutPriorityDefaultLow
+        self.rateButtonBottomConstraint.priority = expanded ? UILayoutPriorityDefaultHigh:UILayoutPriorityDefaultLow
         self.layoutIfNeeded()
     }
     

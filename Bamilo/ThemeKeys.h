@@ -43,6 +43,7 @@ FOUNDATION_EXPORT NSString *const kColorDarkGreen;
 FOUNDATION_EXPORT NSString *const kColorGray1;
 FOUNDATION_EXPORT NSString *const kColorPrimaryGray1;
 FOUNDATION_EXPORT NSString *const kColorSecondaryGray1;
+FOUNDATION_EXPORT NSString *const kColorGray2;
 FOUNDATION_EXPORT NSString *const kColorGray3;
 FOUNDATION_EXPORT NSString *const kColorGray5;
 FOUNDATION_EXPORT NSString *const kColorGray9;

@@ -19,6 +19,7 @@ class OrderItem: NSObject, Mappable {
     var price: String?
     var paymentMethod: String?
     var deliveryCost: String?
+    var productionCount: Int = 0
     
     var packages: [OrderPackage]?
     var billingAddress: Address?
@@ -37,6 +38,7 @@ class OrderItem: NSObject, Mappable {
         price <- map["payment.total_cost"]
         paymentMethod <- map["payment.label"]
         packages <- map["packages"]
+        productionCount <- map["total_products_count"]
         
         //Mapping filters
         let json = JSON(map.JSON)

@@ -12,4 +12,5 @@
 @interface MutualTitleHeaderCell : PlainTableViewHeaderCell
 @property (nonatomic, copy) NSString *leftTitleString;
 @property (nonatomic, copy) NSAttributedString *leftTitleAtributedString;
+@property (nonatomic) CGFloat paddingContent;
 @end
