@@ -47,6 +47,18 @@ import UIKit
     
     func stopFollowing() {
         self.shouldFollower = false
+        self.followingScrollView = nil
+        self.delay = 0
+        self.distance = 0
+        self.lastContentOffset = 0
+    }
+    
+    func pauseFollowing() {
+        self.shouldFollower = false
+    }
+    
+    func resumeFollowing() {
+        self.shouldFollower = true
     }
     
     func resetBarFrame(animated: Bool) {
@@ -100,7 +112,7 @@ import UIKit
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if !decelerate || scrollView != self.followingScrollView {
-            self.barIsHidding ? self.hideBar(animated: false) : self.resetBarFrame(animated: true)
+            self.barIsHidding ? self.hideBar(animated: true) : self.resetBarFrame(animated: true)
             
         }
     }

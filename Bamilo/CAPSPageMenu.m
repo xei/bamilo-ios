@@ -577,19 +577,19 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
         if ([_delegate respondsToSelector:@selector(didMoveToPage:index:)]) {
             [_delegate didMoveToPage:currentController index:_currentPageIndex];
         }
-        
-        // Remove all but current page after decelerating
-        for (NSNumber *num in _pagesAddedSet) {
-            if (![num isEqualToNumber:@(self.currentPageIndex)]) {
-                [self removePageAtIndex:num.integerValue];
-            }
-        }
-        
-        _didScrollAlready = NO;
-        _startingPageForScroll = _currentPageIndex;
-        
-        // Empty out pages in dictionary
-        [_pagesAddedSet removeAllObjects];
+//        
+//        // Remove all but current page after decelerating
+//        for (NSNumber *num in _pagesAddedSet) {
+//            if (![num isEqualToNumber:@(self.currentPageIndex)]) {
+//                [self removePageAtIndex:num.integerValue];
+//            }
+//        }
+//        
+//        _didScrollAlready = NO;
+//        _startingPageForScroll = _currentPageIndex;
+//        
+//        // Empty out pages in dictionary
+//        [_pagesAddedSet removeAllObjects];
     }
 }
 
@@ -602,18 +602,18 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
         [_delegate didMoveToPage:currentController index:_currentPageIndex];
     }
     
-    // Remove all but current page after decelerating
-    for (NSNumber *num in _pagesAddedSet) {
-        if (![num isEqualToNumber:@(self.currentPageIndex)]) {
-            [self removePageAtIndex:num.integerValue];
-        }
-    }
-
-    _startingPageForScroll = _currentPageIndex;
-    _didTapMenuItemToScroll = NO;
-    
-    // Empty out pages in dictionary
-    [_pagesAddedSet removeAllObjects];
+//    // Remove all but current page after decelerating
+//    for (NSNumber *num in _pagesAddedSet) {
+//        if (![num isEqualToNumber:@(self.currentPageIndex)]) {
+//            [self removePageAtIndex:num.integerValue];
+//        }
+//    }
+//
+//    _startingPageForScroll = _currentPageIndex;
+//    _didTapMenuItemToScroll = NO;
+//    
+//    // Empty out pages in dictionary
+//    [_pagesAddedSet removeAllObjects];
 }
 
 
@@ -730,12 +730,12 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
             
             // Move controller scroll view when tapping menu item
             double duration = _scrollAnimationDurationOnMenuItemTap / 1000.0;
-            
+
             [UIView animateWithDuration:duration animations:^{
                 CGFloat xOffset = (CGFloat)itemIndex * _controllerScrollView.frame.size.width;
                 [_controllerScrollView setContentOffset:CGPointMake(xOffset, _controllerScrollView.contentOffset.y)];
             }];
-            
+
             if (_tapTimer != nil) {
                 [_tapTimer invalidate];
             }

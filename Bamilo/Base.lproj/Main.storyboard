@@ -119,7 +119,7 @@
                                         <rect key="frame" x="147" y="137" width="120" height="57"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SSz-D5-qwc">
-                                        <rect key="frame" x="193" y="78" width="29.666666666666657" height="14"/>
+                                        <rect key="frame" x="192.66666666666666" y="78" width="29.666666666666686" height="14"/>
                                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -1048,7 +1048,7 @@
                                                 </connections>
                                             </switch>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="فقط با تخفیف ها" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gEn-nz-ntR">
-                                                <rect key="frame" x="80" y="19.333333333333336" width="65" height="13"/>
+                                                <rect key="frame" x="80" y="20" width="65" height="13"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1461,7 +1461,7 @@
                                 <rect key="frame" x="187" y="100" width="40" height="40"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="فیلترهای کمتری را برای جستجو انتخاب نمایید" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SU1-vf-mKc">
-                                <rect key="frame" x="111" y="165" width="193.66666666666669" height="14"/>
+                                <rect key="frame" x="110.66666666666669" y="165" width="193.66666666666663" height="14"/>
                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -1624,16 +1624,34 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="687"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dyL-OM-a0v" userLabel="Content container">
+                                <rect key="frame" x="0.0" y="140" width="414" height="547"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DJO-8b-dU6">
+                                <rect key="frame" x="0.0" y="64" width="414" height="41"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img_navbar_logo" translatesAutoresizingMaskIntoConstraints="NO" id="GQ4-2P-AAJ">
+                                        <rect key="frame" x="166" y="10.666666666666671" width="83" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="83" id="Il7-iV-Alg"/>
+                                            <constraint firstAttribute="height" constant="20" id="Qs8-vn-yCw"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="41" id="gyv-of-eP1"/>
+                                    <constraint firstItem="GQ4-2P-AAJ" firstAttribute="centerX" secondItem="DJO-8b-dU6" secondAttribute="centerX" id="hOi-6M-QIh"/>
+                                    <constraint firstItem="GQ4-2P-AAJ" firstAttribute="centerY" secondItem="DJO-8b-dU6" secondAttribute="centerY" id="ukn-eW-rN2"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VXG-cT-GiY" customClass="SearchBarControl" customModule="Bamilo" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="64" width="414" height="35"/>
+                                <rect key="frame" x="0.0" y="105" width="414" height="35"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="Ma1-Pf-l5Q"/>
                                 </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dyL-OM-a0v" userLabel="Content container">
-                                <rect key="frame" x="0.0" y="99" width="414" height="588"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1641,15 +1659,20 @@
                             <constraint firstItem="XSt-cb-U18" firstAttribute="top" secondItem="dyL-OM-a0v" secondAttribute="bottom" id="4lm-5f-yjQ"/>
                             <constraint firstAttribute="right" secondItem="dyL-OM-a0v" secondAttribute="right" id="AzP-Rs-6TH"/>
                             <constraint firstAttribute="right" secondItem="VXG-cT-GiY" secondAttribute="right" id="J92-J5-07t"/>
-                            <constraint firstItem="VXG-cT-GiY" firstAttribute="top" secondItem="EsA-aZ-NPd" secondAttribute="bottom" id="V8K-Xd-B6K"/>
+                            <constraint firstItem="DJO-8b-dU6" firstAttribute="top" secondItem="EsA-aZ-NPd" secondAttribute="bottom" id="QKI-ox-jhV"/>
+                            <constraint firstItem="DJO-8b-dU6" firstAttribute="left" secondItem="Oia-Vy-wkr" secondAttribute="left" id="Wy8-kw-qRk"/>
                             <constraint firstItem="dyL-OM-a0v" firstAttribute="left" secondItem="Oia-Vy-wkr" secondAttribute="left" id="bcb-5o-luW"/>
                             <constraint firstItem="VXG-cT-GiY" firstAttribute="left" secondItem="Oia-Vy-wkr" secondAttribute="left" id="itT-yM-F3M"/>
+                            <constraint firstItem="VXG-cT-GiY" firstAttribute="top" secondItem="DJO-8b-dU6" secondAttribute="bottom" id="rYr-kw-f3S"/>
                             <constraint firstItem="dyL-OM-a0v" firstAttribute="top" secondItem="VXG-cT-GiY" secondAttribute="bottom" id="vTA-9k-dM2"/>
+                            <constraint firstAttribute="right" secondItem="DJO-8b-dU6" secondAttribute="right" id="xGB-qQ-Vsd"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" id="Gyj-Lf-Oh9"/>
                     <connections>
+                        <outlet property="artificialNavBarViewHeightConstraint" destination="gyv-of-eP1" id="b9S-Dz-rSV"/>
+                        <outlet property="artificialNavbar" destination="DJO-8b-dU6" id="OFA-ax-cXa"/>
                         <outlet property="contentContainer" destination="dyL-OM-a0v" id="S0S-ov-xrr"/>
                         <outlet property="contentContainerTopConstraint" destination="vTA-9k-dM2" id="f7G-5T-C4i"/>
                         <outlet property="searchBar" destination="VXG-cT-GiY" id="RTz-tO-seN"/>
@@ -1684,6 +1707,7 @@
         <image name="ArrowLeft" width="8" height="14"/>
         <image name="filtered_list_no_result" width="40" height="40"/>
         <image name="img_emptyCart" width="102" height="92"/>
+        <image name="img_navbar_logo" width="83" height="20"/>
         <image name="noOrdersImage" width="120" height="57"/>
         <image name="pageNotFound" width="853" height="853"/>
         <image name="subcatIcon" width="18" height="19"/>
