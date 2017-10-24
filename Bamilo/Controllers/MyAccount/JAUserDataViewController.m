@@ -685,7 +685,7 @@
 #pragma mark - Keyboard notifications
 - (void)keyboardWillShow:(NSNotification *)notification {
     NSDictionary *userInfo = [notification userInfo];
-    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
     
     CGFloat height = kbSize.height;
     if (self.view.frame.size.width == kbSize.height) {

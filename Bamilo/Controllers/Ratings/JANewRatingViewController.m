@@ -655,7 +655,7 @@ UIAlertViewDelegate
     _didPressSendReviewOrKeyboard = TRUE;
     
     NSDictionary *userInfo = [notification userInfo];
-    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
     
     
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
