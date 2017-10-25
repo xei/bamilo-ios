@@ -79,7 +79,7 @@ import UIKit
         }
     }
     
-    func changeBarPositionY(difference: CGFloat) {
+    private func changeBarPositionY(difference: CGFloat) {
         self.barIsHidding = difference > 0
         guard let barViewInitialFrame = self.barViewInitialFrame else {
             return
@@ -93,14 +93,16 @@ import UIKit
         barView?.updateConstraints()
     }
     
-    //these two methods must be called in mutaul UIScrollViewDelegate methods 
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if !self.shouldFollower || scrollView != self.followingScrollView { return }
+    //these two methods must be called in mutaul UIScrollViewDelegate methods
+    
+    //return a cgfloat value between 0 and 1 to show the precentage of progress
+    @discardableResult func scrollViewDidScroll(_ scrollView: UIScrollView) -> CGFloat {
+        if !self.shouldFollower || scrollView != self.followingScrollView { return 0 }
         
         if scrollView.contentOffset.y < self.delay {
             self.resetBarFrame(animated: false)
             self.lastContentOffset = scrollView.contentOffset.y
-            return
+            return 0
         }
         
         let scrollChanage =  scrollView.contentOffset.y - self.lastContentOffset
@@ -109,11 +111,18 @@ import UIKit
         self.lastContentOffset = scrollView.contentOffset.y
         if bottomEdge >= (scrollView.contentSize.height - 50) && scrollChanage < 0 && scrollView.contentSize.height > scrollView.frame.height {
             // we are approaching at the end of scrollview
-            return
+            return 0
         }
         
         self.changeBarPositionY(difference: scrollChanage)
         
+        if let barView = barView, let initialFrame = barViewInitialFrame {
+            let endTargetOriginY = initialFrame.origin.y + (self.direction == .top ? -self.distance : self.distance)
+            let totalDiff = abs(endTargetOriginY - initialFrame.origin.y)
+            let currentDiff = abs(barView.frame.origin.y - initialFrame.origin.y)
+            return currentDiff / totalDiff
+        }
+        return 0
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {

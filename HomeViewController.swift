@@ -16,21 +16,18 @@ class HomeViewController:   BaseViewController,
     @IBOutlet private weak var searchBar: SearchBarControl!
     @IBOutlet private weak var contentContainer: UIView!
     @IBOutlet private weak var contentContainerTopConstraint: NSLayoutConstraint!
-    
+    @IBOutlet weak private var artificialNavbar: UIView!
+    @IBOutlet weak private var artificialNavbarLogo: UIImageView!
+    @IBOutlet weak private var artificialNavBarViewHeightConstraint: NSLayoutConstraint!
     
     private var pagemenu: CAPSPageMenu?
-    private var navBarFollower: ScrollerBarFollower?
-    @IBOutlet weak private var artificialNavbar: UIView!
     private var searchBarFollower: ScrollerBarFollower?
     private var topTabBarFollower: ScrollerBarFollower?
-    
-    private var navBarInitialHeight: CGFloat?
-    
-    @IBOutlet weak private var artificialNavBarViewHeightConstraint: NSLayoutConstraint!
     private var homePage: HomePageViewController!
     private var myBamiloPage: MyBamiloViewController!
+    
     private var isLoaded = false
-    private var isOpeningModal = false
+    private var navBarInitialHeight: CGFloat?
     
     
     override func viewDidLoad() {
@@ -55,6 +52,9 @@ class HomeViewController:   BaseViewController,
         self.searchBar.searchView?.textField.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(resetAllBarFrames(animated:)), name: NSNotification.Name(NotificationKeys.EnterForground), object: true)
         self.view.bringSubview(toFront: self.searchBar)
+        
+        
+        self.searchBar.layer.zPosition = (self.navigationController?.navigationBar.layer.zPosition ?? 0 ) + 1
     }
     
     override func viewDidLayoutSubviews() {
@@ -99,7 +99,6 @@ class HomeViewController:   BaseViewController,
                 self.pagemenu?.menuScrollView.frame.origin.y += navBarHeight
             }
             
-            self.navBarFollower = ScrollerBarFollower(barView: self.artificialNavbar, moveDirection: .top)
             self.searchBarFollower = ScrollerBarFollower(barView: self.searchBar, moveDirection: .top)
             self.topTabBarFollower = ScrollerBarFollower(barView: self.pagemenu!.menuScrollView, moveDirection: .top)
         
@@ -117,7 +116,6 @@ class HomeViewController:   BaseViewController,
         
         // Hide the navigation bar on the this view controller
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
-        self.isOpeningModal = false
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -134,22 +132,19 @@ class HomeViewController:   BaseViewController,
         self.searchBarFollower?.pauseFollowing()
         self.topTabBarFollower?.pauseFollowing()
         
-        self.resetAllBarFrames(animated: true)
+        self.resetAllBarFrames(animated: false)
         
         //Stop all scrolling views
         self.homePage.tableView?.killScroll()
         self.myBamiloPage.collectionView?.killScroll()
         
-        if !self.isOpeningModal {
-            // Show the navigation bar on other view controllers
-            self.navigationController?.setNavigationBarHidden(false, animated: animated)
-        }
+        // Show the navigation bar on other view controllers
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     //MARK:- CAPSPageMenuDelegate
     func willMove(toPage controller: UIViewController!, index: Int) {
         
-        self.navBarFollower?.stopFollowing()
         self.searchBarFollower?.stopFollowing()
         self.topTabBarFollower?.stopFollowing()
         
@@ -171,7 +166,6 @@ class HomeViewController:   BaseViewController,
     }
     
     private func followersFollow(scrollView: UIScrollView, permittedMove: CGFloat) {
-        self.navBarFollower?.followScrollView(scrollView: scrollView, delay: -permittedMove, permittedMoveDistance: permittedMove)
         self.searchBarFollower?.followScrollView(scrollView: scrollView, delay: -permittedMove, permittedMoveDistance: permittedMove)
         self.topTabBarFollower?.followScrollView(scrollView: scrollView, delay: -permittedMove, permittedMoveDistance: permittedMove)
     }
@@ -185,22 +179,21 @@ class HomeViewController:   BaseViewController,
     }
     
     @objc private func resetAllBarFrames(animated: Bool) {
-        self.navBarFollower?.resetBarFrame(animated: animated)
         self.searchBarFollower?.resetBarFrame(animated: animated)
         self.topTabBarFollower?.resetBarFrame(animated: animated)
     }
     
     //MARK:- MyBamiloViewControllerDelegate, HomePageViewControllerDelegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.navBarFollower?.scrollViewDidScroll(scrollView)
-        self.searchBarFollower?.scrollViewDidScroll(scrollView)
+        let precentage = self.searchBarFollower?.scrollViewDidScroll(scrollView)
         self.topTabBarFollower?.scrollViewDidScroll(scrollView)
+        self.artificialNavbarLogo.alpha = 1 - (precentage ?? 0)
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        self.navBarFollower?.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
         self.searchBarFollower?.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
         self.topTabBarFollower?.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
+        self.artificialNavbarLogo.alpha = 1
     }
     
     func didSelectProductSku(productSku: String) {
@@ -219,7 +212,6 @@ class HomeViewController:   BaseViewController,
     //MARK: - UITextFieldDelegate
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.resignFirstResponder()
-        self.isOpeningModal = true
         self.performSegue(withIdentifier: "ShowSearchView", sender: nil)
     }
     
