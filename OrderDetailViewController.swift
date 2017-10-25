@@ -52,7 +52,9 @@ class OrderDetailViewController: BaseViewController, OrderDetailTableViewCellDel
         LoadingManager.showLoading()
         RIProduct.getCompleteWithSku(sku, successBlock: { (product) in
             LoadingManager.hideLoading()
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "NOTIFICATION_SHOW_PRODUCT_SPECIFICATION_SCREEN"), object: ["product": product, "product.screen": "reviews"])
+            if let product = product {
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "NOTIFICATION_SHOW_PRODUCT_SPECIFICATION_SCREEN"), object: nil, userInfo: ["product": product, "product.screen": "reviews"])
+            }
         }) { (response, error) in
             LoadingManager.hideLoading()
             Utility.handleError(error: error, viewController: self)

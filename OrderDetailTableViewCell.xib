@@ -5,7 +5,7 @@
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -63,10 +63,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_dropdown" translatesAutoresizingMaskIntoConstraints="NO" id="hoF-Xk-tFl">
-                                <rect key="frame" x="16" y="84.5" width="19" height="12"/>
+                                <rect key="frame" x="16" y="84.5" width="15" height="15"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="12" id="D9U-fn-0p3"/>
-                                    <constraint firstAttribute="width" constant="19" id="Drg-kJ-2z6"/>
+                                    <constraint firstAttribute="height" constant="15" id="D9U-fn-0p3"/>
+                                    <constraint firstAttribute="width" constant="15" id="Drg-kJ-2z6"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nGe-eU-ped" userLabel="productImageButton">
@@ -156,7 +156,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="ic_dropdown" width="9" height="6"/>
+        <image name="ic_dropdown" width="16" height="16"/>
         <image name="temp" width="215" height="39"/>
     </resources>
 </document>

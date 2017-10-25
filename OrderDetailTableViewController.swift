@@ -53,6 +53,12 @@ class OrderDetailTableViewController: AccordionTableViewController, OrderDetailT
         cell.delegate = self
         cell.update(withModel: self.dataSource?.packages?[indexPath.section - 1].products?[indexPath.row])
         self.setExpandfor(cell: cell, indexPath: indexPath)
+        
+        //To remove offset of seperator in cells
+        cell.preservesSuperviewLayoutMargins = false
+        cell.layoutMargins = .zero
+        cell.separatorInset = .zero
+        
         return cell
     }
     
@@ -62,7 +68,10 @@ class OrderDetailTableViewController: AccordionTableViewController, OrderDetailT
         } else { return nil }
         
         let cell = self.tableView.dequeueReusableHeaderFooterView(withIdentifier: MutualTitleHeaderCell.nibName()) as! MutualTitleHeaderCell
-        cell.contentView.backgroundColor = Theme.color(kColorGray9)
+        cell.frame = CGRect(x: 0, y: 0, width: self.tableView.frame.width, height: 40)
+        cell.backgroundView = UIView(frame: cell.frame)
+        cell.backgroundView?.backgroundColor = Theme.color(kColorGray9)
+        
         cell.leftTitleString = self.dataSource?.packages?[section - 1].deliveryTime
         cell.titleString = self.dataSource?.packages?[section - 1].title
         return cell

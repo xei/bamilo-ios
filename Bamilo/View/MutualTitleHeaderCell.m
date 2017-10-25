@@ -18,7 +18,6 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    
     [self.leftTitleLabel applyStyle:[Theme font:kFontVariationBold size:12.0f] color:[Theme color:kColorExtraDarkGray]];
     
     self.titleRightPaddingConstraint.constant = self.paddingContent ?: 16;

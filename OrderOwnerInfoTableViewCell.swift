@@ -32,21 +32,21 @@ class OrderOwnerInfoTableViewCell: BaseTableViewCell {
         self.orderOwnerPaymentMethodTitleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12),color: Theme.color(kColorGray2))
         self.orderOwnerPaymentMethodLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray2))
         
-        self.orderOwnerNameTitleLabel.text = STRING_RECIPIENT
-        self.orderOwnerAddressTitleLabel.text = STRING_SHIPPING_ADDRESS
-        self.orderOwnerPaymentValueTitleLabel.text = STRING_SHIPPING_COST
-        self.orderOwnerPaymentMethodTitleLabel.text = STRING_PAYMENT_OPTION
+        self.orderOwnerNameTitleLabel.text = "\(STRING_RECIPIENT):"
+        self.orderOwnerAddressTitleLabel.text = "\(STRING_SHIPPING_ADDRESS):"
+        self.orderOwnerPaymentValueTitleLabel.text = "\(STRING_SHIPPING_COST):"
+        self.orderOwnerPaymentMethodTitleLabel.text = "\(STRING_PAYMENT_OPTION):"
     }
     
     override func update(withModel model: Any!) {
         if let order = model as? OrderItem {
             if let name = order.customerFirstName, let lastName = order.customerLastName {
-                self.orderOwnerNameLabel.text = ": \(name) \(lastName)".forceRTL()
+                self.orderOwnerNameLabel.text = "\(name) \(lastName)".forceRTL()
             }
             
-            self.orderOwnerAddressLabel.text = ": \(order.shippingAddress?.address ?? "")".forceRTL()
-            self.orderOwnerPaymentValueLabel.text = ": \((order.deliveryCost ?? "0").formatPriceWithCurrency())".forceRTL()
-            self.orderOwnerPaymentMethodLabel.text = ": \(order.paymentMethod ?? "")".forceRTL()
+            self.orderOwnerAddressLabel.text = "\(order.shippingAddress?.address ?? "")".forceRTL()
+            self.orderOwnerPaymentValueLabel.text = "\((order.deliveryCost ?? "0").formatPriceWithCurrency())".forceRTL()
+            self.orderOwnerPaymentMethodLabel.text = "\(order.paymentMethod ?? "")".forceRTL()
         }
     }
     
