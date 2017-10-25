@@ -80,7 +80,6 @@ import SwiftyJSON
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
         self.view.backgroundColor = Theme.color(kColorVeryLightGray)
         self.productCountLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 11), color: UIColor.black)
         
@@ -199,7 +198,7 @@ import SwiftyJSON
                         self.collectionView.performBatchUpdates({
                             self.collectionView.insertItems(at: newIndexPathes)
                         }, completion: {(finished) in
-                            self.resetBarFollowers(animated: true)
+//                            self.resetBarFollowers(animated: true)
                         })
                     }
                 }
@@ -461,7 +460,11 @@ import SwiftyJSON
     func loadAvaiableSubCategories() {
         if self.searchTarget.targetType == .CATALOG_CATEGORY {
             CatalogDataManager.sharedInstance.getSubCategoriesFilter(self, categoryUrlKey: self.searchTarget.node, completion: { (data, errorMessages) in
-                self.subCategoryFilterItem = data as? CatalogCategoryFilterItem
+                if errorMessages == nil {
+                    self.subCategoryFilterItem = data as? CatalogCategoryFilterItem
+                } else {
+//                    Utility.handleError(error: errorMessages, viewController: self)
+                }
             })
         }
     }
@@ -471,7 +474,11 @@ import SwiftyJSON
         self.pageNumber += 1
         self.loadingDataInProgress = true
         CatalogDataManager.sharedInstance.getCatalog(self, searchTarget: searchTarget, filtersQueryString: pushFilterQueryString, sortingMethod: sortingMethod, page: self.pageNumber) { (data, errorMessages) in
-            self.bind(data, forRequestId: 1)
+            if errorMessages == nil {
+                self.bind(data, forRequestId: 1)
+            } else {
+//                Utility.handleError(error: errorMessages, viewController: self)
+            }
         }
     }
     

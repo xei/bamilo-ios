@@ -155,6 +155,7 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.dismiss(animated: false, completion: nil)
         if indexPath.section == 0 {
             if let categories = self.suggestion?.categories {
                 self.localSavedSuggestion.add(category: categories[indexPath.row])
@@ -162,7 +163,6 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
                     self.delegate?.searchBySuggestion?(targetString: target)
                     if let categoryTitle = categories[indexPath.row].name {
                         TrackerManager.postEvent(selector: EventSelectors.suggestionTappedSelector(), attributes: EventAttributes.searchSuggestionTapped(suggestionTitle: categoryTitle))
-                        
                         MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: "SearchSuggestions:::\(categoryTitle)")
                     }
                 }
@@ -179,7 +179,7 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
                 }
             }
         }
-        self.dismiss(animated: true, completion: nil)
+        
     }
     
     //MARK: - UIScrollViewDelegate
@@ -190,7 +190,7 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
     //MARK: - UITextFieldDelegate
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         let target = RITarget.getTarget(.CATALOG_SEARCH, node: textField.text)
-        
+        self.dismiss(animated: false, completion: nil)
         //Track this action
         if let parentScreenName = parentScreenName, let searchedString = textField.text {
             TrackerManager.postEvent(selector: EventSelectors.searchBarSearchedSelector(), attributes: EventAttributes.searchBarSearched(searchString: searchedString, screenName: parentScreenName))
@@ -202,7 +202,6 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
             MainTabBarViewController.topNavigationController()?.openTargetString(target?.targetString, purchaseInfo: "SearchString:::\(queryString)")
         }
         
-        self.dismiss(animated: true, completion: nil)
         return true
     }
     
