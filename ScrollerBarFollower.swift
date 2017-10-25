@@ -59,19 +59,23 @@ import UIKit
     
     func resumeFollowing() {
         self.shouldFollower = true
+        self.lastContentOffset = self.followingScrollView?.contentOffset.y ?? 0
     }
     
     func resetBarFrame(animated: Bool) {
         if let barView = self.barView, let barViewInitialFrame = self.barViewInitialFrame {
-            barView.setFrame(frame: barViewInitialFrame, animated: animated)
+            UIView.animate(withDuration: 0.15, animations: {
+                barView.frame.origin.y = barViewInitialFrame.origin.y //setFrame(frame: barViewInitialFrame, animated: animated)
+            })
         }
     }
     
     func hideBar(animated: Bool) {
         if let barView = self.barView, let barViewInitialFrame = self.barViewInitialFrame {
-            var hiddenRect = barViewInitialFrame
-            hiddenRect.origin.y = hiddenRect.origin.y + (self.direction == .down ? self.distance : -self.distance)
-            barView.setFrame(frame: hiddenRect, animated: animated)
+            let hiddenRect = barViewInitialFrame
+            UIView.animate(withDuration: 0.15, animations: {
+                barView.frame.origin.y = hiddenRect.origin.y + (self.direction == .down ? self.distance : -self.distance)
+            })
         }
     }
     
@@ -86,6 +90,7 @@ import UIKit
                                  height: barViewInitialFrame.height + self.distance)
         
         barView?.boundedVerticalMove(difference: difference, direction: self.direction, boundFrame: boundedRect)
+        barView?.updateConstraints()
     }
     
     //these two methods must be called in mutaul UIScrollViewDelegate methods 
@@ -99,15 +104,16 @@ import UIKit
         }
         
         let scrollChanage =  scrollView.contentOffset.y - self.lastContentOffset
-        
         let bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height;
-        if bottomEdge >= (scrollView.contentSize.height - 10) && scrollChanage < 0 && scrollView.contentSize.height > scrollView.frame.height {
+        
+        self.lastContentOffset = scrollView.contentOffset.y
+        if bottomEdge >= (scrollView.contentSize.height - 50) && scrollChanage < 0 && scrollView.contentSize.height > scrollView.frame.height {
             // we are approaching at the end of scrollview
             return
         }
         
         self.changeBarPositionY(difference: scrollChanage)
-        self.lastContentOffset = scrollView.contentOffset.y
+        
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {

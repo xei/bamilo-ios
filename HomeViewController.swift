@@ -114,7 +114,6 @@ class HomeViewController:   BaseViewController,
         super.viewWillAppear(animated)
         self.homePage.viewWillAppear(animated)
         self.myBamiloPage.viewWillAppear(animated)
-        self.resetAllBarFrames(animated: true)
         
         // Hide the navigation bar on the this view controller
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
@@ -123,6 +122,7 @@ class HomeViewController:   BaseViewController,
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        self.resetAllBarFrames(animated: true)
         
         self.searchBarFollower?.resumeFollowing()
         self.topTabBarFollower?.resumeFollowing()
@@ -133,6 +133,8 @@ class HomeViewController:   BaseViewController,
         
         self.searchBarFollower?.pauseFollowing()
         self.topTabBarFollower?.pauseFollowing()
+        
+        self.resetAllBarFrames(animated: true)
         
         //Stop all scrolling views
         self.homePage.tableView?.killScroll()

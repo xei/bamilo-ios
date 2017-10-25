@@ -80,7 +80,6 @@ import SwiftyJSON
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
         self.view.backgroundColor = Theme.color(kColorVeryLightGray)
         self.productCountLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 11), color: UIColor.black)
         
@@ -178,7 +177,6 @@ import SwiftyJSON
     //MARK: - DataServiceProtocol
     func bind(_ data: Any!, forRequestId rid: Int32) {
         ThreadManager.execute(onMainThread: {
-            self.loadingDataInProgress = false
             if let receivedCatalogData = data as? Catalog {
                 if rid == 0 {
                     
@@ -199,7 +197,7 @@ import SwiftyJSON
                         self.collectionView.performBatchUpdates({
                             self.collectionView.insertItems(at: newIndexPathes)
                         }, completion: {(finished) in
-                            self.resetBarFollowers(animated: true)
+//                            self.resetBarFollowers(animated: true)
                         })
                     }
                 }
@@ -210,6 +208,7 @@ import SwiftyJSON
                     self.productCountLabel.text = "\(totalProducts) \(STRING_FOUND_PRODUCT_COUNT)".convertTo(language: .arabic)
                 }
             }
+            self.loadingDataInProgress = false
         })
     }
     
@@ -464,7 +463,7 @@ import SwiftyJSON
                 if errorMessages == nil {
                     self.subCategoryFilterItem = data as? CatalogCategoryFilterItem
                 } else {
-                    Utility.handleError(error: errorMessages, viewController: self)
+//                    Utility.handleError(error: errorMessages, viewController: self)
                 }
             })
         }
@@ -478,7 +477,7 @@ import SwiftyJSON
             if errorMessages == nil {
                 self.bind(data, forRequestId: 1)
             } else {
-                Utility.handleError(error: errorMessages, viewController: self)
+//                Utility.handleError(error: errorMessages, viewController: self)
             }
         }
     }
