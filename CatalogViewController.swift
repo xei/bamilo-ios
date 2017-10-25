@@ -177,7 +177,6 @@ import SwiftyJSON
     //MARK: - DataServiceProtocol
     func bind(_ data: Any!, forRequestId rid: Int32) {
         ThreadManager.execute(onMainThread: {
-            self.loadingDataInProgress = false
             if let receivedCatalogData = data as? Catalog {
                 if rid == 0 {
                     
@@ -209,6 +208,7 @@ import SwiftyJSON
                     self.productCountLabel.text = "\(totalProducts) \(STRING_FOUND_PRODUCT_COUNT)".convertTo(language: .arabic)
                 }
             }
+            self.loadingDataInProgress = false
         })
     }
     

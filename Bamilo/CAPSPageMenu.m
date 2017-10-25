@@ -516,6 +516,12 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
                         _currentPageIndex = page;
                         
                         
+                        // Call didMoveToPage delegate function
+                        UIViewController *currentController = _controllerArray[_currentPageIndex];
+                        if ([_delegate respondsToSelector:@selector(willMoveToPage:index:)]) {
+                            [_delegate willMoveToPage:currentController index:_currentPageIndex];
+                        }
+                        
                         if (![_pagesAddedSet containsObject:@(page)] && page < _controllerArray.count && page >= 0){
                             [self addPageAtIndex:page];
                             [_pagesAddedSet addObject:@(page)];
