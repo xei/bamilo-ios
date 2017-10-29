@@ -145,7 +145,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableview deselectRowAtIndexPath:indexPath animated:YES];
-    
     [self performSegueWithIdentifier:@"OrderDetailViewController" sender:self.list.orders[indexPath.row]];
 }
 
@@ -162,10 +161,10 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-//    if([segue.identifier isEqualToString:NSStringFromClass([OrderDetailViewController class])]) {
-//        OrderDetailViewController *orderDetailViewCtrl = (OrderDetailViewController *)segue.destinationViewController;
-//        orderDetailViewCtrl.order = ((Order *)sender);
-//    }
+    if([segue.identifier isEqualToString: @"OrderDetailViewController"]) {
+        OrderDetailViewController *orderDetailViewCtrl = (OrderDetailViewController *)segue.destinationViewController;
+        orderDetailViewCtrl.orderId = ((Order *)sender).orderId;
+    }
 }
     
 #pragma mark - hide tabbar in this view controller

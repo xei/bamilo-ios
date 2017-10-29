@@ -216,6 +216,12 @@
 		61E099721E3E18F0004ED14E /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E099701E3E18F0004ED14E /* NotificationTableViewCell.xib */; };
 		61E099771E3E1A02004ED14E /* VersionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E099751E3E1A02004ED14E /* VersionTableViewCell.m */; };
 		61E099781E3E1A02004ED14E /* VersionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E099761E3E1A02004ED14E /* VersionTableViewCell.xib */; };
+		61E534411FA48D2A00CBDFED /* ProgressBarItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E534401FA48D2A00CBDFED /* ProgressBarItemView.swift */; };
+		61E534431FA48D3400CBDFED /* ProgressBarItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E534421FA48D3400CBDFED /* ProgressBarItemView.xib */; };
+		61E534451FA4918E00CBDFED /* ProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E534441FA4918E00CBDFED /* ProgressBarView.swift */; };
+		61E534471FA4919800CBDFED /* ProgressBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E534461FA4919800CBDFED /* ProgressBarView.xib */; };
+		61E534491FA491D000CBDFED /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E534481FA491D000CBDFED /* ProgressBar.swift */; };
+		61E5344B1FA4CBB700CBDFED /* Ext+NSLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E5344A1FA4CBB700CBDFED /* Ext+NSLayoutConstraint.swift */; };
 		61E8441B1F0D16AE005D79EE /* ScreentTrackerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E8441A1F0D16AE005D79EE /* ScreentTrackerProtocol.swift */; };
 		61E8441D1F0D18D5005D79EE /* EventTrackerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E8441C1F0D18D5005D79EE /* EventTrackerProtocol.swift */; };
 		61E8441F1F0D203A005D79EE /* TrackerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E8441E1F0D203A005D79EE /* TrackerManager.swift */; };
@@ -1241,6 +1247,12 @@
 		61E099741E3E1A02004ED14E /* VersionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionTableViewCell.h; sourceTree = "<group>"; };
 		61E099751E3E1A02004ED14E /* VersionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersionTableViewCell.m; sourceTree = "<group>"; };
 		61E099761E3E1A02004ED14E /* VersionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VersionTableViewCell.xib; sourceTree = "<group>"; };
+		61E534401FA48D2A00CBDFED /* ProgressBarItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarItemView.swift; sourceTree = "<group>"; };
+		61E534421FA48D3400CBDFED /* ProgressBarItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProgressBarItemView.xib; sourceTree = "<group>"; };
+		61E534441FA4918E00CBDFED /* ProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarView.swift; sourceTree = "<group>"; };
+		61E534461FA4919800CBDFED /* ProgressBarView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProgressBarView.xib; sourceTree = "<group>"; };
+		61E534481FA491D000CBDFED /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
+		61E5344A1FA4CBB700CBDFED /* Ext+NSLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+NSLayoutConstraint.swift"; sourceTree = "<group>"; };
 		61E8441A1F0D16AE005D79EE /* ScreentTrackerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreentTrackerProtocol.swift; sourceTree = "<group>"; };
 		61E8441C1F0D18D5005D79EE /* EventTrackerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTrackerProtocol.swift; sourceTree = "<group>"; };
 		61E8441E1F0D203A005D79EE /* TrackerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerManager.swift; sourceTree = "<group>"; };
@@ -2754,6 +2766,7 @@
 		610C689E1EC7423B008FB66C /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				61E534381FA4812200CBDFED /* ItemTrackingProgressBar */,
 				617585EE1F88CD4000D66541 /* Widgets */,
 				611C19101F5E88910073940C /* SearchBarView */,
 				618B25681F35D6C400B39440 /* DeliveryTime */,
@@ -3259,16 +3272,8 @@
 		617585EE1F88CD4000D66541 /* Widgets */ = {
 			isa = PBXGroup;
 			children = (
-				617585EF1F88CE5C00D66541 /* New Group */,
 			);
 			name = Widgets;
-			sourceTree = "<group>";
-		};
-		617585EF1F88CE5C00D66541 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "New Group";
 			sourceTree = "<group>";
 		};
 		617AAA401E503A71004D9430 /* Form */ = {
@@ -3912,6 +3917,7 @@
 				61FB25111F791C980002CD87 /* Ext+UISCrollView.swift */,
 				617585F51F88FF8D00D66541 /* Ext+UIColor.swift */,
 				619D26BF1F9CFDBA00167150 /* Ext+UIButton.swift */,
+				61E5344A1FA4CBB700CBDFED /* Ext+NSLayoutConstraint.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -4137,6 +4143,50 @@
 				61E099761E3E1A02004ED14E /* VersionTableViewCell.xib */,
 			);
 			name = VersionTableViewCell;
+			sourceTree = "<group>";
+		};
+		61E534381FA4812200CBDFED /* ItemTrackingProgressBar */ = {
+			isa = PBXGroup;
+			children = (
+				61E5343A1FA4817400CBDFED /* Views */,
+				61E534391FA4814B00CBDFED /* Control */,
+			);
+			name = ItemTrackingProgressBar;
+			sourceTree = "<group>";
+		};
+		61E534391FA4814B00CBDFED /* Control */ = {
+			isa = PBXGroup;
+			children = (
+				61E534481FA491D000CBDFED /* ProgressBar.swift */,
+			);
+			name = Control;
+			sourceTree = "<group>";
+		};
+		61E5343A1FA4817400CBDFED /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				61E5343C1FA487AA00CBDFED /* ProgressBarItemView */,
+				61E5343B1FA4879E00CBDFED /* ProgressBarView */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		61E5343B1FA4879E00CBDFED /* ProgressBarView */ = {
+			isa = PBXGroup;
+			children = (
+				61E534441FA4918E00CBDFED /* ProgressBarView.swift */,
+				61E534461FA4919800CBDFED /* ProgressBarView.xib */,
+			);
+			name = ProgressBarView;
+			sourceTree = "<group>";
+		};
+		61E5343C1FA487AA00CBDFED /* ProgressBarItemView */ = {
+			isa = PBXGroup;
+			children = (
+				61E534401FA48D2A00CBDFED /* ProgressBarItemView.swift */,
+				61E534421FA48D3400CBDFED /* ProgressBarItemView.xib */,
+			);
+			name = ProgressBarItemView;
 			sourceTree = "<group>";
 		};
 		61E844191F0D1684005D79EE /* Protocols */ = {
@@ -7543,6 +7593,7 @@
 				875744091EA60E2D001B518A /* Summer-60@2x.png in Resources */,
 				8757445A1EA60E8D001B518A /* Yalda-Small@3x.png in Resources */,
 				875743611EA60DA5001B518A /* Birthday.png in Resources */,
+				61E534471FA4919800CBDFED /* ProgressBarView.xib in Resources */,
 				875744281EA60E48001B518A /* Tragedy-60@2x.png in Resources */,
 				875744401EA60E71001B518A /* Winter-Small-40@2x.png in Resources */,
 				61F705411F766EB200DCD77C /* FeaturedStoresCollectionViewCell.xib in Resources */,
@@ -7656,6 +7707,7 @@
 				875744471EA60E71001B518A /* Winter-60@2x.png in Resources */,
 				875743641EA60DA5001B518A /* Birthday-Small.png in Resources */,
 				875743DC1EA60E13001B518A /* Spring@2x.png in Resources */,
+				61E534431FA48D3400CBDFED /* ProgressBarItemView.xib in Resources */,
 				87EA031D1E6D706E00B1E062 /* FormHeaderTableViewCell.xib in Resources */,
 				875744051EA60E2D001B518A /* Summer-76.png in Resources */,
 				875743A61EA60DE0001B518A /* Ramadan-Small-40.png in Resources */,
@@ -8086,6 +8138,7 @@
 				CE8C92B01B8B555600C77706 /* JAMainFilterCell.m in Sources */,
 				610C68AD1EC87F2A008FB66C /* Translations.swift in Sources */,
 				87B684F51E4A04030042C09F /* ReceiptItemModel.m in Sources */,
+				61E5344B1FA4CBB700CBDFED /* Ext+NSLayoutConstraint.swift in Sources */,
 				61D474941F7019BF001DA6A6 /* HomeDataManager.swift in Sources */,
 				879F88291E51CF140033FE87 /* CartEntity.m in Sources */,
 				61FFD5861EB8CE17004A3518 /* CatalogDataManager.swift in Sources */,
@@ -8124,6 +8177,7 @@
 				61B2C7FD1F9CA44100930435 /* OrderDetailTableViewController.swift in Sources */,
 				61832FDE1ED2DC0D006F01FE /* RateStarControl.swift in Sources */,
 				61E8441D1F0D18D5005D79EE /* EventTrackerProtocol.swift in Sources */,
+				61E534451FA4918E00CBDFED /* ProgressBarView.swift in Sources */,
 				8702FBCC1E991C9A001D1AA9 /* LogoutEvent.m in Sources */,
 				8702FBD01E99FDD2001D1AA9 /* UserDefaultsManager.m in Sources */,
 				87AFF6831EE68018001EBC4D /* CartDataManager.swift in Sources */,
@@ -8236,6 +8290,7 @@
 				CE9ADF9B1AB6D78200D56481 /* JACenterNavigationController.m in Sources */,
 				875AD5621E38C0C900584ABF /* RIHtmlShop.m in Sources */,
 				9AE766BF1CBBF01C00B63D8E /* JAEmptyCartView.m in Sources */,
+				61E534411FA48D2A00CBDFED /* ProgressBarItemView.swift in Sources */,
 				9AEF741C1CD27C1400A5D574 /* JACheckoutButton.m in Sources */,
 				616F7D121F6D172100085B64 /* IconTableViewCell.swift in Sources */,
 				CE9ADF9C1AB6D78200D56481 /* JAAddNewAddressViewController.m in Sources */,
@@ -8430,6 +8485,7 @@
 				89C7AF551BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m in Sources */,
 				CE9ADFEA1AB6D78200D56481 /* main.m in Sources */,
 				CE9ADFEC1AB6D78200D56481 /* JARatingsViewMedium.m in Sources */,
+				61E534491FA491D000CBDFED /* ProgressBar.swift in Sources */,
 				61B579081F9E2B0A00C9F454 /* OrderOwnerInfoTableViewCell.swift in Sources */,
 				8702FBD41E99FE0E001D1AA9 /* UserDefaultsConsts.m in Sources */,
 				841E81AA1D1680F300A35AAF /* MPCoachMarks.m in Sources */,

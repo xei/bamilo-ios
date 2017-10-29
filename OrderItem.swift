@@ -16,7 +16,7 @@ class OrderItem: NSObject, Mappable {
     var customerFirstName: String?
     var customerLastName: String?
     var creationDate: String?
-    var price: String?
+    var price: UInt64?
     var paymentMethod: String?
     var deliveryCost: String?
     var productionCount: Int = 0
@@ -36,7 +36,7 @@ class OrderItem: NSObject, Mappable {
         creationDate <- map["creation_date"]
         deliveryCost <- map["payment.delivery_cost"]
         price <- map["payment.total_cost"]
-        paymentMethod <- map["payment.label"]
+        paymentMethod <- map["payment.method"]
         packages <- map["packages"]
         productionCount <- map["total_products_count"]
         

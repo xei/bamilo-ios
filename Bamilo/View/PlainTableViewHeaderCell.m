@@ -19,8 +19,12 @@
     [super awakeFromNib];
     
     //Content View Setup
-    self.container.backgroundColor = [UIColor withRepeatingRGBA:244 alpha:1.0f];
-    
+    self.backgroundView = ({
+        UIView * view = [[UIView alloc] initWithFrame:self.bounds];
+        view.backgroundColor = [UIColor withRepeatingRGBA:244 alpha:1.0f];
+        view;
+    });
+
     //Title Label Setup
     [self.titleLabel applyStyle:kFontBoldName fontSize:12 color:[UIColor withRepeatingRGBA:80 alpha:1.0f]];
 }

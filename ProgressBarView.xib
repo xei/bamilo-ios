@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13196"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ProgressBarView" customModule="Bamilo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="360" height="65"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3ia-Ji-Kp1" userLabel="line">
+                    <rect key="frame" x="30" y="31" width="300" height="3"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6mD-Ir-4oh" userLabel="Heighlighted part">
+                            <rect key="frame" x="270" y="0.0" width="30" height="3"/>
+                            <color key="backgroundColor" red="0.50588235290000005" green="0.70588235290000001" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="30" id="dMi-1G-GWY"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="right" secondItem="6mD-Ir-4oh" secondAttribute="right" id="Nfa-JV-tG0"/>
+                        <constraint firstAttribute="height" constant="3" id="UiL-kU-t4S"/>
+                        <constraint firstItem="6mD-Ir-4oh" firstAttribute="height" secondItem="3ia-Ji-Kp1" secondAttribute="height" id="Z4j-uy-IqE"/>
+                        <constraint firstItem="6mD-Ir-4oh" firstAttribute="top" secondItem="3ia-Ji-Kp1" secondAttribute="top" id="lc8-LV-USl"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lho-fH-j8Q" userLabel="precentage indicator">
+                    <rect key="frame" x="296" y="26" width="4" height="12"/>
+                    <color key="backgroundColor" red="0.50588235290000005" green="0.70588235290000001" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="12" id="WrT-b3-zs0"/>
+                        <constraint firstAttribute="width" constant="4" id="ftO-q1-qyU"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="3ia-Ji-Kp1" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="FHz-NU-fOG"/>
+                <constraint firstItem="3ia-Ji-Kp1" firstAttribute="left" secondItem="iN0-l3-epB" secondAttribute="left" constant="30" id="ITM-1N-hdN"/>
+                <constraint firstItem="Lho-fH-j8Q" firstAttribute="centerY" secondItem="3ia-Ji-Kp1" secondAttribute="centerY" id="SPA-5k-lA7"/>
+                <constraint firstAttribute="right" secondItem="3ia-Ji-Kp1" secondAttribute="right" constant="30" id="j1F-lv-HBa"/>
+                <constraint firstItem="6mD-Ir-4oh" firstAttribute="left" secondItem="Lho-fH-j8Q" secondAttribute="right" id="jmC-tP-x6z"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="heighLightedPartLineView" destination="6mD-Ir-4oh" id="XKl-LB-YlY"/>
+                <outlet property="hightLightViewWidthConstraint" destination="dMi-1G-GWY" id="IOm-uN-TeC"/>
+                <outlet property="lineView" destination="3ia-Ji-Kp1" id="s6g-lw-b24"/>
+                <outlet property="precentageIndicator" destination="Lho-fH-j8Q" id="e2U-Qd-7Jj"/>
+            </connections>
+            <point key="canvasLocation" x="-348" y="-235"/>
+        </view>
+    </objects>
+</document>

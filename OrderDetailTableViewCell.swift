@@ -16,6 +16,7 @@ protocol OrderDetailTableViewCellDelegate: class {
 
 class OrderDetailTableViewCell: AccordionTableViewCell {
 
+    @IBOutlet weak private var progressBarView: ProgressBar!
     @IBOutlet weak private var productImage: UIImageView!
     @IBOutlet weak private var productTitleLabel: UILabel!
     @IBOutlet weak private var productPriceLabel: UILabel!
@@ -74,9 +75,10 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
             self.productPriceLabel.text = "\(Int(productPrice) * (product.quantity ?? 0))".formatPriceWithCurrency()
             let formattedPrice = "\(productPrice)".formatPriceWithCurrency()
             var productInfo = "\(STRING_QUANTITY): \(product.quantity ?? 0)".convertTo(language: .arabic)
-            productInfo += "\n\(STRING_BRAND): \(product.brand ?? "") \n \(STRING_SELLER): \(product.seller ?? "") \n\(STRING_PRICE): \(formattedPrice)"
+            productInfo += "\n\(STRING_BRAND): \(product.brand ?? "") \n\(STRING_SELLER): \(product.seller ?? "") \n\(STRING_PRICE): \(formattedPrice)"
             if let size = product.size { productInfo += "\n\(STRING_SIZE):\(size)".convertTo(language: .arabic)}
             self.productMoreInfoLabel.text = productInfo
+            self.progressBarView.update(withModel: product.histories)
             self.product = product
         }
     }

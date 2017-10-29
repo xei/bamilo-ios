@@ -22,7 +22,7 @@ class OrderProductItem: Product {
         
         deliveryTime <- map["calculated_delivery_time"]
         quantity <- map["quantity"]
-        size <- map["size"]
+        size <- map["filters.size"]
         histories <- map["histories"]
         seller <- map["seller"]
     }

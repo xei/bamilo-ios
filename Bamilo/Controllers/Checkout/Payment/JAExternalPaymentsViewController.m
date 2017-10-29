@@ -148,8 +148,7 @@
     return output;
 }
 
-- (void) checkAppObject
-{
+- (void) checkAppObject {
     NSString *jsonAppObjectString = [self.webView stringByEvaluatingJavaScriptFromString:@"document.getElementById('jsonAppObject').innerHTML"];
     
     NSError *error;
@@ -179,13 +178,10 @@
 
 #pragma mark UIWebViewDelegate
 
--(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
-{
+-(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     NSURL *url = [request URL];
-    
     NSString *existingAuthValue = [request valueForHTTPHeaderField:@"Authorization"];
-    if ([[url host] isEqualToString:[[self.originalRequest URL] host]] && existingAuthValue == nil)
-    {
+    if ([[url host] isEqualToString:[[self.originalRequest URL] host]] && existingAuthValue == nil) {
         NSMutableURLRequest *newRequest = [request mutableCopy];
         NSString *authStr = [NSString stringWithFormat:@"%@:%@", RI_USERNAME, RI_PASSWORD];
         NSData *authData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
@@ -194,7 +190,6 @@
         
         request = newRequest;
     }
-
     return YES;
 }
 

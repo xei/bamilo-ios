@@ -42,7 +42,7 @@ class OrderInfoTableViewCell: BaseTableViewCell {
         if let model = model as? OrderItem {
             self.orderIdLabel.text = "\(model.id ?? "")".forceRTL()
             self.orderCreationDateLabel.text = "\(model.creationDate ?? "")".forceRTL()
-            self.orderCostLabel.text = "\("\(model.price ?? "0")".formatPriceWithCurrency())".forceRTL()
+            self.orderCostLabel.text = "\("\(model.price ?? 0)".formatPriceWithCurrency())".forceRTL()
             self.orderProductCountLabel.text = "\(model.productionCount)".convertTo(language: .arabic).forceRTL()
         }
     }

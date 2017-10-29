@@ -27,20 +27,11 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bKL-by-lbr" userLabel="header View">
                         <rect key="frame" x="0.0" y="0.0" width="374" height="208.5"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7dX-VI-XGO" userLabel="progress bar">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7dX-VI-XGO" userLabel="progress bar" customClass="ProgressBar" customModule="Bamilo" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="374" height="65.5"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="temp" translatesAutoresizingMaskIntoConstraints="NO" id="aXQ-lF-6VJ">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="65.5"/>
-                                    </imageView>
-                                </subviews>
                                 <color key="backgroundColor" red="0.8862745098" green="0.8862745098" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="aXQ-lF-6VJ" firstAttribute="top" secondItem="7dX-VI-XGO" secondAttribute="top" id="WWw-9r-6p5"/>
-                                    <constraint firstItem="aXQ-lF-6VJ" firstAttribute="leading" secondItem="7dX-VI-XGO" secondAttribute="leading" id="WZj-aO-HMB"/>
-                                    <constraint firstAttribute="trailing" secondItem="aXQ-lF-6VJ" secondAttribute="trailing" id="Xet-UZ-shF"/>
                                     <constraint firstAttribute="height" constant="65" id="Xo7-S8-3Sv"/>
-                                    <constraint firstAttribute="bottom" secondItem="aXQ-lF-6VJ" secondAttribute="bottom" id="vSE-g3-Uxq"/>
                                 </constraints>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CqY-m1-VRs" userLabel="product image">
@@ -50,8 +41,8 @@
                                     <constraint firstAttribute="width" constant="82" id="Ohx-YR-8F0"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v1f-Sl-kBK">
-                                <rect key="frame" x="219" y="85" width="42" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v1f-Sl-kBK">
+                                <rect key="frame" x="41" y="85" width="220" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -78,6 +69,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="v1f-Sl-kBK" firstAttribute="left" secondItem="hoF-Xk-tFl" secondAttribute="right" constant="10" id="70G-5F-Lkv"/>
                             <constraint firstItem="nGe-eU-ped" firstAttribute="width" secondItem="CqY-m1-VRs" secondAttribute="width" id="FUZ-9P-vqt"/>
                             <constraint firstAttribute="right" secondItem="CqY-m1-VRs" secondAttribute="right" constant="16" id="FVf-QP-IFo"/>
                             <constraint firstItem="v1f-Sl-kBK" firstAttribute="top" secondItem="CqY-m1-VRs" secondAttribute="top" id="JWb-Pn-wcg"/>
@@ -93,7 +85,6 @@
                             <constraint firstItem="7dX-VI-XGO" firstAttribute="top" secondItem="bKL-by-lbr" secondAttribute="top" id="kof-9e-qF4"/>
                             <constraint firstItem="155-lW-Hwn" firstAttribute="bottom" secondItem="CqY-m1-VRs" secondAttribute="bottom" id="lUj-FI-0By"/>
                             <constraint firstItem="nGe-eU-ped" firstAttribute="height" secondItem="CqY-m1-VRs" secondAttribute="height" id="saG-Af-rV9"/>
-                            <constraint firstAttribute="height" constant="208" id="uUI-oB-rjj"/>
                             <constraint firstItem="155-lW-Hwn" firstAttribute="right" secondItem="v1f-Sl-kBK" secondAttribute="right" id="wPV-EM-116"/>
                         </constraints>
                     </view>
@@ -149,14 +140,14 @@
                 <outlet property="productMoreInfoLabel" destination="FHW-c4-15c" id="713-ry-Bu7"/>
                 <outlet property="productPriceLabel" destination="155-lW-Hwn" id="8sr-wW-cg9"/>
                 <outlet property="productTitleLabel" destination="v1f-Sl-kBK" id="G92-WB-3nW"/>
+                <outlet property="progressBarView" destination="7dX-VI-XGO" id="lbm-RC-3qq"/>
                 <outlet property="rateButton" destination="zBL-jf-zGf" id="QZw-ae-mea"/>
                 <outlet property="rateButtonBottomConstraint" destination="GGd-ZC-2hE" id="5yW-hx-cDD"/>
             </connections>
-            <point key="canvasLocation" x="-364" y="-82.5"/>
+            <point key="canvasLocation" x="-729" y="-120"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="ic_dropdown" width="16" height="16"/>
-        <image name="temp" width="215" height="39"/>
     </resources>
 </document>

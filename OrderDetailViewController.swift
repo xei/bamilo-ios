@@ -8,43 +8,25 @@
 
 import UIKit
 
-class OrderDetailViewController: BaseViewController, OrderDetailTableViewCellDelegate {
+class OrderDetailViewController: BaseViewController, OrderDetailTableViewCellDelegate, DataServiceProtocol {
 
     let orderTableViewCtrl = OrderDetailTableViewController()
-    var order: OrderItem?
+    var orderId: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.orderTableViewCtrl.delegate = self
-        
-        self.order = OrderItem()
-        let orderPackage = OrderPackage()
-        orderPackage.title = "بسته اول"
-        orderPackage.deliveryTime = "چهارشنبه ۲۲ فروردین ۱۳۹۹"
-        let product = OrderProductItem()
-        product.name = "تقسیم کننده کشو"
-        product.deliveryTime = "یکشنبه ۱۵ مرداد ۱۳۹۶"
-        product.quantity = 1
-        product.seller = "bamilo"
-        product.size = "3"
-        product.price = 3000000
-        product.imageUrl = URL(string: "http://staging-img.bamilo.com/p/luxineh-4864-1283681-1-cart.jpg")
-        product.sku = "LU392HL07N4Y2NAFAMZ"
-        orderPackage.products = [product, product, product, product, product, product]
-        self.order?.customerFirstName = "علی"
-        self.order?.customerLastName = "سعیدی فر"
-        self.order?.deliveryCost = "30000"
-        self.order?.packages = [orderPackage]
-        self.order?.id = "4732897483274932"
-        self.order?.creationDate = "چهارشنبه ۲۲ فروردین ۱۳۹۹"
-        self.order?.price = "30000"
-        self.order?.shippingAddress = Address()
-        self.order?.shippingAddress?.address = "گلبرگ غربی، کوچه صفایی، کوچه انوار، بن بست ۲۲ ام بهمن، پلاک ۷، واحد ۷"
-        self.order?.paymentMethod = "درگاه بانک پارسیان (آسان پرداخت)"
-        
         orderTableViewCtrl.addInto(viewController: self, containerView: self.view)
-        orderTableViewCtrl.bindOrder(order: self.order!)
+        
+        if let orderId = self.orderId {
+            OrderDataManager.sharedInstance.getOrder(self, orderId: orderId) { (data, errors) in
+                if errors == nil {
+                    self.bind(data, forRequestId: 0)
+                } else {
+                    Utility.handleError(error: errors, viewController: self)
+                }
+            }
+        }
     }
     
     //MARK: - OrderDetailTableViewCellDelegate
@@ -73,6 +55,13 @@ class OrderDetailViewController: BaseViewController, OrderDetailTableViewCellDel
         }
     }
     
+    // MARK: - DataServiceProtocol
+    func bind(_ data: Any!, forRequestId rid: Int32) {
+        if let orderItem = data as? OrderItem {
+            self.orderTableViewCtrl.bindOrder(order: orderItem)
+        }
+    }
+    
     // MARK: -DataTrackerProtocol
     override func getScreenName() -> String! {
         return "OrderDetailView"
@@ -82,4 +71,5 @@ class OrderDetailViewController: BaseViewController, OrderDetailTableViewCellDel
     override func navBarTitleString() -> String! {
         return STRING_ORDER_STATUS
     }
+
 }

@@ -183,7 +183,7 @@
         }
         [LoadingManager hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
-        [self showNotificationBar:error isSuccess:NO];
+        [Utility handleErrorWithError:error viewController:self];
         [self publishScreenLoadTime];
         [LoadingManager hideLoading];
     }];

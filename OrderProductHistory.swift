@@ -13,7 +13,7 @@ enum OrderProductHistoryStatusType: String {
     case active = "active"
     case inactive = "inactive"
     case success = "success"
-    case fail = "fail"
+    case fail = "failed"
 }
 
 
@@ -28,10 +28,11 @@ enum OrderProductHistoryStep: String {
 class OrderProductHistory: NSObject, Mappable {
     
     var name: String?
+    var nameFa: String?
     var step: OrderProductHistoryStep?
     var status: OrderProductHistoryStatusType?
     var progress: UInt?
-    var multiplier: UInt?
+    var multiplier: UInt = 1
     var date: String?
     
     override init() {}
@@ -39,11 +40,12 @@ class OrderProductHistory: NSObject, Mappable {
     
     func mapping(map: Map) {
         name <- map["name"]
+        nameFa <- map["name_fa"]
         step <- (map["key"], EnumTransform<OrderProductHistoryStep>())
         status <- (map["status"], EnumTransform<OrderProductHistoryStatusType>())
         progress <- map["progress"]
         progress = min(progress ?? 0, 100) //validation
-        multiplier <- map["multiplier"]
+        multiplier <- map["widthMultiplier"]
         date <- map["date"]
     }
 }

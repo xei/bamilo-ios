@@ -22,6 +22,9 @@ class OrderDetailTableViewController: AccordionTableViewController, OrderDetailT
         self.tableView.register(UINib(nibName: MutualTitleHeaderCell.nibName(), bundle: nil), forHeaderFooterViewReuseIdentifier: MutualTitleHeaderCell.nibName())
         self.tableView.register(UINib(nibName: OrderOwnerInfoTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: OrderOwnerInfoTableViewCell.nibName())
         self.tableView.register(UINib(nibName: OrderInfoTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: OrderInfoTableViewCell.nibName())
+        
+        //To remove extra separators from tableview
+        self.tableView.tableFooterView = UIView.init(frame: .zero)
     }
 
     // MARK: - Table view data source
