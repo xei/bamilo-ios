@@ -12,5 +12,6 @@
 @interface SuccessPaymentViewController: BaseViewController
 
 @property (strong, nonatomic) RICart *cart;
+@property (nonatomic) BOOL success;
 
 @end

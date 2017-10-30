@@ -24,7 +24,7 @@ import RealmSwift
     //tracking info is an string with `category:::label` template
     func recordAddToCard(sku: String, trackingInfo: String) {
         let trackInfoArray = trackingInfo.components(separatedBy: ":::")
-        if trackingInfo.count > 1 {
+        if trackInfoArray.count > 1 {
             
             //delete previous beviour by this sku
             self.deleteBehaviour(sku: sku)

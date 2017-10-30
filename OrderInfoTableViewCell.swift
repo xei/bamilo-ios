@@ -40,7 +40,7 @@ class OrderInfoTableViewCell: BaseTableViewCell {
     
     override func update(withModel model: Any!) {
         if let model = model as? OrderItem {
-            self.orderIdLabel.text = "\(model.id ?? "")".forceRTL()
+            self.orderIdLabel.text = "\(model.id ?? "")".convertTo(language: .arabic).forceRTL()
             self.orderCreationDateLabel.text = "\(model.creationDate ?? "")".forceRTL()
             self.orderCostLabel.text = "\("\(model.price ?? 0)".formatPriceWithCurrency())".forceRTL()
             self.orderProductCountLabel.text = "\(model.productionCount)".convertTo(language: .arabic).forceRTL()

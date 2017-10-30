@@ -5,7 +5,7 @@
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -265,12 +265,12 @@
                                                     <constraint firstAttribute="width" secondItem="aqz-cZ-E7n" secondAttribute="height" multiplier="1:1" id="TAw-7f-5da"/>
                                                 </constraints>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="با تشکر از شما!" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tr4-mC-OYm">
-                                                <rect key="frame" x="23.5" y="19" width="133.5" height="23.5"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="پرداخت ناموفق" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tr4-mC-OYm">
+                                                <rect key="frame" x="23.5" y="19.5" width="133.5" height="22.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="133.5" id="Ekl-Q2-L5u"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="19"/>
                                                 <color key="textColor" red="0.63921568627450975" green="0.81176470588235294" blue="0.38431372549019605" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -349,6 +349,8 @@
                     <connections>
                         <outlet property="carouselWidget" destination="RUh-Wx-p8b" id="Fjt-1D-Ah7"/>
                         <outlet property="descLabel" destination="Ft2-Po-4VA" id="rMS-lh-umz"/>
+                        <outlet property="iconImageView" destination="aqz-cZ-E7n" id="2o5-ed-9jF"/>
+                        <outlet property="orderListButton" destination="fcY-30-Vag" id="uLW-oi-gGC"/>
                         <outlet property="titleLabel" destination="Tr4-mC-OYm" id="Ftm-Cn-KHz"/>
                     </connections>
                 </viewController>

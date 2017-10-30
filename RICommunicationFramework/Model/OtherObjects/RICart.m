@@ -561,6 +561,10 @@ static RICart *instance;
         cart.paymentInformation = [RIPaymentInformation parsePaymentInfo:[json objectForKey:@"payment"]];
     }
     
+    if (VALID_NOTEMPTY([json objectForKey:@"payment_landing_page_url"], NSString)) {
+        cart.paymentBrowserUrl = [json objectForKey:@"payment_landing_page_url"];
+    }
+    
     return cart;
 }
 

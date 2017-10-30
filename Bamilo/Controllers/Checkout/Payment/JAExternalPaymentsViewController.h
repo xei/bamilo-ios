@@ -15,4 +15,5 @@
 
 @property (strong, nonatomic) RICart *cart;
 
+- (void)paymentHappend:(BOOL)success;
 @end

@@ -45,6 +45,7 @@ NSString *const kColorPrimaryGray1 = @"primary-gray-1";
 NSString *const kColorSecondaryGray1 = @"secondary-gray-1";
 NSString *const kColorGray2 = @"gray-2";
 NSString *const kColorGray3 = @"gray-3";
+NSString *const kColorGray4 = @"gray-4";
 NSString *const kColorGray5 = @"gray-5";
 NSString *const kColorGray8 = @"gray-8";
 NSString *const kColorGray9 = @"gray-9";

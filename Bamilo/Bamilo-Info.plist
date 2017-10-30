@@ -140,7 +140,7 @@
 		<key>API_BaseUrl</key>
 		<string>http://www.bamilo.com/mobapi/</string>
 		<key>API_Version</key>
-		<string>2.5</string>
+		<string>2.6</string>
 		<key>EMMerchantID</key>
 		<string>18146DE34FE0B8C9</string>
 		<key>Emarsys</key>

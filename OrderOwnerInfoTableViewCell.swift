@@ -44,7 +44,7 @@ class OrderOwnerInfoTableViewCell: BaseTableViewCell {
                 self.orderOwnerNameLabel.text = "\(name) \(lastName)".forceRTL()
             }
             
-            self.orderOwnerAddressLabel.text = "\(order.shippingAddress?.address ?? "")".forceRTL()
+            self.orderOwnerAddressLabel.text = "\(order.shippingAddress?.address ?? "")".convertTo(language: .arabic).forceRTL()
             self.orderOwnerPaymentValueLabel.text = "\((order.deliveryCost ?? "0").formatPriceWithCurrency())".forceRTL()
             self.orderOwnerPaymentMethodLabel.text = "\(order.paymentMethod ?? "")".forceRTL()
         }

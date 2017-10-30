@@ -45,7 +45,7 @@
     }
 }
 
--(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+- (IBAction)cellTapped:(id)sender {
     [self didSelectRadioButton:self];
 }
 

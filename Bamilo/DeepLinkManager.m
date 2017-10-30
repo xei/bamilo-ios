@@ -10,6 +10,7 @@
 #import "ThreadManager.h"
 #import "URLUtility.h"
 #import "Bamilo-Swift.h"
+#import "JAExternalPaymentsViewController.h"
 
 
 static NSMutableArray<NSURL *> *deepLinkPipe;
@@ -59,7 +60,6 @@ static BOOL isListenersReady;
         }
         
         // ---- handle some special views with special params ----
-        
         if ([targetKey isEqualToString:@"d"] && argument.length) {
             // PDV - bamilo://ir/d/BL683ELACCDPNGAMZ?size=1
             NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithDictionary:@{@"sku": argument, @"show_back_button" :@(NO)}];
@@ -70,10 +70,14 @@ static BOOL isListenersReady;
         } else if ([targetKey isEqualToString:@"s"] && argument.length) {
             // Catalog view - search term
             [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification object:@{ @"index": @(99), @"name": STRING_SEARCH, @"text": argument }];
-        } else if ([targetKey isEqualToString:@"camp"] && argument.length) {
-//            [[MainTabBarViewController topNavigationController] openTargetString:[RITarget getTargetString:CAMPAIGN node:argument]];
-        } else if ([targetKey isEqualToString:@"ss"] && argument.length) {
-//            [[MainTabBarViewController topNavigationController] openTargetString:[RITarget getTargetString:STATIC_PAGE node:argument]];
+        } else if ([targetKey isEqualToString:@"externalPayment"]) {
+            // externalPayment - bamilo://ir/externalPayment?orderNum=<OrderNumber>&success=<BOOL>
+            if ([[MainTabBarViewController topViewController] isKindOfClass:[JAExternalPaymentsViewController class]]) {
+                RICart *cart = ((JAExternalPaymentsViewController *)[MainTabBarViewController topViewController]).cart;
+                if (cart && [queryDictionary objectForKey:@"orderNum"] && [queryDictionary objectForKey:@"success"]) {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutThanksScreenNotification object:nil userInfo:@{@"order_number": [queryDictionary objectForKey:@"orderNum"], kCart: cart, @"success": [queryDictionary objectForKey:@"success"]}];
+                }
+            }
         }
     }
 }

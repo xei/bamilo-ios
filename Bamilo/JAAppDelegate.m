@@ -86,6 +86,7 @@
         kColorSecondaryGray1: [UIColor withRGBA:83 green:88 blue:91 alpha:0.54],
         kColorGray2: [UIColor withHexString:@"#656668"],
         kColorGray3: [UIColor withRGBA:116 green:117 blue:119 alpha:1],
+        kColorGray5: [UIColor withHexString:@"#858688"],
         kColorGray5: [UIColor withRGBA:149 green:150 blue:152 alpha:1],
         kColorGray8: [UIColor withHexString:@"#959698"],
         kColorGray9: [UIColor withHexString:@"#dbdbdb"],

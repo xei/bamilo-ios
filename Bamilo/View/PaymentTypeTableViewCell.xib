@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -38,14 +38,24 @@
                         <color key="textColor" red="0.49520188570022583" green="0.49559599161148071" blue="0.49526298046112061" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EeX-P6-dpS">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="39.5"/>
+                        <connections>
+                            <action selector="cellTapped:" destination="VRZ-pI-jdd" eventType="touchUpInside" id="UKF-ZD-Ifd"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <color key="backgroundColor" red="0.40699419390000002" green="0.82547861280000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
                     <constraint firstAttribute="right" secondItem="A8N-hy-ncA" secondAttribute="right" constant="15" id="1n7-5A-T1A"/>
                     <constraint firstItem="A8N-hy-ncA" firstAttribute="left" secondItem="1uu-54-rPa" secondAttribute="right" constant="15" id="3ED-YS-6Z4"/>
+                    <constraint firstItem="EeX-P6-dpS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Hgp-5e-qVl"/>
+                    <constraint firstAttribute="bottom" secondItem="EeX-P6-dpS" secondAttribute="bottom" id="fVh-S0-hAu"/>
                     <constraint firstItem="1uu-54-rPa" firstAttribute="left" secondItem="iN0-l3-epB" secondAttribute="left" constant="15" id="hoR-JG-xwE"/>
                     <constraint firstItem="A8N-hy-ncA" firstAttribute="centerY" secondItem="1uu-54-rPa" secondAttribute="centerY" id="iUr-ro-Os3"/>
+                    <constraint firstItem="EeX-P6-dpS" firstAttribute="left" secondItem="iN0-l3-epB" secondAttribute="left" id="m2A-X1-jXF"/>
                     <constraint firstItem="A8N-hy-ncA" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="r3o-1n-qG7"/>
+                    <constraint firstAttribute="right" secondItem="EeX-P6-dpS" secondAttribute="right" id="toi-D5-RbW"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.40699419390000002" green="0.82547861280000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -53,12 +63,7 @@
                 <outlet property="radioButtonViewControl" destination="A8N-hy-ncA" id="Htt-87-qja"/>
                 <outlet property="titleLabel" destination="1uu-54-rPa" id="f1Y-au-iAi"/>
             </connections>
-            <point key="canvasLocation" x="-37" y="-60"/>
+            <point key="canvasLocation" x="-224" y="-140"/>
         </tableViewCell>
     </objects>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
-    </simulatedMetricsContainer>
 </document>

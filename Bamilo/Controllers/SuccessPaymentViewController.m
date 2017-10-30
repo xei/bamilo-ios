@@ -25,6 +25,9 @@
 @property (nonatomic, weak) IBOutlet EmarsysRecommendationMinimalCarouselWidget *carouselWidget;
 @property (nonatomic, weak) IBOutlet UILabel *titleLabel;
 @property (nonatomic, weak) IBOutlet UILabel *descLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
+@property (weak, nonatomic) IBOutlet UIButton *orderListButton;
+
 @end
 
 @implementation SuccessPaymentViewController
@@ -37,7 +40,6 @@
     [self.carouselWidget setBackgroundColor:[Theme color:kColorVeryLightGray]];
     self.carouselWidget.delegate = self;
     [self setupView];
-    [self trackPurchase];
     [self.carouselWidget updateTitle:STRING_BAMILO_RECOMMENDATION];
     
     //Reset the shared Cart entities
@@ -48,14 +50,22 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.extendedLayoutIncludesOpaqueBars = NO;
     self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    if (self.success) {
+        [self trackPurchase];
+    }
 }
 
 - (void)setupView {
     [self.titleLabel applyStyle:[Theme font:kFontVariationRegular size:20.0f] color:[Theme color:kColorGreen]];
     [self.descLabel applyStyle:[Theme font:kFontVariationRegular size:12.0f] color:[UIColor blackColor]];
-    self.titleLabel.text = STRING_THANK_YOU_ORDER_TITLE;
-    self.descLabel.text = STRING_ORDER_SUCCESS;
+    self.titleLabel.text = self.success ? STRING_THANK_YOU_ORDER_TITLE : STRING_ONLINE_PAYMENT_ERROR;
+    self.descLabel.text = self.success ? STRING_ORDER_SUCCESS : nil;
+    self.iconImageView.image = [UIImage imageNamed: self.success ? @"successIcon" : @"failIcon"];
     [self.carouselWidget hide];
+    if (!self.success) {
+        [self.orderListButton setHidden:YES];
+    }
 }
 
 - (void)trackPurchase {
@@ -97,7 +107,6 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"ThankYou"];
     self.tabBarController.tabBar.hidden = NO;
 }
 

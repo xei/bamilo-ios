@@ -30,7 +30,7 @@ class OrderItem: NSObject, Mappable {
     
     func mapping(map: Map) {
         
-        id <- map["order_id"]
+        id <- map["order_number"]
         customerFirstName <- map["customer.first_name"]
         customerLastName <- map["customer.last_name"]
         creationDate <- map["creation_date"]

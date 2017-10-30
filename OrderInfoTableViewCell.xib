@@ -5,7 +5,7 @@
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -74,9 +74,9 @@
                     <constraint firstItem="H4s-tV-V1U" firstAttribute="centerY" secondItem="cDV-f5-3za" secondAttribute="centerY" id="70i-zj-MeH"/>
                     <constraint firstItem="JtY-tU-kaK" firstAttribute="centerY" secondItem="UVp-Ak-UNh" secondAttribute="centerY" id="975-hD-1Ky"/>
                     <constraint firstItem="JPw-3Y-hCH" firstAttribute="centerY" secondItem="lbI-cn-7yS" secondAttribute="centerY" id="Axl-Fh-JZV"/>
-                    <constraint firstItem="lbI-cn-7yS" firstAttribute="left" secondItem="JPw-3Y-hCH" secondAttribute="right" constant="20" id="Hqs-TB-cR1"/>
                     <constraint firstItem="UVp-Ak-UNh" firstAttribute="right" secondItem="cDV-f5-3za" secondAttribute="right" id="Oqv-fK-wGJ"/>
                     <constraint firstItem="4VF-w1-FlC" firstAttribute="centerY" secondItem="Sog-hO-hTD" secondAttribute="centerY" id="PlL-nl-cG7"/>
+                    <constraint firstItem="Sog-hO-hTD" firstAttribute="left" secondItem="4VF-w1-FlC" secondAttribute="right" constant="20" id="ZU4-E9-Wfg"/>
                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="UVp-Ak-UNh" secondAttribute="bottom" constant="16" id="a69-7h-Ont"/>
                     <constraint firstItem="cDV-f5-3za" firstAttribute="right" secondItem="Sog-hO-hTD" secondAttribute="right" id="drS-yS-bbG"/>
                     <constraint firstItem="UVp-Ak-UNh" firstAttribute="top" secondItem="cDV-f5-3za" secondAttribute="bottom" constant="10" id="edw-M8-nYX"/>

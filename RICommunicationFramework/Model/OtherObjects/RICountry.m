@@ -258,14 +258,14 @@
     uniqueCountry.selectedLanguage = language;
     uniqueCountry.name = RI_UNIQUE_COUNTRY_NAME_BAMILO;
     uniqueCountry.countryIso = RI_UNIQUE_COUNTRY_ISO_BAMILO;
-//#ifdef IS_RELEASE
+#ifdef IS_RELEASE
     uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO;
     uniqueCountry.isLive = YES;
-//#else
-//    uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO_STAGING;
-//    uniqueCountry.isLive = NO;
-//    uniqueCountry.userAgentInjection = RI_UNIQUE_COUNTRY_USER_AGENT_INJECTION_BAMILO_INTEGRATION_MOBILE;
-//#endif
+#else
+    uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO_STAGING;
+    uniqueCountry.isLive = NO;
+    uniqueCountry.userAgentInjection = RI_UNIQUE_COUNTRY_USER_AGENT_INJECTION_BAMILO_INTEGRATION_MOBILE;
+#endif
     return uniqueCountry;
 }
 

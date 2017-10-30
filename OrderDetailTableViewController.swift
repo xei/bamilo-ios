@@ -76,7 +76,7 @@ class OrderDetailTableViewController: AccordionTableViewController, OrderDetailT
         cell.backgroundView?.backgroundColor = Theme.color(kColorGray9)
         
         cell.leftTitleString = self.dataSource?.packages?[section - 1].deliveryTime
-        cell.titleString = self.dataSource?.packages?[section - 1].title
+        cell.titleString = self.dataSource?.packages?[section - 1].title?.convertTo(language: .arabic)
         return cell
     }
     

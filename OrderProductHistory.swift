@@ -19,10 +19,10 @@ enum OrderProductHistoryStatusType: String {
 
 enum OrderProductHistoryStep: String {
     case new = "new"
-    case approved = "exportable_success"
-    case received = "item_received_success"
-    case shipped = "shipped_success"
-    case delivered = "delivered_active"
+    case approved = "exportable"
+    case received = "item_received"
+    case shipped = "shipped"
+    case delivered = "delivered"
 }
 
 class OrderProductHistory: NSObject, Mappable {
@@ -39,9 +39,9 @@ class OrderProductHistory: NSObject, Mappable {
     required init?(map: Map) {}
     
     func mapping(map: Map) {
-        name <- map["name"]
+        name <- map["key"]
         nameFa <- map["name_fa"]
-        step <- (map["key"], EnumTransform<OrderProductHistoryStep>())
+        step <- (map["name"], EnumTransform<OrderProductHistoryStep>())
         status <- (map["status"], EnumTransform<OrderProductHistoryStatusType>())
         progress <- map["progress"]
         progress = min(progress ?? 0, 100) //validation
