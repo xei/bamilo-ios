@@ -179,14 +179,18 @@ import SwiftyJSON
         ThreadManager.execute(onMainThread: {
             if let receivedCatalogData = data as? Catalog {
                 if rid == 0 {
-                    
                     self.catalogData = receivedCatalogData
                     self.processCatalogData()
                     EmarsysPredictManager.sendTransactions(of: self)
                     self.collectionView.reloadData()
-                    
+                    if let receivedCatalogData = data as? Catalog, let totalProducts = receivedCatalogData.totalProductsCount {
+                        if totalProducts <= receivedCatalogData.products.count {
+                            self.listFullyLoaded = true
+                        }
+                        self.productCountLabel.text = "\(totalProducts) \(STRING_FOUND_PRODUCT_COUNT)".convertTo(language: .arabic)
+                    }
+                    self.loadingDataInProgress = false
                 } else if rid == 1, receivedCatalogData.products.count > 0 {
-                    
                     if let visibleProductCount = self.catalogData?.products.count {
                         var newIndexPathes = [IndexPath]()
                         for index in 0...receivedCatalogData.products.count - 1 {
@@ -197,18 +201,13 @@ import SwiftyJSON
                         self.collectionView.performBatchUpdates({
                             self.collectionView.insertItems(at: newIndexPathes)
                         }, completion: {(finished) in
+                            self.loadingDataInProgress = false
 //                            self.resetBarFollowers(animated: true)
                         })
                     }
                 }
-                if let totalProducts = receivedCatalogData.totalProductsCount {
-                    if totalProducts <= receivedCatalogData.products.count {
-                        self.listFullyLoaded = true
-                    }
-                    self.productCountLabel.text = "\(totalProducts) \(STRING_FOUND_PRODUCT_COUNT)".convertTo(language: .arabic)
-                }
             }
-            self.loadingDataInProgress = false
+
         })
     }
     
