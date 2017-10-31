@@ -106,6 +106,8 @@ class HomeViewController:   BaseViewController,
             self.setAndFollowerScrollView(scrollView: self.homePage.tableView)
             
             self.isLoaded = true
+            //to start DeeplinkManager
+            DeepLinkManager.listenersReady()
         }
     }
     

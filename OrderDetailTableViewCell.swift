@@ -27,6 +27,7 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
     @IBOutlet weak private var detailView: UIView!
     @IBOutlet weak private var headerView: UIView!
     @IBOutlet weak private var rateButton: UIButton!
+    @IBOutlet weak private var notInStockMessageLabel: UILabel!
     
     weak var delegate: OrderDetailTableViewCellDelegate?
     private var product: OrderProductItem?
@@ -41,6 +42,8 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
         self.productPriceLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
         self.productMoreInfoLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
         self.rateButton.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: .white)
+        self.notInStockMessageLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorGray4))
+        
         self.rateButton.backgroundColor = Theme.color(kColorDarkGreen)
         self.setPropoerConstraints(expanded: expanded)
         self.productImage?.layer.borderColor = Theme.color(kColorGray9).cgColor
@@ -70,7 +73,7 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
     override func update(withModel model: Any!) {
         if let product = model as? OrderProductItem {
             self.productTitleLabel.text = product.name
-            self.productImage.kf.setImage(with: product.imageUrl, options: [.transition(.fade(0.20))])
+            self.productImage.kf.setImage(with: product.imageUrl, placeholder: UIImage(named: "placeholder_gallery"), options: [.transition(.fade(0.20))])
             let productPrice = product.specialPrice ?? product.price ?? 0
             self.productPriceLabel.text = "\(Int(productPrice) * (product.quantity ?? 0))".formatPriceWithCurrency()
             let formattedPrice = "\(productPrice)".formatPriceWithCurrency()
@@ -79,6 +82,8 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
             if let size = product.size { productInfo += "\n\(STRING_SIZE):\(size)".convertTo(language: .arabic)}
             self.productMoreInfoLabel.text = productInfo
             self.progressBarView.update(withModel: product.histories)
+            self.notInStockMessageLabel.text = product.sku != nil ? nil : STRING_ORDER_OUT_OF_STOCK
+            self.rateButton.backgroundColor = product.sku != nil ? Theme.color(kColorDarkGreen) : Theme.color(kColorGray9)
             self.product = product
         }
     }

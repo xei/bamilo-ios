@@ -86,7 +86,8 @@
         kColorSecondaryGray1: [UIColor withRGBA:83 green:88 blue:91 alpha:0.54],
         kColorGray2: [UIColor withHexString:@"#656668"],
         kColorGray3: [UIColor withRGBA:116 green:117 blue:119 alpha:1],
-        kColorGray5: [UIColor withHexString:@"#858688"],
+        kColorGray3: [UIColor withHexString:@"#747577"],
+        kColorGray4: [UIColor withHexString:@"#858688"],
         kColorGray5: [UIColor withRGBA:149 green:150 blue:152 alpha:1],
         kColorGray8: [UIColor withHexString:@"#959698"],
         kColorGray9: [UIColor withHexString:@"#dbdbdb"],
@@ -94,7 +95,9 @@
         kColorGreen1: [UIColor withHexString:@"#00B09B"],
         kColorGreen3: [UIColor withRGBA:1 green:194 blue:173 alpha:1],
         kColorGreen5: [UIColor withRGBA:63 green:210 blue:192 alpha:1],
-        kColorPink1 : [UIColor withHexString:@"#D80056"]
+        kColorPink1 : [UIColor withHexString:@"#D80056"],
+        kColorPink3: [UIColor withHexString:@"#e74775"],
+        kColorPink10: [UIColor withHexString:@"#fbe8ec"],
     }];
     [[ThemeManager sharedInstance] addThemeColor:cPrimaryPalette color:themeColor];
 

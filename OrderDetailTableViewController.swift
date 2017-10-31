@@ -22,7 +22,7 @@ class OrderDetailTableViewController: AccordionTableViewController, OrderDetailT
         self.tableView.register(UINib(nibName: MutualTitleHeaderCell.nibName(), bundle: nil), forHeaderFooterViewReuseIdentifier: MutualTitleHeaderCell.nibName())
         self.tableView.register(UINib(nibName: OrderOwnerInfoTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: OrderOwnerInfoTableViewCell.nibName())
         self.tableView.register(UINib(nibName: OrderInfoTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: OrderInfoTableViewCell.nibName())
-        
+        self.tableView.register(UINib(nibName: OrderCMSMessageTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: OrderCMSMessageTableViewCell.nibName())
         //To remove extra separators from tableview
         self.tableView.tableFooterView = UIView.init(frame: .zero)
     }
@@ -34,7 +34,7 @@ class OrderDetailTableViewController: AccordionTableViewController, OrderDetailT
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 { return 1 }
+        if section == 0 { return self.dataSource?.cms == nil ? 1 : 2 }
         if let packagesCount = self.dataSource?.packages?.count, section == packagesCount + 1 { return 1 }
         return self.dataSource?.packages?[section - 1].products?.count ?? 0
     }
@@ -42,12 +42,18 @@ class OrderDetailTableViewController: AccordionTableViewController, OrderDetailT
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             //first cell
-            let cell = self.tableView.dequeueReusableCell(withIdentifier: OrderInfoTableViewCell.nibName(), for: indexPath) as! OrderInfoTableViewCell
-            cell.update(withModel: self.dataSource)
-            return cell
+            if let cmsMessage = self.dataSource?.cms, indexPath.row == 0 {
+                let cell = self.tableView.dequeueReusableCell(withIdentifier: OrderCMSMessageTableViewCell.nibName(), for: indexPath) as! OrderCMSMessageTableViewCell
+                cell.update(withModel: cmsMessage)
+                return cell
+            } else {
+                let cell = self.tableView.dequeueReusableCell(withIdentifier: OrderInfoTableViewCell.nibName(), for: indexPath) as! OrderInfoTableViewCell
+                cell.update(withModel: self.dataSource)
+                return cell
+            }
         }
         if let packagesCount = self.dataSource?.packages?.count, indexPath.section == packagesCount + 1 {
-            //last cell
+            //last cell & last section
             let cell = self.tableView.dequeueReusableCell(withIdentifier: OrderOwnerInfoTableViewCell.nibName(), for: indexPath) as! OrderOwnerInfoTableViewCell
             cell.update(withModel: self.dataSource)
             return cell
@@ -68,7 +74,9 @@ class OrderDetailTableViewController: AccordionTableViewController, OrderDetailT
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if let packagesCount = self.dataSource?.packages?.count {
             if section == 0 || section == packagesCount + 1 { return nil }
-        } else { return nil }
+        } else {
+            return nil
+        }
         
         let cell = self.tableView.dequeueReusableHeaderFooterView(withIdentifier: MutualTitleHeaderCell.nibName()) as! MutualTitleHeaderCell
         cell.frame = CGRect(x: 0, y: 0, width: self.tableView.frame.width, height: 40)

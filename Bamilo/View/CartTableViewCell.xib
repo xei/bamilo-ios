@@ -5,7 +5,7 @@
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -125,7 +125,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kyq-o6-cff" customClass="StepperViewControl">
-                                <rect key="frame" x="10" y="120" width="90" height="26"/>
+                                <rect key="frame" x="10" y="120.5" width="90" height="26"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="26" id="5Op-SK-YPX"/>
@@ -139,13 +139,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۱۰،۰۰۰ ریال" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VFE-aN-ZLR">
-                                <rect key="frame" x="10" y="156" width="184.5" height="14"/>
+                                <rect key="frame" x="10" y="156.5" width="184.5" height="14"/>
                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
                                 <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۱۰،۰۰۰ ریال" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="naZ-B0-fgP">
-                                <rect key="frame" x="10" y="173" width="184.5" height="13"/>
+                                <rect key="frame" x="10" y="173.5" width="184.5" height="13"/>
                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                 <color key="textColor" red="0.62352941179999999" green="0.62352941179999999" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>

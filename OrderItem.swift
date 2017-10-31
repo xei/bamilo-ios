@@ -13,6 +13,7 @@ import SwiftyJSON
 class OrderItem: NSObject, Mappable {
     
     var id: String?
+    var cms: String?
     var customerFirstName: String?
     var customerLastName: String?
     var creationDate: String?
@@ -31,6 +32,7 @@ class OrderItem: NSObject, Mappable {
     func mapping(map: Map) {
         
         id <- map["order_number"]
+        cms <- map["cms"]
         customerFirstName <- map["customer.first_name"]
         customerLastName <- map["customer.last_name"]
         creationDate <- map["creation_date"]

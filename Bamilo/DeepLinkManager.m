@@ -74,8 +74,8 @@ static BOOL isListenersReady;
             // externalPayment - bamilo://ir/externalPayment?orderNum=<OrderNumber>&success=<BOOL>
             if ([[MainTabBarViewController topViewController] isKindOfClass:[JAExternalPaymentsViewController class]]) {
                 RICart *cart = ((JAExternalPaymentsViewController *)[MainTabBarViewController topViewController]).cart;
-                if (cart && [queryDictionary objectForKey:@"orderNum"] && [queryDictionary objectForKey:@"success"]) {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutThanksScreenNotification object:nil userInfo:@{@"order_number": [queryDictionary objectForKey:@"orderNum"], kCart: cart, @"success": [queryDictionary objectForKey:@"success"]}];
+                if (cart && [queryDictionary objectForKey:@"success"]) {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutThanksScreenNotification object:nil userInfo:@{@"order_number": cart.orderNr, kCart: cart, @"success": [queryDictionary objectForKey:@"success"]}];
                 }
             }
         }

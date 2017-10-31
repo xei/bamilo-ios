@@ -35,14 +35,14 @@ class MyBamiloRecommendItem: RecommendItem {
 
 class MyBamiloModel {
     
-    lazy var topics = [String]()
+    lazy var topics = [String:String]()
     lazy var products = [MyBamiloRecommendItem]()
     
     @discardableResult func embedNewRecommends(result: EMRecommendationResult) -> [MyBamiloRecommendItem] {
         var newjoinedProducts = [MyBamiloRecommendItem]()
         
-        if let receivedTopic = result.topic ,!self.topics.contains(receivedTopic) {
-            self.topics.append(receivedTopic)
+        if let receivedTopic = result.topic , self.topics[receivedTopic] == nil {
+            self.topics[receivedTopic] = result.featureID
         }
         
         result.products.forEach { (recommendedProduct) in

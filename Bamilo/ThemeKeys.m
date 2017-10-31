@@ -54,4 +54,6 @@ NSString *const kColorGreen1 = @"green-1";
 NSString *const kColorGreen3 = @"green-3";
 NSString *const kColorGreen5 = @"green-5";
 NSString *const kColorPink1 = @"pink-1";
+NSString *const kColorPink3 = @"pink-3";
+NSString *const kColorPink10 = @"pink-10";
 @end

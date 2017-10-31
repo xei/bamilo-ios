@@ -521,7 +521,7 @@
 //#pragma mark Checkout Thanks Screen
 - (void)showCheckoutThanksScreen:(NSNotification *)notification {
     SuccessPaymentViewController *viewCtrl = (SuccessPaymentViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Checkout" nibName:NSStringFromClass([SuccessPaymentViewController class]) resetCache:NO];
-    viewCtrl.success = [notification.userInfo objectForKey:@"success"];
+    viewCtrl.success = [[notification.userInfo objectForKey:@"success"] boolValue];
     viewCtrl.cart = [notification.userInfo objectForKey:kCart];
     [self pushViewController:viewCtrl animated:YES];
 }

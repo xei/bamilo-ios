@@ -57,12 +57,14 @@
 }
 
 - (void)setupView {
-    [self.titleLabel applyStyle:[Theme font:kFontVariationRegular size:20.0f] color:[Theme color:kColorGreen]];
-    [self.descLabel applyStyle:[Theme font:kFontVariationRegular size:12.0f] color:[UIColor blackColor]];
+    [self.titleLabel applyStyle:[Theme font:kFontVariationRegular size:19.0f] color: self.success ? [Theme color:kColorGreen] : [Theme color:kColorPink1]];
+    [self.descLabel applyStyle:[Theme font:kFontVariationRegular size:12.0f] color: self.success ? [UIColor blackColor] : [Theme color:kColorPink1]];
     self.titleLabel.text = self.success ? STRING_THANK_YOU_ORDER_TITLE : STRING_ONLINE_PAYMENT_ERROR;
-    self.descLabel.text = self.success ? STRING_ORDER_SUCCESS : nil;
+    self.descLabel.text = self.success ? STRING_ORDER_SUCCESS : STRING_ORDER_FAIL;
     self.iconImageView.image = [UIImage imageNamed: self.success ? @"successIcon" : @"failIcon"];
     [self.carouselWidget hide];
+    
+    [EmarsysPredictManager sendTransactionsOf:self];
     if (!self.success) {
         [self.orderListButton setHidden:YES];
     }
@@ -102,7 +104,6 @@
     //// ------- END OF LEGACY CODES ------
     
     [self publishScreenLoadTime];
-    [EmarsysPredictManager sendTransactionsOf:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

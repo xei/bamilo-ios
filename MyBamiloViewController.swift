@@ -21,7 +21,9 @@ class MyBamiloViewController:   BaseViewController,
                                 UICollectionViewDelegate,
                                 UICollectionViewDataSource,
                                 BaseCatallogCollectionViewCellDelegate,
-                                UIScrollViewDelegate {
+                                UIScrollViewDelegate,
+                                MyBamiloHeaderViewDelegate,
+                                UIActionSheetDelegate {
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak private var loadingIndicator: UIActivityIndicatorView!
@@ -39,6 +41,7 @@ class MyBamiloViewController:   BaseViewController,
     private var visibleProductCount = 0
     private var refreshControl: UIRefreshControl?
     private var isRefreshing: Bool = false
+    private let headerHeight: CGFloat = 50
     
     weak var delegate: MyBamiloViewControllerDelegate?
     
@@ -50,8 +53,11 @@ class MyBamiloViewController:   BaseViewController,
         self.collectionView.dataSource = self
         
         self.collectionView.register(UINib(nibName: CatalogGridCollectionViewCell.nibName, bundle: nil), forCellWithReuseIdentifier: CatalogGridCollectionViewCell.nibName)
+        self.collectionView.register(UINib(nibName: MyBamiloHeaderView.nibName(), bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: MyBamiloHeaderView.nibName())
         
-        self.collectionView.collectionViewLayout = GridCollectionViewFlowLayout()
+        let flowLayout = GridCollectionViewFlowLayout()
+        flowLayout.headerReferenceSize = CGSize(width: self.collectionView.frame.width, height: self.headerHeight)
+        self.collectionView.collectionViewLayout = flowLayout
         EmarsysPredictManager.sendTransactions(of: self)
         
         self.refreshControl = UIRefreshControl.init()
@@ -110,20 +116,7 @@ class MyBamiloViewController:   BaseViewController,
                     
                     //Wait untill all the requests are ready
                     self.loadingIndicator.stopAnimating()
-                    var newIndexPathes = [IndexPath]()
-                    for index in 0...self.dataSource.products.count - self.visibleProductCount - 1 {
-                        let newIndex = self.visibleProductCount + index
-                        newIndexPathes.append(IndexPath(item: newIndex, section: 0))
-                    }
-                    if self.isRefreshing {
-                        self.collectionView.reloadData()
-                    } else {
-                        self.collectionView.performBatchUpdates({
-                            self.collectionView.insertItems(at: newIndexPathes)
-                        }, completion: { (finished) in
-                            self.visibleProductCount = self.dataSource.products.count
-                        })
-                    }
+                    self.collectionView.reloadData()
                 }
             }
         })
@@ -149,6 +142,13 @@ class MyBamiloViewController:   BaseViewController,
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let headerView = self.collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: MyBamiloHeaderView.nibName(), for: indexPath) as! MyBamiloHeaderView
+        headerView.delegate = self
+        headerView.setTitle(title: STRING_ALL_CATEGORIES)
+        headerView.frame.size.height = self.headerHeight
+        return headerView
+    }
     
     //MARK: - UIScrollViewDelegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -165,6 +165,13 @@ class MyBamiloViewController:   BaseViewController,
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         self.delegate?.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
+    }
+    
+    
+    //MARK: - MyBamiloHeaderViewDelegate
+    func menuButtonTapped() {
+        let actionSheet = UIActionSheet(title: "Choose Option", delegate: self, cancelButtonTitle: nil, destructiveButtonTitle: nil, otherButtonTitles: "Save", "Delete")
+        actionSheet.show(in: self.view)
     }
     
     //MARK: - DataTrackerProtocol

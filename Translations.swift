@@ -70,4 +70,5 @@ let STRING_SHIPPING_ADDRESS = RILocalizationWrapper.localizedString("shipping_ad
 let STRING_PAYMENT_OPTION = RILocalizationWrapper.localizedString("payment_option")!
 let STRING_SHIPPING_COST = RILocalizationWrapper.localizedString("shipping_cost")!
 let STRING_ORDER_STATUS = RILocalizationWrapper.localizedString("string_order_status")!
+let STRING_ORDER_OUT_OF_STOCK = RILocalizationWrapper.localizedString("out_of_stock")!
 

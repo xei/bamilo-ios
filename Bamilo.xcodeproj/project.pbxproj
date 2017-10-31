@@ -84,6 +84,8 @@
 		61420C921F9F03D3009D9ECD /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61420C911F9F03D3009D9ECD /* Utility.swift */; };
 		61432EC61E9B5DD7001F7930 /* BaseCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61432EC51E9B5DD7001F7930 /* BaseCollectionViewCell.m */; };
 		61432ECB1E9B60DE001F7930 /* RecommendItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 61432ECA1E9B60DE001F7930 /* RecommendItem.m */; };
+		614B8C691FA866EB00F7D3D4 /* MyBamiloHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614B8C671FA866EB00F7D3D4 /* MyBamiloHeaderView.swift */; };
+		614B8C6A1FA866EB00F7D3D4 /* MyBamiloHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 614B8C681FA866EB00F7D3D4 /* MyBamiloHeaderView.xib */; };
 		614ED1681F8B6DCB0096E4D6 /* HomePageDailyDealsCollectionFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614ED1671F8B6DCB0096E4D6 /* HomePageDailyDealsCollectionFlowLayout.swift */; };
 		6157A3EE1F83865800B8D501 /* MyBamiloViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6157A3EC1F83865800B8D501 /* MyBamiloViewController.swift */; };
 		6157A3EF1F83865800B8D501 /* MyBamiloViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6157A3ED1F83865800B8D501 /* MyBamiloViewController.xib */; };
@@ -236,6 +238,8 @@
 		61F705411F766EB200DCD77C /* FeaturedStoresCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61F7053F1F766EB200DCD77C /* FeaturedStoresCollectionViewCell.xib */; };
 		61F946B31ED4502100F341A6 /* ProductDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F946B21ED4502100F341A6 /* ProductDataManager.swift */; };
 		61FB25121F791C980002CD87 /* Ext+UISCrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FB25111F791C980002CD87 /* Ext+UISCrollView.swift */; };
+		61FB2FDD1FA8CB92005FE3F6 /* OrderCMSMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FB2FDB1FA8CB92005FE3F6 /* OrderCMSMessageTableViewCell.swift */; };
+		61FB2FDE1FA8CB92005FE3F6 /* OrderCMSMessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61FB2FDC1FA8CB92005FE3F6 /* OrderCMSMessageTableViewCell.xib */; };
 		61FDE3331F72705D00153A74 /* BaseHomePageTeaserBoxTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FDE3321F72705D00153A74 /* BaseHomePageTeaserBoxTableViewCell.swift */; };
 		61FE97D51EC9BB7700DF233D /* GridCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FE97D41EC9BB7600DF233D /* GridCollectionViewFlowLayout.swift */; };
 		61FE97D71EC9C19300DF233D /* ListCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FE97D61EC9C19300DF233D /* ListCollectionViewFlowLayout.swift */; };
@@ -1068,6 +1072,8 @@
 		61432EC51E9B5DD7001F7930 /* BaseCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseCollectionViewCell.m; sourceTree = "<group>"; };
 		61432EC91E9B60DE001F7930 /* RecommendItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecommendItem.h; sourceTree = "<group>"; };
 		61432ECA1E9B60DE001F7930 /* RecommendItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommendItem.m; sourceTree = "<group>"; };
+		614B8C671FA866EB00F7D3D4 /* MyBamiloHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBamiloHeaderView.swift; sourceTree = "<group>"; };
+		614B8C681FA866EB00F7D3D4 /* MyBamiloHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyBamiloHeaderView.xib; sourceTree = "<group>"; };
 		614ED1671F8B6DCB0096E4D6 /* HomePageDailyDealsCollectionFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageDailyDealsCollectionFlowLayout.swift; sourceTree = "<group>"; };
 		6157A3EC1F83865800B8D501 /* MyBamiloViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBamiloViewController.swift; sourceTree = "<group>"; };
 		6157A3ED1F83865800B8D501 /* MyBamiloViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyBamiloViewController.xib; sourceTree = "<group>"; };
@@ -1267,6 +1273,8 @@
 		61F7053F1F766EB200DCD77C /* FeaturedStoresCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeaturedStoresCollectionViewCell.xib; sourceTree = "<group>"; };
 		61F946B21ED4502100F341A6 /* ProductDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductDataManager.swift; sourceTree = "<group>"; };
 		61FB25111F791C980002CD87 /* Ext+UISCrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UISCrollView.swift"; sourceTree = "<group>"; };
+		61FB2FDB1FA8CB92005FE3F6 /* OrderCMSMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCMSMessageTableViewCell.swift; sourceTree = "<group>"; };
+		61FB2FDC1FA8CB92005FE3F6 /* OrderCMSMessageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderCMSMessageTableViewCell.xib; sourceTree = "<group>"; };
 		61FDE3321F72705D00153A74 /* BaseHomePageTeaserBoxTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseHomePageTeaserBoxTableViewCell.swift; sourceTree = "<group>"; };
 		61FE97D41EC9BB7600DF233D /* GridCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		61FE97D61EC9C19300DF233D /* ListCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
@@ -2727,6 +2735,7 @@
 		610C68941EC7395B008FB66C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				614B8C651FA8660E00F7D3D4 /* CollectionViewSupplementary */,
 				61AF00B71F402F2800543BA8 /* Buttons */,
 				612FE5181EDC0A8400C2AFA0 /* TableViewCell */,
 				6193519F1ECAC92800330E5C /* CollectionViewCell */,
@@ -2983,9 +2992,7 @@
 		612FE5181EDC0A8400C2AFA0 /* TableViewCell */ = {
 			isa = PBXGroup;
 			children = (
-				61B579051F9E2AD100C9F454 /* OrderInfoTableViewCell */,
-				61B579041F9E18DA00C9F454 /* OrderOwnerInfoTableViewCell */,
-				61B2C7FE1F9CA58100930435 /* OrderDetailTableViewCell */,
+				61FB2FD91FA8CB5B005FE3F6 /* OrderDetail */,
 				61B2C7F81F9C973300930435 /* Accordion */,
 				61D4748D1F6FE174001DA6A6 /* HomePage */,
 				616F7D0F1F6D170200085B64 /* IconTableViewCell */,
@@ -3167,6 +3174,23 @@
 				61432ECA1E9B60DE001F7930 /* RecommendItem.m */,
 			);
 			name = RecommendItem;
+			sourceTree = "<group>";
+		};
+		614B8C651FA8660E00F7D3D4 /* CollectionViewSupplementary */ = {
+			isa = PBXGroup;
+			children = (
+				614B8C661FA8663D00F7D3D4 /* MyBamiloHeaderView */,
+			);
+			name = CollectionViewSupplementary;
+			sourceTree = "<group>";
+		};
+		614B8C661FA8663D00F7D3D4 /* MyBamiloHeaderView */ = {
+			isa = PBXGroup;
+			children = (
+				614B8C671FA866EB00F7D3D4 /* MyBamiloHeaderView.swift */,
+				614B8C681FA866EB00F7D3D4 /* MyBamiloHeaderView.xib */,
+			);
+			name = MyBamiloHeaderView;
 			sourceTree = "<group>";
 		};
 		6157A3DD1F8376B700B8D501 /* Home */ = {
@@ -4224,6 +4248,26 @@
 				61F7053F1F766EB200DCD77C /* FeaturedStoresCollectionViewCell.xib */,
 			);
 			name = FeaturedStoresCollectionViewCell;
+			sourceTree = "<group>";
+		};
+		61FB2FD91FA8CB5B005FE3F6 /* OrderDetail */ = {
+			isa = PBXGroup;
+			children = (
+				61FB2FDA1FA8CB6C005FE3F6 /* OrderCMSMessageTableViewCell */,
+				61B579051F9E2AD100C9F454 /* OrderInfoTableViewCell */,
+				61B579041F9E18DA00C9F454 /* OrderOwnerInfoTableViewCell */,
+				61B2C7FE1F9CA58100930435 /* OrderDetailTableViewCell */,
+			);
+			name = OrderDetail;
+			sourceTree = "<group>";
+		};
+		61FB2FDA1FA8CB6C005FE3F6 /* OrderCMSMessageTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				61FB2FDB1FA8CB92005FE3F6 /* OrderCMSMessageTableViewCell.swift */,
+				61FB2FDC1FA8CB92005FE3F6 /* OrderCMSMessageTableViewCell.xib */,
+			);
+			name = OrderCMSMessageTableViewCell;
 			sourceTree = "<group>";
 		};
 		61FDE3311F72703400153A74 /* BaseHomePageTeaserBoxTableViewCell */ = {
@@ -7618,9 +7662,11 @@
 				8757438B1EA60DB9001B518A /* National-72.png in Resources */,
 				875743C91EA60DFD001B518A /* SpecialOffer-72.png in Resources */,
 				61338CF61EACA1690017BB06 /* EmarsysRecommendationMinimalCarouselCollectionViewCell.xib in Resources */,
+				61FB2FDE1FA8CB92005FE3F6 /* OrderCMSMessageTableViewCell.xib in Resources */,
 				876869A91E5C9805004B4333 /* NotificationBarView.xib in Resources */,
 				87CE1DCC1E619204000A2C9E /* DeliveryTimeTableViewCell.xib in Resources */,
 				61B579091F9E2B0A00C9F454 /* OrderOwnerInfoTableViewCell.xib in Resources */,
+				614B8C6A1FA866EB00F7D3D4 /* MyBamiloHeaderView.xib in Resources */,
 				CE9AE0581AB6D78200D56481 /* JAPDVVariations.xib in Resources */,
 				CE9AE0611AB6D78200D56481 /* JAOrangeButtonCell_ipad_portrait.xib in Resources */,
 				619351B11ECACA1F00330E5C /* CatalogListCollectionViewCell.xib in Resources */,
@@ -8166,6 +8212,7 @@
 				61A4D1AB1EA6256A003E203C /* EmptyViewController.m in Sources */,
 				87A681581E40F21B00D252AC /* BaseButton.m in Sources */,
 				619E92D21F8A1093003885BC /* BaseCollectionViewCellSwift.swift in Sources */,
+				614B8C691FA866EB00F7D3D4 /* MyBamiloHeaderView.swift in Sources */,
 				87459C821E4EF37200743120 /* CartListItemTableViewCell.m in Sources */,
 				875AD5691E38C0C900584ABF /* RIPaymentMethodFormOption.m in Sources */,
 				879F88351E51DFB90033FE87 /* CartForm.m in Sources */,
@@ -8510,6 +8557,7 @@
 				9AEF73F91CD20E1C00A5D574 /* JAReturnStepByStepModel.m in Sources */,
 				61CBA0421E51BA33005673F7 /* FormViewControl.m in Sources */,
 				8702FBD91E9A3139001D1AA9 /* AddToFavoritesEvent.m in Sources */,
+				61FB2FDD1FA8CB92005FE3F6 /* OrderCMSMessageTableViewCell.swift in Sources */,
 				612544061EBA1075007F9350 /* OrderDataManager.swift in Sources */,
 				617585F41F88EEFE00D66541 /* HomePageDailyDeals.swift in Sources */,
 				613A7E941EBF651600E1AB3F /* BaseCatalogFilterItem.swift in Sources */,

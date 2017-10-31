@@ -33,6 +33,7 @@
 #import "CAPSPageMenu.h"
 
 #import "DataManager.h"
+#import "DeepLinkManager.h"
 #import "OrderList.h"
 #import "PerformanceTrackerProtocol.h"
 #import "DataTrackerProtocol.h"

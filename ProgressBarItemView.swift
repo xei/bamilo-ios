@@ -12,10 +12,13 @@ class ProgressBarItemView: BaseControlView {
     
     private let circleWidth: CGFloat = 13
     
+    @IBOutlet weak private var titleLabelWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var imageView: UIImageView!
     @IBOutlet weak private var circleView: UIView!
     @IBOutlet weak private var circleWidthConstraint: NSLayoutConstraint!
+    
+    private let screenSize = UIScreen.main.bounds.width
     
     var model : OrderProductHistory?
     
@@ -34,21 +37,29 @@ class ProgressBarItemView: BaseControlView {
         self.imageView.image = nil
         self.titleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 9), color: Theme.color(kColorGray8))
         self.titleLabel.text = .EMPTY
+
         self.circleView.layer.cornerRadius = self.circleWidth / 2
         self.circleWidthConstraint.constant = self.circleWidth
         self.backgroundColor = .clear
         self.clipsToBounds = false
         
+        self.circleWidthConstraint.constant = (self.screenSize <= 320) ? 30 : 70
+
         self.frame.size = ProgressBarItemView.getFrameSize()
         self.updateConstraints()
     }
     
     static func getFrameSize() -> CGSize {
-        return CGSize(width: 50, height: 64)
+        return CGSize(width: 50, height: 90)
     }
     
-    func update(model: OrderProductHistory) {
-        self.titleLabel.text = model.nameFa
+    func update(model: OrderProductHistory, isLast: Bool) {
+        
+        if (self.screenSize <= 320) {
+            self.titleLabel.setTitle(title: model.nameFa ?? "", lineHeight: 13, lineSpaceing: 0)
+        } else {
+            self.titleLabel.text = model.nameFa
+        }
         
         //title & circle color
         if model.status == .success {
@@ -63,12 +74,13 @@ class ProgressBarItemView: BaseControlView {
         }
         
         //set image it this level is active
+        self.imageView.isHidden = false
         if let step = model.step, let imageName = self.imageHistoryStepMapper[step], model.status == .active {
             self.imageView.image = UIImage(named: imageName)
-            self.imageView.isHidden = false
-        } else if let step = model.step, step == .delivered, model.status == .success {
-            self.imageView.image = UIImage(named: self.imageHistoryStepMapper[.delivered]!)
-            self.imageView.isHidden = false
+        } else if let step = model.step, step == .delivered, model.status == .success, isLast {
+            self.imageView.image = UIImage(named: "orderDeliveredSuccess")
+        } else {
+            self.imageView.isHidden = true
         }
         
         self.model = model

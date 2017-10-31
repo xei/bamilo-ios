@@ -58,7 +58,7 @@ class ProgressBarView: BaseControlView {
         var index = 0
         model?.forEach({ (historyItem) in
             let nibView = ProgressBarItemView.nibInstance()
-            nibView.update(model: historyItem)
+            nibView.update(model: historyItem, isLast: index == model!.count - 1)
             self.progressItemViews.append(nibView)
             if let model = model, index != model.count - 1 { //not last item
                 self.allWeights += CGFloat(historyItem.multiplier)

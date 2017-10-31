@@ -230,6 +230,7 @@
 
 #define STRING_THANK_YOU_ORDER_TITLE RILocalizedString(@"thank_you_order_title", nil)
 #define STRING_ORDER_SUCCESS RILocalizedString(@"order_success", nil)
+#define STRING_ORDER_FAIL RILocalizedString(@"order_fail_desc", nil)
 #define STRING_ORDER_TRACK_SUCCESS RILocalizedString(@"order_track_success", nil)
 #define STRING_ORDER_TRACK_LINK RILocalizedString(@"order_track_link", nil)
 
