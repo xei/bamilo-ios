@@ -42,7 +42,9 @@ class MyBamiloModel {
         var newjoinedProducts = [MyBamiloRecommendItem]()
         
         if let receivedTopic = result.topic , self.topics[receivedTopic] == nil {
-            self.topics[receivedTopic] = result.featureID
+            if let pureTopic = receivedTopic.components(separatedBy: ">").first {
+                self.topics[pureTopic] = result.featureID
+            }
         }
         
         result.products.forEach { (recommendedProduct) in

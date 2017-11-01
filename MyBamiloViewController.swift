@@ -36,12 +36,14 @@ class MyBamiloViewController:   BaseViewController,
     
     private lazy var dataSource = MyBamiloModel()
     private lazy var incomingDataSource = MyBamiloModel()
+    private var presentingProducts: [MyBamiloRecommendItem]?
     
     private var recommendationRequestCounts = 0
     private var visibleProductCount = 0
     private var refreshControl: UIRefreshControl?
     private var isRefreshing: Bool = false
     private let headerHeight: CGFloat = 50
+    private var selectedLogicID: String?
     
     weak var delegate: MyBamiloViewControllerDelegate?
     
@@ -69,7 +71,6 @@ class MyBamiloViewController:   BaseViewController,
     
     override func viewWillDisappear(_ animated: Bool) {
         self.collectionView.killScroll()
-
         
         //To prevent refresh control to be visible (and it's gap) for the next time
         self.refreshControl?.endRefreshing()
@@ -112,6 +113,8 @@ class MyBamiloViewController:   BaseViewController,
                 if self.recommendationRequestCounts == 0 {
                     self.dataSource.topics = self.incomingDataSource.topics
                     self.dataSource.products = self.incomingDataSource.products
+                    self.filterProductListById(id: self.selectedLogicID)
+                    
                     self.refreshControl?.endRefreshing()
                     
                     //Wait untill all the requests are ready
@@ -124,19 +127,23 @@ class MyBamiloViewController:   BaseViewController,
     
     //MARK: - UICollectionViewDelegate, UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.dataSource.products.count
+        return self.presentingProducts?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: CatalogGridCollectionViewCell.nibName, for: indexPath) as! CatalogGridCollectionViewCell
-        cell.updateWithProduct(product: self.dataSource.products[indexPath.row].convertToProduct())
+        if let product = self.presentingProducts?[indexPath.row].convertToProduct() {
+            cell.updateWithProduct(product: product)
+        }
         cell.cellIndex = indexPath.row
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.delegate?.didSelectProductSku(productSku: self.dataSource.products[indexPath.row].sku)
+        if let sku = self.presentingProducts?[indexPath.row].sku {
+            self.delegate?.didSelectProductSku(productSku: sku)
+        }
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -170,8 +177,45 @@ class MyBamiloViewController:   BaseViewController,
     
     //MARK: - MyBamiloHeaderViewDelegate
     func menuButtonTapped() {
-        let actionSheet = UIActionSheet(title: "Choose Option", delegate: self, cancelButtonTitle: nil, destructiveButtonTitle: nil, otherButtonTitles: "Save", "Delete")
-        actionSheet.show(in: self.view)
+        self.presentActionSheet()
+    }
+    
+    private func presentActionSheet() {
+        let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        //all category action filtert
+        let allKeyAction = UIAlertAction(title: STRING_ALL_CATEGORIES, style: .default) { _ in
+            self.filterProductListById(id: nil)
+            self.collectionView.reloadData()
+        }
+        optionMenu.addAction(allKeyAction)
+        
+        //all avaiable actions
+        self.dataSource.topics.forEach { (key, value) in
+            let action = UIAlertAction(title: key, style: .default) { _ in
+                self.filterProductListById(id: value)
+                self.collectionView.reloadData()
+            }
+            optionMenu.addAction(action)
+        }
+        
+        //cancel button
+        let cancelAction = UIAlertAction(title: STRING_CANCEL, style: .cancel) { _ in
+            print("Cancelled")
+        }
+        optionMenu.addAction(cancelAction)
+        
+        let height:NSLayoutConstraint = NSLayoutConstraint(item: optionMenu.view, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: self.view.frame.height * 0.80)
+        optionMenu.view.addConstraint(height)
+        self.present(optionMenu, animated: true, completion: nil)
+    }
+    
+    private func filterProductListById(id: String?) {
+        if let id = id {
+            self.presentingProducts = self.dataSource.filterById(id: id)
+        } else {
+            self.presentingProducts = self.dataSource.products
+        }
     }
     
     //MARK: - DataTrackerProtocol
