@@ -238,6 +238,7 @@
             JAPDVViewController *viewController = [JAPDVViewController new];
             viewController.purchaseTrackingInfo = purchaseInfo;
             [self loadScreenTarget:screenTarget forBaseViewController:viewController];
+            viewController.hidesBottomBarWhenPushed = YES;
             [self pushViewController:viewController animated:screenTarget.pushAnimation];
             return YES;
         }
@@ -521,7 +522,7 @@
 //#pragma mark Checkout Thanks Screen
 - (void)showCheckoutThanksScreen:(NSNotification *)notification {
     SuccessPaymentViewController *viewCtrl = (SuccessPaymentViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Checkout" nibName:NSStringFromClass([SuccessPaymentViewController class]) resetCache:NO];
-    viewCtrl.success = [[notification.userInfo objectForKey:@"success"] boolValue];
+    viewCtrl.success = [(NSNumber *)[notification.userInfo objectForKey:@"success"] boolValue];
     viewCtrl.cart = [notification.userInfo objectForKey:kCart];
     [self pushViewController:viewCtrl animated:YES];
 }
@@ -530,7 +531,6 @@
 - (void)pushCatalogToShowSearchResults:(NSString *)query {
     CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
     catalog.searchTarget = [RITarget getTarget:CATALOG_SEARCH node:query];
-    
     [self pushViewController:catalog animated:YES];
 }
 
@@ -845,7 +845,7 @@
         if ([notification.userInfo objectForKey:@"purchaseTrackingInfo"]) {
             pdv.purchaseTrackingInfo = [notification.userInfo objectForKey:@"purchaseTrackingInfo"];
         }
-        
+        pdv.hidesBottomBarWhenPushed = YES;
         [self pushViewController:pdv animated:YES];
     }
 }

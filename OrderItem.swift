@@ -19,7 +19,7 @@ class OrderItem: NSObject, Mappable {
     var creationDate: String?
     var price: UInt64?
     var paymentMethod: String?
-    var deliveryCost: String?
+    var deliveryCost: UInt64?
     var productionCount: Int = 0
     
     var packages: [OrderPackage]?

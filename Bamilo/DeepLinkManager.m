@@ -28,7 +28,7 @@ static BOOL isListenersReady;
     
     if (url.scheme) {
     
-        NSDictionary *queryDictionary = [URLUtility parseQueryString:url];
+        NSDictionary<NSString *, NSString *> *queryDictionary = [URLUtility parseQueryString:url];
         
         if ([queryDictionary objectForKey:kUTMSource] ||
             [queryDictionary objectForKey:kUTMMedium] ||
@@ -73,9 +73,12 @@ static BOOL isListenersReady;
         } else if ([targetKey isEqualToString:@"externalPayment"]) {
             // externalPayment - bamilo://ir/externalPayment?orderNum=<OrderNumber>&success=<BOOL>
             if ([[MainTabBarViewController topViewController] isKindOfClass:[JAExternalPaymentsViewController class]]) {
+                JAExternalPaymentsViewController *viewController = (JAExternalPaymentsViewController *)[MainTabBarViewController topViewController];
                 RICart *cart = ((JAExternalPaymentsViewController *)[MainTabBarViewController topViewController]).cart;
                 if (cart && [queryDictionary objectForKey:@"success"]) {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutThanksScreenNotification object:nil userInfo:@{@"order_number": cart.orderNr, kCart: cart, @"success": [queryDictionary objectForKey:@"success"]}];
+                    BOOL success = [[queryDictionary objectForKey:@"success"] isEqualToString:@"true"];
+                    [viewController paymentHappend:success];
+                    viewController.isComingFromBank = YES;
                 }
             }
         }

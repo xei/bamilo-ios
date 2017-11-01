@@ -163,6 +163,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString: @"OrderDetailViewController"]) {
         OrderDetailViewController *orderDetailViewCtrl = (OrderDetailViewController *)segue.destinationViewController;
+        orderDetailViewCtrl.hidesBottomBarWhenPushed = YES;
         orderDetailViewCtrl.orderId = ((Order *)sender).orderId;
     }
 }

@@ -8,6 +8,7 @@
 
 import UIKit
 import EmarsysPredictSDK
+import TBActionSheet
 
 protocol MyBamiloViewControllerDelegate: class {
     func scrollViewDidScroll(_ scrollView: UIScrollView)
@@ -23,7 +24,7 @@ class MyBamiloViewController:   BaseViewController,
                                 BaseCatallogCollectionViewCellDelegate,
                                 UIScrollViewDelegate,
                                 MyBamiloHeaderViewDelegate,
-                                UIActionSheetDelegate {
+                                TBActionSheetDelegate {
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak private var loadingIndicator: UIActivityIndicatorView!
@@ -44,6 +45,7 @@ class MyBamiloViewController:   BaseViewController,
     private var isRefreshing: Bool = false
     private let headerHeight: CGFloat = 50
     private var selectedLogicID: String?
+    private var selectedCategoryName: String?
     
     weak var delegate: MyBamiloViewControllerDelegate?
     
@@ -152,7 +154,7 @@ class MyBamiloViewController:   BaseViewController,
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let headerView = self.collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: MyBamiloHeaderView.nibName(), for: indexPath) as! MyBamiloHeaderView
         headerView.delegate = self
-        headerView.setTitle(title: STRING_ALL_CATEGORIES)
+        headerView.setTitle(title: selectedCategoryName ?? STRING_ALL_CATEGORIES)
         headerView.frame.size.height = self.headerHeight
         return headerView
     }
@@ -160,7 +162,6 @@ class MyBamiloViewController:   BaseViewController,
     //MARK: - UIScrollViewDelegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.delegate?.scrollViewDidScroll(scrollView)
-        
         let bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height;
         if (bottomEdge >= (scrollView.contentSize.height - self.paginationThresholdPoint)) {
             // we are approaching at the end of scrollview
@@ -181,33 +182,31 @@ class MyBamiloViewController:   BaseViewController,
     }
     
     private func presentActionSheet() {
-        let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        //all category action filtert
-        let allKeyAction = UIAlertAction(title: STRING_ALL_CATEGORIES, style: .default) { _ in
+        let optionMenu = TBActionSheet()
+        optionMenu.addButton(withTitle: STRING_ALL_CATEGORIES, style: self.selectedLogicID == nil ? .destructive : .default) { _ in
             self.filterProductListById(id: nil)
+            self.selectedCategoryName = STRING_ALL_CATEGORIES
             self.collectionView.reloadData()
         }
-        optionMenu.addAction(allKeyAction)
-        
+
         //all avaiable actions
         self.dataSource.topics.forEach { (key, value) in
-            let action = UIAlertAction(title: key, style: .default) { _ in
+            optionMenu.addButton(withTitle: key, style: self.selectedLogicID == value ? .destructive : .default, handler: { (_) in
                 self.filterProductListById(id: value)
+                self.selectedCategoryName = key
                 self.collectionView.reloadData()
-            }
-            optionMenu.addAction(action)
+            })
         }
-        
-        //cancel button
-        let cancelAction = UIAlertAction(title: STRING_CANCEL, style: .cancel) { _ in
-            print("Cancelled")
-        }
-        optionMenu.addAction(cancelAction)
-        
-        let height:NSLayoutConstraint = NSLayoutConstraint(item: optionMenu.view, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: self.view.frame.height * 0.80)
-        optionMenu.view.addConstraint(height)
-        self.present(optionMenu, animated: true, completion: nil)
+        optionMenu.ambientColor = .white
+        optionMenu.destructiveButtonColor = Theme.color(kColorDarkGreen)
+        optionMenu.tintColor = Theme.color(kColorGray1)
+        optionMenu.buttonFont = Theme.font(kFontVariationRegular, size: 13)
+        optionMenu.rectCornerRadius = 0
+        optionMenu.buttonHeight = 45
+        optionMenu.setupLayout()
+        optionMenu.setupContainerFrame()
+        optionMenu.setupStyle()
+        optionMenu.show()
     }
     
     private func filterProductListById(id: String?) {
@@ -216,6 +215,7 @@ class MyBamiloViewController:   BaseViewController,
         } else {
             self.presentingProducts = self.dataSource.products
         }
+        self.selectedLogicID = id
     }
     
     //MARK: - DataTrackerProtocol

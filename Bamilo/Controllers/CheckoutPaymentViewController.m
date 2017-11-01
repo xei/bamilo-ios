@@ -243,6 +243,7 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
     NSString * segueName = segue.identifier;
     if ([segueName isEqualToString: NSStringFromClass([SuccessPaymentViewController class])]) {
         ((SuccessPaymentViewController *) [segue destinationViewController]).cart = self.cart;
+        ((SuccessPaymentViewController *) [segue destinationViewController]).success = YES;
     }
 }
 

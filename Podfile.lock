@@ -59,6 +59,7 @@ PODS:
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
   - SwiftyJSON (3.1.4)
+  - TBActionSheet (1.5.5)
   - TTRangeSlider (1.0.5)
 
 DEPENDENCIES:
@@ -84,6 +85,7 @@ DEPENDENCIES:
   - RealmSwift
   - SDWebImage (~> 3.8)
   - SwiftyJSON
+  - TBActionSheet
   - TTRangeSlider (~> 1.0.5)
 
 SPEC CHECKSUMS:
@@ -113,8 +115,9 @@ SPEC CHECKSUMS:
   RGB: 21cf4b60ef3501c6b7cbb268a30045905dd90995
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+  TBActionSheet: f1c95530f81b41b6dd75d9f653331e953fb3c7f5
   TTRangeSlider: 2f2ce4a33b32bb323c6575b9f5161c4664459c58
 
-PODFILE CHECKSUM: 39cb17bff0789bc35994d5b8deeb57d35c331513
+PODFILE CHECKSUM: a8b2885f125b4d714cbdc239ce3625840603dbad
 
 COCOAPODS: 1.4.0.beta.1

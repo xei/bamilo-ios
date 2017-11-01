@@ -10,13 +10,13 @@
 
 @implementation URLUtility
 
-+ (NSDictionary *)parseQueryString:(NSURL *)url {
++ (NSDictionary<NSString *, NSString *> *)parseQueryString:(NSURL *)url {
     NSString *query = [url query];
-    NSMutableDictionary *dict = [NSMutableDictionary new];
-    NSArray *pairs = [query componentsSeparatedByString:@"&"];
+    NSMutableDictionary<NSString *, NSString *> *dict = [NSMutableDictionary new];
+    NSArray<NSString *> *pairs = [query componentsSeparatedByString:@"&"];
     
     for (NSString *pair in pairs) {
-        NSArray *elements = [pair componentsSeparatedByString:@"="];
+        NSArray<NSString *> *elements = [pair componentsSeparatedByString:@"="];
         
         if(elements.count >= 2) {
             NSString *key = [[elements[0] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding] lowercaseString];
@@ -25,8 +25,7 @@
             [dict setObject:val forKey:key];
         }
     }
-    
-    return dict;
+    return [dict copy];
 }
 
 @end

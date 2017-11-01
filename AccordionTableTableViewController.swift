@@ -69,8 +69,8 @@ open class AccordionTableViewController: UITableViewController {
     
     func addInto(viewController: UIViewController, containerView: UIView) {
         viewController.addChildViewController(self)
-        self.view.frame = containerView.bounds
         containerView.addSubview(self.view)
+        self.view.bindFrameToSuperviewBounds()
         self.didMove(toParentViewController: viewController)
     }
 }

@@ -45,7 +45,11 @@ class OrderOwnerInfoTableViewCell: BaseTableViewCell {
             }
             
             self.orderOwnerAddressLabel.text = "\(order.shippingAddress?.address ?? "")".convertTo(language: .arabic).forceRTL()
-            self.orderOwnerPaymentValueLabel.text = "\((order.deliveryCost ?? "0").formatPriceWithCurrency())".forceRTL()
+            if let deliveryCost = order.deliveryCost {
+                self.orderOwnerPaymentValueLabel.text = deliveryCost > 0 ? "\(deliveryCost)".formatPriceWithCurrency().forceRTL() : STRING_FREE
+            } else {
+                self.orderOwnerPaymentValueLabel.text = STRING_FREE
+            }
             self.orderOwnerPaymentMethodLabel.text = "\(order.paymentMethod ?? "")".forceRTL()
         }
     }

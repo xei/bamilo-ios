@@ -45,6 +45,9 @@ class OrderDetailTableViewController: AccordionTableViewController, OrderDetailT
             if let cmsMessage = self.dataSource?.cms, indexPath.row == 0 {
                 let cell = self.tableView.dequeueReusableCell(withIdentifier: OrderCMSMessageTableViewCell.nibName(), for: indexPath) as! OrderCMSMessageTableViewCell
                 cell.update(withModel: cmsMessage)
+                
+                //to remove seperator for this cell
+                cell.separatorInset = UIEdgeInsetsMake(0, cell.bounds.size.width, 0, 0);
                 return cell
             } else {
                 let cell = self.tableView.dequeueReusableCell(withIdentifier: OrderInfoTableViewCell.nibName(), for: indexPath) as! OrderInfoTableViewCell
@@ -56,6 +59,9 @@ class OrderDetailTableViewController: AccordionTableViewController, OrderDetailT
             //last cell & last section
             let cell = self.tableView.dequeueReusableCell(withIdentifier: OrderOwnerInfoTableViewCell.nibName(), for: indexPath) as! OrderOwnerInfoTableViewCell
             cell.update(withModel: self.dataSource)
+            
+            //to remove seperator for this cell
+            cell.separatorInset = UIEdgeInsetsMake(0, cell.bounds.size.width, 0, 0);
             return cell
         }
         let cell = self.tableView.dequeueReusableCell(withIdentifier: OrderDetailTableViewCell.nibName(), for: indexPath) as! OrderDetailTableViewCell

@@ -72,8 +72,8 @@ import UIKit
     //MARk: - UITabBarControllerDelegate
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         if let centerNav = viewController as? JACenterNavigationController, centerNav != MainTabBarViewController.previousSelectedViewController {
-            centerNav.registerObservingOnNotifications()
             MainTabBarViewController.previousSelectedViewController?.removeObservingNotifications()
+            centerNav.registerObservingOnNotifications()
             MainTabBarViewController.previousSelectedViewController = centerNav
             
             
@@ -95,8 +95,8 @@ import UIKit
             tabBarController?.selectedIndex = index
             if let navigationController = tabBarController?.viewControllers?[index] as? JACenterNavigationController {
                 navigationController.popToRootViewController(animated: false)
-                navigationController.registerObservingOnNotifications()
                 MainTabBarViewController.previousSelectedViewController?.removeObservingNotifications()
+                navigationController.registerObservingOnNotifications()
                 MainTabBarViewController.previousSelectedViewController = navigationController
             }
         }
