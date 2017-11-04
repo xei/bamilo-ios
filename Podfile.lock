@@ -29,11 +29,11 @@ PODS:
     - ObjectMapper (~> 2.0)
   - AlgoliaSearch-Client (3.7.0):
     - AFNetworking (~> 2.2)
-  - Crashlytics (3.8.6):
-    - Fabric (~> 1.6.3)
+  - Crashlytics (3.9.3):
+    - Fabric (~> 1.7.2)
   - EmarsysPredictSDK (1.0.32)
-  - Fabric (1.6.13)
-  - FSPagerView (0.7.0)
+  - Fabric (1.7.2)
+  - FSPagerView (0.7.1)
   - FXBlurView (1.6.4)
   - GoogleAnalytics (3.14.0)
   - GoogleAppIndexing (2.0.3)
@@ -45,15 +45,15 @@ PODS:
   - Masonry (1.1.0)
   - NewRelicAgent (5.10.1)
   - ObjectMapper (2.2.9)
-  - Pushwoosh (5.3.7)
+  - Pushwoosh (5.4.0)
   - RAlertView (0.1.1):
     - Masonry
     - RGB
-  - Realm (2.10.2):
-    - Realm/Headers (= 2.10.2)
-  - Realm/Headers (2.10.2)
-  - RealmSwift (2.10.2):
-    - Realm (= 2.10.2)
+  - Realm (3.0.1):
+    - Realm/Headers (= 3.0.1)
+  - Realm/Headers (3.0.1)
+  - RealmSwift (3.0.1):
+    - Realm (= 3.0.1)
   - RGB (0.0.2)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
@@ -94,10 +94,10 @@ SPEC CHECKSUMS:
   Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
   AlamofireObjectMapper: 435adc82f5b367679bd9e71c4974a54efd0b2521
   AlgoliaSearch-Client: 8a937017f9faad0eef7a2d43fdb695f7620de140
-  Crashlytics: 95d05f4e4c19a771250c4bd9ce344d996de32bbf
+  Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   EmarsysPredictSDK: 8267726b1e8b3d5621a67d68b3c123060dde3639
-  Fabric: 2fb5676bc811af011a04513451f463dac6803206
-  FSPagerView: 7042409096ef3fc050a3f5f4ccc941e8a5a2b330
+  Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
+  FSPagerView: 958aba39684e1573755ddcfcc29f7eebb8413cee
   FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
   GoogleAnalytics: 9be1afdb8deeac4bb5f13ca7f7d3b9db2a1f43dc
   GoogleAppIndexing: 176146164d14b30a403f5ba394fc2b51855025da
@@ -108,10 +108,10 @@ SPEC CHECKSUMS:
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   NewRelicAgent: d16c572a3355d3ff9a359a6677e946c7a75a8f76
   ObjectMapper: 63cfe41bc6f8e7c8f44344c49901b8ae7de14c52
-  Pushwoosh: 91a4a341a37a5ce9f23cba68a909950fced10a8f
+  Pushwoosh: 933203afdb61f495147643b75f6dbf9c401c5f9a
   RAlertView: b9996eb63ceb64c7d1879a1d1846af5e386a1808
-  Realm: 0ef72b837fb67e9f4b098bac771ddd72c7fdbb69
-  RealmSwift: 07a9ae0505091eda6b2ee7c190c3786d6e90a7b0
+  Realm: ba6144c74f835f7497791f6599d63a7755377b83
+  RealmSwift: 7d13b1ac4b6022a13f841e3143e7789c9e40ad0d
   RGB: 21cf4b60ef3501c6b7cbb268a30045905dd90995
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
