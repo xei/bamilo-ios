@@ -162,13 +162,13 @@ class MyBamiloViewController:   BaseViewController,
     //MARK: - UIScrollViewDelegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.delegate?.scrollViewDidScroll(scrollView)
-        let bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height;
-        if (bottomEdge >= (scrollView.contentSize.height - self.paginationThresholdPoint)) {
-            // we are approaching at the end of scrollview
-            if self.recommendationRequestCounts == 0 {
-                EmarsysPredictManager.sendTransactions(of: self) //To get more recommendations
-            }
-        }
+//        let bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height;
+//        if (bottomEdge >= (scrollView.contentSize.height - self.paginationThresholdPoint)) {
+//            // we are approaching at the end of scrollview
+//            if self.recommendationRequestCounts == 0 {
+//                EmarsysPredictManager.sendTransactions(of: self) //To get more recommendations
+//            }
+//        }
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {

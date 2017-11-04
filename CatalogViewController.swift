@@ -202,7 +202,6 @@ import SwiftyJSON
                             self.collectionView.insertItems(at: newIndexPathes)
                         }, completion: {(finished) in
                             self.loadingDataInProgress = false
-//                            self.resetBarFollowers(animated: true)
                         })
                     }
                 }
@@ -550,7 +549,7 @@ import SwiftyJSON
         self.tabBarScrollFollower?.scrollViewDidScroll(scrollView)
         self.searchBarScrollFollower?.scrollViewDidScroll(scrollView)
         
-        let bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height;
+        let bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height
         if (bottomEdge >= (scrollView.contentSize.height - paginationThresholdPoint)) {
             // we are approaching at the end of scrollview
             self.loadMore()

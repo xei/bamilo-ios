@@ -18,7 +18,6 @@ class OrderDetailViewController: BaseViewController, OrderDetailTableViewCellDel
         self.orderTableViewCtrl.delegate = self
         orderTableViewCtrl.addInto(viewController: self, containerView: self.view)
         
-        
         if let orderId = self.orderId {
             OrderDataManager.sharedInstance.getOrder(self, orderId: orderId) { (data, errors) in
                 if errors == nil {

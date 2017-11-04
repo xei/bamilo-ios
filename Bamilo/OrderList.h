@@ -13,5 +13,7 @@
 
 @interface OrderList : BaseModel
 @property (nonatomic) NSInteger totalOrdersCount;
-@property (nonatomic, strong) NSArray<Order>* orders;
+@property (nonatomic, strong) NSMutableArray<Order>* orders;
+@property (nonatomic) NSInteger currentPage;
+@property (nonatomic) NSInteger totalPages;
 @end

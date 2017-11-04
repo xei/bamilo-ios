@@ -128,6 +128,8 @@
 		618B256C1F35D80700B39440 /* DeliveryTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618B256B1F35D80700B39440 /* DeliveryTimeView.swift */; };
 		618B256E1F35D81800B39440 /* DeliveryTimeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 618B256D1F35D81800B39440 /* DeliveryTimeView.xib */; };
 		618B25701F35D85900B39440 /* DeliveryTimeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618B256F1F35D85900B39440 /* DeliveryTimeControl.swift */; };
+		618D8B431FADEF5B0006A936 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618D8B421FADEF5B0006A936 /* LoadingView.swift */; };
+		618D8B451FADEF680006A936 /* LoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 618D8B441FADEF680006A936 /* LoadingView.xib */; };
 		6190E9E61ED4263600163F6D /* BreadcrumbsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6190E9E51ED4263600163F6D /* BreadcrumbsItem.swift */; };
 		619351A51ECAC9A900330E5C /* CatalogGridCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619351A31ECAC9A900330E5C /* CatalogGridCollectionViewCell.swift */; };
 		619351A61ECAC9A900330E5C /* CatalogGridCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 619351A41ECAC9A900330E5C /* CatalogGridCollectionViewCell.xib */; };
@@ -1130,6 +1132,8 @@
 		618B256B1F35D80700B39440 /* DeliveryTimeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeliveryTimeView.swift; sourceTree = "<group>"; };
 		618B256D1F35D81800B39440 /* DeliveryTimeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeliveryTimeView.xib; sourceTree = "<group>"; };
 		618B256F1F35D85900B39440 /* DeliveryTimeControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeliveryTimeControl.swift; sourceTree = "<group>"; };
+		618D8B421FADEF5B0006A936 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		618D8B441FADEF680006A936 /* LoadingView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingView.xib; sourceTree = "<group>"; };
 		6190E9E51ED4263600163F6D /* BreadcrumbsItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BreadcrumbsItem.swift; sourceTree = "<group>"; };
 		619351A31ECAC9A900330E5C /* CatalogGridCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogGridCollectionViewCell.swift; sourceTree = "<group>"; };
 		619351A41ECAC9A900330E5C /* CatalogGridCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CatalogGridCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -2775,6 +2779,7 @@
 		610C689E1EC7423B008FB66C /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				618D8B3F1FADEEF60006A936 /* LoadingView */,
 				61E534381FA4812200CBDFED /* ItemTrackingProgressBar */,
 				617585EE1F88CD4000D66541 /* Widgets */,
 				611C19101F5E88910073940C /* SearchBarView */,
@@ -3519,6 +3524,31 @@
 				618B256D1F35D81800B39440 /* DeliveryTimeView.xib */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		618D8B3F1FADEEF60006A936 /* LoadingView */ = {
+			isa = PBXGroup;
+			children = (
+				618D8B411FADEF1B0006A936 /* Control */,
+				618D8B401FADEF170006A936 /* View */,
+			);
+			name = LoadingView;
+			sourceTree = "<group>";
+		};
+		618D8B401FADEF170006A936 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				618D8B421FADEF5B0006A936 /* LoadingView.swift */,
+				618D8B441FADEF680006A936 /* LoadingView.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		618D8B411FADEF1B0006A936 /* Control */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Control;
 			sourceTree = "<group>";
 		};
 		6193519F1ECAC92800330E5C /* CollectionViewCell */ = {
@@ -7843,6 +7873,7 @@
 				1C71FC5E1E2CABAD007ACF02 /* Bamilosans Black.ttf in Resources */,
 				1C71FC601E2CABAD007ACF02 /* Bamilosans Light.ttf in Resources */,
 				875743C41EA60DFD001B518A /* SpecialOffer-Small-40@2x.png in Resources */,
+				618D8B451FADEF680006A936 /* LoadingView.xib in Resources */,
 				1C71FC621E2CABAD007ACF02 /* Bamilosans UltraLight.ttf in Resources */,
 				875744221EA60E48001B518A /* Tragedy-Small-40.png in Resources */,
 				1C80D8841E2E3D850036B514 /* ‌Bamilosans Bold.ttf in Resources */,
@@ -7891,7 +7922,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		875AD58C1E38C62A00584ABF /* ShellScript */ = {
@@ -8041,7 +8072,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -8312,6 +8343,7 @@
 				875AD5861E38C0C900584ABF /* RIAdjustTracker.m in Sources */,
 				CE9ADF931AB6D78200D56481 /* JAPaymentViewController.m in Sources */,
 				CE0F13111AF277F700F99356 /* JAKickoutView.m in Sources */,
+				618D8B431FADEF5B0006A936 /* LoadingView.swift in Sources */,
 				875AD5721E38C0C900584ABF /* RISellerReviewInfo.m in Sources */,
 				61B2C7F71F9C96B900930435 /* AccordionTableTableViewController.swift in Sources */,
 				8976FB321C0F3F4300483651 /* JATextFilterCell.m in Sources */,

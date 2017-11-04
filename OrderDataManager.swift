@@ -16,7 +16,7 @@ class OrderDataManager: DataManagerSwift {
             "per_page" : perPageCount,
             "page" : page
         ]
-        OrderDataManager.requestManager.async(.post, target: target, path: RI_API_GET_ORDERS, params: params, type: .foreground) { (responseType, data, errorMessages) in
+        OrderDataManager.requestManager.async(.post, target: target, path: RI_API_GET_ORDERS, params: params, type: .background) { (responseType, data, errorMessages) in
             self.processResponse(responseType, aClass: OrderList.self, data: data, errorMessages: errorMessages, completion: completion)
         }
     }

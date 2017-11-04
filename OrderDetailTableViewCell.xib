@@ -21,7 +21,7 @@
             <rect key="frame" x="0.0" y="0.0" width="374" height="303"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="374" height="303"/>
+                <rect key="frame" x="0.0" y="0.0" width="374" height="302.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bKL-by-lbr" userLabel="header View">
@@ -91,8 +91,8 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dwH-9g-eEq" userLabel="detail View">
                         <rect key="frame" x="0.0" y="213" width="374" height="89.5"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FHW-c4-15c">
-                                <rect key="frame" x="219" y="0.0" width="42" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FHW-c4-15c">
+                                <rect key="frame" x="16" y="0.0" width="245" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -123,6 +123,7 @@
                             <constraint firstItem="FHW-c4-15c" firstAttribute="top" secondItem="dwH-9g-eEq" secondAttribute="top" id="REm-mr-O9u"/>
                             <constraint firstItem="DDW-iv-aia" firstAttribute="right" secondItem="FHW-c4-15c" secondAttribute="right" id="dqP-cO-ABJ"/>
                             <constraint firstItem="DDW-iv-aia" firstAttribute="centerY" secondItem="zBL-jf-zGf" secondAttribute="centerY" id="iI9-Hk-fRk"/>
+                            <constraint firstItem="FHW-c4-15c" firstAttribute="left" secondItem="zBL-jf-zGf" secondAttribute="left" id="mhg-Zl-ZiR"/>
                         </constraints>
                     </view>
                 </subviews>
