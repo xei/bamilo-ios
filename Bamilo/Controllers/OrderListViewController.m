@@ -13,7 +13,7 @@
 #import "OrderList.h"
 
 #define kTopSeparatorHight 1.f
-#define kOrdersPerPage 25
+#define kOrdersPerPage 300
 
 @interface OrderListViewController ()
 @property (nonatomic, weak) IBOutlet UITableView *tableview;
@@ -162,8 +162,9 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString: @"OrderDetailViewController"]) {
+        self.hidesBottomBarWhenPushed = YES;
         OrderDetailViewController *orderDetailViewCtrl = (OrderDetailViewController *)segue.destinationViewController;
-        orderDetailViewCtrl.hidesBottomBarWhenPushed = YES;
+        self.hidesBottomBarWhenPushed = NO;
         orderDetailViewCtrl.orderId = ((Order *)sender).orderId;
     }
 }

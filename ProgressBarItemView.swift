@@ -13,10 +13,10 @@ class ProgressBarItemView: BaseControlView {
     private let circleWidth: CGFloat = 13
     
     @IBOutlet weak private var titleLabelWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak private var circleWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var imageView: UIImageView!
     @IBOutlet weak private var circleView: UIView!
-    @IBOutlet weak private var circleWidthConstraint: NSLayoutConstraint!
     
     private let screenSize = UIScreen.main.bounds.width
     
@@ -43,7 +43,7 @@ class ProgressBarItemView: BaseControlView {
         self.backgroundColor = .clear
         self.clipsToBounds = false
         
-        self.circleWidthConstraint.constant = (self.screenSize <= 320) ? 30 : 70
+        self.titleLabelWidthConstraint.constant = (self.screenSize <= 320) ? 35 : 70
 
         self.frame.size = ProgressBarItemView.getFrameSize()
         self.updateConstraints()

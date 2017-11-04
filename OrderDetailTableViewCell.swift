@@ -42,7 +42,7 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
         self.productPriceLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
         self.productMoreInfoLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
         self.rateButton.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: .white)
-        self.notInStockMessageLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorGray4))
+        self.notInStockMessageLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 9), color: Theme.color(kColorGray4))
         
         self.rateButton.backgroundColor = Theme.color(kColorDarkGreen)
         self.setPropoerConstraints(expanded: expanded)

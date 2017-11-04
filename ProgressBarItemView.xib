@@ -59,10 +59,10 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="circleView" destination="Ydj-FF-LoS" id="NIc-dH-evh"/>
-                <outlet property="circleWidthConstraint" destination="6oX-Ra-bFh" id="e8g-0m-HY4"/>
+                <outlet property="circleWidthConstraint" destination="X07-Fd-Doi" id="kiJ-PV-lHp"/>
                 <outlet property="imageView" destination="3dK-hm-tCr" id="Wdt-7N-KEy"/>
                 <outlet property="titleLabel" destination="e0s-JE-wRy" id="gtA-e2-1wp"/>
-                <outlet property="titleLabelWidthConstraint" destination="6oX-Ra-bFh" id="IPf-lT-pSF"/>
+                <outlet property="titleLabelWidthConstraint" destination="6oX-Ra-bFh" id="Eof-Qx-dad"/>
             </connections>
             <point key="canvasLocation" x="-357" y="-152.5"/>
         </view>

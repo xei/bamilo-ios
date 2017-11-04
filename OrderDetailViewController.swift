@@ -28,6 +28,7 @@ class OrderDetailViewController: BaseViewController, OrderDetailTableViewCellDel
                 }
             }
         }
+        self.hidesBottomBarWhenPushed = true
     }
     
     //MARK: - OrderDetailTableViewCellDelegate
