@@ -181,6 +181,7 @@ class HomeViewController:   BaseViewController,
     }
     
     @objc private func resetAllBarFrames(animated: Bool) {
+        self.artificialNavbarLogo.alpha = 1
         self.searchBarFollower?.resetBarFrame(animated: animated)
         self.topTabBarFollower?.resetBarFrame(animated: animated)
     }

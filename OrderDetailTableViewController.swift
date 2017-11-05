@@ -35,7 +35,7 @@ class OrderDetailTableViewController: AccordionTableViewController, OrderDetailT
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            if let cms = self.dataSource?.cms, cms.characters.count > 0 {
+            if let cms = self.dataSource?.cms, cms.count > 0 {
                 return 2
             }
             return 1
@@ -47,7 +47,7 @@ class OrderDetailTableViewController: AccordionTableViewController, OrderDetailT
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             //first cell
-            if let cmsMessage = self.dataSource?.cms, cmsMessage.characters.count > 0, indexPath.row == 0 {
+            if let cmsMessage = self.dataSource?.cms, cmsMessage.count > 0, indexPath.row == 0 {
                 let cell = self.tableView.dequeueReusableCell(withIdentifier: OrderCMSMessageTableViewCell.nibName(), for: indexPath) as! OrderCMSMessageTableViewCell
                 cell.update(withModel: cmsMessage)
                 

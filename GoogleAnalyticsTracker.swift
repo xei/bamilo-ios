@@ -61,7 +61,7 @@
             }
             
             
-            if let utmSource = campaignDictionary[kUTMSource], utmSource.characters.count > 0 {
+            if let utmSource = campaignDictionary[kUTMSource], utmSource.count > 0 {
                 if let _ = campaignDictionary[kUTMCampaign] {
                     params += ["\(kUTMSource)=push"]
                 } else {
@@ -69,7 +69,7 @@
                 }
             }
             
-            if let utmMedium = campaignDictionary[kUTMMedium], utmMedium.characters.count > 0 {
+            if let utmMedium = campaignDictionary[kUTMMedium], utmMedium.count > 0 {
                 if let _ = campaignDictionary[kUTMCampaign] {
                     params += ["\(kUTMMedium)=referrer"]
                 } else {
@@ -321,7 +321,7 @@
     //MARK: - Helper functions
     private func sendParamsToGA(params: GAIDictionaryBuilder?) {
         guard let params = params else { return }
-        if let campaignStrig = self.campaginDataString,  campaignStrig.characters.count > 0 {
+        if let campaignStrig = self.campaginDataString,  campaignStrig.count > 0 {
             let _ = params.setCampaignParametersFromUrl(campaignStrig)
         }
         GAI.sharedInstance().defaultTracker.send(params.build() as! [AnyHashable : Any])

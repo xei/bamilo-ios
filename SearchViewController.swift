@@ -26,6 +26,7 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
     private var suggestion: SearchSuggestion?
     private var localSavedSuggestion = LocalSearchSuggestion()
     private var keyboardCanBeDismissed = false
+    private var isRecentView = false
     var parentScreenName: String?
     
     weak var delegate: SearchViewControllerDelegate?
@@ -82,7 +83,7 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
 
     @IBAction func textFieldEditingChanged(_ sender: UITextField) {
         self.previousRequestTask?.cancel()
-        if sender.text?.characters.count == 0 {
+        if sender.text?.count == 0 {
             self.suggestion = self.localSavedSuggestion.load()
             self.tableView.reloadData()
             return
@@ -101,10 +102,18 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
     //MARK: - UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = self.tableView.dequeueReusableHeaderFooterView(withIdentifier: PlainTableViewHeaderCell.nibName()) as! PlainTableViewHeaderCell
-        if let searchString = self.searchTextField.text, searchString.characters.count > 0 {
+        if let searchString = self.searchTextField.text, searchString.count > 0 {
+            isRecentView = true
             headerView.titleString = section == 0 ? "\(searchString) \(STRING_IN) \(STRING_CATEGORIES)".forceRTL() : STRING_PRODUCTS
         } else {
-            headerView.titleString = section == 0 ? STRING_CATEGORIES : STRING_PRODUCTS
+            isRecentView = false
+            if section == 0 {
+                headerView.titleString = STRING_CATEGORIES
+            } else if section == 1 {
+                headerView.titleString = STRING_PRODUCTS
+            } else if section == 2 {
+                headerView.titleString = STRING_RECENT_SEARCH
+            }
         }
         return headerView
     }
@@ -114,8 +123,9 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0 && self.suggestion?.categories?.count == 0 { return 0 }
-        if section == 1 && self.suggestion?.products?.count == 0 { return 0 }
+        if section == 0 && (self.suggestion?.categories == nil || self.suggestion?.categories?.count == 0) { return 0 }
+        if section == 1 && (self.suggestion?.products == nil || self.suggestion?.products?.count == 0) { return 0 }
+        if section == 2 && (self.suggestion?.searchQueries == nil || self.suggestion?.searchQueries?.count == 0) { return 0 }
         return 30
     }
     
@@ -128,6 +138,11 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
             let cell = self.tableView.dequeueReusableCell(withIdentifier: IconTableViewCell.nibName(), for: indexPath) as! IconTableViewCell
             cell.titleLabel.text = suggestion?.products?[indexPath.row].name
             cell.cellImageView.kf.setImage(with: suggestion?.products?[indexPath.row].imageUrl, options: [.transition(.fade(0.20))])
+            return cell
+        } else if indexPath.section == 2 {
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: IconTableViewCell.nibName(), for: indexPath) as! IconTableViewCell
+            cell.titleLabel.text = suggestion?.searchQueries?[indexPath.row].name
+            cell.cellImageView.image = UIImage(named: "ico_recentsearches")
             return cell
         } else {
             return UITableViewCell()
@@ -143,13 +158,14 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
             return cats.count
         } else if section == 1, let suggestion = self.suggestion, let products = suggestion.products {
             return products.count
+        } else if section == 2, let suggestion = self.suggestion, let searchQueries = suggestion.searchQueries {
+            return searchQueries.count
         }
         return 0
     }
     func numberOfSections(in tableView: UITableView) -> Int {
-        if let suggestion = self.suggestion {
-            if let cats = suggestion.categories, cats.count > 0 { return 2 }
-            if let products = suggestion.products, products.count > 0 { return 2 }
+        if let _ = self.suggestion {
+            return 3
         }
         return 0
     }
@@ -161,10 +177,9 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
                 self.localSavedSuggestion.add(category: categories[indexPath.row])
                 if let target = categories[indexPath.row].target {
                     self.delegate?.searchBySuggestion?(targetString: target)
-                    if let categoryTitle = categories[indexPath.row].name {
-                        TrackerManager.postEvent(selector: EventSelectors.suggestionTappedSelector(), attributes: EventAttributes.searchSuggestionTapped(suggestionTitle: categoryTitle))
-                        MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: "SearchSuggestions:::\(categoryTitle)")
-                    }
+                    let trackingActionLabel = isRecentView ? "search_recent_cat" : "Search_recom_cat"
+                    TrackerManager.postEvent(selector: EventSelectors.suggestionTappedSelector(), attributes: EventAttributes.searchSuggestionTapped(suggestionTitle: trackingActionLabel))
+                    MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: "SearchSuggestions:::\(trackingActionLabel)")
                 }
             }
         } else if indexPath.section == 1 {
@@ -172,11 +187,15 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
                 self.localSavedSuggestion.add(product: products[indexPath.row])
                 if let target = products[indexPath.row].target {
                     self.delegate?.searchBySuggestion?(targetString: target)
-                    if let productName = products[indexPath.row].name {
-                        TrackerManager.postEvent(selector: EventSelectors.suggestionTappedSelector(), attributes: EventAttributes.searchSuggestionTapped(suggestionTitle: productName))
-                        MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: "SearchSuggestions:::\(productName)")
-                    }
+                    let trackingActionLabel = isRecentView ? "search_recent_sku" : "Search_recom_sku"
+                    TrackerManager.postEvent(selector: EventSelectors.suggestionTappedSelector(), attributes: EventAttributes.searchSuggestionTapped(suggestionTitle: trackingActionLabel))
+                    MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: "SearchSuggestions:::\(trackingActionLabel)")
                 }
+            }
+        } else if indexPath.section == 2 {
+            if let searchQueries = self.suggestion?.searchQueries, let target = searchQueries[indexPath.row].target, let _ = searchQueries[indexPath.row].name {
+                TrackerManager.postEvent(selector: EventSelectors.suggestionTappedSelector(), attributes: EventAttributes.searchSuggestionTapped(suggestionTitle: "search_recent_string"))
+                MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: "SearchSuggestions:::search_recent_string")
             }
         }
         
@@ -198,6 +217,7 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
         
         if let queryString = textField.text {
             self.delegate?.searchByString?(queryString: queryString)
+            self.localSavedSuggestion.add(searchQuery: queryString)
             
             MainTabBarViewController.topNavigationController()?.openTargetString(target?.targetString, purchaseInfo: "SearchString:::\(queryString)")
         }

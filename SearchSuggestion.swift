@@ -1,5 +1,4 @@
-//
-//  SearchSuggestion.swift
+////  SearchSuggestion.swift
 //  Bamilo
 //
 //  Created by Ali Saeedifar on 9/13/17.
@@ -13,6 +12,7 @@ class SearchSuggestion: NSObject, Mappable {
     
     var products: [Product]?
     var categories: [CategorySuggestion]?
+    var searchQueries: [SearchSuggestionItem]?
     
     override init() {
     }

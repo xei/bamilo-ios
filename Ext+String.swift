@@ -29,9 +29,9 @@ extension String {
     }
     
     func priceFormat() -> String {
-        var cammaIndex: Int = self.characters.count % 3 == 0 ? 3 : self.characters.count % 3
+        var cammaIndex: Int = self.count % 3 == 0 ? 3 : self.count % 3
         var result = self
-        while (cammaIndex < result.characters.count) {
+        while (cammaIndex < result.count) {
             result.insert(",", at: result.index(result.startIndex, offsetBy: cammaIndex))
             cammaIndex += 4;
         }

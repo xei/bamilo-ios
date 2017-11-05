@@ -45,10 +45,17 @@ class LocalSearchSuggestion {
             product.imageUrl = URL(string: productItem.imageUrl ?? "")
             return product
         })
+        convertSuggestion.searchQueries = suggestoins.filter { $0.type == "searchQuery" }.map({ (searchItem) -> SearchSuggestionItem in
+            let searchQuery = SearchSuggestionItem()
+            searchQuery.name = searchItem.name
+            searchQuery.target = searchItem.target
+            return searchQuery
+        })
+        
         return convertSuggestion
     }
     
-    func add(product: Product? = nil, category: CategorySuggestion? = nil) {
+    func add(product: Product? = nil, category: CategorySuggestion? = nil, searchQuery: String? = nil) {
         
         let suggestoins = realm.objects(SearchSuggestionItem.self)
         if let product = product {
@@ -92,5 +99,29 @@ class LocalSearchSuggestion {
                 realm.add(convertedSuggestion)
             }
         }
+        
+        if let searchQuery = searchQuery {
+            let target = RITarget.getTarget(.CATALOG_SEARCH, node: searchQuery)
+            if let searchTarget = target?.targetString {
+                let privousCategory = suggestoins.filter { $0.type == "searchQuery"}
+                let repeatedSearchQuery = privousCategory.filter{ $0.target == searchTarget }
+                if repeatedSearchQuery.count > 0 { return }
+                
+                let convertedSuggestion = SearchSuggestionItem()
+                convertedSuggestion.name = searchQuery
+                convertedSuggestion.target = searchTarget
+                convertedSuggestion.type = "searchQuery"
+                
+                if privousCategory.count >= 3 {
+                    try! realm.write {
+                        realm.delete(privousCategory.first!)
+                    }
+                }
+                try! realm.write {
+                    realm.add(convertedSuggestion)
+                }
+            }
+        }
     }
+
 }

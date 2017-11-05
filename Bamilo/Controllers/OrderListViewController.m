@@ -9,7 +9,7 @@
 #import "OrderListViewController.h"
 #import "OrderListTableViewCell.h"
 #import "Bamilo-Swift.h"
-//#import "OrderDetailViewController.h"
+#import "ThreadManager.h"
 #import "OrderList.h"
 
 #define kTopSeparatorHight 1.f
@@ -196,13 +196,14 @@
         [self.list.orders addObjectsFromArray:((OrderList *)data).orders];
         self.list.currentPage = ((OrderList *)data).currentPage;
         self.list.totalPages = ((OrderList *)data).totalPages;
-        dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [ThreadManager executeOnMainThread:^{
             if (self.list.orders.count == 0) {
                 self.emptyListMessageView.hidden = NO;
             }
             [self.tableview reloadData];
             self.tableview.tableFooterView = nil;
-        });
+        }];
     }
 }
 

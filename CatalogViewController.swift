@@ -221,11 +221,11 @@ import SwiftyJSON
         let queryFilters = self.getQueryOfActiveFilters(activeFilters: activeFilters)
         trackSearchFilter(activeFilterQuery: queryFilters)
         
-        if let startIndex = self.startCatalogStackIndexInNavigationViewController, queryFilters.characters.count == 0 {
+        if let startIndex = self.startCatalogStackIndexInNavigationViewController, queryFilters.count == 0 {
             if let arrayOfViewControllers = self.navigationController?.viewControllers {
                 self.navigationController?.popToViewController(arrayOfViewControllers[startIndex], animated: false)
             }
-        } else if queryFilters != self.pushFilterQueryString && queryFilters.characters.count != 0 {
+        } else if queryFilters != self.pushFilterQueryString && queryFilters.count != 0 {
             self.pushToSearchByFilterQuery(query: queryFilters)
         }
     }
@@ -303,7 +303,7 @@ import SwiftyJSON
                     priceQuery += "price/\(priceFilter.lowerValue)-\(priceFilter.upperValue)"
                 }
                 if (priceFilter.discountOnly) {
-                    if (priceQuery.characters.count > 0) {
+                    if (priceQuery.count > 0) {
                         priceQuery += "/special_price/1"
                     } else {
                         priceQuery = "special_price/1"
@@ -315,7 +315,7 @@ import SwiftyJSON
             }
         }).joined(separator: "/")
         
-        if filtersToString.characters.count > 0 {
+        if filtersToString.count > 0 {
             filterQuery = filtersToString + "/"
         }
         return filterQuery
@@ -409,7 +409,7 @@ import SwiftyJSON
                 return filter.name
                 }.joined(separator: "، ");
         }
-        if activeFilterString.characters.count > 0 {
+        if activeFilterString.count > 0 {
             self.catalogHeader.setFilterDescription(filterDescription: activeFilterString)
             self.catalogHeader.setFilterButtonActive()
         }
