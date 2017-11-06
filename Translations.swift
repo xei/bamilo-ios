@@ -72,4 +72,9 @@ let STRING_SHIPPING_COST = RILocalizationWrapper.localizedString("shipping_cost"
 let STRING_ORDER_STATUS = RILocalizationWrapper.localizedString("string_order_status")!
 let STRING_ORDER_OUT_OF_STOCK = RILocalizationWrapper.localizedString("out_of_stock")!
 let STRING_RECENT_SEARCH = RILocalizationWrapper.localizedString("recent_searches")!
+let STRING_COLOR = RILocalizationWrapper.localizedString("color")!
+let STRING_ORDER_FAIL = RILocalizationWrapper.localizedString("order_fail_desc")!
+let STRING_BACK_TO_CART = RILocalizationWrapper.localizedString("back_to_cart")!
+
+
 

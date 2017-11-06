@@ -113,6 +113,7 @@
     //it's possible that previous view controllers hides bottom bar so content edges will be disturbed
     //by this trick this view always shows proper boundary
     self.tableviewBottomConstraint.constant = [MainTabBarViewController sharedInstance].tabBar.height;
+    
     self.refreshControl = [UIRefreshControl new];
     [self.refreshControl addTarget:self action:@selector(resetContentAndRefresh) forControlEvents:UIControlEventValueChanged];
     [self.tableview addSubview:self.refreshControl];

@@ -162,7 +162,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showAuthenticationScreen:) name:kShowAuthenticationScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showSignUpScreen:) name:kShowSignUpScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showCheckoutExternalPaymentsScreen:) name:kShowCheckoutExternalPaymentsScreenNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showCheckoutThanksScreen:) name:kShowCheckoutThanksScreenNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showCheckoutThanksScreen:) name:kShowCheckoutThanksScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectRecentSearch:) name:kSelectedRecentSearchNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectItemInMenu:) name:kMenuDidSelectOptionNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectLeafCategoryInMenu:) name:kMenuDidSelectLeafCategoryNotification object:nil];
@@ -198,7 +198,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowAuthenticationScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowSignUpScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowCheckoutExternalPaymentsScreenNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowCheckoutThanksScreenNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowCheckoutThanksScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kSelectedRecentSearchNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kMenuDidSelectOptionNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kMenuDidSelectLeafCategoryNotification object:nil];
@@ -520,12 +520,12 @@
 }
 
 //#pragma mark Checkout Thanks Screen
-- (void)showCheckoutThanksScreen:(NSNotification *)notification {
-    SuccessPaymentViewController *viewCtrl = (SuccessPaymentViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Checkout" nibName:NSStringFromClass([SuccessPaymentViewController class]) resetCache:NO];
-    viewCtrl.success = [(NSNumber *)[notification.userInfo objectForKey:@"success"] boolValue];
-    viewCtrl.cart = [notification.userInfo objectForKey:kCart];
-    [self pushViewController:viewCtrl animated:YES];
-}
+//- (void)showCheckoutThanksScreen:(NSNotification *)notification {
+//    SuccessPaymentViewController *viewCtrl = (SuccessPaymentViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Checkout" nibName:NSStringFromClass([SuccessPaymentViewController class]) resetCache:NO];
+//    viewCtrl.success = [(NSNumber *)[notification.userInfo objectForKey:@"success"] boolValue];
+//    viewCtrl.cart = [notification.userInfo objectForKey:kCart];
+//    [self pushViewController:viewCtrl animated:YES];
+//}
 
 #pragma mark Catalog Screen
 - (void)pushCatalogToShowSearchResults:(NSString *)query {

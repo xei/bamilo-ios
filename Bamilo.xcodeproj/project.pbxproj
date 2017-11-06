@@ -87,6 +87,7 @@
 		614B8C691FA866EB00F7D3D4 /* MyBamiloHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614B8C671FA866EB00F7D3D4 /* MyBamiloHeaderView.swift */; };
 		614B8C6A1FA866EB00F7D3D4 /* MyBamiloHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 614B8C681FA866EB00F7D3D4 /* MyBamiloHeaderView.xib */; };
 		614ED1681F8B6DCB0096E4D6 /* HomePageDailyDealsCollectionFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614ED1671F8B6DCB0096E4D6 /* HomePageDailyDealsCollectionFlowLayout.swift */; };
+		615052D61FB0758600E67571 /* FailPaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615052D51FB0758600E67571 /* FailPaymentViewController.swift */; };
 		6157A3EE1F83865800B8D501 /* MyBamiloViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6157A3EC1F83865800B8D501 /* MyBamiloViewController.swift */; };
 		6157A3EF1F83865800B8D501 /* MyBamiloViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6157A3ED1F83865800B8D501 /* MyBamiloViewController.xib */; };
 		6157A3F31F83974100B8D501 /* MyBamiloModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6157A3F21F83974100B8D501 /* MyBamiloModel.swift */; };
@@ -1077,6 +1078,7 @@
 		614B8C671FA866EB00F7D3D4 /* MyBamiloHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBamiloHeaderView.swift; sourceTree = "<group>"; };
 		614B8C681FA866EB00F7D3D4 /* MyBamiloHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyBamiloHeaderView.xib; sourceTree = "<group>"; };
 		614ED1671F8B6DCB0096E4D6 /* HomePageDailyDealsCollectionFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageDailyDealsCollectionFlowLayout.swift; sourceTree = "<group>"; };
+		615052D51FB0758600E67571 /* FailPaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailPaymentViewController.swift; sourceTree = "<group>"; };
 		6157A3EC1F83865800B8D501 /* MyBamiloViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBamiloViewController.swift; sourceTree = "<group>"; };
 		6157A3ED1F83865800B8D501 /* MyBamiloViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyBamiloViewController.xib; sourceTree = "<group>"; };
 		6157A3F21F83974100B8D501 /* MyBamiloModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBamiloModel.swift; sourceTree = "<group>"; };
@@ -3078,6 +3080,7 @@
 				61EA566B1EDEC75E0093EAD4 /* MainTabBarViewController.swift */,
 				61CBA8851F691D05009F0EEF /* SearchViewController.swift */,
 				61B2C7F61F9C96B900930435 /* AccordionTableTableViewController.swift */,
+				615052D51FB0758600E67571 /* FailPaymentViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -8587,6 +8590,7 @@
 				CE9ADFF61AB6D78200D56481 /* JAShippingInfoCell.m in Sources */,
 				87459C8D1E4F04AD00743120 /* RadioButtonViewControl.m in Sources */,
 				611C19201F5FCEEB0073940C /* HomeViewController.swift in Sources */,
+				615052D61FB0758600E67571 /* FailPaymentViewController.swift in Sources */,
 				9AC4D6991B45A51A00036F1C /* JACatalogListCollectionViewCell.m in Sources */,
 				9AEF73F91CD20E1C00A5D574 /* JAReturnStepByStepModel.m in Sources */,
 				61CBA0421E51BA33005673F7 /* FormViewControl.m in Sources */,

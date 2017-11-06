@@ -16,6 +16,7 @@ class OrderProductItem: Product {
     var quantity: Int?
     var histories: [OrderProductHistory]?
     var seller: String?
+    var color: String?
     
     override func mapping(map: Map) {
         super.mapping(map: map)
@@ -23,6 +24,7 @@ class OrderProductItem: Product {
         deliveryTime <- map["calculated_delivery_time"]
         quantity <- map["quantity"]
         size <- map["filters.size"]
+        color <- map["filters.color"]
         histories <- map["histories"]
         seller <- map["seller"]
     }

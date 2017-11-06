@@ -20,9 +20,8 @@ extension String {
     }
     
     func convertTo(language: LocalLang) -> String {
-        let characters = self.characters
         var converted: String = ""
-        for character in characters {
+        for character in self {
             converted.append(convertSingleCharTo(character: String(character), language: language))
         }
         return converted
@@ -35,7 +34,6 @@ extension String {
             result.insert(",", at: result.index(result.startIndex, offsetBy: cammaIndex))
             cammaIndex += 4;
         }
-        
         return result
     }
     

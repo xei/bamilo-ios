@@ -47,11 +47,16 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
         self.tableView.tableFooterView = UIView()
         
         self.suggestion = self.localSavedSuggestion.load()
+        
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShown(notification:)), name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: .UIKeyboardWillHide, object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         self.keyboardCanBeDismissed = true
         self.searchTextField.resignFirstResponder()
+        NotificationCenter.default.removeObserver(self)
     }
     
     func setupView() {
@@ -225,6 +230,21 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
         return true
     }
     
+    
+    @objc private func keyboardWillShown(notification: Notification) {
+        if let kbSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect)?.size {
+            let contentInsets = UIEdgeInsetsMake(0, 0, kbSize.height, 0)
+            
+            self.tableView.contentInset = contentInsets
+            self.tableView.scrollIndicatorInsets = contentInsets
+        }
+    }
+    
+    @objc private func keyboardWillHide(notification: Notification) {
+        let contentInsets = UIEdgeInsetsMake(0, 0, 0, 0)
+        self.tableView.contentInset = contentInsets
+        self.tableView.scrollIndicatorInsets = contentInsets
+    }
     
     //MARK: - DataServiceProtocol
     func bind(_ data: Any!, forRequestId rid: Int32) {

@@ -15,7 +15,6 @@
 #import "EmarsysPredictManager.h"
 #import "Bamilo-Swift.h"
 
-
 // --- Legacy imports ---
 #import "RIProduct.h"
 #import "RICartItem.h"
@@ -27,7 +26,6 @@
 @property (nonatomic, weak) IBOutlet UILabel *descLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
 @property (weak, nonatomic) IBOutlet UIButton *orderListButton;
-
 @end
 
 @implementation SuccessPaymentViewController
@@ -50,24 +48,19 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.extendedLayoutIncludesOpaqueBars = NO;
     self.automaticallyAdjustsScrollViewInsets = NO;
-    
-    if (self.success) {
-        [self trackPurchase];
-    }
+    [self trackPurchase];
 }
 
 - (void)setupView {
-    [self.titleLabel applyStyle:[Theme font:kFontVariationRegular size:19.0f] color: self.success ? [Theme color:kColorGreen] : [Theme color:kColorPink1]];
-    [self.descLabel applyStyle:[Theme font:kFontVariationRegular size:12.0f] color: self.success ? [UIColor blackColor] : [Theme color:kColorPink1]];
-    self.titleLabel.text = self.success ? STRING_THANK_YOU_ORDER_TITLE : STRING_ONLINE_PAYMENT_ERROR;
-    self.descLabel.text = self.success ? STRING_ORDER_SUCCESS : STRING_ORDER_FAIL;
-    self.iconImageView.image = [UIImage imageNamed: self.success ? @"successIcon" : @"failIcon"];
+    [self.titleLabel applyStyle:[Theme font:kFontVariationRegular size:19.0f] color: [Theme color:kColorGreen]];
+    [self.descLabel applyStyle:[Theme font:kFontVariationRegular size:12.0f] color:[UIColor blackColor]];
+    self.titleLabel.text = STRING_THANK_YOU_ORDER_TITLE;
+    self.descLabel.text = STRING_ORDER_SUCCESS;
+    self.iconImageView.image = [UIImage imageNamed:@"successIcon"];
     [self.carouselWidget hide];
     
     [EmarsysPredictManager sendTransactionsOf:self];
-    if (!self.success) {
-        [self.orderListButton setHidden:YES];
-    }
+    [self.orderListButton setHidden:NO];
 }
 
 - (void)trackPurchase {
@@ -102,7 +95,6 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     //// ------- END OF LEGACY CODES ------
-    
     [self publishScreenLoadTime];
 }
 

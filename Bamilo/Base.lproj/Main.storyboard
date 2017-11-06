@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="kvV-JZ-EK2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="kvV-JZ-EK2">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -101,7 +101,7 @@
                                         <rect key="frame" x="147" y="137" width="120" height="57"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SSz-D5-qwc">
-                                        <rect key="frame" x="192.66666666666666" y="78" width="29.666666666666657" height="14"/>
+                                        <rect key="frame" x="192.33333333333334" y="78" width="29.666666666666657" height="14"/>
                                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -954,6 +954,7 @@
                     <connections>
                         <outlet property="messageLabel" destination="esJ-Z7-NKS" id="P8d-DS-xFd"/>
                         <segue destination="bBJ-E5-rab" kind="show" identifier="showSuccessPaymentViewController" id="Cr8-H3-fzr"/>
+                        <segue destination="jzu-Nf-ZF6" kind="show" identifier="showFailPaymentViewController" id="sBz-el-HW7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ccb-qh-2qX" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -967,6 +968,59 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kao-ZO-aPg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-4503" y="-1281"/>
+        </scene>
+        <!--Fail Payment View Controller-->
+        <scene sceneID="Kfc-Hj-d8L">
+            <objects>
+                <viewController id="jzu-Nf-ZF6" customClass="FailPaymentViewController" customModule="Bamilo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="I8j-t9-Tif"/>
+                        <viewControllerLayoutGuide type="bottom" id="xug-4R-Euf"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="yYt-8L-dLI">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zMF-Ix-E64">
+                                <rect key="frame" x="182" y="120" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="zMF-Ix-E64" secondAttribute="height" multiplier="1:1" id="7np-Na-ce6"/>
+                                    <constraint firstAttribute="width" constant="50" id="fab-O2-DKd"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nKg-te-XOu">
+                                <rect key="frame" x="184" y="271" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="backToCardButtonTapped:" destination="jzu-Nf-ZF6" eventType="touchUpInside" id="tuK-ei-s0Y"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bwz-pW-H9s">
+                                <rect key="frame" x="186" y="210" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="nKg-te-XOu" firstAttribute="centerX" secondItem="zMF-Ix-E64" secondAttribute="centerX" id="Kd6-UY-lOI"/>
+                            <constraint firstItem="zMF-Ix-E64" firstAttribute="top" secondItem="I8j-t9-Tif" secondAttribute="bottom" constant="100" id="nvC-34-U1z"/>
+                            <constraint firstItem="zMF-Ix-E64" firstAttribute="centerX" secondItem="yYt-8L-dLI" secondAttribute="centerX" id="pIA-es-QjB"/>
+                            <constraint firstItem="nKg-te-XOu" firstAttribute="top" secondItem="Bwz-pW-H9s" secondAttribute="bottom" constant="40" id="tfW-TP-ASj"/>
+                            <constraint firstItem="Bwz-pW-H9s" firstAttribute="top" secondItem="zMF-Ix-E64" secondAttribute="bottom" constant="40" id="wWn-ph-fFf"/>
+                            <constraint firstItem="Bwz-pW-H9s" firstAttribute="centerX" secondItem="zMF-Ix-E64" secondAttribute="centerX" id="zm4-R7-ZZU"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="backToCardButton" destination="nKg-te-XOu" id="Xjr-yW-XBa"/>
+                        <outlet property="imageIcon" destination="zMF-Ix-E64" id="vRm-GM-lXt"/>
+                        <outlet property="messageLabel" destination="Bwz-pW-H9s" id="Zbg-CT-x9E"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RsP-mV-zHM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-5200" y="-462"/>
         </scene>
         <!--Filters View Controller-->
         <scene sceneID="sPO-lR-OuH">
@@ -1014,7 +1068,7 @@
                                                 </connections>
                                             </switch>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="فقط با تخفیف ها" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gEn-nz-ntR">
-                                                <rect key="frame" x="80" y="20" width="65" height="13"/>
+                                                <rect key="frame" x="80" y="19.666666666666664" width="65" height="13"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1427,7 +1481,7 @@
                                 <rect key="frame" x="187" y="100" width="40" height="40"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="فیلترهای کمتری را برای جستجو انتخاب نمایید" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SU1-vf-mKc">
-                                <rect key="frame" x="110.66666666666667" y="165" width="193.66666666666663" height="14"/>
+                                <rect key="frame" x="110.33333333333333" y="165" width="193.66666666666669" height="14"/>
                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>

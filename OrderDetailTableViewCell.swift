@@ -76,10 +76,26 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
             self.productImage.kf.setImage(with: product.imageUrl, placeholder: UIImage(named: "placeholder_gallery"), options: [.transition(.fade(0.20))])
             let productPrice = product.specialPrice ?? product.price ?? 0
             self.productPriceLabel.text = "\(Int(productPrice) * (product.quantity ?? 0))".formatPriceWithCurrency()
-            let formattedPrice = "\(productPrice)".formatPriceWithCurrency()
+            
             var productInfo = "\(STRING_QUANTITY): \(product.quantity ?? 0)".convertTo(language: .arabic)
-            productInfo += "\n\(STRING_BRAND): \(product.brand ?? "") \n\(STRING_SELLER): \(product.seller ?? "") \n\(STRING_PRICE): \(formattedPrice)"
-            if let size = product.size { productInfo += "\n\(STRING_SIZE):\(size)".convertTo(language: .arabic)}
+            if (product.brand ?? "").count > 0 {
+                productInfo += "\n\(STRING_BRAND): \(product.brand ?? "")"
+            }
+            if (product.seller ?? "").count > 0 {
+                productInfo += "\n\(STRING_SELLER): \(product.seller ?? "")"
+            }
+            if productPrice > 0 {
+                let formattedPrice = "\(productPrice)".formatPriceWithCurrency()
+                productInfo += "\n\(STRING_PRICE): \(formattedPrice)"
+            }
+            if let size = product.size {
+                productInfo += "\n\(STRING_SIZE): \(size)".convertTo(language: .arabic)
+            }
+            if let color = product.color {
+                productInfo += "\n\(STRING_COLOR): \(color)".convertTo(language: .arabic)
+            }
+            
+            
             self.productMoreInfoLabel.text = productInfo
             self.progressBarView.update(withModel: product.histories)
             self.notInStockMessageLabel.text = product.sku != nil ? nil : STRING_ORDER_OUT_OF_STOCK

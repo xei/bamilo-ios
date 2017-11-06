@@ -1034,8 +1034,7 @@
     }
 }
 
-- (BOOL)hasStock
-{
+- (BOOL)hasStock {
     for (RIProductSimple *simple in self.productSimples) {
         if (![simple.quantity isEqualToString:@"0"]) {
             return YES;

@@ -22,9 +22,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    self.webView.translatesAutoresizingMaskIntoConstraints = YES;
-//    [self.webView setDelegate:self];
-//    self.originalRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:[RIApi getCountryUrlInUse]]];
+    self.view.backgroundColor = [UIColor whiteColor];
     [self.messageLabel applyStyle:[Theme font:kFontVariationRegular size:14] color:[Theme color:kColorGray1]];
     self.messageLabel.text = STRING_LOADING;
     [self loadPaymentMethodRequest];
@@ -42,8 +40,14 @@
 
 - (void)checkPaymentResult {
     if (self.isComingFromBank) {
-        [self performSegueWithIdentifier:@"showSuccessPaymentViewController" sender:nil];
+        if (self.successfulPayment) {
+            [self performSegueWithIdentifier:@"showSuccessPaymentViewController" sender:nil];
+        } else {
+            [self performSegueWithIdentifier:@"showFailPaymentViewController" sender:nil];
+        }
         self.isComingFromBank = NO;
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 
@@ -60,7 +64,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString: @"showSuccessPaymentViewController"]) {
         SuccessPaymentViewController *ViewCtrl = (SuccessPaymentViewController *)segue.destinationViewController;
-        ViewCtrl.success = self.successfulPayment;
+        ViewCtrl.cart = self.cart;
     }
 }
 

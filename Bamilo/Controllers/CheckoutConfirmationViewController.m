@@ -80,7 +80,6 @@
         [DataAggregator getMultistepConfirmation:self type:RequestExecutionTypeContainer completion:^(id data, NSError *error) {
             if(error == nil) {
                 [self bind:data forRequestId:0];
-                
                 //Discount Code
                 if(self.cart.cartEntity.couponCode != nil) {
                     [self updateDiscountViewAppearanceForValue:YES animated:NO];
@@ -90,22 +89,17 @@
                 [DataAggregator getMultistepShipping:self completion:^(id data, NSError *error) {
                     if(error == nil) {
                         [self bind:data forRequestId:1];
-                        
                         self.isCompleteFetch = YES;
-                        
                         [self.tableView reloadData];
                     }
                 }];
                 
                 //Shipping Address
                 _shippingAddress = self.cart.cartEntity.address;
-                
                 //Products
                 _products = self.cart.cartEntity.cartItems;
                 [_cellsIndexPaths setObject:[NSMutableArray indexPathArrayOfLength:(int)_products.count forSection:2] atIndexedSubscript:2];
-                
                 [self.tableView reloadData];
-                
                 [self publishScreenLoadTime];
             }
         }];

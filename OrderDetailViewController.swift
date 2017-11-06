@@ -18,6 +18,15 @@ class OrderDetailViewController: BaseViewController, OrderDetailTableViewCellDel
         self.orderTableViewCtrl.delegate = self
         orderTableViewCtrl.addInto(viewController: self, containerView: self.view)
         
+        //update the bottom constraint with tabbar height
+        orderTableViewCtrl.view.superview?.constraints.forEach { (constraint) in
+            if constraint.firstAttribute == .bottom {
+                if let height = MainTabBarViewController.sharedInstance()?.tabBar.frame.height {
+                    constraint.constant = height
+                }
+            }
+        }
+        
         if let orderId = self.orderId {
             OrderDataManager.sharedInstance.getOrder(self, orderId: orderId) { (data, errors) in
                 if errors == nil {
@@ -28,6 +37,11 @@ class OrderDetailViewController: BaseViewController, OrderDetailTableViewCellDel
             }
         }
         self.hidesBottomBarWhenPushed = true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.tabBarController?.tabBar.isHidden = false;
     }
     
     //MARK: - OrderDetailTableViewCellDelegate

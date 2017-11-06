@@ -13,7 +13,23 @@ import Kingfisher
 class HomePageSliderTableViewCell: BaseHomePageTeaserBoxTableViewCell, FSPagerViewDataSource, FSPagerViewDelegate, HomePageTeaserHeightCalculator {
     
     var sliderContent: HomePageSlider?
-
+    private static let sliderRatio: CGFloat = 2.1375 //ratio:  342*160
+    private static var cellSpacing: CGFloat {
+        get {
+            return UIDevice.current.userInterfaceIdiom == .pad ? 10 : 8
+        }
+    }
+    private static var partialSlideWidthPrecent: CGFloat {
+        get {
+            return UIDevice.current.userInterfaceIdiom == .pad ? 0.1 : 0.026
+        }
+    }
+    private static var wholeSlidesWidthRatio: CGFloat {
+        get {
+            return 1 + 2 * partialSlideWidthPrecent
+        }
+    }
+    
     @IBOutlet weak var sliderPager: FSPageControl!
     @IBOutlet private weak var pagerView: FSPagerView! {
         didSet {
@@ -38,11 +54,11 @@ class HomePageSliderTableViewCell: BaseHomePageTeaserBoxTableViewCell, FSPagerVi
         self.contentView.backgroundColor = .clear
         // --- The formulla of slider itemWidth calculation --
         // WidthWholeView = sliderItemWidth + 2 * (0.026) * sliderItemWidth + 2 * (interitemSpacing = 8)
-        let itemWidth = (UIApplication.shared.statusBarFrame.width - 16) / 1.052
-        let itemHeight = itemWidth / 2.1375  //ratio:  342*160
+        let itemWidth = (UIApplication.shared.statusBarFrame.width - HomePageSliderTableViewCell.cellSpacing * 2) / HomePageSliderTableViewCell.wholeSlidesWidthRatio
+        let itemHeight = itemWidth / HomePageSliderTableViewCell.sliderRatio
         
         self.pagerView.itemSize = CGSize(width: itemWidth, height: itemHeight)
-        self.pagerView.interitemSpacing = 8
+        self.pagerView.interitemSpacing = HomePageSliderTableViewCell.cellSpacing
         
         self.sliderPager.setFillColor(Theme.color(kColorGray5), for: .normal)
         self.sliderPager.setFillColor(Theme.color(kColorOrange1), for: .selected)
@@ -94,8 +110,8 @@ class HomePageSliderTableViewCell: BaseHomePageTeaserBoxTableViewCell, FSPagerVi
     
     //MARK: - HomePageTeaserHeightCalculator
     static func teaserHeight(model: Any?) -> CGFloat {
-        let itemWidth = (UIApplication.shared.statusBarFrame.width - 16) / 1.052
-        let itemHeight = itemWidth / 2.1375  //ratio:  342*160
-        return itemHeight + 8 * 3 //8 point padding from top & bottom point bottom of slider (for slider control)
+        let itemWidth = (UIApplication.shared.statusBarFrame.width - 2 * cellSpacing) / wholeSlidesWidthRatio
+        let itemHeight = itemWidth / sliderRatio
+        return itemHeight + cellSpacing * 2 + 8 //8 point padding from bottom
     }
 }

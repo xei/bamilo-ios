@@ -142,8 +142,8 @@ static NSString *recommendationLogic = @"RELATED";
             _processActionBlock();
         }
     }
-    
     [self updateCartInNavBar];
+    self.tabBarController.tabBar.hidden = YES;
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
