@@ -19,6 +19,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     [self.leftTitleLabel applyStyle:[Theme font:kFontVariationBold size:12.0f] color:[Theme color:kColorExtraDarkGray]];
+    self.contentView.backgroundColor = [UIColor withRepeatingRGBA:244 alpha:1.0f];
     
     self.titleRightPaddingConstraint.constant = self.paddingContent ?: 16;
     self.leftTitleLeftPaddingConstraint.constant = self.paddingContent ?: 16;

@@ -112,7 +112,7 @@ class LocalSearchSuggestion {
                 convertedSuggestion.target = searchTarget
                 convertedSuggestion.type = "searchQuery"
                 
-                if privousCategory.count >= 3 {
+                if privousCategory.count >= 6 {
                     try! realm.write {
                         realm.delete(privousCategory.first!)
                     }

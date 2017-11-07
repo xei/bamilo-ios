@@ -131,22 +131,20 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
         if section == 0 && (self.suggestion?.categories == nil || self.suggestion?.categories?.count == 0) { return 0 }
         if section == 1 && (self.suggestion?.products == nil || self.suggestion?.products?.count == 0) { return 0 }
         if section == 2 && (self.suggestion?.searchQueries == nil || self.suggestion?.searchQueries?.count == 0) { return 0 }
-        return 30
+        return PlainTableViewHeaderCell.cellHeight()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: IconTableViewCell.nibName(), for: indexPath) as! IconTableViewCell
         if indexPath.section == 0 {
-            let cell = self.tableView.dequeueReusableCell(withIdentifier: IconTableViewCell.nibName(), for: indexPath) as! IconTableViewCell
-            cell.titleLabel.text = suggestion?.categories?[indexPath.row].name
+            cell.titleLabel.text = suggestion?.categories?[indexPath.row].name?.forceRTL()
             return cell
         } else if indexPath.section == 1 {
-            let cell = self.tableView.dequeueReusableCell(withIdentifier: IconTableViewCell.nibName(), for: indexPath) as! IconTableViewCell
-            cell.titleLabel.text = suggestion?.products?[indexPath.row].name
+            cell.titleLabel.text = suggestion?.products?[indexPath.row].name?.forceRTL()
             cell.cellImageView.kf.setImage(with: suggestion?.products?[indexPath.row].imageUrl, options: [.transition(.fade(0.20))])
             return cell
         } else if indexPath.section == 2 {
-            let cell = self.tableView.dequeueReusableCell(withIdentifier: IconTableViewCell.nibName(), for: indexPath) as! IconTableViewCell
-            cell.titleLabel.text = suggestion?.searchQueries?[indexPath.row].name
+            cell.titleLabel.text = suggestion?.searchQueries?[indexPath.row].name?.forceRTL()
             cell.cellImageView.image = UIImage(named: "ico_recentsearches")
             return cell
         } else {
@@ -179,7 +177,11 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
         self.dismiss(animated: false, completion: nil)
         if indexPath.section == 0 {
             if let categories = self.suggestion?.categories {
-                self.localSavedSuggestion.add(category: categories[indexPath.row])
+                let selectedCat = categories[indexPath.row]
+                if let searchQuery = searchTextField.text, searchQuery.count > 0, let catName = selectedCat.name {
+                    selectedCat.name = "\(searchQuery) \(STRING_IN) \(catName)"
+                }
+                self.localSavedSuggestion.add(category: selectedCat)
                 if let target = categories[indexPath.row].target {
                     self.delegate?.searchBySuggestion?(targetString: target)
                     let trackingActionLabel = isRecentView ? "search_recent_cat" : "Search_recom_cat"

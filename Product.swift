@@ -37,7 +37,7 @@ import SwiftyJSON
         brand               <- map["brand"]
         maxSavingPrecentage <- map["max_saving_percentage"]
         price               <- map["price"]
-        categoryIds         = JSON(map.JSON)["categories"].string?.characters.split(separator: "|").map {String($0)}
+        categoryIds         = JSON(map.JSON)["categories"].string?.split(separator: "|").map {String($0)}
         specialPrice        <- map["special_price"]
         imageUrl            <- (map["image"], URLTransform())
         target              <- map["target"]
