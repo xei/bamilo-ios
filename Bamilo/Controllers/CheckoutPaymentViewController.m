@@ -42,26 +42,19 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self.tableView registerNib:[UINib nibWithNibName:[PlainTableViewHeaderCell nibName] bundle:nil]  forHeaderFooterViewReuseIdentifier:[PlainTableViewHeaderCell nibName]];
-    
     //PaymentTypeTableViewCell
     [self.tableView registerNib:[UINib nibWithNibName:[PaymentTypeTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[PaymentTypeTableViewCell nibName]];
-    
     //PaymentOptionWithLogoTableViewCell
     [self.tableView registerNib:[UINib nibWithNibName:[PaymentOptionWithLogoTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[PaymentOptionWithLogoTableViewCell nibName]];
-    
     //PaymentOptionTableViewCell
     [self.tableView registerNib:[UINib nibWithNibName:[PaymentOptionTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[PaymentOptionTableViewCell nibName]];
-    
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
     _selectedPaymentMethodIndex = -1;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     if(_paymentMethods == nil) {
         [self getPaymentMethods:^(NSArray *paymentMethods) {
             [self publishScreenLoadTime];
@@ -99,9 +92,7 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
         [DataAggregator setMultistepConfirmation:self cart:self.cart completion:^(id data, NSError *error) {
             if(error == nil) {
                 [self bind:data forRequestId:1];
-                
                 NSDictionary *userInfo = @{ kCart : self.cart };
-    
                 if(self.cart.paymentInformation.type == RIPaymentInformationCheckoutEnded) {
                     [self setHidesBottomBarWhenPushed:NO];
                     [self performSegueWithIdentifier:NSStringFromClass([SuccessPaymentViewController class]) sender:nil];
@@ -109,11 +100,9 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
                 } else {
                     [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutExternalPaymentsScreenNotification object:nil userInfo:userInfo];
                 }
-
                 completion(_multistepEntity.nextStep, YES);
             } else {
                 [self showNotificationBar:error isSuccess:NO];
-                
                 //EVENT : PURCHASE
                 [TrackerManager postEventWithSelector:[EventSelectors purchaseSelector] attributes:[EventAttributes purchaseWithCart:self.cart success:YES]];
                 completion(nil, NO);

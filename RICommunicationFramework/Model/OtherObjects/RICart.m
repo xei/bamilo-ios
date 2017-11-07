@@ -886,6 +886,11 @@ static RICart *instance;
     if (_estimatedDeliveryTime) {
         [RICart sharedInstance].estimatedDeliveryTime = _estimatedDeliveryTime[@"delivery_message"];
     }
+    
+    NSString *_deliveryNotice = [dict objectForKey:@"delivery_notice"];
+    if (_deliveryNotice.length) {
+        [RICart sharedInstance].deliveryNotice = _deliveryNotice;
+    }
     //SHIPPING METHOD FORM
     /*if (VALID_NOTEMPTY([dict objectForKey:@"shippingMethodForm"], NSDictionary)) {
         cart.formEntity.shippingMethodForm = [ShippingMethodForm new];
