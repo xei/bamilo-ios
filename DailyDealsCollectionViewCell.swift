@@ -12,16 +12,16 @@ import Kingfisher
 class DailyDealsCollectionViewCell: BaseCollectionViewCellSwift {
 
     @IBOutlet weak private var imageview: UIImageView!
+    @IBOutlet weak private var containerview: UIView!
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var brandLabel: UILabel!
     @IBOutlet weak private var discountedPriceLabel: UILabel!
     @IBOutlet weak private var priceLabel: UILabel!
-    @IBOutlet weak private var discountPrecentageView: UIView!
-    @IBOutlet weak private var discountPrecentageLabel: UILabel!
+    @IBOutlet weak private var bottomBadgeContainerView: UIView!
+    @IBOutlet weak private var bottomBadgeLabel: UILabel!
     
     @IBOutlet weak private var imageTopConstraint: NSLayoutConstraint!
     @IBOutlet weak private var imageLeftConstraint: NSLayoutConstraint!
-    @IBOutlet weak private var imageRightConstraint: NSLayoutConstraint!
     @IBOutlet weak private var imageBottomConstraint: NSLayoutConstraint!
     
     @IBOutlet weak private var titleHeightConstraint: NSLayoutConstraint!
@@ -52,15 +52,14 @@ class DailyDealsCollectionViewCell: BaseCollectionViewCellSwift {
         self.titleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
         self.brandLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorSecondaryGray1))
         self.discountedPriceLabel.applyStype(font: Theme.font(kFontVariationBold, size: 13), color: Theme.color(kColorGray1))
-        self.discountPrecentageView.backgroundColor = Theme.color(kColorGray10)
-        self.discountPrecentageLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorSecondaryGray1))
+        self.bottomBadgeContainerView.backgroundColor = Theme.color(kColorGray10)
+        self.bottomBadgeLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorSecondaryGray1))
         self.priceLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorSecondaryGray1))
         
         //setting constraints
         self.imageTopConstraint.constant = DailyDealsCollectionViewCell.imagePadding
         self.imageBottomConstraint.constant = DailyDealsCollectionViewCell.imagePadding
         self.imageLeftConstraint.constant = DailyDealsCollectionViewCell.imagePadding
-        self.imageRightConstraint.constant = DailyDealsCollectionViewCell.imagePadding
         self.titleHeightConstraint.constant = DailyDealsCollectionViewCell.labelSmallHeight
         self.brandlabelHeightConstraint.constant = DailyDealsCollectionViewCell.labelBigHeight
         self.brandBottomConstraint.constant = DailyDealsCollectionViewCell.whiteSpaceHeigt
@@ -73,16 +72,27 @@ class DailyDealsCollectionViewCell: BaseCollectionViewCellSwift {
         brandLabel.text = product.brand
         imageview.kf.indicatorType = .activity
         imageview.kf.setImage(with: product.imageUrl, options: [.transition(.fade(0.20))])
+        self.containerview.alpha = 1
+        self.bottomBadgeContainerView.backgroundColor = Theme.color(kColorGray10)
+        self.bottomBadgeLabel.textColor = Theme.color(kColorSecondaryGray1)
         if let specialPrice = product.specialPrice, let price = product.price, let precentage = product.maxSavingPrecentage {
-            discountPrecentageView.isHidden = false
+            bottomBadgeContainerView.isHidden = false
             discountedPriceLabel.text = "\(specialPrice)".formatPriceWithCurrency()
             priceLabel.attributedText = "\(price)".formatPriceWithCurrency().strucThroughPriceFormat()
-            discountPrecentageLabel.text = "%\(precentage)".convertTo(language: .arabic)
+            bottomBadgeLabel.text = "%\(precentage)".convertTo(language: .arabic)
         } else if let price = product.price {
             discountedPriceLabel.text = "\(price)".formatPriceWithCurrency()
             priceLabel.text = nil
-            discountPrecentageLabel.text = nil
-            discountPrecentageView.isHidden = true
+            bottomBadgeLabel.text = nil
+            bottomBadgeContainerView.isHidden = true
+        }
+        if (!product.hasStock) {
+            self.priceLabel.text = nil
+            self.containerview.alpha = 0.5
+            self.bottomBadgeContainerView.isHidden = false
+            self.bottomBadgeContainerView.backgroundColor = Theme.color(kColorGray1)
+            self.bottomBadgeLabel.text = STRING_OUT_OF_STOCK
+            self.bottomBadgeLabel.textColor = .white
         }
         self.product = product
     }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -27,39 +27,71 @@
                 <rect key="frame" x="0.0" y="0.0" width="168" height="285"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="H8O-rh-G7h">
-                        <rect key="frame" x="8" y="8" width="152" height="190"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RkR-vy-TCD" userLabel="container">
+                        <rect key="frame" x="0.0" y="0.0" width="168" height="285"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="H8O-rh-G7h">
+                                <rect key="frame" x="8" y="8" width="152" height="190"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="H8O-rh-G7h" secondAttribute="height" multiplier="1:1.25" id="iXg-cl-NDh"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="کیبورد wifit" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JNO-Gq-X3N">
+                                <rect key="frame" x="8" y="206" width="152" height="14"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="14" id="Kew-xm-a5a"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Logitec" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1K5-7V-Y0g">
+                                <rect key="frame" x="8" y="220" width="152" height="17.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="17" id="bKr-Bo-x4b"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="9"/>
+                                <color key="textColor" red="0.62352941179999999" green="0.62352941179999999" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۱۵۰،۰۰۰ ریال" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M3a-QQ-gHm">
+                                <rect key="frame" x="8" y="247.5" width="152" height="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="17" id="58X-Uj-poG"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="۲۰۰،۰۰۰ ریال" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I8H-qD-OCt">
+                                <rect key="frame" x="8" y="264.5" width="152" height="14"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="14" id="hEE-6x-5vS"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="9"/>
+                                <color key="textColor" red="0.62352941179999999" green="0.62352941179999999" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="width" secondItem="H8O-rh-G7h" secondAttribute="height" multiplier="1:1.25" id="iXg-cl-NDh"/>
+                            <constraint firstItem="JNO-Gq-X3N" firstAttribute="bottom" secondItem="1K5-7V-Y0g" secondAttribute="top" id="2wz-jc-bWf"/>
+                            <constraint firstItem="JNO-Gq-X3N" firstAttribute="right" secondItem="H8O-rh-G7h" secondAttribute="right" id="8oO-cL-NUn"/>
+                            <constraint firstItem="JNO-Gq-X3N" firstAttribute="top" secondItem="H8O-rh-G7h" secondAttribute="bottom" constant="8" id="AOm-Wv-VhW"/>
+                            <constraint firstItem="1K5-7V-Y0g" firstAttribute="left" secondItem="H8O-rh-G7h" secondAttribute="left" id="DIb-Su-WB2"/>
+                            <constraint firstItem="M3a-QQ-gHm" firstAttribute="left" secondItem="H8O-rh-G7h" secondAttribute="left" id="EZj-Ss-iT6"/>
+                            <constraint firstItem="H8O-rh-G7h" firstAttribute="centerX" secondItem="RkR-vy-TCD" secondAttribute="centerX" id="P2w-GZ-rXD"/>
+                            <constraint firstItem="H8O-rh-G7h" firstAttribute="top" secondItem="RkR-vy-TCD" secondAttribute="top" constant="8" id="RR0-Vl-LLb"/>
+                            <constraint firstItem="M3a-QQ-gHm" firstAttribute="top" secondItem="1K5-7V-Y0g" secondAttribute="bottom" constant="10" id="XWH-eo-xct"/>
+                            <constraint firstItem="JNO-Gq-X3N" firstAttribute="left" secondItem="H8O-rh-G7h" secondAttribute="left" id="a5X-mr-uoT"/>
+                            <constraint firstItem="M3a-QQ-gHm" firstAttribute="right" secondItem="H8O-rh-G7h" secondAttribute="right" id="aCf-VF-7zi"/>
+                            <constraint firstItem="H8O-rh-G7h" firstAttribute="left" secondItem="RkR-vy-TCD" secondAttribute="left" constant="8" id="eYa-Ke-X1d"/>
+                            <constraint firstItem="I8H-qD-OCt" firstAttribute="left" secondItem="M3a-QQ-gHm" secondAttribute="left" id="fX8-n5-Fsb"/>
+                            <constraint firstItem="I8H-qD-OCt" firstAttribute="right" secondItem="M3a-QQ-gHm" secondAttribute="right" id="frg-yI-3Mj"/>
+                            <constraint firstItem="M3a-QQ-gHm" firstAttribute="bottom" secondItem="I8H-qD-OCt" secondAttribute="top" id="mrp-hP-4tC"/>
+                            <constraint firstItem="1K5-7V-Y0g" firstAttribute="right" secondItem="H8O-rh-G7h" secondAttribute="right" id="oja-fa-myB"/>
                         </constraints>
-                    </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="کیبورد wifit" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JNO-Gq-X3N">
-                        <rect key="frame" x="8" y="206" width="152" height="14"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="14" id="Kew-xm-a5a"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Logitec" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1K5-7V-Y0g">
-                        <rect key="frame" x="8" y="220" width="152" height="17.5"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="17" id="bKr-Bo-x4b"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="9"/>
-                        <color key="textColor" red="0.62352941179999999" green="0.62352941179999999" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۱۵۰،۰۰۰ ریال" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M3a-QQ-gHm">
-                        <rect key="frame" x="33.5" y="247.5" width="126.5" height="17"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="17" id="58X-Uj-poG"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SwN-Wj-fF0">
                         <rect key="frame" x="8" y="263" width="25.5" height="14"/>
                         <subviews>
@@ -87,37 +119,16 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="۲۰۰،۰۰۰ ریال" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I8H-qD-OCt">
-                        <rect key="frame" x="33.5" y="264.5" width="126.5" height="14"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="14" id="hEE-6x-5vS"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="9"/>
-                        <color key="textColor" red="0.62352941179999999" green="0.62352941179999999" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                 </subviews>
             </view>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="H8O-rh-G7h" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="083-TO-Xot"/>
-                <constraint firstAttribute="right" secondItem="H8O-rh-G7h" secondAttribute="right" constant="8" id="19e-at-E1E"/>
-                <constraint firstItem="1K5-7V-Y0g" firstAttribute="right" secondItem="JNO-Gq-X3N" secondAttribute="right" id="4lp-Lh-e4i"/>
-                <constraint firstItem="1K5-7V-Y0g" firstAttribute="left" secondItem="JNO-Gq-X3N" secondAttribute="left" id="HXL-so-Iwr"/>
-                <constraint firstItem="I8H-qD-OCt" firstAttribute="top" secondItem="M3a-QQ-gHm" secondAttribute="bottom" id="J26-Fw-U7k"/>
-                <constraint firstItem="1K5-7V-Y0g" firstAttribute="top" secondItem="JNO-Gq-X3N" secondAttribute="bottom" id="L4n-QH-eGq"/>
+                <constraint firstAttribute="bottom" secondItem="RkR-vy-TCD" secondAttribute="bottom" id="81I-i5-nef"/>
+                <constraint firstItem="RkR-vy-TCD" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="IPf-VO-3Qp"/>
                 <constraint firstAttribute="bottom" secondItem="SwN-Wj-fF0" secondAttribute="bottom" constant="8" id="LeN-eD-bat"/>
-                <constraint firstItem="I8H-qD-OCt" firstAttribute="left" secondItem="SwN-Wj-fF0" secondAttribute="right" id="Ncp-vv-gNr"/>
-                <constraint firstItem="M3a-QQ-gHm" firstAttribute="top" secondItem="1K5-7V-Y0g" secondAttribute="bottom" constant="10" id="O4v-Qq-qqE"/>
-                <constraint firstItem="I8H-qD-OCt" firstAttribute="right" secondItem="1K5-7V-Y0g" secondAttribute="right" id="Prv-gU-07W"/>
-                <constraint firstItem="SwN-Wj-fF0" firstAttribute="left" secondItem="H8O-rh-G7h" secondAttribute="left" id="S5F-nY-udv"/>
-                <constraint firstItem="H8O-rh-G7h" firstAttribute="left" secondItem="gTV-IL-0wX" secondAttribute="left" constant="8" id="XfA-Pr-9VE"/>
-                <constraint firstItem="H8O-rh-G7h" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="XrP-qf-pTW"/>
-                <constraint firstItem="JNO-Gq-X3N" firstAttribute="top" secondItem="H8O-rh-G7h" secondAttribute="bottom" constant="8" id="YOm-TP-OPb"/>
-                <constraint firstItem="M3a-QQ-gHm" firstAttribute="left" secondItem="I8H-qD-OCt" secondAttribute="left" id="e47-Kd-cUX"/>
-                <constraint firstItem="JNO-Gq-X3N" firstAttribute="right" secondItem="H8O-rh-G7h" secondAttribute="right" id="iQK-T5-Lfe"/>
-                <constraint firstItem="M3a-QQ-gHm" firstAttribute="right" secondItem="I8H-qD-OCt" secondAttribute="right" id="n7G-Xo-PCH"/>
-                <constraint firstItem="JNO-Gq-X3N" firstAttribute="left" secondItem="H8O-rh-G7h" secondAttribute="left" id="vsX-ZS-ZP3"/>
+                <constraint firstAttribute="right" secondItem="RkR-vy-TCD" secondAttribute="right" id="VGj-1p-5o6"/>
+                <constraint firstItem="SwN-Wj-fF0" firstAttribute="left" secondItem="H8O-rh-G7h" secondAttribute="left" id="ZJe-XY-Gmm"/>
+                <constraint firstItem="RkR-vy-TCD" firstAttribute="left" secondItem="gTV-IL-0wX" secondAttribute="left" id="pvy-bY-Zuq"/>
             </constraints>
             <size key="customSize" width="229" height="330"/>
             <userDefinedRuntimeAttributes>
@@ -144,24 +155,24 @@
                 </userDefinedRuntimeAttribute>
             </userDefinedRuntimeAttributes>
             <connections>
-                <outlet property="brandBottomConstraint" destination="O4v-Qq-qqE" id="Drb-1P-pUw"/>
+                <outlet property="bottomBadgeContainerView" destination="SwN-Wj-fF0" id="iO8-wb-T15"/>
+                <outlet property="bottomBadgeLabel" destination="CTk-nB-2te" id="SLZ-lK-M44"/>
+                <outlet property="brandBottomConstraint" destination="XWH-eo-xct" id="ZSD-Um-kPP"/>
                 <outlet property="brandLabel" destination="1K5-7V-Y0g" id="iv2-CP-iGu"/>
                 <outlet property="brandlabelHeightConstraint" destination="bKr-Bo-x4b" id="5WO-sk-Qzu"/>
-                <outlet property="discountPrecentageLabel" destination="CTk-nB-2te" id="A66-mV-gWc"/>
-                <outlet property="discountPrecentageView" destination="SwN-Wj-fF0" id="BFk-Sf-Jq6"/>
+                <outlet property="containerview" destination="RkR-vy-TCD" id="TwE-3L-88L"/>
                 <outlet property="discountedPriceHeightConstraint" destination="58X-Uj-poG" id="wDE-lC-x6a"/>
                 <outlet property="discountedPriceLabel" destination="M3a-QQ-gHm" id="lhZ-1f-dhH"/>
-                <outlet property="imageBottomConstraint" destination="YOm-TP-OPb" id="4pd-1u-AAW"/>
-                <outlet property="imageLeftConstraint" destination="XfA-Pr-9VE" id="kbJ-u3-F9o"/>
-                <outlet property="imageRightConstraint" destination="19e-at-E1E" id="xlR-q0-95k"/>
-                <outlet property="imageTopConstraint" destination="XrP-qf-pTW" id="6t5-k3-cam"/>
+                <outlet property="imageBottomConstraint" destination="AOm-Wv-VhW" id="GtW-wx-0OJ"/>
+                <outlet property="imageLeftConstraint" destination="eYa-Ke-X1d" id="ZOW-Fa-0Tn"/>
+                <outlet property="imageTopConstraint" destination="RR0-Vl-LLb" id="DnE-Kn-agH"/>
                 <outlet property="imageview" destination="H8O-rh-G7h" id="K6M-UK-4Lq"/>
                 <outlet property="priceHeightConstraint" destination="hEE-6x-5vS" id="KBl-0M-ZcH"/>
                 <outlet property="priceLabel" destination="I8H-qD-OCt" id="3Fx-8B-O5u"/>
                 <outlet property="titleHeightConstraint" destination="Kew-xm-a5a" id="Shc-bw-32R"/>
                 <outlet property="titleLabel" destination="JNO-Gq-X3N" id="yRE-cO-umK"/>
             </connections>
-            <point key="canvasLocation" x="-1019" y="-25"/>
+            <point key="canvasLocation" x="-1438" y="-181"/>
         </collectionViewCell>
     </objects>
 </document>

@@ -75,6 +75,6 @@ let STRING_RECENT_SEARCH = RILocalizationWrapper.localizedString("recent_searche
 let STRING_COLOR = RILocalizationWrapper.localizedString("color")!
 let STRING_ORDER_FAIL = RILocalizationWrapper.localizedString("order_fail_desc")!
 let STRING_BACK_TO_CART = RILocalizationWrapper.localizedString("back_to_cart")!
-
+let STRING_OUT_OF_STOCK = RILocalizationWrapper.localizedString("out_of_stock")!
 
 

@@ -27,6 +27,7 @@ import SwiftyJSON
     var isNew: Bool = false
     var isInWishList: Bool = false
     var reviewsCount: Int?
+    var hasStock: Bool = true
     
     override init() {}
     required init?(map: Map) {}
@@ -47,5 +48,10 @@ import SwiftyJSON
         ratingsCount        <- map["rating_reviews_summary.ratings_total"]
         reviewsCount        <- map["rating_reviews_summary.reviews_total"]
         isNew               <- map["is_new"]
+        
+        //checkou avaiability
+        var stockAvaiablity: Bool?
+        stockAvaiablity     <- map["has_stock"]
+        hasStock = stockAvaiablity ?? true
     }
 }
