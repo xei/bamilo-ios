@@ -156,6 +156,7 @@
 		619E92CF1F8A1044003885BC /* DailyDealsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619E92CD1F8A1044003885BC /* DailyDealsCollectionViewCell.swift */; };
 		619E92D01F8A1044003885BC /* DailyDealsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 619E92CE1F8A1044003885BC /* DailyDealsCollectionViewCell.xib */; };
 		619E92D21F8A1093003885BC /* BaseCollectionViewCellSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619E92D11F8A1093003885BC /* BaseCollectionViewCellSwift.swift */; };
+		61A166BA1FB6A7AA003FBA56 /* TourManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A166B91FB6A7AA003FBA56 /* TourManager.swift */; };
 		61A4D1AB1EA6256A003E203C /* EmptyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A4D1AA1EA6256A003E203C /* EmptyViewController.m */; };
 		61A62CAD1E98FB0600E78D81 /* NSArray+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A62CAC1E98FB0600E78D81 /* NSArray+Extension.m */; };
 		61AF00B91F402FE600543BA8 /* DOFavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AF00B81F402FE600543BA8 /* DOFavoriteButton.swift */; };
@@ -1166,6 +1167,7 @@
 		619E92CD1F8A1044003885BC /* DailyDealsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyDealsCollectionViewCell.swift; sourceTree = "<group>"; };
 		619E92CE1F8A1044003885BC /* DailyDealsCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DailyDealsCollectionViewCell.xib; sourceTree = "<group>"; };
 		619E92D11F8A1093003885BC /* BaseCollectionViewCellSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCellSwift.swift; sourceTree = "<group>"; };
+		61A166B91FB6A7AA003FBA56 /* TourManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourManager.swift; sourceTree = "<group>"; };
 		61A4D1A91EA6256A003E203C /* EmptyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmptyViewController.h; sourceTree = "<group>"; };
 		61A4D1AA1EA6256A003E203C /* EmptyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmptyViewController.m; sourceTree = "<group>"; };
 		61A62CAB1E98FB0600E78D81 /* NSArray+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Extension.h"; sourceTree = "<group>"; };
@@ -3400,6 +3402,7 @@
 			children = (
 				8720C33F1EE2CD1000404378 /* Data */,
 				8720C3401EE2CD2700404378 /* LoadingManager.swift */,
+				61A166B91FB6A7AA003FBA56 /* TourManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -8484,6 +8487,7 @@
 				875AD5531E38C0C900584ABF /* RITeaserGrouping.m in Sources */,
 				FFF900721C6A5CC700DDF538 /* JATextFieldComponent.m in Sources */,
 				61148E051E4724FC00E2540B /* StepperView.m in Sources */,
+				61A166BA1FB6A7AA003FBA56 /* TourManager.swift in Sources */,
 				875AD54F1E38C0C900584ABF /* RISearchSuggestion.m in Sources */,
 				87A681711E41FCF300D252AC /* CheckoutProgressView.m in Sources */,
 				CE9ADFC71AB6D78200D56481 /* JAButtonWithBlur.m in Sources */,

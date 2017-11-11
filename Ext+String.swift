@@ -48,7 +48,7 @@ extension String {
         return attributeString
     }
     
-//MARK: Private Methods
+    //MARK: Private Methods
     private func convertSingleCharTo(character: String, language: LocalLang) -> String {
         let formatter: NumberFormatter = NumberFormatter()
         let irLoc = NSLocale(localeIdentifier: language.rawValue) as Locale

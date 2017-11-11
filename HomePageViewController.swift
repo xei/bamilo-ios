@@ -17,7 +17,8 @@ class HomePageViewController:   BaseViewController,
                                 UITableViewDataSource,
                                 DataServiceProtocol,
                                 UITableViewDelegate,
-                                BaseHomePageTeaserBoxTableViewCellDelegate {
+                                BaseHomePageTeaserBoxTableViewCellDelegate,
+                                TourPresentor {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak private var loadingIndicator: UIActivityIndicatorView!
@@ -211,7 +212,12 @@ class HomePageViewController:   BaseViewController,
         }
     }
     
+    //MARK: - TourPresentor
     override func getScreenName() -> String! {
         return "HomePage"
+    }
+    
+    func doOnBoarding(featureName: String, handler: (String, TourPresentor) -> Void) {
+        
     }
 }
