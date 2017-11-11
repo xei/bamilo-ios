@@ -13,7 +13,7 @@ target 'Bamilo' do
   pod 'AlgoliaSearch-Client'
   pod 'Fabric'
   pod 'EmarsysPredictSDK'
-  pod 'Crashlytics', '~> 3.8'
+  pod 'Crashlytics', '~> 3.9'
   pod 'FXBlurView','~> 1.6.4'
   pod 'GoogleTagManager', '3.15.0' # ********** Legacy
   pod 'GoogleAnalytics', '3.14.0' # ********** Legacy

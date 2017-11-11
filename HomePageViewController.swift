@@ -18,7 +18,8 @@ class HomePageViewController:   BaseViewController,
                                 DataServiceProtocol,
                                 UITableViewDelegate,
                                 BaseHomePageTeaserBoxTableViewCellDelegate,
-                                TourPresentor {
+                                TourPresentor,
+                                TourSpotLightViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak private var loadingIndicator: UIActivityIndicatorView!
@@ -29,6 +30,8 @@ class HomePageViewController:   BaseViewController,
     private var homePage: HomePage?
     private var dailyDealsIndex: Int?
     private var refreshControl: UIRefreshControl?
+    private var spotLightView: TourSpotLightView?
+    private var tourHandler: TourPresentingHandler?
     
     private let cellTypeMapper: [HomePageTeaserType: String] = [
         .slider: HomePageSliderTableViewCell.nibName(),
@@ -54,6 +57,9 @@ class HomePageViewController:   BaseViewController,
         if let refreshControl = self.refreshControl {
             self.tableView.addSubview(refreshControl)
         }
+        
+        //start tour if it's necessary
+        TourManager.shared.onBoard(presentor: self)
     }
     
     func handleRefresh() {
@@ -212,12 +218,44 @@ class HomePageViewController:   BaseViewController,
         }
     }
     
+    private func setupSpotlight(feature: String) {
+        if spotLightView == nil {
+            if let tabItemView = MainTabBarViewController.getTabbarItemView(rootViewClassType: ProfileViewController.self) {
+                if let tabItemFrame = tabItemView.superview?.convert(tabItemView.frame, to: nil) {
+                    let profileSpotLight = TourSpotLight(withRect: tabItemFrame, shape: .circle, text: STRING_ITEM_TRACKING_HINT_1, margin: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
+                    spotLightView = TourSpotLightView(frame: UIScreen.main.bounds, spotlight: [profileSpotLight])
+                    spotLightView?.enableContinueLabel = true
+                    spotLightView?.tourName = feature
+                    spotLightView?.textLabelFont = Theme.font(kFontVariationBold, size: 14)
+                    spotLightView?.continueLabelFont = Theme.font(kFontVariationBold, size: 16)
+                    spotLightView?.continueLabelText = STRING_GOT_IT
+                    spotLightView?.delegate = self
+                }
+            }
+        }
+        
+        let window = UIApplication.shared.keyWindow!
+        if let view = spotLightView {
+            window.addSubview(view)
+        }
+        spotLightView?.start()
+    }
+    
     //MARK: - TourPresentor
     override func getScreenName() -> String! {
         return "HomePage"
     }
     
-    func doOnBoarding(featureName: String, handler: (String, TourPresentor) -> Void) {
-        
+    func doOnBoarding(featureName: String, handler: @escaping (String, TourPresentor) -> Void) {
+        if featureName == TourNames.ItemTrackings {
+            setupSpotlight(feature: featureName)
+            self.tourHandler = handler
+        }
     }
+    
+    //MARK: - TourSpotLightViewDelegate
+    func spotlightViewDidCleanup(_ spotlightView: TourSpotLightView) {
+        self.tourHandler?(spotlightView.tourName!, self)
+    }
+    
 }

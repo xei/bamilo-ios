@@ -56,10 +56,6 @@
             self.navigationItem.rightBarButtonItem = [NavBarUtility navBarLeftButtonWithType:NavBarLeftButtonTypeCart viewController:self];
         }
     }
-    
-    if ([self conformsToProtocol:@protocol(TourPresentor)]) {
-        [[TourManager shared] onBoardWithPresentor:(id<TourPresentor>)self];
-    }
 }
 
 //- (JANavigationBarLayout *)navBarLayout {

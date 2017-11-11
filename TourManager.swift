@@ -11,7 +11,7 @@ import UIKit
 typealias TourPresentingHandler = (_ feature: String, _ presentor: TourPresentor) -> Void
 
 @objc protocol TourPresentor {
-    func doOnBoarding(featureName: String, handler: TourPresentingHandler)
+    func doOnBoarding(featureName: String, handler: @escaping TourPresentingHandler)
     func getScreenName() -> String!
 }
 

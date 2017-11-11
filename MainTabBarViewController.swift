@@ -123,6 +123,21 @@ import UIKit
         MainTabBarViewController.sharedInstance()?.tabBar.items?.last?.badgeValue = cartItemsCount == 0 ? nil : "\(cartItemsCount)" //.convertTo(language: .arabic)
     }
     
+    static func getTabbarItemView<T>(rootViewClassType: T.Type) -> UIView? {
+        let tabBarController = MainTabBarViewController.sharedInstance()
+        var targetView: UIView?
+        if let index = tabBarController?.viewControllers?.index(where: {
+            if ($0 as! UINavigationController).viewControllers.count > 0 {
+                return ($0 as? UINavigationController)?.viewControllers[0] is T
+            }
+            return false
+        }) {
+            if let view = tabBarController?.tabBar.items?[index].value(forKey: "view") as? UIView {
+                targetView = view
+            }
+        }
+        return targetView
+    }
     
     //TODO: Temprory helper functions (for objective c codes)
     static func showHome() {

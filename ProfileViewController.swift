@@ -24,13 +24,15 @@ struct ProfileViewDataModel {
 }
 
 
-class ProfileViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, DataServiceProtocol, MFMailComposeViewControllerDelegate{
+class ProfileViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, DataServiceProtocol, MFMailComposeViewControllerDelegate, TourPresentor, TourSpotLightViewDelegate {
 
     @IBOutlet private weak var tableView: UITableView!
+    
     private var tableViewDataSource: [[ProfileViewDataModel]]?
     private let footerSectionHeight: CGFloat = 7
     private var viewWillApearedOnceOrMore = false
-    
+    private var spotLightView: TourSpotLightView?
+    private var tourHandler: TourPresentingHandler?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +52,9 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         
         self.updateTableViewDataSource()
         self.tableView.reloadData()
+        
+        //start tour if it's necessary
+        TourManager.shared.onBoard(presentor: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -269,9 +274,63 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         ViewControllerManager.sharedInstance().clearCache()
     }
     
-    //MARK: - DataTrackerProtocol
+    //MARK: - DataTrackerProtocol & TourPresentor
     override func getScreenName() -> String! {
         return "ProfileView"
+    }
+    
+    private func setupSpotlight(feature: String) {
+        if spotLightView == nil {
+            if let tabItemView = MainTabBarViewController.getTabbarItemView(rootViewClassType: ProfileViewController.self) {
+                if let tabItemFrame = tabItemView.superview?.convert(tabItemView.frame, to: nil) {
+                    let profileSpotLight = TourSpotLight(withRect: tabItemFrame, shape: .circle, text: STRING_ITEM_TRACKING_HINT_1, margin: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
+                    spotLightView = TourSpotLightView(frame: UIScreen.main.bounds, spotlight: [profileSpotLight])
+                    spotLightView?.enableContinueLabel = true
+                    spotLightView?.tourName = feature
+                    spotLightView?.textLabelFont = Theme.font(kFontVariationBold, size: 14)
+                    spotLightView?.continueLabelFont = Theme.font(kFontVariationBold, size: 16)
+                    spotLightView?.continueLabelText = STRING_GOT_IT
+                    spotLightView?.delegate = self
+                }
+            }
+        }
+        
+        let window = UIApplication.shared.keyWindow!
+        if let view = spotLightView {
+            window.addSubview(view)
+        }
+        spotLightView?.start()
+    }
+    
+    func doOnBoarding(featureName: String, handler: @escaping (String, TourPresentor) -> Void) {
+        if featureName == TourNames.ItemTrackings {
+            if spotLightView == nil {
+                if let orderTrackingCell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 1)) {
+                    let cellRect = self.tableView.convert(orderTrackingCell.frame, to: nil)
+                    let cellRectInSuperView = self.tableView.convert(cellRect, to: tableView.superview)
+                    let orderSpotLight = TourSpotLight(withRect: cellRectInSuperView, shape: .roundRectangle, text: STRING_ITEM_TRACKING_HINT_2)
+                    spotLightView = TourSpotLightView(frame: UIScreen.main.bounds, spotlight: [orderSpotLight])
+                    spotLightView?.enableContinueLabel = true
+                    spotLightView?.tourName = featureName
+                    spotLightView?.textLabelFont = Theme.font(kFontVariationBold, size: 16)
+                    spotLightView?.continueLabelFont = Theme.font(kFontVariationBold, size: 14)
+                    spotLightView?.continueLabelText = STRING_GOT_IT
+                    spotLightView?.delegate = self
+                }
+            }
+            
+            let window = UIApplication.shared.keyWindow!
+            if let view = spotLightView {
+                window.addSubview(view)
+            }
+            spotLightView?.start()
+            self.tourHandler = handler
+        }
+    }
+    
+    //MARK: - TourSpotLightViewDelegate
+    func spotlightViewDidCleanup(_ spotlightView: TourSpotLightView) {
+        self.tourHandler?(spotlightView.tourName!, self)
     }
     
     //MARK: - NavigationBarProtocol

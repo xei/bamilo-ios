@@ -143,7 +143,11 @@
 		<dict>
 			<key>HomePage</key>
 			<array>
-				<string>Feature1</string>
+				<string>ItemTrackings</string>
+			</array>
+			<key>ProfileView</key>
+			<array>
+				<string>ItemTrackings</string>
 			</array>
 		</dict>
 		<key>API_BaseUrl</key>
