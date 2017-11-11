@@ -10,6 +10,7 @@ import ObjectMapper
 
 class SearchSuggestion: NSObject, Mappable {
     
+    var query: String?
     var products: [Product]?
     var categories: [CategorySuggestion]?
     var searchQueries: [SearchSuggestionItem]?
@@ -21,8 +22,9 @@ class SearchSuggestion: NSObject, Mappable {
     }
     
     func mapping(map: Map) {
-        self.products <- map["products"]
+        products <- map["products"]
         categories <- map["categories"]
+        query <- map["query"]
     }
 
 }

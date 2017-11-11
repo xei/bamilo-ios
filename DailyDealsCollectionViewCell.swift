@@ -53,7 +53,7 @@ class DailyDealsCollectionViewCell: BaseCollectionViewCellSwift {
         self.brandLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorSecondaryGray1))
         self.discountedPriceLabel.applyStype(font: Theme.font(kFontVariationBold, size: 13), color: Theme.color(kColorGray1))
         self.bottomBadgeContainerView.backgroundColor = Theme.color(kColorGray10)
-        self.bottomBadgeLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorSecondaryGray1))
+        self.bottomBadgeLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 10), color: Theme.color(kColorSecondaryGray1))
         self.priceLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorSecondaryGray1))
         
         //setting constraints
@@ -63,7 +63,7 @@ class DailyDealsCollectionViewCell: BaseCollectionViewCellSwift {
         self.titleHeightConstraint.constant = DailyDealsCollectionViewCell.labelSmallHeight
         self.brandlabelHeightConstraint.constant = DailyDealsCollectionViewCell.labelBigHeight
         self.brandBottomConstraint.constant = DailyDealsCollectionViewCell.whiteSpaceHeigt
-        self.priceHeightConstraint.constant = DailyDealsCollectionViewCell.labelSmallHeight
+        self.priceHeightConstraint.constant = DailyDealsCollectionViewCell.labelBigHeight
         self.discountedPriceHeightConstraint.constant = DailyDealsCollectionViewCell.labelBigHeight
     }
     
@@ -98,7 +98,7 @@ class DailyDealsCollectionViewCell: BaseCollectionViewCellSwift {
     }
     
     static func cellHeight(relateTo width: CGFloat) -> CGFloat {
-        let contentWithoudImageHeight = 2 * imagePadding + 2 * labelSmallHeight + 2 * labelBigHeight + whiteSpaceHeigt + 8
+        let contentWithoudImageHeight = 2 * imagePadding + labelSmallHeight + 3 * labelBigHeight + whiteSpaceHeigt + 8
         let imageSidePadding = 2 * imagePadding
         let imageRatio:CGFloat = 1.25
         return (width - imageSidePadding) * imageRatio + contentWithoudImageHeight

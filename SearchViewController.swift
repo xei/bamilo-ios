@@ -107,7 +107,7 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
     //MARK: - UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = self.tableView.dequeueReusableHeaderFooterView(withIdentifier: PlainTableViewHeaderCell.nibName()) as! PlainTableViewHeaderCell
-        if let searchString = self.searchTextField.text, searchString.count > 0 {
+        if let searchString = self.suggestion?.query, searchString.count > 0 {
             isRecentView = true
             headerView.titleString = section == 0 ? "\(searchString) \(STRING_IN) \(STRING_CATEGORIES)".forceRTL() : STRING_PRODUCTS
         } else {
@@ -178,7 +178,7 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
         if indexPath.section == 0 {
             if let categories = self.suggestion?.categories {
                 let selectedCat = categories[indexPath.row]
-                if let searchQuery = searchTextField.text, searchQuery.count > 0, let catName = selectedCat.name {
+                if let searchQuery = self.suggestion?.query, searchQuery.count > 0, let catName = selectedCat.name {
                     selectedCat.name = "\(searchQuery) \(STRING_IN) \(catName)"
                 }
                 self.localSavedSuggestion.add(category: selectedCat)
@@ -253,7 +253,7 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
         if let searchSuggestion = data as? SearchSuggestion {
             self.suggestion = searchSuggestion
         } else {
-            self.suggestion = self.localSavedSuggestion.load()
+            self.suggestion = nil
         }
         ThreadManager.execute(onMainThread: {
             self.tableView.reloadData()

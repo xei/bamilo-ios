@@ -36,7 +36,7 @@ class LocalSearchSuggestion {
             category.name = catItem.name
             category.target = catItem.target
             return category
-        })
+        }).reversed()
         
         convertSuggestion.products = suggestoins.filter { $0.type == "product"}.map({ (productItem) -> Product in
             let product = Product()
@@ -44,13 +44,14 @@ class LocalSearchSuggestion {
             product.target = productItem.target
             product.imageUrl = URL(string: productItem.imageUrl ?? "")
             return product
-        })
+        }).reversed()
+        
         convertSuggestion.searchQueries = suggestoins.filter { $0.type == "searchQuery" }.map({ (searchItem) -> SearchSuggestionItem in
             let searchQuery = SearchSuggestionItem()
             searchQuery.name = searchItem.name
             searchQuery.target = searchItem.target
             return searchQuery
-        })
+        }).reversed()
         
         return convertSuggestion
     }
