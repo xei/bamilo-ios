@@ -360,9 +360,9 @@ withCampaignTargetString:(NSString*)campaignTargetString
 
 #pragma mark - JATopTabViewDelegate
 
-- (void)selectedIndex:(NSInteger)index animated:(BOOL)animated
-{
+- (void)selectedIndex:(NSInteger)index animated:(BOOL)animated {
     self.campaignIndex = index;
+    
     JACampaignPageView* campaignPageView = [self.campaignPages objectAtIndex:index];
     [self.scrollView scrollRectToVisible:campaignPageView.frame animated:animated];
     if (NO == campaignPageView.isLoaded) {

@@ -129,7 +129,7 @@
 
     if (SYSTEM_VERSION_GREATER_THAN(@"9.0")) {
         
-        if (SYSTEM_VERSION_GREATER_THAN(@"10.0")) {
+        if (SYSTEM_VERSION_GREATER_THAN(@"11.0")) {
             myImage = [UIImage imageNamed:@"left_btn_back"]; //set your backbutton imagename
             backButtonImage = [myImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         }

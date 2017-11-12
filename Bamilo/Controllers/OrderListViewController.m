@@ -84,8 +84,8 @@
     }
     return _emptyOrderHistoryImageView;
 }
-// --- endof Legacy views
 
+// --- endof Legacy views
 - (OrderList *)list {
     if (!_list) {
         _list = [[OrderList alloc] init];
@@ -104,8 +104,8 @@
     [self.tableview registerNib:[UINib nibWithNibName:[OrderListTableViewCell nibName] bundle:nil] forCellReuseIdentifier: [OrderListTableViewCell nibName]];
     
     
-//    // This will remove extra separators from tableview
-//    self.tableview.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    // This will remove extra separators from tableview
+    self.tableview.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     [self.emptyListMessageLabel applyStyle:[Theme font:kFontVariationRegular size:15] color:[UIColor blackColor]];
     self.emptyListMessageLabel.text = STRING_NO_ORDERS_TITLE;

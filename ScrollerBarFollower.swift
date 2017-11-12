@@ -126,9 +126,9 @@ import UIKit
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        let scrollViewCanBeHide = scrollView.contentOffset.y > self.delay + self.distance
         if !decelerate || scrollView != self.followingScrollView {
-            self.barIsHidding ? self.hideBar(animated: true) : self.resetBarFrame(animated: true)
-            
+            self.barIsHidding && scrollViewCanBeHide ? self.hideBar(animated: true) : self.resetBarFrame(animated: true)
         }
     }
 }

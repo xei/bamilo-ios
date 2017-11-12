@@ -226,7 +226,7 @@ class HomePageViewController:   BaseViewController,
                     spotLightView = TourSpotLightView(frame: UIScreen.main.bounds, spotlight: [profileSpotLight])
                     spotLightView?.enableContinueLabel = true
                     spotLightView?.tourName = feature
-                    spotLightView?.textLabelFont = Theme.font(kFontVariationBold, size: 14)
+                    spotLightView?.textLabelFont = Theme.font(kFontVariationBold, size: 16)
                     spotLightView?.continueLabelFont = Theme.font(kFontVariationBold, size: 16)
                     spotLightView?.continueLabelText = STRING_GOT_IT
                     spotLightView?.delegate = self

@@ -30,7 +30,11 @@ class HomePageSliderTableViewCell: BaseHomePageTeaserBoxTableViewCell, FSPagerVi
         }
     }
     
-    @IBOutlet weak var sliderPager: FSPageControl!
+    @IBOutlet weak var sliderPager: FSPageControl! {
+        didSet{
+            self.sliderPager.transform = CGAffineTransform(scaleX: -1, y: 1)
+        }
+    }
     @IBOutlet private weak var pagerView: FSPagerView! {
         didSet {
             self.pagerView.register(FSPagerViewCell.self, forCellWithReuseIdentifier: "cell")
@@ -38,6 +42,8 @@ class HomePageSliderTableViewCell: BaseHomePageTeaserBoxTableViewCell, FSPagerVi
             self.pagerView.dataSource = self
             self.pagerView.delegate = self
             self.pagerView.isInfinite = true
+            
+            self.pagerView.transform = CGAffineTransform(scaleX: -1, y: 1)
         }
     }
     
@@ -89,6 +95,7 @@ class HomePageSliderTableViewCell: BaseHomePageTeaserBoxTableViewCell, FSPagerVi
         cell.contentView.layer.shadowOffset = CGSize(width:1 , height: 2)
         cell.contentView.layer.shadowRadius = 1
         cell.contentView.clipsToBounds = false
+        cell.transform = CGAffineTransform(scaleX: -1, y: 1)
         
         cell.imageView?.contentMode = .scaleAspectFill
         return cell

@@ -127,6 +127,11 @@ import SwiftyJSON
         if let navTitle = self.navBarTitle {
             self.title = navTitle
         }
+        
+        self.navBarScrollFollower?.resumeFollowing()
+        self.tabBarScrollFollower?.resumeFollowing()
+        self.searchBarScrollFollower?.resumeFollowing()
+        
         self.navBarBlurView = self.navigationController?.navigationBar.addBlurView()
         self.navBarBlurView?.alpha = 0
     }
@@ -155,6 +160,10 @@ import SwiftyJSON
 
         //reset all states of tabbar and navBar, status bar
         self.resetBarFollowers(animated:true)
+        
+        self.navBarScrollFollower?.pauseFollowing()
+        self.tabBarScrollFollower?.pauseFollowing()
+        self.searchBarScrollFollower?.pauseFollowing()
         
         self.setNavigationBarAlpha(alpha: 0, animated: true)
         self.navBarBlurView?.removeFromSuperview()
@@ -444,6 +453,8 @@ import SwiftyJSON
             } else {
                 self.showNoResultView()
             }
+            
+            self.resetBarFollowers(animated: true)
         }
         self.loadAvaiableSubCategories()
     }

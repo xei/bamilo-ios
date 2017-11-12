@@ -84,10 +84,10 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
             if (product.seller ?? "").count > 0 {
                 productInfo += "\n\(STRING_SELLER): \(product.seller ?? "")"
             }
-            if productPrice > 0 {
-                let formattedPrice = "\(productPrice)".formatPriceWithCurrency()
-                productInfo += "\n\(STRING_PRICE): \(formattedPrice)"
-            }
+//            if productPrice > 0 {
+//                let formattedPrice = "\(productPrice)".formatPriceWithCurrency()
+//                productInfo += "\n\(STRING_PRICE): \(formattedPrice)"
+//            }
             if let size = product.size {
                 productInfo += "\n\(STRING_SIZE): \(size)".convertTo(language: .arabic)
             }
