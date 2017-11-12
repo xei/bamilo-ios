@@ -24,7 +24,7 @@ struct ProfileViewDataModel {
 }
 
 
-class ProfileViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, DataServiceProtocol, MFMailComposeViewControllerDelegate, TourPresentor, TourSpotLightViewDelegate {
+class ProfileViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, DataServiceProtocol, MFMailComposeViewControllerDelegate, TourPresenter, TourSpotLightViewDelegate {
 
     @IBOutlet private weak var tableView: UITableView!
     
@@ -54,7 +54,7 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         self.tableView.reloadData()
         
         //start tour if it's necessary
-        TourManager.shared.onBoard(presentor: self)
+        TourManager.shared.onBoard(presenter: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -274,7 +274,7 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         ViewControllerManager.sharedInstance().clearCache()
     }
     
-    //MARK: - DataTrackerProtocol & TourPresentor
+    //MARK: - DataTrackerProtocol & TourPresenter
     override func getScreenName() -> String! {
         return "ProfileView"
     }
@@ -302,7 +302,7 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         spotLightView?.start()
     }
     
-    func doOnBoarding(featureName: String, handler: @escaping (String, TourPresentor) -> Void) {
+    func doOnBoarding(featureName: String, handler: @escaping (String, TourPresenter) -> Void) {
         if featureName == TourNames.ItemTrackings {
             if spotLightView == nil {
                 if let orderTrackingCell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 1)) {

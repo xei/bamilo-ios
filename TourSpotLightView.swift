@@ -30,7 +30,6 @@ class TourSpotLightView: UIView {
     private static let kMaxContinueBtnSpacing: CGFloat = 18
     private static let kEnableContinueLabel = false
     private static let kEnableSkipButton = false
-    private static let kEnableArrowDown = false
     private static let kShowAllSpotlightsAtOnce = false
     private static let kTextLabelFont = UIFont.systemFont(ofSize: 20.0)
     private static let kContinueLabelHeight: CGFloat = 40
@@ -55,7 +54,6 @@ class TourSpotLightView: UIView {
     var continueSpacing : CGFloat = kMaxContinueBtnSpacing
     var enableContinueLabel = kEnableContinueLabel
     var enableSkipButton = kEnableSkipButton
-    var enableArrowDown = kEnableArrowDown
     var textLabelFont = kTextLabelFont
     var showAllSpotlightsAtOnce = kShowAllSpotlightsAtOnce
     
@@ -254,10 +252,8 @@ class TourSpotLightView: UIView {
     
     private func calculateTextPositionAndSizeWithSpotlight(spotlight: TourSpotLight) {
         textLabel.frame = CGRect(x: 0, y: 0, width: maxLabelWidth, height: 0)
-        textLabel.attributedText = spotlight.showedText
-        if enableArrowDown && currentIndex == 0 {
-            labelSpacing += 18
-        }
+        textLabel.attributedText = spotlight.attributedText
+    
         textLabel.sizeToFit()
         let rect = calculateRectWithMarginForSpotlight(spotlight)
         var y = rect.origin.y + rect.size.height + labelSpacing

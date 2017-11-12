@@ -8,9 +8,9 @@
 
 import UIKit
 
-typealias TourPresentingHandler = (_ feature: String, _ presentor: TourPresentor) -> Void
+typealias TourPresentingHandler = (_ feature: String, _ presenter: TourPresenter) -> Void
 
-@objc protocol TourPresentor {
+@objc protocol TourPresenter {
     func doOnBoarding(featureName: String, handler: @escaping TourPresentingHandler)
     func getScreenName() -> String!
 }
@@ -18,27 +18,26 @@ typealias TourPresentingHandler = (_ feature: String, _ presentor: TourPresentor
 @objc class TourManager: NSObject {
     
     static let shared = TourManager()
-    let dict:[String:String] = ["key":"Hello"]
-    
+
     private let defaults: UserDefaults = UserDefaults.standard
     private let featuresConfig = AppUtility.getInfoConfigs(for: "Tour") as? [String: [String]]
     
-    func onBoard(presentor: TourPresentor) {
-        if let featureID = self.avaiableFeature(for: presentor) {
-            presentor.doOnBoarding(featureName: featureID, handler: presentorHandler(feature:presentor:))
+    func onBoard(presenter: TourPresenter) {
+        if let featureID = self.avaiableFeature(for: presenter) {
+            presenter.doOnBoarding(featureName: featureID, handler: presenterHandler(feature:presenter:))
         }
     }
     
-    func presentorHandler(feature: String, presentor: TourPresentor) {
-        if let screenName = presentor.getScreenName() {
+    func presenterHandler(feature: String, presenter: TourPresenter) {
+        if let screenName = presenter.getScreenName() {
             defaults.set(true, forKey: getFeatureID(screenName: screenName, featureName: feature))
             defaults.synchronize()
-            self.onBoard(presentor: presentor) //for more posible features on this presentor
+            self.onBoard(presenter: presenter) //for more possible features on this presenter
         }
     }
     
-    func checkPresented(feature: String, presentor: TourPresentor) -> Bool {
-        if let screenName = presentor.getScreenName() {
+    func checkPresented(feature: String, presenter: TourPresenter) -> Bool {
+        if let screenName = presenter.getScreenName() {
             return defaults.bool(forKey: self.getFeatureID(screenName: screenName, featureName: feature))
         }
         return false
@@ -48,9 +47,9 @@ typealias TourPresentingHandler = (_ feature: String, _ presentor: TourPresentor
         return "\(screenName)+\(featureName)"
     }
     
-    private func avaiableFeature(for presentor: TourPresentor) -> String? {
-        if let features = featuresConfig?[presentor.getScreenName()] {
-            return features.filter({ !self.checkPresented(feature: $0, presentor: presentor) }).first
+    private func avaiableFeature(for presenter: TourPresenter) -> String? {
+        if let features = featuresConfig?[presenter.getScreenName()] {
+            return features.filter({ !self.checkPresented(feature: $0, presenter: presenter) }).first
         }
         return nil
     }

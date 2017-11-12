@@ -67,7 +67,7 @@ DEPENDENCIES:
   - Alamofire (~> 4.4)
   - AlamofireObjectMapper (~> 4.0)
   - AlgoliaSearch-Client
-  - Crashlytics (~> 3.8)
+  - Crashlytics (~> 3.9)
   - EmarsysPredictSDK
   - Fabric
   - FSPagerView
@@ -118,6 +118,6 @@ SPEC CHECKSUMS:
   TBActionSheet: f1c95530f81b41b6dd75d9f653331e953fb3c7f5
   TTRangeSlider: 2f2ce4a33b32bb323c6575b9f5161c4664459c58
 
-PODFILE CHECKSUM: a8b2885f125b4d714cbdc239ce3625840603dbad
+PODFILE CHECKSUM: 5bdfd50327b4bdaaf8a2cedd38564611b447a4fc
 
-COCOAPODS: 1.4.0.beta.2
+COCOAPODS: 1.2.1

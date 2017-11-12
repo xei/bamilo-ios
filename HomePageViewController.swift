@@ -18,7 +18,7 @@ class HomePageViewController:   BaseViewController,
                                 DataServiceProtocol,
                                 UITableViewDelegate,
                                 BaseHomePageTeaserBoxTableViewCellDelegate,
-                                TourPresentor,
+                                TourPresenter,
                                 TourSpotLightViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
@@ -59,7 +59,7 @@ class HomePageViewController:   BaseViewController,
         }
         
         //start tour if it's necessary
-        TourManager.shared.onBoard(presentor: self)
+        TourManager.shared.onBoard(presenter: self)
     }
     
     func handleRefresh() {
@@ -241,12 +241,12 @@ class HomePageViewController:   BaseViewController,
         spotLightView?.start()
     }
     
-    //MARK: - TourPresentor
+    //MARK: - TourPresenter
     override func getScreenName() -> String! {
         return "HomePage"
     }
     
-    func doOnBoarding(featureName: String, handler: @escaping (String, TourPresentor) -> Void) {
+    func doOnBoarding(featureName: String, handler: @escaping (String, TourPresenter) -> Void) {
         if featureName == TourNames.ItemTrackings {
             setupSpotlight(feature: featureName)
             self.tourHandler = handler
