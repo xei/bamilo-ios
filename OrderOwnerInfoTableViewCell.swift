@@ -40,7 +40,7 @@ class OrderOwnerInfoTableViewCell: BaseTableViewCell {
     
     override func update(withModel model: Any!) {
         if let order = model as? OrderItem {
-            if let name = order.customerFirstName, let lastName = order.customerLastName {
+            if let name = order.shippingAddress?.firstName, let lastName = order.shippingAddress?.lastName {
                 self.orderOwnerNameLabel.text = "\(name) \(lastName)".forceRTL()
             }
             

@@ -103,6 +103,9 @@
 }
 
 + (NSString*)getURLStringforType:(NSString*)type node:(NSString*)node {
+    if ([type isEqualToString:@"external_link"]) {
+        return node;
+    }
     NSString* urlString = [NSString stringWithFormat:@"%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION];
     return [NSString stringWithFormat:@"%@%@", urlString, [RITarget getRelativeUrlForType:type node:node]];
 }

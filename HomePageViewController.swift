@@ -60,6 +60,12 @@ class HomePageViewController:   BaseViewController,
         
         //start tour if it's necessary
         TourManager.shared.onBoard(presenter: self)
+        
+        if #available(iOS 11.0, *) {
+            self.tableView.contentInsetAdjustmentBehavior = .never
+        } else {
+            // Fallback on earlier versions
+        }
     }
     
     func handleRefresh() {

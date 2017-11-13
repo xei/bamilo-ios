@@ -207,6 +207,11 @@ import SwiftyJSON
                             newIndexPathes.append(IndexPath(item: newIndex, section: 0))
                             self.catalogData?.products.insert(receivedCatalogData.products[index], at: newIndex)
                         }
+                        
+                        if let totalProducts = receivedCatalogData.totalProductsCount, let updateVisibleProductCount = self.catalogData?.products.count, totalProducts <= updateVisibleProductCount {
+                            self.listFullyLoaded = true
+                        }
+                        
                         self.collectionView.performBatchUpdates({
                             self.collectionView.insertItems(at: newIndexPathes)
                         }, completion: {(finished) in
@@ -486,6 +491,7 @@ import SwiftyJSON
             if errorMessages == nil {
                 self.bind(data, forRequestId: 1)
             } else {
+                self.loadingDataInProgress = false
 //                Utility.handleError(error: errorMessages, viewController: self)
             }
         }
@@ -563,7 +569,9 @@ import SwiftyJSON
         let bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height
         if (bottomEdge >= (scrollView.contentSize.height - paginationThresholdPoint)) {
             // we are approaching at the end of scrollview
-            self.loadMore()
+            if !self.listFullyLoaded {
+                self.loadMore()
+            }
         }
         
         if (scrollView.contentOffset.y < productCountViewHeight) {

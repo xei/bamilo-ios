@@ -102,14 +102,19 @@ class LocalSearchSuggestion {
         }
         
         if let searchQuery = searchQuery {
-            let target = RITarget.getTarget(.CATALOG_SEARCH, node: searchQuery)
+            let trimedString = searchQuery.trimmingCharacters(in: .whitespacesAndNewlines)
+            if trimedString.count == 0 {
+                return
+            }
+            
+            let target = RITarget.getTarget(.CATALOG_SEARCH, node: trimedString)
             if let searchTarget = target?.targetString {
                 let privousCategory = suggestoins.filter { $0.type == "searchQuery"}
                 let repeatedSearchQuery = privousCategory.filter{ $0.target == searchTarget }
                 if repeatedSearchQuery.count > 0 { return }
                 
                 let convertedSuggestion = SearchSuggestionItem()
-                convertedSuggestion.name = searchQuery
+                convertedSuggestion.name = trimedString
                 convertedSuggestion.target = searchTarget
                 convertedSuggestion.type = "searchQuery"
                 

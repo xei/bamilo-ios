@@ -279,36 +279,20 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         return "ProfileView"
     }
     
-    private func setupSpotlight(feature: String) {
-        if spotLightView == nil {
-            if let tabItemView = MainTabBarViewController.getTabbarItemView(rootViewClassType: ProfileViewController.self) {
-                if let tabItemFrame = tabItemView.superview?.convert(tabItemView.frame, to: nil) {
-                    let profileSpotLight = TourSpotLight(withRect: tabItemFrame, shape: .circle, text: STRING_ITEM_TRACKING_HINT_1, margin: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
-                    spotLightView = TourSpotLightView(frame: UIScreen.main.bounds, spotlight: [profileSpotLight])
-                    spotLightView?.enableContinueLabel = true
-                    spotLightView?.tourName = feature
-                    spotLightView?.textLabelFont = Theme.font(kFontVariationBold, size: 14)
-                    spotLightView?.continueLabelFont = Theme.font(kFontVariationBold, size: 16)
-                    spotLightView?.continueLabelText = STRING_GOT_IT
-                    spotLightView?.delegate = self
-                }
-            }
-        }
-        
-        let window = UIApplication.shared.keyWindow!
-        if let view = spotLightView {
-            window.addSubview(view)
-        }
-        spotLightView?.start()
-    }
-    
     func doOnBoarding(featureName: String, handler: @escaping (String, TourPresenter) -> Void) {
         if featureName == TourNames.ItemTrackings {
             if spotLightView == nil {
                 if let orderTrackingCell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 1)) {
-                    let cellRect = self.tableView.convert(orderTrackingCell.frame, to: nil)
-                    let cellRectInSuperView = self.tableView.convert(cellRect, to: tableView.superview)
-                    let orderSpotLight = TourSpotLight(withRect: cellRectInSuperView, shape: .roundRectangle, text: STRING_ITEM_TRACKING_HINT_2)
+                    var cellRect = self.tableView.convert(orderTrackingCell.frame, to: self.tableView.superview)
+                    
+                    //TODO: temprory code for this release!!!
+                    let IS_IPHONE = UIDevice.current.userInterfaceIdiom == .phone
+                    let IS_IPHONE_X = IS_IPHONE && Int(UIScreen.main.bounds.size.height) == 812
+                    if IS_IPHONE_X {
+                        cellRect.origin.y += 25
+                    }
+                    
+                    let orderSpotLight = TourSpotLight(withRect: cellRect, shape: .roundRectangle, text: STRING_ITEM_TRACKING_HINT_2)
                     spotLightView = TourSpotLightView(frame: UIScreen.main.bounds, spotlight: [orderSpotLight])
                     spotLightView?.enableContinueLabel = true
                     spotLightView?.tourName = featureName

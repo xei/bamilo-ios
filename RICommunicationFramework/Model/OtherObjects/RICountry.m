@@ -14,28 +14,8 @@
 #pragma mark - Requests
 
 + (NSString*)getCountriesWithSuccessBlock:(void (^)(id countries))successBlock
-                          andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
-{
+                          andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock {
     NSString *countryListURL;
-//_UNS
-//    if([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
-//    {
-//        countryListURL = RI_COUNTRIES_URL_JUMIA;
-//    }
-//    else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
-//    {
-//        countryListURL = RI_COUNTRIES_URL_DARAZ;
-//    }
-//#if defined(STAGING) && STAGING
-//    if([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
-//    {
-//        countryListURL = RI_COUNTRIES_URL_JUMIA_STAGING;
-//    }
-//    else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
-//    {
-//        countryListURL = RI_COUNTRIES_URL_DARAZ_STAGING;
-//    }
-//#endif
     return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:countryListURL]
                                                              parameters:nil
                                                              httpMethod:HttpVerbGET
@@ -44,29 +24,23 @@
                                                      userAgentInjection:nil
                                                            successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                                
-                                                               if (VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary))
-                                                               {
+                                                               if (VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary)) {
                                                                    NSDictionary *metadataObject = [jsonObject objectForKey:@"metadata"];
                                                                    NSArray *countriesArray = [RICountry parseCountriesWithJson:metadataObject];
                                                                    
-                                                                   if(VALID_NOTEMPTY(countriesArray, NSArray))
-                                                                   {
+                                                                   if(VALID_NOTEMPTY(countriesArray, NSArray)) {
                                                                        successBlock(countriesArray);
-                                                                   } else
-                                                                   {
+                                                                   } else {
                                                                        failureBlock(apiResponse, nil);
                                                                    }
                                                                }
                                                            } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
-                                                               if(NOTEMPTY(errorJsonObject))
-                                                               {
+                                                               if(NOTEMPTY(errorJsonObject)) {
                                                                    failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
-                                                               } else if(NOTEMPTY(errorObject))
-                                                               {
+                                                               } else if(NOTEMPTY(errorObject)) {
                                                                    NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
                                                                    failureBlock(apiResponse, errorArray);
-                                                               } else
-                                                               {
+                                                               } else {
                                                                    failureBlock(apiResponse, nil);
                                                                }
                                                            }];
@@ -75,8 +49,7 @@
 + (NSString *)loadCountryConfigurationForCountry:(NSString*)countryUrl
                               userAgentInjection:(NSString*)userAgentInjection
                                 withSuccessBlock:(void (^)(RICountryConfiguration *configuration))successBlock
-                                 andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
-{
+                                 andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock {
     return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", countryUrl, RI_API_VERSION, RI_API_COUNTRY_CONFIGURATION]]
                                                              parameters:nil
                                                              httpMethod:HttpVerbPOST
@@ -84,16 +57,12 @@
                                                               cacheTime:RIURLCacheNoTime
                                                      userAgentInjection:userAgentInjection
                                                            successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-                                                               
                                                                if ([jsonObject objectForKey:@"metadata"]) {
                                                                    RICountryConfiguration *config = [RICountryConfiguration parseCountryConfiguration:[jsonObject objectForKey:@"metadata"]];
-                                                                   
                                                                    successBlock(config);
                                                                } else {
-                                                                   
                                                                    failureBlock(apiResponse, nil);
                                                                }
-                                                               
                                                            } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
                                                                
                                                                if(NOTEMPTY(errorJsonObject)) {
@@ -107,12 +76,9 @@
                                                            }];
 }
 
-+ (NSString *)getCountryConfigurationWithSuccessBlock:(void (^)(RICountryConfiguration *configuration))successBlock
-                                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock {
++ (NSString *)getCountryConfigurationWithSuccessBlock:(void (^)(RICountryConfiguration *configuration))successBlock andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock {
     NSString *operationID = nil;
-    
     NSArray *configuration = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICountryConfiguration class])];
-    
     if (VALID_NOTEMPTY(configuration, NSArray)) {
         successBlock([configuration firstObject]);
     } else {
@@ -120,7 +86,6 @@
             successBlock(configuration);
         } andFailureBlock:failureBlock];
     }
-    
     return operationID;
 }
 
@@ -153,28 +118,6 @@
             }
         }
     }
-    
-    //INSERTING INTEGRATION MOBILE
-    //*****************
-//    NSMutableDictionary* integrationDict = [NSMutableDictionary new];
-//    
-//    [integrationDict setObject:@"MA" forKey:@"country_iso"];
-//    [integrationDict setObject:@"http://www.jumia.com/images/mobapi/flag_morocco.png" forKey:@"flag"];
-//    [integrationDict setObject:[NSNumber numberWithBool:0] forKey:@"force_files"];
-//    [integrationDict setObject:@"Integration Mobile Maroc" forKey:@"name"];
-//    [integrationDict setObject:@"integration-mobile-www.jumia.ma/mobapi/" forKey:@"url"];
-//    
-//    NSMutableDictionary* mapFiles = [NSMutableDictionary new];
-//    [mapFiles setObject:@"http://www.jumia.com/images/mobapi/map_hdpi_ma.png" forKey:@"hdpi"];
-//    [mapFiles setObject:@"http://www.jumia.com/images/mobapi/map_mdpi_ma.png" forKey:@"mdpi"];
-//    [mapFiles setObject:@"http://www.jumia.com/images/mobapi/map_xhdpi_ma.png" forKey:@"xdpi"];
-//    
-//    [integrationDict setObject:mapFiles forKey:@"map_files"];
-//    
-//    RICountry *country = [RICountry parseCountryWithJson:integrationDict];
-//    [countriesArray addObject:country];
-    //*****************
-    
     return [countriesArray copy];
 }
 
@@ -214,19 +157,13 @@
     }
     
     if ([jsonObject objectForKey:@"url"]) {
-        if([[jsonObject objectForKey:@"url"] rangeOfString:@"http://"].location == NSNotFound && [[jsonObject objectForKey:@"url"] rangeOfString:@"https://"].location == NSNotFound)
-        {
-            if(country.forceHttps)
-            {
+        if([[jsonObject objectForKey:@"url"] rangeOfString:@"http://"].location == NSNotFound && [[jsonObject objectForKey:@"url"] rangeOfString:@"https://"].location == NSNotFound) {
+            if(country.forceHttps) {
                 country.url = [NSString stringWithFormat:@"%@%@", @"https://", [jsonObject objectForKey:@"url"]];
-            }
-            else
-            {
+            } else {
                 country.url = [NSString stringWithFormat:@"%@%@", @"http://", [jsonObject objectForKey:@"url"]];
             }
-        }
-        else
-        {
+        } else {
             country.url = [jsonObject objectForKey:@"url"];
         }
     }
@@ -270,8 +207,7 @@
 }
 
 + (NSString *)getCountryPhonePrefixesWithSuccessBlock:(void (^)(NSArray *prefixes))successBlock
-                                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
-{
+                                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock {
     return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_GET_PHONE_PREFIXES]]
                                                              parameters:nil
                                                              httpMethod:HttpVerbPOST
@@ -309,8 +245,7 @@
 }
 
 + (NSString *)getCountryFaqAndTermsWithSuccessBlock:(void (^)(NSArray *faqAndTerms))successBlock
-                                     andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
-{
+                                     andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock {
     return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_GET_FAQ_AND_TERMS]]
                                                              parameters:nil
                                                          httpMethod:HttpVerbPOST

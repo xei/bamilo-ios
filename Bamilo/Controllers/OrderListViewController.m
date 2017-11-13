@@ -118,9 +118,13 @@
     [self.refreshControl addTarget:self action:@selector(resetContentAndRefresh) forControlEvents:UIControlEventValueChanged];
     [self.tableview addSubview:self.refreshControl];
     
-    //Get data for this list
-    [self getPage:1 callBack:nil];
     [self.tableview sizeToFit];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    
+    //Get data for this list
+    [self resetContentAndRefresh];
 }
 
 - (void) showLoading {

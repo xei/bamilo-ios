@@ -24,12 +24,7 @@
 #define kPasswordMargin 16.f
 #define kIconToTextFieldMargin 10.f
 
-@interface JAUserDataViewController ()
-<
-    JADynamicFormDelegate,
-    JAPickerDelegate,
-    JADatePickerDelegate
-> {
+@interface JAUserDataViewController ()< JADynamicFormDelegate, JAPickerDelegate, JADatePickerDelegate > {
     UIView *_firstResponder;
     UIImageView *_userIconView;
 }
@@ -66,14 +61,9 @@
 
 @implementation JAUserDataViewController
 
-- (UIScrollView *)mainScrollView
-{
+- (UIScrollView *)mainScrollView {
     if (!VALID(_mainScrollView, UIScrollView)) {
-        _mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(
-                                                                         0,
-                                                                         self.viewBounds.origin.y,
-                                                                         self.viewBounds.size.width,
-                                                                         self.viewBounds.size.height)];
+        _mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.viewBounds.origin.y, self.viewBounds.size.width, self.viewBounds.size.height)];
         [_mainScrollView setShowsHorizontalScrollIndicator:NO];
         [_mainScrollView setShowsVerticalScrollIndicator:NO];
         [_mainScrollView setContentSize:_mainScrollView.bounds.size];
@@ -84,21 +74,15 @@
     return _mainScrollView;
 }
 
-- (JAProductInfoHeaderLine *)personalDataHeader
-{
+- (JAProductInfoHeaderLine *)personalDataHeader {
     if (!VALID_NOTEMPTY(_personalDataHeader, JAProductInfoHeaderLine)) {
-        _personalDataHeader = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(
-                                                                                        0,
-                                                                                        0,
-                                                                                        self.viewBounds.size.width,
-                                                                                        kProductInfoHeaderLineHeight)];
+        _personalDataHeader = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake( 0, 0, self.viewBounds.size.width, kProductInfoHeaderLineHeight)];
         [_personalDataHeader setTitle:[STRING_YOUR_PERSONAL_DATA uppercaseString]];
     }
     return _personalDataHeader;
 }
 
-- (JABottomBar *)saveButton
-{
+- (JABottomBar *)saveButton {
     if (!VALID_NOTEMPTY(_saveButton, JABottomBar)) {
         _saveButton = [[JABottomBar alloc] initWithFrame:CGRectMake(
                                                                     kSideMargin,
@@ -110,21 +94,15 @@
     return _saveButton;
 }
 
-- (JAProductInfoHeaderLine *)passwordHeader
-{
+- (JAProductInfoHeaderLine *)passwordHeader {
     if (!VALID_NOTEMPTY(_passwordHeader, JAProductInfoHeaderLine)) {
-        _passwordHeader = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(
-                                                                                    0,
-                                                                                    0,
-                                                                                    self.viewBounds.size.width,
-                                                                                    kProductInfoHeaderLineHeight)];
+        _passwordHeader = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, 0, self.viewBounds.size.width, kProductInfoHeaderLineHeight)];
         [_passwordHeader setTitle:[STRING_PASSWORD uppercaseString]];
     }
     return _passwordHeader;
 }
 
-- (JABottomBar *)changePasswordButton
-{
+- (JABottomBar *)changePasswordButton {
     if (!VALID_NOTEMPTY(_changePasswordButton, JABottomBar)) {
         _changePasswordButton = [[JABottomBar alloc] initWithFrame:CGRectMake(
                                                                     kSideMargin,
@@ -147,81 +125,55 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     if (self.apiResponse == RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess) {
         [self showLoading];
     }
-    
     [self.view setBackgroundColor:[UIColor whiteColor]];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
                                                  name:UIKeyboardWillShowNotification
                                                object:nil];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(hideKeyboard)
-                                                 name:kOpenMenuNotification
-                                               object:nil];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideKeyboard) name:kOpenMenuNotification object:nil];
     self.apiResponse = RIApiResponseSuccess;
     self.isOpeningPicker = NO;
-    
     [self.view addSubview:self.mainScrollView];
     
     //requests user form and when it is finished
     //requests change pass form
     [self requestUserEditForm];
-    
     [self publishScreenLoadTime];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [self setupFixedElements];
-    [self hideKeyboard];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"UserData"];
-}
-
--(void)viewWillDisappear:(BOOL)animated
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void)onOrientationChanged
-{
-    [super onOrientationChanged];
-    
-    [self closePickers];
-    [self setupUserEditFormViews];
-    [self setupChangePasswordFormViews];
-    [self setupFixedElements];
     
     if (RI_IS_RTL) {
         [self.view flipAllSubviews];
     }
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self setupFixedElements];
+    [self hideKeyboard];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"UserData"];
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 #pragma mark actions
-- (void)requestUserEditForm
-{
+- (void)requestUserEditForm {
+    [self showLoading];
     [RIForm getForm:@"edit"
        successBlock:^(RIForm *form) {
            self.userForm = [[JADynamicForm alloc] initWithForm:form
@@ -239,6 +191,11 @@
            [self setupUserEditFormViews];
            [self requestChangePasswordForm];
            [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
+           
+           if (RI_IS_RTL) {
+               [self.mainScrollView flipAllSubviews];
+           }
+           [self hideLoading];
        } failureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
            self.apiResponse = apiResponse;
            [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(requestUserEditForm) objects:nil];
@@ -246,18 +203,15 @@
        }];
 }
 
-- (void)requestChangePasswordForm
-{
+- (void)requestChangePasswordForm {
     if (!([RICustomer checkIfUserIsLoggedAsGuest])) {
-        
-        [RIForm getForm:@"change_password" successBlock:^(RIForm *form)
-         {
+        [self showLoading];
+        [RIForm getForm:@"change_password" successBlock:^(RIForm *form) {
              self.changePasswordForm = [[JADynamicForm alloc] initWithForm:form
                                                           startingPosition:CGRectGetMaxY(self.passwordHeader.frame) + kPasswordMargin
                                                                  widthSize:self.mainScrollView.width - (kSideMargin * 2)
                                                         hasFieldNavigation:YES];
              self.changePasswordForm.delegate = self;
-             
              for (UIView *view in self.changePasswordForm.formViews) {
                  [self.changePasswordView addSubview:view];
              }
@@ -269,6 +223,9 @@
              [self setupChangePasswordFormViews];
              [self setupFixedElements];
              [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
+            
+            [self.changePasswordView flipAllSubviews];
+            [self hideLoading];
          } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
              self.apiResponse = apiResponse;
              [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(requestUserEditForm) objects:nil];
@@ -278,8 +235,7 @@
         [self setupFixedElements];
 }
 
-- (void)saveButtonPressed
-{
+- (void)saveButtonPressed {
     [self showLoading];
     [self hideKeyboard];
     
@@ -315,8 +271,7 @@
     }];
 }
 
-- (void)trackCustumerDataUpdated:(RICustomer*)customer
-{
+- (void)trackCustumerDataUpdated:(RICustomer*)customer {
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:customer.customerId forKey:kRIEventLabelKey];
     [trackingDictionary setValue:@"UserInfoUpdated" forKey:kRIEventActionKey];
@@ -339,8 +294,7 @@
 
 }
 
-- (void)changePasswordButtonPressed
-{
+- (void)changePasswordButtonPressed {
     [self showLoading];
     [self hideKeyboard];
     
@@ -373,8 +327,7 @@
 }
 
 #pragma mark geometryFunctions
-- (void)setupUserEditFormViews
-{
+- (void)setupUserEditFormViews {
     [self.mainScrollView setWidth:self.viewBounds.size.width];
     [self.personalDataHeader setWidth:self.mainScrollView.width];
     
@@ -418,8 +371,7 @@
     [self.saveButton setY:maxY + kButtonsMargin];
 }
 
-- (void)setupChangePasswordFormViews
-{
+- (void)setupChangePasswordFormViews {
     CGFloat maxY = CGRectGetMaxY(self.saveButton.frame);
     [self.changePasswordView setFrame:CGRectMake(0.f, maxY, self.mainScrollView.width, 0.f)];
     
@@ -439,36 +391,21 @@
     [self.changePasswordView setHeight:CGRectGetMaxY(self.changePasswordButton.frame)];
 }
 
-- (void)setupFixedElements
-{
-    [self.mainScrollView setFrame:CGRectMake(0,
-                                             self.viewBounds.origin.y,
-                                             self.viewBounds.size.width,
-                                             self.viewBounds.size.height)];
-    
-    CGSize size = CGSizeMake(self.mainScrollView.width,
-                             CGRectGetMaxY(self.changePasswordView.frame) + 6.f);
-    
+- (void)setupFixedElements {
+    [self.mainScrollView setFrame:CGRectMake(0, self.viewBounds.origin.y, self.viewBounds.size.width, self.viewBounds.size.height)];
+    CGSize size = CGSizeMake(self.mainScrollView.width, CGRectGetMaxY(self.changePasswordView.frame) + 6.f);
     if (!VALID_NOTEMPTY(self.changePasswordForm, JADynamicForm)) {
-        size = CGSizeMake(self.mainScrollView.width,
-                          CGRectGetMaxY(self.saveButton.frame) + 6.f);
+        size = CGSizeMake(self.mainScrollView.width, CGRectGetMaxY(self.saveButton.frame) + 6.f);
     }
     
     [self.mainScrollView setContentSize:size];
-    
     self.mainScrollViewInitialRect = self.mainScrollView.frame;
-    
     [self.saveButton setWidth:self.mainScrollView.width - (kSideMargin * 2)];
     [self.changePasswordButton setWidth:self.mainScrollView.width - (kSideMargin * 2)];
-    
-    if (RI_IS_RTL) {
-        [self.view flipAllSubviews];
-    }
 }
 
 #pragma mark - Done button
-- (IBAction)doneClicked:(id)sender
-{
+- (IBAction)doneClicked:(id)sender {
     [self.view endEditing:YES];
 }
 

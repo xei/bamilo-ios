@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -21,12 +22,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" image="launch_screen_logo" translatesAutoresizingMaskIntoConstraints="NO" id="PGO-nd-ckW">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" image="launch_screen_logo" translatesAutoresizingMaskIntoConstraints="NO" id="PGO-nd-ckW">
                                 <rect key="frame" x="57" y="302" width="261" height="62"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="PGO-nd-ckW" secondAttribute="height" multiplier="261:62" id="U7P-By-1Xl"/>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="261" id="YqL-Q0-hyB"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="right" secondItem="PGO-nd-ckW" secondAttribute="right" constant="57" id="3WQ-5C-56w"/>
+                            <constraint firstItem="PGO-nd-ckW" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="8fQ-Gd-gTF"/>
+                            <constraint firstItem="PGO-nd-ckW" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="P0R-9b-fcI"/>
+                        </constraints>
                     </view>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                 </viewController>

@@ -97,18 +97,17 @@ import UIKit
     
     //return a cgfloat value between 0 and 1 to show the precentage of progress
     @discardableResult func scrollViewDidScroll(_ scrollView: UIScrollView) -> CGFloat {
-        if !self.shouldFollower || scrollView != self.followingScrollView { return 0 }
+        if scrollView != self.followingScrollView { return 0 }
+        let scrollChanage =  scrollView.contentOffset.y - self.lastContentOffset
+        self.lastContentOffset = scrollView.contentOffset.y
         
+        if !self.shouldFollower || scrollView != self.followingScrollView { return 0 }
         if scrollView.contentOffset.y < self.delay {
             self.resetBarFrame(animated: false)
-            self.lastContentOffset = scrollView.contentOffset.y
             return 0
         }
         
-        let scrollChanage =  scrollView.contentOffset.y - self.lastContentOffset
         let bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height;
-        
-        self.lastContentOffset = scrollView.contentOffset.y
         if bottomEdge >= (scrollView.contentSize.height - 50) && scrollChanage < 0 && scrollView.contentSize.height > scrollView.frame.height {
             // we are approaching at the end of scrollview
             return 0
