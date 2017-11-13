@@ -531,25 +531,17 @@ static NSString *recommendationLogic = @"RELATED";
         self.bundleSingleItemsArray = [NSMutableArray new];
 
         for(int i= 0; i<self.productBundle.bundleProducts.count; i++) {
-
             RIProduct *bundleProduct = [self.productBundle.bundleProducts objectAtIndex:i];
-
             JAPDVBundleSingleItem* bundleSingleItem = [JAPDVBundleSingleItem getNewPDVBundleSingleItem];
-
             bundleSingleItem.selectedProduct.tag = i;
-
             NSString* checkmarkImageName = @"selectionCheckmark";
             if (0 == i) {
                 checkmarkImageName = @"selectionCheckmarkDisabled";
             }
             [bundleSingleItem.selectedProduct setImage:[UIImage imageNamed:@"noSelectionCheckMark"] forState:UIControlStateNormal];
             [bundleSingleItem.selectedProduct setImage:[UIImage imageNamed:checkmarkImageName] forState:UIControlStateSelected];
-
             [self.bundleSingleItemsArray addObject:bundleSingleItem];
-
-            [bundleSingleItem.selectedProduct addTarget:self
-                                                 action:@selector(checkBundle:)
-                                       forControlEvents:UIControlEventTouchUpInside];
+            [bundleSingleItem.selectedProduct addTarget:self action:@selector(checkBundle:) forControlEvents:UIControlEventTouchUpInside];
 
             CGRect tempFrame = bundleSingleItem.frame;
             tempFrame.origin.x = bundleSingleItemStart;
@@ -591,12 +583,9 @@ static NSString *recommendationLogic = @"RELATED";
                 }
             }
             bundleSingleItem.selected = isSelected;
-
             [bundleSingleItem bringSubviewToFront:bundleSingleItem.selectedProduct];
-
             bundleSingleItemStart += bundleSingleItem.frame.size.width + 5.0f;
         }
-
 
         self.bundleLayout = [[JAPDVBundles alloc] initWithFrame:CGRectMake(0, scrollViewY, self.mainScrollView.width, 300) withSize:NO];
 
@@ -605,21 +594,15 @@ static NSString *recommendationLogic = @"RELATED";
         } else {
             [self.bundleLayout setHeaderText:[STRING_COMBOS uppercaseString]];
         }
-
         for (JAPDVBundleSingleItem* singleItem in self.bundleSingleItemsArray) {
             [self.bundleLayout addBundleItemView:singleItem];
         }
-
         self.bundleLayout.frame = CGRectMake(6.0f, scrollViewY, self.bundleLayout.frame.size.width, self.bundleLayout.frame.size.height);
-
         [self.mainScrollView addSubview:self.bundleLayout];
         [self.bundleLayout addBuyingBundleTarget:self action:@selector(goToBundlesScreen)];
-
         self.bundleLayout.frame = CGRectMake(.0f, scrollViewY, self.bundleLayout.frame.size.width, self.bundleLayout.frame.size.height);
         [self.mainScrollView addSubview:self.bundleLayout];
-
         scrollViewY += (self.bundleLayout.frame.size.height);
-
     }
 
 
@@ -641,7 +624,6 @@ static NSString *recommendationLogic = @"RELATED";
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"FirtTimeProductDetailPage"];
             [[NSUserDefaults standardUserDefaults] synchronize];
         }
-        
         //################ when product is fully loaded & rendered
         [EmarsysPredictManager sendTransactionsOf:self];
     }
@@ -666,7 +648,6 @@ static NSString *recommendationLogic = @"RELATED";
 
     if (VALID_NOTEMPTY(tempProduct.targetString, NSString)) {
         [userInfo setObject:tempProduct.targetString forKey:@"targetString"];
-
         if (VALID_NOTEMPTY(tempProduct.richRelevanceParameter, NSString)) {
             [userInfo setObject:tempProduct.richRelevanceParameter forKey:@"richRelevance"];
         }
@@ -683,8 +664,7 @@ static NSString *recommendationLogic = @"RELATED";
 }
 
 - (void)showSeller {
-    [self.mainScrollView setContentOffset:CGPointMake(0, self.productInfoSection.frame.origin.y + [self.productInfoSection getSellerInfoYPosition])
-                                 animated:YES];
+    [self.mainScrollView setContentOffset:CGPointMake(0, self.productInfoSection.frame.origin.y + [self.productInfoSection getSellerInfoYPosition]) animated:YES];
 }
 
 - (void)goToSellerCatalog {
@@ -701,16 +681,12 @@ static NSString *recommendationLogic = @"RELATED";
 
 - (void)goToSellerLink {
     NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];
-
     if(VALID_NOTEMPTY(self.product.seller, RISeller)) {
         if ([self.product.seller isGlobal]) {
             [userInfo setObject:self.product.seller.linkTextGlobal forKey:@"title"];
             [userInfo setObject:self.product.seller.linkTargetStringGlobal forKey:@"targetString"];
             [userInfo setObject:STRING_BACK forKey:@"show_back_button_title"];
-
-            [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithShopUrlNofication
-                                                                object:nil
-                                                              userInfo:userInfo];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithShopUrlNofication object:nil userInfo:userInfo];
         }
     }
 }
@@ -806,11 +782,7 @@ static NSString *recommendationLogic = @"RELATED";
     };
 
     if (UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
-        CGRect sharePopoverRect = CGRectMake(self.ctaView.frame.size.width,
-                                             self.ctaView.frame.size.height / 2,
-                                             0.0f,
-                                             0.0f);
-
+        CGRect sharePopoverRect = CGRectMake(self.ctaView.frame.size.width, self.ctaView.frame.size.height / 2, 0.0f, 0.0f);
         UIPopoverController* popoverController =
         [[UIPopoverController alloc] initWithContentViewController:activityController];
         [popoverController presentPopoverFromRect:sharePopoverRect inView:self.ctaView permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
@@ -831,11 +803,9 @@ static NSString *recommendationLogic = @"RELATED";
         [self showSizePicker];
     } else {
         //[self showLoading];
-
         if (!self.currentSimple && self.product.productSimples.count == 1) {
             self.currentSimple = [self.product.productSimples firstObject];
         }
-
         [DataAggregator addProductToCart:self simpleSku:self.currentSimple.sku completion:^(id data, NSError *error) {
             if(error == nil) {
                 [self bind:data forRequestId:0];
@@ -872,7 +842,6 @@ static NSString *recommendationLogic = @"RELATED";
                 //EVENT: ADD TO CART
                 [TrackerManager postEventWithSelector:[EventSelectors addToCartEventSelector]
                                            attributes:[EventAttributes addToCardWithProduct:self.product screenName:[self getScreenName] success:NO]];
-
                 [self onErrorResponse:error.code messages:[error.userInfo objectForKey:kErrorMessages] showAsMessage:YES selector:@selector(addToCart) objects:nil];
                 //[self hideLoading];
             }
@@ -887,13 +856,9 @@ static NSString *recommendationLogic = @"RELATED";
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if(buttonIndex ==0) {
-
-    } else {
+    if(buttonIndex ==0) {} else {
         [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
-
             [self trackingEventCallToOrder];
-
             NSString *phoneNumber = [@"tel://" stringByAppendingString:[JAUtils convertToEnglishNumber:configuration.phoneNumber]];//tessa
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {

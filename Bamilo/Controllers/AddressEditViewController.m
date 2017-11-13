@@ -32,35 +32,26 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = STRING_ADDRESS;
     [self setupView];
-
-    //custom back button to behave customly
-    self.navigationItem.hidesBackButton = YES;
 }
 
 
 - (void)setNavigationBarConfigs {
     self.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName: [Theme font:kFontVariationRegular size:13],
                                                NSForegroundColorAttributeName: [UIColor whiteColor]};
-    //To change back button icon
-    UIImage *myImage = [UIImage imageNamed:@"btn_back"]; //set your backbutton imagename
-    UIImage *backButtonImage = [myImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    
     //To remove navBar bottom border
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setShadowImage:[UIImage new]];
-    
-    // now use the new backButtomImage
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] init];
-    backButton.image = backButtonImage;
-    backButton.target = self;
-    backButton.action = @selector(backAction);
-    
     self.navigationController.navigationBar.tintColor = [UIColor clearColor];
-    self.navigationItem.backBarButtonItem = backButton;
-    
+     
     //To set navigation bar background color
     self.navigationController.navigationBar.barTintColor = [Theme color:kColorExtraDarkBlue];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    
+    
+    //custom back button to behave customly
+    self.navigationItem.hidesBackButton = YES;
+    UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"btn_back"] style:UIBarButtonItemStylePlain target:self action: self.comesFromEmptyList ? @selector(twoStepBackNavigation): @selector(backAction)];
+    self.navigationItem.leftBarButtonItem = newBackButton;
 }
 
 - (void)backAction {

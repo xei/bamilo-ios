@@ -80,7 +80,7 @@
         [_flowLayout registerClass:[JACollectionSeparator class] forDecorationViewOfKind:@"horizontalSeparator"];
         [_flowLayout registerClass:[JACollectionSeparator class] forDecorationViewOfKind:@"verticalSeparator"];
         
-        //                                              top, left, bottom, right
+        //top, left, bottom, right
         [self.flowLayout setSectionInset:UIEdgeInsetsMake(0.f, 0.0, 0.0, 0.0)];
         self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
     }
@@ -143,8 +143,6 @@
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     [self collectionView];
-
-    
     [self.emptyViewContainer setFrame:self.collectionView.frame];
 }
 
@@ -157,10 +155,8 @@
 #pragma mark - Load Data
 - (void)loadProducts {
     [LoadingManager showLoading];
-    [RIProduct getFavoriteProductsForPage:self.currentPage.integerValue+1 maxItems:self.maxPerPage.integerValue SuccessBlock:^(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages) {
-        
+    [RIProduct getFavoriteProductsForPage:self.currentPage.integerValue + 1 maxItems:self.maxPerPage.integerValue SuccessBlock:^(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages) {
         if (favoriteProducts.count > 0) {
-            
             if (currentPage == totalPages) {
                 self.lastPage = YES;
             }
@@ -174,7 +170,7 @@
             }
             self.chosenSimples = [NSMutableDictionary new];
             [self reloadData];
-            self.currentPage = [NSNumber numberWithInteger:self.currentPage.integerValue+1];
+            self.currentPage = [NSNumber numberWithInteger:self.currentPage.integerValue + 1];
             [self publishScreenLoadTime];
         } else {
             self.productsDictionary = nil;

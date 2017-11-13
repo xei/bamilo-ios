@@ -14,8 +14,10 @@
 @property (weak, nonatomic) IBOutlet UIImageView *icon;
 @property (assign, nonatomic) BOOL hasIcon;
 
--(void) showErrorMsg:(NSString *)errorMsg;
--(void) clearError;
--(void) updateDropDownAppearance:(BOOL)isHidden;
+- (void)showErrorMsg:(NSString *)errorMsg;
+- (void)clearError;
+- (void)updateDropDownAppearance:(BOOL)isHidden;
+- (void)showDisabledMode;
+- (void)resetSeperator;
 
 @end

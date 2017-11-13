@@ -203,7 +203,9 @@
                 self.emptyListMessageView.hidden = NO;
             }
             [self.tableview reloadData];
-            self.tableview.tableFooterView = nil;
+            
+            // This will remove extra separators from tableview
+            self.tableview.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
         }];
     }
 }

@@ -41,6 +41,7 @@
 
 #pragma mark - AddressTableViewControllerDelegate
 - (BOOL)addressSelected:(Address *)address {
+    return NO; // for now
     if(_currentAddress.uid == address.uid) {
         return NO;
     }

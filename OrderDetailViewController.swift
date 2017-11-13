@@ -36,7 +36,6 @@ class OrderDetailViewController: BaseViewController, OrderDetailTableViewCellDel
                 }
             }
         }
-        self.hidesBottomBarWhenPushed = true
     }
     
     override func viewWillAppear(_ animated: Bool) {

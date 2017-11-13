@@ -115,6 +115,7 @@
 
 - (void)setModel:(FormItemModel *)model {
     _model = model;
+    [self.input resetSeperator];
     
     //update UI
     self.input.icon.image = model.icon;
@@ -135,17 +136,19 @@
     } else {
         self.input.textField.text = nil;
     }
-    
+
     if (model.selectOption) {
         self.type = InputTextFieldControlTypeOptions;
         //when we have only one option!
         if (model.selectOption.count == 1) {
             model.inputTextValue = model.selectOption.allKeys.firstObject;
             self.input.textField.enabled = NO;
+            [self.input showDisabledMode];
         }
     } else if (self.type == InputTextFieldControlTypeOptions) {
         //When we have no selectOption model but it's `Option` type
         self.input.textField.enabled = NO;
+        [self.input showDisabledMode];
     }
     
     if (model.lastErrorMessage.length) {

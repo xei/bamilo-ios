@@ -136,20 +136,9 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>12</string>
+	<string>13</string>
 	<key>Configs</key>
 	<dict>
-		<key>Tour</key>
-		<dict>
-			<key>HomePage</key>
-			<array>
-				<string>ItemTrackings</string>
-			</array>
-			<key>ProfileView</key>
-			<array>
-				<string>ItemTrackings</string>
-			</array>
-		</dict>
 		<key>API_BaseUrl</key>
 		<string>http://staging.bamilo.com/mobapi/</string>
 		<key>API_Version</key>
@@ -167,6 +156,17 @@
 		<string>UA-52004541-5</string>
 		<key>Pushwoosh_BETA</key>
 		<string>1</string>
+		<key>Tour</key>
+		<dict>
+			<key>HomePage</key>
+			<array>
+				<string>ItemTrackings</string>
+			</array>
+			<key>ProfileView</key>
+			<array>
+				<string>ItemTrackings</string>
+			</array>
+		</dict>
 	</dict>
 	<key>Fabric</key>
 	<dict>
