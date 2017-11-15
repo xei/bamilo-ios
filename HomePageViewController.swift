@@ -32,6 +32,7 @@ class HomePageViewController:   BaseViewController,
     private var refreshControl: UIRefreshControl?
     private var spotLightView: TourSpotLightView?
     private var tourHandler: TourPresentingHandler?
+    private var isRefreshing: Bool = false
     
     private let cellTypeMapper: [HomePageTeaserType: String] = [
         .slider: HomePageSliderTableViewCell.nibName(),
@@ -69,8 +70,10 @@ class HomePageViewController:   BaseViewController,
     }
     
     func handleRefresh() {
+        self.isRefreshing = true
         self.getHomePage {
             self.refreshControl?.endRefreshing()
+            self.isRefreshing = false
         }
     }
     
@@ -85,8 +88,10 @@ class HomePageViewController:   BaseViewController,
         super.viewWillDisappear(animated)
         
         //To prevent refresh control to be visible (and it's gap) for the next time
-        self.refreshControl?.endRefreshing()
-        self.tableView.reloadData()
+        if self.isRefreshing {
+            self.refreshControl?.endRefreshing()
+            self.tableView.reloadData()
+        }
     }
     
     private func getHomePage(callBack: (()->Void)? = nil) {

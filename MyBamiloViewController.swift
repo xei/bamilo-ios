@@ -75,8 +75,10 @@ class MyBamiloViewController:   BaseViewController,
         self.collectionView.killScroll()
         
         //To prevent refresh control to be visible (and it's gap) for the next time
-        self.refreshControl?.endRefreshing()
-        self.collectionView.reloadData()
+        if self.isRefreshing {
+            self.refreshControl?.endRefreshing()
+            self.collectionView.reloadData()
+        }
     }
     
     func handleRefresh() {
