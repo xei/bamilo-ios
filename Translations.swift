@@ -79,4 +79,4 @@ let STRING_OUT_OF_STOCK = RILocalizationWrapper.localizedString("out_of_stock")!
 let STRING_GOT_IT = RILocalizationWrapper.localizedString("got_it")!
 let STRING_ITEM_TRACKING_HINT_1 = RILocalizationWrapper.localizedString("item_tracking_hint_1")!
 let STRING_ITEM_TRACKING_HINT_2 = RILocalizationWrapper.localizedString("item_tracking_hint_2")!
-
+let STRING_BAMILO_RECOMMENDATION = RILocalizationWrapper.localizedString("bamilo_recommendations")!

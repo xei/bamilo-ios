@@ -40,7 +40,6 @@
 #import "AuthenticationDataManager.h"
 #import "EmarsysPredictProtocol.h"
 #import "EmarsysPredictManager.h"
-#import "RecommendItem.h"
 #import "InputTextFieldControl.h"
 
 #import "BaseControlView.h"

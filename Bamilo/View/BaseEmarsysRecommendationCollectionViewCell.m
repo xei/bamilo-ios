@@ -8,7 +8,7 @@
 
 #import "BaseEmarsysRecommendationCollectionViewCell.h"
 #import "ImageManager.h"
-#import "RecommendItem.h"
+#import "Bamilo-Swift.h"
 
 @interface BaseEmarsysRecommendationCollectionViewCell()
 
@@ -47,7 +47,7 @@
     [self.brandLabel setText:item.brandName];
     [self.discountedPriceLabel setText:item.formattedDiscountedPrice];
     self.priceLabel.attributedText = (NSAttributedString *)[item.formattedPrice struckThroughText];
-    if ([item.price isEqualToString:item.dicountedPrice]) {
+    if (item.price == item.dicountedPrice) {
         [self.priceLabel setHidden:YES];
     } else {
         [self.priceLabel setHidden:NO];

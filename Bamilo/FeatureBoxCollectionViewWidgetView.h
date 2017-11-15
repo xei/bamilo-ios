@@ -7,12 +7,10 @@
 //
 
 #import "FeatureBoxWidgetView.h"
-#import "RecommendItem.h"
 
 @protocol FeatureBoxCollectionViewWidgetViewDelegate<NSObject>
-
+- (void)moreButtonTappedInWidgetView:(id)widgetView; //self type
 - (void)selectFeatureItem:(NSObject *)item widgetBox:(id)widgetBox;
-
 @end
 
 @interface FeatureBoxCollectionViewWidgetView : FeatureBoxWidgetView <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>

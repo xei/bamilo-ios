@@ -43,7 +43,6 @@
 #import "ViewControllerManager.h"
 #import "EmarsysPredictManager.h"
 #import "CartDataManager.h"
-#import "RecommendItem.h"
 #import "NSArray+Extension.h"
 #import "EmarsysRecommendationGridWidgetView.h"
 #import "ThreadManager.h"
@@ -88,7 +87,7 @@ typedef void (^ProcessActionBlock)(void);
 
 @property (strong, nonatomic) UIPopoverController *currentPopoverController;
 @property (strong, nonatomic) RICart *cart;
-
+@property (strong, nonatomic) NSArray<RecommendItem *> *recommendItems;
 @end
 
 static NSString *recommendationLogic = @"RELATED";
@@ -1667,7 +1666,7 @@ static NSString *recommendationLogic = @"RELATED";
 
 - (NSArray<EMRecommendationRequest *> *)getRecommendations {
     EMRecommendationRequest *recommend = [EMRecommendationRequest requestWithLogic:recommendationLogic];
-    recommend.limit = 4;
+    recommend.limit = 100;
     recommend.completionHandler = ^(EMRecommendationResult *_Nonnull result) {
         [self renderRecommendations:result];
     };
@@ -1675,26 +1674,26 @@ static NSString *recommendationLogic = @"RELATED";
 }
 
 - (void)renderRecommendations:(EMRecommendationResult *)result {
-    NSArray<RecommendItem *> *recommendItems = [result.products map:^id(EMRecommendationItem *item) {
-        return [RecommendItem instanceWithEMRecommendationItem:item];
+    self.recommendItems = [result.products map:^id(EMRecommendationItem *item) {
+        return [[RecommendItem alloc] initWithItem:item];
     }];
-    
+    NSArray<RecommendItem *>* renderingItems = [self.recommendItems subarrayWithRange:NSMakeRange(0, 6)];
     if(_recommendationView == nil) {
         _recommendationView = [EmarsysRecommendationGridWidgetView nibInstance];
         _recommendationView.delegate = self;
         
-        [_recommendationView setHeight:[EmarsysRecommendationGridWidgetView preferredHeightWithContentModel:recommendItems boundWidth:self.mainScrollView.width]];
-        [_recommendationView updateTitle:STRING_BAMILO_RECOMMENDATION];
+        [_recommendationView setHeight:[EmarsysRecommendationGridWidgetView preferredHeightWithContentModel:renderingItems boundWidth:self.mainScrollView.width]];
+        [_recommendationView updateTitle:STRING_BAMILO_RECOMMENDATION_FOR_YOU];
         [_recommendationView setWidgetBacgkround:JABlack300Color];
         [ThreadManager executeOnMainThread:^{
             [_recommendationView setFrame:CGRectMake(0, self.mainScrollView.contentSize.height, self.mainScrollView.width, _recommendationView.height)];
             [self.mainScrollView addSubview:_recommendationView];
             [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.width, self.mainScrollView.contentSize.height + _recommendationView.height)];
-            [_recommendationView updateWithModel:recommendItems];
+            [_recommendationView updateWithModel:renderingItems];
         }];
     } else {
         [ThreadManager executeOnMainThread:^{
-            [_recommendationView updateWithModel:recommendItems];
+            [_recommendationView updateWithModel:renderingItems];
         }];
     }
 }
@@ -1707,6 +1706,12 @@ static NSString *recommendationLogic = @"RELATED";
                                                             object: nil
                                                           userInfo: @{@"sku": ((RecommendItem *)item).sku}];
     }
+}
+
+- (void)moreButtonTappedInWidgetView:(id)widgetView {
+    AllRecommendationViewController *viewCtrl = (AllRecommendationViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"AllRecommendationViewController" resetCache:YES];
+    viewCtrl.recommendItems = self.recommendItems;
+    [self.navigationController pushViewController:viewCtrl animated:YES];
 }
 
 #pragma mark - hide tabbar in this view controller

@@ -26,6 +26,7 @@
 @property (nonatomic, weak) IBOutlet UILabel *descLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
 @property (weak, nonatomic) IBOutlet UIButton *orderListButton;
+@property (strong, nonatomic) NSArray<RecommendItem *>* recommendedProducts;
 @end
 
 @implementation SuccessPaymentViewController
@@ -38,7 +39,7 @@
     [self.carouselWidget setBackgroundColor:[Theme color:kColorVeryLightGray]];
     self.carouselWidget.delegate = self;
     [self setupView];
-    [self.carouselWidget updateTitle:STRING_BAMILO_RECOMMENDATION];
+    [self.carouselWidget updateTitle:STRING_BAMILO_RECOMMENDATION_FOR_YOU];
     
     //Reset the shared Cart entities
     [RICart sharedInstance].cartEntity.cartItems = @[];
@@ -113,19 +114,23 @@
 - (NSArray<EMRecommendationRequest *> *)getRecommendations {
     NSString *recommendationLogic = self.cart.cartEntity.cartCount.integerValue == 1 ? @"ALSO_BOUGHT" : @"PERSONAL"; //Production requirement
     EMRecommendationRequest *recommend = [EMRecommendationRequest requestWithLogic: recommendationLogic];
-    recommend.limit = 15;
+    recommend.limit = 100;
     recommend.completionHandler = ^(EMRecommendationResult *_Nonnull result) {
         if (!result.products.count) return;
         [ThreadManager executeOnMainThread:^{
             [self.carouselWidget fadeIn:0.15];
-            [self.carouselWidget updateWithModel:[result.products map:^id(EMRecommendationItem *item) {
-                return [RecommendItem instanceWithEMRecommendationItem:item];
-            }]];
+            self.recommendedProducts = [result.products map:^id(EMRecommendationItem *item) {
+                return [[RecommendItem alloc] initWithItem:item];
+            }];
+            [self.carouselWidget updateWithModel: [self.recommendedProducts subarrayWithRange:NSMakeRange(0, 15)]];
         }];
     };
     return @[recommend];
 }
 
+- (void)moreButtonTappedInWidgetView:(id)widgetView {
+    [self performSegueWithIdentifier:@"showAllRecommendationView" sender:nil];
+}
 
 
 #pragma mark - DataTrackerProtocol
@@ -158,5 +163,11 @@
     return YES;
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString: @"showAllRecommendationView"]) {
+        AllRecommendationViewController *viewCtrl = (AllRecommendationViewController *) [segue destinationViewController];
+        viewCtrl.recommendItems = self.recommendedProducts;
+    }
+}
 
 @end

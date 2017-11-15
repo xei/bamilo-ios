@@ -15,21 +15,10 @@ class MyBamiloRecommendItem: RecommendItem {
     var topic: String?
     
     static func instance(with recItem: EMRecommendationItem, topic: String?, identifier: String?) -> Self? {
-        let item = self.instance(with: recItem)
+        let item = self.init(JSON: recItem.data)  //self.instance(with: recItem)
         item?.id = identifier
         item?.topic = topic
         return item
-    }
-    
-    func convertToProduct() -> Product {
-        let product = Product()
-        product.name = self.name
-        product.imageUrl = URL(string: self.imageUrl)
-        product.sku = self.sku
-        product.price = UInt64(self.price)
-        product.brand = self.brandName
-        product.specialPrice = UInt64(self.dicountedPrice)
-        return product
     }
 }
 

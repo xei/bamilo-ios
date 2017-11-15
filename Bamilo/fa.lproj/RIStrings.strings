@@ -849,7 +849,9 @@
 
 "already_logged_in" = "شما قبلا وارد سیستم شده اید";
 
-"bamilo_recommendation" = "پیشنهادهای بامیلو برای شما";
+"bamilo_recommendations" = "پیشنهادات بامیلو";
+
+"bamilo_recommendation_for_you" = "پیشنهادهای بامیلو برای شما";
 
 "send_ideas_and_reports" = "ارسال مشکلات و ایده‌ها";
 

@@ -24,6 +24,8 @@
 		61037CBE1EB72C7600A461E0 /* EmarsysMobileEngageTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 61037CBD1EB72C7600A461E0 /* EmarsysMobileEngageTracker.m */; };
 		6104C5CD1F5C24D300C0F5E3 /* ScrollerBarFollower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6104C5CC1F5C24D300C0F5E3 /* ScrollerBarFollower.swift */; };
 		610519421F370DA4004695BD /* DeliveryTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610519411F370DA4004695BD /* DeliveryTime.swift */; };
+		610BC28F1FBC419100A7C343 /* AllRecommendationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610BC28E1FBC419100A7C343 /* AllRecommendationViewController.swift */; };
+		610BC2911FBC5CBF00A7C343 /* RecommendItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610BC2901FBC5CBF00A7C343 /* RecommendItem.swift */; };
 		610C68A31EC74292008FB66C /* CatalogHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610C68A21EC74292008FB66C /* CatalogHeaderView.swift */; };
 		610C68A51EC742E3008FB66C /* CatalogHeaderControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610C68A41EC742E3008FB66C /* CatalogHeaderControl.swift */; };
 		610C68A71EC7442B008FB66C /* CatalogHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 610C68A61EC7442B008FB66C /* CatalogHeaderView.xib */; };
@@ -83,7 +85,6 @@
 		613FF2C11E4B3D1B008660CF /* Authentication.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 613FF2C01E4B3D1B008660CF /* Authentication.storyboard */; };
 		61420C921F9F03D3009D9ECD /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61420C911F9F03D3009D9ECD /* Utility.swift */; };
 		61432EC61E9B5DD7001F7930 /* BaseCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61432EC51E9B5DD7001F7930 /* BaseCollectionViewCell.m */; };
-		61432ECB1E9B60DE001F7930 /* RecommendItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 61432ECA1E9B60DE001F7930 /* RecommendItem.m */; };
 		6147F74B1FB6ED9E000CBA85 /* TourSpotLight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6147F74A1FB6ED9E000CBA85 /* TourSpotLight.swift */; };
 		6147F7511FB6EDEF000CBA85 /* TourSpotLightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6147F7501FB6EDEF000CBA85 /* TourSpotLightView.swift */; };
 		6147F7531FB73D31000CBA85 /* TourNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6147F7521FB73D31000CBA85 /* TourNames.swift */; };
@@ -993,6 +994,8 @@
 		61037CC31EB7416200A461E0 /* ScreenTrackingProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenTrackingProtocol.h; sourceTree = "<group>"; };
 		6104C5CC1F5C24D300C0F5E3 /* ScrollerBarFollower.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollerBarFollower.swift; sourceTree = "<group>"; };
 		610519411F370DA4004695BD /* DeliveryTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeliveryTime.swift; sourceTree = "<group>"; };
+		610BC28E1FBC419100A7C343 /* AllRecommendationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllRecommendationViewController.swift; sourceTree = "<group>"; };
+		610BC2901FBC5CBF00A7C343 /* RecommendItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendItem.swift; sourceTree = "<group>"; };
 		610C68A21EC74292008FB66C /* CatalogHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogHeaderView.swift; sourceTree = "<group>"; };
 		610C68A41EC742E3008FB66C /* CatalogHeaderControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogHeaderControl.swift; sourceTree = "<group>"; };
 		610C68A61EC7442B008FB66C /* CatalogHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CatalogHeaderView.xib; sourceTree = "<group>"; };
@@ -1077,8 +1080,6 @@
 		61420C911F9F03D3009D9ECD /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		61432EC41E9B5DD7001F7930 /* BaseCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseCollectionViewCell.h; sourceTree = "<group>"; };
 		61432EC51E9B5DD7001F7930 /* BaseCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseCollectionViewCell.m; sourceTree = "<group>"; };
-		61432EC91E9B60DE001F7930 /* RecommendItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecommendItem.h; sourceTree = "<group>"; };
-		61432ECA1E9B60DE001F7930 /* RecommendItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommendItem.m; sourceTree = "<group>"; };
 		6147F74A1FB6ED9E000CBA85 /* TourSpotLight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourSpotLight.swift; sourceTree = "<group>"; };
 		6147F7501FB6EDEF000CBA85 /* TourSpotLightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourSpotLightView.swift; sourceTree = "<group>"; };
 		6147F7521FB73D31000CBA85 /* TourNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourNames.swift; sourceTree = "<group>"; };
@@ -3091,6 +3092,7 @@
 				61CBA8851F691D05009F0EEF /* SearchViewController.swift */,
 				61B2C7F61F9C96B900930435 /* AccordionTableTableViewController.swift */,
 				615052D51FB0758600E67571 /* FailPaymentViewController.swift */,
+				610BC28E1FBC419100A7C343 /* AllRecommendationViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -3183,15 +3185,6 @@
 				61432EC51E9B5DD7001F7930 /* BaseCollectionViewCell.m */,
 			);
 			name = Base;
-			sourceTree = "<group>";
-		};
-		61432EC81E9B60BE001F7930 /* RecommendItem */ = {
-			isa = PBXGroup;
-			children = (
-				61432EC91E9B60DE001F7930 /* RecommendItem.h */,
-				61432ECA1E9B60DE001F7930 /* RecommendItem.m */,
-			);
-			name = RecommendItem;
 			sourceTree = "<group>";
 		};
 		6147F7471FB6ECF1000CBA85 /* TourSpotLightView */ = {
@@ -3375,6 +3368,7 @@
 				61CBA8871F695633009F0EEF /* SearchSuggestion.swift */,
 				61CBA8891F6959A9009F0EEF /* CategorySuggestion.swift */,
 				617585F81F8A088500D66541 /* Transformers.swift */,
+				610BC2901FBC5CBF00A7C343 /* RecommendItem.swift */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -6210,7 +6204,6 @@
 			children = (
 				8714E0621E47483B004C9B1D /* Base */,
 				877762C61E9BB36D00B73140 /* Data */,
-				61432EC81E9B60BE001F7930 /* RecommendItem */,
 				61036B6D1E65B6F2006E12A9 /* OrderGroup */,
 				617BBFDD1E6AD0A900A165AF /* FilterGroup */,
 				879F88071E50B8380033FE87 /* AddressList */,
@@ -8184,7 +8177,6 @@
 				875AD53F1E38C0C800584ABF /* RIConfiguration.m in Sources */,
 				9A1737331B68EBB0004905B4 /* JACheckoutBottomView.m in Sources */,
 				875AD56C1E38C0C900584ABF /* RIProductOffer.m in Sources */,
-				61432ECB1E9B60DE001F7930 /* RecommendItem.m in Sources */,
 				617F77AF1EB85BEC000A2A6C /* AddressDataManager.swift in Sources */,
 				CE9ADF3A1AB6D78200D56481 /* JAButtonCell.m in Sources */,
 				6157A3EE1F83865800B8D501 /* MyBamiloViewController.swift in Sources */,
@@ -8396,6 +8388,8 @@
 				CE9ADF9B1AB6D78200D56481 /* JACenterNavigationController.m in Sources */,
 				875AD5621E38C0C900584ABF /* RIHtmlShop.m in Sources */,
 				9AE766BF1CBBF01C00B63D8E /* JAEmptyCartView.m in Sources */,
+				610BC2911FBC5CBF00A7C343 /* RecommendItem.swift in Sources */,
+				610BC28F1FBC419100A7C343 /* AllRecommendationViewController.swift in Sources */,
 				61E534411FA48D2A00CBDFED /* ProgressBarItemView.swift in Sources */,
 				9AEF741C1CD27C1400A5D574 /* JACheckoutButton.m in Sources */,
 				616F7D121F6D172100085B64 /* IconTableViewCell.swift in Sources */,

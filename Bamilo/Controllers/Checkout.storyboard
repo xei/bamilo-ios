@@ -352,6 +352,7 @@
                         <outlet property="iconImageView" destination="aqz-cZ-E7n" id="2o5-ed-9jF"/>
                         <outlet property="orderListButton" destination="fcY-30-Vag" id="uLW-oi-gGC"/>
                         <outlet property="titleLabel" destination="Tr4-mC-OYm" id="Ftm-Cn-KHz"/>
+                        <segue destination="0hS-tr-b0v" kind="show" identifier="showAllRecommendationView" id="gaO-ue-DPo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="78b-NQ-EYb" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -364,7 +365,15 @@
                 <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="OrderListViewController" id="gww-nF-gX8" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rM7-CH-hzc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2886" y="-71"/>
+            <point key="canvasLocation" x="2860" y="-94"/>
+        </scene>
+        <!--AllRecommendationViewController-->
+        <scene sceneID="QJy-Zu-0bw">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="AllRecommendationViewController" id="0hS-tr-b0v" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jcJ-2Q-wQq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2911" y="-50"/>
         </scene>
     </scenes>
     <resources>

@@ -8,9 +8,11 @@
 
 #import "EmarsysRecommendationCarouselView.h"
 #import "EmarsysRecommendationCarouselCollectionViewCell.h"
+#import "Bamilo-Swift.h"
 
 @interface EmarsysRecommendationCarouselView()
 
+@property (weak, nonatomic) IBOutlet UIButton *moreButton;
 @property (weak, nonatomic) IBOutlet UILabel *carouselTitle;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
@@ -21,10 +23,12 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     [self setWidgetBacgkround:[UIColor clearColor]];
-    [self.carouselTitle applyStyle:[Theme font:kFontVariationBold size:11.0f] color:[UIColor blackColor]];
+    [self.carouselTitle applyStyle:[Theme font:kFontVariationBold size:12.0f] color:[UIColor blackColor]];
     [self.collectionView registerNib:[UINib nibWithNibName:[EmarsysRecommendationCarouselCollectionViewCell nibName] bundle:nil]
           forCellWithReuseIdentifier:[EmarsysRecommendationCarouselCollectionViewCell nibName]];
     [self.activityIndicator startAnimating];
+    [self.moreButton applyStyle:[Theme font:kFontVariationRegular size:11] color:[Theme color:kColorGray1]];
+    [self.moreButton setTitle:STRING_MORE forState:UIControlStateNormal];
 }
 
 - (void)updateWithModel:(NSArray *)arrayModel {
@@ -50,5 +54,12 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     return [EmarsysRecommendationCarouselCollectionViewCell preferedSize];
 }
+
+- (IBAction)moreButtonTapped:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(moreButtonTappedInWidgetView:)]) {
+        [self.delegate moreButtonTappedInWidgetView:self];
+    }
+}
+
 
 @end

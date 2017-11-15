@@ -8,6 +8,7 @@
 
 #import "EmarsysRecommendationMinimalCarouselWidget.h"
 #import "EmarsysRecommendationMinimalCarouselWidgetView.h"
+#import "Bamilo-Swift.h"
 
 @interface EmarsysRecommendationMinimalCarouselWidget()
 

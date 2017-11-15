@@ -63,7 +63,6 @@ class RequestManagerSwift {
                                 completion(self.map(statusCode: response.response?.statusCode), nil, self.prepareErrorMessages(messagesList: apiResponseData.messages!))
                             }
                         }
-                    
                         if(type == .foreground) {
                             LoadingManager.hideLoading()
                         }

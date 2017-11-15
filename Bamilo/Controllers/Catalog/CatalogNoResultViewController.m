@@ -14,7 +14,6 @@
 #import "EmarsysPredictManager.h"
 #import "EmarsysPredictProtocol.h"
 #import "NSArray+Extension.h"
-#import "RecommendItem.h"
 #import "ThreadManager.h"
 #import "Bamilo-Swift.h"
 
@@ -25,6 +24,8 @@
 @property (nonatomic, copy) NSString *searchTerm;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *carouselBottomConstraint;
 @property (strong, nonatomic) IBOutlet EmarsysRecommendationCarouselWidget *carouselWidget;
+
+@property (strong, nonatomic) NSArray<RecommendItem *>* recommendedProducts;
 @end
 
 @implementation CatalogNoResultViewController
@@ -34,7 +35,7 @@
     [self.carouselWidget setBackgroundColor:[Theme color:kColorVeryLightGray]];
     self.carouselWidget.delegate = self;
     
-    [self.carouselWidget updateTitle:STRING_BAMILO_RECOMMENDATION];
+    [self.carouselWidget updateTitle:STRING_BAMILO_RECOMMENDATION_FOR_YOU];
     
     [self.noResultMessageUILabel setFont: [UIFont fontWithName:kFontRegularName size:14]];
     [self.warningMessageUILabel setFont: [UIFont fontWithName:kFontLightName size:11]];
@@ -71,13 +72,14 @@
 
 - (NSArray<EMRecommendationRequest *> *)getRecommendations {
     EMRecommendationRequest *recommend = [EMRecommendationRequest requestWithLogic:@"PERSONAL"];
-    recommend.limit = 15;
+    recommend.limit = 100;
     recommend.completionHandler = ^(EMRecommendationResult *_Nonnull result) {
         [ThreadManager executeOnMainThread:^{
             [self.carouselWidget fadeIn:0.15];
-            [self.carouselWidget updateWithModel:[result.products map:^id(EMRecommendationItem *item) {
-                return [RecommendItem instanceWithEMRecommendationItem:item];
-            }]];
+            self.recommendedProducts = [result.products map:^id(EMRecommendationItem *item) {
+                return [[RecommendItem alloc] initWithItem:item];
+            }];
+            [self.carouselWidget updateWithModel: [self.recommendedProducts subarrayWithRange:NSMakeRange(0, 15)]];
         }];
     };
     
@@ -99,6 +101,17 @@
         [[NSNotificationCenter defaultCenter] postNotificationName: kDidSelectTeaserWithPDVUrlNofication
                                                             object: nil
                                                           userInfo: @{@"sku": ((RecommendItem *)item).sku}];
+    }
+}
+
+- (void)moreButtonTappedInWidgetView:(id)widgetView {
+    [self performSegueWithIdentifier:@"showAllRecommendationView" sender:nil];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString: @"showAllRecommendationView"]) {
+        AllRecommendationViewController *viewCtrl = (AllRecommendationViewController *) [segue destinationViewController];
+        viewCtrl.recommendItems = self.recommendedProducts;
     }
 }
 

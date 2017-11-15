@@ -93,7 +93,7 @@ class MyBamiloViewController:   BaseViewController,
             let recommendReq = EMRecommendationRequest.init(logic: "\(recommendationLogic)_\(i + 1)")
             recommendReq.limit = self.recommendationCountPerLogic
             
-            recommendReq.excludeItemsWhere("item", isIn: self.incomingDataSource.filterById(id: "\(recommendationLogic)_\(i + 1)").map { $0.sku })
+            recommendReq.excludeItemsWhere("item", isIn: self.incomingDataSource.filterById(id: "\(recommendationLogic)_\(i + 1)").map { $0.sku ?? "" })
             recommendReq.completionHandler = { receivedRecs in
                 self.processRecommandationResult(result: receivedRecs)
             }

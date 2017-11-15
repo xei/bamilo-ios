@@ -9,5 +9,4 @@
 #import "WidgetBaseView.h"
 
 @interface FeatureBoxWidgetView : WidgetBaseView
-
 @end

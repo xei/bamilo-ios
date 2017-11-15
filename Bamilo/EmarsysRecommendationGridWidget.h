@@ -9,5 +9,4 @@
 #import "FeatureBoxCollectionViewWidget.h"
 
 @interface EmarsysRecommendationGridWidget : FeatureBoxCollectionViewWidget
-
 @end
