@@ -45,8 +45,8 @@
     [self.imageView sd_setImageWithURL:[NSURL URLWithString:item.imageUrl] placeholderImage:[ImageManager defaultPlaceholder]];
     [self.titleLabel setText:item.name];
     [self.brandLabel setText:item.brandName];
-    [self.discountedPriceLabel setText:item.formattedPrice];
-    self.priceLabel.attributedText = (NSAttributedString *)[item.formattedDiscountedPrice struckThroughText];
+    [self.discountedPriceLabel setText:item.formattedDiscountedPrice];
+    self.priceLabel.attributedText = (NSAttributedString *)[item.formattedPrice struckThroughText];
     if ([item.price isEqualToString:item.dicountedPrice]) {
         [self.priceLabel setHidden:YES];
     } else {

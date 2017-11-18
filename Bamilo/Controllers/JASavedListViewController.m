@@ -80,7 +80,7 @@
         [_flowLayout registerClass:[JACollectionSeparator class] forDecorationViewOfKind:@"horizontalSeparator"];
         [_flowLayout registerClass:[JACollectionSeparator class] forDecorationViewOfKind:@"verticalSeparator"];
         
-        //                                              top, left, bottom, right
+        //top, left, bottom, right
         [self.flowLayout setSectionInset:UIEdgeInsetsMake(0.f, 0.0, 0.0, 0.0)];
         self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
     }
@@ -107,8 +107,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navBarLayout.showCartButton = NO;
-    self.navBarLayout.showSeparatorView = NO;
     [self.collectionView setBackgroundColor:[UIColor whiteColor]];
     [self.collectionView registerClass:[JARecentlyViewedCell class] forCellWithReuseIdentifier:@"CellWithLines"];
     
@@ -145,8 +143,6 @@
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     [self collectionView];
-
-    
     [self.emptyViewContainer setFrame:self.collectionView.frame];
 }
 
@@ -159,14 +155,12 @@
 #pragma mark - Load Data
 - (void)loadProducts {
     [LoadingManager showLoading];
-    [RIProduct getFavoriteProductsForPage:self.currentPage.integerValue+1 maxItems:self.maxPerPage.integerValue SuccessBlock:^(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages) {
-        
+    [RIProduct getFavoriteProductsForPage:self.currentPage.integerValue + 1 maxItems:self.maxPerPage.integerValue SuccessBlock:^(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages) {
         if (favoriteProducts.count > 0) {
-            
-            if (currentPage == totalPages) {
-                self.lastPage = YES;
+            self.lastPage = currentPage == totalPages;
+            if (self.currentPage.integerValue == 0) {
+                [self.productsArray removeAllObjects];
             }
-            [self.productsArray removeAllObjects];
             for (RIProduct *product in favoriteProducts) {
                 if ([self.productsArray containsObject:product.sku]) {
                     [self.productsArray removeObject:product.sku];
@@ -176,7 +170,7 @@
             }
             self.chosenSimples = [NSMutableDictionary new];
             [self reloadData];
-            self.currentPage = [NSNumber numberWithInteger:self.currentPage.integerValue+1];
+            self.currentPage = [NSNumber numberWithInteger:self.currentPage.integerValue + 1];
             [self publishScreenLoadTime];
         } else {
             self.productsDictionary = nil;
@@ -185,7 +179,7 @@
         }
         [LoadingManager hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
-        [self showNotificationBar:error isSuccess:NO];
+        [Utility handleErrorWithError:error viewController:self];
         [self publishScreenLoadTime];
         [LoadingManager hideLoading];
     }];
@@ -203,7 +197,6 @@
     [LoadingManager showLoading];
     [self.collectionView reloadData];
     if (ISEMPTY(self.productsArray)) {
-        
         [self.emptyViewContainer fadeIn:0.15];
         [self.emptyViewController getSuggestions];
         self.collectionView.hidden = YES;
@@ -217,11 +210,10 @@
 
 #pragma mark - collectionView methods
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (!self.lastPage && indexPath.row == self.productsArray.count-1) {
+    if (!self.lastPage && indexPath.row == self.productsArray.count - 1) {
         [self loadProducts];
     }
     RIProduct *product = [self getProductFromIndex:indexPath.row];
-    
     JARecentlyViewedCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"CellWithLines" forIndexPath:indexPath];
     [cell setHideRating:YES];
     [cell setHideShopFirstLogo:YES];

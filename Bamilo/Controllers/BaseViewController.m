@@ -37,6 +37,7 @@
     }
     
     //navigation bar configs
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil];
     
     if ([self respondsToSelector:@selector(navBarTitleView)]){
         self.navigationItem.titleView = [self navBarTitleView];
@@ -57,12 +58,12 @@
     }
 }
 
-- (JANavigationBarLayout *)navBarLayout {
-    if (!_navBarLayout) {
-        _navBarLayout = [[JANavigationBarLayout alloc] init];
-    }
-    return _navBarLayout;
-}
+//- (JANavigationBarLayout *)navBarLayout {
+//    if (!_navBarLayout) {
+//        _navBarLayout = [[JANavigationBarLayout alloc] init];
+//    }
+//    return _navBarLayout;
+//}
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -174,7 +175,7 @@
 
 #pragma mark - NavigationBarProtocol
 - (void)searchIconButtonTapped {
-    [[MainTabBarViewController topNavigationController] showSearchView];
+    [[MainTabBarViewController topNavigationController] showSearchView: [self getScreenName]];
 }
 
 - (void)cartIconButtonTapped {

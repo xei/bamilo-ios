@@ -65,6 +65,15 @@
     }];
 }
 
+- (void)resetSeperator {
+    self.seperatorBorderView.backgroundColor = [Theme color:kColorDarkGray];
+}
+
+- (void)showDisabledMode {
+    self.seperatorBorderView.backgroundColor = [Theme color:kColorGray9];
+    [self.dropDownIcon setHidden:YES];
+}
+
 - (void)clearError {
     self.errorMsg.text = nil;
     self.seperatorBorderView.backgroundColor = [Theme color:kColorDarkGray];
@@ -72,12 +81,12 @@
     self.errorMsgTopConstraint.constant = -15;
 }
 
--(void) updateDropDownAppearance:(BOOL)isHidden {
+- (void)updateDropDownAppearance:(BOOL)isHidden {
     [self.dropDownIcon setHidden:isHidden];
 }
 
 #pragma mark - Helpers
--(void) updateIconAppearance:(BOOL)isHidden {
+- (void)updateIconAppearance:(BOOL)isHidden {
     if(isHidden) {
         self.iconTrailingConstraint.constant = -1 * (2 * cICON_RIGHT_MARGIN);
     } else {

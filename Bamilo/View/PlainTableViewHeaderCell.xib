@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -19,12 +19,12 @@
         <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" selectionStyle="default" indentationWidth="10" rowHeight="40" id="aFB-5W-UIz" customClass="PlainTableViewHeaderCell">
             <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aFB-5W-UIz" id="iN0-l3-epB">
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="right" semanticContentAttribute="forceRightToLeft" tableViewCell="aFB-5W-UIz" id="iN0-l3-epB">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="39.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="بامیلو اولین بازار اینترنتی ایران" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D52-W4-0mi" userLabel="TitleLabel">
-                        <rect key="frame" x="136.5" y="7.5" width="173.5" height="25"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="right" semanticContentAttribute="forceRightToLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="بامیلو اولین بازار اینترنتی ایران" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D52-W4-0mi" userLabel="TitleLabel">
+                        <rect key="frame" x="10" y="8" width="300" height="25"/>
                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="13"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
@@ -32,20 +32,16 @@
                 </subviews>
                 <color key="backgroundColor" red="0.81681483980000003" green="0.81743925809999995" blue="0.8169115186" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
-                    <constraint firstAttribute="right" secondItem="D52-W4-0mi" secondAttribute="right" priority="750" constant="10" id="5fm-M5-PTD"/>
+                    <constraint firstAttribute="right" secondItem="D52-W4-0mi" secondAttribute="right" constant="10" id="5fm-M5-PTD"/>
                     <constraint firstItem="D52-W4-0mi" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="IMl-Sw-pai"/>
+                    <constraint firstItem="D52-W4-0mi" firstAttribute="left" secondItem="iN0-l3-epB" secondAttribute="left" constant="10" id="T4c-kd-e3w"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="container" destination="iN0-l3-epB" id="CY3-kr-yGH"/>
                 <outlet property="titleLabel" destination="D52-W4-0mi" id="dBi-7c-CcM"/>
             </connections>
-            <point key="canvasLocation" x="95" y="178"/>
+            <point key="canvasLocation" x="-295" y="-19"/>
         </tableViewCell>
     </objects>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
-    </simulatedMetricsContainer>
 </document>

@@ -21,37 +21,40 @@ import SwiftyJSON
                                     UICollectionViewDelegateFlowLayout,
                                     FilteredListNoResultViewControllerDelegate,
                                     JAPDVViewControllerDelegate,
-                                    SearchBarListener {
+                                    SearchViewControllerDelegate {
     
     @IBOutlet private weak var catalogHeader: CatalogHeaderControl!
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var noResultViewContainer: UIView!
     @IBOutlet private weak var filteredNoResultContainer: UIView!
-    @IBOutlet private weak var catalogHeaderTopConstraint: NSLayoutConstraint!
     @IBOutlet private weak var productCountLabel: UILabel!
     @IBOutlet private weak var productCountLabelHeight: NSLayoutConstraint!
     @IBOutlet private weak var productCountLabelTopConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var topCollectionViewConstraint: NSLayoutConstraint!
     
     var navBarTitle: String?
     var searchTarget: RITarget!
     var sortingMethod: Catalog.CatalogSortType? = nil
     var pushFilterQueryString : String?
     var startCatalogStackIndexInNavigationViewController: Int?
-    var teaserTrackingInfo: String? //For tracking teaser (purchase) journeys (optional)
+    var purchaseTrackingInfo: String? //For tracking teaser (purchase) journeys (optional)
     
     private var selectedProduct: Product? //TODO: it's not necessary to keep it, but we should do it for now because
                                           // we need to know which product (may) has been changed by PDVViewController (add to wish list)
     
-    
+    private var allSubviewsHasBeenRendered = false
     private var navBarBlurView: UIVisualEffectView?
     private var listViewType: CatalogListViewType = .grid
     private var listFullyLoaded = false
-    private var lastContentOffset: CGFloat = 0
     private var initialNavBarAndStatusBarHeight: CGFloat!
     private var initialTabBarHeight: CGFloat!
     private let loadingFooterViewHeight: CGFloat = 50
     private let productCountViewHeight: CGFloat = 30
     private let cardViewNewTagElementHeight: CGFloat = 16
+    private var navBarScrollFollower: ScrollerBarFollower?
+    private var tabBarScrollFollower: ScrollerBarFollower?
+    private var searchBarScrollFollower: ScrollerBarFollower?
+    
     
     //TODO: this property is only used for passing enum (swift type) property from objective c
     // so we have to remove it after migration those who wanna pass this property
@@ -66,9 +69,8 @@ import SwiftyJSON
     private var subCategoryFilterItem: CatalogCategoryFilterItem?
     private var pageNumber: Int = 1
     private var catalogData: Catalog?
-    private var initialCatalogHeaderTopConstraint: CGFloat!
     private var noResultViewController: CatalogNoResultViewController?
-    private let paginationCellCountThreshold = 6
+    private let paginationThresholdPoint: CGFloat = 100
     private var loadingDataInProgress = true {
         didSet {
             //To refresh the footerView
@@ -76,10 +78,8 @@ import SwiftyJSON
         }
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-    
         self.view.backgroundColor = Theme.color(kColorVeryLightGray)
         self.productCountLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 11), color: UIColor.black)
         
@@ -100,15 +100,21 @@ import SwiftyJSON
         
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateListWithUserLoginNotification(notification:)), name: NSNotification.Name(NotificationKeys.UserLogin), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(resetBarFollowers(animated:)), name: NSNotification.Name(NotificationKeys.EnterForground), object: true)
+        
         if let navBar = self.navigationController?.navigationBar {
-            self.initialCatalogHeaderTopConstraint = navBar.frame.height + NavBarUtility.getStatusBarHeight()
-            self.catalogHeaderTopConstraint.constant = self.initialCatalogHeaderTopConstraint
+            self.initialNavBarAndStatusBarHeight = navBar.frame.height + UIApplication.shared.statusBarFrame.height
         }
         
-        self.initialTabBarHeight = self.tabBarController!.tabBar.frame.height
-        self.initialNavBarAndStatusBarHeight = self.navigationController!.navigationBar.frame.height + UIApplication.shared.statusBarFrame.height
-        self.productCountLabelTopConstraint.constant = self.initialNavBarAndStatusBarHeight + catalogHeader.frame.height
+        if let tabBar = self.tabBarController?.tabBar {
+            self.initialTabBarHeight = tabBar.frame.height
+        }
+        
+        self.productCountLabelTopConstraint.constant = self.catalogHeader.frame.height
         self.productCountLabelHeight.constant = self.productCountViewHeight
+        
+        self.topCollectionViewConstraint.constant = -(self.navigationController?.navigationBar.frame.size.height ?? 0)
     }
     
     deinit {
@@ -121,30 +127,53 @@ import SwiftyJSON
         if let navTitle = self.navBarTitle {
             self.title = navTitle
         }
-        if let tabBar = self.tabBarController?.tabBar {
-            self.tabbarInitialFrame = tabBar.frame
-        }
-        if let navBar = self.navigationController?.navigationBar {
-             self.navBarInitialFrame = navBar.frame
-        }
-        NavBarUtility.changeStatusBarColor(color: Theme.color(kColorExtraDarkBlue))
+        
+        self.navBarScrollFollower?.resumeFollowing()
+        self.tabBarScrollFollower?.resumeFollowing()
+        self.searchBarScrollFollower?.resumeFollowing()
         
         self.navBarBlurView = self.navigationController?.navigationBar.addBlurView()
         self.navBarBlurView?.alpha = 0
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if  !allSubviewsHasBeenRendered {
+            //asign scroll followers in this view
+            self.searchBarScrollFollower = ScrollerBarFollower(barView: catalogHeader, moveDirection: .top)
+            if let navBar = self.navigationController?.navigationBar {
+                self.navBarScrollFollower = ScrollerBarFollower(barView: navBar, moveDirection: .top)
+                self.navBarScrollFollower?.followScrollView(scrollView: collectionView, delay: productCountViewHeight, permittedMoveDistance: navBar.frame.height)
+                self.searchBarScrollFollower?.followScrollView(scrollView: collectionView, delay: productCountViewHeight, permittedMoveDistance: navBar.frame.height)
+            }
+            if let tabBar = self.tabBarController?.tabBar {
+                self.tabBarScrollFollower = ScrollerBarFollower(barView: tabBar, moveDirection: .down)
+                self.tabBarScrollFollower?.followScrollView(scrollView: self.collectionView, delay: productCountViewHeight, permittedMoveDistance: tabBar.frame.height)
+            }
+            
+            self.allSubviewsHasBeenRendered = true
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
         //reset all states of tabbar and navBar, status bar
-        self.resetTabarFrame(animated: true)
-        self.resetNavBar(animated: false)
+        self.resetBarFollowers(animated:true)
+        
+        self.navBarScrollFollower?.pauseFollowing()
+        self.tabBarScrollFollower?.pauseFollowing()
+        self.searchBarScrollFollower?.pauseFollowing()
+        
         self.setNavigationBarAlpha(alpha: 0, animated: true)
-        self.catalogHeaderTopConstraint.constant = self.initialCatalogHeaderTopConstraint
-        NavBarUtility.changeStatusBarColor(color: .clear)
-        
-        
         self.navBarBlurView?.removeFromSuperview()
+        self.collectionView.killScroll()
+    }
+    
+    func resetBarFollowers(animated: Bool) {
+        self.navBarScrollFollower?.resetBarFrame(animated: animated)
+        self.tabBarScrollFollower?.resetBarFrame(animated: animated)
+        self.searchBarScrollFollower?.resetBarFrame(animated: animated)
     }
     
     func updateNavBar() {
@@ -156,23 +185,43 @@ import SwiftyJSON
     
     //MARK: - DataServiceProtocol
     func bind(_ data: Any!, forRequestId rid: Int32) {
-        self.loadingDataInProgress = false
-        if let receivedCatalogData = data as? Catalog {
-            if rid == 0 {
-                self.catalogData = receivedCatalogData
-                self.processCatalogData()
-                EmarsysPredictManager.sendTransactions(of: self)
-            } else if rid == 1, receivedCatalogData.products.count > 0 {
-                self.catalogData?.products.append(contentsOf: receivedCatalogData.products)
-            }
-            if let totalProducts = receivedCatalogData.totalProductsCount {
-                if totalProducts <= receivedCatalogData.products.count {
-                    self.listFullyLoaded = true
+        ThreadManager.execute(onMainThread: {
+            if let receivedCatalogData = data as? Catalog {
+                if rid == 0 {
+                    self.catalogData = receivedCatalogData
+                    self.processCatalogData()
+                    EmarsysPredictManager.sendTransactions(of: self)
+                    self.collectionView.reloadData()
+                    if let receivedCatalogData = data as? Catalog, let totalProducts = receivedCatalogData.totalProductsCount {
+                        if totalProducts <= receivedCatalogData.products.count {
+                            self.listFullyLoaded = true
+                        }
+                        self.productCountLabel.text = "\(totalProducts) \(STRING_FOUND_PRODUCT_COUNT)".convertTo(language: .arabic)
+                    }
+                    self.loadingDataInProgress = false
+                } else if rid == 1, receivedCatalogData.products.count > 0 {
+                    if let visibleProductCount = self.catalogData?.products.count {
+                        var newIndexPathes = [IndexPath]()
+                        for index in 0...receivedCatalogData.products.count - 1 {
+                            let newIndex = visibleProductCount + index
+                            newIndexPathes.append(IndexPath(item: newIndex, section: 0))
+                            self.catalogData?.products.insert(receivedCatalogData.products[index], at: newIndex)
+                        }
+                        
+                        if let totalProducts = receivedCatalogData.totalProductsCount, let updateVisibleProductCount = self.catalogData?.products.count, totalProducts <= updateVisibleProductCount {
+                            self.listFullyLoaded = true
+                        }
+                        
+                        self.collectionView.performBatchUpdates({
+                            self.collectionView.insertItems(at: newIndexPathes)
+                        }, completion: {(finished) in
+                            self.loadingDataInProgress = false
+                        })
+                    }
                 }
-                self.productCountLabel.text = "\(totalProducts) \(STRING_FOUND_PRODUCT_COUNT)".convertTo(language: .arabic)
             }
-            self.collectionView.reloadData()
-        }
+
+        })
     }
     
     //MARK: - FilteredListNoResultViewControllerDelegate
@@ -186,11 +235,11 @@ import SwiftyJSON
         let queryFilters = self.getQueryOfActiveFilters(activeFilters: activeFilters)
         trackSearchFilter(activeFilterQuery: queryFilters)
         
-        if let startIndex = self.startCatalogStackIndexInNavigationViewController, queryFilters.characters.count == 0 {
+        if let startIndex = self.startCatalogStackIndexInNavigationViewController, queryFilters.count == 0 {
             if let arrayOfViewControllers = self.navigationController?.viewControllers {
                 self.navigationController?.popToViewController(arrayOfViewControllers[startIndex], animated: false)
             }
-        } else if queryFilters != self.pushFilterQueryString && queryFilters.characters.count != 0 {
+        } else if queryFilters != self.pushFilterQueryString && queryFilters.count != 0 {
             self.pushToSearchByFilterQuery(query: queryFilters)
         }
     }
@@ -224,13 +273,12 @@ import SwiftyJSON
             attributes: EventAttributes.catalogViewChanged(listViewType: type)
         )
         self.collectionView.reloadData()
+        self.resetBarFollowers(animated: true)
         UIView.animate(withDuration: 0.15, animations: { 
             self.collectionView.collectionViewLayout.invalidateLayout()
             self.collectionView.setCollectionViewLayout(self.getProperCollectionViewFlowLayout(), animated: true)
         }, completion: nil)
     }
-    
-    
     
     //MARK: - helpers 
     private func setSortingMethodToHeader() {
@@ -248,7 +296,7 @@ import SwiftyJSON
     private(set) lazy var cardFlowLayout: CardCollectionViewFlowLayout = {
         return CardCollectionViewFlowLayout()
     }()
-    private func getProperCollectionViewFlowLayout () -> BaseCatalogCollectionFlowLayout {
+    private func getProperCollectionViewFlowLayout () -> BaseCollectionFlowLayout {
         if self.listViewType == .grid {
             return gridFlowLayout
         } else if self.listViewType == .list {
@@ -269,7 +317,7 @@ import SwiftyJSON
                     priceQuery += "price/\(priceFilter.lowerValue)-\(priceFilter.upperValue)"
                 }
                 if (priceFilter.discountOnly) {
-                    if (priceQuery.characters.count > 0) {
+                    if (priceQuery.count > 0) {
                         priceQuery += "/special_price/1"
                     } else {
                         priceQuery = "special_price/1"
@@ -281,10 +329,9 @@ import SwiftyJSON
             }
         }).joined(separator: "/")
         
-        if filtersToString.characters.count > 0 {
+        if filtersToString.count > 0 {
             filterQuery = filtersToString + "/"
         }
-
         return filterQuery
     }
     
@@ -308,8 +355,6 @@ import SwiftyJSON
         }
         
         //Sequence of these functions are important
-//        self.sortingMethod = self.catalogData?.sortType
-//        self.setSortingMethodToHeader()
         let activeFilters = self.findActiveFilters(filters: self.catalogData?.filters)
         self.setActiveFiltersToHeader(activeFilters: activeFilters)
     }
@@ -337,53 +382,6 @@ import SwiftyJSON
         self.collectionView.reloadData()
     }
     
-    
-    private var tabbarInitialFrame: CGRect?
-    private var tabbarIsHidding = true
-    private func changeTabbarPositionY(difference: CGFloat) {
-        self.tabbarIsHidding = difference < 0
-        if let tabBar = self.tabBarController?.tabBar,let tabbarInitialFrame = self.tabbarInitialFrame {
-            tabBar.boundedStickyVerticalMove(difference: -difference, direction: .down, initialFrame: tabbarInitialFrame)
-        }
-    }
-    
-    private func hideTabbar(animated: Bool) {
-        if let tabBar = self.tabBarController?.tabBar,let tabbarInitialFrame = self.tabbarInitialFrame {
-            var hiddenRect = tabbarInitialFrame
-            hiddenRect.origin.y += hiddenRect.size.height
-            tabBar.setFrame(frame: hiddenRect, animated: animated)
-        }
-    }
-    
-    private func resetTabarFrame(animated: Bool) {
-        if let tabBar = self.tabBarController?.tabBar,let tabbarInitialFrame = self.tabbarInitialFrame {
-            tabBar.setFrame(frame: tabbarInitialFrame, animated: animated)
-        }
-    }
-    
-    private var navBarInitialFrame: CGRect?
-    private var navBarIsHidding = true
-    private func changeNavBarPositionY(difference: CGFloat) {
-        self.navBarIsHidding = difference < 0
-        if let navBar = self.navigationController?.navigationBar,let navBarInitialFrame = self.navBarInitialFrame {
-            navBar.boundedStickyVerticalMove(difference: -difference, direction: .top, initialFrame: navBarInitialFrame)
-            
-            let totalTransitionWidth = navBarInitialFrame.size.height
-            let movedTransitionWidth = navBarInitialFrame.origin.y - navBar.frame.origin.y
-            let alpha = movedTransitionWidth/totalTransitionWidth
-            
-            self.setNavigationBarAlpha(alpha: alpha, animated: false)
-            
-            if movedTransitionWidth == 0 {
-                self.catalogHeaderTopConstraint.constant = self.initialCatalogHeaderTopConstraint
-            } else if movedTransitionWidth == totalTransitionWidth {
-                self.catalogHeaderTopConstraint.constant = NavBarUtility.getStatusBarHeight()
-            } else {
-                self.catalogHeaderTopConstraint.constant = self.initialCatalogHeaderTopConstraint - movedTransitionWidth
-            }
-        }
-    }
-    
     private func setNavigationBarAlpha(alpha: CGFloat, animated: Bool) {
         let navigationBackgroundView = self.navBarBlurView
         if animated {
@@ -393,21 +391,6 @@ import SwiftyJSON
             }, completion: nil)
         } else {
             navigationBackgroundView?.alpha = alpha
-        }
-    }
-    
-    private func hideNavBar(animated: Bool) {
-        if let navBar = self.navigationController?.navigationBar,let navBarInitialFrame = self.navBarInitialFrame {
-            var hiddenRect = navBarInitialFrame
-            hiddenRect.origin.y -= hiddenRect.size.height
-            navBar.setFrame(frame: hiddenRect, animated: animated)
-        }
-    }
-    
-    private func resetNavBar(animated: Bool) {
-        if let navBar = self.navigationController?.navigationBar,let navBarInitialFrame = self.navBarInitialFrame {
-            navBar.setFrame(frame: navBarInitialFrame, animated: animated)
-            self.catalogHeaderTopConstraint.constant = self.initialCatalogHeaderTopConstraint
         }
     }
     
@@ -440,7 +423,7 @@ import SwiftyJSON
                 return filter.name
                 }.joined(separator: "، ");
         }
-        if activeFilterString.characters.count > 0 {
+        if activeFilterString.count > 0 {
             self.catalogHeader.setFilterDescription(filterDescription: activeFilterString)
             self.catalogHeader.setFilterButtonActive()
         }
@@ -475,6 +458,8 @@ import SwiftyJSON
             } else {
                 self.showNoResultView()
             }
+            
+            self.resetBarFollowers(animated: true)
         }
         self.loadAvaiableSubCategories()
     }
@@ -487,10 +472,13 @@ import SwiftyJSON
     }
     
     func loadAvaiableSubCategories() {
-        //TODO: type of Target must be enum not string (the enum of RITarget can not be reusded in swift)
-        if self.searchTarget.type == "catalog_category" {
+        if self.searchTarget.targetType == .CATALOG_CATEGORY {
             CatalogDataManager.sharedInstance.getSubCategoriesFilter(self, categoryUrlKey: self.searchTarget.node, completion: { (data, errorMessages) in
-                self.subCategoryFilterItem = data as? CatalogCategoryFilterItem
+                if errorMessages == nil {
+                    self.subCategoryFilterItem = data as? CatalogCategoryFilterItem
+                } else {
+//                    Utility.handleError(error: errorMessages, viewController: self)
+                }
             })
         }
     }
@@ -500,7 +488,12 @@ import SwiftyJSON
         self.pageNumber += 1
         self.loadingDataInProgress = true
         CatalogDataManager.sharedInstance.getCatalog(self, searchTarget: searchTarget, filtersQueryString: pushFilterQueryString, sortingMethod: sortingMethod, page: self.pageNumber) { (data, errorMessages) in
-            self.bind(data, forRequestId: 1)
+            if errorMessages == nil {
+                self.bind(data, forRequestId: 1)
+            } else {
+                self.loadingDataInProgress = false
+//                Utility.handleError(error: errorMessages, viewController: self)
+            }
         }
     }
     
@@ -519,8 +512,7 @@ import SwiftyJSON
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return  UIEdgeInsetsMake(self.catalogHeader.frame.height + self.initialNavBarAndStatusBarHeight + productCountViewHeight - self.getProperCollectionViewFlowLayout().cellSpacing , 0, initialTabBarHeight, 0)
-        
+        return UIEdgeInsetsMake((self.navigationController?.navigationBar.frame.size.height ?? 0) + self.productCountViewHeight , 0, 0, 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -536,12 +528,6 @@ import SwiftyJSON
         cell.updateWithProduct(product: self.catalogData!.products[indexPath.row])
         cell.cellIndex = indexPath.row
         return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if let catalog = self.catalogData, catalog.products.count - indexPath.row < paginationCellCountThreshold {
-            self.loadMore()
-        }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -576,36 +562,30 @@ import SwiftyJSON
     
     //MARK: -ScrollViewDelegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (scrollView.contentOffset.y < productCountViewHeight) {
-            self.resetTabarFrame(animated: false)
-            self.resetNavBar(animated: false)
-            self.setNavigationBarAlpha(alpha: 0, animated: false)
-            self.lastContentOffset = scrollView.contentOffset.y
-            self.productCountLabel.alpha = 1
-            return
+        self.navBarScrollFollower?.scrollViewDidScroll(scrollView)
+        self.tabBarScrollFollower?.scrollViewDidScroll(scrollView)
+        self.searchBarScrollFollower?.scrollViewDidScroll(scrollView)
+        
+        let bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height
+        if (bottomEdge >= (scrollView.contentSize.height - paginationThresholdPoint)) {
+            // we are approaching at the end of scrollview
+            if !self.listFullyLoaded {
+                self.loadMore()
+            }
         }
         
+        if (scrollView.contentOffset.y < productCountViewHeight) {
+            self.setNavigationBarAlpha(alpha: 0, animated: false)
+            self.productCountLabel.alpha = 1
+            return
+        } 
         self.productCountLabel.alpha = 0
-        let scrollChanage = self.lastContentOffset - scrollView.contentOffset.y
-        self.changeTabbarPositionY(difference: scrollChanage)
-        self.changeNavBarPositionY(difference: scrollChanage)
-        
-        self.lastContentOffset = scrollView.contentOffset.y;
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if !decelerate {
-            self.tabbarIsHidding ? self.hideTabbar(animated: true) : self.resetTabarFrame(animated: true)
-            if self.navBarIsHidding {
-                self.hideNavBar(animated: true)
-                self.setNavigationBarAlpha(alpha: 1, animated: true)
-                self.catalogHeaderTopConstraint.constant = NavBarUtility.getStatusBarHeight()
-            } else {
-                self.resetNavBar(animated: true)
-                self.setNavigationBarAlpha(alpha: 0, animated: true)
-                self.catalogHeaderTopConstraint.constant = self.initialCatalogHeaderTopConstraint
-            }
-        }
+        self.navBarScrollFollower?.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
+        self.tabBarScrollFollower?.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
+        self.searchBarScrollFollower?.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
     }
     
     //MARK: - JAPDVViewControllerDelegate
@@ -687,7 +667,7 @@ import SwiftyJSON
             destinationViewCtrl?.delegate = self
         } else if segueName == "pushPDVViewController" {
             let destinationViewCtrl = segue.destination as? JAPDVViewController
-            destinationViewCtrl?.teaserTrackingInfo = self.teaserTrackingInfo
+            destinationViewCtrl?.purchaseTrackingInfo = self.purchaseTrackingInfo
             destinationViewCtrl?.productSku = self.selectedProduct?.sku
             destinationViewCtrl?.delegate = self
         }
@@ -696,7 +676,7 @@ import SwiftyJSON
     
     //MARK: - EmarsysWebExtendProtocol
     func getDataCollection(_ transaction: EMTransaction!) -> EMTransaction! {
-        if self.searchTarget.type == "catalog_query" {
+        if self.searchTarget.targetType == .CATALOG_SEARCH {
             transaction.setSearchTerm(self.searchTarget.node)
         }
         if let breadcrumbsFullPath = self.catalogData?.breadcrumbsFullPath {
@@ -708,14 +688,6 @@ import SwiftyJSON
     
     func isPreventSendTransactionInViewWillAppear() -> Bool {
         return true
-    }
-    
-    //MARK: -SearchBarListener protocol
-    func searchBarSearched(_ searchBar: UISearchBar!) {
-        TrackerManager.postEvent(
-            selector: EventSelectors.searchBarSearchedSelector(),
-            attributes: EventAttributes.searchBarSearched(searchString: searchBar.text ?? "", screenName: self.getScreenName())
-        )
     }
     
     //MARK: -DataTrackerProtocol

@@ -43,10 +43,8 @@
 @dynamic targetString;
 @dynamic queryString;
 
-+ (void)deleteSearchSuggestionByTargetString:(NSString *)targetString
-{
++ (void)deleteSearchSuggestionByTargetString:(NSString *)targetString {
     NSArray *searches = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RISearchSuggestion class])];
-    
     for (RISearchSuggestion *tempSearch in searches) {
         if ([tempSearch.targetString isEqualToString:targetString]) {
             [[RIDataBaseWrapper sharedInstance] deleteObject:tempSearch];
@@ -57,8 +55,7 @@
     }
 }
 
-+ (RISearchSuggestion *)getSearchSuggestionWithQuery:(NSString *)query isRecentSearch:(BOOL)isRecentSearch andContext:(BOOL)save
-{
++ (RISearchSuggestion *)getSearchSuggestionWithQuery:(NSString *)query isRecentSearch:(BOOL)isRecentSearch andContext:(BOOL)save {
     RISearchSuggestion *newSearchSuggestion = (RISearchSuggestion*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RISearchSuggestion class])];
     newSearchSuggestion.item = query;
     newSearchSuggestion.relevance = @(0);
@@ -67,32 +64,21 @@
     return newSearchSuggestion;
 }
 
-+ (void)saveSearchSuggestionOnDB:(RISearchSuggestion *)searchSuggestion
-                  isRecentSearch:(BOOL)isRecentSearch andContext:(BOOL)save
-{
-    if(VALID_NOTEMPTY(searchSuggestion.item, NSString))
-    {
-        if ([RISearchSuggestion checkIfSuggestionsExistsOnDB:searchSuggestion.targetString])
-        {
++ (void)saveSearchSuggestionOnDB:(RISearchSuggestion *)searchSuggestion isRecentSearch:(BOOL)isRecentSearch andContext:(BOOL)save {
+    if(VALID_NOTEMPTY(searchSuggestion.item, NSString)) {    
+        if ([RISearchSuggestion checkIfSuggestionsExistsOnDB:searchSuggestion.targetString]) {
             [RISearchSuggestion deleteSearchSuggestionByTargetString:searchSuggestion.targetString];
         }
-        
         [searchSuggestion setIsRecentSearch:isRecentSearch];
         [searchSuggestion setDate:[NSDate date]];
-        
-        // The limit for recent search is 5, if there is > 5 it's necessary to delete the old one
-        if (isRecentSearch)
-        {
+        //The limit for recent search is 5, if there is > 5 it's necessary to delete the old one
+        if (isRecentSearch) {
             NSMutableArray *searches = [[[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RISearchSuggestion class])] mutableCopy];
             
-            if (searches.count > 4)
-            {
-                [searches sortUsingComparator:^(RISearchSuggestion *obj1, RISearchSuggestion *obj2)
-                 {
+            if (searches.count > 4) {
+                [searches sortUsingComparator:^(RISearchSuggestion *obj1, RISearchSuggestion *obj2) {
                      NSComparisonResult result = [obj1.date compare:obj2.date];
-                     
-                     switch (result)
-                     {
+                     switch (result) {
                          case NSOrderedAscending: return (NSComparisonResult)NSOrderedDescending; break;
                          case NSOrderedDescending: return (NSComparisonResult)NSOrderedAscending; break;
                          case NSOrderedSame: return (NSComparisonResult)NSOrderedSame; break;
@@ -100,14 +86,11 @@
                          default: return (NSComparisonResult)NSOrderedSame; break;
                      }
                  }];
-                
                 [[RIDataBaseWrapper sharedInstance] deleteObject:[searches lastObject]];
                 if (save) {
                     [[RIDataBaseWrapper sharedInstance] saveContext];
                 }
-                
             }
-
             [[RIDataBaseWrapper sharedInstance] insertManagedObject:searchSuggestion];
             if (save) {
                 [[RIDataBaseWrapper sharedInstance] saveContext];
@@ -118,12 +101,10 @@
 
 + (NSString *)getSuggestionsForQuery:(NSString *)query
                        successBlock:(void (^)(NSArray *suggestions))successBlock
-                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
-{
+                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock {
        if([RICountryConfiguration getCurrentConfiguration].suggesterProviderEnum == ALGOLIA &&
            VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].algoliaAppId, NSString) &&
-           VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].algoliaApiKey, NSString))
-    {
+           VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].algoliaApiKey, NSString)) {
         __block NSLock *searchLock = [NSLock new];
         __block NSArray *outsideBlockProductsResultsArray;
         __block NSArray *outsideBlockShopInShopResultsArray;
@@ -292,34 +273,24 @@
 
 #pragma mark - Get Recent searches
 
-+ (NSArray *)getRecentSearches
-{
++ (NSArray *)getRecentSearches {
     NSArray *searches = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RISearchSuggestion class])];
     
-    if (0 == searches.count)
-    {
+    if (0 == searches.count) {
         return nil;
-    }
-    else
-    {
+    } else {
         NSMutableArray *array = [NSMutableArray new];
         
-        for (RISearchSuggestion *suggestion in searches)
-        {
-            if (suggestion.isRecentSearch)
-            {
+        for (RISearchSuggestion *suggestion in searches) {
+            if (suggestion.isRecentSearch) {
                 [array addObject:suggestion];
             }
         }
-        
-        if (array.count > 1)
-        {
-            [array sortUsingComparator:^(RISearchSuggestion *obj1, RISearchSuggestion *obj2)
-             {
+        if (array.count > 1) {
+            [array sortUsingComparator:^(RISearchSuggestion *obj1, RISearchSuggestion *obj2) {
                  NSComparisonResult result = [obj1.date compare:obj2.date];
                  
-                 switch (result)
-                 {
+                 switch (result) {
                      case NSOrderedAscending: return (NSComparisonResult)NSOrderedDescending; break;
                      case NSOrderedDescending: return (NSComparisonResult)NSOrderedAscending; break;
                      case NSOrderedSame: return (NSComparisonResult)NSOrderedSame; break;
@@ -328,59 +299,48 @@
                  }
              }];
         }
-        
         return [array copy];
     }
 }
 
-+ (void)deleteAllSearches
-{
++ (void)deleteAllSearches {
     [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RISearchSuggestion class])];
     [[RIDataBaseWrapper sharedInstance] saveContext];
 }
 
-+ (void)putRecentSearchInTop:(RISearchSuggestion *)search
-{
++ (void)putRecentSearchInTop:(RISearchSuggestion *)search {
     search.date = [NSDate date];
     [[RIDataBaseWrapper sharedInstance] saveContext];
 }
 
 #pragma mark - Cancel requests
 
-+ (void)cancelRequest:(NSString *)operationID
-{
++ (void)cancelRequest:(NSString *)operationID {
     if(VALID_NOTEMPTY(operationID, NSString))
         [[RICommunicationWrapper sharedInstance] cancelRequest:operationID];
 }
 
 #pragma mark - Private methods
 
-+ (BOOL)checkIfSuggestionsExistsOnDB:(NSString *)targetString
-{
++ (BOOL)checkIfSuggestionsExistsOnDB:(NSString *)targetString {
     BOOL suggestionExists = false;
     NSArray* searchSuggestions = [RISearchSuggestion getSearchSuggestionsOnDBForTargetString:targetString];
-    if(VALID_NOTEMPTY(searchSuggestions, NSArray))
-    {
+    if(VALID_NOTEMPTY(searchSuggestions, NSArray)) {
         suggestionExists = true;
     }
     return suggestionExists;
 }
 
-+ (NSArray *)getSearchSuggestionsOnDBForTargetString:(NSString*)targetString
-{
++ (NSArray *)getSearchSuggestionsOnDBForTargetString:(NSString*)targetString {
     return [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RISearchSuggestion class]) withPropertyName:@"targetString" andPropertyValue:targetString];
 }
 
-+ (NSArray*) parseSearchSuggestions:(NSArray*)jsonObject forTextQuery:(NSString *)textQuery
-{
++ (NSArray*) parseSearchSuggestions:(NSArray*)jsonObject forTextQuery:(NSString *)textQuery {
     NSMutableArray *suggestions = [[NSMutableArray alloc] init];
     
-    if(VALID_NOTEMPTY(jsonObject, NSArray))
-    {
-        for(NSDictionary *suggestionObject in jsonObject)
-        {
-            if(VALID_NOTEMPTY(suggestionObject, NSDictionary))
-            {
+    if(VALID_NOTEMPTY(jsonObject, NSArray)) {
+        for(NSDictionary *suggestionObject in jsonObject) {
+            if(VALID_NOTEMPTY(suggestionObject, NSDictionary)) {
                 [suggestions addObject:[RISearchSuggestion parseSearchSuggestion:suggestionObject forTextQuery:textQuery]];
             }
         }
@@ -388,8 +348,7 @@
     return [suggestions copy];
 }
 
-+ (RISearchSuggestion *)parseSearchSuggestion:(NSDictionary*)jsonObject forTextQuery:(NSString *)textQuery
-{
++ (RISearchSuggestion *)parseSearchSuggestion:(NSDictionary*)jsonObject forTextQuery:(NSString *)textQuery {
     RISearchSuggestion *newSearchSuggestion = (RISearchSuggestion*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RISearchSuggestion class])];
     
     [newSearchSuggestion setItem:VALID_NOTEMPTY_VALUE([jsonObject objectForKey:@"sub_string"], NSString)];
@@ -408,10 +367,8 @@
 
 #pragma mark - Parse undefined term
 
-+ (RIUndefinedSearchTerm *)parseUndefinedSearchTerm:(NSDictionary *)json
-{
-    if (NOTEMPTY(json))
-    {
++ (RIUndefinedSearchTerm *)parseUndefinedSearchTerm:(NSDictionary *)json {
+    if (NOTEMPTY(json)) {
         RIUndefinedSearchTerm *undefinedSearchTerm = [[RIUndefinedSearchTerm alloc] init];
         
         if ([json objectForKey:@"error_message"]) {

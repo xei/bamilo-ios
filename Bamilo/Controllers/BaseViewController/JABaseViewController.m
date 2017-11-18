@@ -19,7 +19,7 @@
 #import "EmarsysPredictManager.h"
 #import "Bamilo-Swift.h"
 
-#define kSearchViewBarHeight 44.0f
+//#define kSearchViewBarHeight 44.0f
 
 
 @interface JABaseViewController () {
@@ -50,9 +50,7 @@
 
 - (CGRect)viewBounds {
     CGFloat topOffset = 0.0f;
-    if (self.searchBarIsVisible) {
-        topOffset += kSearchViewBarHeight;
-    }
+
     if (SYSTEM_VERSION_GREATER_THAN(@"9.0")) {
         return CGRectMake(self.view.bounds.origin.x,
                           self.view.bounds.origin.y + topOffset,
@@ -72,9 +70,7 @@
 - (CGRect)bounds {
     CGFloat offset = 0.0f;
     CGFloat heightOffset = 0.0f;
-    if (self.searchBarIsVisible) {
-        offset = kSearchViewBarHeight;
-    }
+
     if (self.navigationController.navigationBar) {
         heightOffset = CGRectGetMaxY(self.navigationController.navigationBar.frame);
     }
@@ -87,8 +83,6 @@
 -(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-//        JANavigationBarLayout *defaultLayout = [[JANavigationBarLayout alloc] init];
-//        self.navBarLayout = defaultLayout;
     }
     return self;
 }
@@ -96,8 +90,6 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-//        JANavigationBarLayout *defaultLayout = [[JANavigationBarLayout alloc] init];
-//        self.navBarLayout = defaultLayout;
     }
     return self;
 }
@@ -105,8 +97,6 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-//        JANavigationBarLayout *defaultLayout = [[JANavigationBarLayout alloc] init];
-//        self.navBarLayout = defaultLayout;
     }
     return self;
 }
@@ -152,6 +142,7 @@
     [self.navigationController.interactivePopGestureRecognizer setEnabled:YES];
     
     //navigation bar configs
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil];
     if ([self respondsToSelector:@selector(navBarTitleView)]){
         self.navigationItem.titleView = [self navBarTitleView];
     }
@@ -171,14 +162,6 @@
     }
 }
 
--(void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-}
-
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
     [self changeLoadingFrame:[[UIScreen mainScreen] bounds] orientation:toInterfaceOrientation];
@@ -195,34 +178,31 @@
 
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
-    if ([[UIApplication sharedApplication] statusBarOrientation] != self.orientation) {
-        [self onOrientationChanged];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC/2), dispatch_get_main_queue(), ^{
-            [self setOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
-        });
-    }
+//    if ([[UIApplication sharedApplication] statusBarOrientation] != self.orientation) {
+//        [self onOrientationChanged];
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC/2), dispatch_get_main_queue(), ^{
+//            [self setOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
+//        });
+//    }
 }
 
 - (void)changeLoadingFrame:(CGRect)frame orientation:(UIInterfaceOrientation)orientation {
     CGFloat screenWidth = frame.size.width;
     CGFloat screenHeight = frame.size.height;
     
-    if (UIInterfaceOrientationIsPortrait(orientation)) {
+//    if (UIInterfaceOrientationIsPortrait(orientation)) {
         if (screenWidth > screenHeight) {
             self.loadingView.frame  = CGRectMake(0, 0, screenHeight, screenWidth);
-        }
-        else {
+        } else {
             self.loadingView.frame  = CGRectMake(0, 0, screenWidth, screenHeight);
         }
-    }
-    else {
-        if (screenWidth > screenHeight) {
-            self.loadingView.frame  = CGRectMake(0, 0, screenWidth, screenHeight);
-        }
-        else {
-            self.loadingView.frame  = CGRectMake(0, 0, screenHeight, screenWidth);
-        }
-    }
+//    } else {
+//        if (screenWidth > screenHeight) {
+//            self.loadingView.frame  = CGRectMake(0, 0, screenWidth, screenHeight);
+//        } else {
+//            self.loadingView.frame  = CGRectMake(0, 0, screenHeight, screenWidth);
+//        }
+//    }
     
     self.loadingAnimation.center = self.loadingView.center;
 }
@@ -254,31 +234,17 @@
          if (self.kickoutView) {
              [self.kickoutView setupKickoutView:CGRectMake(0.0f, 0.0f, window.frame.size.width, window.frame.size.height) orientation:orientation];
          }
-         if (self.searchBarIsVisible) {
-             [self reloadSearchBar];
-         }
-
      } completion: nil];
-    
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self reloadNavBar];
-//    [self reloadTabBar];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sideMenuIsOpening) name:kOpenMenuNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showSearchView) name:kDidPressSearchButtonNotification object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillEnterForeground) name:kAppWillEnterForeground object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground) name:kAppDidEnterBackground object:nil];
-    
-    if (self.searchBarIsVisible) {
-        [self showSearchBar];
-    }
     
     if ([self conformsToProtocol:@protocol(EmarsysPredictProtocolBase)]) {
         if ([self respondsToSelector:@selector(isPreventSendTransactionInViewWillAppear)]) {
@@ -297,7 +263,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kOpenMenuNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kAppWillEnterForeground object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kAppDidEnterBackground object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kDidPressSearchButtonNotification object:nil];
 }
 
 - (void)sideMenuIsOpening {
@@ -311,86 +276,64 @@
     return supportedInterfaceOrientations;
 }
 
-- (void)reloadNavBar {
-}
+//- (void)reloadNavBar {
+//}
 
-- (void)showSearchBar {
-    if (self.searchBarBackground) return; //if has been shown previously
-    self.searchBarBackground = [[UIView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, kSearchViewBarHeight)];
-    
-    self.searchBarBackground.backgroundColor = [Theme color:kColorExtraDarkBlue];
-    [self.view addSubview:self.searchBarBackground];
-    
-    CGFloat horizontalMargin = 0.0f;
-    
-    //adjustment to native searchbar margin
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        horizontalMargin = 10.0f;
-    }
-    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(self.searchBarBackground.bounds.origin.x + horizontalMargin, self.searchBarBackground.bounds.origin.y, self.searchBarBackground.bounds.size.width, self.searchBarBackground.bounds.size.height)];
-    
-    self.searchBar.delegate = self;
-    self.searchBar.barTintColor = [Theme color:kColorExtraDarkBlue];
-    self.searchBar.placeholder = STRING_SEARCH_PLACEHOLDER;
-    self.searchBar.showsCancelButton = NO;
-    [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTintColor: [Theme color:kColorOrange]];
-    
-    UITextField *textFieldSearch = [self.searchBar valueForKey:@"_searchField"];
-    textFieldSearch.font = [UIFont fontWithName:kFontRegularName size:textFieldSearch.font.pointSize];
-    textFieldSearch.backgroundColor = JAWhiteColor;
-    textFieldSearch.textAlignment = NSTextAlignmentRight;
-    
-    //remove magnifying lens
-    [textFieldSearch setLeftViewMode:UITextFieldViewModeNever];
-    [self.searchBarBackground addSubview:self.searchBar];
-    UIImage *searchIcon = [UIImage imageNamed:@"searchIcon"];
-    
-    self.searchIconImageView = [[UIImageView alloc] initWithImage:searchIcon];
-    self.searchIconImageView.frame = CGRectMake(self.searchBar.frame.size.width - horizontalMargin - searchIcon.size.width,(self.searchBar.frame.size.height - searchIcon.size.height) / 2, searchIcon.size.width, searchIcon.size.height);
-    
-    [self.searchBar addSubview:self.searchIconImageView];
-    [self reloadSearchBar];
-}
+//- (void)showSearchBar {
+//    if (self.searchBarBackground) return; //if has been shown previously
+//    self.searchBarBackground = [[UIView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, kSearchViewBarHeight)];
+//    
+//    self.searchBarBackground.backgroundColor = [Theme color:kColorExtraDarkBlue];
+//    [self.view addSubview:self.searchBarBackground];
+//    
+//    CGFloat horizontalMargin = 0.0f;
+//    
+//    //adjustment to native searchbar margin
+//    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+//        horizontalMargin = 10.0f;
+//    }
+//    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(self.searchBarBackground.bounds.origin.x + horizontalMargin, self.searchBarBackground.bounds.origin.y, self.searchBarBackground.bounds.size.width, self.searchBarBackground.bounds.size.height)];
+//    
+//    self.searchBar.delegate = self;
+//    self.searchBar.barTintColor = [Theme color:kColorExtraDarkBlue];
+//    self.searchBar.placeholder = STRING_SEARCH_PLACEHOLDER;
+//    self.searchBar.showsCancelButton = NO;
+//    [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTintColor: [Theme color:kColorOrange]];
+//    
+//    UITextField *textFieldSearch = [self.searchBar valueForKey:@"_searchField"];
+//    textFieldSearch.font = [UIFont fontWithName:kFontRegularName size:textFieldSearch.font.pointSize];
+//    textFieldSearch.backgroundColor = JAWhiteColor;
+//    textFieldSearch.textAlignment = NSTextAlignmentRight;
+//    
+//    //remove magnifying lens
+//    [textFieldSearch setLeftViewMode:UITextFieldViewModeNever];
+//    [self.searchBarBackground addSubview:self.searchBar];
+//    UIImage *searchIcon = [UIImage imageNamed:@"searchIcon"];
+//    
+//    self.searchIconImageView = [[UIImageView alloc] initWithImage:searchIcon];
+//    self.searchIconImageView.frame = CGRectMake(self.searchBar.frame.size.width - horizontalMargin - searchIcon.size.width,(self.searchBar.frame.size.height - searchIcon.size.height) / 2, searchIcon.size.width, searchIcon.size.height);
+//    
+//    [self.searchBar addSubview:self.searchIconImageView];
+//    [self reloadSearchBar];
+//}
 
 - (void)setSearchBarText:(NSString*)text {
     _searchBarText = text;
 }
 
-- (void)reloadSearchBar {
-    self.searchBarBackground.frame = CGRectMake(self.viewBounds.origin.x,
-                                                self.viewBounds.origin.y - kSearchViewBarHeight,
-                                                self.viewBounds.size.width,
-                                                kSearchViewBarHeight);
-    CGFloat horizontalMargin = 3.0f; //adjustment to native searchbar margin
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        horizontalMargin = 10.0f;
-    }
-    self.searchBar.frame = CGRectMake(self.searchBarBackground.bounds.origin.x + horizontalMargin,
-                                      self.searchBarBackground.bounds.origin.y,
-                                      self.searchBarBackground.bounds.size.width - horizontalMargin * 2,
-                                      self.searchBarBackground.bounds.size.height - 1.0f);
-    
-    self.searchIconImageView.frame = CGRectMake(self.searchBar.frame.size.width - 12.0 - self.searchIconImageView.frame.size.width,
-                                                (self.searchBar.frame.size.height - self.searchIconImageView.frame.size.height) / 2,
-                                                self.searchIconImageView.frame.size.width,
-                                                self.searchIconImageView.frame.size.height);
-    
-    [self.searchBar setSearchBarStyle:UISearchBarStyleDefault];
-    [self.searchBar setBackgroundImage:[[UIImage alloc]init]];
-}
 
-#pragma mark Search Bar && Search Results View Delegate
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    NSLog(@"%@", searchBar.text);
-}
-
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-}
-
-- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
-    [[MainTabBarViewController topNavigationController] showSearchView];
-    return NO;
-}
+//#pragma mark Search Bar && Search Results View Delegate
+//- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+//    NSLog(@"%@", searchBar.text);
+//}
+//
+//- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+//}
+//
+//- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
+////    [[MainTabBarViewController topNavigationController] showSearchView];
+//    return NO;
+//}
 
 # pragma mark - Loading View
 - (void)showLoading {
@@ -404,11 +347,10 @@
         
         [self.loadingAnimation startAnimating];
         
-        [UIView animateWithDuration:0.4f
-                         animations: ^{
-                             self.loadingView.alpha = 0.5f;
-                             self.loadingAnimation.alpha = 0.5f;
-                         }];
+        [UIView animateWithDuration:0.4f animations: ^{
+             self.loadingView.alpha = 0.5f;
+             self.loadingAnimation.alpha = 0.5f;
+        }];
     }
 }
 
@@ -418,12 +360,11 @@
         self.requestNumber = 0;
     }
     if (0 == self.requestNumber) {
-        [UIView animateWithDuration:0.4f
-                         animations: ^{
-                             self.loadingView.alpha = 0.0f;
-                             self.loadingAnimation.alpha = 0.0f;
-                         } completion: ^(BOOL finished) {
-                             [self.loadingView removeFromSuperview];
+        [UIView animateWithDuration:0.4f animations: ^{
+            self.loadingView.alpha = 0.0f;
+            self.loadingAnimation.alpha = 0.0f;
+        } completion: ^(BOOL finished) {
+            [self.loadingView removeFromSuperview];
                              [self.loadingAnimation removeFromSuperview];
                          }];
     }
@@ -648,7 +589,7 @@
     
     self.kickoutView = [[JAKickoutView alloc] init];
     [self.kickoutView setupKickoutView:window.frame orientation:[[UIApplication sharedApplication] statusBarOrientation]];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     __block id viewController = target;
     [self.kickoutView setRetryBlock: ^(BOOL dismiss) {
          if ([viewController respondsToSelector:selector]) {
@@ -677,7 +618,7 @@
 }
 
 - (void)removeKickoutView {
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
+//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
     UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
     for (UIView *view in window.rootViewController.view.subviews) {
         if ([view isKindOfClass:[JAKickoutView class]]) {
@@ -710,9 +651,9 @@
 }
 
 - (void)onOrientationChanged {
-    if (self.searchBarIsVisible) {
-        [self reloadSearchBar];
-    }
+//    if (self.searchBarIsVisible) {
+//        [self reloadSearchBar];
+//    }
     self.orientation = [[UIApplication sharedApplication] statusBarOrientation];
 }
 
@@ -773,7 +714,7 @@
 
 #pragma mark - NavigationBarProtocol
 - (void)searchIconButtonTapped {
-    [[MainTabBarViewController topNavigationController] showSearchView];
+    [[MainTabBarViewController topNavigationController] showSearchView: [self getScreenName]];
 }
 
 - (void)cartIconButtonTapped {
@@ -784,6 +725,10 @@
     if (self.navBarleftButton == NavBarLeftButtonTypeCart) {
         self.navigationItem.rightBarButtonItem.badgeValue = [NSString stringWithFormat:@"%lu", (unsigned long)[[RICart sharedInstance].cartEntity.cartCount integerValue]];
     }
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
 }
 
 @end

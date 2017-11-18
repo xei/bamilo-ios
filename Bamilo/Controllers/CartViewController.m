@@ -115,9 +115,12 @@
     [LoadingManager showLoading];
     [RICart removeProductWithSku:cartItem.simpleSku withSuccessBlock:^(RICart *cart) {
         
-        NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
-        [skusFromTeaserInCart removeObjectForKey:cartItem.sku];
-        [[NSUserDefaults standardUserDefaults] setObject:[skusFromTeaserInCart copy] forKey:kSkusFromTeaserInCartKey];
+        //remove the existing purchase behaviour with sku
+        [[PurchaseBehaviourRecorder sharedInstance] deleteBehaviourWithSku:cartItem.sku];
+        
+//        NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
+//        [skusFromTeaserInCart removeObjectForKey:cartItem.sku];
+//        [[NSUserDefaults standardUserDefaults] setObject:[skusFromTeaserInCart copy] forKey:kSkusFromTeaserInCartKey];
         
         
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];

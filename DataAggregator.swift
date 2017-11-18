@@ -37,7 +37,6 @@ import Foundation
         if let requestType = ApiRequestExecutionType(rawValue: Int(type.rawValue)) {
           AddressDataManager.sharedInstance.setDefaultAddress(target, address: address, isBilling: isBilling, type: requestType, completion: completion)
         }
-//
     }
     
     static func addAddress(_ target: DataServiceProtocol, params: [String:String], completion:@escaping DataClosure) {

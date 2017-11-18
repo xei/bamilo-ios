@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CardCollectionViewFlowLayout: BaseCatalogCollectionFlowLayout {
+class CardCollectionViewFlowLayout: BaseCollectionFlowLayout {
     
     private let otherContentHeight: CGFloat = 122
     private let imageRatio: CGFloat = 1.25

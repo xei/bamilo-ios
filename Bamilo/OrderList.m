@@ -13,7 +13,9 @@
 + (JSONKeyMapper *)keyMapper {
     return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{
         @"orders":@"orders",
-        @"totalOrdersCount": @"total_orders"
+        @"totalOrdersCount": @"total_orders",
+        @"currentPage": @"pagination.current_page",
+        @"totalPages": @"pagination.total_pages"
     }];
 }
 

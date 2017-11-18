@@ -37,7 +37,7 @@ class RequestManagerSwift {
         self.baseUrl = baseUrl
     }
     
-    func async(_ method: HTTPMethod, target: Any?, path: String, params: Parameters?, type: ApiRequestExecutionType, completion: @escaping ResponseClosure) {
+    @discardableResult func async(_ method: HTTPMethod, target: Any?, path: String, params: Parameters?, type: ApiRequestExecutionType, completion: @escaping ResponseClosure) -> URLSessionTask? {
         if let baseUrl = self.baseUrl {
             if(type == .container || type == .foreground) {
                 LoadingManager.showLoading(on: target)
@@ -47,8 +47,8 @@ class RequestManagerSwift {
                 print(params)
             }
             Alamofire.SessionManager.default.session.configuration.timeoutIntervalForRequest = 10
-            
-            Alamofire.request("\(baseUrl)/\(path)", method: method, parameters: params, encoding: URLEncoding(destination: .methodDependent), headers: self.createHeaders()).responseJSON(completionHandler: { (response) in
+            let requestUrl = "\(baseUrl)/\(path)".addingPercentEncoding( withAllowedCharacters: NSCharacterSet.urlQueryAllowed) ?? ""
+            return Alamofire.request(requestUrl, method: method, parameters: params, encoding: URLEncoding(destination: .methodDependent), headers: self.createHeaders()).responseJSON(completionHandler: { (response) in
                 if let url = response.request?.url {
                     print("------------ Start response for : \(url)")
                 }
@@ -74,8 +74,9 @@ class RequestManagerSwift {
                             LoadingManager.hideLoading()
                         }
                 }
-            }
+            }.task
         }
+        return nil
     }
     
     //MARK: Private Methods

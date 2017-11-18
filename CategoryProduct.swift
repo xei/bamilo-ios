@@ -10,8 +10,9 @@ import UIKit
 import ObjectMapper
 
 class CategoryProduct : NSObject, Mappable {
-    var urlKey:String?
-    var name:String?
+    
+    var urlKey  : String?
+    var name    : String?
     
     required init?(map: Map) {
         

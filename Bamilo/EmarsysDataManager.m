@@ -8,7 +8,7 @@
 
 #import "EmarsysDataManager.h"
 #import "EmarsysRequestManager.h"
-#import "DeviceManager.h"
+#import "DeviceStatusManager.h"
 #import "AppManager.h"
 
 #define kApplicationId @"application_id"
@@ -114,10 +114,10 @@ static EmarsysDataManager *instance;
     return [NSMutableDictionary
             dictionaryWithObjects:@[ contact.applicationId, contact.hardwareId, @"ios",
                                      ([[NSLocale currentLocale] objectForKey:NSLocaleLanguageCode] ?: @"fa"),
-                                     [DeviceManager getLocalTimeZoneRFC822Formatted],
-                                     [DeviceManager getDeviceModel],
+                                     [DeviceStatusManager getLocalTimeZoneRFC822Formatted],
+                                     [DeviceStatusManager getDeviceModel],
                                      [[AppManager sharedInstance] getAppVersionNumber],
-                                     [DeviceManager getOSVersionFormatted],
+                                     [DeviceStatusManager getOSVersionFormatted],
                                      contact.pushToken ?: @"false"]
             forKeys:@[ kApplicationId, kHardwareId, kPlatform, kLanguage, kTimezone, kDeviceModel, kApplicationVersion, kOSVersion, kPushToken]];
 }

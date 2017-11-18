@@ -561,6 +561,10 @@ static RICart *instance;
         cart.paymentInformation = [RIPaymentInformation parsePaymentInfo:[json objectForKey:@"payment"]];
     }
     
+    if (VALID_NOTEMPTY([json objectForKey:@"payment_landing_page_url"], NSString)) {
+        cart.paymentBrowserUrl = [json objectForKey:@"payment_landing_page_url"];
+    }
+    
     return cart;
 }
 
@@ -881,6 +885,11 @@ static RICart *instance;
     NSDictionary *_estimatedDeliveryTime = [dict objectForKey:@"estimated_delivery_time"];
     if (_estimatedDeliveryTime) {
         [RICart sharedInstance].estimatedDeliveryTime = _estimatedDeliveryTime[@"delivery_message"];
+    }
+    
+    NSString *_deliveryNotice = [dict objectForKey:@"delivery_notice"];
+    if (_deliveryNotice.length) {
+        [RICart sharedInstance].deliveryNotice = _deliveryNotice;
     }
     //SHIPPING METHOD FORM
     /*if (VALID_NOTEMPTY([dict objectForKey:@"shippingMethodForm"], NSDictionary)) {

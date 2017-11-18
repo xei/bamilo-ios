@@ -15,7 +15,6 @@
 #import "EmarsysPredictManager.h"
 #import "Bamilo-Swift.h"
 
-
 // --- Legacy imports ---
 #import "RIProduct.h"
 #import "RICartItem.h"
@@ -25,6 +24,8 @@
 @property (nonatomic, weak) IBOutlet EmarsysRecommendationMinimalCarouselWidget *carouselWidget;
 @property (nonatomic, weak) IBOutlet UILabel *titleLabel;
 @property (nonatomic, weak) IBOutlet UILabel *descLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
+@property (weak, nonatomic) IBOutlet UIButton *orderListButton;
 @end
 
 @implementation SuccessPaymentViewController
@@ -37,7 +38,6 @@
     [self.carouselWidget setBackgroundColor:[Theme color:kColorVeryLightGray]];
     self.carouselWidget.delegate = self;
     [self setupView];
-    [self trackPurchase];
     [self.carouselWidget updateTitle:STRING_BAMILO_RECOMMENDATION];
     
     //Reset the shared Cart entities
@@ -48,14 +48,19 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.extendedLayoutIncludesOpaqueBars = NO;
     self.automaticallyAdjustsScrollViewInsets = NO;
+    [self trackPurchase];
 }
 
 - (void)setupView {
-    [self.titleLabel applyStyle:[Theme font:kFontVariationRegular size:20.0f] color:[Theme color:kColorGreen]];
+    [self.titleLabel applyStyle:[Theme font:kFontVariationRegular size:19.0f] color: [Theme color:kColorGreen]];
     [self.descLabel applyStyle:[Theme font:kFontVariationRegular size:12.0f] color:[UIColor blackColor]];
     self.titleLabel.text = STRING_THANK_YOU_ORDER_TITLE;
     self.descLabel.text = STRING_ORDER_SUCCESS;
+    self.iconImageView.image = [UIImage imageNamed:@"successIcon"];
     [self.carouselWidget hide];
+    
+    [EmarsysPredictManager sendTransactionsOf:self];
+    [self.orderListButton setHidden:NO];
 }
 
 - (void)trackPurchase {
@@ -70,17 +75,14 @@
     }];
     
     //check if came from teasers and track that info
-    NSDictionary* teaserTrackingInfoDictionary = [[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey];
     [self.cart.cartEntity.cartItems enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([obj isKindOfClass:[RICartItem class]]) {
-            NSString *teaserTrackingInfo = [teaserTrackingInfoDictionary objectForKey:((RICartItem *)obj).sku];
-            if (teaserTrackingInfo.length) {
-                [TrackerManager postEventWithSelector:[EventSelectors teaserPurchasedSelector] attributes:[EventAttributes teaserPurchaseWithTeaserName:teaserTrackingInfo screenName:@"HomePage"]];
+            PurchaseBehaviour *behaviour = [[PurchaseBehaviourRecorder sharedInstance] getBehviourBySkuWithSku:((RICartItem *)obj).sku];
+            if (behaviour) {
+                [TrackerManager postEventWithSelector:[EventSelectors behaviourPurchasedSelector] attributes:[EventAttributes purchaseBehaviourWithBehaviour:behaviour]];
             }
         }
     }];
-    
-    
     
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kSkusFromTeaserInCartKey];
     //// ------- START OF LEGACY CODES ------
@@ -93,14 +95,11 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     //// ------- END OF LEGACY CODES ------
-    
     [self publishScreenLoadTime];
-    [EmarsysPredictManager sendTransactionsOf:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"ThankYou"];
     self.tabBarController.tabBar.hidden = NO;
 }
 

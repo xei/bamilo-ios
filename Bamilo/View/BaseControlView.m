@@ -10,8 +10,12 @@
 
 @implementation BaseControlView
 
++ (NSString *)nibName {
+    return NSStringFromClass([self class]);
+}
+
 + (instancetype)nibInstance {
-    return [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([self class]) owner:self options:nil] lastObject];
+    return [[[NSBundle mainBundle] loadNibNamed:[self nibName] owner:self options:nil] lastObject];
 }
 
 @end

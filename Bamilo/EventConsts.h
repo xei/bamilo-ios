@@ -52,6 +52,7 @@ FOUNDATION_EXPORT NSString *const kEventScreenName;
 FOUNDATION_EXPORT NSString *const kEventRecommendationLogic;
 FOUNDATION_EXPORT NSString *const kEventCatalogSortMethod;
 FOUNDATION_EXPORT NSString *const kEventCatalogListViewType;
+FOUNDATION_EXPORT NSString *const kEventSuggestionTitle;
 
 
 @end

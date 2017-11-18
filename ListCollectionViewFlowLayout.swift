@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ListCollectionViewFlowLayout: BaseCatalogCollectionFlowLayout {
+class ListCollectionViewFlowLayout: BaseCollectionFlowLayout {
     
     private let cellHeight: CGFloat = 145
     

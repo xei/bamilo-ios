@@ -1,4 +1,4 @@
-//
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  //
 //  JAShopWebViewController.m
 //  Jumia
 //
@@ -14,7 +14,7 @@
 #import "JACenterNavigationController.h"
 #import "Bamilo-Swift.h"
 
-@interface JAShopWebViewController ()
+@interface JAShopWebViewController () <SearchViewControllerDelegate>
 
 @property (nonatomic, strong)RIHtmlShop* htmlShop;
 @property (nonatomic, strong)UIScrollView* scrollView;
@@ -126,7 +126,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
  navigationType:(UIWebViewNavigationType)navigationType {
     RITarget *target = [RITarget parseTarget:[request.URL absoluteString]];
     JAScreenTarget *screenTarget = [[JAScreenTarget alloc] initWithTarget:target];
-    return ![[MainTabBarViewController topNavigationController] openScreenTarget:screenTarget];
+    return ![[MainTabBarViewController topNavigationController] openScreenTarget:screenTarget purchaseInfo:self.purchaseTrackingInfo];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {

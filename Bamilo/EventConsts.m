@@ -52,5 +52,6 @@ NSString *const kEventScreenName = @"screnName";
 NSString *const kEventRecommendationLogic = @"RecommendationLogic";
 NSString *const kEventCatalogSortMethod = @"CatalogSortMethod";
 NSString *const kEventCatalogListViewType = @"CatalogListViewType";
+NSString *const kEventSuggestionTitle = @"SuggestionTitle";
 
 @end

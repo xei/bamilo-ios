@@ -13,7 +13,7 @@ import Kingfisher
     @objc optional func addOrRemoveFromWishList(product: Product, cell: BaseCatallogCollectionViewCell, add: Bool)
 }
  
-class BaseCatallogCollectionViewCell: UICollectionViewCell {
+class BaseCatallogCollectionViewCell: BaseCollectionViewCellSwift {
     
     @IBOutlet weak var productImage: UIImageView?
     @IBOutlet weak var titleLabel: UILabel?
@@ -32,24 +32,11 @@ class BaseCatallogCollectionViewCell: UICollectionViewCell {
     
     var cellIndex: Int = 0 {
         didSet {
-            productImage?.backgroundColor = self.placeholderColors[cellIndex % 6]
+            productImage?.backgroundColor = UIColor.placeholderColors[cellIndex % 6]
         }
     }
-    private let placeholderColors:[UIColor] = [ //Sequence of these colors are important
-        UIColor.init(red: 249/255, green: 239/255, blue: 234/255, alpha: 1),
-        UIColor.init(red: 236/255, green: 236/255, blue: 236/255, alpha: 1),
-        UIColor.init(red: 226/255, green: 232/255, blue: 239/255, alpha: 1),
-        UIColor.init(red: 233/255, green: 247/255, blue: 247/255, alpha: 1),
-        UIColor.init(red: 245/255, green: 241/255, blue: 247/255, alpha: 1),
-        UIColor.init(red: 236/255, green: 235/255, blue: 222/255, alpha: 1)
-    ]
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        self.setupView()
-    }
-    
-    func setupView() {
+    override func setupView() {
         self.rateView?.enableButtons(enable: false)
         self.newTagView?.backgroundColor = Theme.color(kColorOrange)
 
@@ -76,10 +63,14 @@ class BaseCatallogCollectionViewCell: UICollectionViewCell {
         brandLabel?.text = product.brand
         productImage?.kf.indicatorType = .activity
         productImage?.kf.setImage(with: product.imageUrl, options: [.transition(.fade(0.20))])
-        if let specialPrice = product.specialPrice, let price = product.price, let precentage = product.maxSavingPrecentage {
+        if let specialPrice = product.specialPrice, let price = product.price, product.price != product.specialPrice {
             discountedPriceLabel?.text = "\(specialPrice)".formatPriceWithCurrency()
             priceLabel?.attributedText = "\(price)".formatPriceWithCurrency().strucThroughPriceFormat()
-            dicountPrecentageLabel?.text = "%\(precentage)".convertTo(language: .arabic)
+            if let precentage = product.maxSavingPrecentage {
+                dicountPrecentageLabel?.text = "%\(precentage)".convertTo(language: .arabic)
+            } else {
+                dicountPrecentageLabel?.text = ""
+            }
         } else if let price = product.price {
             discountedPriceLabel?.text = "\(price)".formatPriceWithCurrency()
             priceLabel?.text = nil
@@ -97,9 +88,5 @@ class BaseCatallogCollectionViewCell: UICollectionViewCell {
         }
         self.addToWishListButton?.isSelected = product.isInWishList
         self.product = product
-    }
-    
-    static var nibName: String {
-        return AppUtility.getStringFromClass(for: self)!
     }
 }

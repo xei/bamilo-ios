@@ -21,19 +21,16 @@ import SwiftyJSON
     var categoryIds: [String]?
     var category: CategoryProduct?
     var imageUrl: URL?
-    var target:String?
+    var target: String?
     var reviewsAverage: Double?
     var ratingsCount: Int?
     var isNew: Bool = false
     var isInWishList: Bool = false
     var reviewsCount: Int?
+    var hasStock: Bool = true
     
-    
-    required init?(map: Map) {
-        if map.JSON["sku"] == nil {
-            return nil;
-        }
-    }
+    override init() {}
+    required init?(map: Map) {}
     
     func mapping(map: Map) {
         sku                 <- map["sku"]
@@ -41,7 +38,7 @@ import SwiftyJSON
         brand               <- map["brand"]
         maxSavingPrecentage <- map["max_saving_percentage"]
         price               <- map["price"]
-        categoryIds         = JSON(map.JSON)["categories"].string?.characters.split(separator: "|").map {String($0)}
+        categoryIds         = JSON(map.JSON)["categories"].string?.split(separator: "|").map {String($0)}
         specialPrice        <- map["special_price"]
         imageUrl            <- (map["image"], URLTransform())
         target              <- map["target"]
@@ -51,5 +48,10 @@ import SwiftyJSON
         ratingsCount        <- map["rating_reviews_summary.ratings_total"]
         reviewsCount        <- map["rating_reviews_summary.reviews_total"]
         isNew               <- map["is_new"]
+        
+        //checkou avaiability
+        var stockAvaiablity: Bool?
+        stockAvaiablity     <- map["has_stock"]
+        hasStock = stockAvaiablity ?? true
     }
 }

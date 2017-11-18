@@ -15,5 +15,4 @@
 @end
 
 @interface PaymentOptionTableViewCell : BaseTableViewCell <RadioButtonViewProtocol>
-
 @end

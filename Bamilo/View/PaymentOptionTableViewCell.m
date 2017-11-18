@@ -22,16 +22,13 @@
 
 -(void)awakeFromNib {
     [super awakeFromNib];
-    
     [self.paymentDescLabel applyStyle:[Theme font:kFontVariationRegular size:11.0f] color:[Theme color:kColorDarkGray]];
 }
 
 #pragma mark - Overrides
 -(void)updateWithModel:(id)model {
     PaymentOptionTableViewCellModel *paymentOptionTableViewCellModel = (PaymentOptionTableViewCellModel *)model;
-    
     self.paymentDescLabel.text = paymentOptionTableViewCellModel.isSelected ? paymentOptionTableViewCellModel.descText : nil;
-    
     _model = model;
 }
 

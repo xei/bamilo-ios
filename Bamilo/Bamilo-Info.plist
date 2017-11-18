@@ -98,7 +98,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.0.2</string>
+	<string>2.1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -134,13 +134,24 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>5</string>
+	<string>14</string>
 	<key>Configs</key>
 	<dict>
+		<key>Tour</key>
+		<dict>
+			<key>HomePage</key>
+			<array>
+				<string>ItemTrackings</string>
+			</array>
+			<key>ProfileView</key>
+			<array>
+				<string>ItemTrackings</string>
+			</array>
+		</dict>
 		<key>API_BaseUrl</key>
 		<string>http://www.bamilo.com/mobapi/</string>
 		<key>API_Version</key>
-		<string>2.4</string>
+		<string>2.6</string>
 		<key>EMMerchantID</key>
 		<string>18146DE34FE0B8C9</string>
 		<key>Emarsys</key>

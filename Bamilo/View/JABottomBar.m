@@ -59,6 +59,7 @@
 - (JAButton *)addButton:(NSString *)name target:(id)target action:(SEL)action {
     JAButton *button = [[JAButton alloc] initButtonWithTitle:name target:target action:action];
     [self addSubview:button];
+    [self bringSubviewToFront:button];
     [button setBackgroundColor:[Theme color:kColorDarkGreen]];
     [self.buttonsArray addObject:button];
     [self reloadFrame:self.frame];

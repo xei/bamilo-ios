@@ -12,23 +12,28 @@ extension String {
     
     static let EMPTY = ""
     
+    func forceLTR() -> String {
+        return "\u{200E}".appending(self)
+    }
+    func forceRTL() -> String {
+        return "\u{200F}".appending(self)
+    }
+    
     func convertTo(language: LocalLang) -> String {
-        let characters = self.characters
         var converted: String = ""
-        for character in characters {
+        for character in self {
             converted.append(convertSingleCharTo(character: String(character), language: language))
         }
         return converted
     }
     
     func priceFormat() -> String {
-        var cammaIndex: Int = self.characters.count % 3 == 0 ? 3 : self.characters.count % 3
+        var cammaIndex: Int = self.count % 3 == 0 ? 3 : self.count % 3
         var result = self
-        while (cammaIndex < result.characters.count) {
+        while (cammaIndex < result.count) {
             result.insert(",", at: result.index(result.startIndex, offsetBy: cammaIndex))
             cammaIndex += 4;
         }
-        
         return result
     }
     
@@ -43,7 +48,7 @@ extension String {
         return attributeString
     }
     
-//MARK: Private Methods
+    //MARK: Private Methods
     private func convertSingleCharTo(character: String, language: LocalLang) -> String {
         let formatter: NumberFormatter = NumberFormatter()
         let irLoc = NSLocale(localeIdentifier: language.rawValue) as Locale

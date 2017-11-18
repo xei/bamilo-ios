@@ -92,7 +92,7 @@
 #pragma mark - Helpers
 -(void) popToCheckoutViewControllerAtStep:(int)step {
     if(step < self.navigationController.viewControllers.count) {
-        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:step + 1] animated:YES];
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:step] animated:YES];
     }
 }
 

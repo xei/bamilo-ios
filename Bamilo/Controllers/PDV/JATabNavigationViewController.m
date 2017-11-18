@@ -155,6 +155,8 @@
     
     [self topTabsView];
     [self contentScrollView];
+    
+    self.tabBarController.tabBar.hidden = YES;
 }
 
 #pragma mark JATopTabsViewDelegate
@@ -167,6 +169,11 @@
 
 - (NSString *)navBarTitleString {
     return self.product.brand;
+}
+
+#pragma mark - hide tabbar in this view controller
+- (BOOL)hidesBottomBarWhenPushed {
+    return YES;
 }
 
 @end

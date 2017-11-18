@@ -18,13 +18,9 @@
 @property (nonatomic, strong) NSString* currentErrorMessage;
 
 -(void)setupWithField:(RIField*)field;
-
 -(NSDate*)getDate;
-
 -(void)setError:(NSString*)error;
-
 -(void)cleanError;
-
 -(void)resetValue;
 
 @end

@@ -24,8 +24,8 @@
 //@property (nonatomic, strong)NSString *screenName;
 //@property (nonatomic, strong)NSDate *startLoadingTime;
 //@property (nonatomic, assign)BOOL firstLoading;
-@property (nonatomic, assign)BOOL searchBarIsVisible;
-@property (nonatomic, assign)BOOL tabBarIsVisible;
+//@property (nonatomic, assign)BOOL searchBarIsVisible;
+//@property (nonatomic, assign)BOOL tabBarIsVisible;
 
 @property (nonatomic, strong) UIImageView *searchIconImageView;
 
@@ -39,10 +39,6 @@
  */
 - (CGRect)viewBounds;
 - (CGRect)bounds;
-/**
- * Method to force Nav bar to reload. This is called in viewWillAppear
- */
-- (void)reloadNavBar;
 
 /**
  * Method to set SearchBar text

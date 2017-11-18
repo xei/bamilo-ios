@@ -516,6 +516,12 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
                         _currentPageIndex = page;
                         
                         
+                        // Call didMoveToPage delegate function
+                        UIViewController *currentController = _controllerArray[_currentPageIndex];
+                        if ([_delegate respondsToSelector:@selector(willMoveToPage:index:)]) {
+                            [_delegate willMoveToPage:currentController index:_currentPageIndex];
+                        }
+                        
                         if (![_pagesAddedSet containsObject:@(page)] && page < _controllerArray.count && page >= 0){
                             [self addPageAtIndex:page];
                             [_pagesAddedSet addObject:@(page)];
@@ -577,19 +583,19 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
         if ([_delegate respondsToSelector:@selector(didMoveToPage:index:)]) {
             [_delegate didMoveToPage:currentController index:_currentPageIndex];
         }
-        
-        // Remove all but current page after decelerating
-        for (NSNumber *num in _pagesAddedSet) {
-            if (![num isEqualToNumber:@(self.currentPageIndex)]) {
-                [self removePageAtIndex:num.integerValue];
-            }
-        }
-        
-        _didScrollAlready = NO;
-        _startingPageForScroll = _currentPageIndex;
-        
-        // Empty out pages in dictionary
-        [_pagesAddedSet removeAllObjects];
+//        
+//        // Remove all but current page after decelerating
+//        for (NSNumber *num in _pagesAddedSet) {
+//            if (![num isEqualToNumber:@(self.currentPageIndex)]) {
+//                [self removePageAtIndex:num.integerValue];
+//            }
+//        }
+//        
+//        _didScrollAlready = NO;
+//        _startingPageForScroll = _currentPageIndex;
+//        
+//        // Empty out pages in dictionary
+//        [_pagesAddedSet removeAllObjects];
     }
 }
 
@@ -602,18 +608,18 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
         [_delegate didMoveToPage:currentController index:_currentPageIndex];
     }
     
-    // Remove all but current page after decelerating
-    for (NSNumber *num in _pagesAddedSet) {
-        if (![num isEqualToNumber:@(self.currentPageIndex)]) {
-            [self removePageAtIndex:num.integerValue];
-        }
-    }
-
-    _startingPageForScroll = _currentPageIndex;
-    _didTapMenuItemToScroll = NO;
-    
-    // Empty out pages in dictionary
-    [_pagesAddedSet removeAllObjects];
+//    // Remove all but current page after decelerating
+//    for (NSNumber *num in _pagesAddedSet) {
+//        if (![num isEqualToNumber:@(self.currentPageIndex)]) {
+//            [self removePageAtIndex:num.integerValue];
+//        }
+//    }
+//
+//    _startingPageForScroll = _currentPageIndex;
+//    _didTapMenuItemToScroll = NO;
+//    
+//    // Empty out pages in dictionary
+//    [_pagesAddedSet removeAllObjects];
 }
 
 
@@ -730,12 +736,12 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
             
             // Move controller scroll view when tapping menu item
             double duration = _scrollAnimationDurationOnMenuItemTap / 1000.0;
-            
+
             [UIView animateWithDuration:duration animations:^{
                 CGFloat xOffset = (CGFloat)itemIndex * _controllerScrollView.frame.size.width;
                 [_controllerScrollView setContentOffset:CGPointMake(xOffset, _controllerScrollView.contentOffset.y)];
             }];
-            
+
             if (_tapTimer != nil) {
                 [_tapTimer invalidate];
             }
@@ -876,6 +882,10 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
  */
 - (void)moveToPage:(NSInteger)index
 {
+    [self moveToPage:index withAnimated:YES];
+}
+
+- (void)moveToPage:(NSInteger)index withAnimated:(BOOL)animated {
     if (index >= 0 && index < _controllerArray.count) {
         // Update page if changed
         if (index != _currentPageIndex) {
@@ -906,10 +916,15 @@ NSString * const CAPSPageMenuOptionHideTopMenuBar                       = @"hide
         // Move controller scroll view when tapping menu item
         double duration = (double)(_scrollAnimationDurationOnMenuItemTap) / (double)(1000);
         
-        [UIView animateWithDuration:duration animations:^{
+        if (animated) {
+            [UIView animateWithDuration:duration animations:^{
+                CGFloat xOffset = (CGFloat)index * self.controllerScrollView.frame.size.width;
+                [self.controllerScrollView setContentOffset:CGPointMake(xOffset, self.controllerScrollView.contentOffset.y) animated:NO];
+            }];
+        } else {
             CGFloat xOffset = (CGFloat)index * self.controllerScrollView.frame.size.width;
             [self.controllerScrollView setContentOffset:CGPointMake(xOffset, self.controllerScrollView.contentOffset.y) animated:NO];
-        }];
+        }
     }
 }
 

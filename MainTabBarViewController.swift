@@ -15,11 +15,12 @@ import UIKit
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setRTL()
+        NavBarUtility.changeStatusBarColor(color: Theme.color(kColorExtraDarkBlue))
         
         self.tabBar.isTranslucent = false
         self.delegate = self
         
-        MainTabBarViewController.activateTabItem(rootViewClassType: JAHomeViewController.self)
+        MainTabBarViewController.activateTabItem(rootViewClassType: HomeViewController.self)
         
         self.tabBar.tintColor = Theme.color(kColorExtraDarkBlue)
         UITabBarItem.appearance().setTitleTextAttributes([NSFontAttributeName: Theme.font(kFontVariationRegular, size: 9), NSForegroundColorAttributeName: Theme.color(kColorExtraDarkBlue)], for: .selected)
@@ -71,8 +72,8 @@ import UIKit
     //MARk: - UITabBarControllerDelegate
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         if let centerNav = viewController as? JACenterNavigationController, centerNav != MainTabBarViewController.previousSelectedViewController {
-            centerNav.registerObservingOnNotifications()
             MainTabBarViewController.previousSelectedViewController?.removeObservingNotifications()
+            centerNav.registerObservingOnNotifications()
             MainTabBarViewController.previousSelectedViewController = centerNav
             
             
@@ -94,8 +95,8 @@ import UIKit
             tabBarController?.selectedIndex = index
             if let navigationController = tabBarController?.viewControllers?[index] as? JACenterNavigationController {
                 navigationController.popToRootViewController(animated: false)
-                navigationController.registerObservingOnNotifications()
                 MainTabBarViewController.previousSelectedViewController?.removeObservingNotifications()
+                navigationController.registerObservingOnNotifications()
                 MainTabBarViewController.previousSelectedViewController = navigationController
             }
         }
@@ -122,10 +123,25 @@ import UIKit
         MainTabBarViewController.sharedInstance()?.tabBar.items?.last?.badgeValue = cartItemsCount == 0 ? nil : "\(cartItemsCount)" //.convertTo(language: .arabic)
     }
     
+    static func getTabbarItemView<T>(rootViewClassType: T.Type) -> UIView? {
+        let tabBarController = MainTabBarViewController.sharedInstance()
+        var targetView: UIView?
+        if let index = tabBarController?.viewControllers?.index(where: {
+            if ($0 as! UINavigationController).viewControllers.count > 0 {
+                return ($0 as? UINavigationController)?.viewControllers[0] is T
+            }
+            return false
+        }) {
+            if let view = tabBarController?.tabBar.items?[index].value(forKey: "view") as? UIView {
+                targetView = view
+            }
+        }
+        return targetView
+    }
     
     //TODO: Temprory helper functions (for objective c codes)
     static func showHome() {
-        MainTabBarViewController.activateTabItem(rootViewClassType: JAHomeViewController.self)
+        MainTabBarViewController.activateTabItem(rootViewClassType: HomeViewController.self)
     }
     
     static func showWishList() {
@@ -138,6 +154,10 @@ import UIKit
     
     static func showCart() {
         MainTabBarViewController.activateTabItem(rootViewClassType: CartViewController.self)
+    }
+    
+    static func showCategories() {
+        MainTabBarViewController.activateTabItem(rootViewClassType: JACategoriesSideMenuViewController.self)
     }
     
     

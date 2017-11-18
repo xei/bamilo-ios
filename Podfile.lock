@@ -1,7 +1,7 @@
 PODS:
-  - Adjust (4.11.4):
-    - Adjust/Core (= 4.11.4)
-  - Adjust/Core (4.11.4)
+  - Adjust (4.11.5):
+    - Adjust/Core (= 4.11.5)
+  - Adjust/Core (4.11.5)
   - AFNetworking (2.6.3):
     - AFNetworking/NSURLConnection (= 2.6.3)
     - AFNetworking/NSURLSession (= 2.6.3)
@@ -23,16 +23,17 @@ PODS:
   - AFNetworking/UIKit (2.6.3):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - Alamofire (4.5.0)
+  - Alamofire (4.5.1)
   - AlamofireObjectMapper (4.1.0):
     - Alamofire (~> 4.1)
     - ObjectMapper (~> 2.0)
   - AlgoliaSearch-Client (3.7.0):
     - AFNetworking (~> 2.2)
-  - Crashlytics (3.8.5):
-    - Fabric (~> 1.6.3)
+  - Crashlytics (3.9.3):
+    - Fabric (~> 1.7.2)
   - EmarsysPredictSDK (1.0.32)
-  - Fabric (1.6.12)
+  - Fabric (1.7.2)
+  - FSPagerView (0.7.1)
   - FXBlurView (1.6.4)
   - GoogleAnalytics (3.14.0)
   - GoogleAppIndexing (2.0.3)
@@ -40,19 +41,25 @@ PODS:
     - GoogleAnalytics (= 3.14.0)
   - JBWhatsAppActivity (1.0)
   - JSONModel (1.7.0)
-  - Kingfisher (3.11.0)
-  - Masonry (1.0.2)
+  - Kingfisher (3.13.1)
+  - Masonry (1.1.0)
   - NewRelicAgent (5.10.1)
-  - ObjectMapper (2.2.8)
-  - Pushwoosh (5.3.4)
+  - ObjectMapper (2.2.9)
+  - Pushwoosh (5.4.0)
   - RAlertView (0.1.1):
     - Masonry
     - RGB
+  - Realm (3.0.1):
+    - Realm/Headers (= 3.0.1)
+  - Realm/Headers (3.0.1)
+  - RealmSwift (3.0.1):
+    - Realm (= 3.0.1)
   - RGB (0.0.2)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
   - SwiftyJSON (3.1.4)
+  - TBActionSheet (1.5.5)
   - TTRangeSlider (1.0.5)
 
 DEPENDENCIES:
@@ -60,9 +67,10 @@ DEPENDENCIES:
   - Alamofire (~> 4.4)
   - AlamofireObjectMapper (~> 4.0)
   - AlgoliaSearch-Client
-  - Crashlytics (~> 3.8)
+  - Crashlytics (~> 3.9)
   - EmarsysPredictSDK
   - Fabric
+  - FSPagerView
   - FXBlurView (~> 1.6.4)
   - GoogleAnalytics (= 3.14.0)
   - GoogleAppIndexing (~> 2.0.3)
@@ -74,36 +82,42 @@ DEPENDENCIES:
   - ObjectMapper (~> 2.2)
   - Pushwoosh
   - RAlertView
+  - RealmSwift
   - SDWebImage (~> 3.8)
   - SwiftyJSON
+  - TBActionSheet
   - TTRangeSlider (~> 1.0.5)
 
 SPEC CHECKSUMS:
-  Adjust: c3265d1c75916d727277aca22ac4b52072fc18d2
+  Adjust: 4d8e3830da125a270705188250c3ba86b544ebb7
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
-  Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
+  Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
   AlamofireObjectMapper: 435adc82f5b367679bd9e71c4974a54efd0b2521
   AlgoliaSearch-Client: 8a937017f9faad0eef7a2d43fdb695f7620de140
-  Crashlytics: dfbae35ef22ca189240d230ad501feea4ee85d2d
+  Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   EmarsysPredictSDK: 8267726b1e8b3d5621a67d68b3c123060dde3639
-  Fabric: f050464eac45a2ce5a8e6e6a07e977c0df32fe28
+  Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
+  FSPagerView: 958aba39684e1573755ddcfcc29f7eebb8413cee
   FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
   GoogleAnalytics: 9be1afdb8deeac4bb5f13ca7f7d3b9db2a1f43dc
   GoogleAppIndexing: 176146164d14b30a403f5ba394fc2b51855025da
   GoogleTagManager: 39e4af1e9250e7817d328f690768e26afe560da0
   JBWhatsAppActivity: e1b4dcf1b967aaf714cc784b42fb49a110972e4a
   JSONModel: 840bc0fcffb24b8454d2c026bf26fea454b8e98d
-  Kingfisher: c8911a7672c6217dec8c0520fb6e76ec4b7e0780
-  Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
+  Kingfisher: ed9707a409cc47fddafbcd12a43a9757e3600af5
+  Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   NewRelicAgent: d16c572a3355d3ff9a359a6677e946c7a75a8f76
-  ObjectMapper: 3d571bb5af471c779e1160828cd9ad5c4ef90958
-  Pushwoosh: c5a1324778f4195d95f7e3f7435140a36a5bfed0
+  ObjectMapper: 63cfe41bc6f8e7c8f44344c49901b8ae7de14c52
+  Pushwoosh: 933203afdb61f495147643b75f6dbf9c401c5f9a
   RAlertView: b9996eb63ceb64c7d1879a1d1846af5e386a1808
+  Realm: ba6144c74f835f7497791f6599d63a7755377b83
+  RealmSwift: 7d13b1ac4b6022a13f841e3143e7789c9e40ad0d
   RGB: 21cf4b60ef3501c6b7cbb268a30045905dd90995
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+  TBActionSheet: f1c95530f81b41b6dd75d9f653331e953fb3c7f5
   TTRangeSlider: 2f2ce4a33b32bb323c6575b9f5161c4664459c58
 
-PODFILE CHECKSUM: dda2872dfa4bca2416dcfb52847acda8a474c05a
+PODFILE CHECKSUM: 5bdfd50327b4bdaaf8a2cedd38564611b447a4fc
 
 COCOAPODS: 1.2.1

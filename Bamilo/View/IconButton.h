@@ -11,4 +11,5 @@
 
 @interface IconButton : BaseButton
 @property (nonatomic) IBInspectable CGFloat imageHeightToButtonHeightRatio;
+@property (nonatomic) IBInspectable BOOL isLTR;
 @end

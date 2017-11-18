@@ -24,13 +24,15 @@ struct ProfileViewDataModel {
 }
 
 
-class ProfileViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, DataServiceProtocol, MFMailComposeViewControllerDelegate{
+class ProfileViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, DataServiceProtocol, MFMailComposeViewControllerDelegate, TourPresenter, TourSpotLightViewDelegate {
 
     @IBOutlet private weak var tableView: UITableView!
+    
     private var tableViewDataSource: [[ProfileViewDataModel]]?
     private let footerSectionHeight: CGFloat = 7
     private var viewWillApearedOnceOrMore = false
-    
+    private var spotLightView: TourSpotLightView?
+    private var tourHandler: TourPresentingHandler?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +52,9 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         
         self.updateTableViewDataSource()
         self.tableView.reloadData()
+        
+        //start tour if it's necessary
+        TourManager.shared.onBoard(presenter: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -192,8 +197,10 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
             //Reset some actions
             EmarsysPredictManager.userLoggedOut()
             RICustomer.cleanFromDB()
-            RICart.sharedInstance().cartEntity.cartItems = [];
-            RICart.sharedInstance().cartEntity.cartCount = nil;
+            RICart.sharedInstance().cartEntity?.cartItems = []
+            RICart.sharedInstance().cartEntity?.cartCount = nil
+            LocalSearchSuggestion().clearAllHistories()
+            
             UserDefaults.standard.removeObject(forKey: "SelectedAreaByUser")
         }
         NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.UserLoggedOut), object: nil, userInfo: nil)
@@ -261,15 +268,53 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         
         //TODO: handle these legacy code with another way (when tab bar is ready)
         NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.UpdateCart), object: nil, userInfo: nil)
-        MainTabBarViewController.activateTabItem(rootViewClassType: JAHomeViewController.self)
+        MainTabBarViewController.activateTabItem(rootViewClassType: HomeViewController.self)
         
         RICommunicationWrapper.deleteSessionCookie()
         ViewControllerManager.sharedInstance().clearCache()
     }
     
-    //MARK: - DataTrackerProtocol
+    //MARK: - DataTrackerProtocol & TourPresenter
     override func getScreenName() -> String! {
         return "ProfileView"
+    }
+    
+    func doOnBoarding(featureName: String, handler: @escaping (String, TourPresenter) -> Void) {
+        if featureName == TourNames.ItemTrackings {
+            if spotLightView == nil {
+                if let orderTrackingCell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 1)) {
+                    var cellRect = self.tableView.convert(orderTrackingCell.frame, to: self.tableView.superview)
+                    
+                    //TODO: temprory code for this release!!!
+                    let IS_IPHONE = UIDevice.current.userInterfaceIdiom == .phone
+                    let IS_IPHONE_X = IS_IPHONE && Int(UIScreen.main.bounds.size.height) == 812
+                    if IS_IPHONE_X {
+                        cellRect.origin.y += 25
+                    }
+                    
+                    let orderSpotLight = TourSpotLight(withRect: cellRect, shape: .roundRectangle, text: STRING_ITEM_TRACKING_HINT_2)
+                    spotLightView = TourSpotLightView(frame: UIScreen.main.bounds, spotlight: [orderSpotLight])
+                    spotLightView?.enableContinueLabel = true
+                    spotLightView?.tourName = featureName
+                    spotLightView?.textLabelFont = Theme.font(kFontVariationBold, size: 16)
+                    spotLightView?.continueLabelFont = Theme.font(kFontVariationBold, size: 16)
+                    spotLightView?.continueLabelText = STRING_GOT_IT
+                    spotLightView?.delegate = self
+                }
+            }
+            
+            let window = UIApplication.shared.keyWindow!
+            if let view = spotLightView {
+                window.addSubview(view)
+            }
+            spotLightView?.start()
+            self.tourHandler = handler
+        }
+    }
+    
+    //MARK: - TourSpotLightViewDelegate
+    func spotlightViewDidCleanup(_ spotlightView: TourSpotLightView) {
+        self.tourHandler?(spotlightView.tourName!, self)
     }
     
     //MARK: - NavigationBarProtocol

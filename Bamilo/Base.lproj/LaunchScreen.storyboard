@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -21,29 +22,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ar3-6x-00D">
-                                <rect key="frame" x="0.0" y="20" width="375" height="43"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img_navBar_logo" translatesAutoresizingMaskIntoConstraints="NO" id="Hvu-5x-KRd">
-                                        <rect key="frame" x="146" y="11.5" width="83" height="20"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="83" id="By7-QJ-nws"/>
-                                            <constraint firstAttribute="height" constant="20" id="Oqo-sR-V0F"/>
-                                        </constraints>
-                                    </imageView>
-                                </subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" image="launch_screen_logo" translatesAutoresizingMaskIntoConstraints="NO" id="PGO-nd-ckW">
+                                <rect key="frame" x="57" y="302" width="261" height="62"/>
                                 <constraints>
-                                    <constraint firstItem="Hvu-5x-KRd" firstAttribute="centerX" secondItem="Ar3-6x-00D" secondAttribute="centerX" id="BQv-4W-RA7"/>
-                                    <constraint firstAttribute="height" constant="43" id="Cjb-aV-waz"/>
-                                    <constraint firstItem="Hvu-5x-KRd" firstAttribute="centerY" secondItem="Ar3-6x-00D" secondAttribute="centerY" constant="0.5" id="uFA-xW-nNp"/>
+                                    <constraint firstAttribute="width" secondItem="PGO-nd-ckW" secondAttribute="height" multiplier="261:62" id="U7P-By-1Xl"/>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="261" id="YqL-Q0-hyB"/>
                                 </constraints>
-                            </view>
+                            </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Ar3-6x-00D" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" id="5YU-cJ-rE1"/>
-                            <constraint firstAttribute="trailing" secondItem="Ar3-6x-00D" secondAttribute="trailing" id="Ybb-Go-mGH"/>
-                            <constraint firstItem="Ar3-6x-00D" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="rLM-TR-cTH"/>
+                            <constraint firstAttribute="right" secondItem="PGO-nd-ckW" secondAttribute="right" constant="57" id="3WQ-5C-56w"/>
+                            <constraint firstItem="PGO-nd-ckW" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="8fQ-Gd-gTF"/>
+                            <constraint firstItem="PGO-nd-ckW" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="P0R-9b-fcI"/>
                         </constraints>
                     </view>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
@@ -54,6 +45,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="img_navBar_logo" width="83" height="20"/>
+        <image name="launch_screen_logo" width="261" height="62"/>
     </resources>
 </document>

@@ -28,7 +28,9 @@
 @property (nonatomic, copy) NSString *customerFirstMame;
 @property (nonatomic, copy) NSString *customerLastName;
 @property (nonatomic, copy) NSString *estimatedDeliveryTime;
+@property (nonatomic, copy) NSString *deliveryNotice;
 @property (nonatomic, strong) RIPaymentInformation *paymentInformation;
+@property (nonatomic, copy) NSString *paymentBrowserUrl;
 
 + (instancetype)sharedInstance;
 

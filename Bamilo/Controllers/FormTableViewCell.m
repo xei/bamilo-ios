@@ -13,6 +13,8 @@
     return @"FormTableViewCell";
 }
 - (void)prepareForReuse {
+    [super prepareForReuse];
     [self.formItemControl resetAndClear];
 }
+
 @end

@@ -24,20 +24,23 @@
 #import "RICommunicationWrapper.h"
 #import "RIGoogleAnalyticsTracker.h"
 #import "AppManager.h"
-#import "DeviceManager.h"
+#import "DeviceStatusManager.h"
 
 
 #import <Masonry/Masonry.h>
 #import <RGB/RRGB.h>
 #import "UIBarButtonItem+Badge.h"
+#import "CAPSPageMenu.h"
 
 #import "DataManager.h"
+#import "DeepLinkManager.h"
 #import "OrderList.h"
 #import "PerformanceTrackerProtocol.h"
 #import "DataTrackerProtocol.h"
 #import "AuthenticationDataManager.h"
 #import "EmarsysPredictProtocol.h"
 #import "EmarsysPredictManager.h"
+#import "RecommendItem.h"
 #import "InputTextFieldControl.h"
 
 #import "BaseControlView.h"
@@ -48,15 +51,18 @@
 #import "JABaseViewController.h"
 #import "BaseViewController.h"
 #import "BaseTableViewCell.h"
+#import "PlainTableViewHeaderCell.h"
+#import "MutualTitleHeaderCell.h"
 #import "CatalogNoResultViewController.h"
 #import "JAFiltersViewController.h"
+#import "JACategoriesSideMenuViewController.h"
 #import "JAPDVViewController.h"
 #import "BaseTracker.h"
 #import "TagTrackerProtocol.h"
 
-#import "JAHomeViewController.h"
 #import "CartViewController.h"
 #import "JASavedListViewController.h"
+#import "JAHomeViewController.h"
 #import "MultistepEntity.h"
 #import "SuccessPaymentViewController.h"
 

@@ -11,7 +11,7 @@
 
 @interface RecommendItem : BaseModel
 
-+ (RecommendItem *)instanceWithEMRecommendationItem:(EMRecommendationItem *)item;
++ (instancetype)instanceWithEMRecommendationItem:(EMRecommendationItem *)item;
 
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *brandName;

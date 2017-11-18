@@ -36,7 +36,7 @@
 #import "JANewsletterViewController.h"
 #import "JANewsletterSubscriptionViewController.h"
 
-#import "JASearchView.h"
+//#import "JASearchView.h"
 #import "JAActionWebViewController.h"
 
 #import "JAStepByStepTabViewController.h"
@@ -70,7 +70,7 @@
 @property (assign, nonatomic) BOOL neeedsExternalPaymentMethod;
 @property (strong, nonatomic) UIStoryboard *mainStoryboard;
 
-@property (nonatomic, strong) JASearchView *searchView;
+//@property (nonatomic, strong) JASearchView *searchView;
 
 @property (nonatomic, strong) JAStepByStepTabViewController *checkoutStepByStepViewController;
 @property (nonatomic, strong) JAStepByStepTabViewController *returnsStepByStepViewController;
@@ -88,12 +88,6 @@
 
 - (JAStepByStepTabViewController *)getNewCheckoutStepByStepViewController {
     JAStepByStepTabViewController *checkoutStepByStepViewController = [JAStepByStepTabViewController new];
-//    [checkoutStepByStepViewController setStepByStepModel:[JACheckoutStepByStepModel new]];
-//    checkoutStepByStepViewController.navBarLayout.showCartButton = NO;
-//    [checkoutStepByStepViewController.navBarLayout setShowBackButton:YES];
-//    checkoutStepByStepViewController.navBarLayout.showLogo = NO;
-//    [checkoutStepByStepViewController.navBarLayout setTitle:STRING_CHECKOUT];
-//    [checkoutStepByStepViewController setIndexInit:0];
     return checkoutStepByStepViewController;
 }
 
@@ -108,10 +102,6 @@
     JAStepByStepTabViewController *returnsStepByStepViewController = [JAStepByStepTabViewController new];
     
     [returnsStepByStepViewController setStepByStepModel:[JAReturnStepByStepModel new]];
-//    returnsStepByStepViewController.navBarLayout.showCartButton = NO;
-//    [returnsStepByStepViewController.navBarLayout setShowBackButton:YES];
-//    returnsStepByStepViewController.navBarLayout.showLogo = NO;
-//    [returnsStepByStepViewController.navBarLayout setTitle:STRING_MY_ORDERS];
     [returnsStepByStepViewController setIndexInit:0];
     return returnsStepByStepViewController;
 }
@@ -125,21 +115,12 @@
     [self setNeedsStatusBarAppearanceUpdate];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCart:) name:kUpdateCartNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeEditButtonState:) name:kEditShouldChangeStateNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeDoneButtonState:) name:kDoneShouldChangeStateNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeNavigationWithNotification:) name:kChangeNavigationBarNotification object:nil];
-    
-    
 }
 
 - (void)setNavigationBarConfigs {
     self.navigationBar.titleTextAttributes = @{NSFontAttributeName: [Theme font:kFontVariationRegular size:13],
                                                NSForegroundColorAttributeName: [UIColor whiteColor]};
     self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    //To remove the back button title
-    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(-60, -60) forBarMetrics:UIBarMetricsDefault];
-    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:
-     @{NSFontAttributeName: [Theme font:kFontVariationRegular size:1]} forState:UIControlStateNormal];
     
     //To change back button icon
     UIImage *myImage = [UIImage imageNamed:@"btn_back"]; //set your backbutton imagename
@@ -147,6 +128,12 @@
     
 
     if (SYSTEM_VERSION_GREATER_THAN(@"9.0")) {
+        
+        if (SYSTEM_VERSION_GREATER_THAN(@"11.0")) {
+            myImage = [UIImage imageNamed:@"left_btn_back"]; //set your backbutton imagename
+            backButtonImage = [myImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        }
+        
         //To remove navBar bottom border
         [self.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
         [self.navigationBar setShadowImage:[UIImage new]];
@@ -172,11 +159,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showEmailNotificaitons:) name:kShowEmailNotificationsScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showNewsletterSubscritions:) name:kShowNewsletterSubscriptionsScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showMyOrdersViewController:) name:kShowMyOrdersScreenNotification object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showMyOrderDetailViewController:) name:kShowMyOrderDetailScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showAuthenticationScreen:) name:kShowAuthenticationScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showSignUpScreen:) name:kShowSignUpScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showCheckoutExternalPaymentsScreen:) name:kShowCheckoutExternalPaymentsScreenNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showCheckoutThanksScreen:) name:kShowCheckoutThanksScreenNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showCheckoutThanksScreen:) name:kShowCheckoutThanksScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectRecentSearch:) name:kSelectedRecentSearchNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectItemInMenu:) name:kMenuDidSelectOptionNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectLeafCategoryInMenu:) name:kMenuDidSelectLeafCategoryNotification object:nil];
@@ -209,11 +195,10 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowEmailNotificationsScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowNewsletterSubscriptionsScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowMyOrdersScreenNotification object:nil];
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowMyOrderDetailScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowAuthenticationScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowSignUpScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowCheckoutExternalPaymentsScreenNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowCheckoutThanksScreenNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowCheckoutThanksScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kSelectedRecentSearchNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kMenuDidSelectOptionNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kMenuDidSelectLeafCategoryNotification object:nil];
@@ -237,31 +222,30 @@
     
 }
 
-//- (void)loadNavigationViews {
-//    [self.navigationBarView removeFromSuperview];
-//    [self customizeNavigationBar];
-//}
-
-- (void)openTargetString:(NSString *)targetString {
+- (void)openTargetString:(NSString *)targetString purchaseInfo:(NSString *)purchaseInfo {
     JAScreenTarget *screenTarget = [JAScreenTarget new];
     screenTarget.target = [RITarget parseTarget:targetString];
-    [self openScreenTarget:screenTarget];
+    screenTarget.pushAnimation = YES;
+    [self openScreenTarget:screenTarget purchaseInfo:purchaseInfo];
 }
 
-- (BOOL)openScreenTarget:(JAScreenTarget *)screenTarget {
+- (BOOL)openScreenTarget:(JAScreenTarget *)screenTarget purchaseInfo:(NSString *)purchaseInfo {
     if ([[self topViewController] isKindOfClass:[JABaseViewController class]] && [[(JABaseViewController *)[self topViewController] targetString] isEqualToString:screenTarget.target.targetString]) {
         return NO;
     }
     switch (screenTarget.target.targetType) {
         case PRODUCT_DETAIL: {
             JAPDVViewController *viewController = [JAPDVViewController new];
+            viewController.purchaseTrackingInfo = purchaseInfo;
             [self loadScreenTarget:screenTarget forBaseViewController:viewController];
+            viewController.hidesBottomBarWhenPushed = YES;
             [self pushViewController:viewController animated:screenTarget.pushAnimation];
             return YES;
         }
         case CATALOG_SEARCH: {
             CatalogViewController *viewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
             viewController.searchTarget = screenTarget.target;
+            viewController.purchaseTrackingInfo = purchaseInfo;
             [self pushViewController:viewController animated:screenTarget.pushAnimation];
             return YES;
         }
@@ -270,12 +254,14 @@
         case CATALOG_CATEGORY: {
             CatalogViewController *viewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];;
             viewController.searchTarget = screenTarget.target;
+            viewController.purchaseTrackingInfo = purchaseInfo;
             [self pushViewController:viewController animated:screenTarget.pushAnimation];
             return YES;
         }
         case STATIC_PAGE:
         case SHOP_IN_SHOP: {
             JAShopWebViewController* viewController = [[JAShopWebViewController alloc] init];
+            viewController.purchaseTrackingInfo = purchaseInfo;
             [self loadScreenTarget:screenTarget forBaseViewController:viewController];
             [viewController setTitle:screenTarget.target.node];
             [self pushViewController:viewController animated:screenTarget.pushAnimation];
@@ -290,6 +276,7 @@
         }
         case CAMPAIGN: {
             JACampaignsViewController *viewController = [JACampaignsViewController new];
+            viewController.purchaseTrackingInfo = purchaseInfo;
             [self loadScreenTarget:screenTarget forBaseViewController:viewController];
             [self pushViewController:viewController animated:screenTarget.pushAnimation];
             return YES;
@@ -320,7 +307,6 @@
 
 
 #pragma mark - Left Menu Actions
-
 - (void)didSelectItemInMenu:(NSNotification *)notification {
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification object:nil];
     NSDictionary *selectedItem = [notification object];
@@ -347,11 +333,7 @@
 - (void)changeCenterPanel:(NSString *)newScreenName notification:(NSNotification *)notification {
     if ([newScreenName isEqualToString:STRING_HOME]) {
         [self showHomeScreen:nil];
-//    } else if ([newScreenName isEqualToString:STRING_MY_FAVOURITES]) {
-//        [self showSavedListViewController:nil];
     }
-//    else if ([newScreenName isEqualToString:STRING_CHOOSE_COUNTRY]) {
-//        [self showChooseCountry:[NSNotification notificationWithName:kShowChooseCountryScreenNotification object:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"show_menu_button"]]];
     else if ([newScreenName isEqualToString:STRING_RECENT_SEARCHES]) {
         [self showRecentSearchesController:nil];
     } else if ([newScreenName isEqualToString:STRING_LOGIN]) {
@@ -381,16 +363,6 @@
     [MainTabBarViewController showWishList];
 }
 
-#pragma mark MoreMenu
-//- (void)showMoreMenu {
-//    UIViewController *topViewController = [self topViewController];
-//    if (![topViewController isKindOfClass:[JAMoreMenuViewController class]]) {
-//        JAMoreMenuViewController *moreMenuViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"moreMenuViewController"];
-//        [self popToRootViewControllerAnimated:NO];
-//        [self pushViewController:moreMenuViewController animated:NO];
-//    }
-//}
-
 #pragma mark Recent Searches Screen
 - (void)showRecentSearchesController:(NSNotification*)notification {
     UIViewController *topViewController = [self topViewController];
@@ -409,8 +381,6 @@
     }
     
     AuthenticationContainerViewController *authenticationViewController = (AuthenticationContainerViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Authentication" nibName:@"AuthenticationContainerViewController" resetCache:YES];
-
-    authenticationViewController.navBarLayout.showBackButton = YES;
     
     authenticationViewController.fromSideMenu = NO;
     if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"from_side_menu"], NSNumber)) {
@@ -451,7 +421,6 @@
     
     AuthenticationContainerViewController *authenticationViewController = (AuthenticationContainerViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Authentication" nibName:@"AuthenticationContainerViewController" resetCache:YES];
     authenticationViewController.startWithSignUpViewController = YES;
-    authenticationViewController.navBarLayout.showBackButton = YES;
     [self pushViewController:authenticationViewController animated:YES];
 }
 
@@ -480,11 +449,6 @@
 #pragma mark My Account Screen
 - (void)showMyAccountController {
     [MainTabBarViewController showProfile];
-//    UIViewController *topViewController = [self topViewController];
-//    if (![topViewController isKindOfClass:[ProfileViewController class]]) {
-//        ProfileViewController *myAccountViewCtrl = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"ProfileViewController"];
-//        [self pushViewController:myAccountViewCtrl animated:NO];
-//    }
 }
 
 #pragma mark Track Order Screen
@@ -502,39 +466,11 @@
 
 #pragma mark Track Order Detail Screen
 - (void)showMyOrderDetailViewController:(NSNotification*)notification {
-//    UIViewController *topViewController = [self topViewController];
-//    if ([topViewController isKindOfClass:[JAMyOrdersViewController class]]) {
-//        
-//        NSDictionary *userInfo = notification.userInfo;
-//        if(VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"order"], RITrackOrder)) {
-//            JAMyOrderDetailViewController *myOrderVC = [JAMyOrderDetailViewController new];
-//            myOrderVC.trackingOrder = [userInfo objectForKey:@"order"];
-//            
-//            [self pushViewController:myOrderVC animated:YES];
-//        }
-//    }
 }
 
 #pragma mark User Data Screen
 - (void)showUserData:(NSNotification*)notification {
     [[MainTabBarViewController topNavigationController] requestNavigateToClass:@"JAUserDataViewController" args:nil];
-//    UIViewController *topViewController = [self topViewController];
-//    if([RICustomer checkIfUserIsLogged]) {
-//        if (![topViewController isKindOfClass:[JAUserDataViewController class]]) {
-//            BOOL animated = NO;
-//            if(VALID_NOTEMPTY(notification.object, NSDictionary) && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber)) {
-//                animated = [[notification.object objectForKey:@"animated"] boolValue];
-//            }
-//            
-//            JAUserDataViewController *userData = [[JAUserDataViewController alloc] init];
-//            
-//            [self pushViewController:userData animated:animated];
-//        }
-//    } else {
-//        [self performProtectedBlock:^(BOOL userHadSession) {
-//            [[NSNotificationCenter defaultCenter] postNotification:notification];
-//        }];
-//    }
 }
 
 #pragma mark Email Notifications Screen
@@ -569,148 +505,6 @@
     }
 }
 
-//#pragma mark - Checkout Addresses Screen
-//- (void)showCheckoutAddressesScreen:(NSNotification*)notification {
-//    if (![RICustomer checkIfUserIsLogged]) {
-//        JAAuthenticationViewController *auth = [[JAAuthenticationViewController alloc] init];
-//        
-//        auth.navBarLayout.showBackButton = YES;
-//        auth.fromSideMenu = NO;
-//        auth.nextStepBlock = ^{ [[NSNotificationCenter defaultCenter] postNotification:notification]; };
-//        
-//        [self pushViewController:auth animated:NO];
-//        return;
-//    }
-//    
-//    BOOL fromCheckout = NO;
-//    if(VALID_NOTEMPTY(notification.userInfo, NSDictionary) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"from_checkout"], NSNumber)) {
-//        fromCheckout = [[notification.userInfo objectForKey:@"from_checkout"] boolValue];
-//    }
-//    
-//    UIViewController *topViewController = [self topViewController];
-//    if (![topViewController isKindOfClass:[CheckoutAddressViewController class]]) {
-//        CheckoutAddressViewController *checkoutAddressViewController = (CheckoutAddressViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Checkout" nibName:@"CheckoutAddressViewController" resetCache:YES];
-//        
-//        if (fromCheckout) {
-//            checkoutAddressViewController.navBarLayout.showCartButton = NO;
-//            [self goToStep:checkoutAddressViewController forStepByStepViewController:self.checkoutStepByStepViewController];
-//        } else {
-//            [self pushViewController:checkoutAddressViewController animated:YES];
-//        }
-//    }
-//    
-//    /*
-//    UIViewController *topViewController = [self topViewController];
-//    if (![topViewController isKindOfClass:[JAAddressesViewController class]]) {
-//        JAAddressesViewController *addressesVC = [[JAAddressesViewController alloc] init];
-//        
-//        addressesVC.cart = self.cart;
-//        addressesVC.fromCheckout = fromCheckout;
-//        [addressesVC.navBarLayout setShowBackButton:YES];
-//        addressesVC.navBarLayout.showLogo = NO; 
-//        if (fromCheckout) {
-//            addressesVC.navBarLayout.showCartButton = NO;
-//            [self goToStep:addressesVC forStepByStepViewController:self.checkoutStepByStepViewController];
-//        } else {
-//            [self pushViewController:addressesVC animated:NO];
-//        }
-//    }*/
-//}
-
-//#pragma mark Checkout Add Address Screen
-//- (void)showCheckoutAddAddressScreen:(NSNotification*)notification {
-//    if (![RICustomer checkIfUserIsLogged]) {
-//        JAAuthenticationViewController *auth = [[JAAuthenticationViewController alloc] init];
-//        
-//        auth.navBarLayout.showBackButton = YES;
-//        auth.fromSideMenu = NO;
-//        auth.nextStepBlock = ^{ [[NSNotificationCenter defaultCenter] postNotification:notification]; };
-//        
-//        [self pushViewController:auth animated:NO];
-//        return;
-//    }
-//    
-//    NSNumber* showBackButton = [notification.userInfo objectForKey:@"show_back_button"];
-//    NSNumber* fromCheckout = [notification.userInfo objectForKey:@"from_checkout"];
-//    NSNumber *animated = @YES;
-//    if ([notification.userInfo objectForKey:@"animated"]) {
-//        animated = [notification.userInfo objectForKey:@"animated"];
-//    }
-//    UIViewController *topViewController = [self topViewController];
-//    if (![topViewController isKindOfClass:[JAAddNewAddressViewController class]]) {
-//        JAAddNewAddressViewController *addAddressVC = [[JAAddNewAddressViewController alloc] init];
-//        
-//        addAddressVC.fromCheckout = [fromCheckout boolValue];
-//        addAddressVC.cart = self.cart;
-//        
-//        if([fromCheckout boolValue]) {
-//            addAddressVC.navBarLayout.showCartButton = NO;
-//            if([showBackButton boolValue]) {
-//                [addAddressVC.navBarLayout setShowBackButton:YES];
-//                addAddressVC.navBarLayout.showLogo = NO;
-//            } else {
-//                addAddressVC.navBarLayout.title = STRING_CHECKOUT;
-//            }
-//            [self goToStep:addAddressVC forStepByStepViewController:self.checkoutStepByStepViewController];
-//        } else {
-//            [addAddressVC.navBarLayout setShowBackButton:YES];
-//            addAddressVC.navBarLayout.showLogo = NO;
-//            [self pushViewController:addAddressVC animated:animated.boolValue];
-//        }
-//    }
-//}
-
-//#pragma mark Checkout Edit Address Screen
-//- (void)showCheckoutEditAddressScreen:(NSNotification*)notification {
-//    NSNumber* fromCheckout = [notification.userInfo objectForKey:@"from_checkout"];
-//    
-//    UIViewController *topViewController = [self topViewController];
-//    if (![topViewController isKindOfClass:[JAEditAddressViewController class]] && [RICustomer checkIfUserIsLogged]) {
-//        JAEditAddressViewController *editAddressVC = [[JAEditAddressViewController alloc] init];
-//        
-//        RIAddress* editAddress = [notification.userInfo objectForKey:@"address_to_edit"];
-//        editAddressVC.editAddress = editAddress;
-//        editAddressVC.cart = self.cart;
-//        editAddressVC.fromCheckout = [fromCheckout boolValue];
-//        
-//        if([fromCheckout boolValue]) {
-//            editAddressVC.navBarLayout.showCartButton = NO;
-//            editAddressVC.navBarLayout.title = STRING_CHECKOUT;
-//        } else {
-//            [editAddressVC.navBarLayout setShowBackButton:YES];
-//            editAddressVC.navBarLayout.showLogo = NO;
-//        }
-//        
-//        if (fromCheckout.boolValue) {
-//            [self goToStep:editAddressVC forStepByStepViewController:self.checkoutStepByStepViewController];
-//        } else {
-//            [self pushViewController:editAddressVC animated:YES];
-//        }
-//    }
-//}
-
-#pragma mark Checkout Shipping Screen
-//- (void)showCheckoutShippingScreen {
-//    JAShippingViewController *viewController = [[JAShippingViewController alloc] init];
-//    [self goToStep:viewController forStepByStepViewController:self.checkoutStepByStepViewController];
-//}
-//
-////#pragma mark Checkout Payment Screen
-//- (void)showCheckoutPaymentScreen {
-//    JAPaymentViewController *viewController = [[JAPaymentViewController alloc] init];
-//    [self goToStep:viewController forStepByStepViewController:self.checkoutStepByStepViewController];
-//}
-//
-////#pragma mark Checkout Finish Screen
-//- (void)showCheckoutFinishScreen:(NSNotification*)notification {
-//    UIViewController *topViewController = [self topViewController];
-//    if (![topViewController isKindOfClass:[JAOrderViewController class]] && [RICustomer checkIfUserIsLogged]) {
-//        JAOrderViewController *orderVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"orderViewController"];
-//        
-//        [self pushViewController:orderVC animated:YES];
-//    }
-//}
-
 //#pragma mark Checkout External Payments Screen
 - (void)showCheckoutExternalPaymentsScreen:(NSNotification *)notification {
     UIViewController *topViewController = [self topViewController];
@@ -726,28 +520,23 @@
 }
 
 //#pragma mark Checkout Thanks Screen
-- (void)showCheckoutThanksScreen:(NSNotification *)notification {
-    SuccessPaymentViewController *viewCtrl = (SuccessPaymentViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Checkout" nibName:NSStringFromClass([SuccessPaymentViewController class]) resetCache:NO];
-    
-    viewCtrl.cart = [notification.userInfo objectForKey:kCart];
-    [self pushViewController:viewCtrl animated:YES];
-}
+//- (void)showCheckoutThanksScreen:(NSNotification *)notification {
+//    SuccessPaymentViewController *viewCtrl = (SuccessPaymentViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Checkout" nibName:NSStringFromClass([SuccessPaymentViewController class]) resetCache:NO];
+//    viewCtrl.success = [(NSNumber *)[notification.userInfo objectForKey:@"success"] boolValue];
+//    viewCtrl.cart = [notification.userInfo objectForKey:kCart];
+//    [self pushViewController:viewCtrl animated:YES];
+//}
 
 #pragma mark Catalog Screen
 - (void)pushCatalogToShowSearchResults:(NSString *)query {
     CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
     catalog.searchTarget = [RITarget getTarget:CATALOG_SEARCH node:query];
-    
-//    catalog.navBarLayout.title = query;
-    
     [self pushViewController:catalog animated:YES];
 }
 
 - (void)pushCatalogForUndefinedSearchWithBrandTargetString:(NSString *)brandTargetString andBrandName:(NSString *)brandName {
     CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
     catalog.searchTarget = [RITarget parseTarget:brandTargetString];
-    
-//    catalog.navBarLayout.title = brandName;
     [self pushViewController:catalog animated:YES];
 }
 
@@ -761,7 +550,6 @@
     if (category) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification object:nil];
         CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
-        catalog.navBarLayout.title = category.label;
         catalog.searchTarget = [RITarget getTarget:CATALOG_CATEGORY node:category.urlKey];
         
         [self pushViewController:catalog animated:YES];
@@ -943,8 +731,7 @@
         CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
         RITarget *target = [RITarget parseTarget:targetString];
         catalog.searchTarget = target;
-        catalog.navBarLayout.title = title;
-        catalog.navBarLayout.showBackButton = YES;
+        catalog.title = title;
         
         [self pushViewController:catalog animated:YES];
     }
@@ -963,16 +750,10 @@
         
         RITarget *target = [RITarget parseTarget:targetString];
         catalog.searchTarget = target;
+        catalog.title = title;
 
-        catalog.navBarLayout.title = title;
-        
-        if ([notification.userInfo objectForKey:@"show_back_button_title"]) {
-            [catalog.navBarLayout setShowBackButton:YES];
-        } else {
-            [catalog.navBarLayout setShowBackButton:YES];;
-        }
-        if ([notification.userInfo objectForKey:@"teaserTrackingInfo"]) {
-            catalog.teaserTrackingInfo = [notification.userInfo objectForKey:@"teaserTrackingInfo"];
+        if ([notification.userInfo objectForKey:@"purchaseTrackingInfo"]) {
+            catalog.purchaseTrackingInfo = [notification.userInfo objectForKey:@"purchaseTrackingInfo"];
         }
         
         [[MainTabBarViewController topNavigationController] pushViewController:catalog animated:YES];
@@ -994,8 +775,8 @@
     NSString* campaignId = [notification.userInfo objectForKey:@"campaign_id"];
     
     NSString* cameFromTeasers;
-    if ([notification.userInfo objectForKey:@"teaserTrackingInfo"]) {
-        cameFromTeasers = [notification.userInfo objectForKey:@"teaserTrackingInfo"];
+    if ([notification.userInfo objectForKey:@"purchaseTrackingInfo"]) {
+        cameFromTeasers = [notification.userInfo objectForKey:@"purchaseTrackingInfo"];
     }
     
     if (teaserGrouping) {
@@ -1003,21 +784,21 @@
         
         campaignsVC.teaserGrouping = teaserGrouping;
         campaignsVC.startingTitle = title;
-        campaignsVC.teaserTrackingInfo = cameFromTeasers;
+        campaignsVC.purchaseTrackingInfo = cameFromTeasers;
         
         [self pushViewController:campaignsVC animated:YES];
     } else if (campaignId.length) {
         JACampaignsViewController* campaignsVC = [JACampaignsViewController new];
         
         campaignsVC.campaignId = campaignId;
-        campaignsVC.teaserTrackingInfo = cameFromTeasers;
+        campaignsVC.purchaseTrackingInfo = cameFromTeasers;
         
         [self pushViewController:campaignsVC animated:YES];
     } else if (campaignTargetString.length) {
         JACampaignsViewController* campaignsVC = [JACampaignsViewController new];
         
         campaignsVC.targetString = campaignTargetString;
-        campaignsVC.teaserTrackingInfo = cameFromTeasers;
+        campaignsVC.purchaseTrackingInfo = cameFromTeasers;
         
         [self pushViewController:campaignsVC animated:YES];
     }
@@ -1061,10 +842,10 @@
             pdv.preSelectedSize = [notification.userInfo objectForKey:@"size"];
         }
         
-        if ([notification.userInfo objectForKey:@"teaserTrackingInfo"]) {
-            pdv.teaserTrackingInfo = [notification.userInfo objectForKey:@"teaserTrackingInfo"];
+        if ([notification.userInfo objectForKey:@"purchaseTrackingInfo"]) {
+            pdv.purchaseTrackingInfo = [notification.userInfo objectForKey:@"purchaseTrackingInfo"];
         }
-        
+        pdv.hidesBottomBarWhenPushed = YES;
         [self pushViewController:pdv animated:YES];
     }
 }
@@ -1078,8 +859,8 @@
     if([notification.userInfo objectForKey:@"title"]) {
         viewController.title = [notification.userInfo objectForKey:@"title"];
     }
-    if ([notification.userInfo objectForKey:@"teaserTrackingInfo"]) {
-        viewController.teaserTrackingInfo = [notification.userInfo objectForKey:@"teaserTrackingInfo"];
+    if ([notification.userInfo objectForKey:@"purchaseTrackingInfo"]) {
+        viewController.purchaseTrackingInfo = [notification.userInfo objectForKey:@"purchaseTrackingInfo"];
     }
     if (targetString.length) {
         viewController.targetString = targetString;
@@ -1117,7 +898,7 @@
     return NO;
 }
 
-- (void) closeTopTwoScreensNotificaion:(NSNotification*)notification {
+- (void)closeTopTwoScreensNotificaion:(NSNotification*)notification {
     NSInteger thirdToLastIndex = self.viewControllers.count-3;
     if (0 <= thirdToLastIndex) {
         UIViewController* thirdToLastViewController = [self.viewControllers objectAtIndex:thirdToLastIndex];
@@ -1140,7 +921,7 @@
             [screenTarget.navBarLayout setShowBackButton:NO];
             [screenTarget.navBarLayout setShowCartButton:NO];
             [screenTarget.navBarLayout setShowSearchButton:NO];
-            [[MainTabBarViewController topNavigationController] openScreenTarget:screenTarget];
+//            [[MainTabBarViewController topNavigationController] openScreenTarget:screenTarget];
             return;
         }
     }
@@ -1243,27 +1024,9 @@
     if (recentSearch) {
         CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
         catalog.searchTarget = [RITarget getTarget:CATALOG_SEARCH node:recentSearch.item];
-        catalog.navBarLayout.title = recentSearch.item;
         
         [self pushViewController:catalog animated:YES];
     }
-}
-
-- (void)changeNavigationWithNotification:(NSNotification*)notification {
-//    JANavigationBarLayout* layout = notification.object;
-//    if (VALID_NOTEMPTY(layout, JANavigationBarLayout)) {
-//        [self.navigationBarView setupWithNavigationBarLayout:layout];
-//    }
-}
-
-- (void)changeEditButtonState:(NSNotification *)notification {
-//    NSNumber* state = [notification.userInfo objectForKey:@"enabled"];
-//    self.navigationBarView.editButton.enabled = [state boolValue];
-}
-
-- (void)changeDoneButtonState:(NSNotification *)notification {
-//    NSNumber* state = [notification.userInfo objectForKey:@"enabled"];
-//    self.navigationBarView.doneButton.enabled = [state boolValue];
 }
 
 - (void)updateCart:(NSNotification*) notification {
@@ -1289,53 +1052,17 @@
     }
 }
 
-#pragma mark - NavBar Button actions
-- (void)back {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressBackNotification object:nil];
-    JAStepByStepTabViewController *topViewController = (JAStepByStepTabViewController *)[self topViewController];
-    if ([topViewController isKindOfClass:[JAStepByStepTabViewController class]] && !topViewController.stackIsEmpty) {
-        if ([topViewController sendBack]) {
-            return;
-        }
-    }
-    [self popViewControllerAnimated:YES];
-}
-
--(void)goTop {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressNavBar object:nil];
-}
-
-- (void)done {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressDoneNotification object:nil];
-    [self back];
-}
-
-- (void)edit {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressEditNotification object:nil];
-}
-
 - (void)openCart:(NSNotification*) notification {
     [MainTabBarViewController showCart];
 }
 
-- (void)viewWillLayoutSubviews {
-    [self.searchView resetFrame:self.view.bounds];
-}
-
-#pragma mark - Search Bar
-- (JASearchView *)searchView {
-    if (!VALID(_searchView, JASearchView)) {
-        _searchView = [[JASearchView alloc] initWithFrame:self.view.bounds andText:@""];
-        [_searchView setHidden:YES];
-        [self.view addSubview:_searchView];
+- (void)showSearchView: (NSString *)screenName {
+    SearchViewController *searchViewController = (SearchViewController *)[self requestViewController:@"SearchViewController" ofStoryboard:@"Main" useCache:NO];
+    searchViewController.parentScreenName = screenName;
+    if ([[MainTabBarViewController topViewController] conformsToProtocol:@protocol(SearchViewControllerDelegate)]) {
+        searchViewController.delegate = (id<SearchViewControllerDelegate>)[MainTabBarViewController topViewController];
     }
-    return _searchView;
-}
-
-- (void)showSearchView {
-    if (!self.searchViewAlwaysHidden) {
-        [self.searchView setHidden:NO];
-    }
+    [self presentViewController:searchViewController animated:true completion:nil];
 }
 
 //#####################################################################################################################

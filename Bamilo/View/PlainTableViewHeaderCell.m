@@ -17,10 +17,7 @@
 
 -(void)awakeFromNib {
     [super awakeFromNib];
-    
-    //Content View Setup
     self.container.backgroundColor = [UIColor withRepeatingRGBA:244 alpha:1.0f];
-    
     //Title Label Setup
     [self.titleLabel applyStyle:kFontBoldName fontSize:12 color:[UIColor withRepeatingRGBA:80 alpha:1.0f]];
 }
@@ -32,7 +29,7 @@
 
 #pragma mark - Overrides
 + (NSString *)nibName {
-    return @"PlainTableViewHeaderCell";
+    return NSStringFromClass([self class]);
 }
 
 + (CGFloat)cellHeight {

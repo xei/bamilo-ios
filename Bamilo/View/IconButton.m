@@ -41,9 +41,14 @@
     imageFrame.size.height = self.size.height * (self.imageHeightToButtonHeightRatio ? MIN(self.imageHeightToButtonHeightRatio, 1) : 0.5);
     imageFrame.size.width = imageFrame.size.height;
     
-    if (self.titleLabel.text.length != 0) {
-        labelFrame.origin.x = (self.size.width / 2)  - ((imageFrame.size.width + labelFrame.size.width + spaceBtwIconAndLabel) / 2);
-        imageFrame.origin.x = labelFrame.origin.x + labelFrame.size.width + spaceBtwIconAndLabel;
+    if (self.titleLabel.text.length) {
+        if (self.isLTR) {
+            imageFrame.origin.x = (self.size.width / 2) - ((imageFrame.size.width + labelFrame.size.width + spaceBtwIconAndLabel) / 2);
+            labelFrame.origin.x = imageFrame.origin.x + imageFrame.size.width + spaceBtwIconAndLabel;
+        } else {
+            labelFrame.origin.x = (self.size.width / 2)  - ((imageFrame.size.width + labelFrame.size.width + spaceBtwIconAndLabel) / 2);
+            imageFrame.origin.x = labelFrame.origin.x + labelFrame.size.width + spaceBtwIconAndLabel;
+        }
         imageFrame.origin.y = (self.size.height / 2) - (imageFrame.size.height / 2);
         labelFrame.origin.y = (self.size.height / 2) - (labelFrame.size.height / 2);
     } else {

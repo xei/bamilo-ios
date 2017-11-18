@@ -13,6 +13,8 @@
 
 @interface JAExternalPaymentsViewController : JABaseViewController
 
+@property (nonatomic) BOOL isComingFromBank;
 @property (strong, nonatomic) RICart *cart;
+- (void)paymentHappend:(BOOL)success;
 
 @end

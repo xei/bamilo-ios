@@ -97,6 +97,7 @@
 }
 
 - (void)prepareForReuse {
+    [super prepareForReuse];
     [self.brandLabelButton setTitle:nil forState:UIControlStateNormal];
     self.nameLabel.text = nil;
     self.itemImage.image = nil;

@@ -61,7 +61,7 @@
             }
             
             
-            if let utmSource = campaignDictionary[kUTMSource], utmSource.characters.count > 0 {
+            if let utmSource = campaignDictionary[kUTMSource], utmSource.count > 0 {
                 if let _ = campaignDictionary[kUTMCampaign] {
                     params += ["\(kUTMSource)=push"]
                 } else {
@@ -69,7 +69,7 @@
                 }
             }
             
-            if let utmMedium = campaignDictionary[kUTMMedium], utmMedium.characters.count > 0 {
+            if let utmMedium = campaignDictionary[kUTMMedium], utmMedium.count > 0 {
                 if let _ = campaignDictionary[kUTMCampaign] {
                     params += ["\(kUTMMedium)=referrer"]
                 } else {
@@ -292,13 +292,25 @@
         }
     }
 
-    func teaserPurchased(attributes: EventAttributeType) {
-        if let screenName = attributes[kEventScreenName] as? String,
-            let teaserName = attributes[kEventTeaser] as? String {
+    func purchaseBehaviour(attributes: EventAttributeType) {
+        if let category = attributes[kGAEventCategory] as? String,
+            let label = attributes[kGAEventLabel] as? String {
             let params = GAIDictionaryBuilder.createEvent(
-                withCategory: "\(screenName)+\(teaserName)",
-                action: "TeaserPurchase",
-                label: nil,
+                withCategory: category,
+                action: "purchase",
+                label: label,
+                value: nil
+            )
+            self.sendParamsToGA(params: params)
+        }
+    }
+    
+    func searchSuggestionTapped(attributes: EventAttributeType) {
+        if let suggestionTitle = attributes[kEventSuggestionTitle] as? String {
+            let params = GAIDictionaryBuilder.createEvent(
+                withCategory: "SearchSuggestions",
+                action: "Tapped",
+                label: "\(suggestionTitle)",
                 value: nil
             )
             self.sendParamsToGA(params: params)
@@ -309,7 +321,7 @@
     //MARK: - Helper functions
     private func sendParamsToGA(params: GAIDictionaryBuilder?) {
         guard let params = params else { return }
-        if let campaignStrig = self.campaginDataString,  campaignStrig.characters.count > 0 {
+        if let campaignStrig = self.campaginDataString,  campaignStrig.count > 0 {
             let _ = params.setCampaignParametersFromUrl(campaignStrig)
         }
         GAI.sharedInstance().defaultTracker.send(params.build() as! [AnyHashable : Any])

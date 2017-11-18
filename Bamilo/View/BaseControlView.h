@@ -10,6 +10,7 @@
 
 @interface BaseControlView : UIView
 
++ (NSString *)nibName;
 + (instancetype)nibInstance;
 
 @end

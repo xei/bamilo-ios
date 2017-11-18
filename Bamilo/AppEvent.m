@@ -9,7 +9,7 @@
 #import "AppEvent.h"
 #import "RICustomer.h"
 #import "AppManager.h"
-#import "DeviceManager.h"
+#import "DeviceStatusManager.h"
 
 @implementation AppEvent
 
@@ -23,7 +23,7 @@
                                          kEventName: [self name],
                                          kEventAppVersion: [[AppManager sharedInstance] getAppFullFormattedVersion],
                                          kEventPlatform: @"ios",
-                                         kEventConnection: [DeviceManager getConnectionType],
+                                         kEventConnection: [DeviceStatusManager getConnectionType],
                                          kEventDate:  [NSDate date]
                                          }];
     

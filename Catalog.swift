@@ -24,7 +24,7 @@ import SwiftyJSON
         get {
             return self.breadcrumbs?.map({ (item) -> String in
                 return item.title ?? ""
-            }).filter { $0.characters.count > 0 }.joined(separator: " > ")
+            }).filter { $0.count > 0 }.joined(separator: " > ")
         }
     }
     

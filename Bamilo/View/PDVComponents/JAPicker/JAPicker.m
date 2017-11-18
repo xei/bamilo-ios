@@ -78,16 +78,13 @@ UIPickerViewDelegate
                                          self.backgroundView.frame.size.width,
                                          self.pickerView.frame.size.height)];
     
-    if (!VALID_NOTEMPTY(self.buttonBackgroundView, UIToolbar)) {
-        self.buttonBackgroundView = [[UIToolbar alloc] initWithFrame:CGRectZero];
+    if (!VALID_NOTEMPTY(self.buttonBackgroundView, UIView)) {
+        self.buttonBackgroundView = [[UIView alloc] initWithFrame:CGRectZero];
         [self.buttonBackgroundView setBackgroundColor:JAWhiteColor];
         [self.buttonBackgroundView setAlpha:0.9];
         [self addSubview:self.buttonBackgroundView];
     }
-    [self.buttonBackgroundView setFrame:CGRectMake(0.0f,
-                                                   CGRectGetMinY(self.pickerView.frame) - 44.0f,
-                                                   self.backgroundView.frame.size.width,
-                                                   44.0f)];
+    [self.buttonBackgroundView setFrame:CGRectMake(0.0f, CGRectGetMinY(self.pickerView.frame) - 44.0f, self.backgroundView.frame.size.width, 44.0f)];
 
     
     CGFloat doneButtonWidth = 62.0f;
