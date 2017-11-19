@@ -28,6 +28,7 @@ static AlertManager *instance;
     alertView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
     [self configure:alertView];
     
+    [alertView.closedButton setHidden:YES];
     alertView.headerTitleLabel.text = title;
     alertView.contentTextLabel.text = body;
     [alertView.confirmButton setTitle:confirm forState:UIControlStateNormal];
@@ -42,6 +43,7 @@ static AlertManager *instance;
     alertView.isClickBackgroundCloseWindow = NO;
     alertView.headerTitleLabel.text = title;
     alertView.contentTextLabel.text = text;
+    [alertView.closedButton setHidden:YES];
     
     [alertView.confirmButton setTitle:confirm forState:UIControlStateNormal];
     alertView.confirm = ^(){

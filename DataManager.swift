@@ -10,13 +10,12 @@ import ObjectMapper
 
 typealias DataClosure = (_ data: Any?, _ error: NSError?) -> Void
 
-class DataManagerSwift {
-    
-    struct DataManagerKeys {
-        static let DataMessages = "DataMessages"
-        static let DataContent = "DataContent"
-    }
+struct DataManagerKeys {
+    static let DataMessages = "DataMessages"
+    static let DataContent = "DataContent"
+}
 
+class DataManagerSwift {
     static private(set) var requestManager: RequestManagerSwift = {
         if let apiBaseUrl = AppUtility.getInfoConfigs(for: AppKeys.APIBaseUrl) as? String,
             let apiVersion = AppUtility.getInfoConfigs(for: AppKeys.APIVersion) as? String {
@@ -37,7 +36,7 @@ class DataManagerSwift {
                 payload[DataManagerKeys.DataMessages] = messages
             }
             
-             /*TEMP:
+            /*TODO: TEMP:
               When all classes migrated to Swift along with models replace this with
              
               if let serviceData = data.metadata as [String:Any]?, let mappableClass = aClass as? Mappable.Type {

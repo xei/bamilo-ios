@@ -12,18 +12,31 @@ class AllRecommendationViewController: BaseViewController,
     UICollectionViewDelegate,
 UICollectionViewDataSource {
     
+    @IBOutlet weak private var collectionViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak private var collectionView: UICollectionView!
     var recommendItems: [RecommendItem] = []
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = Theme.color(kColorVeryLightGray)
         
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
+        self.collectionView.backgroundColor = .clear
         
         self.collectionView.register(UINib(nibName: CatalogGridCollectionViewCell.nibName, bundle: nil), forCellWithReuseIdentifier: CatalogGridCollectionViewCell.nibName)
-        self.collectionView.collectionViewLayout = GridCollectionViewFlowLayout()
+        let flowLayout = GridCollectionViewFlowLayout()
+        self.collectionView.contentInset = UIEdgeInsets(top: flowLayout.cellSpacing, left: 0, bottom: flowLayout.cellSpacing, right: 0)
+        self.collectionView.collectionViewLayout = flowLayout
+        
+        if let tabbar = self.tabBarController?.tabBar {
+            self.collectionViewBottomConstraint.constant = tabbar.frame.height
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     //MARK: - UICollectionViewDataSource & UICollectionViewDelegate
@@ -36,6 +49,10 @@ UICollectionViewDataSource {
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.performSegue(withIdentifier: "showPDVViewController", sender: self.recommendItems[indexPath.row].sku)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.recommendItems.count
     }
@@ -46,5 +63,12 @@ UICollectionViewDataSource {
     
     override func navBarTitleString() -> String! {
         return STRING_BAMILO_RECOMMENDATION
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let segueName = segue.identifier
+        if segueName == "showPDVViewController", let pdvViewCtrl = segue.destination as? JAPDVViewController, let sku = sender as? String {
+            pdvViewCtrl.productSku = sku
+        }
     }
 }

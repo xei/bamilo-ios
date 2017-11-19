@@ -125,11 +125,26 @@
 - (BOOL)showNotificationBarFromMessageDictionary:(NSDictionary *)messageDict isSuccess:(BOOL)success {
     if(messageDict.count) {
         NSString *errorMessage = [messageDict objectForKey:kMessage];
-        if(errorMessage && errorMessage.length) {
+        if (errorMessage && errorMessage.length) {
             return [self showNotificationBarMessage:errorMessage isSuccess:success];
         }
     }
     return NO;
+}
+
+- (void)showMessage:(NSArray <NSString *>*)successMessages showMessage:(BOOL)showMessage {
+    if (showMessage) {
+        [self showNotificationBarMessage:[successMessages componentsJoinedByString:@","] isSuccess:YES];
+    }
+}
+
+//TEMP FUNCTION
+- (NSArray *)extractSuccessMessages:(DataMessageList *)dataMessages {
+    NSMutableArray *messages = [NSMutableArray array];
+    for(DataMessage *msgObject in ((DataMessageList *)dataMessages).success) {
+        [messages addObject:msgObject.message];
+    }
+    return messages;
 }
 
 - (BOOL)showNotificationBarMessage:(NSString *)message isSuccess:(BOOL)success {

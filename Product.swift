@@ -28,6 +28,8 @@ import SwiftyJSON
     var isInWishList: Bool = false
     var reviewsCount: Int?
     var hasStock: Bool = true
+    var simples: [SimpleProduct]?
+    var variationName: String?
     
     override init() {}
     required init?(map: Map) {}
@@ -48,6 +50,8 @@ import SwiftyJSON
         ratingsCount        <- map["rating_reviews_summary.ratings_total"]
         reviewsCount        <- map["rating_reviews_summary.reviews_total"]
         isNew               <- map["is_new"]
+        simples             <- map["simples"]
+        variationName       <- map["variation_name"]
         
         //checkou avaiability
         var stockAvaiablity: Bool?

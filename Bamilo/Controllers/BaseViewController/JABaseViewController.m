@@ -659,7 +659,7 @@
 
 
 //TEMP FUNCTION
--(NSArray *) extractSuccessMessages:(id)dataMessages {
+- (NSArray *)extractSuccessMessages:(id)dataMessages {
     NSMutableArray *messages = [NSMutableArray array];
     
     if ([dataMessages isKindOfClass:DataMessageList.class]) {

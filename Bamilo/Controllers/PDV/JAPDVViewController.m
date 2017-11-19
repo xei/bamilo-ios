@@ -1156,7 +1156,7 @@ static NSString *recommendationLogic = @"RELATED";
                                                                     object:self.product.sku
                                                                   userInfo:userInfo];
                 
-                [TrackerManager postEventWithSelector:[EventSelectors removeFromWishListSelector] attributes:[EventAttributes removeToWishListWithProduct:self.product screenName:[self getScreenName]]];
+                [TrackerManager postEventWithSelector:[EventSelectors removeFromWishListSelector] attributes:[EventAttributes removeFromWishListWithProduct:self.product screenName:[self getScreenName]]];
                 
                 [self.delegate addToWishList:self.product.sku add:NO];
             } else {

@@ -68,7 +68,7 @@ public typealias EventAttributeType = [String:Any]
         return attributes
     }
     
-    static func removeToWishList(product: RIProduct, screenName: String) -> EventAttributeType {
+    static func removeFromWishList(product: RIProduct, screenName: String) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventScreenName] = screenName
         attributes[kEventProduct] = product

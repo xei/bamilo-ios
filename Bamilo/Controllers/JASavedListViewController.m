@@ -282,9 +282,7 @@
 
 - (void)finishAddToCart:(UIButton *)button {
     RIProduct* product = [self.productsDictionary objectForKey:[self.productsArray objectAtIndex:button.tag]];
-    
     RIProductSimple* productSimple;
-    
     if(VALID([self.chosenSimples objectForKey:product.sku], RIProductSimple)) {
         productSimple = [self.chosenSimples objectForKey:product.sku];
     } else if (1 == product.productSimples.count) {
@@ -298,10 +296,8 @@
     [DataAggregator addProductToCart:self simpleSku:productSimple.sku completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
-            
             //EVENT: ADD TO CART
             [TrackerManager postEventWithSelector:[EventSelectors addToCartEventSelector] attributes:[EventAttributes addToCardWithProduct:product screenName:[self getScreenName] success:YES]];
-            
             NSNumber *price = (VALID_NOTEMPTY(product.specialPriceEuroConverted, NSNumber) && [product.specialPriceEuroConverted longValue] > 0.0f) ? product.specialPriceEuroConverted :product.priceEuroConverted;
             
             NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
@@ -316,7 +312,6 @@
             [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
             [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
             [trackingDictionary setValue:product.name forKey:kRIEventProductNameKey];
-            
             if(VALID_NOTEMPTY(product.categoryIds, NSArray)) {
                 NSArray *categoryIds = product.categoryIds;
                 NSInteger subCategoryIndex = [categoryIds count] - 1;
@@ -325,7 +320,6 @@
                 if(categoryIndex >= 0) {
                     NSString *categoryId = [categoryIds objectAtIndex:categoryIndex];
                     [trackingDictionary setValue:[RICategory getCategoryName:categoryId] forKey:kRIEventCategoryIdKey];
-                    
                     NSString *subCategoryId = [categoryIds objectAtIndex:subCategoryIndex];
                     [trackingDictionary setValue:[RICategory getCategoryName:subCategoryId] forKey:kRIEventSubCategoryIdKey];
                 } else {
@@ -435,19 +429,12 @@
     
     CGFloat pickerViewHeight = self.view.frame.size.height;
     CGFloat pickerViewWidth = self.view.frame.size.width;
-    [self.picker setFrame:CGRectMake(0.0f,
-                                     pickerViewHeight,
-                                     pickerViewWidth,
-                                     pickerViewHeight)];
+    [self.picker setFrame:CGRectMake(0.0f, pickerViewHeight, pickerViewWidth, pickerViewHeight)];
     [self.view addSubview:self.picker];
     
-    [UIView animateWithDuration:0.4f
-                     animations:^{
-                         [self.picker setFrame:CGRectMake(0.0f,
-                                                          0.0f,
-                                                          pickerViewWidth,
-                                                          pickerViewHeight)];
-                     }];
+    [UIView animateWithDuration:0.4f animations:^{
+        [self.picker setFrame:CGRectMake(0.0f, 0.0f, pickerViewWidth, pickerViewHeight)];
+    }];
 }
 
 - (void)removeFromSavedListPressed:(UIButton *)button {
@@ -495,7 +482,7 @@
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInteger:RIEventAddFromWishlistToCart]
                                                       data:[NSDictionary dictionaryWithObject:product.sku forKey:kRIEventProductFavToCartKey]];
             
-            [TrackerManager postEventWithSelector:[EventSelectors removeFromWishListSelector] attributes:[EventAttributes removeToWishListWithProduct:product screenName:[self getScreenName]]];
+            [TrackerManager postEventWithSelector:[EventSelectors removeFromWishListSelector] attributes:[EventAttributes removeFromWishListWithProduct:product screenName:[self getScreenName]]];
             
             [[NSUserDefaults standardUserDefaults] setObject:product.sku forKey:kRIEventProductFavToCartKey];
             [[NSUserDefaults standardUserDefaults] synchronize];

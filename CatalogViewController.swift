@@ -92,9 +92,9 @@ import SwiftyJSON
         self.setSortingMethodToHeader()
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
-        self.collectionView.register(UINib(nibName: CatalogListCollectionViewCell.nibName, bundle: nil), forCellWithReuseIdentifier: CatalogListCollectionViewCell.nibName)
-        self.collectionView.register(UINib(nibName: CatalogCardCollectionViewCell.nibName, bundle: nil), forCellWithReuseIdentifier: CatalogCardCollectionViewCell.nibName)
-        self.collectionView.register(UINib(nibName: CatalogGridCollectionViewCell.nibName, bundle: nil), forCellWithReuseIdentifier: CatalogGridCollectionViewCell.nibName)
+        self.collectionView.register(CatalogListCollectionViewCell.nibInstance, forCellWithReuseIdentifier: CatalogListCollectionViewCell.nibName)
+        self.collectionView.register(CatalogCardCollectionViewCell.nibInstance, forCellWithReuseIdentifier: CatalogCardCollectionViewCell.nibName)
+        self.collectionView.register(CatalogGridCollectionViewCell.nibInstance, forCellWithReuseIdentifier: CatalogGridCollectionViewCell.nibName)
         self.collectionView.setCollectionViewLayout(self.getProperCollectionViewFlowLayout(), animated: true)
         self.loadData()
         
@@ -540,7 +540,7 @@ import SwiftyJSON
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize.zero
+        return .zero
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
@@ -634,7 +634,7 @@ import SwiftyJSON
                         cell.updateWithProduct(product: product)
                         TrackerManager.postEvent(
                             selector: EventSelectors.removeFromWishListSelector(),
-                            attributes: EventAttributes.removeToWishList(product: translatedProduct, screenName: self.getScreenName())
+                            attributes: EventAttributes.removeFromWishList(product: translatedProduct, screenName: self.getScreenName())
                         )
                         return
                     }

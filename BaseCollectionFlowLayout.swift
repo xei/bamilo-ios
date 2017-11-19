@@ -10,7 +10,7 @@ import UIKit
 
 class BaseCollectionFlowLayout: UICollectionViewFlowLayout {
     
-    var cellSpacing: CGFloat = 5
+    var cellSpacing: CGFloat = 8
     
     override init() {
         super.init()
