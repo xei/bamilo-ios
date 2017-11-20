@@ -683,7 +683,6 @@
 		9A564CB51B3411AD00F23057 /* JANewSellerRatingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A564CB01B3411AD00F23057 /* JANewSellerRatingViewController.xib */; };
 		9A564CBB1B34273800F23057 /* JASellerRatingsViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A564CB61B34273800F23057 /* JASellerRatingsViewController~ipad.xib */; };
 		9A564CC11B38187100F23057 /* JANewSellerRatingViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A564CBC1B38187100F23057 /* JANewSellerRatingViewController~ipad.xib */; };
-		9A59E7F61C3A8D5100F37D3F /* JASavedListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A59E7F11C3A8D5100F37D3F /* JASavedListViewController.m */; };
 		9A6BC07C1C40132100DD9492 /* JAOrderItemCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6BC0771C40132100DD9492 /* JAOrderItemCollectionViewCell.m */; };
 		9A6BC0831C43CBB900DD9492 /* JAMyOrderResumeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6BC07E1C43CBB900DD9492 /* JAMyOrderResumeView.m */; };
 		9A6BC08A1C4907BB00DD9492 /* JAMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6BC0851C4907BA00DD9492 /* JAMessageView.m */; };
@@ -1998,8 +1997,6 @@
 		9A564CB01B3411AD00F23057 /* JANewSellerRatingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JANewSellerRatingViewController.xib; sourceTree = "<group>"; };
 		9A564CB61B34273800F23057 /* JASellerRatingsViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JASellerRatingsViewController~ipad.xib"; sourceTree = "<group>"; };
 		9A564CBC1B38187100F23057 /* JANewSellerRatingViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JANewSellerRatingViewController~ipad.xib"; sourceTree = "<group>"; };
-		9A59E7F01C3A8D5100F37D3F /* JASavedListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASavedListViewController.h; sourceTree = "<group>"; };
-		9A59E7F11C3A8D5100F37D3F /* JASavedListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASavedListViewController.m; sourceTree = "<group>"; };
 		9A6BC0761C40132100DD9492 /* JAOrderItemCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAOrderItemCollectionViewCell.h; sourceTree = "<group>"; };
 		9A6BC0771C40132100DD9492 /* JAOrderItemCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAOrderItemCollectionViewCell.m; sourceTree = "<group>"; };
 		9A6BC07D1C43CBB900DD9492 /* JAMyOrderResumeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMyOrderResumeView.h; sourceTree = "<group>"; };
@@ -6140,7 +6137,6 @@
 				B55BFB9219E6A83E0098467E /* LoadCountryViewController */,
 				4AE242E2198656F500E37C90 /* MenuViewController */,
 				4A39211B19891F1500B70A9C /* MyAccount */,
-				9A59E7EF1C3A8D2300F37D3F /* SavedList */,
 				4AE730AF198F88CB000CA1DD /* PDV */,
 				4A944FF2199273E000C02734 /* Ratings */,
 				4A39211D19891F1500B70A9C /* RecentlyViewed */,
@@ -6683,15 +6679,6 @@
 				9A4ADF671C2AF1010019F439 /* JADropdownControl.m */,
 			);
 			name = CustomControls;
-			sourceTree = "<group>";
-		};
-		9A59E7EF1C3A8D2300F37D3F /* SavedList */ = {
-			isa = PBXGroup;
-			children = (
-				9A59E7F01C3A8D5100F37D3F /* JASavedListViewController.h */,
-				9A59E7F11C3A8D5100F37D3F /* JASavedListViewController.m */,
-			);
-			name = SavedList;
 			sourceTree = "<group>";
 		};
 		9AE7669B1CB3CF2300B63D8E /* Authentication */ = {
@@ -8571,7 +8558,6 @@
 				61CBA0391E51A72A005673F7 /* ForgetPasswordViewController.m in Sources */,
 				8702FBF41E9A4A7A001D1AA9 /* ProductDataManager.m in Sources */,
 				611C19181F5EA1DA0073940C /* SearchBarControl.swift in Sources */,
-				9A59E7F61C3A8D5100F37D3F /* JASavedListViewController.m in Sources */,
 				875AD5771E38C0C900584ABF /* RISpecification.m in Sources */,
 				CE9ADFD61AB6D78200D56481 /* JAFilteredNoResultsView.m in Sources */,
 				CE9ADFD71AB6D78200D56481 /* JAProductListFlowLayout.m in Sources */,

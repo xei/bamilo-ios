@@ -69,6 +69,8 @@ class MyBamiloViewController:   BaseViewController,
         if let refreshControl = self.refreshControl {
             self.collectionView.addSubview(refreshControl)
         }
+        
+        self.collectionView.alwaysBounceVertical = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {

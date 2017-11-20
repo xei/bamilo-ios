@@ -14,6 +14,18 @@ enum VerticalMoveDirection: String {
 }
 
 extension UIView {
+
+    func hide() {
+        self.isHidden = true
+        self.alpha = 0
+    }
+    
+    func fadeIn(duration: TimeInterval) {
+        self.isHidden = false
+        UIView.animate(withDuration: duration, animations: {
+            self.alpha = 1
+        })
+    }
     
     func bindFrameToSuperviewBounds() {
         guard let superview = self.superview else {

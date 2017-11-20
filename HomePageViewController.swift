@@ -58,6 +58,7 @@ class HomePageViewController:   BaseViewController,
         if let refreshControl = self.refreshControl {
             self.tableView.addSubview(refreshControl)
         }
+        self.tableView.alwaysBounceVertical = true
         
         //start tour if it's necessary
         TourManager.shared.onBoard(presenter: self)

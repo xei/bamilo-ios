@@ -70,6 +70,10 @@ static BOOL isListenersReady;
         } else if ([targetKey isEqualToString:@"s"] && argument.length) {
             // Catalog view - search term
             [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification object:@{ @"index": @(99), @"name": STRING_SEARCH, @"text": argument }];
+        } else if ([targetKey isEqualToString:@"camp"] && argument.length) {
+            [[MainTabBarViewController topNavigationController] openTargetString:[RITarget getTargetString:CAMPAIGN node:argument] purchaseInfo:nil];//openTargetString:[RITarget getTargetString:CAMPAIGN node:argument]];
+        } else if ([targetKey isEqualToString:@"ss"] && argument.length) {
+            [[MainTabBarViewController topNavigationController] openTargetString:[RITarget getTargetString:STATIC_PAGE node:argument] purchaseInfo:nil];
         } else if ([targetKey isEqualToString:@"externalPayment"]) {
             // externalPayment - bamilo://ir/externalPayment?orderNum=<OrderNumber>&success=<BOOL>
             if ([[MainTabBarViewController topViewController] isKindOfClass:[JAExternalPaymentsViewController class]]) {

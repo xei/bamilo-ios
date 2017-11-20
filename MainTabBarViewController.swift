@@ -145,7 +145,7 @@ import UIKit
     }
     
     static func showWishList() {
-        MainTabBarViewController.activateTabItem(rootViewClassType: JASavedListViewController.self)
+        MainTabBarViewController.activateTabItem(rootViewClassType: WishListViewController.self)
     }
     
     static func showProfile() {

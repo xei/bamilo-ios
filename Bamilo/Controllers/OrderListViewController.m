@@ -117,6 +117,7 @@
     self.refreshControl = [UIRefreshControl new];
     [self.refreshControl addTarget:self action:@selector(resetContentAndRefresh) forControlEvents:UIControlEventValueChanged];
     [self.tableview addSubview:self.refreshControl];
+    self.tableview.alwaysBounceVertical = YES;
     
     [self.tableview sizeToFit];
 }

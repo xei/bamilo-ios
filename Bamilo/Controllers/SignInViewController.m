@@ -87,8 +87,6 @@
             [self bind:data forRequestId:0];
             
             //EVENT: LOGIN / SUCCESS
-
-            
             RICustomer *customer = [RICustomer getCurrentCustomer];
             [TrackerManager postEventWithSelector:[EventSelectors loginEventSelector] attributes:[EventAttributes loginWithLoginMethod:cLoginMethodEmail user:customer]];
             [[EmarsysMobileEngage sharedInstance] sendLogin:[[PushNotificationManager pushManager] getPushToken] completion:nil];

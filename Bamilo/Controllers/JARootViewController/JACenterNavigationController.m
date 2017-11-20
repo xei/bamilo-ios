@@ -11,7 +11,6 @@
 #import "JAChooseCountryViewController.h"
 #import "JAHomeViewController.h"
 #import "JALoadCountryViewController.h"
-#import "JASavedListViewController.h"
 #import "JARecentSearchesViewController.h"
 #import "JARecentlyViewedViewController.h"
 #import "JAUserDataViewController.h"
@@ -31,12 +30,10 @@
 #import "JAShopWebViewController.h"
 #import "JABundlesViewController.h"
 #import "JAPDVVariationsViewController.h"
-//#import "JAMoreMenuViewController.h"
 #import "RICountry.h"
 #import "JANewsletterViewController.h"
 #import "JANewsletterSubscriptionViewController.h"
 
-//#import "JASearchView.h"
 #import "JAActionWebViewController.h"
 
 #import "JAStepByStepTabViewController.h"

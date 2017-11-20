@@ -84,4 +84,5 @@ let STRING_BUY_NOW = RILocalizationWrapper.localizedString("buy_now")!
 let STRING_FAVOURITES = RILocalizationWrapper.localizedString("favourites")!
 let STRING_REMOVE_FAVOURITES = RILocalizationWrapper.localizedString("remove_favourties")!
 let STRING_REMOVE_FAVOURITES_DESCRIPTION = RILocalizationWrapper.localizedString("remove_favourties_description")!
+let STRING_NO_SAVED_ITEMS_FAVOURITES = RILocalizationWrapper.localizedString("favourites_no_saved_items")!
 

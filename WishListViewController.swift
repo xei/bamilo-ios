@@ -59,6 +59,8 @@ class WishListViewController: BaseViewController,
         if let refreshControl = self.refreshControl {
             self.collectionView.addSubview(refreshControl)
         }
+        
+        self.collectionView.alwaysBounceVertical = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -163,14 +165,22 @@ class WishListViewController: BaseViewController,
     //MARK: - Helper functions
     private func presentActionSheet(product: Product) {
         let optionMenu = TBActionSheet()
+        
+        var avaiableSimpleProduct: SimpleProduct?
         //all avaiable simple products
         product.simples?.forEach({ (simpleProduct) in
             if simpleProduct.quantity > 0 { //if this simple product is available
+                avaiableSimpleProduct = simpleProduct
                 optionMenu.addButton(withTitle: simpleProduct.variationValue, style: .default, handler: { (_) in
                     self.addToCart(product: product, simpleSku: simpleProduct.sku)
                 })
             }
         })
+        //if we have only one avaiable simple product
+        if let avaiableProduct = avaiableSimpleProduct, optionMenu.numberOfButtons == 1 {
+            self.addToCart(product: product, simpleSku: avaiableProduct.sku)
+            return
+        }
         optionMenu.ambientColor = .white
         optionMenu.destructiveButtonColor = Theme.color(kColorDarkGreen)
         optionMenu.tintColor = Theme.color(kColorGray1)
@@ -232,6 +242,8 @@ class WishListViewController: BaseViewController,
                 self.showMessage(self.extractSuccessMessages(messages), showMessage: true)
             }
             
+            self.showEmptyViewIfItsNeeded()
+            
             //TODO: temprory code, when we migrate RIProduct to Product these code must be removed
             let convertedProduct = RIProduct()
             convertedProduct.sku = product.sku
@@ -267,15 +279,31 @@ class WishListViewController: BaseViewController,
                     self.refreshControl?.endRefreshing()
                     self.isRefreshing = false
                 }
+                
+                self.showEmptyViewIfItsNeeded()
             }
+        }
+    }
+    
+    private func showEmptyViewIfItsNeeded() {
+        if self.wishList == nil || self.wishList?.products.count == 0 {
+            self.emptyViewContainer.fadeIn(duration: 0.15)
+            self.emptyController?.getSuggestions()
+        } else {
+            self.emptyViewContainer.hide()
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let segueName = segue.identifier
+        
         if segueName == "embedEmptyViewController" {
             let destinationViewCtrl = segue.destination as? EmptyViewController
             self.emptyController = destinationViewCtrl
+            self.emptyController?.updateTitle(STRING_NO_SAVED_ITEMS_FAVOURITES)
+            self.emptyController?.recommendationLogic = "POPULAR"
+            self.emptyController?.parentScreenName = self.getScreenName()
+            self.emptyController?.update(UIImage(named: "emptyFavoritesIcon"))
         }
         if segueName == "showPDVViewController", let pdvViewCtrl = segue.destination as? JAPDVViewController, let sku = sender as? String {
             pdvViewCtrl.productSku = sku

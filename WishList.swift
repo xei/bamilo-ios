@@ -20,8 +20,8 @@ class WishList: NSObject, Mappable {
     }
     
     func mapping(map: Map) {
-        currentPage <- map["current_page"]
-        lastPage <- map["per_page"]
+        currentPage <- map["pagination.current_page"]
+        lastPage <- map["pagination.total_pages"]
         products <- map["products"]
     }
 }
