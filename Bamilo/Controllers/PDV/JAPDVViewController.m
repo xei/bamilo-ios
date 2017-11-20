@@ -155,6 +155,7 @@ static NSString *recommendationLogic = @"RELATED";
 
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    self.tabBarController.tabBar.hidden = YES;
     [self trackingEventScreenName:@"ShopProductDetail"];
 }
 
