@@ -14,7 +14,8 @@ class WishListViewController: BaseViewController,
                                 UICollectionViewDataSource,
                                 DataServiceProtocol,
                                 UIScrollViewDelegate,
-                                WishListCollectionViewCellDelegate {
+                                WishListCollectionViewCellDelegate,
+                                UINavigationControllerDelegate {
 
     @IBOutlet weak private var collectionView: UICollectionView!
     @IBOutlet weak private var emptyViewContainer: UIView!
@@ -32,7 +33,6 @@ class WishListViewController: BaseViewController,
         }
     }
     private var isRefreshing: Bool = false
-    
     private var wishList: WishList?
     
     override func viewDidLoad() {
@@ -59,23 +59,30 @@ class WishListViewController: BaseViewController,
         if let refreshControl = self.refreshControl {
             self.collectionView.addSubview(refreshControl)
         }
-        
         self.collectionView.alwaysBounceVertical = true
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(userLogout(notification:)), name: NSNotification.Name(rawValue: NotificationKeys.UserLoggedOut), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if !RICustomer.checkIfUserIsLogged() {
-            (self.navigationController as? JACenterNavigationController)?.requestForcedLogin()
+            (self.navigationController as? JACenterNavigationController)?.requestForcedLogin(completion: {
+                self.refreshAndReload()
+            })
             return
         }
         self.refreshAndReload()
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     
     private func loadProducts(page: Int) {
         if isLoading { return }
-        if let lastPage = self.wishList?.lastPage ,page > lastPage { return }
+        if let lastPage = self.wishList?.lastPage ,(lastPage != 0 && page > lastPage && isRefreshing == false) { return }
         self.isLoading = true
         ProductDataManager.sharedInstance.getWishListProducts(self, page: page, perPageCount: perPageProductCount) { (data, error) in
             if let error = error {
@@ -151,7 +158,7 @@ class WishListViewController: BaseViewController,
     }
     
     func remove(product: Product, cell: WishListCollectionViewCell) {
-        AlertManager.sharedInstance().confirmAlert(STRING_REMOVE_FAVOURITES, text: STRING_REMOVE_FAVOURITES_DESCRIPTION, confirm: STRING_OK, cancel: STRING_CANCEL) { (confirm) in
+        AlertManager.sharedInstance().confirmAlert(STRING_REMOVE_FAVOURITES, text: STRING_REMOVE_FAVOURITES_DESCRIPTION, confirm: STRING_YES, cancel: STRING_NO) { (confirm) in
             if confirm {
                 self.removeFromWishList(product: product, cell: cell)
             }
@@ -213,7 +220,7 @@ class WishListViewController: BaseViewController,
             }
             
             if let receivedData = data as? [String: Any], let cart = receivedData[DataManagerKeys.DataContent] as? RICart {
-                NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.UpdateCart), object: nil, userInfo: ["NOTIFICATION_UPDATE_CART_VALUE" : cart])
+                NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.UpdateCart), object: nil, userInfo: [NotificationKeys.NotificationCart : cart])
             }
         }
     }
@@ -250,7 +257,14 @@ class WishListViewController: BaseViewController,
             convertedProduct.price = NSNumber(value: product.price ?? 0)
             
             TrackerManager.postEvent(selector: EventSelectors.removeFromWishListSelector(), attributes: EventAttributes.removeFromWishList(product: convertedProduct, screenName: self.getScreenName()))
+            
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: NotificationKeys.WishListUpdate), object: nil, userInfo: [NotificationKeys.NotificationProduct: product, NotificationKeys.NotificationBool: false])
         }
+    }
+    
+    @objc private func userLogout(notification: Notification) {
+        self.wishList?.products.removeAll()
+        self.collectionView.reloadData()
     }
     
     //MARK: - DataServiceProtocol

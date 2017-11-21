@@ -1113,9 +1113,9 @@
 }
 
 //In existing navigation view controller force the user to login (no back button) e.g. in root of navigation view controllers
-- (void)requestForcedLogin {
+- (void)requestForcedLoginWithCompletion:(void (^)(void))completion {
     if (![RICustomer checkIfUserIsLogged]) {
-        [self pushAuthenticationViewController:nil byAniamtion:NO byForce:YES];
+        [self pushAuthenticationViewController:completion byAniamtion:NO byForce:YES];
     }
 }
 

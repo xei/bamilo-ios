@@ -13,6 +13,8 @@
 #import "ViewControllerManager.h"
 #import "EmarsysPredictManager.h"
 #import "Bamilo-Swift.h"
+#import "PushWooshTracker.h"
+#import <Crashlytics/Crashlytics.h>
 
 #define kUserIsGuestFlagKey [NSString stringWithFormat:@"%@_user_is_guest", [RIApi getCountryIsoInUse]]
 
@@ -163,6 +165,11 @@
                     dispatch_async(dispatch_get_main_queue(), ^{
                         returnBlock(YES, nil, customerObject.loginMethod);
                     });
+                    
+                    //Set auto logged in customer 
+                    [EmarsysPredictManager setCustomer:customerObject];
+                    [[PushWooshTracker sharedTracker] setUserID:customerObject.email];
+                    [[Crashlytics sharedInstance] setUserEmail:customerObject.email];
                 }
             }];
         } else {

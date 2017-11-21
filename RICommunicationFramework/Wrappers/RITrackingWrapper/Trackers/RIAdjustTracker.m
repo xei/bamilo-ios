@@ -101,27 +101,21 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
 
 #pragma mark - RITracker protocol
 
-- (void)applicationDidLaunchWithOptions:(NSDictionary *)options
-{
+- (void)applicationDidLaunchWithOptions:(NSDictionary *)options {
     RIDebugLog(@"Adjust tracker tracks application launch");
-    
     NSString *apiKey = [RITrackingConfiguration valueForKey:kRIAdjustToken];
-    
     if (!apiKey) {
         RIRaiseError(@"Missing Adjust API key in tracking properties")
         return;
     }
     
 #ifdef IS_RELEASE
-    ADJConfig *adjustConfig = [ADJConfig configWithAppToken:apiKey
-                                                environment:ADJEnvironmentProduction];
+    ADJConfig *adjustConfig = [ADJConfig configWithAppToken:apiKey environment:ADJEnvironmentProduction];
     NSLog(@"Adjust setEnvironment as ADJEnvironmentProduction");
 #else
-    ADJConfig *adjustConfig = [ADJConfig configWithAppToken:apiKey
-                                                environment:ADJEnvironmentSandbox];
+    ADJConfig *adjustConfig = [ADJConfig configWithAppToken:apiKey environment:ADJEnvironmentSandbox];
     NSLog(@"Adjust setEnvironment as ADJEnvironmentSandbox");
 #endif
-    
     [adjustConfig setLogLevel:ADJLogLevelAssert];// ADJLogLevelDebug];
     [adjustConfig setDelegate:self];
     [Adjust appDidLaunch:adjustConfig];
@@ -132,25 +126,20 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
 - (void)handlePushNotifcation:(NSDictionary *)info {
     NSString* url = [info objectForKey:@"u"];
     if (VALID_NOTEMPTY(url, NSString)) {
-//        [Adjust appWillOpenUrl:[NSURL URLWithString:[NSString stringWithFormat:@"jumia://?%@",url]]];
         [Adjust appWillOpenUrl:[NSURL URLWithString:url]];
     }
 }
 
 
 #pragma mark RIOpenURLTracking protocol
-- (void)trackOpenURL:(NSURL *)url
-{
+- (void)trackOpenURL:(NSURL *)url {
     [Adjust appWillOpenUrl:url];
 }
 
 #pragma mark RIEventTracking protocol
-
-- (void)trackEvent:(NSNumber *)eventType data:(NSDictionary *)data
-{
+- (void)trackEvent:(NSNumber *)eventType data:(NSDictionary *)data {
     RIDebugLog(@"Adjust - Tracking event = %@, data %@", eventType, data);
     if([self.registeredEvents containsObject:eventType]) {
-        
         NSString *keyRIEventLoginSuccess;
         NSString *keyRIEventLogout;
         NSString *keyRIEventRegisterSuccess;

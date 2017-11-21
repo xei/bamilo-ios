@@ -482,6 +482,10 @@
 
 "ok_got_it" = "تایید";
 
+"yes" = "بله";
+
+"no" = "خیر";
+
 "home_tip_text" = "انگشت خود را به چپ و راست بکشید تا مجموعه کالاها را تغییر دهید";
 
 "products_tip_swipe_text" = "انگشت خود را به راست و چپ بکشید تا کالاها بر اساس معیارهای دیگر مرتب سازی شوند.";
@@ -688,7 +692,7 @@
 
 "favourites_no_saved_items" = "شما هیچ کالای ذخیره شده ای در علاقه مندی ها ندارید";
 
-"favourites_no_saved_items_description" = "شما کالای ذخیره شده ای ندارید";
+"favourites__saved_items_description" = "شما کالای ذخیره شده ای ندارید";
 
 "login_enter_your_password_to_continue" = "برای ادامه رمز عبور خود را وارد کنید.";
 
@@ -937,4 +941,4 @@
 
 "remove_favourties" = "حذف کالا";
 
-"remove_favourties_description" = "از حذف کالا از لیست علاقه‌های خود اطمینان دارید؟";
+"remove_favourties_description" = "آیا از حذف کالا از لیست علاقه‌مندی‌ها اطمینان دارید؟";

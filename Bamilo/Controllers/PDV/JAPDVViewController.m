@@ -123,8 +123,13 @@ static NSString *recommendationLogic = @"RELATED";
     self.landscapeScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     [self.landscapeScrollView setHidden:YES];
     [self.view addSubview:self.landscapeScrollView];
-
-    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector( applicationDidEnterBackgroundNotification:) name: UIApplicationDidEnterBackgroundNotification object: nil];
+    
+    //regiter notifications
+    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(applicationDidEnterBackgroundNotification:) name: UIApplicationDidEnterBackgroundNotification object: nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatedProduct:) name:kProductChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatedProduct:) name:kUserLoggedInNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatedProduct:) name:kUserLoggedOutNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateWishList:) name:kUpdateWishListNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -145,12 +150,13 @@ static NSString *recommendationLogic = @"RELATED";
     self.tabBarController.tabBar.hidden = YES;
 }
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)viewDidDisappear:(BOOL)animated {
     // notify the InAppNotification SDK that this view controller in no more active
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatedProduct:) name:kProductChangedNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatedProduct:) name:kUserLoggedInNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatedProduct:) name:kUserLoggedOutNotification object:nil];
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -281,6 +287,17 @@ static NSString *recommendationLogic = @"RELATED";
     }
     if (VALID_NOTEMPTY(notification.object, NSString) && [self.productSku isEqualToString:notification.object]) {
         _needRefreshProduct = YES;
+    }
+}
+
+- (void)updateWishList:(NSNotification *)notification {
+    //TODO: THIS view is a total shit!! 
+    Product *product = [[notification userInfo] objectForKey:@"NOTIFICATION_UPDATE_PRODUCT_VALUE"];
+    BOOL isInWishList = [((NSNumber *)[[notification userInfo] objectForKey:@"NOTIFICATION_UPDATE_BOOL_VALUE"]) boolValue];
+    
+    if ([product.sku isEqualToString: self.product.sku]) {
+        self.product.favoriteAddDate = isInWishList ? [NSDate new] : nil;
+        [self.productImageSection.wishListButton setSelected:isInWishList];
     }
 }
 
@@ -1069,10 +1086,7 @@ static NSString *recommendationLogic = @"RELATED";
 }
 
 - (void)addToWishList:(UIButton *)button {
-    //[self showLoading];
-
     __weak typeof (self) weakSelf = self;
-
     BOOL logged = [self isUserLoggedInWithBlock:^{
         _needAddToFavBlock = NO;
         if(![RICustomer checkIfUserIsLogged]) {
@@ -1081,11 +1095,9 @@ static NSString *recommendationLogic = @"RELATED";
             [weakSelf addToWishList:button];
         }
     }];
-
     if (!logged) {
         return;
     }
-
     if (!button.selected && !VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate)) {
         [DataAggregator addToWishListWithTarget:self sku:self.product.sku completion:^(id data, NSError *error) {
             if(error == nil) {
@@ -1095,11 +1107,8 @@ static NSString *recommendationLogic = @"RELATED";
                 
                 //[self hideLoading];
                 button.selected = YES;
-
                 self.product.favoriteAddDate = [NSDate date];
-
                 [self trackingEventAddToWishList];
-
                 NSDictionary *userInfo = nil;
                 if (self.product.favoriteAddDate) {
                     userInfo = [NSDictionary dictionaryWithObject:self.product.favoriteAddDate forKey:@"favoriteAddDate"];
@@ -1111,7 +1120,6 @@ static NSString *recommendationLogic = @"RELATED";
                 [self.delegate addToWishList:self.product.sku add:YES];
             } else {
                 [self onErrorResponse:error.code messages:[error.userInfo objectForKey:kErrorMessages] showAsMessage:YES selector:@selector(addToWishList:) objects:@[button]];
-                //[self hideLoading];
                 
                 //EVENT: ADD TO FAVORITES
                 [TrackerManager postEventWithSelector:[EventSelectors addToWishListSelector]
@@ -1122,10 +1130,7 @@ static NSString *recommendationLogic = @"RELATED";
 }
 
 - (void)removeFromFavorites:(UIButton *)button {
-    [self showLoading];
-
     __weak typeof (self) weakSelf = self;
-
     BOOL logged = [self isUserLoggedInWithBlock:^{
         _needAddToFavBlock = NO;
         if(![RICustomer checkIfUserIsLogged]) {
@@ -1134,7 +1139,6 @@ static NSString *recommendationLogic = @"RELATED";
             [weakSelf removeFromFavorites:button];
         }
     }];
-
     if (!logged) {
         return;
     }
@@ -1145,17 +1149,13 @@ static NSString *recommendationLogic = @"RELATED";
                 button.selected = NO;
     
                 self.product.favoriteAddDate = nil;
-    
                 [self trackingEventRemoveFromWishlist];
-    
                 [self onSuccessResponse:RIApiResponseSuccess messages:[self extractSuccessMessages:data] showMessage:YES];
                 NSDictionary *userInfo = nil;
                 if (self.product.favoriteAddDate) {
                     userInfo = [NSDictionary dictionaryWithObject:self.product.favoriteAddDate forKey:@"favoriteAddDate"];
                 }
-                [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
-                                                                    object:self.product.sku
-                                                                  userInfo:userInfo];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification object:self.product.sku userInfo:userInfo];
                 
                 [TrackerManager postEventWithSelector:[EventSelectors removeFromWishListSelector] attributes:[EventAttributes removeFromWishListWithProduct:self.product screenName:[self getScreenName]]];
                 

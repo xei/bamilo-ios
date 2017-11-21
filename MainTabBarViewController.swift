@@ -164,7 +164,7 @@ import UIKit
     //MARK: - DataServiceProtocol 
     func bind(_ data: Any!, forRequestId rid: Int32) {
         if let cart = data as? RICart {
-            NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.UpdateCart), object: nil, userInfo: ["NOTIFICATION_UPDATE_CART_VALUE" : cart])
+            NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.UpdateCart), object: nil, userInfo: [NotificationKeys.NotificationCart : cart])
         }
     }
 }

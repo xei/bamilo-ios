@@ -93,29 +93,21 @@ static dispatch_once_t sharedInstanceToken;
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    [self RI_callTrackersConformToProtocol:@protocol(RITracker)
-                                  selector:@selector(applicationDidEnterBackground:)
-                                 arguments:[NSArray arrayWithObjects:application, nil]];
+    [self RI_callTrackersConformToProtocol:@protocol(RITracker) selector:@selector(applicationDidEnterBackground:) arguments:[NSArray arrayWithObjects:application, nil]];
 }
 
 #pragma mark - RIEventTracking protocol
 
 - (void)trackEvent:(NSNumber* )eventType data:(NSDictionary *)data {
     RIDebugLog(@"Tracking event: '%@' with data: %@", eventType, data);
-    
-    [self RI_callTrackersConformToProtocol:@protocol(RIEventTracking)
-                                  selector:@selector(trackEvent:data:)
-                                 arguments:[NSArray arrayWithObjects:eventType, data, nil]];
+    [self RI_callTrackersConformToProtocol:@protocol(RIEventTracking) selector:@selector(trackEvent:data:) arguments:[NSArray arrayWithObjects:eventType, data, nil]];
 }
 
 #pragma mark - RIExceptionTracking protocolx
 
 - (void)trackExceptionWithName:(NSString *)name {
     RIDebugLog(@"Tracking exception with name '%@'", name);
-    
-    [self RI_callTrackersConformToProtocol:@protocol(RIExceptionTracking)
-                                  selector:@selector(trackExceptionWithName:)
-                                 arguments:@[name]];
+    [self RI_callTrackersConformToProtocol:@protocol(RIExceptionTracking) selector:@selector(trackExceptionWithName:) arguments:@[name]];
 }
 
 #pragma mark - RIOpenURLTracking protocol
@@ -173,38 +165,26 @@ static dispatch_once_t sharedInstanceToken;
     [self.handlers addObject:handler];
 }
 
-- (void)trackOpenURL:(NSURL *)url
-{
+- (void)trackOpenURL:(NSURL *)url {
     RIDebugLog(@"Tracking deepling with URL '%@'", url);
-    
     for (RIOpenURLHandler *handler in self.handlers) {
         [handler handleOpenURL:url];
     }
-    
-    [self RI_callTrackersConformToProtocol:@protocol(RIOpenURLTracking)
-                                  selector:@selector(trackOpenURL:)
-                                 arguments:@[url]];
+    [self RI_callTrackersConformToProtocol:@protocol(RIOpenURLTracking) selector:@selector(trackOpenURL:) arguments:@[url]];
 }
 
 #pragma mark - RIScreenTracking protocol
 
-- (void)trackScreenWithName:(NSString *)name
-{
+- (void)trackScreenWithName:(NSString *)name {
     RIDebugLog(@"Tracking screen with name: '%@'", name);
-    
-    [self RI_callTrackersConformToProtocol:@protocol(RIScreenTracking)
-                                  selector:@selector(trackScreenWithName:)
-                                 arguments:@[name]];
+    [self RI_callTrackersConformToProtocol:@protocol(RIScreenTracking) selector:@selector(trackScreenWithName:) arguments:@[name]];
 }
 
 #pragma mark - RINotificationTracking protocol
 
-- (void)applicationDidRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
-{
+- (void)applicationDidRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken {
     RIDebugLog(@"Application did register for remote notification");
-    
-    [self RI_callTrackersConformToProtocol:@protocol(RINotificationTracking)
-                                  selector:@selector(applicationDidRegisterForRemoteNotificationsWithDeviceToken:) arguments:@[deviceToken]];
+    [self RI_callTrackersConformToProtocol:@protocol(RINotificationTracking) selector:@selector(applicationDidRegisterForRemoteNotificationsWithDeviceToken:) arguments:@[deviceToken]];
 }
 
 - (void)applicationDidReceiveRemoteNotification:(NSDictionary *)userInfo {

@@ -90,8 +90,8 @@
             RICustomer *customer = [RICustomer getCurrentCustomer];
             [TrackerManager postEventWithSelector:[EventSelectors loginEventSelector] attributes:[EventAttributes loginWithLoginMethod:cLoginMethodEmail user:customer]];
             [[EmarsysMobileEngage sharedInstance] sendLogin:[[PushNotificationManager pushManager] getPushToken] completion:nil];
+            
             [EmarsysPredictManager setCustomer:customer];
-        
             [[PushWooshTracker sharedTracker] setUserID:customer.email];
             [[Crashlytics sharedInstance] setUserEmail:customer.email];
             
@@ -161,13 +161,8 @@
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLoginSuccess]
                                                   data:[trackingDictionary copy]];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
-                                                            object:customerObject.wishlistProducts];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification object:customerObject.wishlistProducts];
         
-        NSMutableDictionary *userInfo = [NSMutableDictionary new];
-        if (self.fromSideMenu) {
-            [userInfo setObject:@YES forKey:@"from_side_menu"];
-        }
     }
 }
 

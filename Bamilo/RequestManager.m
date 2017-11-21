@@ -75,7 +75,9 @@
          }
          
          switch (type) {
-            case RequestExecutionTypeForeground:
+             case RequestExecutionTypeContainer:
+             case RequestExecutionTypeForeground:
+                 
                  [LoadingManager hideLoading];
             break;
                  

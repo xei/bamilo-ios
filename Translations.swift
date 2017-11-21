@@ -85,4 +85,6 @@ let STRING_FAVOURITES = RILocalizationWrapper.localizedString("favourites")!
 let STRING_REMOVE_FAVOURITES = RILocalizationWrapper.localizedString("remove_favourties")!
 let STRING_REMOVE_FAVOURITES_DESCRIPTION = RILocalizationWrapper.localizedString("remove_favourties_description")!
 let STRING_NO_SAVED_ITEMS_FAVOURITES = RILocalizationWrapper.localizedString("favourites_no_saved_items")!
+let STRING_NO = RILocalizationWrapper.localizedString("no")!
+let STRING_YES = RILocalizationWrapper.localizedString("yes")!
 

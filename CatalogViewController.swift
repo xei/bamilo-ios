@@ -101,6 +101,8 @@ import SwiftyJSON
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateListWithUserLoginNotification(notification:)), name: NSNotification.Name(NotificationKeys.UserLogin), object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(updateProductStatusFromWishList(notification:)), name: NSNotification.Name(NotificationKeys.WishListUpdate), object: nil)
+        
         NotificationCenter.default.addObserver(self, selector: #selector(resetBarFollowers(animated:)), name: NSNotification.Name(NotificationKeys.EnterForground), object: true)
         
         if let navBar = self.navigationController?.navigationBar {
@@ -373,13 +375,23 @@ import SwiftyJSON
     
     func updateListWithUserLoginNotification(notification: Notification) {
         if let wishlistSkuArray = notification.object as? [String] {
-            self.catalogData?.products.filter({ (product) -> Bool in
-                return wishlistSkuArray.contains(product.sku)
-            }).forEach({ (product) in
-                product.isInWishList = true
+            self.catalogData?.products.forEach({ (product) in
+                product.isInWishList = wishlistSkuArray.contains(product.sku)
             })
         }
         self.collectionView.reloadData()
+    }
+    
+    func updateProductStatusFromWishList(notification: Notification) {
+        if let product = notification.userInfo?[NotificationKeys.NotificationProduct] as? Product ,let isInWishlist = notification.userInfo?[NotificationKeys.NotificationBool] as? Bool {
+            let targetProduct = self.catalogData?.products.filter { $0.sku == product.sku }.first
+            if let targetProduct = targetProduct {
+                targetProduct.isInWishList = isInWishlist
+                if let index = self.catalogData?.products.index(of: targetProduct) {
+                    self.collectionView.reloadItems(at: [IndexPath(row: index, section: 0)])
+                }
+            }
+        }
     }
     
     private func setNavigationBarAlpha(alpha: CGFloat, animated: Bool) {
@@ -646,6 +658,9 @@ import SwiftyJSON
                     self.showNotificationBar(error, isSuccess: false)
                 })
             }
+            
+            //Inform others if it's needed
+            NotificationCenter.default.post(name: Notification.Name(rawValue: NotificationKeys.WishListUpdate), object: nil, userInfo: [NotificationKeys.NotificationProduct: product, NotificationKeys.NotificationBool: add])
         })
     }
     
