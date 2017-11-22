@@ -157,8 +157,7 @@
     return nil;
 }
 
-+ (NSString *)getTargetKey:(TargetType)type
-{
++ (NSString *)getTargetKey:(TargetType)type {
     switch (type) {
         case PRODUCT_DETAIL:
             return @"product_detail";

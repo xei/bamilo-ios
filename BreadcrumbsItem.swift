@@ -15,11 +15,10 @@ class BreadcrumbsItem: NSObject, Mappable {
     var url : String?
     
     required init?(map: Map) {
-        
     }
     
     func mapping(map: Map) {
         title <- map["title"]
-        url <- map["url"]
+        url <- map["target"]
     }
 }

@@ -653,13 +653,11 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
     CGFloat convertedTransactionValueFloat = [convertedTransactionValue longValue];
     
     [event setRevenue:convertedTransactionValueFloat currency:@"EUR"]; // You have to include the currency
-    if(VALID_NOTEMPTY([data objectForKey:kRIEcommerceTransactionIdKey], NSString))
-    {
+    if (VALID_NOTEMPTY([data objectForKey:kRIEcommerceTransactionIdKey], NSString)) {
         [event setTransactionId:[data objectForKey:kRIEcommerceTransactionIdKey]];
         [event addCallbackParameter:kAdjustEventTransactionIdKey value:[data objectForKey:kRIEcommerceTransactionIdKey]];
         [event addPartnerParameter:kAdjustEventTransactionIdKey value:[data objectForKey:kRIEcommerceTransactionIdKey]];
     }
-    
     [Adjust trackEvent:event];
 }
 

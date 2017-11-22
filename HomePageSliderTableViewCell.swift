@@ -110,7 +110,7 @@ class HomePageSliderTableViewCell: BaseHomePageTeaserBoxTableViewCell, FSPagerVi
     
     func pagerView(_ pagerView: FSPagerView, didSelectItemAt index: Int) {
         pagerView.deselectItem(at: index, animated: true)
-        if let sliderItem = self.sliderContent?.sliders?[index], let target = sliderItem.target, let id = self.sliderContent?.teaserId {
+        if let sliderItems = self.sliderContent?.sliders, index < sliderItems.count, let target = sliderItems[index].target, let id = self.sliderContent?.teaserId {
             self.delegate?.teaserItemTappedWithTargetString(target: target, teaserId: id)
         }
     }

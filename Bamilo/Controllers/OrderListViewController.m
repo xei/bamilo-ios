@@ -164,7 +164,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     OrderListTableViewCell *cell = [self.tableview dequeueReusableCellWithIdentifier:[OrderListTableViewCell nibName] forIndexPath:indexPath];
-    [cell updateWithModel:self.list.orders[indexPath.row]];
+    if (indexPath.row < self.list.orders.count) {
+        [cell updateWithModel:self.list.orders[indexPath.row]];
+    }
     return cell;
 }
 
@@ -182,7 +184,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableview deselectRowAtIndexPath:indexPath animated:YES];
-    [self performSegueWithIdentifier:@"OrderDetailViewController" sender:self.list.orders[indexPath.row]];
+    if (indexPath.row < self.list.orders.count) {
+        [self performSegueWithIdentifier:@"OrderDetailViewController" sender:self.list.orders[indexPath.row]];
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {

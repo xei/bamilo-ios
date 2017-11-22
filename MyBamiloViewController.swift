@@ -138,7 +138,8 @@ class MyBamiloViewController:   BaseViewController,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: CatalogGridCollectionViewCell.nibName, for: indexPath) as! CatalogGridCollectionViewCell
-        if let product = self.presentingProducts?[indexPath.row].convertToProduct() {
+        if let products = self.presentingProducts, indexPath.row < products.count {
+            let product = products[indexPath.row].convertToProduct()
             cell.updateWithProduct(product: product)
         }
         cell.cellIndex = indexPath.row
@@ -147,7 +148,7 @@ class MyBamiloViewController:   BaseViewController,
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let sku = self.presentingProducts?[indexPath.row].sku {
+        if let products = self.presentingProducts, indexPath.row < products.count, let sku = products[indexPath.row].sku {
             self.delegate?.didSelectProductSku(productSku: sku)
         }
     }

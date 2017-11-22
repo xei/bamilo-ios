@@ -265,9 +265,11 @@
     [super viewWillAppear:animated];
     
     [DataAggregator getUserCart:self completion:^(id data, NSError *error) {
-        if(error == nil) {
-            [self bind:data forRequestId:0];
+        if(error != nil) {
+            [Utility handleErrorWithError:error viewController:self];
+            return;
         }
+        [self bind:data forRequestId:0];
     }];
 }
 
