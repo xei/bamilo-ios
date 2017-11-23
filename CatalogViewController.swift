@@ -21,7 +21,8 @@ import SwiftyJSON
                                     UICollectionViewDelegateFlowLayout,
                                     FilteredListNoResultViewControllerDelegate,
                                     JAPDVViewControllerDelegate,
-                                    SearchViewControllerDelegate {
+                                    SearchViewControllerDelegate,
+                                    BreadcrumbsViewDelegate {
     
     @IBOutlet private weak var catalogHeaderContainer: UIView!
     @IBOutlet private weak var catalogHeaderContainerHeightConstraint: NSLayoutConstraint!
@@ -94,6 +95,7 @@ import SwiftyJSON
             self.catalogHeader.headerView?.listViewType = self.listViewType
         }
         
+        self.breadCrumbsControl.delegate = self
         self.catalogHeader.delegate = self
         self.setSortingMethodToHeader()
         self.collectionView.delegate = self
@@ -713,6 +715,13 @@ import SwiftyJSON
             destinationViewCtrl?.delegate = self
         }
         
+    }
+    
+    //MARK: - BreadcrumbsViewDelegate
+    func itemTapped(item: BreadcrumbsItem) {
+        if let target = item.target {
+            MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: nil)
+        }
     }
     
     //MARK: - EmarsysWebExtendProtocol

@@ -79,7 +79,6 @@ class WishListViewController: BaseViewController,
         NotificationCenter.default.removeObserver(self)
     }
     
-    
     private func loadProducts(page: Int) {
         if isLoading { return }
         if let lastPage = self.wishList?.lastPage ,(lastPage != 0 && page > lastPage && isRefreshing == false) { return }
@@ -167,6 +166,9 @@ class WishListViewController: BaseViewController,
     
     func share(product: Product, cell: WishListCollectionViewCell) {
         //we should share the product here
+        if let url = product.shareURL, let name = product.name {
+            Utility.shareUrl(url: url, message: name, viewController: self)
+        }
     }
     
     //MARK: - Helper functions

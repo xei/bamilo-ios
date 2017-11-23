@@ -31,29 +31,13 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="پیراهن با کت مجلسی زنانه پیراهن با کت مجلسی زنانه پیراهن با کت مجلسی زنانه پیراهن با کت مجلسی زنانه " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LIx-pW-8G0">
-                        <rect key="frame" x="40" y="10" width="179" height="14"/>
+                        <rect key="frame" x="40" y="10" width="179" height="23"/>
                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="whw-2Z-93h" customClass="IconButton">
-                        <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
-                        <constraints>
-                            <constraint firstAttribute="width" secondItem="whw-2Z-93h" secondAttribute="height" multiplier="1:1" id="RBb-1E-EYO"/>
-                            <constraint firstAttribute="width" constant="40" id="WTK-3q-PFS"/>
-                        </constraints>
-                        <state key="normal" image="GrayClose"/>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="imageHeightToButtonHeightRatio">
-                                <real key="value" value="0.34999999999999998"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
-                        <connections>
-                            <action selector="removeButtonTapped:" destination="gTV-IL-0wX" eventType="touchUpInside" id="Uv4-N8-hOw"/>
-                        </connections>
-                    </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Logitec" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ysN-ie-iU3">
-                        <rect key="frame" x="182.5" y="24" width="36.5" height="18"/>
+                        <rect key="frame" x="184.5" y="33" width="34.5" height="18"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="18" id="A2t-t7-XQS"/>
                         </constraints>
@@ -62,13 +46,13 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۲۰،۵۰۰،۰۰۰ ریال" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IdK-16-fRl">
-                        <rect key="frame" x="138.5" y="42" width="80.5" height="15.5"/>
+                        <rect key="frame" x="128.5" y="51" width="90.5" height="25"/>
                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="13"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۱۰۰،۰۰۰ ریال" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4iC-Ue-vGe">
-                        <rect key="frame" x="166" y="57.5" width="53.5" height="18"/>
+                        <rect key="frame" x="161.5" y="76" width="58" height="18"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="18" id="Pei-SY-F1O"/>
                         </constraints>
@@ -97,6 +81,22 @@
                         </userDefinedRuntimeAttributes>
                         <connections>
                             <action selector="shareButtonTapped:" destination="gTV-IL-0wX" eventType="touchUpInside" id="dcr-E3-i6u"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="whw-2Z-93h" customClass="IconButton">
+                        <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="whw-2Z-93h" secondAttribute="height" multiplier="1:1" id="RBb-1E-EYO"/>
+                            <constraint firstAttribute="width" constant="40" id="WTK-3q-PFS"/>
+                        </constraints>
+                        <state key="normal" image="GrayClose"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="imageHeightToButtonHeightRatio">
+                                <real key="value" value="0.34999999999999998"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                        <connections>
+                            <action selector="removeButtonTapped:" destination="gTV-IL-0wX" eventType="touchUpInside" id="Uv4-N8-hOw"/>
                         </connections>
                     </button>
                 </subviews>

@@ -71,7 +71,7 @@ import UIKit
     func resetBarFrame(animated: Bool) {
         if let barView = self.barView, let barViewInitialFrame = self.barViewInitialFrame {
             UIView.animate(withDuration: 0.15, animations: {
-                barView.frame.origin.y = barViewInitialFrame.origin.y //setFrame(frame: barViewInitialFrame, animated: animated)
+                barView.frame.origin.y = barViewInitialFrame.origin.y
             })
         }
     }
@@ -85,6 +85,7 @@ import UIKit
         }
     }
     
+    private var previousFrameY: CGFloat?
     private func changeBarPositionY(difference: CGFloat) {
         self.barIsHidding = difference > 0
         guard let barViewInitialFrame = self.barViewInitialFrame else {
@@ -95,8 +96,16 @@ import UIKit
                                  width: barViewInitialFrame.width,
                                  height: barViewInitialFrame.height + self.distance)
         
+        //To move smoothly!
+        if let prevY = self.previousFrameY, let frameY = barView?.frame.origin.y {
+            if frameY - prevY > difference {
+                barView?.frame.origin.y = prevY
+            }
+        }
+        
         barView?.boundedVerticalMove(difference: difference, direction: self.direction, boundFrame: boundedRect)
         barView?.updateConstraints()
+        previousFrameY = self.barView?.frame.origin.y
     }
     
     //these two methods must be called in mutaul UIScrollViewDelegate methods
@@ -118,9 +127,7 @@ import UIKit
             // we are approaching at the end of scrollview
             return 0
         }
-        
         self.changeBarPositionY(difference: scrollChanage)
-        
         if let barView = barView, let initialFrame = barViewInitialFrame {
             let endTargetOriginY = initialFrame.origin.y + (self.direction == .top ? -self.distance : self.distance)
             let totalDiff = abs(endTargetOriginY - initialFrame.origin.y)

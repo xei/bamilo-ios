@@ -39,7 +39,22 @@ class WishListCollectionViewCell: BaseCatallogCollectionViewCell {
         self.clipsToBounds = false
     }
     
-    @IBAction func shareButtonTapped(_ sender: Any) {
+    override func updateWithProduct(product: Product) {
+        super.updateWithProduct(product: product)
+        if let _ = product.shareURL {
+            self.shareButton.isHidden = false
+        }
+        if (!product.hasStock) {
+//            self.priceLabel.text = nil
+//            self.alpha = 0.5
+//            self.bottomBadgeContainerView.isHidden = false
+//            self.bottomBadgeContainerView.backgroundColor = Theme.color(kColorGray1)
+//            self.bottomBadgeLabel.text = STRING_OUT_OF_STOCK
+//            self.bottomBadgeLabel.textColor = .white
+        }
+    }
+    
+    @IBAction func shareButtonTapped(_ sender: UIButton) {
         if let product = self.product {
             self.wishListItemDelegate?.share(product: product, cell: self)
         }

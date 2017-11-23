@@ -79,8 +79,8 @@ class BreadcrumbsView: BaseControlView {
             }
             offset += button.frame.width + imageWidthAndAllMargins
         }
-        let imageWidthAndHorizontalMargins = (imageHorizontalMargin * 2 + self.contentHeight - self.buttonVerticalMargin * 2)
-        let contentSize = offset > 0 ?  offset - imageWidthAndHorizontalMargins : offset
+        let imageWidthAndHorizontalMargins = imageHorizontalMargin * 2 + imageSize.width
+        let contentSize = offset > 0 ?  offset - imageWidthAndHorizontalMargins + wholeContentMargin + buttonHorizontalMargin : offset
         let contentHorizontalMargin = wholeContentMargin - buttonHorizontalMargin
         self.scrollview.contentInset = UIEdgeInsetsMake(0, contentHorizontalMargin, 0, contentHorizontalMargin)
         self.scrollview.contentSize = CGSize(width: contentSize, height: self.contentHeight)

@@ -30,6 +30,7 @@ import SwiftyJSON
     var hasStock: Bool = true
     var simples: [SimpleProduct]?
     var variationName: String?
+    var shareURL: String?
     
     override init() {}
     required init?(map: Map) {}
@@ -52,6 +53,7 @@ import SwiftyJSON
         isNew               <- map["is_new"]
         simples             <- map["simples"]
         variationName       <- map["variation_name"]
+        shareURL            <- map["share_url"]
         
         //checkou avaiability
         var stockAvaiablity: Bool?
