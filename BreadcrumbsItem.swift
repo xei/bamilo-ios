@@ -12,13 +12,13 @@ import ObjectMapper
 class BreadcrumbsItem: NSObject, Mappable {
     
     var title: String?
-    var url : String?
+    var target : String?
     
     required init?(map: Map) {
     }
     
     func mapping(map: Map) {
         title <- map["title"]
-        url <- map["target"]
+        target <- map["target"]
     }
 }

@@ -23,7 +23,10 @@ import SwiftyJSON
                                     JAPDVViewControllerDelegate,
                                     SearchViewControllerDelegate {
     
+    @IBOutlet private weak var catalogHeaderContainer: UIView!
+    @IBOutlet private weak var catalogHeaderContainerHeightConstraint: NSLayoutConstraint!
     @IBOutlet private weak var catalogHeader: CatalogHeaderControl!
+    @IBOutlet weak private var breadCrumbsControl: BreadcrumbsControl!
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var noResultViewContainer: UIView!
     @IBOutlet private weak var filteredNoResultContainer: UIView!
@@ -50,6 +53,8 @@ import SwiftyJSON
     private var initialTabBarHeight: CGFloat!
     private let loadingFooterViewHeight: CGFloat = 50
     private let productCountViewHeight: CGFloat = 30
+    private let catalogHeaderContainerHeightWithBreadcrumb:CGFloat = 96
+    private let catalogHeaderContainerHeightWithoutBreadcrumb:CGFloat = 48
     private let cardViewNewTagElementHeight: CGFloat = 16
     private var navBarScrollFollower: ScrollerBarFollower?
     private var tabBarScrollFollower: ScrollerBarFollower?
@@ -81,6 +86,7 @@ import SwiftyJSON
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = Theme.color(kColorVeryLightGray)
+        self.catalogHeaderContainerHeightConstraint.constant = self.catalogHeaderContainerHeightWithoutBreadcrumb
         self.productCountLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 11), color: UIColor.black)
         
         if let savedListViewType = UserDefaults.standard.string(forKey: "CatalogListViewType") {
@@ -107,16 +113,14 @@ import SwiftyJSON
         
         if let navBar = self.navigationController?.navigationBar {
             self.initialNavBarAndStatusBarHeight = navBar.frame.height + UIApplication.shared.statusBarFrame.height
+            
+            self.topCollectionViewConstraint.constant = navBar.frame.height-(self.navigationController?.navigationBar.frame.size.height ?? navBar.frame.height)
         }
         
         if let tabBar = self.tabBarController?.tabBar {
             self.initialTabBarHeight = tabBar.frame.height
         }
-        
-        self.productCountLabelTopConstraint.constant = self.catalogHeader.frame.height
         self.productCountLabelHeight.constant = self.productCountViewHeight
-        
-        self.topCollectionViewConstraint.constant = -(self.navigationController?.navigationBar.frame.size.height ?? 0)
     }
     
     deinit {
@@ -142,11 +146,11 @@ import SwiftyJSON
         super.viewDidLayoutSubviews()
         if  !allSubviewsHasBeenRendered {
             //asign scroll followers in this view
-            self.searchBarScrollFollower = ScrollerBarFollower(barView: catalogHeader, moveDirection: .top)
+            self.searchBarScrollFollower = ScrollerBarFollower(barView: catalogHeaderContainer, moveDirection: .top)
             if let navBar = self.navigationController?.navigationBar {
                 self.navBarScrollFollower = ScrollerBarFollower(barView: navBar, moveDirection: .top)
                 self.navBarScrollFollower?.followScrollView(scrollView: collectionView, delay: productCountViewHeight, permittedMoveDistance: navBar.frame.height)
-                self.searchBarScrollFollower?.followScrollView(scrollView: collectionView, delay: productCountViewHeight, permittedMoveDistance: navBar.frame.height)
+                self.searchBarScrollFollower?.followScrollView(scrollView: collectionView, delay: productCountViewHeight, permittedMoveDistance: navBar.frame.height + 48)
             }
             if let tabBar = self.tabBarController?.tabBar {
                 self.tabBarScrollFollower = ScrollerBarFollower(barView: tabBar, moveDirection: .down)
@@ -172,7 +176,13 @@ import SwiftyJSON
         self.collectionView.killScroll()
     }
     
-    func resetBarFollowers(animated: Bool) {
+    private func refreshBarFollower() {
+        self.navBarScrollFollower?.refreshForFrameSize()
+        self.tabBarScrollFollower?.refreshForFrameSize()
+        self.searchBarScrollFollower?.refreshForFrameSize()
+    }
+    
+    @objc private func resetBarFollowers(animated: Bool) {
         self.navBarScrollFollower?.resetBarFrame(animated: animated)
         self.tabBarScrollFollower?.resetBarFrame(animated: animated)
         self.searchBarScrollFollower?.resetBarFrame(animated: animated)
@@ -201,6 +211,22 @@ import SwiftyJSON
                         self.productCountLabel.text = "\(totalProducts) \(STRING_FOUND_PRODUCT_COUNT)".convertTo(language: .arabic)
                     }
                     self.loadingDataInProgress = false
+                    if let breadcrumb = self.catalogData?.breadcrumbs {
+                        UIView.animate(withDuration: 0.15, animations: {
+                            self.catalogHeaderContainerHeightConstraint.constant = self.catalogHeaderContainerHeightWithBreadcrumb
+                        }, completion: { (finished) in
+                            self.refreshBarFollower()
+                            self.breadCrumbsControl.update(withModel: breadcrumb)
+                            self.productCountLabelTopConstraint.constant = self.catalogHeaderContainer.frame.height
+                        })
+                    } else {
+                        UIView.animate(withDuration: 0.15, animations: {
+                            self.catalogHeaderContainerHeightConstraint.constant = self.catalogHeaderContainerHeightWithoutBreadcrumb
+                        }, completion: { (finished) in
+                            self.refreshBarFollower()
+                            self.productCountLabelTopConstraint.constant = self.catalogHeaderContainer.frame.height
+                        })
+                    }
                 } else if rid == 1, receivedCatalogData.products.count > 0 {
                     if let visibleProductCount = self.catalogData?.products.count {
                         var newIndexPathes = [IndexPath]()
@@ -524,7 +550,7 @@ import SwiftyJSON
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake((self.navigationController?.navigationBar.frame.size.height ?? 0) + self.productCountViewHeight , 0, 0, 0)
+        return UIEdgeInsetsMake(self.catalogHeaderContainer.frame.height + self.productCountViewHeight , 0, 0, 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

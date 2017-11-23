@@ -27,6 +27,8 @@ NSString *const cPrimaryPalette = @"Bamilo-Palette";
 //PALETTE COLORS
 NSString *const kColorGreen = @"ColorGreen";
 NSString *const kColorBlue = @"ColorBlue";
+NSString *const kColorBlue1 = @"blue_1";
+NSString *const kColorBlue10 = @"blue_10";
 NSString *const kColorOrange = @"ColorOrange";
 NSString *const kColorExtraDarkGray = @"ColorExtraDarkGray";
 NSString *const kColorDarkGray = @"ColorDarkGray";

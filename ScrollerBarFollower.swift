@@ -36,6 +36,12 @@ import UIKit
         self.barViewInitialFrame = barView.frame
         self.direction = VerticalMoveDirection(rawValue: moveDirection) ?? .top
     }
+    
+    func refreshForFrameSize() {
+        if let size = self.barView?.frame.size {
+            self.barViewInitialFrame?.size = size
+        }
+    }
       
     func followScrollView(scrollView: UIScrollView, delay: CGFloat, permittedMoveDistance: CGFloat) {
         self.delay = delay

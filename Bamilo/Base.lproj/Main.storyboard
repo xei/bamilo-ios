@@ -101,7 +101,7 @@
                                         <rect key="frame" x="147" y="137" width="120" height="57"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SSz-D5-qwc">
-                                        <rect key="frame" x="192.66666666666666" y="78" width="29.666666666666657" height="14"/>
+                                        <rect key="frame" x="192.33333333333334" y="78" width="29.666666666666657" height="14"/>
                                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -729,47 +729,71 @@
                                     <constraint firstItem="Mfm-Tg-aNx" firstAttribute="top" secondItem="wP7-Pc-1Pj" secondAttribute="top" id="w00-nz-i1c"/>
                                 </constraints>
                             </view>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" translatesAutoresizingMaskIntoConstraints="NO" id="UiY-yi-baF" userLabel="Catalog header" customClass="CatalogHeaderControl" customModule="Bamilo" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="20" width="414" height="48"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l9T-3E-h7k" userLabel="Catalog header Container">
+                                <rect key="frame" x="0.0" y="20" width="414" height="96"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cdF-nh-dIO" customClass="BreadcrumbsControl" customModule="Bamilo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="48"/>
+                                        <color key="backgroundColor" red="0.50588235290000005" green="0.70588235290000001" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                    <view clipsSubviews="YES" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" translatesAutoresizingMaskIntoConstraints="NO" id="UiY-yi-baF" userLabel="Catalog header" customClass="CatalogHeaderControl" customModule="Bamilo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="48" width="414" height="48"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="48" id="7wM-DA-gpN"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="48" id="7wM-DA-gpN"/>
+                                    <constraint firstAttribute="right" secondItem="UiY-yi-baF" secondAttribute="right" id="1H1-42-N3Y"/>
+                                    <constraint firstAttribute="right" secondItem="cdF-nh-dIO" secondAttribute="right" id="5Pw-Uc-rCD"/>
+                                    <constraint firstItem="UiY-yi-baF" firstAttribute="left" secondItem="l9T-3E-h7k" secondAttribute="left" id="Do6-qK-coz"/>
+                                    <constraint firstItem="cdF-nh-dIO" firstAttribute="top" secondItem="l9T-3E-h7k" secondAttribute="top" id="IjQ-Wy-U2z"/>
+                                    <constraint firstAttribute="bottom" secondItem="UiY-yi-baF" secondAttribute="bottom" id="NSa-5j-Odd"/>
+                                    <constraint firstItem="cdF-nh-dIO" firstAttribute="left" secondItem="l9T-3E-h7k" secondAttribute="left" id="POt-W3-zxN"/>
+                                    <constraint firstAttribute="height" constant="96" id="bfa-JE-KtW"/>
+                                    <constraint firstItem="cdF-nh-dIO" firstAttribute="bottom" secondItem="UiY-yi-baF" secondAttribute="top" id="liO-88-AOs"/>
                                 </constraints>
                             </view>
-                            <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eAy-WM-iDC">
-                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
-                                <connections>
-                                    <segue destination="1gH-4D-wsq" kind="embed" identifier="embedCatalogNoResult" id="rXj-wl-oI1"/>
-                                </connections>
-                            </containerView>
                             <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DhN-q4-dsC" userLabel="Filtered list no result Container View">
                                 <rect key="frame" x="0.0" y="20" width="414" height="716"/>
                                 <connections>
                                     <segue destination="m3S-uW-r01" kind="embed" identifier="embedFilteredListNoResult" id="bxd-xd-g8c"/>
                                 </connections>
                             </containerView>
+                            <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eAy-WM-iDC">
+                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
+                                <connections>
+                                    <segue destination="1gH-4D-wsq" kind="embed" identifier="embedCatalogNoResult" id="rXj-wl-oI1"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" red="0.92549019610000005" green="0.92549019610000005" blue="0.92549019610000005" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="DhN-q4-dsC" firstAttribute="centerY" secondItem="eAy-WM-iDC" secondAttribute="centerY" id="4ld-Vb-b1h"/>
-                            <constraint firstItem="UiY-yi-baF" firstAttribute="left" secondItem="NAL-9e-Ury" secondAttribute="left" id="5Zo-2E-w2W"/>
-                            <constraint firstItem="wP7-Pc-1Pj" firstAttribute="top" secondItem="UiY-yi-baF" secondAttribute="bottom" id="6Wq-wF-e7Z"/>
+                            <constraint firstItem="wP7-Pc-1Pj" firstAttribute="top" secondItem="BAm-y5-w81" secondAttribute="bottom" constant="48" id="6Wq-wF-e7Z"/>
                             <constraint firstItem="DhN-q4-dsC" firstAttribute="centerX" secondItem="eAy-WM-iDC" secondAttribute="centerX" id="9jC-XU-tTt"/>
                             <constraint firstItem="mY3-o9-UW7" firstAttribute="top" secondItem="wP7-Pc-1Pj" secondAttribute="bottom" id="HhU-xp-7QM"/>
-                            <constraint firstAttribute="right" secondItem="UiY-yi-baF" secondAttribute="right" id="LFS-qa-Nv6"/>
                             <constraint firstItem="DhN-q4-dsC" firstAttribute="width" secondItem="eAy-WM-iDC" secondAttribute="width" id="LXQ-wM-40S"/>
                             <constraint firstAttribute="right" secondItem="wP7-Pc-1Pj" secondAttribute="right" id="S0o-g8-BOx"/>
                             <constraint firstItem="wP7-Pc-1Pj" firstAttribute="left" secondItem="NAL-9e-Ury" secondAttribute="left" id="UvH-Mu-3Hl"/>
-                            <constraint firstItem="UiY-yi-baF" firstAttribute="top" secondItem="BAm-y5-w81" secondAttribute="bottom" id="YMU-i8-lW4"/>
+                            <constraint firstAttribute="right" secondItem="l9T-3E-h7k" secondAttribute="right" id="bUu-KM-vKf"/>
                             <constraint firstItem="eAy-WM-iDC" firstAttribute="left" secondItem="NAL-9e-Ury" secondAttribute="left" id="eJ2-47-Dt3"/>
                             <constraint firstItem="mY3-o9-UW7" firstAttribute="top" secondItem="eAy-WM-iDC" secondAttribute="bottom" id="lue-O9-svx"/>
+                            <constraint firstItem="l9T-3E-h7k" firstAttribute="left" secondItem="NAL-9e-Ury" secondAttribute="left" id="ni5-Yj-Rv3"/>
                             <constraint firstItem="eAy-WM-iDC" firstAttribute="top" secondItem="BAm-y5-w81" secondAttribute="bottom" id="onA-Cm-ru6"/>
                             <constraint firstAttribute="right" secondItem="eAy-WM-iDC" secondAttribute="right" id="wzq-JX-48w"/>
+                            <constraint firstItem="l9T-3E-h7k" firstAttribute="top" secondItem="BAm-y5-w81" secondAttribute="bottom" id="xxQ-m1-UaG"/>
                             <constraint firstItem="DhN-q4-dsC" firstAttribute="height" secondItem="eAy-WM-iDC" secondAttribute="height" id="ykD-3M-50B"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="breadCrumbsControl" destination="cdF-nh-dIO" id="Yd1-rc-dRb"/>
                         <outlet property="catalogHeader" destination="UiY-yi-baF" id="b7m-Ug-LPY"/>
+                        <outlet property="catalogHeaderContainer" destination="l9T-3E-h7k" id="ar4-F5-3Kj"/>
+                        <outlet property="catalogHeaderContainerHeightConstraint" destination="bfa-JE-KtW" id="erh-yA-qsq"/>
                         <outlet property="collectionView" destination="CDQ-8E-fbn" id="QVO-Bd-QC4"/>
                         <outlet property="filteredNoResultContainer" destination="DhN-q4-dsC" id="1Kj-t9-LLp"/>
                         <outlet property="noResultViewContainer" destination="eAy-WM-iDC" id="M5h-nJ-cCy"/>
@@ -1018,7 +1042,7 @@
                                                 </connections>
                                             </switch>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="فقط با تخفیف ها" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gEn-nz-ntR">
-                                                <rect key="frame" x="80" y="20" width="65" height="13"/>
+                                                <rect key="frame" x="80" y="19.666666666666664" width="65" height="13"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1474,7 +1498,7 @@
                                 <rect key="frame" x="187" y="100" width="40" height="40"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="فیلترهای کمتری را برای جستجو انتخاب نمایید" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SU1-vf-mKc">
-                                <rect key="frame" x="110.66666666666667" y="165" width="193.66666666666663" height="14"/>
+                                <rect key="frame" x="110.33333333333333" y="165" width="193.66666666666669" height="14"/>
                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -1791,7 +1815,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="bEV-Bv-dJp"/>
-        <segue reference="heG-nW-AOJ"/>
+        <segue reference="QvZ-9a-k1K"/>
         <segue reference="mLp-yH-ACJ"/>
     </inferredMetricsTieBreakers>
 </document>

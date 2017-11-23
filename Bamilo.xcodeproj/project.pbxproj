@@ -57,6 +57,9 @@
 		612553501E4F18E800975C6F /* BlueButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 6125534F1E4F18E800975C6F /* BlueButton.m */; };
 		6125535B1E4F382100975C6F /* UIScrollView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 6125535A1E4F382100975C6F /* UIScrollView+Extension.m */; };
 		612553611E4F514100975C6F /* FormItemValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = 612553601E4F514100975C6F /* FormItemValidation.m */; };
+		61259BE11FC5819C0051CBD4 /* BreadcrumbsControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61259BE01FC5819C0051CBD4 /* BreadcrumbsControl.swift */; };
+		61259BE31FC5851F0051CBD4 /* BreadcrumbsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61259BE21FC5851F0051CBD4 /* BreadcrumbsView.swift */; };
+		61259BE51FC585360051CBD4 /* BreadcrumbsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61259BE41FC585360051CBD4 /* BreadcrumbsView.xib */; };
 		6128806C1F0A2EC3006F5240 /* TapRecommendationEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 6128806B1F0A2EC3006F5240 /* TapRecommendationEvent.m */; };
 		612FDC371E45E0A900A9D0BD /* CartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 612FDC351E45E0A900A9D0BD /* CartTableViewCell.m */; };
 		612FDC381E45E0A900A9D0BD /* CartTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 612FDC361E45E0A900A9D0BD /* CartTableViewCell.xib */; };
@@ -1047,6 +1050,9 @@
 		6125535A1E4F382100975C6F /* UIScrollView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+Extension.m"; sourceTree = "<group>"; };
 		6125535F1E4F514100975C6F /* FormItemValidation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormItemValidation.h; sourceTree = "<group>"; };
 		612553601E4F514100975C6F /* FormItemValidation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormItemValidation.m; sourceTree = "<group>"; };
+		61259BE01FC5819C0051CBD4 /* BreadcrumbsControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreadcrumbsControl.swift; sourceTree = "<group>"; };
+		61259BE21FC5851F0051CBD4 /* BreadcrumbsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreadcrumbsView.swift; sourceTree = "<group>"; };
+		61259BE41FC585360051CBD4 /* BreadcrumbsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BreadcrumbsView.xib; sourceTree = "<group>"; };
 		6128806A1F0A2EC3006F5240 /* TapRecommendationEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TapRecommendationEvent.h; sourceTree = "<group>"; };
 		6128806B1F0A2EC3006F5240 /* TapRecommendationEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TapRecommendationEvent.m; sourceTree = "<group>"; };
 		612FDC341E45E0A900A9D0BD /* CartTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartTableViewCell.h; sourceTree = "<group>"; };
@@ -2801,6 +2807,7 @@
 		610C689E1EC7423B008FB66C /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				61259BDD1FC581360051CBD4 /* BreadcrubmsControl */,
 				6147F7471FB6ECF1000CBA85 /* TourSpotLightView */,
 				618D8B3F1FADEEF60006A936 /* LoadingView */,
 				61E534381FA4812200CBDFED /* ItemTrackingProgressBar */,
@@ -2996,6 +3003,32 @@
 				612553601E4F514100975C6F /* FormItemValidation.m */,
 			);
 			name = FormItemValidation;
+			sourceTree = "<group>";
+		};
+		61259BDD1FC581360051CBD4 /* BreadcrubmsControl */ = {
+			isa = PBXGroup;
+			children = (
+				61259BDF1FC581650051CBD4 /* View */,
+				61259BDE1FC5815F0051CBD4 /* Control */,
+			);
+			name = BreadcrubmsControl;
+			sourceTree = "<group>";
+		};
+		61259BDE1FC5815F0051CBD4 /* Control */ = {
+			isa = PBXGroup;
+			children = (
+				61259BE01FC5819C0051CBD4 /* BreadcrumbsControl.swift */,
+			);
+			name = Control;
+			sourceTree = "<group>";
+		};
+		61259BDF1FC581650051CBD4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				61259BE21FC5851F0051CBD4 /* BreadcrumbsView.swift */,
+				61259BE41FC585360051CBD4 /* BreadcrumbsView.xib */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 		612880691F0A2C5D006F5240 /* VisitRecommendationEvent */ = {
@@ -7803,6 +7836,7 @@
 				6167C1AE1F431578009293B2 /* JANoConnectionView.xib in Resources */,
 				8757445D1EA60E8D001B518A /* Yalda-Small-50@2x.png in Resources */,
 				875743A71EA60DE0001B518A /* Ramadan-76@2x.png in Resources */,
+				61259BE51FC585360051CBD4 /* BreadcrumbsView.xib in Resources */,
 				875744621EA60E8E001B518A /* Yalda-76.png in Resources */,
 				8757441E1EA60E48001B518A /* Tragedy-Small.png in Resources */,
 				616F7D131F6D172100085B64 /* IconTableViewCell.xib in Resources */,
@@ -8206,6 +8240,7 @@
 				617F77AF1EB85BEC000A2A6C /* AddressDataManager.swift in Sources */,
 				CE9ADF3A1AB6D78200D56481 /* JAButtonCell.m in Sources */,
 				6157A3EE1F83865800B8D501 /* MyBamiloViewController.swift in Sources */,
+				61259BE11FC5819C0051CBD4 /* BreadcrumbsControl.swift in Sources */,
 				8720C33E1EE2A8CC00404378 /* App.swift in Sources */,
 				61D4748B1F6FDF7A001DA6A6 /* HomePageViewController.swift in Sources */,
 				8702FBBE1E9901AE001D1AA9 /* EventFactory.m in Sources */,
@@ -8416,6 +8451,7 @@
 				875AD5621E38C0C900584ABF /* RIHtmlShop.m in Sources */,
 				9AE766BF1CBBF01C00B63D8E /* JAEmptyCartView.m in Sources */,
 				610BC2911FBC5CBF00A7C343 /* RecommendItem.swift in Sources */,
+				61259BE31FC5851F0051CBD4 /* BreadcrumbsView.swift in Sources */,
 				610BC28F1FBC419100A7C343 /* AllRecommendationViewController.swift in Sources */,
 				61E534411FA48D2A00CBDFED /* ProgressBarItemView.swift in Sources */,
 				9AEF741C1CD27C1400A5D574 /* JACheckoutButton.m in Sources */,
