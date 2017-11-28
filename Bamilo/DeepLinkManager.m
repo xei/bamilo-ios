@@ -71,7 +71,7 @@ static BOOL isListenersReady;
             // Catalog view - search term
             [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification object:@{ @"index": @(99), @"name": STRING_SEARCH, @"text": argument }];
         } else if ([targetKey isEqualToString:@"camp"] && argument.length) {
-            [[MainTabBarViewController topNavigationController] openTargetString:[RITarget getTargetString:CAMPAIGN node:argument] purchaseInfo:nil];//openTargetString:[RITarget getTargetString:CAMPAIGN node:argument]];
+            [[MainTabBarViewController topNavigationController] openTargetString:[RITarget getTargetString:CAMPAIGN node:argument] purchaseInfo:nil];
         } else if ([targetKey isEqualToString:@"ss"] && argument.length) {
             [[MainTabBarViewController topNavigationController] openTargetString:[RITarget getTargetString:STATIC_PAGE node:argument] purchaseInfo:nil];
         } else if ([targetKey isEqualToString:@"externalPayment"]) {

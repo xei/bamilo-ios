@@ -90,7 +90,7 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
     
     private func getTimeDeliveryForCityId(cityID: String?) {
         ProductDataManager.sharedInstance.getDeliveryTime(self, sku: self.productSku, cityId: cityID) { (data, error) in
-            if error == nil {
+            if error == nil, let data = data {
                 self.bind(data, forRequestId: 2)
             }
         }
@@ -122,7 +122,7 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
     //MARK: -DataServiceProtocol
     func bind(_ data: Any!, forRequestId rid: Int32) {
         if rid == 2 {
-            if let deliveryTimes = data as? DeliveryTimes, deliveryTimes.array!.count > 0, let deliveryTime = deliveryTimes.array?.first {
+            if let deliveryTimes = data as? DeliveryTimes, let deliveries = deliveryTimes.array, deliveries.count > 0, let deliveryTime = deliveryTimes.array?.first {
                 self.deliveryTimeLabel.text = (deliveryTime.deliveryTimeMessage ?? "\(STRING_TEHRAN) \(deliveryTime.deliveryTimeZone1!)\n\(STRING_MINICITY) \(deliveryTime.deliveryTimeZone2!)").convertTo(language: .arabic)
                 self.deliveryTimeTitleLabel.text = "\(deliveryTime.deliveryTimeMessage != nil ?  STRING_DELIVERY_TIME : STRING_ESTIMATED_TIME):"
                 

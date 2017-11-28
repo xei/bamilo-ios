@@ -515,21 +515,17 @@
 }
 
 #pragma mark JAPickerDelegate
--(void)selectedRow:(NSInteger)selectedRow
-{
+-(void)selectedRow:(NSInteger)selectedRow {
     RIProduct *product = [self getProductFromIndex:self.picker.tag];
-    
-    RIProductSimple* selectedSimple = [self.pickerDataSource objectAtIndex:selectedRow];
-    
-    [self.chosenSimples setObject:selectedSimple forKey:product.sku];
-    
-    [self closePicker];
-    [self.collectionView reloadData];
-    
-    if (self.selectedSizeAndAddToCart) {
-        self.selectedSizeAndAddToCart = NO;
-        
-        [self addToCartButtonPressed:self.backupButton];
+    if (selectedRow < self.pickerDataSource.count) {
+        RIProductSimple* selectedSimple = [self.pickerDataSource objectAtIndex:selectedRow];
+        [self.chosenSimples setObject:selectedSimple forKey:product.sku];
+        [self closePicker];
+        [self.collectionView reloadData];
+        if (self.selectedSizeAndAddToCart) {
+            self.selectedSizeAndAddToCart = NO;
+            [self addToCartButtonPressed:self.backupButton];
+        }
     }
 }
 

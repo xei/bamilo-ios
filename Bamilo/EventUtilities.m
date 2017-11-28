@@ -15,7 +15,9 @@
     NSMutableArray *categories = [NSMutableArray array];
     
     for(RICartItem *item in cart.cartEntity.cartItems) {
-        [categories addObject:item.categoryUrlKey];
+        if (item.categoryUrlKey) {
+            [categories addObject:item.categoryUrlKey];
+        }
     }
     
     return [categories componentsJoinedByString:@"|"];

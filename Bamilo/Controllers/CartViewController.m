@@ -170,7 +170,9 @@
         return receiptView;
     }
     CartTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:[CartTableViewCell nibName] forIndexPath:indexPath];
-    cell.cartItem = self.cart.cartEntity.cartItems[indexPath.row];
+    if (indexPath.row < self.cart.cartEntity.cartItems.count) {
+        cell.cartItem = self.cart.cartEntity.cartItems[indexPath.row];
+    }
     cell.delegate = self;
     return cell;
 }

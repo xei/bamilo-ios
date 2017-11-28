@@ -60,7 +60,7 @@ class RequestManagerSwift {
                             if(apiResponseData.success) {
                                 completion(self.map(statusCode: response.response?.statusCode), apiResponseData, nil)
                             } else {
-                                completion(self.map(statusCode: response.response?.statusCode), nil, self.prepareErrorMessages(messagesList: apiResponseData.messages!))
+                                completion(self.map(statusCode: response.response?.statusCode), nil, self.prepareErrorMessages(messagesList: apiResponseData.messages))
                             }
                         }
                         if(type == .foreground) {
@@ -93,7 +93,7 @@ class RequestManagerSwift {
         }
     }
     
-    private func prepareErrorMessages(messagesList: ApiDataMessageList) -> [Any] {
-        return messagesList.validations ?? messagesList.errors?.map { $0.message ?? "" } ?? []
+    private func prepareErrorMessages(messagesList: ApiDataMessageList?) -> [Any] {
+        return messagesList?.validations ?? messagesList?.errors?.map { $0.message ?? "" } ?? []
     }
 }

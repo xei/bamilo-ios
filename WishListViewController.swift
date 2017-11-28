@@ -109,8 +109,8 @@ class WishListViewController: BaseViewController,
         let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: WishListCollectionViewCell.nibName, for: indexPath) as! WishListCollectionViewCell
         cell.wishListItemDelegate = self
         cell.cellIndex = indexPath.row
-        if let product = self.wishList?.products[indexPath.row] {
-            cell.updateWithProduct(product: product)
+        if let products = self.wishList?.products, indexPath.row < products.count {
+            cell.updateWithProduct(product: products[indexPath.row])
         }
         return cell
     }

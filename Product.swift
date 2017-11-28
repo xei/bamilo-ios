@@ -59,6 +59,5 @@ import SwiftyJSON
         var stockAvaiablity: Bool?
         stockAvaiablity     <- map["has_stock"]
         hasStock = stockAvaiablity ?? true
-        
     }
 }

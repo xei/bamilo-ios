@@ -851,8 +851,9 @@ static NSString *recommendationLogic = @"RELATED";
                 [self onSuccessResponse:RIApiResponseSuccess messages:[self extractSuccessMessages:[data objectForKey:kDataMessages]] showMessage:YES];
                 //[self hideLoading];
                 
-                //##############
-                [EmarsysPredictManager sendTransactionsOf:self];
+                //############## No need to call this transation for emarsys
+                // because every other transactions should carry the CART value
+                //[EmarsysPredictManager sendTransactionsOf:self];
                 
                 [self updateCartInNavBar];
             } else {

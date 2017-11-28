@@ -86,14 +86,18 @@
 }
 
 - (IBAction)gotoCartItemProduct:(id)sender {
-    [[NSNotificationCenter defaultCenter] postNotificationName: kDidSelectTeaserWithPDVUrlNofication
-                                                        object: nil
-                                                      userInfo: @{
-                                                                  @"sku" : self.cartItem.sku,
-                                                                  @"previousCategory" : STRING_CART,
-                                                                  @"show_back_button" : [NSNumber numberWithBool:NO]
-                                                                  }];
-    [[RITrackingWrapper sharedInstance] trackScreenWithName:[NSString stringWithFormat:@"cart_%@",self.cartItem.name]];
+    if (self.cartItem.sku.length) {
+        [[NSNotificationCenter defaultCenter] postNotificationName: kDidSelectTeaserWithPDVUrlNofication
+                                                            object: nil
+                                                          userInfo: @{
+                                                                      @"sku" : self.cartItem.sku,
+                                                                      @"previousCategory" : STRING_CART,
+                                                                      @"show_back_button" : [NSNumber numberWithBool:NO]
+                                                                      }];
+    }
+    if (self.cartItem.name.length) {
+        [[RITrackingWrapper sharedInstance] trackScreenWithName:[NSString stringWithFormat:@"cart_%@",self.cartItem.name]];
+    }
 }
 
 - (void)prepareForReuse {

@@ -883,8 +883,8 @@ static RICart *instance;
     }
     
     NSDictionary *_estimatedDeliveryTime = [dict objectForKey:@"estimated_delivery_time"];
-    if (_estimatedDeliveryTime) {
-        [RICart sharedInstance].estimatedDeliveryTime = _estimatedDeliveryTime[@"delivery_message"];
+    if ([_estimatedDeliveryTime objectForKey:@"delivery_message"]) {
+        [RICart sharedInstance].estimatedDeliveryTime = [_estimatedDeliveryTime objectForKey:@"delivery_message"];
     }
     
     NSString *_deliveryNotice = [dict objectForKey:@"delivery_notice"];

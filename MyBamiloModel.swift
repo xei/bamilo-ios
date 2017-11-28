@@ -38,7 +38,9 @@ class MyBamiloModel {
         
         result.products.forEach { (recommendedProduct) in
             if let item = MyBamiloRecommendItem.instance(with: recommendedProduct, topic: result.topic, identifier: result.featureID) {
-                self.products.append(item)
+                
+                self.products.insert(item, at: self.products.count)
+                
                 newjoinedProducts.append(item)
             }
         }
