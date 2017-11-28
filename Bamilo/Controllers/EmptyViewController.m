@@ -71,7 +71,7 @@
             self.recommendedProducts = [result.products map:^id(EMRecommendationItem *item) {
                 return [[RecommendItem alloc] initWithItem:item];
             }];
-            [self.carouselWidget updateWithModel: [self.recommendedProducts subarrayWithRange:NSMakeRange(0, 15)]];
+            [self.carouselWidget updateWithModel: [self.recommendedProducts subarrayWithRange:NSMakeRange(0, MIN(self.recommendedProducts.count, 15))]];
         }];
     };
     

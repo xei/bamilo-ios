@@ -19,6 +19,11 @@ class WishListCollectionViewCell: BaseCatallogCollectionViewCell {
     
     @IBOutlet weak private var shareButton: IconButton!
     @IBOutlet weak private var addToCartButton: UIButton!
+    @IBOutlet weak private var bottomBadgeContainerView: UIView!
+    @IBOutlet weak private var bottomBadgeLabel: UILabel!
+    @IBOutlet weak private var containerView: UIView!
+
+    
     private let horizontalAddToCartPadding:CGFloat = 15
     private let verticalAddToCartPadding:CGFloat = 5
     weak var wishListItemDelegate: WishListCollectionViewCellDelegate?
@@ -35,6 +40,8 @@ class WishListCollectionViewCell: BaseCatallogCollectionViewCell {
         self.addToCartButton.setTitle(STRING_BUY_NOW, for: .normal)
         self.addToCartButton.contentEdgeInsets = UIEdgeInsets(top: verticalAddToCartPadding, left: horizontalAddToCartPadding, bottom: verticalAddToCartPadding, right: horizontalAddToCartPadding)
         
+        self.bottomBadgeContainerView.isUserInteractionEnabled = false
+        self.bottomBadgeContainerView.isHidden = true
         self.contentView.clipsToBounds = false
         self.clipsToBounds = false
     }
@@ -45,12 +52,13 @@ class WishListCollectionViewCell: BaseCatallogCollectionViewCell {
             self.shareButton.isHidden = false
         }
         if (!product.hasStock) {
-//            self.priceLabel.text = nil
-//            self.alpha = 0.5
-//            self.bottomBadgeContainerView.isHidden = false
-//            self.bottomBadgeContainerView.backgroundColor = Theme.color(kColorGray1)
-//            self.bottomBadgeLabel.text = STRING_OUT_OF_STOCK
-//            self.bottomBadgeLabel.textColor = .white
+            self.priceLabel?.text = nil
+            self.addToCartButton.isHidden = true
+            self.containerView.alpha = 0.5
+            self.bottomBadgeContainerView.isHidden = false
+            self.bottomBadgeContainerView.backgroundColor = Theme.color(kColorGray1)
+            self.bottomBadgeLabel.text = STRING_OUT_OF_STOCK
+            self.bottomBadgeLabel.textColor = .white
         }
     }
     
@@ -70,5 +78,12 @@ class WishListCollectionViewCell: BaseCatallogCollectionViewCell {
         if let product = self.product {
             self.wishListItemDelegate?.addToCart(product: product, cell: self)
         }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.bottomBadgeContainerView.isHidden = true
+        self.addToCartButton.isHidden = false
+        self.containerView.alpha = 1
     }
 }

@@ -11,10 +11,10 @@ import UIKit
 
 @objc class ScrollerBarFollower:NSObject {
     
-    private var barView: UIView?
-    private var delay: CGFloat!
-    private var direction: VerticalMoveDirection = .top
-    private var distance: CGFloat!
+    var barView: UIView?
+    var delay: CGFloat!
+    var direction: VerticalMoveDirection = .top
+    var distance: CGFloat!
     private var barViewInitialFrame: CGRect?
     private var barIsHidding = false
     private var lastContentOffset: CGFloat = 0

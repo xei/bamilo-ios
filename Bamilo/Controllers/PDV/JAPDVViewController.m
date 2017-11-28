@@ -1678,7 +1678,8 @@ static NSString *recommendationLogic = @"RELATED";
     self.recommendItems = [result.products map:^id(EMRecommendationItem *item) {
         return [[RecommendItem alloc] initWithItem:item];
     }];
-    NSArray<RecommendItem *>* renderingItems = [self.recommendItems subarrayWithRange:NSMakeRange(0, 6)];
+    if (self.recommendItems.count < 6) { return; }
+    NSArray<RecommendItem *>* renderingItems = [self.recommendItems subarrayWithRange:NSMakeRange(0, MIN(6, self.recommendItems.count))];
     if(_recommendationView == nil) {
         _recommendationView = [EmarsysRecommendationGridWidgetView nibInstance];
         _recommendationView.delegate = self;

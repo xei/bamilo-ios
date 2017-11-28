@@ -152,7 +152,7 @@ import SwiftyJSON
             if let navBar = self.navigationController?.navigationBar {
                 self.navBarScrollFollower = ScrollerBarFollower(barView: navBar, moveDirection: .top)
                 self.navBarScrollFollower?.followScrollView(scrollView: collectionView, delay: productCountViewHeight, permittedMoveDistance: navBar.frame.height)
-                self.searchBarScrollFollower?.followScrollView(scrollView: collectionView, delay: productCountViewHeight, permittedMoveDistance: navBar.frame.height + 48)
+                self.searchBarScrollFollower?.followScrollView(scrollView: collectionView, delay: productCountViewHeight, permittedMoveDistance: navBar.frame.height)
             }
             if let tabBar = self.tabBarController?.tabBar {
                 self.tabBarScrollFollower = ScrollerBarFollower(barView: tabBar, moveDirection: .down)
@@ -218,6 +218,9 @@ import SwiftyJSON
                             self.catalogHeaderContainerHeightConstraint.constant = self.catalogHeaderContainerHeightWithBreadcrumb
                         }, completion: { (finished) in
                             self.refreshBarFollower()
+                            if let navBar = self.navigationController?.navigationBar {
+                                self.searchBarScrollFollower?.distance = navBar.frame.height + self.catalogHeaderContainerHeightWithoutBreadcrumb
+                            }
                             self.breadCrumbsControl.update(withModel: breadcrumb)
                             self.productCountLabelTopConstraint.constant = self.catalogHeaderContainer.frame.height
                         })
