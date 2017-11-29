@@ -93,6 +93,7 @@ class BreadcrumbsView: BaseControlView {
     }
     
     func update(model: [BreadcrumbsItem]) {
+        self.resetAndClear()
         for (index, item) in model.enumerated() {
             let btn = self.createButton(item: item)
             self.scrollview.insertSubview(btn, at: 0)
@@ -111,6 +112,17 @@ class BreadcrumbsView: BaseControlView {
         }
         self.layoutIfNeeded()
         self.breadcrumbs = model
+    }
+    
+    func resetAndClear() {
+        self.buttons.forEach { (button) in
+            button.removeFromSuperview()
+        }
+        self.buttons.removeAll()
+        self.arrowImageViews.forEach { (image) in
+            image.removeFromSuperview()
+        }
+        self.arrowImageViews.removeAll()
     }
     
     //TODO: when we migrate all BaseControlView we need to use it as this function implementation

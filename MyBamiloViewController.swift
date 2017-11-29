@@ -118,9 +118,10 @@ class MyBamiloViewController:   BaseViewController,
             if newRecommendedItems.count > 0 {
                 if self.recommendationRequestCounts == 0 {
                     self.dataSource.topics = self.incomingDataSource.topics
+                    self.incomingDataSource.mergeProductsWithInterleaveLogic()
+                    
                     self.dataSource.products = self.incomingDataSource.products
                     self.filterProductListById(id: self.selectedLogicID)
-                    
                     self.refreshControl?.endRefreshing()
                     
                     //Wait untill all the requests are ready
@@ -167,6 +168,7 @@ class MyBamiloViewController:   BaseViewController,
     //MARK: - UIScrollViewDelegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.delegate?.scrollViewDidScroll(scrollView)
+        //Pagination : is disabled for now
 //        let bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height;
 //        if (bottomEdge >= (scrollView.contentSize.height - self.paginationThresholdPoint)) {
 //            // we are approaching at the end of scrollview

@@ -232,6 +232,7 @@ import SwiftyJSON
                             self.productCountLabelTopConstraint.constant = self.catalogHeaderContainer.frame.height
                         })
                     }
+                    
                 } else if rid == 1, receivedCatalogData.products.count > 0 {
                     if let visibleProductCount = self.catalogData?.products.count {
                         var newIndexPathes = [IndexPath]()
@@ -626,9 +627,7 @@ import SwiftyJSON
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        self.navBarScrollFollower?.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
         self.tabBarScrollFollower?.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
-        self.searchBarScrollFollower?.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
     }
     
     //MARK: - JAPDVViewControllerDelegate

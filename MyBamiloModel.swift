@@ -26,6 +26,7 @@ class MyBamiloModel {
     
     lazy var topics = [String:String]()
     lazy var products = [MyBamiloRecommendItem]()
+    lazy var sequences = [[MyBamiloRecommendItem]]()
     
     @discardableResult func embedNewRecommends(result: EMRecommendationResult) -> [MyBamiloRecommendItem] {
         var newjoinedProducts = [MyBamiloRecommendItem]()
@@ -36,20 +37,34 @@ class MyBamiloModel {
             }
         }
         
-        result.products.forEach { (recommendedProduct) in
+        result.products.forEach({ (recommendedProduct) in
             if let item = MyBamiloRecommendItem.instance(with: recommendedProduct, topic: result.topic, identifier: result.featureID) {
-                
-                self.products.insert(item, at: self.products.count)
-                
                 newjoinedProducts.append(item)
             }
-        }
+        })
+        
+        self.sequences.append(newjoinedProducts)
         return newjoinedProducts
+    }
+    
+    @discardableResult func mergeProductsWithInterleaveLogic() -> [MyBamiloRecommendItem] {
+        var maxLength = 0
+        products.removeAll()
+        self.sequences.forEach{ maxLength = max(maxLength, $0.count) }
+        for index in 0 ... maxLength - 1 {
+            self.sequences.forEach({ (sequence) in
+                if index < sequence.count {
+                    products.append(sequence[index])
+                }
+            })
+        }
+        return products
     }
     
     func resetAndClear() {
         self.topics.removeAll()
         self.products.removeAll()
+        self.sequences.removeAll()
     }
     
     func filterById(id: String) -> [MyBamiloRecommendItem] {
