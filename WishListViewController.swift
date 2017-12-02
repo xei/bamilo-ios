@@ -84,6 +84,7 @@ class WishListViewController: BaseViewController,
         if let lastPage = self.wishList?.lastPage ,(lastPage != 0 && page > lastPage && isRefreshing == false) { return }
         self.isLoading = true
         ProductDataManager.sharedInstance.getWishListProducts(self, page: page, perPageCount: perPageProductCount) { (data, error) in
+            self.isLoading = false
             if let error = error {
                 Utility.handleError(error: error, viewController: self)
                 return

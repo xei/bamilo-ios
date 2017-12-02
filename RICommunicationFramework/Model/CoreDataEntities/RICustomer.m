@@ -149,7 +149,6 @@
                                                           }];
 }
 
-
 //TODO: !!! we should really decide about this
 + (NSString*)autoLogin:(void (^)(BOOL success, NSDictionary *entities, NSString *loginMethod))returnBlock {
     NSString *operationID = nil;
@@ -161,17 +160,20 @@
         
         if (customerObject && customerObject.email.length && customerObject.plainPassword.length) {
             [DataAggregator loginUser:nil username:customerObject.email password:customerObject.plainPassword completion:^(id _Nullable data, NSError * _Nullable error) {
-                if (returnBlock != nil) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        returnBlock(YES, nil, customerObject.loginMethod);
-                    });
-                    
-                    //Set auto logged in customer 
-                    [EmarsysPredictManager setCustomer:customerObject];
-                    [[PushWooshTracker sharedTracker] setUserID:customerObject.email];
-                    [[Crashlytics sharedInstance] setUserEmail:customerObject.email];
+                if (error == nil) {
+                    if (returnBlock != nil) {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            returnBlock(YES, nil, customerObject.loginMethod);
+                        });
+                    }
                 }
             }];
+            
+            //Set auto logged in customer
+            [EmarsysPredictManager setCustomer:customerObject];
+            [[PushWooshTracker sharedTracker] setUserID:[customerObject.customerId stringValue]];
+            [[Crashlytics sharedInstance] setUserEmail:customerObject.email];
+            
         } else {
             [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RICustomer class])];
             dispatch_async(dispatch_get_main_queue(), ^{

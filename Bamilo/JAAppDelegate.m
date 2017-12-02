@@ -31,7 +31,6 @@
 #import "EmarsysMobileEngage.h"
 #import "EmarsysMobileEngageTracker.h"
 #import "EmarsysPredictManager.h"
-#import "CartDataManager.h"
 #import "Bamilo-Swift.h"
 
 @interface JAAppDelegate () <RIAdjustTrackerDelegate>

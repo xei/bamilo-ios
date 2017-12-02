@@ -42,7 +42,6 @@
 //##########################
 #import "ViewControllerManager.h"
 #import "EmarsysPredictManager.h"
-#import "CartDataManager.h"
 #import "NSArray+Extension.h"
 #import "EmarsysRecommendationGridWidgetView.h"
 #import "ThreadManager.h"

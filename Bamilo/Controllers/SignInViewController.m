@@ -6,7 +6,6 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import "AuthenticationDataManager.h"
 #import "SignInViewController.h"
 #import "InputTextFieldControl.h"
 #import "UIScrollView+Extension.h"

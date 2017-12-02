@@ -6,7 +6,6 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import "CheckoutDataManager.h"
 #import "CheckoutAddressViewController.h"
 #import "CheckoutProgressViewButtonModel.h"
 #import "Bamilo-Swift.h"

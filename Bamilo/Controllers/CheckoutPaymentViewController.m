@@ -6,7 +6,6 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import "CheckoutDataManager.h"
 #import "CheckoutPaymentViewController.h"
 #import "CheckoutProgressViewButtonModel.h"
 #import "PlainTableViewHeaderCell.h"

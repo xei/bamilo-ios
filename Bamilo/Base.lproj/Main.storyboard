@@ -101,7 +101,7 @@
                                         <rect key="frame" x="147" y="137" width="120" height="57"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SSz-D5-qwc">
-                                        <rect key="frame" x="192.33333333333334" y="78" width="29.666666666666657" height="14"/>
+                                        <rect key="frame" x="193.66666666666666" y="69" width="27.333333333333343" height="23"/>
                                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -238,7 +238,7 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="شما هیچ کالایی در سبد خرید ندارید." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DCm-py-rHJ">
-                                                <rect key="frame" x="0.0" y="85" width="180" height="35"/>
+                                                <rect key="frame" x="0.0" y="62.666666666666686" width="180" height="57.333333333333343"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="15"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -835,13 +835,13 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="متاسفانه برای کلمه شما نتیجه یافت نشد" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lwx-IM-0oN">
-                                                <rect key="frame" x="0.0" y="80" width="290" height="16.333333333333329"/>
+                                                <rect key="frame" x="0.0" y="80" width="290" height="27"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="14"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="✔︎ از صحت نگارش عبارت مورد نظر خود اطمینان حاصل نموده و مجدد جستجو نمایید." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A5u-Np-HlN">
-                                                <rect key="frame" x="29" y="149.33333333333331" width="232" height="25.666666666666657"/>
+                                                <rect key="frame" x="29" y="135.33333333333331" width="232" height="39.666666666666657"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="11"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1042,7 +1042,7 @@
                                                 </connections>
                                             </switch>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="فقط با تخفیف ها" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gEn-nz-ntR">
-                                                <rect key="frame" x="80" y="19.666666666666664" width="65" height="13"/>
+                                                <rect key="frame" x="59.666666666666679" y="15.666666666666663" width="85.333333333333314" height="21.333333333333329"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1380,17 +1380,17 @@
                                 <rect key="frame" x="0.0" y="20" width="414" height="356"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aHK-zt-d1F">
-                                        <rect key="frame" x="109.33333333333333" y="113" width="196.33333333333337" height="130"/>
+                                        <rect key="frame" x="85.666666666666671" y="113" width="243.66666666666663" height="130"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img_emptyCart" translatesAutoresizingMaskIntoConstraints="NO" id="6mZ-Dq-aV9">
-                                                <rect key="frame" x="64.666666666666671" y="10" width="67.000000000000014" height="60"/>
+                                                <rect key="frame" x="88.333333333333329" y="10" width="66.999999999999986" height="60"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="6mZ-Dq-aV9" secondAttribute="height" multiplier="51:46" id="GUi-v4-g6M"/>
                                                     <constraint firstAttribute="height" constant="60" id="qQQ-zu-ESG"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="شما هیچ کالایی در سبد خرید ندارید." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uxT-zy-g4F">
-                                                <rect key="frame" x="0.0" y="112.33333333333334" width="196.33333333333334" height="17.666666666666657"/>
+                                                <rect key="frame" x="0.0" y="101.33333333333334" width="243.66666666666666" height="28.666666666666657"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="15"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1498,13 +1498,13 @@
                                 <rect key="frame" x="187" y="100" width="40" height="40"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="فیلترهای کمتری را برای جستجو انتخاب نمایید" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SU1-vf-mKc">
-                                <rect key="frame" x="110.33333333333333" y="165" width="193.66666666666669" height="14"/>
+                                <rect key="frame" x="83.666666666666671" y="165" width="247.33333333333331" height="23"/>
                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vRi-98-olW" customClass="OrangeButton">
-                                <rect key="frame" x="87" y="239" width="240" height="30"/>
+                                <rect key="frame" x="87" y="248" width="240" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="bEG-HB-yEx"/>
                                 </constraints>
@@ -1662,7 +1662,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="UmC-fM-eVN">
-                                <rect key="frame" x="5" y="64" width="404" height="623"/>
+                                <rect key="frame" x="8" y="64" width="398" height="623"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="HJT-y8-ECM">
                                     <size key="itemSize" width="50" height="50"/>
@@ -1681,10 +1681,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="right" secondItem="UmC-fM-eVN" secondAttribute="right" constant="5" id="H6c-6A-A8X"/>
+                            <constraint firstAttribute="right" secondItem="UmC-fM-eVN" secondAttribute="right" constant="8" id="H6c-6A-A8X"/>
                             <constraint firstItem="hFD-t3-YXf" firstAttribute="top" secondItem="UmC-fM-eVN" secondAttribute="bottom" id="Pe5-54-OCe"/>
                             <constraint firstAttribute="right" secondItem="RPa-4t-46M" secondAttribute="right" id="QT7-zZ-OvV"/>
-                            <constraint firstItem="UmC-fM-eVN" firstAttribute="left" secondItem="knq-k9-D4I" secondAttribute="left" constant="5" id="Zgm-6s-FRP"/>
+                            <constraint firstItem="UmC-fM-eVN" firstAttribute="left" secondItem="knq-k9-D4I" secondAttribute="left" constant="8" id="Zgm-6s-FRP"/>
                             <constraint firstItem="RPa-4t-46M" firstAttribute="top" secondItem="24i-f9-KRJ" secondAttribute="bottom" id="jUJ-Cu-q3Q"/>
                             <constraint firstItem="UmC-fM-eVN" firstAttribute="top" secondItem="24i-f9-KRJ" secondAttribute="bottom" id="l7A-Tx-nDl"/>
                             <constraint firstItem="RPa-4t-46M" firstAttribute="left" secondItem="knq-k9-D4I" secondAttribute="left" id="nTg-Dj-9em"/>
@@ -1815,7 +1815,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="bEV-Bv-dJp"/>
-        <segue reference="QvZ-9a-k1K"/>
+        <segue reference="jQX-gw-9ku"/>
         <segue reference="mLp-yH-ACJ"/>
     </inferredMetricsTieBreakers>
 </document>

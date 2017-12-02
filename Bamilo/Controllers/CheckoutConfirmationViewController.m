@@ -19,7 +19,6 @@
 #import "RIShippingMethodForm.h"
 #import "RIShippingMethod.h"
 #import "DeliveryTimeTableViewCell.h"
-#import "CheckoutDataManager.h"
 #import "Bamilo-Swift.h"
 
 @interface CheckoutConfirmationViewController() <DiscountCodeViewDelegate, DiscountSwitcherViewDelegate>
