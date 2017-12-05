@@ -35,6 +35,12 @@ import Foundation
     class func addToCartEventSelector() -> Selector {
         return Selector(("addToCartWithAttributes:"))
     }
+    class func removeFromCartEventSelector() -> Selector {
+        return Selector(("removeFromCartWithAttributes:"))
+    }
+    class func viewCartEventSelector() -> Selector {
+        return Selector(("viewCartWithAttributes:"))
+    }
     class func addToWishListSelector() -> Selector {
         return Selector(("addToWishListWithAttributes:"))
     }
@@ -53,6 +59,12 @@ import Foundation
     class func viewProductSelector() -> Selector {
         return Selector(("viewProductWithAttributes:"))
     }
+    class func rateProductSelector() -> Selector {
+        return Selector(("rateProductWithAttributes:"))
+    }
+    class func callToOrderTappedSelector() -> Selector {
+        return Selector(("callToOrderTappedWithAttributes:"))
+    }
     class func openAppSelector() -> Selector {
         return Selector(("appOpendWithAttributes:"))
     }
@@ -65,14 +77,12 @@ import Foundation
     class func catalogSortChangedSelector() -> Selector {
         return Selector(("catalogSortChangedWithAttributes:"))
     }
-    
     class func checkoutStartSelector() -> Selector {
         return Selector(("checkoutStartWithAttributes:"))
     }
     class func checkoutFinishedSelector() -> Selector {
         return Selector(("checkoutFinishedWithAttributes:"))
     }
-    
     class func suggestionTappedSelector() -> Selector {
         return Selector(("searchSuggestionTappedWithAttributes:"))
     }

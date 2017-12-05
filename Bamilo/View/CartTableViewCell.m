@@ -95,9 +95,9 @@
                                                                       @"show_back_button" : [NSNumber numberWithBool:NO]
                                                                       }];
     }
-    if (self.cartItem.name.length) {
-        [[RITrackingWrapper sharedInstance] trackScreenWithName:[NSString stringWithFormat:@"cart_%@",self.cartItem.name]];
-    }
+//    if (self.cartItem.name.length) {
+//        [[RITrackingWrapper sharedInstance] trackScreenWithName:[NSString stringWithFormat:@"cart_%@",self.cartItem.name]];
+//    }
 }
 
 - (void)prepareForReuse {

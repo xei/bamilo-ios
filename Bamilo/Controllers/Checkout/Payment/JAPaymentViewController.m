@@ -79,13 +79,13 @@ UITextFieldDelegate>
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
     
-    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
-    [trackingDictionary setValue:@"CheckoutPaymentMethods" forKey:kRIEventActionKey];
-    [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
-    
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPayment]
-                                              data:[trackingDictionary copy]];
+//    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+//    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+//    [trackingDictionary setValue:@"CheckoutPaymentMethods" forKey:kRIEventActionKey];
+//    [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
+//
+//    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPayment]
+//                                              data:[trackingDictionary copy]];
     
     self.apiResponse = RIApiResponseSuccess;
     
@@ -118,7 +118,7 @@ UITextFieldDelegate>
 {
     [super viewDidAppear:animated];
     
-    [[RITrackingWrapper sharedInstance]trackScreenWithName:@"CheckoutPayment"];
+//    [[RITrackingWrapper sharedInstance]trackScreenWithName:@"CheckoutPayment"];
 }
 
 -(void)continueLoading
@@ -402,11 +402,11 @@ UITextFieldDelegate>
             self.cart = cart;
             NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
             [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
-            NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
-            [trackingDictionary setValue:cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
-            [trackingDictionary setValue:cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
-                                                      data:[trackingDictionary copy]];
+//            NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
+//            [trackingDictionary setValue:cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+//            [trackingDictionary setValue:cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
+//            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
+//                                                      data:[trackingDictionary copy]];
             
             [self.useCouponClickableView setTitle:[STRING_USE uppercaseString] forState:UIControlStateNormal];
             [self.couponTextField setEnabled: YES];
@@ -428,11 +428,11 @@ UITextFieldDelegate>
             self.cart = cart;
             NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
             [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
-            NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
-            [trackingDictionary setValue:cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
-            [trackingDictionary setValue:cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
-                                                      data:[trackingDictionary copy]];
+//            NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
+//            [trackingDictionary setValue:cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+//            [trackingDictionary setValue:cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
+//            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
+//                                                      data:[trackingDictionary copy]];
             
             [self.useCouponClickableView setTitle:[STRING_REMOVE uppercaseString] forState:UIControlStateNormal];
             [self.couponTextField setEnabled:NO];
@@ -464,10 +464,10 @@ UITextFieldDelegate>
     [RICart setMultistepPayment:parameters
                    successBlock:^(NSString *nextStep) {
                        
-                       NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                       [trackingDictionary setValue:self.selectedPaymentMethod.label forKey:kRIEventPaymentMethodKey];
-                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentSuccess]
-                                                                 data:[trackingDictionary copy]];
+//                       NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+//                       [trackingDictionary setValue:self.selectedPaymentMethod.label forKey:kRIEventPaymentMethodKey];
+//                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentSuccess]
+//                                                                 data:[trackingDictionary copy]];
                        
                        [JAUtils goToNextStep:nextStep
                                     userInfo:nil];
@@ -475,11 +475,11 @@ UITextFieldDelegate>
                        [self hideLoading];
                    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
                        
-                       NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                       [trackingDictionary setValue:self.selectedPaymentMethod.label forKey:kRIEventPaymentMethodKey];
-                       [trackingDictionary setValue:self.cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalTransactionKey];
-                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentFail]
-                                                                 data:[trackingDictionary copy]];
+//                       NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+//                       [trackingDictionary setValue:self.selectedPaymentMethod.label forKey:kRIEventPaymentMethodKey];
+//                       [trackingDictionary setValue:self.cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalTransactionKey];
+//                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentFail]
+//                                                                 data:[trackingDictionary copy]];
                        
                        [self onErrorResponse:apiResponse messages:@[STRING_ERROR_SETTING_PAYMENT_METHOD] showAsMessage:YES selector:@selector(nextStepButtonPressed) objects:nil];
                        [self hideLoading];

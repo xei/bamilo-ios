@@ -343,13 +343,13 @@
         } else {
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[RITarget getURLStringforTargetString:[(RIExternalCategory *)category targetString]]]];
             
-            NSMutableDictionary* externalLinkTrackingDictionary = [NSMutableDictionary new];
-            [externalLinkTrackingDictionary setValue:@"ExternalLink" forKey:kRIEventCategoryKey];
-            [externalLinkTrackingDictionary setValue:[(RIExternalCategory *)category label] forKey:kRIEventActionKey];
-            [externalLinkTrackingDictionary setValue:@"CategoriesTree" forKey:kRIEventLabelKey];
-            
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCategoryExternalLink]
-                                                      data:[externalLinkTrackingDictionary copy]];
+//            NSMutableDictionary* externalLinkTrackingDictionary = [NSMutableDictionary new];
+//            [externalLinkTrackingDictionary setValue:@"ExternalLink" forKey:kRIEventCategoryKey];
+//            [externalLinkTrackingDictionary setValue:[(RIExternalCategory *)category label] forKey:kRIEventActionKey];
+//            [externalLinkTrackingDictionary setValue:@"CategoriesTree" forKey:kRIEventLabelKey];
+//            
+//            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCategoryExternalLink]
+//                                                      data:[externalLinkTrackingDictionary copy]];
         }
     }
 }

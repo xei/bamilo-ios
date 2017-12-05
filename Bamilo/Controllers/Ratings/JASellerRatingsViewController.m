@@ -189,7 +189,7 @@ UITableViewDataSource
 {
     [super viewDidAppear:animated];
     
-    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"SellerReviewsScreen"];
+//    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"SellerReviewsScreen"];
     
     if(self.requestsDone)
     {

@@ -30,9 +30,7 @@
         
         let GAID = (Bundle.main.object(forInfoDictionaryKey: "Configs") as? [String:Any])?["GoogleAnalyticsID"] as? String
         GAI.sharedInstance().tracker(withTrackingId: GAID)
-        
         GAI.sharedInstance().defaultTracker.set(kGAIAppVersion, value: AppManager.sharedInstance().getAppFullFormattedVersion() ?? "")
-        
         GAI.sharedInstance().defaultTracker.allowIDFACollection = true
     }
     
@@ -297,7 +295,7 @@
             let label = attributes[kGAEventLabel] as? String {
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: category,
-                action: "purchase",
+                action: "Purchase",
                 label: label,
                 value: nil
             )
@@ -317,6 +315,10 @@
         }
     }
     
+    
+    func trackExecutionTime(refrence: String, interval: NSNumber) {
+        //TODO: track execution time 
+    }
     
     //MARK: - Helper functions
     private func sendParamsToGA(params: GAIDictionaryBuilder?) {

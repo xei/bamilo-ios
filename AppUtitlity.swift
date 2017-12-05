@@ -52,7 +52,6 @@ struct AppUtility {
         guard let object = Bundle.main.object(forInfoDictionaryKey: key) as? T else {
             return nil
         }
-        
         return object
     }
     

@@ -12,9 +12,8 @@
 #import <Crashlytics/Crashlytics.h>
 #import <NewRelicAgent/NewRelic.h>
 #import <GoogleAppIndexing/GoogleAppIndexing.h>
-#import "JARootViewController.h"
 #import "JAUtils.h"
-#import "RIAdjustTracker.h"
+#import "Adjust.h"
 #import "RIProduct.h"
 #import "AppManager.h"
 #import "SessionManager.h"
@@ -33,7 +32,7 @@
 #import "EmarsysPredictManager.h"
 #import "Bamilo-Swift.h"
 
-@interface JAAppDelegate () <RIAdjustTrackerDelegate>
+@interface JAAppDelegate ()
 
 @property (nonatomic, strong) NSDate *startLoadingTime;
 
@@ -108,13 +107,13 @@
     [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans" forKey:kFontMediumNameKey];
     [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans-Black" forKey:kFontBlackNameKey];
 
-#ifdef IS_RELEASE
-    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITracking_Bamilo" ofType:@"plist"];
-#else
-    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITrackingDebug_Bamilo" ofType:@"plist"];
-#endif
+//#ifdef IS_RELEASE
+//    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITracking_Bamilo" ofType:@"plist"];
+//#else
+//    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITrackingDebug_Bamilo" ofType:@"plist"];
+//#endif
 
-    [[RITrackingWrapper sharedInstance] startWithConfigurationFromPropertyListAtPath:plistPath launchOptions:launchOptions delegate:self];
+//    [[RITrackingWrapper sharedInstance] startWithConfigurationFromPropertyListAtPath:plistPath launchOptions:launchOptions delegate:self];
 
     [[GSDAppIndexing sharedInstance] registerApp:kAppStoreIdBamiloInteger];
 
@@ -140,10 +139,10 @@
 //            mainController.notification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
 //        }
 
-        [[RITrackingWrapper sharedInstance] applicationDidReceiveRemoteNotification:[launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey]];
+//        [[RITrackingWrapper sharedInstance] applicationDidReceiveRemoteNotification:[launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey]];
     }
-
-//#########################################################################################################
+    
+    //#########################################################################################################
     //Start Crashlytics
     [Fabric with:@[[Crashlytics class]]];
 
@@ -170,12 +169,12 @@
     // register for push notifications!
     [[PushNotificationManager pushManager] registerForPushNotifications];
     
-    
     //SETUP TRACKERS
     //********************************************************************
     [TrackerManager addTrackerWithTracker:[EmarsysMobileEngageTracker sharedTracker]];
     [TrackerManager addTrackerWithTracker:[PushWooshTracker sharedTracker]];
     [TrackerManager addTrackerWithTracker:[GoogleAnalyticsTracker sharedTracker]];
+    [TrackerManager addTrackerWithTracker:[AdjustTracker sharedTracker]];
     
     NSDictionary *configs = [[NSBundle mainBundle] objectForInfoDictionaryKey:kConfigs];
     if(configs) {
@@ -189,7 +188,6 @@
         }
     }
     [EmarsysPredictManager setConfigs];
-    
     return YES;
 }
 
@@ -200,9 +198,9 @@
 }
 
 - (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler {
-    if(!VALID_NOTEMPTY(application, UIApplication) || UIApplicationStateActive != application.applicationState) {
-        [[RITrackingWrapper sharedInstance] applicationHandleActionWithIdentifier:identifier forRemoteNotification:userInfo];
-    }
+//    if(!VALID_NOTEMPTY(application, UIApplication) || UIApplicationStateActive != application.applicationState) {
+//        [[RITrackingWrapper sharedInstance] applicationHandleActionWithIdentifier:identifier forRemoteNotification:userInfo];
+//    }
 
     completionHandler();
 }
@@ -227,11 +225,11 @@
         screenName = [topViewController getPerformanceTrackerScreenName];
     }
 
-    if(screenName) {
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCloseApp] data:[NSDictionary dictionaryWithObject:screenName forKey:kRIEventScreenNameKey]];
-    }
-
-    [[RITrackingWrapper sharedInstance] applicationDidEnterBackground:application];
+//    if(screenName) {
+//        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCloseApp] data:[NSDictionary dictionaryWithObject:screenName forKey:kRIEventScreenNameKey]];
+//    }
+//
+//    [[RITrackingWrapper sharedInstance] applicationDidEnterBackground:application];
 
     [[NSNotificationCenter defaultCenter] postNotificationName:kAppDidEnterBackground object:nil];
 }
@@ -239,7 +237,7 @@
 // In case the app was sent into the background when there was no network connection, we will use
 // the background data fetching mechanism to send any pending Google Analytics data.
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    [[RITrackingWrapper sharedInstance] applicationDidEnterBackground:application];
+//    [[RITrackingWrapper sharedInstance] applicationDidEnterBackground:application];
     completionHandler(UIBackgroundFetchResultNewData);
 }
 
@@ -279,18 +277,18 @@
 
     [[SessionManager sharedInstance] evaluateActiveSessions];
 
-    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+//    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+//    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+//
+//    [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+//    [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+//
+//    CGFloat duration = fabs([self.startLoadingTime timeIntervalSinceNow] * 1000);
+//
+//    [trackingDictionary setValue:[NSString stringWithFormat:@"%f", duration] forKey:kRILaunchEventDurationDataKey];
 
-    [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-    [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-
-    CGFloat duration = fabs([self.startLoadingTime timeIntervalSinceNow] * 1000);
-
-    [trackingDictionary setValue:[NSString stringWithFormat:@"%f", duration] forKey:kRILaunchEventDurationDataKey];
-
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventOpenApp]
-                                              data:[trackingDictionary copy]];
+//    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventOpenApp]
+//                                              data:[trackingDictionary copy]];
 
     [[NSNotificationCenter defaultCenter] postNotificationName:kAppWillEnterForeground object:nil];
 }
@@ -301,7 +299,7 @@
 
 #pragma mark - Push Notification
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    [[RITrackingWrapper sharedInstance] applicationDidRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+//    [[RITrackingWrapper sharedInstance] applicationDidRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 
     //PUSH WOOSH
     [[PushNotificationManager pushManager] handlePushRegistration:deviceToken];
@@ -320,7 +318,7 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
-    [[RITrackingWrapper sharedInstance] applicationDidReceiveLocalNotification:notification];
+//    [[RITrackingWrapper sharedInstance] applicationDidReceiveLocalNotification:notification];
 }
 
 #pragma mark - Open URL Scheme
@@ -329,7 +327,7 @@
     [Adjust appWillOpenUrl:url = [GSDDeepLink handleDeepLink:url]];
 
     if (url) {
-        [[RITrackingWrapper sharedInstance] trackOpenURL:url];
+//        [[RITrackingWrapper sharedInstance] trackOpenURL:url];
         [DeepLinkManager handleUrl:url];
     
         //EVENT: OPEN APP / DEEP LINK
@@ -339,28 +337,6 @@
     }
 
     return NO;
-}
-
-#pragma mark - Private Methods
-- (void)adjustAttributionChanged:(NSString *)network campaign:(NSString *)campaign adGroup:(NSString *)adGroup creative:(NSString *)creative {
-    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
-    if(VALID_NOTEMPTY(network, NSString)) {
-        [dictionary setObject:network forKey:kRIEventNetworkKey];
-    }
-    if(VALID_NOTEMPTY(campaign, NSString))
-    {
-        [dictionary setObject:campaign forKey:kRIEventAdgroupKey];
-    }
-    if(VALID_NOTEMPTY(adGroup, NSString))
-    {
-        [dictionary setObject:adGroup forKey:kRIEventCreativeKey];
-    }
-    if(VALID_NOTEMPTY(creative, NSString))
-    {
-        [dictionary setObject:creative forKey:kRIEventCreativeKey];
-    }
-
-    [[RITrackingWrapper sharedInstance] trackEvent:@(RIEventInstallViaAdjust) data:dictionary];
 }
 
 @end

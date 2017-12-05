@@ -212,7 +212,9 @@
         //Delivery Time Cell
         case 2: {
             DeliveryTimeTableViewCell *deliveryTimeTableViewCell = [tableView dequeueReusableCellWithIdentifier:[DeliveryTimeTableViewCell nibName] forIndexPath:indexPath];
-            [deliveryTimeTableViewCell updateTitle:[_deliveryTime numbersToPersian]];
+            if (_deliveryTime.length) {
+                [deliveryTimeTableViewCell updateTitle:[_deliveryTime numbersToPersian]];
+            }
             return deliveryTimeTableViewCell;
         }
         break;
@@ -296,10 +298,10 @@
                 
                 ((DiscountCodeView *)sender).state = DISCOUNT_CODE_VIEW_STATE_CONTAINS_CODE;
                 
-                NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
-                [trackingDictionary setValue:self.cart.cartEntity.cartValue forKey:kRIEventTotalCartKey];
-                [trackingDictionary setValue:self.cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
-                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart] data:[trackingDictionary copy]];
+//                NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
+//                [trackingDictionary setValue:self.cart.cartEntity.cartValue forKey:kRIEventTotalCartKey];
+//                [trackingDictionary setValue:self.cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
+//                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart] data:[trackingDictionary copy]];
                 
                 [self.tableView reloadData];
             } else {
@@ -405,10 +407,10 @@
         if(error == nil) {
             [self bind:data forRequestId:3];
             
-            NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
-            [trackingDictionary setValue:self.cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
-            [trackingDictionary setValue:self.cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart] data:[trackingDictionary copy]];
+//            NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
+//            [trackingDictionary setValue:self.cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+//            [trackingDictionary setValue:self.cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
+//            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart] data:[trackingDictionary copy]];
             
             [self.tableView reloadData];
         }

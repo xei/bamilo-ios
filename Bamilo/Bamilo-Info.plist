@@ -137,6 +137,8 @@
 	<string>16</string>
 	<key>Configs</key>
 	<dict>
+		<key>AdjustTokenID</key>
+		<string>pttex2kff47v</string>
 		<key>Tour</key>
 		<dict>
 			<key>HomePage</key>

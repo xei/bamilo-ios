@@ -83,29 +83,29 @@
 }
 
 - (void)goToHomeScreen {
-    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
-    [trackingDictionary setValue:@"ContinueShopping" forKey:kRIEventActionKey];
-    [trackingDictionary setValue:@"Checkout" forKey:kRIEventCategoryKey];
-    
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutContinueShopping] data:[trackingDictionary copy]];
+//    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+//    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+//    [trackingDictionary setValue:@"ContinueShopping" forKey:kRIEventActionKey];
+//    [trackingDictionary setValue:@"Checkout" forKey:kRIEventCategoryKey];
+//
+//    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutContinueShopping] data:[trackingDictionary copy]];
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
 }
 
 - (IBAction)proceedToCheckout:(id)sender {
-    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
-    [trackingDictionary setValue:@"Started" forKey:kRIEventActionKey];
-    [trackingDictionary setValue:@"Checkout" forKey:kRIEventCategoryKey];
-    [trackingDictionary setValue:[NSNumber numberWithInteger:[[self.cart.cartEntity cartItems] count]] forKey:kRIEventQuantityKey];
-    [trackingDictionary setValue:[self.cart.cartEntity cartValueEuroConverted] forKey:kRIEventTotalCartKey];
-    NSMutableString* attributeSetID = [NSMutableString new];
-    for (RICartItem* pd in [self.cart.cartEntity cartItems]) {
-        [attributeSetID appendFormat:@"%@;",[pd attributeSetID]];
-    }
-    [trackingDictionary setValue:[attributeSetID copy] forKey:kRIEventAttributeSetIDCartKey];
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutStart] data:[trackingDictionary copy]];
-    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"CheckoutAddress"];
+//    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+//    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+//    [trackingDictionary setValue:@"Started" forKey:kRIEventActionKey];
+//    [trackingDictionary setValue:@"Checkout" forKey:kRIEventCategoryKey];
+//    [trackingDictionary setValue:[NSNumber numberWithInteger:[[self.cart.cartEntity cartItems] count]] forKey:kRIEventQuantityKey];
+//    [trackingDictionary setValue:[self.cart.cartEntity cartValueEuroConverted] forKey:kRIEventTotalCartKey];
+//    NSMutableString* attributeSetID = [NSMutableString new];
+//    for (RICartItem* pd in [self.cart.cartEntity cartItems]) {
+//        [attributeSetID appendFormat:@"%@;",[pd attributeSetID]];
+//    }
+//    [trackingDictionary setValue:[attributeSetID copy] forKey:kRIEventAttributeSetIDCartKey];
+//    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutStart] data:[trackingDictionary copy]];
+//    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"CheckoutAddress"];
     
     [[MainTabBarViewController topNavigationController] requestNavigateToNib:@"CheckoutAddressViewController" ofStoryboard:@"Checkout" useCache:NO args:nil];
 }
@@ -117,35 +117,10 @@
         //remove the existing purchase behaviour with sku
         [[PurchaseBehaviourRecorder sharedInstance] deleteBehaviourWithSku:cartItem.sku];
         
-//        NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
-//        [skusFromTeaserInCart removeObjectForKey:cartItem.sku];
-//        [[NSUserDefaults standardUserDefaults] setObject:[skusFromTeaserInCart copy] forKey:kSkusFromTeaserInCartKey];
-        
-        
-        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-        [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-        [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-        [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-        [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-        
-        // Since we're sending the converted price, we have to send the currency as EUR.
-        // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
-        NSNumber *price = (VALID_NOTEMPTY(cartItem.specialPriceEuroConverted, NSNumber) && [cartItem.specialPriceEuroConverted floatValue] > 0.0f) ? cartItem.specialPriceEuroConverted : cartItem.priceEuroConverted;
-        [trackingDictionary setValue:price forKey:kRIEventPriceKey];
-        [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
-        
-        [trackingDictionary setValue:cartItem.sku forKey:kRIEventSkuKey];
-        [trackingDictionary setValue:[cart.cartEntity.cartCount stringValue] forKey:kRIEventQuantityKey];
-        [trackingDictionary setValue:cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
-        
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromCart]
-                                                  data:[trackingDictionary copy]];
-        
-        NSMutableDictionary *tracking = [NSMutableDictionary new];
-        [tracking setValue:cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
-        [tracking setValue:cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart] data:[tracking copy]];
+        RIProduct *product = [RIProduct new];
+        product.price = cartItem.price;
+        product.sku = cartItem.sku;
+        [TrackerManager postEventWithSelector:[EventSelectors removeFromCartEventSelector] attributes:[EventAttributes removeFromCardWithProduct:product success:YES]];
         
         NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
         [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
@@ -218,10 +193,10 @@
 - (void)quantityHasBeenChangedTo:(int)newValue withNewCart:(RICart *)cart withCell:(id)cartCell {
     [LoadingManager hideLoading];
     
-    NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
-    [trackingDictionary setValue:cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
-    [trackingDictionary setValue:cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart] data:[trackingDictionary copy]];
+//    NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
+//    [trackingDictionary setValue:cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+//    [trackingDictionary setValue:cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
+//    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart] data:[trackingDictionary copy]];
     NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
     [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
     
@@ -289,6 +264,8 @@
     //When cart is ready & not empty
     if (cart.cartEntity.cartCount.integerValue) {
         [EmarsysPredictManager sendTransactionsOf:self];
+        
+        [TrackerManager postEventWithSelector:[EventSelectors viewCartEventSelector] attributes:[EventAttributes viewCartWithCart:cart success:YES]];
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo: @{kUpdateCartNotificationValue: cart}];

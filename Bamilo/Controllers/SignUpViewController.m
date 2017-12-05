@@ -106,28 +106,28 @@
 
 #pragma mark - DataServiceProtocol
 - (void)bind:(id)data forRequestId:(int)rid {
-    // --------------- Legacy actions --------------
-    RICustomer *customerObject = [(NSDictionary*)data objectForKey:@"customer"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-    [trackingDictionary setValue:customerObject.customerId forKey:kRIEventLabelKey];
-    [trackingDictionary setValue:@"CreateSuccess" forKey:kRIEventActionKey];
-    [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
-    [trackingDictionary setValue:customerObject.customerId forKey:kRIEventUserIdKey];
-    [trackingDictionary setValue:customerObject.firstName forKey:kRIEventUserFirstNameKey];
-    [trackingDictionary setValue:customerObject.lastName forKey:kRIEventUserLastNameKey];
-    [trackingDictionary setValue:customerObject.gender forKey:kRIEventGenderKey];
-    [trackingDictionary setValue:customerObject.birthday forKey:kRIEventBirthDayKey];
-    [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-    [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-    if(self.fromSideMenu) {
-        [trackingDictionary setValue:@"Side menu" forKey:kRIEventLocationKey];
-    } else {
-        [trackingDictionary setValue:@"My account" forKey:kRIEventLocationKey];
-    }
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRegisterSuccess] data:[trackingDictionary copy]];
+//    // --------------- Legacy actions --------------
+//    RICustomer *customerObject = [(NSDictionary*)data objectForKey:@"customer"];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
+//    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+//    [trackingDictionary setValue:customerObject.customerId forKey:kRIEventLabelKey];
+//    [trackingDictionary setValue:@"CreateSuccess" forKey:kRIEventActionKey];
+//    [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+//    [trackingDictionary setValue:customerObject.customerId forKey:kRIEventUserIdKey];
+//    [trackingDictionary setValue:customerObject.firstName forKey:kRIEventUserFirstNameKey];
+//    [trackingDictionary setValue:customerObject.lastName forKey:kRIEventUserLastNameKey];
+//    [trackingDictionary setValue:customerObject.gender forKey:kRIEventGenderKey];
+//    [trackingDictionary setValue:customerObject.birthday forKey:kRIEventBirthDayKey];
+//    [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+//    [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+//    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+//    [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+//    if(self.fromSideMenu) {
+//        [trackingDictionary setValue:@"Side menu" forKey:kRIEventLocationKey];
+//    } else {
+//        [trackingDictionary setValue:@"My account" forKey:kRIEventLocationKey];
+//    }
+//    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRegisterSuccess] data:[trackingDictionary copy]];
     [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification object:nil];
     
     NSMutableDictionary *userInfo = [NSMutableDictionary new];

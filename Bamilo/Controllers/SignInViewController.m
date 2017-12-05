@@ -124,41 +124,41 @@
     NSDictionary *metadata = ((ApiResponseData *)data).metadata;
     if ([metadata isKindOfClass:[NSDictionary class]]) {
         RICustomer *customerObject = [RICustomer parseCustomerWithJson:[metadata objectForKey:@"customer_entity"]];
-        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-        [trackingDictionary setValue:customerObject.customerId forKey:kRIEventLabelKey];
-        [trackingDictionary setValue:@"LoginSuccess" forKey:kRIEventActionKey];
-        [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
-        [trackingDictionary setValue:customerObject.customerId forKey:kRIEventUserIdKey];
-        [trackingDictionary setValue:customerObject.firstName forKey:kRIEventUserFirstNameKey];
-        [trackingDictionary setValue:customerObject.lastName forKey:kRIEventUserLastNameKey];
-        [trackingDictionary setValue:customerObject.birthday forKey:kRIEventBirthDayKey];
-        [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-        [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-        [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-        if(self.fromSideMenu) {
-            [trackingDictionary setValue:@"Side menu" forKey:kRIEventLocationKey];
-        } else {
-            [trackingDictionary setValue:@"My account" forKey:kRIEventLocationKey];
-        }
-        
-        [trackingDictionary setValue:customerObject.gender forKey:kRIEventGenderKey];
-        [trackingDictionary setValue:customerObject.createdAt forKey:kRIEventAccountDateKey];
-        
-        if (customerObject.birthday) {
-            NSDate* now = [NSDate date];
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-            NSDate *dateOfBirth = [dateFormatter dateFromString:customerObject.birthday];
-            NSDateComponents* ageComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitYear fromDate:dateOfBirth toDate:now options:0];
-            [trackingDictionary setValue:[NSNumber numberWithInteger:[ageComponents year]] forKey:kRIEventAgeKey];
-        }
-        
-        NSNumber *numberOfPurchases = [[NSUserDefaults standardUserDefaults] objectForKey:kRIEventAmountTransactions];
-        [trackingDictionary setValue:numberOfPurchases forKey:kRIEventAmountTransactions];
-        
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLoginSuccess]
-                                                  data:[trackingDictionary copy]];
+//        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+//        [trackingDictionary setValue:customerObject.customerId forKey:kRIEventLabelKey];
+//        [trackingDictionary setValue:@"LoginSuccess" forKey:kRIEventActionKey];
+//        [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+//        [trackingDictionary setValue:customerObject.customerId forKey:kRIEventUserIdKey];
+//        [trackingDictionary setValue:customerObject.firstName forKey:kRIEventUserFirstNameKey];
+//        [trackingDictionary setValue:customerObject.lastName forKey:kRIEventUserLastNameKey];
+//        [trackingDictionary setValue:customerObject.birthday forKey:kRIEventBirthDayKey];
+//        [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+//        [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+//        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+//        [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+//        if(self.fromSideMenu) {
+//            [trackingDictionary setValue:@"Side menu" forKey:kRIEventLocationKey];
+//        } else {
+//            [trackingDictionary setValue:@"My account" forKey:kRIEventLocationKey];
+//        }
+//
+//        [trackingDictionary setValue:customerObject.gender forKey:kRIEventGenderKey];
+//        [trackingDictionary setValue:customerObject.createdAt forKey:kRIEventAccountDateKey];
+//
+//        if (customerObject.birthday) {
+//            NSDate* now = [NSDate date];
+//            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//            [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+//            NSDate *dateOfBirth = [dateFormatter dateFromString:customerObject.birthday];
+//            NSDateComponents* ageComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitYear fromDate:dateOfBirth toDate:now options:0];
+//            [trackingDictionary setValue:[NSNumber numberWithInteger:[ageComponents year]] forKey:kRIEventAgeKey];
+//        }
+//
+//        NSNumber *numberOfPurchases = [[NSUserDefaults standardUserDefaults] objectForKey:kRIEventAmountTransactions];
+//        [trackingDictionary setValue:numberOfPurchases forKey:kRIEventAmountTransactions];
+//
+//        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLoginSuccess]
+//                                                  data:[trackingDictionary copy]];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification object:customerObject.wishlistProducts];
         

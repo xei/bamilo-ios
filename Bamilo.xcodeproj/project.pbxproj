@@ -220,6 +220,7 @@
 		61CBA88C1F696013009F0EEF /* SearchSuggestionDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA88B1F696013009F0EEF /* SearchSuggestionDataManager.swift */; };
 		61CC6AD21FC187B800355B78 /* SimpleProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CC6AD11FC187B800355B78 /* SimpleProduct.swift */; };
 		61D10E6C1EAE22C6009A0865 /* SuccessPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D10E6B1EAE22C6009A0865 /* SuccessPaymentViewController.m */; };
+		61D24A7C1FD4134700DDA283 /* AdjustTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D24A7B1FD4134700DDA283 /* AdjustTracker.swift */; };
 		61D474801F6FC622001DA6A6 /* HomePageSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D4747F1F6FC622001DA6A6 /* HomePageSlider.swift */; };
 		61D474821F6FD17E001DA6A6 /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D474811F6FD17E001DA6A6 /* HomePage.swift */; };
 		61D474841F6FD371001DA6A6 /* HomePageTeaserBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D474831F6FD371001DA6A6 /* HomePageTeaserBox.swift */; };
@@ -1260,6 +1261,7 @@
 		61CC6AD11FC187B800355B78 /* SimpleProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleProduct.swift; sourceTree = "<group>"; };
 		61D10E6A1EAE22C6009A0865 /* SuccessPaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuccessPaymentViewController.h; sourceTree = "<group>"; };
 		61D10E6B1EAE22C6009A0865 /* SuccessPaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuccessPaymentViewController.m; sourceTree = "<group>"; };
+		61D24A7B1FD4134700DDA283 /* AdjustTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustTracker.swift; sourceTree = "<group>"; };
 		61D4747F1F6FC622001DA6A6 /* HomePageSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePageSlider.swift; sourceTree = "<group>"; };
 		61D474811F6FD17E001DA6A6 /* HomePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePage.swift; sourceTree = "<group>"; };
 		61D474831F6FD371001DA6A6 /* HomePageTeaserBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePageTeaserBox.swift; sourceTree = "<group>"; };
@@ -3656,6 +3658,8 @@
 			children = (
 				6193F3D91F0CF5F400DA3CDE /* Base */,
 				61E8441E1F0D203A005D79EE /* TrackerManager.swift */,
+				6193F3E01F0CF9D600DA3CDE /* GoogleAnalyticsTracker.swift */,
+				61D24A7B1FD4134700DDA283 /* AdjustTracker.swift */,
 			);
 			name = Trackers;
 			sourceTree = "<group>";
@@ -3663,7 +3667,6 @@
 		6193F3D91F0CF5F400DA3CDE /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				6193F3DF1F0CF9A400DA3CDE /* GoogleAnalyticsTracker */,
 				6193F3DA1F0CF60A00DA3CDE /* Class */,
 			);
 			name = Base;
@@ -3692,14 +3695,6 @@
 				6193F3DD1F0CF67100DA3CDE /* EventAttributes.swift */,
 			);
 			name = EventAttributes;
-			sourceTree = "<group>";
-		};
-		6193F3DF1F0CF9A400DA3CDE /* GoogleAnalyticsTracker */ = {
-			isa = PBXGroup;
-			children = (
-				6193F3E01F0CF9D600DA3CDE /* GoogleAnalyticsTracker.swift */,
-			);
-			name = GoogleAnalyticsTracker;
 			sourceTree = "<group>";
 		};
 		619CC2DB1F8E5870008E4B86 /* TileTeaserCollectionViewCell */ = {
@@ -7933,7 +7928,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		875AD58C1E38C62A00584ABF /* ShellScript */ = {
@@ -8083,7 +8078,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -8518,6 +8513,7 @@
 				61F946B31ED4502100F341A6 /* ProductDataManager.swift in Sources */,
 				9AB488891B727B2D00886A44 /* UIImage+WithColor.m in Sources */,
 				CE9ADFD11AB6D78200D56481 /* JAOrderSummaryView.m in Sources */,
+				61D24A7C1FD4134700DDA283 /* AdjustTracker.swift in Sources */,
 				87A6815C1E40F9C000D252AC /* BaseViewController.m in Sources */,
 				CE9ADFD21AB6D78200D56481 /* JAPriceView.m in Sources */,
 				61583DDD1EF92100007107C1 /* DeleteEntityDataManager.swift in Sources */,

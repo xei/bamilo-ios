@@ -123,20 +123,11 @@
     }
 }
 
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    [[RITrackingWrapper sharedInstance]trackScreenWithName:@"RecentSearches"];
-}
-
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
     CGFloat newSize = self.recentSearches.count * [self tableView:self.recentSearchesTableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     self.recentSearchesTableView.frame = CGRectMake(self.recentSearchesTableView.frame.origin.x,
                                                     self.recentSearchesTableView.frame.origin.y,
@@ -302,3 +293,4 @@
 }
 
 @end
+

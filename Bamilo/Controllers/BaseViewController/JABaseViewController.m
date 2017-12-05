@@ -688,9 +688,9 @@
     if(_hasAppeared == NO) {
         NSTimeInterval executionTime = [[NSDate date] timeIntervalSinceDate:_startLoadingTime];
         NSString *screenName = [self getPerformanceTrackerScreenName];
-        if(screenName) {
-            [[RITrackingWrapper sharedInstance] trackTimingInMillis:[NSNumber numberWithDouble:executionTime] reference:screenName label:[self getPerformanceTrackerLabel] ?: @""];
-        }
+//        if(screenName) {
+//            [[RITrackingWrapper sharedInstance] trackTimingInMillis:[NSNumber numberWithDouble:executionTime] reference:screenName label:[self getPerformanceTrackerLabel] ?: @""];
+//        }
         _hasAppeared = YES;
     }
 }

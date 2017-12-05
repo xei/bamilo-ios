@@ -60,7 +60,7 @@ JADynamicFormDelegate
 {
     [super viewDidAppear:animated];
     
-    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"NewsletterSubscription"];
+//    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"NewsletterSubscription"];
 }
 
 - (void)getForm
@@ -129,22 +129,22 @@ JADynamicFormDelegate
              }
          }
          
-         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-         [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
-         [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
-         [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-         [trackingDictionary setValue:@"My Account" forKey:kRIEventLocationKey];
-         if (notSelectedNewsletter)
-         {
-             [trackingDictionary setValue:@"UnsubscribeNewsletter" forKey:kRIEventActionKey];
-         }
-         else
-         {
-             [trackingDictionary setValue:@"SubscribeNewsletter" forKey:kRIEventActionKey];
-         }
-         
-         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventNewsletter]
-                                                   data:[trackingDictionary copy]];
+//         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+//         [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+//         [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+//         [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+//         [trackingDictionary setValue:@"My Account" forKey:kRIEventLocationKey];
+//         if (notSelectedNewsletter)
+//         {
+//             [trackingDictionary setValue:@"UnsubscribeNewsletter" forKey:kRIEventActionKey];
+//         }
+//         else
+//         {
+//             [trackingDictionary setValue:@"SubscribeNewsletter" forKey:kRIEventActionKey];
+//         }
+//         
+//         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventNewsletter]
+//                                                   data:[trackingDictionary copy]];
          
          [self.dynamicForm resetValues];
          

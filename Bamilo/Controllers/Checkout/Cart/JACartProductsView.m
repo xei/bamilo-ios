@@ -114,7 +114,7 @@
                                                                       @"previousCategory" : STRING_CART,
                                                                       @"show_back_button" : [NSNumber numberWithBool:NO]}];
         
-        [[RITrackingWrapper sharedInstance] trackScreenWithName:[NSString stringWithFormat:@"cart_%@",product.name]];
+//        [[RITrackingWrapper sharedInstance] trackScreenWithName:[NSString stringWithFormat:@"cart_%@",product.name]];
         
     }
 }

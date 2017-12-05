@@ -139,6 +139,8 @@
 	<string>16</string>
 	<key>Configs</key>
 	<dict>
+		<key>AdjustTokenID</key>
+		<string>pttex2kff47v</string>
 		<key>API_BaseUrl</key>
 		<string>http://staging.bamilo.com/mobapi/</string>
 		<key>API_Version</key>

@@ -267,10 +267,10 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
         
         [DataAggregator setMultistepPayment:self params:params completion:^(id data, NSError *error) {
             if(error == nil) {
-                NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                [trackingDictionary setValue:selectedPaymentMethod.label forKey:kRIEventPaymentMethodKey];
-                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentSuccess] data:[trackingDictionary copy]];
-                
+//                NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+//                [trackingDictionary setValue:selectedPaymentMethod.label forKey:kRIEventPaymentMethodKey];
+//                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentSuccess] data:[trackingDictionary copy]];
+//
                 _multistepEntity = (MultistepEntity *)data;
                 
                 [DataAggregator getMultistepConfirmation:self type:RequestExecutionTypeForeground completion:^(id data, NSError *error) {
@@ -285,10 +285,10 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
                     }
                 }];
             } else {
-                NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                [trackingDictionary setValue:selectedPaymentMethod.label forKey:kRIEventPaymentMethodKey];
-                [trackingDictionary setValue:self.cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalTransactionKey];
-                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentFail] data:[trackingDictionary copy]];
+//                NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+//                [trackingDictionary setValue:selectedPaymentMethod.label forKey:kRIEventPaymentMethodKey];
+//                [trackingDictionary setValue:self.cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalTransactionKey];
+//                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentFail] data:[trackingDictionary copy]];
                 
                 [self showNotificationBarMessage:STRING_ERROR_SETTING_PAYMENT_METHOD isSuccess:NO];
             }
