@@ -63,7 +63,9 @@ class OrderDetailTableViewController: AccordionTableViewController, OrderDetailT
         if let packagesCount = self.dataSource?.packages?.count, indexPath.section == packagesCount + 1 {
             //last cell & last section
             let cell = self.tableView.dequeueReusableCell(withIdentifier: OrderOwnerInfoTableViewCell.nibName(), for: indexPath) as! OrderOwnerInfoTableViewCell
-            cell.update(withModel: self.dataSource)
+            if let dataSource = self.dataSource {
+                cell.update(withModel: dataSource)
+            }
             
             //to remove seperator for this cell
             cell.separatorInset = UIEdgeInsetsMake(0, cell.bounds.size.width, 0, 0);

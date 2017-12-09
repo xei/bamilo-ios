@@ -39,4 +39,13 @@ import UIKit
             viewController.present(activityVC, animated: true, completion: nil)
         }
     }
+    
+    static func resetUserBehaviours() {
+        //Reset some actions
+        EmarsysPredictManager.userLoggedOut()
+        RICustomer.cleanFromDB()
+        RICart.sharedInstance().cartEntity?.cartItems = []
+        RICart.sharedInstance().cartEntity?.cartCount = nil
+        LocalSearchSuggestion().clearAllHistories()
+    }
 }

@@ -75,7 +75,7 @@ class AdjustTracker: BaseTracker, EventTrackerProtocol {
     func viewProduct(attributes: EventAttributeType) {
         self.createAndSendEvent(name: kViewProductEvent)
     }
-    func appOpend(attributes: EventAttributeType) {
+    func appOpened(attributes: EventAttributeType) {
         self.createAndSendEvent(name: kOpenAppEvent)
     }
     func checkoutFinished(attributes: EventAttributeType) {

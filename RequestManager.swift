@@ -11,13 +11,13 @@ import Alamofire
 import AlamofireObjectMapper
 
 enum ApiResponseType: Int {
-    case success                = 9000
-    case authorizationError     = 9001
-    case timeOut                = 9002
-    case badUrl                 = 9003
-    case unknownError           = 9004
+    case success                = 200
+    case authorizationError     = 403
+    case timeOut                = -1001
+    case badUrl                 = -1000
+    case unknownError           = -1
     case apiError               = 9005
-    case noInternetConnection   = 9006
+    case noInternetConnection   = -1009
     case maintenancePage        = 9007
     case kickoutView            = 9008
 }
@@ -28,7 +28,7 @@ enum ApiRequestExecutionType: Int {
     case container  = 2
 }
 
-typealias ResponseClosure = (_ responseType: ApiResponseType, _ data: ApiResponseData?, _ errorMessages: [Any]?) -> Void
+typealias ResponseClosure = (_ responseType: Int, _ data: ApiResponseData?, _ errorMessages: [Any]?) -> Void
 
 class RequestManagerSwift {
     private var baseUrl: String?
@@ -58,9 +58,10 @@ class RequestManagerSwift {
                     case .success:
                         if let apiResponseData = response.result.value {
                             if(apiResponseData.success) {
-                                completion(self.map(statusCode: response.response?.statusCode), apiResponseData, nil)
+                                
+                                completion(response.response?.statusCode ?? 0, apiResponseData, nil)
                             } else {
-                                completion(self.map(statusCode: response.response?.statusCode), nil, self.prepareErrorMessages(messagesList: apiResponseData.messages))
+                                completion(response.response?.statusCode ?? 0, nil, self.prepareErrorMessages(messagesList: apiResponseData.messages))
                             }
                         }
                         if(type == .foreground) {
@@ -68,7 +69,7 @@ class RequestManagerSwift {
                         }
                     case .failure(let error):
                         print(error)
-                        completion(self.map(statusCode: response.response?.statusCode), nil, [STRING_OOPS])
+                        completion(error.code, nil, [STRING_OOPS])
                         if(type == .container || type == .foreground) {
                             LoadingManager.hideLoading()
                         }
@@ -86,12 +87,27 @@ class RequestManagerSwift {
         ]
     }
     
-    private func map(statusCode: Int?) -> ApiResponseType {
-        switch statusCode {
-            default:
-                return .success
-        }
-    }
+//    private func handleGenericError(viewController: UIViewController, error: Error) {
+//        switch (error.code) {
+//        case NSURLErrorCannotConnectToHost,
+//             NSURLErrorNotConnectedToInternet,
+//             NSURLErrorNetworkConnectionLost,
+//             NSURLErrorTimedOut,
+//             NSURLErrorDNSLookupFailed,
+//             NSURLErrorCannotFindHost:
+//            //Internet connection error
+//            if viewController.isKind(of: BaseViewControl) {
+//
+//            } else {
+//
+//            }
+//            break
+//        case NSURLErrorTimedOut:
+//            break
+//        default:
+//            break
+//        }
+//    }
     
     private func prepareErrorMessages(messagesList: ApiDataMessageList?) -> [Any] {
         return messagesList?.validations ?? messagesList?.errors?.map { $0.message ?? "" } ?? []

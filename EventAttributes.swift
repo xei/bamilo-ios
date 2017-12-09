@@ -75,7 +75,7 @@ public typealias EventAttributeType = [String:Any]
         return attributes
     }
     
-    static func addToCard(product: RIProduct, screenName: String, success: Bool) -> EventAttributeType {
+    static func addToCart(product: RIProduct, screenName: String, success: Bool) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventScreenName] = screenName
         attributes[kEventSuccess] = success

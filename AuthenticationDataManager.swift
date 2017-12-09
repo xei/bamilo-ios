@@ -18,7 +18,7 @@ class AuthenticationDataManager: DataManagerSwift {
         ]
         
         AuthenticationDataManager.requestManager.async(.post, target: target, path: RI_API_LOGIN_CUSTOMER, params: params, type: .foreground) { (responseType, data, errorMessages) in
-            if let data = data, responseType == .success {
+            if let data = data, responseType == 200 {
                 RICustomer.parseCustomer(withJson: data.metadata?["customer_entity"] as! [AnyHashable : Any], plainPassword: password, loginMethod: "normal")
                 completion(data, nil)
             } else {
@@ -32,7 +32,7 @@ class AuthenticationDataManager: DataManagerSwift {
         let customerPassword = fields["customer[password]"]
         
         AuthenticationDataManager.requestManager.async(.post, target: target, path: RI_API_REGISTER_CUSTOMER, params: fields, type: .foreground) { (responseType, data, errorMessages) in
-            if let data = data, responseType == .success {
+            if let data = data, responseType == 200 {
                 RICustomer.parseCustomer(withJson: data.metadata?["customer_entity"] as! [AnyHashable : Any], plainPassword: customerPassword, loginMethod: "normal")
                 completion(data.metadata, nil)
             } else {

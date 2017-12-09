@@ -22,7 +22,7 @@
     @objc optional func viewCart(attributes: EventAttributeType)
     @objc optional func addToWishList(attributes: EventAttributeType)
     @objc optional func removeFromWishList(attributes: EventAttributeType)
-    @objc optional func appOpend(attributes: EventAttributeType)
+    @objc optional func appOpened(attributes: EventAttributeType)
     @objc optional func logout(attributes: EventAttributeType)
     @objc optional func login(attributes: EventAttributeType)
     @objc optional func signup(attributes: EventAttributeType)

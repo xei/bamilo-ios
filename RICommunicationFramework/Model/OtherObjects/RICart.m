@@ -215,8 +215,7 @@ static RICart *instance;
 
 + (NSString *)removeProductWithSku:(NSString *)sku
                   withSuccessBlock:(void (^)(RICart *cart))sucessBlock
-                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
-{
+                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock {
     NSMutableDictionary* parameters = [NSMutableDictionary new];
     if (VALID_NOTEMPTY(sku, NSString)) {
         [parameters setObject:sku forKey:@"sku"];

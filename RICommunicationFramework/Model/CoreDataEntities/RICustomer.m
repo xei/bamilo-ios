@@ -166,6 +166,8 @@
                             returnBlock(YES, nil, customerObject.loginMethod);
                         });
                     }
+                } else {
+                    [Utility resetUserBehaviours];
                 }
             }];
             

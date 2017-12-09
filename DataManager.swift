@@ -21,38 +21,25 @@ class DataManagerSwift {
             let apiVersion = AppUtility.getInfoConfigs(for: AppKeys.APIVersion) as? String {
             return RequestManagerSwift(with: "\(apiBaseUrl)v\(apiVersion)")
         }
-        
         return RequestManagerSwift(with: nil)
     }()
     
-    func processResponse(_ responseType: ApiResponseType, aClass: Any?, data: ApiResponseData?, errorMessages: [Any]?, completion: DataClosure?) {
+    func processResponse(_ responseType: Int, aClass: Any?, data: ApiResponseData?, errorMessages: [Any]?, completion: DataClosure?) {
         if let completion = completion {
-            guard responseType == .success, let data = data else {
+            guard let data = data else {
                 return completion(nil, self.createError(responseType, errorMessages: errorMessages))
             }
-            
             var payload = [String: Any]()
             if let messages = data.messages {
                 payload[DataManagerKeys.DataMessages] = messages
             }
-            
-            /*TODO: TEMP:
-              When all classes migrated to Swift along with models replace this with
-             
-              if let serviceData = data.metadata as [String:Any]?, let mappableClass = aClass as? Mappable.Type {
-                if let responseObj = mappableClass.init(JSON: serviceData) {
-                    payload[DataManagerKeys.DataContent] = responseObj
-                }
-              }
-             */
             if let serviceData = data.metadata as [String:Any]? {
                 if let mappableClass = aClass as? Mappable.Type, let responseObj = mappableClass.init(JSON: serviceData) {
                     payload[DataManagerKeys.DataContent] = responseObj
-                    
                     self.handlePayload(payload: payload, data: data, completion: completion)
                 } else if let mappableClassVerbose = aClass as? JSONVerboseModel.Type {
                     RICountry.getConfigurationWithSuccessBlock({ (configuration) in
-                        payload[DataManagerKeys.DataContent] = mappableClassVerbose.parseToDataModel(with: [serviceData, configuration! ])
+                        payload[DataManagerKeys.DataContent] = mappableClassVerbose.parseToDataModel(with: [serviceData, configuration!])
                         self.handlePayload(payload: payload, data: data, completion: completion)
                     }, andFailureBlock: { (apiResponse, errorMessages) in
                         if let errorMessages = errorMessages, let apiResponseType = self.map(statusCode: apiResponse) {
@@ -63,7 +50,6 @@ class DataManagerSwift {
                     let dataModel = mappableClass.init()
                     try? dataModel.merge(from: serviceData, useKeyMapping: true, error: ())
                     payload[DataManagerKeys.DataContent] = dataModel
-                    
                     self.handlePayload(payload: payload, data: data, completion: completion)
                 } else { // can not be parse as expected, just pass data
                     self.handlePayload(payload: payload, data: data, completion: completion)
@@ -74,12 +60,11 @@ class DataManagerSwift {
         }
     }
     
-    func createError(_ responseType: ApiResponseType, errorMessages: [Any]?) -> NSError? {
+    func createError(_ responseType: Int, errorMessages: [Any]?) -> NSError? {
         guard let errorMessages = errorMessages else {
-            return NSError(domain:AppValues.Domain, code:responseType.rawValue, userInfo:nil)
+            return NSError(domain:AppValues.Domain, code:responseType, userInfo:nil)
         }
-        
-        return NSError(domain:AppValues.Domain, code:responseType.rawValue, userInfo:[ AppKeys.ErrorMessages : errorMessages ])
+        return NSError(domain:AppValues.Domain, code:responseType, userInfo:[ AppKeys.ErrorMessages : errorMessages ])
     }
     
     //MARK: Private Methods
@@ -95,37 +80,26 @@ class DataManagerSwift {
         }
     }
     
-    /*
-     RIApiResponseSuccess                = 9000,
-     RIApiResponseAuthorizationError     = 9001,
-     RIApiResponseTimeOut                = 9002,
-     RIApiResponseBadUrl                 = 9003,
-     RIApiResponseUnknownError           = 9004,
-     RIApiResponseAPIError               = 9005,
-     RIApiResponseNoInternetConnection   = 9006,
-     RIApiResponseMaintenancePage        = 9007,
-     RIApiResponseKickoutView            = 9008
-     */
-    private func map(statusCode: RIApiResponse) -> ApiResponseType? {
+    private func map(statusCode: RIApiResponse) -> Int? {
         switch statusCode {
             case .success:
-                return ApiResponseType.success
+                return 200
             case .authorizationError:
-                return ApiResponseType.authorizationError
+                return NSURLErrorUserAuthenticationRequired
             case .timeOut:
-                return ApiResponseType.timeOut
+                return NSURLErrorTimedOut
             case .badUrl:
-                return ApiResponseType.badUrl
+                return NSURLErrorBadURL
             case .unknownError:
-                return ApiResponseType.unknownError
+                return NSURLErrorUnknown
             case .apiError:
-                return ApiResponseType.apiError
+                return NSURLErrorBadServerResponse
             case .noInternetConnection:
-                return ApiResponseType.noInternetConnection
+                return NSURLErrorNotConnectedToInternet
             case .maintenancePage:
-                return ApiResponseType.maintenancePage
+                return NSURLErrorCannotConnectToHost
             case .kickoutView:
-                return ApiResponseType.kickoutView
+                return NSURLErrorUnsupportedURL
         }
     }
 }

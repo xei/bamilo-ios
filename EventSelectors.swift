@@ -30,7 +30,7 @@ import Foundation
         return Selector(("signupWithAttributes:"))
     }
     class func appOpenEventSelector() -> Selector {
-        return Selector(("appOpendWithAttributes:"))
+        return Selector(("appOpenedWithAttributes:"))
     }
     class func addToCartEventSelector() -> Selector {
         return Selector(("addToCartWithAttributes:"))
@@ -66,7 +66,7 @@ import Foundation
         return Selector(("callToOrderTappedWithAttributes:"))
     }
     class func openAppSelector() -> Selector {
-        return Selector(("appOpendWithAttributes:"))
+        return Selector(("appOpenedWithAttributes:"))
     }
     class func recommendationTappedSelector() -> Selector {
         return Selector(("recommendationTappedWithAttributes:"))

@@ -142,7 +142,9 @@
             switch (_cellIndexPath.row) {
                 case 0: {
                     OrderCMSMessageTableViewCell *deliveryNoticeCell = [tableView dequeueReusableCellWithIdentifier:[OrderCMSMessageTableViewCell nibName]];
-                    [deliveryNoticeCell updateWithModel:_deliveryNotice];
+                    if ([_deliveryNotice isKindOfClass:[NSString class]] && [_deliveryNotice length]) {
+                        [deliveryNoticeCell updateWithModel:_deliveryNotice];
+                    }
                     return deliveryNoticeCell;
                     break;
                 }

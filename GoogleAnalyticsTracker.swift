@@ -185,7 +185,7 @@
             let product = attributes[kEventProduct] as? RIProduct {
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: screenName,
-                action: "AddToCard",
+                action: "AddToCart",
                 label: product.sku,
                 value: product.price
             )

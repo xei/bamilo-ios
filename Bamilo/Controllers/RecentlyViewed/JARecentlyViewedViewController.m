@@ -351,7 +351,7 @@
             
             //EVENT: ADD TO CART
             [TrackerManager postEventWithSelector:[EventSelectors addToCartEventSelector]
-                                       attributes:[EventAttributes addToCardWithProduct:product screenName:[self getScreenName] success:YES]];
+                                       attributes:[EventAttributes addToCartWithProduct:product screenName:[self getScreenName] success:YES]];
             
 //            NSNumber *price = (VALID_NOTEMPTY(product.specialPriceEuroConverted, NSNumber) && [product.specialPriceEuroConverted longValue] > 0.0f) ? product.specialPriceEuroConverted : product.priceEuroConverted;
             
@@ -444,7 +444,7 @@
         } else {
             //EVENT: ADD TO CART
             [TrackerManager postEventWithSelector:[EventSelectors addToCartEventSelector]
-                                       attributes:[EventAttributes addToCardWithProduct:product screenName:[self getScreenName] success:NO]];
+                                       attributes:[EventAttributes addToCartWithProduct:product screenName:[self getScreenName] success:NO]];
             
             [self onErrorResponse:error.code messages:[error.userInfo objectForKey:kErrorMessages] showAsMessage:YES selector:@selector(finishAddToCartWithButton:) objects:@[button]];
             //[self hideLoading];

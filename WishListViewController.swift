@@ -216,7 +216,7 @@ class WishListViewController: BaseViewController,
             convertedProduct.price = NSNumber(value: product.price ?? 0)
             
             //EVENT: ADD TO CART
-            TrackerManager.postEvent(selector: EventSelectors.addToCartEventSelector(), attributes: EventAttributes.addToCard(product: convertedProduct, screenName: self.getScreenName(), success: true))
+            TrackerManager.postEvent(selector: EventSelectors.addToCartEventSelector(), attributes: EventAttributes.addToCart(product: convertedProduct, screenName: self.getScreenName(), success: true))
             
             if let receivedData = data as? [String: Any], let messages = receivedData[DataManagerKeys.DataMessages] {
                 self.showMessage(self.extractSuccessMessages(messages), showMessage: true)

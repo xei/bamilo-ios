@@ -822,18 +822,10 @@ static NSString *recommendationLogic = @"RELATED";
 
                 //EVENT: ADD TO CART
                 [TrackerManager postEventWithSelector:[EventSelectors addToCartEventSelector]
-                                           attributes:[EventAttributes addToCardWithProduct:self.product screenName:[self getScreenName] success:YES]];
+                                           attributes:[EventAttributes addToCartWithProduct:self.product screenName:[self getScreenName] success:YES]];
 
                 if (VALID_NOTEMPTY(self.purchaseTrackingInfo, NSString)) {
-                    [[PurchaseBehaviourRecorder sharedInstance] recordAddToCardWithSku:self.product.sku trackingInfo:self.purchaseTrackingInfo];
-//                    NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
-//
-//                    NSString *obj = [skusFromTeaserInCart objectForKey:self.product.sku];
-//
-//                    if (ISEMPTY(obj)) {
-//                        [skusFromTeaserInCart setValue:self.purchaseTrackingInfo forKey:self.product.sku];
-//                        [[NSUserDefaults standardUserDefaults] setObject:[skusFromTeaserInCart copy] forKey:kSkusFromTeaserInCartKey];
-//                    }
+                    [[PurchaseBehaviourRecorder sharedInstance] recordAddToCartWithSku:self.product.sku trackingInfo:self.purchaseTrackingInfo];
                 }
 
                 [self trackingEventAddToCart:self.cart];
@@ -842,17 +834,15 @@ static NSString *recommendationLogic = @"RELATED";
                 [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
 
                 [self onSuccessResponse:RIApiResponseSuccess messages:[self extractSuccessMessages:[data objectForKey:kDataMessages]] showMessage:YES];
-                //[self hideLoading];
                 
                 //############## No need to call this transation for emarsys
                 // because every other transactions should carry the CART value
-                //[EmarsysPredictManager sendTransactionsOf:self];
                 
                 [self updateCartInNavBar];
             } else {
                 //EVENT: ADD TO CART
                 [TrackerManager postEventWithSelector:[EventSelectors addToCartEventSelector]
-                                           attributes:[EventAttributes addToCardWithProduct:self.product screenName:[self getScreenName] success:NO]];
+                                           attributes:[EventAttributes addToCartWithProduct:self.product screenName:[self getScreenName] success:NO]];
                 [self onErrorResponse:error.code messages:[error.userInfo objectForKey:kErrorMessages] showAsMessage:YES selector:@selector(addToCart) objects:nil];
                 //[self hideLoading];
             }

@@ -449,7 +449,7 @@ withCampaignTargetString:(NSString*)campaignTargetString
             [self trackAddToCartAction:YES];
             
             if (VALID_NOTEMPTY(self.purchaseTrackingInfo, NSString)) {
-                [[PurchaseBehaviourRecorder sharedInstance] recordAddToCardWithSku:self.backupSimpleSku trackingInfo:self.purchaseTrackingInfo];
+                [[PurchaseBehaviourRecorder sharedInstance] recordAddToCartWithSku:self.backupSimpleSku trackingInfo:self.purchaseTrackingInfo];
                 
 //                NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
 //
@@ -542,7 +542,7 @@ withCampaignTargetString:(NSString*)campaignTargetString
     product.price = self.cart.cartEntity.cartValue;
     //EVENT : ADD TO CART
     [TrackerManager postEventWithSelector:[EventSelectors addToCartEventSelector]
-                               attributes:[EventAttributes addToCardWithProduct:product screenName:[self getScreenName] success:success]];
+                               attributes:[EventAttributes addToCartWithProduct:product screenName:[self getScreenName] success:success]];
 }
 
 #pragma mark - UIScrollViewDelegate

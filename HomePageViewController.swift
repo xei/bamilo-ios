@@ -131,8 +131,9 @@ class HomePageViewController:   BaseViewController,
         if let cellType = self.homePage?.teasers[indexPath.row].type {
             let cell = self.tableView.dequeueReusableCell(withIdentifier: cellType.rawValue, for: indexPath) as! BaseHomePageTeaserBoxTableViewCell
             cell.delegate = self
-            cell.update(withModel: self.homePage?.teasers[indexPath.row])
-            
+            if let teasers = self.homePage?.teasers, indexPath.row < teasers.count {
+                cell.update(withModel: teasers[indexPath.row])
+            }
             return cell
         }
         return UITableViewCell()
