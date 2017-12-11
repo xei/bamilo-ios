@@ -100,7 +100,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.1.0</string>
+	<string>2.2.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -136,15 +136,15 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>16</string>
+	<string>4</string>
 	<key>Configs</key>
 	<dict>
-		<key>AdjustTokenID</key>
-		<string>pttex2kff47v</string>
 		<key>API_BaseUrl</key>
 		<string>http://staging.bamilo.com/mobapi/</string>
 		<key>API_Version</key>
 		<string>2.6</string>
+		<key>AdjustTokenID</key>
+		<string>pttex2kff47v</string>
 		<key>EMMerchantID</key>
 		<string>18146DE34FE0B8C9</string>
 		<key>Emarsys</key>

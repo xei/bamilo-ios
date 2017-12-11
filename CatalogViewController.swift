@@ -258,7 +258,7 @@ import SwiftyJSON
     }
     
     func retryAction(_ callBack: RetryHandler!, forRequestId rid: Int32) {
-        if rid == 0  {
+        if rid == 0 {
             self.loadData { (success) in
                 callBack(success)
             }
