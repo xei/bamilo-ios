@@ -38,7 +38,7 @@ class ProfileUserTableViewCell: BaseProfileTableViewCell {
                 if let gender = user.gender {
                     self.logoImage.image = UIImage(named: gender == "female" ? "woman_user_profile" : "man_user_profile")
                 } else {
-                    self.logoImage.image = UIImage(named:"man_user_profile")
+                    self.logoImage.image = #imageLiteral(resourceName: "man_user_profile")
                 }
                 
             }
@@ -47,7 +47,7 @@ class ProfileUserTableViewCell: BaseProfileTableViewCell {
             self.setupLoggedOutView()
             self.topMessageLabel.text = STRING_WELCOME
             self.bottomMessageLabel.text = STRING_LOGIN_OR_SIGNUP
-            self.logoImage.image = UIImage(named: "man_user_profile")
+            self.logoImage.image = #imageLiteral(resourceName: "man_user_profile")
         }
     }
     

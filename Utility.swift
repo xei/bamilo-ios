@@ -9,15 +9,18 @@
 import UIKit
 
 @objc class Utility: NSObject {
-    
-    static func handleError(error: Any?, viewController: BaseViewController) {
+
+    @discardableResult static func handleErrorMessages(error: Any?, viewController: BaseViewController) -> Bool {
         if !viewController.showNotificationBar(error, isSuccess: false) {
             if let error = error as? [Any], error.count > 0, let errorDictionary = error[0] as? [AnyHashable: Any] {
                 viewController.showNotificationBar(fromMessageDictionary: errorDictionary, isSuccess: false)
+                return true
             } else if let error = error as? [Any], error.count > 0, let errorMessage = error[0] as? String {
                 viewController.showNotificationBarMessage(errorMessage, isSuccess: false)
+                return true
             }
         }
+        return false
     }
     
     static func openExternalUrlOnBrowser(urlString: String) {

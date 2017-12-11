@@ -13,7 +13,7 @@
 
 @optional
 - (BOOL)isPreventSendTransactionInViewWillAppear;
-- (void)recievedErrorSendingTransition:(NSError *)error;
+- (void)receivedErrorSendingTransition:(NSError *)error;
 
 @end
 

@@ -522,4 +522,5 @@
 #define STRING_CITY RILocalizedString(@"city", nil)
 #define STRING_NEIGHBOURHOOD RILocalizedString(@"neighbourhood", nil)
 #define STRING_ONLINE_PAYMENT_ERROR RILocalizedString(@"online_payment_error", nil)
+#define STRING_SERVER_ERROR_MESSAGES RILocalizedString(@"server_error_message", nil)
 #endif

@@ -79,17 +79,19 @@ class WishListViewController: BaseViewController,
         NotificationCenter.default.removeObserver(self)
     }
     
-    private func loadProducts(page: Int) {
+    private func loadProducts(page: Int, callBack: ((Bool)->Void)? = nil) {
         if isLoading { return }
         if let lastPage = self.wishList?.lastPage ,(lastPage != 0 && page > lastPage && isRefreshing == false) { return }
         self.isLoading = true
         ProductDataManager.sharedInstance.getWishListProducts(self, page: page, perPageCount: perPageProductCount) { (data, error) in
             self.isLoading = false
             if let error = error {
-                Utility.handleError(error: error, viewController: self)
+                callBack?(false)
+                self.errorHandler(error, forRequestID: 0)
                 return
             }
             self.bind(data, forRequestId: 0)
+            callBack?(true)
         }
     }
     
@@ -99,10 +101,10 @@ class WishListViewController: BaseViewController,
         self.loadProducts(page: page)
     }
     
-    @objc private func refreshAndReload() {
+    @objc private func refreshAndReload(callBack: ((Bool)->Void)? = nil) {
         self.page = 1
         self.isRefreshing = true
-        self.loadProducts(page: page)
+        self.loadProducts(page: page, callBack: callBack)
     }
     
     //MARK: - UICollectionViewDelegate & UICollectionViewDataSource
@@ -206,7 +208,7 @@ class WishListViewController: BaseViewController,
     private func addToCart(product: Product, simpleSku: String) {
         CartDataManager.sharedInstance.addProductToCart(self, simpleSku: simpleSku) { (data, error) in
             if error != nil {
-                Utility.handleError(error: error, viewController: self)
+                Utility.handleErrorMessages(error: error, viewController: self)
                 return
             }
             
@@ -231,7 +233,7 @@ class WishListViewController: BaseViewController,
     private func removeFromWishList(product: Product, cell: WishListCollectionViewCell) {
         DeleteEntityDataManager.sharedInstance().removeFromWishList(self, sku: product.sku) { (data, error) in
             if error != nil {
-                Utility.handleError(error: error, viewController: self)
+                Utility.handleErrorMessages(error: error, viewController: self)
                 return
             }
             
@@ -299,6 +301,17 @@ class WishListViewController: BaseViewController,
                 
                 self.showEmptyViewIfItsNeeded()
             }
+        }
+    }
+    func retryAction(_ callBack: RetryHandler!, forRequestId rid: Int32) {
+        self.refreshAndReload { (success) in
+            callBack(success)
+        }
+    }
+    
+    func errorHandler(_ error: Error!, forRequestID rid: Int32) {
+        if !Utility.handleErrorMessages(error: error, viewController: self) {
+            self.handleGenericErrorCodesWithErrorControlView(Int32(error.code), forRequestID: rid)
         }
     }
     

@@ -239,13 +239,19 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+    [self getContent:nil];
+}
+
+- (void)getContent:(void(^)(BOOL))callBack {
     [DataAggregator getUserCart:self completion:^(id data, NSError *error) {
         if(error != nil) {
-            [Utility handleErrorWithError:error viewController:self];
+            [Utility handleErrorMessagesWithError:error viewController:self];
+            [self errorHandler:error forRequestID:0];
+            if (callBack) callBack(NO);
             return;
         }
         [self bind:data forRequestId:0];
+        if (callBack) callBack(YES);
     }];
 }
 
@@ -264,11 +270,22 @@
     //When cart is ready & not empty
     if (cart.cartEntity.cartCount.integerValue) {
         [EmarsysPredictManager sendTransactionsOf:self];
-        
         [TrackerManager postEventWithSelector:[EventSelectors viewCartEventSelector] attributes:[EventAttributes viewCartWithCart:cart success:YES]];
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo: @{kUpdateCartNotificationValue: cart}];
+}
+
+- (void)errorHandler:(NSError *)error forRequestID:(int)rid {
+    if (![Utility handleErrorMessagesWithError:error viewController:self]) {
+        [self handleGenericErrorCodesWithErrorControlView:(int)error.code forRequestID:rid];
+    }
+}
+
+- (void)retryAction:(RetryHandler)callBack forRequestId:(int)rid {
+    [self getContent:^(BOOL success) {
+        callBack(success);
+    }];
 }
 
 - (NSString *)getPerformanceTrackerLabel {

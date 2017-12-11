@@ -78,7 +78,7 @@ class ProgressBarItemView: BaseControlView {
         if let step = model.step, let imageName = self.imageHistoryStepMapper[step], model.status == .active {
             self.imageView.image = UIImage(named: imageName)
         } else if let step = model.step, step == .delivered, model.status == .success, isLast {
-            self.imageView.image = UIImage(named: "orderDeliveredSuccess")
+            self.imageView.image = #imageLiteral(resourceName: "orderDeliveredSuccess")
         } else {
             self.imageView.isHidden = true
         }

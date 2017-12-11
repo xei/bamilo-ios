@@ -73,7 +73,7 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
     override func update(withModel model: Any!) {
         if let product = model as? OrderProductItem {
             self.productTitleLabel.text = product.name
-            self.productImage.kf.setImage(with: product.imageUrl, placeholder: UIImage(named: "placeholder_gallery"), options: [.transition(.fade(0.20))])
+            self.productImage.kf.setImage(with: product.imageUrl, placeholder: #imageLiteral(resourceName: "placeholder_gallery"), options: [.transition(.fade(0.20))])
             let productPrice = product.specialPrice ?? product.price ?? 0
             self.productPriceLabel.text = "\(Int(productPrice) * (product.quantity ?? 0))".formatPriceWithCurrency()
             

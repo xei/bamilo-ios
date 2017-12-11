@@ -21,7 +21,7 @@ import UIKit
         self.backgroundColor = Theme.color(kColorExtraDarkBlue)
         self.textField.backgroundColor = UIColor.white
         self.textField.font = Theme.font(kFontVariationRegular, size: 13)
-        let searchIconView = UIImageView(image: UIImage(named: "searchIcon"))
+        let searchIconView = UIImageView(image: #imageLiteral(resourceName: "searchIcon"))
         searchIconView.contentMode = .scaleAspectFit
         self.textField.leftViewMode = .always
         searchIconView.frame = CGRect(x: 0, y: 0, width: 30, height: 20)

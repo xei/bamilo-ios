@@ -41,7 +41,7 @@ class FeaturedStoresCollectionViewCell: BaseCollectionViewCellSwift {
     override func update(withModel model: Any) {
         if let featureStoreItem = model as? HomePageFeaturedStoreItem {
             self.title = featureStoreItem.title
-            self.imageIcon.kf.setImage(with: featureStoreItem.imageUrl, placeholder: UIImage(named: "homepage_slider_placeholder"),options: [.transition(.fade(0.20))])
+            self.imageIcon.kf.setImage(with: featureStoreItem.imageUrl, placeholder: #imageLiteral(resourceName: "homepage_slider_placeholder"),options: [.transition(.fade(0.20))])
         }
     }
     

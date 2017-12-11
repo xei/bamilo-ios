@@ -97,9 +97,7 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
             switch cellType {
             case .profileUserTableViewCell:
                 cell = self.tableView.dequeueReusableCell(withIdentifier: ProfileUserTableViewCell.nibName(), for: indexPath) as! ProfileUserTableViewCell
-                if let user = RICustomer.getCurrent() {
-                    cell.update(withModel: user)
-                }
+                cell.update(withModel: RICustomer.getCurrent())
             case .profileOrderTableViewCell:
                 cell = self.tableView.dequeueReusableCell(withIdentifier: ProfileOrderTableViewCell.nibName(), for: indexPath) as! ProfileOrderTableViewCell
                 cell.update(withModel: dataModel)

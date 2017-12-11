@@ -175,7 +175,7 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
     
     func enableFilterButton(enable:Bool) {
         self.filterButton.isEnabled = enable
-        self.filterButtonContainer.backgroundColor = enable ? UIColor.white : UIColor.init(colorLiteralRed: 240/255, green: 240/255, blue: 240/255, alpha: 1)  //Theme.color(kColorVeryLightGray)
+        self.filterButtonContainer.backgroundColor = enable ? UIColor.white : UIColor.fromHexString(hex: "#f0f0f0")
         self.filterTitleLabel.textColor = enable ? Theme.color(kColorDarkGray) : Theme.color(kColorLightGray)
         self.filterDescLabel.textColor = enable ? Theme.color(kColorLightGray) : Theme.color(kColorExtraLightGray)
         self.filterIconImage.image = enable ? UIImage(named: "filterIcon_normal") : UIImage(named: "filtered_list_no_result")

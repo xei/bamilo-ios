@@ -80,7 +80,8 @@ static NotificationBarView *instance;
     }
     
     [viewController.view addSubview:self];
-
+    [viewController.view bringSubviewToFront:self];
+    
     float spaceForCurrentView = floor(viewController.view.size.width / basicSpaceOfOneLine);
     int actualNumberOfLines = ceilf(self.textLabel.text.length / (spaceForCurrentView * basicNumberOfCharsPerLine));
     

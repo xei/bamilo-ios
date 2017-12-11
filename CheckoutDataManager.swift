@@ -59,7 +59,7 @@ class CheckoutDataManager: DataManagerSwift {
             "customer_device": UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad ? "tablet" : "mobile"
         ]
         CheckoutDataManager.requestManager.async(.post, target: target, path: RI_API_MULTISTEP_SUBMIT_FINISH, params: params, type: .foreground) { (responseType, data, errorMessages) in
-            if errorMessages != nil {
+            if errorMessages != nil || data == nil {
                 completion(nil, self.createError(responseType, errorMessages: errorMessages))
             } else {
                 completion(RICart.parseCheckoutFinish(data?.metadata, for:cart), nil)

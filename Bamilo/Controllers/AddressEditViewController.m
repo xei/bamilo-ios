@@ -115,7 +115,7 @@
     [self.formController setupTableView];
     if (!self.address.uid) {
         // Get regions and citiies for region defualt value (if exists)
-        [self getRegionsByCompletion:^{
+        [self getRegionsByCompletion:^(BOOL success){
             if (region.inputTextValue) {
                 [self getCitiesForRegionId:[region getValue] completion: nil];
             }
@@ -145,7 +145,6 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
     [self.formController unregisterForKeyboardNotifications];
 }
 
@@ -218,6 +217,22 @@
     }
 }
 
+- (void)retryAction:(RetryHandler)callBack forRequestId:(int)rid {
+    if (rid == 0) {
+        [self getRegionsByCompletion:^(BOOL success){
+            callBack(success);
+        }];
+    }
+    if (self.address.uid && rid == 3) {
+        [self getAddressByID:self.address.uid];
+        callBack(YES);
+    }
+}
+
+- (void)errorHandler:(NSError *)error forRequestID:(int)rid {
+    [self handleGenericErrorCodesWithErrorControlView:(int)error.code forRequestID:rid];
+}
+
 #pragma ArgsReceiverProtocol
 -(void)updateWithArgs:(NSDictionary *)args {
     Address *address = [args objectForKey:kAddress];
@@ -232,6 +247,8 @@
         if (error == nil) {
             [self bind:data forRequestId:3];
             [self publishScreenLoadTime];
+        } else {
+            [self errorHandler:error forRequestID:3];
         }
     }];
 }
@@ -269,7 +286,7 @@
     }];
     
     [self.formController refreshView];
-    [self getRegionsByCompletion:^{
+    [self getRegionsByCompletion:^(BOOL success){
         if (addressFieldMapValues[@"address_form[region]"].length) {
             [self getCitiesForRegionId:[region getValue] completion:^{
                 if (addressFieldMapValues[@"address_form[city]"]) {
@@ -283,13 +300,13 @@
 
 
 
-- (void)getRegionsByCompletion:(void (^)(void))completion {
+- (void)getRegionsByCompletion:(void (^)(BOOL))completion {
     [DataAggregator getRegions:self completion:^(id data, NSError *error) {
-        if (!error)  {
-//            [ThreadManager executeOnMainThread:^{
-                [self bind:data forRequestId:0];
-                if(completion) completion();
-//            }];
+        if (!error) {
+            [self bind:data forRequestId:0];
+            if(completion) completion(YES);
+        } else {
+            if(completion) completion(NO);
         }
     }];
 }

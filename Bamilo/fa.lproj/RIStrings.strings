@@ -446,11 +446,11 @@
 
 "promotion_tip_tap_text" = "کادر بالا را لمس نموده تا کد در حافظه ذخیره شده و در موقع لزوم از آن استفاده نمایید.";
 
-"string_try_again" = "دوباره امتحان کنید";
+"string_try_again" = "تلاش مجدد";
 
 "error_no_connection" = "ارتباط قطع است";
 
-"string_no_newtork" = "اتصال قطع شده است.";
+"string_no_newtork" = "دسترسی به اینترنت امکان پذیر نمی باشد";
 
 "internet_no_connection_details_label" = "مشکلی در ارتباط با اینترنت بوجود آمد. لطفا مجددا تلاش نمایید";
 
@@ -942,3 +942,11 @@
 "remove_favourties" = "حذف کالا";
 
 "remove_favourties_description" = "آیا از حذف کالا از لیست علاقه‌مندی‌ها اطمینان دارید؟";
+
+"server_error_message" = "خطایی از سمت سرورها رخ داده";
+
+"connection_to_server_error_message" = "خطا در برقراری ارتباط, مجدد تلاش کنید";
+
+"please_wait_message" = "لطفا کمی صبر کنید";
+
+"internet_setting" = "تنظیمات اینترنت";

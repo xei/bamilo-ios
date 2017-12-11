@@ -26,15 +26,22 @@ class OrderDetailViewController: BaseViewController, OrderDetailTableViewCellDel
                 }
             }
         }
-        
+        self.loadContent()
+    }
+    
+    private func loadContent(completion: ((Bool)-> Void)? = nil) {
         if let orderId = self.orderId {
             OrderDataManager.sharedInstance.getOrder(self, orderId: orderId) { (data, errors) in
-                if errors == nil {
-                    self.bind(data, forRequestId: 0)
+                if let error = errors {
+                    completion?(false)
+                    self.errorHandler(error, forRequestID: 0)
                 } else {
-                    Utility.handleError(error: errors, viewController: self)
+                    completion?(true)
+                    self.bind(data, forRequestId: 0)
                 }
             }
+        } else {
+            self.handleGenericErrorCodesWithErrorControlView(Int32(NSURLErrorBadServerResponse), forRequestID: 0)
         }
     }
     
@@ -59,7 +66,7 @@ class OrderDetailViewController: BaseViewController, OrderDetailTableViewCellDel
             }
         }) { (response, error) in
             LoadingManager.hideLoading()
-            Utility.handleError(error: error, viewController: self)
+            Utility.handleErrorMessages(error: error, viewController: self)
         }
     }
     
@@ -79,6 +86,20 @@ class OrderDetailViewController: BaseViewController, OrderDetailTableViewCellDel
     func bind(_ data: Any!, forRequestId rid: Int32) {
         if let orderItem = data as? OrderItem {
             self.orderTableViewCtrl.bindOrder(order: orderItem)
+        }
+    }
+    
+    func errorHandler(_ error: Error!, forRequestID rid: Int32) {
+        if rid == 0 {
+            if !Utility.handleErrorMessages(error: error, viewController: self) {
+                self.handleGenericErrorCodesWithErrorControlView(Int32(error.code), forRequestID: rid)
+            }
+        }
+    }
+    
+    func retryAction(_ callBack: RetryHandler!, forRequestId rid: Int32) {
+        self.loadContent { (success) in
+            callBack(success)
         }
     }
     

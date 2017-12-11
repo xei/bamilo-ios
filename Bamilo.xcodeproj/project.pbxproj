@@ -198,6 +198,8 @@
 		61BA9B551E9A0645004E9DE8 /* EmarsysRecommendationCarouselCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BA9B531E9A0645004E9DE8 /* EmarsysRecommendationCarouselCollectionViewCell.m */; };
 		61BA9B561E9A0645004E9DE8 /* EmarsysRecommendationCarouselCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61BA9B541E9A0645004E9DE8 /* EmarsysRecommendationCarouselCollectionViewCell.xib */; };
 		61C51E681FDC078C00DC75EE /* ErrorHandlerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C51E671FDC078C00DC75EE /* ErrorHandlerProtocol.swift */; };
+		61C51E6D1FDC151700DC75EE /* ErrorControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C51E6C1FDC151700DC75EE /* ErrorControlView.swift */; };
+		61C51E6F1FDC155500DC75EE /* ErrorControlView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61C51E6E1FDC155500DC75EE /* ErrorControlView.xib */; };
 		61C5BAF11EC1F40300F3A796 /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C5BAF01EC1F40300F3A796 /* CatalogViewController.swift */; };
 		61C5C40D1E545C6200F22130 /* CartEntitySummaryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61C5C40C1E545C6200F22130 /* CartEntitySummaryView.m */; };
 		61C5C40F1E545C7500F22130 /* CartEntitySummaryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61C5C40E1E545C7400F22130 /* CartEntitySummaryView.xib */; };
@@ -1230,6 +1232,8 @@
 		61C407C31E476486004ACEE8 /* StepperViewControlDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepperViewControlDelegate.h; sourceTree = "<group>"; };
 		61C407C41E476939004ACEE8 /* CartTableViewCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartTableViewCellDelegate.h; sourceTree = "<group>"; };
 		61C51E671FDC078C00DC75EE /* ErrorHandlerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandlerProtocol.swift; sourceTree = "<group>"; };
+		61C51E6C1FDC151700DC75EE /* ErrorControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorControlView.swift; sourceTree = "<group>"; };
+		61C51E6E1FDC155500DC75EE /* ErrorControlView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ErrorControlView.xib; sourceTree = "<group>"; };
 		61C5BAF01EC1F40300F3A796 /* CatalogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 		61C5C4081E54479100F22130 /* ProtectedViewControllerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtectedViewControllerProtocol.h; sourceTree = "<group>"; };
 		61C5C40B1E545C6200F22130 /* CartEntitySummaryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartEntitySummaryView.h; sourceTree = "<group>"; };
@@ -2798,6 +2802,7 @@
 		610C689E1EC7423B008FB66C /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				61C51E691FDC143800DC75EE /* ErrorView */,
 				61259BDD1FC581360051CBD4 /* BreadcrubmsControl */,
 				6147F7471FB6ECF1000CBA85 /* TourSpotLightView */,
 				618D8B3F1FADEEF60006A936 /* LoadingView */,
@@ -3986,6 +3991,31 @@
 			);
 			name = EmarsysRecommendationCarouselCollectionViewCell;
 			path = ..;
+			sourceTree = "<group>";
+		};
+		61C51E691FDC143800DC75EE /* ErrorView */ = {
+			isa = PBXGroup;
+			children = (
+				61C51E6B1FDC144700DC75EE /* Control */,
+				61C51E6A1FDC144400DC75EE /* View */,
+			);
+			name = ErrorView;
+			sourceTree = "<group>";
+		};
+		61C51E6A1FDC144400DC75EE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				61C51E6C1FDC151700DC75EE /* ErrorControlView.swift */,
+				61C51E6E1FDC155500DC75EE /* ErrorControlView.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		61C51E6B1FDC144700DC75EE /* Control */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Control;
 			sourceTree = "<group>";
 		};
 		61C5C40A1E545C0C00F22130 /* CartEntitySummery */ = {
@@ -7761,6 +7791,7 @@
 				8757436B1EA60DA5001B518A /* Birthday-72@2x.png in Resources */,
 				875743C11EA60DFD001B518A /* SpecialOffer-Small.png in Resources */,
 				CE9AE0A81AB6D78200D56481 /* JACartListHeaderView.xib in Resources */,
+				61C51E6F1FDC155500DC75EE /* ErrorControlView.xib in Resources */,
 				CE9AE0AC1AB6D78200D56481 /* JACatalogTopView_iphone.xib in Resources */,
 				8757436A1EA60DA5001B518A /* Birthday-76.png in Resources */,
 				61BA9B501E9A04E1004E9DE8 /* EmarsysRecommendationCarouselView.xib in Resources */,
@@ -8192,6 +8223,7 @@
 				CE9ADF3C1AB6D78200D56481 /* JAPageControl.m in Sources */,
 				9A3876561BCD0DBE0088B186 /* JAProductDescriptionView.m in Sources */,
 				875AD5501E38C0C900584ABF /* RISection.m in Sources */,
+				61C51E6D1FDC151700DC75EE /* ErrorControlView.swift in Sources */,
 				9AE766CD1CBCF31400B63D8E /* JACartResumeView.m in Sources */,
 				61420C921F9F03D3009D9ECD /* Utility.swift in Sources */,
 				CE9ADF3E1AB6D78200D56481 /* JAAppDelegate.m in Sources */,

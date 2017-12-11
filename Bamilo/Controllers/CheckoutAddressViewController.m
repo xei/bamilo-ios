@@ -37,22 +37,29 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if (!self.viewIsDisappearing) {
-        [DataAggregator getMultistepAddressList:self completion:^(id data, NSError *error) {
-            if(error == nil) {
-                [self bind:data forRequestId:0];
-                [self setIsStepValid:_addresses.count];
-                if(self.cart.cartEntity.shippingAddress) {
-                    Address *_addressToSelect = [self getAddressById:self.cart.cartEntity.shippingAddress.uid];
-                    [self updateSelectedAddress:_addressToSelect];
-                }
-                [_addressTableViewController updateWithModel:_addresses];
-                [self publishScreenLoadTime];
-                [TrackerManager postEventWithSelector:[EventSelectors checkoutStartSelector] attributes:[EventAttributes checkoutStartWithCart:data]];
-            }
-        }];
+        [self getContent:nil];
     }
 }
 
+- (void)getContent:(void(^)(BOOL))callBack {
+    [DataAggregator getMultistepAddressList:self completion:^(id data, NSError *error) {
+        if(error == nil) {
+            [self bind:data forRequestId:0];
+            [self setIsStepValid:_addresses.count];
+            if(self.cart.cartEntity.shippingAddress) {
+                Address *_addressToSelect = [self getAddressById:self.cart.cartEntity.shippingAddress.uid];
+                [self updateSelectedAddress:_addressToSelect];
+            }
+            [_addressTableViewController updateWithModel:_addresses];
+            [self publishScreenLoadTime];
+            [TrackerManager postEventWithSelector:[EventSelectors checkoutStartSelector] attributes:[EventAttributes checkoutStartWithCart:data]];
+            if (callBack) callBack(YES);
+        } else {
+            if (callBack) callBack(NO);
+            [self errorHandler:error forRequestID:0];
+        }
+    }];
+}
 #pragma mark - Overrides
 - (NSString *)getTitleForContinueButton {
     return STRING_CONTINUE_SHOPPING;
@@ -130,6 +137,18 @@
             }
         }
         break;
+    }
+}
+
+- (void)retryAction:(RetryHandler)callBack forRequestId:(int)rid {
+    [self getContent:^(BOOL success) {
+        callBack(success);
+    }];
+}
+
+- (void)errorHandler:(NSError *)error forRequestID:(int)rid {
+    if (![Utility handleErrorMessagesWithError:error viewController:self]) {
+        [self handleGenericErrorCodesWithErrorControlView:(int)error.code forRequestID:rid];
     }
 }
 

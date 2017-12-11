@@ -72,7 +72,7 @@ class HomePageFeaturedStoresTableViewCell: BaseHomePageTeaserBoxTableViewCell, U
         if let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: FeaturedStoresCollectionViewCell.nibName, for: indexPath) as? FeaturedStoresCollectionViewCell {
             if indexPath.row == 0 {
                 cell.title = STRING_ALL_CATEGORIES
-                cell.image = UIImage(named: "all_cats")
+                cell.image = #imageLiteral(resourceName: "all_cats")
                 return cell
             } else if let featuredStore = self.featuredStores?.items?[indexPath.row - 1] {
                 cell.update(withModel: featuredStore)

@@ -69,7 +69,7 @@ class RequestManagerSwift {
                         }
                     case .failure(let error):
                         print(error)
-                        completion(error.code, nil, [STRING_OOPS])
+                        completion(error.code, nil, nil)
                         if(type == .container || type == .foreground) {
                             LoadingManager.hideLoading()
                         }

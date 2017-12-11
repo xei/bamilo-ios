@@ -213,7 +213,7 @@ import SwiftyJSON
                         self.productCountLabel.text = "\(totalProducts) \(STRING_FOUND_PRODUCT_COUNT)".convertTo(language: .arabic)
                     }
                     self.loadingDataInProgress = false
-                    if let breadcrumb = self.catalogData?.breadcrumbs {
+                    if let breadcrumb = self.catalogData?.breadcrumbs, false { // for now!
                         UIView.animate(withDuration: 0.15, animations: {
                             self.catalogHeaderContainerHeightConstraint.constant = self.catalogHeaderContainerHeightWithBreadcrumb
                         }, completion: { (finished) in
@@ -232,7 +232,6 @@ import SwiftyJSON
                             self.productCountLabelTopConstraint.constant = self.catalogHeaderContainer.frame.height
                         })
                     }
-                    
                 } else if rid == 1, receivedCatalogData.products.count > 0 {
                     if let visibleProductCount = self.catalogData?.products.count {
                         var newIndexPathes = [IndexPath]()
@@ -256,6 +255,24 @@ import SwiftyJSON
             }
 
         })
+    }
+    
+    func retryAction(_ callBack: RetryHandler!, forRequestId rid: Int32) {
+        if rid == 0  {
+            self.loadData { (success) in
+                callBack(success)
+            }
+        }
+    }
+    
+    func errorHandler(_ error: Error!, forRequestID rid: Int32) {
+        if rid == 0 {
+            self.handleGenericErrorCodesWithErrorControlView(Int32(error.code), forRequestID: rid)
+        } else if rid == 1 {
+//            if !Utility.handleErrorMessages(error: error, viewController: self) {
+//                self.showNotificationBarMessage(STRING_SERVER_ERROR_MESSAGE, isSuccess: false)
+//            }
+        }
     }
     
     //MARK: - FilteredListNoResultViewControllerDelegate
@@ -290,6 +307,7 @@ import SwiftyJSON
         )
         self.sortingMethod = type
         self.setSortingMethodToHeader()
+        self.resetBarFollowers(animated: true)
         self.loadData()
     }
     
@@ -308,10 +326,8 @@ import SwiftyJSON
         )
         self.collectionView.reloadData()
         self.resetBarFollowers(animated: true)
-        UIView.animate(withDuration: 0.15, animations: { 
-            self.collectionView.collectionViewLayout.invalidateLayout()
-            self.collectionView.setCollectionViewLayout(self.getProperCollectionViewFlowLayout(), animated: true)
-        }, completion: nil)
+        self.collectionView.collectionViewLayout.invalidateLayout()
+        self.collectionView.setCollectionViewLayout(self.getProperCollectionViewFlowLayout(), animated: true)
     }
     
     //MARK: - helpers 
@@ -494,15 +510,16 @@ import SwiftyJSON
         self.navigationController?.pushViewController(newCatalogViewController, animated: true)
     }
     
-    private func loadData() {
+    private func loadData(callBack: ((Bool)->Void)? = nil) {
         self.pageNumber = 1
         CatalogDataManager.sharedInstance.getCatalog(self, searchTarget: searchTarget, filtersQueryString: pushFilterQueryString, sortingMethod: sortingMethod) { (data, errorMessages) in
-            if errorMessages == nil {
-                self.bind(data, forRequestId: 0)
+            if let error = errorMessages {
+                self.errorHandler(error, forRequestID: 0)
+                callBack?(false)
             } else {
-                self.showNoResultView()
+                self.bind(data, forRequestId: 0)
+                callBack?(true)
             }
-            
             self.resetBarFollowers(animated: true)
         }
         self.loadAvaiableSubCategories()
@@ -536,7 +553,7 @@ import SwiftyJSON
                 self.bind(data, forRequestId: 1)
             } else {
                 self.loadingDataInProgress = false
-//                Utility.handleError(error: errorMessages, viewController: self)
+                self.errorHandler(errorMessages, forRequestID: 1)
             }
         }
     }
@@ -617,12 +634,12 @@ import SwiftyJSON
                 self.loadMore()
             }
         }
-        
+
         if (scrollView.contentOffset.y < productCountViewHeight) {
             self.setNavigationBarAlpha(alpha: 0, animated: false)
             self.productCountLabel.alpha = 1
             return
-        } 
+        }
         self.productCountLabel.alpha = 0
     }
     

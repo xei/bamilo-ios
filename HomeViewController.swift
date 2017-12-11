@@ -133,7 +133,6 @@ class HomeViewController:   BaseViewController,
         
         self.searchBarFollower?.pauseFollowing()
         self.topTabBarFollower?.pauseFollowing()
-        
         self.resetAllBarFrames(animated: false)
         
         //Stop all scrolling views

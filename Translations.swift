@@ -87,4 +87,11 @@ let STRING_REMOVE_FAVOURITES_DESCRIPTION = RILocalizationWrapper.localizedString
 let STRING_NO_SAVED_ITEMS_FAVOURITES = RILocalizationWrapper.localizedString("favourites_no_saved_items")!
 let STRING_NO = RILocalizationWrapper.localizedString("no")!
 let STRING_YES = RILocalizationWrapper.localizedString("yes")!
+let STRING_SERVER_ERROR_MESSAGE = RILocalizationWrapper.localizedString("server_error_message")!
+let STRING_SERVER_CONNECTION_ERROR_MESSAGE = RILocalizationWrapper.localizedString("connection_to_server_error_message")!
+let STRING_PLEASE_WAIT = RILocalizationWrapper.localizedString("please_wait_message")!
+let STRING_NO_NETWORK = RILocalizationWrapper.localizedString("string_no_newtork")!
+let STRING_TRY_AGAIN = RILocalizationWrapper.localizedString("string_try_again")!
+let STRING_INTERNET_SETTING = RILocalizationWrapper.localizedString("internet_setting")!
+
 

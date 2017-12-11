@@ -20,5 +20,6 @@
 - (BOOL)showNotificationBarFromMessageDictionary:(NSDictionary *)messageDict isSuccess:(BOOL)success;
 - (BOOL)showNotificationBarMessage:(NSString *)message isSuccess:(BOOL)success;
 - (void)updateCartInNavBar;
+- (void)handleGenericErrorCodesWithErrorControlView:(int)errorCode forRequestID:(int)rid;
 
 @end

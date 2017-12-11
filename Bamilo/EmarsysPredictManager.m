@@ -32,8 +32,8 @@
     }
     
     [emarsysSession sendTransaction:transaction errorHandler:^(NSError *_Nonnull error) {
-        if ([viewController respondsToSelector:@selector(recievedErrorSendingTransition:)]) {
-            [viewController performSelector:@selector(recievedErrorSendingTransition:) withObject:error];
+        if ([viewController respondsToSelector:@selector(receivedErrorSendingTransition:)]) {
+            [viewController performSelector:@selector(receivedErrorSendingTransition:) withObject:error];
         }
     }];
 }

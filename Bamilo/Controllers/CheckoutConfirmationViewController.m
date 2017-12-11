@@ -78,38 +78,43 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     if(self.isCompleteFetch == NO) {
-        [DataAggregator getMultistepConfirmation:self type:RequestExecutionTypeContainer completion:^(id data, NSError *error) {
-            if(error == nil) {
-                [self bind:data forRequestId:0];
-                //Discount Code
-                if(self.cart.cartEntity.couponCode != nil) {
-                    [self updateDiscountViewAppearanceForValue:YES animated:NO];
-                }
-                
-                //Delivery Time
-                [DataAggregator getMultistepShipping:self completion:^(id data, NSError *error) {
-                    if(error == nil) {
-                        [self bind:data forRequestId:1];
-                        if (_deliveryNotice.length) {
-                            [_cellsIndexPaths setObject:@[[NSIndexPath indexPathForRow:0 inSection:0]] atIndexedSubscript:0];
-                        }
-                        self.isCompleteFetch = YES;
-                        [self.tableView reloadData];
-                    }
-                }];
-                
-                //Shipping Address
-                _shippingAddress = self.cart.cartEntity.address;
-                //Products
-                _products = self.cart.cartEntity.cartItems;
-                [_cellsIndexPaths setObject:[NSMutableArray indexPathArrayOfLength:(int)_products.count forSection:3] atIndexedSubscript:3];
-                [self.tableView reloadData];
-                [self publishScreenLoadTime];
-            }
-        }];
+        [self getContent];
     }
+}
+
+- (void)getContent {
+    [DataAggregator getMultistepConfirmation:self type:RequestExecutionTypeContainer completion:^(id data, NSError *error) {
+        if(error == nil) {
+            [self bind:data forRequestId:0];
+            //Discount Code
+            if(self.cart.cartEntity.couponCode != nil) {
+                [self updateDiscountViewAppearanceForValue:YES animated:NO];
+            }
+            
+            //Delivery Time
+            [DataAggregator getMultistepShipping:self completion:^(id data, NSError *error) {
+                if(error == nil) {
+                    [self bind:data forRequestId:1];
+                    if (_deliveryNotice.length) {
+                        [_cellsIndexPaths setObject:@[[NSIndexPath indexPathForRow:0 inSection:0]] atIndexedSubscript:0];
+                    }
+                    self.isCompleteFetch = YES;
+                    [self.tableView reloadData];
+                }
+            }];
+            
+            //Shipping Address
+            _shippingAddress = self.cart.cartEntity.address;
+            //Products
+            _products = self.cart.cartEntity.cartItems;
+            [_cellsIndexPaths setObject:[NSMutableArray indexPathArrayOfLength:(int)_products.count forSection:3] atIndexedSubscript:3];
+            [self.tableView reloadData];
+            [self publishScreenLoadTime];
+        } else {
+            [self errorHandler:error forRequestID:0];
+        }
+    }];
 }
 
 #pragma mark - Overrides
@@ -357,6 +362,17 @@
             self.cart = (RICart *)data[kDataContent];
         }
         break;
+    }
+}
+
+- (void)retryAction:(RetryHandler)callBack forRequestId:(int)rid {
+    [self getContent];
+    callBack(YES);
+}
+
+- (void)errorHandler:(NSError *)error forRequestID:(int)rid {
+    if (rid == 0) {
+        [self handleGenericErrorCodesWithErrorControlView:(int)error.code forRequestID:rid];
     }
 }
 

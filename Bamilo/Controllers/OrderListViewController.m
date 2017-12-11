@@ -115,7 +115,7 @@
     self.tableviewBottomConstraint.constant = [MainTabBarViewController sharedInstance].tabBar.height;
     
     self.refreshControl = [UIRefreshControl new];
-    [self.refreshControl addTarget:self action:@selector(resetContentAndRefresh) forControlEvents:UIControlEventValueChanged];
+    [self.refreshControl addTarget:self action:@selector(handleRefreshControl) forControlEvents:UIControlEventValueChanged];
     [self.tableview addSubview:self.refreshControl];
     self.tableview.alwaysBounceVertical = YES;
     
@@ -125,7 +125,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     
     //Get data for this list
-    [self resetContentAndRefresh];
+    [self resetContentAndRefresh:nil];
 }
 
 - (void) showLoading {
@@ -136,26 +136,32 @@
     [footerView.loadingIndicator startAnimating];
 }
 
-- (void)getPage:(NSInteger)pageNumber callBack:(void(^)(void))handler {
+- (void)getPage:(NSInteger)pageNumber callBack:(void(^)(BOOL))handler {
     if (self.isLoadingOrders) return;
     self.isLoadingOrders = YES;
     [self showLoading];
     [DataAggregator getOrders:self page:pageNumber perPageCount:kOrdersPerPage completion:^(id data, NSError *error) {
-        if (handler) handler();
         self.isLoadingOrders = NO;
         if (error == nil) {
+            if (handler) handler(NO);
             [self bind:data forRequestId:0];
         } else {
-            [Utility handleErrorWithError:error viewController:self];
+            if (handler) handler(YES);
+            [self errorHandler:error forRequestID:0];
         }
     }];
 }
 
-- (void)resetContentAndRefresh {
+- (void)handleRefreshControl {
+    [self resetContentAndRefresh:nil];
+}
+
+- (void)resetContentAndRefresh:(void(^)(BOOL))callBack {
     self.list.currentPage = 1;
-    [self getPage:self.list.currentPage callBack:^(void) {
+    [self getPage:self.list.currentPage callBack:^(BOOL success) {
         [self.list.orders removeAllObjects];
         [self.refreshControl endRefreshing];
+        if (callBack) callBack(success);
     }];
 }
 
@@ -206,16 +212,30 @@
         [self.list.orders addObjectsFromArray:((OrderList *)data).orders];
         self.list.currentPage = ((OrderList *)data).currentPage;
         self.list.totalPages = ((OrderList *)data).totalPages;
-        
         [ThreadManager executeOnMainThread:^{
             if (self.list.orders.count == 0) {
                 self.emptyListMessageView.hidden = NO;
             }
             [self.tableview reloadData];
-            
             // This will remove extra separators from tableview
             self.tableview.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
         }];
+    }
+}
+
+- (void)retryAction:(RetryHandler)callBack forRequestId:(int)rid {
+    [self resetContentAndRefresh:^(BOOL success) {
+        callBack(success);
+    }];
+}
+
+- (void)errorHandler:(NSError *)error forRequestID:(int)rid {
+    if (![Utility handleErrorMessagesWithError:error viewController:self]) {
+        if (self.list.currentPage == 1) {
+            [self handleGenericErrorCodesWithErrorControlView:(int)error.code forRequestID:rid];
+        } else {
+            [self showNotificationBarMessage:STRING_SERVER_ERROR_MESSAGES isSuccess:NO];
+        }
     }
 }
 

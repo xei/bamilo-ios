@@ -55,25 +55,30 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if(_paymentMethods == nil) {
-        [self getPaymentMethods:^(NSArray *paymentMethods) {
-            [self publishScreenLoadTime];
-            
-            if(paymentMethods.count) {
-                int __selectedPaymentMethodIndex = 0;
-                
-                if(self.cart.cartEntity.paymentMethod) {
-                    for(int i=0; i<paymentMethods.count; i++) {
-                        RIPaymentMethodFormOption *paymentMethod = paymentMethods[i];
-                        if([paymentMethod.displayName containsString:self.cart.cartEntity.paymentMethod]) {
-                            __selectedPaymentMethodIndex = i;
-                            break;
-                        }
-                    }
+        [self getContent];
+    }
+}
+
+- (void)getContent {
+    [self getPaymentMethods:^(NSArray *paymentMethods) {
+        [self publishScreenLoadTime];
+        [self selectProperPaymentMethodFromMethods:paymentMethods];
+    }];
+}
+
+- (void)selectProperPaymentMethodFromMethods: (NSArray *)paymentMethods {
+    if(paymentMethods.count) {
+        int __selectedPaymentMethodIndex = 0;
+        if(self.cart.cartEntity.paymentMethod) {
+            for(int i=0; i<paymentMethods.count; i++) {
+                RIPaymentMethodFormOption *paymentMethod = paymentMethods[i];
+                if([paymentMethod.displayName containsString:self.cart.cartEntity.paymentMethod]) {
+                    __selectedPaymentMethodIndex = i;
+                    break;
                 }
-                
-                [self setPaymentMethod:__selectedPaymentMethodIndex];
             }
-        }];
+        }
+        [self setPaymentMethod:__selectedPaymentMethodIndex];
     }
 }
 
@@ -121,7 +126,6 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     RIPaymentMethodFormOption *paymentMethod = [_paymentMethods objectAtIndex:indexPath.section];
- 
     switch (indexPath.row) {
         case 0: {
             PaymentTypeTableViewCell *onlinePaymentTableViewCell = [tableView dequeueReusableCellWithIdentifier:[PaymentTypeTableViewCell nibName] forIndexPath:indexPath];
@@ -221,6 +225,17 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
     }
 }
 
+- (void)errorHandler:(NSError *)error forRequestID:(int)rid {
+    if (rid == 0) {
+        [self handleGenericErrorCodesWithErrorControlView:(int)error.code forRequestID:rid];
+    }
+}
+
+- (void)retryAction:(RetryHandler)callBack forRequestId:(int)rid {
+    [self getContent];
+    callBack(YES);
+}
+
 #pragma mark - DataTrackerProtocol
 -(NSString *)getScreenName {
     return @"CheckoutPayment";
@@ -249,6 +264,8 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
             if(completion != nil) {
                 completion(_paymentMethods);
             }
+        } else {
+            [self errorHandler:error forRequestID:0];
         }
     }];
 }
@@ -267,12 +284,7 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
         
         [DataAggregator setMultistepPayment:self params:params completion:^(id data, NSError *error) {
             if(error == nil) {
-//                NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-//                [trackingDictionary setValue:selectedPaymentMethod.label forKey:kRIEventPaymentMethodKey];
-//                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentSuccess] data:[trackingDictionary copy]];
-//
                 _multistepEntity = (MultistepEntity *)data;
-                
                 [DataAggregator getMultistepConfirmation:self type:RequestExecutionTypeForeground completion:^(id data, NSError *error) {
                     if(error == nil) {
                         [self bind:data forRequestId:2];
@@ -285,11 +297,6 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
                     }
                 }];
             } else {
-//                NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-//                [trackingDictionary setValue:selectedPaymentMethod.label forKey:kRIEventPaymentMethodKey];
-//                [trackingDictionary setValue:self.cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalTransactionKey];
-//                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentFail] data:[trackingDictionary copy]];
-                
                 [self showNotificationBarMessage:STRING_ERROR_SETTING_PAYMENT_METHOD isSuccess:NO];
             }
         }];

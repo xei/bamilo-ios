@@ -33,6 +33,7 @@ class HomePageViewController:   BaseViewController,
     private var spotLightView: TourSpotLightView?
     private var tourHandler: TourPresentingHandler?
     private var isRefreshing: Bool = false
+    private var errorView: ErrorControlView?
     
     private let cellTypeMapper: [HomePageTeaserType: String] = [
         .slider: HomePageSliderTableViewCell.nibName(),
@@ -72,7 +73,7 @@ class HomePageViewController:   BaseViewController,
     
     func handleRefresh() {
         self.isRefreshing = true
-        self.getHomePage {
+        self.getHomePage { success in
             self.refreshControl?.endRefreshing()
             self.isRefreshing = false
         }
@@ -95,33 +96,25 @@ class HomePageViewController:   BaseViewController,
         }
     }
     
-    private func getHomePage(callBack: (()->Void)? = nil) {
+    private func getHomePage(callBack: ((Bool)->Void)? = nil) {
         HomeDataManager.sharedInstance.getHomeData(self, requestType: .background) { (data, errors) in
             self.loadingIndicator.stopAnimating()
-            callBack?()
             if errors == nil {
+                callBack?(true)
                 self.tableView.backgroundView = nil
                 self.bind(data, forRequestId: 0)
             } else {
-                self.showErrorMessage()
+                callBack?(false)
+                self.emptyTheView()
+                self.errorHandler(errors, forRequestID: 0)
             }
         }
     }
     
-    private func showErrorMessage() {
+    private func emptyTheView() {
         self.homePage = nil
-        
-        // Display a message when the table is empty
-        let messageLabel = UILabel.init(frame: self.view.bounds)
-        messageLabel.text = STRING_ERROR_MESSAGE
-        messageLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 13), color: .black)
-        messageLabel.numberOfLines = 0
-        messageLabel.textAlignment = .center
-        messageLabel.sizeToFit()
-        
         ThreadManager.execute {
             self.tableView.reloadData()
-            self.tableView.backgroundView = messageLabel;
             self.tableView.separatorStyle = .none;
         }
     }
@@ -195,6 +188,20 @@ class HomePageViewController:   BaseViewController,
                     self.runTimer(seconds: countDown)
                 }
             }
+        }
+    }
+    
+    func retryAction(_ callBack: RetryHandler!, forRequestId rid: Int32) {
+        if rid == 0 {
+            self.getHomePage(callBack: { (success) in
+                callBack(success)
+            })
+        }
+    }
+    
+    func errorHandler(_ error: Error!, forRequestID rid: Int32) {
+        if rid == 0 {
+            self.handleGenericErrorCodesWithErrorControlView(Int32(error.code), forRequestID: rid)
         }
     }
     

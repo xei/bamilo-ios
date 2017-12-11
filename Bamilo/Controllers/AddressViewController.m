@@ -36,7 +36,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self fetchAddressList];
+    [self fetchAddressList:nil];
 }
 
 #pragma mark - AddressTableViewControllerDelegate
@@ -71,7 +71,7 @@
         if(OK) {
             [DataAggregator deleteAddressWithTarget:self address:_currentAddress completion:^(id data, NSError *error) {
                 if(error == nil) {
-                    [self fetchAddressList];
+                    [self fetchAddressList:nil];
                 } else {
                     if(![self showNotificationBar:error isSuccess:NO]) {
                         //do not what else should we do here
@@ -91,23 +91,22 @@
     if([segue.identifier isEqualToString:@"showCreateEditAddress"]) {
         UINavigationController *navController = (UINavigationController *)segue.destinationViewController;
         AddressEditViewController *addressEditViewController = navController.viewControllers.firstObject;
-        if(_currentAddress) {
+        if(_currentAddress) { 
             addressEditViewController.address = _currentAddress;
         }
     }
 }
 
 #pragma mark - Helpers
--(void) fetchAddressList {
+- (void)fetchAddressList:(void(^)(BOOL))callBack {
     [DataAggregator getUserAddressList:self completion:^(id _Nullable data, NSError * _Nullable error) {
         if(error == nil && [data isKindOfClass:AddressList.class]) {
             [self bind:data forRequestId:0];
             [self publishScreenLoadTime];
-        } else if ([data isKindOfClass:ApiResponseData.class]) {
-            if (((ApiResponseData *)data).messages.errors.count == 0) {
-                
-            }
-            //TODO: we can show error messages
+            if (callBack) callBack(YES);
+        } else {
+            [self errorHandler:error forRequestID:0];
+            if (callBack) callBack(NO);
         }
     }];
 }
@@ -126,6 +125,17 @@
         }
         break;
     }
+}
+- (void)errorHandler:(NSError *)error forRequestID:(int)rid {
+    if (![Utility handleErrorMessagesWithError:error viewController:self]) {
+        [self handleGenericErrorCodesWithErrorControlView:(int)error.code forRequestID:rid];
+    }
+}
+
+- (void)retryAction:(RetryHandler)callBack forRequestId:(int)rid {
+    [self fetchAddressList:^(BOOL success) {
+        callBack(success);
+    }];
 }
 
 #pragma mark - DataTrackerProtocol
