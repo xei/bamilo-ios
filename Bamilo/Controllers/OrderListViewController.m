@@ -234,7 +234,7 @@
         if (self.list.currentPage == 1) {
             [self handleGenericErrorCodesWithErrorControlView:(int)error.code forRequestID:rid];
         } else {
-            [self showNotificationBarMessage:STRING_SERVER_ERROR_MESSAGES isSuccess:NO];
+            [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
         }
     }
 }

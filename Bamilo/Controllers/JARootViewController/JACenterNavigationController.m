@@ -234,7 +234,7 @@
         case PRODUCT_DETAIL: {
             JAPDVViewController *viewController = [JAPDVViewController new];
             viewController.purchaseTrackingInfo = purchaseInfo;
-            [self loadScreenTarget:screenTarget forBaseViewController:viewController];
+            viewController.targetString = screenTarget.target.targetString;
             viewController.hidesBottomBarWhenPushed = YES;
             [self pushViewController:viewController animated:screenTarget.pushAnimation];
             return YES;

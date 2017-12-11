@@ -82,10 +82,16 @@
                             MultistepEntity *multistepEntity = (MultistepEntity *)data;
                             completion(multistepEntity.nextStep, YES);
                         } else {
-                            [self showNotificationBar:error isSuccess:NO];
+                            if (![Utility handleErrorMessagesWithError:error viewController:self]) {
+                                [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
+                            }
                             completion(nil, NO);
                         }
                     }];
+                } else {
+                    if (![Utility handleErrorMessagesWithError:error viewController:self]) {
+                        [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
+                    }
                 }
             }];
         } else {

@@ -163,9 +163,17 @@
                 [self dismissViewControllerAnimated:YES completion:nil];
             } else {
                 if(![self showNotificationBar:error isSuccess:NO]) {
+                    BOOL errorHandled = NO;
                     for(NSDictionary* errorField in [error.userInfo objectForKey:@"errorMessages"]) {
                         NSString *fieldName = [NSString stringWithFormat:@"address_form[%@]", errorField[@"field"]];
-                        [self.formController showErrorMessageForField:fieldName errorMsg:errorField[@"message"]];
+                        BOOL handled = [self.formController showErrorMessageForField:fieldName errorMsg:errorField[@"message"]];
+                        if (handled) {
+                            errorHandled = handled;
+                        }
+                    }
+                    
+                    if (!errorHandled){
+                        [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
                     }
                 }
             }
@@ -178,9 +186,16 @@
                 [self dismissViewControllerAnimated:YES completion:nil];
             } else {
                 if(![self showNotificationBar:error isSuccess:NO]) {
+                    BOOL errorHandled = NO;
                     for(NSDictionary* errorField in [error.userInfo objectForKey:kErrorMessages]) {
                         NSString *fieldName = [NSString stringWithFormat:@"address_form[%@]", errorField[@"field"]];
-                        [self.formController showErrorMessageForField:fieldName errorMsg:errorField[kMessage]];
+                        BOOL handled = [self.formController showErrorMessageForField:fieldName errorMsg:errorField[kMessage]];
+                        if (handled) {
+                            errorHandled = handled;
+                        }
+                    }
+                    if (!errorHandled) {
+                        [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
                     }
                 }
             }
@@ -316,6 +331,10 @@
         if (!error) {
             [self bind:data forRequestId:1];
             if (completion) completion();
+        } else {
+            if(![Utility handleErrorMessagesWithError:error viewController:self]) {
+                [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
+            }
         }
     }];
 }
@@ -325,6 +344,10 @@
         if (!error) {
             [self bind:data forRequestId:2];
             if (completion) completion();
+        } else {
+            if(![Utility handleErrorMessagesWithError:error viewController:self]) {
+                [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
+            }
         }
     }];
 }

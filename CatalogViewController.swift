@@ -672,6 +672,9 @@ import SwiftyJSON
                     if error != nil {
                         product.isInWishList.toggle()
                         cell.updateWithProduct(product: product)
+                        if !Utility.handleErrorMessages(error: error, viewController: self) {
+                            self.showNotificationBarMessage(STRING_SERVER_CONNECTION_ERROR_MESSAGE, isSuccess: false)
+                        }
                         return
                     }
                     if product.isInWishList != true {
@@ -691,6 +694,9 @@ import SwiftyJSON
                     if error != nil {
                         product.isInWishList.toggle()
                         cell.updateWithProduct(product: product)
+                        if !Utility.handleErrorMessages(error: error, viewController: self) {
+                            self.showNotificationBarMessage(STRING_SERVER_CONNECTION_ERROR_MESSAGE, isSuccess: false)
+                        }
                         TrackerManager.postEvent(
                             selector: EventSelectors.removeFromWishListSelector(),
                             attributes: EventAttributes.removeFromWishList(product: translatedProduct, screenName: self.getScreenName())

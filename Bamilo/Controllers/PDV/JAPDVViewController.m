@@ -317,7 +317,7 @@ static NSString *recommendationLogic = @"RELATED";
                                          } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
                                              self.apiResponse = apiResponse;
                                                  [self trackingEventLoadingTime];
-                                             [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadCompleteProduct) objects:nil];
+                                             [self onErrorResponse:apiResponse messages:error showAsMessage:NO selector:@selector(loadCompleteProduct) objects:nil];
                                              [self hideLoading];
                                          }];
     } else if (VALID_NOTEMPTY(self.productSku, NSString)) {
@@ -331,7 +331,7 @@ static NSString *recommendationLogic = @"RELATED";
                                     self.apiResponse = apiResponse;
                                     [self trackingEventLoadingTime];
 
-                                    [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadCompleteProduct) objects:nil];
+                                    [self onErrorResponse:apiResponse messages:error showAsMessage:NO selector:@selector(loadCompleteProduct) objects:nil];
 
                                     [self hideLoading];
                                 }];
@@ -843,8 +843,8 @@ static NSString *recommendationLogic = @"RELATED";
                 //EVENT: ADD TO CART
                 [TrackerManager postEventWithSelector:[EventSelectors addToCartEventSelector]
                                            attributes:[EventAttributes addToCartWithProduct:self.product screenName:[self getScreenName] success:NO]];
-                [self onErrorResponse:error.code messages:[error.userInfo objectForKey:kErrorMessages] showAsMessage:YES selector:@selector(addToCart) objects:nil];
-                //[self hideLoading];
+                [self onErrorResponse:RIApiResponseAPIError messages:nil showAsMessage:NO selector:@selector(addToCart) objects:nil];
+                [self hideLoading];
             }
         }];
     }
@@ -863,6 +863,7 @@ static NSString *recommendationLogic = @"RELATED";
             NSString *phoneNumber = [@"tel://" stringByAppendingString:[JAUtils convertToEnglishNumber:configuration.phoneNumber]];//tessa
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+            [self onErrorResponse:RIApiResponseAPIError messages:errorMessages showAsMessage:YES selector:@selector(callToOrder) objects:nil];
         }];
     }
 }

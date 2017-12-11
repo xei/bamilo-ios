@@ -312,8 +312,9 @@
                 
                 [self.tableView reloadData];
             } else {
-                if (error.code != RIApiResponseNoInternetConnection) {
-                    [self showNotificationBar:error isSuccess:NO];
+                if (![Utility handleErrorMessagesWithError:error viewController:self]) {
+                    [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES
+                                           isSuccess:NO];
                 }
             }
         }];

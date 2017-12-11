@@ -106,7 +106,9 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
                 }
                 completion(_multistepEntity.nextStep, YES);
             } else {
-                [self showNotificationBar:error isSuccess:NO];
+                if (![Utility handleErrorMessagesWithError:error viewController:self]) {
+                    [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
+                }
                 //EVENT : PURCHASE
                 [TrackerManager postEventWithSelector:[EventSelectors purchaseSelector] attributes:[EventAttributes purchaseWithCart:self.cart success:YES]];
                 completion(nil, NO);

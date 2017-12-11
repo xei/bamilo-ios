@@ -132,6 +132,9 @@
         
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
         [LoadingManager hideLoading];
+        if (![Utility handleErrorMessagesWithError:errorMessages viewController:self]) {
+            [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
+        }
     }];
 }
 
