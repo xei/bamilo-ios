@@ -231,11 +231,6 @@
 }
 
 - (void)retryAction:(RetryHandler)callBack forRequestId:(int)rid {
-    if (rid == 0) {
-        [self getRegionsByCompletion:^(BOOL success){
-            callBack(success);
-        }];
-    }
     if (self.address.uid && rid == 3) {
         [self getAddressByID:self.address.uid];
         callBack(YES);
@@ -320,6 +315,9 @@
             if(completion) completion(YES);
         } else {
             if(completion) completion(NO);
+            if (![Utility handleErrorMessagesWithError:error viewController:self]) {
+                [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
+            }
         }
     }];
 }

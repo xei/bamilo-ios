@@ -155,7 +155,6 @@ static NSString *recommendationLogic = @"RELATED";
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     self.tabBarController.tabBar.hidden = YES;
-//    [self trackingEventScreenName:@"ShopProductDetail"];
 }
 
 - (void)applicationDidEnterBackgroundNotification:(NSNotification*)notification {
@@ -188,10 +187,8 @@ static NSString *recommendationLogic = @"RELATED";
 
     if(self.galleryPaged) {
         UIView *gallerySuperView = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
-
         CGFloat width = gallerySuperView.frame.size.height;
         CGFloat height = gallerySuperView.frame.size.width;
-
         if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
             if(width < height) {
                 width = gallerySuperView.frame.size.width;
@@ -203,10 +200,8 @@ static NSString *recommendationLogic = @"RELATED";
                 height = gallerySuperView.frame.size.height;
             }
         }
-
         [self.galleryPaged reloadFrame:CGRectMake(0.0f, 0.0f, width, height)];
     }
-
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
@@ -217,11 +212,9 @@ static NSString *recommendationLogic = @"RELATED";
          [self fillTheViews];
          if(self.galleryPaged) {
              UIView *gallerySuperView = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
-
              CGFloat width = gallerySuperView.frame.size.width;
              CGFloat height = gallerySuperView.frame.size.height;
              CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
-
              if(UIInterfaceOrientationIsLandscape(orientation)) {
                  if(width < height) {
                      width = gallerySuperView.frame.size.height;
@@ -236,11 +229,9 @@ static NSString *recommendationLogic = @"RELATED";
                      height = gallerySuperView.frame.size.width;
                  }
              }
-
              [self.galleryPaged reloadFrame:CGRectMake(0.0f, statusBarHeight, width, height)];
              [self.view bringSubviewToFront:self.galleryPaged];
          }
-
      } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
      }];
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
@@ -287,7 +278,6 @@ static NSString *recommendationLogic = @"RELATED";
     //TODO: THIS view is a total shit!! 
     Product *product = [[notification userInfo] objectForKey:@"NOTIFICATION_UPDATE_PRODUCT_VALUE"];
     BOOL isInWishList = [((NSNumber *)[[notification userInfo] objectForKey:@"NOTIFICATION_UPDATE_BOOL_VALUE"]) boolValue];
-    
     if ([product.sku isEqualToString: self.product.sku]) {
         self.product.favoriteAddDate = isInWishList ? [NSDate new] : nil;
         [self.productImageSection.wishListButton setSelected:isInWishList];
@@ -342,22 +332,17 @@ static NSString *recommendationLogic = @"RELATED";
 - (void)loadedProduct:(RIProduct*) product {
     // notify the InAppNotification SDK that this the active view controller
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
-
     self.product = product;
     self.productSku = product.sku;
-
     [self trackingEventViewProduct:product];
     [self trackingEventLoadingTime];
-
     [RIRecentlyViewedProductSku addToRecentlyViewed:product successBlock:^{
         [self requestBundles];
     } andFailureBlock:nil];
-
     NSDictionary *userInfo = nil;
     if (self.product.favoriteAddDate) {
         userInfo = [NSDictionary dictionaryWithObject:self.product.favoriteAddDate forKey:@"favoriteAddDate"];
     }
-
     [self trackingEventMostViewedBrand];
     
 //###################
@@ -376,9 +361,7 @@ static NSString *recommendationLogic = @"RELATED";
 #pragma mark - Product loaded
 - (void)productLoaded {
     [self removeSuperviews];
-
     self.hasLoaddedProduct = YES;
-
     [self.mainScrollView setFrame:[self viewBounds]];
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;

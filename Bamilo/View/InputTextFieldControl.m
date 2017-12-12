@@ -145,6 +145,11 @@
             self.input.textField.enabled = NO;
             [self.input showDisabledMode];
         }
+        //if we have no options for selection 
+        if (model.selectOption.count == 0) {
+            self.input.textField.enabled = NO;
+            [self.input showDisabledMode];
+        }
     } else if (self.type == InputTextFieldControlTypeOptions) {
         //When we have no selectOption model but it's `Option` type
         self.input.textField.enabled = NO;

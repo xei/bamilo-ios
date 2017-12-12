@@ -84,6 +84,8 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
             if error == nil {
                 self.bind(data, forRequestId: 1)
                 completion?()
+            } else {
+                
             }
         }
     }
@@ -92,6 +94,9 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
         ProductDataManager.sharedInstance.getDeliveryTime(self, sku: self.productSku, cityId: cityID) { (data, error) in
             if error == nil, let data = data {
                 self.bind(data, forRequestId: 2)
+            } else {
+                self.deliveryTimeLabel.text = nil
+                self.deliveryTimeTitleLabel.text = nil
             }
         }
     }
