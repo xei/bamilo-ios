@@ -205,13 +205,28 @@
     }
 }
 
-
 #pragma mark - bind to UI
 - (void)bind:(id)data forRequestId:(int)rid {
     if ([data isKindOfClass:[OrderList class]]) {
-        [self.list.orders addObjectsFromArray:((OrderList *)data).orders];
-        self.list.currentPage = ((OrderList *)data).currentPage;
-        self.list.totalPages = ((OrderList *)data).totalPages;
+        [self renderOrderlist:(OrderList *)data];
+    } else {
+        if ([data isKindOfClass:[NSDictionary class]]) {
+            if ([data objectForKey:kDataContent]) {
+                if ([[data objectForKey:kDataContent] isKindOfClass:[OrderList class]]) {
+                    [self renderOrderlist:(OrderList *)[data objectForKey:kDataContent]];
+                }
+            }
+            if ([data objectForKey:kDataMessages]) {
+                [Utility handleErrorMessagesWithError:[data objectForKey:kDataMessages] viewController:self];
+            }
+        }
+    }
+}
+
+- (void)renderOrderlist: (OrderList *)data {
+        [self.list.orders addObjectsFromArray:data.orders];
+        self.list.currentPage = data.currentPage;
+        self.list.totalPages = data.totalPages;
         [ThreadManager executeOnMainThread:^{
             if (self.list.orders.count == 0) {
                 self.emptyListMessageView.hidden = NO;
@@ -220,7 +235,6 @@
             // This will remove extra separators from tableview
             self.tableview.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
         }];
-    }
 }
 
 - (void)retryAction:(RetryHandler)callBack forRequestId:(int)rid {

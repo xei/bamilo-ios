@@ -10,18 +10,6 @@ import Foundation
 import Alamofire
 import AlamofireObjectMapper
 
-enum ApiResponseType: Int {
-    case success                = 200
-    case authorizationError     = 403
-    case timeOut                = -1001
-    case badUrl                 = -1000
-    case unknownError           = -1
-    case apiError               = 9005
-    case noInternetConnection   = -1009
-    case maintenancePage        = 9007
-    case kickoutView            = 9008
-}
-
 enum ApiRequestExecutionType: Int {
     case foreground = 0
     case background = 1
@@ -58,8 +46,7 @@ class RequestManagerSwift {
                     case .success:
                         if let apiResponseData = response.result.value {
                             if(apiResponseData.success) {
-                                
-                                completion(response.response?.statusCode ?? 0, apiResponseData, nil)
+                                completion(response.response?.statusCode ?? 0, apiResponseData, self.prepareErrorMessages(messagesList: apiResponseData.messages))
                             } else {
                                 completion(response.response?.statusCode ?? 0, nil, self.prepareErrorMessages(messagesList: apiResponseData.messages))
                             }

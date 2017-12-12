@@ -105,13 +105,13 @@
             if(![baseViewController showNotificationBar:error isSuccess:NO]) {
                 BOOL errorHandled = NO;
                 for(NSDictionary* errorField in [error.userInfo objectForKey:@"errorMessages"]) {
-                    NSString *fieldName = errorField[@"field"];
+                    NSString *fieldName = [errorField objectForKey:@"field"];
                     BOOL handled = NO;
                     if ([fieldName isEqualToString:@"password"]) {
-                        [self.passwordControl showErrorMsg:errorField[@"message"]];
+                        [self.passwordControl showErrorMsg:[errorField objectForKey:@"message"]];
                         handled = YES;
                     } else if ([fieldName isEqualToString:@"email"]) {
-                        [self.emailControl showErrorMsg:errorField[@"message"]];
+                        [self.emailControl showErrorMsg:[errorField objectForKey:@"message"]];
                         handled = YES;
                     }
                     if (handled) {

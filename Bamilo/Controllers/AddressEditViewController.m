@@ -164,13 +164,12 @@
             } else {
                 if(![self showNotificationBar:error isSuccess:NO]) {
                     BOOL errorHandled = NO;
-                    for(NSDictionary* errorField in [error.userInfo objectForKey:@"errorMessages"]) {
+                    for(NSDictionary* errorField in [error.userInfo objectForKey: kErrorMessages]) {
                         NSString *fieldName = [NSString stringWithFormat:@"address_form[%@]", errorField[@"field"]];
-                        if ([self.formController showErrorMessageForField:fieldName errorMsg:errorField[@"message"]]) {
+                        if ([self.formController showErrorMessageForField:fieldName errorMsg: errorField[kMessage]]) {
                             errorHandled = YES;
                         }
                     }
-                    
                     if (!errorHandled){
                         [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
                     }
@@ -187,9 +186,12 @@
                 if(![self showNotificationBar:error isSuccess:NO]) {
                     BOOL errorHandled = NO;
                     for(NSDictionary* errorField in [error.userInfo objectForKey:kErrorMessages]) {
-                        NSString *fieldName = [NSString stringWithFormat:@"address_form[%@]", errorField[@"field"]];
-                        if ([self.formController showErrorMessageForField:fieldName errorMsg:errorField[kMessage]]) {
-                            errorHandled = YES;
+                        NSString *fieldNameParam = [errorField objectForKey:@"field"];
+                        if ([fieldNameParam isKindOfClass:[NSString class]] && fieldNameParam.length > 0) {
+                            NSString *fieldName = [NSString stringWithFormat:@"address_form[%@]", fieldNameParam];
+                            if ([self.formController showErrorMessageForField:fieldName errorMsg: errorField[kMessage]]) {
+                                errorHandled = YES;
+                            }
                         }
                     }
                     if (!errorHandled) {

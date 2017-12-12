@@ -45,6 +45,6 @@ class BaseCollectionFlowLayout: UICollectionViewFlowLayout {
     }
     
     override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint {
-        return collectionView!.contentOffset
+        return collectionView?.contentOffset ?? .zero
     }
 }

@@ -97,9 +97,12 @@
             if(![baseViewController showNotificationBar:error isSuccess:NO]) {
                 BOOL errorHandled = NO;
                 for(NSDictionary* errorField in [error.userInfo objectForKey:kErrorMessages]) {
-                    NSString *fieldName = [NSString stringWithFormat:@"customer[%@]", errorField[@"field"]];
-                    if ([self.formController showErrorMessageForField:fieldName errorMsg:errorField[kMessage]]) {
-                        errorHandled = YES;
+                    NSString *fieldNameParm = [errorField objectForKey:@"field"];
+                    if ([fieldNameParm isKindOfClass:[NSString class]] && fieldNameParm.length > 0) {
+                        NSString *fieldName = [NSString stringWithFormat:@"customer[%@]", fieldNameParm];
+                        if ([self.formController showErrorMessageForField:fieldName errorMsg:errorField[kMessage]]) {
+                            errorHandled = YES;
+                        }
                     }
                 }
                 if (!errorHandled) {

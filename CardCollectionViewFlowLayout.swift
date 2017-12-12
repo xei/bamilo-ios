@@ -23,7 +23,7 @@ class CardCollectionViewFlowLayout: BaseCollectionFlowLayout {
     }
     
     override func itemWidth() -> CGFloat {
-        return collectionView!.frame.width
+        return collectionView?.frame.width ?? 0
     }
     
     override  func itemHeight() -> CGFloat {

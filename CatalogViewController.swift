@@ -586,13 +586,15 @@ import SwiftyJSON
             cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: CatalogCardCollectionViewCell.nibName, for: indexPath) as! CatalogCardCollectionViewCell
         }
         cell.delegate = self
-        cell.updateWithProduct(product: self.catalogData!.products[indexPath.row])
+        if let products = self.catalogData?.products, indexPath.row < products.count {
+            cell.updateWithProduct(product: products[indexPath.row])
+        }
         cell.cellIndex = indexPath.row
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return (self.catalogData != nil) ? self.catalogData!.products.count : 0
+        return self.catalogData?.products.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {

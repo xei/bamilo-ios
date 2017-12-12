@@ -29,7 +29,7 @@ class ErrorControlView: BaseControlView {
         self.retryButton.setTitle(STRING_TRY_AGAIN, for: .normal)
         self.settingButton.setTitle(STRING_INTERNET_SETTING, for: .normal)
         self.timerLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray3))
-        self.settingButton.applyStyle(font: Theme.font(kFontVariationRegular, size: 14), color: Theme.color(kColorGray7))
+        self.settingButton.applyStyle(font: Theme.font(kFontVariationRegular, size: 14), color: Theme.color(kColorDarkGreen3))
         self.retryButton.setTitleColor(Theme.color(kColorGray5), for: .disabled)
         self.activityIndicator.stopAnimating()
         

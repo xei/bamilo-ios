@@ -34,7 +34,7 @@ class DailyDealsCollectionViewCell: BaseCollectionViewCellSwift {
     private static let labelSmallHeight: CGFloat = 14
     private static let labelBigHeight: CGFloat = 17
     private static let whiteSpaceHeigt: CGFloat = 10
-    var product: Product!
+    private var product: Product!
     
     override func setupView() {
         self.contentView.layer.cornerRadius = 1
