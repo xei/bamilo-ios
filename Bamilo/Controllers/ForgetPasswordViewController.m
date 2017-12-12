@@ -61,16 +61,13 @@
             [self bind:data forRequestId:0];
         } else {
             if(![self showNotificationBar:error isSuccess:NO]) {
-                
                 BOOL errorHandled  = NO;
                 for(NSDictionary* errorField in [error.userInfo objectForKey:kErrorMessages]) {
                     NSString *fieldName = [NSString stringWithFormat:@"forgot_password[%@]", errorField[@"field"]];
-                    BOOL handled = [self.formController showErrorMessageForField:fieldName errorMsg:errorField[kMessage]];
-                    if (handled) {
-                        errorHandled = handled;
+                    if ([self.formController showErrorMessageForField:fieldName errorMsg:errorField[kMessage]]) {
+                        errorHandled = YES;
                     }
                 }
-                
                 if (!errorHandled) {
                     [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
                 }

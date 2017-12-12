@@ -95,9 +95,15 @@
             //EVENT: SIGNUP / FAILURE
             BaseViewController *baseViewController = (BaseViewController *)self.delegate;
             if(![baseViewController showNotificationBar:error isSuccess:NO]) {
+                BOOL errorHandled = NO;
                 for(NSDictionary* errorField in [error.userInfo objectForKey:kErrorMessages]) {
                     NSString *fieldName = [NSString stringWithFormat:@"customer[%@]", errorField[@"field"]];
-                    [self.formController showErrorMessageForField:fieldName errorMsg:errorField[kMessage]];
+                    if ([self.formController showErrorMessageForField:fieldName errorMsg:errorField[kMessage]]) {
+                        errorHandled = YES;
+                    }
+                }
+                if (!errorHandled) {
+                    [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
                 }
             }
         }

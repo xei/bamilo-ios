@@ -83,7 +83,7 @@ class ErrorControlView: BaseControlView {
     }
     
     @IBAction func settingButtonTapped(_ sender: Any) {
-        guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
+        guard let settingsUrl = URL(string: "App-Prefs:root=WIFI") else {
             self.retryButton.isHidden = true
             return
         }

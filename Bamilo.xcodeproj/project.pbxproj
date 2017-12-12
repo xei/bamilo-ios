@@ -197,7 +197,6 @@
 		61BA9B501E9A04E1004E9DE8 /* EmarsysRecommendationCarouselView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61BA9B4F1E9A04E1004E9DE8 /* EmarsysRecommendationCarouselView.xib */; };
 		61BA9B551E9A0645004E9DE8 /* EmarsysRecommendationCarouselCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BA9B531E9A0645004E9DE8 /* EmarsysRecommendationCarouselCollectionViewCell.m */; };
 		61BA9B561E9A0645004E9DE8 /* EmarsysRecommendationCarouselCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61BA9B541E9A0645004E9DE8 /* EmarsysRecommendationCarouselCollectionViewCell.xib */; };
-		61C51E681FDC078C00DC75EE /* ErrorHandlerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C51E671FDC078C00DC75EE /* ErrorHandlerProtocol.swift */; };
 		61C51E6D1FDC151700DC75EE /* ErrorControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C51E6C1FDC151700DC75EE /* ErrorControlView.swift */; };
 		61C51E6F1FDC155500DC75EE /* ErrorControlView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61C51E6E1FDC155500DC75EE /* ErrorControlView.xib */; };
 		61C5BAF11EC1F40300F3A796 /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C5BAF01EC1F40300F3A796 /* CatalogViewController.swift */; };
@@ -1229,7 +1228,6 @@
 		61BA9B541E9A0645004E9DE8 /* EmarsysRecommendationCarouselCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmarsysRecommendationCarouselCollectionViewCell.xib; sourceTree = "<group>"; };
 		61C407C31E476486004ACEE8 /* StepperViewControlDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepperViewControlDelegate.h; sourceTree = "<group>"; };
 		61C407C41E476939004ACEE8 /* CartTableViewCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartTableViewCellDelegate.h; sourceTree = "<group>"; };
-		61C51E671FDC078C00DC75EE /* ErrorHandlerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandlerProtocol.swift; sourceTree = "<group>"; };
 		61C51E6C1FDC151700DC75EE /* ErrorControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorControlView.swift; sourceTree = "<group>"; };
 		61C51E6E1FDC155500DC75EE /* ErrorControlView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ErrorControlView.xib; sourceTree = "<group>"; };
 		61C5BAF01EC1F40300F3A796 /* CatalogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
@@ -4208,7 +4206,6 @@
 		61D929391F16564F00716D4C /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				61C51E671FDC078C00DC75EE /* ErrorHandlerProtocol.swift */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -8633,7 +8630,6 @@
 				9A38764E1BCD0CDC0088B186 /* JATabNavigationViewController.m in Sources */,
 				CE9ADFF41AB6D78200D56481 /* JAActivityViewController.m in Sources */,
 				619351AB1ECAC9DD00330E5C /* CatalogCardCollectionViewCell.swift in Sources */,
-				61C51E681FDC078C00DC75EE /* ErrorHandlerProtocol.swift in Sources */,
 				CE9ADFF61AB6D78200D56481 /* JAShippingInfoCell.m in Sources */,
 				87459C8D1E4F04AD00743120 /* RadioButtonViewControl.m in Sources */,
 				611C19201F5FCEEB0073940C /* HomeViewController.swift in Sources */,

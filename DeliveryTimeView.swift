@@ -150,7 +150,6 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
         self.updateOptionInField(inputField: rid == 0 ? self.regionInputView : self.cityInputView, withData: data)
     }
     
-    
     //TODO: when we migrate all BaseControlView we need to use it as this function implementation
     override static func nibInstance() -> DeliveryTimeView {
         return Bundle.main.loadNibNamed(String(describing: self), owner: self, options: nil)?.last as! DeliveryTimeView

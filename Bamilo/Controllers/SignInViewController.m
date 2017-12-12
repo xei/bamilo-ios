@@ -103,13 +103,23 @@
             //EVENT: LOGIN / FAILURE
             BaseViewController *baseViewController = (BaseViewController *)self.delegate;
             if(![baseViewController showNotificationBar:error isSuccess:NO]) {
+                BOOL errorHandled = NO;
                 for(NSDictionary* errorField in [error.userInfo objectForKey:@"errorMessages"]) {
                     NSString *fieldName = errorField[@"field"];
+                    BOOL handled = NO;
                     if ([fieldName isEqualToString:@"password"]) {
                         [self.passwordControl showErrorMsg:errorField[@"message"]];
+                        handled = YES;
                     } else if ([fieldName isEqualToString:@"email"]) {
                         [self.emailControl showErrorMsg:errorField[@"message"]];
+                        handled = YES;
                     }
+                    if (handled) {
+                        errorHandled = handled;
+                    }
+                }
+                if (!errorHandled) {
+                    [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
                 }
             }
         }

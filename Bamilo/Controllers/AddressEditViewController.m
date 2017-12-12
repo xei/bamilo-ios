@@ -166,9 +166,8 @@
                     BOOL errorHandled = NO;
                     for(NSDictionary* errorField in [error.userInfo objectForKey:@"errorMessages"]) {
                         NSString *fieldName = [NSString stringWithFormat:@"address_form[%@]", errorField[@"field"]];
-                        BOOL handled = [self.formController showErrorMessageForField:fieldName errorMsg:errorField[@"message"]];
-                        if (handled) {
-                            errorHandled = handled;
+                        if ([self.formController showErrorMessageForField:fieldName errorMsg:errorField[@"message"]]) {
+                            errorHandled = YES;
                         }
                     }
                     
@@ -189,9 +188,8 @@
                     BOOL errorHandled = NO;
                     for(NSDictionary* errorField in [error.userInfo objectForKey:kErrorMessages]) {
                         NSString *fieldName = [NSString stringWithFormat:@"address_form[%@]", errorField[@"field"]];
-                        BOOL handled = [self.formController showErrorMessageForField:fieldName errorMsg:errorField[kMessage]];
-                        if (handled) {
-                            errorHandled = handled;
+                        if ([self.formController showErrorMessageForField:fieldName errorMsg:errorField[kMessage]]) {
+                            errorHandled = YES;
                         }
                     }
                     if (!errorHandled) {

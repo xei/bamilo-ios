@@ -207,8 +207,7 @@
     return [NSString stringWithFormat:@"%@ %@", [[priceString formatPrice] numbersToPersian], STRING_CURRENCY];
 }
 
-+ (void)saveConfiguration:(RICountryConfiguration *)configuration andContext:(BOOL)save
-{
++ (void)saveConfiguration:(RICountryConfiguration *)configuration andContext:(BOOL)save {
     for (RILanguage *language in configuration.languages) {
         [RILanguage saveLanguage:language andContext:NO];
     }
@@ -217,13 +216,10 @@
     if (save) {
         [[RIDataBaseWrapper sharedInstance] saveContext];
     }
-    
 }
 
-+ (RICountryConfiguration *)getCurrentConfiguration
-{
++ (RICountryConfiguration *)getCurrentConfiguration {
     NSArray *configArray = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICountryConfiguration class])];
-    
     if (0 == configArray.count) {
         return nil;
     } else {
