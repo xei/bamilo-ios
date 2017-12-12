@@ -38,16 +38,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     //Header And Footer Cells
     [self.tableView registerNib:[UINib nibWithNibName:[PlainTableViewHeaderCell nibName] bundle:nil]  forHeaderFooterViewReuseIdentifier:[PlainTableViewHeaderCell nibName]];
-    
     //DiscountSwitcherView
     [self.tableView registerNib:[UINib nibWithNibName:[DiscountSwitcherView nibName] bundle:nil]  forCellReuseIdentifier:[DiscountSwitcherView nibName]];
-    
     //DiscountCodeView
     [self.tableView registerNib:[UINib nibWithNibName:[DiscountCodeView nibName] bundle:nil]  forCellReuseIdentifier:[DiscountCodeView nibName]];
-    
     //ReceiptView
     [self.tableView registerNib:[UINib nibWithNibName:[ReceiptView nibName] bundle:nil] forCellReuseIdentifier:[ReceiptView nibName]];
     
@@ -99,9 +95,12 @@
                     if (_deliveryNotice.length) {
                         [_cellsIndexPaths setObject:@[[NSIndexPath indexPathForRow:0 inSection:0]] atIndexedSubscript:0];
                     }
+                    [self removeDeliverySectionIfNecessary];
                     self.isCompleteFetch = YES;
-                    [self.tableView reloadData];
+                } else {
+                    [self removeDeliverySectionIfNecessary];
                 }
+                [self.tableView reloadData];
             }];
             
             //Shipping Address
@@ -115,6 +114,12 @@
             [self errorHandler:error forRequestID:0];
         }
     }];
+}
+
+- (void)removeDeliverySectionIfNecessary {
+    if (!([_deliveryTime isKindOfClass:[NSString class]] && _deliveryTime.length > 0)) {
+        [_cellsIndexPaths removeObjectAtIndex:2]; //remove delivery time section
+    }
 }
 
 #pragma mark - Overrides
@@ -256,7 +261,10 @@
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     PlainTableViewHeaderCell *plainTableViewHeaderCell = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:[PlainTableViewHeaderCell nibName]];
-    switch (section) {
+    NSArray<NSIndexPath *>* arrayOfIndexPathesInSection = [_cellsIndexPaths objectAtIndex:section];
+    NSUInteger sectionNum = arrayOfIndexPathesInSection.count > 0 ? arrayOfIndexPathesInSection[0].section : section;
+    
+    switch (sectionNum) {
         case 1:
             plainTableViewHeaderCell.titleString = STRING_TOTAL_SUM;
         break;
@@ -400,7 +408,6 @@
 
 -(void) updateDiscountViewAppearanceForValue:(BOOL)isOn animated:(BOOL)animated {
     NSIndexPath *discountCodeViewIndexPath = [NSIndexPath indexPathForRow:1 inSection:1];
-    
     if(isOn) {
         [[_cellsIndexPaths objectAtIndex:discountCodeViewIndexPath.section] insertObject:discountCodeViewIndexPath atIndex:discountCodeViewIndexPath.row];
     } else {
@@ -425,12 +432,6 @@
     [DataAggregator removeVoucher:self voucher:self.cart.cartEntity.couponCode completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:3];
-            
-//            NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
-//            [trackingDictionary setValue:self.cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
-//            [trackingDictionary setValue:self.cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
-//            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart] data:[trackingDictionary copy]];
-            
             [self.tableView reloadData];
         }
     }];
