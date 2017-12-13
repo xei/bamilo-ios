@@ -190,6 +190,10 @@
     }
 }
 
+- (void)removeErrorView {
+    [errorView removeFromSuperview];
+}
+
 -(NSString *) getPerformanceTrackerScreenName {
     return nil;
 }

@@ -34,6 +34,7 @@
 @property (nonatomic, strong) ScrollerBarFollower *navbarFollower;
 @property (nonatomic, strong) ScrollerBarFollower *searchBarFollower;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchBarBottomToTopTableViewConstraint;
+@property (nonatomic) int numberOfRequests;
 
 @end
 
@@ -113,7 +114,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    self.numberOfRequests = 0;
     self.A4SViewControllerAlias = @"SUBCATEGORY";
 
     self.view.backgroundColor = JABlack300Color;
@@ -149,13 +150,15 @@
 
 - (void)reloadCategories {
     [self showLoading];
-    
+    self.numberOfRequests += 1;
     [RICategory getCategoriesWithSuccessBlock:^(id categories) {
+        self.numberOfRequests -= 1;
         self.categoriesLoadingError = NO;
         self.categoriesArray = [NSArray arrayWithArray:(NSArray *)categories];
         [self categoriesLoaded];
         [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
+        self.numberOfRequests -= 1;
         self.categoriesLoadingError = YES;
         [self categoriesLoaded];
         [self hideLoading];
@@ -164,12 +167,19 @@
 
 - (void)reloadExternalLinks {
     [self showLoading];
+    self.numberOfRequests += 1;
     [RIExternalCategory getExternalCategoryWithSuccessBlock:^(RIExternalCategory *externalCategory) {
+        self.numberOfRequests -= 1;
         self.externalCategory = externalCategory;
         [self categoriesLoaded];
-        [self hideLoading];
+        if (self.numberOfRequests == 0) {
+            [self hideLoading];
+        }
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
-        [self hideLoading];
+        self.numberOfRequests -= 1;
+        if (self.numberOfRequests == 0) {
+            [self hideLoading];
+        }
     }];
 }
 

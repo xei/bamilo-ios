@@ -178,6 +178,7 @@ class HomePageViewController:   BaseViewController,
     //MARK: - DataServiceProtocol
     func bind(_ data: Any!, forRequestId rid: Int32) {
         if let homePage = data as? HomePage {
+            self.removeErrorView()
             self.homePage = homePage
             ThreadManager.execute(onMainThread: { 
                 self.tableView.reloadData()

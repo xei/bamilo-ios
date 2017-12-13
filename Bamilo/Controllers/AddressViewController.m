@@ -89,8 +89,7 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:@"showCreateEditAddress"]) {
-        UINavigationController *navController = (UINavigationController *)segue.destinationViewController;
-        AddressEditViewController *addressEditViewController = navController.viewControllers.firstObject;
+        AddressEditViewController *addressEditViewController = (AddressEditViewController *)segue.destinationViewController;
         if(_currentAddress) { 
             addressEditViewController.address = _currentAddress;
         }
@@ -113,6 +112,7 @@
 
 #pragma mark - DataServiceProtocol
 - (void)bind:(id)data forRequestId:(int)rid {
+    [self removeErrorView];
     switch (rid) {
         case 0:
         case 1: {

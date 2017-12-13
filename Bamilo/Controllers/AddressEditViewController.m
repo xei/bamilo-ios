@@ -27,31 +27,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self setNavigationBarConfigs];
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = STRING_ADDRESS;
     [self setupView];
-}
-
-
-- (void)setNavigationBarConfigs {
-    self.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName: [Theme font:kFontVariationRegular size:13],
-                                               NSForegroundColorAttributeName: [UIColor whiteColor]};
-    //To remove navBar bottom border
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
-    self.navigationController.navigationBar.tintColor = [UIColor clearColor];
-     
-    //To set navigation bar background color
-    self.navigationController.navigationBar.barTintColor = [Theme color:kColorExtraDarkBlue];
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    
-    
-    //custom back button to behave customly
-    self.navigationItem.hidesBackButton = YES;
-    UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"btn_back"] style:UIBarButtonItemStylePlain target:self action: self.comesFromEmptyList ? @selector(twoStepBackNavigation): @selector(backAction)];
-    self.navigationItem.leftBarButtonItem = newBackButton;
 }
 
 - (void)backAction {

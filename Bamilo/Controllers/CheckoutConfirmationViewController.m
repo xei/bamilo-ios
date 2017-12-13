@@ -310,14 +310,7 @@
         [DataAggregator applyVoucher:self voucher:discountCode completion:^(id data, NSError *error) {
             if(error == nil) {
                 [self bind:data forRequestId:2];
-                
                 ((DiscountCodeView *)sender).state = DISCOUNT_CODE_VIEW_STATE_CONTAINS_CODE;
-                
-//                NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
-//                [trackingDictionary setValue:self.cart.cartEntity.cartValue forKey:kRIEventTotalCartKey];
-//                [trackingDictionary setValue:self.cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
-//                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart] data:[trackingDictionary copy]];
-                
                 [self.tableView reloadData];
             } else {
                 if (![Utility handleErrorMessagesWithError:error viewController:self]) {

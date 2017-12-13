@@ -232,6 +232,7 @@
                 self.emptyListMessageView.hidden = NO;
             }
             [self.tableview reloadData];
+            
             // This will remove extra separators from tableview
             self.tableview.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
         }];
@@ -244,7 +245,12 @@
 }
 
 - (void)errorHandler:(NSError *)error forRequestID:(int)rid {
-    if (![Utility handleErrorMessagesWithError:error viewController:self]) {
+    if ([Utility handleErrorMessagesWithError:error viewController:self]) {
+        
+        // This will remove extra separators from tableview
+        self.tableview.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+        
+    } else {
         if (self.list.currentPage == 1) {
             [self handleGenericErrorCodesWithErrorControlView:(int)error.code forRequestID:rid];
         } else {

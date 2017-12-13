@@ -34,9 +34,14 @@ class RequestManagerSwift {
             if let params = params {
                 print(params)
             }
+            
+            URLSessionConfiguration.default.timeoutIntervalForRequest = 10
+            URLSessionConfiguration.default.timeoutIntervalForResource = 10
             Alamofire.SessionManager.default.session.configuration.timeoutIntervalForRequest = 10
+            Alamofire.SessionManager.default.session.configuration.timeoutIntervalForResource = 10
+            
             let requestUrl = "\(baseUrl)/\(path)".addingPercentEncoding( withAllowedCharacters: NSCharacterSet.urlQueryAllowed) ?? ""
-            return Alamofire.request(requestUrl, method: method, parameters: params, encoding: URLEncoding(destination: .methodDependent), headers: self.createHeaders()).responseJSON(completionHandler: { (response) in
+            return Alamofire.SessionManager.default.request(requestUrl, method: method, parameters: params, encoding: URLEncoding(destination: .methodDependent), headers: self.createHeaders()).responseJSON(completionHandler: { (response) in
                 if let url = response.request?.url {
                     print("------------ Start response for : \(url)")
                 }

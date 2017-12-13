@@ -55,11 +55,11 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if(_paymentMethods == nil) {
-        [self getContent];
+        [self getContent:nil];
     }
 }
 
-- (void)getContent {
+- (void)getContent:(void(^)(BOOL))callBack {
     [self getPaymentMethods:^(NSArray *paymentMethods) {
         [self publishScreenLoadTime];
         [self selectProperPaymentMethodFromMethods:paymentMethods];
@@ -218,6 +218,7 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
 
 #pragma mark - DataServiceProtocol
 -(void)bind:(id)data forRequestId:(int)rid {
+    [self removeErrorView];
     switch (rid) {
         case 0:
         case 1:
@@ -234,8 +235,9 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
 }
 
 - (void)retryAction:(RetryHandler)callBack forRequestId:(int)rid {
-    [self getContent];
-    callBack(YES);
+    [self getContent:^(BOOL success) {
+        callBack(success);
+    }];
 }
 
 #pragma mark - DataTrackerProtocol

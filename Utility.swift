@@ -11,7 +11,9 @@ import UIKit
 @objc class Utility: NSObject {
 
     @discardableResult static func handleErrorMessages(error: Any?, viewController: BaseViewController) -> Bool {
-        if !viewController.showNotificationBar(error, isSuccess: false) {
+        if viewController.showNotificationBar(error, isSuccess: false) {
+            return true
+        } else {
             if let error = error as? [Any], error.count > 0, let errorDictionary = error[0] as? [AnyHashable: Any] {
                 viewController.showNotificationBar(fromMessageDictionary: errorDictionary, isSuccess: false)
                 return true

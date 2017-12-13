@@ -68,18 +68,22 @@ class WishListViewController: BaseViewController,
         super.viewWillAppear(animated)
         if !RICustomer.checkIfUserIsLogged() {
             (self.navigationController as? JACenterNavigationController)?.requestForcedLogin(completion: {
-                self.refreshAndReload()
+                self.refreshAndReload {(success) in
+                    //Do nothing
+                }
             })
             return
         }
-        self.refreshAndReload()
+        self.refreshAndReload {(sucess) in
+            //Do nothing
+        }
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
     
-    private func loadProducts(page: Int, callBack: ((Bool)->Void)? = nil) {
+    private func loadProducts(page: Int, callBack:((Bool)->Void)? = nil) {
         if isLoading { return }
         if let lastPage = self.wishList?.lastPage ,(lastPage != 0 && page > lastPage && isRefreshing == false) { return }
         self.isLoading = true
@@ -101,7 +105,7 @@ class WishListViewController: BaseViewController,
         self.loadProducts(page: page)
     }
     
-    @objc private func refreshAndReload(callBack: ((Bool)->Void)? = nil) {
+    @objc private func refreshAndReload(callBack: @escaping ((Bool)->Void)) {
         self.page = 1
         self.isRefreshing = true
         self.loadProducts(page: page, callBack: callBack)
