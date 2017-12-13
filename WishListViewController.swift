@@ -55,7 +55,7 @@ class WishListViewController: BaseViewController,
         self.collectionView.showsHorizontalScrollIndicator = false
         
         self.refreshControl = UIRefreshControl.init()
-        self.refreshControl?.addTarget(self, action: #selector(refreshAndReload), for: .valueChanged)
+        self.refreshControl?.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
         if let refreshControl = self.refreshControl {
             self.collectionView.addSubview(refreshControl)
         }
@@ -105,7 +105,13 @@ class WishListViewController: BaseViewController,
         self.loadProducts(page: page)
     }
     
-    @objc private func refreshAndReload(callBack: @escaping ((Bool)->Void)) {
+    @objc private func handleRefresh() {
+        self.refreshAndReload { (success) in
+            
+        }
+    }
+    
+    private func refreshAndReload(callBack: @escaping ((Bool)->Void)) {
         self.page = 1
         self.isRefreshing = true
         self.loadProducts(page: page, callBack: callBack)
