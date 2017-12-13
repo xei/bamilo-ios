@@ -21,6 +21,13 @@ typealias ResponseClosure = (_ responseType: Int, _ data: ApiResponseData?, _ er
 class RequestManagerSwift {
     private var baseUrl: String?
     
+    static private(set) var sharedManager: SessionManager = {
+        let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForRequest = 10
+        configuration.timeoutIntervalForResource = 10
+        return Alamofire.SessionManager(configuration: configuration)
+    }()
+    
     init(with baseUrl: String?) {
         self.baseUrl = baseUrl
     }
@@ -35,13 +42,8 @@ class RequestManagerSwift {
                 print(params)
             }
             
-            URLSessionConfiguration.default.timeoutIntervalForRequest = 10
-            URLSessionConfiguration.default.timeoutIntervalForResource = 10
-            Alamofire.SessionManager.default.session.configuration.timeoutIntervalForRequest = 10
-            Alamofire.SessionManager.default.session.configuration.timeoutIntervalForResource = 10
-            
             let requestUrl = "\(baseUrl)/\(path)".addingPercentEncoding( withAllowedCharacters: NSCharacterSet.urlQueryAllowed) ?? ""
-            return Alamofire.SessionManager.default.request(requestUrl, method: method, parameters: params, encoding: URLEncoding(destination: .methodDependent), headers: self.createHeaders()).responseJSON(completionHandler: { (response) in
+            return RequestManagerSwift.sharedManager.request(requestUrl, method: method, parameters: params, encoding: URLEncoding(destination: .methodDependent), headers: self.createHeaders()).responseJSON(completionHandler: { (response) in
                 if let url = response.request?.url {
                     print("------------ Start response for : \(url)")
                 }

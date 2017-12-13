@@ -103,9 +103,11 @@
             [self bind:data forRequestId:0];
             [self publishScreenLoadTime];
             if (callBack) callBack(YES);
-        } else {
+        } else if (error) {
             [self errorHandler:error forRequestID:0];
             if (callBack) callBack(NO);
+        } else {
+            //Can go to creat new address
         }
     }];
 }

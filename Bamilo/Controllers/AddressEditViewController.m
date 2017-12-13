@@ -27,21 +27,45 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self setNavigationBarConfigs];
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = STRING_ADDRESS;
     [self setupView];
 }
 
+
+- (void)setNavigationBarConfigs {
+//    self.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName: [Theme font:kFontVariationRegular size:13],
+//                                               NSForegroundColorAttributeName: [UIColor whiteColor]};
+//    //To remove navBar bottom border
+//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+//    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+//    self.navigationController.navigationBar.tintColor = [UIColor clearColor];
+//
+//    //To set navigation bar background color
+//    self.navigationController.navigationBar.barTintColor = [Theme color:kColorExtraDarkBlue];
+//    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+//
+
+    //custom back button to behave customly
+    self.navigationItem.hidesBackButton = YES;
+    UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"btn_back"] style:UIBarButtonItemStylePlain target:self action: self.comesFromEmptyList ? @selector(twoStepBackNavigation): @selector(backAction)];
+    self.navigationItem.leftBarButtonItem = newBackButton;
+}
+
 - (void)backAction {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)twoStepBackNavigation {
-    CheckoutAddressViewController *parentViewController = (CheckoutAddressViewController *)[[MainTabBarViewController topNavigationController] topViewController];
-    parentViewController.viewIsDisappearing = YES;
-    [self dismissViewControllerAnimated:NO completion:^{
-        [[MainTabBarViewController topNavigationController] popViewControllerAnimated:YES];
-    }];
+//    CheckoutAddressViewController *parentViewController = (CheckoutAddressViewController *)[[MainTabBarViewController topNavigationController] topViewController];
+//    parentViewController.viewIsDisappearing = YES;
+    [self.navigationController popToRootViewControllerAnimated:YES]; //back to cart
+//    [self.navigationController popViewControllerAnimated:YES];
+//    [self dismissViewControllerAnimated:NO completion:^{
+//        [[MainTabBarViewController topNavigationController] popViewControllerAnimated:YES];
+//    }];
 }
 
 - (void)setupView {
@@ -117,7 +141,8 @@
     }
     //pop this view controller if user is not logged in
     if (![RICustomer checkIfUserIsLogged]) {
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+//        [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
@@ -138,7 +163,8 @@
         params[@"address_form[id]"] = self.address.uid;
         [DataAggregator updateAddress:self params:params addressId:self.address.uid completion:^(id data, NSError *error) {
             if (error == nil) {
-                [self dismissViewControllerAnimated:YES completion:nil];
+                [self.navigationController popViewControllerAnimated:YES];
+//                [self dismissViewControllerAnimated:YES completion:nil];
             } else {
                 if(![self showNotificationBar:error isSuccess:NO]) {
                     BOOL errorHandled = NO;
@@ -159,7 +185,8 @@
         params[@"address_form[id]"] = @"";
         [DataAggregator addAddress:self params:params completion:^(id data, NSError *error) {
             if (error == nil) {
-                [self dismissViewControllerAnimated:YES completion:nil];
+//                [self dismissViewControllerAnimated:YES completion:nil];
+                [self.navigationController popViewControllerAnimated:YES];
             } else {
                 if(![self showNotificationBar:error isSuccess:NO]) {
                     BOOL errorHandled = NO;

@@ -204,8 +204,8 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:@"showCreateEditAddress"]) {
-        UINavigationController *navigationViewController = (UINavigationController *)segue.destinationViewController;
-        AddressEditViewController *addressEditViewController = (AddressEditViewController *)navigationViewController.viewControllers.firstObject;
+//        UINavigationController *navigationViewController = (UINavigationController *)segue.destinationViewController;
+        AddressEditViewController *addressEditViewController = (AddressEditViewController *)segue.destinationViewController;
         if(sender) {
             addressEditViewController.address = sender;
         }

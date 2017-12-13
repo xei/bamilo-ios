@@ -72,7 +72,7 @@
                         <outlet property="checkoutProgressViewControl" destination="RaY-Nc-0ZR" id="zW7-UC-yur"/>
                         <outlet property="continueButton" destination="2Sh-o6-mCT" id="Gah-em-65h"/>
                         <segue destination="RR0-PB-qTp" kind="show" identifier="pushAddressToConfirmation" id="Vuf-MV-Cbd"/>
-                        <segue destination="QRG-Sd-VGg" kind="presentation" identifier="showCreateEditAddress" modalTransitionStyle="crossDissolve" id="5u5-Ga-sXH"/>
+                        <segue destination="QRG-Sd-VGg" kind="show" identifier="showCreateEditAddress" id="5u5-Ga-sXH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qrc-mW-Y1H" userLabel="First Responder" sceneMemberID="firstResponder"/>
