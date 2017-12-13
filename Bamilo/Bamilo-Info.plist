@@ -134,26 +134,15 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>7</string>
+	<string>8</string>
 	<key>Configs</key>
 	<dict>
-		<key>AdjustTokenID</key>
-		<string>pttex2kff47v</string>
-		<key>Tour</key>
-		<dict>
-			<key>HomePage</key>
-			<array>
-				<string>ItemTrackings</string>
-			</array>
-			<key>ProfileView</key>
-			<array>
-				<string>ItemTrackings</string>
-			</array>
-		</dict>
 		<key>API_BaseUrl</key>
 		<string>http://www.bamilo.com/mobapi/</string>
 		<key>API_Version</key>
 		<string>2.6</string>
+		<key>AdjustTokenID</key>
+		<string>pttex2kff47v</string>
 		<key>EMMerchantID</key>
 		<string>18146DE34FE0B8C9</string>
 		<key>Emarsys</key>
@@ -167,6 +156,17 @@
 		<string>UA-57415371-2</string>
 		<key>Pushwoosh_BETA</key>
 		<string>0</string>
+		<key>Tour</key>
+		<dict>
+			<key>HomePage</key>
+			<array>
+				<string>ItemTrackings</string>
+			</array>
+			<key>ProfileView</key>
+			<array>
+				<string>ItemTrackings</string>
+			</array>
+		</dict>
 	</dict>
 	<key>Fabric</key>
 	<dict>
