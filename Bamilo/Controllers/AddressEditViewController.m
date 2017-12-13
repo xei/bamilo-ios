@@ -164,7 +164,6 @@
         [DataAggregator updateAddress:self params:params addressId:self.address.uid completion:^(id data, NSError *error) {
             if (error == nil) {
                 [self.navigationController popViewControllerAnimated:YES];
-//                [self dismissViewControllerAnimated:YES completion:nil];
             } else {
                 if(![self showNotificationBar:error isSuccess:NO]) {
                     BOOL errorHandled = NO;
@@ -185,7 +184,6 @@
         params[@"address_form[id]"] = @"";
         [DataAggregator addAddress:self params:params completion:^(id data, NSError *error) {
             if (error == nil) {
-//                [self dismissViewControllerAnimated:YES completion:nil];
                 [self.navigationController popViewControllerAnimated:YES];
             } else {
                 if(![self showNotificationBar:error isSuccess:NO]) {
@@ -245,7 +243,9 @@
 }
 
 - (void)errorHandler:(NSError *)error forRequestID:(int)rid {
-    [self handleGenericErrorCodesWithErrorControlView:(int)error.code forRequestID:rid];
+    if (![Utility handleErrorMessagesWithError:error viewController:self]) {
+        [self handleGenericErrorCodesWithErrorControlView:(int)error.code forRequestID:rid];
+    }
 }
 
 #pragma ArgsReceiverProtocol

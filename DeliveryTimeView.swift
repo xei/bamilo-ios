@@ -129,7 +129,9 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
         if rid == 2 {
             if let deliveryTimes = data as? DeliveryTimes, let deliveries = deliveryTimes.array, deliveries.count > 0, let deliveryTime = deliveryTimes.array?.first {
                 if let deliveryTimeZone1 = deliveryTime.deliveryTimeZone1, let deliveryTimeZone2 = deliveryTime.deliveryTimeZone2 {
-                    self.deliveryTimeLabel.text = (deliveryTime.deliveryTimeMessage ?? "\(STRING_TEHRAN) \(deliveryTimeZone1)\n\(STRING_MINICITY) \(deliveryTimeZone2)").convertTo(language: .arabic)
+                    self.deliveryTimeLabel.text = "\(STRING_TEHRAN) \(deliveryTimeZone1)\n\(STRING_MINICITY) \(deliveryTimeZone2)".convertTo(language: .arabic)
+                } else {
+                    self.deliveryTimeLabel.text = deliveryTime.deliveryTimeMessage
                 }
                 self.deliveryTimeTitleLabel.text = "\(deliveryTime.deliveryTimeMessage != nil ?  STRING_DELIVERY_TIME : STRING_ESTIMATED_TIME):"
                 

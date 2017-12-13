@@ -374,7 +374,9 @@
 
 - (void)errorHandler:(NSError *)error forRequestID:(int)rid {
     if (rid == 0) {
-        [self handleGenericErrorCodesWithErrorControlView:(int)error.code forRequestID:rid];
+        if (![Utility handleErrorMessagesWithError:error viewController:self]) {
+            [self handleGenericErrorCodesWithErrorControlView:(int)error.code forRequestID:rid];
+        }
     }
 }
 

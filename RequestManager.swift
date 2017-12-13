@@ -103,7 +103,7 @@ class RequestManagerSwift {
 //        }
 //    }
     
-    private func prepareErrorMessages(messagesList: ApiDataMessageList?) -> [Any] {
-        return messagesList?.validations ?? messagesList?.errors?.map { $0.message ?? "" } ?? []
+    private func prepareErrorMessages(messagesList: ApiDataMessageList?) -> [Any]? {
+        return messagesList?.validations ?? messagesList?.errors?.map { $0.message ?? "" }
     }
 }

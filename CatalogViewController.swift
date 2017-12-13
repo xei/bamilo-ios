@@ -267,7 +267,11 @@ import SwiftyJSON
     
     func errorHandler(_ error: Error!, forRequestID rid: Int32) {
         if rid == 0 {
-            self.handleGenericErrorCodesWithErrorControlView(Int32(error.code), forRequestID: rid)
+            if error.code != 200 {
+                self.handleGenericErrorCodesWithErrorControlView(Int32(error.code), forRequestID: rid)
+            } else {
+                self.showNoResultView()
+            }
         } else if rid == 1 {
 //            if !Utility.handleErrorMessages(error: error, viewController: self) {
 //                self.showNotificationBarMessage(STRING_SERVER_ERROR_MESSAGE, isSuccess: false)
