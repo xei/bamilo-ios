@@ -252,7 +252,9 @@
         titleView.textAlignment = NSTextAlignmentCenter;
         titleView.numberOfLines = 3;
     }
-    titleView.text = self.model.selectOption.allKeys[row];
+    if (self.model.selectOption.allKeys.count < row) {
+        titleView.text = self.model.selectOption.allKeys[row];
+    }
     return titleView;
 }
 
