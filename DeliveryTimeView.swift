@@ -91,6 +91,7 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
     }
     
     private func getTimeDeliveryForCityId(cityID: String?) {
+        self.deliveryTimeLabel.text = STRING_IS_CALCULATING
         ProductDataManager.sharedInstance.getDeliveryTime(self, sku: self.productSku, cityId: cityID) { (data, error) in
             if error == nil, let data = data {
                 self.bind(data, forRequestId: 2)

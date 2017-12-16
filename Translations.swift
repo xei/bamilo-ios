@@ -93,5 +93,5 @@ let STRING_PLEASE_WAIT = RILocalizationWrapper.localizedString("please_wait_mess
 let STRING_NO_NETWORK = RILocalizationWrapper.localizedString("string_no_newtork")!
 let STRING_TRY_AGAIN = RILocalizationWrapper.localizedString("string_try_again")!
 let STRING_INTERNET_SETTING = RILocalizationWrapper.localizedString("internet_setting")!
-
+let STRING_IS_CALCULATING = RILocalizationWrapper.localizedString("is_calculating")!
 
