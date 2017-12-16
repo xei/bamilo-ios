@@ -292,6 +292,9 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
                         cellRect.origin.y += 25
                     }
                     
+                    //For Tablet views
+                    cellRect.size.width = UIScreen.main.bounds.width
+                    
                     let orderSpotLight = TourSpotLight(withRect: cellRect, shape: .roundRectangle, text: STRING_ITEM_TRACKING_HINT_2)
                     spotLightView = TourSpotLightView(frame: UIScreen.main.bounds, spotlight: [orderSpotLight])
                     spotLightView?.enableContinueLabel = true
