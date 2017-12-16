@@ -91,7 +91,7 @@
             [[EmarsysMobileEngage sharedInstance] sendLogin:[[PushNotificationManager pushManager] getPushToken] completion:nil];
             
             [EmarsysPredictManager setCustomer:customer];
-            [[PushWooshTracker sharedTracker] setUserID:customer.email];
+            [PushWooshTracker setUserID:customer.email];
             [[Crashlytics sharedInstance] setUserEmail:customer.email];
             
             if (self.completion) {

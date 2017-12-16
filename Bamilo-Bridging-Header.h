@@ -40,6 +40,7 @@
 #import "EmarsysPredictProtocol.h"
 #import "EmarsysPredictManager.h"
 #import "InputTextFieldControl.h"
+#import "PushWooshTracker.h"
 
 #import "BaseControlView.h"
 #import "BaseViewControl.h"

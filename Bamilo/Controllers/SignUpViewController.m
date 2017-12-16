@@ -83,7 +83,7 @@
             
             [TrackerManager postEventWithSelector:[EventSelectors signupEventSelector] attributes:[EventAttributes signupWithMethod:cSignUpMethodEmail user:customer success:YES]];
             [EmarsysPredictManager setCustomer: customer];
-            [[PushWooshTracker sharedTracker] setUserID:[RICustomer getCurrentCustomer].email];
+            [PushWooshTracker setUserID:[RICustomer getCurrentCustomer].email];
             if (self.completion) {
                 self.completion(AUTHENTICATION_FINISHED_WITH_REGISTER);
             } else {

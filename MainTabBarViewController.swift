@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Crashlytics
 
 @objc class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate, DataServiceProtocol {
     
@@ -44,6 +45,11 @@ import UIKit
     
     func updateUserSessionAndCart() {
         //Get user and cart to refresh from server
+        if let currentUser = RICustomer.getCurrent() {
+            EmarsysPredictManager.setCustomer(currentUser)
+            PushWooshTracker.setUserID(currentUser.customerId.stringValue)
+            Crashlytics.sharedInstance().setUserName(currentUser.email)
+        }
         self.getAndUpdateCart()
     }
     

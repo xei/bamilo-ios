@@ -175,7 +175,7 @@
             
             //Set auto logged in customer
             [EmarsysPredictManager setCustomer:customerObject];
-            [[PushWooshTracker sharedTracker] setUserID:[customerObject.customerId stringValue]];
+            [PushWooshTracker setUserID:[customerObject.customerId stringValue]];
             [[Crashlytics sharedInstance] setUserEmail:customerObject.email];
             
         } else {

@@ -26,7 +26,7 @@ static PushWooshTracker *instance;
     return instance;
 }
 
--(void)setUserID:(NSString *)userId {
++ (void)setUserID:(NSString *)userId {
     [[PWInAppManager sharedManager] setUserId:userId];
 }
 

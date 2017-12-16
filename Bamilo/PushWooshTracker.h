@@ -13,6 +13,6 @@
 
 @interface PushWooshTracker : EmarsysBaseTracker <PushNotificationTrackerProtocol, TagTrackerProtocol>
 
--(void) setUserID:(NSString *)userId;
++(void) setUserID:(NSString *)userId;
 
 @end
