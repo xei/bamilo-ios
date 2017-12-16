@@ -36,17 +36,6 @@
 
 
 - (void)setNavigationBarConfigs {
-//    self.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName: [Theme font:kFontVariationRegular size:13],
-//                                               NSForegroundColorAttributeName: [UIColor whiteColor]};
-//    //To remove navBar bottom border
-//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-//    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
-//    self.navigationController.navigationBar.tintColor = [UIColor clearColor];
-//
-//    //To set navigation bar background color
-//    self.navigationController.navigationBar.barTintColor = [Theme color:kColorExtraDarkBlue];
-//    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-//
 
     //custom back button to behave customly
     self.navigationItem.hidesBackButton = YES;
@@ -59,13 +48,7 @@
 }
 
 - (void)twoStepBackNavigation {
-//    CheckoutAddressViewController *parentViewController = (CheckoutAddressViewController *)[[MainTabBarViewController topNavigationController] topViewController];
-//    parentViewController.viewIsDisappearing = YES;
     [self.navigationController popToRootViewControllerAnimated:YES]; //back to cart
-//    [self.navigationController popViewControllerAnimated:YES];
-//    [self dismissViewControllerAnimated:NO completion:^{
-//        [[MainTabBarViewController topNavigationController] popViewControllerAnimated:YES];
-//    }];
 }
 
 - (void)setupView {
