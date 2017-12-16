@@ -44,9 +44,6 @@ import UIKit
     
     func updateUserSessionAndCart() {
         //Get user and cart to refresh from server
-        if (RICustomer.checkIfUserIsLogged()) {
-            RICustomer.autoLogin(nil)
-        }
         self.getAndUpdateCart()
     }
     

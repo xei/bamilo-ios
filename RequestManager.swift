@@ -52,25 +52,54 @@ class RequestManagerSwift {
                 switch response.result {
                     case .success:
                         if let apiResponseData = response.result.value {
+                            
+                            //Check if this request needs athenticated action which the current is not logged in
+                            if let errors = apiResponseData.messages?.errors, path != RI_API_LOGOUT_CUSTOMER {
+                                let hasAuthenticationErrorCode = errors.filter { $0.code == 231 }.count > 0
+                                if hasAuthenticationErrorCode {
+                                    self.autoLoginWith(method, target: type, path: path, params: params, type: type, completion: completion)
+                                    return
+                                }
+                            }
+                            
+                            //Continue processing response
                             if(apiResponseData.success) {
                                 completion(response.response?.statusCode ?? 0, apiResponseData, self.prepareErrorMessages(messagesList: apiResponseData.messages))
                             } else {
                                 completion(response.response?.statusCode ?? 0, nil, self.prepareErrorMessages(messagesList: apiResponseData.messages))
                             }
                         }
+                        
                         if(type == .foreground) {
                             LoadingManager.hideLoading()
                         }
                     case .failure(let error):
                         print(error)
-                        completion(error.code, nil, nil)
                         if(type == .container || type == .foreground) {
                             LoadingManager.hideLoading()
                         }
+                        if (error.code == NSURLErrorUserAuthenticationRequired), path != RI_API_LOGOUT_CUSTOMER {
+                            self.autoLoginWith(method, target: target, path: path, params: params, type: type, completion: completion)
+                            return
+                        }
+                        completion(error.code, nil, nil)
                 }
             }.task
         }
         return nil
+    }
+    
+    private func autoLoginWith(_ method: HTTPMethod, target: Any?, path: String, params: Parameters?, type: ApiRequestExecutionType, completion: @escaping ResponseClosure) {
+        RICustomer.autoLogin({ (success) in
+            if (success) {
+                self.async(method, target: target, path: path, params: params, type: type, completion: completion)
+            } else {
+                Utility.resetUserBehaviours()
+                MainTabBarViewController.topNavigationController()?.performProtectedBlock({ (success) in
+                    self.async(method, target: target, path: path, params: params, type: type, completion: completion)
+                })
+            }
+        })
     }
     
     //MARK: Private Methods
@@ -80,28 +109,6 @@ class RequestManagerSwift {
             "User-Language" : "fa_IR"
         ]
     }
-    
-//    private func handleGenericError(viewController: UIViewController, error: Error) {
-//        switch (error.code) {
-//        case NSURLErrorCannotConnectToHost,
-//             NSURLErrorNotConnectedToInternet,
-//             NSURLErrorNetworkConnectionLost,
-//             NSURLErrorTimedOut,
-//             NSURLErrorDNSLookupFailed,
-//             NSURLErrorCannotFindHost:
-//            //Internet connection error
-//            if viewController.isKind(of: BaseViewControl) {
-//
-//            } else {
-//
-//            }
-//            break
-//        case NSURLErrorTimedOut:
-//            break
-//        default:
-//            break
-//        }
-//    }
     
     private func prepareErrorMessages(messagesList: ApiDataMessageList?) -> [Any]? {
         return messagesList?.validations ?? messagesList?.errors?.map { $0.message ?? "" }

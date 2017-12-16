@@ -39,8 +39,6 @@ class CheckoutDataManager: DataManagerSwift {
         }
     }
     
-    //func setMultistepShipping(_ target: DataServiceProtocol, shippingMethod:String, pickupStation:String, region:String, completion:@escaping DataCompletion) {}
-    
     func getMultistepPayment(_ target: DataServiceProtocol, completion:@escaping DataClosure) {
         CheckoutDataManager.requestManager.async(.get, target: target, path: RI_API_MULTISTEP_GET_PAYMENT, params: nil, type: .container) { (responseType, data, errorMessages) in
             self.processResponse(responseType, aClass: RICart.self, data: data, errorMessages: errorMessages, completion: completion)

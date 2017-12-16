@@ -150,11 +150,9 @@
 }
 
 //TODO: !!! we should really decide about this
-+ (NSString*)autoLogin:(void (^)(BOOL success, NSDictionary *entities, NSString *loginMethod))returnBlock {
++ (NSString*)autoLogin:(void (^)(BOOL success))returnBlock {
     NSString *operationID = nil;
-    
     NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
-    
     if (customers.count > 0) {
         __block RICustomer *customerObject = [customers lastObject];
         if (customerObject && customerObject.email.length && customerObject.plainPassword.length) {
@@ -162,11 +160,16 @@
                 if (error == nil) {
                     if (returnBlock != nil) {
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            returnBlock(YES, nil, customerObject.loginMethod);
+                            returnBlock(YES);
                         });
                     }
                 } else {
                     [Utility resetUserBehaviours];
+                    if (returnBlock != nil) {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            returnBlock(NO);
+                        });
+                    }
                 }
             }];
             
@@ -179,7 +182,7 @@
             [Utility resetUserBehaviours];
             if (returnBlock != nil) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    returnBlock(NO, nil, customerObject.loginMethod);
+                    returnBlock(NO);
                 });
             }
         }
@@ -228,7 +231,7 @@
 //        }
     } else {
         dispatch_async(dispatch_get_main_queue(), ^{
-            returnBlock(NO, nil, nil);
+            returnBlock(NO);
         });
     }
     
@@ -267,7 +270,6 @@
 + (BOOL)wasSignup {
     BOOL wasSignup = NO;
     NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
-    
     if (customers.count > 0) {
         RICustomer *customer = (RICustomer *)[customers lastObject];
         wasSignup = [@"signup" isEqualToString:customer.loginMethod];
@@ -277,16 +279,12 @@
 }
 
 #pragma mark - Get customer
-
-+ (NSString *)getCustomerWithSuccessBlock:(void (^)(id customer))successBlock
-                          andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock {
++ (NSString *)getCustomerWithSuccessBlock:(void (^)(id customer))successBlock andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock {
     NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
-    
     if (customers.count > 0) {
         successBlock([customers lastObject]);
         return nil;
     }
-    
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_GET_CUSTOMER]]
                                                             parameters:nil
                                                             httpMethod:HttpVerbPOST

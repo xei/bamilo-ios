@@ -19,8 +19,6 @@
 #import "EmarsysPredictManager.h"
 #import "Bamilo-Swift.h"
 
-//#define kSearchViewBarHeight 44.0f
-
 
 @interface JABaseViewController () {
     CGRect _noConnectionViewFrame;
@@ -506,16 +504,13 @@
 }
 
 - (void)showAuthenticationPage:(id)target selector:(SEL)selector objects:(NSArray *)objects {
-    
     // This is to avoid a retain cycle
     __block id viewController = target;
     __block void (^block)(void) = ^{
-        
         if ([viewController respondsToSelector:selector]) {
             if (ISEMPTY(objects)) {
                 ((void (*)(id, SEL))[viewController methodForSelector:selector])(viewController, selector);
-            }
-            else if (1 == [objects count]) {
+            } else if (1 == [objects count]) {
                 ((void (*)(id, SEL, id))[viewController methodForSelector:selector])(viewController, selector, [objects objectAtIndex:0]);
             }
             else if (2 == [objects count]) {
@@ -524,7 +519,7 @@
         }
     };
     if ([RICustomer checkIfUserIsLogged]) {
-        [RICustomer autoLogin:^(BOOL success, NSDictionary *entities, NSString *loginMethod) {
+        [RICustomer autoLogin:^(BOOL success) {
             if (success) {
                 block();
             } else {
