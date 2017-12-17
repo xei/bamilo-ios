@@ -228,8 +228,6 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         optionMenu.addAction(deleteAction)
         optionMenu.addAction(saveAction)
         optionMenu.addAction(cancelAction)
-
-        
         self.present(optionMenu, animated: true, completion: nil)
     }
     
