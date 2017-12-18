@@ -16,7 +16,7 @@ class ProfileOrderTableViewCell: BaseProfileTableViewCell {
     override func setupView() {
         super.setupView()
         self.titleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 14), color: Theme.color(kColorExtraDarkGray))
-        self.iconImage.image = UIImage(named: "order-tracking-profile")
+        self.iconImage.image = #imageLiteral(resourceName: "order-tracking-profile")
     }
     
     override static func nibName() -> String {

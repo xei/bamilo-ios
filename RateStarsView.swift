@@ -18,23 +18,17 @@ class RateStarsView: BaseControlView {
     weak var delegate: RateStarsViewDelegate?
     private var tappable = false
     
-    private enum RateButtonType: String {
-        case full = "ProductRateFullStar"
-        case half = "ProductRateHalfStar"
-        case empty = "ProductRateEmptyStar"
-    }
-    
     func updateWithMode(rateValue: Double) {
         let roundedRate = rateValue.roundByStep(step: 0.5)
         ThreadManager.execute { 
             self.starButtons.forEach { (button) in
                 if button.tag <= Int(roundedRate) {
-                    button.imageView?.image = UIImage(named: RateButtonType.full.rawValue)
+                    button.imageView?.image = #imageLiteral(resourceName: "ProductRateFullStar")
                 } else {
-                    button.imageView?.image = UIImage(named: RateButtonType.empty.rawValue)
+                    button.imageView?.image = #imageLiteral(resourceName: "ProductRateHalfStar")
                 }
                 if roundedRate > Double(Int(roundedRate)) && button.tag == Int(roundedRate) + 1 { //has 0.5
-                    button.imageView?.image = UIImage(named: RateButtonType.half.rawValue)
+                    button.imageView?.image = #imageLiteral(resourceName: "ProductRateEmptyStar")
                 }
             }
         }

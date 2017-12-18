@@ -130,8 +130,8 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
     
     private func setupView() {
         self.listViewType = .grid
-        self.filterIconImage.image = UIImage(named: "filterIcon_normal")
-        self.sortIconImage.image = UIImage(named: "sortingIcon_normal")
+        self.filterIconImage.image = #imageLiteral(resourceName: "filterIcon_normal")
+        self.sortIconImage.image = #imageLiteral(resourceName: "sortingIcon_normal")
         
         self.verticalSeperator.backgroundColor = Theme.color(kColorExtraExtraLightGray)
         self.horizontalSeperator.backgroundColor = Theme.color(kColorExtraExtraLightGray)
@@ -154,7 +154,7 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
     private func setSortingButtonActive() {
         self.sortingTitleLabel.textColor = Theme.color(kColorGreen3)
         self.sortingDescLabel.textColor = Theme.color(kColorGreen5)
-        self.sortIconImage.image = UIImage(named: "sortingIcon_highlighted")
+        self.sortIconImage.image = #imageLiteral(resourceName: "sortingIcon_highlighted")
     }
     
     func cancelButtonPickerTapped(sender: UIBarButtonItem) {
@@ -175,16 +175,16 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
     
     func enableFilterButton(enable:Bool) {
         self.filterButton.isEnabled = enable
-        self.filterButtonContainer.backgroundColor = enable ? UIColor.white : UIColor.fromHexString(hex: "#f0f0f0")
+        self.filterButtonContainer.backgroundColor = enable ? UIColor.white : #colorLiteral(red: 0.9411764706, green: 0.9411764706, blue: 0.9411764706, alpha: 1)
         self.filterTitleLabel.textColor = enable ? Theme.color(kColorDarkGray) : Theme.color(kColorLightGray)
         self.filterDescLabel.textColor = enable ? Theme.color(kColorLightGray) : Theme.color(kColorExtraLightGray)
-        self.filterIconImage.image = enable ? UIImage(named: "filterIcon_normal") : UIImage(named: "filtered_list_no_result")
+        self.filterIconImage.image = enable ? #imageLiteral(resourceName: "filterIcon_normal") : #imageLiteral(resourceName: "filtered_list_no_result")
     }
     
     func setFilterButtonActive () {
         self.filterTitleLabel.textColor = Theme.color(kColorGreen3)
         self.filterDescLabel.textColor = Theme.color(kColorGreen5)
-        self.filterIconImage.image = UIImage(named: "filterIcon_highlighted")
+        self.filterIconImage.image = #imageLiteral(resourceName: "filterIcon_highlighted")
     }
     
     @IBAction func sortButtonTapped(_ sender: Any) {
