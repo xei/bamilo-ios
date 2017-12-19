@@ -93,20 +93,6 @@
 }
 
 - (IBAction)proceedToCheckout:(id)sender {
-//    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-//    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
-//    [trackingDictionary setValue:@"Started" forKey:kRIEventActionKey];
-//    [trackingDictionary setValue:@"Checkout" forKey:kRIEventCategoryKey];
-//    [trackingDictionary setValue:[NSNumber numberWithInteger:[[self.cart.cartEntity cartItems] count]] forKey:kRIEventQuantityKey];
-//    [trackingDictionary setValue:[self.cart.cartEntity cartValueEuroConverted] forKey:kRIEventTotalCartKey];
-//    NSMutableString* attributeSetID = [NSMutableString new];
-//    for (RICartItem* pd in [self.cart.cartEntity cartItems]) {
-//        [attributeSetID appendFormat:@"%@;",[pd attributeSetID]];
-//    }
-//    [trackingDictionary setValue:[attributeSetID copy] forKey:kRIEventAttributeSetIDCartKey];
-//    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutStart] data:[trackingDictionary copy]];
-//    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"CheckoutAddress"];
-    
     [[MainTabBarViewController topNavigationController] requestNavigateToNib:@"CheckoutAddressViewController" ofStoryboard:@"Checkout" useCache:NO args:nil];
 }
 
@@ -195,11 +181,6 @@
 
 - (void)quantityHasBeenChangedTo:(int)newValue withNewCart:(RICart *)cart withCell:(id)cartCell {
     [LoadingManager hideLoading];
-    
-//    NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
-//    [trackingDictionary setValue:cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
-//    [trackingDictionary setValue:cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
-//    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart] data:[trackingDictionary copy]];
     NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
     [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
     
@@ -265,18 +246,20 @@
 
 #pragma mark - DataServiceProtocol
 - (void)bind:(id)data forRequestId:(int)rid {
-    RICart *cart = (RICart *)data;
-    self.cart = cart;
-    [self.tableView reloadData];
-    [self checkIfSummeryViewsMustBeVisibleOrNot];
-    
-    //When cart is ready & not empty
-    if (cart.cartEntity.cartCount.integerValue) {
-        [EmarsysPredictManager sendTransactionsOf:self];
-        [TrackerManager postEventWithSelector:[EventSelectors viewCartEventSelector] attributes:[EventAttributes viewCartWithCart:cart success:YES]];
+    if ([data isKindOfClass:[RICart class]]) {
+        self.cart = (RICart *)data;
+        [self.tableView reloadData];
+        [self checkIfSummeryViewsMustBeVisibleOrNot];
+        
+        //When cart is ready & not empty
+        if (self.cart.cartEntity.cartCount.integerValue) {
+            [EmarsysPredictManager sendTransactionsOf:self];
+            [TrackerManager postEventWithSelector:[EventSelectors viewCartEventSelector] attributes:[EventAttributes viewCartWithCart:self.cart success:YES]];
+        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo: @{kUpdateCartNotificationValue: self.cart}];
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo: @{kUpdateCartNotificationValue: cart}];
+    
 }
 
 - (void)errorHandler:(NSError *)error forRequestID:(int)rid {

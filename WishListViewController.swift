@@ -114,6 +114,8 @@ class WishListViewController: BaseViewController,
     private func refreshAndReload(callBack: @escaping ((Bool)->Void)) {
         self.page = 1
         self.isRefreshing = true
+        self.wishList?.products.removeAll()
+        self.collectionView.reloadData()
         self.loadProducts(page: page, callBack: callBack)
     }
     
@@ -246,7 +248,7 @@ class WishListViewController: BaseViewController,
                 Utility.handleErrorMessages(error: error, viewController: self)
                 return
             }
-            
+            if self.isRefreshing { return  }
             if let index = self.wishList?.products.index(of: product) {
                 self.wishList?.products.remove(at: index)
             }
