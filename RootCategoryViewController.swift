@@ -149,26 +149,45 @@ class RootCategoryViewController: BaseViewController, DataServiceProtocol, UITab
         self.requestIdsInProgress = self.requestIdsInProgress.filter { $0 != rid }
     }
     
-    //MARK: - UITableViewDataSource, UITableViewDelegate
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = self.tableview.dequeueReusableCell(withIdentifier: CategoryTableViewCell.nibName(), for: indexPath) as! CategoryTableViewCell
+    private func getModelOfIndexPath(indexPath: IndexPath) -> Any? {
         if indexPath.section < sectionTypes.count {
             let sectionType = self.sectionTypes[indexPath.section]
             if let _ = sectionType as? Categories.Type, let rootCatCount = self.categories?.tree?.count, rootCatCount > 0,
                 let rootChildsCategory = self.categories?.tree?[0].childern, indexPath.row < rootChildsCategory.count {
-                    cell.update(withModel: rootChildsCategory[indexPath.row])
+                return rootChildsCategory[indexPath.row]
             } else if let _ = sectionType as? ExternalLinks.Type, let links = self.externalLinks?.items, indexPath.row < links.count {
-                cell.update(withModel: links[indexPath.row])
+                return links[indexPath.row]
             } else if let _ = sectionType as? InternalLinks.Type, let links = self.internalLinks?.items, indexPath.row < links.count {
-                cell.update(withModel: links[indexPath.row])
+                return links[indexPath.row]
             }
         }
+        return nil
+    }
+    
+    //MARK: - UITableViewDataSource, UITableViewDelegate
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let model = self.getModelOfIndexPath(indexPath: indexPath) {
+            if let cat = model as? CategoryProduct {
+                if cat.childern?.count ?? 0 > 0 {
+                    
+                } else {
+                    MainTabBarViewController.topNavigationController()?.openTargetString(cat.target, purchaseInfo: nil)
+                }
+            } else if let extLink = model as? ExternalLink, let browserLink = extLink.link, let validURL = URL(string: browserLink) {
+                UIApplication.shared.openURL(validURL)
+            } else if let link = model as? InternalLink {
+                MainTabBarViewController.topNavigationController()?.openTargetString(link.target, purchaseInfo: nil)
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = self.tableview.dequeueReusableCell(withIdentifier: CategoryTableViewCell.nibName(), for: indexPath) as! CategoryTableViewCell
+        cell.update(withModel: self.getModelOfIndexPath(indexPath: indexPath))
         return cell
     }
+    
+    
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100

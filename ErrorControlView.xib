@@ -17,7 +17,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SkC-Vx-vfA">
-                    <rect key="frame" x="100" y="128" width="175" height="175"/>
+                    <rect key="frame" x="120" y="168" width="135" height="135"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="lessThanOrEqual" constant="175" id="6eh-2d-jog"/>
                         <constraint firstAttribute="width" secondItem="SkC-Vx-vfA" secondAttribute="height" multiplier="1:1" id="KtR-QL-Jjd"/>
@@ -67,7 +67,7 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstAttribute="right" secondItem="SkC-Vx-vfA" secondAttribute="right" priority="750" constant="100" id="0TY-Br-kGt"/>
+                <constraint firstAttribute="right" secondItem="SkC-Vx-vfA" secondAttribute="right" priority="750" constant="120" id="0TY-Br-kGt"/>
                 <constraint firstItem="Qk6-hG-mhN" firstAttribute="top" secondItem="SkC-Vx-vfA" secondAttribute="bottom" constant="20" id="5Z1-Mo-OOd"/>
                 <constraint firstItem="adz-0D-oPE" firstAttribute="centerY" secondItem="LD3-LA-nlZ" secondAttribute="centerY" id="5ki-fU-Ctx"/>
                 <constraint firstItem="Qk6-hG-mhN" firstAttribute="left" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="left" constant="50" id="7DC-AE-EPo"/>

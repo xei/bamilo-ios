@@ -1640,13 +1640,13 @@ static NSString *recommendationLogic = @"RELATED";
     if (self.recommendItems.count < 6) { return; }
     NSArray<RecommendItem *>* renderingItems = [self.recommendItems subarrayWithRange:NSMakeRange(0, MIN(6, self.recommendItems.count))];
     if(_recommendationView == nil) {
-        _recommendationView = [EmarsysRecommendationGridWidgetView nibInstance];
-        _recommendationView.delegate = self;
-        
-        [_recommendationView setHeight:[EmarsysRecommendationGridWidgetView preferredHeightWithContentModel:renderingItems boundWidth:self.mainScrollView.width]];
-        [_recommendationView updateTitle:STRING_BAMILO_RECOMMENDATION_FOR_YOU];
-        [_recommendationView setWidgetBacgkround:JABlack300Color];
         [ThreadManager executeOnMainThread:^{
+            _recommendationView = [EmarsysRecommendationGridWidgetView nibInstance];
+            _recommendationView.delegate = self;
+            
+            [_recommendationView setHeight:[EmarsysRecommendationGridWidgetView preferredHeightWithContentModel:renderingItems boundWidth:self.mainScrollView.width]];
+            [_recommendationView updateTitle:STRING_BAMILO_RECOMMENDATION_FOR_YOU];
+            [_recommendationView setWidgetBacgkround:JABlack300Color];
             [_recommendationView setFrame:CGRectMake(0, self.mainScrollView.contentSize.height, self.mainScrollView.width, _recommendationView.height)];
             [self.mainScrollView addSubview:_recommendationView];
             [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.width, self.mainScrollView.contentSize.height + _recommendationView.height)];
