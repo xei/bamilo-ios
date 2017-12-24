@@ -117,6 +117,9 @@
 		617585F61F88FF8D00D66541 /* Ext+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617585F51F88FF8D00D66541 /* Ext+UIColor.swift */; };
 		617585F91F8A088500D66541 /* Transformers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617585F81F8A088500D66541 /* Transformers.swift */; };
 		617AAA441E503AB9004D9430 /* FormItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 617AAA431E503AB9004D9430 /* FormItemModel.m */; };
+		617D4EED1FEA5F3600A00799 /* CategoryDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617D4EEC1FEA5F3600A00799 /* CategoryDataManager.swift */; };
+		617D4EEF1FEA65CC00A00799 /* RootCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617D4EEE1FEA65CC00A00799 /* RootCategoryViewController.swift */; };
+		617D4EF11FEA661400A00799 /* SubCategoryLandingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617D4EF01FEA661400A00799 /* SubCategoryLandingPageViewController.swift */; };
 		617D7F391EDC16DC00F36CF7 /* Ext+UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617D7F381EDC16DC00F36CF7 /* Ext+UILabel.swift */; };
 		617D7F3C1EDC2F3E00F36CF7 /* ProfileOrderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617D7F3A1EDC2F3E00F36CF7 /* ProfileOrderTableViewCell.swift */; };
 		617D7F3D1EDC2F3E00F36CF7 /* ProfileOrderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 617D7F3B1EDC2F3E00F36CF7 /* ProfileOrderTableViewCell.xib */; };
@@ -233,6 +236,9 @@
 		61D474941F7019BF001DA6A6 /* HomeDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D474931F7019BF001DA6A6 /* HomeDataManager.swift */; };
 		61D929341F1642C100716D4C /* Ext+CAShapreLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D929331F1642C100716D4C /* Ext+CAShapreLayer.swift */; };
 		61D929481F165AF700716D4C /* NavBarItemTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D929471F165AF700716D4C /* NavBarItemTypes.m */; };
+		61DA163D1FEE5011001C5071 /* CategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DA163B1FEE5011001C5071 /* CategoryTableViewCell.swift */; };
+		61DA163E1FEE5011001C5071 /* CategoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61DA163C1FEE5011001C5071 /* CategoryTableViewCell.xib */; };
+		61DA16411FEE7E93001C5071 /* Links.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DA16401FEE7E93001C5071 /* Links.swift */; };
 		61DBCCB61E46128300BA8251 /* IconButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 61DBCCB51E46128300BA8251 /* IconButton.m */; };
 		61E0996C1E3E117F004ED14E /* BaseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E0996B1E3E117F004ED14E /* BaseTableViewCell.m */; };
 		61E099711E3E18F0004ED14E /* NotificationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E0996F1E3E18F0004ED14E /* NotificationTableViewCell.m */; };
@@ -1126,6 +1132,9 @@
 		617585F81F8A088500D66541 /* Transformers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transformers.swift; sourceTree = "<group>"; };
 		617AAA421E503AB9004D9430 /* FormItemModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormItemModel.h; sourceTree = "<group>"; };
 		617AAA431E503AB9004D9430 /* FormItemModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormItemModel.m; sourceTree = "<group>"; };
+		617D4EEC1FEA5F3600A00799 /* CategoryDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDataManager.swift; sourceTree = "<group>"; };
+		617D4EEE1FEA65CC00A00799 /* RootCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCategoryViewController.swift; sourceTree = "<group>"; };
+		617D4EF01FEA661400A00799 /* SubCategoryLandingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubCategoryLandingPageViewController.swift; sourceTree = "<group>"; };
 		617D7F381EDC16DC00F36CF7 /* Ext+UILabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Ext+UILabel.swift"; sourceTree = "<group>"; };
 		617D7F3A1EDC2F3E00F36CF7 /* ProfileOrderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileOrderTableViewCell.swift; sourceTree = "<group>"; };
 		617D7F3B1EDC2F3E00F36CF7 /* ProfileOrderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileOrderTableViewCell.xib; sourceTree = "<group>"; };
@@ -1277,6 +1286,9 @@
 		61D929331F1642C100716D4C /* Ext+CAShapreLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Ext+CAShapreLayer.swift"; sourceTree = "<group>"; };
 		61D929461F165AF700716D4C /* NavBarItemTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavBarItemTypes.h; sourceTree = "<group>"; };
 		61D929471F165AF700716D4C /* NavBarItemTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavBarItemTypes.m; sourceTree = "<group>"; };
+		61DA163B1FEE5011001C5071 /* CategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableViewCell.swift; sourceTree = "<group>"; };
+		61DA163C1FEE5011001C5071 /* CategoryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryTableViewCell.xib; sourceTree = "<group>"; };
+		61DA16401FEE7E93001C5071 /* Links.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Links.swift; sourceTree = "<group>"; };
 		61DBCCB41E46128300BA8251 /* IconButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconButton.h; sourceTree = "<group>"; };
 		61DBCCB51E46128300BA8251 /* IconButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconButton.m; sourceTree = "<group>"; };
 		61E0996A1E3E117F004ED14E /* BaseTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTableViewCell.h; sourceTree = "<group>"; };
@@ -3061,6 +3073,7 @@
 		612FE5181EDC0A8400C2AFA0 /* TableViewCell */ = {
 			isa = PBXGroup;
 			children = (
+				61DA163F1FEE5016001C5071 /* CategoryTableViewCell */,
 				61FB2FD91FA8CB5B005FE3F6 /* OrderDetail */,
 				61B2C7F81F9C973300930435 /* Accordion */,
 				61D4748D1F6FE174001DA6A6 /* HomePage */,
@@ -3145,6 +3158,8 @@
 				615052D51FB0758600E67571 /* FailPaymentViewController.swift */,
 				610BC28E1FBC419100A7C343 /* AllRecommendationViewController.swift */,
 				61B402621FC02A2100E57EF4 /* WishListViewController.swift */,
+				617D4EEE1FEA65CC00A00799 /* RootCategoryViewController.swift */,
+				617D4EF01FEA661400A00799 /* SubCategoryLandingPageViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -3424,6 +3439,7 @@
 				617585F81F8A088500D66541 /* Transformers.swift */,
 				610BC2901FBC5CBF00A7C343 /* RecommendItem.swift */,
 				61AAC6761FC08296007FC21E /* WishList.swift */,
+				61DA16401FEE7E93001C5071 /* Links.swift */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -4245,6 +4261,15 @@
 			name = NavBar;
 			sourceTree = "<group>";
 		};
+		61DA163F1FEE5016001C5071 /* CategoryTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				61DA163B1FEE5011001C5071 /* CategoryTableViewCell.swift */,
+				61DA163C1FEE5011001C5071 /* CategoryTableViewCell.xib */,
+			);
+			name = CategoryTableViewCell;
+			sourceTree = "<group>";
+		};
 		61DBCCB31E46127600BA8251 /* IconButton */ = {
 			isa = PBXGroup;
 			children = (
@@ -5045,6 +5070,7 @@
 				61583DDC1EF92100007107C1 /* DeleteEntityDataManager.swift */,
 				61CBA88B1F696013009F0EEF /* SearchSuggestionDataManager.swift */,
 				61D474931F7019BF001DA6A6 /* HomeDataManager.swift */,
+				617D4EEC1FEA5F3600A00799 /* CategoryDataManager.swift */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -7729,6 +7755,7 @@
 				8757438B1EA60DB9001B518A /* National-72.png in Resources */,
 				875743C91EA60DFD001B518A /* SpecialOffer-72.png in Resources */,
 				61338CF61EACA1690017BB06 /* EmarsysRecommendationMinimalCarouselCollectionViewCell.xib in Resources */,
+				61DA163E1FEE5011001C5071 /* CategoryTableViewCell.xib in Resources */,
 				61FB2FDE1FA8CB92005FE3F6 /* OrderCMSMessageTableViewCell.xib in Resources */,
 				876869A91E5C9805004B4333 /* NotificationBarView.xib in Resources */,
 				87CE1DCC1E619204000A2C9E /* DeliveryTimeTableViewCell.xib in Resources */,
@@ -8192,6 +8219,7 @@
 				9A189E761BB31B1F0039BC14 /* JAProductInfoBaseLine.m in Sources */,
 				9ABCAEFA1B0F8FEF00A69271 /* UIView+Mirror.m in Sources */,
 				87DAABE31E54430D00445EBB /* PaymentOptionWithLogoTableViewCell.m in Sources */,
+				617D4EF11FEA661400A00799 /* SubCategoryLandingPageViewController.swift in Sources */,
 				8702FBE51E9A33FC001D1AA9 /* PurchaseEvent.m in Sources */,
 				87D07D751E4097EE00C00AC6 /* CheckoutBaseViewController.m in Sources */,
 				FFF9006B1C6A31A700DDF538 /* JANewsletterViewController.m in Sources */,
@@ -8422,6 +8450,7 @@
 				616F7D121F6D172100085B64 /* IconTableViewCell.swift in Sources */,
 				CE9ADF9C1AB6D78200D56481 /* JAAddNewAddressViewController.m in Sources */,
 				875AD5481E38C0C900584ABF /* RIFieldOption.m in Sources */,
+				61DA16411FEE7E93001C5071 /* Links.swift in Sources */,
 				FFF900871C6B5BDF00DDF538 /* JARadioGroupComponent.m in Sources */,
 				61D929481F165AF700716D4C /* NavBarItemTypes.m in Sources */,
 				875AD56B1E38C0C900584ABF /* RIProduct.m in Sources */,
@@ -8570,6 +8599,7 @@
 				875AD5651E38C0C900584ABF /* RIOrder.m in Sources */,
 				FF4465221CECB806003A65EA /* JAORPaymentViewController.m in Sources */,
 				619E92CA1F8A0B61003885BC /* DailyDealsTableViewCell.swift in Sources */,
+				617D4EEF1FEA65CC00A00799 /* RootCategoryViewController.swift in Sources */,
 				87B684DF1E49CE740042C09F /* BasicTableViewCell.m in Sources */,
 				9A0BBE951BFE2482007D35CE /* JACustomNavigationBarView.m in Sources */,
 				8720C3331EDEE19200404378 /* RequestManager.swift in Sources */,
@@ -8648,6 +8678,7 @@
 				61036B5A1E6599FC006E12A9 /* OrderListTableViewCell.m in Sources */,
 				612FE5171EDC062500C2AFA0 /* ProfileViewController.swift in Sources */,
 				8968FE731C3AE33E00B28207 /* JAUserDataViewController.m in Sources */,
+				617D4EED1FEA5F3600A00799 /* CategoryDataManager.swift in Sources */,
 				61338D051EACC64D0017BB06 /* EmarsysRecommendationMinimalCarouselWidget.m in Sources */,
 				87B684F11E4A00C30042C09F /* ReceiptItemView.m in Sources */,
 				9A007C791C203355007D99FC /* JAMyAccountViewController.m in Sources */,
@@ -8714,6 +8745,7 @@
 				CEF0C48D1BE8EE44005B5B12 /* JAReviewCollectionCell.m in Sources */,
 				875AD5681E38C0C900584ABF /* RIPaymentMethodFormField.m in Sources */,
 				619CC2DA1F8E56BF008E4B86 /* HomePageTileTeaser.swift in Sources */,
+				61DA163D1FEE5011001C5071 /* CategoryTableViewCell.swift in Sources */,
 				875AD55C1E38C0C900584ABF /* RICatalog.m in Sources */,
 				877762D11E9BB39300B73140 /* DataMessageList.m in Sources */,
 				8714E0441E45E247004C9B1D /* UILabel+Extensions.m in Sources */,

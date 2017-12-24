@@ -54,7 +54,6 @@
 #import "MutualTitleHeaderCell.h"
 #import "CatalogNoResultViewController.h"
 #import "JAFiltersViewController.h"
-#import "JACategoriesSideMenuViewController.h"
 #import "JAPDVViewController.h"
 #import "BaseTracker.h"
 #import "TagTrackerProtocol.h"

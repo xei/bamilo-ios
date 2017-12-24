@@ -205,6 +205,24 @@
             </objects>
             <point key="canvasLocation" x="1138" y="-1586"/>
         </scene>
+        <!--Sub Cat Filter View Controller-->
+        <scene sceneID="OLo-Un-rtN">
+            <objects>
+                <viewController id="VDg-QM-4TZ" customClass="SubCatFilterViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="iXS-FC-wHH"/>
+                        <viewControllerLayoutGuide type="bottom" id="w8g-J8-u7Q"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ifc-JL-WdM">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yxZ-GP-nc8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2275" y="-2485"/>
+        </scene>
         <!--Empty View Controller-->
         <scene sceneID="Ime-lj-bpF">
             <objects>
@@ -1566,10 +1584,10 @@
             </objects>
             <point key="canvasLocation" x="-2275" y="-4432"/>
         </scene>
-        <!--Categories Side Menu View Controller-->
+        <!--Root Category View Controller-->
         <scene sceneID="4w2-cN-GlA">
             <objects>
-                <viewController extendedLayoutIncludesOpaqueBars="YES" id="mZV-D2-vwZ" customClass="JACategoriesSideMenuViewController" sceneMemberID="viewController">
+                <viewController extendedLayoutIncludesOpaqueBars="YES" id="mZV-D2-vwZ" customClass="RootCategoryViewController" customModule="Bamilo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="G8t-gl-M7s"/>
                         <viewControllerLayoutGuide type="bottom" id="Thh-OC-TPU"/>
@@ -1578,9 +1596,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="687"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="7M9-ed-3k8">
+                                <rect key="frame" x="197" y="389.66666666666669" width="20" height="20"/>
+                            </activityIndicatorView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="ksl-P3-T0i">
                                 <rect key="frame" x="0.0" y="112" width="414" height="575"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a7h-cO-JF2" customClass="SearchBarControl" customModule="Bamilo" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="64" width="414" height="48"/>
@@ -1590,9 +1611,10 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="a7h-cO-JF2" secondAttribute="trailing" id="06r-GR-0W3"/>
+                            <constraint firstItem="7M9-ed-3k8" firstAttribute="centerX" secondItem="ksl-P3-T0i" secondAttribute="centerX" id="5tu-4E-bTF"/>
+                            <constraint firstItem="7M9-ed-3k8" firstAttribute="centerY" secondItem="ksl-P3-T0i" secondAttribute="centerY" id="EoI-tc-QD4"/>
                             <constraint firstItem="a7h-cO-JF2" firstAttribute="top" secondItem="G8t-gl-M7s" secondAttribute="bottom" id="SXK-Qu-OmU"/>
                             <constraint firstAttribute="right" secondItem="ksl-P3-T0i" secondAttribute="right" id="a7u-ml-bh1"/>
                             <constraint firstItem="Thh-OC-TPU" firstAttribute="top" secondItem="ksl-P3-T0i" secondAttribute="bottom" id="bFc-f8-9eQ"/>
@@ -1604,11 +1626,13 @@
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" id="xIp-YF-o3p"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="7M9-ed-3k8" id="iw0-lH-wPN"/>
                         <outlet property="searchBarBottomToTopTableViewConstraint" destination="y55-VW-idu" id="8gH-RI-kdN"/>
                         <outlet property="searchBarHeight" destination="Gq3-uU-WUG" id="fM3-CW-JbI"/>
                         <outlet property="searchbar" destination="a7h-cO-JF2" id="XnC-am-EcM"/>
-                        <outlet property="tableView" destination="ksl-P3-T0i" id="cMI-PG-gz6"/>
+                        <outlet property="tableview" destination="ksl-P3-T0i" id="1dU-79-n8g"/>
                         <segue destination="CdM-AJ-ErQ" kind="presentation" identifier="ShowSearchView" id="mLp-yH-ACJ"/>
+                        <segue destination="VDg-QM-4TZ" kind="show" id="rWc-Ii-opW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fM0-aH-rBk" userLabel="First Responder" sceneMemberID="firstResponder"/>

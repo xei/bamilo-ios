@@ -281,29 +281,30 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
     
     func doOnBoarding(featureName: String, handler: @escaping (String, TourPresenter) -> Void) {
         if featureName == TourNames.ItemTrackings {
-            if spotLightView == nil {
-                if let orderTrackingCell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 1)) {
-                    var cellRect = self.tableView.convert(orderTrackingCell.frame, to: self.tableView.superview)
-                    
-                    //TODO: temprory code for this release!!!
-                    let IS_IPHONE = UIDevice.current.userInterfaceIdiom == .phone
-                    let IS_IPHONE_X = IS_IPHONE && Int(UIScreen.main.bounds.size.height) == 812
-                    if IS_IPHONE_X {
-                        cellRect.origin.y += 25
-                    }
-                    
-                    //For Tablet views
-                    cellRect.size.width = UIScreen.main.bounds.width
-                    
-                    let orderSpotLight = TourSpotLight(withRect: cellRect, shape: .roundRectangle, text: STRING_ITEM_TRACKING_HINT_2)
-                    spotLightView = TourSpotLightView(frame: UIScreen.main.bounds, spotlight: [orderSpotLight])
-                    spotLightView?.enableContinueLabel = true
-                    spotLightView?.tourName = featureName
-                    spotLightView?.textLabelFont = Theme.font(kFontVariationBold, size: 16)
-                    spotLightView?.continueLabelFont = Theme.font(kFontVariationBold, size: 16)
-                    spotLightView?.continueLabelText = STRING_GOT_IT
-                    spotLightView?.delegate = self
+            self.spotLightView?.removeFromSuperview()
+            self.spotLightView = nil
+            
+            if let orderTrackingCell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 1)) {
+                var cellRect = self.tableView.convert(orderTrackingCell.frame, to: self.tableView.superview)
+                
+                //TODO: temprory code for this release!!!
+                let IS_IPHONE = UIDevice.current.userInterfaceIdiom == .phone
+                let IS_IPHONE_X = IS_IPHONE && Int(UIScreen.main.bounds.size.height) == 812
+                if IS_IPHONE_X {
+                    cellRect.origin.y += 25
                 }
+                
+                //For Tablet views
+                cellRect.size.width = UIScreen.main.bounds.width
+                
+                let orderSpotLight = TourSpotLight(withRect: cellRect, shape: .roundRectangle, text: STRING_ITEM_TRACKING_HINT_2)
+                spotLightView = TourSpotLightView(frame: UIScreen.main.bounds, spotlight: [orderSpotLight])
+                spotLightView?.enableContinueLabel = true
+                spotLightView?.tourName = featureName
+                spotLightView?.textLabelFont = Theme.font(kFontVariationBold, size: 16)
+                spotLightView?.continueLabelFont = Theme.font(kFontVariationBold, size: 16)
+                spotLightView?.continueLabelText = STRING_GOT_IT
+                spotLightView?.delegate = self
             }
             
             let window = UIApplication.shared.keyWindow!

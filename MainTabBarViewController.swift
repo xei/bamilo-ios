@@ -160,7 +160,7 @@ import Crashlytics
     }
     
     static func showCategories() {
-        MainTabBarViewController.activateTabItem(rootViewClassType: JACategoriesSideMenuViewController.self)
+        MainTabBarViewController.activateTabItem(rootViewClassType: RootCategoryViewController.self)
     }
     
     

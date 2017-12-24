@@ -16,6 +16,7 @@ struct DataManagerKeys {
 }
 
 class DataManagerSwift {
+    
     static private(set) var requestManager: RequestManagerSwift = {
         if let apiBaseUrl = AppUtility.getInfoConfigs(for: AppKeys.APIBaseUrl) as? String,
             let apiVersion = AppUtility.getInfoConfigs(for: AppKeys.APIVersion) as? String {
