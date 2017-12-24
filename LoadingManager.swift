@@ -15,7 +15,7 @@
         return loadingView
     }()
     
-    private static let loadingAnimationView: UIImageView = {
+    private static let loadingAnimationView: UIImageView = {    
         if let image = UIImage(named: "loadingAnimationFrame1") {
             let lastFrame: Int = 8
             let loadingAnimationView = UIImageView(frame: CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height))

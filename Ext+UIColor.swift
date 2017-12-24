@@ -45,11 +45,6 @@ extension UIColor {
     }
     
     static let placeholderColors:[UIColor] = [ //Sequence of these colors are important
-        UIColor.fromHexString(hex: "#f9efea")!,
-        UIColor.fromHexString(hex: "#ececec")!,
-        UIColor.fromHexString(hex: "#e2e8ef")!,
-        UIColor.fromHexString(hex: "#e9f7f7")!,
-        UIColor.fromHexString(hex: "#f5f1f7")!,
-        UIColor.fromHexString(hex: "#ecebe8")!
+        #colorLiteral(red: 0.9764705882, green: 0.937254902, blue: 0.9176470588, alpha: 1), #colorLiteral(red: 0.9254901961, green: 0.9254901961, blue: 0.9254901961, alpha: 1), #colorLiteral(red: 0.8862745098, green: 0.9098039216, blue: 0.937254902, alpha: 1), #colorLiteral(red: 0.9137254902, green: 0.968627451, blue: 0.968627451, alpha: 1), #colorLiteral(red: 0.9607843137, green: 0.9450980392, blue: 0.968627451, alpha: 1), #colorLiteral(red: 0.9254901961, green: 0.9215686275, blue: 0.9098039216, alpha: 1)
     ]
 }

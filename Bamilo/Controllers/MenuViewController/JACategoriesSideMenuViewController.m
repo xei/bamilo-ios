@@ -155,14 +155,19 @@
         self.numberOfRequests -= 1;
         self.categoriesLoadingError = NO;
         self.categoriesArray = [NSArray arrayWithArray:(NSArray *)categories];
-        [self categoriesLoaded];
-        [self hideLoading];
+        [self renderContentIfIsReady];
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
         self.numberOfRequests -= 1;
         self.categoriesLoadingError = YES;
+        [self renderContentIfIsReady];
+    }];
+}
+
+- (void)renderContentIfIsReady {
+    if (self.numberOfRequests == 0) {
         [self categoriesLoaded];
         [self hideLoading];
-    }];
+    }
 }
 
 - (void)reloadExternalLinks {
@@ -171,15 +176,10 @@
     [RIExternalCategory getExternalCategoryWithSuccessBlock:^(RIExternalCategory *externalCategory) {
         self.numberOfRequests -= 1;
         self.externalCategory = externalCategory;
-        [self categoriesLoaded];
-        if (self.numberOfRequests == 0) {
-            [self hideLoading];
-        }
+        [self renderContentIfIsReady];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
         self.numberOfRequests -= 1;
-        if (self.numberOfRequests == 0) {
-            [self hideLoading];
-        }
+        [self renderContentIfIsReady];
     }];
 }
 
