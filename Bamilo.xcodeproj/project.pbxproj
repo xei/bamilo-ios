@@ -100,6 +100,8 @@
 		6157A3F31F83974100B8D501 /* MyBamiloModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6157A3F21F83974100B8D501 /* MyBamiloModel.swift */; };
 		61583DDD1EF92100007107C1 /* DeleteEntityDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61583DDC1EF92100007107C1 /* DeleteEntityDataManager.swift */; };
 		615E796C1EF6BE58008E661D /* UILabel+WhiteUIDatePickerLabels.m in Sources */ = {isa = PBXBuildFile; fileRef = 615E796B1EF6BE58008E661D /* UILabel+WhiteUIDatePickerLabels.m */; };
+		615EBA7A1FEFE5F900FB58DE /* CategoryCoverTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615EBA781FEFE5F900FB58DE /* CategoryCoverTableViewCell.swift */; };
+		615EBA7B1FEFE5F900FB58DE /* CategoryCoverTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 615EBA791FEFE5F900FB58DE /* CategoryCoverTableViewCell.xib */; };
 		615EDF541F697DA600454A10 /* LocalSearchSuggestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615EDF531F697DA600454A10 /* LocalSearchSuggestion.swift */; };
 		615F96ED1E9E11FD00614644 /* NotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 615F96EC1E9E11FD00614644 /* NotificationService.m */; };
 		615F96F11E9E11FD00614644 /* NotificationService.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 615F96E91E9E11FD00614644 /* NotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -1108,6 +1110,8 @@
 		61583DDC1EF92100007107C1 /* DeleteEntityDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteEntityDataManager.swift; sourceTree = "<group>"; };
 		615E796A1EF6BE58008E661D /* UILabel+WhiteUIDatePickerLabels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+WhiteUIDatePickerLabels.h"; sourceTree = "<group>"; };
 		615E796B1EF6BE58008E661D /* UILabel+WhiteUIDatePickerLabels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+WhiteUIDatePickerLabels.m"; sourceTree = "<group>"; };
+		615EBA781FEFE5F900FB58DE /* CategoryCoverTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCoverTableViewCell.swift; sourceTree = "<group>"; };
+		615EBA791FEFE5F900FB58DE /* CategoryCoverTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryCoverTableViewCell.xib; sourceTree = "<group>"; };
 		615EDF531F697DA600454A10 /* LocalSearchSuggestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalSearchSuggestion.swift; sourceTree = "<group>"; };
 		615F96E91E9E11FD00614644 /* NotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		615F96EB1E9E11FD00614644 /* NotificationService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationService.h; sourceTree = "<group>"; };
@@ -3073,6 +3077,7 @@
 		612FE5181EDC0A8400C2AFA0 /* TableViewCell */ = {
 			isa = PBXGroup;
 			children = (
+				615EBA7C1FEFE60100FB58DE /* CategoryCoverTableViewCell */,
 				61DA163F1FEE5016001C5071 /* CategoryTableViewCell */,
 				61FB2FD91FA8CB5B005FE3F6 /* OrderDetail */,
 				61B2C7F81F9C973300930435 /* Accordion */,
@@ -3324,6 +3329,15 @@
 				6157A3F21F83974100B8D501 /* MyBamiloModel.swift */,
 			);
 			name = MyBamilo;
+			sourceTree = "<group>";
+		};
+		615EBA7C1FEFE60100FB58DE /* CategoryCoverTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				615EBA781FEFE5F900FB58DE /* CategoryCoverTableViewCell.swift */,
+				615EBA791FEFE5F900FB58DE /* CategoryCoverTableViewCell.xib */,
+			);
+			name = CategoryCoverTableViewCell;
 			sourceTree = "<group>";
 		};
 		615F96EA1E9E11FD00614644 /* NotificationService */ = {
@@ -7828,6 +7842,7 @@
 				8757445D1EA60E8D001B518A /* Yalda-Small-50@2x.png in Resources */,
 				875743A71EA60DE0001B518A /* Ramadan-76@2x.png in Resources */,
 				61259BE51FC585360051CBD4 /* BreadcrumbsView.xib in Resources */,
+				615EBA7B1FEFE5F900FB58DE /* CategoryCoverTableViewCell.xib in Resources */,
 				875744621EA60E8E001B518A /* Yalda-76.png in Resources */,
 				8757441E1EA60E48001B518A /* Tragedy-Small.png in Resources */,
 				616F7D131F6D172100085B64 /* IconTableViewCell.xib in Resources */,
@@ -8599,6 +8614,7 @@
 				875AD5651E38C0C900584ABF /* RIOrder.m in Sources */,
 				FF4465221CECB806003A65EA /* JAORPaymentViewController.m in Sources */,
 				619E92CA1F8A0B61003885BC /* DailyDealsTableViewCell.swift in Sources */,
+				615EBA7A1FEFE5F900FB58DE /* CategoryCoverTableViewCell.swift in Sources */,
 				617D4EEF1FEA65CC00A00799 /* RootCategoryViewController.swift in Sources */,
 				87B684DF1E49CE740042C09F /* BasicTableViewCell.m in Sources */,
 				9A0BBE951BFE2482007D35CE /* JACustomNavigationBarView.m in Sources */,

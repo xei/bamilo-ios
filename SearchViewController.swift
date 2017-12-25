@@ -42,6 +42,7 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
         self.tableView.register(UINib(nibName: IconTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: IconTableViewCell.nibName())
         self.tableView.register(UINib(nibName: PlainTableViewHeaderCell.nibName(), bundle: nil), forHeaderFooterViewReuseIdentifier: PlainTableViewHeaderCell.nibName())
         self.searchTextField.becomeFirstResponder()
+        self.searchTextField.returnKeyType = .search
         
         //to remove extra tableview seperators
         self.tableView.tableFooterView = UIView()

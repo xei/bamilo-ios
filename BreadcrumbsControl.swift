@@ -9,12 +9,13 @@
 import UIKit
 
 class BreadcrumbsControl: BaseViewControl, BreadcrumbsViewDelegate {
+    
     var breadcrumbsView: BreadcrumbsView?
     weak var delegate: BreadcrumbsViewDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        self.backgroundColor = .clear
         self.breadcrumbsView = BreadcrumbsView.nibInstance()
         if let view = self.breadcrumbsView {
             view.delegate = self

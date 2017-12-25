@@ -35,24 +35,29 @@ class ExternalLink: Link {
     override func mapping(map: Map) {
         super.mapping(map: map)
         link <- map["external_link_ios"]
+        
     }
 }
 
 
 class InternalLinks: Mappable {
     var items: [InternalLink]?
+    var title: String?
     required init?(map: Map) {
     }
     func mapping(map: Map) {
         items <- map["internal_links"]
+        title <- map["label"]
     }
 }
 
 class ExternalLinks: Mappable {
     var items: [ExternalLink]?
+    var title: String?
     required init?(map: Map) {
     }
     func mapping(map: Map) {
         items <- map["external_links"]
+        title <- map["label"]
     }
 }

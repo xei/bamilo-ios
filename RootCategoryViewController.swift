@@ -8,7 +8,12 @@
 
 import UIKit
 
-class RootCategoryViewController: BaseViewController, DataServiceProtocol, UITableViewDataSource, UITableViewDelegate {
+class RootCategoryViewController: BaseViewController,
+                                    DataServiceProtocol,
+                                    UITableViewDataSource,
+                                    UITableViewDelegate,
+                                    UIScrollViewDelegate,
+                                    UITextFieldDelegate {
     
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet private weak var tableview: UITableView!
@@ -26,13 +31,15 @@ class RootCategoryViewController: BaseViewController, DataServiceProtocol, UITab
     private var externalLinks: ExternalLinks?
     private var internalLinks: InternalLinks?
     
-    private let categoriesRequestID:Int32 = 0
-    private let externalLinksRequestID:Int32 = 1
-    private let internalLinksRequestID:Int32 = 2
+    private let categoriesRequestID: Int32 = 0
+    private let externalLinksRequestID: Int32 = 1
+    private let internalLinksRequestID: Int32 = 2
     
     private var loadContentCompletion: RequestCompletion?
+    private var sectionTypes: [Int:Any] = [:]
     
-    private var sectionTypes: [Int: Any] = [:]
+    private var navbarFollower: ScrollerBarFollower?
+    private var searchBarFollower: ScrollerBarFollower?
     
     private var successRequestIds: [Int32] = []
     private var requestIdsInProgress: [Int32] = [] {
@@ -48,16 +55,30 @@ class RootCategoryViewController: BaseViewController, DataServiceProtocol, UITab
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
-        
         self.tableview.register(UINib(nibName: CategoryTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: CategoryTableViewCell.nibName())
-        
         self.tableview.register(UINib(nibName: PlainTableViewHeaderCell.nibName(), bundle: nil), forHeaderFooterViewReuseIdentifier: PlainTableViewHeaderCell.nibName())
         
         self.tableview.delegate = self
         self.tableview.dataSource = self
+        self.tableview.separatorStyle = .none
         
-        //to remove extra seperators
+        self.searchbar.searchView?.textField.delegate = self
+        //To remove extra seperators
         self.tableview.tableFooterView = UIView(frame: .zero)
+        
+        //To attach scroll followers
+        if let navbarView = self.navigationController?.navigationBar, let tableViewTopOffset = self.navigationController?.navigationBar.frame.height {
+            self.searchBarBottomToTopTableViewConstraint.constant = -tableViewTopOffset
+            self.tableview.contentInset = UIEdgeInsets(top: tableViewTopOffset, left: 0, bottom: 0, right: 0)
+            self.tableview.contentOffset = CGPoint(x: 0, y: -tableViewTopOffset)
+            
+            self.navbarFollower = ScrollerBarFollower(barView: navbarView, moveDirection: .top)
+            self.searchBarFollower = ScrollerBarFollower(barView: self.searchbar, moveDirection: .top)
+            self.navbarFollower?.followScrollView(scrollView: self.tableview, delay: -tableViewTopOffset, permittedMoveDistance: navbarView.frame.height)
+            self.searchBarFollower?.followScrollView(scrollView: self.tableview, delay: -tableViewTopOffset, permittedMoveDistance: navbarView.frame.height)
+        }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(resetNavBarFollowers), name: NSNotification.Name(NotificationKeys.EnterForground), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -65,30 +86,31 @@ class RootCategoryViewController: BaseViewController, DataServiceProtocol, UITab
         self.loadContent()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.resetNavBarFollowers()
+    }
+    
     private func loadContent(completion: RequestCompletion? = nil) {
         var hasReceivedError = false
-        
         self.loadCategories { (success) in
             if !success, !hasReceivedError {
                 hasReceivedError = true
                 completion?(success)
             }
         }
-        
         self.loadExternalLinks { (success) in
             if !success, !hasReceivedError {
                 hasReceivedError = true
                 completion?(success)
             }
         }
-        
         self.loadInternalLinks { (success) in
             if !success, !hasReceivedError {
                 hasReceivedError = true
                 completion?(success)
             }
         }
-        
         self.loadContentCompletion = completion
     }
     
@@ -137,8 +159,8 @@ class RootCategoryViewController: BaseViewController, DataServiceProtocol, UITab
     
     private func handleRequestResponse(data: Any?, error: NSError?, requestID: Int32) {
         self.removeFromRequestIDs(rid: requestID)
-        self.successRequestIds.append(requestID)
         if error == nil {
+            self.successRequestIds.append(requestID)
             self.bind(data, forRequestId: requestID)
         } else {
             self.errorHandler(error, forRequestID: requestID)
@@ -149,17 +171,23 @@ class RootCategoryViewController: BaseViewController, DataServiceProtocol, UITab
         self.requestIdsInProgress = self.requestIdsInProgress.filter { $0 != rid }
     }
     
-    private func getModelOfIndexPath(indexPath: IndexPath) -> Any? {
-        if indexPath.section < sectionTypes.count {
-            let sectionType = self.sectionTypes[indexPath.section]
-            if let _ = sectionType as? Categories.Type, let rootCatCount = self.categories?.tree?.count, rootCatCount > 0,
-                let rootChildsCategory = self.categories?.tree?[0].childern, indexPath.row < rootChildsCategory.count {
-                return rootChildsCategory[indexPath.row]
-            } else if let _ = sectionType as? ExternalLinks.Type, let links = self.externalLinks?.items, indexPath.row < links.count {
-                return links[indexPath.row]
-            } else if let _ = sectionType as? InternalLinks.Type, let links = self.internalLinks?.items, indexPath.row < links.count {
-                return links[indexPath.row]
+    private func getModelOfSection(section: Int) -> [Any]? {
+        if section < self.sectionTypes.count {
+            let sectionType = self.sectionTypes[section]
+            if let _ = sectionType as? Categories.Type, let catTree = self.categories?.tree {
+                return catTree[0].childern
+            } else if let _ = sectionType as? ExternalLinks.Type {
+                return externalLinks?.items
+            } else if let _ = sectionType as? InternalLinks.Type {
+                return self.internalLinks?.items
             }
+        }
+        return nil
+    }
+    
+    private func getModelOfIndexPath(indexPath: IndexPath) -> Any? {
+        if let sectionModel = self.getModelOfSection(section: indexPath.section), indexPath.row < sectionModel.count {
+            return sectionModel[indexPath.row]
         }
         return nil
     }
@@ -169,7 +197,7 @@ class RootCategoryViewController: BaseViewController, DataServiceProtocol, UITab
         if let model = self.getModelOfIndexPath(indexPath: indexPath) {
             if let cat = model as? CategoryProduct {
                 if cat.childern?.count ?? 0 > 0 {
-                    
+                    self.performSegue(withIdentifier: "showsubCategories", sender: cat)
                 } else {
                     MainTabBarViewController.topNavigationController()?.openTargetString(cat.target, purchaseInfo: nil)
                 }
@@ -196,7 +224,7 @@ class RootCategoryViewController: BaseViewController, DataServiceProtocol, UITab
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 { return nil }
         let header = self.tableview.dequeueReusableHeaderFooterView(withIdentifier: PlainTableViewHeaderCell.nibName()) as! PlainTableViewHeaderCell
-        header.titleString = section == 1 ? STRING_SIZE : STRING_CITY
+        header.titleString = section == 1 ? self.externalLinks?.title : self.internalLinks?.title ?? ""
         return header
     }
     
@@ -214,16 +242,28 @@ class RootCategoryViewController: BaseViewController, DataServiceProtocol, UITab
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let sectionType = self.sectionTypes[section]
+        return self.getModelOfSection(section: section)?.count ?? 0
+    }
+    
+    //MARK: - UIScrollViewDelegate
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.navbarFollower?.scrollViewDidScroll(scrollView)
+        self.searchBarFollower?.scrollViewDidScroll(scrollView)
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        self.navbarFollower?.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
+        self.searchBarFollower?.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
+    }
+    
+    
+    //MARK: - UITextFieldDelegate
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.endEditing(true)
+        self.navbarFollower?.resetBarFrame(animated: false)
+        self.searchBarFollower?.resetBarFrame(animated: false)
         
-        if let _ = sectionType as? Categories.Type, let catTree = self.categories?.tree {
-            return catTree.count > 0 ? (catTree[0].childern?.count ?? 0) : 0
-        } else if let _ = sectionType as? ExternalLinks.Type {
-            return self.externalLinks?.items?.count ?? 0
-        } else if let _ = sectionType as? InternalLinks.Type {
-            return self.internalLinks?.items?.count ?? 0
-        }
-        return 0
+        self.performSegue(withIdentifier: "ShowSearchView", sender: nil)
     }
     
     //MARK: - DataServiceProtocol
@@ -251,6 +291,11 @@ class RootCategoryViewController: BaseViewController, DataServiceProtocol, UITab
         }
     }
     
+    @objc private func resetNavBarFollowers() {
+        self.searchBarFollower?.resetBarFrame(animated: false)
+        self.navbarFollower?.resetBarFrame(animated: false)
+    }
+    
     private func updateSectionTypes() {
         if let _ = self.categories {
             self.sectionTypes[self.sectionTypes.keys.count] = Categories.self
@@ -276,7 +321,18 @@ class RootCategoryViewController: BaseViewController, DataServiceProtocol, UITab
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+        let segueName = segue.identifier
+        if segueName == "showsubCategories", let subCatViewController = segue.destination as? SubCategoryLandingPageViewController, let selectedCategory = sender as? CategoryProduct {
+            subCatViewController.subcategories = selectedCategory.childern
+            subCatViewController.historyCategory = [selectedCategory]
+        } else if segueName == "ShowSearchView", let searchViewController = segue.destination as? SearchViewController {
+            searchViewController.parentScreenName = self.getScreenName()
+        }
+    }
+    
+    //MARK: - DataTrackerProtocol
+    override func getScreenName() -> String! {
+        return "CategoryMenu"
     }
     
     //MARK - NavigationBarProtocol

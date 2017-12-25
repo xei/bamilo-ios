@@ -18,12 +18,14 @@ class BreadcrumbsView: BaseControlView {
     @IBOutlet weak private var verticalSeperator: UIView!
     
     private var breadcrumbs: [BreadcrumbsItem]?
-    private let contentHeight: CGFloat = 46
+    
     private lazy var buttons = [UIButton]()
     private lazy var arrowImageViews = [UIImageView]()
+    var isCategoryThemplate = false
     weak var delegate: BreadcrumbsViewDelegate?
     
     override func awakeFromNib() {
+        self.backgroundColor = .clear
         self.scrollview.transform = CGAffineTransform(scaleX: -1, y: 1)
         self.scrollview.backgroundColor = .clear
         self.verticalSeperator.backgroundColor = Theme.color(kColorExtraExtraLightGray)
@@ -33,6 +35,7 @@ class BreadcrumbsView: BaseControlView {
         self.scrollview.showsVerticalScrollIndicator = false
     }
     
+    var contentHeight: CGFloat = 46
     var buttonTitleFont = Theme.font(kFontVariationRegular, size: 12)
     var buttonTitleColor = Theme.color(kColorBlue1)
     var buttonBackgroundColor = Theme.color(kColorBlue10)
@@ -61,12 +64,12 @@ class BreadcrumbsView: BaseControlView {
         button.clipsToBounds = true
         button.layer.cornerRadius = self.buttonBorderRadius
         button.addTarget(self, action: #selector(self.touchUpInsideButton), for: .touchUpInside)
+        
         return button
     }
     
     override func layoutIfNeeded() {
         super.layoutIfNeeded()
-        
         var offset:CGFloat = 0
         if self.buttons.count == 0 { return }
         for (index, button) in self.buttons.enumerated() {

@@ -21,6 +21,8 @@ class CategoryTableViewCell: BaseTableViewCell {
     }
     
     private func applyStyle() {
+        self.backgroundColor = .white
+        self.contentView.backgroundColor = .white
         self.iconImageView.layer.cornerRadius = self.imageViewContainerHeightConstraint.constant / 2
         self.iconImageView.clipsToBounds = true
         self.imageViewContainerView.layer.cornerRadius = self.imageViewContainerHeightConstraint.constant / 2

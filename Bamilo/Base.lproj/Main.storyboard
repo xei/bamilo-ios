@@ -205,10 +205,10 @@
             </objects>
             <point key="canvasLocation" x="1138" y="-1586"/>
         </scene>
-        <!--Sub Cat Filter View Controller-->
+        <!--Sub Category Landing Page View Controller-->
         <scene sceneID="OLo-Un-rtN">
             <objects>
-                <viewController id="VDg-QM-4TZ" customClass="SubCatFilterViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="subCategoryViewController" id="VDg-QM-4TZ" customClass="SubCategoryLandingPageViewController" customModule="Bamilo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="iXS-FC-wHH"/>
                         <viewControllerLayoutGuide type="bottom" id="w8g-J8-u7Q"/>
@@ -216,8 +216,23 @@
                     <view key="view" contentMode="scaleToFill" id="ifc-JL-WdM">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="oR8-iJ-GPv">
+                                <rect key="frame" x="0.0" y="64" width="414" height="623"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="oR8-iJ-GPv" firstAttribute="top" secondItem="iXS-FC-wHH" secondAttribute="bottom" id="HoM-Dg-QEs"/>
+                            <constraint firstItem="oR8-iJ-GPv" firstAttribute="leading" secondItem="ifc-JL-WdM" secondAttribute="leading" id="JvF-J6-tQH"/>
+                            <constraint firstItem="w8g-J8-u7Q" firstAttribute="top" secondItem="oR8-iJ-GPv" secondAttribute="bottom" id="R76-Ib-HrX"/>
+                            <constraint firstAttribute="trailing" secondItem="oR8-iJ-GPv" secondAttribute="trailing" id="b1m-F4-L0Q"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tableview" destination="oR8-iJ-GPv" id="7Bd-sG-kLI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yxZ-GP-nc8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -330,7 +345,7 @@
                                         <rect key="frame" x="64" y="8" width="342" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="search"/>
                                         <connections>
                                             <action selector="textFieldEditingChanged:" destination="CdM-AJ-ErQ" eventType="editingChanged" id="qa8-7b-uts"/>
                                         </connections>
@@ -1599,7 +1614,7 @@
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="7M9-ed-3k8">
                                 <rect key="frame" x="197" y="389.66666666666669" width="20" height="20"/>
                             </activityIndicatorView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="ksl-P3-T0i">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="ksl-P3-T0i">
                                 <rect key="frame" x="0.0" y="112" width="414" height="575"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
@@ -1632,7 +1647,7 @@
                         <outlet property="searchbar" destination="a7h-cO-JF2" id="XnC-am-EcM"/>
                         <outlet property="tableview" destination="ksl-P3-T0i" id="1dU-79-n8g"/>
                         <segue destination="CdM-AJ-ErQ" kind="presentation" identifier="ShowSearchView" id="mLp-yH-ACJ"/>
-                        <segue destination="VDg-QM-4TZ" kind="show" id="rWc-Ii-opW"/>
+                        <segue destination="VDg-QM-4TZ" kind="show" identifier="showsubCategories" id="rWc-Ii-opW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fM0-aH-rBk" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1821,7 +1836,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="bEV-Bv-dJp"/>
-        <segue reference="jQX-gw-9ku"/>
+        <segue reference="QvZ-9a-k1K"/>
         <segue reference="mLp-yH-ACJ"/>
     </inferredMetricsTieBreakers>
 </document>

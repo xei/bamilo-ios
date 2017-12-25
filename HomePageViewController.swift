@@ -115,7 +115,6 @@ class HomePageViewController:   BaseViewController,
         self.homePage = nil
         ThreadManager.execute {
             self.tableView.reloadData()
-            self.tableView.separatorStyle = .none;
         }
     }
     
