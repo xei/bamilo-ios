@@ -63,7 +63,7 @@ class CategoryTableViewCell: BaseTableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        
+            
         self.titleLabel.text = nil
         self.iconImageView.image = nil
     }
