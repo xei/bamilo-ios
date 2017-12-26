@@ -39,18 +39,33 @@ class CategoryTableViewCell: BaseTableViewCell {
     
     override func update(withModel model: Any!) {
         if let category = model as? CategoryProduct {
-            self.titleLabel.text = category.name
-            if let image = category.image {
-                self.imageViewContainerView.isHidden = false
-                self.titleToSuperviewRightConstraint.priority = UILayoutPriorityDefaultLow
-                self.titleLabelToImageRightConstraint.priority = UILayoutPriorityDefaultHigh
-                self.iconImageView.kf.setImage(with: image, options: [.transition(.fade(0.20))])
-            } else {
-                self.imageViewContainerView.isHidden = true
-                self.titleToSuperviewRightConstraint.priority = UILayoutPriorityDefaultHigh
-                self.titleLabelToImageRightConstraint.priority = UILayoutPriorityDefaultLow
-            }
+            self.updateView(imageUrl: category.image, title: category.name ?? "")
+        } else if let externalLink = model as? ExternalLink {
+            self.updateView(imageUrl: externalLink.imageURl, title: externalLink.label ?? "")
+        } else if let internalLink = model as? InternalLink {
+            self.updateView(imageUrl: internalLink.imageURl, title: internalLink.label ?? "")
         }
+    }
+    
+    private func updateView(imageUrl: URL?, title: String) {
+        self.titleLabel.text = title
+        if let image = imageUrl {
+            self.imageViewContainerView.isHidden = false
+            self.titleToSuperviewRightConstraint.priority = UILayoutPriorityDefaultLow
+            self.titleLabelToImageRightConstraint.priority = UILayoutPriorityDefaultHigh
+            self.iconImageView.kf.setImage(with: image, options: [.transition(.fade(0.20))])
+        } else {
+            self.imageViewContainerView.isHidden = true
+            self.titleToSuperviewRightConstraint.priority = UILayoutPriorityDefaultHigh
+            self.titleLabelToImageRightConstraint.priority = UILayoutPriorityDefaultLow
+        }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        self.titleLabel.text = nil
+        self.iconImageView.image = nil
     }
     
     override static func nibName() -> String {
