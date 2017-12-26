@@ -14,6 +14,8 @@ class CategoryTableViewCell: BaseTableViewCell {
     @IBOutlet weak private var iconImageView: UIImageView!
     @IBOutlet weak private var imageViewContainerHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak private var titleLabel: UILabel!
+    @IBOutlet weak private var titleLabelToImageRightConstraint: NSLayoutConstraint!
+    @IBOutlet weak private var titleToSuperviewRightConstraint: NSLayoutConstraint!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -38,7 +40,16 @@ class CategoryTableViewCell: BaseTableViewCell {
     override func update(withModel model: Any!) {
         if let category = model as? CategoryProduct {
             self.titleLabel.text = category.name
-            self.iconImageView.kf.setImage(with: category.image, options: [.transition(.fade(0.20))])
+            if let image = category.image {
+                self.imageViewContainerView.isHidden = false
+                self.titleToSuperviewRightConstraint.priority = UILayoutPriorityDefaultLow
+                self.titleLabelToImageRightConstraint.priority = UILayoutPriorityDefaultHigh
+                self.iconImageView.kf.setImage(with: image, options: [.transition(.fade(0.20))])
+            } else {
+                self.imageViewContainerView.isHidden = true
+                self.titleToSuperviewRightConstraint.priority = UILayoutPriorityDefaultHigh
+                self.titleLabelToImageRightConstraint.priority = UILayoutPriorityDefaultLow
+            }
         }
     }
     

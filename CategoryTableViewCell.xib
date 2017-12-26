@@ -55,9 +55,10 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="Ytb-gG-lUP" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="09U-11-CkU"/>
-                    <constraint firstItem="NHr-RO-nBt" firstAttribute="left" secondItem="mDB-Eh-5ke" secondAttribute="right" constant="16" id="5zH-lL-6aS"/>
+                    <constraint firstItem="NHr-RO-nBt" firstAttribute="left" secondItem="mDB-Eh-5ke" secondAttribute="right" priority="750" constant="16" id="5zH-lL-6aS"/>
                     <constraint firstItem="Ytb-gG-lUP" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="94y-jH-Llf"/>
                     <constraint firstAttribute="right" secondItem="Ytb-gG-lUP" secondAttribute="right" constant="16" id="a3n-sQ-mAv"/>
+                    <constraint firstAttribute="right" secondItem="mDB-Eh-5ke" secondAttribute="right" priority="250" constant="16" id="h2I-gI-LYD"/>
                     <constraint firstItem="mDB-Eh-5ke" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="wwj-zP-zoJ"/>
                 </constraints>
             </tableViewCellContentView>
@@ -66,6 +67,8 @@
                 <outlet property="imageViewContainerHeightConstraint" destination="dXK-Np-3A1" id="c89-aN-rRT"/>
                 <outlet property="imageViewContainerView" destination="Ytb-gG-lUP" id="yqx-yr-y61"/>
                 <outlet property="titleLabel" destination="mDB-Eh-5ke" id="6kI-Pe-UgM"/>
+                <outlet property="titleLabelToImageRightConstraint" destination="5zH-lL-6aS" id="Z2a-v0-UWi"/>
+                <outlet property="titleToSuperviewRightConstraint" destination="h2I-gI-LYD" id="KhM-aF-wsm"/>
             </connections>
             <point key="canvasLocation" x="-772" y="-297"/>
         </tableViewCell>
