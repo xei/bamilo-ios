@@ -1642,7 +1642,6 @@
                     <navigationItem key="navigationItem" id="xIp-YF-o3p"/>
                     <connections>
                         <outlet property="activityIndicator" destination="7M9-ed-3k8" id="iw0-lH-wPN"/>
-                        <outlet property="searchBarBottomToTopTableViewConstraint" destination="y55-VW-idu" id="8gH-RI-kdN"/>
                         <outlet property="searchBarHeight" destination="Gq3-uU-WUG" id="fM3-CW-JbI"/>
                         <outlet property="searchbar" destination="a7h-cO-JF2" id="XnC-am-EcM"/>
                         <outlet property="tableview" destination="ksl-P3-T0i" id="1dU-79-n8g"/>

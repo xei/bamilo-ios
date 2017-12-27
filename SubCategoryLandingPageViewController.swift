@@ -32,6 +32,9 @@ class SubCategoryLandingPageViewController: BaseViewController,
         self.tableview.dataSource = self
         self.tableview.clipsToBounds = false
         self.tableview.separatorStyle = .none
+        
+        self.tableview.showsVerticalScrollIndicator = false
+        self.tableview.showsHorizontalScrollIndicator = false
         self.coverHeight = CategoryCoverTableViewCell.cellHeight()
         
         //navigation title
@@ -115,8 +118,8 @@ class SubCategoryLandingPageViewController: BaseViewController,
     
     //MARK: - CategoryCoverTableViewCellDelegate
     func goBack(level: Int) {
-        if let viewControllers = self.navigationController?.viewControllers, level + 1 < viewControllers.count {
-            self.navigationController?.popToViewController(viewControllers[level + 1], animated: true)
+        if let viewControllers = self.navigationController?.viewControllers, level < viewControllers.count {
+            self.navigationController?.popToViewController(viewControllers[level], animated: true)
         }
     }
     

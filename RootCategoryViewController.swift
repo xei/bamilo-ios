@@ -19,7 +19,6 @@ class RootCategoryViewController: BaseViewController,
     @IBOutlet private weak var tableview: UITableView!
     @IBOutlet private weak var searchbar: SearchBarControl!
     @IBOutlet private weak var searchBarHeight: NSLayoutConstraint!
-    @IBOutlet private weak var searchBarBottomToTopTableViewConstraint: NSLayoutConstraint!
     
     typealias RequestCompletion = (Bool) -> Void
     
@@ -37,9 +36,6 @@ class RootCategoryViewController: BaseViewController,
     
     private var loadContentCompletion: RequestCompletion?
     private var sectionTypes: [Int:Any] = [:]
-    
-    private var navbarFollower: ScrollerBarFollower?
-    private var searchBarFollower: ScrollerBarFollower?
     
     private var successRequestIds: [Int32] = []
     private var requestIdsInProgress: [Int32] = [] {
@@ -65,30 +61,11 @@ class RootCategoryViewController: BaseViewController,
         self.searchbar.searchView?.textField.delegate = self
         //To remove extra seperators
         self.tableview.tableFooterView = UIView(frame: .zero)
-        
-        //To attach scroll followers
-        if let navbarView = self.navigationController?.navigationBar, let tableViewTopOffset = self.navigationController?.navigationBar.frame.height {
-            self.searchBarBottomToTopTableViewConstraint.constant = -tableViewTopOffset
-            self.tableview.contentInset = UIEdgeInsets(top: tableViewTopOffset, left: 0, bottom: 0, right: 0)
-            self.tableview.contentOffset = CGPoint(x: 0, y: -tableViewTopOffset)
-            
-            self.navbarFollower = ScrollerBarFollower(barView: navbarView, moveDirection: .top)
-            self.searchBarFollower = ScrollerBarFollower(barView: self.searchbar, moveDirection: .top)
-            self.navbarFollower?.followScrollView(scrollView: self.tableview, delay: -tableViewTopOffset, permittedMoveDistance: navbarView.frame.height)
-            self.searchBarFollower?.followScrollView(scrollView: self.tableview, delay: -tableViewTopOffset, permittedMoveDistance: navbarView.frame.height)
-        }
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(resetNavBarFollowers), name: NSNotification.Name(NotificationKeys.EnterForground), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.loadContent()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.resetNavBarFollowers()
     }
     
     private func loadContent(completion: RequestCompletion? = nil) {
@@ -245,24 +222,9 @@ class RootCategoryViewController: BaseViewController,
         return self.getModelOfSection(section: section)?.count ?? 0
     }
     
-    //MARK: - UIScrollViewDelegate
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.navbarFollower?.scrollViewDidScroll(scrollView)
-        self.searchBarFollower?.scrollViewDidScroll(scrollView)
-    }
-    
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        self.navbarFollower?.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
-        self.searchBarFollower?.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
-    }
-    
-    
     //MARK: - UITextFieldDelegate
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.endEditing(true)
-        self.navbarFollower?.resetBarFrame(animated: false)
-        self.searchBarFollower?.resetBarFrame(animated: false)
-        
         self.performSegue(withIdentifier: "ShowSearchView", sender: nil)
     }
     
@@ -291,11 +253,6 @@ class RootCategoryViewController: BaseViewController,
         }
     }
     
-    @objc private func resetNavBarFollowers() {
-        self.searchBarFollower?.resetBarFrame(animated: false)
-        self.navbarFollower?.resetBarFrame(animated: false)
-    }
-    
     private func updateSectionTypes() {
         if let _ = self.categories {
             self.sectionTypes[self.sectionTypes.keys.count] = Categories.self
@@ -322,9 +279,9 @@ class RootCategoryViewController: BaseViewController,
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let segueName = segue.identifier
-        if segueName == "showsubCategories", let subCatViewController = segue.destination as? SubCategoryLandingPageViewController, let selectedCategory = sender as? CategoryProduct {
+        if segueName == "showsubCategories", let subCatViewController = segue.destination as? SubCategoryLandingPageViewController, let selectedCategory = sender as? CategoryProduct, let rootCatgory = self.categories?.tree?[0] {
             subCatViewController.subcategories = selectedCategory.childern
-            subCatViewController.historyCategory = [selectedCategory]
+            subCatViewController.historyCategory = [rootCatgory, selectedCategory]
         } else if segueName == "ShowSearchView", let searchViewController = segue.destination as? SearchViewController {
             searchViewController.parentScreenName = self.getScreenName()
         }
