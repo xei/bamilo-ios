@@ -27,7 +27,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.activityIndicator.hidesWhenStopped = YES;
     _addressTableViewController = (AddressTableViewController *)[[ViewControllerManager sharedInstance] loadViewController:NSStringFromClass([AddressTableViewController class])];
     _addressTableViewController.titleHeaderText = nil;
     _addressTableViewController.options = (ADDRESS_CELL_EDIT | ADDRESS_CELL_DELETE /*| ADDRESS_CELL_SELECT*/);
@@ -67,7 +68,6 @@
 
 -(void)addressDeleteButtonTapped:(id)sender {
     _currentAddress = (Address *)sender;
-    
     [[AlertManager sharedInstance] confirmAlert:@"حذف آدرس" text:@"از حذف آدرس خود اطمینان دارید؟" confirm:@"بله" cancel:@"خیر" completion:^(BOOL OK) {
         if(OK) {
             [DataAggregator deleteAddressWithTarget:self address:_currentAddress completion:^(id data, NSError *error) {

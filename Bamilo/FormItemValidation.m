@@ -36,7 +36,7 @@
     return nil;
 }
 
-- (FormValidationType *)checkValiditionOfString:(NSString *)inputString {
+- (FormValidationType *) checkValiditionOfString:(NSString *)inputString {
     
     NSUInteger lengthOfInputText = inputString.length;
     FormValidationType *validation = [[FormValidationType alloc] init];

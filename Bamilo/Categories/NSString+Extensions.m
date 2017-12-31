@@ -53,20 +53,36 @@
 }
 
 - (NSString *)changeNumberToLocalId:(NSString *) identifier {
-    NSNumberFormatter *formatter = [NSNumberFormatter new];
     NSString *result = self;
-    for (NSInteger i = 0; i < 10; i++) {
-        NSString *occurance = @"";
+    for (NSInteger charIdx=0; charIdx<self.length; charIdx++) {
+        NSString *str = [NSString stringWithFormat: @"%C", [self characterAtIndex:charIdx]];
+        NSString * translatedCharater;
         if ([identifier isEqualToString:@"en_US"]) {
-            formatter.locale = [NSLocale localeWithLocaleIdentifier:@"ar"];
-            occurance = [formatter stringFromNumber: @(i)];
+            translatedCharater = [self convertToEnglish:str];
         } else {
-            occurance = @(i).stringValue;
+            translatedCharater = [self convertEnNumberToFarsi:[self convertToEnglish:str]];
         }
-        formatter.locale = [NSLocale localeWithLocaleIdentifier:identifier];
-        result = [result stringByReplacingOccurrencesOfString:occurance withString:[formatter stringFromNumber:@(i)]];
+        result = [result stringByReplacingOccurrencesOfString:str withString:translatedCharater];
     }
     return result;
+}
+
+- (NSString*)convertEnNumberToFarsi:(NSString*)number {
+    NSString *text;
+    NSDecimalNumber *someNumber = [NSDecimalNumber decimalNumberWithString:number];
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    NSLocale *gbLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"fa"];
+    [formatter setLocale:gbLocale];
+    text = [formatter stringFromNumber:someNumber];
+    return text;
+}
+
+- (NSString*)convertToEnglish:(NSString*)input {
+    NSNumberFormatter *Formatter = [[NSNumberFormatter alloc] init];
+    NSLocale *locale = [NSLocale localeWithLocaleIdentifier:@"EN"];
+    [Formatter setLocale:locale];
+    NSNumber *newNum = [Formatter numberFromString:input];
+    return [newNum stringValue];
 }
 
 - (NSString *)getPriceStringFromFormatedPrice {
