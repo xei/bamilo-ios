@@ -9,12 +9,14 @@
 import UIKit
 
 class OrderDetailViewController: BaseViewController, OrderDetailTableViewCellDelegate, DataServiceProtocol {
-
+    
+    @IBOutlet private weak var activiryIndicator: UIActivityIndicatorView!
     let orderTableViewCtrl = OrderDetailTableViewController()
     var orderId: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = .white
         self.orderTableViewCtrl.delegate = self
         orderTableViewCtrl.addInto(viewController: self, containerView: self.view)
         
@@ -31,7 +33,9 @@ class OrderDetailViewController: BaseViewController, OrderDetailTableViewCellDel
     
     private func loadContent(completion: ((Bool)-> Void)? = nil) {
         if let orderId = self.orderId {
+            self.activiryIndicator.startAnimating()
             OrderDataManager.sharedInstance.getOrder(self, orderId: orderId) { (data, errors) in
+                self.activiryIndicator.stopAnimating()
                 if let error = errors {
                     completion?(false)
                     self.errorHandler(error, forRequestID: 0)

@@ -1,5 +1,5 @@
 //
-//  LoadingView.swift
+//  LoadingFooterView.swift
 //  Bamilo
 //
 //  Created by Ali Saeedifar on 11/4/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoadingView: BaseControlView {
+class LoadingFooterView: BaseControlView {
 
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
 

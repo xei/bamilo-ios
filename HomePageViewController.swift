@@ -72,6 +72,7 @@ class HomePageViewController:   BaseViewController,
     }
     
     func handleRefresh() {
+        self.loadingIndicator.stopAnimating()
         self.isRefreshing = true
         self.getHomePage { success in
             self.refreshControl?.endRefreshing()
@@ -88,7 +89,6 @@ class HomePageViewController:   BaseViewController,
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
         //To prevent refresh control to be visible (and it's gap) for the next time
         if self.isRefreshing {
             self.refreshControl?.endRefreshing()

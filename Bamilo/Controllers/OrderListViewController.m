@@ -129,7 +129,7 @@
 }
 
 - (void) showLoading {
-    LoadingView *footerView = [LoadingView nibInstance];
+    LoadingFooterView *footerView = [LoadingFooterView nibInstance];
     footerView.backgroundColor = [UIColor clearColor];
     [footerView setSize:CGSizeMake(self.tableview.frame.size.width, 100)];
     self.tableview.tableFooterView = footerView;
@@ -153,6 +153,7 @@
 }
 
 - (void)handleRefreshControl {
+    [self resetFooterView];
     [self resetContentAndRefresh:nil];
 }
 
@@ -232,9 +233,7 @@
                 self.emptyListMessageView.hidden = NO;
             }
             [self.tableview reloadData];
-            
-            // This will remove extra separators from tableview
-            self.tableview.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+            [self resetFooterView];
         }];
 }
 
@@ -246,10 +245,7 @@
 
 - (void)errorHandler:(NSError *)error forRequestID:(int)rid {
     if ([Utility handleErrorMessagesWithError:error viewController:self]) {
-        
-        // This will remove extra separators from tableview
-        self.tableview.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-        
+        [self resetFooterView];
     } else {
         if (self.list.currentPage == 1) {
             [self handleGenericErrorCodesWithErrorControlView:(int)error.code forRequestID:rid];
@@ -257,6 +253,11 @@
             [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
         }
     }
+}
+
+- (void)resetFooterView {
+    // This will remove extra separators from tableview
+    self.tableview.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

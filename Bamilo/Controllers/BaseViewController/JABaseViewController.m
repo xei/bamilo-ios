@@ -26,8 +26,8 @@
 }
 
 @property (assign, nonatomic) int requestNumber;
-@property (strong, nonatomic) UIView *loadingView;
-@property (nonatomic, strong) UIImageView *loadingAnimation;
+//@property (strong, nonatomic) UIView *loadingView;
+//@property (nonatomic, strong) UIImageView *loadingAnimation;
 @property (strong, nonatomic) JANoConnectionView *noConnectionView;
 @property (strong, nonatomic) JAMessageView *messageView;
 @property (strong, nonatomic) JAMaintenancePage *maintenancePage;
@@ -111,29 +111,29 @@
     self.view.backgroundColor = JABackgroundGrey;
     self.requestNumber = 0;
     
-    self.loadingView = [[UIImageView alloc] initWithFrame:((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame];
-    self.loadingView.backgroundColor = [UIColor blackColor];
-    self.loadingView.alpha = 0.0f;
-    self.loadingView.userInteractionEnabled = YES;
+//    self.loadingView = [[UIImageView alloc] initWithFrame:((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame];
+//    self.loadingView.backgroundColor = [UIColor blackColor];
+//    self.loadingView.alpha = 0.0f;
+//    self.loadingView.userInteractionEnabled = YES;
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancelLoading)];
-    [self.loadingView addGestureRecognizer:tap];
+//    [self.loadingView addGestureRecognizer:tap];
     
     UIImage *image = [UIImage imageNamed:@"loadingAnimationFrame1"];
     int lastFrame = 8;
   
-    self.loadingAnimation = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, image.size.width, image.size.height)];
-    self.loadingAnimation.animationDuration = 1.0f;
-    NSMutableArray *animationFrames = [NSMutableArray new];
-    for (int i = 1; i <= lastFrame; i++) {
-        NSString *frameName = [NSString stringWithFormat:@"loadingAnimationFrame%d", i];
-        UIImage *frame = [UIImage imageNamed:frameName];
-        [animationFrames addObject:frame];
-    }
-    self.loadingAnimation.animationImages = [animationFrames copy];
-    self.loadingAnimation.center = self.loadingView.center;
+//    self.loadingAnimation = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, image.size.width, image.size.height)];
+//    self.loadingAnimation.animationDuration = 1.0f;
+//    NSMutableArray *animationFrames = [NSMutableArray new];
+//    for (int i = 1; i <= lastFrame; i++) {
+//        NSString *frameName = [NSString stringWithFormat:@"loadingAnimationFrame%d", i];
+//        UIImage *frame = [UIImage imageNamed:frameName];
+//        [animationFrames addObject:frame];
+//    }
+//    self.loadingAnimation.animationImages = [animationFrames copy];
+//    self.loadingAnimation.center = self.loadingView.center;
     
-    self.loadingView.alpha = 0.0f;
+//    self.loadingView.alpha = 0.0f;
     if ([self getScreenName].length) {
         [TrackerManager trackScreenNameWithScreenName:[self getScreenName]];
     }
@@ -185,15 +185,15 @@
 }
 
 - (void)changeLoadingFrame:(CGRect)frame orientation:(UIInterfaceOrientation)orientation {
-    CGFloat screenWidth = frame.size.width;
-    CGFloat screenHeight = frame.size.height;
+//    CGFloat screenWidth = frame.size.width;
+//    CGFloat screenHeight = frame.size.height;
     
 //    if (UIInterfaceOrientationIsPortrait(orientation)) {
-        if (screenWidth > screenHeight) {
-            self.loadingView.frame  = CGRectMake(0, 0, screenHeight, screenWidth);
-        } else {
-            self.loadingView.frame  = CGRectMake(0, 0, screenWidth, screenHeight);
-        }
+//        if (screenWidth > screenHeight) {
+//            self.loadingView.frame  = CGRectMake(0, 0, screenHeight, screenWidth);
+//        } else {
+//            self.loadingView.frame  = CGRectMake(0, 0, screenWidth, screenHeight);
+//        }
 //    } else {
 //        if (screenWidth > screenHeight) {
 //            self.loadingView.frame  = CGRectMake(0, 0, screenWidth, screenHeight);
@@ -202,7 +202,7 @@
 //        }
 //    }
     
-    self.loadingAnimation.center = self.loadingView.center;
+//    self.loadingAnimation.center = self.loadingView.center;
 }
 
 - (void)dealloc {
@@ -340,15 +340,16 @@
     [self changeLoadingFrame:[[UIScreen mainScreen] bounds] orientation:[[UIApplication sharedApplication] statusBarOrientation]];
     
     if (1 == self.requestNumber) {
-        [((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view addSubview:self.loadingView];
-        [((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view addSubview:self.loadingAnimation];
-        
-        [self.loadingAnimation startAnimating];
-        
-        [UIView animateWithDuration:0.4f animations: ^{
-             self.loadingView.alpha = 0.5f;
-             self.loadingAnimation.alpha = 0.5f;
-        }];
+        [LoadingManager showLoading];
+//        [((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view addSubview:self.loadingView];
+//        [((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view addSubview:self.loadingAnimation];
+//
+//        [self.loadingAnimation startAnimating];
+//
+//        [UIView animateWithDuration:0.4f animations: ^{
+//             self.loadingView.alpha = 0.5f;
+//             self.loadingAnimation.alpha = 0.5f;
+//        }];
     }
 }
 
@@ -358,13 +359,14 @@
         self.requestNumber = 0;
     }
     if (0 == self.requestNumber) {
-        [UIView animateWithDuration:0.4f animations: ^{
-            self.loadingView.alpha = 0.0f;
-            self.loadingAnimation.alpha = 0.0f;
-        } completion: ^(BOOL finished) {
-            [self.loadingView removeFromSuperview];
-                             [self.loadingAnimation removeFromSuperview];
-                         }];
+        [LoadingManager hideLoading];
+//        [UIView animateWithDuration:0.4f animations: ^{
+//            self.loadingView.alpha = 0.0f;
+//            self.loadingAnimation.alpha = 0.0f;
+//        } completion: ^(BOOL finished) {
+//            [self.loadingView removeFromSuperview];
+//                             [self.loadingAnimation removeFromSuperview];
+//                         }];
     }
 }
 

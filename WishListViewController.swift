@@ -107,8 +107,8 @@ class WishListViewController: BaseViewController,
     
     @objc private func handleRefresh() {
         self.refreshAndReload { (success) in
-            
         }
+        self.isLoading = false
     }
     
     private func refreshAndReload(callBack: @escaping ((Bool)->Void)) {

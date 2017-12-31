@@ -12,7 +12,7 @@ class CheckoutDataManager: DataManagerSwift {
     static let sharedInstance = CheckoutDataManager()
     
     func getMultistepAddressList(_ target: DataServiceProtocol, completion:@escaping DataClosure) {
-        CheckoutDataManager.requestManager.async(.get, target: target, path: RI_API_MULTISTEP_GET_ADDRESSES, params: nil, type: .foreground) { (responseType, data, errorMessages) in
+        CheckoutDataManager.requestManager.async(.get, target: target, path: RI_API_MULTISTEP_GET_ADDRESSES, params: nil, type: .background) { (responseType, data, errorMessages) in
             self.processResponse(responseType, aClass: RICart.self, data: data, errorMessages: errorMessages, completion: completion)
         }
     }

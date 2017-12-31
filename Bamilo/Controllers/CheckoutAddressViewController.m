@@ -16,6 +16,7 @@
 
 @interface CheckoutAddressViewController() <AddressTableViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *addressListContainerView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @end
 
 @implementation CheckoutAddressViewController {
@@ -27,6 +28,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.addressListContainerView.backgroundColor = [UIColor clearColor];
     _addressTableViewController = (AddressTableViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"AddressTableViewController"];
     _addressTableViewController.titleHeaderText = STRING_PLEASE_CHOOSE_YOUR_ADDRESS;
     _addressTableViewController.options = (ADDRESS_CELL_EDIT | ADDRESS_CELL_SELECT);
@@ -42,7 +44,9 @@
 }
 
 - (void)getContent:(void(^)(BOOL))callBack {
+    [self.activityIndicator startAnimating];
     [DataAggregator getMultistepAddressList:self completion:^(id data, NSError *error) {
+        [self.activityIndicator stopAnimating];
         if(error == nil) {
             [self bind:data forRequestId:0];
             [self setIsStepValid:_addresses.count];

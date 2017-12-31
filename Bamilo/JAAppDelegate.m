@@ -66,6 +66,7 @@
     ThemeColor *themeColor = [ThemeColor colorWithPalette:@{
         kColorBlue: [UIColor withRGBA:74 green:144 blue:226 alpha:1.0f],
         kColorBlue1: [UIColor withHexString:@"#1a365e"],
+        kColorBlue6: [UIColor withHexString:@"#8c93ad"],
         kColorBlue10: [UIColor withHexString:@"#e9e8ee"],
         kColorOrange: [UIColor withRGBA:255 green:153 blue:0 alpha:1.0f],
         kColorGreen: [UIColor withRGBA:0 green:160 blue:0 alpha:1.0],

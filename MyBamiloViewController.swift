@@ -84,6 +84,7 @@ class MyBamiloViewController:   BaseViewController,
     
     func handleRefresh() {
         self.isRefreshing = true
+        self.loadingIndicator.stopAnimating()
         self.visibleProductCount = 0
         self.incomingDataSource = MyBamiloModel()
         EmarsysPredictManager.sendTransactions(of: self)

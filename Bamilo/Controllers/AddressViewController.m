@@ -16,6 +16,7 @@
 
 @interface AddressViewController() <AddressTableViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *addressListContainerView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @end
 
 @implementation AddressViewController {
@@ -98,7 +99,9 @@
 
 #pragma mark - Helpers
 - (void)fetchAddressList:(void(^)(BOOL))callBack {
+    [self.activityIndicator startAnimating];
     [DataAggregator getUserAddressList:self completion:^(id _Nullable data, NSError * _Nullable error) {
+        [self.activityIndicator stopAnimating];
         if(error == nil && [data isKindOfClass:AddressList.class]) {
             [self bind:data forRequestId:0];
             [self publishScreenLoadTime];

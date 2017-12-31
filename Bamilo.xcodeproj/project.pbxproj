@@ -141,8 +141,8 @@
 		618B256C1F35D80700B39440 /* DeliveryTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618B256B1F35D80700B39440 /* DeliveryTimeView.swift */; };
 		618B256E1F35D81800B39440 /* DeliveryTimeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 618B256D1F35D81800B39440 /* DeliveryTimeView.xib */; };
 		618B25701F35D85900B39440 /* DeliveryTimeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618B256F1F35D85900B39440 /* DeliveryTimeControl.swift */; };
-		618D8B431FADEF5B0006A936 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618D8B421FADEF5B0006A936 /* LoadingView.swift */; };
-		618D8B451FADEF680006A936 /* LoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 618D8B441FADEF680006A936 /* LoadingView.xib */; };
+		618D8B431FADEF5B0006A936 /* LoadingFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618D8B421FADEF5B0006A936 /* LoadingFooterView.swift */; };
+		618D8B451FADEF680006A936 /* LoadingFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 618D8B441FADEF680006A936 /* LoadingFooterView.xib */; };
 		6190E9E61ED4263600163F6D /* BreadcrumbsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6190E9E51ED4263600163F6D /* BreadcrumbsItem.swift */; };
 		619351A51ECAC9A900330E5C /* CatalogGridCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619351A31ECAC9A900330E5C /* CatalogGridCollectionViewCell.swift */; };
 		619351A61ECAC9A900330E5C /* CatalogGridCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 619351A41ECAC9A900330E5C /* CatalogGridCollectionViewCell.xib */; };
@@ -152,6 +152,8 @@
 		619351B11ECACA1F00330E5C /* CatalogListCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 619351AF1ECACA1F00330E5C /* CatalogListCollectionViewCell.xib */; };
 		6193F3DE1F0CF67100DA3CDE /* EventAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6193F3DD1F0CF67100DA3CDE /* EventAttributes.swift */; };
 		6193F3E11F0CF9D600DA3CDE /* GoogleAnalyticsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6193F3E01F0CF9D600DA3CDE /* GoogleAnalyticsTracker.swift */; };
+		6199B8331FF8EC36008C62A6 /* LoadingCoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6199B8321FF8EC36008C62A6 /* LoadingCoverView.swift */; };
+		6199B8351FF8EC47008C62A6 /* LoadingCoverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6199B8341FF8EC47008C62A6 /* LoadingCoverView.xib */; };
 		619CC2DA1F8E56BF008E4B86 /* HomePageTileTeaser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619CC2D91F8E56BF008E4B86 /* HomePageTileTeaser.swift */; };
 		619CC2DE1F8E58AC008E4B86 /* TileTeaserCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619CC2DC1F8E58AC008E4B86 /* TileTeaserCollectionViewCell.swift */; };
 		619CC2DF1F8E58AC008E4B86 /* TileTeaserCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 619CC2DD1F8E58AC008E4B86 /* TileTeaserCollectionViewCell.xib */; };
@@ -1164,8 +1166,8 @@
 		618B256B1F35D80700B39440 /* DeliveryTimeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeliveryTimeView.swift; sourceTree = "<group>"; };
 		618B256D1F35D81800B39440 /* DeliveryTimeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeliveryTimeView.xib; sourceTree = "<group>"; };
 		618B256F1F35D85900B39440 /* DeliveryTimeControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeliveryTimeControl.swift; sourceTree = "<group>"; };
-		618D8B421FADEF5B0006A936 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
-		618D8B441FADEF680006A936 /* LoadingView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingView.xib; sourceTree = "<group>"; };
+		618D8B421FADEF5B0006A936 /* LoadingFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingFooterView.swift; sourceTree = "<group>"; };
+		618D8B441FADEF680006A936 /* LoadingFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingFooterView.xib; sourceTree = "<group>"; };
 		6190E9E51ED4263600163F6D /* BreadcrumbsItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BreadcrumbsItem.swift; sourceTree = "<group>"; };
 		619351A31ECAC9A900330E5C /* CatalogGridCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogGridCollectionViewCell.swift; sourceTree = "<group>"; };
 		619351A41ECAC9A900330E5C /* CatalogGridCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CatalogGridCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -1175,6 +1177,8 @@
 		619351AF1ECACA1F00330E5C /* CatalogListCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CatalogListCollectionViewCell.xib; sourceTree = "<group>"; };
 		6193F3DD1F0CF67100DA3CDE /* EventAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventAttributes.swift; sourceTree = "<group>"; };
 		6193F3E01F0CF9D600DA3CDE /* GoogleAnalyticsTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleAnalyticsTracker.swift; sourceTree = "<group>"; };
+		6199B8321FF8EC36008C62A6 /* LoadingCoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCoverView.swift; sourceTree = "<group>"; };
+		6199B8341FF8EC47008C62A6 /* LoadingCoverView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingCoverView.xib; sourceTree = "<group>"; };
 		619CC2D91F8E56BF008E4B86 /* HomePageTileTeaser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageTileTeaser.swift; sourceTree = "<group>"; };
 		619CC2DC1F8E58AC008E4B86 /* TileTeaserCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileTeaserCollectionViewCell.swift; sourceTree = "<group>"; };
 		619CC2DD1F8E58AC008E4B86 /* TileTeaserCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TileTeaserCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -2829,10 +2833,11 @@
 		610C689E1EC7423B008FB66C /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				6199B82F1FF8EBF1008C62A6 /* LoadingCoverView */,
 				61C51E691FDC143800DC75EE /* ErrorView */,
 				61259BDD1FC581360051CBD4 /* BreadcrubmsControl */,
 				6147F7471FB6ECF1000CBA85 /* TourSpotLightView */,
-				618D8B3F1FADEEF60006A936 /* LoadingView */,
+				618D8B3F1FADEEF60006A936 /* LoadingFooterView */,
 				61E534381FA4812200CBDFED /* ItemTrackingProgressBar */,
 				617585EE1F88CD4000D66541 /* Widgets */,
 				611C19101F5E88910073940C /* SearchBarView */,
@@ -3628,20 +3633,20 @@
 			name = View;
 			sourceTree = "<group>";
 		};
-		618D8B3F1FADEEF60006A936 /* LoadingView */ = {
+		618D8B3F1FADEEF60006A936 /* LoadingFooterView */ = {
 			isa = PBXGroup;
 			children = (
 				618D8B411FADEF1B0006A936 /* Control */,
 				618D8B401FADEF170006A936 /* View */,
 			);
-			name = LoadingView;
+			name = LoadingFooterView;
 			sourceTree = "<group>";
 		};
 		618D8B401FADEF170006A936 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				618D8B421FADEF5B0006A936 /* LoadingView.swift */,
-				618D8B441FADEF680006A936 /* LoadingView.xib */,
+				618D8B421FADEF5B0006A936 /* LoadingFooterView.swift */,
+				618D8B441FADEF680006A936 /* LoadingFooterView.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -3745,6 +3750,31 @@
 				6193F3DD1F0CF67100DA3CDE /* EventAttributes.swift */,
 			);
 			name = EventAttributes;
+			sourceTree = "<group>";
+		};
+		6199B82F1FF8EBF1008C62A6 /* LoadingCoverView */ = {
+			isa = PBXGroup;
+			children = (
+				6199B8311FF8EC14008C62A6 /* Control */,
+				6199B8301FF8EC0E008C62A6 /* View */,
+			);
+			name = LoadingCoverView;
+			sourceTree = "<group>";
+		};
+		6199B8301FF8EC0E008C62A6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6199B8321FF8EC36008C62A6 /* LoadingCoverView.swift */,
+				6199B8341FF8EC47008C62A6 /* LoadingCoverView.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		6199B8311FF8EC14008C62A6 /* Control */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Control;
 			sourceTree = "<group>";
 		};
 		619CC2DB1F8E5870008E4B86 /* TileTeaserCollectionViewCell */ = {
@@ -7731,6 +7761,7 @@
 				875744261EA60E48001B518A /* Tragedy-72.png in Resources */,
 				875743471EA60D8E001B518A /* Autumn-Small-50.png in Resources */,
 				8757445F1EA60E8D001B518A /* Yalda-Small-40@2x.png in Resources */,
+				6199B8351FF8EC47008C62A6 /* LoadingCoverView.xib in Resources */,
 				875744431EA60E71001B518A /* Winter-76.png in Resources */,
 				9A564CAF1B332FB200F23057 /* JASellerRatingsViewController.xib in Resources */,
 				8757445E1EA60E8D001B518A /* Yalda-Small-50.png in Resources */,
@@ -7954,7 +7985,7 @@
 				1C71FC5E1E2CABAD007ACF02 /* Bamilosans Black.ttf in Resources */,
 				1C71FC601E2CABAD007ACF02 /* Bamilosans Light.ttf in Resources */,
 				875743C41EA60DFD001B518A /* SpecialOffer-Small-40@2x.png in Resources */,
-				618D8B451FADEF680006A936 /* LoadingView.xib in Resources */,
+				618D8B451FADEF680006A936 /* LoadingFooterView.xib in Resources */,
 				1C71FC621E2CABAD007ACF02 /* Bamilosans UltraLight.ttf in Resources */,
 				875744221EA60E48001B518A /* Tragedy-Small-40.png in Resources */,
 				1C80D8841E2E3D850036B514 /* ‌Bamilosans Bold.ttf in Resources */,
@@ -8405,6 +8436,7 @@
 				870BEA851E73F6BC00C5B615 /* ThemeFont.m in Sources */,
 				610ED5831E742947000D5BEC /* UITextField+Extensions.m in Sources */,
 				6193F3DE1F0CF67100DA3CDE /* EventAttributes.swift in Sources */,
+				6199B8331FF8EC36008C62A6 /* LoadingCoverView.swift in Sources */,
 				619D0B121EA34B3500FDB255 /* FeatureBoxWidgetView.m in Sources */,
 				875AD5801E38C0C900584ABF /* RITrackingWrapper.m in Sources */,
 				CE9ADF7D1AB6D78200D56481 /* JAPDVImageSection.m in Sources */,
@@ -8428,7 +8460,7 @@
 				875AD5861E38C0C900584ABF /* RIAdjustTracker.m in Sources */,
 				CE9ADF931AB6D78200D56481 /* JAPaymentViewController.m in Sources */,
 				CE0F13111AF277F700F99356 /* JAKickoutView.m in Sources */,
-				618D8B431FADEF5B0006A936 /* LoadingView.swift in Sources */,
+				618D8B431FADEF5B0006A936 /* LoadingFooterView.swift in Sources */,
 				875AD5721E38C0C900584ABF /* RISellerReviewInfo.m in Sources */,
 				61B2C7F71F9C96B900930435 /* AccordionTableTableViewController.swift in Sources */,
 				8976FB321C0F3F4300483651 /* JATextFilterCell.m in Sources */,

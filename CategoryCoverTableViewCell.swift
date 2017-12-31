@@ -36,6 +36,7 @@ class CategoryCoverTableViewCell: BaseTableViewCell, BreadcrumbsViewDelegate {
         breadcrumbsView.breadcrumbsView?.buttonTitleColor = .white
         breadcrumbsView.breadcrumbsView?.buttonTitleFont = Theme.font(kFontVariationBold, size: 13)
         breadcrumbsView.breadcrumbsView?.contentHeight = 29
+        breadcrumbsView.breadcrumbsView?.buttonVerticalMargin = 0
         breadcrumbsView.update(withModel: self.convertHistoryToBreadcrumbs(historyCategories: historyCategories))
     }
     
@@ -47,7 +48,6 @@ class CategoryCoverTableViewCell: BaseTableViewCell, BreadcrumbsViewDelegate {
             return breadcrumbsItem
         }
     }
-    
     
     override static func cellHeight() -> CGFloat {
         return min(UIScreen.main.bounds.width / self.imageRatio, self.maxCellHeight)

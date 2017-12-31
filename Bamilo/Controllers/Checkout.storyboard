@@ -46,6 +46,9 @@
                                     <constraint firstAttribute="height" constant="60" id="d0h-R8-HHm"/>
                                 </constraints>
                             </containerView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="laJ-I1-m1T">
+                                <rect key="frame" x="177" y="336" width="20" height="20"/>
+                            </activityIndicatorView>
                             <containerView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RQv-Qa-EDH">
                                 <rect key="frame" x="0.0" y="80" width="375" height="532"/>
                             </containerView>
@@ -54,7 +57,9 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="2Sh-o6-mCT" secondAttribute="trailing" id="0G7-rF-27w"/>
                             <constraint firstItem="RQv-Qa-EDH" firstAttribute="leading" secondItem="IvS-Li-N4L" secondAttribute="leading" id="2Af-XO-E8F"/>
+                            <constraint firstItem="laJ-I1-m1T" firstAttribute="centerY" secondItem="RQv-Qa-EDH" secondAttribute="centerY" id="77i-C5-hcW"/>
                             <constraint firstAttribute="trailing" secondItem="RaY-Nc-0ZR" secondAttribute="trailing" id="RKW-31-9NM"/>
+                            <constraint firstItem="laJ-I1-m1T" firstAttribute="centerX" secondItem="RQv-Qa-EDH" secondAttribute="centerX" id="g2i-32-PtL"/>
                             <constraint firstAttribute="trailing" secondItem="RQv-Qa-EDH" secondAttribute="trailing" id="gL7-1C-40P"/>
                             <constraint firstItem="2Sh-o6-mCT" firstAttribute="top" secondItem="RQv-Qa-EDH" secondAttribute="bottom" constant="5" id="i0K-c2-8vR"/>
                             <constraint firstItem="RQv-Qa-EDH" firstAttribute="top" secondItem="RaY-Nc-0ZR" secondAttribute="bottom" id="k1A-pb-RLM"/>
@@ -68,6 +73,7 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="laJ-I1-m1T" id="59n-1B-9ep"/>
                         <outlet property="addressListContainerView" destination="RQv-Qa-EDH" id="ppo-Rb-8sh"/>
                         <outlet property="checkoutProgressViewControl" destination="RaY-Nc-0ZR" id="zW7-UC-yur"/>
                         <outlet property="continueButton" destination="2Sh-o6-mCT" id="Gah-em-65h"/>

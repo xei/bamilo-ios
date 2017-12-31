@@ -157,9 +157,19 @@
                     <view key="view" contentMode="scaleToFill" id="VA1-kv-yEv">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ZTf-Vg-2Wm">
+                                <rect key="frame" x="197" y="358" width="20" height="20"/>
+                            </activityIndicatorView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ZTf-Vg-2Wm" firstAttribute="centerY" secondItem="VA1-kv-yEv" secondAttribute="centerY" id="Qe2-AW-JK5"/>
+                            <constraint firstItem="ZTf-Vg-2Wm" firstAttribute="centerX" secondItem="VA1-kv-yEv" secondAttribute="centerX" id="ej7-ca-XhP"/>
+                        </constraints>
                     </view>
                     <connections>
+                        <outlet property="activiryIndicator" destination="ZTf-Vg-2Wm" id="nWh-SS-KDw"/>
                         <segue destination="gPK-Zt-6PT" kind="show" identifier="pushPDVViewController" id="heG-nW-AOJ"/>
                     </connections>
                 </viewController>
@@ -420,9 +430,12 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qMZ-Vq-mnw" userLabel="container view wrapper">
                                 <rect key="frame" x="0.0" y="64" width="414" height="623"/>
                                 <subviews>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="e6q-Xi-hP9">
+                                        <rect key="frame" x="197" y="279" width="20" height="20"/>
+                                    </activityIndicatorView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ig0-vW-kqW">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="578"/>
-                                        <color key="backgroundColor" red="0.93333333330000001" green="0.94901960780000005" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableView>
                                     <view alpha="0.93999999999999995" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fm5-0g-qnq" userLabel="Cart Summery View">
                                         <rect key="frame" x="0.0" y="578" width="414" height="75"/>
@@ -499,8 +512,9 @@
                                             <action selector="proceedToCheckout:" destination="9Ss-pC-YRE" eventType="touchUpInside" id="ycL-d3-M2W"/>
                                         </connections>
                                     </button>
-                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Zb-5G-jna">
+                                    <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Zb-5G-jna">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="623"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
                                             <segue destination="160-dK-6zH" kind="embed" identifier="embedEmptyViewController" id="gkQ-2h-5Oy"/>
                                         </connections>
@@ -509,8 +523,10 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="right" secondItem="ig0-vW-kqW" secondAttribute="right" id="1yX-ly-RDu"/>
+                                    <constraint firstItem="e6q-Xi-hP9" firstAttribute="centerY" secondItem="ig0-vW-kqW" secondAttribute="centerY" id="4dA-x7-UBT"/>
                                     <constraint firstItem="ig0-vW-kqW" firstAttribute="left" secondItem="qMZ-Vq-mnw" secondAttribute="left" id="6CI-FM-OM4"/>
                                     <constraint firstAttribute="right" secondItem="f8h-QL-QyM" secondAttribute="right" id="8yX-IY-Sbo"/>
+                                    <constraint firstItem="e6q-Xi-hP9" firstAttribute="centerX" secondItem="ig0-vW-kqW" secondAttribute="centerX" id="G0z-KB-UcR"/>
                                     <constraint firstAttribute="right" secondItem="Fm5-0g-qnq" secondAttribute="right" id="MhF-KG-bfK"/>
                                     <constraint firstAttribute="right" secondItem="3Zb-5G-jna" secondAttribute="right" id="Ppk-aB-US8"/>
                                     <constraint firstItem="R5o-k2-OAi" firstAttribute="left" secondItem="qMZ-Vq-mnw" secondAttribute="left" id="Snz-ea-lP3"/>
@@ -538,6 +554,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="JJh-Gi-AKW"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="e6q-Xi-hP9" id="BJV-gd-ass"/>
                         <outlet property="cartSummeryView" destination="Fm5-0g-qnq" id="8eC-Pb-QM4"/>
                         <outlet property="contentWrapper" destination="qMZ-Vq-mnw" id="sgB-Sg-cim"/>
                         <outlet property="costSummeryContainerTopToWholeCostTopConstraint" destination="X0X-t0-0Fo" id="cTb-d9-4G3"/>
@@ -594,19 +611,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="eq2-xJ-sxY">
+                                <rect key="frame" x="197" y="368" width="20" height="20"/>
+                            </activityIndicatorView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Pd-zP-fHK">
                                 <rect key="frame" x="0.0" y="20" width="414" height="716"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="eq2-xJ-sxY" firstAttribute="centerY" secondItem="4Pd-zP-fHK" secondAttribute="centerY" id="5m2-Su-mj1"/>
                             <constraint firstItem="4Pd-zP-fHK" firstAttribute="top" secondItem="MgM-J1-S4V" secondAttribute="bottom" id="7dr-pt-7Ys"/>
                             <constraint firstAttribute="right" secondItem="4Pd-zP-fHK" secondAttribute="right" id="HrJ-fF-h8n"/>
+                            <constraint firstItem="eq2-xJ-sxY" firstAttribute="centerX" secondItem="4Pd-zP-fHK" secondAttribute="centerX" id="Ir7-49-mrX"/>
                             <constraint firstItem="4Pd-zP-fHK" firstAttribute="left" secondItem="bXV-Zd-zMh" secondAttribute="left" id="Kha-mY-vAc"/>
                             <constraint firstItem="EHG-v7-Nv7" firstAttribute="top" secondItem="4Pd-zP-fHK" secondAttribute="bottom" id="ev7-xE-MBd"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="eq2-xJ-sxY" id="2WO-9I-QqI"/>
                         <outlet property="addressListContainerView" destination="4Pd-zP-fHK" id="2OG-Kg-aLD"/>
                         <segue destination="0cf-Qe-rMj" kind="show" identifier="showCreateEditAddress" id="4en-yo-ELu"/>
                     </connections>
@@ -1835,7 +1859,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="bEV-Bv-dJp"/>
-        <segue reference="QvZ-9a-k1K"/>
+        <segue reference="heG-nW-AOJ"/>
         <segue reference="mLp-yH-ACJ"/>
     </inferredMetricsTieBreakers>
 </document>

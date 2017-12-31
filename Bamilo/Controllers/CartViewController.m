@@ -39,13 +39,14 @@
 @property (weak, nonatomic) IBOutlet OrangeButton *submitButton;
 @property (weak, nonatomic) EmptyViewController *emptyCartViewController;
 @property (weak, nonatomic) IBOutlet UIView *emptyCartViewContainer;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @end
 
 @implementation CartViewController
 
 - (void)setCart:(RICart *)cart {
     _cart = cart;
-    
+    if (!_cart) return;
     if (cart.cartEntity.cartItems.count) {
         [self setCartEmpty:NO];
     } else {
@@ -66,7 +67,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view setBackgroundColor:[Theme color:kColorVeryLightGray]];
-    [self.tableView setBackgroundColor:[Theme color:kColorVeryLightGray]];
+    [self.contentWrapper setBackgroundColor:[UIColor clearColor]];
+    [self.tableView setBackgroundColor:[UIColor clearColor]];
     
     //TableView registerations
     self.tableView.delegate = self;
@@ -83,12 +85,6 @@
 }
 
 - (void)goToHomeScreen {
-//    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-//    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
-//    [trackingDictionary setValue:@"ContinueShopping" forKey:kRIEventActionKey];
-//    [trackingDictionary setValue:@"Checkout" forKey:kRIEventCategoryKey];
-//
-//    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutContinueShopping] data:[trackingDictionary copy]];
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
 }
 
@@ -227,7 +223,10 @@
 }
 
 - (void)getContent:(void(^)(BOOL))callBack {
+    [self clearContent];
+    [self.activityIndicator startAnimating];
     [DataAggregator getUserCart:self completion:^(id data, NSError *error) {
+        [self.activityIndicator stopAnimating];
         if(error != nil) {
             [Utility handleErrorMessagesWithError:error viewController:self];
             [self errorHandler:error forRequestID:0];
@@ -244,13 +243,26 @@
     [self publishScreenLoadTime];
 }
 
+- (void) clearContent {
+    self.cart = nil;
+    [self.submitButton setHidden:YES];
+    [self.summeryView setHidden:YES];
+    [self.cartSummeryView setHidden:YES];
+    [self.emptyCartViewContainer setHidden:YES];
+    [self.tableView reloadData];
+}
+
 #pragma mark - DataServiceProtocol
 - (void)bind:(id)data forRequestId:(int)rid {
-    if ([data isKindOfClass:[RICart class]]) {
+    if (rid == 0 && [data isKindOfClass:[RICart class]]) {
+        [self.submitButton setHidden:NO];
+        [self.summeryView setHidden:NO];
+        [self.cartSummeryView setHidden:NO];
+        
         self.cart = (RICart *)data;
         [self.tableView reloadData];
         [self checkIfSummeryViewsMustBeVisibleOrNot];
-        
+
         //When cart is ready & not empty
         if (self.cart.cartEntity.cartCount.integerValue) {
             [EmarsysPredictManager sendTransactionsOf:self];
@@ -258,8 +270,6 @@
         }
         [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo: @{kUpdateCartNotificationValue: self.cart}];
     }
-    
-    
 }
 
 - (void)errorHandler:(NSError *)error forRequestID:(int)rid {

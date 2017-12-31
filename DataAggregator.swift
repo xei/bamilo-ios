@@ -30,7 +30,7 @@ import Foundation
     
 //######## MARK: - AddressDataManager
     static func getUserAddressList(_ target: DataServiceProtocol, completion: @escaping DataClosure) {
-        AddressDataManager.sharedInstance.getUserAddressList(target, requestType: .foreground, completion: completion)
+        AddressDataManager.sharedInstance.getUserAddressList(target, requestType: .background, completion: completion)
     }
     
     static func setDefaultAddress(_ target: DataServiceProtocol, address: Address, isBilling: Bool, type: RequestExecutionType = .foreground, completion: @escaping DataClosure) {
@@ -124,16 +124,12 @@ import Foundation
     }
     
     static func getUserCart(_ target: DataServiceProtocol, completion:@escaping DataClosure) {
-        CartDataManager.sharedInstance.getUserCart(target, type: .foreground, completion: completion)
+        CartDataManager.sharedInstance.getUserCart(target, type: .background, completion: completion)
     }
 
 //######## MARK: - OrderDataManager
     static func getOrders(_ target: DataServiceProtocol, page:Int, perPageCount:Int, completion:@escaping DataClosure) {
         OrderDataManager.sharedInstance.getOrders(target, page: page, perPageCount: perPageCount, completion: completion)
-    }
-    
-    static func getOrder(_ target: DataServiceProtocol, orderId: String, completion:@escaping DataClosure) {
-        OrderDataManager.sharedInstance.getOrder(target, orderId: orderId, completion: completion)
     }
     
 //######## MARK: - ProductDataManager

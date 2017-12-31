@@ -21,7 +21,7 @@
 }
 
 + (NSString *)mobileRegxPattern {
-    return @"(\\+98|0|0098)?9\\d{9}";
+    return @"^(((\\+|00)98)|0)?9[01239]\\d{8}$";
 }
 
 - (NSString *)wrapWithMaxSize:(int)maxSize {
