@@ -62,19 +62,20 @@
         } else {
             translatedCharater = [self convertEnNumberToFarsi:[self convertToEnglish:str]];
         }
-        result = [result stringByReplacingOccurrencesOfString:str withString:translatedCharater];
+        if ([translatedCharater length]) {
+            result = [result stringByReplacingOccurrencesOfString:str withString:translatedCharater];
+        }
     }
     return result;
 }
 
 - (NSString*)convertEnNumberToFarsi:(NSString*)number {
-    NSString *text;
-    NSDecimalNumber *someNumber = [NSDecimalNumber decimalNumberWithString:number];
+    NSNumberFormatter *nf = [NSNumberFormatter new];
+    NSNumber *someNumber = [nf numberFromString:number];
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
     NSLocale *gbLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"fa"];
     [formatter setLocale:gbLocale];
-    text = [formatter stringFromNumber:someNumber];
-    return text;
+    return [formatter stringFromNumber:someNumber];
 }
 
 - (NSString*)convertToEnglish:(NSString*)input {
