@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 protocol CategoryCoverTableViewCellDelegate: class {
     func goBack(level: Int)
@@ -30,8 +31,10 @@ class CategoryCoverTableViewCell: BaseTableViewCell, BreadcrumbsViewDelegate {
         self.breadcrumbsBackground.alpha = 0.8
     }
     
-    func update(coverImage: UIImage, historyCategories: [CategoryProduct]) {
-        self.coverImageView.image = coverImage
+    func update(coverImageUrl: URL?, historyCategories: [CategoryProduct]) {
+        if coverImageUrl != nil {
+            self.coverImageView.kf.setImage(with: coverImageUrl, options: [.transition(.fade(0.20))])
+        }
         breadcrumbsView.breadcrumbsView?.buttonBackgroundColor = .clear
         breadcrumbsView.breadcrumbsView?.buttonTitleColor = .white
         breadcrumbsView.breadcrumbsView?.buttonTitleFont = Theme.font(kFontVariationBold, size: 13)

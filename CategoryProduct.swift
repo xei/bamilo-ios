@@ -25,6 +25,7 @@ class CategoryProduct : NSObject, Mappable {
     var name : String?
     var image: URL?
     var id: String?
+    var coverImage: URL?
     var childern :[CategoryProduct]?
     
     required init?(map: Map) {
@@ -39,6 +40,7 @@ class CategoryProduct : NSObject, Mappable {
         name = parsedName ?? parsedLabel
         urlKey <- map["url_key"]
         image <- (map["image"], URLTransform())
+        coverImage <- (map["cover_image"], URLTransform())
         id <- map["id"]
         target <- map["target"]
         childern <- map["children"]

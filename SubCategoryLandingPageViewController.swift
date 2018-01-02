@@ -35,7 +35,11 @@ class SubCategoryLandingPageViewController: BaseViewController,
         
         self.tableview.showsVerticalScrollIndicator = false
         self.tableview.showsHorizontalScrollIndicator = false
-        self.coverHeight = CategoryCoverTableViewCell.cellHeight()
+        if let histories = self.historyCategory, histories.count > 1, let _ = histories[1].coverImage {
+            self.coverHeight = CategoryCoverTableViewCell.cellHeight()
+        } else {
+            self.coverHeight = 30 //to cover only breadcrumb (temprory)
+        }
         
         //navigation title
         self.title = self.historyCategory?.last?.name
@@ -48,7 +52,7 @@ class SubCategoryLandingPageViewController: BaseViewController,
             self.coverPageCell = cell
             cell.delegate = self
             cell.layer.zPosition = 0
-            cell.update(coverImage: #imageLiteral(resourceName: "launch_screen_logo"), historyCategories: self.historyCategory ?? [])
+            cell.update(coverImageUrl: self.historyCategory?[1].coverImage, historyCategories: self.historyCategory ?? [])
             return cell
         } else if indexPath.section == 1 {
             let cell = self.tableview.dequeueReusableCell(withIdentifier: CategoryTableViewCell.nibName(), for: indexPath) as! CategoryTableViewCell

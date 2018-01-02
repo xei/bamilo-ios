@@ -201,7 +201,12 @@ class RootCategoryViewController: BaseViewController,
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 { return nil }
         let header = self.tableview.dequeueReusableHeaderFooterView(withIdentifier: PlainTableViewHeaderCell.nibName()) as! PlainTableViewHeaderCell
-        header.titleString = section == 1 ? self.externalLinks?.title : self.internalLinks?.title ?? ""
+        let sectionType = self.sectionTypes[section]
+        if sectionType is ExternalLinks.Type {
+            header.titleString = self.externalLinks?.title
+        } else if sectionType is InternalLinks.Type {
+            header.titleString = self.internalLinks?.title
+        }
         return header
     }
     
@@ -257,11 +262,11 @@ class RootCategoryViewController: BaseViewController,
         if let _ = self.categories {
             self.sectionTypes[self.sectionTypes.keys.count] = Categories.self
         }
-        if let _ = self.externalLinks {
-            self.sectionTypes[self.sectionTypes.keys.count] = ExternalLinks.self
-        }
         if let _ = self.internalLinks {
             self.sectionTypes[self.sectionTypes.keys.count] = InternalLinks.self
+        }
+        if let _ = self.externalLinks {
+            self.sectionTypes[self.sectionTypes.keys.count] = ExternalLinks.self
         }
     }
     
