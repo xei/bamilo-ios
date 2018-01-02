@@ -214,7 +214,8 @@ import SwiftyJSON
                         self.productCountLabel.text = "\(totalProducts) \(STRING_FOUND_PRODUCT_COUNT)".convertTo(language: .arabic)
                     }
                     self.loadingDataInProgress = false
-                    if let breadcrumb = self.catalogData?.breadcrumbs, false { //for now
+                    if let breadcrumb = self.catalogData?.breadcrumbs { //for now
+                        self.catalogHeaderContainer.translatesAutoresizingMaskIntoConstraints = false
                         UIView.animate(withDuration: 0.15, animations: {
                             self.catalogHeaderContainerHeightConstraint.constant = self.catalogHeaderContainerHeightWithBreadcrumb
                         }, completion: { (finished) in
@@ -224,6 +225,7 @@ import SwiftyJSON
                             }
                             self.breadCrumbsControl.update(withModel: breadcrumb)
                             self.productCountLabelTopConstraint.constant = self.catalogHeaderContainer.frame.height
+                            self.catalogHeaderContainer.translatesAutoresizingMaskIntoConstraints = true
                         })
                     } else {
                         UIView.animate(withDuration: 0.15, animations: {

@@ -236,7 +236,7 @@
 }
 
 - (void)textFieldEditingChanged:(UITextField *)textField {
-    if (self.type == InputTextFieldControlTypeNumerical) {
+    if (self.type == InputTextFieldControlTypeNumerical || self.type == InputTextFieldControlTypePhone) {
         textField.text = [textField.text numbersToPersian];
     }
 }
