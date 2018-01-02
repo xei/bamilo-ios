@@ -148,6 +148,7 @@ import SwiftyJSON
         super.viewDidLayoutSubviews()
         if  !allSubviewsHasBeenRendered {
             //asign scroll followers in this view
+            self.catalogHeaderContainer.translatesAutoresizingMaskIntoConstraints = true
             self.searchBarScrollFollower = ScrollerBarFollower(barView: catalogHeaderContainer, moveDirection: .top)
             if let navBar = self.navigationController?.navigationBar {
                 self.navBarScrollFollower = ScrollerBarFollower(barView: navBar, moveDirection: .top)
@@ -650,6 +651,8 @@ import SwiftyJSON
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        self.navBarScrollFollower?.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
+        self.searchBarScrollFollower?.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
         self.tabBarScrollFollower?.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
     }
     

@@ -76,7 +76,7 @@
                                       fieldName: fieldName
                                         andIcon: nil
                                     placeholder: STRING_CELLPHONE
-                                           type: InputTextFieldControlTypeNumerical
+                                           type: InputTextFieldControlTypePhone
                                      validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:[NSString mobileRegxPattern]]
                                   selectOptions: nil];
 }

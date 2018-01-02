@@ -153,17 +153,6 @@ class HomeViewController:   BaseViewController,
         self.homePage.tableView?.killScroll()
         self.myBamiloPage.collectionView?.killScroll()
     
-        // if the destination view controller's scrollview is on top of it
-        if let homePage = controller as? HomePageViewController,let navBarInitialHeight = self.navBarInitialHeight, let tableView = homePage.tableView {
-            if tableView.contentOffset.y <= 2 * navBarInitialHeight {
-                self.resetAllBarFrames(animated: true)
-            }
-        }
-        if let myBamilo = controller as? MyBamiloViewController ,let navBarInitialHeight = self.navBarInitialHeight, let scrollView = myBamilo.collectionView {
-            if scrollView.contentOffset.y <= 2 * navBarInitialHeight {
-                self.resetAllBarFrames(animated: true)
-            }
-        }
     }
     
     private func followersFollow(scrollView: UIScrollView, permittedMove: CGFloat) {
@@ -172,6 +161,19 @@ class HomeViewController:   BaseViewController,
     }
     
     func didMove(toPage controller: UIViewController!, index: Int) {
+        
+        // if the destination view controller's scrollview is on top of it
+        if let homePage = controller as? HomePageViewController,let navBarInitialHeight = self.navBarInitialHeight, let tableView = homePage.tableView {
+            if tableView.contentOffset.y <= 2 * navBarInitialHeight {
+                self.resetAllBarFrames(animated: false)
+            }
+        }
+        if let myBamilo = controller as? MyBamiloViewController ,let navBarInitialHeight = self.navBarInitialHeight, let scrollView = myBamilo.collectionView {
+            if scrollView.contentOffset.y <= 2 * navBarInitialHeight {
+                self.resetAllBarFrames(animated: false)
+            }
+        }
+        
         if let homePage = controller as? HomePageViewController, let navBarHeight = self.navBarInitialHeight, let scrollView = homePage.tableView {
             self.followersFollow(scrollView: scrollView, permittedMove: navBarHeight)
         } else if let myBamilo = controller as? MyBamiloViewController, let navBarHeight = self.navBarInitialHeight, let scrollView = myBamilo.collectionView {

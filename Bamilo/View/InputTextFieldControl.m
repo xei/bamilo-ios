@@ -89,6 +89,9 @@
             self.input.textField.keyboardType = UIKeyboardTypeDefault;
             self.input.textField.secureTextEntry = YES;
             break;
+        case InputTextFieldControlTypePhone:
+            self.input.textField.keyboardType = UIKeyboardTypePhonePad;
+            break;
         case InputTextFieldControlTypeNumerical:
             self.input.textField.keyboardType = UIKeyboardTypeNumberPad;
             break;

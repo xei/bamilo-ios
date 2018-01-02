@@ -85,7 +85,7 @@ class WishListViewController: BaseViewController,
     
     private func loadProducts(page: Int, callBack:((Bool)->Void)? = nil) {
         if isLoading { return }
-        if let lastPage = self.wishList?.lastPage ,(lastPage != 0 && page > lastPage && self.isRefreshing == false) { return }
+        if let lastPage = self.wishList?.lastPage ,(lastPage != 0 && page > lastPage) { return }
         self.isLoading = true
         ProductDataManager.sharedInstance.getWishListProducts(self, page: page, perPageCount: perPageProductCount) { (data, error) in
             self.isLoading = false

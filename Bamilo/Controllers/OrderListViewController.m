@@ -153,8 +153,8 @@
 }
 
 - (void)handleRefreshControl {
-    [self resetFooterView];
     [self resetContentAndRefresh:nil];
+    [self resetFooterView];
 }
 
 - (void)resetContentAndRefresh:(void(^)(BOOL))callBack {
