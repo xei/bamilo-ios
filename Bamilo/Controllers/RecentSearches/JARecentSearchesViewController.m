@@ -9,11 +9,7 @@
 #import "JARecentSearchesViewController.h"
 #import "JAClickableView.h"
 
-@interface JARecentSearchesViewController ()
-<
-    UITableViewDataSource,
-    UITableViewDelegate
->
+@interface JARecentSearchesViewController () <UITableViewDataSource,UITableViewDelegate>
 
 @property (strong, nonatomic) NSMutableArray *recentSearches;
 @property (weak, nonatomic) IBOutlet UIView *noSearchesView;
@@ -34,63 +30,42 @@
     self.noSearchesView.layer.cornerRadius = 5.0f;
     self.noSearchesLabel.font = [UIFont fontWithName:kFontRegularName size:self.noSearchesLabel.font.pointSize];
     [self.noSearchesLabel setText:STRING_NO_RECENT_SEARCHES];
-    
     self.recentSearches = [NSMutableArray new];
-    
     self.recentSearches = [[RISearchSuggestion getRecentSearches] mutableCopy];
+    [self.noSearchesView setHidden: YES];
     
     if (0 == self.recentSearches.count) {
         self.recentSearchesTableView.hidden = YES;
     } else {
         self.noSearchesView.alpha = 0.0f;
-        self.noSearchesView.hidden = YES;
         self.recentSearchesTableView.layer.cornerRadius = 5.0f;
         self.recentSearchesTableView.scrollEnabled = NO;
         self.recentSearchesTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        
         self.button = [UIButton buttonWithType:UIButtonTypeCustom];
-        
         self.button.titleLabel.font = JADisplay3Font;
-        [self.button setTitleColor:JAButtonTextOrange
-                          forState:UIControlStateNormal];
-
+        [self.button setTitleColor:JAButtonTextOrange forState:UIControlStateNormal];
         if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
-            [self.button setBackgroundImage:[UIImage imageNamed:@"greyFullPortrait_normal"]
-                                   forState:UIControlStateNormal];
-            [self.button setBackgroundImage:[UIImage imageNamed:@"greyFullPortrait_highlighted"]
-                                   forState:UIControlStateSelected];
-            [self.button setBackgroundImage:[UIImage imageNamed:@"greyFullPortrait_highlighted"]
-                                   forState:UIControlStateHighlighted];
-            [self.button setBackgroundImage:[UIImage imageNamed:@"greyFullPortrait_disabled"]
-                                   forState:UIControlStateDisabled];
+            [self.button setBackgroundImage:[UIImage imageNamed:@"greyFullPortrait_normal"] forState:UIControlStateNormal];
+            [self.button setBackgroundImage:[UIImage imageNamed:@"greyFullPortrait_highlighted"] forState:UIControlStateSelected];
+            [self.button setBackgroundImage:[UIImage imageNamed:@"greyFullPortrait_highlighted"] forState:UIControlStateHighlighted];
+            [self.button setBackgroundImage:[UIImage imageNamed:@"greyFullPortrait_disabled"] forState:UIControlStateDisabled];
         } else {
-            [self.button setBackgroundImage:[UIImage imageNamed:@"greyBig_normal"]
-                                   forState:UIControlStateNormal];
-            [self.button setBackgroundImage:[UIImage imageNamed:@"greyBig_highlighted"]
-                                   forState:UIControlStateSelected];
-            [self.button setBackgroundImage:[UIImage imageNamed:@"greyBig_highlighted"]
-                                   forState:UIControlStateHighlighted];
-            [self.button setBackgroundImage:[UIImage imageNamed:@"greyBig_disabled"]
-                                   forState:UIControlStateDisabled];
+            [self.button setBackgroundImage:[UIImage imageNamed:@"greyBig_normal"] forState:UIControlStateNormal];
+            [self.button setBackgroundImage:[UIImage imageNamed:@"greyBig_highlighted"] forState:UIControlStateSelected];
+            [self.button setBackgroundImage:[UIImage imageNamed:@"greyBig_highlighted"] forState:UIControlStateHighlighted];
+            [self.button setBackgroundImage:[UIImage imageNamed:@"greyBig_disabled"] forState:UIControlStateDisabled];
         }
-        
-        [self.button setTitle:STRING_CLEAR_RECENT_SEARCHES
-                     forState:UIControlStateNormal];
-        
-        [self.button addTarget:self
-                   action:@selector(clearRecentSearches)
-         forControlEvents:UIControlEventTouchUpInside];
-        
+        [self.button setTitle:STRING_CLEAR_RECENT_SEARCHES forState:UIControlStateNormal];
+        [self.button addTarget:self action:@selector(clearRecentSearches) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:self.button];
     }
     
     [self publishScreenLoadTime];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+
     //tessa changed nil to [NSIndexPath indexPathForRow:0 inSection:0]
     CGFloat newSize = self.recentSearches.count * [self tableView:self.recentSearchesTableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     self.recentSearchesTableView.frame = CGRectMake(self.recentSearchesTableView.frame.origin.x,
@@ -99,27 +74,12 @@
                                                     newSize);
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
         CGFloat buttonWidth = [UIImage imageNamed:@"greyFullPortrait_normal"].size.width;
-        self.button.frame = CGRectMake((self.view.frame.size.width - buttonWidth) / 2,
-                                       newSize + 12.0f,
-                                       buttonWidth,
-                                       44);
-        self.noSearchesView.frame = CGRectMake(self.noSearchesView.frame.origin.x,
-                                               self.noSearchesView.frame.origin.y,
-                                               self.view.frame.size.width - self.noSearchesView.frame.origin.x * 2,
-                                               300.0f);
-        self.noSearchesImageView.frame = CGRectMake((self.noSearchesView.frame.size.width - self.noSearchesImageView.frame.size.width)/2,
-                                                    56.0f,
-                                                    self.noSearchesImageView.frame.size.width,
-                                                    self.noSearchesImageView.frame.size.height);
-        self.noSearchesLabel.frame = CGRectMake(12.0f,
-                                                183.0f,
-                                                self.noSearchesView.frame.size.width - 12*2,
-                                                self.noSearchesLabel.frame.size.height);
+        self.button.frame = CGRectMake((self.view.frame.size.width - buttonWidth) / 2, newSize + 12.0f, buttonWidth, 44);
+        self.noSearchesView.frame = CGRectMake(self.noSearchesView.frame.origin.x, self.noSearchesView.frame.origin.y, self.view.frame.size.width - self.noSearchesView.frame.origin.x * 2, 300.0f);
+        self.noSearchesImageView.frame = CGRectMake((self.noSearchesView.frame.size.width - self.noSearchesImageView.frame.size.width)/2, 56.0f, self.noSearchesImageView.frame.size.width, self.noSearchesImageView.frame.size.height);
+        self.noSearchesLabel.frame = CGRectMake(12.0f, 183.0f, self.noSearchesView.frame.size.width - 12*2, self.noSearchesLabel.frame.size.height);
     } else {
-        self.button.frame = CGRectMake(6,
-                                       newSize + 20,
-                                       self.view.frame.size.width - 12,
-                                       44);
+        self.button.frame = CGRectMake(6, newSize + 20, self.view.frame.size.width - 12, 44);
     }
 }
 
@@ -135,72 +95,52 @@
                                                     newSize);
     [self.recentSearchesTableView reloadData];
     CGFloat buttonWidth = [UIImage imageNamed:@"greyFullPortrait_normal"].size.width;
-    self.button.frame = CGRectMake((self.view.frame.size.width - buttonWidth) / 2,
-                                   newSize + 12.0f,
-                                   buttonWidth,
-                                   44);
+    self.button.frame = CGRectMake((self.view.frame.size.width - buttonWidth) / 2, newSize + 12.0f, buttonWidth, 44);
     
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
         self.noSearchesView.frame = CGRectMake(self.noSearchesView.frame.origin.x,
                                                self.noSearchesView.frame.origin.y,
                                                self.view.frame.size.width - self.noSearchesView.frame.origin.x * 2,
                                                300.0f);
-        self.noSearchesImageView.frame = CGRectMake((self.noSearchesView.frame.size.width - self.noSearchesImageView.frame.size.width)/2,
-                                                    56.0f,
-                                                    self.noSearchesImageView.frame.size.width,
-                                                    self.noSearchesImageView.frame.size.height);
-        self.noSearchesLabel.frame = CGRectMake(12.0f,
-                                                183.0f,
-                                                self.noSearchesView.frame.size.width - 12*2,
-                                                self.noSearchesLabel.frame.size.height);
+        self.noSearchesImageView.frame = CGRectMake((self.noSearchesView.frame.size.width - self.noSearchesImageView.frame.size.width)/2, 56.0f, self.noSearchesImageView.frame.size.width, self.noSearchesImageView.frame.size.height);
+        self.noSearchesLabel.frame = CGRectMake(12.0f, 183.0f, self.noSearchesView.frame.size.width - 12*2, self.noSearchesLabel.frame.size.height);
     }
 }
 
 #pragma mark - Action clear
 
-- (void)clearRecentSearches
-{
+- (void)clearRecentSearches {
     [RISearchSuggestion deleteAllSearches];
-    
     self.noSearchesView.hidden = NO;
-    
-    [UIView animateWithDuration:0.4f
-                     animations:^{
-                         self.recentSearchesTableView.alpha = 0.0f;
-                         self.button.alpha = 0.0f;
-                     } completion:^(BOOL finished) {
-                         
-                         self.recentSearchesTableView.hidden = YES;
-                         self.button.hidden = YES;
-                         
-                         [UIView animateWithDuration:0.4f
-                                          animations:^{
-                                              self.noSearchesView.alpha = 1.0f;
-                                          } completion:^(BOOL finished) {
-                                              
-                                          }];
-                     }];
+    [UIView animateWithDuration:0.4f animations:^{
+         self.recentSearchesTableView.alpha = 0.0f;
+         self.button.alpha = 0.0f;
+     } completion:^(BOOL finished) {
+         self.recentSearchesTableView.hidden = YES;
+         self.button.hidden = YES;
+         [UIView animateWithDuration:0.4f animations:^{
+                              self.noSearchesView.alpha = 1.0f;
+         } completion:^(BOOL finished) {
+             
+         }];
+     }];
 }
 
 #pragma mark - TableViewDelegate
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 44.0f;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-{
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     return [[UIView alloc] initWithFrame:CGRectZero];
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.recentSearches.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"searchCell"];
     
     if (ISEMPTY(cell)) {
@@ -219,10 +159,7 @@
     }
     
     JAClickableView* clickableView = [[JAClickableView alloc] init];
-    clickableView.frame = CGRectMake(0.0f,
-                                     0.0f,
-                                     self.recentSearchesTableView.frame.size.width,
-                                     cell.height);
+    clickableView.frame = CGRectMake(0.0f, 0.0f, self.recentSearchesTableView.frame.size.width, cell.height);
     clickableView.tag = indexPath.row;
     [clickableView addTarget:self action:@selector(pressedClickableViewInCell:) forControlEvents:UIControlEventTouchUpInside];
     [cell addSubview:clickableView];
@@ -231,18 +168,12 @@
     UIImageView* customImageView = [[UIImageView alloc] initWithImage:customIcon];
     
     CGFloat margin = (clickableView.bounds.size.height - customIcon.size.height)/2;
-    customImageView.frame = CGRectMake(margin,
-                                       margin,
-                                       customIcon.size.width,
-                                       customIcon.size.height);
+    customImageView.frame = CGRectMake(margin, margin, customIcon.size.width, customIcon.size.height);
     [clickableView addSubview:customImageView];
-    
+
     CGFloat remainingWidth = clickableView.frame.size.width - customImageView.frame.size.width - margin*3;
     UILabel* customTextLabel = [UILabel new];
-    customTextLabel.frame = CGRectMake(CGRectGetMaxX(customImageView.frame) + margin,
-                                       clickableView.bounds.origin.y,
-                                       remainingWidth,
-                                       clickableView.frame.size.height);
+    customTextLabel.frame = CGRectMake(CGRectGetMaxX(customImageView.frame) + margin, clickableView.bounds.origin.y, remainingWidth, clickableView.frame.size.height);
     [clickableView addSubview:customTextLabel];
     
     RISearchSuggestion *search = [self.recentSearches objectAtIndex:indexPath.row];
@@ -251,10 +182,7 @@
     if (indexPath.row < self.recentSearches.count-1) {
         UIView* separator = [UIView new];
         separator.backgroundColor = JABlack300Color;
-        separator.frame = CGRectMake(0.0f,
-                                     clickableView.frame.size.height - 1,
-                                     clickableView.frame.size.width,
-                                     1);
+        separator.frame = CGRectMake(0.0f, clickableView.frame.size.height - 1, clickableView.frame.size.width, 1);
         [clickableView addSubview:separator];
     }
     
@@ -266,19 +194,14 @@
     return cell;
 }
 
-- (void)pressedClickableViewInCell:(UIButton*)sender
-{
+- (void)pressedClickableViewInCell:(UIButton*)sender {
     [self tableView:self.recentSearchesTableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [tableView deselectRowAtIndexPath:indexPath
-                             animated:YES];
-    
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     RISearchSuggestion *suggestion = [self.recentSearches objectAtIndex:indexPath.row];
     [RISearchSuggestion putRecentSearchInTop:suggestion];
-    
     [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedRecentSearchNotification object:suggestion];
 }
 

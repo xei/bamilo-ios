@@ -231,6 +231,8 @@
         [ThreadManager executeOnMainThread:^{
             if (self.list.orders.count == 0) {
                 self.emptyListMessageView.hidden = NO;
+            } else {
+                self.emptyListMessageView.hidden = YES;
             }
             [self.tableview reloadData];
             [self resetFooterView];

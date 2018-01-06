@@ -44,8 +44,7 @@
 
 @implementation JARecentlyViewedViewController
 
-- (void)setProductsDictionary:(NSMutableDictionary *)productsDictionary
-{
+- (void)setProductsDictionary:(NSMutableDictionary *)productsDictionary {
     _productsDictionary = productsDictionary;
     [self.collectionView reloadData];
     if (ISEMPTY(productsDictionary)) {
@@ -69,6 +68,7 @@
         [_emptyListView addSubview:self.emptyTitleLabel];
         [_emptyListView addSubview:self.emptyListImageView];
         [_emptyListView addSubview:self.emptyListLabel];
+        [self.emptyListView setHidden:YES];
         [self.view addSubview:_emptyListView];
     }
     return _emptyListView;
@@ -202,17 +202,14 @@
 
 #pragma mark - Load Data
 
-- (void)loadProducts
-{
+- (void)loadProducts {
     [self showLoading];
     [RIProduct getRecentlyViewedProductsWithSuccessBlock:^(NSArray *recentlyViewedProducts) {
-        
         if (recentlyViewedProducts.count > 0) {
             NSMutableArray* skus = [NSMutableArray new];
             for (RIProduct* product in recentlyViewedProducts) {
                 [skus addObject:product.sku];
             }
-            
             self.productsArray = [NSMutableArray new];
             NSMutableDictionary *temp = [NSMutableDictionary new];
             for (RIProduct *product in recentlyViewedProducts) {
@@ -220,22 +217,15 @@
                 [temp setObject:product forKey:product.sku];
             }
             self.productsDictionary = [temp mutableCopy];
-            
             self.chosenSimples = [NSMutableDictionary new];
-            
             [self.collectionView reloadData];
-            
             [self publishScreenLoadTime];
-
         } else {
             self.productsDictionary = nil;
         }
-        
         [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-        
         [self publishScreenLoadTime];
-        
         [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadProducts) objects:nil];
         [self hideLoading];
     }];

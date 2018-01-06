@@ -41,8 +41,8 @@ class RequestManagerSwift {
             if let params = params {
                 print(params)
             }
-            let requestUrl = "\(baseUrl)/\(path)"
-            return RequestManagerSwift.sharedManager.request(requestUrl, method: method, parameters: params, encoding: URLEncoding(destination: .methodDependent), headers: self.createHeaders()).responseJSON(completionHandler: { (response) in
+            let requestUrl = "\(baseUrl)/\(path)".addingPercentEncoding( withAllowedCharacters: NSCharacterSet.urlQueryAllowed)
+            return RequestManagerSwift.sharedManager.request(requestUrl ?? "\(baseUrl)/\(path)", method: method, parameters: params, encoding: URLEncoding(destination: .methodDependent), headers: self.createHeaders()).responseJSON(completionHandler: { (response) in
                 if let url = response.request?.url {
                     print("------------ Start response for : \(url)")
                 }

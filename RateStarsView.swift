@@ -25,10 +25,10 @@ class RateStarsView: BaseControlView {
                 if button.tag <= Int(roundedRate) {
                     button.imageView?.image = #imageLiteral(resourceName: "ProductRateFullStar")
                 } else {
-                    button.imageView?.image = #imageLiteral(resourceName: "ProductRateHalfStar")
+                    button.imageView?.image = #imageLiteral(resourceName: "ProductRateEmptyStar")
                 }
                 if roundedRate > Double(Int(roundedRate)) && button.tag == Int(roundedRate) + 1 { //has 0.5
-                    button.imageView?.image = #imageLiteral(resourceName: "ProductRateEmptyStar")
+                    button.imageView?.image = #imageLiteral(resourceName: "ProductRateHalfStar")
                 }
             }
         }
