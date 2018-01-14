@@ -15,7 +15,7 @@ class OrderDetailCancellationViewController: BaseViewController,
                                             DataServiceProtocol {
     @IBOutlet weak private var tableView: UITableView!
     @IBOutlet weak private var cancelOrderSubmitButton: OrangeButton!
-    
+    @IBOutlet weak private var submitButtonBottomToSuperViewConstaint: NSLayoutConstraint!
     private var footerView: OrderCancellationFooterView?
     private var dataSource: [CancellingOrderProduct]?
     private var selectedCancellingItems: [CancellingOrderProduct]?
@@ -42,6 +42,10 @@ class OrderDetailCancellationViewController: BaseViewController,
         self.tableView.dataSource = self
         self.tableView.setEditing(true, animated: false)
         self.tableView.allowsMultipleSelectionDuringEditing = true
+        
+        //it's possible that previous view controllers hides bottom bar so content edges will be disturbed
+        //by this trick this view always shows proper boundary
+        self.submitButtonBottomToSuperViewConstaint.constant = MainTabBarViewController.sharedInstance()?.tabBar.frame.height ?? 0
         
         //To remove floating header/footer of sections
         let dummyHeaderViewHeight = CGFloat(40)
@@ -170,7 +174,7 @@ class OrderDetailCancellationViewController: BaseViewController,
         let cancellingOrder = CancellingOrder()
         cancellingOrder.items = self.dataSource?.filter { $0.isSelected }
         if cancellingOrder.items?.count == 0 {
-            self.showNotificationBar(PLEASE_SELECT_AT_LEAST_ONE_CASE, isSuccess: false)
+            self.showNotificationBarMessage(PLEASE_SELECT_AT_LEAST_ONE_CASE, isSuccess: false)
             return
         }
         cancellingOrder.orderNum = self.order?.id
@@ -193,7 +197,10 @@ class OrderDetailCancellationViewController: BaseViewController,
             let newContentInsets = UIEdgeInsetsMake(initContentInset.top, initContentInset.left, initContentInset.bottom + keyboardHeight - self.cancelOrderSubmitButton.frame.height - tabbarHeight, initContentInset.right)
             self.tableView.contentInset = newContentInsets
             self.tableView.scrollIndicatorInsets = newContentInsets
-            self.tableView.scrollRectToVisible(self.tableView.convert(self.tableView.tableFooterView!.bounds, from: self.tableView.tableFooterView), animated: true)
+            
+            if let footerView = footerView ,footerView.moreDescriptionTextView.isFirstResponder {
+                self.tableView.scrollRectToVisible(self.tableView.convert(self.tableView.tableFooterView!.bounds, from: self.tableView.tableFooterView), animated: true)
+            }
         }
     }
     

@@ -102,9 +102,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="404" height="179.5"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IzI-ua-5t6">
+                        <rect key="frame" x="181" y="141" width="42" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="IzI-ua-5t6" firstAttribute="centerX" secondItem="pDX-jh-fgX" secondAttribute="centerX" id="1Z3-Lr-mFr"/>
                     <constraint firstItem="fWk-xD-VdX" firstAttribute="left" secondItem="efu-fa-bEg" secondAttribute="right" constant="16" id="7eP-aW-WFc"/>
+                    <constraint firstItem="IzI-ua-5t6" firstAttribute="centerY" secondItem="pDX-jh-fgX" secondAttribute="centerY" id="7oE-Bl-YDV"/>
                     <constraint firstItem="efu-fa-bEg" firstAttribute="top" secondItem="fWk-xD-VdX" secondAttribute="top" id="Agz-6O-JaO"/>
                     <constraint firstAttribute="right" secondItem="fWk-xD-VdX" secondAttribute="right" constant="16" id="CKZ-sW-Gnf"/>
                     <constraint firstItem="KVU-fe-ISd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="LUS-rI-yqU"/>
@@ -130,6 +138,7 @@
                 <outlet property="cancellationReasonFieldView" destination="pDX-jh-fgX" id="0JO-c9-fcH"/>
                 <outlet property="cancellingTitleLabel" destination="g4S-3X-UZN" id="e2M-qq-NTh"/>
                 <outlet property="disabledCoverView" destination="KVU-fe-ISd" id="hH2-bn-726"/>
+                <outlet property="notCacelableReasonLabel" destination="IzI-ua-5t6" id="wnL-GH-nIg"/>
                 <outlet property="productAttributeLabel" destination="JfX-8A-kNC" id="nLz-oo-vyr"/>
                 <outlet property="productImage" destination="fWk-xD-VdX" id="9Ke-qt-JPi"/>
                 <outlet property="productTitleLabel" destination="efu-fa-bEg" id="xh1-dL-GLG"/>

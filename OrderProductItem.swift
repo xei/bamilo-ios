@@ -33,6 +33,7 @@ class OrderProductItem: Product {
     
     var simpleSku: String?
     var isCancelable: Bool = false
+    var notCancelableReason: String?
     var deliveryTime: String?
     var size: String?
     var quantity: Int?
@@ -44,6 +45,7 @@ class OrderProductItem: Product {
         super.mapping(map: map)
         simpleSku <- map["simple_sku"]
         isCancelable <- map["isCancelable"]
+        notCancelableReason <- map["notCancelableReason"]
         deliveryTime <- map["calculated_delivery_time"]
         quantity <- map["quantity"]
         size <- map["filters.size"]

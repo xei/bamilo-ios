@@ -1577,7 +1577,7 @@
         <!--Order Detail Cancellation View Controller-->
         <scene sceneID="fH0-MJ-fOn">
             <objects>
-                <viewController id="Lvl-X0-ycF" customClass="OrderDetailCancellationViewController" customModule="Bamilo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="Lvl-X0-ycF" customClass="OrderDetailCancellationViewController" customModule="Bamilo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="kOf-WS-Exx"/>
                         <viewControllerLayoutGuide type="bottom" id="Ea4-Xc-Ggb"/>
@@ -1616,6 +1616,7 @@
                     </view>
                     <connections>
                         <outlet property="cancelOrderSubmitButton" destination="GgD-Hp-azO" id="Q4v-uB-QDO"/>
+                        <outlet property="submitButtonBottomToSuperViewConstaint" destination="cAY-RW-luy" id="6he-Tk-IV0"/>
                         <outlet property="tableView" destination="CzZ-x1-P5O" id="pIN-qR-YNA"/>
                         <segue destination="VGn-SC-niW" kind="show" identifier="showSuccessCancellationResult" id="G7v-VH-FnC"/>
                     </connections>
@@ -1944,7 +1945,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="le7-CL-VSU"/>
-        <segue reference="QvZ-9a-k1K"/>
+        <segue reference="heG-nW-AOJ"/>
         <segue reference="mLp-yH-ACJ"/>
     </inferredMetricsTieBreakers>
 </document>

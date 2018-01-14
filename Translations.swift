@@ -99,3 +99,4 @@ let STRING_CANCEL_ITEMS_DESC = RILocalizationWrapper.localizedString("cancel_ite
 let STRING_DESCRIPTION = RILocalizationWrapper.localizedString("description")!
 let ORDER_CANCELLATION_SUCCESS_MESSAGES = RILocalizationWrapper.localizedString("order_cancellation_success_message")!
 let PLEASE_SELECT_AT_LEAST_ONE_CASE = RILocalizationWrapper.localizedString("please_select_at_least_one_case")!
+let NOT_CANCELABLE_DEFAULT_REASON = RILocalizationWrapper.localizedString("not_cancelable_default_reason")!

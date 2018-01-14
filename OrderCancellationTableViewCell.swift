@@ -14,6 +14,7 @@ protocol OrderCancellationTableViewCellDelegate: class {
 
 class OrderCancellationTableViewCell: BaseTableViewCell, StepperViewControlDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
+    @IBOutlet weak private var notCacelableReasonLabel: UILabel!
     @IBOutlet weak private var disabledCoverView: UIView!
     @IBOutlet weak private var cancellingTitleLabel: UILabel!
     @IBOutlet weak private var productImage: UIImageView!
@@ -110,6 +111,7 @@ class OrderCancellationTableViewCell: BaseTableViewCell, StepperViewControlDeleg
         self.cancellationReasonFieldView.applyBorder(width: 1, color: Theme.color(kColorGray9))
         self.cancellationReasonFieldView.layer.cornerRadius = 3
         self.cancellingTitleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
+        self.notCacelableReasonLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGreen3))
     }
     
     //MARK : - StepperViewControlDelegate
@@ -127,7 +129,11 @@ class OrderCancellationTableViewCell: BaseTableViewCell, StepperViewControlDeleg
         self.quantityStepper.quantity = Int32(cancellingItem.cancellingQuantity)
         self.quantityStepper.maxQuantity = Int32(cancellingItem.quantity ?? 0)
         self.quantityStepper.minQuantity = min(self.quantityStepper.maxQuantity, 1)
-        self.cancellationReasonFieldHeightConstraint.constant = cancellingItem.isSelected ? 42 : 0
+        self.cancellationReasonFieldHeightConstraint.constant = cancellingItem.isSelected || !cancellingItem.isCancelable ? 42 : 0
+        self.cancellationReasonFieldView.isHidden = !cancellingItem.isCancelable
+        self.notCacelableReasonLabel.isHidden = cancellingItem.isCancelable
+        self.notCacelableReasonLabel.text = cancellingItem.notCancelableReason ?? NOT_CANCELABLE_DEFAULT_REASON
+        
         self.isUserInteractionEnabled = cancellingItem.isCancelable
         self.disabledCoverView.isHidden = cancellingItem.isCancelable
         

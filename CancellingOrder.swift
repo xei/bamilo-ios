@@ -16,7 +16,7 @@ class CancellingOrder {
     func toJson() -> [String:Any] {
         var json = [String:Any]()
         
-        json.updateField(key: "order_number", value: orderNum)
+        json.updateField(key: "orderNumber", value: orderNum)
         json.updateField(key: "description", value: description)
         
         
