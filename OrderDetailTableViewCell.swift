@@ -12,6 +12,7 @@ import Kingfisher
 protocol OrderDetailTableViewCellDelegate: class {
     func opensProductDetailWithSku(sku: String)
     func openRateViewWithSku(sku: String)
+    func cancelProduct(product: OrderProductItem)
 }
 
 class OrderDetailTableViewCell: AccordionTableViewCell {
@@ -28,6 +29,7 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
     @IBOutlet weak private var headerView: UIView!
     @IBOutlet weak private var rateButton: UIButton!
     @IBOutlet weak private var notInStockMessageLabel: UILabel!
+    @IBOutlet weak private var cancellationButton: UIButton!
     
     weak var delegate: OrderDetailTableViewCellDelegate?
     private var product: OrderProductItem?
@@ -42,9 +44,14 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
         self.productPriceLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
         self.productMoreInfoLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
         self.rateButton.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: .white)
+        self.rateButton.applyShadow(position: CGSize(width:0 , height: 1), color: .black, opacity: 0.2)
+        self.cancellationButton.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
         self.notInStockMessageLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 9), color: Theme.color(kColorGray4))
         
         self.rateButton.backgroundColor = Theme.color(kColorDarkGreen)
+        self.cancellationButton.backgroundColor = .white
+        self.cancellationButton.applyShadow(position: CGSize(width:0 , height: 1), color: .black, opacity: 0.2)
+        
         self.setPropoerConstraints(expanded: expanded)
         self.productImage?.layer.borderColor = Theme.color(kColorGray9).cgColor
         self.productImage?.layer.borderWidth = 1
@@ -84,10 +91,6 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
             if (product.seller ?? "").count > 0 {
                 productInfo += "\n\(STRING_SELLER): \(product.seller ?? "")"
             }
-//            if productPrice > 0 {
-//                let formattedPrice = "\(productPrice)".formatPriceWithCurrency()
-//                productInfo += "\n\(STRING_PRICE): \(formattedPrice)"
-//            }
             if let size = product.size {
                 productInfo += "\n\(STRING_SIZE): \(size)".convertTo(language: .arabic)
             }
@@ -95,7 +98,7 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
                 productInfo += "\n\(STRING_COLOR): \(color)".convertTo(language: .arabic)
             }
             
-            
+            self.cancellationButton.isHidden = !product.isCancelable
             self.productMoreInfoLabel.text = productInfo
             self.progressBarView.update(withModel: product.histories)
             self.notInStockMessageLabel.text = product.sku != nil ? nil : STRING_ORDER_OUT_OF_STOCK
@@ -113,6 +116,12 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
     @IBAction func rateButtonTapped(_ sender: Any) {
         if let sku = self.product?.sku {
             self.delegate?.openRateViewWithSku(sku: sku)
+        }
+    }
+    
+    @IBAction func cancellButtonTapped(_ sender: Any) {
+        if let product = self.product {
+            self.delegate?.cancelProduct(product: product)
         }
     }
     

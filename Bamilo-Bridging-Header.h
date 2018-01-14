@@ -41,6 +41,7 @@
 #import "EmarsysPredictManager.h"
 #import "InputTextFieldControl.h"
 #import "PushWooshTracker.h"
+#import "StepperViewControl.h"
 
 #import "BaseControlView.h"
 #import "BaseViewControl.h"

@@ -29,10 +29,7 @@ class MyBamiloHeaderView: UICollectionReusableView {
         self.menuButton.layer.cornerRadius = 3
         self.menuButton.clipsToBounds = true
         
-        self.containerView.layer.shadowColor = UIColor.black.cgColor
-        self.containerView.layer.shadowOffset = CGSize(width:1 , height: 2)
-        self.containerView.layer.shadowRadius = 1
-        self.containerView.layer.shadowOpacity = 0.2
+        self.containerView.applyShadow(position: CGSize(width:0 , height: 1), color: .black, opacity: 0.2)
         
         self.clipsToBounds = false
         self.backgroundColor = .clear

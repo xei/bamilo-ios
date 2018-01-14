@@ -11,7 +11,7 @@ import UIKit
 
 
 class OrderDetailTableViewController: AccordionTableViewController, OrderDetailTableViewCellDelegate {
-
+    
     var dataSource: OrderItem?
     weak var delegate: OrderDetailTableViewCellDelegate?
     
@@ -133,6 +133,10 @@ class OrderDetailTableViewController: AccordionTableViewController, OrderDetailT
     
     func openRateViewWithSku(sku: String) {
         self.delegate?.openRateViewWithSku(sku: sku)
+    }
+    
+    func cancelProduct(product: OrderProductItem) {
+        self.delegate?.cancelProduct(product: product)
     }
     
 }

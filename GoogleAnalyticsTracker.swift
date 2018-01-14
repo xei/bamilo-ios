@@ -260,33 +260,27 @@
     
     func checkoutStart(attributes: EventAttributeType) {
         if let cart = attributes[kEventCart] as? RICart {
-            cart.cartEntity.cartItems.forEach({ (cartItem) in
-                if let cartItem = cartItem as? RICartItem {
-                    let params = GAIDictionaryBuilder.createEvent(
-                        withCategory: "Checkout",
-                        action: "CheckoutStart",
-                        label: cartItem.sku,
-                        value: cartItem.price
-                    )
-                    self.sendParamsToGA(params: params)
-                }
-            })
+            let combinedSkus = cart.cartEntity.cartItems.map { ($0 as? RICartItem)?.sku }.flatMap { $0 }.joined(separator: ",")
+            let params = GAIDictionaryBuilder.createEvent(
+                withCategory: "Checkout",
+                action: "CheckoutStart",
+                label: combinedSkus,
+                value: cart.cartEntity.cartValue
+            )
+            self.sendParamsToGA(params: params)
         }
     }
     
     func checkoutFinished(attributes: EventAttributeType) {
         if let cart = attributes[kEventCart] as? RICart {
-            cart.cartEntity.cartItems.forEach({ (cartItem) in
-                if let cartItem = cartItem as? RICartItem {
-                    let params = GAIDictionaryBuilder.createEvent(
-                        withCategory: "Checkout",
-                        action: "CheckoutFinish",
-                        label: cartItem.sku,
-                        value: cartItem.price
-                    )
-                    self.sendParamsToGA(params: params)
-                }
-            })
+            let combinedSkus = cart.cartEntity.cartItems.map { ($0 as? RICartItem)?.sku }.flatMap { $0 }.joined(separator: ",")
+            let params = GAIDictionaryBuilder.createEvent(
+                withCategory: "Checkout",
+                action: "CheckoutFinish",
+                label: combinedSkus,
+                value: cart.cartEntity.cartValue
+            )
+            self.sendParamsToGA(params: params)
         }
     }
 

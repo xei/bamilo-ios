@@ -441,7 +441,6 @@ static NSString *recommendationLogic = @"RELATED";
     _productBundle = productBundle;
     if (!VALID(self.selectedBundles, NSMutableDictionary)) {
         self.selectedBundles = [[NSMutableDictionary alloc]init];
-
         for (RIProduct* pd in productBundle.bundleProducts) {
             [self.selectedBundles setObject:[pd.productSimples firstObject] forKey:pd.sku];
         }
@@ -449,7 +448,6 @@ static NSString *recommendationLogic = @"RELATED";
 }
 
 #pragma mark - Fill the views
-
 - (void)fillTheViews {
     if (self.product == nil) {
         return;
@@ -480,16 +478,13 @@ static NSString *recommendationLogic = @"RELATED";
         [self.mainScrollView addSubview:self.productImageSection];
         scrollViewY = CGRectGetMaxY(self.productImageSection.frame) + 6.0f;
     }
-
     if (self.product.variations.count) {
         self.variationsSection = [JAPDVVariations getNewPDVVariationsSection];
         [self.variationsSection setupWithFrame:self.mainScrollView.frame];
     }
-
     /*******
      Product Info Section
      *******/
-
     self.productInfoSection = [[JAPDVProductInfo alloc] init];
     CGRect productInfoSectionFrame = CGRectMake(0, 6, self.mainScrollView.width, 0);
     [self.productInfoSection setupWithFrame:productInfoSectionFrame product:self.product preSelectedSize:self.preSelectedSize];

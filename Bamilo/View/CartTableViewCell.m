@@ -124,7 +124,7 @@
     }
 }
 
-#pragma StepperViewController Delegate
+#pragma StepperViewControlDelegate
 - (void)valueHasBeenChanged:(id)stepperViewControl withNewValue:(int)value {
     [self quantityChangeTo:value];
 }

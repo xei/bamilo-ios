@@ -189,7 +189,6 @@ public typealias EventAttributeType = [String:Any]
     }
     
     static func callToOrderTapped() -> EventAttributeType {
-        var attributes = self.getCommonAttributes()
-        return attributes
+        return self.getCommonAttributes()
     }
 }

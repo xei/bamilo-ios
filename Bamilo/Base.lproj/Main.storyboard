@@ -144,7 +144,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="v4s-up-oT1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4199" y="173"/>
+            <point key="canvasLocation" x="-3999" y="108"/>
         </scene>
         <!--Order Detail View Controller-->
         <scene sceneID="eau-3j-UQE">
@@ -171,11 +171,12 @@
                     <connections>
                         <outlet property="activiryIndicator" destination="ZTf-Vg-2Wm" id="nWh-SS-KDw"/>
                         <segue destination="gPK-Zt-6PT" kind="show" identifier="pushPDVViewController" id="heG-nW-AOJ"/>
+                        <segue destination="Lvl-X0-ycF" kind="show" identifier="pushCancellationViewController" id="Jy7-BK-hRU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ldn-r3-6iS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3368" y="173"/>
+            <point key="canvasLocation" x="-3167" y="108"/>
         </scene>
         <!--Size Guide View Controller-->
         <scene sceneID="vTY-FR-PQM">
@@ -725,7 +726,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qde-Iw-6YS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-577" y="173"/>
+            <point key="canvasLocation" x="-377" y="108"/>
         </scene>
         <!--Catalog View Controller-->
         <scene sceneID="aKC-VI-rqH">
@@ -864,7 +865,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MVI-lX-DtE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2448" y="173"/>
+            <point key="canvasLocation" x="-2248" y="108"/>
         </scene>
         <!--Catalog No Result View Controller-->
         <scene sceneID="ZoX-Yu-dMa">
@@ -955,7 +956,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6ud-77-mC7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1548" y="631"/>
+            <point key="canvasLocation" x="-1348" y="567"/>
         </scene>
         <!--External Payments View Controller-->
         <scene sceneID="wVg-Vi-92H">
@@ -1310,7 +1311,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fqf-CK-yfm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1548" y="-581"/>
+            <point key="canvasLocation" x="-1348" y="-646"/>
         </scene>
         <!--Sub Cat Filter View Controller-->
         <scene sceneID="fqU-ue-oM7">
@@ -1506,11 +1507,11 @@
                         <viewControllerLayoutGuide type="bottom" id="zI7-gT-Oag"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="pmB-dk-Chu">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="623"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="O6y-dc-Laj">
-                                <rect key="frame" x="8" y="20" width="398" height="603"/>
+                                <rect key="frame" x="8" y="20" width="398" height="696"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="clg-El-4xX">
                                     <size key="itemSize" width="50" height="50"/>
@@ -1538,6 +1539,90 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B9M-Mn-Dsz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="381" y="-2484"/>
+        </scene>
+        <!--Order Cancellation Result View Controller-->
+        <scene sceneID="mHh-83-6vS">
+            <objects>
+                <viewController id="VGn-SC-niW" customClass="OrderCancellationResultViewController" customModule="Bamilo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hm8-Di-fjx"/>
+                        <viewControllerLayoutGuide type="bottom" id="jVh-La-11O"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="UNI-Dk-uRs">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="phU-05-CXB">
+                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="phU-05-CXB" firstAttribute="top" secondItem="hm8-Di-fjx" secondAttribute="bottom" id="5qm-LU-Gwz"/>
+                            <constraint firstAttribute="right" secondItem="phU-05-CXB" secondAttribute="right" id="PKM-NO-VAx"/>
+                            <constraint firstItem="phU-05-CXB" firstAttribute="left" secondItem="UNI-Dk-uRs" secondAttribute="left" id="dDb-wL-nys"/>
+                            <constraint firstItem="jVh-La-11O" firstAttribute="top" secondItem="phU-05-CXB" secondAttribute="bottom" id="teY-vl-HXo"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="phU-05-CXB" id="lYx-xL-7cY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SWO-hc-w3k" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3167" y="1585"/>
+        </scene>
+        <!--Order Detail Cancellation View Controller-->
+        <scene sceneID="fH0-MJ-fOn">
+            <objects>
+                <viewController id="Lvl-X0-ycF" customClass="OrderDetailCancellationViewController" customModule="Bamilo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="kOf-WS-Exx"/>
+                        <viewControllerLayoutGuide type="bottom" id="Ea4-Xc-Ggb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dhX-4m-5b3">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CzZ-x1-P5O">
+                                <rect key="frame" x="0.0" y="20" width="414" height="671"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GgD-Hp-azO" customClass="OrangeButton">
+                                <rect key="frame" x="0.0" y="691" width="414" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="dqQ-ld-Tyt"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="15"/>
+                                <state key="normal" title="ثبت سفارش"/>
+                                <connections>
+                                    <action selector="cancellationSubmitButtonTapped:" destination="Lvl-X0-ycF" eventType="touchUpInside" id="Gq8-y7-S9g"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="GgD-Hp-azO" firstAttribute="left" secondItem="dhX-4m-5b3" secondAttribute="left" id="BCv-07-fTr"/>
+                            <constraint firstItem="CzZ-x1-P5O" firstAttribute="left" secondItem="dhX-4m-5b3" secondAttribute="left" id="OWK-ZK-WaO"/>
+                            <constraint firstAttribute="right" secondItem="CzZ-x1-P5O" secondAttribute="right" id="Rbx-wj-57p"/>
+                            <constraint firstItem="GgD-Hp-azO" firstAttribute="top" secondItem="CzZ-x1-P5O" secondAttribute="bottom" id="SMw-4m-NIK"/>
+                            <constraint firstItem="CzZ-x1-P5O" firstAttribute="top" secondItem="kOf-WS-Exx" secondAttribute="bottom" id="T2Z-da-koL"/>
+                            <constraint firstItem="Ea4-Xc-Ggb" firstAttribute="top" secondItem="GgD-Hp-azO" secondAttribute="bottom" id="cAY-RW-luy"/>
+                            <constraint firstAttribute="right" secondItem="GgD-Hp-azO" secondAttribute="right" id="ly5-eZ-zVL"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="cancelOrderSubmitButton" destination="GgD-Hp-azO" id="Q4v-uB-QDO"/>
+                        <outlet property="tableView" destination="CzZ-x1-P5O" id="pIN-qR-YNA"/>
+                        <segue destination="VGn-SC-niW" kind="show" identifier="showSuccessCancellationResult" id="G7v-VH-FnC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="STW-lP-6z6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3167" y="846"/>
         </scene>
         <!--Filtered List No Result View Controller-->
         <scene sceneID="CsY-KX-BfZ">
@@ -1587,7 +1672,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hqI-fM-Anc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2447" y="904"/>
+            <point key="canvasLocation" x="-2246" y="839"/>
         </scene>
         <!--حساب کاربری-->
         <scene sceneID="maa-G4-bvT">
@@ -1858,8 +1943,8 @@
         <image name="tabbar_category_highlighted" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="bEV-Bv-dJp"/>
-        <segue reference="heG-nW-AOJ"/>
+        <segue reference="le7-CL-VSU"/>
+        <segue reference="QvZ-9a-k1K"/>
         <segue reference="mLp-yH-ACJ"/>
     </inferredMetricsTieBreakers>
 </document>

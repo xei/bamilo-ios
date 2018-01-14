@@ -90,10 +90,7 @@ class HomePageSliderTableViewCell: BaseHomePageTeaserBoxTableViewCell, FSPagerVi
         cell.imageView?.layer.masksToBounds = true
         cell.imageView?.clipsToBounds = true
         
-        cell.contentView.layer.shadowColor = UIColor.black.cgColor
-        cell.contentView.layer.shadowOpacity = 0.2
-        cell.contentView.layer.shadowOffset = CGSize(width:1 , height: 2)
-        cell.contentView.layer.shadowRadius = 1
+        cell.contentView.applyShadow(position: CGSize(width:0 , height: 1), color: .black, opacity: 0.2)
         cell.contentView.clipsToBounds = false
         cell.transform = CGAffineTransform(scaleX: -1, y: 1)
         

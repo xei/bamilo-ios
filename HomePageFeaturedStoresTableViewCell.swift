@@ -27,10 +27,7 @@ class HomePageFeaturedStoresTableViewCell: BaseHomePageTeaserBoxTableViewCell, U
         self.collectionView.layer.cornerRadius = 2
         self.collectionView.clipsToBounds = true
         
-        self.collectionViewContainer.layer.shadowColor = UIColor.black.cgColor
-        self.collectionViewContainer.layer.shadowOpacity = 0.1
-        self.collectionViewContainer.layer.shadowRadius = 1
-        self.collectionViewContainer.layer.shadowOffset = CGSize(width:1 , height: 1)
+        self.collectionViewContainer.applyShadow(position: CGSize(width:0 , height: 1), color: .black, opacity: 0.2)
         self.collectionViewContainer.clipsToBounds = false
         
         self.collectionView.delegate = self

@@ -94,4 +94,8 @@ let STRING_NO_NETWORK = RILocalizationWrapper.localizedString("string_no_newtork
 let STRING_TRY_AGAIN = RILocalizationWrapper.localizedString("string_try_again")!
 let STRING_INTERNET_SETTING = RILocalizationWrapper.localizedString("internet_setting")!
 let STRING_IS_CALCULATING = RILocalizationWrapper.localizedString("is_calculating")!
-
+let STRING_OK_LABEL = RILocalizationWrapper.localizedString("ok_label")!
+let STRING_CANCEL_ITEMS_DESC = RILocalizationWrapper.localizedString("cancel_items_description")!
+let STRING_DESCRIPTION = RILocalizationWrapper.localizedString("description")!
+let ORDER_CANCELLATION_SUCCESS_MESSAGES = RILocalizationWrapper.localizedString("order_cancellation_success_message")!
+let PLEASE_SELECT_AT_LEAST_ONE_CASE = RILocalizationWrapper.localizedString("please_select_at_least_one_case")!

@@ -88,7 +88,6 @@ import UIKit
     private var previousFrameY: CGFloat?
     private func changeBarPositionY(difference: CGFloat) {
         self.barIsHidding = difference > 0
-        if difference == 0.5 { return }
         guard let barViewInitialFrame = self.barViewInitialFrame else {
             return
         }

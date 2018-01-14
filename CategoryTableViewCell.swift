@@ -28,10 +28,7 @@ class CategoryTableViewCell: BaseTableViewCell {
         self.iconImageView.layer.cornerRadius = self.imageViewContainerHeightConstraint.constant / 2
         self.iconImageView.clipsToBounds = true
         self.imageViewContainerView.layer.cornerRadius = self.imageViewContainerHeightConstraint.constant / 2
-        self.imageViewContainerView.layer.shadowColor = UIColor.black.cgColor
-        self.imageViewContainerView.layer.shadowOffset = CGSize(width:1 , height: 2)
-        self.imageViewContainerView.layer.shadowRadius = 1
-        self.imageViewContainerView.layer.shadowOpacity = 0.2
+        self.imageViewContainerView.applyShadow(position: CGSize(width:0 , height: 1), color: .black, opacity: 0.2)
         self.imageViewContainerView.clipsToBounds = false
         
         self.titleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))

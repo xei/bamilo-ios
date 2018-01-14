@@ -293,4 +293,8 @@ const int subCatButtonVisibleHeight = 50;
 - (NSString *)navBarTitleString {
     return STRING_FILTERS;
 }
+
+- (NSString *)getScreenName {
+    return @"FilterView";
+}
 @end

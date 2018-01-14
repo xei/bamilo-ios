@@ -77,7 +77,7 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
     
     private lazy var doneButton: UIBarButtonItem = { [unowned self] in
         
-        let doneBtn = UIBarButtonItem(title:"تایید", style: .plain, target: self, action: #selector(doneButtonPickerTapped(sender:)))
+        let doneBtn = UIBarButtonItem(title:STRING_OK_LABEL, style: .plain, target: self, action: #selector(doneButtonPickerTapped(sender:)))
         doneBtn.setTitleTextAttributes([
             NSFontAttributeName: Theme.font(kFontVariationRegular, size: 13),
             NSForegroundColorAttributeName: Theme.color(kColorDarkGreen)
@@ -88,14 +88,14 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
     
     private lazy var cancelButton: UIBarButtonItem = { [unowned self] in
         
-        let cancelBtn = UIBarButtonItem(title:"لغو", style: .plain, target: self, action: #selector(cancelButtonPickerTapped(sender:)))
+        let cancelBtn = UIBarButtonItem(title: STRING_CANCEL, style: .plain, target: self, action: #selector(cancelButtonPickerTapped(sender:)))
         cancelBtn.setTitleTextAttributes([
             NSFontAttributeName: Theme.font(kFontVariationRegular, size: 13),
             NSForegroundColorAttributeName: Theme.color(kColorDarkGreen)
             ], for: .normal)
         return cancelBtn
         
-        }()
+    }()
     
     private lazy var pickerView: UIPickerView = {
         

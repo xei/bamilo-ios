@@ -63,7 +63,7 @@ NSString *const RI_UNIQUE_COUNTRY_NAME_BAMILO = @"Iran";
 NSString *const RI_UNIQUE_COUNTRY_ISO_BAMILO = @"IR";
 
 NSString *const RI_MOBAPI_PREFIX = @"mobapi/";
-NSString *const RI_API_VERSION = @"v2.6/"; // ||| DO NOT CHANGE |||
+NSString *const RI_API_VERSION = @"v2.7/"; // ||| DO NOT CHANGE |||
 
 NSString *const RI_API_INFO = @"main/md5/";
 NSString *const RI_API_IMAGE_RESOLUTIONS = @"main/imageresolutions/";
@@ -94,6 +94,7 @@ NSString *const RI_API_REMOVE_VOUCHER_FROM_CART = @"cart/removevoucher/";
 
 NSString *const RI_API_GET_ORDERS = @"customer/orderlist/";
 NSString *const RI_API_TRACK_ORDER = @"customer/trackingorder/";
+NSString *const RI_API_CANCEL_ORDER = @"customer/cancelitems";
 NSString *const RI_API_GET_CUSTOMER = @"customer/getdetails/";
 NSString *const RI_API_REGISTER_CUSTOMER = @"customer/create/";
 NSString *const RI_API_LOGIN_CUSTOMER = @"customer/login/";
