@@ -21,7 +21,7 @@ class OrderDetailTableViewController: AccordionTableViewController, OrderDetailT
         self.tableView.backgroundColor = .clear
         
         self.tableView.register(UINib(nibName: OrderDetailTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: OrderDetailTableViewCell.nibName())
-        self.tableView.register(UINib(nibName: MutualTitleHeaderCell.nibName(), bundle: nil), forHeaderFooterViewReuseIdentifier: MutualTitleHeaderCell.nibName())
+        self.tableView.register(UINib(nibName: OrderDetailPackageHeaderTableViewHeader.nibName(), bundle: nil), forHeaderFooterViewReuseIdentifier: OrderDetailPackageHeaderTableViewHeader.nibName())
         self.tableView.register(UINib(nibName: OrderOwnerInfoTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: OrderOwnerInfoTableViewCell.nibName())
         self.tableView.register(UINib(nibName: OrderInfoTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: OrderInfoTableViewCell.nibName())
         self.tableView.register(UINib(nibName: OrderCMSMessageTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: OrderCMSMessageTableViewCell.nibName())
@@ -93,14 +93,20 @@ class OrderDetailTableViewController: AccordionTableViewController, OrderDetailT
             return nil
         }
         
-        let cell = self.tableView.dequeueReusableHeaderFooterView(withIdentifier: MutualTitleHeaderCell.nibName()) as! MutualTitleHeaderCell
-        cell.frame = CGRect(x: 0, y: 0, width: self.tableView.frame.width, height: 40)
-        cell.backgroundView = UIView(frame: cell.frame)
-        cell.backgroundView?.backgroundColor = Theme.color(kColorGray9)
+        let header = self.tableView.dequeueReusableHeaderFooterView(withIdentifier: OrderDetailPackageHeaderTableViewHeader.nibName()) as! OrderDetailPackageHeaderTableViewHeader
+        header.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 40)
+        header.backgroundView = UIView(frame: header.frame)
+        header.backgroundView?.backgroundColor = Theme.color(kColorGray9)
         
-        cell.leftTitleString = self.dataSource?.packages?[section - 1].deliveryTime
-        cell.titleString = self.dataSource?.packages?[section - 1].title?.convertTo(language: .arabic)
-        return cell
+        header.leftTitleString = self.dataSource?.packages?[section - 1].deliveryTime
+        header.titleString = self.dataSource?.packages?[section - 1].title?.convertTo(language: .arabic)
+        if let hasDelay = self.dataSource?.packages?[section - 1].delay?.hasDelay, hasDelay {
+            header.update(deviationDescription: self.dataSource?.packages?[section - 1].delay?.reason)
+            header.leftTitleString = ""
+        } else {
+            header.update(deviationDescription: nil)
+        }
+        return header
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -108,7 +114,11 @@ class OrderDetailTableViewController: AccordionTableViewController, OrderDetailT
             if section == 0 || section == packagesCount + 1 { return 0 }
         } else { return 0 }
         
-        return 40
+        return UITableViewAutomaticDimension
+    }
+    
+    override func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+        return 90
     }
     
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {

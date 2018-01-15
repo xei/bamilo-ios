@@ -100,6 +100,8 @@
 		614ED1681F8B6DCB0096E4D6 /* HomePageDailyDealsCollectionFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614ED1671F8B6DCB0096E4D6 /* HomePageDailyDealsCollectionFlowLayout.swift */; };
 		615052D61FB0758600E67571 /* FailPaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615052D51FB0758600E67571 /* FailPaymentViewController.swift */; };
 		61508586200C945B00BC67B1 /* OrderDetailCancellationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61508585200C945B00BC67B1 /* OrderDetailCancellationTableViewController.swift */; };
+		6150858C200CCE9700BC67B1 /* OrderDetailPackageHeaderTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6150858B200CCE9700BC67B1 /* OrderDetailPackageHeaderTableViewHeader.swift */; };
+		6150858E200CCEE400BC67B1 /* OrderDetailPackageHeaderTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6150858D200CCEE400BC67B1 /* OrderDetailPackageHeaderTableViewHeader.xib */; };
 		61540C822006482300D2F03F /* Ext+Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61540C812006482300D2F03F /* Ext+Array.swift */; };
 		61540C86200A599700D2F03F /* OrderCancellationFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61540C85200A599700D2F03F /* OrderCancellationFooterView.swift */; };
 		61540C88200A59C700D2F03F /* OrderCancellationFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61540C87200A59C700D2F03F /* OrderCancellationFooterView.xib */; };
@@ -1126,6 +1128,8 @@
 		614ED1671F8B6DCB0096E4D6 /* HomePageDailyDealsCollectionFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageDailyDealsCollectionFlowLayout.swift; sourceTree = "<group>"; };
 		615052D51FB0758600E67571 /* FailPaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailPaymentViewController.swift; sourceTree = "<group>"; };
 		61508585200C945B00BC67B1 /* OrderDetailCancellationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailCancellationTableViewController.swift; sourceTree = "<group>"; };
+		6150858B200CCE9700BC67B1 /* OrderDetailPackageHeaderTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailPackageHeaderTableViewHeader.swift; sourceTree = "<group>"; };
+		6150858D200CCEE400BC67B1 /* OrderDetailPackageHeaderTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderDetailPackageHeaderTableViewHeader.xib; sourceTree = "<group>"; };
 		61540C812006482300D2F03F /* Ext+Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+Array.swift"; sourceTree = "<group>"; };
 		61540C85200A599700D2F03F /* OrderCancellationFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCancellationFooterView.swift; sourceTree = "<group>"; };
 		61540C87200A59C700D2F03F /* OrderCancellationFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderCancellationFooterView.xib; sourceTree = "<group>"; };
@@ -3333,6 +3337,15 @@
 			name = MyBamiloHeaderView;
 			sourceTree = "<group>";
 		};
+		61508588200CCE5700BC67B1 /* OrderDetailPackageHeaderTableViewHeader */ = {
+			isa = PBXGroup;
+			children = (
+				6150858B200CCE9700BC67B1 /* OrderDetailPackageHeaderTableViewHeader.swift */,
+				6150858D200CCEE400BC67B1 /* OrderDetailPackageHeaderTableViewHeader.xib */,
+			);
+			name = OrderDetailPackageHeaderTableViewHeader;
+			sourceTree = "<group>";
+		};
 		61540C83200A4D1B00D2F03F /* OrderCancellationTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -4547,6 +4560,7 @@
 		61FB2FD91FA8CB5B005FE3F6 /* OrderDetail */ = {
 			isa = PBXGroup;
 			children = (
+				61508588200CCE5700BC67B1 /* OrderDetailPackageHeaderTableViewHeader */,
 				61FB2FDA1FA8CB6C005FE3F6 /* OrderCMSMessageTableViewCell */,
 				61B579051F9E2AD100C9F454 /* OrderInfoTableViewCell */,
 				61B579041F9E18DA00C9F454 /* OrderOwnerInfoTableViewCell */,
@@ -8025,6 +8039,7 @@
 				875743E61EA60E13001B518A /* Spring-76.png in Resources */,
 				CE9AE0E01AB6D78200D56481 /* JAPDVProductInfo~iPad_Portrait.xib in Resources */,
 				87B684DC1E49CE660042C09F /* BasicTableViewCell.xib in Resources */,
+				6150858E200CCEE400BC67B1 /* OrderDetailPackageHeaderTableViewHeader.xib in Resources */,
 				875743A81EA60DE0001B518A /* Ramadan-76.png in Resources */,
 				619E92D01F8A1044003885BC /* DailyDealsCollectionViewCell.xib in Resources */,
 				61540C88200A59C700D2F03F /* OrderCancellationFooterView.xib in Resources */,
@@ -8752,6 +8767,7 @@
 				8720C3331EDEE19200404378 /* RequestManager.swift in Sources */,
 				875AD5471E38C0C900584ABF /* RIFieldDataSetComponent.m in Sources */,
 				6171F3681F3A021700B3B212 /* Ext+UIView.swift in Sources */,
+				6150858C200CCE9700BC67B1 /* OrderDetailPackageHeaderTableViewHeader.swift in Sources */,
 				CE9ADFDE1AB6D78200D56481 /* JABaseViewController.m in Sources */,
 				8702FBDD1E9A32D3001D1AA9 /* AddToCartEvent.m in Sources */,
 				9AEF74051CD20E5700A5D574 /* JAScreenTarget.m in Sources */,

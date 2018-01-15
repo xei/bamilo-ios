@@ -9,9 +9,10 @@
 import UIKit
 import ObjectMapper
 
-class OrderPackageDelay: Mappable {
+class OrderPackageDelay:NSObject, Mappable {
     var hasDelay: Bool?
     var reason: String?
+    override init() {}
     required init?(map: Map) {
     }
     func mapping(map: Map) {

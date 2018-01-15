@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="OrderDetailPackageHeaderTableViewHeader" customModule="Bamilo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="85"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wOj-hI-oQh">
+                    <rect key="frame" x="268" y="10" width="42" height="34"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="49v-s9-hxv">
+                    <rect key="frame" x="10" y="10" width="42" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P45-sA-3OA">
+                    <rect key="frame" x="268" y="54" width="42" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="P45-sA-3OA" secondAttribute="bottom" priority="750" constant="10" id="17K-Eg-ZCX"/>
+                <constraint firstAttribute="right" secondItem="wOj-hI-oQh" secondAttribute="right" constant="10" id="2HF-Z3-SKT"/>
+                <constraint firstItem="49v-s9-hxv" firstAttribute="left" secondItem="iN0-l3-epB" secondAttribute="left" constant="10" id="fHb-5X-czc"/>
+                <constraint firstItem="P45-sA-3OA" firstAttribute="top" secondItem="wOj-hI-oQh" secondAttribute="bottom" constant="10" id="iL0-x8-hF8"/>
+                <constraint firstItem="P45-sA-3OA" firstAttribute="right" secondItem="wOj-hI-oQh" secondAttribute="right" id="ksy-hx-lif"/>
+                <constraint firstAttribute="bottom" secondItem="wOj-hI-oQh" secondAttribute="bottom" priority="250" constant="10" id="m8R-c5-D2E"/>
+                <constraint firstItem="49v-s9-hxv" firstAttribute="top" secondItem="wOj-hI-oQh" secondAttribute="top" id="pgX-7Q-b1b"/>
+                <constraint firstItem="wOj-hI-oQh" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="woe-bl-hve"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="deviationDescBottomSuperViewConstraint" destination="17K-Eg-ZCX" id="MWK-QK-faO"/>
+                <outlet property="deviationDescriptionLabel" destination="P45-sA-3OA" id="jZR-Eg-Tj3"/>
+                <outlet property="leftTitleLabel" destination="49v-s9-hxv" id="f77-il-x9u"/>
+                <outlet property="leftTitleLeftPaddingConstraint" destination="fHb-5X-czc" id="rNU-Ji-HT8"/>
+                <outlet property="titleLabel" destination="wOj-hI-oQh" id="tqL-od-eSx"/>
+                <outlet property="titleRightPaddingConstraint" destination="2HF-Z3-SKT" id="3uB-uR-VOn"/>
+                <outlet property="titleToBottomSuperViewConstraint" destination="m8R-c5-D2E" id="7Gj-bd-GBI"/>
+            </connections>
+            <point key="canvasLocation" x="-297" y="-90.5"/>
+        </view>
+    </objects>
+</document>
