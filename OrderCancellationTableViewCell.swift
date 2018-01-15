@@ -9,10 +9,7 @@
 import UIKit
 import Kingfisher
 
-protocol OrderCancellationTableViewCellDelegate: class {
-}
-
-class OrderCancellationTableViewCell: BaseTableViewCell, StepperViewControlDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
+class OrderCancellationTableViewCell: AccordionTableViewCell, StepperViewControlDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
     @IBOutlet weak private var notCacelableReasonLabel: UILabel!
     @IBOutlet weak private var disabledCoverView: UIView!
@@ -28,8 +25,6 @@ class OrderCancellationTableViewCell: BaseTableViewCell, StepperViewControlDeleg
     private var pickerViewTextFiled: UITextField?
     private var cancellingItem : CancellingOrderProduct?
     private var cancellingReasons : [OrderCancellationReason]?
-    weak var delegate: OrderCancellationTableViewCellDelegate?
-    
     
     private lazy var doneButton: UIBarButtonItem = { [unowned self] in
         let doneBtn = UIBarButtonItem(title: STRING_OK_LABEL, style: .plain, target: self, action: #selector(doneButtonPickerTapped(sender:)))
@@ -124,40 +119,35 @@ class OrderCancellationTableViewCell: BaseTableViewCell, StepperViewControlDeleg
     
     func update(cancellingItem: CancellingOrderProduct, cancellingReasons: [OrderCancellationReason]) {
         self.productTitleLabel.text = cancellingItem.name
-        self.productAttributeLabel.text = cancellingItem.color
+        if let color = cancellingItem.color {
+            self.productAttributeLabel.text = "\(STRING_COLOR): \(color)"
+        }
         self.productImage.kf.setImage(with: cancellingItem.imageUrl, placeholder: UIImage(named: "placeholder_list"), options: [.transition(.fade(0.20))])
         self.quantityStepper.quantity = Int32(cancellingItem.cancellingQuantity)
         self.quantityStepper.maxQuantity = Int32(cancellingItem.quantity ?? 0)
         self.quantityStepper.minQuantity = min(self.quantityStepper.maxQuantity, 1)
-        self.cancellationReasonFieldHeightConstraint.constant = cancellingItem.isSelected || !cancellingItem.isCancelable ? 42 : 0
         self.cancellationReasonFieldView.isHidden = !cancellingItem.isCancelable
         self.notCacelableReasonLabel.isHidden = cancellingItem.isCancelable
         self.notCacelableReasonLabel.text = cancellingItem.notCancelableReason ?? NOT_CANCELABLE_DEFAULT_REASON
-        
+
         self.isUserInteractionEnabled = cancellingItem.isCancelable
         self.disabledCoverView.isHidden = cancellingItem.isCancelable
-        
+
         self.cancellingItem = cancellingItem
         self.cancellingReasons = cancellingReasons
-        
+
         self.cancellingItem?.reasonId = self.cancellingItem?.reasonId ?? self.cancellingReasons?.first?.id
         self.updateReasonsUI()
     }
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+    override func setExpanded(_ expanded: Bool, animated: Bool) {
+        super.setExpanded(expanded, animated: animated)
+        self.setPropoerConstraints(expanded: expanded)
     }
     
     override func prepareForReuse() {
-        self.cancellingItem = nil
-        self.cancellingReasons = nil
         super.prepareForReuse()
-    }
-    
-    func toggleView(selected: Bool) {
-        UIView.transition(with: self, duration: 0.15, animations: {
-            self.cancellationReasonFieldHeightConstraint.constant = selected ? 42 : 0
-        })
+        
     }
     
     @IBAction func cancellingReasonButtonTapped(_ sender: Any) {
@@ -189,6 +179,12 @@ class OrderCancellationTableViewCell: BaseTableViewCell, StepperViewControlDeleg
         }
         titleView?.text = self.cancellingReasons?[row].title ?? ""
         return titleView!;
+    }
+    
+    private func setPropoerConstraints(expanded: Bool) {
+        //to set the height of cell via
+        self.cancellationReasonFieldHeightConstraint.constant = expanded ? 42 : 0
+        self.layoutIfNeeded()
     }
     
     override static func nibName() -> String {

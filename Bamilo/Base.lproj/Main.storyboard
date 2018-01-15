@@ -1586,38 +1586,37 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CzZ-x1-P5O">
-                                <rect key="frame" x="0.0" y="20" width="414" height="671"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GgD-Hp-azO" customClass="OrangeButton">
                                 <rect key="frame" x="0.0" y="691" width="414" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="dqQ-ld-Tyt"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="15"/>
-                                <state key="normal" title="ثبت سفارش"/>
+                                <state key="normal" title="ثبت درخواست"/>
                                 <connections>
                                     <action selector="cancellationSubmitButtonTapped:" destination="Lvl-X0-ycF" eventType="touchUpInside" id="Gq8-y7-S9g"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="48P-4t-6dq">
+                                <rect key="frame" x="0.0" y="20" width="414" height="671"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="GgD-Hp-azO" firstAttribute="left" secondItem="dhX-4m-5b3" secondAttribute="left" id="BCv-07-fTr"/>
-                            <constraint firstItem="CzZ-x1-P5O" firstAttribute="left" secondItem="dhX-4m-5b3" secondAttribute="left" id="OWK-ZK-WaO"/>
-                            <constraint firstAttribute="right" secondItem="CzZ-x1-P5O" secondAttribute="right" id="Rbx-wj-57p"/>
-                            <constraint firstItem="GgD-Hp-azO" firstAttribute="top" secondItem="CzZ-x1-P5O" secondAttribute="bottom" id="SMw-4m-NIK"/>
-                            <constraint firstItem="CzZ-x1-P5O" firstAttribute="top" secondItem="kOf-WS-Exx" secondAttribute="bottom" id="T2Z-da-koL"/>
+                            <constraint firstItem="48P-4t-6dq" firstAttribute="leading" secondItem="dhX-4m-5b3" secondAttribute="leading" id="JEW-DO-L7C"/>
                             <constraint firstItem="Ea4-Xc-Ggb" firstAttribute="top" secondItem="GgD-Hp-azO" secondAttribute="bottom" id="cAY-RW-luy"/>
+                            <constraint firstItem="GgD-Hp-azO" firstAttribute="top" secondItem="48P-4t-6dq" secondAttribute="bottom" id="hRr-7n-12U"/>
                             <constraint firstAttribute="right" secondItem="GgD-Hp-azO" secondAttribute="right" id="ly5-eZ-zVL"/>
+                            <constraint firstAttribute="trailing" secondItem="48P-4t-6dq" secondAttribute="trailing" id="mFa-5N-kqX"/>
+                            <constraint firstItem="48P-4t-6dq" firstAttribute="top" secondItem="kOf-WS-Exx" secondAttribute="bottom" id="rhj-aA-cGb"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="cancelOrderSubmitButton" destination="GgD-Hp-azO" id="Q4v-uB-QDO"/>
+                        <outlet property="contentWrapperView" destination="48P-4t-6dq" id="EMz-Gx-tq5"/>
                         <outlet property="submitButtonBottomToSuperViewConstaint" destination="cAY-RW-luy" id="6he-Tk-IV0"/>
-                        <outlet property="tableView" destination="CzZ-x1-P5O" id="pIN-qR-YNA"/>
                         <segue destination="VGn-SC-niW" kind="show" identifier="showSuccessCancellationResult" id="G7v-VH-FnC"/>
                     </connections>
                 </viewController>

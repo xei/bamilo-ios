@@ -953,10 +953,12 @@
 
 "is_calculating" = "در حال محاسبه ";
 
-"cancel_items_description" = "آیتم هایی که قصد لغو آنها را دارید انتخاب کنید";
+"cancel_items_description" = "کالاهایی را که می خواهید لغو کنید، انتخاب نمایید";
 
 "order_cancellation_success_message" = "درخواست لغو شما با موفقیت ثبت شد. \n وضعیت سفارش شما به زودی بروزرسانی خواهد شد.";
 
 "please_select_at_least_one_case" = "لطفا حداقل یک مورد را انتخاب نمایید.";
 
 "not_cancelable_default_reason" = "این محصول امکان لغو ندارد";
+
+"submit_cancellation" = "ثبت درخواست لغو";
