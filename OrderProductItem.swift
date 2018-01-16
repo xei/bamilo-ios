@@ -14,12 +14,12 @@ enum OrderProductItemRefundStatus: String {
     case success = "success"
 }
 
-class OrderProductItemRefund :Mappable {
+class OrderProductItemRefund:NSObject, Mappable {
     var status: OrderProductItemRefundStatus?
     var cardNumber: String?
     var cancellationReason: String?
     var date: String?
-    
+    override init() {}
     required init?(map: Map) {}
     func mapping(map: Map) {
         status <- (map["status"], EnumTransform())
@@ -31,6 +31,7 @@ class OrderProductItemRefund :Mappable {
 
 class OrderProductItem: Product {
     
+    var refaund: OrderProductItemRefund?
     var simpleSku: String?
     var isCancelable: Bool = false
     var notCancelableReason: String?
@@ -40,7 +41,7 @@ class OrderProductItem: Product {
     var histories: [OrderProductHistory]?
     var seller: String?
     var color: String?
-    
+
     override func mapping(map: Map) {
         super.mapping(map: map)
         simpleSku <- map["simple_sku"]
@@ -52,6 +53,7 @@ class OrderProductItem: Product {
         color <- map["filters.color"]
         histories <- map["histories"]
         seller <- map["seller"]
+        refaund <- map["refund"]
     }
     
     func convertToCancelling() -> CancellingOrderProduct {
