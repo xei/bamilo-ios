@@ -17,6 +17,7 @@ class OrderDetailTableViewController: AccordionTableViewController, OrderDetailT
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.shouldAnimateCellToggle = false
         self.view.backgroundColor = .clear
         self.tableView.backgroundColor = .clear
         
@@ -122,7 +123,7 @@ class OrderDetailTableViewController: AccordionTableViewController, OrderDetailT
     }
     
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 300
+        return 400
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
