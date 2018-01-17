@@ -54,6 +54,7 @@ class OrderProductItem: Product {
         histories <- map["histories"]
         seller <- map["seller"]
         refaund <- map["refund"]
+        
     }
     
     func convertToCancelling() -> CancellingOrderProduct {
