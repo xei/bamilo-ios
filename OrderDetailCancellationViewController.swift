@@ -77,6 +77,7 @@ class OrderDetailCancellationViewController: BaseViewController, DataServiceProt
         if let keyboardHeight = keyboardRectangle?.height {
             self.submitButtonBottomToSuperViewConstaint.constant = keyboardHeight
         }
+        self.orderCancellationTableViewCtrl.scrollToMoreDescriptionField()
     }
     
     func keyboardWillBeHidden(notification: Notification) {

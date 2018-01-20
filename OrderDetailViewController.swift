@@ -79,7 +79,9 @@ class OrderDetailViewController: BaseViewController, OrderDetailTableViewCellDel
     }
     
     func cancelProduct(product: OrderProductItem) {
-        self.performSegue(withIdentifier: "pushCancellationViewController", sender: product)
+        if let order = self.orderTableViewCtrl.dataSource, let avaiableCancellationReasons = order.cancellationInfo?.reasons, avaiableCancellationReasons.count > 0 {
+            self.performSegue(withIdentifier: "pushCancellationViewController", sender: product)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

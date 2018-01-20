@@ -40,7 +40,7 @@ class OrderDetailCancellationTableViewController: AccordionTableViewController {
         self.dataSource = self.order?.packages?.map { $0.products }.flatMap { $0 }.flatMap { $0.map { $0.convertToCancelling() } }
         
         //Brign up the selected item to the first of list
-        if let selectedSimpleSku = selectedSimpleSku, let selectedIndex = self.dataSource?.index(where: { $0.simpleSku == selectedSimpleSku }) {
+        if let selectedSimpleSku = selectedSimpleSku, let selectedIndex = self.dataSource?.index(where: { $0.simpleSku == selectedSimpleSku && $0.isCancelable }) {
             self.dataSource?[selectedIndex].isSelected = true
             self.dataSource?.rearrange(from: selectedIndex, to: 0)
         }
@@ -151,7 +151,7 @@ class OrderDetailCancellationTableViewController: AccordionTableViewController {
     
     func getCancellingOrder() -> CancellingOrder? {
         let cancellingOrder = CancellingOrder()
-        cancellingOrder.items = self.dataSource?.filter { $0.isSelected }
+        cancellingOrder.items = self.getCancellingProductList()
         if cancellingOrder.items?.count == 0 {
             return nil
         }
@@ -161,10 +161,23 @@ class OrderDetailCancellationTableViewController: AccordionTableViewController {
     }
     
     func getCancellingProductList() ->  [CancellingOrderProduct]? {
-        return self.dataSource?.filter { $0.isSelected }
+        return self.dataSource?.filter { $0.isSelected && $0.isCancelable }
     }
     
     func isMoreDescriptionFieldFirstResponder() -> Bool {
         return self.footerView?.moreDescriptionTextView.isFirstResponder ?? false
+    }
+    
+    func scrollToMoreDescriptionField() {
+        ThreadManager.execute {
+            self.tableView.scrollRectToVisible(self.getRectOfTextField(), animated: true)
+        }
+    }
+    
+    private func getRectOfTextField() -> CGRect {
+        if let textFieldFrame = self.footerView?.moreDescriptionTextView.frame {
+            return self.tableView.convert(textFieldFrame, from: self.footerView)
+        }
+        return .zero
     }
 }
