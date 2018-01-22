@@ -11,30 +11,32 @@ import UIKit
 class OrderDetailCancellationTableViewController: AccordionTableViewController {
 
     private var dataSource: [CancellingOrderProduct]?
-    private var footerView: OrderCancellationFooterView?
+    private var footerTableViewCell: OrderCancellationFooterTableViewCell?
     private var order: OrderItem?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+    
         //set editing mode for tableview
         self.tableView.setEditing(true, animated: false)
         self.tableView.allowsMultipleSelectionDuringEditing = true
+        if #available(iOS 11.0, *) {
+            self.tableView.insetsContentViewsToSafeArea = false
+        } else {}
         
         //regiter nibs for cells and header/footer
         self.tableView.register(UINib(nibName: OrderCancellationTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: OrderCancellationTableViewCell.nibName())
         self.tableView.register(UINib(nibName: PlainTableViewHeaderCell.nibName(), bundle: nil), forHeaderFooterViewReuseIdentifier: PlainTableViewHeaderCell.nibName())
-        self.tableView.register(UINib(nibName: OrderCancellationFooterView.nibName(), bundle: nil), forHeaderFooterViewReuseIdentifier: OrderCancellationFooterView.nibName())
+        self.tableView.register(UINib(nibName: OrderCancellationFooterTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: OrderCancellationFooterTableViewCell.nibName())
         
         //To remove floating header/footer of sections
         let dummyHeaderViewHeight = CGFloat(100)
         self.tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: self.tableView.bounds.size.width, height: dummyHeaderViewHeight))
-
         let dummyFooterViewHeight = CGFloat(500)
         self.tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: self.tableView.bounds.size.width, height: dummyFooterViewHeight))
         self.tableView.contentInset = UIEdgeInsetsMake(-dummyHeaderViewHeight, 0, -dummyFooterViewHeight, 0)
     }
-
+    
     func bindOrder(order: OrderItem, selectedSimpleSku: String? = nil) {
         self.order = order
         self.dataSource = self.order?.packages?.map { $0.products }.flatMap { $0 }.flatMap { $0.map { $0.convertToCancelling() } }
@@ -57,7 +59,10 @@ class OrderDetailCancellationTableViewController: AccordionTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.dataSource?.count ?? 0
+        if let dataSourceCount = self.dataSource?.count {
+            return dataSourceCount + 1
+        }
+        return 0
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -69,30 +74,43 @@ class OrderDetailCancellationTableViewController: AccordionTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        super.tableView(tableView, cellForRowAt: indexPath)
-        let cell = self.tableView.dequeueReusableCell(withIdentifier: OrderCancellationTableViewCell.nibName(), for: indexPath) as! OrderCancellationTableViewCell
-        if let cancellingItem = self.dataSource?[indexPath.row], let cancellingReasons = self.order?.cancellationInfo?.reasons {
-            cell.update(cancellingItem: cancellingItem, cancellingReasons: cancellingReasons)
+        if let dataSource = self.dataSource, indexPath.row < dataSource.count {
+            super.tableView(tableView, cellForRowAt: indexPath)
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: OrderCancellationTableViewCell.nibName(), for: indexPath) as! OrderCancellationTableViewCell
+            if let cancellingItem = self.dataSource?[indexPath.row], let cancellingReasons = self.order?.cancellationInfo?.reasons {
+                cell.update(cancellingItem: cancellingItem, cancellingReasons: cancellingReasons)
+            }
+            cell.selectionStyle = .blue
+            self.setExpandfor(cell: cell, indexPath: indexPath)
+            if !dataSource[indexPath.row].isCancelable {
+                cell.setExpanded(true, animated: false)
+            }
+            //To remove offset of seperator in cells
+            cell.preservesSuperviewLayoutMargins = false
+            cell.layoutMargins = .zero
+            cell.separatorInset = .zero
+            
+            return cell
+        } else {
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: OrderCancellationFooterTableViewCell.nibName(), for: indexPath) as! OrderCancellationFooterTableViewCell
+            self.footerTableViewCell = cell
+            
+            cell.orderCancellationCMSLabel.text = self.order?.cancellationInfo?.refundMessage
+            cell.orderCancellationNoticeMessage.text = self.order?.cancellationInfo?.noticeMessage
+            
+            cell.selectionStyle = .none
+            return cell
         }
-        cell.selectionStyle = .blue
-        self.setExpandfor(cell: cell, indexPath: indexPath)
-        if let cancellingItem = self.dataSource?[indexPath.row], !cancellingItem.isCancelable {
-            cell.setExpanded(true, animated: false)
-        }
-        //To remove offset of seperator in cells
-        cell.preservesSuperviewLayoutMargins = false
-        cell.layoutMargins = .zero
-        cell.separatorInset = .zero
-        
-        return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == self.dataSource?.count ?? 0 { return }
         super.tableView(tableView, didSelectRowAt: indexPath)
         self.toggleSelection(indexPath: indexPath, selected: true)
     }
     
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        if indexPath.row == self.dataSource?.count ?? 0 { return }
         if let cell = tableView.cellForRow(at: indexPath) as? AccordionTableViewCell {
             toggleCell(cell, animated: shouldAnimateCellToggle)
         }
@@ -105,7 +123,18 @@ class OrderDetailCancellationTableViewController: AccordionTableViewController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return indexPath.row != (self.dataSource?.count ?? 0)
+    }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return indexPath.row != (self.dataSource?.count ?? 0)
+    }
+    
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        if indexPath.row == (self.dataSource?.count ?? 0) {
+            return .none
+        }
         return .delete
     }
 
@@ -118,22 +147,6 @@ class OrderDetailCancellationTableViewController: AccordionTableViewController {
 
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return PlainTableViewHeaderCell.cellHeight()
-    }
-
-    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        self.footerView = self.tableView.dequeueReusableHeaderFooterView(withIdentifier: OrderCancellationFooterView.nibName()) as? OrderCancellationFooterView
-        self.footerView?.orderCancellationCMSLabel.text = self.order?.cancellationInfo?.refundMessage
-        self.footerView?.orderCancellationNoticeMessage.text = self.order?.cancellationInfo?.noticeMessage
-        self.footerView?.frame.size.width = UIScreen.main.bounds.width
-        return self.footerView
-    }
-
-    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return UITableViewAutomaticDimension
-    }
-
-    override  func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
-        return 100
     }
     
     private func updateTableviewSelection() {
@@ -156,7 +169,7 @@ class OrderDetailCancellationTableViewController: AccordionTableViewController {
             return nil
         }
         cancellingOrder.orderNum = self.order?.id
-        cancellingOrder.description = self.footerView?.moreDescriptionTextView.text
+        cancellingOrder.description = self.footerTableViewCell?.moreDescriptionTextView.text
         return cancellingOrder
     }
     
@@ -165,18 +178,20 @@ class OrderDetailCancellationTableViewController: AccordionTableViewController {
     }
     
     func isMoreDescriptionFieldFirstResponder() -> Bool {
-        return self.footerView?.moreDescriptionTextView.isFirstResponder ?? false
+        return self.footerTableViewCell?.moreDescriptionTextView.isFirstResponder ?? false
     }
     
     func scrollToMoreDescriptionField() {
         ThreadManager.execute {
-            self.tableView.scrollRectToVisible(self.getRectOfTextField(), animated: true)
+            var moreDescriptionFeildRect = self.getRectOfTextField()
+            moreDescriptionFeildRect.size.height += 20  //More description
+            self.tableView.scrollRectToVisible(moreDescriptionFeildRect, animated: true)
         }
     }
     
     private func getRectOfTextField() -> CGRect {
-        if let textFieldFrame = self.footerView?.moreDescriptionTextView.frame {
-            return self.tableView.convert(textFieldFrame, from: self.footerView)
+        if let textFieldFrame = self.footerTableViewCell?.moreDescriptionTextView.frame {
+            return self.tableView.convert(textFieldFrame, from: self.footerTableViewCell)
         }
         return .zero
     }

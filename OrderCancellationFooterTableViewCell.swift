@@ -1,15 +1,15 @@
 //
-//  OrderCancellationFooterView.swift
+//  OrderCancellationFooterTableViewCell.swift
 //  Bamilo
 //
-//  Created by Ali Saeedifar on 1/13/18.
+//  Created by Ali Saeedifar on 1/21/18.
 //  Copyright © 2018 Rocket Internet. All rights reserved.
 //
 
 import UIKit
 
-class OrderCancellationFooterView: UITableViewHeaderFooterView {
-
+class OrderCancellationFooterTableViewCell: BaseTableViewCell {
+        
     @IBOutlet weak private var moreDescriptionTitleLabel: UILabel!
     @IBOutlet weak var moreDescriptionTextView: UITextView!
     @IBOutlet weak var orderCancellationCMSWrapperView: UIView!
@@ -30,7 +30,12 @@ class OrderCancellationFooterView: UITableViewHeaderFooterView {
 
     }
     
-    class func nibName() -> String {
-        return AppUtility.getStringFromClass(for: self) ?? "OrderCancellationFooterView"
+    override func update(withModel model: Any!) {
+        
     }
+    
+    override static func nibName() -> String {
+        return AppUtility.getStringFromClass(for: self)!
+    }
+    
 }

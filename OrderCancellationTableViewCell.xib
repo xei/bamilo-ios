@@ -145,7 +145,7 @@
                 <outlet property="quantityStepper" destination="2G1-ry-hLt" id="UFH-uH-WC8"/>
                 <outlet property="quantityTitleLabel" destination="IZa-Mb-mLy" id="iqn-qS-K4k"/>
             </connections>
-            <point key="canvasLocation" x="-219" y="58.5"/>
+            <point key="canvasLocation" x="-219" y="58"/>
         </tableViewCell>
     </objects>
     <resources>

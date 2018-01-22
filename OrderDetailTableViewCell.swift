@@ -123,7 +123,7 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
                     self.refuadDescriptionLabelBottomConstraint.priority = UILayoutPriorityDefaultHigh
                     self.cancellationReasonLabelBottomConstraint.priority = UILayoutPriorityDefaultHigh
                     self.refundMessagesToTopSuperViewConstriant.priority = UILayoutPriorityDefaultLow
-                    self.cancellationReasonLabel.text = reason
+                    self.cancellationReasonLabel.text = reason.convertTo(language: .arabic)
                 } else {
                     self.refuadDescriptionLabelBottomConstraint.priority = UILayoutPriorityDefaultLow
                     self.cancellationReasonLabelBottomConstraint.priority = UILayoutPriorityDefaultHigh
@@ -158,7 +158,7 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
             refundMsg += "در تاریخ \(date)"
         }
         refundMsg += " بازگشت داده میشود"
-        return refundMsg
+        return refundMsg.convertTo(language: .arabic)
     }
 
     @IBAction func rateButtonTapped(_ sender: Any) {

@@ -27,8 +27,8 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P45-sA-3OA">
-                    <rect key="frame" x="268" y="54" width="42" height="21"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P45-sA-3OA">
+                    <rect key="frame" x="10" y="54" width="300" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -39,6 +39,7 @@
                 <constraint firstAttribute="bottom" secondItem="P45-sA-3OA" secondAttribute="bottom" priority="750" constant="10" id="17K-Eg-ZCX"/>
                 <constraint firstAttribute="right" secondItem="wOj-hI-oQh" secondAttribute="right" constant="10" id="2HF-Z3-SKT"/>
                 <constraint firstItem="49v-s9-hxv" firstAttribute="left" secondItem="iN0-l3-epB" secondAttribute="left" constant="10" id="fHb-5X-czc"/>
+                <constraint firstItem="P45-sA-3OA" firstAttribute="left" secondItem="49v-s9-hxv" secondAttribute="left" id="hoM-oX-bZX"/>
                 <constraint firstItem="P45-sA-3OA" firstAttribute="top" secondItem="wOj-hI-oQh" secondAttribute="bottom" constant="10" id="iL0-x8-hF8"/>
                 <constraint firstItem="P45-sA-3OA" firstAttribute="right" secondItem="wOj-hI-oQh" secondAttribute="right" id="ksy-hx-lif"/>
                 <constraint firstAttribute="bottom" secondItem="wOj-hI-oQh" secondAttribute="bottom" priority="250" constant="10" id="m8R-c5-D2E"/>

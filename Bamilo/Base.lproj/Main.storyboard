@@ -1605,11 +1605,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="GgD-Hp-azO" firstAttribute="left" secondItem="dhX-4m-5b3" secondAttribute="left" id="BCv-07-fTr"/>
-                            <constraint firstItem="48P-4t-6dq" firstAttribute="leading" secondItem="dhX-4m-5b3" secondAttribute="leading" id="JEW-DO-L7C"/>
+                            <constraint firstItem="48P-4t-6dq" firstAttribute="left" secondItem="dhX-4m-5b3" secondAttribute="left" id="JEW-DO-L7C"/>
                             <constraint firstItem="Ea4-Xc-Ggb" firstAttribute="top" secondItem="GgD-Hp-azO" secondAttribute="bottom" id="cAY-RW-luy"/>
                             <constraint firstItem="GgD-Hp-azO" firstAttribute="top" secondItem="48P-4t-6dq" secondAttribute="bottom" id="hRr-7n-12U"/>
                             <constraint firstAttribute="right" secondItem="GgD-Hp-azO" secondAttribute="right" id="ly5-eZ-zVL"/>
-                            <constraint firstAttribute="trailing" secondItem="48P-4t-6dq" secondAttribute="trailing" id="mFa-5N-kqX"/>
+                            <constraint firstAttribute="right" secondItem="48P-4t-6dq" secondAttribute="right" id="mFa-5N-kqX"/>
                             <constraint firstItem="48P-4t-6dq" firstAttribute="top" secondItem="kOf-WS-Exx" secondAttribute="bottom" id="rhj-aA-cGb"/>
                         </constraints>
                     </view>

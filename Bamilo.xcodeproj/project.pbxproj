@@ -103,8 +103,6 @@
 		6150858C200CCE9700BC67B1 /* OrderDetailPackageHeaderTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6150858B200CCE9700BC67B1 /* OrderDetailPackageHeaderTableViewHeader.swift */; };
 		6150858E200CCEE400BC67B1 /* OrderDetailPackageHeaderTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6150858D200CCEE400BC67B1 /* OrderDetailPackageHeaderTableViewHeader.xib */; };
 		61540C822006482300D2F03F /* Ext+Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61540C812006482300D2F03F /* Ext+Array.swift */; };
-		61540C86200A599700D2F03F /* OrderCancellationFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61540C85200A599700D2F03F /* OrderCancellationFooterView.swift */; };
-		61540C88200A59C700D2F03F /* OrderCancellationFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61540C87200A59C700D2F03F /* OrderCancellationFooterView.xib */; };
 		6157A3EE1F83865800B8D501 /* MyBamiloViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6157A3EC1F83865800B8D501 /* MyBamiloViewController.swift */; };
 		6157A3EF1F83865800B8D501 /* MyBamiloViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6157A3ED1F83865800B8D501 /* MyBamiloViewController.xib */; };
 		6157A3F31F83974100B8D501 /* MyBamiloModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6157A3F21F83974100B8D501 /* MyBamiloModel.swift */; };
@@ -186,6 +184,8 @@
 		61AAC6771FC08296007FC21E /* WishList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AAC6761FC08296007FC21E /* WishList.swift */; };
 		61AAC67B1FC08A10007FC21E /* CollectionViewLoadingFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AAC6791FC08A10007FC21E /* CollectionViewLoadingFooter.swift */; };
 		61AAC67C1FC08A10007FC21E /* CollectionViewLoadingFooter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61AAC67A1FC08A10007FC21E /* CollectionViewLoadingFooter.xib */; };
+		61AAEB532014D6180046963F /* OrderCancellationFooterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AAEB512014D6180046963F /* OrderCancellationFooterTableViewCell.swift */; };
+		61AAEB542014D6180046963F /* OrderCancellationFooterTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61AAEB522014D6180046963F /* OrderCancellationFooterTableViewCell.xib */; };
 		61AF00B91F402FE600543BA8 /* DOFavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AF00B81F402FE600543BA8 /* DOFavoriteButton.swift */; };
 		61B161D01E6BF24E0032C5C6 /* SearchPriceFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B161CF1E6BF24E0032C5C6 /* SearchPriceFilter.m */; };
 		61B161D41E6BF9520032C5C6 /* BaseSearchFilterItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B161D31E6BF9520032C5C6 /* BaseSearchFilterItem.m */; };
@@ -1131,8 +1131,6 @@
 		6150858B200CCE9700BC67B1 /* OrderDetailPackageHeaderTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailPackageHeaderTableViewHeader.swift; sourceTree = "<group>"; };
 		6150858D200CCEE400BC67B1 /* OrderDetailPackageHeaderTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderDetailPackageHeaderTableViewHeader.xib; sourceTree = "<group>"; };
 		61540C812006482300D2F03F /* Ext+Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+Array.swift"; sourceTree = "<group>"; };
-		61540C85200A599700D2F03F /* OrderCancellationFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCancellationFooterView.swift; sourceTree = "<group>"; };
-		61540C87200A59C700D2F03F /* OrderCancellationFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderCancellationFooterView.xib; sourceTree = "<group>"; };
 		6157A3EC1F83865800B8D501 /* MyBamiloViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBamiloViewController.swift; sourceTree = "<group>"; };
 		6157A3ED1F83865800B8D501 /* MyBamiloViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyBamiloViewController.xib; sourceTree = "<group>"; };
 		6157A3F21F83974100B8D501 /* MyBamiloModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBamiloModel.swift; sourceTree = "<group>"; };
@@ -1235,6 +1233,8 @@
 		61AAC6761FC08296007FC21E /* WishList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishList.swift; sourceTree = "<group>"; };
 		61AAC6791FC08A10007FC21E /* CollectionViewLoadingFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewLoadingFooter.swift; sourceTree = "<group>"; };
 		61AAC67A1FC08A10007FC21E /* CollectionViewLoadingFooter.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionViewLoadingFooter.xib; sourceTree = "<group>"; };
+		61AAEB512014D6180046963F /* OrderCancellationFooterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCancellationFooterTableViewCell.swift; sourceTree = "<group>"; };
+		61AAEB522014D6180046963F /* OrderCancellationFooterTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderCancellationFooterTableViewCell.xib; sourceTree = "<group>"; };
 		61AF00B81F402FE600543BA8 /* DOFavoriteButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DOFavoriteButton.swift; sourceTree = "<group>"; };
 		61B161CE1E6BF24E0032C5C6 /* SearchPriceFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchPriceFilter.h; sourceTree = "<group>"; };
 		61B161CF1E6BF24E0032C5C6 /* SearchPriceFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchPriceFilter.m; sourceTree = "<group>"; };
@@ -2814,9 +2814,9 @@
 		610767D62004E9B900F6A849 /* OrderCancellation */ = {
 			isa = PBXGroup;
 			children = (
+				61AAEB502014D6000046963F /* OrderCancellationFooterTableViewCell */,
 				61EB3938200B779B00F98C95 /* OrderCancellationResultHeaderTableViewCell */,
 				61EB3933200B5D1900F98C95 /* OrderCancellationResultTableViewCell */,
-				61540C84200A595A00D2F03F /* OrderCancellationFooterView */,
 				61540C83200A4D1B00D2F03F /* OrderCancellationTableViewCell */,
 			);
 			name = OrderCancellation;
@@ -3340,15 +3340,6 @@
 				610767D82004ECAC00F6A849 /* OrderCancellationTableViewCell.xib */,
 			);
 			name = OrderCancellationTableViewCell;
-			sourceTree = "<group>";
-		};
-		61540C84200A595A00D2F03F /* OrderCancellationFooterView */ = {
-			isa = PBXGroup;
-			children = (
-				61540C85200A599700D2F03F /* OrderCancellationFooterView.swift */,
-				61540C87200A59C700D2F03F /* OrderCancellationFooterView.xib */,
-			);
-			name = OrderCancellationFooterView;
 			sourceTree = "<group>";
 		};
 		6157A3DD1F8376B700B8D501 /* Home */ = {
@@ -3961,6 +3952,15 @@
 				61AAC67A1FC08A10007FC21E /* CollectionViewLoadingFooter.xib */,
 			);
 			name = CollectionViewLoadingFooter;
+			sourceTree = "<group>";
+		};
+		61AAEB502014D6000046963F /* OrderCancellationFooterTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				61AAEB512014D6180046963F /* OrderCancellationFooterTableViewCell.swift */,
+				61AAEB522014D6180046963F /* OrderCancellationFooterTableViewCell.xib */,
+			);
+			name = OrderCancellationFooterTableViewCell;
 			sourceTree = "<group>";
 		};
 		61AF00B71F402F2800543BA8 /* Buttons */ = {
@@ -8003,6 +8003,7 @@
 				87DAABE51E54431A00445EBB /* PaymentOptionWithLogoTableViewCell.xib in Resources */,
 				875744661EA60E8E001B518A /* Yalda-60@2x.png in Resources */,
 				CE9AE0C21AB6D78200D56481 /* JACatalogTopView_ipad.xib in Resources */,
+				61AAEB542014D6180046963F /* OrderCancellationFooterTableViewCell.xib in Resources */,
 				CE9AE0C41AB6D78200D56481 /* JAPriceFiltersView.xib in Resources */,
 				87DAABEB1E55A2C100445EBB /* PaymentOptionTableViewCell.xib in Resources */,
 				875743BD1EA60DFD001B518A /* SpecialOffer@2x.png in Resources */,
@@ -8042,7 +8043,6 @@
 				6150858E200CCEE400BC67B1 /* OrderDetailPackageHeaderTableViewHeader.xib in Resources */,
 				875743A81EA60DE0001B518A /* Ramadan-76.png in Resources */,
 				619E92D01F8A1044003885BC /* DailyDealsCollectionViewCell.xib in Resources */,
-				61540C88200A59C700D2F03F /* OrderCancellationFooterView.xib in Resources */,
 				61036B511E65897D006E12A9 /* MutualTitleHeaderCell.xib in Resources */,
 				CEDBF8921B0DF5D00073971A /* JANewsletterComponent_RTL.xib in Resources */,
 				875743831EA60DB9001B518A /* National-Small.png in Resources */,
@@ -8603,6 +8603,7 @@
 				61FCF0821FD69DF900084872 /* Ext+Error.swift in Sources */,
 				610BC2911FBC5CBF00A7C343 /* RecommendItem.swift in Sources */,
 				61259BE31FC5851F0051CBD4 /* BreadcrumbsView.swift in Sources */,
+				61AAEB532014D6180046963F /* OrderCancellationFooterTableViewCell.swift in Sources */,
 				610BC28F1FBC419100A7C343 /* AllRecommendationViewController.swift in Sources */,
 				61E534411FA48D2A00CBDFED /* ProgressBarItemView.swift in Sources */,
 				9AEF741C1CD27C1400A5D574 /* JACheckoutButton.m in Sources */,
@@ -8732,7 +8733,6 @@
 				FF4383E31C6CD4AC003BA957 /* JASwitchRadioComponent.m in Sources */,
 				9A189E811BB54C2D0039BC14 /* JAScrolledImageGalleryView.m in Sources */,
 				8976FB2C1C0F323700483651 /* JARatingFilterCell.m in Sources */,
-				61540C86200A599700D2F03F /* OrderCancellationFooterView.swift in Sources */,
 				87A6ACEF1E38919C00C0E7DC /* GTMNSString+HTML.m in Sources */,
 				61C5BAF11EC1F40300F3A796 /* CatalogViewController.swift in Sources */,
 				870BEA8D1E74013F00C5B615 /* ThemeColor.m in Sources */,
