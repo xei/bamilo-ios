@@ -13,7 +13,6 @@
 #import "JAPDVImageSection.h"
 #import "MPCoachMarks.h"
 #import "EmarsysPredictProtocol.h"
-#import "ProductDataManager.h"
 #import "DataServiceProtocol.h"
 
 @protocol JAPDVViewControllerDelegate <NSObject>

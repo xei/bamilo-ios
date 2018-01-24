@@ -24,15 +24,23 @@ const int numberOfColumns = 2;
 - (void)awakeFromNib {
     [super awakeFromNib];
     [self setWidgetBacgkround:[UIColor clearColor]];
-    [self.leftButton setHidden:YES];
     
-    [self.widgetTitle applyStyle:[Theme font:kFontVariationBold size:11.0f] color:[UIColor blackColor]];
+    [self.widgetTitle applyStyle:[Theme font:kFontVariationBold size:12.0f] color:[UIColor blackColor]];
     [self.collectionView registerNib:[UINib nibWithNibName:[EmarsysRecommendationCarouselCollectionViewCell nibName] bundle:nil] forCellWithReuseIdentifier:[EmarsysRecommendationCarouselCollectionViewCell nibName]];
+    
+    [self.leftButton applyStyle:[Theme font:kFontVariationRegular size:11] color:[Theme color:kColorGray1]];
+    [self.leftButton setTitle:STRING_MORE forState:UIControlStateNormal];
 }
 
 - (void)updateLeftButtonTitle:(NSString *)title {
-    [self.leftButton setHeight:NO];
+    [self.leftButton setHidden:NO];
     [self.leftButton setTitle:title forState:UIControlStateNormal];
+}
+
+- (IBAction)leftButtonTapped:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(moreButtonTappedInWidgetView:)]) {
+        [self.delegate moreButtonTappedInWidgetView:self];
+    }
 }
 
 - (void)updateTitle:(NSString *)title {

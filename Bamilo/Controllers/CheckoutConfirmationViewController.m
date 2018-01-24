@@ -19,7 +19,6 @@
 #import "RIShippingMethodForm.h"
 #import "RIShippingMethod.h"
 #import "DeliveryTimeTableViewCell.h"
-#import "CheckoutDataManager.h"
 #import "Bamilo-Swift.h"
 
 @interface CheckoutConfirmationViewController() <DiscountCodeViewDelegate, DiscountSwitcherViewDelegate>
@@ -39,16 +38,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     //Header And Footer Cells
     [self.tableView registerNib:[UINib nibWithNibName:[PlainTableViewHeaderCell nibName] bundle:nil]  forHeaderFooterViewReuseIdentifier:[PlainTableViewHeaderCell nibName]];
-    
     //DiscountSwitcherView
     [self.tableView registerNib:[UINib nibWithNibName:[DiscountSwitcherView nibName] bundle:nil]  forCellReuseIdentifier:[DiscountSwitcherView nibName]];
-    
     //DiscountCodeView
     [self.tableView registerNib:[UINib nibWithNibName:[DiscountCodeView nibName] bundle:nil]  forCellReuseIdentifier:[DiscountCodeView nibName]];
-    
     //ReceiptView
     [self.tableView registerNib:[UINib nibWithNibName:[ReceiptView nibName] bundle:nil] forCellReuseIdentifier:[ReceiptView nibName]];
     
@@ -79,37 +74,51 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     if(self.isCompleteFetch == NO) {
-        [DataAggregator getMultistepConfirmation:self type:RequestExecutionTypeContainer completion:^(id data, NSError *error) {
-            if(error == nil) {
-                [self bind:data forRequestId:0];
-                //Discount Code
-                if(self.cart.cartEntity.couponCode != nil) {
-                    [self updateDiscountViewAppearanceForValue:YES animated:NO];
-                }
-                
-                //Delivery Time
-                [DataAggregator getMultistepShipping:self completion:^(id data, NSError *error) {
-                    if(error == nil) {
-                        [self bind:data forRequestId:1];
-                        if (_deliveryNotice.length) {
-                            [_cellsIndexPaths setObject:@[[NSIndexPath indexPathForRow:0 inSection:0]] atIndexedSubscript:0];
-                        }
-                        self.isCompleteFetch = YES;
-                        [self.tableView reloadData];
-                    }
-                }];
-                
-                //Shipping Address
-                _shippingAddress = self.cart.cartEntity.address;
-                //Products
-                _products = self.cart.cartEntity.cartItems;
-                [_cellsIndexPaths setObject:[NSMutableArray indexPathArrayOfLength:(int)_products.count forSection:3] atIndexedSubscript:3];
-                [self.tableView reloadData];
-                [self publishScreenLoadTime];
+        [self getContent];
+    }
+}
+
+- (void)getContent {
+    [DataAggregator getMultistepConfirmation:self type:RequestExecutionTypeContainer completion:^(id data, NSError *error) {
+        if(error == nil) {
+            [self bind:data forRequestId:0];
+            //Discount Code
+            if(self.cart.cartEntity.couponCode != nil) {
+                [self updateDiscountViewAppearanceForValue:YES animated:NO];
             }
-        }];
+            
+            //Delivery Time
+            [DataAggregator getMultistepShipping:self completion:^(id data, NSError *error) {
+                if(error == nil) {
+                    [self bind:data forRequestId:1];
+                    if (_deliveryNotice.length) {
+                        [_cellsIndexPaths setObject:@[[NSIndexPath indexPathForRow:0 inSection:0]] atIndexedSubscript:0];
+                    }
+                    [self removeDeliverySectionIfNecessary];
+                    self.isCompleteFetch = YES;
+                } else {
+                    [self removeDeliverySectionIfNecessary];
+                }
+                [self.tableView reloadData];
+            }];
+            
+            //Shipping Address
+            _shippingAddress = self.cart.cartEntity.address;
+            //Products
+            _products = self.cart.cartEntity.cartItems;
+            [_cellsIndexPaths setObject:[NSMutableArray indexPathArrayOfLength:(int)_products.count forSection:3] atIndexedSubscript:3];
+            [self.tableView reloadData];
+            [self publishScreenLoadTime];
+        } else {
+            [self errorHandler:error forRequestID:0];
+        }
+    }];
+}
+
+- (void)removeDeliverySectionIfNecessary {
+    if (!([_deliveryTime isKindOfClass:[NSString class]] && _deliveryTime.length > 0)) {
+        [_cellsIndexPaths removeObjectAtIndex:2]; //remove delivery time section
     }
 }
 
@@ -143,7 +152,9 @@
             switch (_cellIndexPath.row) {
                 case 0: {
                     OrderCMSMessageTableViewCell *deliveryNoticeCell = [tableView dequeueReusableCellWithIdentifier:[OrderCMSMessageTableViewCell nibName]];
-                    [deliveryNoticeCell updateWithModel:_deliveryNotice];
+                    if ([_deliveryNotice isKindOfClass:[NSString class]] && [_deliveryNotice length]) {
+                        [deliveryNoticeCell updateWithModel:_deliveryNotice];
+                    }
                     return deliveryNoticeCell;
                     break;
                 }
@@ -213,7 +224,9 @@
         //Delivery Time Cell
         case 2: {
             DeliveryTimeTableViewCell *deliveryTimeTableViewCell = [tableView dequeueReusableCellWithIdentifier:[DeliveryTimeTableViewCell nibName] forIndexPath:indexPath];
-            [deliveryTimeTableViewCell updateTitle:[_deliveryTime numbersToPersian]];
+            if (_deliveryTime.length) {
+                [deliveryTimeTableViewCell updateTitle:[_deliveryTime numbersToPersian]];
+            }
             return deliveryTimeTableViewCell;
         }
         break;
@@ -248,7 +261,10 @@
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     PlainTableViewHeaderCell *plainTableViewHeaderCell = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:[PlainTableViewHeaderCell nibName]];
-    switch (section) {
+    NSArray<NSIndexPath *>* arrayOfIndexPathesInSection = [_cellsIndexPaths objectAtIndex:section];
+    NSUInteger sectionNum = arrayOfIndexPathesInSection.count > 0 ? arrayOfIndexPathesInSection[0].section : section;
+    
+    switch (sectionNum) {
         case 1:
             plainTableViewHeaderCell.titleString = STRING_TOTAL_SUM;
         break;
@@ -294,18 +310,12 @@
         [DataAggregator applyVoucher:self voucher:discountCode completion:^(id data, NSError *error) {
             if(error == nil) {
                 [self bind:data forRequestId:2];
-                
                 ((DiscountCodeView *)sender).state = DISCOUNT_CODE_VIEW_STATE_CONTAINS_CODE;
-                
-                NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
-                [trackingDictionary setValue:self.cart.cartEntity.cartValue forKey:kRIEventTotalCartKey];
-                [trackingDictionary setValue:self.cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
-                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart] data:[trackingDictionary copy]];
-                
                 [self.tableView reloadData];
             } else {
-                if (error.code != RIApiResponseNoInternetConnection) {
-                    [self showNotificationBar:error isSuccess:NO];
+                if (![Utility handleErrorMessagesWithError:error viewController:self]) {
+                    [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES
+                                           isSuccess:NO];
                 }
             }
         }];
@@ -357,6 +367,19 @@
     }
 }
 
+- (void)retryAction:(RetryHandler)callBack forRequestId:(int)rid {
+    [self getContent];
+    callBack(YES);
+}
+
+- (void)errorHandler:(NSError *)error forRequestID:(int)rid {
+    if (rid == 0) {
+        if (![Utility handleErrorMessagesWithError:error viewController:self]) {
+            [self handleGenericErrorCodesWithErrorControlView:(int)error.code forRequestID:rid];
+        }
+    }
+}
+
 #pragma mark - Helpers
 -(void) setInitialCellPathState {
     _cellsIndexPaths = [NSMutableArray arrayWithObjects:
@@ -380,7 +403,6 @@
 
 -(void) updateDiscountViewAppearanceForValue:(BOOL)isOn animated:(BOOL)animated {
     NSIndexPath *discountCodeViewIndexPath = [NSIndexPath indexPathForRow:1 inSection:1];
-    
     if(isOn) {
         [[_cellsIndexPaths objectAtIndex:discountCodeViewIndexPath.section] insertObject:discountCodeViewIndexPath atIndex:discountCodeViewIndexPath.row];
     } else {
@@ -405,12 +427,6 @@
     [DataAggregator removeVoucher:self voucher:self.cart.cartEntity.couponCode completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:3];
-            
-            NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
-            [trackingDictionary setValue:self.cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
-            [trackingDictionary setValue:self.cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart] data:[trackingDictionary copy]];
-            
             [self.tableView reloadData];
         }
     }];

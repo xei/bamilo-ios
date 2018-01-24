@@ -14,6 +14,30 @@ enum VerticalMoveDirection: String {
 }
 
 extension UIView {
+
+    func hide() {
+        self.isHidden = true
+        self.alpha = 0
+    }
+    
+    func fadeIn(duration: TimeInterval) {
+        self.isHidden = false
+        UIView.animate(withDuration: duration, animations: {
+            self.alpha = 1
+        })
+    }
+    
+    func applyShadow(position:CGSize, color: UIColor, opacity: Float? = 0.5, radius: CGFloat? = 1) {
+        self.layer.shadowColor = color.cgColor
+        self.layer.shadowOpacity = opacity ?? 1
+        self.layer.shadowOffset = position
+        self.layer.shadowRadius = radius ?? 1
+    }
+    
+    func applyBorder(width: CGFloat, color: UIColor) {
+        self.layer.borderWidth = width
+        self.layer.borderColor = color.cgColor
+    }
     
     func bindFrameToSuperviewBounds() {
         guard let superview = self.superview else {

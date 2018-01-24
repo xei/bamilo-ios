@@ -84,14 +84,20 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
             if error == nil {
                 self.bind(data, forRequestId: 1)
                 completion?()
+            } else {
+                
             }
         }
     }
     
     private func getTimeDeliveryForCityId(cityID: String?) {
+        self.deliveryTimeLabel.text = STRING_IS_CALCULATING
         ProductDataManager.sharedInstance.getDeliveryTime(self, sku: self.productSku, cityId: cityID) { (data, error) in
-            if error == nil {
+            if error == nil, let data = data {
                 self.bind(data, forRequestId: 2)
+            } else {
+                self.deliveryTimeLabel.text = nil
+                self.deliveryTimeTitleLabel.text = nil
             }
         }
     }
@@ -122,8 +128,12 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
     //MARK: -DataServiceProtocol
     func bind(_ data: Any!, forRequestId rid: Int32) {
         if rid == 2 {
-            if let deliveryTimes = data as? DeliveryTimes, deliveryTimes.array!.count > 0, let deliveryTime = deliveryTimes.array?.first {
-                self.deliveryTimeLabel.text = (deliveryTime.deliveryTimeMessage ?? "\(STRING_TEHRAN) \(deliveryTime.deliveryTimeZone1!)\n\(STRING_MINICITY) \(deliveryTime.deliveryTimeZone2!)").convertTo(language: .arabic)
+            if let deliveryTimes = data as? DeliveryTimes, let deliveries = deliveryTimes.array, deliveries.count > 0, let deliveryTime = deliveryTimes.array?.first {
+                if let deliveryTimeZone1 = deliveryTime.deliveryTimeZone1, let deliveryTimeZone2 = deliveryTime.deliveryTimeZone2 {
+                    self.deliveryTimeLabel.text = "\(STRING_TEHRAN) \(deliveryTimeZone1)\n\(STRING_MINICITY) \(deliveryTimeZone2)".convertTo(language: .arabic)
+                } else {
+                    self.deliveryTimeLabel.text = deliveryTime.deliveryTimeMessage
+                }
                 self.deliveryTimeTitleLabel.text = "\(deliveryTime.deliveryTimeMessage != nil ?  STRING_DELIVERY_TIME : STRING_ESTIMATED_TIME):"
                 
                 if let cityId = deliveryTimes.cityId, let regionId = deliveryTimes.regionId {
@@ -147,7 +157,6 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
         }
         self.updateOptionInField(inputField: rid == 0 ? self.regionInputView : self.cityInputView, withData: data)
     }
-    
     
     //TODO: when we migrate all BaseControlView we need to use it as this function implementation
     override static func nibInstance() -> DeliveryTimeView {

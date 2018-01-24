@@ -43,7 +43,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[RITrackingWrapper sharedInstance] trackStaticPage:self.targetString];
+//    [[RITrackingWrapper sharedInstance] trackStaticPage:self.targetString];
 
     [self.scrollView setFrame:[self viewBounds]];
     [self.scrollView setBackgroundColor:[UIColor whiteColor]];

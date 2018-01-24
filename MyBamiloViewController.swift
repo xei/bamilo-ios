@@ -24,7 +24,8 @@ class MyBamiloViewController:   BaseViewController,
                                 BaseCatallogCollectionViewCellDelegate,
                                 UIScrollViewDelegate,
                                 MyBamiloHeaderViewDelegate,
-                                TBActionSheetDelegate {
+                                TBActionSheetDelegate,
+                                DataServiceProtocol {
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak private var loadingIndicator: UIActivityIndicatorView!
@@ -69,18 +70,21 @@ class MyBamiloViewController:   BaseViewController,
         if let refreshControl = self.refreshControl {
             self.collectionView.addSubview(refreshControl)
         }
+        self.collectionView.alwaysBounceVertical = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         self.collectionView.killScroll()
-        
         //To prevent refresh control to be visible (and it's gap) for the next time
-        self.refreshControl?.endRefreshing()
-        self.collectionView.reloadData()
+        if self.isRefreshing {
+            self.refreshControl?.endRefreshing()
+            self.collectionView.reloadData()
+        }
     }
     
     func handleRefresh() {
         self.isRefreshing = true
+        self.loadingIndicator.stopAnimating()
         self.visibleProductCount = 0
         self.incomingDataSource = MyBamiloModel()
         EmarsysPredictManager.sendTransactions(of: self)
@@ -90,13 +94,13 @@ class MyBamiloViewController:   BaseViewController,
     func getRecommendations() -> [EMRecommendationRequest]! {
         var recommendsRequest = [EMRecommendationRequest]()
         for i in 0...categoriesCount - 1 {
-            let recommendReq = EMRecommendationRequest.init(logic: "\(recommendationLogic)_\(i + 1)")
+            let recommendReq = EMRecommendationRequest(logic: "\(recommendationLogic)_\(i + 1)")
             recommendReq.limit = self.recommendationCountPerLogic
-            
-            recommendReq.excludeItemsWhere("item", isIn: self.incomingDataSource.filterById(id: "\(recommendationLogic)_\(i + 1)").map { $0.sku })
+            recommendReq.excludeItemsWhere("item", isIn: self.incomingDataSource.filterById(id: "\(recommendationLogic)_\(i + 1)").map { $0.sku ?? "" })
             recommendReq.completionHandler = { receivedRecs in
-                self.processRecommandationResult(result: receivedRecs)
+                self.bind(receivedRecs, forRequestId: 0)
             }
+            
             recommendsRequest.append(recommendReq)
             recommendationRequestCounts += 1
         }
@@ -107,24 +111,45 @@ class MyBamiloViewController:   BaseViewController,
         return true
     }
     
-    private func processRecommandationResult(result: EMRecommendationResult) {
-        ThreadManager.execute(onMainThread: {
-            self.recommendationRequestCounts -= 1
-            let newRecommendedItems = self.incomingDataSource.embedNewRecommends(result: result)
-            if newRecommendedItems.count > 0 {
+    func receivedErrorSendingTransition(_ error: Error!) {
+        self.recommendationRequestCounts = 0
+        ThreadManager.execute {
+            self.errorHandler(error, forRequestID: 0)
+        }
+    }
+    
+    func bind(_ data: Any!, forRequestId rid: Int32) {
+        if let reccommend =  data as? EMRecommendationResult {
+            ThreadManager.execute(onMainThread: {
+                self.recommendationRequestCounts -= 1
+                self.incomingDataSource.embedNewRecommends(result: reccommend)
                 if self.recommendationRequestCounts == 0 {
-                    self.dataSource.topics = self.incomingDataSource.topics
-                    self.dataSource.products = self.incomingDataSource.products
-                    self.filterProductListById(id: self.selectedLogicID)
-                    
-                    self.refreshControl?.endRefreshing()
-                    
-                    //Wait untill all the requests are ready
-                    self.loadingIndicator.stopAnimating()
-                    self.collectionView.reloadData()
+                    self.renderIncomingDataSource()
                 }
-            }
-        })
+            })
+        }
+    }
+    
+    func retryAction(_ callBack: RetryHandler!, forRequestId rid: Int32) {
+        self.handleRefresh()
+        callBack(true)
+    }
+    
+    func errorHandler(_ error: Error!, forRequestID rid: Int32) {
+        self.handleGenericErrorCodesWithErrorControlView(Int32(error.code), forRequestID: 0)
+    }
+    
+    private func renderIncomingDataSource() {
+        self.dataSource.topics = self.incomingDataSource.topics
+        self.incomingDataSource.mergeProductsWithInterleaveLogic()
+        
+        self.dataSource.products = self.incomingDataSource.products
+        self.filterProductListById(id: self.selectedLogicID)
+        self.refreshControl?.endRefreshing()
+        
+        //Wait untill all the requests are ready
+        self.loadingIndicator.stopAnimating()
+        self.collectionView.reloadData()
     }
     
     //MARK: - UICollectionViewDelegate, UICollectionViewDataSource
@@ -134,7 +159,8 @@ class MyBamiloViewController:   BaseViewController,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: CatalogGridCollectionViewCell.nibName, for: indexPath) as! CatalogGridCollectionViewCell
-        if let product = self.presentingProducts?[indexPath.row].convertToProduct() {
+        if let products = self.presentingProducts, indexPath.row < products.count {
+            let product = products[indexPath.row].convertToProduct()
             cell.updateWithProduct(product: product)
         }
         cell.cellIndex = indexPath.row
@@ -143,7 +169,7 @@ class MyBamiloViewController:   BaseViewController,
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let sku = self.presentingProducts?[indexPath.row].sku {
+        if let products = self.presentingProducts, indexPath.row < products.count, let sku = products[indexPath.row].sku {
             self.delegate?.didSelectProductSku(productSku: sku)
         }
     }
@@ -162,6 +188,7 @@ class MyBamiloViewController:   BaseViewController,
     //MARK: - UIScrollViewDelegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.delegate?.scrollViewDidScroll(scrollView)
+        //Pagination : is disabled for now
 //        let bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height;
 //        if (bottomEdge >= (scrollView.contentSize.height - self.paginationThresholdPoint)) {
 //            // we are approaching at the end of scrollview

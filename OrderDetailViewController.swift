@@ -9,12 +9,14 @@
 import UIKit
 
 class OrderDetailViewController: BaseViewController, OrderDetailTableViewCellDelegate, DataServiceProtocol {
-
+    
+    @IBOutlet private weak var activiryIndicator: UIActivityIndicatorView!
     let orderTableViewCtrl = OrderDetailTableViewController()
     var orderId: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = .white
         self.orderTableViewCtrl.delegate = self
         orderTableViewCtrl.addInto(viewController: self, containerView: self.view)
         
@@ -26,19 +28,34 @@ class OrderDetailViewController: BaseViewController, OrderDetailTableViewCellDel
                 }
             }
         }
-        
+        self.loadContent()
+    }
+    
+    private func loadContent(completion: ((Bool)-> Void)? = nil) {
         if let orderId = self.orderId {
+            self.activiryIndicator.startAnimating()
             OrderDataManager.sharedInstance.getOrder(self, orderId: orderId) { (data, errors) in
-                if errors == nil {
-                    self.bind(data, forRequestId: 0)
+                self.activiryIndicator.stopAnimating()
+                if let error = errors {
+                    completion?(false)
+                    self.errorHandler(error, forRequestID: 0)
                 } else {
-                    Utility.handleError(error: errors, viewController: self)
+                    completion?(true)
+                    self.bind(data, forRequestId: 0)
                 }
             }
+        } else {
+            self.handleGenericErrorCodesWithErrorControlView(Int32(NSURLErrorBadServerResponse), forRequestID: 0)
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.hidesBottomBarWhenPushed = false
+        self.tabBarController?.tabBar.isHidden = false;
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.tabBarController?.tabBar.isHidden = false;
     }
@@ -53,19 +70,28 @@ class OrderDetailViewController: BaseViewController, OrderDetailTableViewCellDel
             }
         }) { (response, error) in
             LoadingManager.hideLoading()
-            Utility.handleError(error: error, viewController: self)
+            Utility.handleErrorMessages(error: error, viewController: self)
         }
     }
     
     func opensProductDetailWithSku(sku: String) {
         self.performSegue(withIdentifier: "pushPDVViewController", sender: sku)
     }
-
+    
+    func cancelProduct(product: OrderProductItem) {
+        if let order = self.orderTableViewCtrl.dataSource, let avaiableCancellationReasons = order.cancellationInfo?.reasons, avaiableCancellationReasons.count > 0 {
+            self.performSegue(withIdentifier: "pushCancellationViewController", sender: product)
+        }
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let segueName = segue.identifier
         if segueName == "pushPDVViewController", let pdvViewCtrl = segue.destination as? JAPDVViewController {
             pdvViewCtrl.productSku = sender as? String
+        }
+        if segueName == "pushCancellationViewController", let cancellingOrderViewCtrl = segue.destination as? OrderDetailCancellationViewController, let order = self.orderTableViewCtrl.dataSource, let avaiableCancellationReasons = order.cancellationInfo?.reasons, avaiableCancellationReasons.count > 0, let selectedProduct = sender as? OrderProductItem  {
+            cancellingOrderViewCtrl.selectedProduct = selectedProduct
+            cancellingOrderViewCtrl.order = order
         }
     }
     
@@ -73,6 +99,20 @@ class OrderDetailViewController: BaseViewController, OrderDetailTableViewCellDel
     func bind(_ data: Any!, forRequestId rid: Int32) {
         if let orderItem = data as? OrderItem {
             self.orderTableViewCtrl.bindOrder(order: orderItem)
+        }
+    }
+    
+    func errorHandler(_ error: Error!, forRequestID rid: Int32) {
+        if rid == 0 {
+            if !Utility.handleErrorMessages(error: error, viewController: self) {
+                self.handleGenericErrorCodesWithErrorControlView(Int32(error.code), forRequestID: rid)
+            }
+        }
+    }
+    
+    func retryAction(_ callBack: RetryHandler!, forRequestId rid: Int32) {
+        self.loadContent { (success) in
+            callBack(success)
         }
     }
     

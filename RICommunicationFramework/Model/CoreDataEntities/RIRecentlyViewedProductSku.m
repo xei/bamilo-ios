@@ -16,35 +16,24 @@
 @dynamic brand;
 @dynamic numberOfTimesSeen;
 
-+ (void)getRecentlyViewedProductSkusWithSuccessBlock:(void (^)(NSArray *recentlyViewedProductSkus))successBlock;
-{
++ (void)getRecentlyViewedProductSkusWithSuccessBlock:(void (^)(NSArray *recentlyViewedProductSkus))successBlock {
     NSArray* recentlyViewedProductSkus = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIRecentlyViewedProductSku class]) withPropertyName:@"lastViewedDate"];
     
     if (VALID(recentlyViewedProductSkus, NSArray)) {
-        
-        NSSortDescriptor *dateDescriptor = [NSSortDescriptor
-                                            sortDescriptorWithKey:@"lastViewedDate"
-                                            ascending:NO];
+        NSSortDescriptor *dateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"lastViewedDate" ascending:NO];
         NSArray *sortDescriptors = [NSArray arrayWithObject:dateDescriptor];
-        NSArray *sortedArray = [recentlyViewedProductSkus
-                                sortedArrayUsingDescriptors:sortDescriptors];
-        
+        NSArray *sortedArray = [recentlyViewedProductSkus sortedArrayUsingDescriptors:sortDescriptors];
         successBlock(sortedArray);
     } else {
         successBlock(nil);
     }
 }
 
-+ (void)addToRecentlyViewed:(RIProduct*)product
-               successBlock:(void (^)(void))successBlock
-            andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
-{
++ (void)addToRecentlyViewed:(RIProduct*)product successBlock:(void (^)(void))successBlock andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock {
     NSArray* allRecentlyViewedProductSkus = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIRecentlyViewedProductSku class])];
-    
     BOOL productExists = NO;
     for (RIRecentlyViewedProductSku* currentProductSku in allRecentlyViewedProductSkus) {
         if ([currentProductSku.productSku isEqualToString:product.sku]) {
-            
             //found it, so just update the last viewed date
             currentProductSku.lastViewedDate = [NSDate date];
             [RIRecentlyViewedProductSku saveRecentlyViewedProductSku:currentProductSku andContext:YES];
@@ -52,11 +41,9 @@
             break;
         }
     }
-    
     if (NO == productExists) {
         //did not find it, so create a new object and save
         RIRecentlyViewedProductSku* newRecentlyViewedProductSku = (RIRecentlyViewedProductSku*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RIRecentlyViewedProductSku class])];
-        
         newRecentlyViewedProductSku.productSku = product.sku;
         newRecentlyViewedProductSku.brand = product.brand;
         newRecentlyViewedProductSku.lastViewedDate = [NSDate date];
@@ -96,12 +83,10 @@
     for (RIRecentlyViewedProductSku* currentProductSku in recentlyViewedProductSkus) {
         [[RIDataBaseWrapper sharedInstance] deleteObject:currentProductSku];
     }
-    
     [[RIDataBaseWrapper sharedInstance] saveContext];
 }
 
-+ (void)removeAllRecentlyViewedProductSkus
-{
++ (void)removeAllRecentlyViewedProductSkus {
     [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RIRecentlyViewedProductSku class])];
     [[RIDataBaseWrapper sharedInstance] saveContext];
 }

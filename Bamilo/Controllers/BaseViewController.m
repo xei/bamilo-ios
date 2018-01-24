@@ -13,6 +13,7 @@
 #import "NotificationBarView.h"
 #import "EmarsysPredictManager.h"
 #import "Bamilo-Swift.h"
+#import "DataServiceProtocol.h"
 
 @interface BaseViewController()
 @property (strong, nonatomic) JAMessageView *messageView;
@@ -21,6 +22,7 @@
 @implementation BaseViewController {
 @private
     NSDate *_startLoadingTime;
+    ErrorControlView *errorView;
     BOOL _hasAppeared;
 }
 
@@ -57,13 +59,6 @@
         }
     }
 }
-
-//- (JANavigationBarLayout *)navBarLayout {
-//    if (!_navBarLayout) {
-//        _navBarLayout = [[JANavigationBarLayout alloc] init];
-//    }
-//    return _navBarLayout;
-//}
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -108,7 +103,7 @@
 }
 
 # pragma mark - Message View
-- (BOOL) showNotificationBar:(id)message isSuccess:(BOOL)success {
+- (BOOL)showNotificationBar:(id)message isSuccess:(BOOL)success {
     if(success == NO) {
         if([message isKindOfClass:[NSError class]]) {
             NSError *error = (NSError *)message;
@@ -118,18 +113,32 @@
             }
         }
     }
-    
     return NO;
 }
 
 - (BOOL)showNotificationBarFromMessageDictionary:(NSDictionary *)messageDict isSuccess:(BOOL)success {
     if(messageDict.count) {
         NSString *errorMessage = [messageDict objectForKey:kMessage];
-        if(errorMessage && errorMessage.length) {
+        if (errorMessage && errorMessage.length) {
             return [self showNotificationBarMessage:errorMessage isSuccess:success];
         }
     }
     return NO;
+}
+
+- (void)showMessage:(NSArray <NSString *>*)successMessages showMessage:(BOOL)showMessage {
+    if (showMessage) {
+        [self showNotificationBarMessage:[successMessages componentsJoinedByString:@","] isSuccess:YES];
+    }
+}
+
+//TEMP FUNCTION
+- (NSArray *)extractSuccessMessages:(DataMessageList *)dataMessages {
+    NSMutableArray *messages = [NSMutableArray array];
+    for(DataMessage *msgObject in ((DataMessageList *)dataMessages).success) {
+        [messages addObject:msgObject.message];
+    }
+    return messages;
 }
 
 - (BOOL)showNotificationBarMessage:(NSString *)message isSuccess:(BOOL)success {
@@ -151,13 +160,31 @@
 -(void) publishScreenLoadTime {
     //Publish the load time if it's the first load OR it's been forced
     if(_hasAppeared == NO || ([self respondsToSelector:@selector(forcePublishScreenLoadTime)] && [self forcePublishScreenLoadTime])) {
-        NSTimeInterval executionTime = [[NSDate date] timeIntervalSinceDate:_startLoadingTime];
-        NSString *screenName = [self getPerformanceTrackerScreenName];
-        if(screenName) {
-            [[RITrackingWrapper sharedInstance] trackTimingInMillis:[NSNumber numberWithDouble:executionTime] reference:screenName label:[self getPerformanceTrackerLabel] ?: @""];
-        }
         _hasAppeared = YES;
     }
+}
+
+- (void)handleGenericErrorCodesWithErrorControlView:(int)errorCode forRequestID:(int)rid {
+    if (errorView) {
+        [errorView removeFromSuperview];
+    }
+    errorView = [ErrorControlView nibInstance];
+    if (errorView) {
+        [errorView updateWith:errorCode callBack:^(void (^errorViewHandler)(BOOL)) {
+            if ([self conformsToProtocol:@protocol(DataServiceProtocol)]) {
+                [((id<DataServiceProtocol>)self) retryAction:^(BOOL success) {
+                    errorViewHandler(success);
+                } forRequestId:rid];
+            }
+        }];
+        [self.view addSubview:errorView];
+        [errorView bringSubviewToFront:self.view];
+        [errorView bindFrameToSuperviewBounds];
+    }
+}
+
+- (void)removeErrorView {
+    [errorView removeFromSuperview];
 }
 
 -(NSString *) getPerformanceTrackerScreenName {

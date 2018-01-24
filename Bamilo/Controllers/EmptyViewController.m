@@ -22,18 +22,17 @@
 
 @property (copy, nonatomic) NSString *titleString;
 @property (strong, nonatomic) UIImage *topImage;
+@property (strong, nonatomic) NSArray<RecommendItem*>* recommendedProducts;
 
 @end
 
 @implementation EmptyViewController
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self.view setBackgroundColor:[UIColor whiteColor]];
-    
     [self.carouselWidget setBackgroundColor:[Theme color:kColorVeryLightGray]];
     self.carouselWidget.delegate = self;
-    [self.carouselWidget updateTitle:STRING_BAMILO_RECOMMENDATION];
+    [self.carouselWidget updateTitle:STRING_BAMILO_RECOMMENDATION_FOR_YOU];
     
     [self.carouselWidget hide];
     [self.titleLabel applyStyle:[Theme font:kFontVariationRegular size:13.0f] color:[UIColor blackColor]];
@@ -64,18 +63,23 @@
 
 - (NSArray<EMRecommendationRequest *> *)getRecommendations {
     EMRecommendationRequest *recommend = [EMRecommendationRequest requestWithLogic:self.recommendationLogic ?: @"PERSONAL"];
-    recommend.limit = 15;
+    recommend.limit = 100;
     recommend.completionHandler = ^(EMRecommendationResult *_Nonnull result) {
         if (!result.products.count) return;
         [ThreadManager executeOnMainThread:^{
             [self.carouselWidget fadeIn:0.15];
-            [self.carouselWidget updateWithModel:[result.products map:^id(EMRecommendationItem *item) {
-                return [RecommendItem instanceWithEMRecommendationItem:item];
-            }]];
+            self.recommendedProducts = [result.products map:^id(EMRecommendationItem *item) {
+                return [[RecommendItem alloc] initWithItem:item];
+            }];
+            [self.carouselWidget updateWithModel: [self.recommendedProducts subarrayWithRange:NSMakeRange(0, MIN(self.recommendedProducts.count, 15))]];
         }];
     };
     
     return @[recommend];
+}
+
+- (void)moreButtonTappedInWidgetView:(id)widgetView {
+    [self performSegueWithIdentifier:@"showAllRecommendationView" sender:nil];
 }
 
 #pragma mark - FeatureBoxCollectionViewWidgetViewDelegate
@@ -85,6 +89,13 @@
         [[NSNotificationCenter defaultCenter] postNotificationName: kDidSelectTeaserWithPDVUrlNofication
                                                             object: nil
                                                           userInfo: @{@"sku": ((RecommendItem *)item).sku}];
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString: @"showAllRecommendationView"]) {
+        AllRecommendationViewController *viewCtrl = (AllRecommendationViewController *) [segue destinationViewController];
+        viewCtrl.recommendItems = self.recommendedProducts;
     }
 }
 

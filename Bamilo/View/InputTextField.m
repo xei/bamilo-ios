@@ -53,7 +53,7 @@
 
 #pragma mark - Public Methods
 - (void)showErrorMsg:(NSString *)errorMsg {
-    if (!errorMsg){
+    if (!([errorMsg isKindOfClass:[NSString class]] && errorMsg.length)){
         return;
     }
     self.errorMsg.text = errorMsg;

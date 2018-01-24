@@ -13,6 +13,8 @@
 #import "ViewControllerManager.h"
 #import "EmarsysPredictManager.h"
 #import "Bamilo-Swift.h"
+#import "PushWooshTracker.h"
+#import <Crashlytics/Crashlytics.h>
 
 #define kUserIsGuestFlagKey [NSString stringWithFormat:@"%@_user_is_guest", [RIApi getCountryIsoInUse]]
 
@@ -147,29 +149,42 @@
                                                           }];
 }
 
-
 //TODO: !!! we should really decide about this
-+ (NSString*)autoLogin:(void (^)(BOOL success, NSDictionary *entities, NSString *loginMethod))returnBlock {
++ (NSString*)autoLogin:(void (^)(BOOL success))returnBlock {
     NSString *operationID = nil;
-    
     NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
-    
     if (customers.count > 0) {
         __block RICustomer *customerObject = [customers lastObject];
-        
         if (customerObject && customerObject.email.length && customerObject.plainPassword.length) {
             [DataAggregator loginUser:nil username:customerObject.email password:customerObject.plainPassword completion:^(id _Nullable data, NSError * _Nullable error) {
-                if (returnBlock != nil) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        returnBlock(YES, nil, customerObject.loginMethod);
-                    });
+                if (error == nil) {
+                    if (returnBlock != nil) {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            returnBlock(YES);
+                        });
+                    }
+                } else {
+                    [Utility resetUserBehaviours];
+                    if (returnBlock != nil) {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            returnBlock(NO);
+                        });
+                    }
                 }
             }];
+            
+            //Set auto logged in customer
+            [EmarsysPredictManager setCustomer:customerObject];
+            [PushWooshTracker setUserID:[customerObject.customerId stringValue]];
+            [[Crashlytics sharedInstance] setUserEmail:customerObject.email];
+            
         } else {
-            [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RICustomer class])];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                returnBlock(NO, nil, customerObject.loginMethod);
-            });
+            [Utility resetUserBehaviours];
+            if (returnBlock != nil) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    returnBlock(NO);
+                });
+            }
         }
 //        if (customerObject) {
 //            if([@"normal" isEqualToString:customerObject.loginMethod]) {
@@ -216,7 +231,7 @@
 //        }
     } else {
         dispatch_async(dispatch_get_main_queue(), ^{
-            returnBlock(NO, nil, nil);
+            returnBlock(NO);
         });
     }
     
@@ -255,7 +270,6 @@
 + (BOOL)wasSignup {
     BOOL wasSignup = NO;
     NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
-    
     if (customers.count > 0) {
         RICustomer *customer = (RICustomer *)[customers lastObject];
         wasSignup = [@"signup" isEqualToString:customer.loginMethod];
@@ -265,16 +279,12 @@
 }
 
 #pragma mark - Get customer
-
-+ (NSString *)getCustomerWithSuccessBlock:(void (^)(id customer))successBlock
-                          andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock {
++ (NSString *)getCustomerWithSuccessBlock:(void (^)(id customer))successBlock andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock {
     NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
-    
     if (customers.count > 0) {
         successBlock([customers lastObject]);
         return nil;
     }
-    
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_GET_CUSTOMER]]
                                                             parameters:nil
                                                             httpMethod:HttpVerbPOST

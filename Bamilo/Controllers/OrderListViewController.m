@@ -115,8 +115,9 @@
     self.tableviewBottomConstraint.constant = [MainTabBarViewController sharedInstance].tabBar.height;
     
     self.refreshControl = [UIRefreshControl new];
-    [self.refreshControl addTarget:self action:@selector(resetContentAndRefresh) forControlEvents:UIControlEventValueChanged];
+    [self.refreshControl addTarget:self action:@selector(handleRefreshControl) forControlEvents:UIControlEventValueChanged];
     [self.tableview addSubview:self.refreshControl];
+    self.tableview.alwaysBounceVertical = YES;
     
     [self.tableview sizeToFit];
 }
@@ -124,37 +125,44 @@
 - (void)viewWillAppear:(BOOL)animated {
     
     //Get data for this list
-    [self resetContentAndRefresh];
+    [self resetContentAndRefresh:nil];
 }
 
 - (void) showLoading {
-    LoadingView *footerView = [LoadingView nibInstance];
+    LoadingFooterView *footerView = [LoadingFooterView nibInstance];
     footerView.backgroundColor = [UIColor clearColor];
     [footerView setSize:CGSizeMake(self.tableview.frame.size.width, 100)];
     self.tableview.tableFooterView = footerView;
     [footerView.loadingIndicator startAnimating];
 }
 
-- (void)getPage:(NSInteger)pageNumber callBack:(void(^)(void))handler {
+- (void)getPage:(NSInteger)pageNumber callBack:(void(^)(BOOL))handler {
     if (self.isLoadingOrders) return;
     self.isLoadingOrders = YES;
     [self showLoading];
     [DataAggregator getOrders:self page:pageNumber perPageCount:kOrdersPerPage completion:^(id data, NSError *error) {
-        if (handler) handler();
         self.isLoadingOrders = NO;
         if (error == nil) {
+            if (handler) handler(NO);
             [self bind:data forRequestId:0];
         } else {
-            [Utility handleErrorWithError:error viewController:self];
+            if (handler) handler(YES);
+            [self errorHandler:error forRequestID:0];
         }
     }];
 }
 
-- (void)resetContentAndRefresh {
+- (void)handleRefreshControl {
+    [self resetContentAndRefresh:nil];
+    [self resetFooterView];
+}
+
+- (void)resetContentAndRefresh:(void(^)(BOOL))callBack {
     self.list.currentPage = 1;
-    [self getPage:self.list.currentPage callBack:^(void) {
+    [self getPage:self.list.currentPage callBack:^(BOOL success) {
         [self.list.orders removeAllObjects];
         [self.refreshControl endRefreshing];
+        if (callBack) callBack(success);
     }];
 }
 
@@ -163,7 +171,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     OrderListTableViewCell *cell = [self.tableview dequeueReusableCellWithIdentifier:[OrderListTableViewCell nibName] forIndexPath:indexPath];
-    [cell updateWithModel:self.list.orders[indexPath.row]];
+    if (indexPath.row < self.list.orders.count) {
+        [cell updateWithModel:self.list.orders[indexPath.row]];
+    }
     return cell;
 }
 
@@ -181,7 +191,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableview deselectRowAtIndexPath:indexPath animated:YES];
-    [self performSegueWithIdentifier:@"OrderDetailViewController" sender:self.list.orders[indexPath.row]];
+    if (indexPath.row < self.list.orders.count) {
+        [self performSegueWithIdentifier:@"OrderDetailViewController" sender:self.list.orders[indexPath.row]];
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -194,24 +206,60 @@
     }
 }
 
-
 #pragma mark - bind to UI
 - (void)bind:(id)data forRequestId:(int)rid {
     if ([data isKindOfClass:[OrderList class]]) {
-        [self.list.orders addObjectsFromArray:((OrderList *)data).orders];
-        self.list.currentPage = ((OrderList *)data).currentPage;
-        self.list.totalPages = ((OrderList *)data).totalPages;
-        
+        [self renderOrderlist:(OrderList *)data];
+    } else {
+        if ([data isKindOfClass:[NSDictionary class]]) {
+            if ([data objectForKey:kDataContent]) {
+                if ([[data objectForKey:kDataContent] isKindOfClass:[OrderList class]]) {
+                    [self renderOrderlist:(OrderList *)[data objectForKey:kDataContent]];
+                }
+            }
+            if ([data objectForKey:kDataMessages]) {
+                [Utility handleErrorMessagesWithError:[data objectForKey:kDataMessages] viewController:self];
+            }
+        }
+    }
+}
+
+- (void)renderOrderlist: (OrderList *)data {
+        [self.list.orders addObjectsFromArray:data.orders];
+        self.list.currentPage = data.currentPage;
+        self.list.totalPages = data.totalPages;
         [ThreadManager executeOnMainThread:^{
             if (self.list.orders.count == 0) {
                 self.emptyListMessageView.hidden = NO;
+            } else {
+                self.emptyListMessageView.hidden = YES;
             }
             [self.tableview reloadData];
-            
-            // This will remove extra separators from tableview
-            self.tableview.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+            [self resetFooterView];
         }];
+}
+
+- (void)retryAction:(RetryHandler)callBack forRequestId:(int)rid {
+    [self resetContentAndRefresh:^(BOOL success) {
+        callBack(success);
+    }];
+}
+
+- (void)errorHandler:(NSError *)error forRequestID:(int)rid {
+    if ([Utility handleErrorMessagesWithError:error viewController:self]) {
+        [self resetFooterView];
+    } else {
+        if (self.list.currentPage == 1) {
+            [self handleGenericErrorCodesWithErrorControlView:(int)error.code forRequestID:rid];
+        } else {
+            [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
+        }
     }
+}
+
+- (void)resetFooterView {
+    // This will remove extra separators from tableview
+    self.tableview.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

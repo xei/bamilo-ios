@@ -11,10 +11,10 @@ import UIKit
 
 @objc class ScrollerBarFollower:NSObject {
     
-    private var barView: UIView?
-    private var delay: CGFloat!
-    private var direction: VerticalMoveDirection = .top
-    private var distance: CGFloat!
+    var barView: UIView?
+    var delay: CGFloat!
+    var direction: VerticalMoveDirection = .top
+    var distance: CGFloat!
     private var barViewInitialFrame: CGRect?
     private var barIsHidding = false
     private var lastContentOffset: CGFloat = 0
@@ -35,6 +35,12 @@ import UIKit
         self.barView = barView
         self.barViewInitialFrame = barView.frame
         self.direction = VerticalMoveDirection(rawValue: moveDirection) ?? .top
+    }
+    
+    func refreshForFrameSize() {
+        if let size = self.barView?.frame.size {
+            self.barViewInitialFrame?.size = size
+        }
     }
       
     func followScrollView(scrollView: UIScrollView, delay: CGFloat, permittedMoveDistance: CGFloat) {
@@ -65,7 +71,7 @@ import UIKit
     func resetBarFrame(animated: Bool) {
         if let barView = self.barView, let barViewInitialFrame = self.barViewInitialFrame {
             UIView.animate(withDuration: 0.15, animations: {
-                barView.frame.origin.y = barViewInitialFrame.origin.y //setFrame(frame: barViewInitialFrame, animated: animated)
+                barView.frame.origin.y = barViewInitialFrame.origin.y
             })
         }
     }
@@ -79,6 +85,7 @@ import UIKit
         }
     }
     
+    private var previousFrameY: CGFloat?
     private func changeBarPositionY(difference: CGFloat) {
         self.barIsHidding = difference > 0
         guard let barViewInitialFrame = self.barViewInitialFrame else {
@@ -89,8 +96,16 @@ import UIKit
                                  width: barViewInitialFrame.width,
                                  height: barViewInitialFrame.height + self.distance)
         
+        //To move smoothly!
+        if let prevY = self.previousFrameY, let frameY = barView?.frame.origin.y {
+            if frameY - prevY > difference {
+                barView?.frame.origin.y = prevY
+            }
+        }
+        
         barView?.boundedVerticalMove(difference: difference, direction: self.direction, boundFrame: boundedRect)
         barView?.updateConstraints()
+        previousFrameY = self.barView?.frame.origin.y
     }
     
     //these two methods must be called in mutaul UIScrollViewDelegate methods
@@ -112,9 +127,7 @@ import UIKit
             // we are approaching at the end of scrollview
             return 0
         }
-        
         self.changeBarPositionY(difference: scrollChanage)
-        
         if let barView = barView, let initialFrame = barViewInitialFrame {
             let endTargetOriginY = initialFrame.origin.y + (self.direction == .top ? -self.distance : self.distance)
             let totalDiff = abs(endTargetOriginY - initialFrame.origin.y)
@@ -125,9 +138,9 @@ import UIKit
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        let scrollViewCanBeHide = scrollView.contentOffset.y > self.delay + self.distance
+        let barViewCanBeHide = scrollView.contentOffset.y > self.delay + self.distance
         if !decelerate || scrollView != self.followingScrollView {
-            self.barIsHidding && scrollViewCanBeHide ? self.hideBar(animated: true) : self.resetBarFrame(animated: true)
+            self.barIsHidding && barViewCanBeHide ? self.hideBar(animated: true) : self.resetBarFrame(animated: true)
         }
     }
 }

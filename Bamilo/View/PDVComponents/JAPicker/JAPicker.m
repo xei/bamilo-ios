@@ -9,62 +9,44 @@
 #import "JAPicker.h"
 #import "RIProductSimple.h"
 
-@interface JAPicker ()
-<
-UIPickerViewDataSource,
-UIPickerViewDelegate
->
+@interface JAPicker () <UIPickerViewDataSource, UIPickerViewDelegate>
 
 @property (strong, nonatomic) NSArray *dataSource;
 @property (strong, nonatomic) UIView *backgroundView;
 @property (strong, nonatomic) UIView *buttonBackgroundView;
 @property (strong, nonatomic) UIButton *doneButton;
 @property (strong, nonatomic) UIButton *leftButton;
-
 @property (strong, nonatomic) UILabel *titleLabel;
 
 @end
 
 @implementation JAPicker
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
+- (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
-    
-    if (self)
-    {
+    if (self) {
         [self setup];
     }
-    
     return self;
 }
 
-- (void)setFrame:(CGRect)frame
-{
+- (void)setFrame:(CGRect)frame {
     [super setFrame:frame];
     [self setup];
 }
 
--(void)setup
-{
-    if(!VALID(self.backgroundView, UIView))
-    {
-        self.backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                       0.0f,
-                                                                       self.frame.size.width,
-                                                                       self.frame.size.height)];
+- (void)setup {
+    if (!VALID(self.backgroundView, UIView)) {
+        self.backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.frame.size.width, self.frame.size.height)];
         [self addSubview:self.backgroundView];
-    }else{
+    } else {
         [self.backgroundView setFrame:self.bounds];
     }
     
-    UITapGestureRecognizer *removePickerViewTap =
-    [[UITapGestureRecognizer alloc] initWithTarget:self
-                                            action:@selector(removePickerView)];
+    UITapGestureRecognizer *removePickerViewTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(removePickerView)];
     [self.backgroundView addGestureRecognizer:removePickerViewTap];
     
-    if(!VALID(self.doneButton, UIButton))
-    {
+    if(!VALID(self.doneButton, UIButton)) {
         self.pickerView = [[UIPickerView alloc] initWithFrame:CGRectZero];
         [self addSubview:self.pickerView];
     }
@@ -90,7 +72,7 @@ UIPickerViewDelegate
     CGFloat doneButtonWidth = 62.0f;
     
     if (!VALID_NOTEMPTY(self.doneButton, UIButton)) {
-        self.doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        self.doneButton = [UIButton buttonWithType: UIButtonTypeCustom];
         [self.doneButton.titleLabel setFont:JAPickerDoneLabel];
         [self.doneButton setTitle:STRING_DONE forState:UIControlStateNormal];
         [self.doneButton setTitleColor:JAButtonTextOrange forState:UIControlStateNormal];
@@ -98,15 +80,10 @@ UIPickerViewDelegate
         [self.doneButton addTarget:self action:@selector(doneButtonPressed) forControlEvents:UIControlEventTouchUpInside];
         [self.buttonBackgroundView addSubview:self.doneButton];
     }
-    [self.doneButton setFrame:CGRectMake(self.backgroundView.frame.size.width - doneButtonWidth,
-                                         0.0f,
-                                         doneButtonWidth,
-                                         44.0f)];
-    
+    [self.doneButton setFrame:CGRectMake(self.backgroundView.frame.size.width - doneButtonWidth, 0.0f, doneButtonWidth, 44.0f)];
     CGFloat leftButtonWidth = 100.0f;
-    
     if (!VALID_NOTEMPTY(self.leftButton, UIButton)) {
-        self.leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        self.leftButton = [UIButton buttonWithType: UIButtonTypeCustom];
         [self.leftButton.titleLabel setFont:JAPickerDoneLabel];
         [self.leftButton setTitleColor:JAButtonTextOrange forState:UIControlStateNormal];
         [self.leftButton setTitleColor:JAOrange1Color forState:UIControlStateHighlighted];
@@ -114,10 +91,7 @@ UIPickerViewDelegate
         [self.buttonBackgroundView addSubview:self.leftButton];
         self.leftButton.hidden = YES;
     }
-    [self.leftButton setFrame:CGRectMake(0.0f,
-                                         0.0f,
-                                         leftButtonWidth,
-                                         44.0f)];
+    [self.leftButton setFrame:CGRectMake(0.0f, 0.0f, leftButtonWidth, 44.0f)];
     
     if (RI_IS_RTL) {
         [self.doneButton flipViewPositionInsideSuperview];
@@ -125,30 +99,19 @@ UIPickerViewDelegate
     }
 }
 
-- (void)removePickerView
-{
-    if(self.delegate && [self.delegate respondsToSelector:@selector(closePicker)])
-    {
+- (void)removePickerView {
+    if(self.delegate && [self.delegate respondsToSelector:@selector(closePicker)]) {
         [self.delegate closePicker];
-    }
-    else
-    {
+    } else {
         [self removeFromSuperview];
     }
 }
 
-- (void)setDataSourceArray:(NSArray *)dataSource
-              previousText:(NSString *)previousText
-           leftButtonTitle:(NSString*)leftButtonTitle;
-{
+- (void)setDataSourceArray:(NSArray *)dataSource previousText:(NSString *)previousText leftButtonTitle:(NSString*)leftButtonTitle {
     [self setDataSourceArray:dataSource pickerTitle:nil previousText:previousText leftButtonTitle:leftButtonTitle];
 }
 
-- (void)setDataSourceArray:(NSArray *)dataSource
-               pickerTitle:(NSString *)pickerTitle
-              previousText:(NSString *)previousText
-           leftButtonTitle:(NSString*)leftButtonTitle
-{
+- (void)setDataSourceArray:(NSArray *)dataSource pickerTitle:(NSString *)pickerTitle previousText:(NSString *)previousText leftButtonTitle:(NSString*)leftButtonTitle {
     if (VALID_NOTEMPTY(leftButtonTitle, NSString)) {
         [self.leftButton setTitle:leftButtonTitle forState:UIControlStateNormal];
         self.leftButton.hidden = NO;
@@ -176,11 +139,9 @@ UIPickerViewDelegate
     self.dataSource = [NSArray arrayWithArray:dataSource];
     [self.pickerView reloadAllComponents];
     
-    for (int i = 0 ; i < dataSource.count ; i++)
-    {
+    for (int i = 0 ; i < dataSource.count ; i++) {
         NSString *object = [dataSource objectAtIndex:i];
-        if ([object isEqualToString:previousText])
-        {
+        if ([object isEqualToString:previousText]) {
             [self.pickerView selectRow:i
                            inComponent:0
                               animated:YES];
@@ -189,39 +150,30 @@ UIPickerViewDelegate
     }
 }
 
-- (void)doneButtonPressed
-{
-    if(self.delegate && [self.delegate respondsToSelector:@selector(selectedRow:)])
-    {
+- (void)doneButtonPressed {
+    if(self.delegate && [self.delegate respondsToSelector:@selector(selectedRow:)]) {
         [self.delegate selectedRow:[self.pickerView selectedRowInComponent:0]];
     }
 }
 
-- (void)leftButtonPressed
-{
-    if(self.delegate && [self.delegate respondsToSelector:@selector(leftButtonPressed)])
-    {
+- (void)leftButtonPressed {
+    if(self.delegate && [self.delegate respondsToSelector:@selector(leftButtonPressed)]) {
         [self.delegate leftButtonPressed];
     }
 }
 
 #pragma mark - Pickerview data source
-
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-{
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     return 1;
 }
 
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     return self.dataSource.count;
 }
 
-- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
-{
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
     UILabel* tView = (UILabel*)view;
-    if (!tView)
-    {
+    if (!tView) {
         tView = [[UILabel alloc] init];
         [tView setFont:JAPickerAttLabel];
         [tView setTextAlignment:NSTextAlignmentCenter];

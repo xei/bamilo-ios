@@ -27,10 +27,7 @@ class HomePageFeaturedStoresTableViewCell: BaseHomePageTeaserBoxTableViewCell, U
         self.collectionView.layer.cornerRadius = 2
         self.collectionView.clipsToBounds = true
         
-        self.collectionViewContainer.layer.shadowColor = UIColor.black.cgColor
-        self.collectionViewContainer.layer.shadowOpacity = 0.1
-        self.collectionViewContainer.layer.shadowRadius = 1
-        self.collectionViewContainer.layer.shadowOffset = CGSize(width:1 , height: 1)
+        self.collectionViewContainer.applyShadow(position: CGSize(width:0 , height: 1), color: .black, opacity: 0.2)
         self.collectionViewContainer.clipsToBounds = false
         
         self.collectionView.delegate = self
@@ -72,7 +69,7 @@ class HomePageFeaturedStoresTableViewCell: BaseHomePageTeaserBoxTableViewCell, U
         if let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: FeaturedStoresCollectionViewCell.nibName, for: indexPath) as? FeaturedStoresCollectionViewCell {
             if indexPath.row == 0 {
                 cell.title = STRING_ALL_CATEGORIES
-                cell.image = UIImage(named: "all_cats")
+                cell.image = #imageLiteral(resourceName: "all_cats")
                 return cell
             } else if let featuredStore = self.featuredStores?.items?[indexPath.row - 1] {
                 cell.update(withModel: featuredStore)

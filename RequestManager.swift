@@ -10,28 +10,23 @@ import Foundation
 import Alamofire
 import AlamofireObjectMapper
 
-enum ApiResponseType: Int {
-    case success                = 9000
-    case authorizationError     = 9001
-    case timeOut                = 9002
-    case badUrl                 = 9003
-    case unknownError           = 9004
-    case apiError               = 9005
-    case noInternetConnection   = 9006
-    case maintenancePage        = 9007
-    case kickoutView            = 9008
-}
-
 enum ApiRequestExecutionType: Int {
     case foreground = 0
     case background = 1
     case container  = 2
 }
 
-typealias ResponseClosure = (_ responseType: ApiResponseType, _ data: ApiResponseData?, _ errorMessages: [Any]?) -> Void
+typealias ResponseClosure = (_ responseType: Int, _ data: ApiResponseData?, _ errorMessages: [Any]?) -> Void
 
 class RequestManagerSwift {
     private var baseUrl: String?
+    
+    static private(set) var sharedManager: SessionManager = {
+        let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForRequest = 10
+        configuration.timeoutIntervalForResource = 10
+        return Alamofire.SessionManager(configuration: configuration)
+    }()
     
     init(with baseUrl: String?) {
         self.baseUrl = baseUrl
@@ -46,9 +41,8 @@ class RequestManagerSwift {
             if let params = params {
                 print(params)
             }
-            Alamofire.SessionManager.default.session.configuration.timeoutIntervalForRequest = 10
-            let requestUrl = "\(baseUrl)/\(path)".addingPercentEncoding( withAllowedCharacters: NSCharacterSet.urlQueryAllowed) ?? ""
-            return Alamofire.request(requestUrl, method: method, parameters: params, encoding: URLEncoding(destination: .methodDependent), headers: self.createHeaders()).responseJSON(completionHandler: { (response) in
+            let requestUrl = "\(baseUrl)/\(path)".addingPercentEncoding( withAllowedCharacters: NSCharacterSet.urlQueryAllowed)
+            return RequestManagerSwift.sharedManager.request(requestUrl ?? "\(baseUrl)/\(path)", method: method, parameters: params, encoding: URLEncoding(destination: .methodDependent), headers: self.createHeaders()).responseJSON(completionHandler: { (response) in
                 if let url = response.request?.url {
                     print("------------ Start response for : \(url)")
                 }
@@ -57,26 +51,54 @@ class RequestManagerSwift {
                 switch response.result {
                     case .success:
                         if let apiResponseData = response.result.value {
+                            
+                            //Check if this request needs athenticated action which the current is not logged in
+                            if let errors = apiResponseData.messages?.errors, path != RI_API_LOGOUT_CUSTOMER {
+                                let hasAuthenticationErrorCode = errors.filter { $0.code == 231 }.count > 0
+                                if hasAuthenticationErrorCode {
+                                    self.autoLoginWith(method, target: type, path: path, params: params, type: type, completion: completion)
+                                    return
+                                }
+                            }
+                            
+                            //Continue processing response
                             if(apiResponseData.success) {
-                                completion(self.map(statusCode: response.response?.statusCode), apiResponseData, nil)
+                                completion(response.response?.statusCode ?? 0, apiResponseData, self.prepareErrorMessages(messagesList: apiResponseData.messages))
                             } else {
-                                completion(self.map(statusCode: response.response?.statusCode), nil, self.prepareErrorMessages(messagesList: apiResponseData.messages!))
+                                completion(response.response?.statusCode ?? 0, nil, self.prepareErrorMessages(messagesList: apiResponseData.messages))
                             }
                         }
-                    
+                        
                         if(type == .foreground) {
                             LoadingManager.hideLoading()
                         }
                     case .failure(let error):
                         print(error)
-                        completion(self.map(statusCode: response.response?.statusCode), nil, [STRING_OOPS])
                         if(type == .container || type == .foreground) {
                             LoadingManager.hideLoading()
                         }
+                        if (error.code == NSURLErrorUserAuthenticationRequired), path != RI_API_LOGOUT_CUSTOMER {
+                            self.autoLoginWith(method, target: target, path: path, params: params, type: type, completion: completion)
+                            return
+                        }
+                        completion(error.code, nil, nil)
                 }
             }.task
         }
         return nil
+    }
+    
+    private func autoLoginWith(_ method: HTTPMethod, target: Any?, path: String, params: Parameters?, type: ApiRequestExecutionType, completion: @escaping ResponseClosure) {
+        RICustomer.autoLogin({ (success) in
+            if (success) {
+                self.async(method, target: target, path: path, params: params, type: type, completion: completion)
+            } else {
+                Utility.resetUserBehaviours()
+                MainTabBarViewController.topNavigationController()?.performProtectedBlock({ (success) in
+                    self.async(method, target: target, path: path, params: params, type: type, completion: completion)
+                })
+            }
+        })
     }
     
     //MARK: Private Methods
@@ -87,14 +109,7 @@ class RequestManagerSwift {
         ]
     }
     
-    private func map(statusCode: Int?) -> ApiResponseType {
-        switch statusCode {
-            default:
-                return .success
-        }
-    }
-    
-    private func prepareErrorMessages(messagesList: ApiDataMessageList) -> [Any] {
-        return messagesList.validations ?? messagesList.errors?.map { $0.message ?? "" } ?? []
+    private func prepareErrorMessages(messagesList: ApiDataMessageList?) -> [Any]? {
+        return messagesList?.validations ?? messagesList?.errors?.map { $0.message ?? "" }
     }
 }

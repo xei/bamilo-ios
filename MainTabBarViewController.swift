@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Crashlytics
 
 @objc class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate, DataServiceProtocol {
     
@@ -44,8 +45,10 @@ import UIKit
     
     func updateUserSessionAndCart() {
         //Get user and cart to refresh from server
-        if (RICustomer.checkIfUserIsLogged()) {
-            RICustomer.autoLogin(nil)
+        if let currentUser = RICustomer.getCurrent() {
+            EmarsysPredictManager.setCustomer(currentUser)
+            PushWooshTracker.setUserID(currentUser.customerId.stringValue)
+            Crashlytics.sharedInstance().setUserName(currentUser.email)
         }
         self.getAndUpdateCart()
     }
@@ -145,7 +148,7 @@ import UIKit
     }
     
     static func showWishList() {
-        MainTabBarViewController.activateTabItem(rootViewClassType: JASavedListViewController.self)
+        MainTabBarViewController.activateTabItem(rootViewClassType: WishListViewController.self)
     }
     
     static func showProfile() {
@@ -157,14 +160,14 @@ import UIKit
     }
     
     static func showCategories() {
-        MainTabBarViewController.activateTabItem(rootViewClassType: JACategoriesSideMenuViewController.self)
+        MainTabBarViewController.activateTabItem(rootViewClassType: RootCategoryViewController.self)
     }
     
     
     //MARK: - DataServiceProtocol 
     func bind(_ data: Any!, forRequestId rid: Int32) {
         if let cart = data as? RICart {
-            NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.UpdateCart), object: nil, userInfo: ["NOTIFICATION_UPDATE_CART_VALUE" : cart])
+            NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.UpdateCart), object: nil, userInfo: [NotificationKeys.NotificationCart : cart])
         }
     }
 }

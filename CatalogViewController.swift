@@ -21,9 +21,13 @@ import SwiftyJSON
                                     UICollectionViewDelegateFlowLayout,
                                     FilteredListNoResultViewControllerDelegate,
                                     JAPDVViewControllerDelegate,
-                                    SearchViewControllerDelegate {
+                                    SearchViewControllerDelegate,
+                                    BreadcrumbsViewDelegate {
     
+    @IBOutlet private weak var catalogHeaderContainer: UIView!
+    @IBOutlet private weak var catalogHeaderContainerHeightConstraint: NSLayoutConstraint!
     @IBOutlet private weak var catalogHeader: CatalogHeaderControl!
+    @IBOutlet weak private var breadCrumbsControl: BreadcrumbsControl!
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var noResultViewContainer: UIView!
     @IBOutlet private weak var filteredNoResultContainer: UIView!
@@ -50,6 +54,8 @@ import SwiftyJSON
     private var initialTabBarHeight: CGFloat!
     private let loadingFooterViewHeight: CGFloat = 50
     private let productCountViewHeight: CGFloat = 30
+    private let catalogHeaderContainerHeightWithBreadcrumb:CGFloat = 96
+    private let catalogHeaderContainerHeightWithoutBreadcrumb:CGFloat = 48
     private let cardViewNewTagElementHeight: CGFloat = 16
     private var navBarScrollFollower: ScrollerBarFollower?
     private var tabBarScrollFollower: ScrollerBarFollower?
@@ -81,6 +87,7 @@ import SwiftyJSON
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = Theme.color(kColorVeryLightGray)
+        self.catalogHeaderContainerHeightConstraint.constant = self.catalogHeaderContainerHeightWithoutBreadcrumb
         self.productCountLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 11), color: UIColor.black)
         
         if let savedListViewType = UserDefaults.standard.string(forKey: "CatalogListViewType") {
@@ -88,33 +95,34 @@ import SwiftyJSON
             self.catalogHeader.headerView?.listViewType = self.listViewType
         }
         
+        self.breadCrumbsControl.delegate = self
         self.catalogHeader.delegate = self
         self.setSortingMethodToHeader()
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
-        self.collectionView.register(UINib(nibName: CatalogListCollectionViewCell.nibName, bundle: nil), forCellWithReuseIdentifier: CatalogListCollectionViewCell.nibName)
-        self.collectionView.register(UINib(nibName: CatalogCardCollectionViewCell.nibName, bundle: nil), forCellWithReuseIdentifier: CatalogCardCollectionViewCell.nibName)
-        self.collectionView.register(UINib(nibName: CatalogGridCollectionViewCell.nibName, bundle: nil), forCellWithReuseIdentifier: CatalogGridCollectionViewCell.nibName)
+        self.collectionView.register(CatalogListCollectionViewCell.nibInstance, forCellWithReuseIdentifier: CatalogListCollectionViewCell.nibName)
+        self.collectionView.register(CatalogCardCollectionViewCell.nibInstance, forCellWithReuseIdentifier: CatalogCardCollectionViewCell.nibName)
+        self.collectionView.register(CatalogGridCollectionViewCell.nibInstance, forCellWithReuseIdentifier: CatalogGridCollectionViewCell.nibName)
         self.collectionView.setCollectionViewLayout(self.getProperCollectionViewFlowLayout(), animated: true)
         self.loadData()
         
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateListWithUserLoginNotification(notification:)), name: NSNotification.Name(NotificationKeys.UserLogin), object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(updateProductStatusFromWishList(notification:)), name: NSNotification.Name(NotificationKeys.WishListUpdate), object: nil)
+        
         NotificationCenter.default.addObserver(self, selector: #selector(resetBarFollowers(animated:)), name: NSNotification.Name(NotificationKeys.EnterForground), object: true)
         
         if let navBar = self.navigationController?.navigationBar {
             self.initialNavBarAndStatusBarHeight = navBar.frame.height + UIApplication.shared.statusBarFrame.height
+            
+            self.topCollectionViewConstraint.constant = navBar.frame.height-(self.navigationController?.navigationBar.frame.size.height ?? navBar.frame.height)
         }
         
         if let tabBar = self.tabBarController?.tabBar {
             self.initialTabBarHeight = tabBar.frame.height
         }
-        
-        self.productCountLabelTopConstraint.constant = self.catalogHeader.frame.height
         self.productCountLabelHeight.constant = self.productCountViewHeight
-        
-        self.topCollectionViewConstraint.constant = -(self.navigationController?.navigationBar.frame.size.height ?? 0)
     }
     
     deinit {
@@ -140,7 +148,8 @@ import SwiftyJSON
         super.viewDidLayoutSubviews()
         if  !allSubviewsHasBeenRendered {
             //asign scroll followers in this view
-            self.searchBarScrollFollower = ScrollerBarFollower(barView: catalogHeader, moveDirection: .top)
+            self.catalogHeaderContainer.translatesAutoresizingMaskIntoConstraints = true
+            self.searchBarScrollFollower = ScrollerBarFollower(barView: catalogHeaderContainer, moveDirection: .top)
             if let navBar = self.navigationController?.navigationBar {
                 self.navBarScrollFollower = ScrollerBarFollower(barView: navBar, moveDirection: .top)
                 self.navBarScrollFollower?.followScrollView(scrollView: collectionView, delay: productCountViewHeight, permittedMoveDistance: navBar.frame.height)
@@ -170,7 +179,13 @@ import SwiftyJSON
         self.collectionView.killScroll()
     }
     
-    func resetBarFollowers(animated: Bool) {
+    private func refreshBarFollower() {
+        self.navBarScrollFollower?.refreshForFrameSize()
+        self.tabBarScrollFollower?.refreshForFrameSize()
+        self.searchBarScrollFollower?.refreshForFrameSize()
+    }
+    
+    @objc private func resetBarFollowers(animated: Bool) {
         self.navBarScrollFollower?.resetBarFrame(animated: animated)
         self.tabBarScrollFollower?.resetBarFrame(animated: animated)
         self.searchBarScrollFollower?.resetBarFrame(animated: animated)
@@ -199,6 +214,27 @@ import SwiftyJSON
                         self.productCountLabel.text = "\(totalProducts) \(STRING_FOUND_PRODUCT_COUNT)".convertTo(language: .arabic)
                     }
                     self.loadingDataInProgress = false
+                    if let breadcrumb = self.catalogData?.breadcrumbs, false { //for now
+                        self.catalogHeaderContainer.translatesAutoresizingMaskIntoConstraints = false
+                        UIView.animate(withDuration: 0.15, animations: {
+                            self.catalogHeaderContainerHeightConstraint.constant = self.catalogHeaderContainerHeightWithBreadcrumb
+                        }, completion: { (finished) in
+                            self.refreshBarFollower()
+                            if let navBar = self.navigationController?.navigationBar {
+                                self.searchBarScrollFollower?.distance = navBar.frame.height + self.catalogHeaderContainerHeightWithoutBreadcrumb
+                            }
+                            self.breadCrumbsControl.update(withModel: breadcrumb)
+                            self.productCountLabelTopConstraint.constant = self.catalogHeaderContainer.frame.height
+                            self.catalogHeaderContainer.translatesAutoresizingMaskIntoConstraints = true
+                        })
+                    } else {
+                        UIView.animate(withDuration: 0.15, animations: {
+                            self.catalogHeaderContainerHeightConstraint.constant = self.catalogHeaderContainerHeightWithoutBreadcrumb
+                        }, completion: { (finished) in
+                            self.refreshBarFollower()
+                            self.productCountLabelTopConstraint.constant = self.catalogHeaderContainer.frame.height
+                        })
+                    }
                 } else if rid == 1, receivedCatalogData.products.count > 0 {
                     if let visibleProductCount = self.catalogData?.products.count {
                         var newIndexPathes = [IndexPath]()
@@ -222,6 +258,28 @@ import SwiftyJSON
             }
 
         })
+    }
+    
+    func retryAction(_ callBack: RetryHandler!, forRequestId rid: Int32) {
+        if rid == 0 {
+            self.loadData { (success) in
+                callBack(success)
+            }
+        }
+    }
+    
+    func errorHandler(_ error: Error!, forRequestID rid: Int32) {
+        if rid == 0 {
+            if error.code != 200 {
+                self.handleGenericErrorCodesWithErrorControlView(Int32(error.code), forRequestID: rid)
+            } else {
+                self.showNoResultView()
+            }
+        } else if rid == 1 {
+//            if !Utility.handleErrorMessages(error: error, viewController: self) {
+//                self.showNotificationBarMessage(STRING_SERVER_ERROR_MESSAGE, isSuccess: false)
+//            }
+        }
     }
     
     //MARK: - FilteredListNoResultViewControllerDelegate
@@ -256,6 +314,7 @@ import SwiftyJSON
         )
         self.sortingMethod = type
         self.setSortingMethodToHeader()
+        self.resetBarFollowers(animated: true)
         self.loadData()
     }
     
@@ -274,10 +333,8 @@ import SwiftyJSON
         )
         self.collectionView.reloadData()
         self.resetBarFollowers(animated: true)
-        UIView.animate(withDuration: 0.15, animations: { 
-            self.collectionView.collectionViewLayout.invalidateLayout()
-            self.collectionView.setCollectionViewLayout(self.getProperCollectionViewFlowLayout(), animated: true)
-        }, completion: nil)
+        self.collectionView.collectionViewLayout.invalidateLayout()
+        self.collectionView.setCollectionViewLayout(self.getProperCollectionViewFlowLayout(), animated: true)
     }
     
     //MARK: - helpers 
@@ -373,13 +430,23 @@ import SwiftyJSON
     
     func updateListWithUserLoginNotification(notification: Notification) {
         if let wishlistSkuArray = notification.object as? [String] {
-            self.catalogData?.products.filter({ (product) -> Bool in
-                return wishlistSkuArray.contains(product.sku)
-            }).forEach({ (product) in
-                product.isInWishList = true
+            self.catalogData?.products.forEach({ (product) in
+                product.isInWishList = wishlistSkuArray.contains(product.sku)
             })
         }
         self.collectionView.reloadData()
+    }
+    
+    func updateProductStatusFromWishList(notification: Notification) {
+        if let product = notification.userInfo?[NotificationKeys.NotificationProduct] as? Product ,let isInWishlist = notification.userInfo?[NotificationKeys.NotificationBool] as? Bool {
+            let targetProduct = self.catalogData?.products.filter { $0.sku == product.sku }.first
+            if let targetProduct = targetProduct {
+                targetProduct.isInWishList = isInWishlist
+                if let index = self.catalogData?.products.index(of: targetProduct) {
+                    self.collectionView.reloadItems(at: [IndexPath(row: index, section: 0)])
+                }
+            }
+        }
     }
     
     private func setNavigationBarAlpha(alpha: CGFloat, animated: Bool) {
@@ -450,15 +517,16 @@ import SwiftyJSON
         self.navigationController?.pushViewController(newCatalogViewController, animated: true)
     }
     
-    private func loadData() {
+    private func loadData(callBack: ((Bool)->Void)? = nil) {
         self.pageNumber = 1
         CatalogDataManager.sharedInstance.getCatalog(self, searchTarget: searchTarget, filtersQueryString: pushFilterQueryString, sortingMethod: sortingMethod) { (data, errorMessages) in
-            if errorMessages == nil {
-                self.bind(data, forRequestId: 0)
+            if let error = errorMessages {
+                self.errorHandler(error, forRequestID: 0)
+                callBack?(false)
             } else {
-                self.showNoResultView()
+                self.bind(data, forRequestId: 0)
+                callBack?(true)
             }
-            
             self.resetBarFollowers(animated: true)
         }
         self.loadAvaiableSubCategories()
@@ -492,7 +560,7 @@ import SwiftyJSON
                 self.bind(data, forRequestId: 1)
             } else {
                 self.loadingDataInProgress = false
-//                Utility.handleError(error: errorMessages, viewController: self)
+                self.errorHandler(errorMessages, forRequestID: 1)
             }
         }
     }
@@ -512,7 +580,7 @@ import SwiftyJSON
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake((self.navigationController?.navigationBar.frame.size.height ?? 0) + self.productCountViewHeight , 0, 0, 0)
+        return UIEdgeInsetsMake(self.catalogHeaderContainer.frame.height + self.productCountViewHeight , 0, 0, 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -525,13 +593,15 @@ import SwiftyJSON
             cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: CatalogCardCollectionViewCell.nibName, for: indexPath) as! CatalogCardCollectionViewCell
         }
         cell.delegate = self
-        cell.updateWithProduct(product: self.catalogData!.products[indexPath.row])
+        if let products = self.catalogData?.products, indexPath.row < products.count {
+            cell.updateWithProduct(product: products[indexPath.row])
+        }
         cell.cellIndex = indexPath.row
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return (self.catalogData != nil) ? self.catalogData!.products.count : 0
+        return self.catalogData?.products.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -540,7 +610,7 @@ import SwiftyJSON
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize.zero
+        return .zero
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
@@ -573,19 +643,19 @@ import SwiftyJSON
                 self.loadMore()
             }
         }
-        
+
         if (scrollView.contentOffset.y < productCountViewHeight) {
             self.setNavigationBarAlpha(alpha: 0, animated: false)
             self.productCountLabel.alpha = 1
             return
-        } 
+        }
         self.productCountLabel.alpha = 0
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         self.navBarScrollFollower?.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
-        self.tabBarScrollFollower?.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
         self.searchBarScrollFollower?.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
+        self.tabBarScrollFollower?.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
     }
     
     //MARK: - JAPDVViewControllerDelegate
@@ -613,6 +683,9 @@ import SwiftyJSON
                     if error != nil {
                         product.isInWishList.toggle()
                         cell.updateWithProduct(product: product)
+//                        if !Utility.handleErrorMessages(error: error, viewController: self) {
+//                            self.showNotificationBarMessage(STRING_SERVER_CONNECTION_ERROR_MESSAGE, isSuccess: false)
+//                        }
                         return
                     }
                     if product.isInWishList != true {
@@ -632,9 +705,12 @@ import SwiftyJSON
                     if error != nil {
                         product.isInWishList.toggle()
                         cell.updateWithProduct(product: product)
+//                        if !Utility.handleErrorMessages(error: error, viewController: self) {
+//                            self.showNotificationBarMessage(STRING_SERVER_CONNECTION_ERROR_MESSAGE, isSuccess: false)
+//                        }
                         TrackerManager.postEvent(
                             selector: EventSelectors.removeFromWishListSelector(),
-                            attributes: EventAttributes.removeToWishList(product: translatedProduct, screenName: self.getScreenName())
+                            attributes: EventAttributes.removeFromWishList(product: translatedProduct, screenName: self.getScreenName())
                         )
                         return
                     }
@@ -646,6 +722,9 @@ import SwiftyJSON
                     self.showNotificationBar(error, isSuccess: false)
                 })
             }
+            
+            //Inform others if it's needed
+            NotificationCenter.default.post(name: Notification.Name(rawValue: NotificationKeys.WishListUpdate), object: nil, userInfo: [NotificationKeys.NotificationProduct: product, NotificationKeys.NotificationBool: add])
         })
     }
     
@@ -672,6 +751,13 @@ import SwiftyJSON
             destinationViewCtrl?.delegate = self
         }
         
+    }
+    
+    //MARK: - BreadcrumbsViewDelegate
+    func itemTapped(item: BreadcrumbsItem) {
+        if let target = item.target {
+            MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: nil)
+        }
     }
     
     //MARK: - EmarsysWebExtendProtocol

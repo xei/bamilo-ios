@@ -34,6 +34,7 @@
 @property (nonatomic, strong) ScrollerBarFollower *navbarFollower;
 @property (nonatomic, strong) ScrollerBarFollower *searchBarFollower;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchBarBottomToTopTableViewConstraint;
+@property (nonatomic) int numberOfRequests;
 
 @end
 
@@ -64,9 +65,7 @@
     self.loadingView.backgroundColor = [UIColor blackColor];
     self.loadingView.alpha = 0.0f;
     self.loadingView.userInteractionEnabled = YES;
-    
     UIImage *image = [UIImage imageNamed:@"loadingAnimationFrame1"];
-    
     int lastFrame = 8;
     
     self.loadingAnimation = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, image.size.width, image.size.height)];
@@ -79,7 +78,6 @@
     }
     self.loadingAnimation.animationImages = [animationFrames copy];
     self.loadingAnimation.center = self.loadingView.center;
-    
     self.loadingView.alpha = 0.0f;
 }
 
@@ -87,57 +85,45 @@
     if (NO == VALID_NOTEMPTY(self.loadingView, UIView)) {
         [self initLoading];
     }
-    
     [((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view addSubview:self.loadingView];
     [((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view addSubview:self.loadingAnimation];
-    
     [self.loadingAnimation startAnimating];
-    
-    [UIView animateWithDuration:0.4f
-                     animations: ^{
-                         self.loadingView.alpha = 0.5f;
-                         self.loadingAnimation.alpha = 0.5f;
-                     }];
+    [UIView animateWithDuration:0.4f animations: ^{
+         self.loadingView.alpha = 0.5f;
+         self.loadingAnimation.alpha = 0.5f;
+    }];
 }
 
 - (void)hideLoading {
     [UIView animateWithDuration:0.4f animations: ^{
-                         self.loadingView.alpha = 0.0f;
-                         self.loadingAnimation.alpha = 0.0f;
-                     } completion: ^(BOOL finished) {
-                         [self.loadingView removeFromSuperview];
-                         [self.loadingAnimation removeFromSuperview];
-                     }];
+         self.loadingView.alpha = 0.0f;
+         self.loadingAnimation.alpha = 0.0f;
+     } completion: ^(BOOL finished) {
+         [self.loadingView removeFromSuperview];
+         [self.loadingAnimation removeFromSuperview];
+     }];
 }
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    self.numberOfRequests = 0;
     self.A4SViewControllerAlias = @"SUBCATEGORY";
-
     self.view.backgroundColor = JABlack300Color;
-    
     // notify the InAppNotification SDK that this the active view controller
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popToRoot) name:kSideMenuShouldReload object:nil];
-    
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.view addSubview:self.tableView];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCategories) name:kSideMenuShouldReload object:nil];
     animationInsert = UITableViewRowAnimationRight;
     animationDelete = UITableViewRowAnimationLeft;
-    
     self.searchbar.searchView.textField.delegate = self;
     [self.view bringSubviewToFront:self.searchbar];
-    
     [self reloadData];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetNavbarStatusBar) name:@"appDidEnterForeground" object:nil];
 }
 
@@ -149,38 +135,45 @@
 
 - (void)reloadCategories {
     [self showLoading];
-    
+    self.numberOfRequests += 1;
     [RICategory getCategoriesWithSuccessBlock:^(id categories) {
+        self.numberOfRequests -= 1;
         self.categoriesLoadingError = NO;
         self.categoriesArray = [NSArray arrayWithArray:(NSArray *)categories];
-        [self categoriesLoaded];
-        [self hideLoading];
+        [self renderContentIfIsReady];
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
+        self.numberOfRequests -= 1;
         self.categoriesLoadingError = YES;
+        [self renderContentIfIsReady];
+    }];
+}
+
+- (void)renderContentIfIsReady {
+    if (self.numberOfRequests == 0) {
         [self categoriesLoaded];
         [self hideLoading];
-    }];
+    }
 }
 
 - (void)reloadExternalLinks {
     [self showLoading];
+    self.numberOfRequests += 1;
     [RIExternalCategory getExternalCategoryWithSuccessBlock:^(RIExternalCategory *externalCategory) {
+        self.numberOfRequests -= 1;
         self.externalCategory = externalCategory;
-        [self categoriesLoaded];
-        [self hideLoading];
+        [self renderContentIfIsReady];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
-        [self hideLoading];
+        self.numberOfRequests -= 1;
+        [self renderContentIfIsReady];
     }];
 }
 
 - (void)categoriesLoaded {
     [self.reloadLock lock];
-    
     NSInteger externalIndex = -1;
     if (VALID_VALUE(self.externalCategory, RIExternalCategory)) {
         externalIndex = self.externalCategory.position.integerValue;
     }
-    
     self.tableViewCategoriesArray = [NSMutableArray new];
     int j = 0;
     for (RICategory* category in self.categoriesArray) {
@@ -206,23 +199,17 @@
             externalIndex++;
         }
     }
-    
     [self.tableView reloadData];
     [self.reloadLock unlock];
-    
-    
     //assign scrollbar follower to bar views
     self.navbarFollower = [ScrollerBarFollower new];
     [self.navbarFollower setWithBarView:self.navigationController.navigationBar moveDirection:@"TOP"];
     self.searchBarFollower = [ScrollerBarFollower new];
     [self.searchBarFollower setWithBarView:self.searchbar moveDirection:@"TOP"];
-    
     CGFloat tableViewTopOffset = self.navigationController.navigationBar.height;
     self.searchBarBottomToTopTableViewConstraint.constant = -tableViewTopOffset;
-    
     [self.tableView setContentInset:UIEdgeInsetsMake(tableViewTopOffset, 0, 0, 0)];
     [self.tableView setContentOffset:CGPointMake(0, -tableViewTopOffset)];
-    
     [self.navbarFollower followScrollViewWithScrollView:self.tableView delay: -tableViewTopOffset permittedMoveDistance: self.navigationController.navigationBar.height];
     [self.searchBarFollower followScrollViewWithScrollView:self.tableView delay: -tableViewTopOffset permittedMoveDistance:self.navigationController.navigationBar.height];
 }
@@ -278,16 +265,13 @@
         [retryButton addTarget:self action:@selector(reloadCategories) forControlEvents:UIControlEventTouchUpInside];
         return tableViewCell;
     }
-    
     NSString *cellIdentifier = @"cell";
-    
     JACategoriesSideMenuCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (ISEMPTY(cell)) {
         cell = [[JACategoriesSideMenuCell alloc] initWithReuseIdentifier:cellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.delegate = self;
     }
-    
     id category = [self.tableViewCategoriesArray objectAtIndex:indexPath.row];
     NSNumber *level = nil;
     if ([category isKindOfClass:[RICategory class]]) {
@@ -295,7 +279,6 @@
     } else if ([category isKindOfClass:[RIExternalCategory class]]) {
         level = [(RIExternalCategory *)category level];
     }
-    
     BOOL isOpen = NO;
     BOOL hasSeparator = NO;
     if (self.tableViewCategoriesArray.count - 1 != indexPath.row) {
@@ -314,11 +297,9 @@
         if (1 <= [nextLevel integerValue]) {
             hasSeparator = YES;
         }
-        
     }
     
     [cell setupWithCategory:category width:self.tableView.width hasSeparator:hasSeparator isOpen:isOpen];
-    
     return cell;
 }
 
@@ -338,18 +319,9 @@
     } else {
         //This does not have children so just open up the category
         if ([category isKindOfClass:[RICategory class]]) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification
-                                                                object:@{@"category":category}];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category":category}];
         } else {
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[RITarget getURLStringforTargetString:[(RIExternalCategory *)category targetString]]]];
-            
-            NSMutableDictionary* externalLinkTrackingDictionary = [NSMutableDictionary new];
-            [externalLinkTrackingDictionary setValue:@"ExternalLink" forKey:kRIEventCategoryKey];
-            [externalLinkTrackingDictionary setValue:[(RIExternalCategory *)category label] forKey:kRIEventActionKey];
-            [externalLinkTrackingDictionary setValue:@"CategoriesTree" forKey:kRIEventLabelKey];
-            
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCategoryExternalLink]
-                                                      data:[externalLinkTrackingDictionary copy]];
         }
     }
 }
@@ -360,7 +332,6 @@
         [rootViewController.view addSubview:self.messageView];
     }
     [self.messageView setFrame:CGRectMake(0, 64, self.messageView.superview.width, kMessageViewHeight)];
-    
     [self.messageView setTitle:message success:success];
 }
 
@@ -371,7 +342,6 @@
     } else if ([category isKindOfClass:[RIExternalCategory class]]) {
         return [(RIExternalCategory *)category level];
     }
-    
     return nil;
 }
 
@@ -381,7 +351,6 @@
     } else if ([category isKindOfClass:[RIExternalCategory class]]) {
         return [(RIExternalCategory *)category children];
     }
-    
     return nil;
 }
 
@@ -393,11 +362,9 @@
                 NSNumber *sLevel = [self getLevelForCategory:sCategory];
                 NSOrderedSet *sChildren = [self getChildrenForCategory:sCategory];
                 NSInteger sIndex = [self getIndexOfTheCategory:sCategory];
-                
                 if([self getIfToClose:sIndex level:sLevel]) {
                     [self updateCategory:sCategory children:sChildren index:sIndex level:sLevel toClose:toClose];
                 }
-                
                 [self removeChildFromTableView:sIndex];
             }
         } else {
@@ -407,14 +374,12 @@
         //Open Up
         [self addChildrenToTableView:children index:index];
     }
-    
     [self updateRowInTableView:index];
 }
 
 -(NSInteger) getIndexOfTheCategory:(id)category {
     //based on category, find the index
     NSInteger index = 0;
-    
     for (int i = 0; i < self.tableViewCategoriesArray.count; i++) {
         id tableCategory = [self.tableViewCategoriesArray objectAtIndex:i];
         if (tableCategory == category) {
@@ -428,7 +393,6 @@
 
 -(BOOL) getIfToClose:(NSInteger)index level:(NSNumber *)level {
     BOOL isOpen = NO;
-    
     if (self.tableViewCategoriesArray.count - 1 != index) {
         id nextCategory = [self.tableViewCategoriesArray objectAtIndex:index + 1];
         NSNumber *nextLevel = nil;
@@ -441,7 +405,6 @@
             isOpen = YES;
         }
     }
-    
     return isOpen;
 }
 
@@ -453,7 +416,6 @@
 
 - (void)removeChildFromTableView:(NSInteger)index {
     [self.tableViewCategoriesArray removeObjectAtIndex:index];
-    
     [self.tableView beginUpdates];
     [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:animationDelete];
     [self.tableView endUpdates];
@@ -464,10 +426,8 @@
     NSMutableArray* insertIndexPaths = [NSMutableArray new];
     for (int i = 0; i < [children count]; i++) {
         id child = [children objectAtIndex:i];
-        
         NSInteger newIndex = index + i + 1;
         [self.tableViewCategoriesArray insertObject:child atIndex:newIndex];
-        
         [insertIndexPaths addObject:[NSIndexPath indexPathForRow:newIndex inSection:0]];
     }
     [self.tableView beginUpdates];
@@ -479,10 +439,8 @@
 #pragma mark: - UITextFieldDelegate
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     [textField resignFirstResponder];
-    
     [self.navbarFollower resetBarFrameWithAnimated:NO];
     [self.searchBarFollower resetBarFrameWithAnimated:NO];
-    
     [self performSegueWithIdentifier:@"ShowSearchView" sender:nil];
 }
 
@@ -502,12 +460,10 @@
     return @"CategoryMenu";
 }
 
-
 #pragma mark - NavigationBarProtocol
 - (NSString *)navBarTitleString {
     return STRING_CATEGORIES;
 }
-
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     NSString* identifier = segue.identifier;
@@ -516,10 +472,5 @@
         searchView.parentScreenName = [self getScreenName];
     }
 }
-
-//
-//- (NavBarLeftButtonType)navBarleftButton {
-//    return NavBarLeftButtonTypeSearch;
-//}
 
 @end

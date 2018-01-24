@@ -21,7 +21,7 @@ class CarouselCollectionFlowLayout: BaseCollectionFlowLayout {
     }
     
     override func itemWidth() -> CGFloat {
-        return CarouselCollectionFlowLayout.itemWidth(relateTo: self.collectionView!.frame.width, cellSpacing: cellSpacing)
+        return CarouselCollectionFlowLayout.itemWidth(relateTo: self.collectionView?.frame.width ?? 0, cellSpacing: cellSpacing)
     }
     
     static func itemWidth(relateTo parentWidth: CGFloat, cellSpacing: CGFloat) -> CGFloat {

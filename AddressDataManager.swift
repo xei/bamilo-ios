@@ -95,7 +95,7 @@ class AddressDataManager: DataManagerSwift {
     // MARK: - Helpers
     private func getAreaZone(_ tagret: DataServiceProtocol, type: ApiRequestExecutionType, path: String, completion:@escaping DataClosure) {
         AddressDataManager.requestManager.async(.get, target: tagret, path: path, params: nil, type: type) { (statusCode, data, errorMessages) in
-            if let response = data, (statusCode == .success) {
+            if let response = data, (statusCode == 200) {
                 var dictionary: [String: String] = [:]
                 if let regions = response.metadata?["data"] as? [[String:Any]] {
                     for region in regions {

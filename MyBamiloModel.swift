@@ -15,21 +15,10 @@ class MyBamiloRecommendItem: RecommendItem {
     var topic: String?
     
     static func instance(with recItem: EMRecommendationItem, topic: String?, identifier: String?) -> Self? {
-        let item = self.instance(with: recItem)
+        let item = self.init(JSON: recItem.data)  //self.instance(with: recItem)
         item?.id = identifier
         item?.topic = topic
         return item
-    }
-    
-    func convertToProduct() -> Product {
-        let product = Product()
-        product.name = self.name
-        product.imageUrl = URL(string: self.imageUrl)
-        product.sku = self.sku
-        product.price = UInt64(self.price)
-        product.brand = self.brandName
-        product.specialPrice = UInt64(self.dicountedPrice)
-        return product
     }
 }
 
@@ -37,6 +26,7 @@ class MyBamiloModel {
     
     lazy var topics = [String:String]()
     lazy var products = [MyBamiloRecommendItem]()
+    lazy var sequences = [[MyBamiloRecommendItem]]()
     
     @discardableResult func embedNewRecommends(result: EMRecommendationResult) -> [MyBamiloRecommendItem] {
         var newjoinedProducts = [MyBamiloRecommendItem]()
@@ -47,18 +37,34 @@ class MyBamiloModel {
             }
         }
         
-        result.products.forEach { (recommendedProduct) in
+        result.products.forEach({ (recommendedProduct) in
             if let item = MyBamiloRecommendItem.instance(with: recommendedProduct, topic: result.topic, identifier: result.featureID) {
-                self.products.append(item)
                 newjoinedProducts.append(item)
             }
-        }
+        })
+        
+        self.sequences.append(newjoinedProducts)
         return newjoinedProducts
+    }
+    
+    @discardableResult func mergeProductsWithInterleaveLogic() -> [MyBamiloRecommendItem] {
+        var maxLength = 0
+        products.removeAll()
+        self.sequences.forEach{ maxLength = max(maxLength, $0.count) }
+        for index in 0 ... maxLength - 1 {
+            self.sequences.forEach({ (sequence) in
+                if index < sequence.count {
+                    products.append(sequence[index])
+                }
+            })
+        }
+        return products
     }
     
     func resetAndClear() {
         self.topics.removeAll()
         self.products.removeAll()
+        self.sequences.removeAll()
     }
     
     func filterById(id: String) -> [MyBamiloRecommendItem] {

@@ -41,7 +41,7 @@
     [self postEventByName:@"SignUp" attributes:[dict copy]];
 }
 
-- (void)appOpendWithAttributes:(NSDictionary<NSString *,id> *)attributes {
+- (void)appOpenedWithAttributes:(NSDictionary<NSString *,id> *)attributes {
     NSMutableDictionary *dict = [self generateCommonAttributesUsingAttributes:attributes];
     [self postEventByName:@"OpenApp" attributes:dict];
 }

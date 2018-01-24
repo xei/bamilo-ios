@@ -6,7 +6,6 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import "AuthenticationDataManager.h"
 #import "SignInViewController.h"
 #import "InputTextFieldControl.h"
 #import "UIScrollView+Extension.h"
@@ -87,14 +86,12 @@
             [self bind:data forRequestId:0];
             
             //EVENT: LOGIN / SUCCESS
-
-            
             RICustomer *customer = [RICustomer getCurrentCustomer];
             [TrackerManager postEventWithSelector:[EventSelectors loginEventSelector] attributes:[EventAttributes loginWithLoginMethod:cLoginMethodEmail user:customer]];
             [[EmarsysMobileEngage sharedInstance] sendLogin:[[PushNotificationManager pushManager] getPushToken] completion:nil];
+            
             [EmarsysPredictManager setCustomer:customer];
-        
-            [[PushWooshTracker sharedTracker] setUserID:customer.email];
+            [PushWooshTracker setUserID:customer.email];
             [[Crashlytics sharedInstance] setUserEmail:customer.email];
             
             if (self.completion) {
@@ -106,13 +103,23 @@
             //EVENT: LOGIN / FAILURE
             BaseViewController *baseViewController = (BaseViewController *)self.delegate;
             if(![baseViewController showNotificationBar:error isSuccess:NO]) {
+                BOOL errorHandled = NO;
                 for(NSDictionary* errorField in [error.userInfo objectForKey:@"errorMessages"]) {
-                    NSString *fieldName = errorField[@"field"];
+                    NSString *fieldName = [errorField objectForKey:@"field"];
+                    BOOL handled = NO;
                     if ([fieldName isEqualToString:@"password"]) {
-                        [self.passwordControl showErrorMsg:errorField[@"message"]];
+                        [self.passwordControl showErrorMsg:[errorField objectForKey:@"message"]];
+                        handled = YES;
                     } else if ([fieldName isEqualToString:@"email"]) {
-                        [self.emailControl showErrorMsg:errorField[@"message"]];
+                        [self.emailControl showErrorMsg:[errorField objectForKey:@"message"]];
+                        handled = YES;
                     }
+                    if (handled) {
+                        errorHandled = handled;
+                    }
+                }
+                if (!errorHandled) {
+                    [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
                 }
             }
         }
@@ -127,49 +134,44 @@
     NSDictionary *metadata = ((ApiResponseData *)data).metadata;
     if ([metadata isKindOfClass:[NSDictionary class]]) {
         RICustomer *customerObject = [RICustomer parseCustomerWithJson:[metadata objectForKey:@"customer_entity"]];
-        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-        [trackingDictionary setValue:customerObject.customerId forKey:kRIEventLabelKey];
-        [trackingDictionary setValue:@"LoginSuccess" forKey:kRIEventActionKey];
-        [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
-        [trackingDictionary setValue:customerObject.customerId forKey:kRIEventUserIdKey];
-        [trackingDictionary setValue:customerObject.firstName forKey:kRIEventUserFirstNameKey];
-        [trackingDictionary setValue:customerObject.lastName forKey:kRIEventUserLastNameKey];
-        [trackingDictionary setValue:customerObject.birthday forKey:kRIEventBirthDayKey];
-        [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-        [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-        [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-        if(self.fromSideMenu) {
-            [trackingDictionary setValue:@"Side menu" forKey:kRIEventLocationKey];
-        } else {
-            [trackingDictionary setValue:@"My account" forKey:kRIEventLocationKey];
-        }
+//        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+//        [trackingDictionary setValue:customerObject.customerId forKey:kRIEventLabelKey];
+//        [trackingDictionary setValue:@"LoginSuccess" forKey:kRIEventActionKey];
+//        [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+//        [trackingDictionary setValue:customerObject.customerId forKey:kRIEventUserIdKey];
+//        [trackingDictionary setValue:customerObject.firstName forKey:kRIEventUserFirstNameKey];
+//        [trackingDictionary setValue:customerObject.lastName forKey:kRIEventUserLastNameKey];
+//        [trackingDictionary setValue:customerObject.birthday forKey:kRIEventBirthDayKey];
+//        [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+//        [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+//        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+//        [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+//        if(self.fromSideMenu) {
+//            [trackingDictionary setValue:@"Side menu" forKey:kRIEventLocationKey];
+//        } else {
+//            [trackingDictionary setValue:@"My account" forKey:kRIEventLocationKey];
+//        }
+//
+//        [trackingDictionary setValue:customerObject.gender forKey:kRIEventGenderKey];
+//        [trackingDictionary setValue:customerObject.createdAt forKey:kRIEventAccountDateKey];
+//
+//        if (customerObject.birthday) {
+//            NSDate* now = [NSDate date];
+//            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//            [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+//            NSDate *dateOfBirth = [dateFormatter dateFromString:customerObject.birthday];
+//            NSDateComponents* ageComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitYear fromDate:dateOfBirth toDate:now options:0];
+//            [trackingDictionary setValue:[NSNumber numberWithInteger:[ageComponents year]] forKey:kRIEventAgeKey];
+//        }
+//
+//        NSNumber *numberOfPurchases = [[NSUserDefaults standardUserDefaults] objectForKey:kRIEventAmountTransactions];
+//        [trackingDictionary setValue:numberOfPurchases forKey:kRIEventAmountTransactions];
+//
+//        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLoginSuccess]
+//                                                  data:[trackingDictionary copy]];
         
-        [trackingDictionary setValue:customerObject.gender forKey:kRIEventGenderKey];
-        [trackingDictionary setValue:customerObject.createdAt forKey:kRIEventAccountDateKey];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification object:customerObject.wishlistProducts];
         
-        if (customerObject.birthday) {
-            NSDate* now = [NSDate date];
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-            NSDate *dateOfBirth = [dateFormatter dateFromString:customerObject.birthday];
-            NSDateComponents* ageComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitYear fromDate:dateOfBirth toDate:now options:0];
-            [trackingDictionary setValue:[NSNumber numberWithInteger:[ageComponents year]] forKey:kRIEventAgeKey];
-        }
-        
-        NSNumber *numberOfPurchases = [[NSUserDefaults standardUserDefaults] objectForKey:kRIEventAmountTransactions];
-        [trackingDictionary setValue:numberOfPurchases forKey:kRIEventAmountTransactions];
-        
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLoginSuccess]
-                                                  data:[trackingDictionary copy]];
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
-                                                            object:customerObject.wishlistProducts];
-        
-        NSMutableDictionary *userInfo = [NSMutableDictionary new];
-        if (self.fromSideMenu) {
-            [userInfo setObject:@YES forKey:@"from_side_menu"];
-        }
     }
 }
 

@@ -89,6 +89,9 @@
             self.input.textField.keyboardType = UIKeyboardTypeDefault;
             self.input.textField.secureTextEntry = YES;
             break;
+        case InputTextFieldControlTypePhone:
+            self.input.textField.keyboardType = UIKeyboardTypePhonePad;
+            break;
         case InputTextFieldControlTypeNumerical:
             self.input.textField.keyboardType = UIKeyboardTypeNumberPad;
             break;
@@ -142,6 +145,11 @@
         //when we have only one option!
         if (model.selectOption.count == 1) {
             model.inputTextValue = model.selectOption.allKeys.firstObject;
+            self.input.textField.enabled = NO;
+            [self.input showDisabledMode];
+        }
+        //if we have no options for selection 
+        if (model.selectOption.count == 0) {
             self.input.textField.enabled = NO;
             [self.input showDisabledMode];
         }
@@ -228,7 +236,7 @@
 }
 
 - (void)textFieldEditingChanged:(UITextField *)textField {
-    if (self.type == InputTextFieldControlTypeNumerical) {
+    if (self.type == InputTextFieldControlTypeNumerical || self.type == InputTextFieldControlTypePhone) {
         textField.text = [textField.text numbersToPersian];
     }
 }
@@ -247,7 +255,9 @@
         titleView.textAlignment = NSTextAlignmentCenter;
         titleView.numberOfLines = 3;
     }
-    titleView.text = self.model.selectOption.allKeys[row];
+    if (row < self.model.selectOption.allKeys.count) {
+        titleView.text = self.model.selectOption.allKeys[row];
+    }
     return titleView;
 }
 

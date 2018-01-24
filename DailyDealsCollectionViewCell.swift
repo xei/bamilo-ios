@@ -34,20 +34,15 @@ class DailyDealsCollectionViewCell: BaseCollectionViewCellSwift {
     private static let labelSmallHeight: CGFloat = 14
     private static let labelBigHeight: CGFloat = 17
     private static let whiteSpaceHeigt: CGFloat = 10
-    
-    var product: Product!
+    private var product: Product!
     
     override func setupView() {
         self.contentView.layer.cornerRadius = 1
         self.contentView.clipsToBounds = true
         
-        self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowOpacity = 0.2
-        self.layer.shadowRadius = 1
-        self.layer.shadowOffset = CGSize(width:0 , height: 1)
+        self.applyShadow(position: CGSize(width:0 , height: 1), color: .black, opacity: 0.2)
         self.layer.borderWidth = 0
         self.clipsToBounds = false
-        
         
         self.titleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
         self.brandLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorSecondaryGray1))

@@ -36,7 +36,7 @@
     return nil;
 }
 
-- (FormValidationType *)checkValiditionOfString:(NSString *)inputString {
+- (FormValidationType *) checkValiditionOfString:(NSString *)inputString {
     
     NSUInteger lengthOfInputText = inputString.length;
     FormValidationType *validation = [[FormValidationType alloc] init];
@@ -66,7 +66,7 @@
         NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:self.regxPattern options:NSRegularExpressionCaseInsensitive error:&error];
         NSTextCheckingResult *match = [regex firstMatchInString:inputTextValue options:0 range:NSMakeRange(0, [inputTextValue length])];
         
-        if (!match) {
+        if (!match || (match && match.range.length != [inputTextValue length])) {
             validation.errorMsg = [self getErrorMsgOfType:FormItemValidationErrorRegx];
             validation.boolValue = NO;
             return validation;

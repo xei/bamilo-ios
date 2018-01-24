@@ -167,9 +167,9 @@
         self.campaign = campaign;
         
         
-        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-        [trackingDictionary setValue:self.campaign.name forKey:kRIEventCampaignKey];
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewCampaign] data:trackingDictionary];
+//        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+//        [trackingDictionary setValue:self.campaign.name forKey:kRIEventCampaignKey];
+//        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewCampaign] data:trackingDictionary];
         
         
         

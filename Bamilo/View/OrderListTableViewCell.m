@@ -40,6 +40,7 @@
 
 
 - (void)prepareForReuse {
+    [super prepareForReuse];
     self.priceLabel.text = nil;
     self.orderDateLabel.text = nil;
     self.orderNumLabel.text = nil;

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ErrorControlView" customModule="Bamilo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SkC-Vx-vfA">
+                    <rect key="frame" x="100" y="128" width="175" height="175"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="175" id="6eh-2d-jog"/>
+                        <constraint firstAttribute="width" secondItem="SkC-Vx-vfA" secondAttribute="height" multiplier="1:1" id="KtR-QL-Jjd"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qk6-hG-mhN">
+                    <rect key="frame" x="166.5" y="323" width="42" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="275" id="q8V-gO-dl4"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="adz-0D-oPE">
+                    <rect key="frame" x="177" y="417.5" width="20" height="20"/>
+                </activityIndicatorView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LD3-LA-nlZ" customClass="IconButton">
+                    <rect key="frame" x="50" y="405" width="275" height="45"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="275" id="3Mf-k2-fcP"/>
+                        <constraint firstAttribute="height" constant="45" id="u2z-dZ-KxM"/>
+                    </constraints>
+                    <state key="normal" title="Button" image="reload"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="imageHeightToButtonHeightRatio">
+                            <real key="value" value="0.59999999999999998"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="retryButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="ujr-Dl-3DN"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cTk-qG-053">
+                    <rect key="frame" x="164" y="470" width="46" height="30"/>
+                    <state key="normal" title="Button"/>
+                    <connections>
+                        <action selector="settingButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="l0l-5w-sU0"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d8T-7n-PMF">
+                    <rect key="frame" x="166.5" y="364" width="42" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="right" secondItem="SkC-Vx-vfA" secondAttribute="right" priority="999" constant="100" id="0TY-Br-kGt"/>
+                <constraint firstItem="Qk6-hG-mhN" firstAttribute="top" secondItem="SkC-Vx-vfA" secondAttribute="bottom" constant="20" id="5Z1-Mo-OOd"/>
+                <constraint firstItem="adz-0D-oPE" firstAttribute="centerY" secondItem="LD3-LA-nlZ" secondAttribute="centerY" id="5ki-fU-Ctx"/>
+                <constraint firstItem="Qk6-hG-mhN" firstAttribute="left" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="left" constant="50" id="7DC-AE-EPo"/>
+                <constraint firstItem="SkC-Vx-vfA" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="90t-GE-yKM"/>
+                <constraint firstItem="d8T-7n-PMF" firstAttribute="top" secondItem="Qk6-hG-mhN" secondAttribute="bottom" constant="20" id="9y4-1t-GMB"/>
+                <constraint firstItem="d8T-7n-PMF" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="F3x-KC-NTl"/>
+                <constraint firstItem="Qk6-hG-mhN" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Ok2-eD-3c5"/>
+                <constraint firstItem="cTk-qG-053" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="gcI-18-7WX"/>
+                <constraint firstAttribute="right" relation="greaterThanOrEqual" secondItem="Qk6-hG-mhN" secondAttribute="right" constant="50" id="hsb-0X-KO5"/>
+                <constraint firstItem="cTk-qG-053" firstAttribute="top" secondItem="LD3-LA-nlZ" secondAttribute="bottom" constant="20" id="iQR-ue-xHH"/>
+                <constraint firstItem="Qk6-hG-mhN" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="ipC-wd-KS1"/>
+                <constraint firstItem="LD3-LA-nlZ" firstAttribute="top" secondItem="d8T-7n-PMF" secondAttribute="bottom" constant="20" id="jsU-jk-Cik"/>
+                <constraint firstItem="LD3-LA-nlZ" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="q4s-jn-DOY"/>
+                <constraint firstItem="adz-0D-oPE" firstAttribute="centerX" secondItem="LD3-LA-nlZ" secondAttribute="centerX" id="tqi-TW-W4h"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="activityIndicator" destination="adz-0D-oPE" id="iow-hQ-VFs"/>
+                <outlet property="imageView" destination="SkC-Vx-vfA" id="XCT-cm-4Xy"/>
+                <outlet property="messageLabel" destination="Qk6-hG-mhN" id="UJo-ga-lrL"/>
+                <outlet property="retryButton" destination="LD3-LA-nlZ" id="nUg-Um-cYa"/>
+                <outlet property="settingButton" destination="cTk-qG-053" id="NEk-5c-JBR"/>
+                <outlet property="timerLabel" destination="d8T-7n-PMF" id="deG-OE-PfA"/>
+            </connections>
+            <point key="canvasLocation" x="-206" y="-110"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="reload" width="170" height="170"/>
+    </resources>
+</document>

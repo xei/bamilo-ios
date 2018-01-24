@@ -12,3 +12,4 @@
 @interface JARecentSearchesViewController : JABaseViewController
 
 @end
+

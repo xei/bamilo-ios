@@ -68,18 +68,32 @@ public typealias EventAttributeType = [String:Any]
         return attributes
     }
     
-    static func removeToWishList(product: RIProduct, screenName: String) -> EventAttributeType {
+    static func removeFromWishList(product: RIProduct, screenName: String) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventScreenName] = screenName
         attributes[kEventProduct] = product
         return attributes
     }
     
-    static func addToCard(product: RIProduct, screenName: String, success: Bool) -> EventAttributeType {
+    static func addToCart(product: RIProduct, screenName: String, success: Bool) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventScreenName] = screenName
         attributes[kEventSuccess] = success
         attributes[kEventProduct] = product
+        return attributes
+    }
+    
+    static func removeFromCard(product: RIProduct, success: Bool) -> EventAttributeType {
+        var attributes = self.getCommonAttributes()
+        attributes[kEventSuccess] = success
+        attributes[kEventProduct] = product
+        return attributes
+    }
+    
+    static func viewCart(cart: RICart, success: Bool) -> EventAttributeType {
+        var attributes = self.getCommonAttributes()
+        attributes[kEventCart] = success
+        attributes[kEventSuccess] = success
         return attributes
     }
     
@@ -108,6 +122,12 @@ public typealias EventAttributeType = [String:Any]
     static func viewProduct(parentViewScreenName: String, product: RIProduct) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventScreenName] = parentViewScreenName
+        attributes[kEventProduct] = product
+        return attributes
+    }
+    
+    static func rateProduct(product: RIProduct) -> EventAttributeType {
+        var attributes = self.getCommonAttributes()
         attributes[kEventProduct] = product
         return attributes
     }
@@ -168,4 +188,7 @@ public typealias EventAttributeType = [String:Any]
         return attributes
     }
     
+    static func callToOrderTapped() -> EventAttributeType {
+        return self.getCommonAttributes()
+    }
 }

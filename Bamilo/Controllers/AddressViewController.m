@@ -16,6 +16,7 @@
 
 @interface AddressViewController() <AddressTableViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *addressListContainerView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @end
 
 @implementation AddressViewController {
@@ -26,7 +27,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.activityIndicator.hidesWhenStopped = YES;
     _addressTableViewController = (AddressTableViewController *)[[ViewControllerManager sharedInstance] loadViewController:NSStringFromClass([AddressTableViewController class])];
     _addressTableViewController.titleHeaderText = nil;
     _addressTableViewController.options = (ADDRESS_CELL_EDIT | ADDRESS_CELL_DELETE /*| ADDRESS_CELL_SELECT*/);
@@ -36,7 +38,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self fetchAddressList];
+    [self fetchAddressList:nil];
 }
 
 #pragma mark - AddressTableViewControllerDelegate
@@ -66,12 +68,11 @@
 
 -(void)addressDeleteButtonTapped:(id)sender {
     _currentAddress = (Address *)sender;
-    
     [[AlertManager sharedInstance] confirmAlert:@"حذف آدرس" text:@"از حذف آدرس خود اطمینان دارید؟" confirm:@"بله" cancel:@"خیر" completion:^(BOOL OK) {
         if(OK) {
             [DataAggregator deleteAddressWithTarget:self address:_currentAddress completion:^(id data, NSError *error) {
                 if(error == nil) {
-                    [self fetchAddressList];
+                    [self fetchAddressList:nil];
                 } else {
                     if(![self showNotificationBar:error isSuccess:NO]) {
                         //do not what else should we do here
@@ -89,31 +90,34 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:@"showCreateEditAddress"]) {
-        UINavigationController *navController = (UINavigationController *)segue.destinationViewController;
-        AddressEditViewController *addressEditViewController = navController.viewControllers.firstObject;
-        if(_currentAddress) {
+        AddressEditViewController *addressEditViewController = (AddressEditViewController *)segue.destinationViewController;
+        if(_currentAddress) { 
             addressEditViewController.address = _currentAddress;
         }
     }
 }
 
 #pragma mark - Helpers
--(void) fetchAddressList {
+- (void)fetchAddressList:(void(^)(BOOL))callBack {
+    [self.activityIndicator startAnimating];
     [DataAggregator getUserAddressList:self completion:^(id _Nullable data, NSError * _Nullable error) {
+        [self.activityIndicator stopAnimating];
         if(error == nil && [data isKindOfClass:AddressList.class]) {
             [self bind:data forRequestId:0];
             [self publishScreenLoadTime];
-        } else if ([data isKindOfClass:ApiResponseData.class]) {
-            if (((ApiResponseData *)data).messages.errors.count == 0) {
-                
-            }
-            //TODO: we can show error messages
+            if (callBack) callBack(YES);
+        } else if (error) {
+            [self errorHandler:error forRequestID:0];
+            if (callBack) callBack(NO);
+        } else {
+            //Can go to creat new address
         }
     }];
 }
 
 #pragma mark - DataServiceProtocol
 - (void)bind:(id)data forRequestId:(int)rid {
+    [self removeErrorView];
     switch (rid) {
         case 0:
         case 1: {
@@ -126,6 +130,17 @@
         }
         break;
     }
+}
+- (void)errorHandler:(NSError *)error forRequestID:(int)rid {
+    if (![Utility handleErrorMessagesWithError:error viewController:self]) {
+        [self handleGenericErrorCodesWithErrorControlView:(int)error.code forRequestID:rid];
+    }
+}
+
+- (void)retryAction:(RetryHandler)callBack forRequestId:(int)rid {
+    [self fetchAddressList:^(BOOL success) {
+        callBack(success);
+    }];
 }
 
 #pragma mark - DataTrackerProtocol

@@ -9,5 +9,4 @@
 #import "FeatureBoxWidget.h"
 
 @interface FeatureBoxCollectionViewWidget : FeatureBoxWidget
-
 @end

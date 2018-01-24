@@ -28,6 +28,7 @@ class FailPaymentViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.hidesBottomBarWhenPushed = false
         self.tabBarController?.tabBar.isHidden = false;
     }
     

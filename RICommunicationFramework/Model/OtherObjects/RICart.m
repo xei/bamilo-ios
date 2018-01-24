@@ -30,8 +30,12 @@ static RICart *instance;
 - (NSArray<EMCartItem *> *)convertItems {
     NSMutableArray<EMCartItem *> *emCartItems = [[NSMutableArray alloc] init];
     for (RICartItem *item in self.cartEntity.cartItems) {
-        EMCartItem *wrapped = [[EMCartItem alloc] initWithItemID:item.sku price:item.price.floatValue quantity:item.quantity.intValue];
-        [emCartItems addObject:wrapped];
+        if ([item.sku isKindOfClass:[NSString class]] && item.sku.length
+            && [item.price isKindOfClass:[NSNumber class]]
+            && [item.quantity isKindOfClass:[NSNumber class]]) {
+            EMCartItem *wrapped = [[EMCartItem alloc] initWithItemID:item.sku price:item.price.floatValue quantity:item.quantity.intValue];
+            [emCartItems addObject:wrapped];
+        }
     }
     return emCartItems;
 }
@@ -215,8 +219,7 @@ static RICart *instance;
 
 + (NSString *)removeProductWithSku:(NSString *)sku
                   withSuccessBlock:(void (^)(RICart *cart))sucessBlock
-                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
-{
+                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock {
     NSMutableDictionary* parameters = [NSMutableDictionary new];
     if (VALID_NOTEMPTY(sku, NSString)) {
         [parameters setObject:sku forKey:@"sku"];
@@ -883,8 +886,9 @@ static RICart *instance;
     }
     
     NSDictionary *_estimatedDeliveryTime = [dict objectForKey:@"estimated_delivery_time"];
-    if (_estimatedDeliveryTime) {
-        [RICart sharedInstance].estimatedDeliveryTime = _estimatedDeliveryTime[@"delivery_message"];
+    NSString *deliveryMessage = [_estimatedDeliveryTime objectForKey:@"delivery_message"];
+    if (deliveryMessage && [deliveryMessage isKindOfClass:[NSString class]] && deliveryMessage.length) {
+        [RICart sharedInstance].estimatedDeliveryTime = deliveryMessage;
     }
     
     NSString *_deliveryNotice = [dict objectForKey:@"delivery_notice"];

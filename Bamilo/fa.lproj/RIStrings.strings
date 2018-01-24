@@ -446,11 +446,11 @@
 
 "promotion_tip_tap_text" = "کادر بالا را لمس نموده تا کد در حافظه ذخیره شده و در موقع لزوم از آن استفاده نمایید.";
 
-"string_try_again" = "دوباره امتحان کنید";
+"string_try_again" = "تلاش مجدد";
 
 "error_no_connection" = "ارتباط قطع است";
 
-"string_no_newtork" = "اتصال قطع شده است.";
+"string_no_newtork" = "دسترسی به اینترنت امکان پذیر نمی باشد";
 
 "internet_no_connection_details_label" = "مشکلی در ارتباط با اینترنت بوجود آمد. لطفا مجددا تلاش نمایید";
 
@@ -481,6 +481,10 @@
 "got_it" = "خُب";
 
 "ok_got_it" = "تایید";
+
+"yes" = "بله";
+
+"no" = "خیر";
 
 "home_tip_text" = "انگشت خود را به چپ و راست بکشید تا مجموعه کالاها را تغییر دهید";
 
@@ -688,7 +692,7 @@
 
 "favourites_no_saved_items" = "شما هیچ کالای ذخیره شده ای در علاقه مندی ها ندارید";
 
-"favourites_no_saved_items_description" = "شما کالای ذخیره شده ای ندارید";
+"favourites__saved_items_description" = "شما کالای ذخیره شده ای ندارید";
 
 "login_enter_your_password_to_continue" = "برای ادامه رمز عبور خود را وارد کنید.";
 
@@ -849,7 +853,9 @@
 
 "already_logged_in" = "شما قبلا وارد سیستم شده اید";
 
-"bamilo_recommendation" = "پیشنهادهای بامیلو برای شما";
+"bamilo_recommendations" = "پیشنهادات بامیلو";
+
+"bamilo_recommendation_for_you" = "پیشنهادهای بامیلو برای شما";
 
 "send_ideas_and_reports" = "ارسال مشکلات و ایده‌ها";
 
@@ -932,3 +938,27 @@
 "item_tracking_hint_1" = "می تونید از اینجا سفارشتون رو با جزئیات بیشتری پیگیری کنید";
 
 "item_tracking_hint_2" = "از این پس میتونید از وضعیت کالاهای سفارش خود مطلع شوید";
+
+"remove_favourties" = "حذف کالا";
+
+"remove_favourties_description" = "آیا از حذف کالا از لیست علاقه‌مندی‌ها اطمینان دارید؟";
+
+"server_error_message" = "خطایی از سمت سرورها رخ داده";
+
+"connection_to_server_error_message" = "خطا در برقراری ارتباط, مجدد تلاش کنید";
+
+"please_wait_message" = "لطفا کمی صبر کنید";
+
+"internet_setting" = "تنظیمات اینترنت";
+
+"is_calculating" = "در حال محاسبه ";
+
+"cancel_items_description" = "کالاهایی را که می خواهید لغو کنید، انتخاب نمایید";
+
+"order_cancellation_success_message" = "درخواست لغو شما با موفقیت ثبت شد. \n وضعیت سفارش شما به زودی بروزرسانی خواهد شد.";
+
+"please_select_at_least_one_case" = "لطفا حداقل یک مورد را انتخاب نمایید.";
+
+"not_cancelable_default_reason" = "این محصول امکان لغو ندارد";
+
+"submit_cancellation" = "ثبت درخواست لغو";

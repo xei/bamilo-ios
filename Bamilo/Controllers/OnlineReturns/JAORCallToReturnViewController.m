@@ -11,6 +11,7 @@
 #import "JAButton.h"
 #import "JAUtils.h"
 #import "RICustomer.h"
+#import "Bamilo-Swift.h"
 
 #define kLateralMargin 16.f
 
@@ -213,17 +214,17 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
 }
 
-- (void)trackingEventCallToReturn
-{
-    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-    [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-    [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-    
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCallToOrder]
-                                              data:[trackingDictionary copy]];
+- (void)trackingEventCallToReturn {
+    [TrackerManager postEventWithSelector:[EventSelectors callToOrderTappedSelector] attributes:[EventAttributes callToOrderTapped]];
+//    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+//    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+//    [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+//    [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+//    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+//    [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+//
+//    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCallToOrder]
+//                                              data:[trackingDictionary copy]];
 }
 
 #pragma mark - NavigationBarProtocol

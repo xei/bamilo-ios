@@ -25,9 +25,9 @@ class BaseCatallogCollectionViewCell: BaseCollectionViewCellSwift {
     @IBOutlet weak var rateCountLabel: UILabel?
     @IBOutlet weak var addToWishListButton: DOFavoriteButton?
     @IBOutlet weak var newTagView: UIView?
+    var product: Product?
     
     weak var delegate: BaseCatallogCollectionViewCellDelegate?
-    private var product: Product?
     
     
     var cellIndex: Int = 0 {
@@ -37,13 +37,19 @@ class BaseCatallogCollectionViewCell: BaseCollectionViewCellSwift {
     }
     
     override func setupView() {
+        
+        self.titleLabel?.applyStype(font: Theme.font(kFontVariationBold, size: 12), color: Theme.color(kColorGray1))
+        self.brandLabel?.applyStype(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorGray5))
+        self.discountedPriceLabel?.applyStype(font: Theme.font(kFontVariationBold, size: 13), color: Theme.color(kColorGray1))
+        self.priceLabel?.applyStype(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorGray5))
+        
         self.rateView?.enableButtons(enable: false)
         self.newTagView?.backgroundColor = Theme.color(kColorOrange)
-
         self.rateCountLabel?.textColor = Theme.color(kColorGray3)
-        self.brandLabel?.textColor = Theme.color(kColorGray3)
-        self.priceLabel?.textColor = Theme.color(kColorGray3)
         self.dicountPrecentageLabel?.textColor = Theme.color(kColorGray3)
+        
+        //apply shadow
+        self.applyShadow(position: CGSize(width:0 , height: 1), color: .black, opacity: 0.2)
     }
     
     @IBAction func addToWishListButtonTapped(_ sender: DOFavoriteButton) {
@@ -59,8 +65,8 @@ class BaseCatallogCollectionViewCell: BaseCollectionViewCellSwift {
     }
     
     func updateWithProduct(product: Product) {
-        titleLabel?.text = product.name
-        brandLabel?.text = product.brand
+        titleLabel?.text = product.name?.forceRTL()
+        brandLabel?.text = product.brand?.forceRTL()
         productImage?.kf.indicatorType = .activity
         productImage?.kf.setImage(with: product.imageUrl, options: [.transition(.fade(0.20))])
         if let specialPrice = product.specialPrice, let price = product.price, product.price != product.specialPrice {

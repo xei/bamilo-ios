@@ -25,7 +25,7 @@ class OrderItem: NSObject, Mappable {
     var packages: [OrderPackage]?
     var billingAddress: Address?
     var shippingAddress: Address?
-    
+    var cancellationInfo: OrderCancellationInfo?
     override init() {}
     required init?(map: Map) {}
     
@@ -41,6 +41,7 @@ class OrderItem: NSObject, Mappable {
         paymentMethod <- map["payment.method"]
         packages <- map["packages"]
         productionCount <- map["total_products_count"]
+        cancellationInfo <- map["cancellation"]
         
         //Mapping filters
         let json = JSON(map.JSON)
@@ -50,5 +51,5 @@ class OrderItem: NSObject, Mappable {
         
         shippingAddress = Address.init()
         try? shippingAddress?.merge(from: json["shipping_address"].dictionaryObject, useKeyMapping: true, error: ())
-    }
+     }
 }

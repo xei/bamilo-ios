@@ -30,9 +30,7 @@
         
         let GAID = (Bundle.main.object(forInfoDictionaryKey: "Configs") as? [String:Any])?["GoogleAnalyticsID"] as? String
         GAI.sharedInstance().tracker(withTrackingId: GAID)
-        
         GAI.sharedInstance().defaultTracker.set(kGAIAppVersion, value: AppManager.sharedInstance().getAppFullFormattedVersion() ?? "")
-        
         GAI.sharedInstance().defaultTracker.allowIDFACollection = true
     }
     
@@ -187,7 +185,7 @@
             let product = attributes[kEventProduct] as? RIProduct {
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: screenName,
-                action: "AddToCard",
+                action: "AddToCart",
                 label: product.sku,
                 value: product.price
             )
@@ -262,33 +260,27 @@
     
     func checkoutStart(attributes: EventAttributeType) {
         if let cart = attributes[kEventCart] as? RICart {
-            cart.cartEntity.cartItems.forEach({ (cartItem) in
-                if let cartItem = cartItem as? RICartItem {
-                    let params = GAIDictionaryBuilder.createEvent(
-                        withCategory: "Checkout",
-                        action: "CheckoutStart",
-                        label: cartItem.sku,
-                        value: cartItem.price
-                    )
-                    self.sendParamsToGA(params: params)
-                }
-            })
+            let combinedSkus = cart.cartEntity.cartItems.map { ($0 as? RICartItem)?.sku }.flatMap { $0 }.joined(separator: ",")
+            let params = GAIDictionaryBuilder.createEvent(
+                withCategory: "Checkout",
+                action: "CheckoutStart",
+                label: combinedSkus,
+                value: cart.cartEntity.cartValue
+            )
+            self.sendParamsToGA(params: params)
         }
     }
     
     func checkoutFinished(attributes: EventAttributeType) {
         if let cart = attributes[kEventCart] as? RICart {
-            cart.cartEntity.cartItems.forEach({ (cartItem) in
-                if let cartItem = cartItem as? RICartItem {
-                    let params = GAIDictionaryBuilder.createEvent(
-                        withCategory: "Checkout",
-                        action: "CheckoutFinish",
-                        label: cartItem.sku,
-                        value: cartItem.price
-                    )
-                    self.sendParamsToGA(params: params)
-                }
-            })
+            let combinedSkus = cart.cartEntity.cartItems.map { ($0 as? RICartItem)?.sku }.flatMap { $0 }.joined(separator: ",")
+            let params = GAIDictionaryBuilder.createEvent(
+                withCategory: "Checkout",
+                action: "CheckoutFinish",
+                label: combinedSkus,
+                value: cart.cartEntity.cartValue
+            )
+            self.sendParamsToGA(params: params)
         }
     }
 
@@ -297,7 +289,7 @@
             let label = attributes[kGAEventLabel] as? String {
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: category,
-                action: "purchase",
+                action: "Purchase",
                 label: label,
                 value: nil
             )
@@ -317,6 +309,10 @@
         }
     }
     
+    
+    func trackExecutionTime(refrence: String, interval: NSNumber) {
+        //TODO: track execution time 
+    }
     
     //MARK: - Helper functions
     private func sendParamsToGA(params: GAIDictionaryBuilder?) {

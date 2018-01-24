@@ -32,6 +32,8 @@ class HomePageViewController:   BaseViewController,
     private var refreshControl: UIRefreshControl?
     private var spotLightView: TourSpotLightView?
     private var tourHandler: TourPresentingHandler?
+    private var isRefreshing: Bool = false
+    private var errorView: ErrorControlView?
     
     private let cellTypeMapper: [HomePageTeaserType: String] = [
         .slider: HomePageSliderTableViewCell.nibName(),
@@ -57,6 +59,7 @@ class HomePageViewController:   BaseViewController,
         if let refreshControl = self.refreshControl {
             self.tableView.addSubview(refreshControl)
         }
+        self.tableView.alwaysBounceVertical = true
         
         //start tour if it's necessary
         TourManager.shared.onBoard(presenter: self)
@@ -69,8 +72,11 @@ class HomePageViewController:   BaseViewController,
     }
     
     func handleRefresh() {
-        self.getHomePage {
+        self.loadingIndicator.stopAnimating()
+        self.isRefreshing = true
+        self.getHomePage { success in
             self.refreshControl?.endRefreshing()
+            self.isRefreshing = false
         }
     }
     
@@ -83,40 +89,32 @@ class HomePageViewController:   BaseViewController,
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
         //To prevent refresh control to be visible (and it's gap) for the next time
-        self.refreshControl?.endRefreshing()
-        self.tableView.reloadData()
+        if self.isRefreshing {
+            self.refreshControl?.endRefreshing()
+            self.tableView.reloadData()
+        }
     }
     
-    private func getHomePage(callBack: (()->Void)? = nil) {
+    private func getHomePage(callBack: ((Bool)->Void)? = nil) {
         HomeDataManager.sharedInstance.getHomeData(self, requestType: .background) { (data, errors) in
             self.loadingIndicator.stopAnimating()
-            callBack?()
             if errors == nil {
+                callBack?(true)
                 self.tableView.backgroundView = nil
                 self.bind(data, forRequestId: 0)
             } else {
-                self.showErrorMessage()
+                callBack?(false)
+                self.emptyTheView()
+                self.errorHandler(errors, forRequestID: 0)
             }
         }
     }
     
-    private func showErrorMessage() {
+    private func emptyTheView() {
         self.homePage = nil
-        
-        // Display a message when the table is empty
-        let messageLabel = UILabel.init(frame: self.view.bounds)
-        messageLabel.text = STRING_ERROR_MESSAGE
-        messageLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 13), color: .black)
-        messageLabel.numberOfLines = 0
-        messageLabel.textAlignment = .center
-        messageLabel.sizeToFit()
-        
         ThreadManager.execute {
             self.tableView.reloadData()
-            self.tableView.backgroundView = messageLabel;
-            self.tableView.separatorStyle = .none;
         }
     }
     
@@ -125,8 +123,9 @@ class HomePageViewController:   BaseViewController,
         if let cellType = self.homePage?.teasers[indexPath.row].type {
             let cell = self.tableView.dequeueReusableCell(withIdentifier: cellType.rawValue, for: indexPath) as! BaseHomePageTeaserBoxTableViewCell
             cell.delegate = self
-            cell.update(withModel: self.homePage?.teasers[indexPath.row])
-            
+            if let teasers = self.homePage?.teasers, indexPath.row < teasers.count {
+                cell.update(withModel: teasers[indexPath.row])
+            }
             return cell
         }
         return UITableViewCell()
@@ -178,6 +177,7 @@ class HomePageViewController:   BaseViewController,
     //MARK: - DataServiceProtocol
     func bind(_ data: Any!, forRequestId rid: Int32) {
         if let homePage = data as? HomePage {
+            self.removeErrorView()
             self.homePage = homePage
             ThreadManager.execute(onMainThread: { 
                 self.tableView.reloadData()
@@ -188,6 +188,20 @@ class HomePageViewController:   BaseViewController,
                     self.runTimer(seconds: countDown)
                 }
             }
+        }
+    }
+    
+    func retryAction(_ callBack: RetryHandler!, forRequestId rid: Int32) {
+        if rid == 0 {
+            self.getHomePage(callBack: { (success) in
+                callBack(success)
+            })
+        }
+    }
+    
+    func errorHandler(_ error: Error!, forRequestID rid: Int32) {
+        if rid == 0 {
+            self.handleGenericErrorCodesWithErrorControlView(Int32(error.code), forRequestID: rid)
         }
     }
     

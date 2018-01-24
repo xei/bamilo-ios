@@ -11,15 +11,20 @@ import UIKit
 
 
 class OrderDetailTableViewController: AccordionTableViewController, OrderDetailTableViewCellDelegate {
-
+    
     var dataSource: OrderItem?
+    private lazy var heightAtIndexPath = [IndexPath: CGFloat]()
+    private lazy var headerHeightForSection = [Int: CGFloat]()
     weak var delegate: OrderDetailTableViewCellDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.shouldAnimateCellToggle = false
+        self.view.backgroundColor = .clear
+        self.tableView.backgroundColor = .clear
         
         self.tableView.register(UINib(nibName: OrderDetailTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: OrderDetailTableViewCell.nibName())
-        self.tableView.register(UINib(nibName: MutualTitleHeaderCell.nibName(), bundle: nil), forHeaderFooterViewReuseIdentifier: MutualTitleHeaderCell.nibName())
+        self.tableView.register(UINib(nibName: OrderDetailPackageHeaderTableViewHeader.nibName(), bundle: nil), forHeaderFooterViewReuseIdentifier: OrderDetailPackageHeaderTableViewHeader.nibName())
         self.tableView.register(UINib(nibName: OrderOwnerInfoTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: OrderOwnerInfoTableViewCell.nibName())
         self.tableView.register(UINib(nibName: OrderInfoTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: OrderInfoTableViewCell.nibName())
         self.tableView.register(UINib(nibName: OrderCMSMessageTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: OrderCMSMessageTableViewCell.nibName())
@@ -63,7 +68,9 @@ class OrderDetailTableViewController: AccordionTableViewController, OrderDetailT
         if let packagesCount = self.dataSource?.packages?.count, indexPath.section == packagesCount + 1 {
             //last cell & last section
             let cell = self.tableView.dequeueReusableCell(withIdentifier: OrderOwnerInfoTableViewCell.nibName(), for: indexPath) as! OrderOwnerInfoTableViewCell
-            cell.update(withModel: self.dataSource)
+            if let dataSource = self.dataSource {
+                cell.update(withModel: dataSource)
+            }
             
             //to remove seperator for this cell
             cell.separatorInset = UIEdgeInsetsMake(0, cell.bounds.size.width, 0, 0);
@@ -71,6 +78,11 @@ class OrderDetailTableViewController: AccordionTableViewController, OrderDetailT
         }
         let cell = self.tableView.dequeueReusableCell(withIdentifier: OrderDetailTableViewCell.nibName(), for: indexPath) as! OrderDetailTableViewCell
         cell.delegate = self
+        let product = self.dataSource?.packages?[indexPath.section - 1].products?[indexPath.row]
+        if let isCancellable = product?.isCancelable {
+            //if we have enough information for cancelling the product 
+            product?.isCancelable = isCancellable && self.orderHasCancellationInfo()
+        }
         cell.update(withModel: self.dataSource?.packages?[indexPath.section - 1].products?[indexPath.row])
         self.setExpandfor(cell: cell, indexPath: indexPath)
         
@@ -88,31 +100,54 @@ class OrderDetailTableViewController: AccordionTableViewController, OrderDetailT
         } else {
             return nil
         }
-        
-        let cell = self.tableView.dequeueReusableHeaderFooterView(withIdentifier: MutualTitleHeaderCell.nibName()) as! MutualTitleHeaderCell
-        cell.frame = CGRect(x: 0, y: 0, width: self.tableView.frame.width, height: 40)
-        cell.backgroundView = UIView(frame: cell.frame)
-        cell.backgroundView?.backgroundColor = Theme.color(kColorGray9)
-        
-        cell.leftTitleString = self.dataSource?.packages?[section - 1].deliveryTime
-        cell.titleString = self.dataSource?.packages?[section - 1].title?.convertTo(language: .arabic)
-        return cell
+        let header = self.tableView.dequeueReusableHeaderFooterView(withIdentifier: OrderDetailPackageHeaderTableViewHeader.nibName()) as! OrderDetailPackageHeaderTableViewHeader
+        header.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 42)
+        header.backgroundView = UIView(frame: header.frame)
+        header.backgroundView?.backgroundColor = Theme.color(kColorGray9)
+
+        header.leftTitleString = self.dataSource?.packages?[section - 1].deliveryTime
+        header.titleString = self.dataSource?.packages?[section - 1].title?.convertTo(language: .arabic)
+        if let hasDelay = self.dataSource?.packages?[section - 1].delay?.hasDelay, hasDelay {
+            header.update(deviationDescription: self.dataSource?.packages?[section - 1].delay?.reason)
+            header.leftTitleString = ""
+        } else {
+            header.update(deviationDescription: nil)
+        }
+        return header
     }
-    
+
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        headerHeightForSection[section] = view.frame.height
+    }
+
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if let packagesCount = self.dataSource?.packages?.count {
-            if section == 0 || section == packagesCount + 1 { return 0 }
+            return  (section == 0 || section == packagesCount + 1) ? 0 : self.headerHeightForSection[section] ?? UITableViewAutomaticDimension
         } else { return 0 }
-        
-        return 40
+    }
+
+    override func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+        if let packagesCount = self.dataSource?.packages?.count {
+            return (section == 0 || section == packagesCount + 1) ? 0 : 42
+        }
+        return 0
     }
     
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 300
+        return 400
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.heightAtIndexPath.removeValue(forKey: indexPath)
+        super.tableView(tableView, didSelectRowAt: indexPath)
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
+        return self.heightAtIndexPath[indexPath] ?? UITableViewAutomaticDimension
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        self.heightAtIndexPath[indexPath] = cell.frame.height
     }
     
     func bindOrder(order: OrderItem) {
@@ -131,4 +166,20 @@ class OrderDetailTableViewController: AccordionTableViewController, OrderDetailT
         self.delegate?.openRateViewWithSku(sku: sku)
     }
     
+    func cancelProduct(product: OrderProductItem) {
+        self.delegate?.cancelProduct(product: product)
+    }
+    
+    private var isCancellationInfoEnough: Bool?
+    private func orderHasCancellationInfo() -> Bool {
+        if let hasEnough = isCancellationInfoEnough {
+            return hasEnough
+        }
+        if let order = self.dataSource, let avaiableCancellationReasons = order.cancellationInfo?.reasons, avaiableCancellationReasons.count > 0 {
+            self.isCancellationInfoEnough = true
+            return true
+        }
+        self.isCancellationInfoEnough = false
+        return false
+    }
 }

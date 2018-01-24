@@ -36,18 +36,7 @@
 
 
 - (void)setNavigationBarConfigs {
-    self.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName: [Theme font:kFontVariationRegular size:13],
-                                               NSForegroundColorAttributeName: [UIColor whiteColor]};
-    //To remove navBar bottom border
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
-    self.navigationController.navigationBar.tintColor = [UIColor clearColor];
-     
-    //To set navigation bar background color
-    self.navigationController.navigationBar.barTintColor = [Theme color:kColorExtraDarkBlue];
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    
-    
+
     //custom back button to behave customly
     self.navigationItem.hidesBackButton = YES;
     UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"btn_back"] style:UIBarButtonItemStylePlain target:self action: self.comesFromEmptyList ? @selector(twoStepBackNavigation): @selector(backAction)];
@@ -55,15 +44,11 @@
 }
 
 - (void)backAction {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)twoStepBackNavigation {
-    CheckoutAddressViewController *parentViewController = (CheckoutAddressViewController *)[[MainTabBarViewController topNavigationController] topViewController];
-    parentViewController.viewIsDisappearing = YES;
-    [self dismissViewControllerAnimated:NO completion:^{
-        [[MainTabBarViewController topNavigationController] popViewControllerAnimated:YES];
-    }];
+    [self.navigationController popToRootViewControllerAnimated:YES]; //back to cart
 }
 
 - (void)setupView {
@@ -79,7 +64,7 @@
     FormHeaderModel *addressHeader = [[FormHeaderModel alloc] initWithHeaderTitle:STRING_ADDRESS];
     region = [[FormItemModel alloc] initWithTextValue: (self.address.uid) ? @"": @"تهران" fieldName: @"address_form[region]" andIcon: nil placeholder: @"استان" type: InputTextFieldControlTypeOptions validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil] selectOptions: nil];
     
-    city = [[FormItemModel alloc] initWithTextValue:nil fieldName: @"address_form[city]" andIcon:nil placeholder: @"شهر" type: InputTextFieldControlTypeOptions validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil] selectOptions:nil];
+    city = [[FormItemModel alloc] initWithTextValue:nil fieldName: @"address_form[city]" andIcon:nil placeholder: STRING_CITY type: InputTextFieldControlTypeOptions validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil] selectOptions:nil];
     
     vicinity = [[FormItemModel alloc] initWithTextValue: nil fieldName: @"address_form[postcode]" andIcon: nil placeholder: @"محله" type: InputTextFieldControlTypeOptions validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:nil] selectOptions: nil];
     vicinity.validation.isRequired = NO;
@@ -115,7 +100,7 @@
     [self.formController setupTableView];
     if (!self.address.uid) {
         // Get regions and citiies for region defualt value (if exists)
-        [self getRegionsByCompletion:^{
+        [self getRegionsByCompletion:^(BOOL success){
             if (region.inputTextValue) {
                 [self getCitiesForRegionId:[region getValue] completion: nil];
             }
@@ -139,13 +124,13 @@
     }
     //pop this view controller if user is not logged in
     if (![RICustomer checkIfUserIsLogged]) {
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+//        [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
     [self.formController unregisterForKeyboardNotifications];
 }
 
@@ -161,12 +146,18 @@
         params[@"address_form[id]"] = self.address.uid;
         [DataAggregator updateAddress:self params:params addressId:self.address.uid completion:^(id data, NSError *error) {
             if (error == nil) {
-                [self dismissViewControllerAnimated:YES completion:nil];
+                [self.navigationController popViewControllerAnimated:YES];
             } else {
                 if(![self showNotificationBar:error isSuccess:NO]) {
-                    for(NSDictionary* errorField in [error.userInfo objectForKey:@"errorMessages"]) {
+                    BOOL errorHandled = NO;
+                    for(NSDictionary* errorField in [error.userInfo objectForKey: kErrorMessages]) {
                         NSString *fieldName = [NSString stringWithFormat:@"address_form[%@]", errorField[@"field"]];
-                        [self.formController showErrorMessageForField:fieldName errorMsg:errorField[@"message"]];
+                        if ([self.formController showErrorMessageForField:fieldName errorMsg: errorField[kMessage]]) {
+                            errorHandled = YES;
+                        }
+                    }
+                    if (!errorHandled){
+                        [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
                     }
                 }
             }
@@ -176,12 +167,21 @@
         params[@"address_form[id]"] = @"";
         [DataAggregator addAddress:self params:params completion:^(id data, NSError *error) {
             if (error == nil) {
-                [self dismissViewControllerAnimated:YES completion:nil];
+                [self.navigationController popViewControllerAnimated:YES];
             } else {
                 if(![self showNotificationBar:error isSuccess:NO]) {
+                    BOOL errorHandled = NO;
                     for(NSDictionary* errorField in [error.userInfo objectForKey:kErrorMessages]) {
-                        NSString *fieldName = [NSString stringWithFormat:@"address_form[%@]", errorField[@"field"]];
-                        [self.formController showErrorMessageForField:fieldName errorMsg:errorField[kMessage]];
+                        NSString *fieldNameParam = [errorField objectForKey:@"field"];
+                        if ([fieldNameParam isKindOfClass:[NSString class]] && fieldNameParam.length > 0) {
+                            NSString *fieldName = [NSString stringWithFormat:@"address_form[%@]", fieldNameParam];
+                            if ([self.formController showErrorMessageForField:fieldName errorMsg: errorField[kMessage]]) {
+                                errorHandled = YES;
+                            }
+                        }
+                    }
+                    if (!errorHandled) {
+                        [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
                     }
                 }
             }
@@ -218,6 +218,19 @@
     }
 }
 
+- (void)retryAction:(RetryHandler)callBack forRequestId:(int)rid {
+    if (self.address.uid && rid == 3) {
+        [self getAddressByID:self.address.uid];
+        callBack(YES);
+    }
+}
+
+- (void)errorHandler:(NSError *)error forRequestID:(int)rid {
+    if (![Utility handleErrorMessagesWithError:error viewController:self]) {
+        [self handleGenericErrorCodesWithErrorControlView:(int)error.code forRequestID:rid];
+    }
+}
+
 #pragma ArgsReceiverProtocol
 -(void)updateWithArgs:(NSDictionary *)args {
     Address *address = [args objectForKey:kAddress];
@@ -232,6 +245,8 @@
         if (error == nil) {
             [self bind:data forRequestId:3];
             [self publishScreenLoadTime];
+        } else {
+            [self errorHandler:error forRequestID:3];
         }
     }];
 }
@@ -269,7 +284,7 @@
     }];
     
     [self.formController refreshView];
-    [self getRegionsByCompletion:^{
+    [self getRegionsByCompletion:^(BOOL success){
         if (addressFieldMapValues[@"address_form[region]"].length) {
             [self getCitiesForRegionId:[region getValue] completion:^{
                 if (addressFieldMapValues[@"address_form[city]"]) {
@@ -283,13 +298,16 @@
 
 
 
-- (void)getRegionsByCompletion:(void (^)(void))completion {
+- (void)getRegionsByCompletion:(void (^)(BOOL))completion {
     [DataAggregator getRegions:self completion:^(id data, NSError *error) {
-        if (!error)  {
-//            [ThreadManager executeOnMainThread:^{
-                [self bind:data forRequestId:0];
-                if(completion) completion();
-//            }];
+        if (!error) {
+            [self bind:data forRequestId:0];
+            if(completion) completion(YES);
+        } else {
+            if(completion) completion(NO);
+            if (![Utility handleErrorMessagesWithError:error viewController:self]) {
+                [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
+            }
         }
     }];
 }
@@ -299,6 +317,10 @@
         if (!error) {
             [self bind:data forRequestId:1];
             if (completion) completion();
+        } else {
+            if(![Utility handleErrorMessagesWithError:error viewController:self]) {
+                [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
+            }
         }
     }];
 }
@@ -308,6 +330,10 @@
         if (!error) {
             [self bind:data forRequestId:2];
             if (completion) completion();
+        } else {
+            if(![Utility handleErrorMessagesWithError:error viewController:self]) {
+                [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
+            }
         }
     }];
 }

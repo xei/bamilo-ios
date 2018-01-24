@@ -504,7 +504,7 @@
 #define STRING_SENT RILocalizedString(@"sent", nil)
 #define STRING_CANCELLED RILocalizedString(@"cancelled", nil)
 #define STRING_ALREADY_LOGGED_IN RILocalizedString(@"already_logged_in", nil)
-#define STRING_BAMILO_RECOMMENDATION RILocalizedString(@"bamilo_recommendation", nil)
+#define STRING_BAMILO_RECOMMENDATION_FOR_YOU RILocalizedString(@"bamilo_recommendation_for_you", nil)
 #define STRING_GENDER RILocalizedString(@"gender", nil)
 #define STRING_EMAIL_TO_CS RILocalizedString(@"send_email_to_CS", nil)
 #define STRING_ZERO_COST RILocalizedString(@"zero_cost", nil)
@@ -522,4 +522,5 @@
 #define STRING_CITY RILocalizedString(@"city", nil)
 #define STRING_NEIGHBOURHOOD RILocalizedString(@"neighbourhood", nil)
 #define STRING_ONLINE_PAYMENT_ERROR RILocalizedString(@"online_payment_error", nil)
+#define STRING_CONNECTION_SERVER_ERROR_MESSAGES RILocalizedString(@"connection_to_server_error_message", nil)
 #endif

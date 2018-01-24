@@ -6,7 +6,6 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import "CheckoutDataManager.h"
 #import "CheckoutAddressViewController.h"
 #import "CheckoutProgressViewButtonModel.h"
 #import "Bamilo-Swift.h"
@@ -17,6 +16,7 @@
 
 @interface CheckoutAddressViewController() <AddressTableViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *addressListContainerView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @end
 
 @implementation CheckoutAddressViewController {
@@ -28,6 +28,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.addressListContainerView.backgroundColor = [UIColor clearColor];
     _addressTableViewController = (AddressTableViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"AddressTableViewController"];
     _addressTableViewController.titleHeaderText = STRING_PLEASE_CHOOSE_YOUR_ADDRESS;
     _addressTableViewController.options = (ADDRESS_CELL_EDIT | ADDRESS_CELL_SELECT);
@@ -38,22 +39,31 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if (!self.viewIsDisappearing) {
-        [DataAggregator getMultistepAddressList:self completion:^(id data, NSError *error) {
-            if(error == nil) {
-                [self bind:data forRequestId:0];
-                [self setIsStepValid:_addresses.count];
-                if(self.cart.cartEntity.shippingAddress) {
-                    Address *_addressToSelect = [self getAddressById:self.cart.cartEntity.shippingAddress.uid];
-                    [self updateSelectedAddress:_addressToSelect];
-                }
-                [_addressTableViewController updateWithModel:_addresses];
-                [self publishScreenLoadTime];
-                [TrackerManager postEventWithSelector:[EventSelectors checkoutStartSelector] attributes:[EventAttributes checkoutStartWithCart:data]];
-            }
-        }];
+        [self getContent:nil];
     }
 }
 
+- (void)getContent:(void(^)(BOOL))callBack {
+    [self.activityIndicator startAnimating];
+    [DataAggregator getMultistepAddressList:self completion:^(id data, NSError *error) {
+        [self.activityIndicator stopAnimating];
+        if(error == nil) {
+            [self bind:data forRequestId:0];
+            [self setIsStepValid:_addresses.count];
+            if(self.cart.cartEntity.shippingAddress) {
+                Address *_addressToSelect = [self getAddressById:self.cart.cartEntity.shippingAddress.uid];
+                [self updateSelectedAddress:_addressToSelect];
+            }
+            [_addressTableViewController updateWithModel:_addresses];
+            [self publishScreenLoadTime];
+            [TrackerManager postEventWithSelector:[EventSelectors checkoutStartSelector] attributes:[EventAttributes checkoutStartWithCart:data]];
+            if (callBack) callBack(YES);
+        } else {
+            if (callBack) callBack(NO);
+            [self errorHandler:error forRequestID:0];
+        }
+    }];
+}
 #pragma mark - Overrides
 - (NSString *)getTitleForContinueButton {
     return STRING_CONTINUE_SHOPPING;
@@ -76,10 +86,16 @@
                             MultistepEntity *multistepEntity = (MultistepEntity *)data;
                             completion(multistepEntity.nextStep, YES);
                         } else {
-                            [self showNotificationBar:error isSuccess:NO];
+                            if (![Utility handleErrorMessagesWithError:error viewController:self]) {
+                                [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
+                            }
                             completion(nil, NO);
                         }
                     }];
+                } else {
+                    if (![Utility handleErrorMessagesWithError:error viewController:self]) {
+                        [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
+                    }
                 }
             }];
         } else {
@@ -134,6 +150,18 @@
     }
 }
 
+- (void)retryAction:(RetryHandler)callBack forRequestId:(int)rid {
+    [self getContent:^(BOOL success) {
+        callBack(success);
+    }];
+}
+
+- (void)errorHandler:(NSError *)error forRequestID:(int)rid {
+    if (![Utility handleErrorMessagesWithError:error viewController:self]) {
+        [self handleGenericErrorCodesWithErrorControlView:(int)error.code forRequestID:rid];
+    }
+}
+
 #pragma mark - DataTrackerProtocol
 -(NSString *)getScreenName {
     return @"CheckoutAddresses";
@@ -180,8 +208,8 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:@"showCreateEditAddress"]) {
-        UINavigationController *navigationViewController = (UINavigationController *)segue.destinationViewController;
-        AddressEditViewController *addressEditViewController = (AddressEditViewController *)navigationViewController.viewControllers.firstObject;
+//        UINavigationController *navigationViewController = (UINavigationController *)segue.destinationViewController;
+        AddressEditViewController *addressEditViewController = (AddressEditViewController *)segue.destinationViewController;
         if(sender) {
             addressEditViewController.address = sender;
         }

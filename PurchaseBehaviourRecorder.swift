@@ -22,7 +22,7 @@ import RealmSwift
     let realm = try! Realm()
     
     //tracking info is an string with `category:::label` template
-    func recordAddToCard(sku: String, trackingInfo: String) {
+    func recordAddToCart(sku: String, trackingInfo: String) {
         let trackInfoArray = trackingInfo.components(separatedBy: ":::")
         if trackInfoArray.count > 1 {
             

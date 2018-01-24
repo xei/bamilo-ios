@@ -12,11 +12,13 @@ import ObjectMapper
     
     var message: String? = nil
     var reason: String? = nil
+    var code: Int?
     
     required init?(map: Map) {}
     
     func mapping(map: Map) {
         message     <- map["message"]
         reason      <- map["reason"]
+        code        <- map["code"]
     }
 }

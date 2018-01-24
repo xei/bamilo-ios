@@ -14,6 +14,7 @@
 typedef NS_ENUM(NSUInteger, InputTextFieldControlType) {
     InputTextFieldControlTypePassword = 0,
     InputTextFieldControlTypeNumerical = 1,
+    InputTextFieldControlTypePhone = 2,
     InputTextFieldControlTypeEmail,
     InputTextFieldControlTypeString,
     InputTextFieldControlTypeOptions,

@@ -14,8 +14,7 @@
 #define kLeftSidePercentage 0.5f
 #define kBarWidth 85
 
-@interface JAProductReviewsView () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
-{
+@interface JAProductReviewsView () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout> {
     NSDictionary *_ratingsDictionary;
     NSInteger _currentPage;
 }

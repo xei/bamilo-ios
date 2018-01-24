@@ -20,12 +20,12 @@
 #import "ThemeManager.h"
 #import "LoadingManager.h"
 #import "AlertManager.h"
-#import "CartDataManager.h"
 #import "RICommunicationWrapper.h"
 #import "RIGoogleAnalyticsTracker.h"
 #import "AppManager.h"
 #import "DeviceStatusManager.h"
-
+#import "EmptyViewController.h"
+#import "OrangeButton.h"
 
 #import <Masonry/Masonry.h>
 #import <RGB/RRGB.h>
@@ -37,11 +37,11 @@
 #import "OrderList.h"
 #import "PerformanceTrackerProtocol.h"
 #import "DataTrackerProtocol.h"
-#import "AuthenticationDataManager.h"
 #import "EmarsysPredictProtocol.h"
 #import "EmarsysPredictManager.h"
-#import "RecommendItem.h"
 #import "InputTextFieldControl.h"
+#import "PushWooshTracker.h"
+#import "StepperViewControl.h"
 
 #import "BaseControlView.h"
 #import "BaseViewControl.h"
@@ -55,13 +55,11 @@
 #import "MutualTitleHeaderCell.h"
 #import "CatalogNoResultViewController.h"
 #import "JAFiltersViewController.h"
-#import "JACategoriesSideMenuViewController.h"
 #import "JAPDVViewController.h"
 #import "BaseTracker.h"
 #import "TagTrackerProtocol.h"
 
 #import "CartViewController.h"
-#import "JASavedListViewController.h"
 #import "JAHomeViewController.h"
 #import "MultistepEntity.h"
 #import "SuccessPaymentViewController.h"

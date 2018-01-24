@@ -21,7 +21,7 @@
 }
 
 + (NSString *)mobileRegxPattern {
-    return @"(0|\\+98)?([ ]|,|-|[()]){0,2}9([ ]|,|-|[()]){0,2}(?:[0-9]([ ]|,|-|[()]){0,2}){9}";
+    return @"^(((\\+|00)98)|0)?9[01239]\\d{8}$";
 }
 
 - (NSString *)wrapWithMaxSize:(int)maxSize {
@@ -53,20 +53,37 @@
 }
 
 - (NSString *)changeNumberToLocalId:(NSString *) identifier {
-    NSNumberFormatter *formatter = [NSNumberFormatter new];
     NSString *result = self;
-    for (NSInteger i = 0; i < 10; i++) {
-        NSString *occurance = @"";
+    for (NSInteger charIdx=0; charIdx<self.length; charIdx++) {
+        NSString *str = [NSString stringWithFormat: @"%C", [self characterAtIndex:charIdx]];
+        NSString * translatedCharater;
         if ([identifier isEqualToString:@"en_US"]) {
-            formatter.locale = [NSLocale localeWithLocaleIdentifier:@"ar"];
-            occurance = [formatter stringFromNumber: @(i)];
+            translatedCharater = [self convertToEnglish:str];
         } else {
-            occurance = @(i).stringValue;
+            translatedCharater = [self convertEnNumberToFarsi:[self convertToEnglish:str]];
         }
-        formatter.locale = [NSLocale localeWithLocaleIdentifier:identifier];
-        result = [result stringByReplacingOccurrencesOfString:occurance withString:[formatter stringFromNumber:@(i)]];
+        if ([translatedCharater length]) {
+            result = [result stringByReplacingOccurrencesOfString:str withString:translatedCharater];
+        }
     }
     return result;
+}
+
+- (NSString*)convertEnNumberToFarsi:(NSString*)number {
+    NSNumberFormatter *nf = [NSNumberFormatter new];
+    NSNumber *someNumber = [nf numberFromString:number];
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    NSLocale *gbLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"fa"];
+    [formatter setLocale:gbLocale];
+    return [formatter stringFromNumber:someNumber];
+}
+
+- (NSString*)convertToEnglish:(NSString*)input {
+    NSNumberFormatter *Formatter = [[NSNumberFormatter alloc] init];
+    NSLocale *locale = [NSLocale localeWithLocaleIdentifier:@"EN"];
+    [Formatter setLocale:locale];
+    NSNumber *newNum = [Formatter numberFromString:input];
+    return [newNum stringValue];
 }
 
 - (NSString *)getPriceStringFromFormatedPrice {

@@ -63,19 +63,25 @@
      cacheType:RIURLCacheNoCache
      cacheTime:RIURLCacheDefaultTime
      userAgentInjection:[RIApi getCountryUserAgentInjection] successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-         
+        
          NSError *error;
          ResponseData *data = [ResponseData new];
          [data mergeFromDictionary:jsonObject useKeyMapping:NO error:&error];
          
          if (data.success) {
-            completion(apiResponse, data, nil);
+             completion(apiResponse, data, nil);
          } else {
-            completion(apiResponse, nil, nil);
+             if (apiResponse == RIApiResponseAuthorizationError) {
+                 [self autoLoginWith:method path:path params:params type:type target:target completion:completion];
+             } else {
+                 completion(apiResponse, nil, nil);
+             }
          }
          
          switch (type) {
-            case RequestExecutionTypeForeground:
+             case RequestExecutionTypeContainer:
+             case RequestExecutionTypeForeground:
+                 
                  [LoadingManager hideLoading];
             break;
                  
@@ -83,16 +89,32 @@
          }
          
      } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
-        if(errorJsonObject && errorJsonObject.allKeys.count) {
-            completion(apiResponse, nil, [RIError getPerfectErrorMessages:errorJsonObject]);
-        } else if(errorObject) {
-            NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-            completion(apiResponse, nil, errorArray);
+         [LoadingManager hideLoading];
+         if (apiResponse == RIApiResponseAuthorizationError) {
+             [self autoLoginWith:method path:path params:params type:type target:target completion:completion];
+             return;
+         }
+         if(errorJsonObject && errorJsonObject.allKeys.count) {
+             completion(apiResponse, nil, [RIError getPerfectErrorMessages:errorJsonObject]);
+         } else if(errorObject) {
+             NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+             completion(apiResponse, nil, errorArray);
+         } else {
+             completion(apiResponse, nil, nil);
+         }
+    }];
+}
+
+- (void)autoLoginWith:(HttpVerb)method path:(NSString *)path params:(NSDictionary *)params type:(RequestExecutionType)type target:(id<DataServiceProtocol>)target completion:(RequestCompletion)completion {
+    [RICustomer autoLogin:^(BOOL success) {
+        if (success) {
+            [self asyncRequest:method path:path params:params type:type target:target completion:completion];
         } else {
-            completion(apiResponse, nil, nil);
+            [Utility resetUserBehaviours];
+            [[MainTabBarViewController topNavigationController] performProtectedBlock:^(BOOL userHadSession) {
+                [self asyncRequest:method path:path params:params type:type target:target completion:completion];
+            }];
         }
-        
-        [LoadingManager hideLoading];
     }];
 }
 

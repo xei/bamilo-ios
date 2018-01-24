@@ -11,7 +11,6 @@
 #import "JAChooseCountryViewController.h"
 #import "JAHomeViewController.h"
 #import "JALoadCountryViewController.h"
-#import "JASavedListViewController.h"
 #import "JARecentSearchesViewController.h"
 #import "JARecentlyViewedViewController.h"
 #import "JAUserDataViewController.h"
@@ -31,12 +30,10 @@
 #import "JAShopWebViewController.h"
 #import "JABundlesViewController.h"
 #import "JAPDVVariationsViewController.h"
-//#import "JAMoreMenuViewController.h"
 #import "RICountry.h"
 #import "JANewsletterViewController.h"
 #import "JANewsletterSubscriptionViewController.h"
 
-//#import "JASearchView.h"
 #import "JAActionWebViewController.h"
 
 #import "JAStepByStepTabViewController.h"
@@ -163,7 +160,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showSignUpScreen:) name:kShowSignUpScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showCheckoutExternalPaymentsScreen:) name:kShowCheckoutExternalPaymentsScreenNotification object:nil];
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showCheckoutThanksScreen:) name:kShowCheckoutThanksScreenNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectRecentSearch:) name:kSelectedRecentSearchNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectRecentSearch:) name:kSelectedRecentSearchNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectItemInMenu:) name:kMenuDidSelectOptionNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectLeafCategoryInMenu:) name:kMenuDidSelectLeafCategoryNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openCart:) name:kOpenCartNotification object:nil];
@@ -199,7 +196,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowSignUpScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowCheckoutExternalPaymentsScreenNotification object:nil];
 //    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowCheckoutThanksScreenNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kSelectedRecentSearchNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:kSelectedRecentSearchNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kMenuDidSelectOptionNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kMenuDidSelectLeafCategoryNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kOpenCartNotification object:nil];
@@ -237,7 +234,7 @@
         case PRODUCT_DETAIL: {
             JAPDVViewController *viewController = [JAPDVViewController new];
             viewController.purchaseTrackingInfo = purchaseInfo;
-            [self loadScreenTarget:screenTarget forBaseViewController:viewController];
+            viewController.targetString = screenTarget.target.targetString;
             viewController.hidesBottomBarWhenPushed = YES;
             [self pushViewController:viewController animated:screenTarget.pushAnimation];
             return YES;
@@ -350,12 +347,12 @@
         [self showEmailNotificaitons:nil];
     }
     
-    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
-    [trackingDictionary setValue:newScreenName forKey:kRIEventActionKey];
-    [trackingDictionary setValue:@"ActionOverflow" forKey:kRIEventCategoryKey];
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSideMenu]
-                                              data:[trackingDictionary copy]];
+//    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+//    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+//    [trackingDictionary setValue:newScreenName forKey:kRIEventActionKey];
+//    [trackingDictionary setValue:@"ActionOverflow" forKey:kRIEventCategoryKey];
+//    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSideMenu]
+//                                              data:[trackingDictionary copy]];
 }
 
 #pragma mark Favorites Screen
@@ -368,7 +365,7 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JARecentSearchesViewController class]]) {
         JARecentSearchesViewController *recentSearches = [[JARecentSearchesViewController alloc] initWithNibName:@"JARecentSearchesViewController" bundle:nil];
-        
+
         [self popToRootViewControllerAnimated:NO];
         [self pushViewController:recentSearches animated:NO];
     }
@@ -1018,16 +1015,16 @@
 
 #pragma mark - Recent Search
 
-- (void)didSelectRecentSearch:(NSNotification*)notification {
-    RISearchSuggestion *recentSearch = notification.object;
-    
-    if (recentSearch) {
-        CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
-        catalog.searchTarget = [RITarget getTarget:CATALOG_SEARCH node:recentSearch.item];
-        
-        [self pushViewController:catalog animated:YES];
-    }
-}
+//- (void)didSelectRecentSearch:(NSNotification*)notification {
+//    RISearchSuggestion *recentSearch = notification.object;
+//
+//    if (recentSearch) {
+//        CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+//        catalog.searchTarget = [RITarget getTarget:CATALOG_SEARCH node:recentSearch.item];
+//
+//        [self pushViewController:catalog animated:YES];
+//    }
+//}
 
 - (void)updateCart:(NSNotification*) notification {
     NSMutableDictionary* userInfo = nil;
@@ -1116,9 +1113,9 @@
 }
 
 //In existing navigation view controller force the user to login (no back button) e.g. in root of navigation view controllers
-- (void)requestForcedLogin {
+- (void)requestForcedLoginWithCompletion:(void (^)(void))completion {
     if (![RICustomer checkIfUserIsLogged]) {
-        [self pushAuthenticationViewController:nil byAniamtion:NO byForce:YES];
+        [self pushAuthenticationViewController:completion byAniamtion:NO byForce:YES];
     }
 }
 

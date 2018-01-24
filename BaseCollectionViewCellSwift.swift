@@ -19,6 +19,14 @@ class BaseCollectionViewCellSwift: UICollectionViewCell {
         return AppUtility.getStringFromClass(for: self)!
     }
     
+    static var nibInstance: UINib {
+        return UINib(nibName: self.nibName, bundle: nil)
+    }
+    
+    func update(withModel model: Any) {
+        //abstract function (must be overriden)
+    }
+    
     func setupView() {
         return
     }

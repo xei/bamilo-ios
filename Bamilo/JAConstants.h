@@ -16,6 +16,7 @@
 //#define kSelectedCountryNotification @"NOTIFICATION_SELECTED_COUNTRY"
 #define kUpdateCountryNotification @"NOTIFICATION_UPDATE_COUNTRY"
 #define kUpdateCartNotification @"NOTIFICATION_UPDATE_CART"
+#define kUpdateWishListNotification @"NOTIFICATION_WISHLIST_UPDATE"
 #define kUpdateCartNotificationValue @"NOTIFICATION_UPDATE_CART_VALUE"
 #define kUserLoggedInNotification @"NOTIFICATION_USER_LOGGED_IN"
 #define kUserLoggedOutNotification @"NOTIFICATION_USER_LOGGED_OUT"

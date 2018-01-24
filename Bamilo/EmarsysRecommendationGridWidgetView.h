@@ -8,6 +8,7 @@
 
 #import "FeatureBoxWidget.h"
 #import "FeatureBoxCollectionViewWidgetView.h"
+#import "Bamilo-Swift.h"
 
 @interface EmarsysRecommendationGridWidgetView: FeatureBoxCollectionViewWidgetView
 

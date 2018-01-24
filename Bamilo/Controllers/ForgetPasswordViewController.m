@@ -61,9 +61,18 @@
             [self bind:data forRequestId:0];
         } else {
             if(![self showNotificationBar:error isSuccess:NO]) {
+                BOOL errorHandled  = NO;
                 for(NSDictionary* errorField in [error.userInfo objectForKey:kErrorMessages]) {
-                    NSString *fieldName = [NSString stringWithFormat:@"forgot_password[%@]", errorField[@"field"]];
-                    [self.formController showErrorMessageForField:fieldName errorMsg:errorField[kMessage]];
+                    NSString *fileNameParam = [errorField objectForKey:@"field"];
+                    if ([fileNameParam isKindOfClass:[NSString class]] && fileNameParam.length) {
+                        NSString *fieldName = [NSString stringWithFormat:@"forgot_password[%@]", fileNameParam];
+                        if ([self.formController showErrorMessageForField:fieldName errorMsg:errorField[kMessage]]) {
+                            errorHandled = YES;
+                        }
+                    }
+                }
+                if (!errorHandled) {
+                    [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
                 }
             }
         }
@@ -73,7 +82,6 @@
 #pragma mark - DataServiceProtocol
 - (void)bind:(id)data forRequestId:(int)rid {
     [self showNotificationBarMessage:STRING_EMAIL_SENT isSuccess:YES];
-//    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - DataTrackerProtocol

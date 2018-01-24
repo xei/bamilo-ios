@@ -40,7 +40,7 @@
             successBlock:(void (^)(BOOL knownEmail, RICustomer *customerAlreadyLoggedIn))successBlock
          andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock;
 
-+ (NSString*)autoLogin:(void (^)(BOOL success, NSDictionary *entities, NSString *loginMethod))returnBlock;
++ (NSString*)autoLogin:(void (^)(BOOL success))returnBlock;
 
 /**
  * Method to login user via facebook

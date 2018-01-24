@@ -22,7 +22,7 @@ class IconTableViewCell: BaseTableViewCell {
     
     private func setupView() {
         self.titleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray3))
-        self.cellImageView.image = UIImage(named: "placeholder_list")
+        self.cellImageView.image = #imageLiteral(resourceName: "placeholder_list")
     }
     
     override static func nibName() -> String {
@@ -30,7 +30,7 @@ class IconTableViewCell: BaseTableViewCell {
     }
     
     override func prepareForReuse() {
-        self.cellImageView.image = UIImage(named: "placeholder_list")
+        self.cellImageView.image = #imageLiteral(resourceName: "placeholder_list")
         self.titleLabel.text = nil
     }
 }

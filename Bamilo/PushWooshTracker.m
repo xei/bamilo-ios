@@ -26,7 +26,7 @@ static PushWooshTracker *instance;
     return instance;
 }
 
--(void)setUserID:(NSString *)userId {
++ (void)setUserID:(NSString *)userId {
     [[PWInAppManager sharedManager] setUserId:userId];
 }
 
@@ -43,8 +43,6 @@ static PushWooshTracker *instance;
     if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
         //App already open
     } else {
-        //App opened from Notification
-        [[RITrackingWrapper sharedInstance] applicationDidReceiveRemoteNotification:pushNotification];
         //EVENT: OPEN APP
         [TrackerManager postEventWithSelector:[EventSelectors openAppSelector] attributes:[EventAttributes openAppWithSource:OpenAppEventSourceTypePushNotification]];
     }

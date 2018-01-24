@@ -16,4 +16,8 @@ struct NotificationKeys {
     static let UpdateCart = "NOTIFICATION_UPDATE_CART"
     static let ShowAthenticationScreen = "NOTIFICATION_SHOW_AUTHENTICATION_SCREEN"
     static let SelectTeaserWithShopURL = "NOTIFICATION_DID_SELECT_TEASER_WITH_SHOP_URL"
+    static let WishListUpdate = "NOTIFICATION_WISHLIST_UPDATE"
+    static let NotificationCart = "NOTIFICATION_UPDATE_CART_VALUE"
+    static let NotificationProduct = "NOTIFICATION_UPDATE_PRODUCT_VALUE"
+    static let NotificationBool = "NOTIFICATION_UPDATE_BOOL_VALUE"
 }

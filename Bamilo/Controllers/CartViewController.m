@@ -7,7 +7,6 @@
 //
 
 #import "CartViewController.h"
-#import "CartDataManager.h"
 #import "JAEmptyCartView.h"
 #import "RICustomer.h"
 #import "JAUtils.h"
@@ -40,13 +39,14 @@
 @property (weak, nonatomic) IBOutlet OrangeButton *submitButton;
 @property (weak, nonatomic) EmptyViewController *emptyCartViewController;
 @property (weak, nonatomic) IBOutlet UIView *emptyCartViewContainer;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @end
 
 @implementation CartViewController
 
 - (void)setCart:(RICart *)cart {
     _cart = cart;
-    
+    if (!_cart) return;
     if (cart.cartEntity.cartItems.count) {
         [self setCartEmpty:NO];
     } else {
@@ -67,7 +67,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view setBackgroundColor:[Theme color:kColorVeryLightGray]];
-    [self.tableView setBackgroundColor:[Theme color:kColorVeryLightGray]];
+    [self.contentWrapper setBackgroundColor:[UIColor clearColor]];
+    [self.tableView setBackgroundColor:[UIColor clearColor]];
     
     //TableView registerations
     self.tableView.delegate = self;
@@ -84,30 +85,10 @@
 }
 
 - (void)goToHomeScreen {
-    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
-    [trackingDictionary setValue:@"ContinueShopping" forKey:kRIEventActionKey];
-    [trackingDictionary setValue:@"Checkout" forKey:kRIEventCategoryKey];
-    
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutContinueShopping] data:[trackingDictionary copy]];
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
 }
 
 - (IBAction)proceedToCheckout:(id)sender {
-    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
-    [trackingDictionary setValue:@"Started" forKey:kRIEventActionKey];
-    [trackingDictionary setValue:@"Checkout" forKey:kRIEventCategoryKey];
-    [trackingDictionary setValue:[NSNumber numberWithInteger:[[self.cart.cartEntity cartItems] count]] forKey:kRIEventQuantityKey];
-    [trackingDictionary setValue:[self.cart.cartEntity cartValueEuroConverted] forKey:kRIEventTotalCartKey];
-    NSMutableString* attributeSetID = [NSMutableString new];
-    for (RICartItem* pd in [self.cart.cartEntity cartItems]) {
-        [attributeSetID appendFormat:@"%@;",[pd attributeSetID]];
-    }
-    [trackingDictionary setValue:[attributeSetID copy] forKey:kRIEventAttributeSetIDCartKey];
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutStart] data:[trackingDictionary copy]];
-    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"CheckoutAddress"];
-    
     [[MainTabBarViewController topNavigationController] requestNavigateToNib:@"CheckoutAddressViewController" ofStoryboard:@"Checkout" useCache:NO args:nil];
 }
 
@@ -118,35 +99,10 @@
         //remove the existing purchase behaviour with sku
         [[PurchaseBehaviourRecorder sharedInstance] deleteBehaviourWithSku:cartItem.sku];
         
-//        NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
-//        [skusFromTeaserInCart removeObjectForKey:cartItem.sku];
-//        [[NSUserDefaults standardUserDefaults] setObject:[skusFromTeaserInCart copy] forKey:kSkusFromTeaserInCartKey];
-        
-        
-        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-        [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-        [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-        [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-        [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-        
-        // Since we're sending the converted price, we have to send the currency as EUR.
-        // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
-        NSNumber *price = (VALID_NOTEMPTY(cartItem.specialPriceEuroConverted, NSNumber) && [cartItem.specialPriceEuroConverted floatValue] > 0.0f) ? cartItem.specialPriceEuroConverted : cartItem.priceEuroConverted;
-        [trackingDictionary setValue:price forKey:kRIEventPriceKey];
-        [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
-        
-        [trackingDictionary setValue:cartItem.sku forKey:kRIEventSkuKey];
-        [trackingDictionary setValue:[cart.cartEntity.cartCount stringValue] forKey:kRIEventQuantityKey];
-        [trackingDictionary setValue:cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
-        
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromCart]
-                                                  data:[trackingDictionary copy]];
-        
-        NSMutableDictionary *tracking = [NSMutableDictionary new];
-        [tracking setValue:cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
-        [tracking setValue:cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart] data:[tracking copy]];
+        RIProduct *product = [RIProduct new];
+        product.price = cartItem.price;
+        product.sku = cartItem.sku;
+        [TrackerManager postEventWithSelector:[EventSelectors removeFromCartEventSelector] attributes:[EventAttributes removeFromCardWithProduct:product success:YES]];
         
         NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
         [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
@@ -158,6 +114,9 @@
         
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
         [LoadingManager hideLoading];
+        if (![Utility handleErrorMessagesWithError:errorMessages viewController:self]) {
+            [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
+        }
     }];
 }
 
@@ -170,7 +129,9 @@
         return receiptView;
     }
     CartTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:[CartTableViewCell nibName] forIndexPath:indexPath];
-    cell.cartItem = self.cart.cartEntity.cartItems[indexPath.row];
+    if (indexPath.row < self.cart.cartEntity.cartItems.count) {
+        cell.cartItem = self.cart.cartEntity.cartItems[indexPath.row];
+    }
     cell.delegate = self;
     return cell;
 }
@@ -216,11 +177,6 @@
 
 - (void)quantityHasBeenChangedTo:(int)newValue withNewCart:(RICart *)cart withCell:(id)cartCell {
     [LoadingManager hideLoading];
-    
-    NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
-    [trackingDictionary setValue:cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
-    [trackingDictionary setValue:cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart] data:[trackingDictionary copy]];
     NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
     [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
     
@@ -263,11 +219,22 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+    [self getContent:nil];
+}
+
+- (void)getContent:(void(^)(BOOL))callBack {
+    [self clearContent];
+    [self.activityIndicator startAnimating];
     [DataAggregator getUserCart:self completion:^(id data, NSError *error) {
-        if(error == nil) {
-            [self bind:data forRequestId:0];
+        [self.activityIndicator stopAnimating];
+        if(error != nil) {
+            [Utility handleErrorMessagesWithError:error viewController:self];
+            [self errorHandler:error forRequestID:0];
+            if (callBack) callBack(NO);
+            return;
         }
+        [self bind:data forRequestId:0];
+        if (callBack) callBack(YES);
     }];
 }
 
@@ -276,19 +243,45 @@
     [self publishScreenLoadTime];
 }
 
+- (void) clearContent {
+    self.cart = nil;
+    [self.submitButton setHidden:YES];
+    [self.summeryView setHidden:YES];
+    [self.cartSummeryView setHidden:YES];
+    [self.emptyCartViewContainer setHidden:YES];
+    [self.tableView reloadData];
+}
+
 #pragma mark - DataServiceProtocol
 - (void)bind:(id)data forRequestId:(int)rid {
-    RICart *cart = (RICart *)data;
-    self.cart = cart;
-    [self.tableView reloadData];
-    [self checkIfSummeryViewsMustBeVisibleOrNot];
-    
-    //When cart is ready & not empty
-    if (cart.cartEntity.cartCount.integerValue) {
-        [EmarsysPredictManager sendTransactionsOf:self];
+    if (rid == 0 && [data isKindOfClass:[RICart class]]) {
+        [self.submitButton setHidden:NO];
+        [self.summeryView setHidden:NO];
+        [self.cartSummeryView setHidden:NO];
+        
+        self.cart = (RICart *)data;
+        [self.tableView reloadData];
+        [self checkIfSummeryViewsMustBeVisibleOrNot];
+
+        //When cart is ready & not empty
+        if (self.cart.cartEntity.cartCount.integerValue) {
+            [EmarsysPredictManager sendTransactionsOf:self];
+            [TrackerManager postEventWithSelector:[EventSelectors viewCartEventSelector] attributes:[EventAttributes viewCartWithCart:self.cart success:YES]];
+        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo: @{kUpdateCartNotificationValue: self.cart}];
     }
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo: @{kUpdateCartNotificationValue: cart}];
+}
+
+- (void)errorHandler:(NSError *)error forRequestID:(int)rid {
+    if (![Utility handleErrorMessagesWithError:error viewController:self]) {
+        [self handleGenericErrorCodesWithErrorControlView:(int)error.code forRequestID:rid];
+    }
+}
+
+- (void)retryAction:(RetryHandler)callBack forRequestId:(int)rid {
+    [self getContent:^(BOOL success) {
+        callBack(success);
+    }];
 }
 
 - (NSString *)getPerformanceTrackerLabel {

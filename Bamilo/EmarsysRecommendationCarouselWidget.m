@@ -7,18 +7,16 @@
 //
 
 #import "EmarsysRecommendationCarouselWidget.h"
+#import "Bamilo-Swift.h"
 
 @interface EmarsysRecommendationCarouselWidget()
-    
 @property (nonatomic, strong) EmarsysRecommendationCarouselView *carouselView;
-
 @end
 
 @implementation EmarsysRecommendationCarouselWidget
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    
     self.backgroundColor = [UIColor whiteColor];
     self.carouselView = [EmarsysRecommendationCarouselView nibInstance];
     if(self.carouselView) {

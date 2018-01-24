@@ -72,13 +72,13 @@ UITableViewDelegate
 {
     [super viewDidLoad];
 
-    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
-    [trackingDictionary setValue:@"CheckoutShippingMethods" forKey:kRIEventActionKey];
-    [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
-    
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutShipping]
-                                              data:[trackingDictionary copy]];
+//    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+//    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+//    [trackingDictionary setValue:@"CheckoutShippingMethods" forKey:kRIEventActionKey];
+//    [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
+//
+//    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutShipping]
+//                                              data:[trackingDictionary copy]];
     
     self.title = STRING_CHECKOUT;
 //    self.navBarLayout.showBackButton = YES;
@@ -109,7 +109,7 @@ UITableViewDelegate
 {
     [super viewDidAppear:animate];
     
-    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"CheckoutShipping"];
+//    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"CheckoutShipping"];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration

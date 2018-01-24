@@ -26,7 +26,7 @@
 }
 
 - (NSString *)getValue {
-    if (self.type == InputTextFieldControlTypeNumerical) {
+    if (self.type == InputTextFieldControlTypeNumerical || self.type == InputTextFieldControlTypePhone) {
         return [self.inputTextValue numbersToEnglish];
     } else if (self.type == InputTextFieldControlTypeOptions) {
         return self.selectOption[self.inputTextValue];
@@ -39,7 +39,7 @@
 }
 
 - (void)setValue:(NSString *)value {
-    if (self.type == InputTextFieldControlTypeNumerical) {
+    if (self.type == InputTextFieldControlTypeNumerical || self.type == InputTextFieldControlTypePhone) {
         self.inputTextValue = [value numbersToPersian];
     } else if (self.type == InputTextFieldControlTypeOptions) {
          self.inputTextValue = [[self.selectOption allKeysForObject:value] lastObject];
@@ -76,7 +76,7 @@
                                       fieldName: fieldName
                                         andIcon: nil
                                     placeholder: STRING_CELLPHONE
-                                           type: InputTextFieldControlTypeNumerical
+                                           type: InputTextFieldControlTypePhone
                                      validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:[NSString mobileRegxPattern]]
                                   selectOptions: nil];
 }

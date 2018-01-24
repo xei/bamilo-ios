@@ -9,17 +9,40 @@
 import UIKit
 import ObjectMapper
 
+class Categories: Mappable {
+    var tree: [CategoryProduct]?
+    required init?(map: Map) {
+    }
+    func mapping(map: Map) {
+        tree <- map["data"]
+    }
+}
+
 class CategoryProduct : NSObject, Mappable {
     
-    var urlKey  : String?
-    var name    : String?
+    var urlKey : String?
+    var target: String?
+    var name : String?
+    var image: URL?
+    var id: String?
+    var coverImage: URL?
+    var childern :[CategoryProduct]?
     
     required init?(map: Map) {
-        
     }
     
     func mapping(map: Map) {
+        var parsedName: String?
+        var parsedLabel: String?
+        parsedName   <- map["name"]
+        parsedLabel  <- map["label"]
+        
+        name = parsedName ?? parsedLabel
         urlKey <- map["url_key"]
-        name   <- map["name"]
+        image <- (map["image"], URLTransform())
+        coverImage <- (map["cover_image"], URLTransform())
+        id <- map["id"]
+        target <- map["target"]
+        childern <- map["children"]
     }
 }
