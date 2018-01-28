@@ -116,6 +116,7 @@
 		616058E61E6AD8D50079B2CD /* SearchFilterItemOption.m in Sources */ = {isa = PBXBuildFile; fileRef = 616058E51E6AD8D50079B2CD /* SearchFilterItemOption.m */; };
 		616058E91E6AE2030079B2CD /* SearchFilterItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 616058E81E6AE2030079B2CD /* SearchFilterItem.m */; };
 		61626BF51F111818008F2463 /* EmarsysBaseTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 61626BF41F111818008F2463 /* EmarsysBaseTracker.m */; };
+		6164F54D201762910009ED19 /* PhoneVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6164F54C201762910009ED19 /* PhoneVerificationViewController.swift */; };
 		6167C1AE1F431578009293B2 /* JANoConnectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6167C1AD1F431578009293B2 /* JANoConnectionView.xib */; };
 		616F7D121F6D172100085B64 /* IconTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616F7D101F6D172100085B64 /* IconTableViewCell.swift */; };
 		616F7D131F6D172100085B64 /* IconTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 616F7D111F6D172100085B64 /* IconTableViewCell.xib */; };
@@ -288,6 +289,7 @@
 		61FB25121F791C980002CD87 /* Ext+UISCrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FB25111F791C980002CD87 /* Ext+UISCrollView.swift */; };
 		61FB2FDD1FA8CB92005FE3F6 /* OrderCMSMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FB2FDB1FA8CB92005FE3F6 /* OrderCMSMessageTableViewCell.swift */; };
 		61FB2FDE1FA8CB92005FE3F6 /* OrderCMSMessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61FB2FDC1FA8CB92005FE3F6 /* OrderCMSMessageTableViewCell.xib */; };
+		61FC466E201DBBC9000141FA /* Ext+UINavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC466D201DBBC9000141FA /* Ext+UINavigationViewController.swift */; };
 		61FCF0821FD69DF900084872 /* Ext+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FCF0811FD69DF900084872 /* Ext+Error.swift */; };
 		61FDE3331F72705D00153A74 /* BaseHomePageTeaserBoxTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FDE3321F72705D00153A74 /* BaseHomePageTeaserBoxTableViewCell.swift */; };
 		61FE97D51EC9BB7700DF233D /* GridCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FE97D41EC9BB7600DF233D /* GridCollectionViewFlowLayout.swift */; };
@@ -1150,6 +1152,7 @@
 		616058E81E6AE2030079B2CD /* SearchFilterItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchFilterItem.m; sourceTree = "<group>"; };
 		61626BF31F111818008F2463 /* EmarsysBaseTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysBaseTracker.h; sourceTree = "<group>"; };
 		61626BF41F111818008F2463 /* EmarsysBaseTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysBaseTracker.m; sourceTree = "<group>"; };
+		6164F54C201762910009ED19 /* PhoneVerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneVerificationViewController.swift; sourceTree = "<group>"; };
 		6167C1AD1F431578009293B2 /* JANoConnectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JANoConnectionView.xib; sourceTree = "<group>"; };
 		616F7D101F6D172100085B64 /* IconTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconTableViewCell.swift; sourceTree = "<group>"; };
 		616F7D111F6D172100085B64 /* IconTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IconTableViewCell.xib; sourceTree = "<group>"; };
@@ -1363,6 +1366,7 @@
 		61FB25111F791C980002CD87 /* Ext+UISCrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UISCrollView.swift"; sourceTree = "<group>"; };
 		61FB2FDB1FA8CB92005FE3F6 /* OrderCMSMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCMSMessageTableViewCell.swift; sourceTree = "<group>"; };
 		61FB2FDC1FA8CB92005FE3F6 /* OrderCMSMessageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderCMSMessageTableViewCell.xib; sourceTree = "<group>"; };
+		61FC466D201DBBC9000141FA /* Ext+UINavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UINavigationViewController.swift"; sourceTree = "<group>"; };
 		61FCF0811FD69DF900084872 /* Ext+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+Error.swift"; sourceTree = "<group>"; };
 		61FDE3321F72705D00153A74 /* BaseHomePageTeaserBoxTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseHomePageTeaserBoxTableViewCell.swift; sourceTree = "<group>"; };
 		61FE97D41EC9BB7600DF233D /* GridCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
@@ -3203,6 +3207,7 @@
 				61B402621FC02A2100E57EF4 /* WishListViewController.swift */,
 				617D4EEE1FEA65CC00A00799 /* RootCategoryViewController.swift */,
 				617D4EF01FEA661400A00799 /* SubCategoryLandingPageViewController.swift */,
+				6164F54C201762910009ED19 /* PhoneVerificationViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -4209,6 +4214,7 @@
 				61FCF0811FD69DF900084872 /* Ext+Error.swift */,
 				6119576C2003C0A600B7B9D8 /* Ext+Dictionary.swift */,
 				61540C812006482300D2F03F /* Ext+Array.swift */,
+				61FC466D201DBBC9000141FA /* Ext+UINavigationViewController.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -8351,6 +8357,7 @@
 				87C69DAE1E38B7A50026018F /* UIColor+Format.m in Sources */,
 				87D3DD271E8A962C00C960FF /* EmarsysRequestManager.m in Sources */,
 				875AD5781E38C0C900584ABF /* RISpecificationAttribute.m in Sources */,
+				6164F54D201762910009ED19 /* PhoneVerificationViewController.swift in Sources */,
 				61E8441B1F0D16AE005D79EE /* ScreentTrackerProtocol.swift in Sources */,
 				61E0996C1E3E117F004ED14E /* BaseTableViewCell.m in Sources */,
 				9A38765D1BCD0DE00088B186 /* JAProductSpecificationView.m in Sources */,
@@ -8362,6 +8369,7 @@
 				CE9ADF361AB6D78200D56481 /* JAGradientLayer.m in Sources */,
 				617585F21F88D96700D66541 /* CarouselCollectionFlowLayout.swift in Sources */,
 				CEA2A1B71B25D20C00E5973F /* JADynamicField.m in Sources */,
+				61FC466E201DBBC9000141FA /* Ext+UINavigationViewController.swift in Sources */,
 				FF44651B1CEB4FD7003A65EA /* JAORProductView.m in Sources */,
 				875AD5741E38C0C900584ABF /* RIShippingMethodForm.m in Sources */,
 				CE9ADF371AB6D78200D56481 /* JAPDVSingleRelatedItem.m in Sources */,

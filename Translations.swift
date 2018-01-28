@@ -101,4 +101,5 @@ let ORDER_CANCELLATION_SUCCESS_MESSAGES = RILocalizationWrapper.localizedString(
 let PLEASE_SELECT_AT_LEAST_ONE_CASE = RILocalizationWrapper.localizedString("please_select_at_least_one_case")!
 let NOT_CANCELABLE_DEFAULT_REASON = RILocalizationWrapper.localizedString("not_cancelable_default_reason")!
 let STRING_SUBMIT_CANCELLATION = RILocalizationWrapper.localizedString("submit_cancellation")!
-
+let STRING_HAVENT_RECEIVED_TOKEN = RILocalizationWrapper.localizedString("havent_received_token")!
+let STRING_RESENDING = RILocalizationWrapper.localizedString("resending")!

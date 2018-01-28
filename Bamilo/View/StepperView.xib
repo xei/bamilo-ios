@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,8 +21,8 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="81"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6A2-Zl-aLJ">
-                    <rect key="frame" x="251" y="13" width="124" height="60"/>
+                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6A2-Zl-aLJ">
+                    <rect key="frame" x="250.5" y="13" width="124.5" height="60"/>
                     <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="25"/>
                     <state key="normal" title="+">
                         <color key="titleColor" red="0.62352941179999999" green="0.62352941179999999" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -34,8 +34,8 @@
                         <action selector="IncrementBtnTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="ECK-wi-IxT"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k36-K5-e4c">
-                    <rect key="frame" x="0.0" y="0.0" width="125" height="81"/>
+                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k36-K5-e4c">
+                    <rect key="frame" x="0.0" y="0.0" width="125.5" height="81"/>
                     <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="25"/>
                     <state key="normal" title="-">
                         <color key="titleColor" red="0.62352941179999999" green="0.62352941179999999" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -48,23 +48,31 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۳۳" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vHl-ND-FAQ">
-                    <rect key="frame" x="126" y="0.0" width="124" height="81"/>
+                    <rect key="frame" x="125.5" y="-1" width="125" height="83"/>
                     <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="10"/>
                     <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                            <real key="value" value="1"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                            <color key="value" red="0.62352941179999999" green="0.62352941179999999" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dhb-eX-v5q" userLabel="seperator">
-                    <rect key="frame" x="250" y="0.0" width="1" height="81"/>
+                    <rect key="frame" x="250.5" y="0.0" width="0.0" height="81"/>
                     <color key="backgroundColor" red="0.62352941179999999" green="0.62352941179999999" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="0.5" id="Cbs-cd-Age"/>
+                        <constraint firstAttribute="width" id="Cbs-cd-Age"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BeW-ba-h4W" userLabel="seperator">
-                    <rect key="frame" x="125" y="0.0" width="1" height="81"/>
+                    <rect key="frame" x="125.5" y="0.0" width="0.0" height="81"/>
                     <color key="backgroundColor" red="0.62352941179999999" green="0.62352941179999999" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="0.5" id="SKI-RD-SSb"/>
+                        <constraint firstAttribute="width" id="SKI-RD-SSb"/>
                     </constraints>
                 </view>
             </subviews>
@@ -76,11 +84,11 @@
                 <constraint firstItem="Dhb-eX-v5q" firstAttribute="left" secondItem="vHl-ND-FAQ" secondAttribute="right" id="6PS-qQ-3LC"/>
                 <constraint firstItem="Dhb-eX-v5q" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" multiplier="4:3" id="7lO-Z5-cpT"/>
                 <constraint firstItem="vHl-ND-FAQ" firstAttribute="left" secondItem="BeW-ba-h4W" secondAttribute="right" id="892-cy-jzu"/>
-                <constraint firstAttribute="bottom" secondItem="vHl-ND-FAQ" secondAttribute="bottom" id="CeF-hC-ODH"/>
+                <constraint firstAttribute="bottom" secondItem="vHl-ND-FAQ" secondAttribute="bottom" constant="-1" id="CeF-hC-ODH"/>
                 <constraint firstItem="BeW-ba-h4W" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Dk8-vF-Sng"/>
                 <constraint firstItem="BeW-ba-h4W" firstAttribute="left" secondItem="k36-K5-e4c" secondAttribute="right" id="LEz-yN-T9Z"/>
                 <constraint firstItem="k36-K5-e4c" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="MBU-KV-SxS"/>
-                <constraint firstItem="vHl-ND-FAQ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="S6p-rH-Uiz"/>
+                <constraint firstItem="vHl-ND-FAQ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="-1" id="S6p-rH-Uiz"/>
                 <constraint firstItem="6A2-Zl-aLJ" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="2" id="Td5-i5-5iN"/>
                 <constraint firstItem="Dhb-eX-v5q" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Zx0-1s-iic"/>
                 <constraint firstAttribute="bottom" secondItem="Dhb-eX-v5q" secondAttribute="bottom" id="ha3-Di-zrp"/>
@@ -109,9 +117,4 @@
             <point key="canvasLocation" x="-160.5" y="51.5"/>
         </view>
     </objects>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
-    </simulatedMetricsContainer>
 </document>

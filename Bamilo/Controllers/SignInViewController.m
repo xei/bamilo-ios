@@ -95,7 +95,7 @@
             [[Crashlytics sharedInstance] setUserEmail:customer.email];
             
             if (self.completion) {
-                self.completion(AUTHENTICATION_FINISHED_WITH_LOGIN);
+                self.completion(AuthenticationStatusSigninFinished);
             } else {
                 [((UIViewController *)self.delegate).navigationController popViewControllerAnimated:YES];
             }

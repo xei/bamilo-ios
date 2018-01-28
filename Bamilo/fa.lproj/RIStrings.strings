@@ -962,3 +962,7 @@
 "not_cancelable_default_reason" = "این محصول امکان لغو ندارد";
 
 "submit_cancellation" = "ثبت درخواست لغو";
+
+"resending" = "ارسال مجدد";
+
+"havent_received_token" = "کد تایید را دریافت نکردید؟";

@@ -10,6 +10,7 @@
 #import "CAPSPageMenu.h"
 #import "RICustomer.h"
 #import "ViewControllerManager.h"
+#import "Bamilo-Swift.h"
 
 @interface AuthenticationContainerViewController() <CAPSPageMenuDelegate>
 @property (nonatomic) CAPSPageMenu *pagemenu;
@@ -79,9 +80,17 @@
     [self performSegueWithIdentifier:@"showForgetPasswordViewCtrl" sender:nil];
 }
 
+
+- (void)wantsToShowTokenVerificatinWithUserFormDictionary:(NSMutableDictionary *)dictionary {
+    [self performSegueWithIdentifier:@"showVrificationCodeViewCtrl" sender:dictionary];
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     NSString * segueName = segue.identifier;
     if ([segueName isEqualToString: @"showContinueWithoutLoginViewCtrl"]) {
+    }
+    if ([segueName isEqualToString:@"showVrificationCodeViewCtrl"] && [sender isKindOfClass:[NSMutableDictionary class]]) {
+        ((PhoneVerificationViewController *)segue.destinationViewController).userFormInfoDictionary = sender;
     }
 }
 

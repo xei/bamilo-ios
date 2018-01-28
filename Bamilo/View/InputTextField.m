@@ -18,13 +18,13 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *errorMsgTopConstraint;
 @property (weak, nonatomic) IBOutlet UIView *seperatorBorderView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconTrailingConstraint;
+@property (weak, nonatomic) IBOutlet IconButton *eyeIconButton;
 @end
 
 @implementation InputTextField
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    
     [self setUpView];
     
     self.errorMsg.text = nil;
@@ -44,6 +44,13 @@
     [self clearError];
     [self updateIconAppearance:YES];
     self.seperatorBorderView.backgroundColor = [Theme color:kColorDarkGray];
+    [self enableEyeIconButton: NO];
+}
+
+- (void)enableEyeIconButton:(BOOL)enable {
+    [self.eyeIconButton setEnabled:enable];
+    [self.eyeIconButton setHidden:!enable];
+    [self.eyeIconButton setUserInteractionEnabled:enable];
 }
 
 -(void)setHasIcon:(BOOL)hasIcon {
@@ -83,6 +90,10 @@
 
 - (void)updateDropDownAppearance:(BOOL)isHidden {
     [self.dropDownIcon setHidden:isHidden];
+}
+
+- (IBAction)eyeIconButtonTapped:(id)sender {
+    self.textField.secureTextEntry = !self.textField.secureTextEntry;
 }
 
 #pragma mark - Helpers

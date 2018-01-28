@@ -84,10 +84,12 @@
 - (void)setType:(InputTextFieldControlType) type {
     self.input.textField.secureTextEntry = NO;
     [self.input updateDropDownAppearance:YES];
+    [self.input enableEyeIconButton:NO];
     switch (type) {
         case InputTextFieldControlTypePassword:
             self.input.textField.keyboardType = UIKeyboardTypeDefault;
             self.input.textField.secureTextEntry = YES;
+            [self.input enableEyeIconButton:YES];
             break;
         case InputTextFieldControlTypePhone:
             self.input.textField.keyboardType = UIKeyboardTypePhonePad;

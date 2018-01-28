@@ -1129,9 +1129,19 @@
 - (void)pushAuthenticationViewController:(void (^)(void))completion byAniamtion:(BOOL)animation byForce:(BOOL)force {
     AuthenticationCompletion _authenticationCompletion = ^(AuthenticationStatus status) {
         switch (status) {
-            case AUTHENTICATION_FINISHED_WITH_LOGIN:
-            case AUTHENTICATION_FINISHED_WITH_REGISTER:
+            case AuthenticationStatusSigninFinished:
                 [self popViewControllerAnimated:NO];
+                if(completion) {
+                    completion();
+                }
+                break;
+            case AuthenticationStatusSignupFinished:
+                if (self.viewControllers.count > 2) {
+                    UINavigationController *viewCtrl = [self.viewControllers objectAtIndex:self.viewControllers.count - 2];
+                    [self popToViewController:viewCtrl animated:YES];
+                } else {
+                    [self popViewControllerAnimated:NO];
+                }
                 if(completion) {
                     completion();
                 }

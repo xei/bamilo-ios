@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseControlView.h"
+#import "IconButton.h"
 
 @interface InputTextField : BaseControlView
 @property (weak, nonatomic) IBOutlet UITextField *textField;
@@ -19,5 +20,6 @@
 - (void)updateDropDownAppearance:(BOOL)isHidden;
 - (void)showDisabledMode;
 - (void)resetSeperator;
+- (void)enableEyeIconButton:(BOOL)enable;
 
 @end

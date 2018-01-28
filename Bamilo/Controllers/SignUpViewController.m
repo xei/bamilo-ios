@@ -19,6 +19,7 @@
 #define cSignUpMethodEmail @"email"
 #define cSignUpMethodGoogle @"sso-google"
 
+
 @interface SignUpViewController()
 @property (nonatomic, weak) IBOutlet UITableView* tableView;
 @property (nonatomic, strong) FormViewControl *formController;
@@ -34,7 +35,10 @@
     
     [self.tableView setContentInset: UIEdgeInsetsMake(28, 0, 0, 0)];
     self.formController.tableView = self.tableView;
-
+    
+    
+    FormItemModel *email = [FormItemModel emailWithFieldName:@"customer[email]"];
+    FormItemModel *phone = [FormItemModel phoneWithFieldName:@"customer[phone]"];
     FormItemModel *melliCode = [[FormItemModel alloc]
                                 initWithTextValue:nil
                                 fieldName: @"customer[national_id]"
@@ -44,18 +48,11 @@
                                 validation: [[FormItemValidation alloc] initWithRequired:YES max:10 min:10 withRegxPatter:nil]
                                 selectOptions:nil];
     
-    
-    FormItemModel *birthday = [FormItemModel birthdayFieldName:@"customer[birthday]"];
-    FormItemModel *email = [FormItemModel emailWithFieldName:@"customer[email]"];
-    FormItemModel *firstName = [FormItemModel firstNameFieldWithFiedName:@"customer[first_name]"];
-    FormItemModel *lastName = [FormItemModel lastNameWithFieldName:@"customer[last_name]"];
-    FormItemModel *phone = [FormItemModel phoneWithFieldName:@"customer[phone]"];
     FormItemModel *password = [FormItemModel passWordWithFieldName:@"customer[password]"];
-    FormItemModel *gender = [FormItemModel genderWithFieldName:@"customer[gender]"];
     
-    self.formController.submitTitle = @"ثبت نام";
+    self.formController.submitTitle = STRING_SIGNUP;
     self.title = STRING_SIGNUP;
-    self.formController.formModelList = [NSMutableArray arrayWithArray:@[ firstName, lastName, melliCode, gender, birthday, email, password, phone]];
+    self.formController.formModelList = [NSMutableArray arrayWithArray:@[ email, phone, melliCode, password ]];
     [self.formController setupTableView];
 }
 
@@ -74,43 +71,46 @@
         return;
     }
     
-    [DataAggregator signupUser:self with:[self.formController getMutableDictionaryOfForm] completion:^(id data, NSError *error) {
-        if(error == nil) {
-            [self bind:data forRequestId:0];
-            
-            //EVENT: SIGNUP / SUCCESS
-            RICustomer *customer = [RICustomer getCurrentCustomer];
-            
-            [TrackerManager postEventWithSelector:[EventSelectors signupEventSelector] attributes:[EventAttributes signupWithMethod:cSignUpMethodEmail user:customer success:YES]];
-            [EmarsysPredictManager setCustomer: customer];
-            [PushWooshTracker setUserID:[RICustomer getCurrentCustomer].email];
-            if (self.completion) {
-                self.completion(AUTHENTICATION_FINISHED_WITH_REGISTER);
-            } else {
-                [((UIViewController *)self.delegate).navigationController popViewControllerAnimated:YES];
-            }
-        } else {
-            [TrackerManager postEventWithSelector:[EventSelectors signupEventSelector]
-                                       attributes:[EventAttributes signupWithMethod:cSignUpMethodEmail user:nil success:NO]];
-            //EVENT: SIGNUP / FAILURE
-            BaseViewController *baseViewController = (BaseViewController *)self.delegate;
-            if(![baseViewController showNotificationBar:error isSuccess:NO]) {
-                BOOL errorHandled = NO;
-                for(NSDictionary* errorField in [error.userInfo objectForKey:kErrorMessages]) {
-                    NSString *fieldNameParm = [errorField objectForKey:@"field"];
-                    if ([fieldNameParm isKindOfClass:[NSString class]] && fieldNameParm.length > 0) {
-                        NSString *fieldName = [NSString stringWithFormat:@"customer[%@]", fieldNameParm];
-                        if ([self.formController showErrorMessageForField:fieldName errorMsg:errorField[kMessage]]) {
-                            errorHandled = YES;
-                        }
-                    }
-                }
-                if (!errorHandled) {
-                    [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
-                }
-            }
-        }
-    }];
+    //TODO: here we should check the user's form dictionary validation via server then
+    [self.delegate wantsToShowTokenVerificatinWithUserFormDictionary:[self.formController getMutableDictionaryOfForm]];
+    
+//    [DataAggregator signupUser:self with:[self.formController getMutableDictionaryOfForm] completion:^(id data, NSError *error) {
+//        if(error == nil) {
+//            [self bind:data forRequestId:0];
+//
+//            //EVENT: SIGNUP / SUCCESS
+//            RICustomer *customer = [RICustomer getCurrentCustomer];
+//
+//            [TrackerManager postEventWithSelector:[EventSelectors signupEventSelector] attributes:[EventAttributes signupWithMethod:cSignUpMethodEmail user:customer success:YES]];
+//            [EmarsysPredictManager setCustomer: customer];
+//            [PushWooshTracker setUserID:[RICustomer getCurrentCustomer].email];
+//            if (self.completion) {
+//                self.completion(AUTHENTICATION_FINISHED_WITH_REGISTER);
+//            } else {
+//                [((UIViewController *)self.delegate).navigationController popViewControllerAnimated:YES];
+//            }
+//        } else {
+//            [TrackerManager postEventWithSelector:[EventSelectors signupEventSelector]
+//                                       attributes:[EventAttributes signupWithMethod:cSignUpMethodEmail user:nil success:NO]];
+//            //EVENT: SIGNUP / FAILURE
+//            BaseViewController *baseViewController = (BaseViewController *)self.delegate;
+//            if(![baseViewController showNotificationBar:error isSuccess:NO]) {
+//                BOOL errorHandled = NO;
+//                for(NSDictionary* errorField in [error.userInfo objectForKey:kErrorMessages]) {
+//                    NSString *fieldNameParm = [errorField objectForKey:@"field"];
+//                    if ([fieldNameParm isKindOfClass:[NSString class]] && fieldNameParm.length > 0) {
+//                        NSString *fieldName = [NSString stringWithFormat:@"customer[%@]", fieldNameParm];
+//                        if ([self.formController showErrorMessageForField:fieldName errorMsg:errorField[kMessage]]) {
+//                            errorHandled = YES;
+//                        }
+//                    }
+//                }
+//                if (!errorHandled) {
+//                    [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
+//                }
+//            }
+//        }
+//    }];
 }
 
 #pragma mark - DataServiceProtocol
@@ -137,12 +137,12 @@
 //        [trackingDictionary setValue:@"My account" forKey:kRIEventLocationKey];
 //    }
 //    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRegisterSuccess] data:[trackingDictionary copy]];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification object:nil];
-    
-    NSMutableDictionary *userInfo = [NSMutableDictionary new];
-    if (self.fromSideMenu) {
-        [userInfo setObject:@YES forKey:@"from_side_menu"];
-    }
+//    [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification object:nil];
+//
+//    NSMutableDictionary *userInfo = [NSMutableDictionary new];
+//    if (self.fromSideMenu) {
+//        [userInfo setObject:@YES forKey:@"from_side_menu"];
+//    }
 }
 
 @end
