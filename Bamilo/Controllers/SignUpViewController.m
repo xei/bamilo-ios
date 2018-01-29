@@ -36,18 +36,9 @@
     [self.tableView setContentInset: UIEdgeInsetsMake(28, 0, 0, 0)];
     self.formController.tableView = self.tableView;
     
-    
     FormItemModel *email = [FormItemModel emailWithFieldName:@"customer[email]"];
     FormItemModel *phone = [FormItemModel phoneWithFieldName:@"customer[phone]"];
-    FormItemModel *melliCode = [[FormItemModel alloc]
-                                initWithTextValue:nil
-                                fieldName: @"customer[national_id]"
-                                andIcon:nil
-                                placeholder:@"کد ملی"
-                                type:InputTextFieldControlTypeNumerical
-                                validation: [[FormItemValidation alloc] initWithRequired:YES max:10 min:10 withRegxPatter:nil]
-                                selectOptions:nil];
-    
+    FormItemModel *melliCode = [FormItemModel nationalCode:@"customer[national_id]"];
     FormItemModel *password = [FormItemModel passWordWithFieldName:@"customer[password]"];
     
     self.formController.submitTitle = STRING_SIGNUP;

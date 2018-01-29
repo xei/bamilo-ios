@@ -105,6 +105,7 @@
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="backgroundView" destination="6Fa-Ht-d6l" id="gqS-WN-C8U"/>
                 <outlet property="dropDownIcon" destination="bPy-SO-qhD" id="s8C-pj-ufB"/>
                 <outlet property="errorMsg" destination="d2O-YV-59p" id="MOp-B3-7RI"/>
                 <outlet property="errorMsgTopConstraint" destination="W8b-tV-9pC" id="5Xx-up-B2N"/>

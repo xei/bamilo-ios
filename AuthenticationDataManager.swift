@@ -54,4 +54,16 @@ class AuthenticationDataManager: DataManagerSwift {
             }
         }
     }
+    
+    func getCurrentUser(_ target:DataServiceProtocol?, completion: @escaping DataClosure) {
+        AuthenticationDataManager.requestManager.async(.get, target: target, path: RI_API_GET_CUSTOMER, params: nil, type: .foreground) { (responseType, data, errors) in
+            if let data = data, responseType == 200 {
+                let customer = RICustomer.getCurrent()
+                RICustomer.parseCustomer(withJson: data.metadata?["customer_entity"] as! [AnyHashable : Any], plainPassword: customer?.plainPassword, loginMethod: "normal")
+                completion(data.metadata, nil)
+            } else {
+                completion(nil, self.createError(responseType, errorMessages: errors))
+            }
+        }
+    }
 }

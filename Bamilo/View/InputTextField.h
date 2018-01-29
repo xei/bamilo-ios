@@ -13,13 +13,13 @@
 @interface InputTextField : BaseControlView
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UIImageView *icon;
+@property (weak, nonatomic) IBOutlet UIView *backgroundView;
 @property (assign, nonatomic) BOOL hasIcon;
 
 - (void)showErrorMsg:(NSString *)errorMsg;
 - (void)clearError;
 - (void)updateDropDownAppearance:(BOOL)isHidden;
-- (void)showDisabledMode;
-- (void)resetSeperator;
+- (void)showDisabledMode:(BOOL)disabled;
 - (void)enableEyeIconButton:(BOOL)enable;
 
 @end

@@ -290,6 +290,9 @@
 		61FB2FDD1FA8CB92005FE3F6 /* OrderCMSMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FB2FDB1FA8CB92005FE3F6 /* OrderCMSMessageTableViewCell.swift */; };
 		61FB2FDE1FA8CB92005FE3F6 /* OrderCMSMessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61FB2FDC1FA8CB92005FE3F6 /* OrderCMSMessageTableViewCell.xib */; };
 		61FC466E201DBBC9000141FA /* Ext+UINavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC466D201DBBC9000141FA /* Ext+UINavigationViewController.swift */; };
+		61FC4670201DC044000141FA /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC466F201DC044000141FA /* EditProfileViewController.swift */; };
+		61FC4673201F3CCC000141FA /* CMSTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC4672201F3CCC000141FA /* CMSTableViewHeader.swift */; };
+		61FC4675201F4042000141FA /* CMSTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61FC4674201F4042000141FA /* CMSTableViewHeader.xib */; };
 		61FCF0821FD69DF900084872 /* Ext+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FCF0811FD69DF900084872 /* Ext+Error.swift */; };
 		61FDE3331F72705D00153A74 /* BaseHomePageTeaserBoxTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FDE3321F72705D00153A74 /* BaseHomePageTeaserBoxTableViewCell.swift */; };
 		61FE97D51EC9BB7700DF233D /* GridCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FE97D41EC9BB7600DF233D /* GridCollectionViewFlowLayout.swift */; };
@@ -1367,6 +1370,9 @@
 		61FB2FDB1FA8CB92005FE3F6 /* OrderCMSMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCMSMessageTableViewCell.swift; sourceTree = "<group>"; };
 		61FB2FDC1FA8CB92005FE3F6 /* OrderCMSMessageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderCMSMessageTableViewCell.xib; sourceTree = "<group>"; };
 		61FC466D201DBBC9000141FA /* Ext+UINavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UINavigationViewController.swift"; sourceTree = "<group>"; };
+		61FC466F201DC044000141FA /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		61FC4672201F3CCC000141FA /* CMSTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSTableViewHeader.swift; sourceTree = "<group>"; };
+		61FC4674201F4042000141FA /* CMSTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CMSTableViewHeader.xib; sourceTree = "<group>"; };
 		61FCF0811FD69DF900084872 /* Ext+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+Error.swift"; sourceTree = "<group>"; };
 		61FDE3321F72705D00153A74 /* BaseHomePageTeaserBoxTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseHomePageTeaserBoxTableViewCell.swift; sourceTree = "<group>"; };
 		61FE97D41EC9BB7600DF233D /* GridCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
@@ -3118,6 +3124,7 @@
 		612FE5181EDC0A8400C2AFA0 /* TableViewCell */ = {
 			isa = PBXGroup;
 			children = (
+				61FC4671201F3C9E000141FA /* CMSTableViewHeader */,
 				610767D62004E9B900F6A849 /* OrderCancellation */,
 				615EBA7C1FEFE60100FB58DE /* CategoryCoverTableViewCell */,
 				61DA163F1FEE5016001C5071 /* CategoryTableViewCell */,
@@ -3208,6 +3215,7 @@
 				617D4EEE1FEA65CC00A00799 /* RootCategoryViewController.swift */,
 				617D4EF01FEA661400A00799 /* SubCategoryLandingPageViewController.swift */,
 				6164F54C201762910009ED19 /* PhoneVerificationViewController.swift */,
+				61FC466F201DC044000141FA /* EditProfileViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -4569,6 +4577,15 @@
 				61FB2FDC1FA8CB92005FE3F6 /* OrderCMSMessageTableViewCell.xib */,
 			);
 			name = OrderCMSMessageTableViewCell;
+			sourceTree = "<group>";
+		};
+		61FC4671201F3C9E000141FA /* CMSTableViewHeader */ = {
+			isa = PBXGroup;
+			children = (
+				61FC4672201F3CCC000141FA /* CMSTableViewHeader.swift */,
+				61FC4674201F4042000141FA /* CMSTableViewHeader.xib */,
+			);
+			name = CMSTableViewHeader;
 			sourceTree = "<group>";
 		};
 		61FDE3311F72703400153A74 /* BaseHomePageTeaserBoxTableViewCell */ = {
@@ -8111,6 +8128,7 @@
 				618B256E1F35D81800B39440 /* DeliveryTimeView.xib in Resources */,
 				875743C61EA60DFD001B518A /* SpecialOffer-76@2x.png in Resources */,
 				875743651EA60DA5001B518A /* Birthday-Small-50@2x.png in Resources */,
+				61FC4675201F4042000141FA /* CMSTableViewHeader.xib in Resources */,
 				8716987D1E38A94C0027B34A /* Main.storyboard in Resources */,
 				875744461EA60E71001B518A /* Winter-60@3x.png in Resources */,
 				8757445B1EA60E8D001B518A /* Yalda-Small@2x.png in Resources */,
@@ -8709,6 +8727,7 @@
 				61B161D01E6BF24E0032C5C6 /* SearchPriceFilter.m in Sources */,
 				9AE766D41CBD2E0300B63D8E /* JAProductInfoPriceDescriptionLine.m in Sources */,
 				9AE766B11CBBB28E00B63D8E /* JACartProductsView.m in Sources */,
+				61FC4670201DC044000141FA /* EditProfileViewController.swift in Sources */,
 				61B56D591F9B4EC30002BFF3 /* OrderItem.swift in Sources */,
 				619E92CF1F8A1044003885BC /* DailyDealsCollectionViewCell.swift in Sources */,
 				FFB1B0951CE61D96000F60AD /* JARadioExpandableComponent.m in Sources */,
@@ -8757,6 +8776,7 @@
 				875AD5771E38C0C900584ABF /* RISpecification.m in Sources */,
 				CE9ADFD61AB6D78200D56481 /* JAFilteredNoResultsView.m in Sources */,
 				CE9ADFD71AB6D78200D56481 /* JAProductListFlowLayout.m in Sources */,
+				61FC4673201F3CCC000141FA /* CMSTableViewHeader.swift in Sources */,
 				61CBA88A1F6959A9009F0EEF /* CategorySuggestion.swift in Sources */,
 				873369C21E589FEC00B0B5E5 /* ShippingMethodForm.m in Sources */,
 				875AD55A1E38C0C900584ABF /* RICart.m in Sources */,

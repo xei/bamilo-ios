@@ -45,6 +45,8 @@
     [self updateIconAppearance:YES];
     self.seperatorBorderView.backgroundColor = [Theme color:kColorDarkGray];
     [self enableEyeIconButton: NO];
+    self.textField.backgroundColor = UIColor.clearColor;
+    self.eyeIconButton.backgroundColor = UIColor.clearColor;
 }
 
 - (void)enableEyeIconButton:(BOOL)enable {
@@ -72,13 +74,9 @@
     }];
 }
 
-- (void)resetSeperator {
-    self.seperatorBorderView.backgroundColor = [Theme color:kColorDarkGray];
-}
-
-- (void)showDisabledMode {
-    self.seperatorBorderView.backgroundColor = [Theme color:kColorGray9];
-    [self.dropDownIcon setHidden:YES];
+- (void)showDisabledMode:(BOOL)disabled {
+    self.backgroundView.backgroundColor = disabled ? [Theme color:kColorGray10] : UIColor.whiteColor;
+    self.textField.userInteractionEnabled = !disabled;
 }
 
 - (void)clearError {

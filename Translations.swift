@@ -103,3 +103,8 @@ let NOT_CANCELABLE_DEFAULT_REASON = RILocalizationWrapper.localizedString("not_c
 let STRING_SUBMIT_CANCELLATION = RILocalizationWrapper.localizedString("submit_cancellation")!
 let STRING_HAVENT_RECEIVED_TOKEN = RILocalizationWrapper.localizedString("havent_received_token")!
 let STRING_RESENDING = RILocalizationWrapper.localizedString("resending")!
+let STRING_NATIONAL_ID = RILocalizationWrapper.localizedString("national_id")!
+let STRING_REGISTRATION_SUBMIT = RILocalizationWrapper.localizedString("registration_text")!
+let STRING_MALE = RILocalizationWrapper.localizedString("male")!
+let STRING_FEMALE = RILocalizationWrapper.localizedString("female")!
+

@@ -51,7 +51,6 @@ class RequestManagerSwift {
                 switch response.result {
                     case .success:
                         if let apiResponseData = response.result.value {
-                            
                             //Check if this request needs athenticated action which the current is not logged in
                             if let errors = apiResponseData.messages?.errors, path != RI_API_LOGOUT_CUSTOMER {
                                 let hasAuthenticationErrorCode = errors.filter { $0.code == 231 }.count > 0

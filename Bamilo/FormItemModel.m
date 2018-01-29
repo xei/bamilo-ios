@@ -155,4 +155,14 @@
     return model;
 }
 
++ (FormItemModel *)nationalCode: (NSString *)fieldName {
+    return  [[FormItemModel alloc] initWithTextValue: nil
+                                           fieldName: fieldName
+                                             andIcon: nil
+                                         placeholder: STRING_NATIONAL_ID
+                                                type: InputTextFieldControlTypeNumerical
+                                          validation: [[FormItemValidation alloc] initWithRequired:YES max:10 min:10 withRegxPatter:nil]
+                                       selectOptions:nil];
+}
+
 @end

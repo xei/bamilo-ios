@@ -87,7 +87,6 @@
             if(self.cart.cartEntity.couponCode != nil) {
                 [self updateDiscountViewAppearanceForValue:YES animated:NO];
             }
-            
             //Delivery Time
             [DataAggregator getMultistepShipping:self completion:^(id data, NSError *error) {
                 if(error == nil) {

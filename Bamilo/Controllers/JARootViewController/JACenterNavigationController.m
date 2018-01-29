@@ -467,7 +467,7 @@
 
 #pragma mark User Data Screen
 - (void)showUserData:(NSNotification*)notification {
-    [[MainTabBarViewController topNavigationController] requestNavigateToClass:@"JAUserDataViewController" args:nil];
+    [self requestNavigateToNib:@"EditProfileViewController" args:nil];
 }
 
 #pragma mark Email Notifications Screen

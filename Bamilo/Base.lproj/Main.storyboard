@@ -216,6 +216,39 @@
             </objects>
             <point key="canvasLocation" x="1138" y="-1586"/>
         </scene>
+        <!--Edit Profile View Controller-->
+        <scene sceneID="aIr-rN-cz3">
+            <objects>
+                <viewController storyboardIdentifier="EditProfileViewController" id="NHe-8e-2kz" customClass="EditProfileViewController" customModule="Bamilo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="O90-Nh-aSg"/>
+                        <viewControllerLayoutGuide type="bottom" id="tOC-4P-OsJ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="VRX-gQ-rPs">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" delaysContentTouches="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9rO-1e-c1O">
+                                <rect key="frame" x="0.0" y="64" width="414" height="623"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="right" secondItem="9rO-1e-c1O" secondAttribute="right" id="8wN-Jc-ae7"/>
+                            <constraint firstItem="9rO-1e-c1O" firstAttribute="left" secondItem="VRX-gQ-rPs" secondAttribute="left" id="9HU-bk-oTm"/>
+                            <constraint firstItem="9rO-1e-c1O" firstAttribute="top" secondItem="O90-Nh-aSg" secondAttribute="bottom" id="vew-se-YIR"/>
+                            <constraint firstItem="tOC-4P-OsJ" firstAttribute="top" secondItem="9rO-1e-c1O" secondAttribute="bottom" id="zgQ-IJ-iXx"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableview" destination="9rO-1e-c1O" id="WgY-cQ-hMu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XID-Mj-3nA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3228" y="-2486"/>
+        </scene>
         <!--Sub Category Landing Page View Controller-->
         <scene sceneID="OLo-Un-rtN">
             <objects>
@@ -704,6 +737,7 @@
                     <navigationItem key="navigationItem" id="qgd-Ai-StE"/>
                     <connections>
                         <outlet property="tableView" destination="Y9Y-N4-eD7" id="lwM-vc-IPk"/>
+                        <segue destination="NHe-8e-2kz" kind="show" id="9FZ-YM-kkl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J1S-Nh-R2B" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1496,7 +1530,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zP1-Cy-ljt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4381" y="-2582"/>
+            <point key="canvasLocation" x="-4381" y="-2532"/>
         </scene>
         <!--All Recommendation View Controller-->
         <scene sceneID="qPJ-c0-uDd">
@@ -1507,11 +1541,11 @@
                         <viewControllerLayoutGuide type="bottom" id="zI7-gT-Oag"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="pmB-dk-Chu">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="623"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="O6y-dc-Laj">
-                                <rect key="frame" x="8" y="20" width="398" height="696"/>
+                                <rect key="frame" x="8" y="20" width="398" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="clg-El-4xX">
                                     <size key="itemSize" width="50" height="50"/>
@@ -1943,7 +1977,7 @@
         <image name="tabbar_category_highlighted" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="le7-CL-VSU"/>
+        <segue reference="bEV-Bv-dJp"/>
         <segue reference="heG-nW-AOJ"/>
         <segue reference="mLp-yH-ACJ"/>
     </inferredMetricsTieBreakers>

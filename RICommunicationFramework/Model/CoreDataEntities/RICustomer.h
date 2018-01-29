@@ -27,6 +27,7 @@
 @property (nonatomic, retain) NSString * loginMethod;
 @property (nonatomic, retain) NSOrderedSet *addresses;
 @property (nonatomic, retain) NSNumber *newsletterSubscribed;
+@property (nonatomic, copy) NSString *nationalID;
 
 @property (nonatomic, retain) NSArray *wishlistProducts;
 @property (strong, nonatomic) AddressList *addressList;
@@ -163,8 +164,8 @@
  * @param the block where the failure response can be processed
  * @return a string with the operationID that can be used to cancel the operation
  */
-+ (NSString *)requestPasswordReset:(void (^)())successBlock
-                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock;
+//+ (NSString *)requestPasswordReset:(void (^)(void))successBlock
+//                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock;
 
 @end
 

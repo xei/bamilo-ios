@@ -42,6 +42,7 @@
 @synthesize costumerRequestID, wishlistProducts;
 @synthesize addressList;
 @synthesize phone;
+@synthesize nationalID;
 
 + (NSString *)signUpAccount:(NSString *)email
                successBlock:(void (^)(id object))successBlock
@@ -175,7 +176,7 @@
             }];
             
             //Set auto logged in customer
-            [EmarsysMobileEngageTracker performSelector:[EventSelectors loginEventSelector] withObject:[EventAttributes loginWithLoginMethod:@"autoLogin" user:customerObject]];
+            [[EmarsysMobileEngageTracker sharedTracker] performSelector:[EventSelectors loginEventSelector] withObject:[EventAttributes loginWithLoginMethod:@"autoLogin" user:customerObject]];
 
             [EmarsysPredictManager setCustomer:customerObject];
             [PushWooshTracker setUserID:[customerObject.customerId stringValue]];
@@ -327,27 +328,27 @@
     [RICart sharedInstance].cartEntity.cartItems = @[];
 }
 
-+ (NSString *)requestPasswordReset:(void (^)())successBlock
-                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock {
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_LOGOUT_CUSTOMER]]
-                                                            parameters:nil
-                                                            httpMethod:HttpVerbPOST
-                                                             cacheType:RIURLCacheNoCache
-                                                             cacheTime:RIURLCacheDefaultTime
-                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
-                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-                                                              successBlock();
-                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
-                                                              if(NOTEMPTY(errorJsonObject)) {
-                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
-                                                              } else if(NOTEMPTY(errorObject)) {
-                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                  failureBlock(apiResponse, errorArray);
-                                                              } else {
-                                                                  failureBlock(apiResponse, nil);
-                                                              }
-                                                          }];
-}
+//+ (NSString *)requestPasswordReset:(void (^)(void))successBlock
+//                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock {
+//    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_LOGOUT_CUSTOMER]]
+//                                                            parameters:nil
+//                                                            httpMethod:HttpVerbPOST
+//                                                             cacheType:RIURLCacheNoCache
+//                                                             cacheTime:RIURLCacheDefaultTime
+//                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
+//                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+//                                                              successBlock();
+//                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
+//                                                              if(NOTEMPTY(errorJsonObject)) {
+//                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
+//                                                              } else if(NOTEMPTY(errorObject)) {
+//                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+//                                                                  failureBlock(apiResponse, errorArray);
+//                                                              } else {
+//                                                                  failureBlock(apiResponse, nil);
+//                                                              }
+//                                                          }];
+//}
 
 + (BOOL)checkIfUserIsLogged {
     NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
@@ -374,7 +375,6 @@
 
 + (BOOL)checkIfUserHasAddresses {
     NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
-    
     if (VALID_NOTEMPTY(customers, NSArray)) {
         RICustomer *customer = [customers lastObject];
         if(VALID_NOTEMPTY(customer.addresses, NSOrderedSet)) {
@@ -514,6 +514,10 @@
             }
         }
         customer.wishlistProducts = [wishlist copy];
+    }
+    
+    if (VALID_NOTEMPTY([dict objectForKey:@"national_id"], NSString)) {
+        customer.nationalID = [dict objectForKey:@"national_id"];
     }
     //#############################################################################################################
     
