@@ -18,4 +18,6 @@
 - (BOOL)navBarhideBackButton;
 - (void)searchIconButtonTapped;
 - (void)cartIconButtonTapped;
+- (void)closeButtonTapped;
+
 @end

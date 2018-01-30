@@ -8,6 +8,10 @@
 
 import UIKit
 
+@objc protocol PhoneVerificationViewControllerDelegate: NSObjectProtocol {
+    func finishedVerifingPhone(callBack:() -> Void)
+}
+
 @objc class PhoneVerificationViewController: AuthenticationBaseViewController, UITextFieldDelegate {
     
     @IBOutlet weak private var titleLabel: UILabel!
@@ -26,7 +30,8 @@ import UIKit
     private let countDownSeconds = 30
     private var remainingSeconds = 0
     
-    var userFormInfoDictionary: [String: Any]?
+    weak var delegate: PhoneVerificationViewControllerDelegate?
+    var phoneNumber: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,11 +58,8 @@ import UIKit
         }
     }
     
-    private func getTitleLabelMessage(userInfoDic: [String: Any]?) -> String? {
-        if let userPhone = self.userFormInfoDictionary?["customer[phone]"] as? String {
-            return "کد تایید به شماره زیر شما ارسال شد \n \(userPhone)".convertTo(language: .arabic)
-        }
-        return nil
+    private func getTitleLabelMessage(phoneString: String) -> String {
+        return "کد تایید به شماره زیر شما ارسال شد \n \(phoneString)".convertTo(language: .arabic)
     }
     
     private func applyStyle() {
@@ -68,11 +70,12 @@ import UIKit
         self.tokenCodeTextField.layer.cornerRadius = 0
         self.tokenCodeTextField.font = Theme.font(kFontVariationRegular, size: 15)
         self.tokenCodeTextField.textColor = Theme.color(kColorGray1)
+        self.tokenCodeTextField.keyboardType = .numberPad
+        self.tokenCodeTextField.borderStyle = .none
+        
         self.retryButton.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorBlue))
         self.submissionButton.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: .white)
         self.submissionButton.backgroundColor = Theme.color(kColorOrange1)
-        self.tokenCodeTextField.keyboardType = .numberPad
-        self.tokenCodeTextField.borderStyle = .none
         self.bottomOfContentConstraint.constant = defaultContentBottomConstriant
         
         self.retryTitleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 10), color: Theme.color(kColorGray5))
@@ -80,11 +83,11 @@ import UIKit
         
         self.submissionButton.setTitle(STRING_OK, for: .normal)
         self.retryButton.setTitle(STRING_RESENDING, for: .normal)
-        self.titleLabel.text = self.getTitleLabelMessage(userInfoDic: self.userFormInfoDictionary)
+        if let userPhone = self.phoneNumber {
+            self.titleLabel.text = self.getTitleLabelMessage(phoneString: userPhone)
+        }
         self.retryContainerView.isHidden = true
     }
-    
-    
     
     @objc private func updateTimer() {
         self.remainingSeconds -= 1
@@ -109,11 +112,13 @@ import UIKit
     }
     
     private func submitForm() {
-        if let completionAction = self.completion {
-            completionAction(.signupFinished)
-        } else {
-            self.navigationController?.pop(step: 2, animated: true)
-        }
+        self.delegate?.finishedVerifingPhone(callBack: {
+            if let completionAction = self.completion {
+                completionAction(.signupFinished)
+            } else {
+                self.navigationController?.pop(step: 2, animated: true)
+            }
+        })
     }
     
     //MARK: - helper functions for timer
@@ -154,5 +159,13 @@ import UIKit
     //MARK: - UITextFieldDelegate
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
         return viewWillDisapear
+    }
+    
+    override func getScreenName() -> String! {
+        return "phoneVerification"
+    }
+    
+    override func navBarTitleString() -> String! {
+        return STRING_PHONE_VERIFICATION_CONFIRM
     }
 }

@@ -13,6 +13,6 @@
 @optional
 - (void)wantsToContinueWithoutLogin;
 - (void)wantsToShowForgetPassword;
-- (void)wantsToShowTokenVerificatinWithUserFormDictionary:(NSMutableDictionary *)dictionary;
+- (void)wantsToShowTokenVerificatinWith:(AuthenticationBaseViewController *)viewCtrl phone:(NSString *)phone;
 
 @end

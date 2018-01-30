@@ -74,7 +74,8 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
     
     func fieldHasBeenFocuced(_ field: InputTextFieldControl!, inFieldIndex fieldIndex: UInt) {
         if field.model == self.phoneFieldModel {
-            
+            field.input.textField.resignFirstResponder()
+            self.performSegue(withIdentifier: "showPhoneChangeViewController", sender: nil)
         }
     }
     

@@ -120,7 +120,7 @@
         <!--Phone Verification View Controller-->
         <scene sceneID="gvg-VC-7AV">
             <objects>
-                <viewController id="GfW-hX-m5m" customClass="PhoneVerificationViewController" customModule="Bamilo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PhoneVerificationViewController" id="GfW-hX-m5m" customClass="PhoneVerificationViewController" customModule="Bamilo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="QTF-sb-BOO"/>
                         <viewControllerLayoutGuide type="bottom" id="ydA-zM-Qsr"/>

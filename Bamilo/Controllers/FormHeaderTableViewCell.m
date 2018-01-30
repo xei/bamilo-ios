@@ -7,6 +7,7 @@
 //
 
 #import "FormHeaderTableViewCell.h"
+#import "FormHeaderModel.h"
 
 @interface FormHeaderTableViewCell()
 @property (weak, nonatomic) IBOutlet UIView *containerView;
@@ -27,9 +28,13 @@
     _titleString = titleString;
 }
 
-#pragma mark - Overrides
-+(CGFloat)cellHeight {
-    return 56.0f;
+- (void)updateWithModel:(id)model {
+    if ([model isKindOfClass:[FormHeaderModel class]]) {
+        FormHeaderModel *headerModel = model;
+        self.titleLabel.text = headerModel.headerString;
+        self.titleLabel.textAlignment = headerModel.alignMent ?: NSTextAlignmentRight;
+        self.containerView.backgroundColor = headerModel.backgroundColor ?: [UIColor withRepeatingRGBA:244 alpha:1.0f];
+    }
 }
 
 +(NSString *)nibName {

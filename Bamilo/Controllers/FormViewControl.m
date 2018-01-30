@@ -101,7 +101,7 @@
             return cell;
         } else if([formElement isKindOfClass:[FormHeaderModel class]]) {
             FormHeaderTableViewCell *formHeaderItemTableViewCell = [self.tableView dequeueReusableCellWithIdentifier:[FormHeaderTableViewCell nibName] forIndexPath:indexPath];
-            formHeaderItemTableViewCell.titleString  = ((FormHeaderModel *)formElement).headerString;
+            [formHeaderItemTableViewCell updateWithModel: formElement];
             return formHeaderItemTableViewCell;
         }
     }
@@ -113,11 +113,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row < self.formModelList.count && [[self.formModelList objectAtIndex:indexPath.row] isKindOfClass:[FormHeaderModel class]]) {
-        return [FormHeaderTableViewCell cellHeight];
-    } else {
-        return UITableViewAutomaticDimension;
-    }
+    return UITableViewAutomaticDimension;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {

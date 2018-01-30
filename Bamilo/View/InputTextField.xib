@@ -40,7 +40,7 @@
                             <rect key="frame" x="0.0" y="61" width="318" height="1"/>
                             <color key="backgroundColor" red="0.61960784310000006" green="0.61960784310000006" blue="0.61960784310000006" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="0.5" id="kZO-LK-odJ"/>
+                                <constraint firstAttribute="height" constant="0.59999999999999998" id="kZO-LK-odJ"/>
                             </constraints>
                         </view>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="متن خالی" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZZk-q2-461">

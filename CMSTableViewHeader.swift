@@ -10,8 +10,8 @@ import UIKit
 
 class CMSTableViewHeader: UITableViewHeaderFooterView {
 
-    @IBOutlet weak private var cmsContainerView: UIView!
-    @IBOutlet weak private var cmsMessageLabel: UILabel!
+    @IBOutlet weak var cmsContainerView: UIView!
+    @IBOutlet weak var cmsMessageLabel: UILabel!
     @IBOutlet weak var horizontalSpacingConstraint: NSLayoutConstraint!
     @IBOutlet weak var verticalSpacingConstraint: NSLayoutConstraint!
    

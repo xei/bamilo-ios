@@ -16,7 +16,9 @@
 @property (nonatomic) CAPSPageMenu *pagemenu;
 @end
 
-@implementation AuthenticationContainerViewController
+@implementation AuthenticationContainerViewController {
+    @private NSString *userPhone;
+}
 
 -(void)awakeFromNib {
     [super awakeFromNib];
@@ -81,16 +83,16 @@
 }
 
 
-- (void)wantsToShowTokenVerificatinWithUserFormDictionary:(NSMutableDictionary *)dictionary {
-    [self performSegueWithIdentifier:@"showVrificationCodeViewCtrl" sender:dictionary];
+- (void)wantsToShowTokenVerificatinWith:(AuthenticationBaseViewController *)viewCtrl phone:(NSString *)phone {
+    userPhone = phone;
+    [self performSegueWithIdentifier:@"showVrificationCodeViewCtrl" sender:viewCtrl];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     NSString * segueName = segue.identifier;
-    if ([segueName isEqualToString: @"showContinueWithoutLoginViewCtrl"]) {
-    }
-    if ([segueName isEqualToString:@"showVrificationCodeViewCtrl"] && [sender isKindOfClass:[NSMutableDictionary class]]) {
-        ((PhoneVerificationViewController *)segue.destinationViewController).userFormInfoDictionary = sender;
+    if ([segueName isEqualToString:@"showVrificationCodeViewCtrl"] && [sender isKindOfClass:[SignUpViewController class]]) {
+        ((PhoneVerificationViewController *)segue.destinationViewController).phoneNumber = userPhone;
+        ((PhoneVerificationViewController *)segue.destinationViewController).delegate = sender;
     }
 }
 

@@ -107,4 +107,6 @@ let STRING_NATIONAL_ID = RILocalizationWrapper.localizedString("national_id")!
 let STRING_REGISTRATION_SUBMIT = RILocalizationWrapper.localizedString("registration_text")!
 let STRING_MALE = RILocalizationWrapper.localizedString("male")!
 let STRING_FEMALE = RILocalizationWrapper.localizedString("female")!
-
+let STRING_PHONE_VERIFICATION_CONFIRM = RILocalizationWrapper.localizedString("phone_verification_confirm")!
+let STRING_PHONE_NUMBER = RILocalizationWrapper.localizedString("phone_number")!
+let STRING_PHONE_SUBMISSION = RILocalizationWrapper.localizedString("phone_submission")!

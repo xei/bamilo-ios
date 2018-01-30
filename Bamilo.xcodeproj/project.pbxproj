@@ -293,6 +293,8 @@
 		61FC4670201DC044000141FA /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC466F201DC044000141FA /* EditProfileViewController.swift */; };
 		61FC4673201F3CCC000141FA /* CMSTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC4672201F3CCC000141FA /* CMSTableViewHeader.swift */; };
 		61FC4675201F4042000141FA /* CMSTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61FC4674201F4042000141FA /* CMSTableViewHeader.xib */; };
+		61FC4677201F65C2000141FA /* PhoneChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC4676201F65C2000141FA /* PhoneChangeViewController.swift */; };
+		61FC467D201F75BF000141FA /* BaseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61FC467C201F75BF000141FA /* BaseNavigationController.m */; };
 		61FCF0821FD69DF900084872 /* Ext+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FCF0811FD69DF900084872 /* Ext+Error.swift */; };
 		61FDE3331F72705D00153A74 /* BaseHomePageTeaserBoxTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FDE3321F72705D00153A74 /* BaseHomePageTeaserBoxTableViewCell.swift */; };
 		61FE97D51EC9BB7700DF233D /* GridCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FE97D41EC9BB7600DF233D /* GridCollectionViewFlowLayout.swift */; };
@@ -1373,6 +1375,9 @@
 		61FC466F201DC044000141FA /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		61FC4672201F3CCC000141FA /* CMSTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSTableViewHeader.swift; sourceTree = "<group>"; };
 		61FC4674201F4042000141FA /* CMSTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CMSTableViewHeader.xib; sourceTree = "<group>"; };
+		61FC4676201F65C2000141FA /* PhoneChangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneChangeViewController.swift; sourceTree = "<group>"; };
+		61FC467B201F75BF000141FA /* BaseNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseNavigationController.h; sourceTree = "<group>"; };
+		61FC467C201F75BF000141FA /* BaseNavigationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseNavigationController.m; sourceTree = "<group>"; };
 		61FCF0811FD69DF900084872 /* Ext+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+Error.swift"; sourceTree = "<group>"; };
 		61FDE3321F72705D00153A74 /* BaseHomePageTeaserBoxTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseHomePageTeaserBoxTableViewCell.swift; sourceTree = "<group>"; };
 		61FE97D41EC9BB7600DF233D /* GridCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
@@ -3216,6 +3221,7 @@
 				617D4EF01FEA661400A00799 /* SubCategoryLandingPageViewController.swift */,
 				6164F54C201762910009ED19 /* PhoneVerificationViewController.swift */,
 				61FC466F201DC044000141FA /* EditProfileViewController.swift */,
+				61FC4676201F65C2000141FA /* PhoneChangeViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -4586,6 +4592,15 @@
 				61FC4674201F4042000141FA /* CMSTableViewHeader.xib */,
 			);
 			name = CMSTableViewHeader;
+			sourceTree = "<group>";
+		};
+		61FC4678201F755E000141FA /* BaseNavigtaionController */ = {
+			isa = PBXGroup;
+			children = (
+				61FC467B201F75BF000141FA /* BaseNavigationController.h */,
+				61FC467C201F75BF000141FA /* BaseNavigationController.m */,
+			);
+			name = BaseNavigtaionController;
 			sourceTree = "<group>";
 		};
 		61FDE3311F72703400153A74 /* BaseHomePageTeaserBoxTableViewCell */ = {
@@ -6509,6 +6524,7 @@
 		87D07D811E40B45A00C00AC6 /* BML */ = {
 			isa = PBXGroup;
 			children = (
+				61FC4678201F755E000141FA /* BaseNavigtaionController */,
 				61432EC21E9B5CE0001F7930 /* CollectionviewCell */,
 				61E099661E3E10F0004ED14E /* TableViewCells */,
 				87D07D841E40B4DA00C00AC6 /* TableViewHeaderFooters */,
@@ -8426,6 +8442,7 @@
 				875AD5501E38C0C900584ABF /* RISection.m in Sources */,
 				61C51E6D1FDC151700DC75EE /* ErrorControlView.swift in Sources */,
 				9AE766CD1CBCF31400B63D8E /* JACartResumeView.m in Sources */,
+				61FC467D201F75BF000141FA /* BaseNavigationController.m in Sources */,
 				61BBFC8020038F500000FC8A /* OrderCancellation.swift in Sources */,
 				61420C921F9F03D3009D9ECD /* Utility.swift in Sources */,
 				CE9ADF3E1AB6D78200D56481 /* JAAppDelegate.m in Sources */,
@@ -8474,6 +8491,7 @@
 				875AD5891E38C0C900584ABF /* RIGTMTracker.m in Sources */,
 				61EE79901EC046D90036F93E /* CatalogCategoryFilterOption.swift in Sources */,
 				CED6205C1BEB526B00FA8403 /* JAFiltersViewController.m in Sources */,
+				61FC4677201F65C2000141FA /* PhoneChangeViewController.swift in Sources */,
 				61EB3932200B43AC00F98C95 /* OrderCancellationResultViewController.swift in Sources */,
 				613A7E8F1EBF0F6B00E1AB3F /* CategoryProduct.swift in Sources */,
 				875AD57E1E38C0C900584ABF /* RIDataBaseWrapper.m in Sources */,

@@ -18,7 +18,8 @@ typedef NS_ENUM(NSUInteger, NavBarTitleType) {
 typedef NS_ENUM(NSUInteger, NavBarLeftButtonType) {
     NavBarLeftButtonTypeNone = 0,
     NavBarLeftButtonTypeSearch = 1,
-    NavBarLeftButtonTypeCart = 2
+    NavBarLeftButtonTypeCart = 2,
+    NavBarLeftButtonTypeClose = 3
 };
 
 @end

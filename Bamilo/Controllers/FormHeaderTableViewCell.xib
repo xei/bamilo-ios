@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -20,13 +20,13 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TaZ-oA-24f" id="AkE-rQ-p1A">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="55"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="55.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KAe-2u-SGF" userLabel="Container View">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="بامیلو اولین بازار اینترنتی ایران" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HaV-af-kEw">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="بامیلو اولین بازار اینترنتی ایران" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HaV-af-kEw">
                                 <rect key="frame" x="20" y="8" width="335" height="25"/>
                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="13"/>
                                 <nil key="textColor"/>
@@ -35,18 +35,19 @@
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="HaV-af-kEw" secondAttribute="trailing" constant="20" id="0Zh-WE-SjU"/>
-                            <constraint firstAttribute="height" constant="40" id="anv-hd-Ipw"/>
-                            <constraint firstItem="HaV-af-kEw" firstAttribute="leading" secondItem="KAe-2u-SGF" secondAttribute="leading" constant="20" id="cFA-W6-hPI"/>
+                            <constraint firstAttribute="right" secondItem="HaV-af-kEw" secondAttribute="right" constant="20" id="0Zh-WE-SjU"/>
+                            <constraint firstItem="HaV-af-kEw" firstAttribute="top" secondItem="KAe-2u-SGF" secondAttribute="top" constant="8" id="OVl-pO-GvA"/>
+                            <constraint firstItem="HaV-af-kEw" firstAttribute="left" secondItem="KAe-2u-SGF" secondAttribute="left" constant="20" id="cFA-W6-hPI"/>
                             <constraint firstItem="HaV-af-kEw" firstAttribute="centerY" secondItem="KAe-2u-SGF" secondAttribute="centerY" id="sIo-aC-med"/>
                         </constraints>
                     </view>
                 </subviews>
                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 <constraints>
-                    <constraint firstItem="KAe-2u-SGF" firstAttribute="leading" secondItem="AkE-rQ-p1A" secondAttribute="leading" id="2Jf-57-YN4"/>
-                    <constraint firstAttribute="trailing" secondItem="KAe-2u-SGF" secondAttribute="trailing" id="HFX-zn-uma"/>
+                    <constraint firstItem="KAe-2u-SGF" firstAttribute="left" secondItem="AkE-rQ-p1A" secondAttribute="left" id="2Jf-57-YN4"/>
+                    <constraint firstAttribute="right" secondItem="KAe-2u-SGF" secondAttribute="right" id="HFX-zn-uma"/>
                     <constraint firstItem="KAe-2u-SGF" firstAttribute="top" secondItem="AkE-rQ-p1A" secondAttribute="top" id="YSM-Jr-1Od"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="KAe-2u-SGF" secondAttribute="bottom" constant="15" id="brk-Sz-ycv"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

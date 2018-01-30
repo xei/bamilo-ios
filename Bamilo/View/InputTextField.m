@@ -43,7 +43,7 @@
     
     [self clearError];
     [self updateIconAppearance:YES];
-    self.seperatorBorderView.backgroundColor = [Theme color:kColorDarkGray];
+    self.seperatorBorderView.backgroundColor = [Theme color:kColorGray1];
     [self enableEyeIconButton: NO];
     self.textField.backgroundColor = UIColor.clearColor;
     self.eyeIconButton.backgroundColor = UIColor.clearColor;
@@ -81,7 +81,7 @@
 
 - (void)clearError {
     self.errorMsg.text = nil;
-    self.seperatorBorderView.backgroundColor = [Theme color:kColorDarkGray];
+    self.seperatorBorderView.backgroundColor = [Theme color:kColorGray1];
     self.textField.textColor = [Theme color:kColorExtraDarkGray];
     self.errorMsgTopConstraint.constant = -15;
 }

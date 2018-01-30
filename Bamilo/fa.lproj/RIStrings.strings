@@ -968,3 +968,9 @@
 "havent_received_token" = "کد تایید را دریافت نکردید؟";
 
 "national_id" = "کد ملی";
+
+"phone_verification_confirm" = "تایید شماره";
+
+"phone_number" = "شماره تلفن";
+
+"phone_submission" = "ثبت شماره";

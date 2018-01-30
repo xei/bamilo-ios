@@ -20,9 +20,11 @@
 #define cSignUpMethodGoogle @"sso-google"
 
 
-@interface SignUpViewController()
+@interface SignUpViewController() <PhoneVerificationViewControllerDelegate>
 @property (nonatomic, weak) IBOutlet UITableView* tableView;
 @property (nonatomic, strong) FormViewControl *formController;
+@property (nonatomic, strong) FormItemModel *phoneField;
+
 @end
 
 @implementation SignUpViewController
@@ -37,13 +39,13 @@
     self.formController.tableView = self.tableView;
     
     FormItemModel *email = [FormItemModel emailWithFieldName:@"customer[email]"];
-    FormItemModel *phone = [FormItemModel phoneWithFieldName:@"customer[phone]"];
+    self.phoneField = [FormItemModel phoneWithFieldName:@"customer[phone]"];
     FormItemModel *melliCode = [FormItemModel nationalCode:@"customer[national_id]"];
     FormItemModel *password = [FormItemModel passWordWithFieldName:@"customer[password]"];
     
     self.formController.submitTitle = STRING_SIGNUP;
     self.title = STRING_SIGNUP;
-    self.formController.formModelList = [NSMutableArray arrayWithArray:@[ email, phone, melliCode, password ]];
+    self.formController.formModelList = [NSMutableArray arrayWithArray:@[ email, self.phoneField, melliCode, password ]];
     [self.formController setupTableView];
 }
 
@@ -63,7 +65,7 @@
     }
     
     //TODO: here we should check the user's form dictionary validation via server then
-    [self.delegate wantsToShowTokenVerificatinWithUserFormDictionary:[self.formController getMutableDictionaryOfForm]];
+    [self.delegate wantsToShowTokenVerificatinWith:self phone: [self.phoneField getValue]];
     
 //    [DataAggregator signupUser:self with:[self.formController getMutableDictionaryOfForm] completion:^(id data, NSError *error) {
 //        if(error == nil) {
@@ -102,6 +104,13 @@
 //            }
 //        }
 //    }];
+}
+
+#pragma mark - PhoneVerificationViewControllerDelegate
+- (void)finishedVerifingPhoneWithCallBack:(void (^)(void))callBack {
+    //complete signup
+    [self.formController getMutableDictionaryOfForm];
+    callBack();
 }
 
 #pragma mark - DataServiceProtocol
