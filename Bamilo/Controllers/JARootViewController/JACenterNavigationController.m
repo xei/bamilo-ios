@@ -1100,22 +1100,11 @@
         switch (status) {
             case AuthenticationStatusSigninFinished:
                 [self popViewControllerAnimated:NO];
-                if(completion) {
-                    completion();
-                }
+                if(completion) completion();
                 break;
             case AuthenticationStatusSignupFinished:
-                if (self.viewControllers.count > 2) {
-                    UINavigationController *viewCtrl = [self.viewControllers objectAtIndex:self.viewControllers.count - 2];
-                    [self popToViewController:viewCtrl animated:YES];
-                } else {
-                    [self popViewControllerAnimated:NO];
-                }
-                if(completion) {
-                    completion();
-                }
+                if(completion) completion();
                 break;
-                
             default:
                 break;
         }

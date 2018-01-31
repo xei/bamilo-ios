@@ -32,12 +32,13 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
             let gender = FormItemModel.gender(withFieldName: "customer[gender]"),
             let email = FormItemModel.email(withFieldName: "customer[email]"),
             let birthday = FormItemModel.birthdayFieldName("customer[birthday]"),
-            let nationalCode = FormItemModel.nationalCode("customer[national_id]") {
-            
+            let nationalCode = FormItemModel.nationalCode("customer[national_id]"),
+            let bankCard = FormItemModel.bankAccountFieldName("customer[bank_card_number]") {
+
             email.disabled = true
             self.birthdayFeildModel = birthday
             self.phoneFieldModel = phone
-            self.formController?.formModelList = [phone, firstName, lastName, gender, email, birthday, nationalCode]
+            self.formController?.formModelList = [phone, firstName, lastName, gender, email, birthday, nationalCode, bankCard]
             
         }
         

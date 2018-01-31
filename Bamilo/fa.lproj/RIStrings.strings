@@ -974,3 +974,7 @@
 "phone_number" = "شماره تلفن";
 
 "phone_submission" = "ثبت شماره";
+
+"enter_phone_verification_code" = "لطفا کد ارسالی را وارد نمایید";
+
+"bank_card_number" = "شماره کارت بانکی";

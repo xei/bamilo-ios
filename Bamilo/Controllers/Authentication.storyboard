@@ -173,6 +173,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="InC-Ve-tyM">
                                         <rect key="frame" x="10" y="0.0" width="46" height="50"/>
                                         <state key="normal" title="Button"/>
+                                        <connections>
+                                            <action selector="retryButtonTapped:" destination="GfW-hX-m5m" eventType="touchUpInside" id="lLF-pY-mcq"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iWO-fs-Vu2">
                                         <rect key="frame" x="66" y="14.5" width="42" height="21"/>

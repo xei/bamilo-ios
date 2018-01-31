@@ -12,7 +12,7 @@ import UIKit
     func finishedVerifingPhone(callBack:() -> Void)
 }
 
-@objc class PhoneVerificationViewController: AuthenticationBaseViewController, UITextFieldDelegate {
+@objc class PhoneVerificationViewController: AuthenticationBaseViewController, UITextFieldDelegate, DataServiceProtocol {
     
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var tokenCodeTextField: UITextField!
@@ -24,14 +24,16 @@ import UIKit
     @IBOutlet weak private var submissionButton: UIButton!
     @IBOutlet weak private var retryButton: UIButton!
     
-    private var viewWillDisapear = false
+    private var textFieldShouldEndEditing = false
     private let defaultContentBottomConstriant: CGFloat = 20
     private var timer: Timer?
     private let countDownSeconds = 30
     private var remainingSeconds = 0
+    private var isVerificationDone = false
+    private let tokenLength = 5
     
     weak var delegate: PhoneVerificationViewControllerDelegate?
-    var phoneNumber: String?
+    var phoneNumber: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,17 +41,17 @@ import UIKit
         self.tokenCodeTextField.becomeFirstResponder()
         
         self.applyStyle()
-        self.runTimer(seconds: self.countDownSeconds)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWasShown(notification:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
-        
         tokenCodeTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        
+        self.requestToken(for: self.phoneNumber)
     }
     
     func textFieldDidChange(_ textField: UITextField) {
         if let inputToken = textField.text {
-            if inputToken.count <= 5 {
+            if inputToken.count <= tokenLength {
                 textField.text = inputToken.convertTo(language: .arabic)
-                if inputToken.count == 5 {
+                if inputToken.count == tokenLength {
                     self.submitForm()
                 }
                 return
@@ -83,11 +85,10 @@ import UIKit
         
         self.submissionButton.setTitle(STRING_OK, for: .normal)
         self.retryButton.setTitle(STRING_RESENDING, for: .normal)
-        if let userPhone = self.phoneNumber {
-            self.titleLabel.text = self.getTitleLabelMessage(phoneString: userPhone)
-        }
+        self.titleLabel.text = self.getTitleLabelMessage(phoneString: self.phoneNumber)
         self.retryContainerView.isHidden = true
     }
+    
     
     @objc private func updateTimer() {
         self.remainingSeconds -= 1
@@ -111,14 +112,85 @@ import UIKit
         self.submitForm()
     }
     
+    @IBAction func retryButtonTapped(_ sender: Any) {
+        self.requestToken(for: self.phoneNumber)
+    }
+    
     private func submitForm() {
+        if isVerificationDone {
+            self.performActionAfterVerification()
+            return
+        }
+        self.controlTokenSubmission()
+    }
+    
+    private func controlTokenSubmission(callBack: ((Bool)-> Void)? = nil ) {
+        if let token = self.tokenCodeTextField.text, token.count == tokenLength {
+            self.submitToken(token: token, callBack: { (success) in
+                callBack?(success)
+                if success { self.performActionAfterVerification() }
+            })
+        } else {
+            callBack?(false)
+            self.showNotificationBarMessage(STRING_ENTER_PHONE_VERIFICATION_CODE, isSuccess: false)
+        }
+    }
+    
+    private func performActionAfterVerification() {
         self.delegate?.finishedVerifingPhone(callBack: {
-            if let completionAction = self.completion {
-                completionAction(.signupFinished)
-            } else {
-                self.navigationController?.pop(step: 2, animated: true)
-            }
+            self.navigationController?.pop(step: 2, animated: true)
         })
+    }
+    
+    private func requestToken(for cellPhone: String, callBack: ((Bool)->Void)? = nil) {
+        self.runTimer(seconds: self.countDownSeconds)
+        self.verificationRequest(phone: cellPhone, rid: 0) { success in callBack?(success) }
+    }
+    
+    private func submitToken(token: String, callBack: ((Bool)->Void)? = nil) {
+        self.verificationRequest(phone: self.phoneNumber, token: token, rid: 1) { success in callBack?(success) }
+    }
+    
+    private func verificationRequest(phone: String, token: String? = nil, rid: Int32, callBack: @escaping (Bool)-> Void) {
+        AuthenticationDataManager.sharedInstance.phoneVerification(self, phone: phone, token: token) { (data, errors) in
+            if let errors = errors {
+                callBack(false)
+                self.errorHandler(errors, forRequestID: rid)
+            } else {
+                callBack(true)
+            }
+        }
+    }
+    
+    //MARK: - DataServiceProtocol
+    func bind(_ data: Any!, forRequestId rid: Int32) {
+        //do nothing here
+    }
+    
+    func errorHandler(_ error: Error!, forRequestID rid: Int32) {
+        if !Utility.handleErrorMessages(error: error, viewController: self) {
+            if rid == 0 {
+                textFieldShouldEndEditing = true
+                self.tokenCodeTextField.resignFirstResponder()
+                self.handleGenericErrorCodesWithErrorControlView(Int32(error.code), forRequestID: rid)
+            } else if rid == 1 {
+                
+            }
+        }
+    }
+    
+    func retryAction(_ callBack: RetryHandler!, forRequestId rid: Int32) {
+        textFieldShouldEndEditing = false
+        if rid == 0 {
+            self.requestToken(for: self.phoneNumber) { success in
+                callBack(success)
+                if success {
+                    self.tokenCodeTextField.becomeFirstResponder()
+                }
+            }
+        } else if rid == 1 {
+            self.controlTokenSubmission()
+        }
     }
     
     //MARK: - helper functions for timer
@@ -141,7 +213,7 @@ import UIKit
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.viewWillDisapear = true
+        self.textFieldShouldEndEditing = true
         self.tokenCodeTextField.resignFirstResponder()
     
         self.timer?.invalidate()
@@ -158,7 +230,7 @@ import UIKit
     
     //MARK: - UITextFieldDelegate
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        return viewWillDisapear
+        return textFieldShouldEndEditing
     }
     
     override func getScreenName() -> String! {

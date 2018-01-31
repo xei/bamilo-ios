@@ -10,7 +10,7 @@ import ObjectMapper
 
 typealias DataClosure = (_ data: Any?, _ error: NSError?) -> Void
 
-struct DataManagerKeys {
+public struct DataManagerKeys {
     static let DataMessages = "DataMessages"
     static let DataContent = "DataContent"
 }

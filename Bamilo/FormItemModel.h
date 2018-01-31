@@ -45,6 +45,7 @@ typedef NS_ENUM(NSUInteger, InputTextFieldControlType) {
 + (FormItemModel *)firstNameFieldWithFiedName:(NSString *)fieldName;
 + (FormItemModel *)lastNameWithFieldName:(NSString *)fieldName;
 + (FormItemModel *)phoneWithFieldName:(NSString *)fieldName;
++ (FormItemModel *)bankAccountFieldName: (NSString *)fieldName;
 + (FormItemModel *)addressWithFieldName:(NSString *)fieldName;
 + (FormItemModel *)postalCodeWithFieldName:(NSString *)fieldName;
 + (FormItemModel *)emailWithFieldName: (NSString *)fieldName;

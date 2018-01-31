@@ -9,7 +9,7 @@
 #import "SignUpViewController.h"
 #import "EmarsysPredictManager.h"
 #import "PushWooshTracker.h"
-
+#import "AuthenticationContainerViewController.h"
 //Lagacy importing
 #import "RICustomer.h"
 #import "JAUtils.h"
@@ -63,54 +63,67 @@
         [self.formController showAnyErrorInForm];
         return;
     }
-    
-    //TODO: here we should check the user's form dictionary validation via server then
-    [self.delegate wantsToShowTokenVerificatinWith:self phone: [self.phoneField getValue]];
-    
-//    [DataAggregator signupUser:self with:[self.formController getMutableDictionaryOfForm] completion:^(id data, NSError *error) {
-//        if(error == nil) {
-//            [self bind:data forRequestId:0];
-//
-//            //EVENT: SIGNUP / SUCCESS
-//            RICustomer *customer = [RICustomer getCurrentCustomer];
-//
-//            [TrackerManager postEventWithSelector:[EventSelectors signupEventSelector] attributes:[EventAttributes signupWithMethod:cSignUpMethodEmail user:customer success:YES]];
-//            [EmarsysPredictManager setCustomer: customer];
-//            [PushWooshTracker setUserID:[RICustomer getCurrentCustomer].email];
-//            if (self.completion) {
-//                self.completion(AUTHENTICATION_FINISHED_WITH_REGISTER);
-//            } else {
-//                [((UIViewController *)self.delegate).navigationController popViewControllerAnimated:YES];
-//            }
-//        } else {
-//            [TrackerManager postEventWithSelector:[EventSelectors signupEventSelector]
-//                                       attributes:[EventAttributes signupWithMethod:cSignUpMethodEmail user:nil success:NO]];
-//            //EVENT: SIGNUP / FAILURE
-//            BaseViewController *baseViewController = (BaseViewController *)self.delegate;
-//            if(![baseViewController showNotificationBar:error isSuccess:NO]) {
-//                BOOL errorHandled = NO;
-//                for(NSDictionary* errorField in [error.userInfo objectForKey:kErrorMessages]) {
-//                    NSString *fieldNameParm = [errorField objectForKey:@"field"];
-//                    if ([fieldNameParm isKindOfClass:[NSString class]] && fieldNameParm.length > 0) {
-//                        NSString *fieldName = [NSString stringWithFormat:@"customer[%@]", fieldNameParm];
-//                        if ([self.formController showErrorMessageForField:fieldName errorMsg:errorField[kMessage]]) {
-//                            errorHandled = YES;
-//                        }
+    [self tryToSignupUser:nil];
+}
+
+- (void)tryToSignupUser: (void(^)(void))callBack{
+    [DataAggregator signupUser:self with:[self.formController getMutableDictionaryOfForm] completion:^(id data, NSError *error) {
+        if(error == nil) {
+//            if ([data isKindOfClass:[ApiDataMessageList class]]) {
+//                ApiDataMessageList *messages = data;
+//                if (messages) {
+//                    if ([((ApiDataMessage *)messages.success.firstObject).reason isEqualToString:@"CUSTOMER_REGISTRATION_STEP_1_VALIDATED"]) {
+//                        NSLog(@"comes here");
+//                        [self.delegate wantsToShowTokenVerificatinWith:self phone: [self.phoneField getValue]];
+//                        return;
 //                    }
 //                }
-//                if (!errorHandled) {
-//                    [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
-//                }
 //            }
-//        }
-//    }];
+            [self bind:data forRequestId:0];
+            //EVENT: SIGNUP / SUCCESS
+            RICustomer *customer = [RICustomer getCurrentCustomer];
+            [TrackerManager postEventWithSelector:[EventSelectors signupEventSelector] attributes:[EventAttributes signupWithMethod:cSignUpMethodEmail user:customer success:YES]];
+            [EmarsysPredictManager setCustomer: customer];
+            [PushWooshTracker setUserID:[RICustomer getCurrentCustomer].email];
+            if (self.completion) {
+                self.completion(AuthenticationStatusSignupFinished);
+            } else if ([[MainTabBarViewController topViewController] isKindOfClass:[AuthenticationContainerViewController class]]) {
+                    [((UIViewController *)self.delegate).navigationController popViewControllerAnimated:YES];
+            }
+            if (callBack) callBack();
+        } else {
+            [TrackerManager postEventWithSelector:[EventSelectors signupEventSelector]
+                                       attributes:[EventAttributes signupWithMethod:cSignUpMethodEmail user:nil success:NO]];
+            //EVENT: SIGNUP / FAILURE
+            BaseViewController *baseViewController = (BaseViewController *)self.delegate;
+            if(![baseViewController showNotificationBar:error isSuccess:NO]) {
+                BOOL errorHandled = NO;
+                NSArray<NSDictionary *> *errors = [error.userInfo objectForKey:kErrorMessages];
+                for(NSDictionary* errorField in errors) {
+                    NSString *fieldNameParm = [errorField objectForKey:@"field"];
+                    if ([fieldNameParm isKindOfClass:[NSString class]] && fieldNameParm.length > 0) {
+                        NSString *fieldName = [NSString stringWithFormat:@"customer[%@]", fieldNameParm];
+                        if ([self.formController showErrorMessageForField:fieldName errorMsg:errorField[kMessage]]) {
+                            errorHandled = YES;
+                        }
+                    }
+                }
+                if (!errorHandled && errors.count == 1 && [[errors.firstObject objectForKey:@"field"] isKindOfClass:[NSString class]] && [[errors.firstObject objectForKey:@"field"] isEqualToString:@"token"]) {
+                    [self.delegate wantsToShowTokenVerificatinWith:self phone: [self.phoneField getValue]];
+                } else if (!errorHandled) {
+                    [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
+                }
+            }
+        }
+    }];
 }
 
 #pragma mark - PhoneVerificationViewControllerDelegate
 - (void)finishedVerifingPhoneWithCallBack:(void (^)(void))callBack {
     //complete signup
-    [self.formController getMutableDictionaryOfForm];
-    callBack();
+    [self tryToSignupUser:^{
+        if (callBack) callBack();
+    }];
 }
 
 #pragma mark - DataServiceProtocol

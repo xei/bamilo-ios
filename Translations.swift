@@ -110,3 +110,5 @@ let STRING_FEMALE = RILocalizationWrapper.localizedString("female")!
 let STRING_PHONE_VERIFICATION_CONFIRM = RILocalizationWrapper.localizedString("phone_verification_confirm")!
 let STRING_PHONE_NUMBER = RILocalizationWrapper.localizedString("phone_number")!
 let STRING_PHONE_SUBMISSION = RILocalizationWrapper.localizedString("phone_submission")!
+let STRING_ENTER_PHONE_VERIFICATION_CODE = RILocalizationWrapper.localizedString("enter_phone_verification_code")!
+

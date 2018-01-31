@@ -155,6 +155,16 @@
     return model;
 }
 
++ (FormItemModel *)bankAccountFieldName: (NSString *)fieldName {
+    return [[FormItemModel alloc] initWithTextValue: nil
+                                          fieldName: fieldName
+                                            andIcon: nil
+                                        placeholder: STRING_BANK_ACCOUNT
+                                               type: InputTextFieldControlTypeNumerical
+                                         validation: [[FormItemValidation alloc] initWithRequired:YES max:16 min:16 withRegxPatter:nil]
+                                      selectOptions:nil];
+}
+
 + (FormItemModel *)nationalCode: (NSString *)fieldName {
     return  [[FormItemModel alloc] initWithTextValue: nil
                                            fieldName: fieldName
