@@ -222,19 +222,6 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     
     [[PushNotificationManager pushManager] stopLocationTracking];
-    id topViewController = [ViewControllerManager topViewController];
-    NSString *screenName;
-
-    if([topViewController conformsToProtocol:@protocol(PerformanceTrackerProtocol)]) {
-        screenName = [topViewController getPerformanceTrackerScreenName];
-    }
-
-//    if(screenName) {
-//        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCloseApp] data:[NSDictionary dictionaryWithObject:screenName forKey:kRIEventScreenNameKey]];
-//    }
-//
-//    [[RITrackingWrapper sharedInstance] applicationDidEnterBackground:application];
-
     [[NSNotificationCenter defaultCenter] postNotificationName:kAppDidEnterBackground object:nil];
 }
 

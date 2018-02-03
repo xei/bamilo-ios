@@ -65,11 +65,6 @@
     }
 }
 
--(void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    [self publishScreenLoadTime];
-}
-
 #pragma mark - AuthenticationDelegate
 - (void)wantsToContinueWithoutLogin {
     [self performSegueWithIdentifier:@"showContinueWithoutLoginViewCtrl" sender:nil];
@@ -87,7 +82,6 @@
 
 #pragma mark - CAPSPageMenuDelegate
 - (void)didMoveToPage:(UIViewController *)controller index:(NSInteger)index {
-    [self publishScreenLoadTime];
 }
 
 #pragma mark - DataTrackerProtocol
@@ -98,11 +92,6 @@
         return @"SignIn";
     }
 }
-
--(BOOL)forcePublishScreenLoadTime {
-    return YES;
-}
-
 
 #pragma mark - NavigationBarProtocol
 - (NSString *)navBarTitleString {

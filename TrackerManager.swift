@@ -22,6 +22,12 @@
         }
     }
     
+    static func trackLoadTime(screenName: String, interval: NSNumber, label: String) {
+        trackers.forEach { (tracker) in
+            (tracker as? ScreenTrackerProtocol)?.trackLoadTime?(screenName: screenName, interval: interval, label: label)
+        }
+    }
+    
     static func trackScreenName(screenName:String) {
         self.trackers.forEach { (tracker) in
             (tracker as? ScreenTrackerProtocol)?.trackScreenName(screenName: screenName)

@@ -94,9 +94,13 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
             self.tableView.reloadData()
             return
         }
-        self.previousRequestTask = SearchSuggestionDataManager.sharedInstance.getSuggestion(self, queryString: sender.text!) { (data, errors) in
-            self.previousRequestTask = nil
-            self.bind(data, forRequestId: 0)
+        if let query = sender.text {
+            self.recordStartLoadTime()
+            self.previousRequestTask = SearchSuggestionDataManager.sharedInstance.getSuggestion(self, queryString: query) { (data, errors) in
+                self.previousRequestTask = nil
+                self.bind(data, forRequestId: 0)
+                self.publishScreenLoadTime(withName: self.getScreenName(), withLabel: query)
+            }
         }
     }
     
@@ -259,5 +263,10 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
         ThreadManager.execute(onMainThread: {
             self.tableView.reloadData()
         })
+    }
+    
+    //MARK: - ScreenTrackingProtocol
+    override func getScreenName() -> String! {
+        return "SearchSuggestions"
     }
 }

@@ -145,7 +145,7 @@
     //requests user form and when it is finished
     //requests change pass form
     [self requestUserEditForm];
-    [self publishScreenLoadTime];
+//    [self publishScreenLoadTime];
     
     if (RI_IS_RTL) {
         [self.view flipAllSubviews];

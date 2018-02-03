@@ -74,7 +74,7 @@ JADynamicFormDelegate
            
            self.form = form;
            
-           [self publishScreenLoadTime];
+//           [self publishScreenLoadTime];
            
            [self setupView];
            [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
@@ -83,7 +83,7 @@ JADynamicFormDelegate
        } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
            self.apiResponse = apiResponse;
            
-           [self publishScreenLoadTime];
+//           [self publishScreenLoadTime];
            
            [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(getForm) objects:nil];
            

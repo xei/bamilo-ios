@@ -44,7 +44,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [self.formController registerForKeyboardNotifications];
     
-    [self publishScreenLoadTime];
+//    [self publishScreenLoadTime];
 }
 - (void)viewDidDisappear:(BOOL)animated {
     [self.formController unregisterForKeyboardNotifications];

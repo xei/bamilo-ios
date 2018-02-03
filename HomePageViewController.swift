@@ -97,12 +97,16 @@ class HomePageViewController:   BaseViewController,
     }
     
     private func getHomePage(callBack: ((Bool)->Void)? = nil) {
+        self.recordStartLoadTime()
         HomeDataManager.sharedInstance.getHomeData(self, requestType: .background) { (data, errors) in
             self.loadingIndicator.stopAnimating()
             if errors == nil {
                 callBack?(true)
                 self.tableView.backgroundView = nil
                 self.bind(data, forRequestId: 0)
+                
+                //track load time
+                self.publishScreenLoadTime(withName:self.getScreenName(), withLabel: "")
             } else {
                 callBack?(false)
                 self.emptyTheView()
@@ -277,5 +281,4 @@ class HomePageViewController:   BaseViewController,
     func spotlightViewDidCleanup(_ spotlightView: TourSpotLightView) {
         self.tourHandler?(spotlightView.tourName!, self)
     }
-    
 }

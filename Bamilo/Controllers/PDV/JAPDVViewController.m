@@ -1583,7 +1583,7 @@ static NSString *recommendationLogic = @"RELATED";
 //}
 
 - (void)trackingEventLoadingTime {
-    [self publishScreenLoadTime];
+//    [self publishScreenLoadTime];
 }
 
 #pragma mark - DataTrackerProtocol

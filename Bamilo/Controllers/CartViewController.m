@@ -225,6 +225,7 @@
 - (void)getContent:(void(^)(BOOL))callBack {
     [self clearContent];
     [self.activityIndicator startAnimating];
+    [self recordStartLoadTime];
     [DataAggregator getUserCart:self completion:^(id data, NSError *error) {
         [self.activityIndicator stopAnimating];
         if(error != nil) {
@@ -234,13 +235,9 @@
             return;
         }
         [self bind:data forRequestId:0];
+        [self publishScreenLoadTimeWithName:[self getScreenName] withLabel:@""];
         if (callBack) callBack(YES);
     }];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    [self publishScreenLoadTime];
 }
 
 - (void) clearContent {
