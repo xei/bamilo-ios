@@ -30,7 +30,6 @@
     [super viewDidLoad];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    //PerformanceTrackerProtocol
     [self recordStartLoadTime];
     self.title = nil;
     self.view.backgroundColor = JABackgroundGrey;
@@ -152,19 +151,17 @@
 
 - (void)removeMessageView {
     [[NotificationBarView sharedInstance] dismiss];
-    
 }
 
 #pragma mark - PerformanceTrackerProtocol
--(void) recordStartLoadTime {
+- (void)recordStartLoadTime {
     _startLoadingTime = [NSDate date];
 }
 
--(void) publishScreenLoadTime {
-    //Publish the load time if it's the first load OR it's been forced
-    if(_hasAppeared == NO || ([self respondsToSelector:@selector(forcePublishScreenLoadTime)] && [self forcePublishScreenLoadTime])) {
-        _hasAppeared = YES;
-    }
+- (void)publishScreenLoadTimeWithName:(NSString *)name withLabel:(NSString *)label {
+    NSDate *publishTime = [NSDate date];
+    NSTimeInterval publishInterVal = [publishTime timeIntervalSinceDate:_startLoadingTime];
+    [TrackerManager trackLoadTimeWithScreenName:name interval:@((NSUInteger)(publishInterVal * 1000)) label:label];
 }
 
 - (void)handleGenericErrorCodesWithErrorControlView:(int)errorCode forRequestID:(int)rid {
@@ -188,14 +185,6 @@
 
 - (void)removeErrorView {
     [errorView removeFromSuperview];
-}
-
--(NSString *) getPerformanceTrackerScreenName {
-    return nil;
-}
-
--(NSString *)getPerformanceTrackerLabel {
-    return nil;
 }
 
 #pragma mark - DataTrackerProtocol

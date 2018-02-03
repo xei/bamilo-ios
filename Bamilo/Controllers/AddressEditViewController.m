@@ -112,9 +112,6 @@
     [super viewDidAppear:animated];
     
     [self.formController registerForKeyboardNotifications];
-    if(self.address.uid == nil) {
-        [self publishScreenLoadTime];
-    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -244,7 +241,6 @@
     [DataAggregator getAddress:self id:uid completion:^(id data, NSError *error) {
         if (error == nil) {
             [self bind:data forRequestId:3];
-            [self publishScreenLoadTime];
         } else {
             [self errorHandler:error forRequestID:3];
         }

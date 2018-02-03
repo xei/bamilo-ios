@@ -7,7 +7,6 @@
 //
 
 #import "BaseViewController.h"
-#import "PerformanceTrackerProtocol.h"
 
 typedef NS_ENUM(NSUInteger, AuthenticationStatus) {
     AuthenticationStatusCanceled,

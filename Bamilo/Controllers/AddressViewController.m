@@ -100,11 +100,12 @@
 #pragma mark - Helpers
 - (void)fetchAddressList:(void(^)(BOOL))callBack {
     [self.activityIndicator startAnimating];
+    [self recordStartLoadTime];
     [DataAggregator getUserAddressList:self completion:^(id _Nullable data, NSError * _Nullable error) {
         [self.activityIndicator stopAnimating];
         if(error == nil && [data isKindOfClass:AddressList.class]) {
             [self bind:data forRequestId:0];
-            [self publishScreenLoadTime];
+            [self publishScreenLoadTimeWithName:[self getScreenName] withLabel:@""];
             if (callBack) callBack(YES);
         } else if (error) {
             [self errorHandler:error forRequestID:0];

@@ -7,6 +7,7 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-@objc protocol ScreenTrackerProtocol : class {
+@objc protocol ScreenTrackerProtocol : NSObjectProtocol {
     func trackScreenName(screenName: String)
+    @objc optional func trackLoadTime(screenName: String, interval: NSNumber, label: String)
 }

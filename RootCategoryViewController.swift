@@ -245,6 +245,7 @@ class RootCategoryViewController: BaseViewController,
             self.handleGenericErrorCodesWithErrorControlView(Int32(NSURLErrorBadServerResponse), forRequestID: rid)
         }
         if requestIdsInProgress.count == 0, successRequestIds.count == 3 {
+            self.publishScreenLoadTime(withName: self.getScreenName(), withLabel: "")
             self.categories = self.incomingCategories
             self.externalLinks = self.incomingExternalLinks
             self.internalLinks = self.incomingInternalLinks
@@ -294,7 +295,7 @@ class RootCategoryViewController: BaseViewController,
     
     //MARK: - DataTrackerProtocol
     override func getScreenName() -> String! {
-        return "CategoryMenu"
+        return "Categories"
     }
     
     //MARK - NavigationBarProtocol

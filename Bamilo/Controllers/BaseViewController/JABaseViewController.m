@@ -103,8 +103,6 @@
     [super viewDidLoad];
     
     self.automaticallyAdjustsScrollViewInsets = NO;
-    
-    //PerformanceTrackerProtocol
     [self recordStartLoadTime];
     
     self.orientation = [[UIApplication sharedApplication] statusBarOrientation];
@@ -116,11 +114,11 @@
 //    self.loadingView.alpha = 0.0f;
 //    self.loadingView.userInteractionEnabled = YES;
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancelLoading)];
+//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancelLoading)];
 //    [self.loadingView addGestureRecognizer:tap];
     
-    UIImage *image = [UIImage imageNamed:@"loadingAnimationFrame1"];
-    int lastFrame = 8;
+//    UIImage *image = [UIImage imageNamed:@"loadingAnimationFrame1"];
+//    int lastFrame = 8;
   
 //    self.loadingAnimation = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, image.size.width, image.size.height)];
 //    self.loadingAnimation.animationDuration = 1.0f;
@@ -681,23 +679,10 @@
     _startLoadingTime = [NSDate date];
 }
 
--(void) publishScreenLoadTime {
-    if(_hasAppeared == NO) {
-//        NSTimeInterval executionTime = [[NSDate date] timeIntervalSinceDate:_startLoadingTime];
-//        NSString *screenName = [self getPerformanceTrackerScreenName];
-//        if(screenName) {
-//            [[RITrackingWrapper sharedInstance] trackTimingInMillis:[NSNumber numberWithDouble:executionTime] reference:screenName label:[self getPerformanceTrackerLabel] ?: @""];
-//        }
-        _hasAppeared = YES;
-    }
-}
-
--(NSString *)getPerformanceTrackerLabel {
-    return nil;
-}
-
-- (NSString *)getPerformanceTrackerScreenName {
-    return [self getScreenName];
+- (void)publishScreenLoadTime:(NSString *)name withLabel:(NSString *)label {
+    NSDate *publishTime = [NSDate date];
+    NSTimeInterval publishInterVal = [publishTime timeIntervalSinceDate:_startLoadingTime];
+    [TrackerManager trackLoadTimeWithScreenName:name interval:@((NSUInteger)(publishInterVal * 1000)) label:label];
 }
 
 #pragma mark - DataTrackerProtocol

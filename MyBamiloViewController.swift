@@ -87,6 +87,7 @@ class MyBamiloViewController:   BaseViewController,
         self.loadingIndicator.stopAnimating()
         self.visibleProductCount = 0
         self.incomingDataSource = MyBamiloModel()
+        self.recordStartLoadTime()
         EmarsysPredictManager.sendTransactions(of: self)
     }
     
@@ -140,6 +141,7 @@ class MyBamiloViewController:   BaseViewController,
     }
     
     private func renderIncomingDataSource() {
+        self.publishScreenLoadTime(withName: self.getScreenName(), withLabel: "")
         self.dataSource.topics = self.incomingDataSource.topics
         self.incomingDataSource.mergeProductsWithInterleaveLogic()
         

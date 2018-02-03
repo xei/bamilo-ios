@@ -519,12 +519,14 @@ import SwiftyJSON
     
     private func loadData(callBack: ((Bool)->Void)? = nil) {
         self.pageNumber = 1
+        self.recordStartLoadTime()
         CatalogDataManager.sharedInstance.getCatalog(self, searchTarget: searchTarget, filtersQueryString: pushFilterQueryString, sortingMethod: sortingMethod) { (data, errorMessages) in
             if let error = errorMessages {
                 self.errorHandler(error, forRequestID: 0)
                 callBack?(false)
             } else {
                 self.bind(data, forRequestId: 0)
+                self.publishScreenLoadTime(withName: self.getScreenName(), withLabel: self.searchTarget.node)
                 callBack?(true)
             }
             self.resetBarFollowers(animated: true)

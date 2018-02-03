@@ -11,13 +11,13 @@
 #import "JANavigationBarLayout.h"
 #import "JATabBarView.h"
 #import "JAScreenTarget.h"
-#import "PerformanceTrackerProtocol.h"
 #import "DataTrackerProtocol.h"
 //#######
 #import "DataMessageList.h"
 #import "NavigationBarProtocol.h"
+#import "PerformanceTrackerProtocol.h"
 
-@interface JABaseViewController : UIViewController <PerformanceTrackerProtocol, DataTrackerProtocol, UISearchBarDelegate, NavigationBarProtocol>
+@interface JABaseViewController : UIViewController <DataTrackerProtocol, UISearchBarDelegate, NavigationBarProtocol, PerformanceTrackerProtocol>
 
 //@property (nonatomic, strong)JANavigationBarLayout* navBarLayout;
 
@@ -81,6 +81,7 @@
 
 - (void)updateCartInNavBar;
 
+- (void)publishScreenLoadTime:(NSString *)name withLabel:(NSString *)label;
 //TEMP FUNCTION
 -(NSArray *) extractSuccessMessages:(id)dataMessages;
 

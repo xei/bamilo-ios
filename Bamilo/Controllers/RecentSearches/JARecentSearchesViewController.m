@@ -60,7 +60,7 @@
         [self.view addSubview:self.button];
     }
     
-    [self publishScreenLoadTime];
+//    [self publishScreenLoadTime];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
