@@ -43,7 +43,7 @@ class OrderDetailViewController: BaseViewController, OrderDetailTableViewCellDel
                 } else {
                     completion?(true)
                     self.bind(data, forRequestId: 0)
-                    self.publishScreenLoadTime(withName: self.getScreenName(), withLabel: "")
+                    self.publishScreenLoadTime(withName: self.getScreenName(), withLabel: self.orderId)
                 }
             }
         } else {

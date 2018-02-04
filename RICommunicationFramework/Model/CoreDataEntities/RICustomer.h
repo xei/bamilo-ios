@@ -28,10 +28,12 @@
 @property (nonatomic, retain) NSOrderedSet *addresses;
 @property (nonatomic, retain) NSNumber *newsletterSubscribed;
 @property (nonatomic, copy) NSString *nationalID;
-
+@property (nonatomic, copy) NSString *bankCartNumber;
 @property (nonatomic, retain) NSArray *wishlistProducts;
 @property (strong, nonatomic) AddressList *addressList;
 @property (copy, nonatomic) NSString *phone;
+
++ (instancetype)sharedInstance;
 
 + (NSString *)signUpAccount:(NSString *)email
                successBlock:(void (^)(id object))successBlock

@@ -81,7 +81,7 @@
 
 - (void)updateCartInNavBar;
 
-- (void)publishScreenLoadTime:(NSString *)name withLabel:(NSString *)label;
+- (void)publishScreenLoadTimeWithName:(NSString *)name withLabel:(NSString *)label;
 //TEMP FUNCTION
 -(NSArray *) extractSuccessMessages:(id)dataMessages;
 

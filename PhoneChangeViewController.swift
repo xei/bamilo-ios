@@ -56,7 +56,7 @@ class PhoneChangeViewController: BaseViewController, PhoneVerificationViewContro
     }
     
     //MARK : - PhoneVerificationViewControllerDelegate
-    func finishedVerifingPhone(callBack: () -> Void) {
+    func finishedVerifingPhone(target: PhoneVerificationViewController, callBack: () -> Void) {
         self.dismiss(animated: true, completion: nil)
         callBack()
     }

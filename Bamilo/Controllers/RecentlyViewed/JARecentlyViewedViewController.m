@@ -219,13 +219,13 @@
             self.productsDictionary = [temp mutableCopy];
             self.chosenSimples = [NSMutableDictionary new];
             [self.collectionView reloadData];
-            [self publishScreenLoadTime:[self getScreenName] withLabel:@""];
+            [self publishScreenLoadTimeWithName:[self getScreenName] withLabel:@""];
         } else {
             self.productsDictionary = nil;
         }
         [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-        [self publishScreenLoadTime:[self getScreenName] withLabel:@""];
+        [self publishScreenLoadTimeWithName:[self getScreenName] withLabel:@""];
         [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadProducts) objects:nil];
         [self hideLoading];
     }];

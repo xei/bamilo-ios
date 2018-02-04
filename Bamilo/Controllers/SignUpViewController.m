@@ -13,7 +13,7 @@
 //Lagacy importing
 #import "RICustomer.h"
 #import "JAUtils.h"
-
+#import "DataServiceProtocol.h"
 #import "Bamilo-Swift.h"
 
 #define cSignUpMethodEmail @"email"
@@ -63,22 +63,25 @@
         [self.formController showAnyErrorInForm];
         return;
     }
-    [self tryToSignupUser:nil];
+    [self tryToSignupUser:self withCallBack:nil];
 }
 
-- (void)tryToSignupUser: (void(^)(void))callBack{
-    [DataAggregator signupUser:self with:[self.formController getMutableDictionaryOfForm] completion:^(id data, NSError *error) {
+- (void)tryToSignupUser:(id<DataServiceProtocol>)target withCallBack:(void(^)(void))callBack{
+    [DataAggregator signupUser:target with:[self.formController getMutableDictionaryOfForm] completion:^(id data, NSError *error) {
         if(error == nil) {
-//            if ([data isKindOfClass:[ApiDataMessageList class]]) {
-//                ApiDataMessageList *messages = data;
-//                if (messages) {
-//                    if ([((ApiDataMessage *)messages.success.firstObject).reason isEqualToString:@"CUSTOMER_REGISTRATION_STEP_1_VALIDATED"]) {
-//                        NSLog(@"comes here");
-//                        [self.delegate wantsToShowTokenVerificatinWith:self phone: [self.phoneField getValue]];
-//                        return;
-//                    }
-//                }
-//            }
+            //TODO: this is not a good approach which has been contracted with server
+            // and it's better to be refactored in both platforms
+            if ([data isKindOfClass:[ApiDataMessageList class]]) {
+                ApiDataMessageList *messages = data;
+                if (messages) {
+                    if ([((ApiDataMessage *)messages.success.firstObject).reason isEqualToString:@"CUSTOMER_REGISTRATION_STEP_1_VALIDATED"]) {
+                        NSLog(@"comes here");
+                        [self.delegate wantsToShowTokenVerificatinWith:self phone: [self.phoneField getValue]];
+                        return;
+                    }
+                }
+            }
+            //End of TODO
             [self bind:data forRequestId:0];
             //EVENT: SIGNUP / SUCCESS
             RICustomer *customer = [RICustomer getCurrentCustomer];
@@ -87,8 +90,9 @@
             [PushWooshTracker setUserID:[RICustomer getCurrentCustomer].email];
             if (self.completion) {
                 self.completion(AuthenticationStatusSignupFinished);
-            } else if ([[MainTabBarViewController topViewController] isKindOfClass:[AuthenticationContainerViewController class]]) {
-                    [((UIViewController *)self.delegate).navigationController popViewControllerAnimated:YES];
+            }
+            if ([[MainTabBarViewController topViewController] isKindOfClass:[AuthenticationContainerViewController class]]) {
+                [((UIViewController *)self.delegate).navigationController popViewControllerAnimated:YES];
             }
             if (callBack) callBack();
         } else {
@@ -108,9 +112,10 @@
                         }
                     }
                 }
-                if (!errorHandled && errors.count == 1 && [[errors.firstObject objectForKey:@"field"] isKindOfClass:[NSString class]] && [[errors.firstObject objectForKey:@"field"] isEqualToString:@"token"]) {
-                    [self.delegate wantsToShowTokenVerificatinWith:self phone: [self.phoneField getValue]];
-                } else if (!errorHandled) {
+//                if (!errorHandled && errors.count == 1 && [[errors.firstObject objectForKey:@"field"] isKindOfClass:[NSString class]] && [[errors.firstObject objectForKey:@"field"] isEqualToString:@"token"]) {
+//                    [self.delegate wantsToShowTokenVerificatinWith:self phone: [self.phoneField getValue]];
+//                } else
+                if (!errorHandled) {
                     [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
                 }
             }
@@ -119,9 +124,9 @@
 }
 
 #pragma mark - PhoneVerificationViewControllerDelegate
-- (void)finishedVerifingPhoneWithCallBack:(void (^)(void))callBack {
+- (void)finishedVerifingPhoneWithTarget:(PhoneVerificationViewController *)target callBack:(void (^)(void))callBack {
     //complete signup
-    [self tryToSignupUser:^{
+    [self tryToSignupUser:target withCallBack:^{
         if (callBack) callBack();
     }];
 }

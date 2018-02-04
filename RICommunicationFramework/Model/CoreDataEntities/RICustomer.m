@@ -43,6 +43,7 @@
 @synthesize addressList;
 @synthesize phone;
 @synthesize nationalID;
+@synthesize bankCartNumber;
 
 + (NSString *)signUpAccount:(NSString *)email
                successBlock:(void (^)(id object))successBlock
@@ -519,6 +520,11 @@
     if (VALID_NOTEMPTY([dict objectForKey:@"national_id"], NSString)) {
         customer.nationalID = [dict objectForKey:@"national_id"];
     }
+    
+    if (VALID_NOTEMPTY([dict objectForKey:@"bank_card_number"], NSString)) {
+        customer.bankCartNumber = [dict objectForKey:@"bank_card_number"];
+    }
+    
     //#############################################################################################################
     
     NSDictionary *_addressListDict = [dict objectForKey:@"address_list"];

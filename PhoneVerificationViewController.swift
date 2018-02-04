@@ -9,7 +9,7 @@
 import UIKit
 
 @objc protocol PhoneVerificationViewControllerDelegate: NSObjectProtocol {
-    func finishedVerifingPhone(callBack:() -> Void)
+    func finishedVerifingPhone(target: PhoneVerificationViewController, callBack:() -> Void)
 }
 
 @objc class PhoneVerificationViewController: AuthenticationBaseViewController, UITextFieldDelegate, DataServiceProtocol {
@@ -29,8 +29,7 @@ import UIKit
     private var timer: Timer?
     private let countDownSeconds = 30
     private var remainingSeconds = 0
-    private var isVerificationDone = false
-    private let tokenLength = 5
+    private let tokenLength = 6
     
     weak var delegate: PhoneVerificationViewControllerDelegate?
     var phoneNumber: String!
@@ -113,22 +112,33 @@ import UIKit
     }
     
     @IBAction func retryButtonTapped(_ sender: Any) {
-        self.requestToken(for: self.phoneNumber)
+        if let message = self.getRetryActionMessages() {
+            AlertManager.sharedInstance().confirmAlert("", text: message, confirm: STRING_OK, cancel: STRING_CANCEL) { (didSelectOk) in
+                if didSelectOk {
+                    self.requestToken(for: self.phoneNumber)
+                }
+            }
+        }
+    }
+    
+    private func getRetryActionMessages() -> String? {
+        if let phone = self.phoneNumber {
+            return "‌ارسال مجدد به شماره \(phone)".convertTo(language: .arabic)
+        }
+        return nil
     }
     
     private func submitForm() {
-        if isVerificationDone {
-            self.performActionAfterVerification()
-            return
-        }
         self.controlTokenSubmission()
     }
     
     private func controlTokenSubmission(callBack: ((Bool)-> Void)? = nil ) {
         if let token = self.tokenCodeTextField.text, token.count == tokenLength {
-            self.submitToken(token: token, callBack: { (success) in
-                callBack?(success)
-                if success { self.performActionAfterVerification() }
+            ThreadManager.execute(onMainThread: {
+                self.submitToken(token: token, callBack: { (success) in
+                    callBack?(success)
+                    if success { self.performActionAfterVerification() }
+                })
             })
         } else {
             callBack?(false)
@@ -137,9 +147,11 @@ import UIKit
     }
     
     private func performActionAfterVerification() {
-        self.delegate?.finishedVerifingPhone(callBack: {
-            self.navigationController?.pop(step: 2, animated: true)
-        })
+        ThreadManager.execute {
+            self.delegate?.finishedVerifingPhone(target: self, callBack: {
+                self.navigationController?.pop(step: 2, animated: true)
+            })
+        }
     }
     
     private func requestToken(for cellPhone: String, callBack: ((Bool)->Void)? = nil) {
@@ -152,7 +164,7 @@ import UIKit
     }
     
     private func verificationRequest(phone: String, token: String? = nil, rid: Int32, callBack: @escaping (Bool)-> Void) {
-        AuthenticationDataManager.sharedInstance.phoneVerification(self, phone: phone, token: token) { (data, errors) in
+        AuthenticationDataManager.sharedInstance.phoneVerification(self, phone: phone, token: token?.convertTo(language: .english)) { (data, errors) in
             if let errors = errors {
                 callBack(false)
                 self.errorHandler(errors, forRequestID: rid)
@@ -174,7 +186,7 @@ import UIKit
                 self.tokenCodeTextField.resignFirstResponder()
                 self.handleGenericErrorCodesWithErrorControlView(Int32(error.code), forRequestID: rid)
             } else if rid == 1 {
-                
+                self.showNotificationBarMessage(STRING_SERVER_ERROR_MESSAGE, isSuccess: false)
             }
         }
     }
@@ -215,7 +227,10 @@ import UIKit
         super.viewWillDisappear(animated)
         self.textFieldShouldEndEditing = true
         self.tokenCodeTextField.resignFirstResponder()
+    }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         self.timer?.invalidate()
     }
     

@@ -26,7 +26,7 @@ import Foundation
         let buttonNameMapper: [NavBarLeftButtonType: String] = [
             .search : "btn_search",
             .cart : "btn_cart",
-            .close : "btn_delete_saved"
+            .close : "WhiteClose"
         ]
         if let buttonImageName = buttonNameMapper[type] {
             button.setImage(UIImage(named: buttonImageName), for: UIControlState.normal)

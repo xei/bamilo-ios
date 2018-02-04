@@ -117,7 +117,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     [self hideLoading];
-    [self publishScreenLoadTime:[self getScreenName] withLabel: self.title];
+    [self publishScreenLoadTimeWithName:[self getScreenName] withLabel: self.title];
 
     [self.scrollView setFrame:[self viewBounds]];
     [self.webView setFrame:self.scrollView.bounds];

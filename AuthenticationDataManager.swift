@@ -63,8 +63,8 @@ class AuthenticationDataManager: DataManagerSwift {
         AuthenticationDataManager.requestManager.async(.get, target: target, path: RI_API_GET_CUSTOMER, params: nil, type: .foreground) { (responseType, data, errors) in
             if let data = data, responseType == 200 {
                 let customer = RICustomer.getCurrent()
-                RICustomer.parseCustomer(withJson: data.metadata?["customer_entity"] as! [AnyHashable : Any], plainPassword: customer?.plainPassword, loginMethod: "normal")
-                completion(data.metadata, nil)
+                let parsedCustomer = RICustomer.parseCustomer(withJson: data.metadata?["customer_entity"] as! [AnyHashable : Any], plainPassword: customer?.plainPassword, loginMethod: "normal")
+                completion(parsedCustomer, nil)
             } else {
                 completion(nil, self.createError(responseType, errorMessages: errors))
             }
@@ -78,7 +78,7 @@ class AuthenticationDataManager: DataManagerSwift {
             params["token"] = token
         }
         
-        AuthenticationDataManager.requestManager.async(.post, target: target, path: RI_API_PHONE_VERIFY, params: params, type: .foreground) { (responseType, data, errors) in
+        AuthenticationDataManager.requestManager.async(.post, target: target, path: RI_API_PHONE_VERIFY, params: params, type: token != nil ? .container : .foreground) { (responseType, data, errors) in
             self.processResponse(responseType, aClass: nil, data: data, errorMessages: errors, completion: completion)
         }
     }

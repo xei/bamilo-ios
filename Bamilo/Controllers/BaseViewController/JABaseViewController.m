@@ -679,7 +679,7 @@
     _startLoadingTime = [NSDate date];
 }
 
-- (void)publishScreenLoadTime:(NSString *)name withLabel:(NSString *)label {
+- (void)publishScreenLoadTimeWithName:(NSString *)name withLabel:(NSString *)label {
     NSDate *publishTime = [NSDate date];
     NSTimeInterval publishInterVal = [publishTime timeIntervalSinceDate:_startLoadingTime];
     [TrackerManager trackLoadTimeWithScreenName:name interval:@((NSUInteger)(publishInterVal * 1000)) label:label];

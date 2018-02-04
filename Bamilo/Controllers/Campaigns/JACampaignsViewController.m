@@ -237,7 +237,7 @@
         }
         [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         [campaignPage loadWithCampaign:campaign];
-        [self publishScreenLoadTime:[self getScreenName] withLabel:campaign.name];
+        [self publishScreenLoadTimeWithName:[self getScreenName] withLabel:campaign.name];
         [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errors) {
         if (apiResponse == RIApiResponseAPIError) {

@@ -14,6 +14,8 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
     private var formController: FormViewControl?
     private var birthdayFeildModel: FormItemModel?
     private var phoneFieldModel : FormItemModel?
+    private var bankCartFieldModel : FormItemModel?
+    private var previousBankCartNumber: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,7 +72,17 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
     
     //MARK: - FormViewControlDelegate
     func formSubmitButtonTapped() {
-        
+        if let previousCart = self.previousBankCartNumber, let newCart = self.bankCartFieldModel?.getValue(), previousCart.convertTo(language: .arabic) != newCart {
+            AlertManager.sharedInstance().confirmAlert("", text: STRING_CALL_CUSTOMER_SERVICE, confirm: STRING_OK, cancel: STRING_CANCEL) { (didSelectOk) in
+                self.submitEditProfileToServer()
+            }
+        } else {
+            self.submitEditProfileToServer()
+        }
+    }
+    
+    private func submitEditProfileToServer() {
+        let a = self.formController?.getMutableDictionaryOfForm()
     }
     
     func fieldHasBeenFocuced(_ field: InputTextFieldControl!, inFieldIndex fieldIndex: UInt) {
@@ -82,12 +94,12 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
     
     //MARK: - DataServiceProtocol
     func bind(_ data: Any!, forRequestId rid: Int32) {
-        if rid == 0 {
-            self.updateFormWithCustomer()
-            
-            
-            //TODO: if we have any messages for profile form
-            self.setHeaderMessage(message: "همینطوری یه مسیج امتحانی مینویسیم ببینیم چی میشه اینجا وقتی زیاد بنویسیم چی میشه")
+        if rid == 0, let customer = data as? RICustomer {
+            ThreadManager.execute(onMainThread: {
+                self.updateFormWithCustomer(customer: customer)
+                //TODO: if we have any messages for profile form
+                self.setHeaderMessage(message: "همینطوری یه مسیج امتحانی مینویسیم ببینیم چی میشه اینجا وقتی زیاد بنویسیم چی میشه")
+            })
         }
     }
     
@@ -125,19 +137,18 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
     }
     
     
-    private func updateFormWithCustomer() {
-        let customer = RICustomer.getCurrent()
+    private func updateFormWithCustomer(customer: RICustomer) {
         
         var fieldValues = [
-            "customer[phone]": customer?.phone ?? "",
-            "customer[first_name]": customer?.firstName ?? "",
-            "customer[last_name]" : customer?.lastName ?? "",
-            "customer[email]" : customer?.email ?? "",
-            "customer[national_id]" : customer?.nationalID ?? ""
+            "customer[phone]": customer.phone ?? "",
+            "customer[first_name]": customer.firstName ?? "",
+            "customer[last_name]" : customer.lastName ?? "",
+            "customer[email]" : customer.email ?? "",
+            "customer[national_id]" : customer.nationalID ?? "",
+            "customer[bank_card_number]" : customer.bankCartNumber ?? ""
         ]
         
-        
-        if let birthday = customer?.birthday {
+        if let birthday = customer.birthday {
             let dateFormatter = DateFormatter(withFormat: "yyyy-MM-dd", locale: "en_US")
             dateFormatter.calendar = Calendar(identifier: .gregorian)
             if let date = dateFormatter.date(from: birthday) {
@@ -145,7 +156,7 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
             }
         }
         
-        if let gender = customer?.gender {
+        if let gender = customer.gender {
             let genderMapper = ["male": STRING_MALE, "female": STRING_FEMALE]
             fieldValues["customer[gender]"] = genderMapper[gender] ?? ""
         }
@@ -162,6 +173,8 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
                 }
             }
         }
+        
+        self.previousBankCartNumber = customer.bankCartNumber
         self.formController?.refreshView()
     }
     
