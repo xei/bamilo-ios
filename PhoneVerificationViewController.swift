@@ -27,7 +27,7 @@ import UIKit
     private var textFieldShouldEndEditing = false
     private let defaultContentBottomConstriant: CGFloat = 20
     private var timer: Timer?
-    private let countDownSeconds = 30
+    private let countDownSeconds = 120
     private var remainingSeconds = 0
     private let tokenLength = 6
     private var verificationPhoneIsFinished = false
@@ -61,7 +61,7 @@ import UIKit
     }
     
     private func getTitleLabelMessage(phoneString: String) -> String {
-        return "کد تایید به شماره زیر شما ارسال شد \n \(phoneString)".convertTo(language: .arabic)
+        return "کد تایید به شماره شما ارسال شد \n \(phoneString)".convertTo(language: .arabic)
     }
     
     private func applyStyle() {

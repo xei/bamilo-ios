@@ -47,7 +47,7 @@ const int subCatButtonVisibleHeight = 50;
     [self.subCatButton setTitle:STRING_SUBCATEGORIES forState:UIControlStateNormal];
     [self.submitButton setBackgroundColor:[Theme color:kColorDarkGreen]];
     
-    if (self.subCatsFilter && ((CatalogCategoryFilterItem *)self.subCatsFilter).options.count) {
+    if (self.subCatsFilters && ((NSArray<CatalogCategoryFilterOption *> *)self.subCatsFilters).count) {
         self.subCatButtonHeightConstraint.constant = subCatButtonVisibleHeight;
     } else{
         self.subCatButtonHeightConstraint.constant = 0;
@@ -270,7 +270,7 @@ const int subCatButtonVisibleHeight = 50;
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:@"pushFilterToSubCat"]) {
         SubCatFilterViewController *subCatViewCtrl = (SubCatFilterViewController *)segue.destinationViewController;
-        subCatViewCtrl.subCatsFilter = self.subCatsFilter;
+        subCatViewCtrl.subCatsFilters = self.subCatsFilters;
         subCatViewCtrl.delegate = self;
     }
 }

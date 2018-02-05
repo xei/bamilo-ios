@@ -72,7 +72,7 @@ import SwiftyJSON
         }
     }
     
-    private var subCategoryFilterItem: CatalogCategoryFilterItem?
+//    private var subCategoryFilterItem: CatalogCategoryFilterItem?
     private var pageNumber: Int = 1
     private var catalogData: Catalog?
     private var noResultViewController: CatalogNoResultViewController?
@@ -531,7 +531,7 @@ import SwiftyJSON
             }
             self.resetBarFollowers(animated: true)
         }
-        self.loadAvaiableSubCategories()
+//        self.loadAvaiableSubCategories()
     }
     
     private func trackSearch(searchTarget: RITarget) {
@@ -541,17 +541,17 @@ import SwiftyJSON
         )
     }
     
-    func loadAvaiableSubCategories() {
-        if self.searchTarget.targetType == .CATALOG_CATEGORY {
-            CatalogDataManager.sharedInstance.getSubCategoriesFilter(self, categoryUrlKey: self.searchTarget.node, completion: { (data, errorMessages) in
-                if errorMessages == nil {
-                    self.subCategoryFilterItem = data as? CatalogCategoryFilterItem
-                } else {
-//                    Utility.handleError(error: errorMessages, viewController: self)
-                }
-            })
-        }
-    }
+//    func loadAvaiableSubCategories() {
+//        if self.searchTarget.targetType == .CATALOG_CATEGORY {
+//            CatalogDataManager.sharedInstance.getSubCategoriesFilter(self, categoryUrlKey: self.searchTarget.node, completion: { (data, errorMessages) in
+//                if errorMessages == nil {
+//                    self.subCategoryFilterItem = data as? CatalogCategoryFilterItem
+//                } else {
+////                    Utility.handleError(error: errorMessages, viewController: self)
+//                }
+//            })
+//        }
+//    }
     
     private func loadMore() {
         if self.loadingDataInProgress || self.listFullyLoaded { return }
@@ -738,7 +738,7 @@ import SwiftyJSON
         } else if segueName == "showFilterView" {
             let destinationViewCtrl = segue.destination as? JAFiltersViewController
             destinationViewCtrl?.filtersArray = self.catalogData?.copyFilters() //?.filters
-            destinationViewCtrl?.subCatsFilter = subCategoryFilterItem
+            destinationViewCtrl?.subCatsFilters = catalogData?.subCatFilters
             if let index = self.catalogData?.priceFilterIndex {
                 destinationViewCtrl?.priceFilterIndex = Int32(index);
             }

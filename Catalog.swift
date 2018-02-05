@@ -19,6 +19,7 @@ import SwiftyJSON
     var sortType: CatalogSortType?
     var priceFilterIndex: Int = 0
     var breadcrumbs: [BreadcrumbsItem]?
+    var subCatFilters: [CatalogCategoryFilterOption]?
     
     var breadcrumbsFullPath: String? {
         get {
@@ -48,6 +49,7 @@ import SwiftyJSON
         products <- map["results"]
         totalProductsCount <- map["total_products"]
         breadcrumbs <- map["breadcrumb"]
+        subCatFilters <- map["sub_categories"]
         
         //Mapping filters
         let json = JSON(map.JSON)
