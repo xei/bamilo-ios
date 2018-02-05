@@ -193,6 +193,18 @@
         }
     }
     
+    func removeFromCart(attributes: EventAttributeType) {
+        if let product = attributes[kEventProduct] as? RIProduct {
+            let params = GAIDictionaryBuilder.createEvent(
+                withCategory: "CART",
+                action: "RemoveFromCart",
+                label: product.sku,
+                value: product.price
+            )
+            self.sendParamsToGA(params: params)
+        }
+    }
+    
     func viewProduct(attributes: EventAttributeType) {
         if let parentScreenName = attributes[kEventScreenName] as? String,
             let product = attributes[kEventProduct] as? RIProduct {

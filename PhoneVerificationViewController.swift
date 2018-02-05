@@ -30,6 +30,7 @@ import UIKit
     private let countDownSeconds = 30
     private var remainingSeconds = 0
     private let tokenLength = 6
+    private var verificationPhoneIsFinished = false
     
     weak var delegate: PhoneVerificationViewControllerDelegate?
     var phoneNumber: String!
@@ -129,6 +130,10 @@ import UIKit
     }
     
     private func submitForm() {
+        if verificationPhoneIsFinished {
+            self.performActionAfterVerification()
+            return
+        }
         self.controlTokenSubmission()
     }
     
@@ -137,7 +142,11 @@ import UIKit
             ThreadManager.execute(onMainThread: {
                 self.submitToken(token: token, callBack: { (success) in
                     callBack?(success)
-                    if success { self.performActionAfterVerification() }
+                    if success {
+                        self.verificationPhoneIsFinished = true
+                        self.retryButton.isEnabled = false
+                        self.performActionAfterVerification()
+                    }
                 })
             })
         } else {

@@ -47,6 +47,8 @@
     [self enableEyeIconButton: NO];
     self.textField.backgroundColor = UIColor.clearColor;
     self.eyeIconButton.backgroundColor = UIColor.clearColor;
+    
+    [self.eyeIconButton setImage:[UIImage imageNamed: @"btn_eye"] forState:UIControlStateNormal];
 }
 
 - (void)enableEyeIconButton:(BOOL)enable {
@@ -92,6 +94,7 @@
 
 - (IBAction)eyeIconButtonTapped:(id)sender {
     self.textField.secureTextEntry = !self.textField.secureTextEntry;
+    [self.eyeIconButton setImage:[UIImage imageNamed: self.textField.secureTextEntry ? @"btn_eye": @"btn_eye_closed"] forState:UIControlStateNormal];
 }
 
 #pragma mark - Helpers

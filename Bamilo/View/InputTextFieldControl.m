@@ -60,11 +60,8 @@
 
 - (UIBarButtonItem *)doneBtn {
     if (!_doneBtn){
-        _doneBtn = [[UIBarButtonItem alloc] initWithTitle:@"تایید" style:UIBarButtonItemStylePlain target:self action:@selector(donePicker)];
-        [_doneBtn setTitleTextAttributes:@{
-                             NSFontAttributeName: JAListFont,
-                             NSForegroundColorAttributeName: [UIColor blackColor]
-                             } forState:UIControlStateNormal];
+        _doneBtn = [[UIBarButtonItem alloc] initWithTitle:STRING_OK style:UIBarButtonItemStylePlain target:self action:@selector(donePicker)];
+        [_doneBtn setTitleTextAttributes:@{ NSFontAttributeName: JAListFont, NSForegroundColorAttributeName: [UIColor blackColor] } forState:UIControlStateNormal];
     }
     return _doneBtn;
 }
@@ -210,7 +207,6 @@
     } else if (self.type == InputTextFieldControlTypeDatePicker) {
         self.input.textField.text = [self.model.visibleDateFormat stringFromDate:self.datepicker.date];
     }
-    
     [self.input.textField resignFirstResponder];
 }
 
