@@ -18,8 +18,8 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
     var productSku: String!
     
     override func awakeFromNib() {
-        self.titleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: UIColor.black)
-        self.deliveryTimeLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: UIColor.black)
+        self.titleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: UIColor.black)
+        self.deliveryTimeLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: UIColor.black)
         
         self.cityInputView.delegate = self
         self.regionInputView.delegate = self

@@ -21,7 +21,7 @@ class IconTableViewCell: BaseTableViewCell {
     }
     
     private func setupView() {
-        self.titleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray3))
+        self.titleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray3))
         self.cellImageView.image = #imageLiteral(resourceName: "placeholder_list")
     }
     

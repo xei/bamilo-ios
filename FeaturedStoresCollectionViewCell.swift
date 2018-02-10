@@ -31,7 +31,7 @@ class FeaturedStoresCollectionViewCell: BaseCollectionViewCellSwift {
     }
     
     override func setupView() {
-        self.titleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 10), color: UIColor.black)
+        self.titleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 10), color: UIColor.black)
         self.backgroundColor = .white
         
         self.imageWidthConstraint.constant = UIDevice.current.userInterfaceIdiom == .pad ? imageWithBigSize : imageWithSmallSize

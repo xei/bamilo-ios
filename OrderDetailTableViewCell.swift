@@ -49,16 +49,16 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
         self.detailView.clipsToBounds = true
         self.headerView.clipsToBounds = true
         
-        self.productTitleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
-        self.productPriceLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
-        self.productMoreInfoLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
+        self.productTitleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
+        self.productPriceLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
+        self.productMoreInfoLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
         self.rateButton.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: .white)
         self.rateButton.applyShadow(position: CGSize(width:0 , height: 1), color: .black, opacity: 0.2)
         self.cancellationButton.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
-        self.notInStockMessageLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 9), color: Theme.color(kColorGray4))
+        self.notInStockMessageLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 9), color: Theme.color(kColorGray4))
         
-        self.cancellationReasonLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorGray1))
-        self.refundDescriptionLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorGray1))
+        self.cancellationReasonLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorGray1))
+        self.refundDescriptionLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorGray1))
         self.cancellationView.backgroundColor = Theme.color(kColorOrange10)
         self.cancellationView.layer.cornerRadius = 3
         

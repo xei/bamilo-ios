@@ -33,8 +33,6 @@
 @property (strong, nonatomic) AddressList *addressList;
 @property (copy, nonatomic) NSString *phone;
 
-+ (instancetype)sharedInstance;
-
 + (NSString *)signUpAccount:(NSString *)email
                successBlock:(void (^)(id object))successBlock
             andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock;

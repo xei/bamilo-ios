@@ -19,7 +19,7 @@ class CMSTableViewHeader: UITableViewHeaderFooterView {
         super.awakeFromNib()
         
         self.cmsContainerView.backgroundColor = Theme.color(kColorPink10)
-        self.cmsMessageLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorGray1))
+        self.cmsMessageLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorGray1))
         self.horizontalSpacingConstraint.constant = 0
         self.verticalSpacingConstraint.constant = 0
         self.cmsMessageLabel.numberOfLines = 0

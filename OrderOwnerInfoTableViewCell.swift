@@ -23,14 +23,14 @@ class OrderOwnerInfoTableViewCell: BaseTableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.orderOwnerNameTitleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12),color: Theme.color(kColorGray2))
-        self.orderOwnerNameLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray2))
-        self.orderOwnerAddressTitleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12),color: Theme.color(kColorGray2))
-        self.orderOwnerAddressLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray2))
-        self.orderOwnerPaymentValueTitleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12),color: Theme.color(kColorGray2))
-        self.orderOwnerPaymentValueLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray2))
-        self.orderOwnerPaymentMethodTitleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12),color: Theme.color(kColorGray2))
-        self.orderOwnerPaymentMethodLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray2))
+        self.orderOwnerNameTitleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12),color: Theme.color(kColorGray2))
+        self.orderOwnerNameLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray2))
+        self.orderOwnerAddressTitleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12),color: Theme.color(kColorGray2))
+        self.orderOwnerAddressLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray2))
+        self.orderOwnerPaymentValueTitleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12),color: Theme.color(kColorGray2))
+        self.orderOwnerPaymentValueLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray2))
+        self.orderOwnerPaymentMethodTitleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12),color: Theme.color(kColorGray2))
+        self.orderOwnerPaymentMethodLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray2))
         
         self.orderOwnerNameTitleLabel.text = "\(STRING_RECIPIENT):"
         self.orderOwnerAddressTitleLabel.text = "\(STRING_SHIPPING_ADDRESS):"

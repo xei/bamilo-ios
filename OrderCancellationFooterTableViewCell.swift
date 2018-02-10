@@ -18,14 +18,14 @@ class OrderCancellationFooterTableViewCell: BaseTableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.moreDescriptionTitleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
+        self.moreDescriptionTitleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
         self.moreDescriptionTextView.font = Theme.font(kFontVariationRegular, size: 13)
         self.moreDescriptionTextView.textColor = Theme.color(kColorGray1)
         self.moreDescriptionTextView.applyBorder(width: 1, color: Theme.color(kColorGray7))
         self.orderCancellationCMSWrapperView.backgroundColor = Theme.color(kColorGray10)
         self.orderCancellationCMSWrapperView.layer.cornerRadius = 3
-        self.orderCancellationCMSLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
-        self.orderCancellationNoticeMessage.applyStype(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
+        self.orderCancellationCMSLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
+        self.orderCancellationNoticeMessage.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
         self.moreDescriptionTitleLabel.text = STRING_DESCRIPTION
 
     }

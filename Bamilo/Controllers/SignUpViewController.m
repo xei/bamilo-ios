@@ -40,7 +40,7 @@
     
     FormItemModel *email = [FormItemModel emailWithFieldName:@"customer[email]"];
     self.phoneField = [FormItemModel phoneWithFieldName:@"customer[phone]"];
-    FormItemModel *melliCode = [FormItemModel nationalCode:@"customer[national_id]"];
+    FormItemModel *melliCode = [FormItemModel nationalID:@"customer[national_id]"];
     FormItemModel *password = [FormItemModel passWordWithFieldName:@"customer[password]"];
     
     self.formController.submitTitle = STRING_SIGNUP;

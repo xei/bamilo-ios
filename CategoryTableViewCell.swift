@@ -31,7 +31,7 @@ class CategoryTableViewCell: BaseTableViewCell {
         self.imageViewContainerView.applyShadow(position: CGSize(width:0 , height: 1), color: .black, opacity: 0.2)
         self.imageViewContainerView.clipsToBounds = false
         
-        self.titleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
+        self.titleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
     }
     
     override func update(withModel model: Any!) {

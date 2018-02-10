@@ -100,13 +100,13 @@ class OrderCancellationTableViewCell: AccordionTableViewCell, StepperViewControl
     }
     
     func setupStyles() {
-        self.productTitleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
-        self.productAttributeLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
-        self.quantityTitleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorSecondaryGray1))
+        self.productTitleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
+        self.productAttributeLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
+        self.quantityTitleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorSecondaryGray1))
         self.cancellationReasonFieldView.applyBorder(width: 1, color: Theme.color(kColorGray9))
         self.cancellationReasonFieldView.layer.cornerRadius = 3
-        self.cancellingTitleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
-        self.notCacelableReasonLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGreen3))
+        self.cancellingTitleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
+        self.notCacelableReasonLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGreen3))
     }
     
     //MARK : - StepperViewControlDelegate

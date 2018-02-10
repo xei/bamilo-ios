@@ -66,8 +66,8 @@ import UIKit
     
     private func applyStyle() {
         self.titleLabel.textAlignment = .center
-        self.titleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
-        self.timingLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 10), color: Theme.color(kColorGray5))
+        self.titleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
+        self.timingLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 10), color: Theme.color(kColorGray5))
         self.tokenCodeTextField.layer.borderWidth = 0
         self.tokenCodeTextField.layer.cornerRadius = 0
         self.tokenCodeTextField.font = Theme.font(kFontVariationRegular, size: 15)
@@ -80,7 +80,7 @@ import UIKit
         self.submissionButton.backgroundColor = Theme.color(kColorOrange1)
         self.bottomOfContentConstraint.constant = defaultContentBottomConstriant
         
-        self.retryTitleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 10), color: Theme.color(kColorGray5))
+        self.retryTitleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 10), color: Theme.color(kColorGray5))
         self.retryTitleLabel.text = STRING_HAVENT_RECEIVED_TOKEN
         
         self.submissionButton.setTitle(STRING_OK, for: .normal)
@@ -195,7 +195,7 @@ import UIKit
                 self.tokenCodeTextField.resignFirstResponder()
                 self.handleGenericErrorCodesWithErrorControlView(Int32(error.code), forRequestID: rid)
             } else if rid == 1 {
-                self.showNotificationBarMessage(STRING_SERVER_ERROR_MESSAGE, isSuccess: false)
+                self.showNotificationBarMessage(STRING_SERVER_CONNECTION_ERROR_MESSAGE, isSuccess: false)
             }
         }
     }
@@ -247,7 +247,8 @@ import UIKit
         let userInfo = notification.userInfo
         let keyboardFrame: NSValue? = userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue
         let keyboardRectangle = keyboardFrame?.cgRectValue
-        if let keyboardHeight = keyboardRectangle?.height, let tabBarHeight = MainTabBarViewController.sharedInstance()?.tabBar.frame.height {
+        let tabBarHeight = self.navigationController?.tabBarController?.tabBar.frame.height ?? 0
+        if let keyboardHeight = keyboardRectangle?.height {
             self.bottomOfContentConstraint.constant = keyboardHeight - tabBarHeight + defaultContentBottomConstriant
         }
     }

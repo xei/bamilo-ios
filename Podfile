@@ -2,7 +2,7 @@
 source 'https://github.com/CocoaPods/Specs.git'
 
 # Uncomment the next line to define a global platform for your project
-platform :ios, '8.0'
+platform :ios, '9.0'
 
 target 'Bamilo' do
   # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
@@ -18,6 +18,7 @@ target 'Bamilo' do
   pod 'GoogleTagManager', '3.15.0' # ********** Legacy
   pod 'GoogleAnalytics', '3.14.0' # ********** Legacy
   pod 'GoogleAppIndexing','~> 2.0.3'
+  pod 'MobileEngageSDK','~> 0.9.1'
   pod 'JBWhatsAppActivity', '~> 1.0'
   pod 'NewRelicAgent', '~> 5.10.0'
   pod 'SDWebImage', '~> 3.8'  

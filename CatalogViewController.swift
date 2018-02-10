@@ -88,7 +88,7 @@ import SwiftyJSON
         super.viewDidLoad()
         self.view.backgroundColor = Theme.color(kColorVeryLightGray)
         self.catalogHeaderContainerHeightConstraint.constant = self.catalogHeaderContainerHeightWithoutBreadcrumb
-        self.productCountLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 11), color: UIColor.black)
+        self.productCountLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 11), color: UIColor.black)
         
         if let savedListViewType = UserDefaults.standard.string(forKey: "CatalogListViewType") {
             self.listViewType = CatalogListViewType(rawValue: savedListViewType) ?? .grid
@@ -438,6 +438,7 @@ import SwiftyJSON
     }
     
     func updateProductStatusFromWishList(notification: Notification) {
+        if MainTabBarViewController.topViewController() is CatalogViewController { return }
         if let product = notification.userInfo?[NotificationKeys.NotificationProduct] as? Product ,let isInWishlist = notification.userInfo?[NotificationKeys.NotificationBool] as? Bool {
             let targetProduct = self.catalogData?.products.filter { $0.sku == product.sku }.first
             if let targetProduct = targetProduct {
@@ -696,12 +697,12 @@ import SwiftyJSON
                     }
                     self.showNotificationBar(error, isSuccess: false)
                 })
-                
+
                 TrackerManager.postEvent(
                     selector: EventSelectors.addToWishListSelector(),
                     attributes: EventAttributes.addToWishList(product: translatedProduct, screenName: self.getScreenName(), success: true)
                 )
-                
+
             } else {
                 DeleteEntityDataManager.sharedInstance().removeFromWishList(self, sku: product.sku, completion: { (data, error) in
                     if error != nil {
@@ -716,7 +717,7 @@ import SwiftyJSON
                         )
                         return
                     }
-                    
+
                     if product.isInWishList != false {
                         product.isInWishList.toggle()
                         cell.updateWithProduct(product: product)

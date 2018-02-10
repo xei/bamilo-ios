@@ -144,7 +144,7 @@
 }
 
 - (BOOL)showNotificationBarMessage:(NSString *)message isSuccess:(BOOL)success {
-    UIViewController *rootViewController = [ViewControllerManager topViewController];
+    UIViewController *rootViewController = self; // [ViewControllerManager topViewController];
     [[NotificationBarView sharedInstance] show:rootViewController text:message isSuccess:success];
     return YES;
 }

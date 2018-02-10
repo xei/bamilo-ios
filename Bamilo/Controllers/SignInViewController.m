@@ -11,7 +11,6 @@
 #import "UIScrollView+Extension.h"
 #import "EmarsysPredictManager.h"
 #import "PushWooshTracker.h"
-#import "EmarsysMobileEngage.h"
 #import <Crashlytics/Crashlytics.h>
 
 //Legacy importing
@@ -88,7 +87,8 @@
             //EVENT: LOGIN / SUCCESS
             RICustomer *customer = [RICustomer getCurrentCustomer];
             [TrackerManager postEventWithSelector:[EventSelectors loginEventSelector] attributes:[EventAttributes loginWithLoginMethod:cLoginMethodEmail user:customer]];
-            [[EmarsysMobileEngage sharedInstance] sendLogin:[[PushNotificationManager pushManager] getPushToken] completion:nil];
+            
+//            [[EmarsysMobileEngage sharedInstance] sendLogin:[[PushNotificationManager pushManager] getPushToken] completion:nil];
             
             [EmarsysPredictManager setCustomer:customer];
             [PushWooshTracker setUserID:customer.email];

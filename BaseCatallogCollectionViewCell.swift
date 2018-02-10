@@ -38,10 +38,10 @@ class BaseCatallogCollectionViewCell: BaseCollectionViewCellSwift {
     
     override func setupView() {
         
-        self.titleLabel?.applyStype(font: Theme.font(kFontVariationBold, size: 12), color: Theme.color(kColorGray1))
-        self.brandLabel?.applyStype(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorGray5))
-        self.discountedPriceLabel?.applyStype(font: Theme.font(kFontVariationBold, size: 13), color: Theme.color(kColorGray1))
-        self.priceLabel?.applyStype(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorGray5))
+        self.titleLabel?.applyStyle(font: Theme.font(kFontVariationBold, size: 12), color: Theme.color(kColorGray1))
+        self.brandLabel?.applyStyle(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorGray5))
+        self.discountedPriceLabel?.applyStyle(font: Theme.font(kFontVariationBold, size: 13), color: Theme.color(kColorGray1))
+        self.priceLabel?.applyStyle(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorGray5))
         
         self.rateView?.enableButtons(enable: false)
         self.newTagView?.backgroundColor = Theme.color(kColorOrange)

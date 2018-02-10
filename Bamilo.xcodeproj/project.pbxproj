@@ -21,7 +21,6 @@
 		61036B651E65B570006E12A9 /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = 61036B641E65B570006E12A9 /* Order.m */; };
 		61036B681E65B5F5006E12A9 /* OrderList.m in Sources */ = {isa = PBXBuildFile; fileRef = 61036B671E65B5F5006E12A9 /* OrderList.m */; };
 		61036B6C1E65B638006E12A9 /* OrderProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 61036B6B1E65B638006E12A9 /* OrderProduct.m */; };
-		61037CBE1EB72C7600A461E0 /* EmarsysMobileEngageTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 61037CBD1EB72C7600A461E0 /* EmarsysMobileEngageTracker.m */; };
 		6104C5CD1F5C24D300C0F5E3 /* ScrollerBarFollower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6104C5CC1F5C24D300C0F5E3 /* ScrollerBarFollower.swift */; };
 		610519421F370DA4004695BD /* DeliveryTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610519411F370DA4004695BD /* DeliveryTime.swift */; };
 		610767D52004E23D00F6A849 /* OrderDetailCancellationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610767D42004E23D00F6A849 /* OrderDetailCancellationViewController.swift */; };
@@ -241,6 +240,7 @@
 		61CBA88A1F6959A9009F0EEF /* CategorySuggestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA8891F6959A9009F0EEF /* CategorySuggestion.swift */; };
 		61CBA88C1F696013009F0EEF /* SearchSuggestionDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA88B1F696013009F0EEF /* SearchSuggestionDataManager.swift */; };
 		61CC6AD21FC187B800355B78 /* SimpleProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CC6AD11FC187B800355B78 /* SimpleProduct.swift */; };
+		61CCB309202EE0A8002D922B /* EmarsysMobileEngageTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CCB308202EE0A8002D922B /* EmarsysMobileEngageTracker.swift */; };
 		61D10E6C1EAE22C6009A0865 /* SuccessPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D10E6B1EAE22C6009A0865 /* SuccessPaymentViewController.m */; };
 		61D24A7C1FD4134700DDA283 /* AdjustTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D24A7B1FD4134700DDA283 /* AdjustTracker.swift */; };
 		61D474801F6FC622001DA6A6 /* HomePageSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D4747F1F6FC622001DA6A6 /* HomePageSlider.swift */; };
@@ -650,10 +650,7 @@
 		87D07D7C1E4099C300C00AC6 /* CheckoutConfirmationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D07D7B1E4099C300C00AC6 /* CheckoutConfirmationViewController.m */; };
 		87D07D801E4099E800C00AC6 /* CheckoutPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D07D7F1E4099E800C00AC6 /* CheckoutPaymentViewController.m */; };
 		87D3DD1C1E8A323000C960FF /* BaseDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D3DD1B1E8A323000C960FF /* BaseDataManager.m */; };
-		87D3DD211E8A32D900C960FF /* EmarsysDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D3DD201E8A32D900C960FF /* EmarsysDataManager.m */; };
-		87D3DD271E8A962C00C960FF /* EmarsysRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D3DD261E8A962C00C960FF /* EmarsysRequestManager.m */; };
 		87D3DD2B1E8B810B00C960FF /* DeviceStatusManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D3DD2A1E8B810B00C960FF /* DeviceStatusManager.m */; };
-		87D3DD301E8BA11600C960FF /* EmarsysMobileEngage.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D3DD2F1E8BA11600C960FF /* EmarsysMobileEngage.m */; };
 		87DAABE31E54430D00445EBB /* PaymentOptionWithLogoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DAABE21E54430D00445EBB /* PaymentOptionWithLogoTableViewCell.m */; };
 		87DAABE51E54431A00445EBB /* PaymentOptionWithLogoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 87DAABE41E54431A00445EBB /* PaymentOptionWithLogoTableViewCell.xib */; };
 		87DAABE91E55A1C400445EBB /* PaymentOptionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DAABE81E55A1C400445EBB /* PaymentOptionTableViewCell.m */; };
@@ -1027,8 +1024,6 @@
 		61036B671E65B5F5006E12A9 /* OrderList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderList.m; sourceTree = "<group>"; };
 		61036B6A1E65B638006E12A9 /* OrderProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderProduct.h; sourceTree = "<group>"; };
 		61036B6B1E65B638006E12A9 /* OrderProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderProduct.m; sourceTree = "<group>"; };
-		61037CBC1EB72C7600A461E0 /* EmarsysMobileEngageTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysMobileEngageTracker.h; sourceTree = "<group>"; };
-		61037CBD1EB72C7600A461E0 /* EmarsysMobileEngageTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysMobileEngageTracker.m; sourceTree = "<group>"; };
 		61037CC31EB7416200A461E0 /* ScreenTrackingProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenTrackingProtocol.h; sourceTree = "<group>"; };
 		6104C5CC1F5C24D300C0F5E3 /* ScrollerBarFollower.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollerBarFollower.swift; sourceTree = "<group>"; };
 		610519411F370DA4004695BD /* DeliveryTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeliveryTime.swift; sourceTree = "<group>"; };
@@ -1314,6 +1309,7 @@
 		61CBA8891F6959A9009F0EEF /* CategorySuggestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategorySuggestion.swift; sourceTree = "<group>"; };
 		61CBA88B1F696013009F0EEF /* SearchSuggestionDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchSuggestionDataManager.swift; sourceTree = "<group>"; };
 		61CC6AD11FC187B800355B78 /* SimpleProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleProduct.swift; sourceTree = "<group>"; };
+		61CCB308202EE0A8002D922B /* EmarsysMobileEngageTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmarsysMobileEngageTracker.swift; sourceTree = "<group>"; };
 		61D10E6A1EAE22C6009A0865 /* SuccessPaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuccessPaymentViewController.h; sourceTree = "<group>"; };
 		61D10E6B1EAE22C6009A0865 /* SuccessPaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuccessPaymentViewController.m; sourceTree = "<group>"; };
 		61D24A7B1FD4134700DDA283 /* AdjustTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustTracker.swift; sourceTree = "<group>"; };
@@ -1936,14 +1932,8 @@
 		87D07D7F1E4099E800C00AC6 /* CheckoutPaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckoutPaymentViewController.m; sourceTree = "<group>"; };
 		87D3DD1A1E8A323000C960FF /* BaseDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseDataManager.h; sourceTree = "<group>"; };
 		87D3DD1B1E8A323000C960FF /* BaseDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseDataManager.m; sourceTree = "<group>"; };
-		87D3DD1F1E8A32D900C960FF /* EmarsysDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysDataManager.h; sourceTree = "<group>"; };
-		87D3DD201E8A32D900C960FF /* EmarsysDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysDataManager.m; sourceTree = "<group>"; };
-		87D3DD251E8A962C00C960FF /* EmarsysRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysRequestManager.h; sourceTree = "<group>"; };
-		87D3DD261E8A962C00C960FF /* EmarsysRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysRequestManager.m; sourceTree = "<group>"; };
 		87D3DD291E8B810B00C960FF /* DeviceStatusManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceStatusManager.h; sourceTree = "<group>"; };
 		87D3DD2A1E8B810B00C960FF /* DeviceStatusManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceStatusManager.m; sourceTree = "<group>"; };
-		87D3DD2E1E8BA11600C960FF /* EmarsysMobileEngage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysMobileEngage.h; sourceTree = "<group>"; };
-		87D3DD2F1E8BA11600C960FF /* EmarsysMobileEngage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysMobileEngage.m; sourceTree = "<group>"; };
 		87DAABE11E54430D00445EBB /* PaymentOptionWithLogoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentOptionWithLogoTableViewCell.h; sourceTree = "<group>"; };
 		87DAABE21E54430D00445EBB /* PaymentOptionWithLogoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentOptionWithLogoTableViewCell.m; sourceTree = "<group>"; };
 		87DAABE41E54431A00445EBB /* PaymentOptionWithLogoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentOptionWithLogoTableViewCell.xib; sourceTree = "<group>"; };
@@ -2810,15 +2800,6 @@
 				61036B611E65B553006E12A9 /* Order */,
 			);
 			name = OrderGroup;
-			sourceTree = "<group>";
-		};
-		61037CBA1EB72C4500A461E0 /* EmarsysMobileEngageTracker */ = {
-			isa = PBXGroup;
-			children = (
-				61037CBC1EB72C7600A461E0 /* EmarsysMobileEngageTracker.h */,
-				61037CBD1EB72C7600A461E0 /* EmarsysMobileEngageTracker.m */,
-			);
-			name = EmarsysMobileEngageTracker;
 			sourceTree = "<group>";
 		};
 		610767D62004E9B900F6A849 /* OrderCancellation */ = {
@@ -3779,6 +3760,7 @@
 				61E8441E1F0D203A005D79EE /* TrackerManager.swift */,
 				6193F3E01F0CF9D600DA3CDE /* GoogleAnalyticsTracker.swift */,
 				61D24A7B1FD4134700DDA283 /* AdjustTracker.swift */,
+				61CCB308202EE0A8002D922B /* EmarsysMobileEngageTracker.swift */,
 			);
 			name = Trackers;
 			sourceTree = "<group>";
@@ -5526,7 +5508,6 @@
 			children = (
 				875435141E77ECC400B5D6B4 /* Base */,
 				875435181E77ECD200B5D6B4 /* PushWoosh */,
-				61037CBA1EB72C4500A461E0 /* EmarsysMobileEngageTracker */,
 			);
 			name = Trackers;
 			sourceTree = "<group>";
@@ -6584,24 +6565,6 @@
 			name = BaseDataManager;
 			sourceTree = "<group>";
 		};
-		87D3DD1E1E8A32C000C960FF /* EmarsysDataManager */ = {
-			isa = PBXGroup;
-			children = (
-				87D3DD1F1E8A32D900C960FF /* EmarsysDataManager.h */,
-				87D3DD201E8A32D900C960FF /* EmarsysDataManager.m */,
-			);
-			name = EmarsysDataManager;
-			sourceTree = "<group>";
-		};
-		87D3DD241E8A95FB00C960FF /* EmarsysRequestManager */ = {
-			isa = PBXGroup;
-			children = (
-				87D3DD251E8A962C00C960FF /* EmarsysRequestManager.h */,
-				87D3DD261E8A962C00C960FF /* EmarsysRequestManager.m */,
-			);
-			name = EmarsysRequestManager;
-			sourceTree = "<group>";
-		};
 		87D3DD281E8B80CA00C960FF /* DeviceStatusManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -6629,22 +6592,10 @@
 			name = BML;
 			sourceTree = "<group>";
 		};
-		87D3DD2D1E8BA10400C960FF /* EmarsysMobileEngage */ = {
-			isa = PBXGroup;
-			children = (
-				87D3DD1E1E8A32C000C960FF /* EmarsysDataManager */,
-				87D3DD241E8A95FB00C960FF /* EmarsysRequestManager */,
-				87D3DD2E1E8BA11600C960FF /* EmarsysMobileEngage.h */,
-				87D3DD2F1E8BA11600C960FF /* EmarsysMobileEngage.m */,
-			);
-			name = EmarsysMobileEngage;
-			sourceTree = "<group>";
-		};
 		87D3DD311E8BDE2300C960FF /* Emarsys */ = {
 			isa = PBXGroup;
 			children = (
 				611FF46B1E8BDBCB006F0064 /* EmarsysPredictManager */,
-				87D3DD2D1E8BA10400C960FF /* EmarsysMobileEngage */,
 			);
 			name = Emarsys;
 			sourceTree = "<group>";
@@ -8168,6 +8119,7 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireObjectMapper/AlamofireObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/AlgoliaSearch-Client/AlgoliaSearch_Client.framework",
+				"${BUILT_PRODUCTS_DIR}/CoreSDK/CoreSDK.framework",
 				"${BUILT_PRODUCTS_DIR}/EmarsysPredictSDK/EmarsysPredictSDK.framework",
 				"${BUILT_PRODUCTS_DIR}/FSPagerView/FSPagerView.framework",
 				"${BUILT_PRODUCTS_DIR}/FXBlurView/FXBlurView.framework",
@@ -8175,6 +8127,7 @@
 				"${BUILT_PRODUCTS_DIR}/JSONModel/JSONModel.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
+				"${BUILT_PRODUCTS_DIR}/MobileEngageSDK/MobileEngageSDK.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/RAlertView/RAlertView.framework",
 				"${BUILT_PRODUCTS_DIR}/RGB/RGB.framework",
@@ -8192,6 +8145,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlgoliaSearch_Client.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CoreSDK.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EmarsysPredictSDK.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FSPagerView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FXBlurView.framework",
@@ -8199,6 +8153,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JSONModel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MobileEngageSDK.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RAlertView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RGB.framework",
@@ -8229,7 +8184,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		3C245E9D959A18EFB44E823F /* [CP] Copy Pods Resources */ = {
@@ -8265,7 +8220,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		875AD58C1E38C62A00584ABF /* ShellScript */ = {
@@ -8381,7 +8336,6 @@
 				616058E91E6AE2030079B2CD /* SearchFilterItem.m in Sources */,
 				CE9ADF311AB6D78200D56481 /* JACheckBoxComponent.m in Sources */,
 				87C69DAE1E38B7A50026018F /* UIColor+Format.m in Sources */,
-				87D3DD271E8A962C00C960FF /* EmarsysRequestManager.m in Sources */,
 				875AD5781E38C0C900584ABF /* RISpecificationAttribute.m in Sources */,
 				6164F54D201762910009ED19 /* PhoneVerificationViewController.swift in Sources */,
 				61E8441B1F0D16AE005D79EE /* ScreentTrackerProtocol.swift in Sources */,
@@ -8528,6 +8482,7 @@
 				875AD5591E38C0C900584ABF /* RICampaign.m in Sources */,
 				CE9ADF5C1AB6D78200D56481 /* JAEmailNotificationsViewController.m in Sources */,
 				6104C5CD1F5C24D300C0F5E3 /* ScrollerBarFollower.swift in Sources */,
+				61CCB309202EE0A8002D922B /* EmarsysMobileEngageTracker.swift in Sources */,
 				617585F91F8A088500D66541 /* Transformers.swift in Sources */,
 				611C1B321F0BAA0900C57E4D /* SearchBarSearchEvent.m in Sources */,
 				CE9ADF601AB6D78200D56481 /* JANoConnectionView.m in Sources */,
@@ -8618,7 +8573,6 @@
 				61B2C7F41F9C8C1A00930435 /* OrderDetailViewController.swift in Sources */,
 				CE9ADF941AB6D78200D56481 /* JAPicker.m in Sources */,
 				8714E0591E471E2F004C9B1D /* DataManager.m in Sources */,
-				61037CBE1EB72C7600A461E0 /* EmarsysMobileEngageTracker.m in Sources */,
 				CE9ADF971AB6D78200D56481 /* JAFallbackView.m in Sources */,
 				9AE766A21CB3CF5300B63D8E /* JAAccountServicesView.m in Sources */,
 				619D26C01F9CFDBA00167150 /* Ext+UIButton.swift in Sources */,
@@ -8665,7 +8619,6 @@
 				875AD5711E38C0C900584ABF /* RISellerDelivery.m in Sources */,
 				CE9ADFA81AB6D78200D56481 /* JARatingsView.m in Sources */,
 				CE9ADFA91AB6D78200D56481 /* JASizeGuideViewController.m in Sources */,
-				87D3DD211E8A32D900C960FF /* EmarsysDataManager.m in Sources */,
 				9AB517A61C934342007E1327 /* JAButton.m in Sources */,
 				619D0B071EA347DE00FDB255 /* BaseControlView.m in Sources */,
 				9A55A6911BC2E894008EF4A6 /* JAPDVVariationsViewController.m in Sources */,
@@ -8705,7 +8658,6 @@
 				61036B441E658329006E12A9 /* OrderListViewController.m in Sources */,
 				8702FBE91E9A3458001D1AA9 /* ViewProductEvent.m in Sources */,
 				CE9ADFBB1AB6D78200D56481 /* JAPDVViewController.m in Sources */,
-				87D3DD301E8BA11600C960FF /* EmarsysMobileEngage.m in Sources */,
 				617585F61F88FF8D00D66541 /* Ext+UIColor.swift in Sources */,
 				87DAABEF1E55BD9D00445EBB /* AddressTableViewController.m in Sources */,
 				870F8D061E33975A0021F87B /* IntUtility.m in Sources */,
@@ -9070,7 +9022,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bamilo/Bamilo-Prefix.pch";
 				INFOPLIST_FILE = "Bamilo/Bamilo-Staging-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.app.ios;
 				PRODUCT_NAME = Bamilo;
 				PROVISIONING_PROFILE = "055a0505-d499-4975-ae4f-a765be139a88";
@@ -9349,7 +9301,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bamilo/Bamilo-Prefix.pch";
 				INFOPLIST_FILE = "Bamilo/Bamilo-Debug-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.app.ios;
 				PRODUCT_NAME = Bamilo;
 				PROVISIONING_PROFILE = "16e4e5cf-3ec9-4ece-9ebe-feeb25ab10ce";
@@ -9380,7 +9332,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bamilo/Bamilo-Prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.app.ios;
 				PRODUCT_NAME = Bamilo;
 				PROVISIONING_PROFILE = "b8772c30-7dca-4728-b353-5733eed76f5f";

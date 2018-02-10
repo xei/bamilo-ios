@@ -20,13 +20,13 @@ class ProfileUserTableViewCell: BaseProfileTableViewCell {
     }
     
     func setupLoggedOutView() {
-        self.topMessageLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorLightGray))
-        self.bottomMessageLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 14), color: Theme.color(kColorExtraDarkGray))
+        self.topMessageLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorLightGray))
+        self.bottomMessageLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 14), color: Theme.color(kColorExtraDarkGray))
     }
     
     func setupLoggedInView() {
-        self.topMessageLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 14), color: Theme.color(kColorExtraDarkGray))
-        self.bottomMessageLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorExtraDarkGray))
+        self.topMessageLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 14), color: Theme.color(kColorExtraDarkGray))
+        self.bottomMessageLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorExtraDarkGray))
     }
 
     override func update(withModel model: Any!) {

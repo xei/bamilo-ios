@@ -165,7 +165,7 @@
                                       selectOptions:nil];
 }
 
-+ (FormItemModel *)nationalCode: (NSString *)fieldName {
++ (FormItemModel *)nationalID: (NSString *)fieldName {
     return  [[FormItemModel alloc] initWithTextValue: nil
                                            fieldName: fieldName
                                              andIcon: nil

@@ -18,7 +18,7 @@ class FailPaymentViewController: BaseViewController {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         self.imageIcon.image = UIImage(named: "failIcon")
-        self.messageLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 18), color: Theme.color(kColorPrimaryGray1))
+        self.messageLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 18), color: Theme.color(kColorPrimaryGray1))
         self.backToCardButton.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: .white)
         self.backToCardButton.backgroundColor = Theme.color(kColorOrange1)
         self.backToCardButton.setTitle(STRING_BACK_TO_CART, for: .normal)

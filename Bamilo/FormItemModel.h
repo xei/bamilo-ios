@@ -52,7 +52,7 @@ typedef NS_ENUM(NSUInteger, InputTextFieldControlType) {
 + (FormItemModel *)passWordWithFieldName: (NSString *)fieldName;
 + (FormItemModel *)genderWithFieldName: (NSString *)fieldName;
 + (FormItemModel *)birthdayFieldName: (NSString *)fieldName;
-+ (FormItemModel *)nationalCode: (NSString *)fieldName;
++ (FormItemModel *)nationalID: (NSString *)fieldName;
 
 - (NSString *)getValue;
 - (void)setValue:(NSString *)value;

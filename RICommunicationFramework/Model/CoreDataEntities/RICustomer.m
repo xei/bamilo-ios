@@ -14,7 +14,6 @@
 #import "EmarsysPredictManager.h"
 #import "Bamilo-Swift.h"
 #import "PushWooshTracker.h"
-#import "EmarsysMobileEngageTracker.h"
 #import <Crashlytics/Crashlytics.h>
 
 #define kUserIsGuestFlagKey [NSString stringWithFormat:@"%@_user_is_guest", [RIApi getCountryIsoInUse]]
@@ -177,8 +176,6 @@
             }];
             
             //Set auto logged in customer
-            [[EmarsysMobileEngageTracker sharedTracker] performSelector:[EventSelectors loginEventSelector] withObject:[EventAttributes loginWithLoginMethod:@"autoLogin" user:customerObject]];
-
             [EmarsysPredictManager setCustomer:customerObject];
             [PushWooshTracker setUserID:[customerObject.customerId stringValue]];
             [[Crashlytics sharedInstance] setUserEmail:customerObject.email];
