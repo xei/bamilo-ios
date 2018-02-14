@@ -59,12 +59,21 @@ class AuthenticationDataManager: DataManagerSwift {
         }
     }
     
+    func submitEditedProfile(_ target:DataServiceProtocol?, with fields: inout [String : String], completion: @escaping DataClosure) {
+        fields["customer[phone_prefix]"] = "100"
+        AuthenticationDataManager.requestManager.async(.post, target: target, path: RI_API_EDIT_CUSTOMER, params: fields, type: .foreground) { (responseType, data, errorMessages) in
+            self.processResponse(responseType, aClass: nil, data: data, errorMessages: errorMessages, completion: completion)
+        }
+    }
+    
     func getCurrentUser(_ target:DataServiceProtocol?, completion: @escaping DataClosure) {
         AuthenticationDataManager.requestManager.async(.get, target: target, path: RI_API_GET_CUSTOMER, params: nil, type: .foreground) { (responseType, data, errors) in
             if let data = data, responseType == 200 {
                 let customer = RICustomer.getCurrent()
                 let parsedCustomer = RICustomer.parseCustomer(withJson: data.metadata?["customer_entity"] as! [AnyHashable : Any], plainPassword: customer?.plainPassword, loginMethod: "normal")
-                completion(parsedCustomer, nil)
+                let warningMessage = data.metadata?["warning_message"] as? String
+                let dataSource = EditProfileDataSource(customer: parsedCustomer, warningMsg: warningMessage)
+                completion(dataSource, nil)
             } else {
                 completion(nil, self.createError(responseType, errorMessages: errors))
             }

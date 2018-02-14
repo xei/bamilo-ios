@@ -147,8 +147,8 @@
     model.visibleDateFormat = visibleFormatter;
     
     NSDateFormatter *outputFormatter = [NSDateFormatter new];
-    outputFormatter.dateFormat = @"yyyy-MM-dd";
-    outputFormatter.calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierPersian];
+    outputFormatter.dateFormat = @"dd-MM-yyyy";
+    outputFormatter.calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     outputFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
     model.outputDateFormat = outputFormatter;
     
@@ -161,7 +161,7 @@
                                             andIcon: nil
                                         placeholder: STRING_BANK_ACCOUNT
                                                type: InputTextFieldControlTypeNumerical
-                                         validation: [[FormItemValidation alloc] initWithRequired:YES max:16 min:16 withRegxPatter:nil]
+                                         validation: [[FormItemValidation alloc] initWithRequired:NO max:16 min:16 withRegxPatter:nil]
                                       selectOptions:nil];
 }
 

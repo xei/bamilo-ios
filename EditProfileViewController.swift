@@ -8,7 +8,12 @@
 
 import UIKit
 
-class EditProfileViewController: BaseViewController, FormViewControlDelegate, ProtectedViewControllerProtocol, DataServiceProtocol {
+struct EditProfileDataSource {
+    var customer: RICustomer?
+    var warningMsg: String?
+}
+
+class EditProfileViewController: BaseViewController, FormViewControlDelegate, ProtectedViewControllerProtocol, DataServiceProtocol, PhoneChangeViewControllerDelegate {
 
     @IBOutlet weak var tableview: UITableView!
     private var formController: FormViewControl?
@@ -35,7 +40,7 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
             let email = FormItemModel.email(withFieldName: "customer[email]"),
             let birthday = FormItemModel.birthdayFieldName("customer[birthday]"),
             let nationalID = FormItemModel.nationalID("customer[national_id]"),
-            let bankCard = FormItemModel.bankAccountFieldName("customer[bank_card_number]") {
+            let bankCard = FormItemModel.bankAccountFieldName("customer[card_number]") {
 
             email.disabled = true
             self.birthdayFeildModel = birthday
@@ -43,14 +48,13 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
             self.formController?.formModelList = [phone, firstName, lastName, gender, email, birthday, nationalID, bankCard]
             
         }
-        
         self.formController?.setupTableView()
+        self.getContent()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.formController?.registerForKeyboardNotifications()
-        self.getContent()
     }
     
     private func getContent(callBack: ((Bool)->Void)? = nil ) {
@@ -73,7 +77,7 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
     //MARK: - FormViewControlDelegate
     func formSubmitButtonTapped() {
         if let previousCart = self.previousBankCartNumber, let newCart = self.bankCartFieldModel?.getValue(), previousCart.convertTo(language: .arabic) != newCart {
-            AlertManager.sharedInstance().confirmAlert("", text: STRING_CALL_CUSTOMER_SERVICE, confirm: STRING_OK, cancel: STRING_CANCEL) { (didSelectOk) in
+            AlertManager.sharedInstance().confirmAlert("", text: STRING_EDIT_BANK_CARD_ACKNOWLEDGEMENT, confirm: STRING_OK, cancel: STRING_CANCEL) { (didSelectOk) in
                 self.submitEditProfileToServer()
             }
         } else {
@@ -82,7 +86,15 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
     }
     
     private func submitEditProfileToServer() {
-        let a = self.formController?.getMutableDictionaryOfForm()
+        if var fields = self.formController?.getMutableDictionaryOfForm() as? [String: String] {
+            AuthenticationDataManager.sharedInstance.submitEditedProfile(self, with: &fields) { (data, errors) in
+                if errors == nil {
+                    self.bind(data, forRequestId: 1)
+                    return
+                }
+                self.errorHandler(errors, forRequestID: 1)
+            }
+        }
     }
     
     func fieldHasBeenFocuced(_ field: InputTextFieldControl!, inFieldIndex fieldIndex: UInt) {
@@ -94,18 +106,25 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
     
     //MARK: - DataServiceProtocol
     func bind(_ data: Any!, forRequestId rid: Int32) {
-        if rid == 0, let customer = data as? RICustomer {
+        if rid == 0, let dataSource = data as? EditProfileDataSource, let customer = dataSource.customer {
             ThreadManager.execute(onMainThread: {
                 self.updateFormWithCustomer(customer: customer)
-                //TODO: if we have any messages for profile form
-                self.setHeaderMessage(message: "همینطوری یه مسیج امتحانی مینویسیم ببینیم چی میشه اینجا وقتی زیاد بنویسیم چی میشه")
+                if let warningMessage = dataSource.warningMsg, warningMessage.count > 0 {
+                    self.setHeaderMessage(message: warningMessage)
+                }
             })
+        } else if rid == 1 {
+            if let viewCtrl = self.navigationController?.previousViewController(step: 1) as? BaseViewController {
+                self.navigationController?.popViewController(animated: true)
+                viewCtrl.showNotificationBarMessage(STRING_INFO_SUBMISSION_SUCCESS, isSuccess: true)
+            }
         }
     }
     
     private func setHeaderMessage(message: String) {
         let headerView = self.tableview.dequeueReusableHeaderFooterView(withIdentifier: CMSTableViewHeader.nibName()) as! CMSTableViewHeader
         
+        //Auto dimenssion for tableview header (with dynamic height for dyamic content size)
         headerView.setMessage(message: message)
         headerView.setNeedsUpdateConstraints()
         headerView.updateConstraintsIfNeeded()
@@ -129,9 +148,23 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
     }
     
     func errorHandler(_ error: Error!, forRequestID rid: Int32) {
-        if rid == 0 {
-            if !Utility.handleErrorMessages(error: error, viewController: self) {
+        if !Utility.handleErrorMessages(error: error, viewController: self) {
+            if rid == 0 {
                 self.handleGenericErrorCodesWithErrorControlView(Int32(error.code), forRequestID: rid)
+            } else if rid == 1 {
+                var errorHandled = false
+                if let errors = (error as NSError?)?.userInfo [kErrorMessages] as? [[String: String]] {
+                    for var error in errors {
+                        if let fieldNameParam = error["field"], fieldNameParam.count > 0, let errorMsg = error[kMessage] {
+                            if let result = self.formController?.showErrorMessage(forField: "customer[\(fieldNameParam)]", errorMsg: errorMsg), result {
+                                errorHandled = true
+                            }
+                        }
+                    }
+                }
+                if !errorHandled {
+                    self.showNotificationBarMessage(STRING_SERVER_CONNECTION_ERROR_MESSAGE, isSuccess: false)
+                }
             }
         }
     }
@@ -145,12 +178,12 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
             "customer[last_name]" : customer.lastName ?? "",
             "customer[email]" : customer.email ?? "",
             "customer[national_id]" : customer.nationalID ?? "",
-            "customer[bank_card_number]" : customer.bankCartNumber ?? ""
+            "customer[card_number]" : customer.bankCartNumber ?? ""
         ]
         
         if let birthday = customer.birthday {
             let dateFormatter = DateFormatter(withFormat: "yyyy-MM-dd", locale: "en_US")
-            dateFormatter.calendar = Calendar(identifier: .gregorian)
+            dateFormatter.calendar = Calendar(identifier: .persian)
             if let date = dateFormatter.date(from: birthday) {
                 fieldValues["customer[birthday]"] = birthdayFeildModel?.visibleDateFormat.string(from: date) ?? ""
             }
@@ -186,5 +219,19 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
     //MARK: - NavigationBarPrtocol
     override func navBarTitleString() -> String! {
         return STRING_PROFILE
+    }
+    
+    //MARK: - PhoneChangeViewControllerDelegate
+    func successfullyHasChangedPhone(phone: String) {
+        self.phoneFieldModel?.inputTextValue = phone
+        self.tableview.tableHeaderView = nil
+        self.formController?.refreshView()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let segueName = segue.identifier
+        if segueName == "showPhoneChangeViewController", let navigationViewCtrl = segue.destination as? UINavigationController, let phoneChangeViewCtrl = navigationViewCtrl.viewControllers.first as? PhoneChangeViewController {
+            phoneChangeViewCtrl.delegate = self
+        }
     }
 }

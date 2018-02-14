@@ -111,4 +111,6 @@ let STRING_PHONE_VERIFICATION_CONFIRM = RILocalizationWrapper.localizedString("p
 let STRING_PHONE_NUMBER = RILocalizationWrapper.localizedString("phone_number")!
 let STRING_PHONE_SUBMISSION = RILocalizationWrapper.localizedString("phone_submission")!
 let STRING_ENTER_PHONE_VERIFICATION_CODE = RILocalizationWrapper.localizedString("enter_phone_verification_code")!
+let STRING_EDIT_BANK_CARD_ACKNOWLEDGEMENT = RILocalizationWrapper.localizedString("edit_bank_card_number_acknowledgement")!
+let STRING_INFO_SUBMISSION_SUCCESS = RILocalizationWrapper.localizedString("info_submission_success")!
 

@@ -39,6 +39,7 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
     @IBOutlet weak private var refundMessagesToTopSuperViewConstriant: NSLayoutConstraint!
     @IBOutlet weak private var refundStateIconImageView: UIImageView!
     
+    @IBOutlet weak private var cancellationReasonBottomToBottomConstraint: NSLayoutConstraint!
     
     weak var delegate: OrderDetailTableViewCellDelegate?
     private var product: OrderProductItem?
@@ -128,16 +129,25 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
                     self.refuadDescriptionLabelBottomConstraint.priority = UILayoutPriorityDefaultLow
                     self.cancellationReasonLabelBottomConstraint.priority = UILayoutPriorityDefaultHigh
                 }
-                if let status = refund.status, status == .success {
-                    self.refundStateIconImageView.image = #imageLiteral(resourceName: "successIcon")
+                if let status = refund.status {
+                    if status == .success {
+                        self.refundStateIconImageView.image = #imageLiteral(resourceName: "successIcon")
+                    } else {
+                        self.refundStateIconImageView.image = #imageLiteral(resourceName: "ico_recentsearches_results")
+                    }
+                    self.refundDescriptionLabel.text = self.getRefundMessage(refund: refund)
+                    self.cancellationReasonBottomToBottomConstraint.constant = 249
+                    self.cancellationHeightConstraint.priority = UILayoutPriorityDefaultLow
+                    
                 } else {
-                    self.refundStateIconImageView.image = #imageLiteral(resourceName: "ico_recentsearches_results")
+                    self.cancellationReasonBottomToBottomConstraint.priority = UILayoutPriorityDefaultHigh
+                    self.cancellationReasonLabelBottomConstraint.priority = UILayoutPriorityDefaultLow
+                    self.refundDescriptionLabel.text = "   "
                 }
                 
-                self.refundDescriptionLabel.text = self.getRefundMessage(refund: refund)
-                self.cancellationHeightConstraint.priority = UILayoutPriorityDefaultLow
             } else {
                 self.cancellationHeightConstraint.priority = UILayoutPriorityDefaultHigh
+                self.cancellationReasonBottomToBottomConstraint.priority = UILayoutPriorityDefaultLow
             }
             
             self.product = product
@@ -154,10 +164,14 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
         var refundMsg = "مبلغ کالا به "
         refundMsg += "\(refund.cardNumber ?? "کارتی که با آن پرداخت نمودید")"
         refundMsg += " به صورت خودکار "
-        if let date = refund.date {
+        if let date = refund.date, let status = refund.status, status == .success {
             refundMsg += "در تاریخ \(date)"
         }
-        refundMsg += " بازگشت داده میشود"
+        if let status = refund.status, status == .pending {
+            refundMsg += "بازگشت داده خواهد شد"
+        } else {
+            refundMsg += " بازگشت داده شده است"
+        }
         return refundMsg.convertTo(language: .arabic)
     }
 

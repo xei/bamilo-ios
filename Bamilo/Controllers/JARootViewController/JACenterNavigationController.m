@@ -34,8 +34,6 @@
 #import "JANewsletterViewController.h"
 #import "JANewsletterSubscriptionViewController.h"
 
-#import "JAActionWebViewController.h"
-
 #import "JAStepByStepTabViewController.h"
 #import "JACheckoutStepByStepModel.h"
 #import "JAReturnStepByStepModel.h"
@@ -234,10 +232,7 @@
             return YES;
         }
         case EXTERNAL_LINK: {
-            JAActionWebViewController* viewController = [[JAActionWebViewController alloc] init];
-            [self loadScreenTarget:screenTarget forBaseViewController:viewController];
-            [viewController setHtmlString:VALID_NOTEMPTY_VALUE([screenTarget.screenInfo objectForKey:@"html"], NSString)];
-            [self pushViewController:viewController animated:screenTarget.pushAnimation];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[RITarget getURLStringforTargetString: screenTarget.target.targetString]]];
             return YES;
         }
         case CAMPAIGN: {
@@ -436,7 +431,7 @@
 
 #pragma mark User Data Screen
 - (void)showUserData:(NSNotification*)notification {
-    [self requestNavigateToNib:@"EditProfileViewController" args:nil];
+    [self requestNavigateToNib:@"EditProfileViewController" ofStoryboard:@"Main" useCache:NO args:nil];
 }
 
 #pragma mark Email Notifications Screen
@@ -1103,6 +1098,11 @@
                 if(completion) completion();
                 break;
             case AuthenticationStatusSignupFinished:
+                if ([[MainTabBarViewController topViewController] isKindOfClass:[PhoneVerificationViewController class]]) {
+                    [self popWithStep:2 animated:NO];
+                } else if ([[MainTabBarViewController topViewController] isKindOfClass:[SignUpViewController class]]) {
+                    [self popViewControllerAnimated:NO];
+                }
                 if(completion) completion();
                 break;
             default:

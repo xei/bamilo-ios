@@ -677,7 +677,6 @@
 		89C177BF1BC2EC17006D3B19 /* JAPDVProductInfoSellerInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AC0B9B01BBC4C4A001F4ADE /* JAPDVProductInfoSellerInfo.m */; };
 		89C7AF551BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C7AF4F1BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m */; };
 		9A007C791C203355007D99FC /* JAMyAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A007C741C203355007D99FC /* JAMyAccountViewController.m */; };
-		9A08B1131CC7C377003282CB /* JAActionWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A08B10E1CC7C377003282CB /* JAActionWebViewController.m */; };
 		9A0BBE951BFE2482007D35CE /* JACustomNavigationBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1B7C411BFCF849000111D7 /* JACustomNavigationBarView.m */; };
 		9A0F9BAC1B5E800700569DF2 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A0F9BA61B5E7D3600569DF2 /* AVFoundation.framework */; };
 		9A0F9BAD1B5E801800569DF2 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A0F9BA81B5E7DB400569DF2 /* CoreMotion.framework */; };
@@ -1979,8 +1978,6 @@
 		8E5C96382B41D0A4A321E26F /* Pods-BamiloUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BamiloUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BamiloUITests/Pods-BamiloUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		9A007C731C203355007D99FC /* JAMyAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMyAccountViewController.h; sourceTree = "<group>"; };
 		9A007C741C203355007D99FC /* JAMyAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMyAccountViewController.m; sourceTree = "<group>"; };
-		9A08B10D1CC7C377003282CB /* JAActionWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAActionWebViewController.h; sourceTree = "<group>"; };
-		9A08B10E1CC7C377003282CB /* JAActionWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAActionWebViewController.m; sourceTree = "<group>"; };
 		9A0F9BA41B5E7D0000569DF2 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		9A0F9BA61B5E7D3600569DF2 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		9A0F9BA81B5E7DB400569DF2 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
@@ -7622,8 +7619,6 @@
 			children = (
 				9AB4887E1B72748500886A44 /* JAShopWebViewController.h */,
 				9AB4887F1B72748500886A44 /* JAShopWebViewController.m */,
-				9A08B10D1CC7C377003282CB /* JAActionWebViewController.h */,
-				9A08B10E1CC7C377003282CB /* JAActionWebViewController.m */,
 			);
 			name = Web;
 			path = ShopWeb;
@@ -8302,7 +8297,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A08B1131CC7C377003282CB /* JAActionWebViewController.m in Sources */,
 				87D3DD2B1E8B810B00C960FF /* DeviceStatusManager.m in Sources */,
 				873369CA1E58A1D200B0B5E5 /* ShippingMethodOption.m in Sources */,
 				61F705361F76544D00DCD77C /* HomePageFeaturedStore.swift in Sources */,

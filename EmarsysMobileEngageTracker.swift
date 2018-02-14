@@ -34,7 +34,7 @@ class EmarsysMobileEngageTracker: EmarsysBaseTracker, MobileEngageStatusDelegate
     //MARK: - EventTrackerProtocol
     func appOpened(attributes: EventAttributeType) {
         if let customer = RICustomer.getCurrent() {
-            MobileEngage.appLogin(withContactFieldId: customer.customerId, contactFieldValue: "customerID")
+            MobileEngage.appLogin(withContactFieldId: 3, contactFieldValue: customer.email)
             return
         }
         MobileEngage.appLogin()
@@ -46,8 +46,14 @@ class EmarsysMobileEngageTracker: EmarsysBaseTracker, MobileEngageStatusDelegate
     
     override func postEvent(byName eventName: String!, attributes: [AnyHashable : Any]! = [:]) {
         super.postEvent(byName: eventName, attributes: attributes)
-        if let attributes = attributes as? [String : String] {
-            MobileEngage.trackCustomEvent(eventName, eventAttributes: attributes)
+        if let attributes = attributes as? [String : Any] {
+            
+            //convert all attribute values to string
+            var convertedEventAttribute = [String: String]()
+            attributes.forEach({ (key, value) in
+                convertedEventAttribute[key] = "\(value)"
+            })
+            MobileEngage.trackCustomEvent(eventName, eventAttributes: convertedEventAttribute)
         }
     }
     

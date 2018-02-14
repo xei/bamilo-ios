@@ -8,11 +8,17 @@
 
 import UIKit
 
+protocol PhoneChangeViewControllerDelegate: class {
+    func successfullyHasChangedPhone(phone: String)
+}
+
 class PhoneChangeViewController: BaseViewController, PhoneVerificationViewControllerDelegate, FormViewControlDelegate {
 
     @IBOutlet weak private var tableview: UITableView!
     private var formController: FormViewControl?
     private var phoneFieldItem: FormItemModel?
+    
+    weak var delegate: PhoneChangeViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,9 +62,11 @@ class PhoneChangeViewController: BaseViewController, PhoneVerificationViewContro
     }
     
     //MARK : - PhoneVerificationViewControllerDelegate
-    func finishedVerifingPhone(target: PhoneVerificationViewController, callBack: () -> Void) {
+    func finishedVerifingPhone(target: PhoneVerificationViewController) {
+        if let phone = self.phoneFieldItem?.getValue() {
+            self.delegate?.successfullyHasChangedPhone(phone: phone)
+        }
         self.dismiss(animated: true, completion: nil)
-        callBack()
     }
     
     override func getScreenName() -> String! {

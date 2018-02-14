@@ -63,10 +63,10 @@
         [self.formController showAnyErrorInForm];
         return;
     }
-    [self tryToSignupUser:self withCallBack:nil];
+    [self tryToSignupUser:self];
 }
 
-- (void)tryToSignupUser:(id<DataServiceProtocol>)target withCallBack:(void(^)(void))callBack{
+- (void)tryToSignupUser:(id<DataServiceProtocol>)target {
     [DataAggregator signupUser:target with:[self.formController getMutableDictionaryOfForm] completion:^(id data, NSError *error) {
         if(error == nil) {
             //TODO: this is not a good approach which has been contracted with server
@@ -90,11 +90,11 @@
             [PushWooshTracker setUserID:[RICustomer getCurrentCustomer].email];
             if (self.completion) {
                 self.completion(AuthenticationStatusSignupFinished);
-            }
-            if ([[MainTabBarViewController topViewController] isKindOfClass:[AuthenticationContainerViewController class]]) {
+            } else if ([[MainTabBarViewController topViewController] isKindOfClass:[AuthenticationContainerViewController class]]) {
                 [((UIViewController *)self.delegate).navigationController popViewControllerAnimated:YES];
+            } else {
+                [((UIViewController *)self.delegate).navigationController popWithStep:2 animated:YES];
             }
-            if (callBack) callBack();
         } else {
             [TrackerManager postEventWithSelector:[EventSelectors signupEventSelector]
                                        attributes:[EventAttributes signupWithMethod:cSignUpMethodEmail user:nil success:NO]];
@@ -124,11 +124,9 @@
 }
 
 #pragma mark - PhoneVerificationViewControllerDelegate
-- (void)finishedVerifingPhoneWithTarget:(PhoneVerificationViewController *)target callBack:(void (^)(void))callBack {
+- (void)finishedVerifingPhoneWithTarget:(PhoneVerificationViewController *)target {
     //complete signup
-    [self tryToSignupUser:target withCallBack:^{
-        if (callBack) callBack();
-    }];
+    [self tryToSignupUser:target];
 }
 
 #pragma mark - DataServiceProtocol

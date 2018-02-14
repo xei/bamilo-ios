@@ -978,3 +978,7 @@
 "enter_phone_verification_code" = "لطفا کد ارسالی را وارد نمایید";
 
 "bank_card_number" = "شماره کارت بانکی";
+
+"edit_bank_card_number_acknowledgement" = "از ویرایش کارت بانکی خود اطمینان دارید؟";
+
+"info_submission_success" = "اطلاعات شما با موفقیت ثبت شد";

@@ -9,7 +9,7 @@
 import UIKit
 
 @objc protocol PhoneVerificationViewControllerDelegate: NSObjectProtocol {
-    func finishedVerifingPhone(target: PhoneVerificationViewController, callBack:() -> Void)
+    func finishedVerifingPhone(target: PhoneVerificationViewController)
 }
 
 @objc class PhoneVerificationViewController: AuthenticationBaseViewController, UITextFieldDelegate, DataServiceProtocol {
@@ -48,16 +48,26 @@ import UIKit
     }
     
     func textFieldDidChange(_ textField: UITextField) {
+        self.setSubmissionButton(enabled: false)
         if let inputToken = textField.text {
             if inputToken.count <= tokenLength {
                 textField.text = inputToken.convertTo(language: .arabic)
                 if inputToken.count == tokenLength {
+                    self.setSubmissionButton(enabled: true)
                     self.submitForm()
                 }
                 return
             }
             textField.text?.remove(at: inputToken.index(before: inputToken.endIndex))
+            self.setSubmissionButton(enabled: true)
+            return
         }
+        self.setSubmissionButton(enabled: false)
+    }
+    
+    private func setSubmissionButton(enabled: Bool) {
+        self.submissionButton.backgroundColor = enabled ? Theme.color(kColorOrange1) : Theme.color(kColorGray5)
+        self.submissionButton.isEnabled = enabled
     }
     
     private func getTitleLabelMessage(phoneString: String) -> String {
@@ -78,6 +88,7 @@ import UIKit
         self.retryButton.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorBlue))
         self.submissionButton.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: .white)
         self.submissionButton.backgroundColor = Theme.color(kColorOrange1)
+        self.setSubmissionButton(enabled: false)
         self.bottomOfContentConstraint.constant = defaultContentBottomConstriant
         
         self.retryTitleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 10), color: Theme.color(kColorGray5))
@@ -157,9 +168,7 @@ import UIKit
     
     private func performActionAfterVerification() {
         ThreadManager.execute {
-            self.delegate?.finishedVerifingPhone(target: self, callBack: {
-                self.navigationController?.pop(step: 2, animated: true)
-            })
+            self.delegate?.finishedVerifingPhone(target: self)
         }
     }
     
