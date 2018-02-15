@@ -119,8 +119,11 @@
 
 - (void)setModel:(FormItemModel *)model {
     _model = model;
-    [self.input showDisabledMode:model.disabled];
     
+    //Trim input of model
+    model.inputTextValue  = [model.inputTextValue stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    
+    [self.input showDisabledMode:model.disabled];
     //update UI
     self.input.icon.image = model.icon;
     self.input.textField.placeholder = model.placeholder;
