@@ -34,7 +34,7 @@ class PhoneChangeViewController: BaseViewController, PhoneVerificationViewContro
         
         
         if let phone = FormItemModel.phone(withFieldName: "customer[phone]"),
-            let header = FormHeaderModel(headerTitle: "لطفا شماره خود را در فیلد زیر قرار دهید که ببینیم چی میشه") {
+            let header = FormHeaderModel(headerTitle: STRING_INSERT_YOUR_PHONE) {
             header.alignMent = .center
             header.backgroundColor = .white
             self.formController?.formModelList = [header, phone]

@@ -165,6 +165,7 @@ class MyBamiloViewController:   BaseViewController,
             let product = products[indexPath.row].convertToProduct()
             cell.updateWithProduct(product: product)
         }
+        cell.hideAddToFavoriteButton(hidden: true)
         cell.cellIndex = indexPath.row
         
         return cell

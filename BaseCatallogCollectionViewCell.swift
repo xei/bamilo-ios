@@ -29,15 +29,17 @@ class BaseCatallogCollectionViewCell: BaseCollectionViewCellSwift {
     
     weak var delegate: BaseCatallogCollectionViewCellDelegate?
     
-    
     var cellIndex: Int = 0 {
         didSet {
             productImage?.backgroundColor = UIColor.placeholderColors[cellIndex % 6]
         }
     }
     
+    func hideAddToFavoriteButton(hidden: Bool){
+        self.addToWishListButton?.isHidden = hidden
+    }
+    
     override func setupView() {
-        
         self.titleLabel?.applyStyle(font: Theme.font(kFontVariationBold, size: 12), color: Theme.color(kColorGray1))
         self.brandLabel?.applyStyle(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorGray5))
         self.discountedPriceLabel?.applyStyle(font: Theme.font(kFontVariationBold, size: 13), color: Theme.color(kColorGray1))
