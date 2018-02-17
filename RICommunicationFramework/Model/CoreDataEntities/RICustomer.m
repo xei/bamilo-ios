@@ -518,8 +518,8 @@
         customer.nationalID = [dict objectForKey:@"national_id"];
     }
     
-    if (VALID_NOTEMPTY([dict objectForKey:@"bank_card_number"], NSString)) {
-        customer.bankCartNumber = [dict objectForKey:@"bank_card_number"];
+    if (VALID_NOTEMPTY([dict objectForKey:@"card_number"], NSString)) {
+        customer.bankCartNumber = [dict objectForKey:@"card_number"];
     }
     
     //#############################################################################################################

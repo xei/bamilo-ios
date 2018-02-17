@@ -50,6 +50,7 @@ UICollectionViewDataSource {
         let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: CatalogGridCollectionViewCell.nibName, for: indexPath) as! CatalogGridCollectionViewCell
         let product = self.recommendItems[indexPath.row].convertToProduct()
         cell.updateWithProduct(product: product)
+        cell.hideAddToFavoriteButton(hidden: true)
         cell.cellIndex = indexPath.row
         
         return cell

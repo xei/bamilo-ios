@@ -10,6 +10,7 @@ import UIKit
 
 class CMSTableViewHeader: UITableViewHeaderFooterView {
 
+    @IBOutlet weak private var horizontalLabelSpacingConstraint: NSLayoutConstraint!
     @IBOutlet weak var cmsContainerView: UIView!
     @IBOutlet weak var cmsMessageLabel: UILabel!
     @IBOutlet weak var horizontalSpacingConstraint: NSLayoutConstraint!
@@ -24,7 +25,7 @@ class CMSTableViewHeader: UITableViewHeaderFooterView {
         self.verticalSpacingConstraint.constant = 0
         self.cmsMessageLabel.numberOfLines = 0
         self.cmsMessageLabel.lineBreakMode = .byWordWrapping
-        self.cmsMessageLabel.preferredMaxLayoutWidth = UIScreen.main.bounds.width
+        self.cmsMessageLabel.preferredMaxLayoutWidth = UIScreen.main.bounds.width - (self.horizontalLabelSpacingConstraint.constant * 2)
     }
     
     override func layoutSubviews() {

@@ -47,6 +47,7 @@
             <connections>
                 <outlet property="cmsContainerView" destination="4Rb-M0-3R3" id="LG6-h3-clO"/>
                 <outlet property="cmsMessageLabel" destination="cXg-6E-HJ5" id="JPY-hU-RCJ"/>
+                <outlet property="horizontalLabelSpacingConstraint" destination="Z3S-8P-Fcw" id="fyT-hj-WhY"/>
                 <outlet property="horizontalSpacingConstraint" destination="tBn-cw-Xdd" id="Wo4-hP-Kdp"/>
                 <outlet property="verticalSpacingConstraint" destination="jrN-Tn-uqD" id="R0R-XO-7db"/>
             </connections>
