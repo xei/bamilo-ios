@@ -60,8 +60,8 @@
                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pDX-jh-fgX">
                         <rect key="frame" x="16" y="130.5" width="372" height="42"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g4S-3X-UZN">
-                                <rect key="frame" x="314" y="11" width="42" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g4S-3X-UZN">
+                                <rect key="frame" x="47" y="11" width="309" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -91,6 +91,7 @@
                             <constraint firstItem="g4S-3X-UZN" firstAttribute="centerY" secondItem="pDX-jh-fgX" secondAttribute="centerY" id="Ugp-Wh-kSG"/>
                             <constraint firstAttribute="height" constant="42" id="Zco-W7-BrW"/>
                             <constraint firstAttribute="right" secondItem="T1o-ly-Ehw" secondAttribute="right" id="bC3-pi-tcz"/>
+                            <constraint firstItem="g4S-3X-UZN" firstAttribute="left" secondItem="pP7-oP-GWa" secondAttribute="right" constant="16" id="r1O-zJ-4J2"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
@@ -98,16 +99,16 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KVU-fe-ISd">
-                        <rect key="frame" x="0.0" y="0.0" width="404" height="179.5"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IzI-ua-5t6">
                         <rect key="frame" x="181" y="141" width="42" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KVU-fe-ISd">
+                        <rect key="frame" x="377" y="0.0" width="404" height="179.5"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="IzI-ua-5t6" firstAttribute="centerX" secondItem="pDX-jh-fgX" secondAttribute="centerX" id="1Z3-Lr-mFr"/>
