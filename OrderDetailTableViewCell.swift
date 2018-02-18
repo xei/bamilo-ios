@@ -114,8 +114,7 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
             }
             
             self.cancellationButton.isHidden = !product.isCancelable
-            
-            if !product.isCancelable, let reasonType = product.notCancellableReasonType, reasonType != .isCancelled, let lastHistoryStep = product.histories?.last?.step, lastHistoryStep != .delivered {
+            if !product.isCancelable, let reasonType = product.notCancellableReasonType, reasonType != .isCancelled, let lastHistory = product.histories?.last, (lastHistory.status == .inactive || lastHistory.status == .active) {
                 self.cancellationButton.isHidden = false
             }
         
