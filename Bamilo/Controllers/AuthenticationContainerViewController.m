@@ -11,8 +11,9 @@
 #import "RICustomer.h"
 #import "ViewControllerManager.h"
 #import "Bamilo-Swift.h"
+#import "DataServiceProtocol.h"
 
-@interface AuthenticationContainerViewController() <CAPSPageMenuDelegate>
+@interface AuthenticationContainerViewController() <CAPSPageMenuDelegate, DataServiceProtocol>
 @property (nonatomic) CAPSPageMenu *pagemenu;
 @end
 
@@ -80,7 +81,7 @@
 
 - (void)wantsToShowTokenVerificatinWith:(AuthenticationBaseViewController *)viewCtrl phone:(NSString *)phone {
     userPhone = phone;
-    [self performSegueWithIdentifier:@"showVrificationCodeViewCtrl" sender:viewCtrl];
+    [self requestToken:userPhone bySender:viewCtrl];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -111,6 +112,24 @@
 
 - (BOOL)navBarhideBackButton {
     return self.isForcedToLogin;
+}
+
+#pragma mark - DataServiceProtocol
+- (void)bind:(id)data forRequestId:(int)rid {}
+
+- (void)errorHandler:(NSError *)error forRequestID:(int)rid {
+    if (rid == 0 && ![Utility handleErrorMessagesWithError:error viewController:self]) {
+        [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
+    }
+}
+
+#pragma mark : private function
+- (void)requestToken:(NSString *)phone bySender:(AuthenticationBaseViewController *)sender {
+    [PhoneVerificationViewController verificationRequestWithTarget:self phone:userPhone token:nil rid:0 callBack:^(BOOL success) {
+        if (success) {
+            [self performSegueWithIdentifier:@"showVrificationCodeViewCtrl" sender:sender];
+        }
+    }];
 }
 
 @end

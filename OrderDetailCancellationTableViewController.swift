@@ -95,8 +95,12 @@ class OrderDetailCancellationTableViewController: AccordionTableViewController {
             let cell = self.tableView.dequeueReusableCell(withIdentifier: OrderCancellationFooterTableViewCell.nibName(), for: indexPath) as! OrderCancellationFooterTableViewCell
             self.footerTableViewCell = cell
             
-            cell.orderCancellationCMSLabel.text = self.order?.cancellationInfo?.refundMessage
-            cell.orderCancellationNoticeMessage.text = self.order?.cancellationInfo?.noticeMessage
+            if let CMSRefundMessage = self.order?.cancellationInfo?.refundMessage {
+                cell.setCMSMessage(message: CMSRefundMessage)
+            }
+            if let noticeMessage = self.order?.cancellationInfo?.noticeMessage {
+                cell.setNoticeMessage(message: noticeMessage)
+            }
             
             cell.selectionStyle = .none
             return cell

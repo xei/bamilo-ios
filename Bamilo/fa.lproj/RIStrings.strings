@@ -984,3 +984,9 @@
 "info_submission_success" = "اطلاعات شما با موفقیت ثبت شد";
 
 "please_insert_your_phone" = "شماره همراه خود را وارد نمایید";
+
+"not_cancellable_shipped" = "به دلیل اینکه کالای شما در مرحله ارسال است، امکان لغو وجود ندارد";
+
+"not_cancellable_has_cancellation_request" = "درخواست لغو کالای شما در حال پردازش است.";
+
+"not_cancellable_unknow_status" = "به دلیل وضعیت کالای سفارش شما، امکان لغو وجود ندارد";

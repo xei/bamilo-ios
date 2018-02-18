@@ -114,6 +114,11 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
             }
             
             self.cancellationButton.isHidden = !product.isCancelable
+            
+            if !product.isCancelable, let reasonType = product.notCancellableReasonType, reasonType != .isCancelled, let lastHistoryStep = product.histories?.last?.step, lastHistoryStep != .delivered {
+                self.cancellationButton.isHidden = false
+            }
+        
             self.productMoreInfoLabel.text = productInfo
             self.progressBarView.update(withModel: product.histories)
             self.notInStockMessageLabel.text = product.sku != nil ? nil : STRING_ORDER_OUT_OF_STOCK
@@ -183,7 +188,21 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
     
     @IBAction func cancellButtonTapped(_ sender: Any) {
         if let product = self.product {
-            self.delegate?.cancelProduct(product: product)
+            if product.isCancelable {
+                self.delegate?.cancelProduct(product: product)
+            } else if let notCancellationReasonType = product.notCancellableReasonType {
+                //switch case
+                switch notCancellationReasonType {
+                case .isCancelled:
+                    AlertManager.sharedInstance().simpleAlert("", text: STRING_NOT_CANCELLABLE_UNKNOWN_STATUS, confirm: STRING_GOT_IT)
+                case .hasCancellationRequest:
+                    AlertManager.sharedInstance().simpleAlert("", text: STRING_NOT_CANCELLABLE_HAS_CANCELLATION_REQUEST, confirm: STRING_GOT_IT)
+                case .isShipped:
+                    AlertManager.sharedInstance().simpleAlert("", text: STRING_NOT_CANCELLABLE_SHIPPED, confirm: STRING_GOT_IT)
+                }
+            } else {
+                AlertManager.sharedInstance().simpleAlert("", text: STRING_NOT_CANCELLABLE_UNKNOWN_STATUS, confirm: STRING_GOT_IT)
+            }
         }
     }
     

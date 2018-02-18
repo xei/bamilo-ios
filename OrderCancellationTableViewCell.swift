@@ -123,9 +123,17 @@ class OrderCancellationTableViewCell: AccordionTableViewCell, StepperViewControl
             self.productAttributeLabel.text = "\(STRING_COLOR): \(color)"
         }
         self.productImage.kf.setImage(with: cancellingItem.imageUrl, placeholder: UIImage(named: "placeholder_list"), options: [.transition(.fade(0.20))])
+        
+        self.quantityStepper.isHidden = false
         self.quantityStepper.quantity = Int32(cancellingItem.cancellingQuantity)
         self.quantityStepper.maxQuantity = Int32(cancellingItem.quantity ?? 0)
         self.quantityStepper.minQuantity = min(self.quantityStepper.maxQuantity, 1)
+        
+        //if we have only one quantity of this product
+        if cancellingItem.quantity == 1  {
+            self.quantityStepper.isHidden = true
+        }
+        
         self.cancellationReasonFieldView.isHidden = !cancellingItem.isCancelable
         self.notCacelableReasonLabel.isHidden = cancellingItem.isCancelable
         self.notCacelableReasonLabel.text = cancellingItem.notCancelableReason ?? NOT_CANCELABLE_DEFAULT_REASON

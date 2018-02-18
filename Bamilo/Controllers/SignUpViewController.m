@@ -99,24 +99,28 @@
             [TrackerManager postEventWithSelector:[EventSelectors signupEventSelector]
                                        attributes:[EventAttributes signupWithMethod:cSignUpMethodEmail user:nil success:NO]];
             //EVENT: SIGNUP / FAILURE
-            BaseViewController *baseViewController = (BaseViewController *)self.delegate;
-            if(![baseViewController showNotificationBar:error isSuccess:NO]) {
-                BOOL errorHandled = NO;
-                NSArray<NSDictionary *> *errors = [error.userInfo objectForKey:kErrorMessages];
-                for(NSDictionary* errorField in errors) {
-                    NSString *fieldNameParm = [errorField objectForKey:@"field"];
-                    if ([fieldNameParm isKindOfClass:[NSString class]] && fieldNameParm.length > 0) {
-                        NSString *fieldName = [NSString stringWithFormat:@"customer[%@]", fieldNameParm];
-                        if ([self.formController showErrorMessageForField:fieldName errorMsg:errorField[kMessage]]) {
-                            errorHandled = YES;
+            
+            if ([target isKindOfClass:[SignInViewController class]]) {
+                BaseViewController *baseViewController = (BaseViewController *)self.delegate;
+                if(![baseViewController showNotificationBar:error isSuccess:NO]) {
+                    BOOL errorHandled = NO;
+                    NSArray<NSDictionary *> *errors = [error.userInfo objectForKey:kErrorMessages];
+                    for(NSDictionary* errorField in errors) {
+                        NSString *fieldNameParm = [errorField objectForKey:@"field"];
+                        if ([fieldNameParm isKindOfClass:[NSString class]] && fieldNameParm.length > 0) {
+                            NSString *fieldName = [NSString stringWithFormat:@"customer[%@]", fieldNameParm];
+                            if ([self.formController showErrorMessageForField:fieldName errorMsg:errorField[kMessage]]) {
+                                errorHandled = YES;
+                            }
                         }
                     }
+                    if (!errorHandled) {
+                        [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
+                    }
                 }
-//                if (!errorHandled && errors.count == 1 && [[errors.firstObject objectForKey:@"field"] isKindOfClass:[NSString class]] && [[errors.firstObject objectForKey:@"field"] isEqualToString:@"token"]) {
-//                    [self.delegate wantsToShowTokenVerificatinWith:self phone: [self.phoneField getValue]];
-//                } else
-                if (!errorHandled) {
-                    [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
+            } else if ([target isKindOfClass:[BaseViewController class]]) {
+                if (![Utility handleErrorMessagesWithError:error viewController:(BaseViewController *)target]) {
+                    [(BaseViewController *)target showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
                 }
             }
         }

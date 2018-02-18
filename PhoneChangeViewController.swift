@@ -12,7 +12,7 @@ protocol PhoneChangeViewControllerDelegate: class {
     func successfullyHasChangedPhone(phone: String)
 }
 
-class PhoneChangeViewController: BaseViewController, PhoneVerificationViewControllerDelegate, FormViewControlDelegate {
+class PhoneChangeViewController: BaseViewController, PhoneVerificationViewControllerDelegate, FormViewControlDelegate, DataServiceProtocol {
 
     @IBOutlet weak private var tableview: UITableView!
     private var formController: FormViewControl?
@@ -32,7 +32,6 @@ class PhoneChangeViewController: BaseViewController, PhoneVerificationViewContro
         self.formController?.delegate = self
         self.formController?.submitTitle = STRING_OK
         
-        
         if let phone = FormItemModel.phone(withFieldName: "customer[phone]"),
             let header = FormHeaderModel(headerTitle: STRING_INSERT_YOUR_PHONE) {
             header.alignMent = .center
@@ -48,7 +47,9 @@ class PhoneChangeViewController: BaseViewController, PhoneVerificationViewContro
             self.formController?.showAnyErrorInForm()
             return
         }
-        self.performSegue(withIdentifier: "showPhoneVerificationViewController", sender: nil)
+        if let phone = self.phoneFieldItem?.getValue() {
+            self.requestToken(for: phone)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -80,5 +81,32 @@ class PhoneChangeViewController: BaseViewController, PhoneVerificationViewContro
     
     override func navBarleftButton() -> NavBarLeftButtonType {
         return .close
+    }
+    
+    //MARK: DataServiceProtocol
+    func bind(_ data: Any!, forRequestId rid: Int32) {}
+    
+    func errorHandler(_ error: Error!, forRequestID rid: Int32) {
+        if rid == 0 && !Utility.handleErrorMessages(error: error, viewController: self) {
+            if let errors = (error as NSError?)?.userInfo [kErrorMessages] as? [[String: String]] {
+                var errorHandled = false
+                for var error in errors {
+                    if let fieldNameParam = error["field"], fieldNameParam.count > 0, let errorMsg = error[kMessage], fieldNameParam == "phone" {
+                        errorHandled = true
+                        self.showNotificationBarMessage(errorMsg, isSuccess: false)
+                    }
+                }
+                if errorHandled { return }
+            }
+            self.showNotificationBarMessage(STRING_SERVER_CONNECTION_ERROR_MESSAGE, isSuccess: false)
+        }
+    }
+    
+    private func requestToken(for cellPhone: String) {
+        PhoneVerificationViewController.verificationRequest(target: self, phone: cellPhone, rid: 0, callBack: { (success) in
+            if success {
+                self.performSegue(withIdentifier: "showPhoneVerificationViewController", sender: nil)
+            }
+        })
     }
 }

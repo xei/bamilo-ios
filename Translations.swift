@@ -114,4 +114,6 @@ let STRING_ENTER_PHONE_VERIFICATION_CODE = RILocalizationWrapper.localizedString
 let STRING_EDIT_BANK_CARD_ACKNOWLEDGEMENT = RILocalizationWrapper.localizedString("edit_bank_card_number_acknowledgement")!
 let STRING_INFO_SUBMISSION_SUCCESS = RILocalizationWrapper.localizedString("info_submission_success")!
 let STRING_INSERT_YOUR_PHONE = RILocalizationWrapper.localizedString("please_insert_your_phone")!
-
+let STRING_NOT_CANCELLABLE_SHIPPED = RILocalizationWrapper.localizedString("not_cancellable_shipped")!
+let STRING_NOT_CANCELLABLE_HAS_CANCELLATION_REQUEST = RILocalizationWrapper.localizedString("not_cancellable_has_cancellation_request")!
+let STRING_NOT_CANCELLABLE_UNKNOWN_STATUS = RILocalizationWrapper.localizedString("not_cancellable_unknow_status")!

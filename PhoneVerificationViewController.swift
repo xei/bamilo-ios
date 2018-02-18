@@ -24,10 +24,11 @@ import UIKit
     @IBOutlet weak private var submissionButton: UIButton!
     @IBOutlet weak private var retryButton: UIButton!
     
+    private static let countDownSeconds = 120
+    
     private var textFieldShouldEndEditing = false
     private let defaultContentBottomConstriant: CGFloat = 20
     private var timer: Timer?
-    private let countDownSeconds = 120
     private var remainingSeconds = 0
     private let tokenLength = 6
     private var verificationPhoneIsFinished = false
@@ -44,7 +45,7 @@ import UIKit
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWasShown(notification:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
         tokenCodeTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         
-        self.requestToken(for: self.phoneNumber)
+        self.runTimer(seconds: PhoneVerificationViewController.countDownSeconds)
     }
     
     func textFieldDidChange(_ textField: UITextField) {
@@ -173,19 +174,21 @@ import UIKit
     }
     
     private func requestToken(for cellPhone: String, callBack: ((Bool)->Void)? = nil) {
-        self.runTimer(seconds: self.countDownSeconds)
-        self.verificationRequest(phone: cellPhone, rid: 0) { success in callBack?(success) }
+        PhoneVerificationViewController.verificationRequest(target: self, phone: cellPhone, rid: 0) { success in callBack?(success) }
     }
     
     private func submitToken(token: String, callBack: ((Bool)->Void)? = nil) {
-        self.verificationRequest(phone: self.phoneNumber, token: token, rid: 1) { success in callBack?(success) }
+        PhoneVerificationViewController.verificationRequest(target: self, phone: self.phoneNumber, token: token, rid: 1) { success in callBack?(success) }
     }
     
-    private func verificationRequest(phone: String, token: String? = nil, rid: Int32, callBack: @escaping (Bool)-> Void) {
-        AuthenticationDataManager.sharedInstance.phoneVerification(self, phone: phone, token: token?.convertTo(language: .english)) { (data, errors) in
+    static func verificationRequest(target: DataServiceProtocol, phone: String, token: String? = nil, rid: Int32, callBack: @escaping (Bool)-> Void) {
+        AuthenticationDataManager.sharedInstance.phoneVerification(target, phone: phone, token: token?.convertTo(language: .english)) { (data, errors) in
             if let errors = errors {
                 callBack(false)
-                self.errorHandler(errors, forRequestID: rid)
+                target.errorHandler?(errors, forRequestID: rid)
+                if let phoneVerificationViewCtrl = target as? PhoneVerificationViewController {
+                    phoneVerificationViewCtrl.runTimer(seconds: self.countDownSeconds)
+                }
             } else {
                 callBack(true)
             }
