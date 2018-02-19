@@ -56,7 +56,7 @@ class RootCategoryViewController: BaseViewController,
         
         self.tableview.delegate = self
         self.tableview.dataSource = self
-        self.tableview.separatorStyle = .none
+        self.tableview.separatorStyle = .singleLine
         
         self.searchbar.searchView?.textField.delegate = self
         //To remove extra seperators
