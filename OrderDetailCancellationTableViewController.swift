@@ -111,6 +111,7 @@ class OrderDetailCancellationTableViewController: AccordionTableViewController {
         if indexPath.row == self.dataSource?.count ?? 0 { return }
         super.tableView(tableView, didSelectRowAt: indexPath)
         self.toggleSelection(indexPath: indexPath, selected: true)
+        self.setWhiteBackground(cell: self.tableView.cellForRow(at: indexPath))
     }
     
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -159,6 +160,9 @@ class OrderDetailCancellationTableViewController: AccordionTableViewController {
                 if element.isSelected {
                     self.tableView.selectRow(at: IndexPath(row: index, section: 0), animated: false, scrollPosition: .none)
                     super.tableView(self.tableView, didSelectRowAt: IndexPath(row: index, section: 0))
+                    
+                    //prevent blue background selection
+                    self.setWhiteBackground(cell: self.tableView.cellForRow(at: IndexPath(row: index, section: 0)))
                 } else {
                     self.tableView.deselectRow(at: IndexPath(row: index, section: 0), animated: false)
                 }
@@ -166,6 +170,13 @@ class OrderDetailCancellationTableViewController: AccordionTableViewController {
         }
     }
     
+    private func setWhiteBackground(cell: UITableViewCell?) {
+        //prevent blue background selection
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = .white
+        cell?.selectedBackgroundView = backgroundView
+    }
+   
     func getCancellingOrder() -> CancellingOrder? {
         let cancellingOrder = CancellingOrder()
         cancellingOrder.items = self.getCancellingProductList()

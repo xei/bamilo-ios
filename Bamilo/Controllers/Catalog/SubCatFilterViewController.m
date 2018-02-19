@@ -12,7 +12,7 @@
 
 @interface SubCatFilterViewController ()
 @property (weak, nonatomic) IBOutlet UIView *filterViewContainer;
-@property (weak, nonatomic) IBOutlet OrangeButton *submitButton;
+@property (weak, nonatomic) IBOutlet UIButton *submitButton;
 @end
 
 @implementation SubCatFilterViewController {
@@ -30,6 +30,10 @@
     filterView.frame = self.filterViewContainer.bounds;
     filterView.filtersViewDelegate = self;
     [self.filterViewContainer addSubview:filterView];
+    
+    [self.submitButton applyStyle:kFontRegularName fontSize:13 color: [UIColor whiteColor]];
+    [self.submitButton setTitle:STRING_OK forState:UIControlStateNormal];
+    [self.submitButton setBackgroundColor:[Theme color:kColorDarkGreen]];
 }
 
 - (CatalogFilterItem *)createCatalogCategoryFilterItemWithOptions:(NSArray<CatalogCategoryFilterOption*> *)options {

@@ -220,7 +220,7 @@
                 <outlet property="refundMessagesToTopSuperViewConstriant" destination="3zM-r4-0zB" id="hhD-nS-xcY"/>
                 <outlet property="refundStateIconImageView" destination="0Cs-Nh-G8u" id="y2k-0E-Wp8"/>
             </connections>
-            <point key="canvasLocation" x="-1103" y="-178.5"/>
+            <point key="canvasLocation" x="-1501" y="-267"/>
         </tableViewCell>
     </objects>
     <resources>

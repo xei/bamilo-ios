@@ -16,10 +16,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Rb-M0-3R3">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="142"/>
+                    <rect key="frame" x="20" y="0.0" width="280" height="142"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cXg-6E-HJ5">
-                            <rect key="frame" x="20" y="60.5" width="280" height="20.5"/>
+                            <rect key="frame" x="20" y="60.5" width="240" height="20.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -39,7 +39,7 @@
                 <constraint firstItem="4Rb-M0-3R3" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="EnF-Je-Xuu"/>
                 <constraint firstItem="4Rb-M0-3R3" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="GLe-ux-41u"/>
                 <constraint firstItem="4Rb-M0-3R3" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="jrN-Tn-uqD"/>
-                <constraint firstAttribute="right" secondItem="4Rb-M0-3R3" secondAttribute="right" id="tBn-cw-Xdd"/>
+                <constraint firstAttribute="right" secondItem="4Rb-M0-3R3" secondAttribute="right" constant="20" id="tBn-cw-Xdd"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>

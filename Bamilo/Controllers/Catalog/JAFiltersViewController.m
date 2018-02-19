@@ -43,7 +43,7 @@ const int subCatButtonVisibleHeight = 50;
     CatalogPriceFilterItem *priceFilter = (CatalogPriceFilterItem *)[self.filtersArray objectAtIndex:self.priceFilterIndex];
     self.discountOnlyUISwitch.on = priceFilter.discountOnly;
     
-    [self.subCatButton applyStyle:kFontRegularName fontSize:11 color: [UIColor blackColor]];
+    [self.subCatButton applyStyle:kFontRegularName fontSize:11 color: [UIColor whiteColor]];
     [self.subCatButton setTitle:STRING_SUBCATEGORIES forState:UIControlStateNormal];
     [self.submitButton setBackgroundColor:[Theme color:kColorDarkGreen]];
     

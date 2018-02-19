@@ -19,13 +19,15 @@ class CMSTableViewHeader: UITableViewHeaderFooterView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.cmsContainerView.backgroundColor = Theme.color(kColorPink10)
+        self.cmsContainerView.backgroundColor = Theme.color(kColorOrange10)
         self.cmsMessageLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorGray1))
-        self.horizontalSpacingConstraint.constant = 0
+        self.horizontalSpacingConstraint.constant = 20
         self.verticalSpacingConstraint.constant = 0
         self.cmsMessageLabel.numberOfLines = 0
         self.cmsMessageLabel.lineBreakMode = .byWordWrapping
-        self.cmsMessageLabel.preferredMaxLayoutWidth = UIScreen.main.bounds.width - (self.horizontalLabelSpacingConstraint.constant * 2)
+        self.cmsMessageLabel.preferredMaxLayoutWidth = UIScreen.main.bounds.width -
+            ((self.horizontalLabelSpacingConstraint.constant + self.horizontalSpacingConstraint.constant) * 2)
+        self.cmsContainerView.layer.cornerRadius = 3
     }
     
     override func layoutSubviews() {

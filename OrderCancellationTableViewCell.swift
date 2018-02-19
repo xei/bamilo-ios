@@ -11,6 +11,7 @@ import Kingfisher
 
 class OrderCancellationTableViewCell: AccordionTableViewCell, StepperViewControlDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
+    @IBOutlet weak private var quantityLabel: UILabel!
     @IBOutlet weak private var notCacelableReasonLabel: UILabel!
     @IBOutlet weak private var disabledCoverView: UIView!
     @IBOutlet weak private var cancellingTitleLabel: UILabel!
@@ -107,6 +108,9 @@ class OrderCancellationTableViewCell: AccordionTableViewCell, StepperViewControl
         self.cancellationReasonFieldView.layer.cornerRadius = 3
         self.cancellingTitleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
         self.notCacelableReasonLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGreen3))
+        
+        self.quantityLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorGray1))
+        self.quantityLabel.isHidden = true
     }
     
     //MARK : - StepperViewControlDelegate
@@ -132,6 +136,8 @@ class OrderCancellationTableViewCell: AccordionTableViewCell, StepperViewControl
         //if we have only one quantity of this product
         if cancellingItem.quantity == 1  {
             self.quantityStepper.isHidden = true
+            self.quantityLabel.text = "1".convertTo(language: .arabic)
+            self.quantityLabel.isHidden = false
         }
         
         self.cancellationReasonFieldView.isHidden = !cancellingItem.isCancelable

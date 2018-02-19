@@ -135,9 +135,9 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
                 }
                 if let status = refund.status {
                     if status == .success {
-                        self.refundStateIconImageView.image = #imageLiteral(resourceName: "successIcon")
+                        self.refundStateIconImageView.image = #imageLiteral(resourceName: "outlined_checked_rounded")
                     } else {
-                        self.refundStateIconImageView.image = #imageLiteral(resourceName: "ico_recentsearches_results")
+                        self.refundStateIconImageView.image = #imageLiteral(resourceName: "img_emptyrecentsearches")
                     }
                     self.refundDescriptionLabel.text = self.getRefundMessage(refund: refund)
                     self.cancellationReasonBottomToBottomConstraint.constant = 249

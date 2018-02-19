@@ -82,12 +82,12 @@ class RootCategoryViewController: BaseViewController,
                 completion?(success)
             }
         }
-        self.loadInternalLinks { (success) in
-            if !success, !hasReceivedError {
-                hasReceivedError = true
-                completion?(success)
-            }
-        }
+//        self.loadInternalLinks { (success) in
+//            if !success, !hasReceivedError {
+//                hasReceivedError = true
+//                completion?(success)
+//            }
+//        }
         self.loadContentCompletion = completion
     }
     
@@ -244,7 +244,7 @@ class RootCategoryViewController: BaseViewController,
         } else {
             self.handleGenericErrorCodesWithErrorControlView(Int32(NSURLErrorBadServerResponse), forRequestID: rid)
         }
-        if requestIdsInProgress.count == 0, successRequestIds.count == 3 {
+        if requestIdsInProgress.count == 0, successRequestIds.count == 2 {
             self.publishScreenLoadTime(withName: self.getScreenName(), withLabel: "")
             self.categories = self.incomingCategories
             self.externalLinks = self.incomingExternalLinks

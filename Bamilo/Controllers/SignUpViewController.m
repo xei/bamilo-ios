@@ -24,7 +24,7 @@
 @property (nonatomic, weak) IBOutlet UITableView* tableView;
 @property (nonatomic, strong) FormViewControl *formController;
 @property (nonatomic, strong) FormItemModel *phoneField;
-
+@property (nonatomic) BOOL isSubmissionButtonDisabled;
 @end
 
 @implementation SignUpViewController
@@ -50,6 +50,7 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    self.isSubmissionButtonDisabled = NO;
     [self.formController registerForKeyboardNotifications];
 }
 
@@ -59,7 +60,7 @@
 
 #pragma mark - formControlDelegate
 - (void)formSubmitButtonTapped {
-    if (![self.formController isFormValid]) {
+    if (![self.formController isFormValid] && !self.isSubmissionButtonDisabled) {
         [self.formController showAnyErrorInForm];
         return;
     }
@@ -69,6 +70,7 @@
 - (void)tryToSignupUser:(id<DataServiceProtocol>)target {
     [DataAggregator signupUser:target with:[self.formController getMutableDictionaryOfForm] completion:^(id data, NSError *error) {
         if(error == nil) {
+            self.isSubmissionButtonDisabled = YES;
             //TODO: this is not a good approach which has been contracted with server
             // and it's better to be refactored in both platforms
             if ([data isKindOfClass:[ApiDataMessageList class]]) {
