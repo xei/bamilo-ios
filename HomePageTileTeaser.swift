@@ -30,6 +30,8 @@ class HomePageTileTeaser: HomePageTeaserBox {
     override func mapping(map: Map) {
         super.mapping(map: map)
         items <- map["data"]
+        
+        print(items)
     }
     
 }

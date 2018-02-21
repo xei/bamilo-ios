@@ -58,6 +58,7 @@ class HomePageTileTeaserTableViewCell: BaseHomePageTeaserBoxTableViewCell, UICol
     
     private static func getVaildItemsCount(data: HomePageTileTeaser?) -> Int {
         let itemsCount = data?.items?.count ?? 0
+        if itemsCount == 0 { return 0 }
         let validCount = itemsCount % 2 != 0 ? itemsCount : itemsCount - 1 //only odd items count
         return min(validCount, 5)
     }
@@ -106,6 +107,7 @@ class HomePageTileTeaserTableViewCell: BaseHomePageTeaserBoxTableViewCell, UICol
     static func teaserHeight(model: Any?) -> CGFloat {
         if let model = model as? HomePageTileTeaser {
             let items = self.getVaildItemsCount(data: model)
+            if items == 0 { return 0 }
             let screenWidth = UIScreen.main.bounds.width
             let collectionviewWidth = (screenWidth - collectionPadding * 2)
             let wideCellHeightWidthBottomSpace = collectionviewWidth / wideCellRatio + cellSpacing
