@@ -229,7 +229,7 @@ UITableViewDelegate
         [self tableView:self.tableView didSelectRowAtIndexPath:self.tableViewIndexSelected];
     }
     
-    [self publishScreenLoadTime];
+//    [self publishScreenLoadTime];
     
     [self hideLoading];
 }
@@ -770,11 +770,6 @@ UITableViewDelegate
             self.selectedPickupStationIndexPath = indexPath;
         }
     }
-}
-
-#pragma mark - PerformanceTrackerProtocol
--(NSString *)getPerformanceTrackerScreenName {
-    return @"Shipping";
 }
 
 @end

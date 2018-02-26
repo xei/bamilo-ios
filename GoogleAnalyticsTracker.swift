@@ -27,9 +27,9 @@
         // Dispatch tracking information every 5 seconds (default: 120)
         GAI.sharedInstance().dispatchInterval = 5
         GAI.sharedInstance().logger.logLevel = .none
-        
-        let GAID = (Bundle.main.object(forInfoDictionaryKey: "Configs") as? [String:Any])?["GoogleAnalyticsID"] as? String
-        GAI.sharedInstance().tracker(withTrackingId: GAID)
+        if let GAID = AppUtility.getInfoConfigs(for: "GoogleAnalyticsID") as? String {
+            GAI.sharedInstance().tracker(withTrackingId: GAID)
+        }
         GAI.sharedInstance().defaultTracker.set(kGAIAppVersion, value: AppManager.sharedInstance().getAppFullFormattedVersion() ?? "")
         GAI.sharedInstance().defaultTracker.allowIDFACollection = true
     }
@@ -193,6 +193,18 @@
         }
     }
     
+    func removeFromCart(attributes: EventAttributeType) {
+        if let product = attributes[kEventProduct] as? RIProduct {
+            let params = GAIDictionaryBuilder.createEvent(
+                withCategory: "CART",
+                action: "RemoveFromCart",
+                label: product.sku,
+                value: product.price
+            )
+            self.sendParamsToGA(params: params)
+        }
+    }
+    
     func viewProduct(attributes: EventAttributeType) {
         if let parentScreenName = attributes[kEventScreenName] as? String,
             let product = attributes[kEventProduct] as? RIProduct {
@@ -310,8 +322,14 @@
     }
     
     
-    func trackExecutionTime(refrence: String, interval: NSNumber) {
-        //TODO: track execution time 
+    func trackLoadTime(screenName: String, interval: NSNumber, label: String) {
+        if let timingParms = GAIDictionaryBuilder.createTiming(
+            withCategory: "Screen",
+            interval: interval,
+            name: screenName,
+            label: label) {
+            self.sendParamsToGA(params: timingParms)
+        }
     }
     
     //MARK: - Helper functions

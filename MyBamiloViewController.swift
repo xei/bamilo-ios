@@ -87,6 +87,7 @@ class MyBamiloViewController:   BaseViewController,
         self.loadingIndicator.stopAnimating()
         self.visibleProductCount = 0
         self.incomingDataSource = MyBamiloModel()
+        self.recordStartLoadTime()
         EmarsysPredictManager.sendTransactions(of: self)
     }
     
@@ -140,6 +141,7 @@ class MyBamiloViewController:   BaseViewController,
     }
     
     private func renderIncomingDataSource() {
+        self.publishScreenLoadTime(withName: self.getScreenName(), withLabel: "")
         self.dataSource.topics = self.incomingDataSource.topics
         self.incomingDataSource.mergeProductsWithInterleaveLogic()
         
@@ -163,6 +165,7 @@ class MyBamiloViewController:   BaseViewController,
             let product = products[indexPath.row].convertToProduct()
             cell.updateWithProduct(product: product)
         }
+        cell.hideAddToFavoriteButton(hidden: true)
         cell.cellIndex = indexPath.row
         
         return cell

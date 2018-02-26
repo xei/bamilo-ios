@@ -224,15 +224,12 @@
                                                                            [prefixes addObject:[RIPhonePrefix parse:prefix]];
                                                                        }
                                                                    }
-                                                                   
                                                                    successBlock([prefixes copy]);
                                                                } else {
                                                                    
                                                                    failureBlock(apiResponse, nil);
                                                                }
-                                                               
                                                            } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
-                                                               
                                                                if(NOTEMPTY(errorJsonObject)) {
                                                                    failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
                                                                } else if(NOTEMPTY(errorObject)) {

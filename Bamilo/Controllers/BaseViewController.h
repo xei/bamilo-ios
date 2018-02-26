@@ -10,8 +10,9 @@
 #import "SideMenuProtocol.h" 
 #import "TabBarProtocol.h"
 #import "NavigationBarProtocol.h"
+#import "PerformanceTrackerProtocol.h"
 
-@interface BaseViewController : UIViewController <SideMenuProtocol, TabBarProtocol, PerformanceTrackerProtocol, DataTrackerProtocol, NavigationBarProtocol>
+@interface BaseViewController : UIViewController <SideMenuProtocol, TabBarProtocol, DataTrackerProtocol, NavigationBarProtocol, PerformanceTrackerProtocol>
 - (CGRect)viewBounds;
 - (NSArray <NSString *>*)extractSuccessMessages:(id)dataMessages;
 - (void)showMessage:(NSArray <NSString *>*)successMessages showMessage:(BOOL)showMessage;
@@ -21,5 +22,6 @@
 - (void)updateCartInNavBar;
 - (void)handleGenericErrorCodesWithErrorControlView:(int)errorCode forRequestID:(int)rid;
 - (void)removeErrorView;
+- (void)publishScreenLoadTimeWithName:(NSString *)name withLabel:(NSString *)label;
 
 @end

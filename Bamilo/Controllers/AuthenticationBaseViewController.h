@@ -7,12 +7,11 @@
 //
 
 #import "BaseViewController.h"
-#import "PerformanceTrackerProtocol.h"
 
 typedef NS_ENUM(NSUInteger, AuthenticationStatus) {
-    AUTHENTICATION_CANCELLED,
-    AUTHENTICATION_FINISHED_WITH_LOGIN,
-    AUTHENTICATION_FINISHED_WITH_REGISTER
+    AuthenticationStatusCanceled,
+    AuthenticationStatusSigninFinished,
+    AuthenticationStatusSignupFinished
 };
 
 typedef void(^AuthenticationCompletion)(AuthenticationStatus status);

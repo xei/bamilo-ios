@@ -13,7 +13,7 @@ class OrderCMSMessageTableViewCell: BaseTableViewCell {
     @IBOutlet weak private var titleMessageLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.titleMessageLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorPink3))
+        self.titleMessageLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorPink3))
         self.contentView.backgroundColor = Theme.color(kColorPink10)
         self.backgroundColor = Theme.color(kColorPink10)
     }

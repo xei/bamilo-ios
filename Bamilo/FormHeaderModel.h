@@ -12,7 +12,9 @@
 @interface FormHeaderModel : NSObject <FormElementProtocol>
 
 @property (nonatomic, copy) NSString *headerString;
+@property (nonatomic) NSTextAlignment alignMent;
+@property (nonatomic, strong) UIColor *backgroundColor;
 
--(instancetype) initWithHeaderTitle:(NSString *)headerString;
+- (instancetype)initWithHeaderTitle:(NSString *)headerString;
 
 @end

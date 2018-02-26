@@ -21,14 +21,13 @@
 
 //#######################################################################################
 #import <Pushwoosh/PushNotificationManager.h>
+#import <MobileEngageSDK/MobileEngage.h>
 #import <UserNotifications/UserNotifications.h>
 #import "ViewControllerManager.h"
 #import "BaseViewController.h"
 #import "ThemeManager.h"
 #import "DeepLinkManager.h"
 #import "PushWooshTracker.h"
-#import "EmarsysMobileEngage.h"
-#import "EmarsysMobileEngageTracker.h"
 #import "EmarsysPredictManager.h"
 #import "Bamilo-Swift.h"
 
@@ -124,7 +123,8 @@
     [[SessionManager sharedInstance] evaluateActiveSessions];
 
     [[UINavigationBar appearance] setBarTintColor:JABlack300Color];
-
+    
+    
     [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:JABackgroundGrey, NSForegroundColorAttributeName, [Theme font:kFontVariationLight size:18], NSFontAttributeName,nil] forState:UIControlStateNormal];
 
     [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[Theme color:kColorOrange], NSForegroundColorAttributeName, [Theme font:kFontVariationLight size:18], NSFontAttributeName,nil] forState:UIControlStateSelected];
@@ -175,10 +175,10 @@
     
     //SETUP TRACKERS
     //********************************************************************
-    [TrackerManager addTrackerWithTracker:[EmarsysMobileEngageTracker sharedTracker]];
     [TrackerManager addTrackerWithTracker:[PushWooshTracker sharedTracker]];
     [TrackerManager addTrackerWithTracker:[GoogleAnalyticsTracker sharedTracker]];
     [TrackerManager addTrackerWithTracker:[AdjustTracker sharedTracker]];
+    [TrackerManager addTrackerWithTracker:[EmarsysMobileEngageTracker sharedTracker]];
     
     NSDictionary *configs = [[NSBundle mainBundle] objectForInfoDictionaryKey:kConfigs];
     if(configs) {
@@ -222,19 +222,6 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     
     [[PushNotificationManager pushManager] stopLocationTracking];
-    id topViewController = [ViewControllerManager topViewController];
-    NSString *screenName;
-
-    if([topViewController conformsToProtocol:@protocol(PerformanceTrackerProtocol)]) {
-        screenName = [topViewController getPerformanceTrackerScreenName];
-    }
-
-//    if(screenName) {
-//        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCloseApp] data:[NSDictionary dictionaryWithObject:screenName forKey:kRIEventScreenNameKey]];
-//    }
-//
-//    [[RITrackingWrapper sharedInstance] applicationDidEnterBackground:application];
-
     [[NSNotificationCenter defaultCenter] postNotificationName:kAppDidEnterBackground object:nil];
 }
 
@@ -249,8 +236,8 @@
     [application setApplicationIconBadgeNumber:0];
 
     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"appDidEnterForeground" object:nil]];
-    PushNotificationManager *pushManager = [PushNotificationManager pushManager];
-    [[EmarsysMobileEngage sharedInstance] sendLogin:[pushManager getPushToken] completion:nil];
+//    PushNotificationManager *pushManager = [PushNotificationManager pushManager];
+//    [[EmarsysMobileEngage sharedInstance] sendLogin:[pushManager getPushToken] completion:nil];
     
     OpenAppEventSourceType openAppEventSourceType = [[AppManager sharedInstance] getOpenAppEventSource];
     
@@ -303,8 +290,9 @@
 
 #pragma mark - Push Notification
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-//    [[RITrackingWrapper sharedInstance] applicationDidRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
-
+    //MOBILE ENGAGE
+    [MobileEngage setPushToken:deviceToken];
+    
     //PUSH WOOSH
     [[PushNotificationManager pushManager] handlePushRegistration:deviceToken];
 }

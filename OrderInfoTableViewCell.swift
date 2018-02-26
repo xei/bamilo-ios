@@ -23,14 +23,14 @@ class OrderInfoTableViewCell: BaseTableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.orderIdLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12),color: Theme.color(kColorGray2))
-        self.orderIdTitleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray2))
-        self.orderCostLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12),color: Theme.color(kColorGray2))
-        self.orderCostTitleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray2))
-        self.orderCreationDateLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12),color: Theme.color(kColorGray2))
-        self.orderCreationDateTitleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray2))
-        self.orderProductCountLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12),color: Theme.color(kColorGray2))
-        self.orderProductCountTitleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray2))
+        self.orderIdLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12),color: Theme.color(kColorGray2))
+        self.orderIdTitleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray2))
+        self.orderCostLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12),color: Theme.color(kColorGray2))
+        self.orderCostTitleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray2))
+        self.orderCreationDateLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12),color: Theme.color(kColorGray2))
+        self.orderCreationDateTitleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray2))
+        self.orderProductCountLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12),color: Theme.color(kColorGray2))
+        self.orderProductCountTitleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray2))
         
         self.orderIdTitleLabel.text = "\(STRING_ORDER_ID):"
         self.orderCostTitleLabel.text = "\(STRING_ORDER_COST):"

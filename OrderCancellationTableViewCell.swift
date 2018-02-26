@@ -11,6 +11,7 @@ import Kingfisher
 
 class OrderCancellationTableViewCell: AccordionTableViewCell, StepperViewControlDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
+    @IBOutlet weak private var quantityLabel: UILabel!
     @IBOutlet weak private var notCacelableReasonLabel: UILabel!
     @IBOutlet weak private var disabledCoverView: UIView!
     @IBOutlet weak private var cancellingTitleLabel: UILabel!
@@ -100,13 +101,16 @@ class OrderCancellationTableViewCell: AccordionTableViewCell, StepperViewControl
     }
     
     func setupStyles() {
-        self.productTitleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
-        self.productAttributeLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
-        self.quantityTitleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorSecondaryGray1))
+        self.productTitleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
+        self.productAttributeLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
+        self.quantityTitleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorSecondaryGray1))
         self.cancellationReasonFieldView.applyBorder(width: 1, color: Theme.color(kColorGray9))
         self.cancellationReasonFieldView.layer.cornerRadius = 3
-        self.cancellingTitleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
-        self.notCacelableReasonLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGreen3))
+        self.cancellingTitleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
+        self.notCacelableReasonLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGreen3))
+        
+        self.quantityLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorGray1))
+        self.quantityLabel.isHidden = true
     }
     
     //MARK : - StepperViewControlDelegate
@@ -123,9 +127,19 @@ class OrderCancellationTableViewCell: AccordionTableViewCell, StepperViewControl
             self.productAttributeLabel.text = "\(STRING_COLOR): \(color)"
         }
         self.productImage.kf.setImage(with: cancellingItem.imageUrl, placeholder: UIImage(named: "placeholder_list"), options: [.transition(.fade(0.20))])
+        
+        self.quantityStepper.isHidden = false
         self.quantityStepper.quantity = Int32(cancellingItem.cancellingQuantity)
         self.quantityStepper.maxQuantity = Int32(cancellingItem.quantity ?? 0)
         self.quantityStepper.minQuantity = min(self.quantityStepper.maxQuantity, 1)
+        
+        //if we have only one quantity of this product
+        if cancellingItem.quantity == 1  {
+            self.quantityStepper.isHidden = true
+            self.quantityLabel.text = "1".convertTo(language: .arabic)
+            self.quantityLabel.isHidden = false
+        }
+        
         self.cancellationReasonFieldView.isHidden = !cancellingItem.isCancelable
         self.notCacelableReasonLabel.isHidden = cancellingItem.isCancelable
         self.notCacelableReasonLabel.text = cancellingItem.notCancelableReason ?? NOT_CANCELABLE_DEFAULT_REASON

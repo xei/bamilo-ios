@@ -10,24 +10,40 @@ import UIKit
 
 class OrderCancellationFooterTableViewCell: BaseTableViewCell {
         
+    @IBOutlet weak var orderCancellationCMSBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak private var orderCancelletaionCMSViewWrapperHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak private var orderCancellationCMSViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak private var moreDescriptionBottomToNoticeMessageTopConstraint: NSLayoutConstraint!
     @IBOutlet weak private var moreDescriptionTitleLabel: UILabel!
     @IBOutlet weak var moreDescriptionTextView: UITextView!
     @IBOutlet weak var orderCancellationCMSWrapperView: UIView!
-    @IBOutlet weak var orderCancellationCMSLabel: UILabel!
-    @IBOutlet weak var orderCancellationNoticeMessage: UILabel!
+    @IBOutlet weak private var orderCancellationCMSLabel: UILabel!
+    @IBOutlet weak private var orderCancellationNoticeMessage: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.moreDescriptionTitleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
+        self.moreDescriptionTitleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
         self.moreDescriptionTextView.font = Theme.font(kFontVariationRegular, size: 13)
         self.moreDescriptionTextView.textColor = Theme.color(kColorGray1)
         self.moreDescriptionTextView.applyBorder(width: 1, color: Theme.color(kColorGray7))
         self.orderCancellationCMSWrapperView.backgroundColor = Theme.color(kColorGray10)
         self.orderCancellationCMSWrapperView.layer.cornerRadius = 3
-        self.orderCancellationCMSLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
-        self.orderCancellationNoticeMessage.applyStype(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
+        self.orderCancellationCMSLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
+        self.orderCancellationNoticeMessage.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
         self.moreDescriptionTitleLabel.text = STRING_DESCRIPTION
 
+    }
+    
+    func setCMSMessage(message: String) {
+        self.orderCancelletaionCMSViewWrapperHeightConstraint.priority = message.count == 0 ? UILayoutPriorityDefaultHigh : UILayoutPriorityDefaultLow
+        self.moreDescriptionBottomToNoticeMessageTopConstraint.priority = message.count == 0 ? UILayoutPriorityDefaultHigh : UILayoutPriorityDefaultLow
+        self.orderCancellationCMSViewBottomConstraint.priority = message.count == 0 ? UILayoutPriorityDefaultLow : UILayoutPriorityDefaultHigh
+        self.orderCancellationCMSBottomConstraint.priority = message.count == 0 ? UILayoutPriorityDefaultLow : UILayoutPriorityDefaultHigh
+        self.orderCancellationCMSLabel.text = message
+    }
+    
+    func setNoticeMessage(message: String) {
+        self.orderCancellationNoticeMessage.text = message
     }
     
     override func update(withModel model: Any!) {

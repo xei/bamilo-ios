@@ -45,10 +45,10 @@ class DailyDealsTableViewCell: BaseHomePageTeaserBoxTableViewCell, UICollectionV
         self.contentContainer.clipsToBounds = true
         self.contentContainer.backgroundColor = .white
         
-        self.teaserTitle.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: UIColor.black)
+        self.teaserTitle.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: UIColor.black)
         self.teaserTitleHeightConstraint.constant = DailyDealsTableViewCell.titleLabelHeight
         self.collectionViewBottomConstraint.constant = DailyDealsTableViewCell.collectionPadding
-        self.countDownLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 17), color: Theme.color(kColorRed))
+        self.countDownLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 17), color: Theme.color(kColorRed))
         self.moreButton.titleLabel?.font = Theme.font(kFontVariationRegular, size: 12)
         
         self.collectionView.backgroundColor = .clear
@@ -121,7 +121,7 @@ class DailyDealsTableViewCell: BaseHomePageTeaserBoxTableViewCell, UICollectionV
     
     func updateTimer(seconds: Int) {
         self.countDownLabel.isHidden = false
-        self.countDownLabel.text = timeString(seconds: seconds).convertTo(language: .arabic)
+        self.countDownLabel.text = Utility.timeString(seconds: seconds, allowedUnits: [.hour, .minute, .second]).convertTo(language: .arabic)
     }
     
     private static func cellSize() -> CGSize {
@@ -129,12 +129,5 @@ class DailyDealsTableViewCell: BaseHomePageTeaserBoxTableViewCell, UICollectionV
         let cellWidth = CarouselCollectionFlowLayout.itemWidth(relateTo: collectionWidth, cellSpacing: 5)
         let collectionHeight = DailyDealsCollectionViewCell.cellHeight(relateTo: cellWidth)
         return CGSize(width: cellWidth, height: collectionHeight + titleLabelHeight + collectionPadding )
-    }
-    
-    private func timeString(seconds:Int) -> String {
-        let hours = seconds / 3600
-        let minutes = seconds / 60 % 60
-        let seconds = seconds % 60
-        return String(format:"%02i:%02i:%02i", hours, minutes, seconds)
     }
 }

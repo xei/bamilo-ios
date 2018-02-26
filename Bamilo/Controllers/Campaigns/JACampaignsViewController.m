@@ -48,8 +48,7 @@
 
 @implementation JACampaignsViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     self.campaignIndex = -1;
@@ -69,16 +68,8 @@
     self.scrollView.delegate = self;
     [self.view addSubview:self.scrollView];
     
-//    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-//    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
-//    [trackingDictionary setValue:@"Campaigns" forKey:kRIEventActionKey];
-//    [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
-    
     self.shouldPerformButtonActions = YES;
-    
     self.isLoaded = NO;
-    
-//    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewCampaigns] data:trackingDictionary];
     
     
     UISwipeGestureRecognizer *leftSwipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeft:)];
@@ -89,15 +80,7 @@
     [self.view addGestureRecognizer:rightSwipeGesture];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-//    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffMenuSwipePanelNotification
-//                                                        object:nil];
-}
-
--(void)viewWillLayoutSubviews
-{
+-(void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     if (self.isLoaded) {
         [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
@@ -106,8 +89,7 @@
     }
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
@@ -122,41 +104,27 @@
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
     [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:self.interfaceOrientation];
-    
     [self.topTabsView setHidden:NO];
     [self.scrollView setHidden:NO];
-    
     [self hideLoading];    
     
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
-- (void)setupCampaings:(CGFloat)width height:(CGFloat)height interfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    if(VALID_NOTEMPTY(self.campaignPages, NSMutableArray) && 1 < [self.campaignPages count] && -1 < self.campaignIndex)
-    {
+- (void)setupCampaings:(CGFloat)width height:(CGFloat)height interfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    if(VALID_NOTEMPTY(self.campaignPages, NSMutableArray) && 1 < [self.campaignPages count] && - 1 < self.campaignIndex) {
         [self.topTabsView setSelectedIndex:self.campaignIndex animated:NO];
     }
     CGRect bounds = [self viewBounds];
-    [self.topTabsView setFrame:CGRectMake(bounds.origin.x,
-                                          bounds.origin.y,
-                                          width,
-                                          self.topTabsView.frame.size.height)];
+    [self.topTabsView setFrame:CGRectMake(bounds.origin.x, bounds.origin.y, width, self.topTabsView.frame.size.height)];
     
-    [self.scrollView setFrame:CGRectMake(bounds.origin.x,
-                                         CGRectGetMaxY(self.topTabsView.frame),
-                                         width,
-                                         height - self.topTabsView.frame.size.height )];
+    [self.scrollView setFrame:CGRectMake(bounds.origin.x, CGRectGetMaxY(self.topTabsView.frame), width, height - self.topTabsView.frame.size.height )];
     
-    if(VALID_NOTEMPTY(self.campaignPages, NSMutableArray))
-    {
+    if(VALID_NOTEMPTY(self.campaignPages, NSMutableArray)) {
         CGFloat currentX = 0.0f;
-        
-        for(JACampaignPageView *campaignPage in self.campaignPages)
-        {
+        for(JACampaignPageView *campaignPage in self.campaignPages) {
             [campaignPage setFrame:CGRectMake(currentX,
                                               self.scrollView.bounds.origin.y,
                                               self.scrollView.bounds.size.width,
@@ -164,32 +132,25 @@
             campaignPage.interfaceOrientation = interfaceOrientation;
             currentX += campaignPage.frame.size.width;
         }
-        
         [self.scrollView setContentSize:CGSizeMake(currentX, self.scrollView.frame.size.height)];
     }
 }
 
-- (void)loadCampaigns
-{
+- (void)loadCampaigns {
     self.campaignPages = [NSMutableArray new];
-    
     CGFloat currentX = 0.0f;
     
     NSInteger startingIndex = 0;
     NSMutableArray* optionList = [NSMutableArray new];
     
-    if(VALID_NOTEMPTY(self.campaignId, NSString))
-    {
+    if(VALID_NOTEMPTY(self.campaignId, NSString)) {
         [self createCampaignPageAtX:currentX];
         [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
-    }
-    else if (VALID_NOTEMPTY(self.teaserGrouping, RITeaserGrouping) && VALID_NOTEMPTY(self.teaserGrouping.teaserComponents, NSOrderedSet))
-    {
+    } else if (VALID_NOTEMPTY(self.teaserGrouping, RITeaserGrouping) && VALID_NOTEMPTY(self.teaserGrouping.teaserComponents, NSOrderedSet)) {
         startingIndex = 0;RI_IS_RTL?self.teaserGrouping.teaserComponents.count-1:0;
         self.activeCampaignComponents = [NSMutableArray new];
         for (int i = RI_IS_RTL?(int)self.teaserGrouping.teaserComponents.count-1:0;
-             RI_IS_RTL?i>=0:i < self.teaserGrouping.teaserComponents.count; RI_IS_RTL?i--:i++)
-        {
+             RI_IS_RTL?i>=0:i < self.teaserGrouping.teaserComponents.count; RI_IS_RTL?i--:i++) {
             
             RITeaserComponent* component = [self.teaserGrouping.teaserComponents objectAtIndex:i];
             if (VALID_NOTEMPTY(component, RITeaserComponent)) {
@@ -210,9 +171,6 @@
                     if (VALID_NOTEMPTY(component.title, NSString)) {
                         [optionList addObject:component.title];
                         [self.activeCampaignComponents addObject:component];
-//                        [[RITrackingWrapper sharedInstance]trackScreenWithName:@"Campaign"];
-//                        [[RITrackingWrapper sharedInstance]trackScreenWithName:component.title];
-                        
                         if ([component.title isEqualToString:self.startingTitle]) {
                             startingIndex = RI_IS_RTL?(self.teaserGrouping.teaserComponents.count-1)-i:i;
                         }
@@ -224,8 +182,7 @@
         [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
         
         self.pickerNamesAlreadySet = YES;
-    }
-    else if (VALID_NOTEMPTY(self.targetString, NSString)) {
+    } else if (VALID_NOTEMPTY(self.targetString, NSString)) {
         [self createCampaignPageAtX:currentX];
         [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
     }
@@ -237,8 +194,7 @@
     self.isLoaded = YES;
 }
 
-- (JACampaignPageView*)createCampaignPageAtX:(CGFloat)xPosition
-{
+- (JACampaignPageView*)createCampaignPageAtX:(CGFloat)xPosition {
     JACampaignPageView* campaignPage = [[JACampaignPageView alloc] initWithFrame:CGRectMake(xPosition,
                                                                                             self.scrollView.bounds.origin.y,
                                                                                             self.scrollView.bounds.size.width,
@@ -251,19 +207,15 @@
     return campaignPage;
 }
 
-- (void)loadCampaignPageAtIndex:(NSNumber *)index
-{
+- (void)loadCampaignPageAtIndex:(NSNumber *)index {
     if (self.campaignPages.count > index.intValue) {
         _clickedCampaignIndex = index;
         JACampaignPageView* campaignPageView = [self.campaignPages objectAtIndex:index.intValue];
         if (VALID_NOTEMPTY(campaignPageView, JACampaignPageView) && NO == campaignPageView.isLoaded) {
-            
             if (VALID_NOTEMPTY(self.campaignId, NSString)) {
                 [self loadPage:campaignPageView withCampaignId:self.campaignId];
             } else if (VALID_NOTEMPTY(self.activeCampaignComponents, NSMutableArray)) {
-                
                 RITeaserComponent* component = [self.activeCampaignComponents objectAtIndex:index.intValue];
-                
                 if (VALID_NOTEMPTY(component, RITeaserComponent) && VALID_NOTEMPTY(component.targetString, NSString)) {
                     [self loadPage:campaignPageView withCampaignTargetString:component.targetString];
                 }
@@ -274,11 +226,8 @@
     }
 }
 
-- (void)loadPage:(JACampaignPageView*)campaignPage
-withCampaignTargetString:(NSString*)campaignTargetString
-{
-    if (RIApiResponseNoInternetConnection != self.apiResponse)
-    {
+- (void)loadPage:(JACampaignPageView*)campaignPage withCampaignTargetString:(NSString*)campaignTargetString {
+    if (RIApiResponseNoInternetConnection != self.apiResponse) {
         [self showLoading];
     }
     self.apiResponse = RIApiResponseSuccess;
@@ -288,9 +237,9 @@ withCampaignTargetString:(NSString*)campaignTargetString
         }
         [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         [campaignPage loadWithCampaign:campaign];
+        [self publishScreenLoadTimeWithName:[self getScreenName] withLabel:campaign.name];
         [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errors) {
-        
         if (apiResponse == RIApiResponseAPIError) {
             for (NSDictionary *error in errors) {
                 if (VALID(error, NSDictionary) && VALID([error objectForKey:@"reason"], NSString)) {
@@ -310,9 +259,7 @@ withCampaignTargetString:(NSString*)campaignTargetString
     }];
 }
 
-- (void)loadPage:(JACampaignPageView*)campaignPage
-  withCampaignId:(NSString*)campaignId
-{
+- (void)loadPage:(JACampaignPageView*)campaignPage withCampaignId:(NSString*)campaignId {
     [self showLoading];
     [RICampaign getCampaignWithId:campaignId successBlock:^(RICampaign *campaign) {
         [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
@@ -339,8 +286,7 @@ withCampaignTargetString:(NSString*)campaignTargetString
 }
 
 #pragma mark - JACampaignPageViewDelegate
-- (void)loadCampaignSuccessWithName:(NSString*)name
-{
+- (void)loadCampaignSuccessWithName:(NSString*)name {
     if (NO == self.pickerNamesAlreadySet) {
         NSArray *optionList = [NSArray arrayWithObject:name];
         //this will trigger load methods
@@ -349,10 +295,8 @@ withCampaignTargetString:(NSString*)campaignTargetString
     [self hideLoading];
 }
 
-- (void)loadCampaignFailedWithResponse:(RIApiResponse)apiResponse
-{
+- (void)loadCampaignFailedWithResponse:(RIApiResponse)apiResponse {
     self.apiResponse = apiResponse;
-    
     [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadCampaignPageAtIndex:) objects:[NSArray arrayWithObject:_clickedCampaignIndex]];
     [self hideLoading];
 }
@@ -362,7 +306,6 @@ withCampaignTargetString:(NSString*)campaignTargetString
 
 - (void)selectedIndex:(NSInteger)index animated:(BOOL)animated {
     self.campaignIndex = index;
-    
     JACampaignPageView* campaignPageView = [self.campaignPages objectAtIndex:index];
     [self.scrollView scrollRectToVisible:campaignPageView.frame animated:animated];
     if (NO == campaignPageView.isLoaded) {
@@ -370,26 +313,22 @@ withCampaignTargetString:(NSString*)campaignTargetString
     }
 }
 
-- (IBAction)swipeLeft:(id)sender
-{
+- (IBAction)swipeLeft:(id)sender {
     self.shouldPerformButtonActions = NO;
     [self.topTabsView scrollLeft];
 }
 
-- (IBAction)swipeRight:(id)sender
-{
+- (IBAction)swipeRight:(id)sender {
     self.shouldPerformButtonActions = NO;
     [self.topTabsView scrollRight];
 }
 
 #pragma mark - JACampaignPageViewDelegate
-
 - (void)addToCartForProduct:(RICampaignProduct *)campaignProduct withProductSimple:(NSString*)simpleSku {
     //the flag shouldPerformButtonActions is used to fix the scrolling, if the campaignPages.count is 1, then it is not needed
     if (self.shouldPerformButtonActions || 1 == self.campaignPages.count) {
         self.backupCampaignProduct = campaignProduct;
         self.backupSimpleSku = simpleSku;
-        
         [self finishAddToCart];
     }
 }
@@ -403,9 +342,7 @@ withCampaignTargetString:(NSString*)campaignTargetString
     }
     //the flag shouldPerformButtonActions is used to fix the scrolling, if the campaignPages.count is 1, then it is not needed
     if (self.shouldPerformButtonActions || 1 == self.campaignPages.count) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
-                                                            object:nil
-                                                          userInfo:userInfo];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication object:nil userInfo:userInfo];
     }
 }
 
@@ -420,25 +357,16 @@ withCampaignTargetString:(NSString*)campaignTargetString
     [self.picker setDelegate:self];
     self.pickerDataSource = [NSMutableArray new];
     
-    [self.picker setDataSourceArray:dataSource
-                       previousText:previousText
-                    leftButtonTitle:nil];
+    [self.picker setDataSourceArray:dataSource previousText:previousText leftButtonTitle:nil];
     
     CGFloat pickerViewHeight = self.view.frame.size.height;
     CGFloat pickerViewWidth = self.view.frame.size.width;
-    [self.picker setFrame:CGRectMake(0.0f,
-                                     pickerViewHeight,
-                                     pickerViewWidth,
-                                     pickerViewHeight)];
+    [self.picker setFrame:CGRectMake(0.0f, pickerViewHeight, pickerViewWidth, pickerViewHeight)];
     [self.view addSubview:self.picker];
     
-    [UIView animateWithDuration:0.4f
-                     animations:^{
-                         [self.picker setFrame:CGRectMake(0.0f,
-                                                          0.0f,
-                                                          pickerViewWidth,
-                                                          pickerViewHeight)];
-                     }];
+    [UIView animateWithDuration:0.4f animations:^{
+        [self.picker setFrame:CGRectMake(0.0f, 0.0f, pickerViewWidth, pickerViewHeight)];
+    }];
 }
 
 - (void)finishAddToCart {
@@ -450,78 +378,7 @@ withCampaignTargetString:(NSString*)campaignTargetString
             
             if (VALID_NOTEMPTY(self.purchaseTrackingInfo, NSString)) {
                 [[PurchaseBehaviourRecorder sharedInstance] recordAddToCartWithSku:self.backupSimpleSku trackingInfo:self.purchaseTrackingInfo];
-                
-//                NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
-//
-//                NSString *obj = [skusFromTeaserInCart objectForKey:self.backupSimpleSku];
-//
-//                if (ISEMPTY(obj)) {
-//                    [skusFromTeaserInCart setValue:self.purchaseTrackingInfo forKey:self.backupSimpleSku];
-//                    [[NSUserDefaults standardUserDefaults] setObject:[skusFromTeaserInCart copy] forKey:kSkusFromTeaserInCartKey];
-//                }
             }
-            
-//            NSNumber *price = self.backupCampaignProduct.priceEuroConverted;
-//            if(VALID_NOTEMPTY(self.backupCampaignProduct.specialPriceEuroConverted, NSNumber) && [self.backupCampaignProduct.specialPriceEuroConverted floatValue] > 0.0f) {
-//                price = self.backupCampaignProduct.specialPriceEuroConverted;
-//            }
-//
-//            NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-//            [trackingDictionary setValue:self.backupSimpleSku forKey:kRIEventLabelKey];
-//            [trackingDictionary setValue:@"AddToCart" forKey:kRIEventActionKey];
-//            [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
-//            [trackingDictionary setValue:price forKey:kRIEventValueKey];
-//
-//            NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-//
-//            [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-//            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-//            [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-//            [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-//
-//            // Since we're sending the converted price, we have to send the currency as EUR.
-//            // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
-//            [trackingDictionary setValue:price forKey:kRIEventPriceKey];
-//            [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
-//
-//            [trackingDictionary setValue:@"Campaings" forKey:kRIEventLocationKey];
-//            [trackingDictionary setValue:self.backupSimpleSku forKey:kRIEventSkuKey];
-//            [trackingDictionary setValue:self.backupCampaignProduct.brand forKey:kRIEventBrandName];
-//            [trackingDictionary setValue:self.backupCampaignProduct.name forKey:kRIEventProductNameKey];
-//
-//            NSString *discountPercentage = @"0";
-//            if(VALID_NOTEMPTY(self.backupCampaignProduct.maxSavingPercentage, NSNumber)) {
-//                discountPercentage = [self.backupCampaignProduct.maxSavingPercentage stringValue];
-//            }
-//            [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
-//            [trackingDictionary setValue:self.cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
-//            [trackingDictionary setValue:self.cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
-//
-//            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart] data:[trackingDictionary copy]];
-//
-//            NSMutableDictionary *tracking = [NSMutableDictionary new];
-//            [tracking setValue:self.backupCampaignProduct.name forKey:kRIEventProductNameKey];
-//            [tracking setValue:self.backupSimpleSku forKey:kRIEventSkuKey];
-//            [tracking setValue:nil forKey:kRIEventLastCategoryAddedToCartKey];
-//            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLastAddedToCart] data:tracking];
-//
-//            trackingDictionary = [NSMutableDictionary new];
-//            [trackingDictionary setValue:self.cart.cartEntity.cartValueEuroConverted forKey:kRIEventTotalCartKey];
-//            [trackingDictionary setValue:self.cart.cartEntity.cartCount forKey:kRIEventQuantityKey];
-//            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart] data:[trackingDictionary copy]];
-//
-//            trackingDictionary = [NSMutableDictionary new];
-//            [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-//            NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
-//            [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
-//
-//            [trackingDictionary setValue:[price stringValue] forKey:kRIEventFBValueToSumKey];
-//            [trackingDictionary setValue:self.backupSimpleSku forKey:kRIEventFBContentIdKey];
-//            [trackingDictionary setValue:@"product" forKey:kRIEventFBContentTypeKey];
-//            [trackingDictionary setValue:@"EUR" forKey:kRIEventFBCurrency];
-//
-//            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookAddToCart] data:[trackingDictionary copy]];
-            
             NSDictionary* userInfo = [NSDictionary dictionaryWithObject:self.cart forKey:kUpdateCartNotificationValue];
             [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
             
@@ -548,45 +405,37 @@ withCampaignTargetString:(NSString*)campaignTargetString
 #pragma mark - UIScrollViewDelegate
 //this depends on animation existing. if in the future there is a case where no animation
 //happens on the scroll view, we have to move this to another scrollviewdelegate method
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
-{
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
     self.shouldPerformButtonActions = YES;
 }
 
 #pragma mark JAPickerDelegate
-- (void)selectedRow:(NSInteger)selectedRow
-{
+- (void)selectedRow:(NSInteger)selectedRow {
     [self.campaignPageWithSizePickerOpen selectedSizeIndex:selectedRow];
-    
     CGRect frame = self.picker.frame;
     frame.origin.y = self.view.frame.size.height;
-    
-    [UIView animateWithDuration:0.4f
-                     animations:^{
-                         self.picker.frame = frame;
-                     } completion:^(BOOL finished) {
-                         [self.picker removeFromSuperview];
-                         self.picker = nil;
-                     }];
+    [UIView animateWithDuration:0.4f animations:^{
+        self.picker.frame = frame;
+    } completion:^(BOOL finished) {
+        [self.picker removeFromSuperview];
+        self.picker = nil;
+    }];
 }
 
-- (void)closePicker
-{
+- (void)closePicker {
     CGRect frame = self.picker.frame;
     frame.origin.y = self.view.frame.size.height;
-    
-    [UIView animateWithDuration:0.4f
-                     animations:^{
-                         self.picker.frame = frame;
-                     } completion:^(BOOL finished) {
-                         [self.picker removeFromSuperview];
-                         self.picker = nil;
-                     }];
+    [UIView animateWithDuration:0.4f animations:^{
+        self.picker.frame = frame;
+    } completion:^(BOOL finished) {
+        [self.picker removeFromSuperview];
+        self.picker = nil;
+    }];
 }
 
 #pragma mark - DataTrackerProtocol
 -(NSString *)getScreenName {
-    return @"Campaignpage";
+    return @"CampaignPage";
 }
 
 -(NSString *)getPerformanceTrackerLabel {

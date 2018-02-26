@@ -50,12 +50,14 @@ class RequestManagerSwift {
             }).responseObject { (response: DataResponse<ApiResponseData>) in
                 switch response.result {
                     case .success:
+                        var hasError = false
                         if let apiResponseData = response.result.value {
-                            
                             //Check if this request needs athenticated action which the current is not logged in
                             if let errors = apiResponseData.messages?.errors, path != RI_API_LOGOUT_CUSTOMER {
+                                hasError = true
                                 let hasAuthenticationErrorCode = errors.filter { $0.code == 231 }.count > 0
                                 if hasAuthenticationErrorCode {
+                                    LoadingManager.hideLoading()
                                     self.autoLoginWith(method, target: type, path: path, params: params, type: type, completion: completion)
                                     return
                                 }
@@ -65,11 +67,12 @@ class RequestManagerSwift {
                             if(apiResponseData.success) {
                                 completion(response.response?.statusCode ?? 0, apiResponseData, self.prepareErrorMessages(messagesList: apiResponseData.messages))
                             } else {
+                                hasError = true
                                 completion(response.response?.statusCode ?? 0, nil, self.prepareErrorMessages(messagesList: apiResponseData.messages))
                             }
                         }
                         
-                        if(type == .foreground) {
+                        if(type == .foreground || hasError) {
                             LoadingManager.hideLoading()
                         }
                     case .failure(let error):

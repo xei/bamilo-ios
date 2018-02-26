@@ -15,7 +15,7 @@ class ProfileSimpleTableViewCell: BaseProfileTableViewCell {
     
     override func setupView() {
         super.setupView()
-        self.titleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorExtraDarkGray))
+        self.titleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorExtraDarkGray))
     }
     
     override func update(withModel model: Any!) {

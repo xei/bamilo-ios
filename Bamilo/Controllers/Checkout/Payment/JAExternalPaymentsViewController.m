@@ -30,7 +30,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self publishScreenLoadTime];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(checkPaymentResult) name:@"appDidEnterForeground" object:nil];
 }
 
@@ -68,7 +67,7 @@
     }
 }
 
-#pragma mark - PerformanceTrackerProtocol
+#pragma mark - ScreenTrackerProtocol
 -(NSString *)getScreenName {
     return @"ExternalPayment";
 }

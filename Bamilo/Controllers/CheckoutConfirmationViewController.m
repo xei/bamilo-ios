@@ -80,6 +80,7 @@
 }
 
 - (void)getContent {
+    [self recordStartLoadTime];
     [DataAggregator getMultistepConfirmation:self type:RequestExecutionTypeContainer completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
@@ -87,7 +88,6 @@
             if(self.cart.cartEntity.couponCode != nil) {
                 [self updateDiscountViewAppearanceForValue:YES animated:NO];
             }
-            
             //Delivery Time
             [DataAggregator getMultistepShipping:self completion:^(id data, NSError *error) {
                 if(error == nil) {
@@ -109,7 +109,7 @@
             _products = self.cart.cartEntity.cartItems;
             [_cellsIndexPaths setObject:[NSMutableArray indexPathArrayOfLength:(int)_products.count forSection:3] atIndexedSubscript:3];
             [self.tableView reloadData];
-            [self publishScreenLoadTime];
+            [self publishScreenLoadTimeWithName:[self getScreenName] withLabel:@""];
         } else {
             [self errorHandler:error forRequestID:0];
         }

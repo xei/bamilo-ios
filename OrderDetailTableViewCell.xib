@@ -113,6 +113,7 @@
                                     <constraint firstItem="sQo-RD-vmq" firstAttribute="left" secondItem="5o2-2d-2Ey" secondAttribute="left" id="YwV-on-uJg"/>
                                     <constraint firstItem="0Cs-Nh-G8u" firstAttribute="centerY" secondItem="sQo-RD-vmq" secondAttribute="centerY" id="e7H-bn-kwh"/>
                                     <constraint firstAttribute="right" secondItem="5o2-2d-2Ey" secondAttribute="right" constant="16" id="k1h-2B-3dw"/>
+                                    <constraint firstAttribute="bottom" secondItem="5o2-2d-2Ey" secondAttribute="bottom" priority="249" constant="10" id="pvc-bN-fKq"/>
                                     <constraint firstItem="sQo-RD-vmq" firstAttribute="top" secondItem="5o2-2d-2Ey" secondAttribute="bottom" priority="250" constant="5" id="qFk-tI-17F"/>
                                 </constraints>
                             </view>
@@ -199,6 +200,7 @@
                 <outlet property="bottomArrowImage" destination="hoF-Xk-tFl" id="Ndj-Mh-caL"/>
                 <outlet property="cancellationButton" destination="doN-Dp-g8g" id="nBa-WG-I9g"/>
                 <outlet property="cancellationHeightConstraint" destination="4tH-Mh-tbT" id="5OD-qq-Sbt"/>
+                <outlet property="cancellationReasonBottomToBottomConstraint" destination="pvc-bN-fKq" id="0rZ-EQ-Hhy"/>
                 <outlet property="cancellationReasonLabel" destination="5o2-2d-2Ey" id="t5R-rm-WLF"/>
                 <outlet property="cancellationReasonLabelBottomConstraint" destination="qFk-tI-17F" id="Tcb-N4-CGq"/>
                 <outlet property="cancellationView" destination="5fQ-wt-nNO" id="6qj-Y2-ADq"/>
@@ -218,7 +220,7 @@
                 <outlet property="refundMessagesToTopSuperViewConstriant" destination="3zM-r4-0zB" id="hhD-nS-xcY"/>
                 <outlet property="refundStateIconImageView" destination="0Cs-Nh-G8u" id="y2k-0E-Wp8"/>
             </connections>
-            <point key="canvasLocation" x="-1103" y="-178.5"/>
+            <point key="canvasLocation" x="-1501" y="-267"/>
         </tableViewCell>
     </objects>
     <resources>

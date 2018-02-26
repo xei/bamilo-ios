@@ -12,6 +12,8 @@
 #import "FormItemModel.h"
 
 @protocol InputTextFieldControlDelegate<NSObject>
+@optional
+- (void)inputFocuced:(id)inputTextFieldControl inFieldIndex:(NSUInteger)fieldIndex;
 - (void)inputValueChanged:(id)inputTextFieldControl byNewValue:(NSString *)value inFieldIndex:(NSUInteger)fieldIndex;
 @end
 

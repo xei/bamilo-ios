@@ -44,12 +44,12 @@ class DailyDealsCollectionViewCell: BaseCollectionViewCellSwift {
         self.layer.borderWidth = 0
         self.clipsToBounds = false
         
-        self.titleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
-        self.brandLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorSecondaryGray1))
-        self.discountedPriceLabel.applyStype(font: Theme.font(kFontVariationBold, size: 13), color: Theme.color(kColorGray1))
+        self.titleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
+        self.brandLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorSecondaryGray1))
+        self.discountedPriceLabel.applyStyle(font: Theme.font(kFontVariationBold, size: 13), color: Theme.color(kColorGray1))
         self.bottomBadgeContainerView.backgroundColor = Theme.color(kColorGray10)
-        self.bottomBadgeLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 10), color: Theme.color(kColorSecondaryGray1))
-        self.priceLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorSecondaryGray1))
+        self.bottomBadgeLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 10), color: Theme.color(kColorSecondaryGray1))
+        self.priceLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorSecondaryGray1))
         
         //setting constraints
         self.imageTopConstraint.constant = DailyDealsCollectionViewCell.imagePadding

@@ -173,7 +173,7 @@ UIAlertViewDelegate
 }
 
 -(void)finishedRequests {
-    [self publishScreenLoadTime];
+//    [self publishScreenLoadTime];
     if(RIApiResponseSuccess == self.apiResponse) {
         if (VALID_NOTEMPTY(self.ratingsForm, RIForm)) {
             self.isShowingRating = YES;

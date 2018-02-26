@@ -31,7 +31,7 @@ class SubCategoryLandingPageViewController: BaseViewController,
         self.tableview.delegate = self
         self.tableview.dataSource = self
         self.tableview.clipsToBounds = false
-        self.tableview.separatorStyle = .none
+        self.tableview.separatorStyle = .singleLine
         
         self.tableview.showsVerticalScrollIndicator = false
         self.tableview.showsHorizontalScrollIndicator = false
@@ -43,6 +43,9 @@ class SubCategoryLandingPageViewController: BaseViewController,
         
         //navigation title
         self.title = self.historyCategory?.last?.name
+        
+        //To remove extra seperators
+        self.tableview.tableFooterView = UIView(frame: .zero)
     }
     
     //MARK: - UITableViewDataSource & UITableViewDelegate

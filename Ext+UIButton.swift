@@ -9,8 +9,10 @@
 import UIKit
 
 extension UIButton {
+    
     func applyStyle(font: UIFont, color: UIColor) {
         self.titleLabel?.font = font
         self.setTitleColor(color, for: .normal)
     }
+    
 }

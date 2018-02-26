@@ -35,7 +35,7 @@ class ProgressBarItemView: BaseControlView {
         
         self.imageView.isHidden = true
         self.imageView.image = nil
-        self.titleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 9), color: Theme.color(kColorGray8))
+        self.titleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 9), color: Theme.color(kColorGray8))
         self.titleLabel.text = .EMPTY
 
         self.circleView.layer.cornerRadius = self.circleWidth / 2

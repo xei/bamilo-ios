@@ -70,7 +70,7 @@ static NotificationBarView *instance;
 
 #pragma mark - Helpers
 - (BOOL)showOnViewController:(UIViewController *)viewController text:(NSString *)text isSuccess:(BOOL)isSuccess {
-    self.textLabel.text = text;
+    self.textLabel.text = [text forceRTL];
     self.iconImage.hidden = isSuccess;
     
     if (isSuccess) {

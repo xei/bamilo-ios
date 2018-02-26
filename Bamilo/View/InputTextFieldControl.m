@@ -60,11 +60,8 @@
 
 - (UIBarButtonItem *)doneBtn {
     if (!_doneBtn){
-        _doneBtn = [[UIBarButtonItem alloc] initWithTitle:@"تایید" style:UIBarButtonItemStylePlain target:self action:@selector(donePicker)];
-        [_doneBtn setTitleTextAttributes:@{
-                             NSFontAttributeName: JAListFont,
-                             NSForegroundColorAttributeName: [UIColor blackColor]
-                             } forState:UIControlStateNormal];
+        _doneBtn = [[UIBarButtonItem alloc] initWithTitle:STRING_OK style:UIBarButtonItemStylePlain target:self action:@selector(donePicker)];
+        [_doneBtn setTitleTextAttributes:@{ NSFontAttributeName: JAListFont, NSForegroundColorAttributeName: [UIColor blackColor] } forState:UIControlStateNormal];
     }
     return _doneBtn;
 }
@@ -78,16 +75,18 @@
     
     [self.input.textField addTarget:self action:@selector(textFieldEditingChanged:) forControlEvents:UIControlEventEditingChanged];
     [self.input.textField addTarget:self action:@selector(textFieldEditingDidEndOnExit:) forControlEvents:UIControlEventEditingDidEnd];
-    [self.input.textField addTarget:self action:@selector(textFieldEditingDidEnditingBegan:) forControlEvents:UIControlEventEditingDidBegin];
+    [self.input.textField addTarget:self action:@selector(textFieldEditingDidBegan:) forControlEvents:UIControlEventEditingDidBegin];
 }
 
 - (void)setType:(InputTextFieldControlType) type {
     self.input.textField.secureTextEntry = NO;
     [self.input updateDropDownAppearance:YES];
+    [self.input enableEyeIconButton:NO];
     switch (type) {
         case InputTextFieldControlTypePassword:
             self.input.textField.keyboardType = UIKeyboardTypeDefault;
             self.input.textField.secureTextEntry = YES;
+            [self.input enableEyeIconButton:YES];
             break;
         case InputTextFieldControlTypePhone:
             self.input.textField.keyboardType = UIKeyboardTypePhonePad;
@@ -112,14 +111,19 @@
 - (void)updateModel {
     if (![self.model.inputTextValue isEqualToString:[self getStringValue]]) {
         self.model.inputTextValue = [self getStringValue];
-        [self.delegate inputValueChanged:self byNewValue:[self getStringValue] inFieldIndex:self.fieldIndex];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(inputValueChanged:byNewValue:inFieldIndex:)]) {
+            [self.delegate inputValueChanged:self byNewValue:[self getStringValue] inFieldIndex:self.fieldIndex];
+        }
     }
 }
 
 - (void)setModel:(FormItemModel *)model {
     _model = model;
-    [self.input resetSeperator];
     
+    //Trim input of model
+    model.inputTextValue  = [model.inputTextValue stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    
+    [self.input showDisabledMode:model.disabled];
     //update UI
     self.input.icon.image = model.icon;
     self.input.textField.placeholder = model.placeholder;
@@ -134,7 +138,7 @@
     }
     
     if (model.inputTextValue.length) {
-        self.input.textField.text = (model.type == InputTextFieldControlTypeNumerical) ? [model.inputTextValue numbersToPersian] : model.inputTextValue;
+        self.input.textField.text = (model.type == InputTextFieldControlTypeNumerical || model.type == InputTextFieldControlTypePhone) ? [model.inputTextValue numbersToPersian] : model.inputTextValue;
         [self checkValidation];
     } else {
         self.input.textField.text = nil;
@@ -146,21 +150,25 @@
         if (model.selectOption.count == 1) {
             model.inputTextValue = model.selectOption.allKeys.firstObject;
             self.input.textField.enabled = NO;
-            [self.input showDisabledMode];
+            [self.input showDisabledMode:YES];
         }
         //if we have no options for selection 
         if (model.selectOption.count == 0) {
             self.input.textField.enabled = NO;
-            [self.input showDisabledMode];
+            [self.input showDisabledMode:YES];
         }
     } else if (self.type == InputTextFieldControlTypeOptions) {
         //When we have no selectOption model but it's `Option` type
         self.input.textField.enabled = NO;
-        [self.input showDisabledMode];
+        [self.input showDisabledMode:YES];
     }
     
     if (model.lastErrorMessage.length) {
         [self showErrorMsg:model.lastErrorMessage];
+    }
+    
+    if (model.type == InputTextFieldControlTypeDatePicker && [model.inputTextValue isKindOfClass:[NSString class]] && [model.inputTextValue length]) {
+        self.datepicker.date = [model.visibleDateFormat dateFromString:model.inputTextValue];
     }
 }
 
@@ -202,7 +210,6 @@
     } else if (self.type == InputTextFieldControlTypeDatePicker) {
         self.input.textField.text = [self.model.visibleDateFormat stringFromDate:self.datepicker.date];
     }
-    
     [self.input.textField resignFirstResponder];
 }
 
@@ -219,7 +226,7 @@
     [self checkValidation];
 }
 
-- (void)textFieldEditingDidEnditingBegan:(UITextField *)textField {
+- (void)textFieldEditingDidBegan:(UITextField *)textField {
     [self.input clearError];
     self.model.lastErrorMessage = nil;
     if (self.type == InputTextFieldControlTypeOptions) {
@@ -233,6 +240,9 @@
         textField.inputAccessoryView = self.toolBar;
         textField.text = self.model.inputTextValue;
     }
+    if (self.delegate && [self.delegate respondsToSelector:@selector(inputFocuced:inFieldIndex:)]) {
+        [self.delegate inputFocuced:self inFieldIndex:self.fieldIndex];
+    }
 }
 
 - (void)textFieldEditingChanged:(UITextField *)textField {
@@ -240,7 +250,6 @@
         textField.text = [textField.text numbersToPersian];
     }
 }
-
 
 #pragma mark - UIPickerViewDataSource and Delegate
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {

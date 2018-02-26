@@ -31,7 +31,6 @@ class HomePageSliderItem: NSObject, Mappable {
 class HomePageSlider: HomePageTeaserBox {
 
     var sliders: [HomePageSliderItem]?
-    
     override func mapping(map: Map) {
         super.mapping(map: map)
         sliders <- map["data"]

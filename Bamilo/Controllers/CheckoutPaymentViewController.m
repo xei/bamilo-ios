@@ -60,9 +60,10 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
 }
 
 - (void)getContent:(void(^)(BOOL))callBack {
+    [self recordStartLoadTime];
     [self getPaymentMethods:^(NSArray *paymentMethods) {
-        [self publishScreenLoadTime];
         [self selectProperPaymentMethodFromMethods:paymentMethods];
+        [self publishScreenLoadTimeWithName:[self getScreenName] withLabel:@""];
     }];
 }
 
