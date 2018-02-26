@@ -14,6 +14,12 @@ enum OrderProductItemRefundStatus: String {
     case success = "success"
 }
 
+enum OrderProductNotCancellableReasonType: String {
+    case isShipped = "IS_SHIPPED"
+    case hasCancellationRequest = "HAS_CANCELLATION_REQUEST"
+    case isCancelled = "IS_CANCELED"
+}
+
 class OrderProductItemRefund:NSObject, Mappable {
     var status: OrderProductItemRefundStatus?
     var cardNumber: String?
@@ -35,6 +41,7 @@ class OrderProductItem: Product {
     var simpleSku: String?
     var isCancelable: Bool = false
     var notCancelableReason: String?
+    var notCancellableReasonType: OrderProductNotCancellableReasonType?
     var deliveryTime: String?
     var size: String?
     var quantity: Int?
@@ -45,8 +52,9 @@ class OrderProductItem: Product {
     override func mapping(map: Map) {
         super.mapping(map: map)
         simpleSku <- map["simple_sku"]
-        isCancelable <- map["isCancelable"]
-        notCancelableReason <- map["notCancelableReason"]
+        isCancelable <- map["cancellation.isCancelable"]
+        notCancelableReason <- map["cancellation.notCancelableReason"]
+        notCancellableReasonType <- (map["cancellation.notCancelableReasonType"], EnumTransform())
         deliveryTime <- map["calculated_delivery_time"]
         quantity <- map["quantity"]
         size <- map["filters.size"]

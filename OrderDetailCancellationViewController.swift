@@ -72,11 +72,12 @@ class OrderDetailCancellationViewController: BaseViewController, DataServiceProt
     func keyboardWasShown(notification:NSNotification) {
         if !self.orderCancellationTableViewCtrl.isMoreDescriptionFieldFirstResponder() { return }
         let userInfo = notification.userInfo
-        let keyboardFrame:NSValue? = userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue
+        let keyboardFrame: NSValue? = userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue
         let keyboardRectangle = keyboardFrame?.cgRectValue
         if let keyboardHeight = keyboardRectangle?.height {
             self.submitButtonBottomToSuperViewConstaint.constant = keyboardHeight
         }
+        self.orderCancellationTableViewCtrl.scrollToMoreDescriptionField()
     }
     
     func keyboardWillBeHidden(notification: Notification) {

@@ -20,7 +20,11 @@ open class AccordionTableViewController: UITableViewController {
     open var shouldAnimateCellToggle = true
     open var shouldScrollIfNeededAfterCellExpand = true
     
-  
+    open override func viewWillAppear(_ animated: Bool) {
+        //do not call super view! because default behaviours of tableview in tableviewCotroller!
+        //such as automatic scrolling when the keyboard shown!
+    }
+    
     open func toggleCell(_ cell: AccordionTableViewCell, animated: Bool) {
         self.toggleCellState(expand: !cell.expanded, cell, animated: animated)
     }

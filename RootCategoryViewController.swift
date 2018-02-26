@@ -56,7 +56,7 @@ class RootCategoryViewController: BaseViewController,
         
         self.tableview.delegate = self
         self.tableview.dataSource = self
-        self.tableview.separatorStyle = .none
+        self.tableview.separatorStyle = .singleLine
         
         self.searchbar.searchView?.textField.delegate = self
         //To remove extra seperators
@@ -82,12 +82,12 @@ class RootCategoryViewController: BaseViewController,
                 completion?(success)
             }
         }
-        self.loadInternalLinks { (success) in
-            if !success, !hasReceivedError {
-                hasReceivedError = true
-                completion?(success)
-            }
-        }
+//        self.loadInternalLinks { (success) in
+//            if !success, !hasReceivedError {
+//                hasReceivedError = true
+//                completion?(success)
+//            }
+//        }
         self.loadContentCompletion = completion
     }
     
@@ -244,7 +244,8 @@ class RootCategoryViewController: BaseViewController,
         } else {
             self.handleGenericErrorCodesWithErrorControlView(Int32(NSURLErrorBadServerResponse), forRequestID: rid)
         }
-        if requestIdsInProgress.count == 0, successRequestIds.count == 3 {
+        if requestIdsInProgress.count == 0, successRequestIds.count == 2 {
+            self.publishScreenLoadTime(withName: self.getScreenName(), withLabel: "")
             self.categories = self.incomingCategories
             self.externalLinks = self.incomingExternalLinks
             self.internalLinks = self.incomingInternalLinks
@@ -294,7 +295,7 @@ class RootCategoryViewController: BaseViewController,
     
     //MARK: - DataTrackerProtocol
     override func getScreenName() -> String! {
-        return "CategoryMenu"
+        return "Categories"
     }
     
     //MARK - NavigationBarProtocol

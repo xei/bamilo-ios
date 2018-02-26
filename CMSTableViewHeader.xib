@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="CMSTableViewHeader" customModule="Bamilo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="142"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Rb-M0-3R3">
+                    <rect key="frame" x="20" y="0.0" width="280" height="142"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cXg-6E-HJ5">
+                            <rect key="frame" x="20" y="60.5" width="240" height="20.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="cXg-6E-HJ5" firstAttribute="centerY" secondItem="4Rb-M0-3R3" secondAttribute="centerY" id="SVC-4S-t2L"/>
+                        <constraint firstAttribute="right" secondItem="cXg-6E-HJ5" secondAttribute="right" constant="20" id="Z3S-8P-Fcw"/>
+                        <constraint firstItem="cXg-6E-HJ5" firstAttribute="centerX" secondItem="4Rb-M0-3R3" secondAttribute="centerX" id="jET-8F-9UZ"/>
+                        <constraint firstItem="cXg-6E-HJ5" firstAttribute="top" relation="greaterThanOrEqual" secondItem="4Rb-M0-3R3" secondAttribute="top" constant="10" id="yWf-0x-pVK"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="4Rb-M0-3R3" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="EnF-Je-Xuu"/>
+                <constraint firstItem="4Rb-M0-3R3" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="GLe-ux-41u"/>
+                <constraint firstItem="4Rb-M0-3R3" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="jrN-Tn-uqD"/>
+                <constraint firstAttribute="right" secondItem="4Rb-M0-3R3" secondAttribute="right" constant="20" id="tBn-cw-Xdd"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="cmsContainerView" destination="4Rb-M0-3R3" id="LG6-h3-clO"/>
+                <outlet property="cmsMessageLabel" destination="cXg-6E-HJ5" id="JPY-hU-RCJ"/>
+                <outlet property="horizontalLabelSpacingConstraint" destination="Z3S-8P-Fcw" id="fyT-hj-WhY"/>
+                <outlet property="horizontalSpacingConstraint" destination="tBn-cw-Xdd" id="Wo4-hP-Kdp"/>
+                <outlet property="verticalSpacingConstraint" destination="jrN-Tn-uqD" id="R0R-XO-7db"/>
+            </connections>
+            <point key="canvasLocation" x="-322" y="-162"/>
+        </view>
+    </objects>
+</document>

@@ -136,7 +136,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>23</string>
+	<string>32</string>
 	<key>Configs</key>
 	<dict>
 		<key>AdjustTokenID</key>
@@ -144,10 +144,10 @@
 		<key>API_BaseUrl</key>
 		<string>http://staging.bamilo.com/mobapi/</string>
 		<key>API_Version</key>
-		<string>2.6</string>
+		<string>2.8</string>
 		<key>EMMerchantID</key>
 		<string>18146DE34FE0B8C9</string>
-		<key>Emarsys</key>
+		<key>EmarsysMobileEngage</key>
 		<dict>
 			<key>Application_CODE</key>
 			<string>82449-6B792</string>

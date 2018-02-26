@@ -45,6 +45,23 @@ import UIKit
         }
     }
     
+    static func timeString(seconds:Int, allowedUnits: NSCalendar.Unit) -> String {
+        let hours = seconds / 3600
+        let minutes = seconds / 60 % 60
+        let seconds = seconds % 60
+        let hasHour = allowedUnits.contains(.hour)
+        let hasMin = allowedUnits.contains(.minute)
+        let hasSec = allowedUnits.contains(.second)
+        if !hasHour && !hasMin && !hasSec {
+            return ""
+        } else if !hasHour && hasMin && hasSec {
+            return String(format:"%02i:%02i", minutes, seconds)
+        } else if !hasHour && !hasMin && hasSec {
+            return String(format:"%02i", seconds)
+        }
+        return String(format:"%02i:%02i:%02i", hours, minutes, seconds)
+    }
+    
     static func resetUserBehaviours() {
         //Reset some actions
         EmarsysPredictManager.userLoggedOut()

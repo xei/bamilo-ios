@@ -12,6 +12,7 @@
 
 + (NSString *)mobileRegxPattern;
 
+- (NSString *)forceRTL;
 - (NSString *)wrapWithMaxSize:(int) maxSize;
 - (NSString *)numbersToPersian;
 - (NSString *)numbersToEnglish;

@@ -70,7 +70,7 @@ static NotificationBarView *instance;
 
 #pragma mark - Helpers
 - (BOOL)showOnViewController:(UIViewController *)viewController text:(NSString *)text isSuccess:(BOOL)isSuccess {
-    self.textLabel.text = text;
+    self.textLabel.text = [text forceRTL];
     self.iconImage.hidden = isSuccess;
     
     if (isSuccess) {
@@ -84,13 +84,16 @@ static NotificationBarView *instance;
     
     float spaceForCurrentView = floor(viewController.view.size.width / basicSpaceOfOneLine);
     int actualNumberOfLines = ceilf(self.textLabel.text.length / (spaceForCurrentView * basicNumberOfCharsPerLine));
-    
-    [self setFrame:CGRectMake(0, 0, viewController.view.size.width, actualNumberOfLines * cLINE_HEIGHT + cVERTICAL_PADDING)];
-    [self setY: -self.height];
+    CGFloat startY = 0;
+    if (viewController.extendedLayoutIncludesOpaqueBars) {
+        startY = viewController.navigationController.navigationBar.height + [[UIApplication sharedApplication] statusBarFrame].size.height;
+    }
+    [self setFrame:CGRectMake(0, startY, viewController.view.size.width, actualNumberOfLines * cLINE_HEIGHT + cVERTICAL_PADDING)];
+    [self setY: startY-self.height];
     [self setHidden:NO];
     
     [UIView animateWithDuration:.3 animations:^{
-        [self setY:0.f];
+        [self setY:startY];
     }];
     
     [_timer invalidate];

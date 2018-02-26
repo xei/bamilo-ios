@@ -10,12 +10,16 @@
 #import "CAPSPageMenu.h"
 #import "RICustomer.h"
 #import "ViewControllerManager.h"
+#import "Bamilo-Swift.h"
+#import "DataServiceProtocol.h"
 
-@interface AuthenticationContainerViewController() <CAPSPageMenuDelegate>
+@interface AuthenticationContainerViewController() <CAPSPageMenuDelegate, DataServiceProtocol>
 @property (nonatomic) CAPSPageMenu *pagemenu;
 @end
 
-@implementation AuthenticationContainerViewController
+@implementation AuthenticationContainerViewController {
+    @private NSString *userPhone;
+}
 
 -(void)awakeFromNib {
     [super awakeFromNib];
@@ -65,11 +69,6 @@
     }
 }
 
--(void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    [self publishScreenLoadTime];
-}
-
 #pragma mark - AuthenticationDelegate
 - (void)wantsToContinueWithoutLogin {
     [self performSegueWithIdentifier:@"showContinueWithoutLoginViewCtrl" sender:nil];
@@ -79,15 +78,22 @@
     [self performSegueWithIdentifier:@"showForgetPasswordViewCtrl" sender:nil];
 }
 
+
+- (void)wantsToShowTokenVerificatinWith:(AuthenticationBaseViewController *)viewCtrl phone:(NSString *)phone {
+    userPhone = phone;
+    [self requestToken:userPhone bySender:viewCtrl];
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     NSString * segueName = segue.identifier;
-    if ([segueName isEqualToString: @"showContinueWithoutLoginViewCtrl"]) {
+    if ([segueName isEqualToString:@"showVrificationCodeViewCtrl"] && [sender isKindOfClass:[SignUpViewController class]]) {
+        ((PhoneVerificationViewController *)segue.destinationViewController).phoneNumber = userPhone;
+        ((PhoneVerificationViewController *)segue.destinationViewController).delegate = sender;
     }
 }
 
 #pragma mark - CAPSPageMenuDelegate
 - (void)didMoveToPage:(UIViewController *)controller index:(NSInteger)index {
-    [self publishScreenLoadTime];
 }
 
 #pragma mark - DataTrackerProtocol
@@ -99,11 +105,6 @@
     }
 }
 
--(BOOL)forcePublishScreenLoadTime {
-    return YES;
-}
-
-
 #pragma mark - NavigationBarProtocol
 - (NSString *)navBarTitleString {
     return STRING_LOGIN_OR_SIGNUP;
@@ -111,6 +112,24 @@
 
 - (BOOL)navBarhideBackButton {
     return self.isForcedToLogin;
+}
+
+#pragma mark - DataServiceProtocol
+- (void)bind:(id)data forRequestId:(int)rid {}
+
+- (void)errorHandler:(NSError *)error forRequestID:(int)rid {
+    if (rid == 0 && ![Utility handleErrorMessagesWithError:error viewController:self]) {
+        [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
+    }
+}
+
+#pragma mark : private function
+- (void)requestToken:(NSString *)phone bySender:(AuthenticationBaseViewController *)sender {
+    [PhoneVerificationViewController verificationRequestWithTarget:self phone:userPhone token:nil rid:0 callBack:^(BOOL success) {
+        if (success) {
+            [self performSegueWithIdentifier:@"showVrificationCodeViewCtrl" sender:sender];
+        }
+    }];
 }
 
 @end

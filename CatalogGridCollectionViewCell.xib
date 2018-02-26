@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -111,12 +111,41 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="32h-6f-EtO" customClass="DOFavoriteButton" customModule="Bamilo" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="32h-6f-EtO" secondAttribute="height" multiplier="1:1" id="4fZ-nN-5kL"/>
+                            <constraint firstAttribute="width" constant="40" id="Iw4-OO-vqj"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="image" keyPath="image" value="addToWishlist_highlited"/>
+                            <userDefinedRuntimeAttribute type="color" keyPath="imageColorOn">
+                                <color key="value" red="1" green="0.59999999999999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="imageColorOff">
+                                <color key="value" red="0.7843137255" green="0.7843137255" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="duration">
+                                <real key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="circleColor">
+                                <color key="value" red="1" green="0.59999999999999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
+                                <color key="value" red="1" green="0.59999999999999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                        <connections>
+                            <action selector="addToWishListButtonTapped:" destination="gTV-IL-0wX" eventType="touchUpInside" id="kzK-fe-HwN"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="6fv-eE-yXW" firstAttribute="top" secondItem="ohu-Xx-d0E" secondAttribute="bottom" constant="5" id="0vB-iV-ZEv"/>
                 <constraint firstItem="m3z-e3-ctr" firstAttribute="right" secondItem="87s-Gj-773" secondAttribute="right" id="65S-mC-11B"/>
+                <constraint firstItem="32h-6f-EtO" firstAttribute="width" secondItem="32h-6f-EtO" secondAttribute="height" multiplier="1:1" id="6aF-VU-sKY"/>
                 <constraint firstItem="TU7-2H-hrP" firstAttribute="left" secondItem="MZn-If-CuB" secondAttribute="left" id="75x-dl-AUo"/>
                 <constraint firstItem="eil-MW-0Ga" firstAttribute="centerY" secondItem="m3z-e3-ctr" secondAttribute="centerY" id="9tM-8y-mxg"/>
                 <constraint firstItem="87s-Gj-773" firstAttribute="right" secondItem="lRd-KW-w02" secondAttribute="right" id="Az4-6V-HRp"/>
@@ -125,12 +154,14 @@
                 <constraint firstItem="eil-MW-0Ga" firstAttribute="left" relation="greaterThanOrEqual" secondItem="gTV-IL-0wX" secondAttribute="left" id="KhY-p2-jvc"/>
                 <constraint firstItem="6fv-eE-yXW" firstAttribute="right" secondItem="ohu-Xx-d0E" secondAttribute="right" id="LAD-gr-JeK"/>
                 <constraint firstItem="ohu-Xx-d0E" firstAttribute="left" secondItem="gTV-IL-0wX" secondAttribute="left" constant="10" id="Lcn-XG-mP0"/>
+                <constraint firstItem="32h-6f-EtO" firstAttribute="left" secondItem="gTV-IL-0wX" secondAttribute="left" id="WCf-x1-i7C"/>
                 <constraint firstItem="m3z-e3-ctr" firstAttribute="left" secondItem="eil-MW-0Ga" secondAttribute="right" constant="5" id="WD2-87-uP6"/>
                 <constraint firstItem="87s-Gj-773" firstAttribute="top" secondItem="6fv-eE-yXW" secondAttribute="bottom" constant="15" id="ZB4-9N-0vj"/>
                 <constraint firstItem="87s-Gj-773" firstAttribute="left" secondItem="MZn-If-CuB" secondAttribute="left" id="a4G-wE-yRn"/>
                 <constraint firstItem="MZn-If-CuB" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="aMq-yk-42J"/>
                 <constraint firstItem="lRd-KW-w02" firstAttribute="top" secondItem="m3z-e3-ctr" secondAttribute="bottom" constant="10" id="bFu-8N-NcS"/>
                 <constraint firstItem="eil-MW-0Ga" firstAttribute="height" secondItem="m3z-e3-ctr" secondAttribute="height" id="bRX-Op-IGv"/>
+                <constraint firstItem="32h-6f-EtO" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="bc4-O5-qSm"/>
                 <constraint firstItem="6fv-eE-yXW" firstAttribute="left" secondItem="ohu-Xx-d0E" secondAttribute="left" id="diK-d2-HY5"/>
                 <constraint firstItem="lRd-KW-w02" firstAttribute="left" secondItem="7kW-KG-8HQ" secondAttribute="right" constant="2" id="dwc-8F-0AA"/>
                 <constraint firstItem="TU7-2H-hrP" firstAttribute="centerY" secondItem="lRd-KW-w02" secondAttribute="centerY" id="gP7-bw-yC6"/>
@@ -156,6 +187,7 @@
                 </userDefinedRuntimeAttribute>
             </userDefinedRuntimeAttributes>
             <connections>
+                <outlet property="addToWishListButton" destination="32h-6f-EtO" id="2g5-u4-b9k"/>
                 <outlet property="brandLabel" destination="6fv-eE-yXW" id="zAl-ae-0Ps"/>
                 <outlet property="dicountPrecentageLabel" destination="eil-MW-0Ga" id="iGn-O7-WSX"/>
                 <outlet property="discountedPriceLabel" destination="87s-Gj-773" id="dht-1m-vu8"/>
@@ -169,4 +201,7 @@
             <point key="canvasLocation" x="-221.5" y="25"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="addToWishlist_highlited" width="26" height="26"/>
+    </resources>
 </document>

@@ -54,6 +54,12 @@
     [self postEventByName:@"AddToCart" attributes:[dict copy]];
 }
 
+- (void)removeFromCartWithAttributes:(NSDictionary<NSString *,id> *)attributes {
+    NSMutableDictionary *dict = [self generateCommonAttributesUsingAttributes:attributes];
+    dict[kEventSKU] = [((RIProduct *)attributes[kEventProduct]) sku] ?: cUNKNOWN_EVENT_VALUE;
+    [self postEventByName:@"RemoveFromCart" attributes:[dict copy]];
+}
+
 - (void)addToWishListWithAttributes:(NSDictionary<NSString *,id> *)attributes {
     NSMutableDictionary *dict = [self generateCommonAttributesUsingAttributes:attributes];
     dict[kEventCategoryUrlKey] = [((RIProduct *)attributes[kEventProduct]) categoryUrlKey] ?: cUNKNOWN_EVENT_VALUE;

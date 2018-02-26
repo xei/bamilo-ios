@@ -17,9 +17,9 @@
 
 -(void)awakeFromNib {
     [super awakeFromNib];
-    self.container.backgroundColor = [UIColor withRepeatingRGBA:244 alpha:1.0f];
+    self.container.backgroundColor = [Theme color:kColorGray10]; //[UIColor withRepeatingRGBA:244 alpha:1.0f];
     //Title Label Setup
-    [self.titleLabel applyStyle:kFontBoldName fontSize:12 color:[UIColor withRepeatingRGBA:80 alpha:1.0f]];
+    [self.titleLabel applyStyle:kFontBoldName fontSize:12 color: [Theme color:kColorExtraDarkGray]];//[UIColor withRepeatingRGBA:80 alpha:1.0f]];
 }
 
 - (void)setTitleString:(NSString *)titleString {

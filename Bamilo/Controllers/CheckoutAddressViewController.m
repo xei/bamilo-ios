@@ -45,6 +45,7 @@
 
 - (void)getContent:(void(^)(BOOL))callBack {
     [self.activityIndicator startAnimating];
+    [self recordStartLoadTime];
     [DataAggregator getMultistepAddressList:self completion:^(id data, NSError *error) {
         [self.activityIndicator stopAnimating];
         if(error == nil) {
@@ -55,7 +56,7 @@
                 [self updateSelectedAddress:_addressToSelect];
             }
             [_addressTableViewController updateWithModel:_addresses];
-            [self publishScreenLoadTime];
+            [self publishScreenLoadTimeWithName:[self getScreenName] withLabel:@""];
             [TrackerManager postEventWithSelector:[EventSelectors checkoutStartSelector] attributes:[EventAttributes checkoutStartWithCart:data]];
             if (callBack) callBack(YES);
         } else {

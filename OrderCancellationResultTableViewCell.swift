@@ -18,9 +18,9 @@ class OrderCancellationResultTableViewCell: BaseTableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.productNameLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
-        self.productAttributesLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
-        self.productQuantityLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
+        self.productNameLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
+        self.productAttributesLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
+        self.productQuantityLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
     }
     
     override func update(withModel model: Any!) {

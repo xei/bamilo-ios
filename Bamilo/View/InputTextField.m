@@ -18,13 +18,13 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *errorMsgTopConstraint;
 @property (weak, nonatomic) IBOutlet UIView *seperatorBorderView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconTrailingConstraint;
+@property (weak, nonatomic) IBOutlet IconButton *eyeIconButton;
 @end
 
 @implementation InputTextField
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    
     [self setUpView];
     
     self.errorMsg.text = nil;
@@ -43,7 +43,18 @@
     
     [self clearError];
     [self updateIconAppearance:YES];
-    self.seperatorBorderView.backgroundColor = [Theme color:kColorDarkGray];
+    self.seperatorBorderView.backgroundColor = [Theme color:kColorGray1];
+    [self enableEyeIconButton: NO];
+    self.textField.backgroundColor = UIColor.clearColor;
+    self.eyeIconButton.backgroundColor = UIColor.clearColor;
+    
+    [self.eyeIconButton setImage:[UIImage imageNamed: @"btn_eye_closed"] forState:UIControlStateNormal];
+}
+
+- (void)enableEyeIconButton:(BOOL)enable {
+    [self.eyeIconButton setEnabled:enable];
+    [self.eyeIconButton setHidden:!enable];
+    [self.eyeIconButton setUserInteractionEnabled:enable];
 }
 
 -(void)setHasIcon:(BOOL)hasIcon {
@@ -65,24 +76,25 @@
     }];
 }
 
-- (void)resetSeperator {
-    self.seperatorBorderView.backgroundColor = [Theme color:kColorDarkGray];
-}
-
-- (void)showDisabledMode {
-    self.seperatorBorderView.backgroundColor = [Theme color:kColorGray9];
-    [self.dropDownIcon setHidden:YES];
+- (void)showDisabledMode:(BOOL)disabled {
+    self.backgroundView.backgroundColor = disabled ? [Theme color:kColorGray10] : UIColor.whiteColor;
+    self.textField.userInteractionEnabled = !disabled;
 }
 
 - (void)clearError {
     self.errorMsg.text = nil;
-    self.seperatorBorderView.backgroundColor = [Theme color:kColorDarkGray];
+    self.seperatorBorderView.backgroundColor = [Theme color:kColorGray1];
     self.textField.textColor = [Theme color:kColorExtraDarkGray];
     self.errorMsgTopConstraint.constant = -15;
 }
 
 - (void)updateDropDownAppearance:(BOOL)isHidden {
     [self.dropDownIcon setHidden:isHidden];
+}
+
+- (IBAction)eyeIconButtonTapped:(id)sender {
+    self.textField.secureTextEntry = !self.textField.secureTextEntry;
+    [self.eyeIconButton setImage:[UIImage imageNamed: self.textField.secureTextEntry ? @"btn_eye_closed": @"btn_eye"] forState:UIControlStateNormal];
 }
 
 #pragma mark - Helpers

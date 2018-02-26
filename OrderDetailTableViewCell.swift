@@ -39,6 +39,7 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
     @IBOutlet weak private var refundMessagesToTopSuperViewConstriant: NSLayoutConstraint!
     @IBOutlet weak private var refundStateIconImageView: UIImageView!
     
+    @IBOutlet weak private var cancellationReasonBottomToBottomConstraint: NSLayoutConstraint!
     
     weak var delegate: OrderDetailTableViewCellDelegate?
     private var product: OrderProductItem?
@@ -49,16 +50,16 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
         self.detailView.clipsToBounds = true
         self.headerView.clipsToBounds = true
         
-        self.productTitleLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
-        self.productPriceLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
-        self.productMoreInfoLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
+        self.productTitleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
+        self.productPriceLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
+        self.productMoreInfoLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
         self.rateButton.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: .white)
         self.rateButton.applyShadow(position: CGSize(width:0 , height: 1), color: .black, opacity: 0.2)
         self.cancellationButton.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
-        self.notInStockMessageLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 9), color: Theme.color(kColorGray4))
+        self.notInStockMessageLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 9), color: Theme.color(kColorGray4))
         
-        self.cancellationReasonLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorGray1))
-        self.refundDescriptionLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorGray1))
+        self.cancellationReasonLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorGray1))
+        self.refundDescriptionLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 11), color: Theme.color(kColorGray1))
         self.cancellationView.backgroundColor = Theme.color(kColorOrange10)
         self.cancellationView.layer.cornerRadius = 3
         
@@ -113,6 +114,10 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
             }
             
             self.cancellationButton.isHidden = !product.isCancelable
+            if !product.isCancelable, let reasonType = product.notCancellableReasonType, reasonType != .isCancelled, let lastHistory = product.histories?.last, (lastHistory.status == .inactive || lastHistory.status == .active) {
+                self.cancellationButton.isHidden = false
+            }
+        
             self.productMoreInfoLabel.text = productInfo
             self.progressBarView.update(withModel: product.histories)
             self.notInStockMessageLabel.text = product.sku != nil ? nil : STRING_ORDER_OUT_OF_STOCK
@@ -123,21 +128,30 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
                     self.refuadDescriptionLabelBottomConstraint.priority = UILayoutPriorityDefaultHigh
                     self.cancellationReasonLabelBottomConstraint.priority = UILayoutPriorityDefaultHigh
                     self.refundMessagesToTopSuperViewConstriant.priority = UILayoutPriorityDefaultLow
-                    self.cancellationReasonLabel.text = reason
+                    self.cancellationReasonLabel.text = reason.convertTo(language: .arabic)
                 } else {
                     self.refuadDescriptionLabelBottomConstraint.priority = UILayoutPriorityDefaultLow
                     self.cancellationReasonLabelBottomConstraint.priority = UILayoutPriorityDefaultHigh
                 }
-                if let status = refund.status, status == .success {
-                    self.refundStateIconImageView.image = #imageLiteral(resourceName: "successIcon")
+                if let status = refund.status {
+                    if status == .success {
+                        self.refundStateIconImageView.image = #imageLiteral(resourceName: "outlined_checked_rounded")
+                    } else {
+                        self.refundStateIconImageView.image = #imageLiteral(resourceName: "img_emptyrecentsearches")
+                    }
+                    self.refundDescriptionLabel.text = self.getRefundMessage(refund: refund)
+                    self.cancellationReasonBottomToBottomConstraint.constant = 249
+                    self.cancellationHeightConstraint.priority = UILayoutPriorityDefaultLow
+                    
                 } else {
-                    self.refundStateIconImageView.image = #imageLiteral(resourceName: "ico_recentsearches_results")
+                    self.cancellationReasonBottomToBottomConstraint.priority = UILayoutPriorityDefaultHigh
+                    self.cancellationReasonLabelBottomConstraint.priority = UILayoutPriorityDefaultLow
+                    self.refundDescriptionLabel.text = "   "
                 }
                 
-                self.refundDescriptionLabel.text = self.getRefundMessage(refund: refund)
-                self.cancellationHeightConstraint.priority = UILayoutPriorityDefaultLow
             } else {
                 self.cancellationHeightConstraint.priority = UILayoutPriorityDefaultHigh
+                self.cancellationReasonBottomToBottomConstraint.priority = UILayoutPriorityDefaultLow
             }
             
             self.product = product
@@ -154,11 +168,15 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
         var refundMsg = "مبلغ کالا به "
         refundMsg += "\(refund.cardNumber ?? "کارتی که با آن پرداخت نمودید")"
         refundMsg += " به صورت خودکار "
-        if let date = refund.date {
+        if let date = refund.date, let status = refund.status, status == .success {
             refundMsg += "در تاریخ \(date)"
         }
-        refundMsg += " بازگشت داده میشود"
-        return refundMsg
+        if let status = refund.status, status == .pending {
+            refundMsg += "بازگشت داده خواهد شد"
+        } else {
+            refundMsg += " بازگشت داده شده است"
+        }
+        return refundMsg.convertTo(language: .arabic)
     }
 
     @IBAction func rateButtonTapped(_ sender: Any) {
@@ -169,7 +187,21 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
     
     @IBAction func cancellButtonTapped(_ sender: Any) {
         if let product = self.product {
-            self.delegate?.cancelProduct(product: product)
+            if product.isCancelable {
+                self.delegate?.cancelProduct(product: product)
+            } else if let notCancellationReasonType = product.notCancellableReasonType {
+                //switch case
+                switch notCancellationReasonType {
+                case .isCancelled:
+                    AlertManager.sharedInstance().simpleAlert("", text: STRING_NOT_CANCELLABLE_UNKNOWN_STATUS, confirm: STRING_GOT_IT)
+                case .hasCancellationRequest:
+                    AlertManager.sharedInstance().simpleAlert("", text: STRING_NOT_CANCELLABLE_HAS_CANCELLATION_REQUEST, confirm: STRING_GOT_IT)
+                case .isShipped:
+                    AlertManager.sharedInstance().simpleAlert("", text: STRING_NOT_CANCELLABLE_SHIPPED, confirm: STRING_GOT_IT)
+                }
+            } else {
+                AlertManager.sharedInstance().simpleAlert("", text: STRING_NOT_CANCELLABLE_UNKNOWN_STATUS, confirm: STRING_GOT_IT)
+            }
         }
     }
     

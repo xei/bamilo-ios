@@ -10,13 +10,7 @@
 
 @protocol PerformanceTrackerProtocol <NSObject>
 
--(void) recordStartLoadTime;
--(void) publishScreenLoadTime;
-
--(NSString *) getPerformanceTrackerScreenName;
--(NSString *) getPerformanceTrackerLabel;
-
-@optional
--(BOOL) forcePublishScreenLoadTime;
+- (void)recordStartLoadTime;
+- (void)publishScreenLoadTimeWithName:(NSString *)name withLabel:(NSString *)label;
 
 @end

@@ -20,35 +20,41 @@ class ProfileUserTableViewCell: BaseProfileTableViewCell {
     }
     
     func setupLoggedOutView() {
-        self.topMessageLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorLightGray))
-        self.bottomMessageLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 14), color: Theme.color(kColorExtraDarkGray))
+        self.topMessageLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorLightGray))
+        self.bottomMessageLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 14), color: Theme.color(kColorExtraDarkGray))
     }
     
     func setupLoggedInView() {
-        self.topMessageLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 14), color: Theme.color(kColorExtraDarkGray))
-        self.bottomMessageLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorExtraDarkGray))
+        self.topMessageLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 14), color: Theme.color(kColorExtraDarkGray))
+        self.bottomMessageLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorExtraDarkGray))
     }
 
     override func update(withModel model: Any!) {
         if let user = model as? RICustomer {
             self.setupLoggedInView()
+            self.setDefaults()
             if let name = user.firstName {
                 self.topMessageLabel.text = "\(STRING_HELLO) \(name)"
-                
-                if let gender = user.gender {
-                    self.logoImage.image = UIImage(named: gender == "female" ? "woman_user_profile" : "man_user_profile")
-                } else {
-                    self.logoImage.image = #imageLiteral(resourceName: "man_user_profile")
-                }
-                
+            } else {
+                self.topMessageLabel.text = STRING_HELLO
             }
-            self.bottomMessageLabel.text = user.email
+            if let gender = user.gender {
+                self.logoImage.image = UIImage(named: gender == "female" ? "woman_user_profile" : "man_user_profile")
+            }
+            if let email = user.email {
+                self.bottomMessageLabel.text = email
+            }
+            
         } else {
             self.setupLoggedOutView()
-            self.topMessageLabel.text = STRING_WELCOME
-            self.bottomMessageLabel.text = STRING_LOGIN_OR_SIGNUP
-            self.logoImage.image = #imageLiteral(resourceName: "man_user_profile")
+            self.setDefaults()
         }
+    }
+    
+    private func setDefaults() {
+        self.topMessageLabel.text = STRING_WELCOME
+        self.bottomMessageLabel.text = STRING_LOGIN_OR_SIGNUP
+        self.logoImage.image = #imageLiteral(resourceName: "man_user_profile")
     }
     
     override static func nibName() -> String {

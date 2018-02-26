@@ -44,6 +44,10 @@
     return attributeString;
 }
 
+- (NSString *)forceRTL {
+    return [NSString stringWithFormat:@"\u200F%@", self];
+}
+
 - (NSString *) numbersToPersian {
     return [self changeNumberToLocalId:@"ar"] ?: @"۰";
 }

@@ -12,7 +12,7 @@
 
 @interface SubCatFilterViewController ()
 @property (weak, nonatomic) IBOutlet UIView *filterViewContainer;
-@property (weak, nonatomic) IBOutlet OrangeButton *submitButton;
+@property (weak, nonatomic) IBOutlet UIButton *submitButton;
 @end
 
 @implementation SubCatFilterViewController {
@@ -25,21 +25,33 @@
     [self.submitButton setTitle:STRING_OK forState:UIControlStateNormal];
     
     filterView = [[[NSBundle mainBundle] loadNibNamed:@"JAGenericFiltersView" owner:self options:nil] objectAtIndex:0];
-    [filterView initializeWithFilter:self.subCatsFilter isLandscape:YES];
+    [filterView initializeWithFilter:[self createCatalogCategoryFilterItemWithOptions:self.subCatsFilters] isLandscape:YES];
     
     filterView.frame = self.filterViewContainer.bounds;
     filterView.filtersViewDelegate = self;
     [self.filterViewContainer addSubview:filterView];
+    
+    [self.submitButton applyStyle:kFontRegularName fontSize:13 color: [UIColor whiteColor]];
+    [self.submitButton setTitle:STRING_OK forState:UIControlStateNormal];
+    [self.submitButton setBackgroundColor:[Theme color:kColorDarkGreen]];
+}
+
+- (CatalogFilterItem *)createCatalogCategoryFilterItemWithOptions:(NSArray<CatalogCategoryFilterOption*> *)options {
+    CatalogFilterItem *catalogFilter = [CatalogFilterItem new];
+    catalogFilter.multi = NO;
+    catalogFilter.options = options;
+    catalogFilter.name = STRING_SUBCATEGORIES;
+    return catalogFilter;
 }
 
 
 #pragma mark - JAFiltersViewDelegate
 - (void)updatedValues {
-    self.subCatsFilter = (CatalogCategoryFilterItem *)[filterView getFilter];
+    self.subCatsFilters = ((CatalogFilterItem *)[filterView getFilter]).options;
 }
 
 - (IBAction)submitButtonTapped:(id)sender {
-    for(CatalogFilterOption *catFilterOption in self.subCatsFilter.options) {
+    for(CatalogFilterOption *catFilterOption in self.subCatsFilters) {
         if (catFilterOption.selected) {
             [self.navigationController popViewControllerAnimated:NO];
             [self.delegate submitSubCategoryFilterByUrlKey:catFilterOption.value];

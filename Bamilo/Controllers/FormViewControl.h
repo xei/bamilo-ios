@@ -20,6 +20,7 @@
 
 @optional
 - (void)fieldHasBeenUpdatedByNewValidValue:(NSString *)value inFieldIndex:(NSUInteger)fieldIndex;
+- (void)fieldHasBeenFocuced:(InputTextFieldControl *)field inFieldIndex:(NSUInteger)fieldIndex;
 
 @end
 

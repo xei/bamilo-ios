@@ -20,7 +20,7 @@
 #import "RICartItem.h"
 #import "JAUtils.h"
 
-@interface SuccessPaymentViewController () <EmarsysPredictProtocol, PerformanceTrackerProtocol, FeatureBoxCollectionViewWidgetViewDelegate>
+@interface SuccessPaymentViewController () <EmarsysPredictProtocol, FeatureBoxCollectionViewWidgetViewDelegate>
 @property (nonatomic, weak) IBOutlet EmarsysRecommendationMinimalCarouselWidget *carouselWidget;
 @property (nonatomic, weak) IBOutlet UILabel *titleLabel;
 @property (nonatomic, weak) IBOutlet UILabel *descLabel;
@@ -96,7 +96,7 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     //// ------- END OF LEGACY CODES ------
-    [self publishScreenLoadTime];
+//    [self publishScreenLoadTime];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

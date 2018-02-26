@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseNavigationController.h"
 #import "JACustomNavigationBarView.h"
 #import "JATabBarView.h"
 #import "JAScreenTarget.h"
@@ -15,7 +16,7 @@
 
 typedef void(^ProtectedBlock)(BOOL userHadSession);
 
-@interface JACenterNavigationController : UINavigationController
+@interface JACenterNavigationController : BaseNavigationController
 
 @property (strong, nonatomic) RICart *cart;
 

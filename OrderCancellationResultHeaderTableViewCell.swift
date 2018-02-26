@@ -14,7 +14,7 @@ class OrderCancellationResultHeaderTableViewCell: BaseTableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.successMessage.applyStype(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
+        self.successMessage.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
         self.successMessage.text = ORDER_CANCELLATION_SUCCESS_MESSAGES
     }
     

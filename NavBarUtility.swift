@@ -23,8 +23,25 @@ import Foundation
         let button = IconButton(type: .custom)
         button.imageHeightToButtonHeightRatio = 0.8
         
-        button.setImage(UIImage(named: type ==  .search ? "btn_search" : "btn_cart"), for: UIControlState.normal)
-        button.addTarget(viewController, action: type == .search ? #selector(viewController.searchIconButtonTapped): #selector(viewController.cartIconButtonTapped), for: UIControlEvents.touchUpInside)
+        let buttonNameMapper: [NavBarLeftButtonType: String] = [
+            .search : "btn_search",
+            .cart : "btn_cart",
+            .close : "WhiteClose"
+        ]
+        if let buttonImageName = buttonNameMapper[type] {
+            button.setImage(UIImage(named: buttonImageName), for: UIControlState.normal)
+        }
+        
+        let buttonSelectorMapper: [NavBarLeftButtonType: Selector] = [
+            .search : #selector(viewController.searchIconButtonTapped),
+            .cart : #selector(viewController.cartIconButtonTapped),
+            .close : #selector(viewController.closeButtonTapped)
+        ]
+        
+        if let buttonAction = buttonSelectorMapper[type] {
+            button.addTarget(viewController, action:buttonAction , for: UIControlEvents.touchUpInside)
+        }
+        
         button.frame.size = barButtonItemFrame
         let barButton = UIBarButtonItem(customView: button)
         
