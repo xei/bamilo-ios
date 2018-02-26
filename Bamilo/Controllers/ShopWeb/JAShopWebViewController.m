@@ -65,24 +65,10 @@
     }
 }
 
-- (void)loadViews
-{
-//   CGFloat height = [[self.webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight;"] floatValue];
-//    NSUInteger contentHeight = [[self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"document.body.scrollHeight;"]] intValue];
-    
-//    NSString *output = [self.webView
-//                        stringByEvaluatingJavaScriptFromString:
-//                        @"document.body.offsetHeight;"];
-//    NSLog(@"height: %d", [output intValue]);
-
-//    self.webView.frame = CGRectMake(0.0f,
-//                                    0.0f,
-//                                    self.webView.scrollView.contentSize.width,
-//                                    self.webView.scrollView.contentSize.height);
+- (void)loadViews {
 
     CGRect frame = self.webView.frame;
     frame.size.height = 1;
-//    frame.size.width = 1;
     self.webView.frame = frame;
     CGSize fittingSize = [self.webView sizeThatFits:CGSizeZero];
     frame.size = fittingSize;
@@ -131,15 +117,14 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     [self hideLoading];
-    [self publishScreenLoadTime];
+    [self publishScreenLoadTimeWithName:[self getScreenName] withLabel: self.title];
 
     [self.scrollView setFrame:[self viewBounds]];
     [self.webView setFrame:self.scrollView.bounds];
     [self loadViews];
 }
 
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
-{
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     [self hideLoading];
     [self onErrorResponse:RIApiResponseUnknownError messages:nil showAsMessage:NO selector:@selector(viewWillAppear:) objects:nil];
 }

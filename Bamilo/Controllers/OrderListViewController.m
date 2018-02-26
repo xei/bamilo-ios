@@ -159,7 +159,9 @@
 
 - (void)resetContentAndRefresh:(void(^)(BOOL))callBack {
     self.list.currentPage = 1;
+    [self recordStartLoadTime];
     [self getPage:self.list.currentPage callBack:^(BOOL success) {
+        [self publishScreenLoadTimeWithName:[self getScreenName] withLabel:@""];
         [self.list.orders removeAllObjects];
         [self.refreshControl endRefreshing];
         if (callBack) callBack(success);

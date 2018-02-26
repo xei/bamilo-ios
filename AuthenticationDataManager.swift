@@ -33,8 +33,12 @@ class AuthenticationDataManager: DataManagerSwift {
         
         AuthenticationDataManager.requestManager.async(.post, target: target, path: RI_API_REGISTER_CUSTOMER, params: fields, type: .foreground) { (responseType, data, errorMessages) in
             if let data = data, responseType == 200 {
-                RICustomer.parseCustomer(withJson: data.metadata?["customer_entity"] as! [AnyHashable : Any], plainPassword: customerPassword, loginMethod: "normal")
-                completion(data.metadata, nil)
+                if let customerEntity = data.metadata?["customer_entity"] as? [AnyHashable : Any] {
+                    RICustomer.parseCustomer(withJson: customerEntity, plainPassword: customerPassword, loginMethod: "normal")
+                    completion(data.metadata, nil)
+                } else {
+                    self.processResponse(responseType, aClass: nil, data: data, errorMessages: errorMessages, completion: completion)
+                }
             } else {
                 completion(nil, self.createError(responseType, errorMessages: errorMessages))
             }
@@ -52,6 +56,39 @@ class AuthenticationDataManager: DataManagerSwift {
             self.processResponse(responseType, aClass: nil, data: data, errorMessages: errorMessages) { (data, error) in
                 completion(data, error)
             }
+        }
+    }
+    
+    func submitEditedProfile(_ target:DataServiceProtocol?, with fields: inout [String : String], completion: @escaping DataClosure) {
+        fields["customer[phone_prefix]"] = "100"
+        AuthenticationDataManager.requestManager.async(.post, target: target, path: RI_API_EDIT_CUSTOMER, params: fields, type: .foreground) { (responseType, data, errorMessages) in
+            self.processResponse(responseType, aClass: nil, data: data, errorMessages: errorMessages, completion: completion)
+        }
+    }
+    
+    func getCurrentUser(_ target:DataServiceProtocol?, completion: @escaping DataClosure) {
+        AuthenticationDataManager.requestManager.async(.get, target: target, path: RI_API_GET_CUSTOMER, params: nil, type: .foreground) { (responseType, data, errors) in
+            if let data = data, responseType == 200 {
+                let customer = RICustomer.getCurrent()
+                let parsedCustomer = RICustomer.parseCustomer(withJson: data.metadata?["customer_entity"] as! [AnyHashable : Any], plainPassword: customer?.plainPassword, loginMethod: "normal")
+                let warningMessage = data.metadata?["warning_message"] as? String
+                let dataSource = EditProfileDataSource(customer: parsedCustomer, warningMsg: warningMessage)
+                completion(dataSource, nil)
+            } else {
+                completion(nil, self.createError(responseType, errorMessages: errors))
+            }
+        }
+    }
+    
+    func phoneVerification(_ target:DataServiceProtocol?, phone: String, token: String? = nil, completion: @escaping DataClosure) {
+        
+        var params:[String: String] = [ "phone": phone ]
+        if let token = token {
+            params["token"] = token
+        }
+        
+        AuthenticationDataManager.requestManager.async(.post, target: target, path: RI_API_PHONE_VERIFY, params: params, type: token != nil ? .container : .foreground) { (responseType, data, errors) in
+            self.processResponse(responseType, aClass: nil, data: data, errorMessages: errors, completion: completion)
         }
     }
 }

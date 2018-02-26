@@ -51,5 +51,5 @@ class OrderItem: NSObject, Mappable {
         
         shippingAddress = Address.init()
         try? shippingAddress?.merge(from: json["shipping_address"].dictionaryObject, useKeyMapping: true, error: ())
-    }
+     }
 }

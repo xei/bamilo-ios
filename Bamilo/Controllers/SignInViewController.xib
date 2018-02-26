@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -44,7 +44,7 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9xR-AT-4xc">
-                            <rect key="frame" x="210" y="140" width="135" height="32"/>
+                            <rect key="frame" x="120" y="202" width="135" height="32"/>
                             <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="10"/>
                             <state key="normal" title="کلمه عبور خود را فراموش کردم">
                                 <color key="titleColor" red="0.3529411764705882" green="0.63921568627450975" blue="0.90980392156862744" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -54,7 +54,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KEe-C2-McQ" customClass="OrangeButton">
-                            <rect key="frame" x="30" y="192" width="315" height="40"/>
+                            <rect key="frame" x="30" y="155" width="315" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="oTI-F2-sqd"/>
                             </constraints>
@@ -64,7 +64,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Py-CW-4wp">
-                            <rect key="frame" x="241" y="237" width="104" height="32"/>
+                            <rect key="frame" x="241" y="242" width="104" height="32"/>
                             <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="10"/>
                             <state key="normal" title="ثبت سفارش بدون ورود">
                                 <color key="titleColor" red="0.35294117650000001" green="0.63921568630000003" blue="0.90980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -79,16 +79,16 @@
                         <constraint firstItem="sNJ-uO-icl" firstAttribute="top" secondItem="Vgd-q1-5fi" secondAttribute="bottom" constant="15" id="2NL-n0-CF0"/>
                         <constraint firstItem="sNJ-uO-icl" firstAttribute="right" secondItem="Vgd-q1-5fi" secondAttribute="right" id="62W-EB-9KW"/>
                         <constraint firstItem="Vgd-q1-5fi" firstAttribute="top" secondItem="hjF-u9-yTY" secondAttribute="top" constant="30" id="CeE-g4-t3M"/>
-                        <constraint firstItem="9xR-AT-4xc" firstAttribute="right" secondItem="sNJ-uO-icl" secondAttribute="right" id="Hwb-la-6eC"/>
                         <constraint firstItem="sNJ-uO-icl" firstAttribute="height" secondItem="Vgd-q1-5fi" secondAttribute="height" id="JQI-ld-MYD"/>
-                        <constraint firstItem="KEe-C2-McQ" firstAttribute="right" secondItem="9xR-AT-4xc" secondAttribute="right" id="NYW-Ya-nSB"/>
-                        <constraint firstItem="0Py-CW-4wp" firstAttribute="top" secondItem="KEe-C2-McQ" secondAttribute="bottom" constant="5" id="fY1-UP-avf"/>
+                        <constraint firstItem="KEe-C2-McQ" firstAttribute="top" secondItem="sNJ-uO-icl" secondAttribute="bottom" constant="20" id="Nzv-Pa-gz2"/>
+                        <constraint firstItem="0Py-CW-4wp" firstAttribute="top" secondItem="9xR-AT-4xc" secondAttribute="bottom" constant="8" id="c0S-TM-sQo"/>
+                        <constraint firstItem="9xR-AT-4xc" firstAttribute="centerX" secondItem="KEe-C2-McQ" secondAttribute="centerX" id="h1O-Tb-8Wx"/>
                         <constraint firstAttribute="right" secondItem="Vgd-q1-5fi" secondAttribute="right" constant="30" id="hVn-hq-XgS"/>
-                        <constraint firstItem="KEe-C2-McQ" firstAttribute="top" secondItem="9xR-AT-4xc" secondAttribute="bottom" constant="20" id="nGt-vt-8Io"/>
                         <constraint firstAttribute="bottom" secondItem="0Py-CW-4wp" secondAttribute="bottom" constant="10" id="ndE-7V-cv4"/>
-                        <constraint firstItem="9xR-AT-4xc" firstAttribute="top" secondItem="sNJ-uO-icl" secondAttribute="bottom" constant="5" id="sA2-dj-sPe"/>
                         <constraint firstItem="sNJ-uO-icl" firstAttribute="width" secondItem="Vgd-q1-5fi" secondAttribute="width" id="uVh-Nb-ByQ"/>
+                        <constraint firstItem="9xR-AT-4xc" firstAttribute="top" secondItem="KEe-C2-McQ" secondAttribute="bottom" constant="7" id="vbP-GU-lPG"/>
                         <constraint firstItem="0Py-CW-4wp" firstAttribute="right" secondItem="KEe-C2-McQ" secondAttribute="right" id="vfc-Rm-kFm"/>
+                        <constraint firstItem="KEe-C2-McQ" firstAttribute="centerX" secondItem="sNJ-uO-icl" secondAttribute="centerX" id="yTm-FR-5AS"/>
                         <constraint firstItem="Vgd-q1-5fi" firstAttribute="left" secondItem="hjF-u9-yTY" secondAttribute="left" constant="30" id="ym7-Tb-frh"/>
                     </constraints>
                 </scrollView>
@@ -105,9 +105,4 @@
             <point key="canvasLocation" x="-629" y="-186"/>
         </view>
     </objects>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
-    </simulatedMetricsContainer>
 </document>

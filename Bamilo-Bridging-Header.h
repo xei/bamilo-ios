@@ -35,7 +35,8 @@
 #import "DataManager.h"
 #import "DeepLinkManager.h"
 #import "OrderList.h"
-#import "PerformanceTrackerProtocol.h"
+#import "ProtectedViewControllerProtocol.h"
+
 #import "DataTrackerProtocol.h"
 #import "EmarsysPredictProtocol.h"
 #import "EmarsysPredictManager.h"
@@ -46,10 +47,13 @@
 #import "BaseControlView.h"
 #import "BaseViewControl.h"
 #import "ViewControllerManager.h"
+#import "FormViewControl.h"
 
 #import "JASearchView.h"
 #import "JABaseViewController.h"
 #import "BaseViewController.h"
+#import "AuthenticationBaseViewController.h"
+
 #import "BaseTableViewCell.h"
 #import "PlainTableViewHeaderCell.h"
 #import "MutualTitleHeaderCell.h"

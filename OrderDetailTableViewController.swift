@@ -122,7 +122,7 @@ class OrderDetailTableViewController: AccordionTableViewController, OrderDetailT
 
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if let packagesCount = self.dataSource?.packages?.count {
-            return  (section == 0 || section == packagesCount + 1) ? 0 : self.headerHeightForSection[section] ?? UITableViewAutomaticDimension
+            return  (section == 0 || section == packagesCount + 1) ? 0 : UITableViewAutomaticDimension
         } else { return 0 }
     }
 

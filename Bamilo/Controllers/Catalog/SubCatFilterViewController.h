@@ -18,6 +18,6 @@
 @end
 
 @interface SubCatFilterViewController : BaseViewController <JAFiltersViewDelegate>
-@property (nonatomic, strong) CatalogCategoryFilterItem *subCatsFilter;
+@property (nonatomic, strong) NSArray *subCatsFilters;
 @property (nonatomic, weak) id<SubCatFilterViewControllerDelegate>delegate;
 @end

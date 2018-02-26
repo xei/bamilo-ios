@@ -14,7 +14,6 @@
     if (self = [super init]) {
         self.headerString = headerString;
     }
-    
     return self;
 }
 

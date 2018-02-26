@@ -16,7 +16,7 @@ class OrderDetailPackageHeaderTableViewHeader: MutualTitleHeaderCell {
     @IBOutlet weak private var deviationDescBottomSuperViewConstraint: NSLayoutConstraint!
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.deviationDescriptionLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorPink3))
+        self.deviationDescriptionLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorPink3))
     }
     
     func update(deviationDescription: String?) {

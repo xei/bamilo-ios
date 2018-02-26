@@ -13,7 +13,9 @@ import ObjectMapper
     
     override func mapping(map: Map) {
         super.mapping(map: map)
-        value <- map["url_key"]
+        name <- map["name"]
+        productsCount <- map["total_products"]
+        value <- map["url_slug"]
     }
     
 }

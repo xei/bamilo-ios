@@ -113,10 +113,14 @@ class WishListViewController: BaseViewController,
     
     private func refreshAndReload(callBack: @escaping ((Bool)->Void)) {
         self.page = 1
+        self.recordStartLoadTime()
         self.isRefreshing = true
         self.wishList?.products.removeAll()
         self.collectionView.reloadData()
-        self.loadProducts(page: page, callBack: callBack)
+        self.loadProducts(page: page) { (success) in
+            self.publishScreenLoadTime(withName: self.getScreenName(), withLabel: "")
+            callBack(success)
+        }
     }
     
     //MARK: - UICollectionViewDelegate & UICollectionViewDataSource

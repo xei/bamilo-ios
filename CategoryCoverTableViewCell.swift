@@ -27,7 +27,7 @@ class CategoryCoverTableViewCell: BaseTableViewCell, BreadcrumbsViewDelegate {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.breadcrumbsView.delegate = self
-        self.breadcrumbsBackground.backgroundColor = Theme.color(kColorGray1)
+        self.breadcrumbsBackground.backgroundColor = Theme.color(kColorGray10)
         self.breadcrumbsBackground.alpha = 0.8
     }
     
@@ -36,8 +36,8 @@ class CategoryCoverTableViewCell: BaseTableViewCell, BreadcrumbsViewDelegate {
             self.coverImageView.kf.setImage(with: coverImageUrl, options: [.transition(.fade(0.20))])
         }
         breadcrumbsView.breadcrumbsView?.buttonBackgroundColor = .clear
-        breadcrumbsView.breadcrumbsView?.buttonTitleColor = .white
-        breadcrumbsView.breadcrumbsView?.buttonTitleFont = Theme.font(kFontVariationBold, size: 13)
+        breadcrumbsView.breadcrumbsView?.buttonTitleColor = Theme.color(kColorExtraDarkGray)
+        breadcrumbsView.breadcrumbsView?.buttonTitleFont = Theme.font(kFontVariationRegular, size: 13)
         breadcrumbsView.breadcrumbsView?.contentHeight = 29
         breadcrumbsView.breadcrumbsView?.buttonVerticalMargin = 0
         breadcrumbsView.update(withModel: self.convertHistoryToBreadcrumbs(historyCategories: historyCategories))

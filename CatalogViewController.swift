@@ -72,7 +72,7 @@ import SwiftyJSON
         }
     }
     
-    private var subCategoryFilterItem: CatalogCategoryFilterItem?
+//    private var subCategoryFilterItem: CatalogCategoryFilterItem?
     private var pageNumber: Int = 1
     private var catalogData: Catalog?
     private var noResultViewController: CatalogNoResultViewController?
@@ -88,7 +88,7 @@ import SwiftyJSON
         super.viewDidLoad()
         self.view.backgroundColor = Theme.color(kColorVeryLightGray)
         self.catalogHeaderContainerHeightConstraint.constant = self.catalogHeaderContainerHeightWithoutBreadcrumb
-        self.productCountLabel.applyStype(font: Theme.font(kFontVariationRegular, size: 11), color: UIColor.black)
+        self.productCountLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 11), color: UIColor.black)
         
         if let savedListViewType = UserDefaults.standard.string(forKey: "CatalogListViewType") {
             self.listViewType = CatalogListViewType(rawValue: savedListViewType) ?? .grid
@@ -438,6 +438,7 @@ import SwiftyJSON
     }
     
     func updateProductStatusFromWishList(notification: Notification) {
+        if MainTabBarViewController.topViewController() is CatalogViewController { return }
         if let product = notification.userInfo?[NotificationKeys.NotificationProduct] as? Product ,let isInWishlist = notification.userInfo?[NotificationKeys.NotificationBool] as? Bool {
             let targetProduct = self.catalogData?.products.filter { $0.sku == product.sku }.first
             if let targetProduct = targetProduct {
@@ -519,17 +520,19 @@ import SwiftyJSON
     
     private func loadData(callBack: ((Bool)->Void)? = nil) {
         self.pageNumber = 1
+        self.recordStartLoadTime()
         CatalogDataManager.sharedInstance.getCatalog(self, searchTarget: searchTarget, filtersQueryString: pushFilterQueryString, sortingMethod: sortingMethod) { (data, errorMessages) in
             if let error = errorMessages {
                 self.errorHandler(error, forRequestID: 0)
                 callBack?(false)
             } else {
                 self.bind(data, forRequestId: 0)
+                self.publishScreenLoadTime(withName: self.getScreenName(), withLabel: self.searchTarget.node)
                 callBack?(true)
             }
             self.resetBarFollowers(animated: true)
         }
-        self.loadAvaiableSubCategories()
+//        self.loadAvaiableSubCategories()
     }
     
     private func trackSearch(searchTarget: RITarget) {
@@ -539,17 +542,17 @@ import SwiftyJSON
         )
     }
     
-    func loadAvaiableSubCategories() {
-        if self.searchTarget.targetType == .CATALOG_CATEGORY {
-            CatalogDataManager.sharedInstance.getSubCategoriesFilter(self, categoryUrlKey: self.searchTarget.node, completion: { (data, errorMessages) in
-                if errorMessages == nil {
-                    self.subCategoryFilterItem = data as? CatalogCategoryFilterItem
-                } else {
-//                    Utility.handleError(error: errorMessages, viewController: self)
-                }
-            })
-        }
-    }
+//    func loadAvaiableSubCategories() {
+//        if self.searchTarget.targetType == .CATALOG_CATEGORY {
+//            CatalogDataManager.sharedInstance.getSubCategoriesFilter(self, categoryUrlKey: self.searchTarget.node, completion: { (data, errorMessages) in
+//                if errorMessages == nil {
+//                    self.subCategoryFilterItem = data as? CatalogCategoryFilterItem
+//                } else {
+////                    Utility.handleError(error: errorMessages, viewController: self)
+//                }
+//            })
+//        }
+//    }
     
     private func loadMore() {
         if self.loadingDataInProgress || self.listFullyLoaded { return }
@@ -694,12 +697,12 @@ import SwiftyJSON
                     }
                     self.showNotificationBar(error, isSuccess: false)
                 })
-                
+
                 TrackerManager.postEvent(
                     selector: EventSelectors.addToWishListSelector(),
                     attributes: EventAttributes.addToWishList(product: translatedProduct, screenName: self.getScreenName(), success: true)
                 )
-                
+
             } else {
                 DeleteEntityDataManager.sharedInstance().removeFromWishList(self, sku: product.sku, completion: { (data, error) in
                     if error != nil {
@@ -714,7 +717,7 @@ import SwiftyJSON
                         )
                         return
                     }
-                    
+
                     if product.isInWishList != false {
                         product.isInWishList.toggle()
                         cell.updateWithProduct(product: product)
@@ -736,7 +739,7 @@ import SwiftyJSON
         } else if segueName == "showFilterView" {
             let destinationViewCtrl = segue.destination as? JAFiltersViewController
             destinationViewCtrl?.filtersArray = self.catalogData?.copyFilters() //?.filters
-            destinationViewCtrl?.subCatsFilter = subCategoryFilterItem
+            destinationViewCtrl?.subCatsFilters = catalogData?.subCatFilters
             if let index = self.catalogData?.priceFilterIndex {
                 destinationViewCtrl?.priceFilterIndex = Int32(index);
             }

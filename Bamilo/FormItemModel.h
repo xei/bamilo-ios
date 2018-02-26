@@ -32,6 +32,7 @@ typedef NS_ENUM(NSUInteger, InputTextFieldControlType) {
 @property (nonatomic, copy) NSString *lastErrorMessage;
 @property (nonatomic, strong) NSDateFormatter *visibleDateFormat;
 @property (nonatomic, strong) NSDateFormatter *outputDateFormat;
+@property (nonatomic) BOOL disabled;
 
 - (instancetype)initWithTextValue:(NSString *)title
                             fieldName: (NSString *)fieldName
@@ -44,12 +45,14 @@ typedef NS_ENUM(NSUInteger, InputTextFieldControlType) {
 + (FormItemModel *)firstNameFieldWithFiedName:(NSString *)fieldName;
 + (FormItemModel *)lastNameWithFieldName:(NSString *)fieldName;
 + (FormItemModel *)phoneWithFieldName:(NSString *)fieldName;
++ (FormItemModel *)bankAccountFieldName: (NSString *)fieldName;
 + (FormItemModel *)addressWithFieldName:(NSString *)fieldName;
 + (FormItemModel *)postalCodeWithFieldName:(NSString *)fieldName;
 + (FormItemModel *)emailWithFieldName: (NSString *)fieldName;
 + (FormItemModel *)passWordWithFieldName: (NSString *)fieldName;
 + (FormItemModel *)genderWithFieldName: (NSString *)fieldName;
 + (FormItemModel *)birthdayFieldName: (NSString *)fieldName;
++ (FormItemModel *)nationalID: (NSString *)fieldName;
 
 - (NSString *)getValue;
 - (void)setValue:(NSString *)value;

@@ -15,9 +15,8 @@ import ObjectMapper
     var filterSeparator: String?
     var multi: Bool = false
     
-    required init?(map: Map) {
-        
-    }
+    required init?(map: Map) {}
+    override init() {}
     
     func mapping(map: Map) {
         id <- map["id"]

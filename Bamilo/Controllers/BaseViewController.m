@@ -30,7 +30,6 @@
     [super viewDidLoad];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    //PerformanceTrackerProtocol
     [self recordStartLoadTime];
     self.title = nil;
     self.view.backgroundColor = JABackgroundGrey;
@@ -54,8 +53,11 @@
         if ([self navBarleftButton] == NavBarLeftButtonTypeSearch && [self respondsToSelector:@selector(searchIconButtonTapped)]) {
             self.navigationItem.rightBarButtonItem = [NavBarUtility navBarLeftButtonWithType:NavBarLeftButtonTypeSearch viewController:self];
         }
-        if ([self navBarleftButton] == NavBarLeftButtonTypeCart && [self respondsToSelector:@selector(searchIconButtonTapped)]) {
+        if ([self navBarleftButton] == NavBarLeftButtonTypeCart && [self respondsToSelector:@selector(cartIconButtonTapped)]) {
             self.navigationItem.rightBarButtonItem = [NavBarUtility navBarLeftButtonWithType:NavBarLeftButtonTypeCart viewController:self];
+        }
+        if ([self navBarleftButton] == NavBarLeftButtonTypeClose && [self respondsToSelector:@selector(closeButtonTapped)]) {
+            self.navigationItem.rightBarButtonItem = [NavBarUtility navBarLeftButtonWithType:NavBarLeftButtonTypeClose viewController:self];
         }
     }
 }
@@ -142,26 +144,24 @@
 }
 
 - (BOOL)showNotificationBarMessage:(NSString *)message isSuccess:(BOOL)success {
-    UIViewController *rootViewController = [ViewControllerManager topViewController];
+    UIViewController *rootViewController = self; // [ViewControllerManager topViewController];
     [[NotificationBarView sharedInstance] show:rootViewController text:message isSuccess:success];
     return YES;
 }
 
 - (void)removeMessageView {
     [[NotificationBarView sharedInstance] dismiss];
-    
 }
 
 #pragma mark - PerformanceTrackerProtocol
--(void) recordStartLoadTime {
+- (void)recordStartLoadTime {
     _startLoadingTime = [NSDate date];
 }
 
--(void) publishScreenLoadTime {
-    //Publish the load time if it's the first load OR it's been forced
-    if(_hasAppeared == NO || ([self respondsToSelector:@selector(forcePublishScreenLoadTime)] && [self forcePublishScreenLoadTime])) {
-        _hasAppeared = YES;
-    }
+- (void)publishScreenLoadTimeWithName:(NSString *)name withLabel:(NSString *)label {
+    NSDate *publishTime = [NSDate date];
+    NSTimeInterval publishInterVal = [publishTime timeIntervalSinceDate:_startLoadingTime];
+    [TrackerManager trackLoadTimeWithScreenName:name interval:@((NSUInteger)(publishInterVal * 1000)) label:label];
 }
 
 - (void)handleGenericErrorCodesWithErrorControlView:(int)errorCode forRequestID:(int)rid {
@@ -187,14 +187,6 @@
     [errorView removeFromSuperview];
 }
 
--(NSString *) getPerformanceTrackerScreenName {
-    return nil;
-}
-
--(NSString *)getPerformanceTrackerLabel {
-    return nil;
-}
-
 #pragma mark - DataTrackerProtocol
 -(NSString *)getScreenName {
     return nil;
@@ -207,6 +199,10 @@
 
 - (void)cartIconButtonTapped {
     [MainTabBarViewController showCart];
+}
+
+- (void)closeButtonTapped {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)updateCartInNavBar {

@@ -82,20 +82,20 @@
                                 <rect key="frame" x="16" y="80" width="342" height="87.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5o2-2d-2Ey">
-                                        <rect key="frame" x="10" y="10" width="322" height="20.5"/>
+                                        <rect key="frame" x="16" y="10" width="310" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0Cs-Nh-G8u">
-                                        <rect key="frame" x="302" y="35" width="30" height="32"/>
+                                        <rect key="frame" x="308" y="36.5" width="18" height="19"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="30" id="A7o-Mg-VSY"/>
+                                            <constraint firstAttribute="width" constant="18" id="A7o-Mg-VSY"/>
                                             <constraint firstAttribute="width" secondItem="0Cs-Nh-G8u" secondAttribute="height" multiplier="33:35" id="kZM-dF-dIc"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sQo-RD-vmq">
-                                        <rect key="frame" x="10" y="40.5" width="277" height="21"/>
+                                        <rect key="frame" x="16" y="35.5" width="284" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -108,12 +108,13 @@
                                     <constraint firstItem="5o2-2d-2Ey" firstAttribute="top" secondItem="5fQ-wt-nNO" secondAttribute="top" constant="10" id="GE1-QS-h0K"/>
                                     <constraint firstItem="0Cs-Nh-G8u" firstAttribute="right" secondItem="5o2-2d-2Ey" secondAttribute="right" id="Hym-ge-UtS"/>
                                     <constraint firstAttribute="bottom" secondItem="sQo-RD-vmq" secondAttribute="bottom" priority="1" constant="10" id="J1o-ee-SfI"/>
-                                    <constraint firstItem="0Cs-Nh-G8u" firstAttribute="left" secondItem="sQo-RD-vmq" secondAttribute="right" constant="15" id="Ojt-Dh-tBT"/>
-                                    <constraint firstItem="5o2-2d-2Ey" firstAttribute="left" secondItem="5fQ-wt-nNO" secondAttribute="left" constant="10" id="Ug8-uE-lRv"/>
+                                    <constraint firstItem="0Cs-Nh-G8u" firstAttribute="left" secondItem="sQo-RD-vmq" secondAttribute="right" constant="8" id="Ojt-Dh-tBT"/>
+                                    <constraint firstItem="5o2-2d-2Ey" firstAttribute="left" secondItem="5fQ-wt-nNO" secondAttribute="left" constant="16" id="Ug8-uE-lRv"/>
                                     <constraint firstItem="sQo-RD-vmq" firstAttribute="left" secondItem="5o2-2d-2Ey" secondAttribute="left" id="YwV-on-uJg"/>
                                     <constraint firstItem="0Cs-Nh-G8u" firstAttribute="centerY" secondItem="sQo-RD-vmq" secondAttribute="centerY" id="e7H-bn-kwh"/>
-                                    <constraint firstAttribute="right" secondItem="5o2-2d-2Ey" secondAttribute="right" constant="10" id="k1h-2B-3dw"/>
-                                    <constraint firstItem="sQo-RD-vmq" firstAttribute="top" secondItem="5o2-2d-2Ey" secondAttribute="bottom" priority="250" constant="10" id="qFk-tI-17F"/>
+                                    <constraint firstAttribute="right" secondItem="5o2-2d-2Ey" secondAttribute="right" constant="16" id="k1h-2B-3dw"/>
+                                    <constraint firstAttribute="bottom" secondItem="5o2-2d-2Ey" secondAttribute="bottom" priority="249" constant="10" id="pvc-bN-fKq"/>
+                                    <constraint firstItem="sQo-RD-vmq" firstAttribute="top" secondItem="5o2-2d-2Ey" secondAttribute="bottom" priority="250" constant="5" id="qFk-tI-17F"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -199,6 +200,7 @@
                 <outlet property="bottomArrowImage" destination="hoF-Xk-tFl" id="Ndj-Mh-caL"/>
                 <outlet property="cancellationButton" destination="doN-Dp-g8g" id="nBa-WG-I9g"/>
                 <outlet property="cancellationHeightConstraint" destination="4tH-Mh-tbT" id="5OD-qq-Sbt"/>
+                <outlet property="cancellationReasonBottomToBottomConstraint" destination="pvc-bN-fKq" id="0rZ-EQ-Hhy"/>
                 <outlet property="cancellationReasonLabel" destination="5o2-2d-2Ey" id="t5R-rm-WLF"/>
                 <outlet property="cancellationReasonLabelBottomConstraint" destination="qFk-tI-17F" id="Tcb-N4-CGq"/>
                 <outlet property="cancellationView" destination="5fQ-wt-nNO" id="6qj-Y2-ADq"/>
@@ -218,7 +220,7 @@
                 <outlet property="refundMessagesToTopSuperViewConstriant" destination="3zM-r4-0zB" id="hhD-nS-xcY"/>
                 <outlet property="refundStateIconImageView" destination="0Cs-Nh-G8u" id="y2k-0E-Wp8"/>
             </connections>
-            <point key="canvasLocation" x="-1103" y="-178.5"/>
+            <point key="canvasLocation" x="-1501" y="-267"/>
         </tableViewCell>
     </objects>
     <resources>

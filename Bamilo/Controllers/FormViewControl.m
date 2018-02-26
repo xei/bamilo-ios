@@ -33,6 +33,8 @@
     //Tableview registrations
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame: CGRectZero];
+    self.tableView.separatorColor = [UIColor clearColor];
     [self.tableView registerNib:[UINib nibWithNibName:[FormHeaderTableViewCell nibName] bundle:nil]
          forCellReuseIdentifier:[FormHeaderTableViewCell nibName]];
     [self.tableView registerNib:[UINib nibWithNibName:[FormTableViewCell nibName] bundle:nil]
@@ -99,7 +101,7 @@
             return cell;
         } else if([formElement isKindOfClass:[FormHeaderModel class]]) {
             FormHeaderTableViewCell *formHeaderItemTableViewCell = [self.tableView dequeueReusableCellWithIdentifier:[FormHeaderTableViewCell nibName] forIndexPath:indexPath];
-            formHeaderItemTableViewCell.titleString  = ((FormHeaderModel *)formElement).headerString;
+            [formHeaderItemTableViewCell updateWithModel: formElement];
             return formHeaderItemTableViewCell;
         }
     }
@@ -111,17 +113,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    if (indexPath.row < self.formModelList.count &&
-//        [[self.formModelList objectAtIndex:indexPath.row] isKindOfClass:[FormItemModel class]] &&
-//        ((FormItemModel *) [self.formModelList objectAtIndex:indexPath.row]).type == InputTextFieldControlTypeOptions &&
-//        ((FormItemModel *) [self.formModelList objectAtIndex:indexPath.row]).selectOption.count == 1) {
-//        return 0;
-//    } else
-    if (indexPath.row < self.formModelList.count && [[self.formModelList objectAtIndex:indexPath.row] isKindOfClass:[FormHeaderModel class]]) {
-        return [FormHeaderTableViewCell cellHeight];
-    } else {
-        return UITableViewAutomaticDimension;
-    }
+    return UITableViewAutomaticDimension;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -191,12 +183,13 @@
 #pragma mark - form submission abstract method
 - (void)buttonTapped:(id)cell {
     [self.activeField resignFirstResponder];
-    [self.delegate formSubmitButtonTapped];
+    if (self.delegate && [self.delegate respondsToSelector: @selector(formSubmitButtonTapped)]) {
+        [self.delegate formSubmitButtonTapped];
+    }
 }
 
 #pragma mark - InputTextFieldControlDelegate
 - (void)inputValueChanged:(id)inputTextFieldControl byNewValue:(NSString *)value inFieldIndex:(NSUInteger)fieldIndex {
-    
     FormItemModel *model = self.formModelList[fieldIndex];
     model.inputTextValue = value;
     
@@ -204,6 +197,12 @@
         if ([self.delegate respondsToSelector:@selector(fieldHasBeenUpdatedByNewValidValue:inFieldIndex:)]){
             [self.delegate fieldHasBeenUpdatedByNewValidValue:value inFieldIndex:fieldIndex];
         }
+    }
+}
+
+- (void)inputFocuced:(id)inputTextFieldControl inFieldIndex:(NSUInteger)fieldIndex {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(fieldHasBeenFocuced:inFieldIndex:)]) {
+        [self.delegate fieldHasBeenFocuced:inputTextFieldControl inFieldIndex:fieldIndex];
     }
 }
 

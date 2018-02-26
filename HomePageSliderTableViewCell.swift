@@ -114,8 +114,11 @@ class HomePageSliderTableViewCell: BaseHomePageTeaserBoxTableViewCell, FSPagerVi
     
     //MARK: - HomePageTeaserHeightCalculator
     static func teaserHeight(model: Any?) -> CGFloat {
-        let itemWidth = (UIApplication.shared.statusBarFrame.width - 2 * cellSpacing) / wholeSlidesWidthRatio
-        let itemHeight = itemWidth / sliderRatio
-        return itemHeight + cellSpacing * 2 + 8 //8 point padding from bottom
+        if let slider = model as? HomePageSlider, let sliders = slider.sliders, sliders.count > 0 {
+            let itemWidth = (UIApplication.shared.statusBarFrame.width - 2 * cellSpacing) / wholeSlidesWidthRatio
+            let itemHeight = itemWidth / sliderRatio
+            return itemHeight + cellSpacing * 2 + 8 //8 point padding from bottom
+        }
+        return 0
     }
 }

@@ -112,9 +112,6 @@
     [super viewDidAppear:animated];
     
     [self.formController registerForKeyboardNotifications];
-    if(self.address.uid == nil) {
-        [self publishScreenLoadTime];
-    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -125,7 +122,6 @@
     //pop this view controller if user is not logged in
     if (![RICustomer checkIfUserIsLogged]) {
         [self.navigationController popToRootViewControllerAnimated:YES];
-//        [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
@@ -244,7 +240,6 @@
     [DataAggregator getAddress:self id:uid completion:^(id data, NSError *error) {
         if (error == nil) {
             [self bind:data forRequestId:3];
-            [self publishScreenLoadTime];
         } else {
             [self errorHandler:error forRequestID:3];
         }

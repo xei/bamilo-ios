@@ -22,6 +22,6 @@
 @property (nonatomic, strong)  NSArray *filtersArray;
 @property (nonatomic , assign) int priceFilterIndex;
 @property (nonatomic, assign) id<JAFiltersViewControllerDelegate> delegate;
-@property (nonatomic, strong) id subCatsFilter;
+@property (nonatomic, strong) NSArray *subCatsFilters;
 
 @end

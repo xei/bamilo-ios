@@ -10,7 +10,7 @@ import Foundation
 
 extension UILabel {
     
-    func applyStype(font: UIFont, color: UIColor) {
+    func applyStyle(font: UIFont, color: UIColor) {
         self.font = font
         self.textColor = color
     }

@@ -9,19 +9,22 @@
 #import "SignUpViewController.h"
 #import "EmarsysPredictManager.h"
 #import "PushWooshTracker.h"
-
+#import "AuthenticationContainerViewController.h"
 //Lagacy importing
 #import "RICustomer.h"
 #import "JAUtils.h"
-
+#import "DataServiceProtocol.h"
 #import "Bamilo-Swift.h"
 
 #define cSignUpMethodEmail @"email"
 #define cSignUpMethodGoogle @"sso-google"
 
-@interface SignUpViewController()
+
+@interface SignUpViewController() <PhoneVerificationViewControllerDelegate>
 @property (nonatomic, weak) IBOutlet UITableView* tableView;
 @property (nonatomic, strong) FormViewControl *formController;
+@property (nonatomic, strong) FormItemModel *phoneField;
+@property (nonatomic) BOOL isSubmissionButtonDisabled;
 @end
 
 @implementation SignUpViewController
@@ -34,32 +37,20 @@
     
     [self.tableView setContentInset: UIEdgeInsetsMake(28, 0, 0, 0)];
     self.formController.tableView = self.tableView;
-
-    FormItemModel *melliCode = [[FormItemModel alloc]
-                                initWithTextValue:nil
-                                fieldName: @"customer[national_id]"
-                                andIcon:nil
-                                placeholder:@"کد ملی"
-                                type:InputTextFieldControlTypeNumerical
-                                validation: [[FormItemValidation alloc] initWithRequired:YES max:10 min:10 withRegxPatter:nil]
-                                selectOptions:nil];
     
-    
-    FormItemModel *birthday = [FormItemModel birthdayFieldName:@"customer[birthday]"];
     FormItemModel *email = [FormItemModel emailWithFieldName:@"customer[email]"];
-    FormItemModel *firstName = [FormItemModel firstNameFieldWithFiedName:@"customer[first_name]"];
-    FormItemModel *lastName = [FormItemModel lastNameWithFieldName:@"customer[last_name]"];
-    FormItemModel *phone = [FormItemModel phoneWithFieldName:@"customer[phone]"];
+    self.phoneField = [FormItemModel phoneWithFieldName:@"customer[phone]"];
+    FormItemModel *melliCode = [FormItemModel nationalID:@"customer[national_id]"];
     FormItemModel *password = [FormItemModel passWordWithFieldName:@"customer[password]"];
-    FormItemModel *gender = [FormItemModel genderWithFieldName:@"customer[gender]"];
     
-    self.formController.submitTitle = @"ثبت نام";
+    self.formController.submitTitle = STRING_SIGNUP;
     self.title = STRING_SIGNUP;
-    self.formController.formModelList = [NSMutableArray arrayWithArray:@[ firstName, lastName, melliCode, gender, birthday, email, password, phone]];
+    self.formController.formModelList = [NSMutableArray arrayWithArray:@[ email, self.phoneField, melliCode, password ]];
     [self.formController setupTableView];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    self.isSubmissionButtonDisabled = NO;
     [self.formController registerForKeyboardNotifications];
 }
 
@@ -69,48 +60,79 @@
 
 #pragma mark - formControlDelegate
 - (void)formSubmitButtonTapped {
-    if (![self.formController isFormValid]) {
+    if (![self.formController isFormValid] && !self.isSubmissionButtonDisabled) {
         [self.formController showAnyErrorInForm];
         return;
     }
-    
-    [DataAggregator signupUser:self with:[self.formController getMutableDictionaryOfForm] completion:^(id data, NSError *error) {
+    [self tryToSignupUser:self];
+}
+
+- (void)tryToSignupUser:(id<DataServiceProtocol>)target {
+    [DataAggregator signupUser:target with:[self.formController getMutableDictionaryOfForm] completion:^(id data, NSError *error) {
         if(error == nil) {
+            self.isSubmissionButtonDisabled = YES;
+            //TODO: this is not a good approach which has been contracted with server
+            // and it's better to be refactored in both platforms
+            if ([data isKindOfClass:[ApiDataMessageList class]]) {
+                ApiDataMessageList *messages = data;
+                if (messages) {
+                    if ([((ApiDataMessage *)messages.success.firstObject).reason isEqualToString:@"CUSTOMER_REGISTRATION_STEP_1_VALIDATED"]) {
+                        NSLog(@"comes here");
+                        [self.delegate wantsToShowTokenVerificatinWith:self phone: [self.phoneField getValue]];
+                        return;
+                    }
+                }
+            }
+            //End of TODO
             [self bind:data forRequestId:0];
-            
             //EVENT: SIGNUP / SUCCESS
             RICustomer *customer = [RICustomer getCurrentCustomer];
-            
             [TrackerManager postEventWithSelector:[EventSelectors signupEventSelector] attributes:[EventAttributes signupWithMethod:cSignUpMethodEmail user:customer success:YES]];
             [EmarsysPredictManager setCustomer: customer];
             [PushWooshTracker setUserID:[RICustomer getCurrentCustomer].email];
             if (self.completion) {
-                self.completion(AUTHENTICATION_FINISHED_WITH_REGISTER);
-            } else {
+                self.completion(AuthenticationStatusSignupFinished);
+            } else if ([[MainTabBarViewController topViewController] isKindOfClass:[AuthenticationContainerViewController class]]) {
                 [((UIViewController *)self.delegate).navigationController popViewControllerAnimated:YES];
+            } else {
+                [((UIViewController *)self.delegate).navigationController popWithStep:2 animated:YES];
             }
         } else {
             [TrackerManager postEventWithSelector:[EventSelectors signupEventSelector]
                                        attributes:[EventAttributes signupWithMethod:cSignUpMethodEmail user:nil success:NO]];
             //EVENT: SIGNUP / FAILURE
-            BaseViewController *baseViewController = (BaseViewController *)self.delegate;
-            if(![baseViewController showNotificationBar:error isSuccess:NO]) {
-                BOOL errorHandled = NO;
-                for(NSDictionary* errorField in [error.userInfo objectForKey:kErrorMessages]) {
-                    NSString *fieldNameParm = [errorField objectForKey:@"field"];
-                    if ([fieldNameParm isKindOfClass:[NSString class]] && fieldNameParm.length > 0) {
-                        NSString *fieldName = [NSString stringWithFormat:@"customer[%@]", fieldNameParm];
-                        if ([self.formController showErrorMessageForField:fieldName errorMsg:errorField[kMessage]]) {
-                            errorHandled = YES;
+            
+            if ([target isKindOfClass:[SignInViewController class]]) {
+                BaseViewController *baseViewController = (BaseViewController *)self.delegate;
+                if(![baseViewController showNotificationBar:error isSuccess:NO]) {
+                    BOOL errorHandled = NO;
+                    NSArray<NSDictionary *> *errors = [error.userInfo objectForKey:kErrorMessages];
+                    for(NSDictionary* errorField in errors) {
+                        NSString *fieldNameParm = [errorField objectForKey:@"field"];
+                        if ([fieldNameParm isKindOfClass:[NSString class]] && fieldNameParm.length > 0) {
+                            NSString *fieldName = [NSString stringWithFormat:@"customer[%@]", fieldNameParm];
+                            if ([self.formController showErrorMessageForField:fieldName errorMsg:errorField[kMessage]]) {
+                                errorHandled = YES;
+                            }
                         }
                     }
+                    if (!errorHandled) {
+                        [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
+                    }
                 }
-                if (!errorHandled) {
-                    [self showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
+            } else if ([target isKindOfClass:[BaseViewController class]]) {
+                if (![Utility handleErrorMessagesWithError:error viewController:(BaseViewController *)target]) {
+                    [(BaseViewController *)target showNotificationBarMessage:STRING_CONNECTION_SERVER_ERROR_MESSAGES isSuccess:NO];
                 }
             }
         }
     }];
+}
+
+#pragma mark - PhoneVerificationViewControllerDelegate
+- (void)finishedVerifingPhoneWithTarget:(PhoneVerificationViewController *)target {
+    //complete signup
+    [self tryToSignupUser:target];
 }
 
 #pragma mark - DataServiceProtocol
@@ -137,12 +159,12 @@
 //        [trackingDictionary setValue:@"My account" forKey:kRIEventLocationKey];
 //    }
 //    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRegisterSuccess] data:[trackingDictionary copy]];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification object:nil];
-    
-    NSMutableDictionary *userInfo = [NSMutableDictionary new];
-    if (self.fromSideMenu) {
-        [userInfo setObject:@YES forKey:@"from_side_menu"];
-    }
+//    [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification object:nil];
+//
+//    NSMutableDictionary *userInfo = [NSMutableDictionary new];
+//    if (self.fromSideMenu) {
+//        [userInfo setObject:@YES forKey:@"from_side_menu"];
+//    }
 }
 
 @end

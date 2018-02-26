@@ -25,19 +25,19 @@ class CatalogDataManager: DataManagerSwift {
             path += "\(sortUrl)/"
         }
         path += "maxItems/36/page/\(page)"
-        if let urlPath = path.addingPercentEncoding( withAllowedCharacters: .urlQueryAllowed) {
-            CatalogDataManager.requestManager.async(.get, target: target, path: urlPath, params: nil, type: .background, completion: { (responseType, data, errorMessages) in
-                self.processResponse(responseType, aClass: Catalog.self, data: data, errorMessages: errorMessages, completion: completion)
-            })
-        }
+//        if let urlPath = path.addingPercentEncoding( withAllowedCharacters: .urlQueryAllowed) {
+        CatalogDataManager.requestManager.async(.get, target: target, path: path, params: nil, type: .background, completion: { (responseType, data, errorMessages) in
+            self.processResponse(responseType, aClass: Catalog.self, data: data, errorMessages: errorMessages, completion: completion)
+        })
+//        }
     }
     
-    func getSubCategoriesFilter(_ target: DataServiceProtocol, categoryUrlKey: String, completion: @escaping DataClosure) {
-        let path = "\(RI_API_GET_CATEGORIES_BY_URLKEY)\(categoryUrlKey)"
-        
-        CatalogDataManager.requestManager.async(.get, target: target, path: path, params: nil, type: .background, completion: { (responseType, data, errorMessages) in
-            data?.metadata = ((((data?.metadata?["data"] as? [[String:Any]])?[0])?["children"]) as? [[String: Any]])?[0]
-            self.processResponse(responseType, aClass: CatalogCategoryFilterItem.self, data: data, errorMessages: errorMessages, completion: completion)
-        })
-    }
+//    func getSubCategoriesFilter(_ target: DataServiceProtocol, categoryUrlKey: String, completion: @escaping DataClosure) {
+//        let path = "\(RI_API_GET_CATEGORIES_BY_URLKEY)\(categoryUrlKey)"
+//        
+//        CatalogDataManager.requestManager.async(.get, target: target, path: path, params: nil, type: .background, completion: { (responseType, data, errorMessages) in
+//            data?.metadata = ((((data?.metadata?["data"] as? [[String:Any]])?[0])?["children"]) as? [[String: Any]])?[0]
+//            self.processResponse(responseType, aClass: CatalogCategoryFilterItem.self, data: data, errorMessages: errorMessages, completion: completion)
+//        })
+//    }
 }

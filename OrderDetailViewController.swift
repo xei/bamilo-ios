@@ -34,6 +34,7 @@ class OrderDetailViewController: BaseViewController, OrderDetailTableViewCellDel
     private func loadContent(completion: ((Bool)-> Void)? = nil) {
         if let orderId = self.orderId {
             self.activiryIndicator.startAnimating()
+            self.recordStartLoadTime()
             OrderDataManager.sharedInstance.getOrder(self, orderId: orderId) { (data, errors) in
                 self.activiryIndicator.stopAnimating()
                 if let error = errors {
@@ -42,6 +43,7 @@ class OrderDetailViewController: BaseViewController, OrderDetailTableViewCellDel
                 } else {
                     completion?(true)
                     self.bind(data, forRequestId: 0)
+                    self.publishScreenLoadTime(withName: self.getScreenName(), withLabel: self.orderId)
                 }
             }
         } else {

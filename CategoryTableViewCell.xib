@@ -22,11 +22,11 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ytb-gG-lUP" userLabel="Image Container">
                         <rect key="frame" x="319" y="49.5" width="40" height="40"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NHr-RO-nBt">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NHr-RO-nBt">
                                 <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="27"/>
+                                        <real key="value" value="0.0"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </imageView>
@@ -42,7 +42,7 @@
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                <real key="value" value="27"/>
+                                <real key="value" value="0.0"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
@@ -70,7 +70,7 @@
                 <outlet property="titleLabelToImageRightConstraint" destination="5zH-lL-6aS" id="Z2a-v0-UWi"/>
                 <outlet property="titleToSuperviewRightConstraint" destination="h2I-gI-LYD" id="KhM-aF-wsm"/>
             </connections>
-            <point key="canvasLocation" x="-772" y="-297"/>
+            <point key="canvasLocation" x="-1007" y="-422"/>
         </tableViewCell>
     </objects>
 </document>
