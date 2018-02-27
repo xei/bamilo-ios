@@ -149,7 +149,7 @@
         <!--Order Detail View Controller-->
         <scene sceneID="eau-3j-UQE">
             <objects>
-                <viewController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="oTA-cy-vIx" customClass="OrderDetailViewController" customModule="Bamilo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="OrderDetailViewController" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="oTA-cy-vIx" customClass="OrderDetailViewController" customModule="Bamilo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ayu-ta-Hxp"/>
                         <viewControllerLayoutGuide type="bottom" id="sL1-8b-6w6"/>
@@ -2042,7 +2042,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="bEV-Bv-dJp"/>
-        <segue reference="jQX-gw-9ku"/>
+        <segue reference="heG-nW-AOJ"/>
         <segue reference="mLp-yH-ACJ"/>
     </inferredMetricsTieBreakers>
 </document>
