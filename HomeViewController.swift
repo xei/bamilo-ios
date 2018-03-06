@@ -32,7 +32,6 @@ class HomeViewController:   BaseViewController,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.view.backgroundColor = Theme.color(kColorGray10)
         self.artificialNavbar.backgroundColor = Theme.color(kColorExtraDarkBlue)
         

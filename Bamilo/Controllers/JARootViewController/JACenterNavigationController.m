@@ -537,9 +537,9 @@
         if ([notification.userInfo objectForKey:@"product.screen"]) {
             if ([[notification.userInfo objectForKey:@"product.screen"] isEqualToString:@"description"]) {
                 [productDetailsViewController setTabScreenEnum:kTabScreenDescription];
-            }else if ([[notification.userInfo objectForKey:@"product.screen"] isEqualToString:@"specifications"]) {
+            } else if ([[notification.userInfo objectForKey:@"product.screen"] isEqualToString:@"specifications"]) {
                 [productDetailsViewController setTabScreenEnum:kTabScreenSpecifications];
-            }else if ([[notification.userInfo objectForKey:@"product.screen"] isEqualToString:@"reviews"]) {
+            } else if ([[notification.userInfo objectForKey:@"product.screen"] isEqualToString:@"reviews"]) {
                 [productDetailsViewController setTabScreenEnum:kTabScreenReviews];
             }
         }

@@ -19,8 +19,7 @@ class BreadcrumbsControl: BaseViewControl, BreadcrumbsViewDelegate {
         self.breadcrumbsView = BreadcrumbsView.nibInstance()
         if let view = self.breadcrumbsView {
             view.delegate = self
-            self.addSubview(view)
-            view.frame = self.bounds;
+            self.addAnchorMatchedSubView(view: view)
         }
     }
     

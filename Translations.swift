@@ -117,3 +117,4 @@ let STRING_INSERT_YOUR_PHONE = RILocalizationWrapper.localizedString("please_ins
 let STRING_NOT_CANCELLABLE_SHIPPED = RILocalizationWrapper.localizedString("not_cancellable_shipped")!
 let STRING_NOT_CANCELLABLE_HAS_CANCELLATION_REQUEST = RILocalizationWrapper.localizedString("not_cancellable_has_cancellation_request")!
 let STRING_NOT_CANCELLABLE_UNKNOWN_STATUS = RILocalizationWrapper.localizedString("not_cancellable_unknow_status")!
+let STRING_SUBMIT_LABEL = RILocalizationWrapper.localizedString("submit_label")!

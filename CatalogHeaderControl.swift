@@ -23,8 +23,7 @@ class CatalogHeaderControl: BaseViewControl {
         self.headerView = CatalogHeaderView.nibInstance()
         self.headerView?.delegate = self.delegate
         if let view = self.headerView {
-            self.addSubview(view)
-            view.frame = self.bounds;
+            self.addAnchorMatchedSubView(view: view)
         }
     }
 

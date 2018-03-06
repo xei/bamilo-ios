@@ -154,5 +154,5 @@ NSString *const RI_API_RETURN_FINISH = @"return/finishreturn/";
 
 //################################################################################################
 NSString *const RI_API_DELETE_ADDRESS_REMOVE = @"customer/addressremove/";
-
+NSString *const RI_API_SURVEY_ALIAS = @"/survey/alias/";
 

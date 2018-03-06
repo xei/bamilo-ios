@@ -664,7 +664,6 @@ static NSString *recommendationLogic = @"RELATED";
     }
 
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:self.product.seller userInfo:userInfo];
-//    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"SellerPage"];
 }
 
 - (void)goToSellerLink {

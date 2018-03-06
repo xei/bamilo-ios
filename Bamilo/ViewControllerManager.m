@@ -16,21 +16,10 @@
     NSMutableDictionary *_nibCache;
 }
 
-//EXTENSION
-//+(JARootViewController *)rootViewController {
-//    return (JARootViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Main" nibName:@"JARootViewController" resetCache:NO];
-//}
-
-//+(JACenterNavigationController *)centerViewController {
-//    return [MainTabBarViewController topNavigationController];
-////    return (JACenterNavigationController *)[[ViewControllerManager sharedInstance] loadViewController:@"Main" nibName:@"JACenterNavigationController" resetCache:NO];
-//}
-
 +(id)topViewController {
     return [[MainTabBarViewController topNavigationController] topViewController];
 }
 //EXTENSION
-
 static ViewControllerManager *instance;
 
 - (instancetype)init {

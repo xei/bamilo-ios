@@ -135,7 +135,7 @@
     if ([self getScreenName].length) {
         [TrackerManager trackScreenNameWithScreenName:[self getScreenName]];
     }
-    [self.navigationController.interactivePopGestureRecognizer setEnabled:YES];
+//    [self.navigationController.interactivePopGestureRecognizer setEnabled:YES];
     
     //navigation bar configs
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil];

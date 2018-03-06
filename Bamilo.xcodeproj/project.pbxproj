@@ -51,6 +51,13 @@
 		611C19201F5FCEEB0073940C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611C191F1F5FCEEB0073940C /* HomeViewController.swift */; };
 		611C1B2E1F0B757E00C57E4D /* FilterSearchEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 611C1B2D1F0B757E00C57E4D /* FilterSearchEvent.m */; };
 		611C1B321F0BAA0900C57E4D /* SearchBarSearchEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 611C1B311F0BAA0900C57E4D /* SearchBarSearchEvent.m */; };
+		611C1BD6204A8758007C409C /* ReviewSurveyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611C1BD5204A8758007C409C /* ReviewSurveyManager.swift */; };
+		611C1BDE204AD33F007C409C /* ReviewSurveyEmojiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611C1BDD204AD33F007C409C /* ReviewSurveyEmojiViewController.swift */; };
+		611C1BE4204C4242007C409C /* ReviewImageSelectItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611C1BE3204C4242007C409C /* ReviewImageSelectItemView.swift */; };
+		611C1BE6204C4254007C409C /* ReviewImageSelectItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 611C1BE5204C4254007C409C /* ReviewImageSelectItemView.xib */; };
+		611C1BE9204C484D007C409C /* ReviewImageSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611C1BE8204C484D007C409C /* ReviewImageSelectView.swift */; };
+		611C1BEB204C4855007C409C /* ReviewImageSelectView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 611C1BEA204C4855007C409C /* ReviewImageSelectView.xib */; };
+		611C1BED204D7B22007C409C /* ReviewImageSelectControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611C1BEC204D7B22007C409C /* ReviewImageSelectControl.swift */; };
 		611E23E01F10CFB500E5C3AC /* EventSelectors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611E23DF1F10CFB500E5C3AC /* EventSelectors.swift */; };
 		611FF46E1E8BDBEF006F0064 /* EmarsysPredictManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 611FF46D1E8BDBEF006F0064 /* EmarsysPredictManager.m */; };
 		612544061EBA1075007F9350 /* OrderDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612544051EBA1075007F9350 /* OrderDataManager.swift */; };
@@ -75,6 +82,10 @@
 		61338D001EACC61A0017BB06 /* EmarsysRecommendationMinimalCarouselWidgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61338CFF1EACC61A0017BB06 /* EmarsysRecommendationMinimalCarouselWidgetView.m */; };
 		61338D021EACC63B0017BB06 /* EmarsysRecommendationMinimalCarouselWidgetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61338D011EACC63B0017BB06 /* EmarsysRecommendationMinimalCarouselWidgetView.xib */; };
 		61338D051EACC64D0017BB06 /* EmarsysRecommendationMinimalCarouselWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 61338D041EACC64D0017BB06 /* EmarsysRecommendationMinimalCarouselWidget.m */; };
+		613A5AD02045ACC10017F167 /* ReviewServiceDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613A5ACF2045ACC10017F167 /* ReviewServiceDataManager.swift */; };
+		613A5AD22045C96F0017F167 /* ReviewSurvery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613A5AD12045C96F0017F167 /* ReviewSurvery.swift */; };
+		613A5AD42045C9DD0017F167 /* SurveryQuestionOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613A5AD32045C9DD0017F167 /* SurveryQuestionOption.swift */; };
+		613A5AD62045CB120017F167 /* SurveyQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613A5AD52045CB120017F167 /* SurveyQuestion.swift */; };
 		613A7E8D1EBF069100E1AB3F /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613A7E8C1EBF069100E1AB3F /* Product.swift */; };
 		613A7E8F1EBF0F6B00E1AB3F /* CategoryProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613A7E8E1EBF0F6B00E1AB3F /* CategoryProduct.swift */; };
 		613A7E911EBF2B0600E1AB3F /* Catalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613A7E901EBF2B0600E1AB3F /* Catalog.swift */; };
@@ -1061,6 +1072,13 @@
 		611C1B2D1F0B757E00C57E4D /* FilterSearchEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterSearchEvent.m; sourceTree = "<group>"; };
 		611C1B301F0BAA0900C57E4D /* SearchBarSearchEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchBarSearchEvent.h; sourceTree = "<group>"; };
 		611C1B311F0BAA0900C57E4D /* SearchBarSearchEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchBarSearchEvent.m; sourceTree = "<group>"; };
+		611C1BD5204A8758007C409C /* ReviewSurveyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewSurveyManager.swift; sourceTree = "<group>"; };
+		611C1BDD204AD33F007C409C /* ReviewSurveyEmojiViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewSurveyEmojiViewController.swift; sourceTree = "<group>"; };
+		611C1BE3204C4242007C409C /* ReviewImageSelectItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewImageSelectItemView.swift; sourceTree = "<group>"; };
+		611C1BE5204C4254007C409C /* ReviewImageSelectItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReviewImageSelectItemView.xib; sourceTree = "<group>"; };
+		611C1BE8204C484D007C409C /* ReviewImageSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewImageSelectView.swift; sourceTree = "<group>"; };
+		611C1BEA204C4855007C409C /* ReviewImageSelectView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReviewImageSelectView.xib; sourceTree = "<group>"; };
+		611C1BEC204D7B22007C409C /* ReviewImageSelectControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewImageSelectControl.swift; sourceTree = "<group>"; };
 		611E23DF1F10CFB500E5C3AC /* EventSelectors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventSelectors.swift; sourceTree = "<group>"; };
 		611FF46C1E8BDBEF006F0064 /* EmarsysPredictManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysPredictManager.h; sourceTree = "<group>"; };
 		611FF46D1E8BDBEF006F0064 /* EmarsysPredictManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysPredictManager.m; sourceTree = "<group>"; };
@@ -1098,6 +1116,10 @@
 		61338D011EACC63B0017BB06 /* EmarsysRecommendationMinimalCarouselWidgetView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmarsysRecommendationMinimalCarouselWidgetView.xib; sourceTree = "<group>"; };
 		61338D031EACC64D0017BB06 /* EmarsysRecommendationMinimalCarouselWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysRecommendationMinimalCarouselWidget.h; sourceTree = "<group>"; };
 		61338D041EACC64D0017BB06 /* EmarsysRecommendationMinimalCarouselWidget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysRecommendationMinimalCarouselWidget.m; sourceTree = "<group>"; };
+		613A5ACF2045ACC10017F167 /* ReviewServiceDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewServiceDataManager.swift; sourceTree = "<group>"; };
+		613A5AD12045C96F0017F167 /* ReviewSurvery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewSurvery.swift; sourceTree = "<group>"; };
+		613A5AD32045C9DD0017F167 /* SurveryQuestionOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveryQuestionOption.swift; sourceTree = "<group>"; };
+		613A5AD52045CB120017F167 /* SurveyQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyQuestion.swift; sourceTree = "<group>"; };
 		613A7E8C1EBF069100E1AB3F /* Product.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		613A7E8E1EBF0F6B00E1AB3F /* CategoryProduct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryProduct.swift; sourceTree = "<group>"; };
 		613A7E901EBF2B0600E1AB3F /* Catalog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Catalog.swift; sourceTree = "<group>"; };
@@ -2853,6 +2875,7 @@
 		610C689E1EC7423B008FB66C /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				6192B2BC204E90FE00376D84 /* ReviewSurvey */,
 				6199B82F1FF8EBF1008C62A6 /* LoadingCoverView */,
 				61C51E691FDC143800DC75EE /* ErrorView */,
 				61259BDD1FC581360051CBD4 /* BreadcrubmsControl */,
@@ -2986,6 +3009,58 @@
 				611C1B311F0BAA0900C57E4D /* SearchBarSearchEvent.m */,
 			);
 			name = SearchBarSearchEvent;
+			sourceTree = "<group>";
+		};
+		611C1BDC204AD30A007C409C /* ReviewSurvey */ = {
+			isa = PBXGroup;
+			children = (
+				611C1BDD204AD33F007C409C /* ReviewSurveyEmojiViewController.swift */,
+			);
+			name = ReviewSurvey;
+			sourceTree = "<group>";
+		};
+		611C1BDF204C4108007C409C /* ReviewImageSelectControl */ = {
+			isa = PBXGroup;
+			children = (
+				611C1BE1204C417F007C409C /* View */,
+				611C1BE0204C417A007C409C /* Control */,
+			);
+			name = ReviewImageSelectControl;
+			sourceTree = "<group>";
+		};
+		611C1BE0204C417A007C409C /* Control */ = {
+			isa = PBXGroup;
+			children = (
+				611C1BEC204D7B22007C409C /* ReviewImageSelectControl.swift */,
+			);
+			name = Control;
+			sourceTree = "<group>";
+		};
+		611C1BE1204C417F007C409C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				611C1BE7204C4833007C409C /* ReviewImageSelectView */,
+				611C1BE2204C4202007C409C /* ReviewImageSelectItem */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		611C1BE2204C4202007C409C /* ReviewImageSelectItem */ = {
+			isa = PBXGroup;
+			children = (
+				611C1BE3204C4242007C409C /* ReviewImageSelectItemView.swift */,
+				611C1BE5204C4254007C409C /* ReviewImageSelectItemView.xib */,
+			);
+			name = ReviewImageSelectItem;
+			sourceTree = "<group>";
+		};
+		611C1BE7204C4833007C409C /* ReviewImageSelectView */ = {
+			isa = PBXGroup;
+			children = (
+				611C1BE8204C484D007C409C /* ReviewImageSelectView.swift */,
+				611C1BEA204C4855007C409C /* ReviewImageSelectView.xib */,
+			);
+			name = ReviewImageSelectView;
 			sourceTree = "<group>";
 		};
 		611FF46B1E8BDBCB006F0064 /* EmarsysPredictManager */ = {
@@ -3176,9 +3251,20 @@
 			name = Control;
 			sourceTree = "<group>";
 		};
+		613A5ACE2045AA4B0017F167 /* Review Service */ = {
+			isa = PBXGroup;
+			children = (
+				613A5AD12045C96F0017F167 /* ReviewSurvery.swift */,
+				613A5AD52045CB120017F167 /* SurveyQuestion.swift */,
+				613A5AD32045C9DD0017F167 /* SurveryQuestionOption.swift */,
+			);
+			name = "Review Service";
+			sourceTree = "<group>";
+		};
 		613A7E8A1EBF033400E1AB3F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				611C1BDC204AD30A007C409C /* ReviewSurvey */,
 				61B2C7FB1F9CA42300930435 /* OrderDetail */,
 				6157A3DD1F8376B700B8D501 /* Home */,
 				61C5BAF01EC1F40300F3A796 /* CatalogViewController.swift */,
@@ -3485,6 +3571,7 @@
 		617D7F441EDC3DE400F36CF7 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				613A5ACE2045AA4B0017F167 /* Review Service */,
 				61B56D571F9B299A0002BFF3 /* ItemTracking */,
 				6157A3F01F8390F700B8D501 /* Home */,
 				8720C3341EDEE19900404378 /* Data */,
@@ -3546,6 +3633,7 @@
 				8720C33F1EE2CD1000404378 /* Data */,
 				8720C3401EE2CD2700404378 /* LoadingManager.swift */,
 				61A166B91FB6A7AA003FBA56 /* TourManager.swift */,
+				611C1BD5204A8758007C409C /* ReviewSurveyManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -3698,6 +3786,30 @@
 			children = (
 			);
 			name = Control;
+			sourceTree = "<group>";
+		};
+		6192B2BC204E90FE00376D84 /* ReviewSurvey */ = {
+			isa = PBXGroup;
+			children = (
+				6192B2BD204E923300376D84 /* ImageSelectQuestion */,
+			);
+			name = ReviewSurvey;
+			sourceTree = "<group>";
+		};
+		6192B2BD204E923300376D84 /* ImageSelectQuestion */ = {
+			isa = PBXGroup;
+			children = (
+				6192B2BE204E946600376D84 /* ImageSelectQuestionControl */,
+				611C1BDF204C4108007C409C /* ReviewImageSelectControl */,
+			);
+			name = ImageSelectQuestion;
+			sourceTree = "<group>";
+		};
+		6192B2BE204E946600376D84 /* ImageSelectQuestionControl */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = ImageSelectQuestionControl;
 			sourceTree = "<group>";
 		};
 		6193519F1ECAC92800330E5C /* CollectionViewCell */ = {
@@ -5215,6 +5327,7 @@
 			children = (
 				87865FD21EE2E450009505C7 /* Base */,
 				87865FD31EE2E468009505C7 /* AuthenticationDataManager.swift */,
+				613A5ACF2045ACC10017F167 /* ReviewServiceDataManager.swift */,
 				617F77AE1EB85BEC000A2A6C /* AddressDataManager.swift */,
 				61FFD5851EB8CE17004A3518 /* CatalogDataManager.swift */,
 				87AFF6841EE686FE001EBC4D /* CheckoutDataManager.swift */,
@@ -7824,6 +7937,7 @@
 				87AE50D21F2DAB9F00125473 /* Default-568h@2x.png in Resources */,
 				87459CA11E4F159E00743120 /* PaymentTypeTableViewCell.xib in Resources */,
 				875743BE1EA60DFD001B518A /* SpecialOffer.png in Resources */,
+				611C1BEB204C4855007C409C /* ReviewImageSelectView.xib in Resources */,
 				875743841EA60DB9001B518A /* National-Small-50@2x.png in Resources */,
 				8757443F1EA60E71001B518A /* Winter-Small-50.png in Resources */,
 				8757436C1EA60DA5001B518A /* Birthday-72.png in Resources */,
@@ -7864,6 +7978,7 @@
 				875744271EA60E48001B518A /* Tragedy-60@3x.png in Resources */,
 				875743671EA60DA5001B518A /* Birthday-Small-40@2x.png in Resources */,
 				875743631EA60DA5001B518A /* Birthday-Small@2x.png in Resources */,
+				611C1BE6204C4254007C409C /* ReviewImageSelectItemView.xib in Resources */,
 				61CBA04B1E51D18F005673F7 /* FormTableViewCell.xib in Resources */,
 				87459C9C1E4F0DCD00743120 /* RadioButtonView.xib in Resources */,
 				875744631EA60E8E001B518A /* Yalda-72@2x.png in Resources */,
@@ -8418,6 +8533,7 @@
 				875AD5601E38C0C900584ABF /* RIFeaturedBoxTeaserGrouping.m in Sources */,
 				CE8C92B01B8B555600C77706 /* JAMainFilterCell.m in Sources */,
 				610C68AD1EC87F2A008FB66C /* Translations.swift in Sources */,
+				611C1BE9204C484D007C409C /* ReviewImageSelectView.swift in Sources */,
 				87B684F51E4A04030042C09F /* ReceiptItemModel.m in Sources */,
 				61E5344B1FA4CBB700CBDFED /* Ext+NSLayoutConstraint.swift in Sources */,
 				61D474941F7019BF001DA6A6 /* HomeDataManager.swift in Sources */,
@@ -8429,6 +8545,7 @@
 				613FF2BF1E4B2871008660CF /* AuthenticationContainerViewController.m in Sources */,
 				CE9ADF4C1AB6D78200D56481 /* UIImageView+JA.m in Sources */,
 				875AD5891E38C0C900584ABF /* RIGTMTracker.m in Sources */,
+				613A5AD62045CB120017F167 /* SurveyQuestion.swift in Sources */,
 				61EE79901EC046D90036F93E /* CatalogCategoryFilterOption.swift in Sources */,
 				CED6205C1BEB526B00FA8403 /* JAFiltersViewController.m in Sources */,
 				61FC4677201F65C2000141FA /* PhoneChangeViewController.swift in Sources */,
@@ -8440,6 +8557,7 @@
 				61716BA71E865B3D00F4E65F /* DeepLinkManager.m in Sources */,
 				618B256C1F35D80700B39440 /* DeliveryTimeView.swift in Sources */,
 				617D7F431EDC341B00F36CF7 /* BaseProfileTableViewCell.swift in Sources */,
+				611C1BED204D7B22007C409C /* ReviewImageSelectControl.swift in Sources */,
 				9A7EE9C91B5557C9004E2505 /* UIButton+Extensions.m in Sources */,
 				61036B501E65897D006E12A9 /* MutualTitleHeaderCell.m in Sources */,
 				CE9ADF531AB6D78200D56481 /* JALoadCountryViewController.m in Sources */,
@@ -8492,6 +8610,7 @@
 				9A189E6F1BB31AF70039BC14 /* JAProductInfoSingleLine.m in Sources */,
 				875AD5701E38C0C900584ABF /* RISeller.m in Sources */,
 				89C177BF1BC2EC17006D3B19 /* JAPDVProductInfoSellerInfo.m in Sources */,
+				613A5AD02045ACC10017F167 /* ReviewServiceDataManager.swift in Sources */,
 				879F88051E50B2940033FE87 /* AuthenticationBaseViewController.m in Sources */,
 				619351A51ECAC9A900330E5C /* CatalogGridCollectionViewCell.swift in Sources */,
 				8702FBC21E990C2D001D1AA9 /* OpenAppEvent.m in Sources */,
@@ -8584,6 +8703,7 @@
 				9AE766BF1CBBF01C00B63D8E /* JAEmptyCartView.m in Sources */,
 				61FCF0821FD69DF900084872 /* Ext+Error.swift in Sources */,
 				610BC2911FBC5CBF00A7C343 /* RecommendItem.swift in Sources */,
+				611C1BDE204AD33F007C409C /* ReviewSurveyEmojiViewController.swift in Sources */,
 				61259BE31FC5851F0051CBD4 /* BreadcrumbsView.swift in Sources */,
 				61AAEB532014D6180046963F /* OrderCancellationFooterTableViewCell.swift in Sources */,
 				610BC28F1FBC419100A7C343 /* AllRecommendationViewController.swift in Sources */,
@@ -8600,6 +8720,7 @@
 				CEA107011BD78CE500EF88B1 /* JATabBarView.m in Sources */,
 				61C860471ECB1EAF00F2C571 /* CardCollectionViewFlowLayout.swift in Sources */,
 				CE28A7AA1BDE987400B1FADA /* JATabBarButton.m in Sources */,
+				611C1BD6204A8758007C409C /* ReviewSurveyManager.swift in Sources */,
 				61C5C4141E54674600F22130 /* CartEntitySummaryViewControl.m in Sources */,
 				CE9ADF9E1AB6D78200D56481 /* JAOtherOffersView.m in Sources */,
 				CE9ADF9F1AB6D78200D56481 /* JACampaignsViewController.m in Sources */,
@@ -8639,6 +8760,7 @@
 				61BA9B3D1E99FDEE004E9DE8 /* WidgetBase.m in Sources */,
 				870680B81E62DF20000368D5 /* AddressTableViewHeaderCell.m in Sources */,
 				611C1B2E1F0B757E00C57E4D /* FilterSearchEvent.m in Sources */,
+				611C1BE4204C4242007C409C /* ReviewImageSelectItemView.swift in Sources */,
 				870BEA7D1E73F4CC00C5B615 /* ThemeManager.m in Sources */,
 				61DBCCB61E46128300BA8251 /* IconButton.m in Sources */,
 				CE9ADFBA1AB6D78200D56481 /* JAUtils.m in Sources */,
@@ -8783,6 +8905,7 @@
 				610C68A51EC742E3008FB66C /* CatalogHeaderControl.swift in Sources */,
 				874AAB691E3CEA0700B3F8FE /* AppManager.m in Sources */,
 				CE9ADFE91AB6D78200D56481 /* JADynamicForm.m in Sources */,
+				613A5AD42045C9DD0017F167 /* SurveryQuestionOption.swift in Sources */,
 				87A681521E40ED9200D252AC /* OrangeButton.m in Sources */,
 				879F87FF1E5095E00033FE87 /* LoadingManager.m in Sources */,
 				89C7AF551BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m in Sources */,
@@ -8853,6 +8976,7 @@
 				612553501E4F18E800975C6F /* BlueButton.m in Sources */,
 				8714E0611E474025004C9B1D /* RequestManager.m in Sources */,
 				61BA9B411E99FE09004E9DE8 /* FeatureBoxWidget.m in Sources */,
+				613A5AD22045C96F0017F167 /* ReviewSurvery.swift in Sources */,
 				6147F7511FB6EDEF000CBA85 /* TourSpotLightView.swift in Sources */,
 				CE9AE0041AB6D78200D56481 /* JAOtherOffersViewController.m in Sources */,
 				CE9AE0051AB6D78200D56481 /* JAMyOrderDetailView.m in Sources */,

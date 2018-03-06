@@ -16,8 +16,7 @@ class ProgressBar: BaseViewControl {
         
         self.barView = ProgressBarView.nibInstance()
         if let view = self.barView {
-            self.addSubview(view)
-            view.frame = self.bounds;
+            self.addAnchorMatchedSubView(view: view)
         }
     }
     

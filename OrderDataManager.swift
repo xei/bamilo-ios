@@ -28,7 +28,7 @@ class OrderDataManager: DataManagerSwift {
     }
     
     func cancelOrderItems(_ target: DataServiceProtocol, order: CancellingOrder, completion:@escaping DataClosure) {
-        OrderDataManager.requestManager.async(.post, target: self, path: RI_API_CANCEL_ORDER, params: order.toJson(), type: .foreground) { (responseType, data, errorMessages) in
+        OrderDataManager.requestManager.async(.post, target: target, path: RI_API_CANCEL_ORDER, params: order.toJson(), type: .foreground) { (responseType, data, errorMessages) in
             self.processResponse(responseType, aClass: nil, data: data, errorMessages: errorMessages, completion: completion)
         }
     }

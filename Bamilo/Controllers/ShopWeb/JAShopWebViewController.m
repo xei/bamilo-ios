@@ -41,7 +41,6 @@
         [self showLoading];
         [RIHtmlShop getHtmlShopForTargetString:self.targetString successBlock:^(RIHtmlShop *htmlShop) {
             self.htmlShop = htmlShop;
-            [self applyDefaultFontToHtml:self.htmlShop];
             self.isLoaded = YES;
             [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
             [self.webView loadHTMLString:self.htmlShop.html baseURL:[NSURL URLWithString:@"http://"]];
@@ -61,12 +60,6 @@
             [self hideLoading];
         }];
     }
-}
-
-- (void) applyDefaultFontToHtml: (RIHtmlShop *)htmlShop {
-    UIFont *font = [Theme font:kFontVariationRegular size:13];
-    NSString *htmlString = [NSString stringWithFormat:@"<span style=\"font-family: %@; font-size: %i\">%@</span>", font.fontName, (int) font.pointSize, htmlShop.html];
-    htmlShop.html = htmlString;
 }
 
 - (void)loadViews {
