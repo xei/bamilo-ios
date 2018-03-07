@@ -12,6 +12,7 @@ class ReviewImageSelectControl: BaseViewControl, ReviewImageSelectViewDelegate {
     
     var imageSelectView: ReviewImageSelectView?
     weak var delegate: ReviewImageSelectViewDelegate?
+    private var model: SurveyQuestion?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -26,6 +27,7 @@ class ReviewImageSelectControl: BaseViewControl, ReviewImageSelectViewDelegate {
     override func update(withModel model: Any!) {
         if let model  = model as? SurveyQuestion {
             self.imageSelectView?.update(model: model)
+            self.model = model
         }
     }
     

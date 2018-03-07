@@ -15,7 +15,7 @@ class SurveyQuestionOption: NSObject, Mappable {
     var title           : String?
     var value           : String?
     var isOtherType     : Bool = false
-    var isSelected      : Bool = false
+    var isSelected      : Bool? //for state of unselected cases we use optional state (nil)
     var optionalComment : String?
     
     override init() {} //for initializeing without mapping

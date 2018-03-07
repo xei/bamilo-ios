@@ -34,7 +34,7 @@ class HomeViewController:   BaseViewController,
         super.viewDidLoad()
         self.view.backgroundColor = Theme.color(kColorGray10)
         self.artificialNavbar.backgroundColor = Theme.color(kColorExtraDarkBlue)
-        
+        ReviewSurveyManager.startSurvey(viewController: self)
         if let navBar = self.navigationController?.navigationBar {
             self.navBarInitialHeight = navBar.frame.height
             self.artificialNavBarViewHeightConstraint.constant = self.navBarInitialHeight ?? 44

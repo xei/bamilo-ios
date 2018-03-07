@@ -18,6 +18,7 @@ class ReviewImageSelectView: BaseControlView, ReviewImageSelectItemViewDelegate 
     private var horizontalStackviews: [UIStackView] = []
     private var buttons: [ReviewImageSelectItemView]?
     private var lastTappedButton: ReviewImageSelectItemView?
+    private var model: SurveyQuestion?
     weak var delegate: ReviewImageSelectViewDelegate?
     
     override func awakeFromNib() {
@@ -30,6 +31,7 @@ class ReviewImageSelectView: BaseControlView, ReviewImageSelectItemViewDelegate 
         if let options = model.options {
             fillStackView(by: convertToImageSelectItemView(options: options))
         }
+        self.model = model
     }
     
     private func generateHorizontalStackView() -> UIStackView {
@@ -88,5 +90,4 @@ class ReviewImageSelectView: BaseControlView, ReviewImageSelectItemViewDelegate 
     func getSelectedOption() -> SurveyQuestionOption? {
         return self.lastTappedButton?.model
     }
-    
 }

@@ -26,7 +26,8 @@ import Foundation
         let buttonNameMapper: [NavBarLeftButtonType: String] = [
             .search : "btn_search",
             .cart : "btn_cart",
-            .close : "WhiteClose"
+            .close : "WhiteClose",
+            .darkClose: "GrayClose"
         ]
         if let buttonImageName = buttonNameMapper[type] {
             button.setImage(UIImage(named: buttonImageName), for: UIControlState.normal)
@@ -35,7 +36,8 @@ import Foundation
         let buttonSelectorMapper: [NavBarLeftButtonType: Selector] = [
             .search : #selector(viewController.searchIconButtonTapped),
             .cart : #selector(viewController.cartIconButtonTapped),
-            .close : #selector(viewController.closeButtonTapped)
+            .close : #selector(viewController.closeButtonTapped),
+            .darkClose : #selector(viewController.closeButtonTapped)
         ]
         
         if let buttonAction = buttonSelectorMapper[type] {

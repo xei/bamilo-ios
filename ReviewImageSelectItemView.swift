@@ -46,27 +46,34 @@ class ReviewImageSelectItemView: BaseControlView {
     func update(model: SurveyQuestionOption) {
         self.imageSelectButton.setTitle(model.title, for: .normal)
         self.imageSelectButton.kf.setImage(with: model.image, for: .normal, options: [.transition(.fade(0.20))])
+        if let isSelected = model.isSelected {
+            self.updateViewForState(selected: isSelected)
+        }
         self.model = model
     }
-    
     
     @IBAction private func buttonTapped(_ sender: Any) {
         self.setSelected(selected: true)
         self.delegate?.tapped(item: self)
     }
     
-    func setSelected(selected: Bool) {
-        UIView.animate(withDuration: animationDuration, animations: {
-            if let initialButtonRect = self.initialButtonRect {
-                self.imageSelectButton.frame = CGRect(
-                    x: initialButtonRect.origin.x + (selected ? -(self.scaledValue / 2) : (self.scaledValue / 2)),
-                    y: initialButtonRect.origin.y + (selected ? -(self.scaledValue / 2) : (self.scaledValue / 2)),
-                    width: initialButtonRect.size.width + (selected ? (self.scaledValue) : -(self.scaledValue)),
-                    height: initialButtonRect.size.height + (selected ? (self.scaledValue) : -(self.scaledValue))
-                )
-            }
-            self.alpha = selected ? 1 : 0.5
+    func setSelected(selected: Bool, animated: Bool = true) {
+        UIView.animate(withDuration: animated ? animationDuration : 0, animations: {
+            self.updateViewForState(selected: selected)
         })
+        self.model?.isSelected = selected
+    }
+    
+    private func updateViewForState(selected: Bool) {
+        if let initialButtonRect = self.initialButtonRect {
+            self.imageSelectButton.frame = CGRect(
+                x: initialButtonRect.origin.x + (selected ? -(self.scaledValue / 2) : (self.scaledValue / 2)),
+                y: initialButtonRect.origin.y + (selected ? -(self.scaledValue / 2) : (self.scaledValue / 2)),
+                width: initialButtonRect.size.width + (selected ? (self.scaledValue) : -(self.scaledValue)),
+                height: initialButtonRect.size.height + (selected ? (self.scaledValue) : -(self.scaledValue))
+            )
+        }
+        self.alpha = selected ? 1 : 0.5
     }
     
     override static func nibInstance() -> ReviewImageSelectItemView {

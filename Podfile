@@ -21,6 +21,7 @@ target 'Bamilo' do
   pod 'MobileEngageSDK','~> 0.9.1'
   pod 'JBWhatsAppActivity', '~> 1.0'
   pod 'NewRelicAgent', '~> 5.10.0'
+  pod 'CHIPageControl', '~> 0.1.3'
   pod 'SDWebImage', '~> 3.8'  
   pod 'TTRangeSlider', '~> 1.0.5'
   pod 'JSONModel'

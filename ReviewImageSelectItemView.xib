@@ -22,7 +22,7 @@
                         <constraint firstAttribute="height" constant="90" id="i08-6r-n1G"/>
                         <constraint firstAttribute="width" constant="70" id="uc8-da-ZA1"/>
                     </constraints>
-                    <state key="normal" title="hate" image="hateEmoji"/>
+                    <state key="normal" title="hate"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="imageHeightToButtonHeightRatio">
                             <real key="value" value="0.75"/>
@@ -54,7 +54,4 @@
             <point key="canvasLocation" x="-255" y="-220"/>
         </view>
     </objects>
-    <resources>
-        <image name="hateEmoji" width="76" height="53"/>
-    </resources>
 </document>

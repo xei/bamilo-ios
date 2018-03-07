@@ -56,8 +56,8 @@
         if ([self navBarleftButton] == NavBarLeftButtonTypeCart && [self respondsToSelector:@selector(cartIconButtonTapped)]) {
             self.navigationItem.rightBarButtonItem = [NavBarUtility navBarLeftButtonWithType:NavBarLeftButtonTypeCart viewController:self];
         }
-        if ([self navBarleftButton] == NavBarLeftButtonTypeClose && [self respondsToSelector:@selector(closeButtonTapped)]) {
-            self.navigationItem.rightBarButtonItem = [NavBarUtility navBarLeftButtonWithType:NavBarLeftButtonTypeClose viewController:self];
+        if (([self navBarleftButton] == NavBarLeftButtonTypeClose || [self navBarleftButton] == NavBarLeftButtonTypeDarkClose) && [self respondsToSelector:@selector(closeButtonTapped)]) {
+            self.navigationItem.rightBarButtonItem = [NavBarUtility navBarLeftButtonWithType:[self navBarleftButton] viewController:self];
         }
     }
 }

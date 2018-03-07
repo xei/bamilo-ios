@@ -30,6 +30,7 @@ class ReviewSurvery: NSObject, Mappable {
     var title: String?
     var page : [SurveyQuestionPage]?
     
+    override init() {}
     required init?(map: Map) {}
     func mapping(map: Map) {
         id <- map["id"]

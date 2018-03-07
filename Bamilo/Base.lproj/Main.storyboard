@@ -1753,10 +1753,10 @@
             </objects>
             <point key="canvasLocation" x="-2246" y="839"/>
         </scene>
-        <!--View Controller-->
+        <!--Review Survey View Controller-->
         <scene sceneID="Bnb-iO-JQ0">
             <objects>
-                <viewController id="fLe-zv-MEV" sceneMemberID="viewController">
+                <viewController id="fLe-zv-MEV" customClass="ReviewSurveyViewController" customModule="Bamilo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="728-1m-T5j"/>
                         <viewControllerLayoutGuide type="bottom" id="99h-Ky-lOg"/>
@@ -1776,39 +1776,50 @@
                                     <action selector="proceedToCheckout:" destination="9Ss-pC-YRE" eventType="touchUpInside" id="uBU-v2-BpO"/>
                                 </connections>
                             </button>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Pzc-hC-CNZ">
-                                <rect key="frame" x="20" y="62" width="374" height="606"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Pzc-hC-CNZ">
+                                <rect key="frame" x="0.0" y="51" width="414" height="620"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="KsG-uT-q0X">
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="KsG-uT-q0X">
                                     <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="mxF-5j-6Nj">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </view>
-                                    </collectionViewCell>
-                                </cells>
+                                <cells/>
                             </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aQb-4C-eHr" customClass="CHIPageControlJaloro" customModule="CHIPageControl">
+                                <rect key="frame" x="84.666666666666686" y="15" width="245" height="6"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="numberOfPages">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="99h-Ky-lOg" firstAttribute="top" secondItem="1hV-h5-tPH" secondAttribute="bottom" id="6ll-dY-1K3"/>
+                            <constraint firstItem="aQb-4C-eHr" firstAttribute="top" secondItem="dzF-yr-ery" secondAttribute="top" constant="15" id="Hdx-6m-NbZ"/>
                             <constraint firstAttribute="trailing" secondItem="1hV-h5-tPH" secondAttribute="trailing" id="O2m-k5-rBz"/>
                             <constraint firstItem="1hV-h5-tPH" firstAttribute="leading" secondItem="dzF-yr-ery" secondAttribute="leading" id="Qpb-je-S5r"/>
+                            <constraint firstAttribute="right" secondItem="Pzc-hC-CNZ" secondAttribute="right" id="SSg-TU-d6m"/>
+                            <constraint firstItem="1hV-h5-tPH" firstAttribute="top" secondItem="Pzc-hC-CNZ" secondAttribute="bottom" constant="20" id="b6A-5v-u4q"/>
+                            <constraint firstItem="aQb-4C-eHr" firstAttribute="centerX" secondItem="dzF-yr-ery" secondAttribute="centerX" id="evb-vW-Waz"/>
+                            <constraint firstItem="Pzc-hC-CNZ" firstAttribute="top" secondItem="aQb-4C-eHr" secondAttribute="bottom" constant="30" id="fyZ-Qd-FyE"/>
+                            <constraint firstItem="Pzc-hC-CNZ" firstAttribute="left" secondItem="dzF-yr-ery" secondAttribute="left" id="sWb-b1-kjf"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="hEE-kv-gZf"/>
+                    <connections>
+                        <outlet property="collectionView" destination="Pzc-hC-CNZ" id="gsW-w2-vbT"/>
+                        <outlet property="pagerControl" destination="aQb-4C-eHr" id="5YF-wQ-Z1K"/>
+                        <outlet property="submitButton" destination="1hV-h5-tPH" id="9sh-cr-cPc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9oh-c1-tHn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1349.2753623188407" y="1584.7826086956522"/>
+            <point key="canvasLocation" x="-915.94202898550736" y="1593.7500000000002"/>
         </scene>
         <!--حساب کاربری-->
         <scene sceneID="maa-G4-bvT">
@@ -2076,6 +2087,32 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4MK-1r-mEw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-3228.985507246377" y="-1586.413043478261"/>
+        </scene>
+        <!--Base Navigation Controller-->
+        <scene sceneID="eUt-3C-Etx">
+            <objects>
+                <navigationController storyboardIdentifier="ReviewSurveyStarter" automaticallyAdjustsScrollViewInsets="NO" id="NzY-BO-CR7" customClass="BaseNavigationController" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="kpu-se-OJV">
+                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="color" keyPath="navbarTintColor">
+                            <color key="value" red="0.1019607843" green="0.21176470589999999" blue="0.36862745099999999" alpha="1" colorSpace="calibratedRGB"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="navbarColor">
+                            <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <segue destination="fLe-zv-MEV" kind="relationship" relationship="rootViewController" id="r3c-AP-hri"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DPC-Gg-qi3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1699" y="1594"/>
         </scene>
     </scenes>
     <resources>

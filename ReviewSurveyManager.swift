@@ -11,7 +11,7 @@ import UIKit
 class ReviewSurveyManager: NSObject {
     static func startSurvey(viewController: UIViewController) {
         
-        if let reviewStarter = ViewControllerManager.sharedInstance().loadViewController("Review", nibName: "surveyStarterViewController", resetCache: true) {
+        if let reviewStarter = ViewControllerManager.sharedInstance().loadViewController("ReviewSurveyStarter", resetCache: true) {
             viewController.present(reviewStarter, animated: true)
         }
     }
