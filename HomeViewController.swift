@@ -11,7 +11,8 @@ class HomeViewController:   BaseViewController,
                             UIScrollViewDelegate,
                             UITextFieldDelegate,
                             HomePageViewControllerDelegate,
-                            MyBamiloViewControllerDelegate {
+                            MyBamiloViewControllerDelegate,
+                            DataServiceProtocol {
     
     @IBOutlet private weak var searchBar: SearchBarControl!
     @IBOutlet private weak var contentContainer: UIView!
@@ -34,7 +35,7 @@ class HomeViewController:   BaseViewController,
         super.viewDidLoad()
         self.view.backgroundColor = Theme.color(kColorGray10)
         self.artificialNavbar.backgroundColor = Theme.color(kColorExtraDarkBlue)
-        ReviewSurveyManager.startSurvey(viewController: self)
+        ReviewSurveyManager.runSurveyIfItsNeeded(target: self, executionType: .background)
         if let navBar = self.navigationController?.navigationBar {
             self.navBarInitialHeight = navBar.frame.height
             self.artificialNavBarViewHeightConstraint.constant = self.navBarInitialHeight ?? 44
@@ -247,5 +248,10 @@ class HomeViewController:   BaseViewController,
     //MARK: - DataTrackerProtocol
     override func getScreenName() -> String! {
         return "Home"
+    }
+    
+    //MARK: - DataServiceProtocol
+    func bind(_ data: Any!, forRequestId rid: Int32) {
+        
     }
 }

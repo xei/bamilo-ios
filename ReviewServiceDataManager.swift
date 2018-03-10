@@ -20,8 +20,8 @@ class ReviewServiceDataManager: DataManagerSwift {
     
     static let sharedInstance = ReviewServiceDataManager()
     
-    func getServeryAlias(_ target: DataServiceProtocol, surveyAlias: String, requestType: ApiRequestExecutionType, completion: @escaping DataClosure) {
-        ReviewServiceDataManager.requestManager.async(.get, target: target, path: "\(RI_API_SURVEY_ALIAS)\(surveyAlias)", params: nil, type: requestType) { (responseType, data, errorMessages) in
+    func getServeryAlias(_ target: DataServiceProtocol, surveyAlias: String, executionType: ApiRequestExecutionType, completion: @escaping DataClosure) {
+        ReviewServiceDataManager.requestManager.async(.get, target: target, path: "\(RI_API_SURVEY_ALIAS)\(surveyAlias)", params: nil, type: executionType) { (responseType, data, errorMessages) in
             self.processResponse(responseType, aClass: UserSurvey.self, data: data, errorMessages: errorMessages, completion: completion)
         }
     }
@@ -34,5 +34,11 @@ class ReviewServiceDataManager: DataManagerSwift {
         }
     }
     
-    
+    func getAvaiableUserSurvey(_ target: DataServiceProtocol, executionType: ApiRequestExecutionType = .background, completion: @escaping DataClosure){
+        if let customer = RICustomer.getCurrent(), let customerId = customer.customerId {
+            ReviewServiceDataManager.requestManager.async(.patch, target: target, path: "\(RI_API_USER_SURVEY)\(customerId)", params: nil, type: executionType) { (responseType, data, errorMessages) in
+                self.processResponse(responseType, aClass: UserSurvey.self, data: data, errorMessages: errorMessages, completion: completion)
+            }
+        }
+    }
 }

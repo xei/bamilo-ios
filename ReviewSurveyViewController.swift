@@ -30,7 +30,7 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
         self.collectionView.showsVerticalScrollIndicator = false
         self.collectionView.showsHorizontalScrollIndicator = false
         
-        self.collectionView.register(UINib(nibName: QuestionImageSelectCollectionViewCell.nibName, bundle: nil), forCellWithReuseIdentifier: QuestionImageSelectCollectionViewCell.nibName)
+        self.collectionView.register(UINib(nibName: SurveyQuestionCollectionViewCell.nibName, bundle: nil), forCellWithReuseIdentifier: SurveyQuestionCollectionViewCell.nibName)
         
         //mock
         let review = ReviewSurvery()
@@ -83,11 +83,12 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
     
     //MARK: - UICollectionViewDelegate, UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: QuestionImageSelectCollectionViewCell.nibName, for: indexPath) as! QuestionImageSelectCollectionViewCell
         if let question = self.dataSource?[indexPath.row] {
+            let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: SurveyQuestionCollectionViewCell.nibName, for: indexPath) as! SurveyQuestionCollectionViewCell
             cell.update(withModel: question)
+            return cell
         }
-        return cell
+        return UICollectionViewCell()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

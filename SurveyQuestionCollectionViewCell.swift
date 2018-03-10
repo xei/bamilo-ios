@@ -1,5 +1,5 @@
 //
-//  QuestionImageSelectCollectionViewCell.swift
+//  SurveyQuestionCollectionViewCell.swift
 //  Bamilo
 //
 //  Created by Ali Saeedifar on 3/6/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class QuestionImageSelectCollectionViewCell: BaseCollectionViewCellSwift {
+class SurveyQuestionCollectionViewCell: BaseCollectionViewCellSwift {
 
     private var questionView: BaseSurveyQuestionControlView?
     
@@ -20,21 +20,21 @@ class QuestionImageSelectCollectionViewCell: BaseCollectionViewCellSwift {
     override func update(withModel model: Any) {
         if let question = model as? SurveyQuestion, let type = question.type {
             switch type {
-            case .radio:
-                break
-            case .checkbox:
-                break
-            case .essay:
-                break
+//            case .radio:
+//                break
+//            case .checkbox:
+//                break
+//            case .essay:
+//                break
             case .imageSelect:
                 let view = ImageSelectQuestionView.nibInstance()
                 self.contentView.addAnchorMatchedSubView(view: view)
                 view.update(model: question)
                 self.questionView = view
-            case .nps:
-                break
-            case .textbox:
-                break
+//            case .nps:
+//                break
+//            case .textbox:
+//                break
             }
         }
     }

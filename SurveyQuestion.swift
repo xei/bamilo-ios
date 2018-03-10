@@ -19,12 +19,12 @@ func + <K, V>(lhs: [K : V], rhs: [K : V]) -> [K : V] {
 }
 
 enum SurveryQuestionType: String {
-    case radio = "RADIO"
+//    case radio = "RADIO"
     case imageSelect = "IMAGE_SELECT"
-    case nps = "NPS"
-    case checkbox = "CHECKBOX"
-    case textbox = "TEXTBOX"
-    case essay = "ESSAY"
+//    case nps = "NPS"
+//    case checkbox = "CHECKBOX"
+//    case textbox = "TEXTBOX"
+//    case essay = "ESSAY"
 }
 
 class SurveyQuestion: NSObject, Mappable {

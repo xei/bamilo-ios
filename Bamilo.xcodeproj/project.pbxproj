@@ -42,6 +42,8 @@
 		61148E051E4724FC00E2540B /* StepperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61148E041E4724FC00E2540B /* StepperView.m */; };
 		61148E081E47250A00E2540B /* StepperViewControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 61148E071E47250A00E2540B /* StepperViewControl.m */; };
 		61148E0A1E47255F00E2540B /* StepperView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61148E091E47255F00E2540B /* StepperView.xib */; };
+		61180F2C2054065200B4261E /* NPSQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61180F2B2054065200B4261E /* NPSQuestionView.swift */; };
+		61180F2E2054066900B4261E /* NPSQuestionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61180F2D2054066900B4261E /* NPSQuestionView.xib */; };
 		6119576D2003C0A600B7B9D8 /* Ext+Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6119576C2003C0A600B7B9D8 /* Ext+Dictionary.swift */; };
 		611BB3C11F3EDEEB00022906 /* UIBarButtonItem+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = 611BB3C01F3EDEEB00022906 /* UIBarButtonItem+Badge.m */; };
 		611BB3C31F3F4DBD00022906 /* NavBarUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611BB3C21F3F4DBD00022906 /* NavBarUtility.swift */; };
@@ -127,8 +129,8 @@
 		61626BF51F111818008F2463 /* EmarsysBaseTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 61626BF41F111818008F2463 /* EmarsysBaseTracker.m */; };
 		6164F54D201762910009ED19 /* PhoneVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6164F54C201762910009ED19 /* PhoneVerificationViewController.swift */; };
 		6167C1AE1F431578009293B2 /* JANoConnectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6167C1AD1F431578009293B2 /* JANoConnectionView.xib */; };
-		616D5036204EAA6F00370C4E /* QuestionImageSelectCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616D5034204EAA6F00370C4E /* QuestionImageSelectCollectionViewCell.swift */; };
-		616D5037204EAA6F00370C4E /* QuestionImageSelectCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 616D5035204EAA6F00370C4E /* QuestionImageSelectCollectionViewCell.xib */; };
+		616D5036204EAA6F00370C4E /* SurveyQuestionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616D5034204EAA6F00370C4E /* SurveyQuestionCollectionViewCell.swift */; };
+		616D5037204EAA6F00370C4E /* SurveyQuestionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 616D5035204EAA6F00370C4E /* SurveyQuestionCollectionViewCell.xib */; };
 		616D5039204EBD8100370C4E /* BaseSurveyQuestionControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616D5038204EBD8100370C4E /* BaseSurveyQuestionControlView.swift */; };
 		616F7D121F6D172100085B64 /* IconTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616F7D101F6D172100085B64 /* IconTableViewCell.swift */; };
 		616F7D131F6D172100085B64 /* IconTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 616F7D111F6D172100085B64 /* IconTableViewCell.xib */; };
@@ -1065,6 +1067,8 @@
 		61148E061E47250A00E2540B /* StepperViewControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepperViewControl.h; sourceTree = "<group>"; };
 		61148E071E47250A00E2540B /* StepperViewControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StepperViewControl.m; sourceTree = "<group>"; };
 		61148E091E47255F00E2540B /* StepperView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StepperView.xib; sourceTree = "<group>"; };
+		61180F2B2054065200B4261E /* NPSQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NPSQuestionView.swift; sourceTree = "<group>"; };
+		61180F2D2054066900B4261E /* NPSQuestionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NPSQuestionView.xib; sourceTree = "<group>"; };
 		6119576C2003C0A600B7B9D8 /* Ext+Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+Dictionary.swift"; sourceTree = "<group>"; };
 		611BB3BF1F3EDEEB00022906 /* UIBarButtonItem+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+Badge.h"; sourceTree = "<group>"; };
 		611BB3C01F3EDEEB00022906 /* UIBarButtonItem+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+Badge.m"; sourceTree = "<group>"; };
@@ -1177,8 +1181,8 @@
 		61626BF41F111818008F2463 /* EmarsysBaseTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysBaseTracker.m; sourceTree = "<group>"; };
 		6164F54C201762910009ED19 /* PhoneVerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneVerificationViewController.swift; sourceTree = "<group>"; };
 		6167C1AD1F431578009293B2 /* JANoConnectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JANoConnectionView.xib; sourceTree = "<group>"; };
-		616D5034204EAA6F00370C4E /* QuestionImageSelectCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionImageSelectCollectionViewCell.swift; sourceTree = "<group>"; };
-		616D5035204EAA6F00370C4E /* QuestionImageSelectCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QuestionImageSelectCollectionViewCell.xib; sourceTree = "<group>"; };
+		616D5034204EAA6F00370C4E /* SurveyQuestionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyQuestionCollectionViewCell.swift; sourceTree = "<group>"; };
+		616D5035204EAA6F00370C4E /* SurveyQuestionCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SurveyQuestionCollectionViewCell.xib; sourceTree = "<group>"; };
 		616D5038204EBD8100370C4E /* BaseSurveyQuestionControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSurveyQuestionControlView.swift; sourceTree = "<group>"; };
 		616F7D101F6D172100085B64 /* IconTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconTableViewCell.swift; sourceTree = "<group>"; };
 		616F7D111F6D172100085B64 /* IconTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IconTableViewCell.xib; sourceTree = "<group>"; };
@@ -2977,6 +2981,31 @@
 			name = Controls;
 			sourceTree = "<group>";
 		};
+		61180F28205403BD00B4261E /* NPSQuestion */ = {
+			isa = PBXGroup;
+			children = (
+				61180F2A205405F200B4261E /* Control */,
+				61180F29205405ED00B4261E /* View */,
+			);
+			name = NPSQuestion;
+			sourceTree = "<group>";
+		};
+		61180F29205405ED00B4261E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				61180F2B2054065200B4261E /* NPSQuestionView.swift */,
+				61180F2D2054066900B4261E /* NPSQuestionView.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		61180F2A205405F200B4261E /* Control */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Control;
+			sourceTree = "<group>";
+		};
 		611C19101F5E88910073940C /* SearchBarView */ = {
 			isa = PBXGroup;
 			children = (
@@ -3515,18 +3544,18 @@
 		616D5032204EAA2700370C4E /* ReviewSurvey */ = {
 			isa = PBXGroup;
 			children = (
-				616D5033204EAA3D00370C4E /* QuestionImageSelectCollectionViewCell */,
+				616D5033204EAA3D00370C4E /* SurveyQuestionCollectionViewCell */,
 			);
 			name = ReviewSurvey;
 			sourceTree = "<group>";
 		};
-		616D5033204EAA3D00370C4E /* QuestionImageSelectCollectionViewCell */ = {
+		616D5033204EAA3D00370C4E /* SurveyQuestionCollectionViewCell */ = {
 			isa = PBXGroup;
 			children = (
-				616D5034204EAA6F00370C4E /* QuestionImageSelectCollectionViewCell.swift */,
-				616D5035204EAA6F00370C4E /* QuestionImageSelectCollectionViewCell.xib */,
+				616D5034204EAA6F00370C4E /* SurveyQuestionCollectionViewCell.swift */,
+				616D5035204EAA6F00370C4E /* SurveyQuestionCollectionViewCell.xib */,
 			);
-			name = QuestionImageSelectCollectionViewCell;
+			name = SurveyQuestionCollectionViewCell;
 			sourceTree = "<group>";
 		};
 		616F7D0F1F6D170200085B64 /* IconTableViewCell */ = {
@@ -3810,6 +3839,7 @@
 		6192B2BC204E90FE00376D84 /* ReviewSurvey */ = {
 			isa = PBXGroup;
 			children = (
+				61180F28205403BD00B4261E /* NPSQuestion */,
 				6192B2BD204E923300376D84 /* ImageSelectQuestion */,
 				616D5038204EBD8100370C4E /* BaseSurveyQuestionControlView.swift */,
 			);
@@ -8062,6 +8092,7 @@
 				CE9AE0811AB6D78200D56481 /* JAGrayButtonCell_ipad_landscape.xib in Resources */,
 				87EA030B1E6C697F00B1E062 /* IconTableViewHeaderCell.xib in Resources */,
 				875743821EA60DB9001B518A /* National-Small@2x.png in Resources */,
+				61180F2E2054066900B4261E /* NPSQuestionView.xib in Resources */,
 				875743451EA60D8E001B518A /* Autumn-Small.png in Resources */,
 				611C19161F5E89010073940C /* SearchBarView.xib in Resources */,
 				875743EA1EA60E13001B518A /* Spring-60@2x.png in Resources */,
@@ -8216,7 +8247,7 @@
 				875743DE1EA60E13001B518A /* Spring-Small@3x.png in Resources */,
 				8757438D1EA60DB9001B518A /* National-60@2x.png in Resources */,
 				61036B5B1E6599FC006E12A9 /* OrderListTableViewCell.xib in Resources */,
-				616D5037204EAA6F00370C4E /* QuestionImageSelectCollectionViewCell.xib in Resources */,
+				616D5037204EAA6F00370C4E /* SurveyQuestionCollectionViewCell.xib in Resources */,
 				8757445C1EA60E8D001B518A /* Yalda-Small.png in Resources */,
 				1C71FC5E1E2CABAD007ACF02 /* Bamilosans Black.ttf in Resources */,
 				1C71FC601E2CABAD007ACF02 /* Bamilosans Light.ttf in Resources */,
@@ -8917,6 +8948,7 @@
 				875AD5471E38C0C900584ABF /* RIFieldDataSetComponent.m in Sources */,
 				6171F3681F3A021700B3B212 /* Ext+UIView.swift in Sources */,
 				6150858C200CCE9700BC67B1 /* OrderDetailPackageHeaderTableViewHeader.swift in Sources */,
+				61180F2C2054065200B4261E /* NPSQuestionView.swift in Sources */,
 				CE9ADFDE1AB6D78200D56481 /* JABaseViewController.m in Sources */,
 				8702FBDD1E9A32D3001D1AA9 /* AddToCartEvent.m in Sources */,
 				9AEF74051CD20E5700A5D574 /* JAScreenTarget.m in Sources */,
@@ -9060,7 +9092,7 @@
 				CEF0C48D1BE8EE44005B5B12 /* JAReviewCollectionCell.m in Sources */,
 				875AD5681E38C0C900584ABF /* RIPaymentMethodFormField.m in Sources */,
 				619CC2DA1F8E56BF008E4B86 /* HomePageTileTeaser.swift in Sources */,
-				616D5036204EAA6F00370C4E /* QuestionImageSelectCollectionViewCell.swift in Sources */,
+				616D5036204EAA6F00370C4E /* SurveyQuestionCollectionViewCell.swift in Sources */,
 				61DA163D1FEE5011001C5071 /* CategoryTableViewCell.swift in Sources */,
 				875AD55C1E38C0C900584ABF /* RICatalog.m in Sources */,
 				877762D11E9BB39300B73140 /* DataMessageList.m in Sources */,
