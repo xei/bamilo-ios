@@ -31,8 +31,12 @@ class SurveyQuestionCollectionViewCell: BaseCollectionViewCellSwift {
                 self.contentView.addAnchorMatchedSubView(view: view)
                 view.update(model: question)
                 self.questionView = view
-//            case .nps:
-//                break
+            case .nps:
+                let view = NPSQuestionView.nibInstance()
+                self.contentView.addAnchorMatchedSubView(view: view)
+                view.update(model: question)
+                self.questionView = view
+                break
 //            case .textbox:
 //                break
             }

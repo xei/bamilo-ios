@@ -15,7 +15,7 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
     @IBOutlet weak private var collectionView: UICollectionView!
     @IBOutlet weak private var pagerControl: CHIPageControlJaloro!
     
-    private var surverModel: ReviewSurvery?
+    var surverModel: ReviewSurvery!
     private var dataSource: [SurveyQuestion]?
     private var firstNotAnsweredQuestionIndex: Int = 3
     private var pagerMustBeUpdatedViaAnimation: Bool = false
@@ -32,44 +32,7 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
         
         self.collectionView.register(UINib(nibName: SurveyQuestionCollectionViewCell.nibName, bundle: nil), forCellWithReuseIdentifier: SurveyQuestionCollectionViewCell.nibName)
         
-        //mock
-        let review = ReviewSurvery()
-        let question = SurveyQuestion()
-        let option = SurveyQuestionOption()
-        option.title = "what"
-        option.id = 123
-        option.image = URL(string:"http://www.emoji.com/wordpress/wp-content/uploads/emoji_celebs_146-1.jpg")
-        question.title = "what the fuck"
-        
-        
-        let option1 = SurveyQuestionOption()
-        option1.title = "what1"
-        option1.id = 1233
-        option1.image = URL(string:"http://www.emoji.com/wordpress/wp-content/uploads/emoji_celebs_146-1.jpg")
-        
-        let option2 = SurveyQuestionOption()
-        option2.title = "what2"
-        option2.id = 1234
-        option2.image = URL(string:"http://www.emoji.com/wordpress/wp-content/uploads/emoji_celebs_146-1.jpg")
-        
-        let option3 = SurveyQuestionOption()
-        option3.title = "what3"
-        option3.id = 1235
-        option3.image = URL(string:"http://www.emoji.com/wordpress/wp-content/uploads/emoji_celebs_146-1.jpg")
-        
-        let option4 = SurveyQuestionOption()
-        option4.title = "what4"
-        option4.id = 1236
-        option4.image = URL(string:"http://www.emoji.com/wordpress/wp-content/uploads/emoji_celebs_146-1.jpg")
-        
-        question.options = [option, option1, option2, option3, option4]
-        
-        question.type = .imageSelect
-        review.page = [SurveyQuestionPage()]
-        review.page?.first?.questions = [question, question, question, question, question]
-        //end of mock
-        
-        self.updateView(by: review)
+        self.updateView(by: surverModel)
     }
 
     private func applyStyle() {
@@ -130,7 +93,7 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
         return self.collectionView.frame.size
     }
     
-    func updateView(by survey: ReviewSurvery) {
+    private func updateView(by survey: ReviewSurvery) {
         self.dataSource = survey.page?.flatMap({ $0.questions }).flatMap({ $0 }).filter({ !$0.isHidden && $0.type != nil })
         self.pagerControl.numberOfPages = self.dataSource?.count ?? 0
         self.pagerControl.set(progress: self.pagerControl.numberOfPages - 1, animated: false)

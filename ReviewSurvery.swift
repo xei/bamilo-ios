@@ -15,6 +15,7 @@ class UserSurvey: NSObject, Mappable {
     var orderNumber: String?
     var surveys: [ReviewSurvery]?
     
+    override init() {}
     required init?(map: Map) {}
     func mapping(map: Map) {
         userID <- map["userId"]

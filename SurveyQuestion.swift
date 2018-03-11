@@ -21,7 +21,7 @@ func + <K, V>(lhs: [K : V], rhs: [K : V]) -> [K : V] {
 enum SurveryQuestionType: String {
 //    case radio = "RADIO"
     case imageSelect = "IMAGE_SELECT"
-//    case nps = "NPS"
+    case nps = "NPS"
 //    case checkbox = "CHECKBOX"
 //    case textbox = "TEXTBOX"
 //    case essay = "ESSAY"
@@ -56,7 +56,7 @@ class SurveyQuestion: NSObject, Mappable {
 //        ]
 //
 //        let selectedOptionsDictionary = options?.map({ (option) -> [String:String]? in
-//            if option.isSelected, let id = option.id {
+//            if option.isSelected!, let id = option.id {
 //                if let value = option.value {
 //                    return ["\(id)": value]
 //                } else if let comment = option.optionalComment {

@@ -35,6 +35,10 @@
 		610ED5831E742947000D5BEC /* UITextField+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 610ED5821E742947000D5BEC /* UITextField+Extensions.m */; };
 		611195821E3CB14B00D06690 /* PlainTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 611195801E3CB14B00D06690 /* PlainTableViewCell.m */; };
 		611195831E3CB14B00D06690 /* PlainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 611195811E3CB14B00D06690 /* PlainTableViewCell.xib */; };
+		6113E2B12055419D00CE20BE /* HPCollectionViewFlowlayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6113E2AB2055419D00CE20BE /* HPCollectionViewFlowlayout.swift */; };
+		6113E2B22055419D00CE20BE /* HPCollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6113E2AC2055419D00CE20BE /* HPCollectionVC.swift */; };
+		6113E2B32055419D00CE20BE /* HPCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6113E2AD2055419D00CE20BE /* HPCollectionViewCell.swift */; };
+		6113E2B42055419D00CE20BE /* HorizontalPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6113E2AE2055419D00CE20BE /* HorizontalPickerView.swift */; };
 		61143A591ED55C2300C53BA8 /* Ext+Bool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61143A581ED55C2300C53BA8 /* Ext+Bool.swift */; };
 		61143A601ED5754900C53BA8 /* BaseCollectionFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61143A5F1ED5754900C53BA8 /* BaseCollectionFlowLayout.swift */; };
 		61143A621ED57D3900C53BA8 /* CatalogCollectionFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61143A611ED57D3900C53BA8 /* CatalogCollectionFooterView.swift */; };
@@ -1058,6 +1062,10 @@
 		6111957F1E3CB14B00D06690 /* PlainTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlainTableViewCell.h; path = ../Controllers/MenuViewController/PlainTableViewCell.h; sourceTree = "<group>"; };
 		611195801E3CB14B00D06690 /* PlainTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlainTableViewCell.m; path = ../Controllers/MenuViewController/PlainTableViewCell.m; sourceTree = "<group>"; };
 		611195811E3CB14B00D06690 /* PlainTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PlainTableViewCell.xib; path = ../Controllers/MenuViewController/PlainTableViewCell.xib; sourceTree = "<group>"; };
+		6113E2AB2055419D00CE20BE /* HPCollectionViewFlowlayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HPCollectionViewFlowlayout.swift; sourceTree = "<group>"; };
+		6113E2AC2055419D00CE20BE /* HPCollectionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HPCollectionVC.swift; sourceTree = "<group>"; };
+		6113E2AD2055419D00CE20BE /* HPCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HPCollectionViewCell.swift; sourceTree = "<group>"; };
+		6113E2AE2055419D00CE20BE /* HorizontalPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HorizontalPickerView.swift; sourceTree = "<group>"; };
 		61143A581ED55C2300C53BA8 /* Ext+Bool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Ext+Bool.swift"; sourceTree = "<group>"; };
 		61143A5F1ED5754900C53BA8 /* BaseCollectionFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCollectionFlowLayout.swift; sourceTree = "<group>"; };
 		61143A611ED57D3900C53BA8 /* CatalogCollectionFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogCollectionFooterView.swift; sourceTree = "<group>"; };
@@ -2889,6 +2897,7 @@
 		610C689E1EC7423B008FB66C /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				61180F2F2054182C00B4261E /* HorizontalPickerView */,
 				6192B2BC204E90FE00376D84 /* ReviewSurvey */,
 				6199B82F1FF8EBF1008C62A6 /* LoadingCoverView */,
 				61C51E691FDC143800DC75EE /* ErrorView */,
@@ -2952,6 +2961,25 @@
 			name = "UITextField+Extensions";
 			sourceTree = "<group>";
 		};
+		6113E2A72055419D00CE20BE /* HorizontalPicker */ = {
+			isa = PBXGroup;
+			children = (
+				6113E2AA2055419D00CE20BE /* CollectionView */,
+				6113E2AE2055419D00CE20BE /* HorizontalPickerView.swift */,
+			);
+			path = HorizontalPicker;
+			sourceTree = "<group>";
+		};
+		6113E2AA2055419D00CE20BE /* CollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				6113E2AB2055419D00CE20BE /* HPCollectionViewFlowlayout.swift */,
+				6113E2AC2055419D00CE20BE /* HPCollectionVC.swift */,
+				6113E2AD2055419D00CE20BE /* HPCollectionViewCell.swift */,
+			);
+			path = CollectionView;
+			sourceTree = "<group>";
+		};
 		61148E001E47226200E2540B /* Stepper */ = {
 			isa = PBXGroup;
 			children = (
@@ -3004,6 +3032,14 @@
 			children = (
 			);
 			name = Control;
+			sourceTree = "<group>";
+		};
+		61180F2F2054182C00B4261E /* HorizontalPickerView */ = {
+			isa = PBXGroup;
+			children = (
+				6113E2A72055419D00CE20BE /* HorizontalPicker */,
+			);
+			name = HorizontalPickerView;
 			sourceTree = "<group>";
 		};
 		611C19101F5E88910073940C /* SearchBarView */ = {
@@ -8590,6 +8626,7 @@
 				871BA85C1E8680A1007680C5 /* EventConsts.m in Sources */,
 				8720C33A1EE2808800404378 /* ApiDataMessage.swift in Sources */,
 				61840B681EA39941006739EB /* EmarsysRecommendationGridWidget.m in Sources */,
+				6113E2B12055419D00CE20BE /* HPCollectionViewFlowlayout.swift in Sources */,
 				FF6BDCA01CE238F3002BFE11 /* JAORReasonsViewController.m in Sources */,
 				879F87EF1E5048790033FE87 /* NSMutableArray+Extensions.m in Sources */,
 				875AD54C1E38C0C900584ABF /* RIImageResolution.m in Sources */,
@@ -8641,6 +8678,7 @@
 				CE9ADF561AB6D78200D56481 /* JASwitchCell.m in Sources */,
 				87DAABE91E55A1C400445EBB /* PaymentOptionTableViewCell.m in Sources */,
 				61A4D1AB1EA6256A003E203C /* EmptyViewController.m in Sources */,
+				6113E2B22055419D00CE20BE /* HPCollectionVC.swift in Sources */,
 				87A681581E40F21B00D252AC /* BaseButton.m in Sources */,
 				619E92D21F8A1093003885BC /* BaseCollectionViewCellSwift.swift in Sources */,
 				614B8C691FA866EB00F7D3D4 /* MyBamiloHeaderView.swift in Sources */,
@@ -8791,6 +8829,7 @@
 				61DA16411FEE7E93001C5071 /* Links.swift in Sources */,
 				FFF900871C6B5BDF00DDF538 /* JARadioGroupComponent.m in Sources */,
 				61D929481F165AF700716D4C /* NavBarItemTypes.m in Sources */,
+				6113E2B32055419D00CE20BE /* HPCollectionViewCell.swift in Sources */,
 				875AD56B1E38C0C900584ABF /* RIProduct.m in Sources */,
 				618204991E6D465500322937 /* SearchCategoryFilter.m in Sources */,
 				CEA107011BD78CE500EF88B1 /* JATabBarView.m in Sources */,
@@ -8969,6 +9008,7 @@
 				CE9ADFE11AB6D78200D56481 /* JASortingView.m in Sources */,
 				61036B681E65B5F5006E12A9 /* OrderList.m in Sources */,
 				875AD5581E38C0C900584ABF /* RIBanner.m in Sources */,
+				6113E2B42055419D00CE20BE /* HorizontalPickerView.swift in Sources */,
 				875AD57A1E38C0C900584ABF /* RITarget.m in Sources */,
 				CE9ADFE31AB6D78200D56481 /* JACheckBoxWithOptionsComponent.m in Sources */,
 				875AD57B1E38C0C900584ABF /* RIVariation.m in Sources */,
