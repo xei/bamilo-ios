@@ -9,7 +9,7 @@
 import UIKit
 import ObjectMapper
 
-class SurveyQuestionOption: NSObject, Mappable {
+class SurveyQuestionOption: NSObject, Mappable, SelectViewItemDataSourceProtocol {
     var image           : URL?
     var id              : Int?
     var title           : String?

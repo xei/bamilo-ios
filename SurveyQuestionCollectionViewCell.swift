@@ -11,34 +11,28 @@ import UIKit
 class SurveyQuestionCollectionViewCell: BaseCollectionViewCellSwift {
 
     private var questionView: BaseSurveyQuestionControlView?
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         self.contentView.backgroundColor = .white
     }
-
     override func update(withModel model: Any) {
         if let question = model as? SurveyQuestion, let type = question.type {
             switch type {
-//            case .radio:
-//                break
-//            case .checkbox:
+            case .radio,
+                 .checkbox:
+                self.questionView = SelectOptionQuestionView.nibInstance()
+            case .imageSelect:
+                self.questionView = ImageSelectQuestionView.nibInstance()
+            case .nps:
+                self.questionView = NPSQuestionView.nibInstance()
+//            case .textbox:
 //                break
 //            case .essay:
 //                break
-            case .imageSelect:
-                let view = ImageSelectQuestionView.nibInstance()
+            }
+            if let view = self.questionView {
                 self.contentView.addAnchorMatchedSubView(view: view)
                 view.update(model: question)
-                self.questionView = view
-            case .nps:
-                let view = NPSQuestionView.nibInstance()
-                self.contentView.addAnchorMatchedSubView(view: view)
-                view.update(model: question)
-                self.questionView = view
-                break
-//            case .textbox:
-//                break
             }
         }
     }

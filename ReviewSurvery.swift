@@ -29,7 +29,7 @@ class ReviewSurvery: NSObject, Mappable {
     var id: Int?
     var alias: String?
     var title: String?
-    var page : [SurveyQuestionPage]?
+    var pages : [SurveyQuestionPage]?
     
     override init() {}
     required init?(map: Map) {}
@@ -37,6 +37,12 @@ class ReviewSurvery: NSObject, Mappable {
         id <- map["id"]
         alias <- map["alias"]
         title <- map["title"]
-        page <- map["page"]
+        pages <- map["page"]
+    }
+    
+    func merge(survey: ReviewSurvery) {
+        if let pages = survey.pages {
+            self.pages?.append(contentsOf: pages)
+        }
     }
 }

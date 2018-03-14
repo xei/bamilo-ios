@@ -30,7 +30,7 @@
     else if (errorType == FormItemValidationErrorMax)
         return [NSString stringWithFormat:@"بیش از %lu کاراکتر مجاز نمی باشد.", (unsigned long) self.max];
     else if (errorType == FormItemValidationErrorMin)
-        return [NSString stringWithFormat:@"حداقل %lu کاراکتر باید وارد نمایید.", (unsigned long) self.min];
+        return [NSString stringWithFormat:@"حداقل %lu کاراکتر وارد نمایید.", (unsigned long) self.min];
     else if (errorType == FormItemValidationErrorRegx)
         return @"لطفا مقدار معتبر وارد نمایید";
     return nil;

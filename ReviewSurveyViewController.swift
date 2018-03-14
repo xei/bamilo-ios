@@ -17,8 +17,9 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
     
     var surverModel: ReviewSurvery!
     private var dataSource: [SurveyQuestion]?
-    private var firstNotAnsweredQuestionIndex: Int = 3
+    private var firstNotAnsweredQuestionIndex: Int = 0
     private var pagerMustBeUpdatedViaAnimation: Bool = false
+    private var activeIndex: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +28,7 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
         self.collectionView.delegate = self
         self.collectionView.isPagingEnabled = true
         self.view.backgroundColor = .white
+        
         self.collectionView.showsVerticalScrollIndicator = false
         self.collectionView.showsHorizontalScrollIndicator = false
         
@@ -34,10 +36,16 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
         
         self.updateView(by: surverModel)
     }
+    
+    override func closeButtonTapped() {
+        super.closeButtonTapped()
+        
+        //TODO: send dismiss message to server ignore survey
+    }
 
     private func applyStyle() {
         self.submitButton.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: .white)
-        self.submitButton.setTitle(STRING_SUBMIT_LABEL, for: .normal)
+        self.submitButton.setTitle(STRING_NEXT, for: .normal)
         self.pagerControl.radius = 1
         self.pagerControl.tintColor = Theme.color(kColorGray9)
         self.pagerControl.currentPageTintColor = Theme.color(kColorOrange1)
@@ -67,13 +75,17 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        //Prevent user from scrolling to other more questions before answering this question
-        if let x = self.collectionView.layoutAttributesForItem(at: IndexPath(row: firstNotAnsweredQuestionIndex + 1, section: 0))?.frame.maxX {
-            if (scrollView.contentOffset.x < x) {
-                scrollView.panGestureRecognizer.isEnabled = false
-                scrollView.panGestureRecognizer.isEnabled = true
+        if scrollView == self.collectionView, let dataSource = self.dataSource, dataSource.count - 1 != self.firstNotAnsweredQuestionIndex {
+            //Prevent user from scrolling to other more questions before answering this question
+            if let x = self.collectionView.layoutAttributesForItem(at: IndexPath(row: self.firstNotAnsweredQuestionIndex, section: 0))?.frame.minX {
+                if (scrollView.contentOffset.x < x) {
+                    scrollView.panGestureRecognizer.isEnabled = false
+                    scrollView.panGestureRecognizer.isEnabled = true
+                }
             }
         }
+        self.updateActiveIndexPath()
+        self.updateSubmitButtonTitle()
         self.updatePagerControl(animated: true)
     }
 
@@ -94,7 +106,7 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
     }
     
     private func updateView(by survey: ReviewSurvery) {
-        self.dataSource = survey.page?.flatMap({ $0.questions }).flatMap({ $0 }).filter({ !$0.isHidden && $0.type != nil })
+        self.dataSource = survey.pages?.flatMap({ $0.questions }).flatMap({ $0 }).filter({ !$0.isHidden && $0.type != nil })
         self.pagerControl.numberOfPages = self.dataSource?.count ?? 0
         self.pagerControl.set(progress: self.pagerControl.numberOfPages - 1, animated: false)
         
@@ -102,10 +114,57 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
     }
     
     private func updatePagerControl(animated: Bool) {
-        let activeIndex = Int(ceil(self.collectionView.contentOffset.x / self.collectionView.frame.width))
-        if self.pagerControl.currentPage != activeIndex {
-            self.pagerControl.set(progress: activeIndex, animated: animated && pagerMustBeUpdatedViaAnimation)
+        if let dataSource = self.dataSource {
+            if self.pagerControl.currentPage != dataSource.count - 1 - self.activeIndex {
+                self.pagerControl.set(progress: dataSource.count - 1 - self.activeIndex, animated: animated && pagerMustBeUpdatedViaAnimation)
+            }
         }
+    }
+    
+    private func updateSubmitButtonTitle() {
+        if let dataSource = self.dataSource, self.activeIndex == dataSource.count - 1 {
+            self.submitButton.setTitle(STRING_SUBMIT_LABEL, for: .normal)
+        } else {
+            self.submitButton.setTitle(STRING_NEXT, for: .normal)
+        }
+    }
+    
+    
+    private func updateActiveIndexPath() {
+        let visibleRect = CGRect(origin: self.collectionView.contentOffset, size: self.collectionView.bounds.size)
+        let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
+        if let visibleIndexPath = self.collectionView.indexPathForItem(at: visiblePoint) {
+            self.activeIndex = visibleIndexPath.row
+        }
+    }
+    
+    @IBAction func submitButtonTapped(_ sender: Any) {
+        if let dataSource = self.dataSource {
+            //TODO: submit the active question here
+            if let activeQuestion = self.dataSource?[self.activeIndex] {
+                self.submitQuestion(question: activeQuestion)
+            }
+            
+            if self.firstNotAnsweredQuestionIndex >= self.activeIndex {
+                if self.activeIndex < dataSource.count - 1 {
+                    self.activeIndex += 1
+                    self.scrollToIndex(index: self.activeIndex)
+                } else {
+                    //TODO: submit the last one
+                }
+            }
+            if firstNotAnsweredQuestionIndex < activeIndex {
+                firstNotAnsweredQuestionIndex = activeIndex
+            }
+        }
+    }
+    
+    private func submitQuestion(question: SurveyQuestion) {
+        //TODO: resubmit/submit question of survey
+    }
+    
+    private func scrollToIndex(index: Int, animated: Bool? = true) {
+        self.collectionView.selectItem(at: IndexPath(item: index, section: 0), animated: true, scrollPosition: .centeredHorizontally)
     }
     
     override func navBarTitleString() -> String! {

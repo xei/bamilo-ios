@@ -208,6 +208,8 @@
 		61AAC67C1FC08A10007FC21E /* CollectionViewLoadingFooter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61AAC67A1FC08A10007FC21E /* CollectionViewLoadingFooter.xib */; };
 		61AAEB532014D6180046963F /* OrderCancellationFooterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AAEB512014D6180046963F /* OrderCancellationFooterTableViewCell.swift */; };
 		61AAEB542014D6180046963F /* OrderCancellationFooterTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61AAEB522014D6180046963F /* OrderCancellationFooterTableViewCell.xib */; };
+		61ABDB7D2056BFEB001A0FEE /* SelectOptionQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61ABDB7C2056BFEB001A0FEE /* SelectOptionQuestionView.swift */; };
+		61ABDB7F2056C4CB001A0FEE /* SelectOptionQuestionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61ABDB7E2056C4CB001A0FEE /* SelectOptionQuestionView.xib */; };
 		61AF00B91F402FE600543BA8 /* DOFavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AF00B81F402FE600543BA8 /* DOFavoriteButton.swift */; };
 		61B161D01E6BF24E0032C5C6 /* SearchPriceFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B161CF1E6BF24E0032C5C6 /* SearchPriceFilter.m */; };
 		61B161D41E6BF9520032C5C6 /* BaseSearchFilterItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B161D31E6BF9520032C5C6 /* BaseSearchFilterItem.m */; };
@@ -290,6 +292,11 @@
 		61E534471FA4919800CBDFED /* ProgressBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E534461FA4919800CBDFED /* ProgressBarView.xib */; };
 		61E534491FA491D000CBDFED /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E534481FA491D000CBDFED /* ProgressBar.swift */; };
 		61E5344B1FA4CBB700CBDFED /* Ext+NSLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E5344A1FA4CBB700CBDFED /* Ext+NSLayoutConstraint.swift */; };
+		61E5791320557CEC0092D0F8 /* SelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E5791220557CEC0092D0F8 /* SelectView.swift */; };
+		61E5791520557CFB0092D0F8 /* SelectView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E5791420557CFB0092D0F8 /* SelectView.xib */; };
+		61E57919205582E40092D0F8 /* SelectItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E57917205582E40092D0F8 /* SelectItemViewCell.swift */; };
+		61E5791A205582E40092D0F8 /* SelectItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E57918205582E40092D0F8 /* SelectItemViewCell.xib */; };
+		61E5791C20569CDC0092D0F8 /* SelecctViewControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E5791B20569CDC0092D0F8 /* SelecctViewControl.swift */; };
 		61E8441B1F0D16AE005D79EE /* ScreentTrackerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E8441A1F0D16AE005D79EE /* ScreentTrackerProtocol.swift */; };
 		61E8441D1F0D18D5005D79EE /* EventTrackerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E8441C1F0D18D5005D79EE /* EventTrackerProtocol.swift */; };
 		61E8441F1F0D203A005D79EE /* TrackerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E8441E1F0D203A005D79EE /* TrackerManager.swift */; };
@@ -1065,7 +1072,7 @@
 		6113E2AB2055419D00CE20BE /* HPCollectionViewFlowlayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HPCollectionViewFlowlayout.swift; sourceTree = "<group>"; };
 		6113E2AC2055419D00CE20BE /* HPCollectionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HPCollectionVC.swift; sourceTree = "<group>"; };
 		6113E2AD2055419D00CE20BE /* HPCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HPCollectionViewCell.swift; sourceTree = "<group>"; };
-		6113E2AE2055419D00CE20BE /* HorizontalPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HorizontalPickerView.swift; sourceTree = "<group>"; };
+		6113E2AE2055419D00CE20BE /* HorizontalPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HorizontalPickerView.swift; path = HorizontalPicker/HorizontalPickerView.swift; sourceTree = "<group>"; };
 		61143A581ED55C2300C53BA8 /* Ext+Bool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Ext+Bool.swift"; sourceTree = "<group>"; };
 		61143A5F1ED5754900C53BA8 /* BaseCollectionFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCollectionFlowLayout.swift; sourceTree = "<group>"; };
 		61143A611ED57D3900C53BA8 /* CatalogCollectionFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogCollectionFooterView.swift; sourceTree = "<group>"; };
@@ -1279,6 +1286,8 @@
 		61AAC67A1FC08A10007FC21E /* CollectionViewLoadingFooter.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionViewLoadingFooter.xib; sourceTree = "<group>"; };
 		61AAEB512014D6180046963F /* OrderCancellationFooterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCancellationFooterTableViewCell.swift; sourceTree = "<group>"; };
 		61AAEB522014D6180046963F /* OrderCancellationFooterTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderCancellationFooterTableViewCell.xib; sourceTree = "<group>"; };
+		61ABDB7C2056BFEB001A0FEE /* SelectOptionQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectOptionQuestionView.swift; sourceTree = "<group>"; };
+		61ABDB7E2056C4CB001A0FEE /* SelectOptionQuestionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectOptionQuestionView.xib; sourceTree = "<group>"; };
 		61AF00B81F402FE600543BA8 /* DOFavoriteButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DOFavoriteButton.swift; sourceTree = "<group>"; };
 		61B161CE1E6BF24E0032C5C6 /* SearchPriceFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchPriceFilter.h; sourceTree = "<group>"; };
 		61B161CF1E6BF24E0032C5C6 /* SearchPriceFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchPriceFilter.m; sourceTree = "<group>"; };
@@ -1387,6 +1396,11 @@
 		61E534461FA4919800CBDFED /* ProgressBarView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProgressBarView.xib; sourceTree = "<group>"; };
 		61E534481FA491D000CBDFED /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
 		61E5344A1FA4CBB700CBDFED /* Ext+NSLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+NSLayoutConstraint.swift"; sourceTree = "<group>"; };
+		61E5791220557CEC0092D0F8 /* SelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectView.swift; sourceTree = "<group>"; };
+		61E5791420557CFB0092D0F8 /* SelectView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectView.xib; sourceTree = "<group>"; };
+		61E57917205582E40092D0F8 /* SelectItemViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectItemViewCell.swift; sourceTree = "<group>"; };
+		61E57918205582E40092D0F8 /* SelectItemViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectItemViewCell.xib; sourceTree = "<group>"; };
+		61E5791B20569CDC0092D0F8 /* SelecctViewControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelecctViewControl.swift; sourceTree = "<group>"; };
 		61E8441A1F0D16AE005D79EE /* ScreentTrackerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreentTrackerProtocol.swift; sourceTree = "<group>"; };
 		61E8441C1F0D18D5005D79EE /* EventTrackerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTrackerProtocol.swift; sourceTree = "<group>"; };
 		61E8441E1F0D203A005D79EE /* TrackerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerManager.swift; sourceTree = "<group>"; };
@@ -2897,6 +2911,7 @@
 		610C689E1EC7423B008FB66C /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				61E5790F205575CF0092D0F8 /* SelecctView */,
 				61180F2F2054182C00B4261E /* HorizontalPickerView */,
 				6192B2BC204E90FE00376D84 /* ReviewSurvey */,
 				6199B82F1FF8EBF1008C62A6 /* LoadingCoverView */,
@@ -2959,15 +2974,6 @@
 				610ED5821E742947000D5BEC /* UITextField+Extensions.m */,
 			);
 			name = "UITextField+Extensions";
-			sourceTree = "<group>";
-		};
-		6113E2A72055419D00CE20BE /* HorizontalPicker */ = {
-			isa = PBXGroup;
-			children = (
-				6113E2AA2055419D00CE20BE /* CollectionView */,
-				6113E2AE2055419D00CE20BE /* HorizontalPickerView.swift */,
-			);
-			path = HorizontalPicker;
 			sourceTree = "<group>";
 		};
 		6113E2AA2055419D00CE20BE /* CollectionView */ = {
@@ -3037,7 +3043,8 @@
 		61180F2F2054182C00B4261E /* HorizontalPickerView */ = {
 			isa = PBXGroup;
 			children = (
-				6113E2A72055419D00CE20BE /* HorizontalPicker */,
+				6113E2AA2055419D00CE20BE /* CollectionView */,
+				6113E2AE2055419D00CE20BE /* HorizontalPickerView.swift */,
 			);
 			name = HorizontalPickerView;
 			sourceTree = "<group>";
@@ -3875,6 +3882,7 @@
 		6192B2BC204E90FE00376D84 /* ReviewSurvey */ = {
 			isa = PBXGroup;
 			children = (
+				61ABDB792056BBC8001A0FEE /* SelectOptionQuestion */,
 				61180F28205403BD00B4261E /* NPSQuestion */,
 				6192B2BD204E923300376D84 /* ImageSelectQuestion */,
 				616D5038204EBD8100370C4E /* BaseSurveyQuestionControlView.swift */,
@@ -4170,6 +4178,31 @@
 				61AAEB522014D6180046963F /* OrderCancellationFooterTableViewCell.xib */,
 			);
 			name = OrderCancellationFooterTableViewCell;
+			sourceTree = "<group>";
+		};
+		61ABDB792056BBC8001A0FEE /* SelectOptionQuestion */ = {
+			isa = PBXGroup;
+			children = (
+				61ABDB7B2056BFB3001A0FEE /* Control */,
+				61ABDB7A2056BFAC001A0FEE /* View */,
+			);
+			name = SelectOptionQuestion;
+			sourceTree = "<group>";
+		};
+		61ABDB7A2056BFAC001A0FEE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				61ABDB7C2056BFEB001A0FEE /* SelectOptionQuestionView.swift */,
+				61ABDB7E2056C4CB001A0FEE /* SelectOptionQuestionView.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		61ABDB7B2056BFB3001A0FEE /* Control */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Control;
 			sourceTree = "<group>";
 		};
 		61AF00B71F402F2800543BA8 /* Buttons */ = {
@@ -4697,6 +4730,42 @@
 				61E534421FA48D3400CBDFED /* ProgressBarItemView.xib */,
 			);
 			name = ProgressBarItemView;
+			sourceTree = "<group>";
+		};
+		61E5790F205575CF0092D0F8 /* SelecctView */ = {
+			isa = PBXGroup;
+			children = (
+				61E57911205577710092D0F8 /* Control */,
+				61E579102055776A0092D0F8 /* View */,
+			);
+			name = SelecctView;
+			sourceTree = "<group>";
+		};
+		61E579102055776A0092D0F8 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				61E57916205582BA0092D0F8 /* SelectItemViewCell */,
+				61E5791220557CEC0092D0F8 /* SelectView.swift */,
+				61E5791420557CFB0092D0F8 /* SelectView.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		61E57911205577710092D0F8 /* Control */ = {
+			isa = PBXGroup;
+			children = (
+				61E5791B20569CDC0092D0F8 /* SelecctViewControl.swift */,
+			);
+			name = Control;
+			sourceTree = "<group>";
+		};
+		61E57916205582BA0092D0F8 /* SelectItemViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				61E57917205582E40092D0F8 /* SelectItemViewCell.swift */,
+				61E57918205582E40092D0F8 /* SelectItemViewCell.xib */,
+			);
+			name = SelectItemViewCell;
 			sourceTree = "<group>";
 		};
 		61E844191F0D1684005D79EE /* Protocols */ = {
@@ -8036,6 +8105,7 @@
 				875743DD1EA60E13001B518A /* Spring.png in Resources */,
 				8757443E1EA60E71001B518A /* Winter-Small-50@2x.png in Resources */,
 				875743691EA60DA5001B518A /* Birthday-76@2x.png in Resources */,
+				61ABDB7F2056C4CB001A0FEE /* SelectOptionQuestionView.xib in Resources */,
 				619E92CB1F8A0B61003885BC /* DailyDealsTableViewCell.xib in Resources */,
 				61148E0A1E47255F00E2540B /* StepperView.xib in Resources */,
 				CEDBF8971B0DF5D00073971A /* JANewsletterComponent~iPad_RTL.xib in Resources */,
@@ -8139,6 +8209,7 @@
 				8757441C1EA60E48001B518A /* Tragedy-Small@3x.png in Resources */,
 				8757438A1EA60DB9001B518A /* National-72@2x.png in Resources */,
 				875744011EA60E2D001B518A /* Summer-Small-50.png in Resources */,
+				61E5791520557CFB0092D0F8 /* SelectView.xib in Resources */,
 				CE9AE0931AB6D78200D56481 /* JAGrayButtonCell.xib in Resources */,
 				CEA2A1BB1B25D53B00E5973F /* JANewRatingViewController.xib in Resources */,
 				61B5790D1F9E2B1C00C9F454 /* OrderInfoTableViewCell.xib in Resources */,
@@ -8206,6 +8277,7 @@
 				CE9AE0C41AB6D78200D56481 /* JAPriceFiltersView.xib in Resources */,
 				87DAABEB1E55A2C100445EBB /* PaymentOptionTableViewCell.xib in Resources */,
 				875743BD1EA60DFD001B518A /* SpecialOffer@2x.png in Resources */,
+				61E5791A205582E40092D0F8 /* SelectItemViewCell.xib in Resources */,
 				875743E31EA60E13001B518A /* Spring-Small-40@2x.png in Resources */,
 				CE9AE0CA1AB6D78200D56481 /* JAPDVProductInfo.xib in Resources */,
 				875743A11EA60DE0001B518A /* Ramadan-Small@2x.png in Resources */,
@@ -8345,6 +8417,7 @@
 				"${BUILT_PRODUCTS_DIR}/JBWhatsAppActivity/JBWhatsAppActivity.framework",
 				"${BUILT_PRODUCTS_DIR}/JSONModel/JSONModel.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/M13Checkbox/M13Checkbox.framework",
 				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
 				"${BUILT_PRODUCTS_DIR}/MobileEngageSDK/MobileEngageSDK.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
@@ -8372,6 +8445,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JBWhatsAppActivity.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JSONModel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/M13Checkbox.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MobileEngageSDK.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
@@ -8569,6 +8643,7 @@
 				617585F21F88D96700D66541 /* CarouselCollectionFlowLayout.swift in Sources */,
 				CEA2A1B71B25D20C00E5973F /* JADynamicField.m in Sources */,
 				61FC466E201DBBC9000141FA /* Ext+UINavigationViewController.swift in Sources */,
+				61E5791C20569CDC0092D0F8 /* SelecctViewControl.swift in Sources */,
 				FF44651B1CEB4FD7003A65EA /* JAORProductView.m in Sources */,
 				875AD5741E38C0C900584ABF /* RIShippingMethodForm.m in Sources */,
 				CE9ADF371AB6D78200D56481 /* JAPDVSingleRelatedItem.m in Sources */,
@@ -8632,6 +8707,7 @@
 				875AD54C1E38C0C900584ABF /* RIImageResolution.m in Sources */,
 				CE9ADF421AB6D78200D56481 /* JACatalogViewController.m in Sources */,
 				CE9ADF451AB6D78200D56481 /* JAPickupStationInfoCell.m in Sources */,
+				61E5791320557CEC0092D0F8 /* SelectView.swift in Sources */,
 				CE9ADF471AB6D78200D56481 /* JAOfferCollectionViewCell.m in Sources */,
 				875AD55D1E38C0C900584ABF /* RICatalogSorting.m in Sources */,
 				875AD54B1E38C0C900584ABF /* RIFormIndex.m in Sources */,
@@ -8934,6 +9010,7 @@
 				875AD5531E38C0C900584ABF /* RITeaserGrouping.m in Sources */,
 				FFF900721C6A5CC700DDF538 /* JATextFieldComponent.m in Sources */,
 				61148E051E4724FC00E2540B /* StepperView.m in Sources */,
+				61E57919205582E40092D0F8 /* SelectItemViewCell.swift in Sources */,
 				61A166BA1FB6A7AA003FBA56 /* TourManager.swift in Sources */,
 				875AD54F1E38C0C900584ABF /* RISearchSuggestion.m in Sources */,
 				87A681711E41FCF300D252AC /* CheckoutProgressView.m in Sources */,
@@ -9093,6 +9170,7 @@
 				612553501E4F18E800975C6F /* BlueButton.m in Sources */,
 				8714E0611E474025004C9B1D /* RequestManager.m in Sources */,
 				61BA9B411E99FE09004E9DE8 /* FeatureBoxWidget.m in Sources */,
+				61ABDB7D2056BFEB001A0FEE /* SelectOptionQuestionView.swift in Sources */,
 				613A5AD22045C96F0017F167 /* ReviewSurvery.swift in Sources */,
 				6147F7511FB6EDEF000CBA85 /* TourSpotLightView.swift in Sources */,
 				CE9AE0041AB6D78200D56481 /* JAOtherOffersViewController.m in Sources */,

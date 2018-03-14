@@ -36,11 +36,11 @@ class ReviewSurveyManager: NSObject {
         option.title = "what"
         option.id = 123
         option.image = URL(string:"http://www.emoji.com/wordpress/wp-content/uploads/emoji_celebs_146-1.jpg")
-        question.title = "what the fuck"
+        question.title = "چقدر مایلید بامیلو را به دوستان خود توصیه کنید؟"
         
         
         let option1 = SurveyQuestionOption()
-        option1.title = "what1"
+        option1.title = "بله"
         option1.id = 1233
         option1.image = URL(string:"http://www.emoji.com/wordpress/wp-content/uploads/emoji_celebs_146-1.jpg")
         
@@ -70,7 +70,7 @@ class ReviewSurveyManager: NSObject {
         option11.title = "1"
         option11.id = 123
         option11.image = URL(string:"http://www.emoji.com/wordpress/wp-content/uploads/emoji_celebs_146-1.jpg")
-        question1.title = "what the fuck"
+        question1.title = "چقدر مایلید بامیلو را به دوستان خود توصیه کنید؟"
         
         
         let option12 = SurveyQuestionOption()
@@ -94,11 +94,29 @@ class ReviewSurveyManager: NSObject {
         option15.image = URL(string:"http://www.emoji.com/wordpress/wp-content/uploads/emoji_celebs_146-1.jpg")
         
         question1.options = [option11, option12, option13, option13, option14, option15]
-        
         question1.type = .nps
         
-        review.page = [SurveyQuestionPage()]
-        review.page?.first?.questions = [question, question1, question, question1, question]
+        let question30 = SurveyQuestion()
+        question30.title = "چقدر مایلید بامیلو را به دوستان خود توصیه کنید؟"
+        question30.type = .radio
+        
+        let option31 = SurveyQuestionOption()
+        option31.title = "نظر من این است که"
+        option31.id = 1233
+        
+        let option32 = SurveyQuestionOption()
+        option32.title = "نظر دوم من این است که"
+        option32.id = 1243
+        
+        let option33 = SurveyQuestionOption()
+        option33.title = "نظر سوم من این است که "
+        option33.id = 125
+        
+        question30.options = [option31, option32, option33]
+        question30.id = 12342
+        
+        review.pages = [SurveyQuestionPage()]
+        review.pages?.first?.questions = [question, question1, question30, question1]
         //end of mock
         userSurvey.surveys = [review]
         userSurvey.orderNumber = "2"

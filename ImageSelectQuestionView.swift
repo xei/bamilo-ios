@@ -13,6 +13,11 @@ class ImageSelectQuestionView: BaseSurveyQuestionControlView {
     @IBOutlet weak private var questionTitle: UILabel!
     @IBOutlet weak private var reviewSelectImageControl: ReviewImageSelectControl!
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.questionTitle.applyStyle(font: Theme.font(kFontVariationRegular, size: 15), color: Theme.color(kColorGray1))
+    }
+    
     override func update(model: SurveyQuestion) {
         if model.type == .imageSelect {
             self.questionTitle.text = model.title

@@ -40,6 +40,7 @@ public class HorizontalPickerView: UIView {
     
     public var dataSource: HorizontalPickerViewDataSource?
     public var delegate: HorizontalPickerViewDelegate?
+    public var bounces: Bool = true
     
     override public init(frame: CGRect) {
         super.init(frame: frame)
@@ -64,6 +65,7 @@ public class HorizontalPickerView: UIView {
             }
             
             if let view = collectionController.collectionView, let layout = collectionController.collectionViewLayout as? HPCollectionViewFlowlayout {
+                view.bounces = self.bounces
                 layout.activeDistance   = floor(view.bounds.width / 2.0)
                 layout.midX             = ceil(view.bounds.midX)
                 if let numberOfElements = self.dataSource?.numberOfRowsInHorizontalPickerView(pickerView: self) {

@@ -33,8 +33,10 @@ class NPSQuestionView: BaseSurveyQuestionControlView, HorizontalPickerViewDelega
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.questionTitle.applyStyle(font: Theme.font(kFontVariationRegular, size: 20), color: Theme.color(kColorGray1))
         self.horizontalPickerView.delegate = self
         self.horizontalPickerView.dataSource = self
+        self.horizontalPickerView.bounces = false
     }
     
     override static func nibInstance() -> NPSQuestionView {

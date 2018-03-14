@@ -86,6 +86,10 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
     }
     
     private func submitEditProfileToServer() {
+        if let isvalid = self.formController?.isFormValid(), !isvalid {
+            self.formController?.showAnyErrorInForm()
+            return
+        }
         if var fields = self.formController?.getMutableDictionaryOfForm() as? [String: String] {
             AuthenticationDataManager.sharedInstance.submitEditedProfile(self, with: &fields) { (data, errors) in
                 if errors == nil {

@@ -19,10 +19,10 @@ func + <K, V>(lhs: [K : V], rhs: [K : V]) -> [K : V] {
 }
 
 enum SurveryQuestionType: String {
-//    case radio = "RADIO"
+    case radio = "RADIO"
     case imageSelect = "IMAGE_SELECT"
     case nps = "NPS"
-//    case checkbox = "CHECKBOX"
+    case checkbox = "CHECKBOX"
 //    case textbox = "TEXTBOX"
 //    case essay = "ESSAY"
 }
@@ -35,6 +35,7 @@ class SurveyQuestion: NSObject, Mappable {
     var isRequired : Bool = false
     var isHidden   : Bool = false
     var options    : [SurveyQuestionOption]?
+    var product    : Product?
     
     override init() {} //for initializeing without mapping
     required init?(map: Map) { }
@@ -45,6 +46,7 @@ class SurveyQuestion: NSObject, Mappable {
         isRequired <- map["required"]
         isHidden <- map["hidden"]
         options <- map["options"]
+        product <- map["product"]
     }
     
     func prepareForSubmission(for orderID: String) -> [String:Any] {

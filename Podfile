@@ -24,6 +24,7 @@ target 'Bamilo' do
   pod 'CHIPageControl', '~> 0.1.3'
   pod 'SDWebImage', '~> 3.8'
   pod 'TTRangeSlider', '~> 1.0.5'
+  pod 'M13Checkbox'
   pod 'JSONModel'
   pod 'RAlertView'
   pod 'Pushwoosh'
