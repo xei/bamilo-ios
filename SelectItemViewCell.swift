@@ -37,6 +37,7 @@ class SelectItemViewCell: BaseTableViewCell {
         self.checkbox.boxType = .square
         self.checkbox.tintColor = Theme.color(kColorOrange)
         self.checkbox.secondaryTintColor = Theme.color(kColorGray5)
+        self.checkbox.isUserInteractionEnabled = false 
     }
     
     override func update(withModel model: Any!) {
@@ -52,11 +53,15 @@ class SelectItemViewCell: BaseTableViewCell {
     }
     
     func toggle() {
-        self.checkbox.toggleCheckState(true)
+        ThreadManager.execute {
+            self.checkbox.toggleCheckState(true)
+        }
     }
     
-    func setState(checked: Bool) {
-        self.checkbox.checkState = checked ? .checked : .unchecked
+    func setState(checked: Bool, animated: Bool = false) {
+        ThreadManager.execute {
+            self.checkbox.setCheckState(checked ? .checked : .unchecked, animated: animated)
+        }
     }
     
     override static func nibName() -> String {

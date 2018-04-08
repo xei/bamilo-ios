@@ -11,12 +11,11 @@ import UIKit
 class BaseSurveyQuestionControlView: BaseControlView {
     
     var questionModel: SurveyQuestion?
-    
     func update(model: SurveyQuestion) {
         self.questionModel = model
     }
     
-    func getQuestionResponse(for orderID: String) -> [String:Any]? {
-        return nil
-    }
+//    func getQuestionResponse(for orderID: String) -> [String:Any]? {
+//        return nil
+//    }
 }

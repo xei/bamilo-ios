@@ -26,14 +26,6 @@ class ImageSelectQuestionView: BaseSurveyQuestionControlView {
         }
     }
     
-    override func getQuestionResponse(for orderID: String) -> [String:Any]? {
-        if let selectedOption = self.reviewSelectImageControl.getSelectedOption() {
-            questionModel?.options?.forEach({ $0.isSelected = $0.id == selectedOption.id })
-            return questionModel?.prepareForSubmission(for: orderID)
-        }
-        return nil
-    }
-    
     override static func nibInstance() -> ImageSelectQuestionView {
         return Bundle.main.loadNibNamed(String(describing: self), owner: self, options: nil)?.last as! ImageSelectQuestionView
     }

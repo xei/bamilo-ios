@@ -9,13 +9,15 @@
 import UIKit
 import CHIPageControl
 
-class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, DataServiceProtocol {
 
     @IBOutlet weak private var submitButton: OrangeButton!
     @IBOutlet weak private var collectionView: UICollectionView!
     @IBOutlet weak private var pagerControl: CHIPageControlJaloro!
     
-    var surverModel: ReviewSurvery!
+    var surveryModel: ReviewSurvery!
+    var orderID: String!
+    
     private var dataSource: [SurveyQuestion]?
     private var firstNotAnsweredQuestionIndex: Int = 0
     private var pagerMustBeUpdatedViaAnimation: Bool = false
@@ -33,14 +35,15 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
         self.collectionView.showsHorizontalScrollIndicator = false
         
         self.collectionView.register(UINib(nibName: SurveyQuestionCollectionViewCell.nibName, bundle: nil), forCellWithReuseIdentifier: SurveyQuestionCollectionViewCell.nibName)
-        
-        self.updateView(by: surverModel)
+
+        self.updateView(by: surveryModel)
     }
     
     override func closeButtonTapped() {
+        if let id = self.surveryModel.id {
+            ReviewServiceDataManager.sharedInstance.ignoreSurvey(self, surveyID: "\(id)") { (data, error) in }
+        }
         super.closeButtonTapped()
-        
-        //TODO: send dismiss message to server ignore survey
     }
 
     private func applyStyle() {
@@ -48,7 +51,7 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
         self.submitButton.setTitle(STRING_NEXT, for: .normal)
         self.pagerControl.radius = 1
         self.pagerControl.tintColor = Theme.color(kColorGray9)
-        self.pagerControl.currentPageTintColor = Theme.color(kColorOrange1)
+        self.pagerControl.currentPageTintColor = Theme.color(kColorOrange)
         self.pagerControl.numberOfPages = 0
     }
     
@@ -140,17 +143,15 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
     
     @IBAction func submitButtonTapped(_ sender: Any) {
         if let dataSource = self.dataSource {
-            //TODO: submit the active question here
-            if let activeQuestion = self.dataSource?[self.activeIndex] {
-                self.submitQuestion(question: activeQuestion)
+            
+            if let dataSource = self.dataSource, dataSource.count > self.activeIndex {
+                self.submitQuestion(question: dataSource[self.activeIndex], isLastOne: dataSource.count - 1 == self.activeIndex)
             }
             
             if self.firstNotAnsweredQuestionIndex >= self.activeIndex {
                 if self.activeIndex < dataSource.count - 1 {
                     self.activeIndex += 1
                     self.scrollToIndex(index: self.activeIndex)
-                } else {
-                    //TODO: submit the last one
                 }
             }
             if firstNotAnsweredQuestionIndex < activeIndex {
@@ -159,8 +160,18 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
         }
     }
     
-    private func submitQuestion(question: SurveyQuestion) {
-        //TODO: resubmit/submit question of survey
+    private func submitQuestion(question: SurveyQuestion, isLastOne: Bool) {
+        
+        if let activeQuestionOptionsCount = question.options?.filter({ $0.isSelected ?? false }).count, activeQuestionOptionsCount > 0 {
+            if let alias = self.surveryModel.alias {
+                ReviewServiceDataManager.sharedInstance.sendSurveyAlias(self, surveyAlias: alias, question: question, isLastOne: isLastOne, for: self.orderID, requestType: .background) { data, error in
+                }
+            }
+        }
+        
+        if isLastOne {
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
     private func scrollToIndex(index: Int, animated: Bool? = true) {
@@ -173,5 +184,10 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
     
     override func navBarleftButton() -> NavBarLeftButtonType {
         return .darkClose
+    }
+    
+    //MARK: - DataServiceProtocol
+    func bind(_ data: Any!, forRequestId rid: Int32) {
+        
     }
 }

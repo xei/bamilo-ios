@@ -27,6 +27,10 @@ class SelectViewControl: BaseViewControl {
         }
     }
     
+    func getGetContentSizeHeight() -> CGFloat {
+        return self.selectView?.getGetContentSizeHeight() ?? 0
+    }
+    
     override func update(withModel model: Any!) {
         if let model = model as? [SelectViewItemDataSourceProtocol] {
             self.selectView?.update(model: model, selectionType: selectionType)

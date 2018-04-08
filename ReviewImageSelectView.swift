@@ -64,6 +64,8 @@ class ReviewImageSelectView: BaseControlView, ReviewImageSelectItemViewDelegate 
             nibView.delegate = self
             nibView.widthAnchor.constraint(equalToConstant: 100).isActive = true
             nibView.heightAnchor.constraint(equalToConstant: 90).isActive = true
+            self.lastTappedButton = nil
+            if let selected = option.isSelected, selected { self.lastTappedButton = nibView }
             return nibView
         })
         self.buttons = buttons
@@ -79,7 +81,7 @@ class ReviewImageSelectView: BaseControlView, ReviewImageSelectItemViewDelegate 
         if lastTappedButton == item { return }
         
         if lastTappedButton == nil { //it's first action of seletion
-            buttons?.forEach({ if ($0 != item) {$0.setSelected(selected: false)} })
+            buttons?.forEach({ if ($0 != item) { $0.setSelected(selected: false)} })
             self.delegate?.onFocus(refrence: self)
         }
         

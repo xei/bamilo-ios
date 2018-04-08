@@ -13,7 +13,7 @@ class SurveyQuestionOption: NSObject, Mappable, SelectViewItemDataSourceProtocol
     var image           : URL?
     var id              : Int?
     var title           : String?
-    var value           : String?
+    var value           : Int?
     var isOtherType     : Bool = false
     var isSelected      : Bool? //for state of unselected cases we use optional state (nil)
     var optionalComment : String?

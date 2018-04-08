@@ -37,9 +37,9 @@ class SurveyQuestionCollectionViewCell: BaseCollectionViewCellSwift {
         }
     }
     
-    func getQuestionResponse(for orderID: String) -> [String: Any]? {
-        return self.questionView?.getQuestionResponse(for: orderID)
-    }
+//    func getQuestionResponse(for orderID: String) -> [String: Any]? {
+//        return self.questionView?.getQuestionResponse(for: orderID)
+//    }
     
     override func prepareForReuse() {
         super.prepareForReuse()

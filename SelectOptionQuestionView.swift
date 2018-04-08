@@ -16,10 +16,12 @@ class SelectOptionQuestionView: BaseSurveyQuestionControlView {
     @IBOutlet weak private var selectView: SelectViewControl!
     @IBOutlet weak private var questionTitleLabel: UILabel!
     @IBOutlet weak private var productImageView: UIImageView!
+    @IBOutlet weak private var selectViewHeightConstraint: NSLayoutConstraint!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         self.questionTitleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 15), color: Theme.color(kColorGray1))
+        self.selectView.applyShadow(position: CGSize(width:0 , height: 1), color: .black, opacity: 0.2)
     }
     
     override func update(model: SurveyQuestion) {
@@ -38,6 +40,7 @@ class SelectOptionQuestionView: BaseSurveyQuestionControlView {
                 self.titleLabelBottomToSelectViewConstraint.priority = UILayoutPriorityDefaultHigh
             }
         }
+        self.selectViewHeightConstraint.constant = self.selectView.getGetContentSizeHeight()
     }
     
     override static func nibInstance() -> SelectOptionQuestionView {

@@ -18,13 +18,14 @@ class SelectView: BaseControlView, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak private var tableview: UITableView!
     private var selectionType: SelectionType = .checkbox
     private var dataSource: [SelectViewItemDataSourceProtocol]?
-    private var radioTypePreviousSelectionIndexPath: IndexPath?
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         self.tableview.register(UINib(nibName: SelectItemViewCell.nibName(), bundle: nil), forCellReuseIdentifier: SelectItemViewCell.nibName())
         self.tableview.dataSource = self
         self.tableview.delegate = self
+        
+        self.tableview.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         
         //To remove extra separators from tableview
         self.tableview.tableFooterView = UIView.init(frame: .zero)
@@ -34,6 +35,11 @@ class SelectView: BaseControlView, UITableViewDelegate, UITableViewDataSource {
         self.dataSource = model
         self.selectionType = selectionType
         self.tableview.reloadData()
+        self.tableview.layoutIfNeeded()
+    }
+    
+    func getGetContentSizeHeight() -> CGFloat {
+        return self.tableview.contentSize.height
     }
     
     //MARK: - UITableViewDelegate, UITableViewDataSource
@@ -51,11 +57,24 @@ class SelectView: BaseControlView, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if selectionType == .radio, radioTypePreviousSelectionIndexPath != indexPath {
-            if let previousIndexPath = radioTypePreviousSelectionIndexPath {
-                self.toggleSelectOption(indexPath: previousIndexPath)
+        if selectionType == .radio {
+            var repeatedPressOnSameCell = false
+            //reset state
+            self.tableview.visibleCells.forEach { cell in
+                if let cellIndexPath = self.tableview.indexPath(for: cell) {
+                    if cellIndexPath.row != indexPath.row {
+                        (cell as? SelectItemViewCell)?.setState(checked: false, animated: true)
+                    } else if let dataSource = dataSource, dataSource.count > indexPath.row, let previousSelection = dataSource[indexPath.row].isSelected, previousSelection {
+                        repeatedPressOnSameCell = true
+                    }
+                }
             }
-            radioTypePreviousSelectionIndexPath = indexPath
+            //if the user selected the same cell stop doing anything
+            if repeatedPressOnSameCell { return }
+            
+            for i in 0 ..< (self.dataSource?.count ?? 0) {
+                self.dataSource?[i].isSelected = false
+            }
             self.toggleSelectOption(indexPath: indexPath)
         } else if selectionType == .checkbox {
             self.toggleSelectOption(indexPath: indexPath)
@@ -69,6 +88,9 @@ class SelectView: BaseControlView, UITableViewDelegate, UITableViewDataSource {
     private func toggleSelectOption(indexPath: IndexPath) {
         if var dataSource = self.dataSource, indexPath.row < dataSource.count {
             dataSource[indexPath.row].isSelected?.toggle()
+            if dataSource[indexPath.row].isSelected == nil {
+                dataSource[indexPath.row].isSelected = true
+            }
             (self.tableview.cellForRow(at: indexPath) as? SelectItemViewCell)?.toggle()
         }
     }

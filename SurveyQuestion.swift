@@ -36,6 +36,7 @@ class SurveyQuestion: NSObject, Mappable {
     var isHidden   : Bool = false
     var options    : [SurveyQuestionOption]?
     var product    : Product?
+    var haveAnswer = false
     
     override init() {} //for initializeing without mapping
     required init?(map: Map) { }
@@ -50,29 +51,41 @@ class SurveyQuestion: NSObject, Mappable {
     }
     
     func prepareForSubmission(for orderID: String) -> [String:Any] {
-//        let user = RICustomer.getCurrent()
-//        var result: [String: Any] = [
-//            "device": "mobile_app",
-//            "userId" : user?.customerId.stringValue ?? "",
-//            "orderNumber": orderID
-//        ]
-//
-//        let selectedOptionsDictionary = options?.map({ (option) -> [String:String]? in
-//            if option.isSelected!, let id = option.id {
-//                if let value = option.value {
-//                    return ["\(id)": value]
-//                } else if let comment = option.optionalComment {
-//                    return ["\(id)": comment]
-//                }
-//            }
-//            return nil
-//        }).flatMap({ $0 }).reduce([:]) { $0 + $1 }
-//
-//        if let options = selectedOptionsDictionary {
-//            result["responses"] = [options]
-//        }
-//        return result
-        return ["":""]
+        let user = RICustomer.getCurrent()
+        var result: [String: Any] = [
+            "device": "mobile_app",
+            "userId" : user?.customerId.stringValue ?? "",
+            "orderNumber": orderID
+        ]
+        
+        if let productSku = self.product?.sku {
+            result["sku"] = productSku
+        }
+        if let type = self.type {
+            switch type {
+            case .checkbox:
+                let selectedOptions = options?.map({ (option) -> [String: String]?  in
+                    if let selected = option.isSelected, selected {
+                        if let value = option.value, let optionID = option.id {
+                            var result = ["\(optionID)": "\(value)"]
+                            if let comment = option.optionalComment {
+                                result["\(optionID)-other"] = comment
+                            }
+                            return result
+                        }
+                    }
+                    return nil
+                }).flatMap({ $0 }).reduce([:]) { $0 + $1 }
+                if let selectedOptions = selectedOptions, let id = self.id {
+                    result["responses"] = ["\(id)": selectedOptions]
+                }
+            case .imageSelect, .nps, .radio:
+                if let selectedOption = options?.filter({ $0.isSelected ?? false }).first, let id = self.id , let value = selectedOption.value {
+                    result["responses"] = [["\(id)" : "\(value)"]]
+                }
+            }
+        }
+        return result
     }
 }
 

@@ -27,9 +27,7 @@ static BOOL isListenersReady;
     }
     
     if (url.scheme) {
-    
         NSDictionary<NSString *, NSString *> *queryDictionary = [URLUtility parseQueryString:url];
-        
         if ([queryDictionary objectForKey:kUTMSource] ||
             [queryDictionary objectForKey:kUTMMedium] ||
             [queryDictionary objectForKey:kUTMCampaign] ||
@@ -156,7 +154,7 @@ static BOOL isListenersReady;
                                  @"cb"  : @"BRAND"         //brand
                                  };
     
-    if ([targetKey isEqualToString:@"c"] && argument.length) {
+    if ([targetKey isEqualToString:@"c"]) {
         // Catalog view - category url
         // Do nothing more, everyThing is fine
         successfullyHandled = YES;

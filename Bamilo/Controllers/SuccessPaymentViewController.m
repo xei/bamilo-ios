@@ -62,6 +62,10 @@
     
     [EmarsysPredictManager sendTransactionsOf:self];
     [self.orderDetailButton setHidden:NO];
+    
+    if ([self.cart.orderNr isKindOfClass:[NSString class]] && [self.cart.orderNr length]) {
+        [ReviewSurveyManager getJourneySurveyWithOrderID: self.cart.orderNr];
+    }
 }
 
 - (void)trackPurchase {

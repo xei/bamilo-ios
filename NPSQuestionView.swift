@@ -11,29 +11,37 @@ import Kingfisher
 
 class NPSQuestionView: BaseSurveyQuestionControlView, HorizontalPickerViewDelegate, HorizontalPickerViewDataSource {
 
+    @IBOutlet weak private var hintUILabel: UILabel!
     @IBOutlet weak private var questionTitle: UILabel!
     @IBOutlet weak private var optionImageView: UIImageView!
+    @IBOutlet weak private var selectionIndicatorUIImage: UIImageView!
     @IBOutlet weak private var horizontalPickerView: HorizontalPickerView!
-    private var previousQuestionOption: SurveyQuestionOption?
+    private var isPreselecting: Bool = false
     
     override func update(model: SurveyQuestion) {
         super.update(model: model)
         self.questionTitle.text = self.questionModel?.title
         self.horizontalPickerView.reloadAll()
-        self.horizontalPickerView.tintColor = UIColor.red
+        self.horizontalPickerView.tintColor = Theme.color(kColorOrange)
         
         //Do after horizontalPicker updated
         if let options = self.questionModel?.options {
-            let selectedIndex = options.index(where: { $0.isSelected ?? false }) ?? options.count / 2
+            //get seleted Index or get third quarter index
+            var selectedIndex = options.index(where: { $0.isSelected ?? false })
+            if selectedIndex == nil {
+                self.isPreselecting = true
+                selectedIndex = Int((options.count - 1 + (options.count / 2)) / 2)
+            }
             ThreadManager.execute {
-                self.horizontalPickerView.selectRow(rowIndex: selectedIndex, animated: false)
+                self.horizontalPickerView.selectRow(rowIndex: selectedIndex!, animated: false)
             }
         }
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.questionTitle.applyStyle(font: Theme.font(kFontVariationRegular, size: 20), color: Theme.color(kColorGray1))
+        self.hintUILabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 10), color: UIColor.lightGray)
+        self.questionTitle.applyStyle(font: Theme.font(kFontVariationRegular, size: 15), color: Theme.color(kColorGray1))
         self.horizontalPickerView.delegate = self
         self.horizontalPickerView.dataSource = self
         self.horizontalPickerView.bounces = false
@@ -56,12 +64,31 @@ class NPSQuestionView: BaseSurveyQuestionControlView, HorizontalPickerViewDelega
     }
     
     func horizontalPickerView(pickerView: HorizontalPickerView, didSelectRow row: Int) {
-        if let selectedOption = self.questionModel?.options?[row] {
-            selectedOption.isSelected = true
-            self.optionImageView.kf.setImage(with: selectedOption.image, options: [.transition(.fade(0.20))])
-            self.previousQuestionOption?.isSelected = false
-            self.previousQuestionOption = selectedOption
+        if isPreselecting {
+            self.isPreselecting = false
+            self.setUntouchedState(for: row)
+            return
         }
+        self.hintUILabel.text = nil
+        self.selectionIndicatorUIImage.image = #imageLiteral(resourceName: "outlineCircle")
+        self.questionModel?.haveAnswer = true
+        if let options = self.questionModel?.options, row < options.count {
+            for i in 0..<options.count {
+                options[i].isSelected = false
+            }
+            options[row].isSelected = true
+            self.optionImageView.kf.setImage(with: options[row].image, options: [.transition(.fade(0.20))])
+        }
+    }
+    
+    private func setUntouchedState(for index: Int) {
+        if let options = self.questionModel?.options, index < options.count {
+            self.optionImageView.kf.setImage(with: options[index].image, options: [.transition(.fade(0.20))]) { (image, error, cach, url) in
+                self.optionImageView.image = image?.noir
+            }
+        }
+        self.hintUILabel.text = STRING_PLEASE_SELECT_YOUR_CHOICE
+        self.selectionIndicatorUIImage.image = #imageLiteral(resourceName: "outlineCircle").noir
     }
     
     func textColorForHorizontalPickerView(pickerView: HorizontalPickerView) -> UIColor {

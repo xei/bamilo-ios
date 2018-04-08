@@ -120,4 +120,4 @@ let STRING_NOT_CANCELLABLE_UNKNOWN_STATUS = RILocalizationWrapper.localizedStrin
 let STRING_SUBMIT_LABEL = RILocalizationWrapper.localizedString("submit_label")!
 let STRING_SURVEY = RILocalizationWrapper.localizedString("survey")!
 let STRING_NEXT = RILocalizationWrapper.localizedString("next")!
-
+let STRING_PLEASE_SELECT_YOUR_CHOICE = RILocalizationWrapper.localizedString("please_select_your_choice")!
