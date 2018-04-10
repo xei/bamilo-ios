@@ -10,7 +10,7 @@
 #import "JSONVerboseModel.h"
 #import "Address.h"
 
-@class RIPaymentInformation, RIAddress, RIForm, RISellerDelivery, RICustomer;
+@class RIPaymentInformation, RIForm, RISellerDelivery, RICustomer;
 
 @interface CartEntity : BaseModel <JSONVerboseModel>
 
@@ -52,8 +52,8 @@
 @property (copy  , nonatomic) NSString *couponMoneyValueFormatted;
 @property (strong, nonatomic) NSNumber *couponMoneyValueEuroConverted;
 //PAYMENT
-@property (nonatomic, strong) RIAddress *shippingAddress;
-@property (nonatomic, strong) RIAddress *billingAddress;
+@property (nonatomic, strong) Address *shippingAddress;
+@property (nonatomic, strong) Address *billingAddress;
 @property (nonatomic, copy  ) NSString *paymentMethod;
 @property (nonatomic, copy  ) NSString *shippingMethod;
 

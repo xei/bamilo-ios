@@ -142,7 +142,7 @@
 		<key>API_BaseUrl</key>
 		<string>http://staging.bamilo.com/mobapi/</string>
 		<key>API_Version</key>
-		<string>2.8</string>
+		<string>2.9</string>
 		<key>AdjustTokenID</key>
 		<string>pttex2kff47v</string>
 		<key>EMMerchantID</key>

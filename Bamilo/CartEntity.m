@@ -231,18 +231,15 @@
     
     if (VALID_NOTEMPTY([dict objectForKey:@"billing_address"], NSDictionary)) {
         NSDictionary* billingAddressJSON = [dict objectForKey:@"billing_address"];
-        RIAddress* billingAddress = [RIAddress parseAddress:billingAddressJSON];
-        if (VALID_NOTEMPTY(billingAddress, RIAddress)) {
-            cartEntity.billingAddress = billingAddress;
-        }
+        
+        cartEntity.billingAddress = [Address new];
+        [cartEntity.billingAddress mergeFromDictionary:billingAddressJSON useKeyMapping:YES error:nil];
     }
     
     if (VALID_NOTEMPTY([dict objectForKey:@"shipping_address"], NSDictionary)) {
         NSDictionary* shippingAddressJSON = [dict objectForKey:@"shipping_address"];
-        RIAddress* shippingAddress = [RIAddress parseAddress:shippingAddressJSON];
-        if (VALID_NOTEMPTY(shippingAddress, RIAddress)) {
-            cartEntity.shippingAddress = shippingAddress;
-        }
+        cartEntity.shippingAddress = [Address new];
+        [cartEntity.shippingAddress mergeFromDictionary:shippingAddressJSON useKeyMapping:YES error:nil];
     }
     
     if (VALID_NOTEMPTY([dict objectForKey:@"fulfillment"], NSArray)) {

@@ -77,21 +77,7 @@ import Foundation
     }
     
     static func getMultistepConfirmation(_ target: DataServiceProtocol, type: RequestExecutionType, completion:@escaping DataClosure) {
-        var requestType: ApiRequestExecutionType
-        switch type {
-            case .background:
-                requestType = .background
-            break
-            
-            case .container:
-                requestType = .container
-            break
-            
-            default:
-                requestType = .foreground
-        }
-        
-        CheckoutDataManager.sharedInstance.getMultistepConfirmation(target, type: requestType, completion: completion)
+        CheckoutDataManager.sharedInstance.getMultistepConfirmation(target, type: .foreground, completion: completion)
     }
     
     static func getMultistepShipping(_ target: DataServiceProtocol, completion:@escaping DataClosure) {
