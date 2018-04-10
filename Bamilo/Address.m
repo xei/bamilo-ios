@@ -28,4 +28,12 @@
     }];
 }
 
+- (BOOL)mergeFromDictionary:(NSDictionary *)dict useKeyMapping:(BOOL)useKeyMapping error:(NSError *__autoreleasing *)error {
+    BOOL result = [super mergeFromDictionary:dict useKeyMapping:useKeyMapping error:error];
+    if ([[dict objectForKey:@"customer_address_id"] isKindOfClass:[NSString class]] && [[dict objectForKey:@"customer_address_id"] length]) {
+        self.uid = [dict objectForKey:@"customer_address_id"];
+    }
+    return result;
+}
+
 @end

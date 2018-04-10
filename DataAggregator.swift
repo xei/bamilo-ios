@@ -76,7 +76,7 @@ import Foundation
         CheckoutDataManager.sharedInstance.setMultistepAddress(target, shipping: shipping, billing: billing, completion: completion)
     }
     
-    static func getMultistepConfirmation(_ target: DataServiceProtocol, type: RequestExecutionType, completion:@escaping DataClosure) {
+    static func getMultistepConfirmation(_ target: DataServiceProtocol, completion:@escaping DataClosure) {
         CheckoutDataManager.sharedInstance.getMultistepConfirmation(target, type: .foreground, completion: completion)
     }
     

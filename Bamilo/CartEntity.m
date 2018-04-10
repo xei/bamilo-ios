@@ -8,11 +8,14 @@
 
 #import "CartEntity.h"
 #import "RICountryConfiguration.h"
-#import "RICartItem.h"
 #import "RIPaymentInformation.h"
 #import "RIAddress.h"
 #import "RISellerDelivery.h"
 #import "RIProduct.h"
+
+
+@implementation CartPackage
+@end
 
 @implementation CartEntity
 
@@ -22,38 +25,21 @@
     RICountryConfiguration *country = objects[1];
     
     CartEntity *cartEntity = [[CartEntity alloc] init];
-    
-    BOOL showUnreducedPrice = NO;
-    long int cartUnreducedValue = 0;
-    long int onlyProductDiscount = 0;
     if ([dict objectForKey:@"products"]) {
-        NSArray *cartItemObjects = [dict objectForKey:@"products"];
-        if (VALID_NOTEMPTY(cartItemObjects, NSArray)) {
-            NSMutableArray *cartItems = [[NSMutableArray alloc] init];
-            for(NSDictionary *cartItemObject in cartItemObjects) {
-                RICartItem *cartItem = [RICartItem parseCartItem:cartItemObject country:country];
-                [cartItems addObject:cartItem];
-                cartUnreducedValue += ([cartItem.price longValue] * [cartItem.quantity integerValue]);
-                if (cartItem.specialPrice) {
-                    onlyProductDiscount += (([cartItem.price longValue] - [cartItem.specialPrice longValue]) * [cartItem.quantity integerValue]);
-                }
-                if(!showUnreducedPrice && VALID_NOTEMPTY(cartItem.specialPrice , NSNumber) && 0.0f < [cartItem.specialPrice longValue] && [cartItem.price longValue] != [cartItem.specialPrice longValue]) {
-                    showUnreducedPrice = YES;
-                }
-            }
-            
-            cartEntity.cartItems = [cartItems copy];
-            
-            if(showUnreducedPrice) {
-                cartEntity.cartUnreducedValue = [NSNumber numberWithLong:cartUnreducedValue];
-                cartEntity.cartUnreducedValueFormatted = [RICountryConfiguration formatPrice:cartEntity.cartUnreducedValue country:country];
-            }
-        }
+        cartEntity.cartItems = [self parseProductsFromDictionary:dict forCartEntity:cartEntity withCountry:country];
+    } else if ([dict objectForKey:@"packages"] && [[dict objectForKey:@"packages"] isKindOfClass:[NSArray class]]) {
+        NSArray <NSDictionary *>* packagesObject = [dict objectForKey:@"packages"];
+        NSMutableArray *parsingPackages = [NSMutableArray new];
+        [packagesObject enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            CartPackage *package = [CartPackage new];
+            package.products = [self parseProductsFromDictionary:obj forCartEntity:cartEntity withCountry:country];
+            package.title = [obj objectForKey:@"title"];
+            package.deliveryTime = [obj objectForKey:@"delivery_time"];
+            [parsingPackages addObject:package];
+        }];
+        
+        cartEntity.packages = [parsingPackages copy];
     }
-    
-    cartEntity.onlyProductsDiscount = [NSNumber numberWithLong:onlyProductDiscount];;
-    cartEntity.onlyProductsDiscountFormated = [RICountryConfiguration formatPrice:cartEntity.onlyProductsDiscount country:country];
-    
     
     if([dict objectForKey:@"sub_total_undiscounted"]) {
         cartEntity.cartUnreducedValue = [dict objectForKey:@"sub_total_undiscounted"];
@@ -277,4 +263,39 @@
     return cartEntity;
 }
 
++ (NSArray<RICartItem *>*)parseProductsFromDictionary: (NSDictionary *)dict forCartEntity:(CartEntity *)cartEntity withCountry:(RICountryConfiguration *)country {
+    BOOL showUnreducedPrice = NO;
+    long int cartUnreducedValue = 0;
+    long int onlyProductDiscount = 0;
+    NSMutableArray *cartItems = [[NSMutableArray alloc] init];
+    if ([dict objectForKey:@"products"]) {
+        NSArray *cartItemObjects = [dict objectForKey:@"products"];
+        if (VALID_NOTEMPTY(cartItemObjects, NSArray)) {
+            for(NSDictionary *cartItemObject in cartItemObjects) {
+                RICartItem *cartItem = [RICartItem parseCartItem:cartItemObject country:country];
+                [cartItems addObject:cartItem];
+                cartUnreducedValue += ([cartItem.price longValue] * [cartItem.quantity integerValue]);
+                if (cartItem.specialPrice) {
+                    onlyProductDiscount += (([cartItem.price longValue] - [cartItem.specialPrice longValue]) * [cartItem.quantity integerValue]);
+                }
+                if(!showUnreducedPrice && VALID_NOTEMPTY(cartItem.specialPrice , NSNumber) && 0.0f < [cartItem.specialPrice longValue] && [cartItem.price longValue] != [cartItem.specialPrice longValue]) {
+                    showUnreducedPrice = YES;
+                }
+            }
+            
+            if(showUnreducedPrice) {
+                cartEntity.cartUnreducedValue = [NSNumber numberWithLong:([cartEntity.cartUnreducedValue longValue] + cartUnreducedValue)];
+                cartEntity.cartUnreducedValueFormatted = [RICountryConfiguration formatPrice:cartEntity.cartUnreducedValue country:country];
+            }
+        }
+    }
+    
+    cartEntity.onlyProductsDiscount = [NSNumber numberWithLong:(onlyProductDiscount + [cartEntity.onlyProductsDiscount longValue])];;
+    cartEntity.onlyProductsDiscountFormated = [RICountryConfiguration formatPrice:cartEntity.onlyProductsDiscount country:country];
+    
+    return [cartItems copy];
+}
+
 @end
+
+
