@@ -8,13 +8,23 @@
 
 #import "BaseModel.h"
 #import "JSONVerboseModel.h"
+#import "RICartItem.h"
 #import "Address.h"
 
-@class RIPaymentInformation, RIAddress, RIForm, RISellerDelivery, RICustomer;
+@class RIPaymentInformation, RIForm, RISellerDelivery, RICustomer;
+
+@interface CartPackage: BaseModel
+
+@property (strong, nonatomic) NSArray<RICartItem *>* products;
+@property (copy, nonatomic) NSString *title;
+@property (copy, nonatomic) NSString *deliveryTime;
+
+@end
 
 @interface CartEntity : BaseModel <JSONVerboseModel>
 
-@property (strong, nonatomic) NSArray  *cartItems;
+@property (strong, nonatomic) NSArray<CartPackage *> *packages;
+@property (strong, nonatomic) NSArray<RICartItem *> *cartItems;
 @property (strong, nonatomic) NSNumber *cartUnreducedValue;
 @property (copy  , nonatomic) NSString *cartUnreducedValueFormatted;
 @property (strong, nonatomic) NSNumber *subTotal;
@@ -52,8 +62,8 @@
 @property (copy  , nonatomic) NSString *couponMoneyValueFormatted;
 @property (strong, nonatomic) NSNumber *couponMoneyValueEuroConverted;
 //PAYMENT
-@property (nonatomic, strong) RIAddress *shippingAddress;
-@property (nonatomic, strong) RIAddress *billingAddress;
+@property (nonatomic, strong) Address *shippingAddress;
+@property (nonatomic, strong) Address *billingAddress;
 @property (nonatomic, copy  ) NSString *paymentMethod;
 @property (nonatomic, copy  ) NSString *shippingMethod;
 

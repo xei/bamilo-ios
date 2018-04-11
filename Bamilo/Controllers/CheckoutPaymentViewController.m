@@ -292,7 +292,7 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
         [DataAggregator setMultistepPayment:self params:params completion:^(id data, NSError *error) {
             if(error == nil) {
                 _multistepEntity = (MultistepEntity *)data;
-                [DataAggregator getMultistepConfirmation:self type:RequestExecutionTypeForeground completion:^(id data, NSError *error) {
+                [DataAggregator getMultistepConfirmation:self completion:^(id data, NSError *error) {
                     if(error == nil) {
                         [self bind:data forRequestId:2];
                         _selectedPaymentMethodIndex = selectedPaymentMethodIndex;

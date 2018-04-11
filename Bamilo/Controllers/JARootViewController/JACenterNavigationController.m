@@ -86,20 +86,20 @@
     return checkoutStepByStepViewController;
 }
 
-- (JAStepByStepTabViewController *)returnsStepByStepViewController {
-    if (!VALID(_returnsStepByStepViewController, JAStepByStepTabViewController)) {
-        _returnsStepByStepViewController = [self getNewReturnsStepByStepViewController];
-    }
-    return _returnsStepByStepViewController;
-}
+//- (JAStepByStepTabViewController *)returnsStepByStepViewController {
+//    if (!VALID(_returnsStepByStepViewController, JAStepByStepTabViewController)) {
+//        _returnsStepByStepViewController = [self getNewReturnsStepByStepViewController];
+//    }
+//    return _returnsStepByStepViewController;
+//}
 
-- (JAStepByStepTabViewController *)getNewReturnsStepByStepViewController {
-    JAStepByStepTabViewController *returnsStepByStepViewController = [JAStepByStepTabViewController new];
-    
-    [returnsStepByStepViewController setStepByStepModel:[JAReturnStepByStepModel new]];
-    [returnsStepByStepViewController setIndexInit:0];
-    return returnsStepByStepViewController;
-}
+//- (JAStepByStepTabViewController *)getNewReturnsStepByStepViewController {
+//    JAStepByStepTabViewController *returnsStepByStepViewController = [JAStepByStepTabViewController new];
+//    
+//    [returnsStepByStepViewController setStepByStepModel:[JAReturnStepByStepModel new]];
+//    [returnsStepByStepViewController setIndexInit:0];
+//    return returnsStepByStepViewController;
+//}
 
 #pragma mark - View Lifecycle
 
@@ -896,86 +896,86 @@
     [self pushViewController:viewController animated:YES];
 }
 
-- (void)goToOnlineReturnsPaymentScreenForItems:(NSArray *)items order:(RITrackOrder*)order {
-    JAORPaymentViewController* viewController = [[JAORPaymentViewController alloc] init];
-    [viewController setItems:items];
-    [viewController setOrder:order];
-    [self goToStep:viewController forStepByStepViewController:self.returnsStepByStepViewController];
-}
+//- (void)goToOnlineReturnsPaymentScreenForItems:(NSArray *)items order:(RITrackOrder*)order {
+//    JAORPaymentViewController* viewController = [[JAORPaymentViewController alloc] init];
+//    [viewController setItems:items];
+//    [viewController setOrder:order];
+//    [self goToStep:viewController forStepByStepViewController:self.returnsStepByStepViewController];
+//}
 
-- (void)goToOnlineReturnsWaysScreenForItems:(NSArray *)items order:(RITrackOrder*)order {
-    JAORWaysViewController* viewController = [[JAORWaysViewController alloc] init];
-    [viewController setItems:items];
-    [viewController setOrder:order];
-    [self goToStep:viewController forStepByStepViewController:self.returnsStepByStepViewController];
-}
+//- (void)goToOnlineReturnsWaysScreenForItems:(NSArray *)items order:(RITrackOrder*)order {
+//    JAORWaysViewController* viewController = [[JAORWaysViewController alloc] init];
+//    [viewController setItems:items];
+//    [viewController setOrder:order];
+//    [self goToStep:viewController forStepByStepViewController:self.returnsStepByStepViewController];
+//}
 
-- (void)goToOnlineReturnsReasonsScreenForItems:(NSArray *)items order:(RITrackOrder*)order {
-    JAORReasonsViewController* viewController = [[JAORReasonsViewController alloc] init];
-    [viewController setItems:items];
-    [viewController setOrder:order];
-    [self goToStep:viewController forStepByStepViewController:self.returnsStepByStepViewController];
-}
-    
-- (void)goToOnlineReturnsCall:(RIItemCollection *)item fromOrderNumber:(NSString *)orderNumber {
-    JAORCallToReturnViewController *viewController = [[JAORCallToReturnViewController alloc] init];
-    [viewController setItem:item];
-    [viewController setOrderNumber:orderNumber];
-    [self pushViewController:viewController animated:YES];
-}
+//- (void)goToOnlineReturnsReasonsScreenForItems:(NSArray *)items order:(RITrackOrder*)order {
+//    JAORReasonsViewController* viewController = [[JAORReasonsViewController alloc] init];
+//    [viewController setItems:items];
+//    [viewController setOrder:order];
+//    [self goToStep:viewController forStepByStepViewController:self.returnsStepByStepViewController];
+//}
 
-- (void)goToOnlineReturnsConfirmConditionsForItems:(NSArray *)items order:(RITrackOrder*)order {
-    NSString *targetString = [(RIItemCollection *)[items firstObject] onlineReturnTargetString];
-    
-    [RIHtmlShop getHtmlShopForTargetString:targetString successBlock:^(RIHtmlShop *htmlShop) {
-        JAORConfirmConditionsViewController *viewController = [[JAORConfirmConditionsViewController alloc] init];
-        [viewController setHtml:htmlShop.html];
-        [viewController setItems:items];
-        [viewController setOrder:order];
-        [self pushViewController:viewController animated:YES];
-    } failureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
-        [self goToOnlineReturnsReasonsScreenForItems:items order:order];
-    }];
-}
+//- (void)goToOnlineReturnsCall:(RIItemCollection *)item fromOrderNumber:(NSString *)orderNumber {
+//    JAORCallToReturnViewController *viewController = [[JAORCallToReturnViewController alloc] init];
+//    [viewController setItem:item];
+//    [viewController setOrderNumber:orderNumber];
+//    [self pushViewController:viewController animated:YES];
+//}
 
-- (void)goToOnlineReturnsConfirmScreenForItems:(NSArray *)items order:(RITrackOrder*)order {
-    JAORConfirmationScreenViewController *viewController = [[JAORConfirmationScreenViewController alloc] init];
-    [viewController setItems:items];
-    [viewController setOrder:order];
-    [self goToStep:viewController forStepByStepViewController:self.returnsStepByStepViewController];
-}
+//- (void)goToOnlineReturnsConfirmConditionsForItems:(NSArray *)items order:(RITrackOrder*)order {
+//    NSString *targetString = [(RIItemCollection *)[items firstObject] onlineReturnTargetString];
+//
+//    [RIHtmlShop getHtmlShopForTargetString:targetString successBlock:^(RIHtmlShop *htmlShop) {
+//        JAORConfirmConditionsViewController *viewController = [[JAORConfirmConditionsViewController alloc] init];
+//        [viewController setHtml:htmlShop.html];
+//        [viewController setItems:items];
+//        [viewController setOrder:order];
+//        [self pushViewController:viewController animated:YES];
+//    } failureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+//        [self goToOnlineReturnsReasonsScreenForItems:items order:order];
+//    }];
+//}
 
-- (void)goToStep:(UIViewController *)viewController forStepByStepViewController:(JAStepByStepTabViewController *)stepByStepViewController {
-    if ([self.viewControllers indexOfObject:stepByStepViewController] == NSNotFound) {
-        if (stepByStepViewController == self.checkoutStepByStepViewController) {
-            stepByStepViewController = [self getNewCheckoutStepByStepViewController];
-            self.checkoutStepByStepViewController = stepByStepViewController;
-        } else if (stepByStepViewController == self.returnsStepByStepViewController) {
-            stepByStepViewController = [self getNewReturnsStepByStepViewController];
-            if ([viewController respondsToSelector:@selector(items)]) {
-                [(JAReturnStepByStepModel *)stepByStepViewController.stepByStepModel setItems:[viewController performSelector:@selector(items) withObject:nil]];
-            }
-            if ([viewController respondsToSelector:@selector(order)]) {
-                [(JAReturnStepByStepModel *)stepByStepViewController.stepByStepModel setOrder:[viewController performSelector:@selector(order) withObject:nil]];
-            }
-            self.returnsStepByStepViewController = stepByStepViewController;
-        }
-    }
-    if ([viewController respondsToSelector:@selector(setStateInfoValues:)]) {
-        [viewController performSelector:@selector(setStateInfoValues:) withObject:stepByStepViewController.stepByStepModel.stepByStepValues];
-    }
-    if ([viewController respondsToSelector:@selector(setStateInfoLabels:)]) {
-        [viewController performSelector:@selector(setStateInfoLabels:) withObject:stepByStepViewController.stepByStepModel.stepByStepLabels];
-    }
-    [self closeScreensToStackClass:[JAStepByStepTabViewController class] animated:YES];
-    JAStepByStepTabViewController *stepByStepTabViewController = (JAStepByStepTabViewController *)[self topViewController];
-    if ([stepByStepTabViewController isKindOfClass:[JAStepByStepTabViewController class]] && [stepByStepTabViewController.stepByStepModel isKindOfClass:[stepByStepViewController.stepByStepModel class]]) {
-        [stepByStepTabViewController goToViewController:viewController];
-    } else {
-        [self pushViewController:stepByStepViewController animated:YES];
-        [stepByStepViewController goToViewController:viewController];
-    }
-}
+//- (void)goToOnlineReturnsConfirmScreenForItems:(NSArray *)items order:(RITrackOrder*)order {
+//    JAORConfirmationScreenViewController *viewController = [[JAORConfirmationScreenViewController alloc] init];
+//    [viewController setItems:items];
+//    [viewController setOrder:order];
+//    [self goToStep:viewController forStepByStepViewController:self.returnsStepByStepViewController];
+//}
+
+//- (void)goToStep:(UIViewController *)viewController forStepByStepViewController:(JAStepByStepTabViewController *)stepByStepViewController {
+//    if ([self.viewControllers indexOfObject:stepByStepViewController] == NSNotFound) {
+//        if (stepByStepViewController == self.checkoutStepByStepViewController) {
+//            stepByStepViewController = [self getNewCheckoutStepByStepViewController];
+//            self.checkoutStepByStepViewController = stepByStepViewController;
+//        } else if (stepByStepViewController == self.returnsStepByStepViewController) {
+//            stepByStepViewController = [self getNewReturnsStepByStepViewController];
+//            if ([viewController respondsToSelector:@selector(items)]) {
+//                [(JAReturnStepByStepModel *)stepByStepViewController.stepByStepModel setItems:[viewController performSelector:@selector(items) withObject:nil]];
+//            }
+////            if ([viewController respondsToSelector:@selector(order)]) {
+////                [(JAReturnStepByStepModel *)stepByStepViewController.stepByStepModel setOrder:[viewController performSelector:@selector(order) withObject:nil]];
+////            }
+//            self.returnsStepByStepViewController = stepByStepViewController;
+//        }
+//    }
+//    if ([viewController respondsToSelector:@selector(setStateInfoValues:)]) {
+//        [viewController performSelector:@selector(setStateInfoValues:) withObject:stepByStepViewController.stepByStepModel.stepByStepValues];
+//    }
+//    if ([viewController respondsToSelector:@selector(setStateInfoLabels:)]) {
+//        [viewController performSelector:@selector(setStateInfoLabels:) withObject:stepByStepViewController.stepByStepModel.stepByStepLabels];
+//    }
+//    [self closeScreensToStackClass:[JAStepByStepTabViewController class] animated:YES];
+//    JAStepByStepTabViewController *stepByStepTabViewController = (JAStepByStepTabViewController *)[self topViewController];
+//    if ([stepByStepTabViewController isKindOfClass:[JAStepByStepTabViewController class]] && [stepByStepTabViewController.stepByStepModel isKindOfClass:[stepByStepViewController.stepByStepModel class]]) {
+//        [stepByStepTabViewController goToViewController:viewController];
+//    } else {
+//        [self pushViewController:stepByStepViewController animated:YES];
+//        [stepByStepViewController goToViewController:viewController];
+//    }
+//}
 
 #pragma mark - Recent Search
 

@@ -104,8 +104,9 @@ class OrderDetailTableViewController: AccordionTableViewController, OrderDetailT
         header.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 42)
         header.backgroundView = UIView(frame: header.frame)
         header.backgroundView?.backgroundColor = Theme.color(kColorGray9)
-
-        header.leftTitleString = self.dataSource?.packages?[section - 1].deliveryTime
+        if let deliveryTime = self.dataSource?.packages?[section - 1].deliveryTime {
+            header.leftTitleString = "\(STRING_DELIVERY_TIME) : \(deliveryTime)" 
+        }
         header.titleString = self.dataSource?.packages?[section - 1].title?.convertTo(language: .arabic)
         if let hasDelay = self.dataSource?.packages?[section - 1].delay?.hasDelay, hasDelay {
             header.update(deviationDescription: self.dataSource?.packages?[section - 1].delay?.reason)

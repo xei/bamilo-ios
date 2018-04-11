@@ -21,7 +21,7 @@
     
     static func showLoading(on viewcontroller: Any?) {
         if let targetViewController = viewcontroller as? UIViewController {
-            if let superview = self.loadingView?.superview, superview == targetViewController {
+            if let superview = self.loadingView?.superview, superview == targetViewController.view {
                 return
             }
             UIApplication.shared.isNetworkActivityIndicatorVisible = true
