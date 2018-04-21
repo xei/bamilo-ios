@@ -42,7 +42,8 @@ class NPSQuestionView: BaseSurveyQuestionControlView, HorizontalPickerViewDelega
     override func awakeFromNib() {
         super.awakeFromNib()
         self.hintUILabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 10), color: UIColor.lightGray)
-        self.questionTitle.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
+        self.questionTitle.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
+        self.questionTitle.textAlignment = .right
         self.horizontalPickerView.delegate = self
         self.horizontalPickerView.dataSource = self
         self.horizontalPickerView.bounces = false

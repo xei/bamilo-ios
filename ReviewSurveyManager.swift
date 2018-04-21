@@ -62,7 +62,7 @@ import UIKit
         option.title = "what"
         option.id = 123
         option.image = URL(string:"http://www.emoji.com/wordpress/wp-content/uploads/emoji_celebs_146-1.jpg")
-        question.title = "چقدر مایلید بامیلو را به دوستان خود توصیه کنید؟"
+        question.title = "چقدر مایلید بامیلو را به دوستان خود توصیه کنید که از بامیلو خرید کنند؟"
         
         
         let option1 = SurveyQuestionOption()

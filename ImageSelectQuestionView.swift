@@ -19,7 +19,8 @@ class ImageSelectQuestionView: BaseSurveyQuestionControlView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.questionTitle.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
+        self.questionTitle.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
+        self.questionTitle.textAlignment = .right
     }
     
     override func update(model: SurveyQuestion) {

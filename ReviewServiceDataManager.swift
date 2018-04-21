@@ -20,7 +20,7 @@ class ReviewServiceDataManager: DataManagerSwift {
     
     static let sharedInstance = ReviewServiceDataManager()
     func getServeryAlias(_ target: DataServiceProtocol?, surveyAlias: SurveyType, executionType: ApiRequestExecutionType, completion: @escaping DataClosure) {
-        ReviewServiceDataManager.requestManager.async(.get, target: target, path: "\(RI_API_SURVEY_ALIAS)\(surveyAlias.rawValue)", params: nil, type: executionType) { (responseType, data, errorMessages) in
+        ReviewServiceDataManager.requestManager.async(.get, target: target, path: "\(RI_API_SURVEY_ALIAS)\(surveyAlias.rawValue)?device=mobile_app", params: nil, type: executionType) { (responseType, data, errorMessages) in
             self.processResponse(responseType, aClass: AliasSurvey.self, data: data, errorMessages: errorMessages, completion: completion)
         }
     }
@@ -35,7 +35,7 @@ class ReviewServiceDataManager: DataManagerSwift {
     
     func getAvaiableUserSurvey(_ target: DataServiceProtocol, executionType: ApiRequestExecutionType = .background, completion: @escaping DataClosure){
         if let customer = RICustomer.getCurrent(), let customerId = customer.customerId {
-            ReviewServiceDataManager.requestManager.async(.get, target: target, path: "\(RI_API_USER_SURVEY)\(customerId)", params: nil, type: executionType) { (responseType, data, errorMessages) in
+            ReviewServiceDataManager.requestManager.async(.get, target: target, path: "\(RI_API_USER_SURVEY)\(customerId)?device=mobile_app", params: nil, type: executionType) { (responseType, data, errorMessages) in
                 self.processResponse(responseType, aClass: UserSurvey.self, data: data, errorMessages: errorMessages, completion: completion)
             }
         }

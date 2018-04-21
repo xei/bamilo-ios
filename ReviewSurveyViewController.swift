@@ -21,7 +21,7 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
     private var dataSource: [SurveyQuestion]?
     private var firstNotAnsweredQuestionIndex: Int = 0
     private var pagerMustBeUpdatedViaAnimation: Bool = false
-    private let pagerHorizontalPadding: CGFloat = 4
+    private let pagerHorizontalPadding: CGFloat = 7
     private var activeIndex: Int = 0
     
     override func viewDidLoad() {
@@ -39,6 +39,11 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
 
         self.updateView(by: surveryModel)
         self.title = self.surveryModel.title ?? STRING_SURVEY
+        
+        self.navigationController?.navigationBar.titleTextAttributes = [
+            NSFontAttributeName: Theme.font(kFontVariationBold, size: 14),
+            NSForegroundColorAttributeName: Theme.color(kColorBlue2)
+        ]
     }
     
     override func closeButtonTapped() {
@@ -51,10 +56,11 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
     private func applyStyle() {
         self.submitButton.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: .white)
         self.submitButton.setTitle(STRING_NEXT, for: .normal)
-        self.pagerControl.radius = 2
+        self.pagerControl.radius = 4
         self.pagerControl.tintColor = Theme.color(kColorGray9)
         self.pagerControl.currentPageTintColor = Theme.color(kColorOrange)
         self.pagerControl.numberOfPages = 0
+        self.pagerControl.elementHeight = 9
     }
     
     //MARK: - UICollectionViewDelegate, UICollectionViewDataSource
@@ -112,7 +118,11 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
     
     private func updateView(by survey: ReviewSurvery) {
         self.dataSource = survey.pages?.flatMap({ $0.questions }).flatMap({ $0 }).filter({ !$0.isHidden && $0.type != nil })
-        self.pagerControl.numberOfPages = self.dataSource?.count ?? 0
+        if let dataSourceCount = self.dataSource?.count, dataSourceCount > 1 {
+            self.pagerControl.numberOfPages = dataSourceCount
+        } else {
+            self.pagerControl.isHidden = true
+        }
         self.pagerControl.elementWidth = UIScreen.main.bounds.width / CGFloat(self.pagerControl.numberOfPages) - 2 * self.pagerHorizontalPadding
         
         self.pagerControl.set(progress: self.pagerControl.numberOfPages - 1, animated: false)

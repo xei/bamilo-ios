@@ -68,6 +68,11 @@ class HPCollectionVC: UICollectionViewController, UICollectionViewDelegateFlowLa
         return sizeForText(text: text, maxSize: CGSize(width: maxElementWidth, height: collectionView.bounds.height))
     }
     
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
+    
     // MARK: - UIScrollviewDelegate
     
     override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
