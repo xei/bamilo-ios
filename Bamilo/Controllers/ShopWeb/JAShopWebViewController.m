@@ -122,8 +122,8 @@
     return @"StaticPage";
 }
 
-- (NavBarLeftButtonType)navBarleftButton {
-    return NavBarLeftButtonTypeSearch;
+- (NavBarButtonType)navBarleftButton {
+    return NavBarButtonTypeSearch;
 }
 
 @end

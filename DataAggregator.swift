@@ -77,7 +77,7 @@ import Foundation
     }
     
     static func getMultistepConfirmation(_ target: DataServiceProtocol, completion:@escaping DataClosure) {
-        CheckoutDataManager.sharedInstance.getMultistepConfirmation(target, type: .foreground, completion: completion)
+        CheckoutDataManager.sharedInstance.getMultistepConfirmation(target, type: .background, completion: completion)
     }
     
     static func getMultistepShipping(_ target: DataServiceProtocol, completion:@escaping DataClosure) {

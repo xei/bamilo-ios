@@ -15,12 +15,12 @@ typedef NS_ENUM(NSUInteger, NavBarTitleType) {
     NavBarTitleTypeString = 1
 };
 
-typedef NS_ENUM(NSUInteger, NavBarLeftButtonType) {
-    NavBarLeftButtonTypeNone = 0,
-    NavBarLeftButtonTypeSearch = 1,
-    NavBarLeftButtonTypeCart = 2,
-    NavBarLeftButtonTypeClose = 3,
-    NavBarLeftButtonTypeDarkClose = 4
+typedef NS_ENUM(NSUInteger, NavBarButtonType) {
+    NavBarButtonTypeNone = 0,
+    NavBarButtonTypeSearch = 1,
+    NavBarButtonTypeCart = 2,
+    NavBarButtonTypeClose = 3,
+    NavBarButtonTypeDarkClose = 4
 };
 
 @end

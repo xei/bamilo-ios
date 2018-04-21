@@ -8,6 +8,7 @@
 
 import UIKit
 import Kingfisher
+import AudioToolbox
 
 class NPSQuestionView: BaseSurveyQuestionControlView, HorizontalPickerViewDelegate, HorizontalPickerViewDataSource {
 
@@ -26,14 +27,14 @@ class NPSQuestionView: BaseSurveyQuestionControlView, HorizontalPickerViewDelega
         
         //Do after horizontalPicker updated
         if let options = self.questionModel?.options {
-            //get seleted Index or get third quarter index
+//            //get seleted Index or get third quarter index
             var selectedIndex = options.index(where: { $0.isSelected ?? false })
             if selectedIndex == nil {
                 self.isPreselecting = true
                 selectedIndex = Int((options.count - 1 + (options.count / 2)) / 2)
             }
             ThreadManager.execute {
-                self.horizontalPickerView.selectRow(rowIndex: selectedIndex!, animated: false)
+                self.horizontalPickerView.selectRow(rowIndex: 5, animated: false)
             }
         }
     }
@@ -41,7 +42,7 @@ class NPSQuestionView: BaseSurveyQuestionControlView, HorizontalPickerViewDelega
     override func awakeFromNib() {
         super.awakeFromNib()
         self.hintUILabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 10), color: UIColor.lightGray)
-        self.questionTitle.applyStyle(font: Theme.font(kFontVariationRegular, size: 15), color: Theme.color(kColorGray1))
+        self.questionTitle.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
         self.horizontalPickerView.delegate = self
         self.horizontalPickerView.dataSource = self
         self.horizontalPickerView.bounces = false
@@ -79,16 +80,25 @@ class NPSQuestionView: BaseSurveyQuestionControlView, HorizontalPickerViewDelega
             options[row].isSelected = true
             self.optionImageView.kf.setImage(with: options[row].image, options: [.transition(.fade(0.20))])
         }
+        AudioServicesPlaySystemSound(1519)
     }
     
     private func setUntouchedState(for index: Int) {
         if let options = self.questionModel?.options, index < options.count {
+            self.optionImageView.isHidden = true
             self.optionImageView.kf.setImage(with: options[index].image, options: [.transition(.fade(0.20))]) { (image, error, cach, url) in
-                self.optionImageView.image = image?.noir
+                DispatchQueue.global(qos: .background).async {
+                    let blackWhiteImage = image?.noir
+                    let selectionIndicatorBlackWhite =  #imageLiteral(resourceName: "outlineCircle").noir
+                    DispatchQueue.main.async {
+                        self.optionImageView.image = blackWhiteImage
+                        self.selectionIndicatorUIImage.image = selectionIndicatorBlackWhite
+                        self.optionImageView.isHidden = false
+                    }
+                }
             }
         }
         self.hintUILabel.text = STRING_PLEASE_SELECT_YOUR_CHOICE
-        self.selectionIndicatorUIImage.image = #imageLiteral(resourceName: "outlineCircle").noir
     }
     
     func textColorForHorizontalPickerView(pickerView: HorizontalPickerView) -> UIColor {

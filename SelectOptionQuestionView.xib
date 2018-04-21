@@ -18,20 +18,20 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yiw-xv-g2P">
-                    <rect key="frame" x="20" y="20" width="280" height="20.5"/>
+                    <rect key="frame" x="20" y="10" width="280" height="20.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Axc-UO-36o">
-                    <rect key="frame" x="100" y="48.5" width="120" height="120"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Axc-UO-36o">
+                    <rect key="frame" x="100" y="38.5" width="120" height="120"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="Axc-UO-36o" secondAttribute="height" multiplier="1:1" id="AUs-6g-3yr"/>
                         <constraint firstAttribute="width" constant="120" id="Khy-4S-LSP"/>
                     </constraints>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8G2-Ys-YwN" customClass="SelectViewControl" customModule="Bamilo" customModuleProvider="target">
-                    <rect key="frame" x="10" y="176.5" width="300" height="200"/>
+                    <rect key="frame" x="10" y="166.5" width="300" height="200"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" priority="750" constant="200" id="9KD-wr-PZ9"/>
@@ -49,7 +49,7 @@
                 <constraint firstItem="8G2-Ys-YwN" firstAttribute="centerX" secondItem="Axc-UO-36o" secondAttribute="centerX" id="UlA-Qx-0d8"/>
                 <constraint firstItem="8G2-Ys-YwN" firstAttribute="left" secondItem="vUN-kp-3ea" secondAttribute="left" constant="10" id="lMS-sv-KPl"/>
                 <constraint firstItem="8G2-Ys-YwN" firstAttribute="top" secondItem="yiw-xv-g2P" secondAttribute="bottom" priority="250" constant="10" id="o44-xX-jaf"/>
-                <constraint firstItem="yiw-xv-g2P" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="20" id="ptA-zT-xpe"/>
+                <constraint firstItem="yiw-xv-g2P" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="10" id="ptA-zT-xpe"/>
                 <constraint firstItem="Axc-UO-36o" firstAttribute="top" secondItem="yiw-xv-g2P" secondAttribute="bottom" constant="8" id="s5P-ER-LZb"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>

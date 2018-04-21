@@ -22,7 +22,10 @@
 #import "Bamilo-Swift.h"
 
 @interface CheckoutConfirmationViewController() <DiscountCodeViewDelegate, DiscountSwitcherViewDelegate>
+
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
+
 @end
 
 @implementation CheckoutConfirmationViewController {
@@ -68,10 +71,13 @@
     self.tableView.separatorInset = UIEdgeInsetsZero;
     [self setInitialCellPathState];
     _receiptViewItems = [NSMutableArray new];
+    
+    //remove extra line seperators
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear: animated];
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     if(self.isCompleteFetch == NO) {
         [self getContent];
     }
@@ -79,7 +85,11 @@
 
 - (void)getContent {
     [self recordStartLoadTime];
+    [self.tableView setHidden:YES];
+    [self.loadingIndicator startAnimating];
+    
     [DataAggregator getMultistepConfirmation:self completion:^(id data, NSError *error) {
+        [self.loadingIndicator stopAnimating];
         if(error == nil) {
             [self bind:data forRequestId:0];
             //Discount Code
@@ -99,6 +109,7 @@
             
             [self.tableView reloadData];
             [self publishScreenLoadTimeWithName:[self getScreenName] withLabel:@""];
+            [self.tableView fadeIn:0.15];
         } else {
             [self errorHandler:error forRequestID:0];
         }

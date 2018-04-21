@@ -28,6 +28,7 @@ typedef NS_OPTIONS(NSUInteger, PaymentMethod) {
 typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
 
 @interface CheckoutPaymentViewController () <RadioButtonViewControlDelegate>
+@property (weak, nonatomic) IBOutlet UILabel *noPaymentLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet CartEntitySummaryViewControl *cartEntitySummaryViewControl;
 @end
@@ -50,6 +51,8 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
     [self.tableView registerNib:[UINib nibWithNibName:[PaymentOptionTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[PaymentOptionTableViewCell nibName]];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _selectedPaymentMethodIndex = -1;
+    
+    [self.noPaymentLabel applyStyle:[Theme font:kFontVariationRegular size:13] color:[Theme color:kColorGray1]];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -69,6 +72,7 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
 
 - (void)selectProperPaymentMethodFromMethods: (NSArray *)paymentMethods {
     if(paymentMethods.count) {
+        self.noPaymentLabel.text = nil;
         int __selectedPaymentMethodIndex = 0;
         if(self.cart.cartEntity.paymentMethod) {
             for(int i=0; i<paymentMethods.count; i++) {
@@ -80,6 +84,14 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
             }
         }
         [self setPaymentMethod:__selectedPaymentMethodIndex];
+    } else {
+        [LoadingManager hideLoading];
+        RIPaymentMethodFormField *paymentField = self.cart.formEntity.paymentMethodForm.fields.firstObject;
+         self.noPaymentLabel.text = paymentField.label;
+        
+        //set MutiStep
+        NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithDictionary:[RIPaymentMethodForm getParametersForForm:self.cart.formEntity.paymentMethodForm]];
+        [self setMultistepPayment:params completion:nil];
     }
 }
 
@@ -176,7 +188,6 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
         case 0:
             return [PlainTableViewHeaderCell cellHeight];
     }
-
     return 0.0f;
 }
 
@@ -288,26 +299,31 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
         NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithDictionary:[RIPaymentMethodForm getParametersForForm:self.cart.formEntity.paymentMethodForm]];
         JACheckoutForms *checkoutFormForPaymentMethod = [[JACheckoutForms alloc] initWithPaymentMethodForm:self.cart.formEntity.paymentMethodForm width:0.0];
         [params addEntriesFromDictionary:[checkoutFormForPaymentMethod getValuesForPaymentMethod:selectedPaymentMethod]];
-        
-        [DataAggregator setMultistepPayment:self params:params completion:^(id data, NSError *error) {
-            if(error == nil) {
-                _multistepEntity = (MultistepEntity *)data;
-                [DataAggregator getMultistepConfirmation:self completion:^(id data, NSError *error) {
-                    if(error == nil) {
-                        [self bind:data forRequestId:2];
-                        _selectedPaymentMethodIndex = selectedPaymentMethodIndex;
-                        [self.cartEntitySummaryViewControl updateWithModel:self.cart.cartEntity];
-                        
-                        [ThreadManager executeOnMainThread:^{
-                            [self.tableView reloadData];
-                        }];
-                    }
-                }];
-            } else {
-                [self showNotificationBarMessage:STRING_ERROR_SETTING_PAYMENT_METHOD isSuccess:NO];
-            }
+        [self setMultistepPayment:params completion:^{
+            _selectedPaymentMethodIndex = selectedPaymentMethodIndex;
         }];
     }
+}
+
+- (void)setMultistepPayment:(NSDictionary *)params completion:(void(^)(void))completion {
+    [DataAggregator setMultistepPayment:self params:params completion:^(id data, NSError *error) {
+        if(error == nil) {
+            _multistepEntity = (MultistepEntity *)data;
+            [DataAggregator getMultistepConfirmation:self completion:^(id data, NSError *error) {
+                if(error == nil) {
+                    [self bind:data forRequestId:2];
+                    [self.cartEntitySummaryViewControl updateWithModel:self.cart.cartEntity];
+                    [ThreadManager executeOnMainThread:^{
+                        [self.tableView reloadData];
+                    }];
+                    if (completion) completion();
+                }
+            }];
+        } else {
+            [self showNotificationBarMessage:STRING_ERROR_SETTING_PAYMENT_METHOD isSuccess:NO];
+            if (completion) completion();
+        }
+    }];
 }
 
 #pragma mark - NavigationBarProtocol

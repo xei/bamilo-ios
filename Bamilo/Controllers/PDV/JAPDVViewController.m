@@ -1676,8 +1676,8 @@ static NSString *recommendationLogic = @"RELATED";
 
 #pragma mark - NavigationBarProtocol
 
-- (NavBarLeftButtonType)navBarleftButton {
-    return NavBarLeftButtonTypeCart;
+- (NavBarButtonType)navBarleftButton {
+    return NavBarButtonTypeCart;
 }
 
 @end

@@ -26,8 +26,10 @@ class ReviewServiceDataManager: DataManagerSwift {
     }
 
     func sendSurveyAlias(_ target: DataServiceProtocol, surveyAlias: String, question: SurveyQuestion?, isLastOne: Bool, for orderNumber: String, requestType: ApiRequestExecutionType, completion: @escaping DataClosure) {
-        ReviewServiceDataManager.requestManager.async(.post, target: target, path: "\(RI_API_SURVEY_ALIAS)\(surveyAlias)\(isLastOne ? "" : "?__method=PATCH")", params: question?.prepareForSubmission(for: orderNumber), type: requestType) { (responseType, data, errorMessages) in
-            self.processResponse(responseType, aClass: nil, data: data, errorMessages: errorMessages, completion: completion)
+        if let sendingParams = question?.generateJsonFormData(for: orderNumber) {
+            ReviewServiceDataManager.requestManager.async(.post, target: target, path: "\(RI_API_SURVEY_ALIAS)\(surveyAlias)\(isLastOne ? "" : "?__method=PATCH")", params: sendingParams, type: requestType) { (responseType, data, errorMessages) in
+                self.processResponse(responseType, aClass: nil, data: data, errorMessages: errorMessages, completion: completion)
+            }
         }
     }
     

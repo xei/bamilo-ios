@@ -126,8 +126,7 @@
     UIView *paymentMethodView = [[UIView alloc] init];
     
     if (VALID_NOTEMPTY(paymentMethod, RIPaymentMethodFormOption)) {
-        if(VALID_NOTEMPTY(self.paymentMethodFormViews, NSMutableDictionary))
-        {
+        if(VALID_NOTEMPTY(self.paymentMethodFormViews, NSMutableDictionary)) {
             paymentMethodView = [self.paymentMethodFormViews objectForKey:paymentMethod.value];
         }
     } else {
@@ -138,12 +137,10 @@
     return paymentMethodView;
 }
 
--(CGFloat)getPaymentMethodViewHeight:(RIPaymentMethodFormOption*)paymentMethod
-{
+-(CGFloat)getPaymentMethodViewHeight:(RIPaymentMethodFormOption*)paymentMethod {
     CGFloat paymentMethodViewHeight = 0.0f;
     
-    if(VALID_NOTEMPTY(self.paymentMethodFormViews, NSMutableDictionary))
-    {
+    if(VALID_NOTEMPTY(self.paymentMethodFormViews, NSMutableDictionary)) {
         
         UIView *paymentMethodView;
         if (VALID_NOTEMPTY(paymentMethod, RIPaymentMethodFormOption)) {
@@ -157,8 +154,7 @@
     return paymentMethodViewHeight;
 }
 
--(NSDictionary*)getValuesForPaymentMethod:(RIPaymentMethodFormOption*)paymentMethod
-{
+-(NSDictionary*)getValuesForPaymentMethod:(RIPaymentMethodFormOption*)paymentMethod {
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     
     JADynamicForm *dynamicForm = [self.dynamicForms objectForKey:paymentMethod.value];

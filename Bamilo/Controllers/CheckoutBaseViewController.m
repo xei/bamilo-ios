@@ -76,9 +76,9 @@
         if(success == YES) {
             NSString *nextStepViewControllerSegueIdentifier = [self getNextStepViewControllerSegueIdentifier:nextStep];
             if(nextStepViewControllerSegueIdentifier) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self performSegueWithIdentifier:nextStepViewControllerSegueIdentifier sender:self];
-                });
+//                dispatch_async(dispatch_get_main_queue(), ^{
+                [self performSegueWithIdentifier:nextStepViewControllerSegueIdentifier sender:self];
+//                });
             }
         }
     }];

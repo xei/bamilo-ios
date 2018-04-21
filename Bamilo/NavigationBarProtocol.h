@@ -14,7 +14,8 @@
 @optional
 - (UIView *)navBarTitleView;
 - (NSString *)navBarTitleString;
-- (NavBarLeftButtonType)navBarleftButton;
+- (NavBarButtonType)navBarleftButton;
+- (NavBarButtonType)navBarRightButton;
 - (BOOL)navBarhideBackButton;
 - (void)searchIconButtonTapped;
 - (void)cartIconButtonTapped;

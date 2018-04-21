@@ -39,7 +39,7 @@ class ReviewImageSelectItemView: BaseControlView {
     
     private func applyStyle() {
         self.backgroundColor = .white
-        imageSelectButton.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorExtraDarkBlue))
+        imageSelectButton.applyStyle(font: Theme.font(kFontVariationRegular, size: 9), color: Theme.color(kColorExtraDarkBlue))
         imageSelectButton.layer.masksToBounds = false
     }
     

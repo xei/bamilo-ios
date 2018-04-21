@@ -77,7 +77,7 @@ class SurveyQuestion: NSObject, Mappable {
                     return nil
                 }).flatMap({ $0 }).reduce([:]) { $0 + $1 }
                 if let selectedOptions = selectedOptions, let id = self.id {
-                    result["responses"] = ["\(id)": selectedOptions]
+                    result["responses"] = [["\(id)": selectedOptions]]
                 }
             case .imageSelect, .nps, .radio:
                 if let selectedOption = options?.filter({ $0.isSelected ?? false }).first, let id = self.id , let value = selectedOption.value {
@@ -86,6 +86,20 @@ class SurveyQuestion: NSObject, Mappable {
             }
         }
         return result
+    }
+    
+    func generateJsonFormData(for orderID: String) -> [String: Any]? {
+        var rawDictionary = self.prepareForSubmission(for: orderID)
+    
+        if let checkMarkResponses = rawDictionary["responses"] as? [[String: [String: String]]], let checkboxResponse = checkMarkResponses.first {
+            for (questionId, selectOptions) in checkboxResponse {
+                for (optionId, optiondValue) in selectOptions {
+                    rawDictionary["responses[0][\(questionId)][\(optionId)]"] = optiondValue
+                }
+            }
+            rawDictionary.removeValue(forKey: "responses")
+        }
+        return rawDictionary
     }
 }
 

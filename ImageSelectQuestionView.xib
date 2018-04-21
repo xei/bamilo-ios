@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -16,32 +17,46 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qQp-JS-1Nr">
-                    <rect key="frame" x="20" y="20" width="280" height="20.5"/>
+                    <rect key="frame" x="20" y="10" width="280" height="20.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z3E-4Z-7Xf" customClass="ReviewImageSelectControl" customModule="Bamilo" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="60.5" width="320" height="358.5"/>
+                    <rect key="frame" x="0.0" y="40.5" width="320" height="388.5"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MlJ-YY-Oby">
+                    <rect key="frame" x="100" y="40.5" width="120" height="120"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="MlJ-YY-Oby" secondAttribute="height" multiplier="1:1" id="8hh-rl-oOq"/>
+                        <constraint firstAttribute="width" constant="120" id="opU-fB-hlv"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="z3E-4Z-7Xf" firstAttribute="top" secondItem="qQp-JS-1Nr" secondAttribute="bottom" constant="20" id="5Xl-zU-huV"/>
-                <constraint firstAttribute="trailing" secondItem="z3E-4Z-7Xf" secondAttribute="trailing" id="HvP-sV-XHG"/>
+                <constraint firstItem="MlJ-YY-Oby" firstAttribute="centerX" secondItem="qQp-JS-1Nr" secondAttribute="centerX" id="2pb-KG-dLm"/>
+                <constraint firstItem="MlJ-YY-Oby" firstAttribute="width" secondItem="MlJ-YY-Oby" secondAttribute="height" multiplier="1:1" id="GtT-MN-aly"/>
+                <constraint firstAttribute="right" secondItem="z3E-4Z-7Xf" secondAttribute="right" id="HvP-sV-XHG"/>
+                <constraint firstItem="z3E-4Z-7Xf" firstAttribute="top" secondItem="MlJ-YY-Oby" secondAttribute="bottom" priority="250" constant="10" id="Khc-k4-Rii"/>
                 <constraint firstAttribute="right" secondItem="qQp-JS-1Nr" secondAttribute="right" constant="20" id="MDr-wh-HA2"/>
-                <constraint firstAttribute="bottom" secondItem="z3E-4Z-7Xf" secondAttribute="bottom" constant="20" id="QSd-g4-7mK"/>
-                <constraint firstItem="qQp-JS-1Nr" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="VlS-u3-3i8"/>
-                <constraint firstItem="z3E-4Z-7Xf" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="gsb-jp-YFc"/>
+                <constraint firstAttribute="bottom" secondItem="z3E-4Z-7Xf" secondAttribute="bottom" constant="10" id="QSd-g4-7mK"/>
+                <constraint firstItem="qQp-JS-1Nr" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="VlS-u3-3i8"/>
+                <constraint firstItem="z3E-4Z-7Xf" firstAttribute="top" secondItem="qQp-JS-1Nr" secondAttribute="bottom" priority="750" constant="10" id="YPK-NA-kEK"/>
+                <constraint firstItem="z3E-4Z-7Xf" firstAttribute="left" secondItem="iN0-l3-epB" secondAttribute="left" id="gsb-jp-YFc"/>
+                <constraint firstItem="MlJ-YY-Oby" firstAttribute="top" secondItem="qQp-JS-1Nr" secondAttribute="bottom" constant="10" id="hpP-SO-PmJ"/>
                 <constraint firstItem="qQp-JS-1Nr" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="ntj-2u-aTb"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="productImageView" destination="MlJ-YY-Oby" id="1EG-U6-Jw4"/>
+                <outlet property="productImageViewToSelectViewBottomConstraint" destination="Khc-k4-Rii" id="fHH-Fo-59k"/>
                 <outlet property="questionTitle" destination="qQp-JS-1Nr" id="VFO-ik-ZFQ"/>
                 <outlet property="reviewSelectImageControl" destination="z3E-4Z-7Xf" id="CaL-N1-N1K"/>
+                <outlet property="titleToImageSelectViewBottomConstraint" destination="YPK-NA-kEK" id="PmP-eB-IK9"/>
             </connections>
             <point key="canvasLocation" x="-201" y="-18.5"/>
         </view>

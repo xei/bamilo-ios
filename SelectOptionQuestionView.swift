@@ -20,7 +20,7 @@ class SelectOptionQuestionView: BaseSurveyQuestionControlView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.questionTitleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 15), color: Theme.color(kColorGray1))
+        self.questionTitleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
         self.selectView.applyShadow(position: CGSize(width:0 , height: 1), color: .black, opacity: 0.2)
     }
     

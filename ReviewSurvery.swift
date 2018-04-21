@@ -22,7 +22,7 @@ class UserSurvey: NSObject, Mappable {
     var userID: String?
     var orderNumber: String?
     var surveys: [ReviewSurvery]?
-    
+    override init() {}
     required init?(map: Map) {}
     func mapping(map: Map) {
         userID <- map["userId"]
@@ -38,7 +38,7 @@ class ReviewSurvery: NSObject, Mappable {
     var title: String?
     var pages : [SurveyQuestionPage]?
     var product: Product?
-    
+    override init() {}
     required init?(map: Map) {}
     func mapping(map: Map) {
         id <- map["id"]

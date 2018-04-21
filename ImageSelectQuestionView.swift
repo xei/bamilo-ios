@@ -7,15 +7,19 @@
 //
 
 import UIKit
+import Kingfisher
 
 class ImageSelectQuestionView: BaseSurveyQuestionControlView {
     
     @IBOutlet weak private var questionTitle: UILabel!
     @IBOutlet weak private var reviewSelectImageControl: ReviewImageSelectControl!
+    @IBOutlet weak private var titleToImageSelectViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak private var productImageViewToSelectViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak private var productImageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.questionTitle.applyStyle(font: Theme.font(kFontVariationRegular, size: 15), color: Theme.color(kColorGray1))
+        self.questionTitle.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
     }
     
     override func update(model: SurveyQuestion) {
@@ -23,6 +27,16 @@ class ImageSelectQuestionView: BaseSurveyQuestionControlView {
             self.questionTitle.text = model.title
             self.reviewSelectImageControl.update(withModel: model)
             self.questionModel = model
+            
+            
+            if let productImage = model.product?.imageUrl {
+                self.productImageView.kf.setImage(with: productImage, options: [.transition(.fade(0.20))])
+                self.productImageViewToSelectViewBottomConstraint.priority = UILayoutPriorityDefaultHigh
+                self.titleToImageSelectViewBottomConstraint.priority = UILayoutPriorityDefaultLow
+            } else {
+                self.productImageViewToSelectViewBottomConstraint.priority = UILayoutPriorityDefaultLow
+                self.titleToImageSelectViewBottomConstraint.priority = UILayoutPriorityDefaultHigh
+            }
         }
     }
     

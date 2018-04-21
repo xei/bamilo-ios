@@ -8049,7 +8049,7 @@
 						TestTargetID = CE9ADF271AB6D78200D56481;
 					};
 					CE9ADF271AB6D78200D56481 = {
-						DevelopmentTeam = 3GCCEEQ32X;
+						DevelopmentTeam = 33W53692YU;
 						LastSwiftMigration = 0830;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
@@ -9612,6 +9612,7 @@
 				CODE_SIGN_ENTITLEMENTS = Bamilo/Bamilo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Ramtin Monazahian (5GPRV57UKD)";
 				CURRENT_PROJECT_VERSION = 32;
+				DEVELOPMENT_TEAM = 33W53692YU;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -9622,7 +9623,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.app.ios;
 				PRODUCT_NAME = Bamilo;
-				PROVISIONING_PROFILE = "16e4e5cf-3ec9-4ece-9ebe-feeb25ab10ce";
+				PROVISIONING_PROFILE = "03648867-8d47-4c6b-b7c0-c93ac43ec1f9";
 				PROVISIONING_PROFILE_SPECIFIER = "BMLO Development";
 				SWIFT_OBJC_BRIDGING_HEADER = "Bamilo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -9644,6 +9645,7 @@
 				CODE_SIGN_ENTITLEMENTS = Bamilo/Bamilo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Ramtin Monazahian (33W53692YU)";
 				CURRENT_PROJECT_VERSION = 32;
+				DEVELOPMENT_TEAM = 33W53692YU;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",

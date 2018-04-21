@@ -19,6 +19,7 @@ class ReviewImageSelectView: BaseControlView, ReviewImageSelectItemViewDelegate 
     private var buttons: [ReviewImageSelectItemView]?
     private var lastTappedButton: ReviewImageSelectItemView?
     private var model: SurveyQuestion?
+    private let itemsCountPerRow = 4
     weak var delegate: ReviewImageSelectViewDelegate?
     
     override func awakeFromNib() {
@@ -49,7 +50,7 @@ class ReviewImageSelectView: BaseControlView, ReviewImageSelectItemViewDelegate 
         
         items.forEach { (item) in
             if self.horizontalStackviews.count == 0 { return }
-            if horizontalStackviews[horizontalStackviews.count - 1].arrangedSubviews.count >= 3 {
+            if horizontalStackviews[horizontalStackviews.count - 1].arrangedSubviews.count >= itemsCountPerRow {
                 self.horizontalStackviews.append(self.generateHorizontalStackView())
             }
             self.horizontalStackviews[self.horizontalStackviews.count - 1].addArrangedSubview(item)

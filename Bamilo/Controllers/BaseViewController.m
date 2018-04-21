@@ -49,17 +49,27 @@
     if ([self respondsToSelector:@selector(navBarhideBackButton)]) {
         self.navigationItem.hidesBackButton = [self navBarhideBackButton];
     }
+    
     if ([self respondsToSelector:@selector(navBarleftButton)]) {
-        if ([self navBarleftButton] == NavBarLeftButtonTypeSearch && [self respondsToSelector:@selector(searchIconButtonTapped)]) {
-            self.navigationItem.rightBarButtonItem = [NavBarUtility navBarLeftButtonWithType:NavBarLeftButtonTypeSearch viewController:self];
-        }
-        if ([self navBarleftButton] == NavBarLeftButtonTypeCart && [self respondsToSelector:@selector(cartIconButtonTapped)]) {
-            self.navigationItem.rightBarButtonItem = [NavBarUtility navBarLeftButtonWithType:NavBarLeftButtonTypeCart viewController:self];
-        }
-        if (([self navBarleftButton] == NavBarLeftButtonTypeClose || [self navBarleftButton] == NavBarLeftButtonTypeDarkClose) && [self respondsToSelector:@selector(closeButtonTapped)]) {
-            self.navigationItem.rightBarButtonItem = [NavBarUtility navBarLeftButtonWithType:[self navBarleftButton] viewController:self];
-        }
+        self.navigationItem.rightBarButtonItem = [self getNavbarItemButton:[self navBarleftButton]];
     }
+    
+    if ([self respondsToSelector:@selector(navBarRightButton)]) {
+        self.navigationItem.leftBarButtonItem = [self getNavbarItemButton:[self navBarRightButton]];
+    }
+}
+
+- (UIBarButtonItem *)getNavbarItemButton:(NavBarButtonType)navbarButtonType {
+    if (navbarButtonType == NavBarButtonTypeSearch && [self respondsToSelector:@selector(searchIconButtonTapped)]) {
+        return [NavBarUtility navBarButtonWithType:NavBarButtonTypeSearch viewController:self];
+    }
+    if (navbarButtonType == NavBarButtonTypeCart && [self respondsToSelector:@selector(cartIconButtonTapped)]) {
+        return [NavBarUtility navBarButtonWithType:NavBarButtonTypeCart viewController:self];
+    }
+    if ((navbarButtonType == NavBarButtonTypeClose || navbarButtonType == NavBarButtonTypeDarkClose) && [self respondsToSelector:@selector(closeButtonTapped)]) {
+        return [NavBarUtility navBarButtonWithType:navbarButtonType viewController:self];
+    }
+    return nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -206,7 +216,7 @@
 }
 
 - (void)updateCartInNavBar {
-    if (self.navBarleftButton == NavBarLeftButtonTypeCart) {
+    if (self.navBarleftButton == NavBarButtonTypeCart) {
         self.navigationItem.rightBarButtonItem.badgeValue = [NSString stringWithFormat:@"%lu", (unsigned long)[[RICart sharedInstance].cartEntity.cartCount integerValue]];
     }
 }

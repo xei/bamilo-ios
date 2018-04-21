@@ -80,7 +80,7 @@ public class HorizontalPickerView: UIView {
                     layout.sectionInset.right = layout.midX - collectionController.sizeForText(text: lastElement,  maxSize: view.bounds.size).width / CGFloat(2)
                 }
                 
-                HorizontalPickerView.delay(duration: 0.1, completion: { () -> () in
+                Utility.delay(duration: 0.1, completion: { () -> () in
                     view.selectItem(at: self.collectionController.selectedCellIndexPath, animated: false, scrollPosition: .centeredHorizontally)
                 })
             }
@@ -103,14 +103,6 @@ public class HorizontalPickerView: UIView {
     
     public func reloadAll () {
         collectionController.collectionView?.reloadData()
-    }
-    
-    // MARK: - Helper
-    
-    static func delay (duration: TimeInterval, completion: @escaping ()->() ) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
-            completion()
-        }
     }
     
     // MARK: - Private Interface

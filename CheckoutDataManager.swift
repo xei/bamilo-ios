@@ -46,7 +46,7 @@ class CheckoutDataManager: DataManagerSwift {
     }
     
     func setMultistepPayment(_ target: DataServiceProtocol, params:[String: String], completion:@escaping DataClosure) {
-        CheckoutDataManager.requestManager.async(.post, target: target, path: RI_API_MULTISTEP_SUBMIT_PAYMENT, params: params, type: .container) { (responseType, data, errorMessages) in
+        CheckoutDataManager.requestManager.async(.post, target: target, path: RI_API_MULTISTEP_SUBMIT_PAYMENT, params: params, type: .foreground) { (responseType, data, errorMessages) in
             self.processResponse(responseType, aClass: MultistepEntity.self, data: data, errorMessages: errorMessages, completion: completion)
         }
     }

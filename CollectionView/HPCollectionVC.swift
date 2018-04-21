@@ -122,7 +122,7 @@ class HPCollectionVC: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     private func changeSelectionForCellAtIndexPath (indexPath: IndexPath, collectionView: UICollectionView) {
-        HorizontalPickerView.delay(duration: 0.1) { [unowned self] () -> () in
+        Utility.delay(duration: 0.1) { [unowned self] () -> () in
             collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
             self.selectedCellIndexPath = indexPath
         }

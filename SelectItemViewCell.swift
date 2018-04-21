@@ -27,7 +27,7 @@ class SelectItemViewCell: BaseTableViewCell {
     }
     
     func applyStyle() {
-        self.titleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
+        self.titleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
         self.checkbox.checkState = .unchecked
         self.checkbox.boxLineWidth = 2
         self.checkbox.checkmarkLineWidth = 2

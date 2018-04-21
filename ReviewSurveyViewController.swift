@@ -21,6 +21,7 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
     private var dataSource: [SurveyQuestion]?
     private var firstNotAnsweredQuestionIndex: Int = 0
     private var pagerMustBeUpdatedViaAnimation: Bool = false
+    private let pagerHorizontalPadding: CGFloat = 4
     private var activeIndex: Int = 0
     
     override func viewDidLoad() {
@@ -37,6 +38,7 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
         self.collectionView.register(UINib(nibName: SurveyQuestionCollectionViewCell.nibName, bundle: nil), forCellWithReuseIdentifier: SurveyQuestionCollectionViewCell.nibName)
 
         self.updateView(by: surveryModel)
+        self.title = self.surveryModel.title ?? STRING_SURVEY
     }
     
     override func closeButtonTapped() {
@@ -49,7 +51,7 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
     private func applyStyle() {
         self.submitButton.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: .white)
         self.submitButton.setTitle(STRING_NEXT, for: .normal)
-        self.pagerControl.radius = 1
+        self.pagerControl.radius = 2
         self.pagerControl.tintColor = Theme.color(kColorGray9)
         self.pagerControl.currentPageTintColor = Theme.color(kColorOrange)
         self.pagerControl.numberOfPages = 0
@@ -111,6 +113,8 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
     private func updateView(by survey: ReviewSurvery) {
         self.dataSource = survey.pages?.flatMap({ $0.questions }).flatMap({ $0 }).filter({ !$0.isHidden && $0.type != nil })
         self.pagerControl.numberOfPages = self.dataSource?.count ?? 0
+        self.pagerControl.elementWidth = UIScreen.main.bounds.width / CGFloat(self.pagerControl.numberOfPages) - 2 * self.pagerHorizontalPadding
+        
         self.pagerControl.set(progress: self.pagerControl.numberOfPages - 1, animated: false)
         
         self.collectionView.reloadData()
@@ -182,7 +186,7 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
         return STRING_SURVEY
     }
     
-    override func navBarleftButton() -> NavBarLeftButtonType {
+    override func navBarRightButton() -> NavBarButtonType {
         return .darkClose
     }
     

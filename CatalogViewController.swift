@@ -788,7 +788,7 @@ import SwiftyJSON
     override func navBarTitleString() -> String {
         return STRING_SEARCHING;
     }
-    override func navBarleftButton() -> NavBarLeftButtonType {
+    override func navBarleftButton() -> NavBarButtonType {
         return .search
     }
 }
