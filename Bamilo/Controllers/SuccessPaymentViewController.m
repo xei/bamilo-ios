@@ -98,7 +98,6 @@
     
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:kDidFirstBuyKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    
     //// ------- END OF LEGACY CODES ------
 }
 
