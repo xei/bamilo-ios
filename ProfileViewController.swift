@@ -45,9 +45,8 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         self.tableView.register(UINib(nibName: ProfileSimpleTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: ProfileCellTypeId.profileSimpleTableViewCell.rawValue)
         
         //To remove sticky behaviour of footers
-        let dummyView = UIView.init(frame: CGRect(x: 0, y: 0, width: self.tableView.frame.width, height: 40))
-        self.tableView.tableFooterView = dummyView;
-        self.tableView.contentInset = UIEdgeInsetsMake(0, 0, -40, 0);
+        self.tableView.tableFooterView = UIView.init(frame: CGRect(x: 0, y: 0, width: self.tableView.frame.width, height: 40))
+        self.tableView.contentInset = UIEdgeInsetsMake(0, 0, -40, 0)
         
         
         self.updateTableViewDataSource()
@@ -75,8 +74,7 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
                 ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_PROFILE, iconName: "user-information-icons", notificationName: "NOTIFICATION_SHOW_USER_DATA_SCREEN", selector: nil),
                 ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_MY_ADDRESSES, iconName: "address_profie", notificationName: nil, selector: #selector(showMyAddressViewController)),
                 ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_RECENTLY_VIEWED, iconName: "recently_viewed", notificationName: "NOTIFICATION_SHOW_RECENTLY_VIEWED_SCREEN", selector: nil)
-            ],
-            [
+            ], [
                 ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_CONTACT_US, iconName: "contact_us_profile", notificationName: nil, selector: #selector(callContctUs)),
                 ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_SEND_IDEAS_AND_REPORT, iconName: "feedback_profile", notificationName: nil, selector: #selector(sendIdeaOrReport)),
                 ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_EMAIL_TO_CS, iconName: "email_profile", notificationName: nil, selector: #selector(sendEmailToCS)),

@@ -104,7 +104,7 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
     return nil;
 }
 
--(void)performPreDepartureAction:(CheckoutActionCompletion)completion {
+- (void)performPreDepartureAction:(CheckoutActionCompletion)completion {
     if([_multistepEntity.nextStep isEqualToString:@"finish"] && completion != nil) {
         [DataAggregator setMultistepConfirmation:self cart:self.cart completion:^(id data, NSError *error) {
             if(error == nil) {
@@ -191,7 +191,7 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
     return 0.0f;
 }
 
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     switch (section) {
         case 0: {
             PlainTableViewHeaderCell *plainTableViewHeaderCell = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:[PlainTableViewHeaderCell nibName]];
@@ -207,12 +207,12 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
     return UITableViewAutomaticDimension;
 }
 
--(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 100;
 }
 
 #pragma mark - RadioButtonViewControlDelegate
--(void)didSelectRadioButton:(id)sender {
+- (void)didSelectRadioButton:(id)sender {
     if([sender isKindOfClass:[PaymentTypeTableViewCell class]]) {
         PaymentTypeTableViewCell *radioButtonPaymentTypeTableViewCell = (PaymentTypeTableViewCell *)sender;
         [self setPaymentMethod:(int)radioButtonPaymentTypeTableViewCell.tag];
@@ -220,7 +220,7 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
 }
 
 #pragma mark - CheckoutProgressViewDelegate
--(NSArray *)getButtonsForCheckoutProgressView {
+- (NSArray *)getButtonsForCheckoutProgressView {
     return @[
         [CheckoutProgressViewButtonModel buttonWith:1 state:CHECKOUT_PROGRESSVIEW_BUTTON_STATE_DONE],
         [CheckoutProgressViewButtonModel buttonWith:2 state:CHECKOUT_PROGRESSVIEW_BUTTON_STATE_DONE],
@@ -229,7 +229,7 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
 }
 
 #pragma mark - DataServiceProtocol
--(void)bind:(id)data forRequestId:(int)rid {
+- (void)bind:(id)data forRequestId:(int)rid {
     [self removeErrorView];
     switch (rid) {
         case 0:
@@ -255,7 +255,7 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
 }
 
 #pragma mark - DataTrackerProtocol
--(NSString *)getScreenName {
+- (NSString *)getScreenName {
     return @"CheckoutPayment";
 }
 
@@ -268,7 +268,7 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
 }
 
 #pragma mark - Helpers
--(void) getPaymentMethods:(GetPaymentMethodsCompletion)completion {
+- (void)getPaymentMethods:(GetPaymentMethodsCompletion)completion {
     [DataAggregator getMultistepPayment:self completion:^(id data, NSError *error) {
         if(error == nil) {
             [self bind:data forRequestId:0];
@@ -288,7 +288,7 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
     }];
 }
 
--(void) setPaymentMethod:(int)selectedPaymentMethodIndex {
+- (void)setPaymentMethod:(int)selectedPaymentMethodIndex {
     RIPaymentMethodFormOption *selectedPaymentMethod = [_paymentMethods objectAtIndex:selectedPaymentMethodIndex];
     RIPaymentMethodFormField *field = [self.cart.formEntity.paymentMethodForm.fields firstObject];
     if (VALID_NOTEMPTY(field, RIPaymentMethodFormField)) {

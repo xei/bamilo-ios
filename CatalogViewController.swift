@@ -753,7 +753,6 @@ import SwiftyJSON
             destinationViewCtrl?.productSku = self.selectedProduct?.sku
             destinationViewCtrl?.delegate = self
         }
-        
     }
     
     //MARK: - BreadcrumbsViewDelegate

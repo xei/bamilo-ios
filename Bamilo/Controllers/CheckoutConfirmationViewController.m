@@ -93,10 +93,10 @@
         if(error == nil) {
             [self bind:data forRequestId:0];
             //Discount Code
+            [self setInitialCellPathState];
             if(self.cart.cartEntity.couponCode != nil) {
                 [self updateDiscountViewAppearanceForValue:YES animated:NO];
             }
-            
             //Shipping Address
             _shippingAddress = self.cart.cartEntity.address;
             //Products
@@ -315,10 +315,10 @@
 
 #pragma mark - DiscountSwitcherViewDelegate
 -(void)discountSwitcherViewDidToggle:(BOOL)isOn {
-    [self updateDiscountViewAppearanceForValue:isOn animated:YES];
-    
     if(isOn == NO && self.cart.cartEntity.couponCode) {
         [self requestRemovalOfVoucherCode];
+    } else {
+        [self updateDiscountViewAppearanceForValue:isOn animated:YES];
     }
 }
 
@@ -332,20 +332,12 @@
 }
 
 #pragma mark - DataServiceProtocol
--(void)bind:(id)data forRequestId:(int)rid {
+- (void)bind:(id)data forRequestId:(int)rid {
     switch (rid) {
         case 0: {
             self.cart = (RICart *)data;
         }
         break;
-            
-//        case 1: {
-//            RICart *_tmpCartWithShippingInfo = (RICart *)data;
-//            _deliveryTime = _tmpCartWithShippingInfo.estimatedDeliveryTime;
-//            _deliveryNotice = _tmpCartWithShippingInfo.deliveryNotice;
-//        }
-//        break;
-//
         case 2:
         case 3: {
             self.cart = (RICart *)data[kDataContent];
@@ -368,7 +360,7 @@
 }
 
 #pragma mark - Helpers
--(void) setInitialCellPathState {
+- (void)setInitialCellPathState {
     _cellsIndexPaths = [NSMutableArray arrayWithObjects:
                         //delivery notice
                         @[],
@@ -384,32 +376,37 @@
                         nil];
 }
 
--(void) updateDiscountViewAppearanceForValue:(BOOL)isOn animated:(BOOL)animated {
+- (void)updateDiscountViewAppearanceForValue:(BOOL)isOn animated:(BOOL)animated {
     NSIndexPath *discountCodeViewIndexPath = [NSIndexPath indexPathForRow:1 inSection:1];
     if(isOn) {
         [[_cellsIndexPaths objectAtIndex:discountCodeViewIndexPath.section] insertObject:discountCodeViewIndexPath atIndex:discountCodeViewIndexPath.row];
     } else {
         [[_cellsIndexPaths objectAtIndex:discountCodeViewIndexPath.section] removeObjectAtIndex:discountCodeViewIndexPath.row];
     }
-    [UIView animateWithDuration:0.25 animations:^{
-        [self.tableView beginUpdates];
-        if(isOn) {
-            [self.tableView insertRowsAtIndexPaths:@[discountCodeViewIndexPath] withRowAnimation:UITableViewRowAnimationBottom];
-        } else {
-            [self.tableView deleteRowsAtIndexPaths:@[discountCodeViewIndexPath] withRowAnimation:UITableViewRowAnimationTop];
-        }
-        [self.tableView endUpdates];
-    } completion:^(BOOL finished) {
-        if (finished)
-        [self.tableView reloadData];
-    }];
+    if (animated) {
+        [UIView animateWithDuration:0.25 animations:^{
+            [self.tableView beginUpdates];
+            if(isOn) {
+                [self.tableView insertRowsAtIndexPaths:@[discountCodeViewIndexPath] withRowAnimation:UITableViewRowAnimationBottom];
+            } else {
+                [self.tableView deleteRowsAtIndexPaths:@[discountCodeViewIndexPath] withRowAnimation:UITableViewRowAnimationTop];
+            }
+            [self.tableView endUpdates];
+        } completion:^(BOOL finished) {
+            if (finished)
+                [self.tableView reloadData];
+        }];
+    }
 }
 
 -(void) requestRemovalOfVoucherCode {
     [DataAggregator removeVoucher:self voucher:self.cart.cartEntity.couponCode completion:^(id data, NSError *error) {
         if(error == nil) {
-            [self bind:data forRequestId:3];
-            [self.tableView reloadData];
+            [ThreadManager executeOnMainThread:^{
+                [self bind:data forRequestId:3];
+                [self updateDiscountViewAppearanceForValue:NO animated:NO];
+                [self.tableView reloadData];
+            }];
         }
     }];
 }
