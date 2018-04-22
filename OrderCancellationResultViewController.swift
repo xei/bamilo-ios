@@ -8,7 +8,9 @@
 
 import UIKit
 
-class OrderCancellationResultViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
+class OrderCancellationResultViewController: BaseViewController,
+                                            UITableViewDelegate,
+                                            UITableViewDataSource {
 
     @IBOutlet weak private var tableView: UITableView!
     var canceledProducts: [CancellingOrderProduct]?
@@ -31,9 +33,16 @@ class OrderCancellationResultViewController: BaseViewController, UITableViewDele
         self.navigationItem.leftBarButtonItem = newBackButton
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        viewWillDisappear(animated)
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+    }
+    
     @objc private func backToRoot() {
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         self.navigationController?.popToRootViewController(animated: true)
     }
+    
     
     //MARK: - UITableViewDataSource & UITableViewDelegate
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

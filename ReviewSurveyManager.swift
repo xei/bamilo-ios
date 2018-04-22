@@ -11,12 +11,10 @@ import UIKit
 @objc class ReviewSurveyManager: NSObject {
     
     private static func presentSurveyOn(viewController: UIViewController, reviewSurvey: ReviewSurvery, orderID: String) {
-        Utility.delay(duration: 2) {
-            if let reviewStarter = ViewControllerManager.sharedInstance().loadViewController("ReviewSurveyStarter", resetCache: true) as? BaseNavigationController, let surveyViewCtrl = reviewStarter.viewControllers.first as? ReviewSurveyViewController {
-                surveyViewCtrl.surveryModel = reviewSurvey
-                surveyViewCtrl.orderID = orderID
-                viewController.present(reviewStarter, animated: true)
-            }
+        if let reviewStarter = ViewControllerManager.sharedInstance().loadViewController("ReviewSurveyStarter", resetCache: true) as? BaseNavigationController, let surveyViewCtrl = reviewStarter.viewControllers.first as? ReviewSurveyViewController {
+            surveyViewCtrl.surveryModel = reviewSurvey
+            surveyViewCtrl.orderID = orderID
+            viewController.present(reviewStarter, animated: true)
         }
     }
     
@@ -39,15 +37,16 @@ import UIKit
                 self.startPresentingSurvey(reviewSurvey: presentingSurvey, orderId: orderID)
             }
         }
-        
 //        if let presentingSurvey = mockApi().surveys?.first, let orderID = mockApi().orderNumber {
 //            self.startPresentingSurvey(reviewSurvey: presentingSurvey, orderId: orderID)
 //        }
     }
     
     static func startPresentingSurvey(reviewSurvey: ReviewSurvery, orderId: String) {
-        if let topViewController = MainTabBarViewController.topViewController() {
-            self.presentSurveyOn(viewController: topViewController, reviewSurvey: reviewSurvey, orderID: orderId)
+        Utility.delay(duration: 2) {
+            if let topViewController = MainTabBarViewController.topViewController() {
+                self.presentSurveyOn(viewController: topViewController, reviewSurvey: reviewSurvey, orderID: orderId)
+            }
         }
     }
     
