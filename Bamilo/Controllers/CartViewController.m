@@ -106,10 +106,11 @@
         
         NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
         [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
-        [LoadingManager hideLoading];
         self.cart = cart;
         dispatch_async(dispatch_get_main_queue(), ^{
+            [LoadingManager hideLoading];
             [self.tableView reloadData];
+            [self checkIfSummeryViewsMustBeVisibleOrNot];
         });
         
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
