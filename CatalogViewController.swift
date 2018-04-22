@@ -214,7 +214,7 @@ import SwiftyJSON
                         self.productCountLabel.text = "\(totalProducts) \(STRING_FOUND_PRODUCT_COUNT)".convertTo(language: .arabic)
                     }
                     self.loadingDataInProgress = false
-                    if let breadcrumb = self.catalogData?.breadcrumbs, false { //for now
+                    if let breadcrumbs = self.catalogData?.breadcrumbs, breadcrumbs.count > 0, false { //for now
                         self.catalogHeaderContainer.translatesAutoresizingMaskIntoConstraints = false
                         UIView.animate(withDuration: 0.15, animations: {
                             self.catalogHeaderContainerHeightConstraint.constant = self.catalogHeaderContainerHeightWithBreadcrumb
@@ -223,7 +223,7 @@ import SwiftyJSON
                             if let navBar = self.navigationController?.navigationBar {
                                 self.searchBarScrollFollower?.distance = navBar.frame.height + self.catalogHeaderContainerHeightWithoutBreadcrumb
                             }
-                            self.breadCrumbsControl.update(withModel: breadcrumb)
+                            self.breadCrumbsControl.update(withModel: breadcrumbs)
                             self.productCountLabelTopConstraint.constant = self.catalogHeaderContainer.frame.height
                             self.catalogHeaderContainer.translatesAutoresizingMaskIntoConstraints = true
                         })
@@ -768,7 +768,7 @@ import SwiftyJSON
         if self.searchTarget.targetType == .CATALOG_SEARCH {
             transaction.setSearchTerm(self.searchTarget.node)
         }
-        if let breadcrumbsFullPath = self.catalogData?.breadcrumbsFullPath {
+        if let breadcrumbsFullPath = self.catalogData?.breadcrumbsFullPath, breadcrumbsFullPath.count > 0 {
             transaction.setCategory(breadcrumbsFullPath)
         }
         

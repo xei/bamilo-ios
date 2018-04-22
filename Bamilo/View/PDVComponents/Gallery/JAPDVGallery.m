@@ -11,6 +11,7 @@
 #import "RIImage.h"
 #import "UIImageView+WebCache.h"
 #import "MPCoachMarks.h"
+#import "IconButton.h"
 
 @interface JAPDVGallery ()
 {
@@ -18,7 +19,7 @@
     NSArray *_source;
     NSArray *_imageViewsToScroll;
     NSInteger _lastIndex;
-    UIButton *_exitButton;
+    IconButton *_exitButton;
 }
 
 @end
@@ -45,13 +46,8 @@
     
     NSMutableArray* imageViewsToScroll = [NSMutableArray new];
     NSMutableArray *items = [NSMutableArray new];
-    for (int i = 0; i < source.count; i++)
-    {
-
-        UIScrollView *scrollForImage = [[UIScrollView alloc] initWithFrame:CGRectMake(0,
-                                                                                      0,
-                                                                                      self.width,
-                                                                                      self.height)];
+    for (int i = 0; i < source.count; i++) {
+        UIScrollView *scrollForImage = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height)];
         scrollForImage.delegate = self;
         scrollForImage.tag = i;
         
@@ -88,17 +84,13 @@
     
     
     [_exitButton removeFromSuperview];
-    _exitButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _exitButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:_exitButton.titleLabel.font.pointSize];
-    [_exitButton setTitle:STRING_DONE forState:UIControlStateNormal];
-    [_exitButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-    [_exitButton sizeToFit];
-    [_exitButton setFrame:CGRectMake(RI_IS_RTL?6:self.frame.size.width - _exitButton.frame.size.width - 6.f,
-                                     _exitButton.frame.origin.y,
-                                     _exitButton.frame.size.width,
-                                     _exitButton.frame.size.height)];
+    _exitButton = [IconButton new];
+    [_exitButton setImage:[UIImage imageNamed:@"GrayClose"] forState:UIControlStateNormal];
+    [_exitButton setFrame:CGRectMake( 10 , 10, 50, 50)];
+    _exitButton.imageHeightToButtonHeightRatio = 0.5;
     [_exitButton addTarget:self action:@selector(exitButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_exitButton];
+    
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"FirtTimePDVGallery"])
     {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"FirtTimePDVGallery"];
@@ -107,11 +99,12 @@
     }
 }
 
--(void)presentCoachMarks{
+- (void)presentCoachMarks{
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")){
-    }
-    else{
+        
+    } else {
+        
     }
     
     // Setup coach marks
