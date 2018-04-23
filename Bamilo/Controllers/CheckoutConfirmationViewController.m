@@ -31,6 +31,7 @@
 @implementation CheckoutConfirmationViewController {
 @private
     NSMutableArray *_cellsIndexPaths;
+    BOOL selectedCouponField;
     
     Address *_shippingAddress;
     NSArray <CartPackage *>*_packages;
@@ -168,7 +169,7 @@
                 case 0: {
                     DiscountSwitcherView *discountSwitcherView = [tableView dequeueReusableCellWithIdentifier:[DiscountSwitcherView nibName]];
                     discountSwitcherView.delegate = self;
-                    [discountSwitcherView updateWithModel:@(self.cart.cartEntity.couponCode != nil)];
+                    [discountSwitcherView updateWithModel:@(self.cart.cartEntity.couponCode != nil || selectedCouponField)];
                     return discountSwitcherView;
                 }
                     
@@ -318,6 +319,7 @@
     if(isOn == NO && self.cart.cartEntity.couponCode) {
         [self requestRemovalOfVoucherCode];
     } else {
+        selectedCouponField = isOn;
         [self updateDiscountViewAppearanceForValue:isOn animated:YES];
     }
 }
@@ -404,6 +406,7 @@
         if(error == nil) {
             [ThreadManager executeOnMainThread:^{
                 [self bind:data forRequestId:3];
+                selectedCouponField = false;
                 [self updateDiscountViewAppearanceForValue:NO animated:NO];
                 [self.tableView reloadData];
             }];
