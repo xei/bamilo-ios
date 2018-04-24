@@ -1,16 +1,16 @@
+////
+////  JAMyOrderResumeView.h
+////  Jumia
+////
+////  Created by Jose Mota on 11/01/16.
+////  Copyright © 2016 Rocket Internet. All rights reserved.
+////
 //
-//  JAMyOrderResumeView.h
-//  Jumia
+//#import <UIKit/UIKit.h>
+//#import "RIOrder.h"
 //
-//  Created by Jose Mota on 11/01/16.
-//  Copyright © 2016 Rocket Internet. All rights reserved.
+//@interface JAMyOrderResumeView : UIView
 //
-
-#import <UIKit/UIKit.h>
-#import "RIOrder.h"
-
-@interface JAMyOrderResumeView : UIView
-
-@property (nonatomic) RITrackOrder *order;
-
-@end
+//@property (nonatomic) RITrackOrder *order;
+//
+//@end

@@ -219,7 +219,7 @@ const int subCatButtonVisibleHeight = 50;
 
 
 - (IBAction)discountOnlySwitch:(UISwitch *)sender {
-    if (self.priceFilterIndex && self.filtersArray.count) {
+    if (self.filtersArray.count && [[self.filtersArray objectAtIndex:self.priceFilterIndex] isKindOfClass:[CatalogPriceFilterItem class]]) {
         ((CatalogPriceFilterItem *)[self.filtersArray objectAtIndex:self.priceFilterIndex]).discountOnly = sender.on;
     }
 }

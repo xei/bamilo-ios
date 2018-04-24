@@ -990,3 +990,9 @@
 "not_cancellable_has_cancellation_request" = "درخواست لغو کالای شما در حال پردازش است.";
 
 "not_cancellable_unknow_status" = "به دلیل وضعیت کالای سفارش شما، امکان لغو وجود ندارد";
+
+"survey" = "نظرسنجی";
+
+"next" = "بعدی";
+
+"please_select_your_choice" = "لطفا گزینه مورد نظر خود را انتخاب کنید";

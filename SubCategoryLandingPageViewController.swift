@@ -131,7 +131,7 @@ class SubCategoryLandingPageViewController: BaseViewController,
     }
     
     //MARK: - NavigationBarProtocol
-    override func navBarleftButton() -> NavBarLeftButtonType {
+    override func navBarleftButton() -> NavBarButtonType {
         return .search
     }
 }

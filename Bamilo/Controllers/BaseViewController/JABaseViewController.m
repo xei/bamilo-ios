@@ -135,7 +135,7 @@
     if ([self getScreenName].length) {
         [TrackerManager trackScreenNameWithScreenName:[self getScreenName]];
     }
-    [self.navigationController.interactivePopGestureRecognizer setEnabled:YES];
+//    [self.navigationController.interactivePopGestureRecognizer setEnabled:YES];
     
     //navigation bar configs
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil];
@@ -149,11 +149,11 @@
         self.navigationItem.hidesBackButton = [self navBarhideBackButton];
     }
     if ([self respondsToSelector:@selector(navBarleftButton)]) {
-        if ([self navBarleftButton] == NavBarLeftButtonTypeSearch && [self respondsToSelector:@selector(searchIconButtonTapped)]) {
-            self.navigationItem.rightBarButtonItem = [NavBarUtility navBarLeftButtonWithType:NavBarLeftButtonTypeSearch viewController:self];
+        if ([self navBarleftButton] == NavBarButtonTypeSearch && [self respondsToSelector:@selector(searchIconButtonTapped)]) {
+            self.navigationItem.rightBarButtonItem = [NavBarUtility navBarButtonWithType:NavBarButtonTypeSearch viewController:self];
         }
-        if ([self navBarleftButton] == NavBarLeftButtonTypeCart && [self respondsToSelector:@selector(cartIconButtonTapped)]) {
-            self.navigationItem.rightBarButtonItem = [NavBarUtility navBarLeftButtonWithType:NavBarLeftButtonTypeCart viewController:self];
+        if ([self navBarleftButton] == NavBarButtonTypeCart && [self respondsToSelector:@selector(cartIconButtonTapped)]) {
+            self.navigationItem.rightBarButtonItem = [NavBarUtility navBarButtonWithType:NavBarButtonTypeCart viewController:self];
         }
     }
 }
@@ -704,7 +704,7 @@
 }
 
 - (void)updateCartInNavBar {
-    if (self.navBarleftButton == NavBarLeftButtonTypeCart) {
+    if (self.navBarleftButton == NavBarButtonTypeCart) {
         self.navigationItem.rightBarButtonItem.badgeValue = [NSString stringWithFormat:@"%lu", (unsigned long)[[RICart sharedInstance].cartEntity.cartCount integerValue]];
     }
 }

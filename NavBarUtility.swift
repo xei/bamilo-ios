@@ -19,23 +19,25 @@ import Foundation
         return logoView
     }
     
-    static func navBarLeftButton(type: NavBarLeftButtonType, viewController: NavigationBarProtocol) -> UIBarButtonItem {
+    static func navBarButton(type: NavBarButtonType, viewController: NavigationBarProtocol) -> UIBarButtonItem {
         let button = IconButton(type: .custom)
         button.imageHeightToButtonHeightRatio = 0.8
         
-        let buttonNameMapper: [NavBarLeftButtonType: String] = [
+        let buttonNameMapper: [NavBarButtonType: String] = [
             .search : "btn_search",
             .cart : "btn_cart",
-            .close : "WhiteClose"
+            .close : "WhiteClose",
+            .darkClose: "GrayClose"
         ]
         if let buttonImageName = buttonNameMapper[type] {
             button.setImage(UIImage(named: buttonImageName), for: UIControlState.normal)
         }
         
-        let buttonSelectorMapper: [NavBarLeftButtonType: Selector] = [
+        let buttonSelectorMapper: [NavBarButtonType: Selector] = [
             .search : #selector(viewController.searchIconButtonTapped),
             .cart : #selector(viewController.cartIconButtonTapped),
-            .close : #selector(viewController.closeButtonTapped)
+            .close : #selector(viewController.closeButtonTapped),
+            .darkClose : #selector(viewController.closeButtonTapped)
         ]
         
         if let buttonAction = buttonSelectorMapper[type] {

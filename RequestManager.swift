@@ -63,6 +63,10 @@ class RequestManagerSwift {
                                 }
                             }
                             
+                            if(type == .foreground || hasError) {
+                                LoadingManager.hideLoading()
+                            }
+                            
                             //Continue processing response
                             if(apiResponseData.success) {
                                 completion(response.response?.statusCode ?? 0, apiResponseData, self.prepareErrorMessages(messagesList: apiResponseData.messages))
@@ -70,10 +74,6 @@ class RequestManagerSwift {
                                 hasError = true
                                 completion(response.response?.statusCode ?? 0, nil, self.prepareErrorMessages(messagesList: apiResponseData.messages))
                             }
-                        }
-                        
-                        if(type == .foreground || hasError) {
-                            LoadingManager.hideLoading()
                         }
                     case .failure(let error):
                         print(error)

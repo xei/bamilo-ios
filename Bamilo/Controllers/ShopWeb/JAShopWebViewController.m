@@ -1,4 +1,4 @@
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  //
+//
 //  JAShopWebViewController.m
 //  Jumia
 //
@@ -28,25 +28,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.scrollView = [UIScrollView new];
-    [self.view addSubview:self.scrollView];
-    
     self.webView = [UIWebView new];
+    [self.webView setBackgroundColor:[UIColor whiteColor]];
     self.webView.delegate = self;
-    self.webView.scrollView.scrollEnabled = NO;
-    [self.scrollView addSubview:self.webView];
-    
     self.isLoaded = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-//    [[RITrackingWrapper sharedInstance] trackStaticPage:self.targetString];
-
-    [self.scrollView setFrame:[self viewBounds]];
-    [self.scrollView setBackgroundColor:[UIColor whiteColor]];
     
     if (NO == self.isLoaded) {
         [self showLoading];
@@ -55,18 +44,25 @@
             self.isLoaded = YES;
             [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
             [self.webView loadHTMLString:self.htmlShop.html baseURL:[NSURL URLWithString:@"http://"]];
-            
+            if (self.htmlShop.featuredBoxesArray.count == 0) {
+                self.webView.scrollView.scrollEnabled = YES;
+                [self.webView setFrame:[self viewBounds]];
+                [self.view addSubview:self.webView];
+            } else {
+                self.scrollView = [UIScrollView new];
+                [self.scrollView setBackgroundColor:[UIColor whiteColor]];
+                [self.view addSubview:self.scrollView];
+                [self.scrollView addSubview:self.webView];
+                self.webView.scrollView.scrollEnabled = NO;
+            }
         } failureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
             [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(viewWillAppear:) objects:nil];
             [self hideLoading];
         }];
-    } else {
-        [self loadViews];
     }
 }
 
 - (void)loadViews {
-
     CGRect frame = self.webView.frame;
     frame.size.height = 1;
     self.webView.frame = frame;
@@ -81,11 +77,7 @@
     CGFloat yPosition = CGRectGetMaxY(self.webView.frame);
     self.topSellerTeaserViewsArray = [NSMutableArray new];
     for (RIFeaturedBoxTeaserGrouping* featuredBox in self.htmlShop.featuredBoxesArray) {
-        
-        JATopSellersTeaserView* topSellersTeaserView = [[JATopSellersTeaserView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                                                                yPosition,
-                                                                                                                self.scrollView.frame.size.width,
-                                                                                                                1)]; //height is set by the view itself
+        JATopSellersTeaserView* topSellersTeaserView = [[JATopSellersTeaserView alloc] initWithFrame:CGRectMake(0.0f, yPosition, self.scrollView.frame.size.width, 1)]; //height is set by the view itself
         [self.scrollView addSubview:topSellersTeaserView];
         topSellersTeaserView.featuredBoxTeaserGrouping = featuredBox;
         [topSellersTeaserView load];
@@ -93,13 +85,10 @@
         [self.topSellerTeaserViewsArray addObject:topSellersTeaserView];
         yPosition += topSellersTeaserView.frame.size.height;
     }
-    
     if (self.htmlShop.featuredBoxesArray.count > 0) {
         yPosition += 6.0f;
     }
-    
-    self.scrollView.contentSize = CGSizeMake(self.webView.scrollView.contentSize.width,
-                                             yPosition);
+    self.scrollView.contentSize = CGSizeMake(self.webView.scrollView.contentSize.width, yPosition);
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
@@ -107,9 +96,7 @@
     [self.webView loadHTMLString:self.htmlShop.html baseURL:[NSURL URLWithString:[RITarget getURLStringforTargetString:self.targetString]]];
 }
 
-- (BOOL)webView:(UIWebView *)webView
-shouldStartLoadWithRequest:(NSURLRequest *)request
- navigationType:(UIWebViewNavigationType)navigationType {
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType: (UIWebViewNavigationType)navigationType {
     RITarget *target = [RITarget parseTarget:[request.URL absoluteString]];
     JAScreenTarget *screenTarget = [[JAScreenTarget alloc] initWithTarget:target];
     return ![[MainTabBarViewController topNavigationController] openScreenTarget:screenTarget purchaseInfo:self.purchaseTrackingInfo];
@@ -117,11 +104,12 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     [self hideLoading];
-    [self publishScreenLoadTimeWithName:[self getScreenName] withLabel: self.title];
-
-    [self.scrollView setFrame:[self viewBounds]];
-    [self.webView setFrame:self.scrollView.bounds];
-    [self loadViews];
+    if (self.htmlShop.featuredBoxesArray.count) {
+        [self publishScreenLoadTimeWithName:[self getScreenName] withLabel: self.title];
+        [self.scrollView setFrame:[self viewBounds]];
+        [self.webView setFrame:self.scrollView.bounds];
+        [self loadViews];
+    }
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
@@ -134,8 +122,8 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     return @"StaticPage";
 }
 
-- (NavBarLeftButtonType)navBarleftButton {
-    return NavBarLeftButtonTypeSearch;
+- (NavBarButtonType)navBarleftButton {
+    return NavBarButtonTypeSearch;
 }
 
 @end

@@ -17,8 +17,7 @@ class SearchBarControl: BaseViewControl {
         
         self.searchView = SearchBarView.nibInstance()
         if let view = self.searchView {
-            self.addSubview(view)
-            view.frame = self.bounds;
+            self.addAnchorMatchedSubView(view: view)
         }
     }
 }

@@ -20,7 +20,7 @@
 
 @implementation CartListItemTableViewCell
 
--(void)awakeFromNib {
+- (void)awakeFromNib {
     [super awakeFromNib];
     
     self.contentView.backgroundColor = [UIColor whiteColor];
@@ -32,7 +32,7 @@
 }
 
 #pragma mark - Overrides
-+(CGFloat)cellHeight {
++ (CGFloat)cellHeight {
     return 95;
 }
 

@@ -70,4 +70,10 @@ import UIKit
         RICart.sharedInstance().cartEntity?.cartCount = nil
         LocalSearchSuggestion().clearAllHistories()
     }
+    
+    static func delay (duration: TimeInterval, completion: @escaping ()->() ) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
+            completion()
+        }
+    }
 }

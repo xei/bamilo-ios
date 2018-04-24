@@ -149,5 +149,6 @@ FOUNDATION_EXPORT NSString *const RI_API_RETURN_FINISH;
 
 //################################################################################################
 FOUNDATION_EXPORT NSString *const RI_API_DELETE_ADDRESS_REMOVE;
-
+FOUNDATION_EXPORT NSString *const RI_API_SURVEY_ALIAS;
+FOUNDATION_EXPORT NSString *const RI_API_USER_SURVEY;
 

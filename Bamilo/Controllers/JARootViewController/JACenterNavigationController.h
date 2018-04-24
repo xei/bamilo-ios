@@ -30,21 +30,12 @@ typedef void(^ProtectedBlock)(BOOL userHadSession);
 
 - (void)goToPickupStationWebViewControllerWithCMS:(NSString*)cmsBlock;
 
-- (void)goToOnlineReturnsPaymentScreenForItems:(NSArray *)items
-                                         order:(RITrackOrder*)order;
-- (void)goToOnlineReturnsWaysScreenForItems:(NSArray *)items
-                                      order:(RITrackOrder*)order;
-- (void)goToOnlineReturnsReasonsScreenForItems:(NSArray *)items
-                                         order:(RITrackOrder*)order;
-
-- (void)goToOnlineReturnsConfirmConditionsForItems:(NSArray *)items
-                                             order:(RITrackOrder*)order;
-
-- (void)goToOnlineReturnsCall:(RIItemCollection *)item
-              fromOrderNumber:(NSString *)orderNumber;
-
-- (void)goToOnlineReturnsConfirmScreenForItems:(NSArray *)items
-                                         order:(RITrackOrder *)order;
+//- (void)goToOnlineReturnsPaymentScreenForItems:(NSArray *)items order:(RITrackOrder*)order;
+//- (void)goToOnlineReturnsWaysScreenForItems:(NSArray *)items order:(RITrackOrder*)order;
+//- (void)goToOnlineReturnsReasonsScreenForItems:(NSArray *)items order:(RITrackOrder*)order;
+//- (void)goToOnlineReturnsConfirmConditionsForItems:(NSArray *)items order:(RITrackOrder*)order;
+//- (void)goToOnlineReturnsCall:(RIItemCollection *)item fromOrderNumber:(NSString *)orderNumber;
+//- (void)goToOnlineReturnsConfirmScreenForItems:(NSArray *)items order:(RITrackOrder *)order;
 
 - (BOOL)closeScreensToStackClass:(Class)classKind animated:(BOOL)animated;
 

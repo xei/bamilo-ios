@@ -10,4 +10,7 @@
 
 @interface BaseNavigationController : UINavigationController
 
+@property (nonatomic, strong) IBInspectable UIColor *navbarTintColor;
+@property (nonatomic, strong) IBInspectable UIColor *navbarColor;
+
 @end

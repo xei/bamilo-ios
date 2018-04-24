@@ -1,17 +1,17 @@
+////
+////  JAReturnStepByStepModel.h
+////  Jumia
+////
+////  Created by Jose Mota on 22/04/16.
+////  Copyright © 2016 Rocket Internet. All rights reserved.
+////
 //
-//  JAReturnStepByStepModel.h
-//  Jumia
+//#import "JAStepByStepModel.h"
+//#import "RIOrder.h"
 //
-//  Created by Jose Mota on 22/04/16.
-//  Copyright © 2016 Rocket Internet. All rights reserved.
+//@interface JAReturnStepByStepModel : JAStepByStepModel
 //
-
-#import "JAStepByStepModel.h"
-#import "RIOrder.h"
-
-@interface JAReturnStepByStepModel : JAStepByStepModel
-
-@property (nonatomic, strong) RITrackOrder *order;
-@property (nonatomic, strong) NSArray *items;
-
-@end
+//@property (nonatomic, strong) RITrackOrder *order;
+//@property (nonatomic, strong) NSArray *items;
+//
+//@end

@@ -25,7 +25,7 @@
 @property (nonatomic, weak) IBOutlet UILabel *titleLabel;
 @property (nonatomic, weak) IBOutlet UILabel *descLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
-@property (weak, nonatomic) IBOutlet UIButton *orderListButton;
+@property (weak, nonatomic) IBOutlet UIButton *orderDetailButton;
 @property (strong, nonatomic) NSArray<RecommendItem *>* recommendedProducts;
 @end
 
@@ -61,7 +61,11 @@
     [self.carouselWidget hide];
     
     [EmarsysPredictManager sendTransactionsOf:self];
-    [self.orderListButton setHidden:NO];
+    [self.orderDetailButton setHidden:NO];
+    
+    if ([self.cart.orderNr isKindOfClass:[NSString class]] && [self.cart.orderNr length]) {
+        [ReviewSurveyManager getJourneySurveyWithOrderID: self.cart.orderNr];
+    }
 }
 
 - (void)trackPurchase {
@@ -94,14 +98,22 @@
     
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:kDidFirstBuyKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    
     //// ------- END OF LEGACY CODES ------
-//    [self publishScreenLoadTime];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     self.tabBarController.tabBar.hidden = NO;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.navigationController.interactivePopGestureRecognizer.enabled = YES;
 }
 
 #pragma mark - EmarsysPredictProtocol
@@ -141,6 +153,9 @@
 - (BOOL)isPreventSendTransactionInViewWillAppear {
     return YES;
 }
+- (IBAction)orderDetailButtonTapped:(id)sender {
+    [self performSegueWithIdentifier:@"OrderDetailViewController" sender:sender];
+}
 
 #pragma mark - FeatureBoxCollectionViewWidgetViewDelegate
 - (void)selectFeatureItem:(NSObject *)item widgetBox:(id)widgetBox {
@@ -167,6 +182,11 @@
     if ([segue.identifier isEqualToString: @"showAllRecommendationView"]) {
         AllRecommendationViewController *viewCtrl = (AllRecommendationViewController *) [segue destinationViewController];
         viewCtrl.recommendItems = self.recommendedProducts;
+    } else if([segue.identifier isEqualToString: @"OrderDetailViewController"]) {
+        self.hidesBottomBarWhenPushed = YES;
+        OrderDetailViewController *orderDetailViewCtrl = (OrderDetailViewController *)segue.destinationViewController;
+        self.hidesBottomBarWhenPushed = NO;
+        orderDetailViewCtrl.orderId = self.cart.orderNr;
     }
 }
 

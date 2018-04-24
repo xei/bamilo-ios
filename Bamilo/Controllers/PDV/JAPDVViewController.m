@@ -664,7 +664,6 @@ static NSString *recommendationLogic = @"RELATED";
     }
 
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:self.product.seller userInfo:userInfo];
-//    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"SellerPage"];
 }
 
 - (void)goToSellerLink {
@@ -1677,8 +1676,8 @@ static NSString *recommendationLogic = @"RELATED";
 
 #pragma mark - NavigationBarProtocol
 
-- (NavBarLeftButtonType)navBarleftButton {
-    return NavBarLeftButtonTypeCart;
+- (NavBarButtonType)navBarleftButton {
+    return NavBarButtonTypeCart;
 }
 
 @end

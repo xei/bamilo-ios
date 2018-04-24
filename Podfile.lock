@@ -29,6 +29,23 @@ PODS:
     - ObjectMapper (~> 2.0)
   - AlgoliaSearch-Client (3.7.0):
     - AFNetworking (~> 2.2)
+  - CHIPageControl (0.1.5):
+    - CHIPageControl/Aji (= 0.1.5)
+    - CHIPageControl/Aleppo (= 0.1.5)
+    - CHIPageControl/Chimayo (= 0.1.5)
+    - CHIPageControl/Fresno (= 0.1.5)
+    - CHIPageControl/Jalapeno (= 0.1.5)
+    - CHIPageControl/Jaloro (= 0.1.5)
+    - CHIPageControl/Paprika (= 0.1.5)
+    - CHIPageControl/Puya (= 0.1.5)
+  - CHIPageControl/Aji (0.1.5)
+  - CHIPageControl/Aleppo (0.1.5)
+  - CHIPageControl/Chimayo (0.1.5)
+  - CHIPageControl/Fresno (0.1.5)
+  - CHIPageControl/Jalapeno (0.1.5)
+  - CHIPageControl/Jaloro (0.1.5)
+  - CHIPageControl/Paprika (0.1.5)
+  - CHIPageControl/Puya (0.1.5)
   - CoreSDK (0.9.1)
   - Crashlytics (3.9.3):
     - Fabric (~> 1.7.2)
@@ -43,6 +60,7 @@ PODS:
   - JBWhatsAppActivity (1.0)
   - JSONModel (1.7.0)
   - Kingfisher (3.13.1)
+  - M13Checkbox (3.2.2)
   - Masonry (1.1.0)
   - MobileEngageSDK (0.9.1):
     - CoreSDK
@@ -70,6 +88,7 @@ DEPENDENCIES:
   - Alamofire (~> 4.4)
   - AlamofireObjectMapper (~> 4.0)
   - AlgoliaSearch-Client
+  - CHIPageControl (~> 0.1.3)
   - Crashlytics (~> 3.9)
   - EmarsysPredictSDK
   - Fabric
@@ -81,6 +100,7 @@ DEPENDENCIES:
   - JBWhatsAppActivity (~> 1.0)
   - JSONModel
   - Kingfisher (~> 3.0)
+  - M13Checkbox
   - MobileEngageSDK (~> 0.9.1)
   - NewRelicAgent (~> 5.10.0)
   - ObjectMapper (~> 2.2)
@@ -98,6 +118,7 @@ SPEC CHECKSUMS:
   Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
   AlamofireObjectMapper: 435adc82f5b367679bd9e71c4974a54efd0b2521
   AlgoliaSearch-Client: 8a937017f9faad0eef7a2d43fdb695f7620de140
+  CHIPageControl: 79d19a8ee2e35fa3c1da6533adb5364c77b5cfea
   CoreSDK: 4dd8a41126434e9741c0e8bf73d60e584153870a
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   EmarsysPredictSDK: 575773dad291965132230004203d3c979d43069b
@@ -110,6 +131,7 @@ SPEC CHECKSUMS:
   JBWhatsAppActivity: e1b4dcf1b967aaf714cc784b42fb49a110972e4a
   JSONModel: 840bc0fcffb24b8454d2c026bf26fea454b8e98d
   Kingfisher: ed9707a409cc47fddafbcd12a43a9757e3600af5
+  M13Checkbox: a8c2491cfbbca10797925fd0b9154a782bf40d89
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MobileEngageSDK: 751a1010eb762d2ecb4c529a1c02c5bf7545449a
   NewRelicAgent: d16c572a3355d3ff9a359a6677e946c7a75a8f76
@@ -124,6 +146,6 @@ SPEC CHECKSUMS:
   TBActionSheet: d3c23727ee2d5c573245eef51b9980bb801e8bef
   TTRangeSlider: 2f2ce4a33b32bb323c6575b9f5161c4664459c58
 
-PODFILE CHECKSUM: 11f16655a5655ce699f9f95b5d2f76cf1a9dc515
+PODFILE CHECKSUM: 527aa9eb45ba2417c8bd327f58aad06a75592f62
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.2.1

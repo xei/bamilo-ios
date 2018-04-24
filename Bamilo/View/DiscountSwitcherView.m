@@ -38,9 +38,9 @@
     BOOL toOn = [model boolValue];
     
     //Only automatically on the switcher. Don't turn it off with update model.
-    if(toOn == YES) {
+//    if(toOn == YES) {
         [self.switcherView setOn:toOn];
-    }
+//    }
 }
 
 @end

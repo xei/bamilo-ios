@@ -460,8 +460,8 @@
     return STRING_CAMPAIGNS;
 }
 
-- (NavBarLeftButtonType)navBarleftButton {
-    return NavBarLeftButtonTypeSearch;
+- (NavBarButtonType)navBarleftButton {
+    return NavBarButtonTypeSearch;
 }
 
 @end

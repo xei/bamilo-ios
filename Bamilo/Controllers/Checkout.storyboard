@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="cPx-eU-fFb">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="cPx-eU-fFb">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -115,6 +115,9 @@
                                     <action selector="continueButtonTapped:" destination="RR0-PB-qTp" eventType="touchUpInside" id="Yhg-gN-D0m"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="bgX-Hf-Vck">
+                                <rect key="frame" x="177" y="336" width="20" height="20"/>
+                            </activityIndicatorView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" delaysContentTouches="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dCv-DP-nKy">
                                 <rect key="frame" x="0.0" y="80" width="375" height="532"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -129,6 +132,7 @@
                             <constraint firstAttribute="right" secondItem="dCv-DP-nKy" secondAttribute="right" id="1Nr-CW-Q2X"/>
                             <constraint firstItem="22G-Q0-TRN" firstAttribute="left" secondItem="htM-qu-iwa" secondAttribute="left" id="71R-3o-6kr"/>
                             <constraint firstItem="a6b-JE-wIw" firstAttribute="top" secondItem="dCv-DP-nKy" secondAttribute="bottom" constant="5" id="75i-aM-qU3"/>
+                            <constraint firstItem="bgX-Hf-Vck" firstAttribute="centerY" secondItem="dCv-DP-nKy" secondAttribute="centerY" id="ApC-7w-W8W"/>
                             <constraint firstAttribute="right" secondItem="22G-Q0-TRN" secondAttribute="right" id="F1N-Sr-GKb"/>
                             <constraint firstItem="22G-Q0-TRN" firstAttribute="top" secondItem="qVA-Rv-cap" secondAttribute="bottom" id="Fwk-T5-fOP"/>
                             <constraint firstItem="dCv-DP-nKy" firstAttribute="top" secondItem="22G-Q0-TRN" secondAttribute="bottom" id="GsR-NS-7c0"/>
@@ -136,11 +140,13 @@
                             <constraint firstItem="jbe-49-at3" firstAttribute="top" secondItem="a6b-JE-wIw" secondAttribute="bottom" id="Spf-8c-S8P"/>
                             <constraint firstAttribute="right" secondItem="a6b-JE-wIw" secondAttribute="right" id="fxL-XE-i6j"/>
                             <constraint firstItem="dCv-DP-nKy" firstAttribute="left" secondItem="htM-qu-iwa" secondAttribute="left" id="lcu-2q-VKV"/>
+                            <constraint firstItem="bgX-Hf-Vck" firstAttribute="centerX" secondItem="dCv-DP-nKy" secondAttribute="centerX" id="pv9-TQ-hLg"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="checkoutProgressViewControl" destination="22G-Q0-TRN" id="SJw-3T-MTK"/>
                         <outlet property="continueButton" destination="a6b-JE-wIw" id="xw9-Qc-5YA"/>
+                        <outlet property="loadingIndicator" destination="bgX-Hf-Vck" id="4CI-Hw-iDL"/>
                         <outlet property="tableView" destination="dCv-DP-nKy" id="rj7-oJ-fIb"/>
                         <segue destination="YAa-kj-ypS" kind="show" identifier="pushConfirmationToPayment" id="8lA-ov-Vmp"/>
                     </connections>
@@ -183,6 +189,12 @@
                                     <outlet property="delegate" destination="YAa-kj-ypS" id="4kE-BC-auj"/>
                                 </connections>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Li-YY-i0n">
+                                <rect key="frame" x="187" y="323.5" width="0.0" height="0.0"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FE1-oX-yO3" userLabel="Cart Entity Summary View" customClass="CartEntitySummaryViewControl">
                                 <rect key="frame" x="0.0" y="572" width="375" height="45"/>
                                 <color key="backgroundColor" red="0.090531297028064728" green="0.52686542272567749" blue="0.11270476132631302" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -232,12 +244,15 @@
                             <constraint firstItem="dAO-l3-ogF" firstAttribute="top" secondItem="FE1-oX-yO3" secondAttribute="bottom" id="WCz-bc-rHe"/>
                             <constraint firstAttribute="right" secondItem="dAO-l3-ogF" secondAttribute="right" id="b4t-Pp-xhU"/>
                             <constraint firstItem="7Bg-pG-uxa" firstAttribute="top" secondItem="Rb1-m2-ocz" secondAttribute="bottom" id="d8f-Zr-zbO"/>
+                            <constraint firstItem="8Li-YY-i0n" firstAttribute="centerX" secondItem="zc7-Vb-nIS" secondAttribute="centerX" id="lde-sX-hza"/>
+                            <constraint firstItem="8Li-YY-i0n" firstAttribute="centerY" secondItem="zc7-Vb-nIS" secondAttribute="centerY" id="seo-VQ-512"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="cartEntitySummaryViewControl" destination="FE1-oX-yO3" id="8Th-0M-DjB"/>
                         <outlet property="checkoutProgressViewControl" destination="7Bg-pG-uxa" id="9Vi-Co-9mf"/>
                         <outlet property="continueButton" destination="dAO-l3-ogF" id="Iyt-m0-eWg"/>
+                        <outlet property="noPaymentLabel" destination="8Li-YY-i0n" id="IAr-4S-VmO"/>
                         <outlet property="tableView" destination="zc7-Vb-nIS" id="ghJ-n9-PSq"/>
                         <segue destination="DJI-Ev-Zxb" kind="show" identifier="SuccessPaymentViewController" id="CTo-Jx-FjS"/>
                     </connections>
@@ -299,7 +314,7 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
-                                                    <segue destination="gww-nF-gX8" kind="show" id="LqE-q2-b2X"/>
+                                                    <action selector="orderDetailButtonTapped:" destination="DJI-Ev-Zxb" eventType="touchUpInside" id="a41-wX-zGE"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -356,22 +371,23 @@
                         <outlet property="carouselWidget" destination="RUh-Wx-p8b" id="Fjt-1D-Ah7"/>
                         <outlet property="descLabel" destination="Ft2-Po-4VA" id="rMS-lh-umz"/>
                         <outlet property="iconImageView" destination="aqz-cZ-E7n" id="2o5-ed-9jF"/>
-                        <outlet property="orderListButton" destination="fcY-30-Vag" id="uLW-oi-gGC"/>
+                        <outlet property="orderDetailButton" destination="fcY-30-Vag" id="ySR-ie-Lgb"/>
                         <outlet property="titleLabel" destination="Tr4-mC-OYm" id="Ftm-Cn-KHz"/>
                         <segue destination="0hS-tr-b0v" kind="show" identifier="showAllRecommendationView" id="gaO-ue-DPo"/>
+                        <segue destination="htN-Oo-jZ6" kind="show" identifier="OrderDetailViewController" id="BW0-v2-sCn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="78b-NQ-EYb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2189.5999999999999" y="-72.413793103448285"/>
         </scene>
-        <!--OrderListViewController-->
-        <scene sceneID="pwe-As-CV2">
+        <!--OrderDetailViewController-->
+        <scene sceneID="uxT-0k-A2b">
             <objects>
-                <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="OrderListViewController" id="gww-nF-gX8" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="rM7-CH-hzc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewControllerPlaceholder storyboardIdentifier="OrderDetailViewController" storyboardName="Main" referencedIdentifier="OrderDetailViewController" id="htN-Oo-jZ6" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Tvt-aO-HSO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2860" y="-94"/>
+            <point key="canvasLocation" x="2870" y="-113"/>
         </scene>
         <!--AllRecommendationViewController-->
         <scene sceneID="QJy-Zu-0bw">

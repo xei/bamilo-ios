@@ -79,7 +79,7 @@ class PhoneChangeViewController: BaseViewController, PhoneVerificationViewContro
         return STRING_PHONE_SUBMISSION
     }
     
-    override func navBarleftButton() -> NavBarLeftButtonType {
+    override func navBarRightButton() -> NavBarButtonType {
         return .close
     }
     

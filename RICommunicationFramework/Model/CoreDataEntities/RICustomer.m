@@ -393,9 +393,9 @@
 }
 
 + (void)saveCustomer:(RICustomer *)customer andContext:(BOOL)save {
-    for (RIAddress *address in customer.addresses) {
-        [RIAddress saveAddress:address andContext:NO];
-    }
+//    for (RIAddress *address in customer.addresses) {
+//        [RIAddress saveAddress:address andContext:NO];
+//    }
     
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:customer];
     if (save) {
@@ -427,13 +427,13 @@
     
     [json setValue:customer.createdAt forKey:@"created_at"];
     
-    NSMutableDictionary * addresses = [NSMutableDictionary new];
+//    NSMutableDictionary * addresses = [NSMutableDictionary new];
     
-    for ( RIAddress* addr in customer.addresses) {
-        [addresses setObject:[RIAddress toJSON:addr] forKey:addr.uid];
-    }
+//    for ( RIAddress* addr in customer.addresses) {
+//        [addresses setObject:[RIAddress toJSON:addr] forKey:addr.uid];
+//    }
     
-    [json setValue:addresses forKey:@"address_list"];
+//    [json setValue:addresses forKey:@"address_list"];
     
     return json;
 }

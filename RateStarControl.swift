@@ -23,8 +23,7 @@ class RateStarControl: BaseViewControl {
         self.rateView = RateStarsView.nibInstance()
         self.rateView?.delegate = self.delegate
         if let view = self.rateView {
-            self.addSubview(view)
-            view.frame = self.bounds;
+            self.addAnchorMatchedSubView(view: view)
         }
     }
     
