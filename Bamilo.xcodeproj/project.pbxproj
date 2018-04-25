@@ -49,6 +49,7 @@
 		61180F2C2054065200B4261E /* NPSQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61180F2B2054065200B4261E /* NPSQuestionView.swift */; };
 		61180F2E2054066900B4261E /* NPSQuestionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61180F2D2054066900B4261E /* NPSQuestionView.xib */; };
 		6119576D2003C0A600B7B9D8 /* Ext+Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6119576C2003C0A600B7B9D8 /* Ext+Dictionary.swift */; };
+		611A11C82090858800121A10 /* Seller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611A11C72090858800121A10 /* Seller.swift */; };
 		611BB3C11F3EDEEB00022906 /* UIBarButtonItem+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = 611BB3C01F3EDEEB00022906 /* UIBarButtonItem+Badge.m */; };
 		611BB3C31F3F4DBD00022906 /* NavBarUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611BB3C21F3F4DBD00022906 /* NavBarUtility.swift */; };
 		611C19141F5E88DD0073940C /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611C19131F5E88DD0073940C /* SearchBarView.swift */; };
@@ -1086,6 +1087,7 @@
 		61180F2B2054065200B4261E /* NPSQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NPSQuestionView.swift; sourceTree = "<group>"; };
 		61180F2D2054066900B4261E /* NPSQuestionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NPSQuestionView.xib; sourceTree = "<group>"; };
 		6119576C2003C0A600B7B9D8 /* Ext+Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+Dictionary.swift"; sourceTree = "<group>"; };
+		611A11C72090858800121A10 /* Seller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seller.swift; sourceTree = "<group>"; };
 		611BB3BF1F3EDEEB00022906 /* UIBarButtonItem+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+Badge.h"; sourceTree = "<group>"; };
 		611BB3C01F3EDEEB00022906 /* UIBarButtonItem+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+Badge.m"; sourceTree = "<group>"; };
 		611BB3C21F3F4DBD00022906 /* NavBarUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavBarUtility.swift; sourceTree = "<group>"; };
@@ -3681,6 +3683,7 @@
 				610BC2901FBC5CBF00A7C343 /* RecommendItem.swift */,
 				61AAC6761FC08296007FC21E /* WishList.swift */,
 				61DA16401FEE7E93001C5071 /* Links.swift */,
+				611A11C72090858800121A10 /* Seller.swift */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -8725,6 +8728,7 @@
 				875AD5601E38C0C900584ABF /* RIFeaturedBoxTeaserGrouping.m in Sources */,
 				CE8C92B01B8B555600C77706 /* JAMainFilterCell.m in Sources */,
 				610C68AD1EC87F2A008FB66C /* Translations.swift in Sources */,
+				611A11C82090858800121A10 /* Seller.swift in Sources */,
 				611C1BE9204C484D007C409C /* ReviewImageSelectView.swift in Sources */,
 				87B684F51E4A04030042C09F /* ReceiptItemModel.m in Sources */,
 				61E5344B1FA4CBB700CBDFED /* Ext+NSLayoutConstraint.swift in Sources */,

@@ -9,14 +9,13 @@
 #import "JAPDVImageSection.h"
 #import "JAPriceView.h"
 #import "RIProduct.h"
-#import "RISeller.h"
 #import "RIProductSimple.h"
 #import "RIImage.h"
 #import "UIImageView+WebCache.h"
 #import "JAPageControl.h"
 #import "JARatingsView.h"
 #import "JAScrolledImageGalleryView.h"
-
+#import "Bamilo-Swift.h"
 
 // as of https://jira.rocket-internet.de/browse/NAFAMZ-14582
 #define xFavOffset 16.f
@@ -80,8 +79,7 @@
     return _separatorImageView;
 }
 
-- (UILabel *)productNameLabel
-{
+- (UILabel *)productNameLabel {
     CGRect frame = CGRectMake(16.f, 16.f, self.width - 16.f*2, 20);
     if (self.product.seller.isGlobal) {
         frame.size.width = self.globalButton.x - frame.origin.x;
@@ -216,7 +214,7 @@
 
 - (void)reloadViews
 {
-    if ([self.product.seller isGlobal]) {
+    if (self.product.seller.isGlobal) {
         [self.globalButton setX:self.width-self.globalButton.width];
     }
     [self.productNameLabel setX:16.f];

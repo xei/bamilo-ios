@@ -194,7 +194,7 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     switch (section) {
         case 0: {
-            PlainTableViewHeaderCell *plainTableViewHeaderCell = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:[PlainTableViewHeaderCell nibName]];
+            PlainTableViewHeaderCell *plainTableViewHeaderCell = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier: [PlainTableViewHeaderCell nibName]];
             plainTableViewHeaderCell.titleString = STRING_PAYMENT_OPTION;
             return plainTableViewHeaderCell;
         }

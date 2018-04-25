@@ -143,7 +143,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showProductVariationsScreen:) name:kOpenProductVariationsScreen object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showSizeGuide:) name:kShowSizeGuideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showOtherOffers:) name:kOpenOtherOffers object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showSellerReviews:) name:kOpenSellerReviews object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showSellerReviews:) name:kOpenSellerReviews object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showNewSellerReview:) name:kOpenNewSellerReview object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showSellerCatalog:) name:kOpenSellerPage object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkRedirectInfo) name:kCheckRedirectInfoNotification object:nil];
@@ -179,7 +179,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kOpenProductVariationsScreen object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowSizeGuideNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kOpenOtherOffers object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kOpenSellerReviews object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:kOpenSellerReviews object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kOpenNewSellerReview object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kOpenSellerPage object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kCheckRedirectInfoNotification object:nil];
@@ -649,18 +649,18 @@
     }
 }
 
-- (void)showSellerReviews:(NSNotification*)notification {
-    UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JASellerRatingsViewController class]]) {
-        JASellerRatingsViewController* viewController = [[JASellerRatingsViewController alloc] initWithNibName:@"JASellerRatingsViewController" bundle:nil];
-        
-        if (notification.object && [notification.object isKindOfClass:[RIProduct class]]) {
-            viewController.product = notification.object;
-        }
-        
-        [self pushViewController:viewController animated:YES];
-    }
-}
+//- (void)showSellerReviews:(NSNotification*)notification {
+//    UIViewController *topViewController = [self topViewController];
+//    if (![topViewController isKindOfClass:[JASellerRatingsViewController class]]) {
+//        JASellerRatingsViewController* viewController = [[JASellerRatingsViewController alloc] initWithNibName:@"JASellerRatingsViewController" bundle:nil];
+//        
+//        if (notification.object && [notification.object isKindOfClass:[RIProduct class]]) {
+//            viewController.product = notification.object;
+//        }
+//        
+//        [self pushViewController:viewController animated:YES];
+//    }
+//}
 
 - (void)showNewSellerReview:(NSNotification*)notification {
     UIViewController *topViewController = [self topViewController];

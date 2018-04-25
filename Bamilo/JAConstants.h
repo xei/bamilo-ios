@@ -46,7 +46,6 @@
 #define kSelectedRecentSearchNotification @"NOTIFICATION_SELECTED_RECENT_SEARCH"
 #define kOpenCartNotification @"NOTIFICATION_OPEN_CART"
 #define kOpenOtherOffers @"NOTIFICATION_OPEN_OTHER_OFFERS"
-#define kOpenSellerReviews @"NOTIFICATION_OPEN_SELLER_REVIEWS"
 #define kOpenNewSellerReview @"NOTIFICATION_OPEN_NEW_SELLER_REVIEW"
 #define kOpenSellerPage @"NOTIFICATION_OPEN_SELLER_PAGE"
 

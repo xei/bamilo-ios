@@ -13,7 +13,7 @@
 #import "RICatalogSorting.h"
 #import <EmarsysPredictSDK/EmarsysPredictSDK.h>
 
-@class RIImage, RIProductSimple, RIVariation, RIBundle, RISeller, RIUndefinedSearchTerm;
+@class RIImage, RIProductSimple, RIVariation, RIBundle, Seller, RIUndefinedSearchTerm;
 
 @interface RIProduct : NSObject
 
@@ -53,7 +53,6 @@
 @property (nonatomic, retain) NSNumber *reviewsTotal;
 @property (nonatomic, retain) NSString *richRelevanceParameter;
 @property (nonatomic, retain) NSString *richRelevanceTitle;
-
 @property (nonatomic, retain) NSNumber *offersMinPrice;
 @property (nonatomic, retain) NSNumber *offersMinPriceEuroConverted;
 @property (nonatomic, retain) NSNumber *offersTotal;
@@ -62,24 +61,21 @@
 @property (nonatomic, retain) NSString *shortSummary;
 @property (nonatomic, retain) NSString *summary;
 @property (nonatomic) BOOL preOrder;
-
 @property (nonatomic, strong) NSString* categoryName;
 @property (nonatomic, strong) NSString* categoryUrlKey;
 @property (nonatomic, retain) NSArray *categoryIds;
 @property (nonatomic, retain) NSSet *relatedProducts;
 @property (nonatomic, retain) NSOrderedSet *specifications;
-@property (nonatomic, retain) RISeller *seller;
+@property (nonatomic, retain) Seller *seller;
 @property (nonatomic, retain) NSString *shareUrl;
 @property (nonatomic, retain) NSString *priceRange;
 @property (nonatomic, retain) NSString *vertical;
 @property (nonatomic) BOOL fashion;
-
 @property (nonatomic, retain) NSString *brandId;
 @property (nonatomic, retain) NSString *brandImage;
 @property (nonatomic, retain) NSString *brand;
 @property (nonatomic, retain) NSString *brandTarget;
 @property (nonatomic, retain) NSString *brandUrlKey;
-
 @property (nonatomic) BOOL hasStock;
 @property (nonatomic) BOOL freeShippingPossible;
 
@@ -92,9 +88,7 @@
  *
  *  @return a string with the operationID that can be used to cancel the operation
  */
-+ (NSString *)getCompleteProductWithSku:(NSString*)sku
-                           successBlock:(void (^)(id product))successBlock
-                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
++ (NSString *)getCompleteProductWithSku:(NSString*)sku successBlock:(void (^)(id product))successBlock andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 /**
  *  Method to load a product and all its details given his url
@@ -106,10 +100,7 @@
  *
  *  @return a string with the operationID that can be used to cancel the operation
  */
-+ (NSString *)getCompleteProductWithTargetString:(NSString*)targetString
-                      		   withRichParameter:(NSDictionary*)parameter
-                                    successBlock:(void (^)(id product))successBlock
-                                 andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
++ (NSString *)getCompleteProductWithTargetString:(NSString*)targetString withRichParameter:(NSDictionary*)parameter successBlock:(void (^)(id product))successBlock andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 /**
  *  Method to load a set of products given a base product url, the sorting method and the paging info
@@ -159,10 +150,7 @@
 + (void)getFavoriteProductsWithSuccessBlock:(void (^)(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages))successBlock
                                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
-+ (void)getFavoriteProductsForPage:(NSInteger)page
-                          maxItems:(NSInteger)maxItems
-                      SuccessBlock:(void (^)(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages))successBlock
-                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
++ (void)getFavoriteProductsForPage:(NSInteger)page maxItems:(NSInteger)maxItems SuccessBlock:(void (^)(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages))successBlock andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 /**
  *  Method to add a product to favorites list (and save it in coredata)
@@ -188,8 +176,7 @@
  *  @param the failure block containing the error message
  *
  */
-+ (void)getRecentlyViewedProductsWithSuccessBlock:(void (^)(NSArray *recentlyViewedProducts))successBlock
-                                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
++ (void)getRecentlyViewedProductsWithSuccessBlock:(void (^)(NSArray *recentlyViewedProducts))successBlock andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 
 /**
@@ -206,15 +193,11 @@
  */
 + (RIProduct *)parseProduct:(NSDictionary *)productJSON country:(RICountryConfiguration*)country;
 
-+ (NSString *)getBundleWithSku:(NSString *)sku
-                  successBlock:(void (^)(RIBundle* bundle))successBlock
-               andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
++ (NSString *)getBundleWithSku:(NSString *)sku successBlock:(void (^)(RIBundle* bundle))successBlock andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 + (NSString*)getTopBrand:(RIProduct *)seenProduct;
 
-+ (NSString *)getRichRelevanceRecommendationFromTarget:(NSString *)rrTargetString
-                                          successBlock:(void (^)(NSSet *recommendationProducts, NSString *title))successBlock
-                                       andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
++ (NSString *)getRichRelevanceRecommendationFromTarget:(NSString *)rrTargetString successBlock:(void (^)(NSSet *recommendationProducts, NSString *title))successBlock andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
 
 @end
 

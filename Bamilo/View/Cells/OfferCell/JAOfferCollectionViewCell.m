@@ -11,6 +11,7 @@
 #import "RIProductSimple.h"
 #import "JARatingsView.h"
 #import "JAProductInfoPriceLine.h"
+#import "Bamilo-Swift.h"
 
 @interface JAOfferCollectionViewCell()
 
@@ -88,10 +89,7 @@
         self.sellerLabel.numberOfLines = 1;
         [self.clickableView addSubview:self.sellerLabel];
     }
-    [self.sellerLabel setFrame:CGRectMake(10.0f,
-                                          CGRectGetMaxY(self.priceLine.frame) + 25.0f,
-                                          self.addToCartClicableView.x - 20.0f,
-                                          1.0f)];
+    [self.sellerLabel setFrame:CGRectMake(10.0f, CGRectGetMaxY(self.priceLine.frame) + 25.0f, self.addToCartClicableView.x - 20.0f, 1.0f)];
     self.sellerLabel.text = productOffer.seller.name;
     [self.sellerLabel sizeToFit];
     
@@ -211,12 +209,12 @@
 {
     NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];
     
-    if(VALID_NOTEMPTY(self.productOfferSeller.seller, RISeller))
+    if(VALID_NOTEMPTY(self.productOfferSeller.seller, Seller))
     {
-        if (VALID_NOTEMPTY(self.productOfferSeller.seller.targetString, NSString)) {
+        if (VALID_NOTEMPTY(self.productOfferSeller.seller.target, NSString)) {
         [userInfo setObject:self.productOfferSeller.seller.name forKey:@"name"];
-        [userInfo setObject:self.productOfferSeller.seller.targetString forKey:@"targetString"];
-    
+        [userInfo setObject:self.productOfferSeller.seller.target forKey:@"targetString"];
+
         [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:self.productOfferSeller.seller userInfo:userInfo];
         }
     }
