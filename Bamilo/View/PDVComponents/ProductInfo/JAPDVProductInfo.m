@@ -21,7 +21,7 @@
 #import "JAProductInfoSizeLine.h"
 #import "Bamilo-Swift.h"
 
-@interface JAPDVProductInfo() {
+@interface JAPDVProductInfo() <SellerViewDelegate> {
     UILabel *_sizesLabel;
     JAProductInfoPriceLine *_priceLine;
     JAProductInfoBaseLine *_priceBackgroundLine;
@@ -268,6 +268,7 @@
         [sellerView setFrame:CGRectMake(0, yOffset, frame.size.width, [sellerView getCalculatedHeight])];
         [sellerView runDeliveryTimeCalculationsWithProductSku:((RIProductSimple *)product.productSimples.firstObject).sku];
         [sellerView switchTheTextAlignments];
+        sellerView.delegate = self;
         [self addSubview:sellerView];
         
         yOffset += sellerView.frame.size.height;
@@ -479,6 +480,13 @@
 - (void)addSisTarget:(id)target action:(SEL)action {
     self.sisTarget = target;
     self.sisSelector = action;
+}
+
+#pragma mark: - SellerViewDelegate
+- (void)refreshContentWithSellerView:(SellerView *)sellerView {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(sellerInfoNeedsContentToBeRefreshed)]) {
+        [self.delegate sellerInfoNeedsContentToBeRefreshed];
+    }
 }
 
 @end

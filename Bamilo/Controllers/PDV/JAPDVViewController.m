@@ -45,7 +45,7 @@
 
 typedef void (^ProcessActionBlock)(void);
 
-@interface JAPDVViewController () <JAPDVGalleryDelegate, JAPickerDelegate, JAActivityViewControllerDelegate, FeatureBoxCollectionViewWidgetViewDelegate> {
+@interface JAPDVViewController () <JAPDVGalleryDelegate, JAPickerDelegate, JAActivityViewControllerDelegate, JAPDVProductInfoDelegate, FeatureBoxCollectionViewWidgetViewDelegate> {
     BOOL _needRefreshProduct;
     BOOL _needAddToFavBlock;
     ProcessActionBlock _processActionBlock;
@@ -109,10 +109,6 @@ static NSString *recommendationLogic = @"RELATED";
     [self.view setBackgroundColor:[UIColor whiteColor]];
     self.apiResponse = RIApiResponseSuccess;
     
-    self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
-    [self.mainScrollView setHidden:YES];
-    [self.view addSubview:self.mainScrollView];
-    
     self.landscapeScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     [self.landscapeScrollView setHidden:YES];
     [self.view addSubview:self.landscapeScrollView];
@@ -166,77 +162,6 @@ static NSString *recommendationLogic = @"RELATED";
         [self dismissViewControllerAnimated:NO completion:nil];
     }
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-}
-
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    if(self.currentPopoverController) {
-        [self.currentPopoverController dismissPopoverAnimated:NO];
-    }
-    
-    [self.mainScrollView setHidden:YES];
-    [self.landscapeScrollView setHidden:YES];
-    [self.ctaView setHidden:YES];
-    
-    
-    if (self.picker) {
-        [self closePicker];
-    }
-    
-    if(self.galleryPaged) {
-        UIView *gallerySuperView = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
-        CGFloat width = gallerySuperView.frame.size.height;
-        CGFloat height = gallerySuperView.frame.size.width;
-        if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
-            if(width < height) {
-                width = gallerySuperView.frame.size.width;
-                height = gallerySuperView.frame.size.height;
-            }
-        } else {
-            if(width > height) {
-                width = gallerySuperView.frame.size.width;
-                height = gallerySuperView.frame.size.height;
-            }
-        }
-        [self.galleryPaged reloadFrame:CGRectMake(0.0f, 0.0f, width, height)];
-    }
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-}
-
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
-        // do whatever
-        [self renderLoadedProduct];
-        if(self.galleryPaged) {
-            UIView *gallerySuperView = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
-            CGFloat width = gallerySuperView.frame.size.width;
-            CGFloat height = gallerySuperView.frame.size.height;
-            CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
-            if(UIInterfaceOrientationIsLandscape(orientation)) {
-                if(width < height) {
-                    width = gallerySuperView.frame.size.height;
-                    height = gallerySuperView.frame.size.width;
-                }
-                if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
-                    statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.width;
-                }
-            } else {
-                if(width > height) {
-                    width = gallerySuperView.frame.size.height;
-                    height = gallerySuperView.frame.size.width;
-                }
-            }
-            [self.galleryPaged reloadFrame:CGRectMake(0.0f, statusBarHeight, width, height)];
-            [self.view bringSubviewToFront:self.galleryPaged];
-        }
-    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-    }];
-    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-}
-
 
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
@@ -363,6 +288,11 @@ static NSString *recommendationLogic = @"RELATED";
     [ThreadManager executeOnMainThread:^{
         [self removeSuperviews];
         self.hasLoaddedProduct = YES;
+        
+        self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
+        [self.mainScrollView setHidden:YES];
+        [self.view addSubview:self.mainScrollView];
+        
         [self.mainScrollView setFrame:[self viewBounds]];
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
             UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
@@ -446,6 +376,7 @@ static NSString *recommendationLogic = @"RELATED";
          Product Info Section
          *******/
         self.productInfoSection = [[JAPDVProductInfo alloc] init];
+        self.productInfoSection.delegate = self;
         CGRect productInfoSectionFrame = CGRectMake(0, 6, self.mainScrollView.width, 0);
         [self.productInfoSection setupWithFrame:productInfoSectionFrame product:self.product preSelectedSize:self.preSelectedSize];
         if (self.currentSimple) {
@@ -1562,10 +1493,6 @@ static NSString *recommendationLogic = @"RELATED";
     //    }
 }
 
-//- (void)trackingEventScreenName:(NSString *)screenName {
-//    [[RITrackingWrapper sharedInstance] trackScreenWithName:screenName];
-//}
-
 - (void)trackingEventLoadingTime {
     [self publishScreenLoadTimeWithName:[self getScreenName] withLabel:self.product.sku];
 }
@@ -1601,6 +1528,11 @@ static NSString *recommendationLogic = @"RELATED";
 
 - (BOOL)isPreventSendTransactionInViewWillAppear {
     return YES;
+}
+
+- (void)refreshContent {
+    _recommendationView = nil;
+    [self loadCompleteProduct];
 }
 
 - (NSArray<EMRecommendationRequest *> *)getRecommendations {
@@ -1660,9 +1592,13 @@ static NSString *recommendationLogic = @"RELATED";
 }
 
 #pragma mark - NavigationBarProtocol
-
 - (NavBarButtonType)navBarleftButton {
     return NavBarButtonTypeCart;
+}
+
+#pragma mark - JAPDVProductInfoDelegate
+- (void)sellerInfoNeedsContentToBeRefreshed {
+    [self refreshContent];
 }
 
 @end

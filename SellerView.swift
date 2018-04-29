@@ -8,32 +8,45 @@
 
 import UIKit
 
+@objc protocol SellerViewDelegate {
+    func refreshContent(sellerView: SellerView)
+}
+
 class SellerView: BaseControlView {
 
-    @IBOutlet weak var sellerNameLabel: UILabel!
-    @IBOutlet weak var sellerOrderCounts: UILabel!
-    @IBOutlet weak var guaranteeLabel: UILabel!
-    @IBOutlet weak var precenseDurationLabel: UILabel!
-    @IBOutlet weak var totalScoreValueLabel: UILabel!
-    @IBOutlet weak var totalScoreBaseValueLabel: UILabel!
-    @IBOutlet weak var fullfilmentTitleLabel: UILabel!
-    @IBOutlet weak var fullfilmentValueLabel: UILabel!
-    @IBOutlet weak var notReturnedTitleLabel: UILabel!
-    @IBOutlet weak var notReturnedValueLabel: UILabel!
-    @IBOutlet weak var slaReachedTitleLabel: UILabel!
-    @IBOutlet weak var slaReachedValueLabel: UILabel!
-    @IBOutlet weak var fullfillmentProgressView: SimpleProgressBarControl!
-    @IBOutlet weak var notReturnedProgressView: SimpleProgressBarControl!
-    @IBOutlet weak var slaReachedProgressView: SimpleProgressBarControl!
+    @IBOutlet weak private var sellerNameLabel: UILabel!
+    @IBOutlet weak private var sellerOrderCounts: UILabel!
+    @IBOutlet weak private var guaranteeLabel: UILabel!
+    @IBOutlet weak private var precenseDurationLabel: UILabel!
+    @IBOutlet weak private var totalScoreValueLabel: UILabel!
+    @IBOutlet weak private var totalScoreBaseValueLabel: UILabel!
+    @IBOutlet weak private var fullfilmentTitleLabel: UILabel!
+    @IBOutlet weak private var fullfilmentValueLabel: UILabel!
+    @IBOutlet weak private var notReturnedTitleLabel: UILabel!
+    @IBOutlet weak private var notReturnedValueLabel: UILabel!
+    @IBOutlet weak private var slaReachedTitleLabel: UILabel!
+    @IBOutlet weak private var slaReachedValueLabel: UILabel!
+    @IBOutlet weak private var fullfillmentProgressView: SimpleProgressBarControl!
+    @IBOutlet weak private var notReturnedProgressView: SimpleProgressBarControl!
+    @IBOutlet weak private var slaReachedProgressView: SimpleProgressBarControl!
+    @IBOutlet weak private var sellerRatingWrapperView: UIView!
+    @IBOutlet weak private var deliveryTimeView: DeliveryTimeControl!
+    @IBOutlet weak private var precenseDurationToSeperatorVerticalSpacingConstraint: NSLayoutConstraint!
+    @IBOutlet weak private var guaranteeLabelToSeperatorVerticalSpacingConstraint: NSLayoutConstraint!
+    @IBOutlet weak private var sellerRatingViewToDeliveryTimeVerticalSpacingConstraint: NSLayoutConstraint!
+    @IBOutlet weak private var seperatorToDeliveryTimeViewVerticalSpacingConstraint: NSLayoutConstraint!
+    @IBOutlet weak private var sellerNameToGuaranteeLabelVerticalSpacingConstraint: NSLayoutConstraint!
+    @IBOutlet weak private var presenceDurationToGuaranteeLabelVerticalSpacingConstraint: NSLayoutConstraint!
+    @IBOutlet weak private var horizontalSeperator: UIView!
+    @IBOutlet weak private var norateView: UIView!
+    @IBOutlet weak private var newSellerBadge: UIImageView!
+    @IBOutlet weak private var noRateLabelToNewSellerBadgeHorizontalSpacingConstraint: NSLayoutConstraint!
+    @IBOutlet weak private var noRateLabelToRightSuperviewConstriant: NSLayoutConstraint!
+    @IBOutlet weak private var curroptedSellerRatingMessageLabel: UILabel!
+    @IBOutlet weak private var sellerRatingRefreshButton: IconButton!
+    @IBOutlet weak private var sellerRatingErrorView: UIView!
     
-    @IBOutlet weak var sellerRatingWrapperView: UIView!
-    
-    @IBOutlet weak var deliveryTimeView: DeliveryTimeControl!
-    @IBOutlet weak var precenseDurationToSeperatorVerticalSpacingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var guaranteeLabelToSeperatorVerticalSpacingConstraint: NSLayoutConstraint!
-    
-    @IBOutlet weak var sellerRatingViewToDeliveryTimeVerticalSpacingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var seperatorToDeliveryTimeViewVerticalSpacingConstraint: NSLayoutConstraint!
+    weak var delegate: SellerViewDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -49,6 +62,8 @@ class SellerView: BaseControlView {
         self.notReturnedValueLabel.textColor = Theme.color(kColorGray1)
         self.slaReachedTitleLabel.textColor = Theme.color(kColorGray1)
         self.slaReachedValueLabel.textColor = Theme.color(kColorGray1)
+        self.sellerRatingRefreshButton.setTitleColor(Theme.color(kColorOrange1), for: .normal)
+        
     }
     
     func update(with seller: Seller) {
@@ -64,19 +79,30 @@ class SellerView: BaseControlView {
         if let precenceDuration = seller.precenceDuration {
             self.precenseDurationLabel.text = "\(precenceDuration.label ?? STRING_PRECENSE_DURATION): \(precenceDuration.value ?? "")".convertTo(language: .arabic)
             self.precenseDurationLabel.textColor = precenceDuration.color ?? Theme.color(kColorGray1)
+            self.precenseDurationLabel.alpha = 1
+            
+            self.sellerNameToGuaranteeLabelVerticalSpacingConstraint.priority = MASLayoutPriorityDefaultLow
+            self.precenseDurationToSeperatorVerticalSpacingConstraint.priority = MASLayoutPriorityDefaultHigh
+        } else {
+            self.sellerNameToGuaranteeLabelVerticalSpacingConstraint.priority = MASLayoutPriorityDefaultHigh
+            self.precenseDurationToSeperatorVerticalSpacingConstraint.priority = MASLayoutPriorityDefaultLow
+            self.precenseDurationLabel.alpha = 0
         }
         
         if let guarantee = seller.warranty {
             self.guaranteeLabel.text = "\(STRING_GUARANTEE): \(guarantee)".trimmingCharacters(in: .whitespacesAndNewlines)
             self.guaranteeLabelToSeperatorVerticalSpacingConstraint.priority = MASLayoutPriorityDefaultHigh
             self.precenseDurationToSeperatorVerticalSpacingConstraint.priority = MASLayoutPriorityDefaultLow
+            self.guaranteeLabel.alpha = 1
         } else {
             self.guaranteeLabel.text = nil
+            self.guaranteeLabel.alpha = 0
             self.guaranteeLabelToSeperatorVerticalSpacingConstraint.priority = MASLayoutPriorityDefaultLow
             self.precenseDurationToSeperatorVerticalSpacingConstraint.priority = MASLayoutPriorityDefaultHigh
         }
         
         if let score = seller.score {
+            self.sellerRatingErrorView.isHidden = true
             if let totalScore = score.overall {
                 self.totalScoreValueLabel.textColor = totalScore.color ?? Theme.color(kColorGreen1)
                 if let value = totalScore.value, let maxValue = score.maxValue {
@@ -86,6 +112,8 @@ class SellerView: BaseControlView {
                     self.totalScoreValueLabel.text = nil
                     self.totalScoreBaseValueLabel.text = nil
                 }
+            } else {
+                self.showErrorOnSellerScore()
             }
             self.fullfilmentTitleLabel.textColor = score.fullfilment?.color ?? Theme.color(kColorGray1)
             self.fullfilmentTitleLabel.text = score.fullfilment?.label ?? STRING_SUCCESSFUL_PRODUCT_SUMPPLEMENT
@@ -94,6 +122,8 @@ class SellerView: BaseControlView {
             self.fullfilmentValueLabel.text = "\(score.fullfilment?.value ?? 0)".convertTo(language: .arabic)
             if let value = score.fullfilment?.value, let maxValue = score.maxValue {
                 self.fullfillmentProgressView.update(withModel: CGFloat(value/maxValue))
+            } else {
+                self.showErrorOnSellerScore()
             }
             
             self.notReturnedTitleLabel.textColor = score.notReturned?.color ?? Theme.color(kColorGray1)
@@ -103,6 +133,8 @@ class SellerView: BaseControlView {
             self.notReturnedValueLabel.text = "\(score.notReturned?.value ?? 0)".convertTo(language: .arabic)
             if let value = score.notReturned?.value, let maxValue = score.maxValue {
                 self.notReturnedProgressView.update(withModel: CGFloat(value/maxValue))
+            } else {
+                self.showErrorOnSellerScore()
             }
             
             self.slaReachedTitleLabel.textColor = score.slaReached?.color ?? Theme.color(kColorGray1)
@@ -112,16 +144,32 @@ class SellerView: BaseControlView {
             self.slaReachedValueLabel.text = "\(score.slaReached?.value ?? 0)".convertTo(language: .arabic)
             if let value = score.slaReached?.value, let maxValue = score.maxValue {
                 self.slaReachedProgressView.update(withModel: CGFloat(value/maxValue))
+            } else {
+                self.showErrorOnSellerScore()
             }
             self.sellerRatingViewToDeliveryTimeVerticalSpacingConstraint.priority = MASLayoutPriorityDefaultHigh
             self.seperatorToDeliveryTimeViewVerticalSpacingConstraint.priority = MASLayoutPriorityDefaultLow
             self.sellerRatingWrapperView.alpha = 1
+            self.horizontalSeperator.alpha = 1
+            
+            self.norateView.alpha = 0
         } else {
             self.sellerRatingViewToDeliveryTimeVerticalSpacingConstraint.priority = MASLayoutPriorityDefaultLow
             self.seperatorToDeliveryTimeViewVerticalSpacingConstraint.priority = MASLayoutPriorityDefaultHigh
             self.sellerRatingWrapperView.alpha = 0
+            self.horizontalSeperator.alpha = 0
+            self.norateView.alpha = 1
+            
+            self.noRateLabelToRightSuperviewConstriant.priority = seller.isNew ? MASLayoutPriorityDefaultLow : MASLayoutPriorityDefaultHigh
+            self.noRateLabelToNewSellerBadgeHorizontalSpacingConstraint.priority = seller.isNew ? MASLayoutPriorityDefaultHigh : MASLayoutPriorityDefaultLow
+            self.newSellerBadge.alpha = seller.isNew ? 1 : 0
         }
         
+    }
+    
+    func showErrorOnSellerScore() {
+        self.sellerRatingErrorView.isHidden = false
+        self.sellerRatingErrorView.alpha = 1
     }
     
     func runDeliveryTimeCalculations(productSku: String) {
@@ -135,10 +183,11 @@ class SellerView: BaseControlView {
     
     
     //TODO: this function is unnecessary but we need it for now!,
-    //because in PDVVIew we have to !! change the alignment (with previous implmentations)
+    //because in PDVView we have to !! change the alignment (with previous implmentations)
     func switchTheTextAlignments() {
         self.precenseDurationLabel.textAlignment = .left
         self.sellerOrderCounts.textAlignment = .right
+        self.sellerNameLabel.textAlignment = .left
         self.deliveryTimeView.switchTheTextAlignments()
     }
     
@@ -152,11 +201,20 @@ class SellerView: BaseControlView {
             heightSize -= labelHeight
         }
         
+        //if seller has no presence duration
+        if self.precenseDurationLabel.alpha == 0 {
+            heightSize -= 35
+        }
+        
         //if seller has no score
         if self.sellerRatingWrapperView.alpha == 0 {
             heightSize -= 185
         }
         
         return heightSize
+    }
+    
+    @IBAction func sellerRatingRefreshButtonTapped(_ sender: Any) {
+        self.delegate?.refreshContent(sellerView: self)
     }
 }

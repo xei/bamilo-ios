@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -36,7 +37,7 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oc5-UD-IUC">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oc5-UD-IUC" userLabel="Horizontal Seperator">
                     <rect key="frame" x="16" y="118" width="288" height="1"/>
                     <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
@@ -49,8 +50,8 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="فروشنده:" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gM6-Yl-v9T">
-                    <rect key="frame" x="254" y="16" width="49.5" height="23.5"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="247" verticalHuggingPriority="251" horizontalCompressionResistancePriority="753" text="فروشنده:" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gM6-Yl-v9T">
+                    <rect key="frame" x="129.5" y="16" width="174" height="23.5"/>
                     <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="13"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -148,9 +149,51 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1zC-ld-Sz6" userLabel="Error View">
+                            <rect key="frame" x="0.0" y="0.0" width="288" height="175"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="deadIcon" translatesAutoresizingMaskIntoConstraints="NO" id="q1s-ps-BcT">
+                                    <rect key="frame" x="119" y="8" width="50" height="50"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="50" id="qnO-ho-I5C"/>
+                                        <constraint firstAttribute="width" secondItem="q1s-ps-BcT" secondAttribute="height" multiplier="1:1" id="tuJ-lS-JqJ"/>
+                                    </constraints>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="متاسفانه دریافت اطلاعات فروشنده دچار مشکل شده است" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JX2-Bj-rI5">
+                                    <rect key="frame" x="20" y="68" width="248" height="47"/>
+                                    <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="13"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wbd-Yy-Xa0" customClass="IconButton">
+                                    <rect key="frame" x="88" y="141" width="112" height="24"/>
+                                    <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="13"/>
+                                    <state key="normal" title="مجددا تلاش نمایید" image="orange_refresh"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="positionStatus">
+                                            <integer key="value" value="1"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="sellerRatingRefreshButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="Ojs-pc-KdA"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="JX2-Bj-rI5" firstAttribute="top" secondItem="q1s-ps-BcT" secondAttribute="bottom" constant="10" id="8fg-ol-6Ox"/>
+                                <constraint firstItem="wbd-Yy-Xa0" firstAttribute="centerX" secondItem="JX2-Bj-rI5" secondAttribute="centerX" id="K1H-ya-XGB"/>
+                                <constraint firstItem="JX2-Bj-rI5" firstAttribute="centerX" secondItem="q1s-ps-BcT" secondAttribute="centerX" id="Y3j-KC-HX1"/>
+                                <constraint firstItem="q1s-ps-BcT" firstAttribute="top" secondItem="1zC-ld-Sz6" secondAttribute="top" constant="8" id="eCE-gh-cKG"/>
+                                <constraint firstAttribute="bottom" secondItem="wbd-Yy-Xa0" secondAttribute="bottom" constant="10" id="hQ3-t3-cPr"/>
+                                <constraint firstItem="q1s-ps-BcT" firstAttribute="centerX" secondItem="1zC-ld-Sz6" secondAttribute="centerX" id="jHb-sw-e8g"/>
+                                <constraint firstAttribute="trailing" secondItem="JX2-Bj-rI5" secondAttribute="trailing" constant="20" id="mQi-oY-Inz"/>
+                            </constraints>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
+                        <constraint firstItem="1zC-ld-Sz6" firstAttribute="left" secondItem="PEs-H4-r1K" secondAttribute="left" id="0My-9a-Jvj"/>
                         <constraint firstItem="o2d-RG-Zoa" firstAttribute="right" secondItem="72R-Fd-oqU" secondAttribute="right" id="1Oy-8k-L4M"/>
                         <constraint firstItem="72R-Fd-oqU" firstAttribute="right" secondItem="8NC-QE-SVJ" secondAttribute="right" id="1pu-Lo-CeZ"/>
                         <constraint firstItem="Fyj-Ch-WIU" firstAttribute="left" secondItem="PEs-H4-r1K" secondAttribute="left" id="3gF-3D-55g"/>
@@ -161,14 +204,17 @@
                         <constraint firstItem="Kcr-BH-5Kd" firstAttribute="centerX" secondItem="H4Y-qu-ZwL" secondAttribute="centerX" id="OEO-nm-fRK"/>
                         <constraint firstItem="72R-Fd-oqU" firstAttribute="left" secondItem="z2f-YY-OFA" secondAttribute="left" id="QCX-F4-Jbz"/>
                         <constraint firstAttribute="right" secondItem="H4Y-qu-ZwL" secondAttribute="right" id="SgG-CZ-mfH"/>
+                        <constraint firstAttribute="bottom" secondItem="1zC-ld-Sz6" secondAttribute="bottom" id="Sia-Q9-b8c"/>
                         <constraint firstItem="H4Y-qu-ZwL" firstAttribute="left" secondItem="8TI-7K-DI2" secondAttribute="right" constant="14" id="T0d-Zn-zCP"/>
                         <constraint firstItem="5bm-Cc-pbX" firstAttribute="right" secondItem="o2d-RG-Zoa" secondAttribute="right" id="U6x-Hj-mkf"/>
+                        <constraint firstAttribute="right" secondItem="1zC-ld-Sz6" secondAttribute="right" id="WDd-Bj-ALn"/>
                         <constraint firstItem="ubG-Zz-ZSe" firstAttribute="left" secondItem="5bm-Cc-pbX" secondAttribute="left" id="WLm-DS-BAU"/>
                         <constraint firstItem="SrD-r3-Zc1" firstAttribute="left" secondItem="72R-Fd-oqU" secondAttribute="left" id="XyZ-Ij-6NH"/>
                         <constraint firstItem="SrD-r3-Zc1" firstAttribute="centerY" secondItem="8NC-QE-SVJ" secondAttribute="centerY" id="afQ-Vv-Kg1"/>
                         <constraint firstItem="o2d-RG-Zoa" firstAttribute="top" secondItem="72R-Fd-oqU" secondAttribute="bottom" constant="16" id="cB9-Gq-jRJ"/>
                         <constraint firstItem="8NC-QE-SVJ" firstAttribute="right" secondItem="8TI-7K-DI2" secondAttribute="right" id="dFY-A9-gzO"/>
                         <constraint firstItem="Kcr-BH-5Kd" firstAttribute="top" secondItem="H4Y-qu-ZwL" secondAttribute="bottom" constant="10" id="dw2-co-QbZ"/>
+                        <constraint firstItem="1zC-ld-Sz6" firstAttribute="top" secondItem="PEs-H4-r1K" secondAttribute="top" id="fnE-Hx-7i3"/>
                         <constraint firstItem="z2f-YY-OFA" firstAttribute="top" secondItem="8TI-7K-DI2" secondAttribute="bottom" constant="5" id="glE-fA-Pcd"/>
                         <constraint firstItem="ubG-Zz-ZSe" firstAttribute="centerY" secondItem="o2d-RG-Zoa" secondAttribute="centerY" id="hCY-lZ-VPJ"/>
                         <constraint firstItem="H4Y-qu-ZwL" firstAttribute="centerY" secondItem="8NC-QE-SVJ" secondAttribute="centerY" id="hYC-wO-VM9"/>
@@ -199,23 +245,60 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
+                <view contentMode="scaleToFill" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="hWN-Nq-e5N" userLabel="No Rate View">
+                    <rect key="frame" x="16" y="15" width="103.5" height="26"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="بدون امتیاز" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J6Z-At-CFR">
+                            <rect key="frame" x="5" y="1" width="58.5" height="23.5"/>
+                            <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="13"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="new_seller_badge" translatesAutoresizingMaskIntoConstraints="NO" id="Nk8-v9-nc5">
+                            <rect key="frame" x="68.5" y="-0.5" width="30" height="26"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="30" id="oWS-J8-rMD"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="right" secondItem="Nk8-v9-nc5" secondAttribute="right" constant="5" id="1Nn-Nt-ciX"/>
+                        <constraint firstItem="J6Z-At-CFR" firstAttribute="left" secondItem="hWN-Nq-e5N" secondAttribute="left" constant="5" id="4WX-mN-R2R"/>
+                        <constraint firstAttribute="right" secondItem="J6Z-At-CFR" secondAttribute="right" priority="250" constant="5" id="FMs-Sb-pei"/>
+                        <constraint firstItem="Nk8-v9-nc5" firstAttribute="centerY" secondItem="hWN-Nq-e5N" secondAttribute="centerY" id="ZSi-VD-BxG"/>
+                        <constraint firstItem="Nk8-v9-nc5" firstAttribute="height" secondItem="hWN-Nq-e5N" secondAttribute="height" id="fLe-Td-G2V"/>
+                        <constraint firstItem="J6Z-At-CFR" firstAttribute="centerY" secondItem="hWN-Nq-e5N" secondAttribute="centerY" id="hff-hB-Szt"/>
+                        <constraint firstItem="Nk8-v9-nc5" firstAttribute="left" secondItem="J6Z-At-CFR" secondAttribute="right" priority="750" constant="5" id="oPh-UZ-jAZ"/>
+                        <constraint firstAttribute="height" constant="26" id="u8d-Sa-2Pz"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="5"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="PEs-H4-r1K" firstAttribute="left" secondItem="oc5-UD-IUC" secondAttribute="left" id="1Ih-ar-qUT"/>
+                <constraint firstItem="hWN-Nq-e5N" firstAttribute="centerY" secondItem="gM6-Yl-v9T" secondAttribute="centerY" id="2CG-3h-AYQ"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="eSw-hP-jEC" secondAttribute="bottom" constant="16" id="BHl-7L-ziD"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="right" secondItem="dGb-wu-mdn" secondAttribute="right" constant="16" id="Ds8-Me-Rzf"/>
                 <constraint firstItem="dGb-wu-mdn" firstAttribute="top" secondItem="gM6-Yl-v9T" secondAttribute="bottom" constant="10" id="Lfv-R2-sza"/>
                 <constraint firstItem="dGb-wu-mdn" firstAttribute="left" secondItem="g5S-dq-ivJ" secondAttribute="right" constant="10" id="Pms-qc-i5s"/>
                 <constraint firstItem="eSw-hP-jEC" firstAttribute="right" secondItem="PEs-H4-r1K" secondAttribute="right" id="QK3-5r-bI5"/>
-                <constraint firstItem="TZf-hC-gPC" firstAttribute="top" secondItem="dGb-wu-mdn" secondAttribute="bottom" constant="10" id="RKT-hm-8Tb"/>
+                <constraint firstItem="hWN-Nq-e5N" firstAttribute="left" secondItem="oc5-UD-IUC" secondAttribute="left" id="QSM-Xw-5qv"/>
+                <constraint firstItem="TZf-hC-gPC" firstAttribute="top" secondItem="dGb-wu-mdn" secondAttribute="bottom" priority="750" constant="10" id="RKT-hm-8Tb"/>
+                <constraint firstItem="TZf-hC-gPC" firstAttribute="top" secondItem="gM6-Yl-v9T" secondAttribute="bottom" priority="250" constant="10" id="VQC-Hf-JVk"/>
                 <constraint firstItem="PEs-H4-r1K" firstAttribute="top" secondItem="oc5-UD-IUC" secondAttribute="bottom" constant="10" id="VTd-LQ-oTO"/>
                 <constraint firstItem="oc5-UD-IUC" firstAttribute="right" secondItem="TZf-hC-gPC" secondAttribute="right" id="XRC-4K-7uT"/>
                 <constraint firstItem="eSw-hP-jEC" firstAttribute="top" secondItem="PEs-H4-r1K" secondAttribute="bottom" priority="750" constant="16" id="ZHl-7u-DOL"/>
                 <constraint firstItem="eSw-hP-jEC" firstAttribute="left" secondItem="PEs-H4-r1K" secondAttribute="left" id="b18-io-q7Y"/>
                 <constraint firstItem="PEs-H4-r1K" firstAttribute="right" secondItem="oc5-UD-IUC" secondAttribute="right" id="doj-5W-LFc"/>
-                <constraint firstItem="eSw-hP-jEC" firstAttribute="top" secondItem="oc5-UD-IUC" secondAttribute="bottom" priority="250" constant="10" id="fjM-FC-AUg"/>
+                <constraint firstItem="eSw-hP-jEC" firstAttribute="top" secondItem="oc5-UD-IUC" secondAttribute="bottom" priority="250" id="fjM-FC-AUg"/>
                 <constraint firstItem="gM6-Yl-v9T" firstAttribute="right" secondItem="dGb-wu-mdn" secondAttribute="right" id="jmg-bd-9u9"/>
+                <constraint firstItem="gM6-Yl-v9T" firstAttribute="left" secondItem="hWN-Nq-e5N" secondAttribute="right" constant="10" id="kan-lJ-x3R"/>
                 <constraint firstItem="TZf-hC-gPC" firstAttribute="right" secondItem="dGb-wu-mdn" secondAttribute="right" id="knN-dI-6oo"/>
                 <constraint firstItem="oc5-UD-IUC" firstAttribute="left" secondItem="g5S-dq-ivJ" secondAttribute="left" id="nul-hF-S7P"/>
                 <constraint firstItem="g5S-dq-ivJ" firstAttribute="centerY" secondItem="dGb-wu-mdn" secondAttribute="centerY" id="pEy-GS-gNF"/>
@@ -229,19 +312,29 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
+                <outlet property="curroptedSellerRatingMessageLabel" destination="JX2-Bj-rI5" id="KQc-bI-XaP"/>
                 <outlet property="deliveryTimeView" destination="eSw-hP-jEC" id="4t6-Tb-YuQ"/>
                 <outlet property="fullfillmentProgressView" destination="z2f-YY-OFA" id="6lb-to-uPb"/>
                 <outlet property="fullfilmentTitleLabel" destination="8TI-7K-DI2" id="nqp-HA-6He"/>
                 <outlet property="fullfilmentValueLabel" destination="Fyj-Ch-WIU" id="4e0-Ql-iVW"/>
                 <outlet property="guaranteeLabel" destination="TZf-hC-gPC" id="v9a-OQ-9k7"/>
                 <outlet property="guaranteeLabelToSeperatorVerticalSpacingConstraint" destination="t7Q-wY-aQA" id="aPh-YS-mXG"/>
+                <outlet property="horizontalSeperator" destination="oc5-UD-IUC" id="R3J-8W-0av"/>
+                <outlet property="newSellerBadge" destination="Nk8-v9-nc5" id="jhK-nV-y9x"/>
+                <outlet property="noRateLabelToNewSellerBadgeHorizontalSpacingConstraint" destination="oPh-UZ-jAZ" id="ich-DT-flg"/>
+                <outlet property="noRateLabelToRightSuperviewConstriant" destination="FMs-Sb-pei" id="IAi-j4-fct"/>
+                <outlet property="norateView" destination="hWN-Nq-e5N" id="Nuk-du-A6V"/>
                 <outlet property="notReturnedProgressView" destination="72R-Fd-oqU" id="LfL-Ea-dvf"/>
                 <outlet property="notReturnedTitleLabel" destination="8NC-QE-SVJ" id="YJX-Ie-89O"/>
                 <outlet property="notReturnedValueLabel" destination="SrD-r3-Zc1" id="9Go-HA-ZC9"/>
                 <outlet property="precenseDurationLabel" destination="dGb-wu-mdn" id="yDV-t3-EGa"/>
                 <outlet property="precenseDurationToSeperatorVerticalSpacingConstraint" destination="uEe-PY-v4c" id="0P2-hb-fcw"/>
+                <outlet property="presenceDurationToGuaranteeLabelVerticalSpacingConstraint" destination="RKT-hm-8Tb" id="r6E-Ak-yfh"/>
                 <outlet property="sellerNameLabel" destination="gM6-Yl-v9T" id="lRF-mI-oX1"/>
+                <outlet property="sellerNameToGuaranteeLabelVerticalSpacingConstraint" destination="VQC-Hf-JVk" id="Xtg-eF-N7B"/>
                 <outlet property="sellerOrderCounts" destination="g5S-dq-ivJ" id="bTK-G0-0mv"/>
+                <outlet property="sellerRatingErrorView" destination="1zC-ld-Sz6" id="uo5-nT-vvI"/>
+                <outlet property="sellerRatingRefreshButton" destination="wbd-Yy-Xa0" id="pgS-eM-5bf"/>
                 <outlet property="sellerRatingViewToDeliveryTimeVerticalSpacingConstraint" destination="ZHl-7u-DOL" id="Trl-LA-cjc"/>
                 <outlet property="sellerRatingWrapperView" destination="PEs-H4-r1K" id="Rey-Tt-iBx"/>
                 <outlet property="seperatorToDeliveryTimeViewVerticalSpacingConstraint" destination="fjM-FC-AUg" id="YzE-te-LLi"/>
@@ -254,4 +347,9 @@
             <point key="canvasLocation" x="-792" y="104"/>
         </view>
     </objects>
+    <resources>
+        <image name="deadIcon" width="18" height="18"/>
+        <image name="new_seller_badge" width="21" height="18"/>
+        <image name="orange_refresh" width="12" height="12"/>
+    </resources>
 </document>
