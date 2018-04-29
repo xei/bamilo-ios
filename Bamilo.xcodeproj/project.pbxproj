@@ -118,6 +118,11 @@
 		61508586200C945B00BC67B1 /* OrderDetailCancellationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61508585200C945B00BC67B1 /* OrderDetailCancellationTableViewController.swift */; };
 		6150858C200CCE9700BC67B1 /* OrderDetailPackageHeaderTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6150858B200CCE9700BC67B1 /* OrderDetailPackageHeaderTableViewHeader.swift */; };
 		6150858E200CCEE400BC67B1 /* OrderDetailPackageHeaderTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6150858D200CCEE400BC67B1 /* OrderDetailPackageHeaderTableViewHeader.xib */; };
+		6151786A2091DDA20049907F /* SellerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615178692091DDA20049907F /* SellerView.swift */; };
+		6151786C2091DDAB0049907F /* SellerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6151786B2091DDAB0049907F /* SellerView.xib */; };
+		6151787120944B2B0049907F /* SimpleProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6151787020944B2B0049907F /* SimpleProgressBar.swift */; };
+		6151787320944D1E0049907F /* SimpleProgressBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6151787220944D1E0049907F /* SimpleProgressBar.xib */; };
+		61517875209451CC0049907F /* SimpleProgressBarControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61517874209451CC0049907F /* SimpleProgressBarControl.swift */; };
 		61540C822006482300D2F03F /* Ext+Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61540C812006482300D2F03F /* Ext+Array.swift */; };
 		6157A3EE1F83865800B8D501 /* MyBamiloViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6157A3EC1F83865800B8D501 /* MyBamiloViewController.swift */; };
 		6157A3EF1F83865800B8D501 /* MyBamiloViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6157A3ED1F83865800B8D501 /* MyBamiloViewController.xib */; };
@@ -1177,6 +1182,11 @@
 		61508585200C945B00BC67B1 /* OrderDetailCancellationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailCancellationTableViewController.swift; sourceTree = "<group>"; };
 		6150858B200CCE9700BC67B1 /* OrderDetailPackageHeaderTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailPackageHeaderTableViewHeader.swift; sourceTree = "<group>"; };
 		6150858D200CCEE400BC67B1 /* OrderDetailPackageHeaderTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderDetailPackageHeaderTableViewHeader.xib; sourceTree = "<group>"; };
+		615178692091DDA20049907F /* SellerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellerView.swift; sourceTree = "<group>"; };
+		6151786B2091DDAB0049907F /* SellerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SellerView.xib; sourceTree = "<group>"; };
+		6151787020944B2B0049907F /* SimpleProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleProgressBar.swift; sourceTree = "<group>"; };
+		6151787220944D1E0049907F /* SimpleProgressBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SimpleProgressBar.xib; sourceTree = "<group>"; };
+		61517874209451CC0049907F /* SimpleProgressBarControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleProgressBarControl.swift; sourceTree = "<group>"; };
 		61540C812006482300D2F03F /* Ext+Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+Array.swift"; sourceTree = "<group>"; };
 		6157A3EC1F83865800B8D501 /* MyBamiloViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBamiloViewController.swift; sourceTree = "<group>"; };
 		6157A3ED1F83865800B8D501 /* MyBamiloViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyBamiloViewController.xib; sourceTree = "<group>"; };
@@ -2915,6 +2925,8 @@
 		610C689E1EC7423B008FB66C /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				6151786D20944A8B0049907F /* SimpleProgressBar */,
+				615178662091DD440049907F /* SellerView */,
 				61E5790F205575CF0092D0F8 /* SelecctView */,
 				61180F2F2054182C00B4261E /* HorizontalPickerView */,
 				6192B2BC204E90FE00376D84 /* ReviewSurvey */,
@@ -3486,6 +3498,57 @@
 				6150858D200CCEE400BC67B1 /* OrderDetailPackageHeaderTableViewHeader.xib */,
 			);
 			name = OrderDetailPackageHeaderTableViewHeader;
+			sourceTree = "<group>";
+		};
+		615178662091DD440049907F /* SellerView */ = {
+			isa = PBXGroup;
+			children = (
+				615178682091DD840049907F /* Control */,
+				615178672091DD7F0049907F /* View */,
+			);
+			name = SellerView;
+			sourceTree = "<group>";
+		};
+		615178672091DD7F0049907F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				615178692091DDA20049907F /* SellerView.swift */,
+				6151786B2091DDAB0049907F /* SellerView.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		615178682091DD840049907F /* Control */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Control;
+			sourceTree = "<group>";
+		};
+		6151786D20944A8B0049907F /* SimpleProgressBar */ = {
+			isa = PBXGroup;
+			children = (
+				6151786F20944AB30049907F /* Control */,
+				6151786E20944AAE0049907F /* View */,
+			);
+			name = SimpleProgressBar;
+			sourceTree = "<group>";
+		};
+		6151786E20944AAE0049907F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6151787020944B2B0049907F /* SimpleProgressBar.swift */,
+				6151787220944D1E0049907F /* SimpleProgressBar.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		6151786F20944AB30049907F /* Control */ = {
+			isa = PBXGroup;
+			children = (
+				61517874209451CC0049907F /* SimpleProgressBarControl.swift */,
+			);
+			name = Control;
 			sourceTree = "<group>";
 		};
 		61540C83200A4D1B00D2F03F /* OrderCancellationTableViewCell */ = {
@@ -8211,6 +8274,7 @@
 				875AD5841E38C0C900584ABF /* RITrackingDebug_Bamilo.plist in Resources */,
 				875743FD1EA60E2D001B518A /* Summer-Small@3x.png in Resources */,
 				875744581EA60E8D001B518A /* Yalda@2x.png in Resources */,
+				6151787320944D1E0049907F /* SimpleProgressBar.xib in Resources */,
 				87EA032A1E6D990500B1E062 /* ProgressView.xib in Resources */,
 				8757441C1EA60E48001B518A /* Tragedy-Small@3x.png in Resources */,
 				8757438A1EA60DB9001B518A /* National-72@2x.png in Resources */,
@@ -8365,6 +8429,7 @@
 				8757445C1EA60E8D001B518A /* Yalda-Small.png in Resources */,
 				1C71FC5E1E2CABAD007ACF02 /* Bamilosans Black.ttf in Resources */,
 				1C71FC601E2CABAD007ACF02 /* Bamilosans Light.ttf in Resources */,
+				6151786C2091DDAB0049907F /* SellerView.xib in Resources */,
 				875743C41EA60DFD001B518A /* SpecialOffer-Small-40@2x.png in Resources */,
 				618D8B451FADEF680006A936 /* LoadingFooterView.xib in Resources */,
 				1C71FC621E2CABAD007ACF02 /* Bamilosans UltraLight.ttf in Resources */,
@@ -8688,6 +8753,7 @@
 				CE9ADF3C1AB6D78200D56481 /* JAPageControl.m in Sources */,
 				9A3876561BCD0DBE0088B186 /* JAProductDescriptionView.m in Sources */,
 				875AD5501E38C0C900584ABF /* RISection.m in Sources */,
+				61517875209451CC0049907F /* SimpleProgressBarControl.swift in Sources */,
 				61C51E6D1FDC151700DC75EE /* ErrorControlView.swift in Sources */,
 				9AE766CD1CBCF31400B63D8E /* JACartResumeView.m in Sources */,
 				61FC467D201F75BF000141FA /* BaseNavigationController.m in Sources */,
@@ -8916,6 +8982,7 @@
 				6113E2B32055419D00CE20BE /* HPCollectionViewCell.swift in Sources */,
 				875AD56B1E38C0C900584ABF /* RIProduct.m in Sources */,
 				618204991E6D465500322937 /* SearchCategoryFilter.m in Sources */,
+				6151787120944B2B0049907F /* SimpleProgressBar.swift in Sources */,
 				CEA107011BD78CE500EF88B1 /* JATabBarView.m in Sources */,
 				61C860471ECB1EAF00F2C571 /* CardCollectionViewFlowLayout.swift in Sources */,
 				CE28A7AA1BDE987400B1FADA /* JATabBarButton.m in Sources */,
@@ -9166,6 +9233,7 @@
 				61B402631FC02A2100E57EF4 /* WishListViewController.swift in Sources */,
 				61148E081E47250A00E2540B /* StepperViewControl.m in Sources */,
 				61E099711E3E18F0004ED14E /* NotificationTableViewCell.m in Sources */,
+				6151786A2091DDA20049907F /* SellerView.swift in Sources */,
 				9A189E8F1BB5630C0039BC14 /* JAProductInfoSubLine.m in Sources */,
 				CE9ADFFF1AB6D78200D56481 /* Reachability.m in Sources */,
 				875AD54A1E38C0C900584ABF /* RIForm.m in Sources */,

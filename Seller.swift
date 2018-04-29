@@ -54,6 +54,8 @@ class SellerScore: Mappable {
     var averageReview: Int?
     var deliveryTime: String?
     var score: SellerScore?
+    var precenceDuration: ColorLabelValue<String>?
+    var orderDeliveryCount: ColorLabelValue<String>?
     
     required init?(map: Map) {}
     func mapping(map: Map) {
@@ -67,6 +69,8 @@ class SellerScore: Mappable {
         averageReview <- map["reviews.average"]
         deliveryTime <- map["delivery_time"]
         score <- map["score"]
+        orderDeliveryCount <- map["orders_count"]
+        precenceDuration <- map["precenceDuration"]
         
         //Mapping filters
         let json = JSON(map.JSON)

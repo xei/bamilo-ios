@@ -10,7 +10,6 @@
 #import "JAPriceView.h"
 #import "RIProduct.h"
 #import "RIProductSimple.h"
-#import "RISeller.h"
 #import "JAProductInfoHeaderLine.h"
 #import "JAProductInfoSubLine.h"
 #import "JAProductInfoPriceLine.h"
@@ -21,8 +20,6 @@
 #import "JAProductInfoSISLine.h"
 #import "JAProductInfoSizeLine.h"
 #import "Bamilo-Swift.h"
-
-const CGFloat deliveryTimeViewHeight = 200;
 
 @interface JAPDVProductInfo() {
     UILabel *_sizesLabel;
@@ -256,31 +253,25 @@ const CGFloat deliveryTimeViewHeight = 200;
     /*
      *  SELLER
      */
-//    if (VALID_NOTEMPTY(product.seller, RISeller)) {
-//        _sellerYPosition = yOffset;
-//        JAProductInfoHeaderLine *headerSeller = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoHeaderLineHeight)];
-//        [headerSeller setTitle:[STRING_SELLER_DELIVERTY_TIME_INFO uppercaseString]];
-//        [self addSubview:headerSeller];
-//        yOffset = CGRectGetMaxY(headerSeller.frame);
-//        
-////        DeliveryTimeView *deliveryView = [DeliveryTimeView nibInstance];
-////        deliveryView.productSku = ((RIProductSimple *)product.productSimples.firstObject).sku;
-////        [deliveryView setFrame:CGRectMake(0, yOffset, frame.size.width, deliveryTimeViewHeight)];
-////        [deliveryView fillTheView];
-////        [deliveryView switchTheTextAlignments];
-////        [self addSubview:deliveryView];
-////        yOffset += deliveryTimeViewHeight;
-//        
-//        
-////        JAPDVProductInfoSellerInfo *sellerInfoView = [[JAPDVProductInfoSellerInfo alloc] initWithFrame:CGRectMake(0, yOffset, self.width, 50)];
-////        [sellerInfoView setIsShopFirst:product.shopFirst];
-////        [sellerInfoView setShopFirstOverlayText:product.shopFirstOverlayText];
-////        [sellerInfoView setSeller:product.seller];
-////        [self addTargetToSellerInfoView:sellerInfoView seller:product.seller];
-////
-////        [self addSubview:sellerInfoView];
-////        yOffset = CGRectGetMaxY(sellerInfoView.frame);
-//    }
+    if (VALID_NOTEMPTY(product.seller, Seller)) {
+        _sellerYPosition = yOffset;
+        JAProductInfoHeaderLine *headerSeller = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoHeaderLineHeight)];
+        [headerSeller setTitle:[STRING_SELLER_DELIVERTY_TIME_INFO uppercaseString]];
+        [self addSubview:headerSeller];
+        yOffset = CGRectGetMaxY(headerSeller.frame);
+        
+        SellerView *sellerView = [SellerView nibInstance];
+        [sellerView updateWith:product.seller];
+        
+        [sellerView setNeedsLayout];
+        [sellerView layoutIfNeeded];
+        [sellerView setFrame:CGRectMake(0, yOffset, frame.size.width, [sellerView getCalculatedHeight])];
+        [sellerView runDeliveryTimeCalculationsWithProductSku:((RIProductSimple *)product.productSimples.firstObject).sku];
+        [sellerView switchTheTextAlignments];
+        [self addSubview:sellerView];
+        
+        yOffset += sellerView.frame.size.height;
+    }
     
     /*
      *  OTHER OFFERS

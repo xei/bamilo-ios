@@ -121,3 +121,13 @@ let STRING_SUBMIT_LABEL = RILocalizationWrapper.localizedString("submit_label")!
 let STRING_SURVEY = RILocalizationWrapper.localizedString("survey")!
 let STRING_NEXT = RILocalizationWrapper.localizedString("next")!
 let STRING_PLEASE_SELECT_YOUR_CHOICE = RILocalizationWrapper.localizedString("please_select_your_choice")!
+let STRING_FROM = RILocalizationWrapper.localizedString("from")!
+let STRING_PRECENSE_DURATION = RILocalizationWrapper.localizedString("precense_duration_with_bamilo_label")!
+let STRING_GUARANTEE = RILocalizationWrapper.localizedString("guarantee")!
+let STRING_ORDERS_COUNT = RILocalizationWrapper.localizedString("orders_count")!
+let STRING_RATE = RILocalizationWrapper.localizedString("rate")!
+let STRING_SUCCESSFUL_PRODUCT_SUMPPLEMENT = RILocalizationWrapper.localizedString("successful_product_supplement")!
+let STRING_NO_RETURN_TITLE = RILocalizationWrapper.localizedString("no_return_title")!
+let STRING_SLA_TITLE = RILocalizationWrapper.localizedString("SLA_title")!
+
+
