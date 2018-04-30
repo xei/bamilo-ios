@@ -302,7 +302,7 @@
             let label = attributes[kGAEventLabel] as? String {
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: category,
-                action: "Purchase",
+                action: "TeaserPurchased",
                 label: label,
                 value: nil
             )

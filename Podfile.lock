@@ -1,7 +1,7 @@
 PODS:
-  - Adjust (4.11.5):
-    - Adjust/Core (= 4.11.5)
-  - Adjust/Core (4.11.5)
+  - Adjust (4.13.0):
+    - Adjust/Core (= 4.13.0)
+  - Adjust/Core (4.13.0)
   - AFNetworking (2.6.3):
     - AFNetworking/NSURLConnection (= 2.6.3)
     - AFNetworking/NSURLSession (= 2.6.3)
@@ -23,7 +23,7 @@ PODS:
   - AFNetworking/UIKit (2.6.3):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - Alamofire (4.6.0)
+  - Alamofire (4.7.2)
   - AlamofireObjectMapper (4.1.0):
     - Alamofire (~> 4.1)
     - ObjectMapper (~> 2.0)
@@ -46,11 +46,11 @@ PODS:
   - CHIPageControl/Jaloro (0.1.5)
   - CHIPageControl/Paprika (0.1.5)
   - CHIPageControl/Puya (0.1.5)
-  - CoreSDK (0.9.1)
-  - Crashlytics (3.9.3):
-    - Fabric (~> 1.7.2)
-  - EmarsysPredictSDK (1.0.37)
-  - Fabric (1.7.3)
+  - CoreSDK (1.6.0)
+  - Crashlytics (3.10.1):
+    - Fabric (~> 1.7.5)
+  - EmarsysPredictSDK (1.0.38)
+  - Fabric (1.7.6)
   - FSPagerView (0.7.1)
   - FXBlurView (1.6.4)
   - GoogleAnalytics (3.14.0)
@@ -66,25 +66,25 @@ PODS:
     - CoreSDK
   - NewRelicAgent (5.10.1)
   - ObjectMapper (2.2.9)
-  - Pushwoosh (5.5.3)
+  - Pushwoosh (5.5.5)
   - RAlertView (0.1.1):
     - Masonry
     - RGB
-  - Realm (3.1.1):
-    - Realm/Headers (= 3.1.1)
-  - Realm/Headers (3.1.1)
-  - RealmSwift (3.1.1):
-    - Realm (= 3.1.1)
+  - Realm (3.5.0):
+    - Realm/Headers (= 3.5.0)
+  - Realm/Headers (3.5.0)
+  - RealmSwift (3.5.0):
+    - Realm (= 3.5.0)
   - RGB (0.0.2)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
-  - SwiftyJSON (4.0.0)
-  - TBActionSheet (1.5.6)
-  - TTRangeSlider (1.0.5)
+  - SwiftyJSON (4.1.0)
+  - TBActionSheet (1.6.0)
+  - TTRangeSlider (1.0.6)
 
 DEPENDENCIES:
-  - Adjust (~> 4.11.0)
+  - Adjust
   - Alamofire (~> 4.4)
   - AlamofireObjectMapper (~> 4.0)
   - AlgoliaSearch-Client
@@ -112,17 +112,52 @@ DEPENDENCIES:
   - TBActionSheet
   - TTRangeSlider (~> 1.0.5)
 
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Adjust
+    - AFNetworking
+    - Alamofire
+    - AlamofireObjectMapper
+    - AlgoliaSearch-Client
+    - CHIPageControl
+    - CoreSDK
+    - Crashlytics
+    - EmarsysPredictSDK
+    - Fabric
+    - FSPagerView
+    - FXBlurView
+    - GoogleAnalytics
+    - GoogleAppIndexing
+    - GoogleTagManager
+    - JBWhatsAppActivity
+    - JSONModel
+    - Kingfisher
+    - M13Checkbox
+    - Masonry
+    - MobileEngageSDK
+    - NewRelicAgent
+    - ObjectMapper
+    - Pushwoosh
+    - RAlertView
+    - Realm
+    - RealmSwift
+    - RGB
+    - SDWebImage
+    - SwiftyJSON
+    - TBActionSheet
+    - TTRangeSlider
+
 SPEC CHECKSUMS:
-  Adjust: 4d8e3830da125a270705188250c3ba86b544ebb7
+  Adjust: 8f204c1005d6635e7c931c6a2cb2f881965bf478
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
-  Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
+  Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
   AlamofireObjectMapper: 435adc82f5b367679bd9e71c4974a54efd0b2521
   AlgoliaSearch-Client: 8a937017f9faad0eef7a2d43fdb695f7620de140
   CHIPageControl: 79d19a8ee2e35fa3c1da6533adb5364c77b5cfea
-  CoreSDK: 4dd8a41126434e9741c0e8bf73d60e584153870a
-  Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
-  EmarsysPredictSDK: 575773dad291965132230004203d3c979d43069b
-  Fabric: bb495bb9a7a7677c6d03a1f8b83d95bc49b47e41
+  CoreSDK: 4f79e4fea147954c9716b8b36daaaa02223b39be
+  Crashlytics: aee1a064cbbf99b32efa3f056a5f458d846bc8ff
+  EmarsysPredictSDK: fffffb59050eff3bb35b49990fb77acc249def6c
+  Fabric: f8d42c893bb187326a7968b62abe55c36a987a46
   FSPagerView: 958aba39684e1573755ddcfcc29f7eebb8413cee
   FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
   GoogleAnalytics: 9be1afdb8deeac4bb5f13ca7f7d3b9db2a1f43dc
@@ -136,16 +171,16 @@ SPEC CHECKSUMS:
   MobileEngageSDK: 751a1010eb762d2ecb4c529a1c02c5bf7545449a
   NewRelicAgent: d16c572a3355d3ff9a359a6677e946c7a75a8f76
   ObjectMapper: 63cfe41bc6f8e7c8f44344c49901b8ae7de14c52
-  Pushwoosh: 6e5b9c2845fac05dec7f8955590c24733a57a59c
+  Pushwoosh: fdfb0f676c0991044c04e66125625208289ac2c1
   RAlertView: b9996eb63ceb64c7d1879a1d1846af5e386a1808
-  Realm: 42d1c38a5b1bbcc828b48a7ce702cb86fc68adf4
-  RealmSwift: d31937ca6a6ee54acde64ec839523c0a3c04924b
+  Realm: 0378021c424e4e2bd6a0e63b27881e929d9b9ad1
+  RealmSwift: 3322562622fda2ad596985ead4d8d8be30cf838c
   RGB: 21cf4b60ef3501c6b7cbb268a30045905dd90995
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
-  SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
-  TBActionSheet: d3c23727ee2d5c573245eef51b9980bb801e8bef
-  TTRangeSlider: 2f2ce4a33b32bb323c6575b9f5161c4664459c58
+  SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
+  TBActionSheet: 5ad1810015aece4a9e7d18424f16b6e745f0dc8f
+  TTRangeSlider: 78188bea83f6471a06f75adbc88da5e990baeafe
 
-PODFILE CHECKSUM: 527aa9eb45ba2417c8bd327f58aad06a75592f62
+PODFILE CHECKSUM: 7c61ece23f4b7f8c7d1945237a2931c7e1475cae
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.5.0
