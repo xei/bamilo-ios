@@ -56,7 +56,13 @@
     [self.titleLabel applyStyle:[Theme font:kFontVariationRegular size:19.0f] color: [Theme color:kColorGreen]];
     [self.descLabel applyStyle:[Theme font:kFontVariationRegular size:12.0f] color:[UIColor blackColor]];
     self.titleLabel.text = STRING_THANK_YOU_ORDER_TITLE;
-    self.descLabel.text = STRING_ORDER_SUCCESS;
+    
+    if ([self.cart.orderNr isKindOfClass:[NSString class]] && [self.cart.orderNr length]) {
+        self.descLabel.text = [[NSString stringWithFormat:@"%@\n%@: %@", STRING_ORDER_SUCCESS, STRING_ORDER_NO, self.cart.orderNr] numbersToPersian];
+    } else {
+        self.descLabel.text = STRING_ORDER_SUCCESS;
+    }
+
     self.iconImageView.image = [UIImage imageNamed:@"successIcon"];
     [self.carouselWidget hide];
     

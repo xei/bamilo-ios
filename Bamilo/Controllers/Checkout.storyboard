@@ -332,8 +332,8 @@
                                             <constraint firstItem="fcY-30-Vag" firstAttribute="left" secondItem="JMC-xp-BYm" secondAttribute="left" id="zks-Rg-VbD"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ft2-Po-4VA">
-                                        <rect key="frame" x="166" y="168" width="42" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ft2-Po-4VA">
+                                        <rect key="frame" x="9" y="168.5" width="356" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -342,6 +342,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="Ft2-Po-4VA" firstAttribute="centerY" secondItem="JMC-xp-BYm" secondAttribute="centerY" id="7VI-mf-e8I"/>
+                                    <constraint firstAttribute="trailing" secondItem="Ft2-Po-4VA" secondAttribute="trailing" constant="10" id="SYu-yR-zFI"/>
                                     <constraint firstItem="JMC-xp-BYm" firstAttribute="centerY" secondItem="2GG-zN-eTT" secondAttribute="centerY" id="WYh-QK-KcT"/>
                                     <constraint firstItem="JMC-xp-BYm" firstAttribute="centerX" secondItem="2GG-zN-eTT" secondAttribute="centerX" id="dCV-DR-xN6"/>
                                     <constraint firstItem="Ft2-Po-4VA" firstAttribute="centerX" secondItem="JMC-xp-BYm" secondAttribute="centerX" id="geX-cZ-06g"/>
