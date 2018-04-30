@@ -7,7 +7,7 @@
 //
 
 @objc class GoogleAnalyticsTracker: BaseTracker, EventTrackerProtocol, ScreenTrackerProtocol {
-
+    
     private var campaginDataString: String?
     
     //TODO: Must be changed when we migrate all Trackers
@@ -272,7 +272,7 @@
     
     func checkoutStart(attributes: EventAttributeType) {
         if let cart = attributes[kEventCart] as? RICart {
-            let combinedSkus = cart.cartEntity.cartItems.map { ($0 as? RICartItem)?.sku }.flatMap { $0 }.joined(separator: ",")
+            let combinedSkus = cart.cartEntity.cartItems.map { $0.sku }.flatMap { $0 }.joined(separator: ",")
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: "Checkout",
                 action: "CheckoutStart",
@@ -285,17 +285,18 @@
     
     func checkoutFinished(attributes: EventAttributeType) {
         if let cart = attributes[kEventCart] as? RICart {
-            let combinedSkus = cart.cartEntity.cartItems.map { ($0 as? RICartItem)?.sku }.flatMap { $0 }.joined(separator: ",")
+            let combinedSkus = cart.cartEntity.cartItems?.map { $0.sku }.flatMap { $0 }.joined(separator: ",")
+            let combinedSkusFromPackages = cart.cartEntity.packages.map{$0.products}.flatMap{$0}.flatMap{$0}.map{$0.sku}.flatMap {$0}.joined(separator: ",")
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: "Checkout",
                 action: "CheckoutFinish",
-                label: combinedSkus,
+                label: combinedSkus ?? combinedSkusFromPackages,
                 value: cart.cartEntity.cartValue
             )
             self.sendParamsToGA(params: params)
         }
     }
-
+    
     func purchaseBehaviour(attributes: EventAttributeType) {
         if let category = attributes[kGAEventCategory] as? String,
             let label = attributes[kGAEventLabel] as? String {
@@ -329,6 +330,18 @@
             name: screenName,
             label: label) {
             self.sendParamsToGA(params: timingParms)
+        }
+    }
+    
+    func trackTransaction(cart: RICart) {
+        if let transActionParams = GAIDictionaryBuilder.createTransaction(
+            withId: cart.orderNr,
+            affiliation: "In-App Store",
+            revenue: cart.cartEntity.cartValue,
+            tax: cart.cartEntity.vatValue,
+            shipping: cart.cartEntity.shippingValue,
+            currencyCode: "IRR") {
+            self.sendParamsToGA(params: transActionParams)
         }
     }
     

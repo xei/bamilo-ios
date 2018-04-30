@@ -41,15 +41,16 @@
     [self setupView];
     [self.carouselWidget updateTitle:STRING_BAMILO_RECOMMENDATION_FOR_YOU];
     
-    //Reset the shared Cart entities
-    [RICart sharedInstance].cartEntity.cartItems = @[];
-    [RICart sharedInstance].cartEntity.cartCount = 0;
-    
     [self.tabBarController.tabBar setTranslucent:NO];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.extendedLayoutIncludesOpaqueBars = NO;
     self.automaticallyAdjustsScrollViewInsets = NO;
+    
     [self trackPurchase];
+    
+    //Reset the shared Cart entities
+    [RICart sharedInstance].cartEntity.cartItems = @[];
+    [RICart sharedInstance].cartEntity.cartCount = 0;
 }
 
 - (void)setupView {
@@ -72,6 +73,8 @@
     //EVENT: PURCHASE
     [TrackerManager postEventWithSelector:[EventSelectors purchaseSelector] attributes:[EventAttributes purchaseWithCart:self.cart success:YES]];
     [TrackerManager postEventWithSelector:[EventSelectors checkoutFinishedSelector] attributes:[EventAttributes chekcoutFinishWithCart:self.cart]];
+    
+    [[GoogleAnalyticsTracker sharedTracker] trackTransactionWithCart:self.cart];
     
     [TrackerManager sendTagWithTags:@{ @"PurchaseCount": @([UserDefaultsManager incrementCounter:kUDMPurchaseCount]) } completion:^(NSError *error) {
         if(error == nil) {
