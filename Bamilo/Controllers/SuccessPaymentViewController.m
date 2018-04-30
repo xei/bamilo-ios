@@ -50,6 +50,7 @@
     
     //Reset the shared Cart entities
     [RICart sharedInstance].cartEntity.cartItems = @[];
+    [RICart sharedInstance].cartEntity.packages = @[];
     [RICart sharedInstance].cartEntity.cartCount = 0;
 }
 
@@ -81,7 +82,6 @@
     [TrackerManager postEventWithSelector:[EventSelectors checkoutFinishedSelector] attributes:[EventAttributes chekcoutFinishWithCart:self.cart]];
     
     [[GoogleAnalyticsTracker sharedTracker] trackTransactionWithCart:self.cart];
-    
     [TrackerManager sendTagWithTags:@{ @"PurchaseCount": @([UserDefaultsManager incrementCounter:kUDMPurchaseCount]) } completion:^(NSError *error) {
         if(error == nil) {
             NSLog(@"TrackerManager > PurchaseCount > %d", [UserDefaultsManager getCounter:kUDMPurchaseCount]);
@@ -89,13 +89,15 @@
     }];
     
     //check if came from teasers and track that info
-    [self.cart.cartEntity.cartItems enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([obj isKindOfClass:[RICartItem class]]) {
-            PurchaseBehaviour *behaviour = [[PurchaseBehaviourRecorder sharedInstance] getBehviourBySkuWithSku:((RICartItem *)obj).sku];
-            if (behaviour) {
-                [TrackerManager postEventWithSelector:[EventSelectors behaviourPurchasedSelector] attributes:[EventAttributes purchaseBehaviourWithBehaviour:behaviour]];
+    [self.cart.cartEntity.packages enumerateObjectsUsingBlock:^(CartPackage * _Nonnull package, NSUInteger idx, BOOL * _Nonnull stop) {
+        [package.products enumerateObjectsUsingBlock:^(RICartItem * _Nonnull product, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([product isKindOfClass:[RICartItem class]]) {
+                PurchaseBehaviour *behaviour = [[PurchaseBehaviourRecorder sharedInstance] getBehviourBySkuWithSku:((RICartItem *)product).sku];
+                if (behaviour) {
+                    [TrackerManager postEventWithSelector:[EventSelectors behaviourPurchasedSelector] attributes:[EventAttributes purchaseBehaviourWithBehaviour:behaviour]];
+                }
             }
-        }
+        }];
     }];
     
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kSkusFromTeaserInCartKey];
