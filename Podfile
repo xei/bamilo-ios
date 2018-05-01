@@ -9,7 +9,7 @@ target 'Bamilo' do
   use_frameworks!
 
   # Pods for Bamilo
-  pod 'Adjust', '~> 4.11.0'
+  pod 'Adjust'
   pod 'AlgoliaSearch-Client'
   pod 'Fabric'
   pod 'EmarsysPredictSDK'
