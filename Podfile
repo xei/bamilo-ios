@@ -18,7 +18,7 @@ target 'Bamilo' do
   pod 'GoogleTagManager', '3.15.0' # ********** Legacy
   pod 'GoogleAnalytics', '3.14.0' # ********** Legacy
   pod 'GoogleAppIndexing','~> 2.0.3'
-  pod 'MobileEngageSDK','~> 0.9.1'
+  pod 'MobileEngageSDK','~> 1.1.9'
   pod 'JBWhatsAppActivity', '~> 1.0'
   pod 'NewRelicAgent', '~> 5.10.0'
   pod 'CHIPageControl', '~> 0.1.3'

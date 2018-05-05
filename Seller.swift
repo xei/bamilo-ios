@@ -61,7 +61,6 @@ class SellerScore: Mappable {
     func mapping(map: Map) {
         isGlobal <- map["is_global"]
         isNew <- map["isNew"]
-        isNew = true
         name <- map["name"]
         id <- map["id"]
         warranty <- map["warranty"]
