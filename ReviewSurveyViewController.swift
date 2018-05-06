@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import CHIPageControl
+import AnimatedCollectionViewLayout
 
 class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, DataServiceProtocol {
 
@@ -35,6 +35,13 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
         self.collectionView.showsVerticalScrollIndicator = false
         self.collectionView.showsHorizontalScrollIndicator = false
         
+        self.collectionView.isPagingEnabled = true
+        
+        if let layout = collectionView?.collectionViewLayout as? AnimatedCollectionViewLayout {
+            layout.scrollDirection = .horizontal
+            layout.animator = CubeAttributesAnimator()
+        }
+        
         self.collectionView.register(UINib(nibName: SurveyQuestionCollectionViewCell.nibName, bundle: nil), forCellWithReuseIdentifier: SurveyQuestionCollectionViewCell.nibName)
 
         self.updateView(by: surveryModel)
@@ -61,6 +68,9 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
         self.pagerControl.currentPageTintColor = Theme.color(kColorOrange)
         self.pagerControl.numberOfPages = 0
         self.pagerControl.elementHeight = 9
+        
+        //for RTL view
+        self.pagerControl.transform = CGAffineTransform(scaleX: -1, y: 1)
     }
     
     //MARK: - UICollectionViewDelegate, UICollectionViewDataSource
@@ -124,17 +134,12 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
             self.pagerControl.isHidden = true
         }
         self.pagerControl.elementWidth = UIScreen.main.bounds.width / CGFloat(self.pagerControl.numberOfPages) - 2 * self.pagerHorizontalPadding
-        
-        self.pagerControl.set(progress: self.pagerControl.numberOfPages - 1, animated: false)
-        
         self.collectionView.reloadData()
     }
     
     private func updatePagerControl(animated: Bool) {
-        if let dataSource = self.dataSource {
-            if self.pagerControl.currentPage != dataSource.count - 1 - self.activeIndex {
-                self.pagerControl.set(progress: dataSource.count - 1 - self.activeIndex, animated: animated && pagerMustBeUpdatedViaAnimation)
-            }
+        if self.pagerControl.currentPage != self.activeIndex {
+            self.pagerControl.set(progress: self.activeIndex, animated: animated && pagerMustBeUpdatedViaAnimation)
         }
     }
     

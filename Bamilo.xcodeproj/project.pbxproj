@@ -298,6 +298,10 @@
 		61E57919205582E40092D0F8 /* SelectItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E57917205582E40092D0F8 /* SelectItemViewCell.swift */; };
 		61E5791A205582E40092D0F8 /* SelectItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E57918205582E40092D0F8 /* SelectItemViewCell.xib */; };
 		61E5791C20569CDC0092D0F8 /* SelecctViewControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E5791B20569CDC0092D0F8 /* SelecctViewControl.swift */; };
+		61E6EE64209DD2FC0007ED5F /* CHIBasePageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E6EE61209DD2FB0007ED5F /* CHIBasePageControl.swift */; };
+		61E6EE65209DD2FC0007ED5F /* CHIPageControllable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E6EE62209DD2FB0007ED5F /* CHIPageControllable.swift */; };
+		61E6EE66209DD2FC0007ED5F /* CHILayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E6EE63209DD2FB0007ED5F /* CHILayer.swift */; };
+		61E6EE6A209DD3480007ED5F /* CHIPageControlJaloro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E6EE69209DD3470007ED5F /* CHIPageControlJaloro.swift */; };
 		61E8441B1F0D16AE005D79EE /* ScreentTrackerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E8441A1F0D16AE005D79EE /* ScreentTrackerProtocol.swift */; };
 		61E8441D1F0D18D5005D79EE /* EventTrackerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E8441C1F0D18D5005D79EE /* EventTrackerProtocol.swift */; };
 		61E8441F1F0D203A005D79EE /* TrackerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E8441E1F0D203A005D79EE /* TrackerManager.swift */; };
@@ -1403,6 +1407,10 @@
 		61E57917205582E40092D0F8 /* SelectItemViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectItemViewCell.swift; sourceTree = "<group>"; };
 		61E57918205582E40092D0F8 /* SelectItemViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectItemViewCell.xib; sourceTree = "<group>"; };
 		61E5791B20569CDC0092D0F8 /* SelecctViewControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelecctViewControl.swift; sourceTree = "<group>"; };
+		61E6EE61209DD2FB0007ED5F /* CHIBasePageControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CHIBasePageControl.swift; sourceTree = "<group>"; };
+		61E6EE62209DD2FB0007ED5F /* CHIPageControllable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CHIPageControllable.swift; sourceTree = "<group>"; };
+		61E6EE63209DD2FB0007ED5F /* CHILayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CHILayer.swift; sourceTree = "<group>"; };
+		61E6EE69209DD3470007ED5F /* CHIPageControlJaloro.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CHIPageControlJaloro.swift; sourceTree = "<group>"; };
 		61E8441A1F0D16AE005D79EE /* ScreentTrackerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreentTrackerProtocol.swift; sourceTree = "<group>"; };
 		61E8441C1F0D18D5005D79EE /* EventTrackerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTrackerProtocol.swift; sourceTree = "<group>"; };
 		61E8441E1F0D203A005D79EE /* TrackerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerManager.swift; sourceTree = "<group>"; };
@@ -2913,6 +2921,7 @@
 		610C689E1EC7423B008FB66C /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				61E6EE5E209DCF5A0007ED5F /* Pager */,
 				61E5790F205575CF0092D0F8 /* SelecctView */,
 				61180F2F2054182C00B4261E /* HorizontalPickerView */,
 				6192B2BC204E90FE00376D84 /* ReviewSurvey */,
@@ -4769,6 +4778,33 @@
 				61E57918205582E40092D0F8 /* SelectItemViewCell.xib */,
 			);
 			name = SelectItemViewCell;
+			sourceTree = "<group>";
+		};
+		61E6EE5E209DCF5A0007ED5F /* Pager */ = {
+			isa = PBXGroup;
+			children = (
+				61E6EE5F209DD2700007ED5F /* CHIPageControl */,
+			);
+			name = Pager;
+			sourceTree = "<group>";
+		};
+		61E6EE5F209DD2700007ED5F /* CHIPageControl */ = {
+			isa = PBXGroup;
+			children = (
+				61E6EE69209DD3470007ED5F /* CHIPageControlJaloro.swift */,
+				61E6EE60209DD2FB0007ED5F /* Core */,
+			);
+			name = CHIPageControl;
+			sourceTree = "<group>";
+		};
+		61E6EE60209DD2FB0007ED5F /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				61E6EE61209DD2FB0007ED5F /* CHIBasePageControl.swift */,
+				61E6EE62209DD2FB0007ED5F /* CHIPageControllable.swift */,
+				61E6EE63209DD2FB0007ED5F /* CHILayer.swift */,
+			);
+			path = Core;
 			sourceTree = "<group>";
 		};
 		61E844191F0D1684005D79EE /* Protocols */ = {
@@ -8410,7 +8446,7 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireObjectMapper/AlamofireObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/AlgoliaSearch-Client/AlgoliaSearch_Client.framework",
-				"${BUILT_PRODUCTS_DIR}/CHIPageControl/CHIPageControl.framework",
+				"${BUILT_PRODUCTS_DIR}/AnimatedCollectionViewLayout/AnimatedCollectionViewLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/CoreSDK/CoreSDK.framework",
 				"${BUILT_PRODUCTS_DIR}/EmarsysPredictSDK/EmarsysPredictSDK.framework",
 				"${BUILT_PRODUCTS_DIR}/FSPagerView/FSPagerView.framework",
@@ -8438,7 +8474,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlgoliaSearch_Client.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CHIPageControl.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AnimatedCollectionViewLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CoreSDK.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EmarsysPredictSDK.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FSPagerView.framework",
@@ -8773,6 +8809,7 @@
 				9A189E6F1BB31AF70039BC14 /* JAProductInfoSingleLine.m in Sources */,
 				875AD5701E38C0C900584ABF /* RISeller.m in Sources */,
 				89C177BF1BC2EC17006D3B19 /* JAPDVProductInfoSellerInfo.m in Sources */,
+				61E6EE6A209DD3480007ED5F /* CHIPageControlJaloro.swift in Sources */,
 				613A5AD02045ACC10017F167 /* ReviewServiceDataManager.swift in Sources */,
 				879F88051E50B2940033FE87 /* AuthenticationBaseViewController.m in Sources */,
 				619351A51ECAC9A900330E5C /* CatalogGridCollectionViewCell.swift in Sources */,
@@ -8803,6 +8840,7 @@
 				CE9ADF741AB6D78200D56481 /* JAPDVBundleSingleItem.m in Sources */,
 				CE9ADF7A1AB6D78200D56481 /* JAPercentageBarView.m in Sources */,
 				613FF2BA1E4B2858008660CF /* SignUpViewController.m in Sources */,
+				61E6EE65209DD2FC0007ED5F /* CHIPageControllable.swift in Sources */,
 				87EA03091E6C695D00B1E062 /* IconTableViewHeaderCell.m in Sources */,
 				610519421F370DA4004695BD /* DeliveryTime.swift in Sources */,
 				87865FD11EE2D3B2009505C7 /* Notifications.swift in Sources */,
@@ -8983,6 +9021,7 @@
 				FFF900721C6A5CC700DDF538 /* JATextFieldComponent.m in Sources */,
 				61148E051E4724FC00E2540B /* StepperView.m in Sources */,
 				61E57919205582E40092D0F8 /* SelectItemViewCell.swift in Sources */,
+				61E6EE64209DD2FC0007ED5F /* CHIBasePageControl.swift in Sources */,
 				61A166BA1FB6A7AA003FBA56 /* TourManager.swift in Sources */,
 				875AD54F1E38C0C900584ABF /* RISearchSuggestion.m in Sources */,
 				87A681711E41FCF300D252AC /* CheckoutProgressView.m in Sources */,
@@ -9001,6 +9040,7 @@
 				9A189E811BB54C2D0039BC14 /* JAScrolledImageGalleryView.m in Sources */,
 				8976FB2C1C0F323700483651 /* JARatingFilterCell.m in Sources */,
 				87A6ACEF1E38919C00C0E7DC /* GTMNSString+HTML.m in Sources */,
+				61E6EE66209DD2FC0007ED5F /* CHILayer.swift in Sources */,
 				61C5BAF11EC1F40300F3A796 /* CatalogViewController.swift in Sources */,
 				870BEA8D1E74013F00C5B615 /* ThemeColor.m in Sources */,
 				61F946B31ED4502100F341A6 /* ProductDataManager.swift in Sources */,

@@ -101,7 +101,7 @@
                                         <rect key="frame" x="147" y="137" width="120" height="57"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SSz-D5-qwc">
-                                        <rect key="frame" x="194" y="69" width="27.333333333333343" height="23"/>
+                                        <rect key="frame" x="193.33333333333334" y="69" width="27.333333333333343" height="23"/>
                                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -1179,7 +1179,7 @@
                                                 </connections>
                                             </switch>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="فقط با تخفیف ها" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gEn-nz-ntR">
-                                                <rect key="frame" x="59.666666666666679" y="14.999999999999998" width="85.333333333333314" height="21.333333333333329"/>
+                                                <rect key="frame" x="59.666666666666679" y="15.333333333333334" width="85.333333333333314" height="21.333333333333329"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1719,7 +1719,7 @@
                                 <rect key="frame" x="187" y="100" width="40" height="40"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="فیلترهای کمتری را برای جستجو انتخاب نمایید" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SU1-vf-mKc">
-                                <rect key="frame" x="83.333333333333329" y="165" width="247.33333333333337" height="23"/>
+                                <rect key="frame" x="83.666666666666671" y="165" width="247.33333333333331" height="23"/>
                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -1779,7 +1779,7 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Pzc-hC-CNZ">
                                 <rect key="frame" x="0.0" y="51" width="414" height="620"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="KsG-uT-q0X">
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="KsG-uT-q0X" customClass="AnimatedCollectionViewLayout" customModule="AnimatedCollectionViewLayout">
                                     <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -1787,8 +1787,8 @@
                                 </collectionViewFlowLayout>
                                 <cells/>
                             </collectionView>
-                            <view contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" translatesAutoresizingMaskIntoConstraints="NO" id="aQb-4C-eHr" customClass="CHIPageControlJaloro" customModule="CHIPageControl">
-                                <rect key="frame" x="84.666666666666686" y="15" width="245" height="6"/>
+                            <view contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" translatesAutoresizingMaskIntoConstraints="NO" id="aQb-4C-eHr" customClass="CHIPageControlJaloro" customModule="Bamilo" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="15" width="414" height="6"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="numberOfPages">
@@ -1799,11 +1799,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="aQb-4C-eHr" firstAttribute="left" secondItem="dzF-yr-ery" secondAttribute="left" id="3aG-Ax-hCT"/>
                             <constraint firstItem="99h-Ky-lOg" firstAttribute="top" secondItem="1hV-h5-tPH" secondAttribute="bottom" id="6ll-dY-1K3"/>
                             <constraint firstItem="aQb-4C-eHr" firstAttribute="top" secondItem="dzF-yr-ery" secondAttribute="top" constant="15" id="Hdx-6m-NbZ"/>
                             <constraint firstAttribute="trailing" secondItem="1hV-h5-tPH" secondAttribute="trailing" id="O2m-k5-rBz"/>
                             <constraint firstItem="1hV-h5-tPH" firstAttribute="leading" secondItem="dzF-yr-ery" secondAttribute="leading" id="Qpb-je-S5r"/>
                             <constraint firstAttribute="right" secondItem="Pzc-hC-CNZ" secondAttribute="right" id="SSg-TU-d6m"/>
+                            <constraint firstAttribute="bottom" secondItem="aQb-4C-eHr" secondAttribute="bottom" constant="715" id="aPe-xt-3OL"/>
                             <constraint firstItem="1hV-h5-tPH" firstAttribute="top" secondItem="Pzc-hC-CNZ" secondAttribute="bottom" constant="20" id="b6A-5v-u4q"/>
                             <constraint firstItem="aQb-4C-eHr" firstAttribute="centerX" secondItem="dzF-yr-ery" secondAttribute="centerX" id="evb-vW-Waz"/>
                             <constraint firstItem="Pzc-hC-CNZ" firstAttribute="top" secondItem="aQb-4C-eHr" secondAttribute="bottom" constant="30" id="fyZ-Qd-FyE"/>

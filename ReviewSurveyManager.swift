@@ -30,16 +30,16 @@ import UIKit
     }
     
     static func runSurveyIfItsNeeded(target: DataServiceProtocol, executionType: ApiRequestExecutionType) {
-        ReviewServiceDataManager.sharedInstance.getAvaiableUserSurvey(target, executionType: executionType) { (data, error) in
-            if let dataDictionary = data as? [String: Any], let content = dataDictionary[DataManagerKeys.DataContent] as? UserSurvey, let presentingSurvey = content.surveys?.first, let orderID = content.orderNumber {
-                self.startPresentingSurvey(reviewSurvey: presentingSurvey, orderId: orderID)
-            } else if let userSurvey = data as? UserSurvey, let presentingSurvey = userSurvey.surveys?.first, let orderID = userSurvey.orderNumber {
-                self.startPresentingSurvey(reviewSurvey: presentingSurvey, orderId: orderID)
-            }
-        }
-//        if let presentingSurvey = mockApi().surveys?.first, let orderID = mockApi().orderNumber {
-//            self.startPresentingSurvey(reviewSurvey: presentingSurvey, orderId: orderID)
+//        ReviewServiceDataManager.sharedInstance.getAvaiableUserSurvey(target, executionType: executionType) { (data, error) in
+//            if let dataDictionary = data as? [String: Any], let content = dataDictionary[DataManagerKeys.DataContent] as? UserSurvey, let presentingSurvey = content.surveys?.first, let orderID = content.orderNumber {
+//                self.startPresentingSurvey(reviewSurvey: presentingSurvey, orderId: orderID)
+//            } else if let userSurvey = data as? UserSurvey, let presentingSurvey = userSurvey.surveys?.first, let orderID = userSurvey.orderNumber {
+//                self.startPresentingSurvey(reviewSurvey: presentingSurvey, orderId: orderID)
+//            }
 //        }
+        if let presentingSurvey = mockApi().surveys?.first, let orderID = mockApi().orderNumber {
+            self.startPresentingSurvey(reviewSurvey: presentingSurvey, orderId: orderID)
+        }
     }
     
     static func startPresentingSurvey(reviewSurvey: ReviewSurvery, orderId: String) {
