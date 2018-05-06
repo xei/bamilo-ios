@@ -45,6 +45,7 @@ class SellerView: BaseControlView {
     @IBOutlet weak private var curroptedSellerRatingMessageLabel: UILabel!
     @IBOutlet weak private var sellerRatingRefreshButton: IconButton!
     @IBOutlet weak private var sellerRatingErrorView: UIView!
+    @IBOutlet weak private var sellerNameToSeperatorVerticalSpacingConstraint: NSLayoutConstraint!
     
     weak var delegate: SellerViewDelegate?
     
@@ -67,8 +68,7 @@ class SellerView: BaseControlView {
     }
     
     func update(with seller: Seller) {
-        self.sellerNameLabel.text = "\(STRING_SELLER): \(seller.name ?? "")"
-        
+        self.sellerNameLabel.text = "\(STRING_SELLER): \(seller.name ?? STRING_NO_NAME)"
         if let orderDeliveryCount = seller.orderDeliveryCount {
             self.sellerOrderCounts.text = "\(orderDeliveryCount.label ?? STRING_ORDERS_COUNT): \(orderDeliveryCount.value ?? "")".convertTo(language: .arabic)
             self.sellerOrderCounts.textColor = orderDeliveryCount.color ?? Theme.color(kColorGray1)
@@ -83,6 +83,7 @@ class SellerView: BaseControlView {
             
             self.sellerNameToGuaranteeLabelVerticalSpacingConstraint.priority = MASLayoutPriorityDefaultLow
             self.precenseDurationToSeperatorVerticalSpacingConstraint.priority = MASLayoutPriorityDefaultHigh
+            self.sellerNameToSeperatorVerticalSpacingConstraint.priority = MASLayoutPriorityDefaultLow
         } else {
             self.sellerNameToGuaranteeLabelVerticalSpacingConstraint.priority = MASLayoutPriorityDefaultHigh
             self.precenseDurationToSeperatorVerticalSpacingConstraint.priority = MASLayoutPriorityDefaultLow
@@ -94,11 +95,16 @@ class SellerView: BaseControlView {
             self.guaranteeLabelToSeperatorVerticalSpacingConstraint.priority = MASLayoutPriorityDefaultHigh
             self.precenseDurationToSeperatorVerticalSpacingConstraint.priority = MASLayoutPriorityDefaultLow
             self.guaranteeLabel.alpha = 1
+            self.sellerNameToSeperatorVerticalSpacingConstraint.priority = MASLayoutPriorityDefaultLow
         } else {
             self.guaranteeLabel.text = nil
             self.guaranteeLabel.alpha = 0
             self.guaranteeLabelToSeperatorVerticalSpacingConstraint.priority = MASLayoutPriorityDefaultLow
             self.precenseDurationToSeperatorVerticalSpacingConstraint.priority = MASLayoutPriorityDefaultHigh
+            
+            if seller.precenceDuration == nil || seller.precenceDuration?.value == nil {
+                self.sellerNameToSeperatorVerticalSpacingConstraint.priority = MASLayoutPriorityDefaultHigh
+            }
         }
         
         if let score = seller.score {
@@ -106,8 +112,8 @@ class SellerView: BaseControlView {
             if let totalScore = score.overall {
                 self.totalScoreValueLabel.textColor = totalScore.color ?? Theme.color(kColorGreen1)
                 if let value = totalScore.value, let maxValue = score.maxValue {
-                    self.totalScoreValueLabel.text = "\(value)".convertTo(language: .arabic)
-                    self.totalScoreBaseValueLabel.text = "\(STRING_FROM) \(maxValue) \(STRING_RATE)".convertTo(language: .arabic)
+                    self.totalScoreValueLabel.text = formatScoreValue(score: value)
+                    self.totalScoreBaseValueLabel.text = "\(STRING_FROM) \(formatScoreValue(score:maxValue)) \(STRING_RATE)"
                 } else {
                     self.totalScoreValueLabel.text = nil
                     self.totalScoreBaseValueLabel.text = nil
@@ -119,7 +125,7 @@ class SellerView: BaseControlView {
             self.fullfilmentTitleLabel.text = score.fullfilment?.label ?? STRING_SUCCESSFUL_PRODUCT_SUMPPLEMENT
             
             self.fullfilmentValueLabel.textColor = score.fullfilment?.color ?? Theme.color(kColorGray1)
-            self.fullfilmentValueLabel.text = "\(score.fullfilment?.value ?? 0)".convertTo(language: .arabic)
+            self.fullfilmentValueLabel.text = "\(formatScoreValue(score: score.fullfilment?.value ?? 0)) \(STRING_FROM) \(formatScoreValue(score:score.maxValue ?? 0))"
             if let value = score.fullfilment?.value, let maxValue = score.maxValue {
                 self.fullfillmentProgressView.update(withModel: CGFloat(value/maxValue))
             } else {
@@ -130,7 +136,7 @@ class SellerView: BaseControlView {
             self.notReturnedTitleLabel.text = score.notReturned?.label ?? STRING_NO_RETURN_TITLE
             
             self.notReturnedValueLabel.textColor = score.notReturned?.color ?? Theme.color(kColorGray1)
-            self.notReturnedValueLabel.text = "\(score.notReturned?.value ?? 0)".convertTo(language: .arabic)
+            self.notReturnedValueLabel.text = "\(formatScoreValue(score: score.notReturned?.value ?? 0)) \(STRING_FROM) \(formatScoreValue(score:score.maxValue ?? 0))"
             if let value = score.notReturned?.value, let maxValue = score.maxValue {
                 self.notReturnedProgressView.update(withModel: CGFloat(value/maxValue))
             } else {
@@ -141,7 +147,7 @@ class SellerView: BaseControlView {
             self.slaReachedTitleLabel.text = score.slaReached?.label ?? STRING_SLA_TITLE
             
             self.slaReachedValueLabel.textColor = score.slaReached?.color ?? Theme.color(kColorGray1)
-            self.slaReachedValueLabel.text = "\(score.slaReached?.value ?? 0)".convertTo(language: .arabic)
+            self.slaReachedValueLabel.text = "\(formatScoreValue(score: score.slaReached?.value ?? 0)) \(STRING_FROM) \(formatScoreValue(score:score.maxValue ?? 0))"
             if let value = score.slaReached?.value, let maxValue = score.maxValue {
                 self.slaReachedProgressView.update(withModel: CGFloat(value/maxValue))
             } else {
@@ -165,6 +171,11 @@ class SellerView: BaseControlView {
             self.newSellerBadge.alpha = seller.isNew ? 1 : 0
         }
         
+    }
+    
+    private func formatScoreValue(score: Double) -> String {
+        let isInteger = floor(score) == score
+        return "\(isInteger ? "\(Int(score))" : "\(score)")".convertTo(language: .arabic).persianDoubleFormat()
     }
     
     func showErrorOnSellerScore() {

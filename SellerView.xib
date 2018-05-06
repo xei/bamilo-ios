@@ -32,7 +32,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="تعداد سفارشات :‌ " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g5S-dq-ivJ">
-                    <rect key="frame" x="16" y="49.5" width="92.5" height="23.5"/>
+                    <rect key="frame" x="16" y="50" width="92.5" height="23.5"/>
                     <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="13"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -283,6 +283,7 @@
             <constraints>
                 <constraint firstItem="PEs-H4-r1K" firstAttribute="left" secondItem="oc5-UD-IUC" secondAttribute="left" id="1Ih-ar-qUT"/>
                 <constraint firstItem="hWN-Nq-e5N" firstAttribute="centerY" secondItem="gM6-Yl-v9T" secondAttribute="centerY" id="2CG-3h-AYQ"/>
+                <constraint firstItem="oc5-UD-IUC" firstAttribute="top" secondItem="gM6-Yl-v9T" secondAttribute="bottom" priority="250" constant="16" id="AME-5k-x7a"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="eSw-hP-jEC" secondAttribute="bottom" constant="16" id="BHl-7L-ziD"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="right" secondItem="dGb-wu-mdn" secondAttribute="right" constant="16" id="Ds8-Me-Rzf"/>
                 <constraint firstItem="dGb-wu-mdn" firstAttribute="top" secondItem="gM6-Yl-v9T" secondAttribute="bottom" constant="10" id="Lfv-R2-sza"/>
@@ -332,6 +333,7 @@
                 <outlet property="presenceDurationToGuaranteeLabelVerticalSpacingConstraint" destination="RKT-hm-8Tb" id="r6E-Ak-yfh"/>
                 <outlet property="sellerNameLabel" destination="gM6-Yl-v9T" id="lRF-mI-oX1"/>
                 <outlet property="sellerNameToGuaranteeLabelVerticalSpacingConstraint" destination="VQC-Hf-JVk" id="Xtg-eF-N7B"/>
+                <outlet property="sellerNameToSeperatorVerticalSpacingConstraint" destination="AME-5k-x7a" id="1Yl-UZ-oqt"/>
                 <outlet property="sellerOrderCounts" destination="g5S-dq-ivJ" id="bTK-G0-0mv"/>
                 <outlet property="sellerRatingErrorView" destination="1zC-ld-Sz6" id="uo5-nT-vvI"/>
                 <outlet property="sellerRatingRefreshButton" destination="wbd-Yy-Xa0" id="pgS-eM-5bf"/>

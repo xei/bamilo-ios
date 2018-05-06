@@ -27,6 +27,10 @@ extension String {
         return converted
     }
     
+    func persianDoubleFormat() -> String {
+        return self.replacingOccurrences(of: ".", with: "/")
+    }
+    
     func priceFormat() -> String {
         var cammaIndex: Int = self.count % 3 == 0 ? 3 : self.count % 3
         var result = self
