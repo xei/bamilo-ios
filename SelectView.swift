@@ -15,7 +15,7 @@ protocol SelectViewItemDataSourceProtocol {
 
 class SelectView: BaseControlView, UITableViewDelegate, UITableViewDataSource {
     
-    @IBOutlet weak private var tableview: UITableView!
+    @IBOutlet weak internal var tableview: UITableView!
     private var selectionType: SelectionType = .checkbox
     private var dataSource: [SelectViewItemDataSourceProtocol]?
 

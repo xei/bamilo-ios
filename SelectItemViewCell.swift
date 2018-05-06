@@ -13,7 +13,7 @@ class SelectItemViewCell: BaseTableViewCell {
     
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var checkbox: M13Checkbox!
-    private var model: SelectViewItemDataSourceProtocol?
+    internal var model: SelectViewItemDataSourceProtocol?
 
     
     override func awakeFromNib() {
@@ -26,7 +26,7 @@ class SelectItemViewCell: BaseTableViewCell {
         self.checkbox.markType = type == .checkbox ? .checkmark : .radio
     }
     
-    func applyStyle() {
+    private func applyStyle() {
         self.titleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
         self.checkbox.checkState = .unchecked
         self.checkbox.boxLineWidth = 2

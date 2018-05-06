@@ -302,6 +302,10 @@
 		61E6EE65209DD2FC0007ED5F /* CHIPageControllable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E6EE62209DD2FB0007ED5F /* CHIPageControllable.swift */; };
 		61E6EE66209DD2FC0007ED5F /* CHILayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E6EE63209DD2FB0007ED5F /* CHILayer.swift */; };
 		61E6EE6A209DD3480007ED5F /* CHIPageControlJaloro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E6EE69209DD3470007ED5F /* CHIPageControlJaloro.swift */; };
+		61E6EE74209F2B880007ED5F /* RadioColoredButtonsGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E6EE73209F2B880007ED5F /* RadioColoredButtonsGroupView.swift */; };
+		61E6EE76209F2B910007ED5F /* RadioColoredButtonsGroupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E6EE75209F2B910007ED5F /* RadioColoredButtonsGroupView.xib */; };
+		61E6EE7A209F2F050007ED5F /* RadioColoredButtonItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E6EE78209F2F050007ED5F /* RadioColoredButtonItemTableViewCell.swift */; };
+		61E6EE7B209F2F050007ED5F /* RadioColoredButtonItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E6EE79209F2F050007ED5F /* RadioColoredButtonItemTableViewCell.xib */; };
 		61E8441B1F0D16AE005D79EE /* ScreentTrackerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E8441A1F0D16AE005D79EE /* ScreentTrackerProtocol.swift */; };
 		61E8441D1F0D18D5005D79EE /* EventTrackerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E8441C1F0D18D5005D79EE /* EventTrackerProtocol.swift */; };
 		61E8441F1F0D203A005D79EE /* TrackerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E8441E1F0D203A005D79EE /* TrackerManager.swift */; };
@@ -1411,6 +1415,10 @@
 		61E6EE62209DD2FB0007ED5F /* CHIPageControllable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CHIPageControllable.swift; sourceTree = "<group>"; };
 		61E6EE63209DD2FB0007ED5F /* CHILayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CHILayer.swift; sourceTree = "<group>"; };
 		61E6EE69209DD3470007ED5F /* CHIPageControlJaloro.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CHIPageControlJaloro.swift; sourceTree = "<group>"; };
+		61E6EE73209F2B880007ED5F /* RadioColoredButtonsGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioColoredButtonsGroupView.swift; sourceTree = "<group>"; };
+		61E6EE75209F2B910007ED5F /* RadioColoredButtonsGroupView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RadioColoredButtonsGroupView.xib; sourceTree = "<group>"; };
+		61E6EE78209F2F050007ED5F /* RadioColoredButtonItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioColoredButtonItemTableViewCell.swift; sourceTree = "<group>"; };
+		61E6EE79209F2F050007ED5F /* RadioColoredButtonItemTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RadioColoredButtonItemTableViewCell.xib; sourceTree = "<group>"; };
 		61E8441A1F0D16AE005D79EE /* ScreentTrackerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreentTrackerProtocol.swift; sourceTree = "<group>"; };
 		61E8441C1F0D18D5005D79EE /* EventTrackerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTrackerProtocol.swift; sourceTree = "<group>"; };
 		61E8441E1F0D203A005D79EE /* TrackerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerManager.swift; sourceTree = "<group>"; };
@@ -2922,7 +2930,7 @@
 			isa = PBXGroup;
 			children = (
 				61E6EE5E209DCF5A0007ED5F /* Pager */,
-				61E5790F205575CF0092D0F8 /* SelecctView */,
+				61E5790F205575CF0092D0F8 /* SelectView */,
 				61180F2F2054182C00B4261E /* HorizontalPickerView */,
 				6192B2BC204E90FE00376D84 /* ReviewSurvey */,
 				6199B82F1FF8EBF1008C62A6 /* LoadingCoverView */,
@@ -3893,6 +3901,7 @@
 		6192B2BC204E90FE00376D84 /* ReviewSurvey */ = {
 			isa = PBXGroup;
 			children = (
+				61E6EE6D209F28B10007ED5F /* RadioOptionQuestion */,
 				61ABDB792056BBC8001A0FEE /* SelectOptionQuestion */,
 				61180F28205403BD00B4261E /* NPSQuestion */,
 				6192B2BD204E923300376D84 /* ImageSelectQuestion */,
@@ -4744,13 +4753,13 @@
 			name = ProgressBarItemView;
 			sourceTree = "<group>";
 		};
-		61E5790F205575CF0092D0F8 /* SelecctView */ = {
+		61E5790F205575CF0092D0F8 /* SelectView */ = {
 			isa = PBXGroup;
 			children = (
 				61E57911205577710092D0F8 /* Control */,
 				61E579102055776A0092D0F8 /* View */,
 			);
-			name = SelecctView;
+			name = SelectView;
 			sourceTree = "<group>";
 		};
 		61E579102055776A0092D0F8 /* View */ = {
@@ -4805,6 +4814,65 @@
 				61E6EE63209DD2FB0007ED5F /* CHILayer.swift */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		61E6EE6D209F28B10007ED5F /* RadioOptionQuestion */ = {
+			isa = PBXGroup;
+			children = (
+				61E6EE72209F2B680007ED5F /* Control */,
+				61E6EE71209F2B640007ED5F /* View */,
+			);
+			name = RadioOptionQuestion;
+			sourceTree = "<group>";
+		};
+		61E6EE6E209F2A450007ED5F /* RadioColoredButtonsGroup */ = {
+			isa = PBXGroup;
+			children = (
+				61E6EE70209F2B5D0007ED5F /* Control */,
+				61E6EE6F209F2B570007ED5F /* View */,
+			);
+			name = RadioColoredButtonsGroup;
+			sourceTree = "<group>";
+		};
+		61E6EE6F209F2B570007ED5F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				61E6EE77209F2EC60007ED5F /* RadioColoredButtonItemTableViewCell */,
+				61E6EE73209F2B880007ED5F /* RadioColoredButtonsGroupView.swift */,
+				61E6EE75209F2B910007ED5F /* RadioColoredButtonsGroupView.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		61E6EE70209F2B5D0007ED5F /* Control */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Control;
+			sourceTree = "<group>";
+		};
+		61E6EE71209F2B640007ED5F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				61E6EE6E209F2A450007ED5F /* RadioColoredButtonsGroup */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		61E6EE72209F2B680007ED5F /* Control */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Control;
+			sourceTree = "<group>";
+		};
+		61E6EE77209F2EC60007ED5F /* RadioColoredButtonItemTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				61E6EE78209F2F050007ED5F /* RadioColoredButtonItemTableViewCell.swift */,
+				61E6EE79209F2F050007ED5F /* RadioColoredButtonItemTableViewCell.xib */,
+			);
+			name = RadioColoredButtonItemTableViewCell;
 			sourceTree = "<group>";
 		};
 		61E844191F0D1684005D79EE /* Protocols */ = {
@@ -8349,6 +8417,7 @@
 				CE9AE0E01AB6D78200D56481 /* JAPDVProductInfo~iPad_Portrait.xib in Resources */,
 				87B684DC1E49CE660042C09F /* BasicTableViewCell.xib in Resources */,
 				6150858E200CCEE400BC67B1 /* OrderDetailPackageHeaderTableViewHeader.xib in Resources */,
+				61E6EE7B209F2F050007ED5F /* RadioColoredButtonItemTableViewCell.xib in Resources */,
 				875743A81EA60DE0001B518A /* Ramadan-76.png in Resources */,
 				619E92D01F8A1044003885BC /* DailyDealsCollectionViewCell.xib in Resources */,
 				61036B511E65897D006E12A9 /* MutualTitleHeaderCell.xib in Resources */,
@@ -8391,6 +8460,7 @@
 				875743CA1EA60DFD001B518A /* SpecialOffer-60@3x.png in Resources */,
 				875743DE1EA60E13001B518A /* Spring-Small@3x.png in Resources */,
 				8757438D1EA60DB9001B518A /* National-60@2x.png in Resources */,
+				61E6EE76209F2B910007ED5F /* RadioColoredButtonsGroupView.xib in Resources */,
 				61036B5B1E6599FC006E12A9 /* OrderListTableViewCell.xib in Resources */,
 				616D5037204EAA6F00370C4E /* SurveyQuestionCollectionViewCell.xib in Resources */,
 				8757445C1EA60E8D001B518A /* Yalda-Small.png in Resources */,
@@ -9152,6 +9222,7 @@
 				9A7A77321B2F182E002F530F /* JAPDVGallery.m in Sources */,
 				61036B5A1E6599FC006E12A9 /* OrderListTableViewCell.m in Sources */,
 				612FE5171EDC062500C2AFA0 /* ProfileViewController.swift in Sources */,
+				61E6EE7A209F2F050007ED5F /* RadioColoredButtonItemTableViewCell.swift in Sources */,
 				8968FE731C3AE33E00B28207 /* JAUserDataViewController.m in Sources */,
 				617D4EED1FEA5F3600A00799 /* CategoryDataManager.swift in Sources */,
 				61338D051EACC64D0017BB06 /* EmarsysRecommendationMinimalCarouselWidget.m in Sources */,
@@ -9190,6 +9261,7 @@
 				875AD55F1E38C0C900584ABF /* RIError.m in Sources */,
 				61B2C7FA1F9C974E00930435 /* AccordionTableViewCell.swift in Sources */,
 				CED620631BEB59A900FA8403 /* JAFilterCell.m in Sources */,
+				61E6EE74209F2B880007ED5F /* RadioColoredButtonsGroupView.swift in Sources */,
 				61B2C8011F9CA59E00930435 /* OrderDetailTableViewCell.swift in Sources */,
 				87459C981E4F090F00743120 /* RadioButtonView.m in Sources */,
 				CE9AE0081AB6D78200D56481 /* JAMaintenancePage.m in Sources */,

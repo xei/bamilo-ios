@@ -18,8 +18,9 @@ class SurveyQuestionCollectionViewCell: BaseCollectionViewCellSwift {
     override func update(withModel model: Any) {
         if let question = model as? SurveyQuestion, let type = question.type {
             switch type {
-            case .radio,
-                 .checkbox:
+            case .radio:
+                self.questionView = SelectOptionQuestionView.nibInstance()
+            case .checkbox:
                 self.questionView = SelectOptionQuestionView.nibInstance()
             case .imageSelect:
                 self.questionView = ImageSelectQuestionView.nibInstance()
