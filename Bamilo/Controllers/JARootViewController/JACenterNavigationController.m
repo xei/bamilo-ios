@@ -188,73 +188,73 @@
 
 - (void)openTargetString:(NSString *)targetString purchaseInfo:(NSString *)purchaseInfo {
     JAScreenTarget *screenTarget = [JAScreenTarget new];
-    screenTarget.target = [RITarget parseTarget:targetString];
     screenTarget.pushAnimation = YES;
-    [self openScreenTarget:screenTarget purchaseInfo:purchaseInfo];
+    [self openScreenTarget:[RITarget parseTarget:targetString] purchaseInfo:purchaseInfo];
 }
 
-- (BOOL)openScreenTarget:(JAScreenTarget *)screenTarget purchaseInfo:(NSString *)purchaseInfo {
-    if ([[self topViewController] isKindOfClass:[JABaseViewController class]] && [[(JABaseViewController *)[self topViewController] targetString] isEqualToString:screenTarget.target.targetString]) {
+- (BOOL)openScreenTarget:(RITarget *)target purchaseInfo:(NSString *)purchaseInfo {
+    if ([[self topViewController] isKindOfClass:[JABaseViewController class]] && [[(JABaseViewController *)[self topViewController] targetString] isEqualToString:target.targetString]) {
         return NO;
     }
-    switch (screenTarget.target.targetType) {
+    switch (target.targetType) {
         case PRODUCT_DETAIL: {
             JAPDVViewController *viewController = [JAPDVViewController new];
             viewController.purchaseTrackingInfo = purchaseInfo;
-            viewController.targetString = screenTarget.target.targetString;
+            viewController.targetString = target.targetString;
             viewController.hidesBottomBarWhenPushed = YES;
-            [self pushViewController:viewController animated:screenTarget.pushAnimation];
+            [self pushViewController:viewController animated:true];
             return YES;
         }
-        case CATALOG_SEARCH: {
+        case CATALOG_SEARCH:
+        case CATALOG_SELLER:{
             CatalogViewController *viewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
-            viewController.searchTarget = screenTarget.target;
+            viewController.searchTarget = target;
             viewController.purchaseTrackingInfo = purchaseInfo;
-            [self pushViewController:viewController animated:screenTarget.pushAnimation];
+            [self pushViewController:viewController animated:true];
             return YES;
         }
         case CATALOG_HASH:
         case CATALOG_BRAND:
         case CATALOG_CATEGORY: {
             CatalogViewController *viewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];;
-            viewController.searchTarget = screenTarget.target;
+            viewController.searchTarget = target;
             viewController.purchaseTrackingInfo = purchaseInfo;
-            [self pushViewController:viewController animated:screenTarget.pushAnimation];
+            [self pushViewController:viewController animated:true];
             return YES;
         }
         case STATIC_PAGE:
         case SHOP_IN_SHOP: {
             JAShopWebViewController* viewController = [[JAShopWebViewController alloc] init];
             viewController.purchaseTrackingInfo = purchaseInfo;
-            [self loadScreenTarget:screenTarget forBaseViewController:viewController];
-            [viewController setTitle:screenTarget.target.node];
-            [self pushViewController:viewController animated:screenTarget.pushAnimation];
+            [self loadScreenTarget:target forBaseViewController:viewController];
+            [viewController setTitle:target.node];
+            [self pushViewController:viewController animated: true];
             return YES;
         }
         case EXTERNAL_LINK: {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[RITarget getURLStringforTargetString: screenTarget.target.targetString]]];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[RITarget getURLStringforTargetString: target.targetString]]];
             return YES;
         }
         case CAMPAIGN: {
             JACampaignsViewController *viewController = [JACampaignsViewController new];
             viewController.purchaseTrackingInfo = purchaseInfo;
-            [self loadScreenTarget:screenTarget forBaseViewController:viewController];
-            [self pushViewController:viewController animated:screenTarget.pushAnimation];
+            [self loadScreenTarget:target forBaseViewController:viewController];
+            [self pushViewController:viewController animated:true];
             return YES;
         }
             
         default:
-            if (screenTarget.target.node &&
-                ([screenTarget.target.node containsString:@"itms-apps://"] || [screenTarget.target.node containsString:@"https://app."])) {
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:screenTarget.target.node]];
+            if (target.node &&
+                ([target.node containsString:@"itms-apps://"] || [target.node containsString:@"https://app."])) {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:target.node]];
                 return YES;
             }
             return NO;
     }
 }
 
-- (void)loadScreenTarget:(JAScreenTarget *)screenTarget forBaseViewController:(JABaseViewController *)viewController {
-    [viewController setTargetString:screenTarget.target.targetString];
+- (void)loadScreenTarget:(RITarget *)screenTarget forBaseViewController:(JABaseViewController *)viewController {
+    [viewController setTargetString: screenTarget.targetString];
 }
 
 #pragma mark Home Screen

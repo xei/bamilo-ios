@@ -25,7 +25,7 @@ typedef void(^ProtectedBlock)(BOOL userHadSession);
 @property (nonatomic, assign)BOOL searchViewAlwaysHidden;
 
 - (void)openTargetString:(NSString *)targetString purchaseInfo:(NSString *)purchaseInfo;
-- (BOOL)openScreenTarget:(JAScreenTarget *)screenTarget purchaseInfo:(NSString *)purchaseInfo;
+- (BOOL)openScreenTarget:(RITarget *)screenTarget purchaseInfo:(NSString *)purchaseInfo;
 - (void)showSearchView:(NSString *)screenName;
 
 - (void)goToPickupStationWebViewControllerWithCMS:(NSString*)cmsBlock;

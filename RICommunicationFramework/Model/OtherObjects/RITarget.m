@@ -21,6 +21,10 @@
 }
 
 - (TargetType)targetType {
+    if (!self.type && self.targetString) {
+        self.type = [RITarget parseTarget:self.targetString].type;
+    }
+    
     if ([self.type isEqualToString:[RITarget getTargetKey:PRODUCT_DETAIL]]) {
         return PRODUCT_DETAIL;
     } else if ([self.type isEqualToString:[RITarget getTargetKey:CATALOG_HASH]]) {

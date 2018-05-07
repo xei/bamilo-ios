@@ -10,6 +10,7 @@ import UIKit
 
 @objc protocol SellerViewDelegate {
     func refreshContent(sellerView: SellerView)
+    func goToSellerPage(target: RITarget)
 }
 
 class SellerView: BaseControlView {
@@ -48,6 +49,7 @@ class SellerView: BaseControlView {
     @IBOutlet weak private var sellerNameToSeperatorVerticalSpacingConstraint: NSLayoutConstraint!
     
     weak var delegate: SellerViewDelegate?
+    private var model: Seller?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -170,7 +172,7 @@ class SellerView: BaseControlView {
             self.noRateLabelToNewSellerBadgeHorizontalSpacingConstraint.priority = seller.isNew ? MASLayoutPriorityDefaultHigh : MASLayoutPriorityDefaultLow
             self.newSellerBadge.alpha = seller.isNew ? 1 : 0
         }
-        
+        self.model = seller
     }
     
     private func formatScoreValue(score: Double) -> String {
@@ -223,6 +225,12 @@ class SellerView: BaseControlView {
         }
         
         return heightSize
+    }
+    
+    @IBAction func sellerNameTapped(_ sender: Any) {
+        if let target = self.model?.target {
+            self.delegate?.goToSellerPage(target: target)
+        }
     }
     
     @IBAction func sellerRatingRefreshButtonTapped(_ sender: Any) {

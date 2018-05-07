@@ -489,4 +489,8 @@
     }
 }
 
+- (void)goToSellerPageWithTarget:(RITarget *)target {
+    [[MainTabBarViewController topNavigationController] openScreenTarget:target purchaseInfo:nil];
+}
+
 @end

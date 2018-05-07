@@ -98,8 +98,7 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType: (UIWebViewNavigationType)navigationType {
     RITarget *target = [RITarget parseTarget:[request.URL absoluteString]];
-    JAScreenTarget *screenTarget = [[JAScreenTarget alloc] initWithTarget:target];
-    return ![[MainTabBarViewController topNavigationController] openScreenTarget:screenTarget purchaseInfo:self.purchaseTrackingInfo];
+    return ![[MainTabBarViewController topNavigationController] openScreenTarget:target purchaseInfo:self.purchaseTrackingInfo];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
