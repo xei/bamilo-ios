@@ -95,8 +95,7 @@ static BOOL isListenersReady;
                                                  @"l"   : kShowAuthenticationScreenNotification,
                                                  @"r"   : kShowSignUpScreenNotification,
                                                  @"rv"  : kShowRecentlyViewedScreenNotification,
-                                                 @"rc"  : kShowRecentSearchesScreenNotification,
-                                                 @"news": kShowEmailNotificationsScreenNotification
+                                                 @"rc"  : kShowRecentSearchesScreenNotification
                                                  };
     
     if ([targetKeyToNotificationMap objectForKey:targetKey]) {
@@ -183,6 +182,10 @@ static BOOL isListenersReady;
 + (void)listenersReady {
     isListenersReady = YES;
     [DeepLinkManager popAndPerform];
+}
+
++ (BOOL)hasSomethingToShow {
+    return [deepLinkPipe count] > 0;
 }
 
 + (void)popAndPerform {

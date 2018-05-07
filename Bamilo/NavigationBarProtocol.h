@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NavBarItemTypes.h"
+#import "NavbarItemTypes.h"
 
 @protocol NavigationBarProtocol <NSObject>
 

@@ -35,7 +35,6 @@ class HomeViewController:   BaseViewController,
         super.viewDidLoad()
         self.view.backgroundColor = Theme.color(kColorGray10)
         self.artificialNavbar.backgroundColor = Theme.color(kColorExtraDarkBlue)
-        ReviewSurveyManager.runSurveyIfItsNeeded(target: self, executionType: .background)
         if let navBar = self.navigationController?.navigationBar {
             self.navBarInitialHeight = navBar.frame.height
             self.artificialNavBarViewHeightConstraint.constant = self.navBarInitialHeight ?? 44
@@ -106,6 +105,9 @@ class HomeViewController:   BaseViewController,
             self.setAndFollowerScrollView(scrollView: self.homePage.tableView)
             
             self.isLoaded = true
+            
+            //start review survey if it's necessary
+            ReviewSurveyManager.runSurveyIfItsNeeded(target: self, executionType: .background)
             //to start DeeplinkManager
             DeepLinkManager.listenersReady()
         }

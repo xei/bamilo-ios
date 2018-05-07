@@ -12,5 +12,6 @@
 
 + (void)handleUrl:(NSURL *)url;
 + (void)listenersReady;
++ (BOOL)hasSomethingToShow;
 
 @end

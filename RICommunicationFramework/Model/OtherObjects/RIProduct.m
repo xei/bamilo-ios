@@ -141,7 +141,7 @@
     
     NSString * url =  [RITarget getURLStringforTargetString:targetString];
     url = [NSString stringWithFormat:@"%@/%@",url,richParam];
-    url = [url  stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    url = [url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:url]
                                                             parameters:nil

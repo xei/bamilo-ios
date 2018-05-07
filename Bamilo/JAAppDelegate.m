@@ -44,10 +44,9 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
     [[NSUserDefaults standardUserDefaults] setObject:[NSArray arrayWithObjects:@"fa", @"en", nil] forKey:@"AppleLanguages"];
-    
     self.startLoadingTime = [NSDate date];
-    
     //SET THE LANGUAGE
     RICountry *country = [RICountry getUniqueCountry];
     [RILocalizationWrapper setLocalization:country.selectedLanguage.langCode];
@@ -110,41 +109,22 @@
     [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans-Bold" forKey:kFontBoldNameKey];
     [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans" forKey:kFontMediumNameKey];
     [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans-Black" forKey:kFontBlackNameKey];
-
-//#ifdef IS_RELEASE
-//    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITracking_Bamilo" ofType:@"plist"];
-//#else
-//    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITrackingDebug_Bamilo" ofType:@"plist"];
-//#endif
-
-//    [[RITrackingWrapper sharedInstance] startWithConfigurationFromPropertyListAtPath:plistPath launchOptions:launchOptions delegate:self];
-
     [[GSDAppIndexing sharedInstance] registerApp:kAppStoreIdBamiloInteger];
 
     [[SessionManager sharedInstance] evaluateActiveSessions];
 
     [[UINavigationBar appearance] setBarTintColor:JABlack300Color];
     
-    
-    [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:JABackgroundGrey, NSForegroundColorAttributeName, [Theme font:kFontVariationLight size:18], NSFontAttributeName,nil] forState:UIControlStateNormal];
-
-    [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[Theme color:kColorOrange], NSForegroundColorAttributeName, [Theme font:kFontVariationLight size:18], NSFontAttributeName,nil] forState:UIControlStateSelected];
+    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setTitleTextAttributes:@{
+                              NSFontAttributeName: [Theme font:kFontVariationLight size:18],
+                              NSForegroundColorAttributeName: JABackgroundGrey
+                              } forState:UIControlStateSelected];
 
     NSString* phpSessIDCookie = [NSString stringWithFormat:@"%@%@",kPHPSESSIDCookie,[RIApi getCountryIsoInUse]];
     NSDictionary *cookieProperties = [[NSUserDefaults standardUserDefaults] objectForKey:phpSessIDCookie];
     if(VALID_NOTEMPTY(cookieProperties, NSDictionary)) {
         NSHTTPCookie *cookie = [NSHTTPCookie cookieWithProperties:cookieProperties];
         [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
-    }
-
-    if ([launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey] != nil) {
-//        UINavigationController *rootViewController = (UINavigationController*)self.window.rootViewController;
-//        JARootViewController* mainController = (JARootViewController*) [rootViewController topViewController];
-//        if(VALID_NOTEMPTY(mainController, JARootViewController)) {
-//            mainController.notification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-//        }
-
-//        [[RITrackingWrapper sharedInstance] applicationDidReceiveRemoteNotification:[launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey]];
     }
     
     //#########################################################################################################
@@ -202,12 +182,8 @@
     [application registerForRemoteNotifications];
 }
 
-- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler {
-//    if(!VALID_NOTEMPTY(application, UIApplication) || UIApplicationStateActive != application.applicationState) {
-//        [[RITrackingWrapper sharedInstance] applicationHandleActionWithIdentifier:identifier forRemoteNotification:userInfo];
-//    }
-
-    completionHandler();
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler {
+    if (completionHandler) completionHandler();
 }
 #endif
 
@@ -229,7 +205,6 @@
 // In case the app was sent into the background when there was no network connection, we will use
 // the background data fetching mechanism to send any pending Google Analytics data.
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-//    [[RITrackingWrapper sharedInstance] applicationDidEnterBackground:application];
     completionHandler(UIBackgroundFetchResultNewData);
 }
 
@@ -237,9 +212,6 @@
     [application setApplicationIconBadgeNumber:0];
 
     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"appDidEnterForeground" object:nil]];
-//    PushNotificationManager *pushManager = [PushNotificationManager pushManager];
-//    [[EmarsysMobileEngage sharedInstance] sendLogin:[pushManager getPushToken] completion:nil];
-    
     OpenAppEventSourceType openAppEventSourceType = [[AppManager sharedInstance] getOpenAppEventSource];
     
     if(openAppEventSourceType != OpenAppEventSourceTypePushNotification &&
@@ -256,32 +228,14 @@
     
     //Reset to none for next app open
     [[AppManager sharedInstance] updateOpenAppEventSource:OpenAppEventSourceTypeNone];
-    
     [[AppManager sharedInstance] updateScheduledAppIcons];
     [[AppManager sharedInstance] executeScheduledAppIcons];
-    
     [[PushNotificationManager pushManager] startLocationTracking];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    
     self.startLoadingTime = [NSDate date];
-
     [[SessionManager sharedInstance] evaluateActiveSessions];
-
-//    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-//    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-//
-//    [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-//    [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-//
-//    CGFloat duration = fabs([self.startLoadingTime timeIntervalSinceNow] * 1000);
-//
-//    [trackingDictionary setValue:[NSString stringWithFormat:@"%f", duration] forKey:kRILaunchEventDurationDataKey];
-
-//    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventOpenApp]
-//                                              data:[trackingDictionary copy]];
-
     [[NSNotificationCenter defaultCenter] postNotificationName:kAppWillEnterForeground object:nil];
 }
 
@@ -318,14 +272,10 @@
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
 
     [Adjust appWillOpenUrl:url = [GSDDeepLink handleDeepLink:url]];
-
     if (url) {
-//        [[RITrackingWrapper sharedInstance] trackOpenURL:url];
         [DeepLinkManager handleUrl:url];
-    
         //EVENT: OPEN APP / DEEP LINK
         [TrackerManager postEventWithSelector:[EventSelectors openAppSelector] attributes:[EventAttributes openAppWithSource:OpenAppEventSourceTypeDeeplink]];
-        
         return YES;
     }
 

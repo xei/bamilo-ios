@@ -124,7 +124,7 @@
         if (VALID_NOTEMPTY(bannerArray, NSArray)) {
             NSString* bannerImageURL = [bannerArray firstObject];
             if (VALID_NOTEMPTY(bannerImageURL, NSString)) {
-                newCampaign.bannerImageURL = [bannerImageURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                newCampaign.bannerImageURL = [bannerImageURL stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
             }
         }
     }

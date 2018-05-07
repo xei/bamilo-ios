@@ -13,7 +13,6 @@
 #import "JALoadCountryViewController.h"
 #import "JARecentSearchesViewController.h"
 #import "JARecentlyViewedViewController.h"
-#import "JAUserDataViewController.h"
 #import "JAPDVViewController.h"
 #import "JAExternalPaymentsViewController.h"
 #import "RIProduct.h"
@@ -31,8 +30,6 @@
 #import "JABundlesViewController.h"
 #import "JAPDVVariationsViewController.h"
 #import "RICountry.h"
-#import "JANewsletterViewController.h"
-#import "JANewsletterSubscriptionViewController.h"
 
 #import "JAStepByStepTabViewController.h"
 #import "JACheckoutStepByStepModel.h"
@@ -120,8 +117,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showRecentlyViewedController) name:kShowRecentlyViewedScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showMyAccountController) name:kShowMyAccountScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showUserData:) name:kShowUserDataScreenNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showEmailNotificaitons:) name:kShowEmailNotificationsScreenNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showNewsletterSubscritions:) name:kShowNewsletterSubscriptionsScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showMyOrdersViewController:) name:kShowMyOrdersScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showAuthenticationScreen:) name:kShowAuthenticationScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showSignUpScreen:) name:kShowSignUpScreenNotification object:nil];
@@ -156,8 +151,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowRecentlyViewedScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowMyAccountScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowUserDataScreenNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowEmailNotificationsScreenNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowNewsletterSubscriptionsScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowMyOrdersScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowAuthenticationScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowSignUpScreenNotification object:nil];
@@ -307,16 +300,7 @@
         [self showMyOrdersViewController:nil];
     } else if ([newScreenName isEqualToString:STRING_USER_DATA]) {
         [self showUserData:nil];
-    } else if ([newScreenName isEqualToString:STRING_USER_EMAIL_NOTIFICATIONS]) {
-        [self showEmailNotificaitons:nil];
     }
-    
-//    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-//    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
-//    [trackingDictionary setValue:newScreenName forKey:kRIEventActionKey];
-//    [trackingDictionary setValue:@"ActionOverflow" forKey:kRIEventCategoryKey];
-//    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSideMenu]
-//                                              data:[trackingDictionary copy]];
 }
 
 #pragma mark Favorites Screen
@@ -434,38 +418,6 @@
     [self requestNavigateToNib:@"EditProfileViewController" ofStoryboard:@"Main" useCache:NO args:nil];
 }
 
-#pragma mark Email Notifications Screen
-- (void)showEmailNotificaitons:(NSNotification*)notification {
-    UIViewController *topViewController = [self topViewController];
-    if([RICustomer checkIfUserIsLogged]) {
-        if (![topViewController isKindOfClass:[JANewsletterViewController class]]) {
-            JANewsletterViewController* vc = [[JANewsletterViewController alloc] init];
-            [self pushViewController:vc animated:YES];
-        }
-    } else {
-        [self performProtectedBlock:^(BOOL userHadSession) {
-            [[NSNotificationCenter defaultCenter] postNotification:notification];
-        }];
-    }
-}
-
-- (void)showNewsletterSubscritions:(NSNotification*)notification {
-    NSDictionary* userInfo = notification.userInfo;
-    NSString* targetString = [userInfo objectForKey:@"targetString"];
-    
-    if (VALID_NOTEMPTY(targetString, NSString)) {
-        JANewsletterSubscriptionViewController* vc = [[JANewsletterSubscriptionViewController alloc] init];
-        vc.targetString = targetString;
-        
-        id<JANewsletterSubscriptionDelegate> delegate = [userInfo objectForKey:@"delegate"];
-        if (delegate) {
-            vc.delegate = delegate;
-        }
-        
-        [self pushViewController:vc animated:YES];
-    }
-}
-
 //#pragma mark Checkout External Payments Screen
 - (void)showCheckoutExternalPaymentsScreen:(NSNotification *)notification {
     UIViewController *topViewController = [self topViewController];
@@ -479,14 +431,6 @@
         [self pushViewController:externalPaymentsVC animated:YES];
     }
 }
-
-//#pragma mark Checkout Thanks Screen
-//- (void)showCheckoutThanksScreen:(NSNotification *)notification {
-//    SuccessPaymentViewController *viewCtrl = (SuccessPaymentViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Checkout" nibName:NSStringFromClass([SuccessPaymentViewController class]) resetCache:NO];
-//    viewCtrl.success = [(NSNumber *)[notification.userInfo objectForKey:@"success"] boolValue];
-//    viewCtrl.cart = [notification.userInfo objectForKey:kCart];
-//    [self pushViewController:viewCtrl animated:YES];
-//}
 
 #pragma mark Catalog Screen
 - (void)pushCatalogToShowSearchResults:(NSString *)query {

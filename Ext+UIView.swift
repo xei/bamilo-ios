@@ -75,9 +75,8 @@ extension UIView {
     
     
     func addBlurView() -> UIVisualEffectView {
-        let bounds = self.bounds as CGRect!
         let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
-        visualEffectView.frame = bounds!
+        visualEffectView.frame = self.bounds
         visualEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.addSubview(visualEffectView)
         return visualEffectView

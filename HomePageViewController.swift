@@ -214,7 +214,6 @@ class HomePageViewController:   BaseViewController,
         return STRING_HOME
     }
     
-    
     //MARK: - helper functions for timer
     private func runTimer(seconds: Int) {
         //if any previous timer exists

@@ -11,10 +11,16 @@ import UIKit
 @objc class ReviewSurveyManager: NSObject {
     
     private static func presentSurveyOn(viewController: UIViewController, reviewSurvey: ReviewSurvery, orderID: String) {
-        if let reviewStarter = ViewControllerManager.sharedInstance().loadViewController("ReviewSurveyStarter", resetCache: true) as? BaseNavigationController, let surveyViewCtrl = reviewStarter.viewControllers.first as? ReviewSurveyViewController {
-            surveyViewCtrl.surveryModel = reviewSurvey
-            surveyViewCtrl.orderID = orderID
-            viewController.present(reviewStarter, animated: true)
+        
+        //If we are not going to present any deeplink actions
+        if DeepLinkManager.hasSomethingToShow() { return }
+        
+        ThreadManager.execute {
+            if let reviewStarter = ViewControllerManager.sharedInstance().loadViewController("ReviewSurveyStarter", resetCache: true) as? BaseNavigationController, let surveyViewCtrl = reviewStarter.viewControllers.first as? ReviewSurveyViewController {
+                surveyViewCtrl.surveryModel = reviewSurvey
+                surveyViewCtrl.orderID = orderID
+                viewController.present(reviewStarter, animated: true)
+            }
         }
     }
     
@@ -30,16 +36,16 @@ import UIKit
     }
     
     static func runSurveyIfItsNeeded(target: DataServiceProtocol, executionType: ApiRequestExecutionType) {
-        ReviewServiceDataManager.sharedInstance.getAvaiableUserSurvey(target, executionType: executionType) { (data, error) in
-            if let dataDictionary = data as? [String: Any], let content = dataDictionary[DataManagerKeys.DataContent] as? UserSurvey, let presentingSurvey = content.surveys?.first, let orderID = content.orderNumber {
-                self.startPresentingSurvey(reviewSurvey: presentingSurvey, orderId: orderID)
-            } else if let userSurvey = data as? UserSurvey, let presentingSurvey = userSurvey.surveys?.first, let orderID = userSurvey.orderNumber {
-                self.startPresentingSurvey(reviewSurvey: presentingSurvey, orderId: orderID)
-            }
-        }
-//        if let presentingSurvey = mockApi().surveys?.first, let orderID = mockApi().orderNumber {
-//            self.startPresentingSurvey(reviewSurvey: presentingSurvey, orderId: orderID)
+//        ReviewServiceDataManager.sharedInstance.getAvaiableUserSurvey(target, executionType: executionType) { (data, error) in
+//            if let dataDictionary = data as? [String: Any], let content = dataDictionary[DataManagerKeys.DataContent] as? UserSurvey, let presentingSurvey = content.surveys?.first, let orderID = content.orderNumber {
+//                self.startPresentingSurvey(reviewSurvey: presentingSurvey, orderId: orderID)
+//            } else if let userSurvey = data as? UserSurvey, let presentingSurvey = userSurvey.surveys?.first, let orderID = userSurvey.orderNumber {
+//                self.startPresentingSurvey(reviewSurvey: presentingSurvey, orderId: orderID)
+//            }
 //        }
+        if let presentingSurvey = mockApi().surveys?.first, let orderID = mockApi().orderNumber {
+            self.startPresentingSurvey(reviewSurvey: presentingSurvey, orderId: orderID)
+        }
     }
     
     static func startPresentingSurvey(reviewSurvey: ReviewSurvery, orderId: String) {
@@ -144,7 +150,7 @@ import UIKit
         review.pages?.first?.questions = [question, question1, question30, question1]
         //end of mock
         
-        var product = Product()
+        let product = Product()
         product.name = "بسته خرید بسیار ويزه سال ۹۷"
         product.imageUrl = URL(string: "http://media.bamilo.com/p/tm-6682-6582622-1-zoom.jpg")
         
