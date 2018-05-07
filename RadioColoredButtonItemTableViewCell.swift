@@ -10,35 +10,47 @@ import UIKit
 
 class RadioColoredButtonItemTableViewCell: SelectItemViewCell {
 
-    @IBOutlet weak var button: UIButton!
-    @IBOutlet weak var greenBackgroundView: UIView!
-    @IBOutlet weak var redBackgroundView: UIView!
+    @IBOutlet weak private var titleLabelView: UILabel!
+    @IBOutlet weak private var greenBackgroundView: UIView!
+    @IBOutlet weak private var redBackgroundView: UIView!
+    @IBOutlet weak private var whiteBackgroundView: UIView!
+    
     
     var progresIndex: Double = 0
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.button.backgroundColor = .clear
-        self.button.setTitleColor(.white, for: .normal)
+        
+        self.titleLabelView.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
         self.greenBackgroundView.backgroundColor = Theme.color(kColorGreen1)
         self.redBackgroundView.backgroundColor = Theme.color(kColorRed)
     }
     
     override func update(withModel model: Any!) {
         if let model = model as? SelectViewItemDataSourceProtocol {
-            self.button.setTitle(model.title ?? "", for: .normal)
+            self.titleLabelView.text = model.title ?? ""
             self.redBackgroundView.alpha = CGFloat(progresIndex)
+            self.setState(checked: model.isSelected ?? false)
+            self.model = model
         }
     }
     
+    override func toggle() {
+        self.whiteBackgroundView.alpha = self.whiteBackgroundView.alpha == 1 ? 0.8 : 1
+    }
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
+    override func setSelectionType(type: SelectionType) {
+        //there is nothing to do
+        return
+    }
+    
+    override func setState(checked: Bool, animated: Bool = false) {
         if animated {
             UIView.animate(withDuration: 0.15) {
-                
+                self.whiteBackgroundView.alpha = checked ? 0.8 : 1
             }
         } else {
-            
+            self.whiteBackgroundView.alpha = checked ? 0.8 : 1
         }
     }
 }

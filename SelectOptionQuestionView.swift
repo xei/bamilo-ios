@@ -43,8 +43,4 @@ class SelectOptionQuestionView: BaseSurveyQuestionControlView {
         }
         self.selectViewHeightConstraint.constant = self.selectView.getGetContentSizeHeight()
     }
-    
-    override static func nibInstance() -> SelectOptionQuestionView {
-        return Bundle.main.loadNibNamed(String(describing: self), owner: self, options: nil)?.last as! SelectOptionQuestionView
-    }
 }

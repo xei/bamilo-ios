@@ -40,8 +40,4 @@ class ImageSelectQuestionView: BaseSurveyQuestionControlView {
             }
         }
     }
-    
-    override static func nibInstance() -> ImageSelectQuestionView {
-        return Bundle.main.loadNibNamed(String(describing: self), owner: self, options: nil)?.last as! ImageSelectQuestionView
-    }
 }

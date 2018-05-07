@@ -232,6 +232,9 @@
 		61B579091F9E2B0A00C9F454 /* OrderOwnerInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B579071F9E2B0A00C9F454 /* OrderOwnerInfoTableViewCell.xib */; };
 		61B5790C1F9E2B1C00C9F454 /* OrderInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B5790A1F9E2B1C00C9F454 /* OrderInfoTableViewCell.swift */; };
 		61B5790D1F9E2B1C00C9F454 /* OrderInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B5790B1F9E2B1C00C9F454 /* OrderInfoTableViewCell.xib */; };
+		61B603F020A02D9300D19DC7 /* RadioColoredButtonsGroupControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B603EF20A02D9300D19DC7 /* RadioColoredButtonsGroupControl.swift */; };
+		61B603F220A0323A00D19DC7 /* RadioOptionQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B603F120A0323A00D19DC7 /* RadioOptionQuestionView.swift */; };
+		61B603F420A0324F00D19DC7 /* RadioOptionQuestionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B603F320A0324F00D19DC7 /* RadioOptionQuestionView.xib */; };
 		61BA9B3D1E99FDEE004E9DE8 /* WidgetBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BA9B3C1E99FDEE004E9DE8 /* WidgetBase.m */; };
 		61BA9B411E99FE09004E9DE8 /* FeatureBoxWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BA9B401E99FE09004E9DE8 /* FeatureBoxWidget.m */; };
 		61BA9B4B1E9A009E004E9DE8 /* EmarsysRecommendationCarouselWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BA9B4A1E9A009E004E9DE8 /* EmarsysRecommendationCarouselWidget.m */; };
@@ -1321,6 +1324,9 @@
 		61B579071F9E2B0A00C9F454 /* OrderOwnerInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderOwnerInfoTableViewCell.xib; sourceTree = "<group>"; };
 		61B5790A1F9E2B1C00C9F454 /* OrderInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderInfoTableViewCell.swift; sourceTree = "<group>"; };
 		61B5790B1F9E2B1C00C9F454 /* OrderInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderInfoTableViewCell.xib; sourceTree = "<group>"; };
+		61B603EF20A02D9300D19DC7 /* RadioColoredButtonsGroupControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioColoredButtonsGroupControl.swift; sourceTree = "<group>"; };
+		61B603F120A0323A00D19DC7 /* RadioOptionQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioOptionQuestionView.swift; sourceTree = "<group>"; };
+		61B603F320A0324F00D19DC7 /* RadioOptionQuestionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RadioOptionQuestionView.xib; sourceTree = "<group>"; };
 		61BA9B3B1E99FDEE004E9DE8 /* WidgetBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetBase.h; sourceTree = "<group>"; };
 		61BA9B3C1E99FDEE004E9DE8 /* WidgetBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WidgetBase.m; sourceTree = "<group>"; };
 		61BA9B3F1E99FE09004E9DE8 /* FeatureBoxWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeatureBoxWidget.h; sourceTree = "<group>"; };
@@ -4847,6 +4853,7 @@
 		61E6EE70209F2B5D0007ED5F /* Control */ = {
 			isa = PBXGroup;
 			children = (
+				61B603EF20A02D9300D19DC7 /* RadioColoredButtonsGroupControl.swift */,
 			);
 			name = Control;
 			sourceTree = "<group>";
@@ -4854,6 +4861,8 @@
 		61E6EE71209F2B640007ED5F /* View */ = {
 			isa = PBXGroup;
 			children = (
+				61B603F320A0324F00D19DC7 /* RadioOptionQuestionView.xib */,
+				61B603F120A0323A00D19DC7 /* RadioOptionQuestionView.swift */,
 				61E6EE6E209F2A450007ED5F /* RadioColoredButtonsGroup */,
 			);
 			name = View;
@@ -8470,6 +8479,7 @@
 				618D8B451FADEF680006A936 /* LoadingFooterView.xib in Resources */,
 				1C71FC621E2CABAD007ACF02 /* Bamilosans UltraLight.ttf in Resources */,
 				875744221EA60E48001B518A /* Tragedy-Small-40.png in Resources */,
+				61B603F420A0324F00D19DC7 /* RadioOptionQuestionView.xib in Resources */,
 				1C80D8841E2E3D850036B514 /* ‌Bamilosans Bold.ttf in Resources */,
 				613FF2C11E4B3D1B008660CF /* Authentication.storyboard in Resources */,
 				875744211EA60E48001B518A /* Tragedy-Small-40@2x.png in Resources */,
@@ -8717,6 +8727,7 @@
 				6193F3E11F0CF9D600DA3CDE /* GoogleAnalyticsTracker.swift in Sources */,
 				875AD55B1E38C0C900584ABF /* RICartItem.m in Sources */,
 				CE9ADF361AB6D78200D56481 /* JAGradientLayer.m in Sources */,
+				61B603F020A02D9300D19DC7 /* RadioColoredButtonsGroupControl.swift in Sources */,
 				617585F21F88D96700D66541 /* CarouselCollectionFlowLayout.swift in Sources */,
 				CEA2A1B71B25D20C00E5973F /* JADynamicField.m in Sources */,
 				61FC466E201DBBC9000141FA /* Ext+UINavigationViewController.swift in Sources */,
@@ -8865,6 +8876,7 @@
 				6104C5CD1F5C24D300C0F5E3 /* ScrollerBarFollower.swift in Sources */,
 				61CCB309202EE0A8002D922B /* EmarsysMobileEngageTracker.swift in Sources */,
 				617585F91F8A088500D66541 /* Transformers.swift in Sources */,
+				61B603F220A0323A00D19DC7 /* RadioOptionQuestionView.swift in Sources */,
 				611C1B321F0BAA0900C57E4D /* SearchBarSearchEvent.m in Sources */,
 				CE9ADF601AB6D78200D56481 /* JANoConnectionView.m in Sources */,
 				617AAA441E503AB9004D9430 /* FormItemModel.m in Sources */,

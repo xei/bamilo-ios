@@ -16,8 +16,8 @@ protocol SelectViewItemDataSourceProtocol {
 class SelectView: BaseControlView, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak internal var tableview: UITableView!
-    private var selectionType: SelectionType = .checkbox
-    private var dataSource: [SelectViewItemDataSourceProtocol]?
+    internal var dataSource: [SelectViewItemDataSourceProtocol]?
+    internal var selectionType: SelectionType = .checkbox
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -85,7 +85,7 @@ class SelectView: BaseControlView, UITableViewDelegate, UITableViewDataSource {
         return self.dataSource?.count ?? 0
     }
     
-    private func toggleSelectOption(indexPath: IndexPath) {
+    internal func toggleSelectOption(indexPath: IndexPath) {
         if var dataSource = self.dataSource, indexPath.row < dataSource.count {
             dataSource[indexPath.row].isSelected?.toggle()
             if dataSource[indexPath.row].isSelected == nil {

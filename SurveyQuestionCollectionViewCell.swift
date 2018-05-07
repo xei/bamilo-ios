@@ -19,7 +19,7 @@ class SurveyQuestionCollectionViewCell: BaseCollectionViewCellSwift {
         if let question = model as? SurveyQuestion, let type = question.type {
             switch type {
             case .radio:
-                self.questionView = SelectOptionQuestionView.nibInstance()
+                self.questionView = RadioOptionQuestionView.nibInstance()
             case .checkbox:
                 self.questionView = SelectOptionQuestionView.nibInstance()
             case .imageSelect:

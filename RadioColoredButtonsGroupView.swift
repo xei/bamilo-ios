@@ -9,8 +9,31 @@
 import UIKit
 
 class RadioColoredButtonsGroupView: SelectView {
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.tableview.register(UINib(nibName: "", bundle: nil), forCellReuseIdentifier: "")
+        self.tableview.register(
+            UINib(nibName: RadioColoredButtonItemTableViewCell.nibName(), bundle: nil),
+            forCellReuseIdentifier: RadioColoredButtonItemTableViewCell.nibName()
+        )
+        self.selectionType = .radio
+    }
+    
+    //doesn't matter what to pass as selection
+    //type here because it should be radio type
+    override func update(model: [SelectViewItemDataSourceProtocol], selectionType: SelectionType) {
+        self.dataSource = model
+        self.selectionType = .radio
+        self.tableview.reloadData()
+        self.tableview.layoutIfNeeded()
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = self.tableview.dequeueReusableCell(withIdentifier: RadioColoredButtonItemTableViewCell.nibName(), for: indexPath) as! RadioColoredButtonItemTableViewCell
+        if let dataSource = self.dataSource, indexPath.row < dataSource.count {
+            cell.progresIndex = Double(indexPath.row) / Double(dataSource.count - 1)
+            cell.update(withModel: dataSource[indexPath.row])
+        }
+        return cell
     }
 }

@@ -14,7 +14,6 @@ class SelectItemViewCell: BaseTableViewCell {
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var checkbox: M13Checkbox!
     internal var model: SelectViewItemDataSourceProtocol?
-
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,17 +26,17 @@ class SelectItemViewCell: BaseTableViewCell {
     }
     
     private func applyStyle() {
-        self.titleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
-        self.checkbox.checkState = .unchecked
-        self.checkbox.boxLineWidth = 2
-        self.checkbox.checkmarkLineWidth = 2
-        self.checkbox.stateChangeAnimation = .stroke
-        self.checkbox.animationDuration = 0.25
-        self.checkbox.markType = .checkmark
-        self.checkbox.boxType = .square
-        self.checkbox.tintColor = Theme.color(kColorOrange)
-        self.checkbox.secondaryTintColor = Theme.color(kColorGray5)
-        self.checkbox.isUserInteractionEnabled = false 
+        self.titleLabel?.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
+        self.checkbox?.checkState = .unchecked
+        self.checkbox?.boxLineWidth = 2
+        self.checkbox?.checkmarkLineWidth = 2
+        self.checkbox?.stateChangeAnimation = .stroke
+        self.checkbox?.animationDuration = 0.25
+        self.checkbox?.markType = .checkmark
+        self.checkbox?.boxType = .square
+        self.checkbox?.tintColor = Theme.color(kColorOrange)
+        self.checkbox?.secondaryTintColor = Theme.color(kColorGray5)
+        self.checkbox?.isUserInteractionEnabled = false
     }
     
     override func update(withModel model: Any!) {
