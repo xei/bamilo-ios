@@ -19,7 +19,7 @@ class NPSQuestionView: BaseSurveyQuestionControlView, HorizontalPickerViewDelega
     @IBOutlet weak private var horizontalPickerView: HorizontalPickerView!
     private var isPreselecting: Bool = false
     
-    override func update(model: SurveyQuestion) {
+        override func update(model: SurveyQuestion) {
         super.update(model: model)
         self.questionTitle.text = self.questionModel?.title
         self.horizontalPickerView.reloadAll()
@@ -69,7 +69,6 @@ class NPSQuestionView: BaseSurveyQuestionControlView, HorizontalPickerViewDelega
         }
         self.hintUILabel.text = nil
         self.selectionIndicatorUIImage.image = #imageLiteral(resourceName: "outlineCircle")
-        self.questionModel?.haveAnswer = true
         if let options = self.questionModel?.options, row < options.count {
             for i in 0..<options.count {
                 options[i].isSelected = false

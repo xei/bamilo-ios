@@ -181,15 +181,16 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
     
     private func submitQuestion(question: SurveyQuestion, isLastOne: Bool) {
         
-        if let activeQuestionOptionsCount = question.options?.filter({ $0.isSelected ?? false }).count, activeQuestionOptionsCount > 0 {
-            if let alias = self.surveryModel.alias {
+        if let activeQuestionOptionsCount = question.options?.filter({ $0.isSelected ?? false }).count, activeQuestionOptionsCount > 0 , let alias = self.surveryModel.alias {
                 ReviewServiceDataManager.sharedInstance.sendSurveyAlias(self, surveyAlias: alias, question: question, isLastOne: isLastOne, for: self.orderID, requestType: .background) { data, error in
                 }
+        } else if let _ = question.anwerTextMessage, let alias = self.surveryModel.alias {
+            ReviewServiceDataManager.sharedInstance.sendSurveyAlias(self, surveyAlias: alias, question: question, isLastOne: isLastOne, for: self.orderID, requestType: .background) { data, error in
             }
         }
         
         if isLastOne {
-            self.dismiss(animated: true, completion: nil)
+            self.performSegue(withIdentifier: "showSuccessReviewSubmission", sender: nil)
         }
     }
     

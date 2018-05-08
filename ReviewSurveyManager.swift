@@ -36,16 +36,16 @@ import UIKit
     }
     
     static func runSurveyIfItsNeeded(target: DataServiceProtocol, executionType: ApiRequestExecutionType) {
-//        ReviewServiceDataManager.sharedInstance.getAvaiableUserSurvey(target, executionType: executionType) { (data, error) in
-//            if let dataDictionary = data as? [String: Any], let content = dataDictionary[DataManagerKeys.DataContent] as? UserSurvey, let presentingSurvey = content.surveys?.first, let orderID = content.orderNumber {
-//                self.startPresentingSurvey(reviewSurvey: presentingSurvey, orderId: orderID)
-//            } else if let userSurvey = data as? UserSurvey, let presentingSurvey = userSurvey.surveys?.first, let orderID = userSurvey.orderNumber {
-//                self.startPresentingSurvey(reviewSurvey: presentingSurvey, orderId: orderID)
-//            }
-//        }
-        if let presentingSurvey = mockApi().surveys?.first, let orderID = mockApi().orderNumber {
-            self.startPresentingSurvey(reviewSurvey: presentingSurvey, orderId: orderID)
+        ReviewServiceDataManager.sharedInstance.getAvaiableUserSurvey(target, executionType: executionType) { (data, error) in
+            if let dataDictionary = data as? [String: Any], let content = dataDictionary[DataManagerKeys.DataContent] as? UserSurvey, let presentingSurvey = content.surveys?.first, let orderID = content.orderNumber {
+                self.startPresentingSurvey(reviewSurvey: presentingSurvey, orderId: orderID)
+            } else if let userSurvey = data as? UserSurvey, let presentingSurvey = userSurvey.surveys?.first, let orderID = userSurvey.orderNumber {
+                self.startPresentingSurvey(reviewSurvey: presentingSurvey, orderId: orderID)
+            }
         }
+//        if let presentingSurvey = mockApi().surveys?.first, let orderID = mockApi().orderNumber {
+//            self.startPresentingSurvey(reviewSurvey: presentingSurvey, orderId: orderID)
+//        }
     }
     
     static func startPresentingSurvey(reviewSurvey: ReviewSurvery, orderId: String) {
@@ -67,7 +67,7 @@ import UIKit
         option.title = "what"
         option.id = 123
         option.image = URL(string:"http://www.emoji.com/wordpress/wp-content/uploads/emoji_celebs_146-1.jpg")
-        question.title = "چقدر مایلید بامیلو را به دوستان خود توصیه کنید که از بامیلو خرید کنند؟"
+        question.title = "چقدر مایل هستید که بامیلو را به دوستان خود توصیه کنید که از بامیلو خرید کنند؟"
         
         
         let option1 = SurveyQuestionOption()
@@ -101,7 +101,7 @@ import UIKit
         option11.title = "1"
         option11.id = 123
         option11.image = URL(string:"http://www.emoji.com/wordpress/wp-content/uploads/emoji_celebs_146-1.jpg")
-        question1.title = "چقدر مایلید بامیلو را به دوستان خود توصیه کنید؟"
+        question1.title = "چقدر مایل هستید بامیلو را به دوستان خود توصیه کنید؟"
         
         
         let option12 = SurveyQuestionOption()
@@ -128,8 +128,8 @@ import UIKit
         question1.type = .nps
         
         let question30 = SurveyQuestion()
-        question30.title = "چقدر مایلید بامیلو را به دوستان خود توصیه کنید؟"
-        question30.type = .radio
+        question30.title = "چقدر مایل هستید که بامیلو را به دوستان خود توصیه کنید؟"
+        question30.type = .checkbox
         
         let option31 = SurveyQuestionOption()
         option31.title = "نظر من این است که"
@@ -146,8 +146,13 @@ import UIKit
         question30.options = [option31, option32, option33]
         question30.id = 12342
         
+        let question33 = SurveyQuestion()
+        question33.title = "چقدر مایل هستید که بامیلو را به دوستان خود توصیه کنید؟"
+        question33.type = .essay
+        
+        
         review.pages = [SurveyQuestionPage()]
-        review.pages?.first?.questions = [question, question1, question30, question1]
+        review.pages?.first?.questions = [question, question33, question1, question30, question1]
         //end of mock
         
         let product = Product()

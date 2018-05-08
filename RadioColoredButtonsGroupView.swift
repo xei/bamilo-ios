@@ -17,6 +17,7 @@ class RadioColoredButtonsGroupView: SelectView {
             forCellReuseIdentifier: RadioColoredButtonItemTableViewCell.nibName()
         )
         self.selectionType = .radio
+        self.isScrollEnabled = false
     }
     
     //doesn't matter what to pass as selection
@@ -24,8 +25,13 @@ class RadioColoredButtonsGroupView: SelectView {
     override func update(model: [SelectViewItemDataSourceProtocol], selectionType: SelectionType) {
         self.dataSource = model
         self.selectionType = .radio
+        self.tableview.isScrollEnabled = self.isScrollEnabled
         self.tableview.reloadData()
         self.tableview.layoutIfNeeded()
+    }
+    
+    override func getGetContentSizeHeight() -> CGFloat {
+        return CGFloat(self.dataSource?.count ?? 0) * 65.5
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

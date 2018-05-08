@@ -235,6 +235,9 @@
 		61B603F020A02D9300D19DC7 /* RadioColoredButtonsGroupControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B603EF20A02D9300D19DC7 /* RadioColoredButtonsGroupControl.swift */; };
 		61B603F220A0323A00D19DC7 /* RadioOptionQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B603F120A0323A00D19DC7 /* RadioOptionQuestionView.swift */; };
 		61B603F420A0324F00D19DC7 /* RadioOptionQuestionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B603F320A0324F00D19DC7 /* RadioOptionQuestionView.xib */; };
+		61B603FA20A1BCA100D19DC7 /* AppreciateSurveyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B603F920A1BCA100D19DC7 /* AppreciateSurveyViewController.swift */; };
+		61B603FE20A1C96500D19DC7 /* TextFieldQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B603FD20A1C96500D19DC7 /* TextFieldQuestionView.swift */; };
+		61B6040020A1C97300D19DC7 /* TextFieldQuestionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B603FF20A1C97300D19DC7 /* TextFieldQuestionView.xib */; };
 		61BA9B3D1E99FDEE004E9DE8 /* WidgetBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BA9B3C1E99FDEE004E9DE8 /* WidgetBase.m */; };
 		61BA9B411E99FE09004E9DE8 /* FeatureBoxWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BA9B401E99FE09004E9DE8 /* FeatureBoxWidget.m */; };
 		61BA9B4B1E9A009E004E9DE8 /* EmarsysRecommendationCarouselWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BA9B4A1E9A009E004E9DE8 /* EmarsysRecommendationCarouselWidget.m */; };
@@ -1320,6 +1323,9 @@
 		61B603EF20A02D9300D19DC7 /* RadioColoredButtonsGroupControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioColoredButtonsGroupControl.swift; sourceTree = "<group>"; };
 		61B603F120A0323A00D19DC7 /* RadioOptionQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioOptionQuestionView.swift; sourceTree = "<group>"; };
 		61B603F320A0324F00D19DC7 /* RadioOptionQuestionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RadioOptionQuestionView.xib; sourceTree = "<group>"; };
+		61B603F920A1BCA100D19DC7 /* AppreciateSurveyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppreciateSurveyViewController.swift; sourceTree = "<group>"; };
+		61B603FD20A1C96500D19DC7 /* TextFieldQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldQuestionView.swift; sourceTree = "<group>"; };
+		61B603FF20A1C97300D19DC7 /* TextFieldQuestionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextFieldQuestionView.xib; sourceTree = "<group>"; };
 		61BA9B3B1E99FDEE004E9DE8 /* WidgetBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetBase.h; sourceTree = "<group>"; };
 		61BA9B3C1E99FDEE004E9DE8 /* WidgetBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WidgetBase.m; sourceTree = "<group>"; };
 		61BA9B3F1E99FE09004E9DE8 /* FeatureBoxWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeatureBoxWidget.h; sourceTree = "<group>"; };
@@ -3348,6 +3354,7 @@
 				61FC466F201DC044000141FA /* EditProfileViewController.swift */,
 				61FC4676201F65C2000141FA /* PhoneChangeViewController.swift */,
 				6192B2BF204E9AAD00376D84 /* ReviewSurveyViewController.swift */,
+				61B603F920A1BCA100D19DC7 /* AppreciateSurveyViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -3875,6 +3882,7 @@
 		6192B2BC204E90FE00376D84 /* ReviewSurvey */ = {
 			isa = PBXGroup;
 			children = (
+				61B603FB20A1C92D00D19DC7 /* TextFieldQuestion */,
 				61E6EE6D209F28B10007ED5F /* RadioOptionQuestion */,
 				61ABDB792056BBC8001A0FEE /* SelectOptionQuestion */,
 				61180F28205403BD00B4261E /* NPSQuestion */,
@@ -4292,6 +4300,23 @@
 				61B5790B1F9E2B1C00C9F454 /* OrderInfoTableViewCell.xib */,
 			);
 			name = OrderInfoTableViewCell;
+			sourceTree = "<group>";
+		};
+		61B603FB20A1C92D00D19DC7 /* TextFieldQuestion */ = {
+			isa = PBXGroup;
+			children = (
+				61B603FC20A1C94D00D19DC7 /* View */,
+			);
+			name = TextFieldQuestion;
+			sourceTree = "<group>";
+		};
+		61B603FC20A1C94D00D19DC7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				61B603FD20A1C96500D19DC7 /* TextFieldQuestionView.swift */,
+				61B603FF20A1C97300D19DC7 /* TextFieldQuestionView.xib */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 		61BA9B391E99FDC5004E9DE8 /* Widgets */ = {
@@ -8194,6 +8219,7 @@
 				87459CA11E4F159E00743120 /* PaymentTypeTableViewCell.xib in Resources */,
 				875743BE1EA60DFD001B518A /* SpecialOffer.png in Resources */,
 				611C1BEB204C4855007C409C /* ReviewImageSelectView.xib in Resources */,
+				61B6040020A1C97300D19DC7 /* TextFieldQuestionView.xib in Resources */,
 				875743841EA60DB9001B518A /* National-Small-50@2x.png in Resources */,
 				8757443F1EA60E71001B518A /* Winter-Small-50.png in Resources */,
 				8757436C1EA60DA5001B518A /* Birthday-72.png in Resources */,
@@ -8657,6 +8683,7 @@
 				87EA03331E6DA27D00B1E062 /* ProgressItemViewModel.m in Sources */,
 				61D474841F6FD371001DA6A6 /* HomePageTeaserBox.swift in Sources */,
 				87D3DD1C1E8A323000C960FF /* BaseDataManager.m in Sources */,
+				61B603FA20A1BCA100D19DC7 /* AppreciateSurveyViewController.swift in Sources */,
 				619D0B171EA34B8600FDB255 /* FeatureBoxCollectionViewWidget.m in Sources */,
 				61832FD41ED2C039006F01FE /* RateStarsView.swift in Sources */,
 				61840B631EA397FF006739EB /* EmarsysRecommendationGridWidgetView.m in Sources */,
@@ -8907,6 +8934,7 @@
 				CE9ADF831AB6D78200D56481 /* JAHomeViewController.m in Sources */,
 				875AD5791E38C0C900584ABF /* RISuccess.m in Sources */,
 				CE9ADF861AB6D78200D56481 /* JAColorFilterCell.m in Sources */,
+				61B603FE20A1C96500D19DC7 /* TextFieldQuestionView.swift in Sources */,
 				CE9ADF871AB6D78200D56481 /* JAAddressesViewController.m in Sources */,
 				CE9ADF891AB6D78200D56481 /* JAReviewCell.m in Sources */,
 				61D474821F6FD17E001DA6A6 /* HomePage.swift in Sources */,

@@ -18,6 +18,7 @@ class SelectView: BaseControlView, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak internal var tableview: UITableView!
     internal var dataSource: [SelectViewItemDataSourceProtocol]?
     internal var selectionType: SelectionType = .checkbox
+    var isScrollEnabled: Bool = false
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -34,12 +35,13 @@ class SelectView: BaseControlView, UITableViewDelegate, UITableViewDataSource {
     func update(model: [SelectViewItemDataSourceProtocol], selectionType: SelectionType) {
         self.dataSource = model
         self.selectionType = selectionType
+        self.tableview.isScrollEnabled = self.isScrollEnabled
         self.tableview.reloadData()
         self.tableview.layoutIfNeeded()
     }
     
     func getGetContentSizeHeight() -> CGFloat {
-        return self.tableview.contentSize.height
+        return CGFloat(self.dataSource?.count ?? 0)  * SelectItemViewCell.cellHeight()
     }
     
     //MARK: - UITableViewDelegate, UITableViewDataSource
