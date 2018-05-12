@@ -10,8 +10,9 @@ import UIKit
 
 class TextFieldQuestionView: BaseSurveyQuestionControlView, UITextViewDelegate {
     
-    @IBOutlet weak var questionTitleLabel: UILabel!
-    @IBOutlet weak var answerTextView: UITextView!
+    @IBOutlet weak private var questionTitleLabel: UILabel!
+    @IBOutlet weak private var answerTextView: UITextView!
+    @IBOutlet weak private var contentScrollView: UIScrollView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -20,9 +21,9 @@ class TextFieldQuestionView: BaseSurveyQuestionControlView, UITextViewDelegate {
         self.answerTextView.applyBorder(width: 1, color: Theme.color(kColorGray8))
         self.answerTextView.font = Theme.font(kFontVariationRegular, size: 13)
         self.answerTextView.delegate = self
+
     }
-    
-    
+
     override func update(model: SurveyQuestion) {
         self.questionTitleLabel.text = model.title
         if let answer = model.anwerTextMessage {
@@ -37,7 +38,10 @@ class TextFieldQuestionView: BaseSurveyQuestionControlView, UITextViewDelegate {
     
     //MARK: - UITextViewDelegate
     func textViewDidEndEditing(_ textView: UITextView) {
+        //To change the color of border on focus
         self.answerTextView.applyBorder(width: 1, color: Theme.color(kColorGray8))
+        
+        //To switch back to placeholder if necessary
         if answerTextView.text == "" {
             answerTextView.textColor = .lightGray
             answerTextView.text = STRING_WRITE_COMMENT
@@ -52,8 +56,8 @@ class TextFieldQuestionView: BaseSurveyQuestionControlView, UITextViewDelegate {
         }
     }
     
-    
     func textViewDidChange(_ textView: UITextView) {
+        //update question model
         if self.answerTextView.textColor != .lightGray {
             self.questionModel?.anwerTextMessage = textView.text
         }

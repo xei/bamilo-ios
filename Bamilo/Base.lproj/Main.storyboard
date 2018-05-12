@@ -1802,8 +1802,8 @@
                             <constraint firstItem="aQb-4C-eHr" firstAttribute="left" secondItem="dzF-yr-ery" secondAttribute="left" id="3aG-Ax-hCT"/>
                             <constraint firstItem="99h-Ky-lOg" firstAttribute="top" secondItem="1hV-h5-tPH" secondAttribute="bottom" id="6ll-dY-1K3"/>
                             <constraint firstItem="aQb-4C-eHr" firstAttribute="top" secondItem="dzF-yr-ery" secondAttribute="top" constant="15" id="Hdx-6m-NbZ"/>
-                            <constraint firstAttribute="trailing" secondItem="1hV-h5-tPH" secondAttribute="trailing" id="O2m-k5-rBz"/>
-                            <constraint firstItem="1hV-h5-tPH" firstAttribute="leading" secondItem="dzF-yr-ery" secondAttribute="leading" id="Qpb-je-S5r"/>
+                            <constraint firstAttribute="right" secondItem="1hV-h5-tPH" secondAttribute="right" id="O2m-k5-rBz"/>
+                            <constraint firstItem="1hV-h5-tPH" firstAttribute="left" secondItem="dzF-yr-ery" secondAttribute="left" id="Qpb-je-S5r"/>
                             <constraint firstAttribute="right" secondItem="Pzc-hC-CNZ" secondAttribute="right" id="SSg-TU-d6m"/>
                             <constraint firstAttribute="bottom" secondItem="aQb-4C-eHr" secondAttribute="bottom" constant="715" id="aPe-xt-3OL"/>
                             <constraint firstItem="1hV-h5-tPH" firstAttribute="top" secondItem="Pzc-hC-CNZ" secondAttribute="bottom" constant="20" id="b6A-5v-u4q"/>
@@ -1817,6 +1817,7 @@
                         <outlet property="collectionView" destination="Pzc-hC-CNZ" id="gsW-w2-vbT"/>
                         <outlet property="pagerControl" destination="aQb-4C-eHr" id="5YF-wQ-Z1K"/>
                         <outlet property="submitButton" destination="1hV-h5-tPH" id="9sh-cr-cPc"/>
+                        <outlet property="submitButtonBottomConstraint" destination="6ll-dY-1K3" id="D8b-nK-CV5"/>
                         <segue destination="Iyg-KZ-q3Y" kind="show" identifier="showSuccessReviewSubmission" id="26K-OX-5oC"/>
                     </connections>
                 </viewController>

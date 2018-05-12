@@ -14,6 +14,7 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
     @IBOutlet weak private var submitButton: OrangeButton!
     @IBOutlet weak private var collectionView: UICollectionView!
     @IBOutlet weak private var pagerControl: CHIPageControlJaloro!
+    @IBOutlet weak private var submitButtonBottomConstraint: NSLayoutConstraint!
     
     var surveryModel: ReviewSurvery!
     var orderID: String!
@@ -51,6 +52,15 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
             NSFontAttributeName: Theme.font(kFontVariationBold, size: 14),
             NSForegroundColorAttributeName: Theme.color(kColorBlue2)
         ]
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWasShown(notification:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeHidden(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    
+    deinit {
+        //remove all observers for this view controller when it's deinitliazed
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func closeButtonTapped() {
@@ -74,9 +84,11 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
     }
     
     //MARK: - UICollectionViewDelegate, UICollectionViewDataSource
+    var mycell: UICollectionViewCell?
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let question = self.dataSource?[indexPath.row] {
             let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: SurveyQuestionCollectionViewCell.nibName, for: indexPath) as! SurveyQuestionCollectionViewCell
+            self.mycell = cell
             cell.update(withModel: question)
             return cell
         }
@@ -161,16 +173,17 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
     }
     
     @IBAction func submitButtonTapped(_ sender: Any) {
+        self.view.endEditing(true)
         if let dataSource = self.dataSource {
-            
             if let dataSource = self.dataSource, dataSource.count > self.activeIndex {
                 self.submitQuestion(question: dataSource[self.activeIndex], isLastOne: dataSource.count - 1 == self.activeIndex)
             }
-            
             if self.firstNotAnsweredQuestionIndex >= self.activeIndex {
                 if self.activeIndex < dataSource.count - 1 {
                     self.activeIndex += 1
-                    self.scrollToIndex(index: self.activeIndex)
+                    Utility.delay(duration: 0.15) {
+                        self.scrollToIndex(index: self.activeIndex)
+                    }
                 }
             }
             if firstNotAnsweredQuestionIndex < activeIndex {
@@ -209,5 +222,25 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
     //MARK: - DataServiceProtocol
     func bind(_ data: Any!, forRequestId rid: Int32) {
         
+    }
+    
+    
+    //MARK: - KeyboardNotifications
+    func keyboardWasShown(notification:NSNotification) {
+        let userInfo = notification.userInfo
+        let keyboardFrame: NSValue? = userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue
+        let keyboardRectangle = keyboardFrame?.cgRectValue
+        if let keyboardHeight = keyboardRectangle?.height {
+            self.submitButtonBottomConstraint.constant = keyboardHeight
+            self.collectionView.collectionViewLayout.invalidateLayout()
+            
+            self.collectionView.panGestureRecognizer.isEnabled = false
+        }
+    }
+    
+    func keyboardWillBeHidden(notification: Notification) {
+        self.submitButtonBottomConstraint.constant = 0
+        self.collectionView.collectionViewLayout.invalidateLayout()
+        self.collectionView.panGestureRecognizer.isEnabled = true
     }
 }

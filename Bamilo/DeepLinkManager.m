@@ -15,6 +15,7 @@
 
 static NSMutableArray<NSURL *> *deepLinkPipe;
 static BOOL isListenersReady;
+static BOOL performed;
 
 
 @implementation DeepLinkManager
@@ -27,6 +28,7 @@ static BOOL isListenersReady;
     }
     
     if (url.scheme) {
+        
         NSDictionary<NSString *, NSString *> *queryDictionary = [URLUtility parseQueryString:url];
         if ([queryDictionary objectForKey:kUTMSource] ||
             [queryDictionary objectForKey:kUTMMedium] ||
@@ -54,6 +56,7 @@ static BOOL isListenersReady;
         if ([DeepLinkManager searchWithTarget:targetKey argument:argument filter:filterString] ||
             [DeepLinkManager sellerPageWithTargetKey:targetKey argument:argument] ||
             [DeepLinkManager specialViewWithTarget:targetKey]) {
+            performed = true;
             return;
         }
         
@@ -64,16 +67,21 @@ static BOOL isListenersReady;
             if([queryDictionary objectForKey:@"size"]) {
                 [userInfo setObject:[queryDictionary objectForKey:@"size"] forKey:@"size"];
             }
+            performed = true;
             [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication object:nil userInfo:userInfo];
         } else if ([targetKey isEqualToString:@"s"] && argument.length) {
             // Catalog view - search term
+            performed = true;
             [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification object:@{ @"index": @(99), @"name": STRING_SEARCH, @"text": argument }];
         } else if ([targetKey isEqualToString:@"camp"] && argument.length) {
+            performed = true;
             [[MainTabBarViewController topNavigationController] openTargetString:[RITarget getTargetString:CAMPAIGN node:argument] purchaseInfo:nil];
         } else if ([targetKey isEqualToString:@"ss"] && argument.length) {
+            performed = true;
             [[MainTabBarViewController topNavigationController] openTargetString:[RITarget getTargetString:STATIC_PAGE node:argument] purchaseInfo:nil];
         } else if ([targetKey isEqualToString:@"externalPayment"]) {
             // externalPayment - bamilo://ir/externalPayment?orderNum=<OrderNumber>&success=<BOOL>
+            performed = true;
             if ([[MainTabBarViewController topViewController] isKindOfClass:[JAExternalPaymentsViewController class]]) {
                 JAExternalPaymentsViewController *viewController = (JAExternalPaymentsViewController *)[MainTabBarViewController topViewController];
                 RICart *cart = ((JAExternalPaymentsViewController *)[MainTabBarViewController topViewController]).cart;
@@ -185,7 +193,7 @@ static BOOL isListenersReady;
 }
 
 + (BOOL)hasSomethingToShow {
-    return [deepLinkPipe count] > 0;
+    return performed ?: [deepLinkPipe count] > 0;
 }
 
 + (void)popAndPerform {
