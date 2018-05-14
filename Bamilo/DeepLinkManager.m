@@ -67,11 +67,11 @@ static BOOL isListenersReady;
             [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication object:nil userInfo:userInfo];
         } else if ([targetKey isEqualToString:@"s"] && argument.length) {
             // Catalog view - search term
-            [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification object:@{ @"index": @(99), @"name": STRING_SEARCH, @"text": argument }];
+            [[MainTabBarViewController topNavigationController] openScreenTarget:[RITarget getTarget:CATALOG_SEARCH node:argument] purchaseInfo:nil currentScreenName:nil];
         } else if ([targetKey isEqualToString:@"camp"] && argument.length) {
-            [[MainTabBarViewController topNavigationController] openTargetString:[RITarget getTargetString:CAMPAIGN node:argument] purchaseInfo:nil];
+            [[MainTabBarViewController topNavigationController] openTargetString:[RITarget getTargetString:CAMPAIGN node:argument] purchaseInfo:nil currentScreenName:nil];
         } else if ([targetKey isEqualToString:@"ss"] && argument.length) {
-            [[MainTabBarViewController topNavigationController] openTargetString:[RITarget getTargetString:STATIC_PAGE node:argument] purchaseInfo:nil];
+            [[MainTabBarViewController topNavigationController] openTargetString:[RITarget getTargetString:STATIC_PAGE node:argument] purchaseInfo:nil currentScreenName:nil];
         } else if ([targetKey isEqualToString:@"externalPayment"]) {
             // externalPayment - bamilo://ir/externalPayment?orderNum=<OrderNumber>&success=<BOOL>
             if ([[MainTabBarViewController topViewController] isKindOfClass:[JAExternalPaymentsViewController class]]) {
@@ -125,10 +125,9 @@ static BOOL isListenersReady;
     
     if ([sortingMap objectForKey:targetKey] && argument.length) {
         [categoryDictionary setObject:[sortingMap objectForKey:targetKey] forKey:@"sorting"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:categoryDictionary];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:categoryDictionary];
         return YES;
     }
-    
     return NO;
 }
 
@@ -153,7 +152,6 @@ static BOOL isListenersReady;
                                  @"cn"  : @"NAME",         //name
                                  @"cb"  : @"BRAND"         //brand
                                  };
-    
     if ([targetKey isEqualToString:@"c"]) {
         // Catalog view - category url
         // Do nothing more, everyThing is fine
@@ -162,7 +160,6 @@ static BOOL isListenersReady;
         [categoryDictionary setObject:[sortingMap objectForKey:targetKey] forKey:@"sorting"];
         successfullyHandled = YES;
     }
-
     if (successfullyHandled) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:categoryDictionary];
         return YES;

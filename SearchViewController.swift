@@ -191,23 +191,25 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
                     self.delegate?.searchBySuggestion?(targetString: target)
                     let trackingActionLabel = isRecentView ? "search_recent_cat" : "Search_recom_cat"
                     TrackerManager.postEvent(selector: EventSelectors.suggestionTappedSelector(), attributes: EventAttributes.searchSuggestionTapped(suggestionTitle: trackingActionLabel))
-                    MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: "SearchSuggestions:::\(trackingActionLabel)")
+                    if let screenName = self.getScreenName() {
+                        MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: "\(screenName):::\(trackingActionLabel)", currentScreenName: screenName)
+                    }
                 }
             }
         } else if indexPath.section == 1 {
             if let products = self.suggestion?.products {
                 self.localSavedSuggestion.add(product: products[indexPath.row])
-                if let target = products[indexPath.row].target {
+                if let target = products[indexPath.row].target, let screenName = self.getScreenName() {
                     self.delegate?.searchBySuggestion?(targetString: target)
                     let trackingActionLabel = isRecentView ? "search_recent_sku" : "Search_recom_sku"
                     TrackerManager.postEvent(selector: EventSelectors.suggestionTappedSelector(), attributes: EventAttributes.searchSuggestionTapped(suggestionTitle: trackingActionLabel))
-                    MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: "SearchSuggestions:::\(trackingActionLabel)")
+                    MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: "\(screenName):::\(trackingActionLabel)", currentScreenName: screenName)
                 }
             }
         } else if indexPath.section == 2 {
-            if let searchQueries = self.suggestion?.searchQueries, let target = searchQueries[indexPath.row].target, let _ = searchQueries[indexPath.row].name {
+            if let searchQueries = self.suggestion?.searchQueries, let target = searchQueries[indexPath.row].target, let _ = searchQueries[indexPath.row].name, let screenName = self.getScreenName() {
                 TrackerManager.postEvent(selector: EventSelectors.suggestionTappedSelector(), attributes: EventAttributes.searchSuggestionTapped(suggestionTitle: "search_recent_string"))
-                MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: "SearchSuggestions:::search_recent_string")
+                MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: "\(screenName):::search_recent_string", currentScreenName: screenName)
             }
         }
         
@@ -230,8 +232,9 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
         if let queryString = textField.text {
             self.delegate?.searchByString?(queryString: queryString)
             self.localSavedSuggestion.add(searchQuery: queryString)
-            
-            MainTabBarViewController.topNavigationController()?.openTargetString(target?.targetString, purchaseInfo: "SearchString:::\(queryString)")
+            if let screenName = getScreenName() {
+                MainTabBarViewController.topNavigationController()?.openTargetString(target?.targetString, purchaseInfo: "SearchString:::\(queryString)", currentScreenName: screenName)
+            }
         }
         
         return true

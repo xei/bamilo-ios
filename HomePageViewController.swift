@@ -165,7 +165,7 @@ class HomePageViewController:   BaseViewController,
     func teaserItemTappedWithTargetString(target: String, teaserId: String) {
         TrackerManager.postEvent(selector: EventSelectors.teaserTappedSelector(), attributes: EventAttributes.teaserTapped(teaserName: teaserId, screenName: getScreenName(), teaserTargetNode: target))
         if let screenName = getScreenName() {
-            MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: "\(screenName)_\(teaserId):::\(target)")
+            MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: "\(screenName)_\(teaserId):::\(target)", currentScreenName: screenName)
         }
     }
     

@@ -490,7 +490,9 @@
 }
 
 - (void)goToSellerPageWithTarget:(RITarget *)target {
-    [[MainTabBarViewController topNavigationController] openScreenTarget:target purchaseInfo:nil];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(sellerNameTapped)]) {
+        [self.delegate sellerNameTapped];
+    }
 }
 
 @end

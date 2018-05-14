@@ -266,6 +266,9 @@
             [EmarsysPredictManager sendTransactionsOf:self];
             [TrackerManager postEventWithSelector:[EventSelectors viewCartEventSelector] attributes:[EventAttributes viewCartWithCart:self.cart success:YES]];
         }
+        
+        //track Ecommerce event
+        [[GoogleAnalyticsTracker sharedTracker] trackEcommerceCartInCheckoutWithCart:self.cart step:@(1) options:nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo: @{kUpdateCartNotificationValue: self.cart}];
     }
 }

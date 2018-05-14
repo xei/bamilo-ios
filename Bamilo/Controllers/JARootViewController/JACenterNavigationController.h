@@ -24,8 +24,8 @@ typedef void(^ProtectedBlock)(BOOL userHadSession);
 //@property (strong, nonatomic) JATabBarView *tabBarView;
 @property (nonatomic, assign)BOOL searchViewAlwaysHidden;
 
-- (void)openTargetString:(NSString *)targetString purchaseInfo:(NSString *)purchaseInfo;
-- (BOOL)openScreenTarget:(RITarget *)screenTarget purchaseInfo:(NSString *)purchaseInfo;
+- (void)openTargetString:(NSString *)targetString purchaseInfo:(NSString *)purchaseInfo currentScreenName:(NSString *)screenName;
+- (BOOL)openScreenTarget:(RITarget *)target purchaseInfo:(NSString *)purchaseInfo currentScreenName:(NSString *)screenName;
 - (void)showSearchView:(NSString *)screenName;
 
 - (void)goToPickupStationWebViewControllerWithCMS:(NSString*)cmsBlock;

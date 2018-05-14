@@ -163,8 +163,7 @@
     }
 }
 
-- (CGFloat)imageHeight
-{
+- (CGFloat)imageHeight {
     switch (self.imageRatingSize) {
         case kImageRatingSizeSmall:
             return 14.f;
@@ -181,13 +180,11 @@
     }
 }
 
-- (void)setImageRatingSize:(JAImageRatingSize)imageRatingSize
-{
+- (void)setImageRatingSize:(JAImageRatingSize)imageRatingSize {
     _imageRatingSize = imageRatingSize;
 }
 
-- (void)setRatingAverage:(NSNumber *)ratingAverage
-{
+- (void)setRatingAverage:(NSNumber *)ratingAverage {
     double doubleNumber = ratingAverage.doubleValue;
     [self setStarImage:self.star1 forValue:doubleNumber];
     [self setStarImage:self.star2 forValue:doubleNumber-1];

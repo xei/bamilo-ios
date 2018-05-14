@@ -86,21 +86,6 @@
     return checkoutStepByStepViewController;
 }
 
-//- (JAStepByStepTabViewController *)returnsStepByStepViewController {
-//    if (!VALID(_returnsStepByStepViewController, JAStepByStepTabViewController)) {
-//        _returnsStepByStepViewController = [self getNewReturnsStepByStepViewController];
-//    }
-//    return _returnsStepByStepViewController;
-//}
-
-//- (JAStepByStepTabViewController *)getNewReturnsStepByStepViewController {
-//    JAStepByStepTabViewController *returnsStepByStepViewController = [JAStepByStepTabViewController new];
-//    
-//    [returnsStepByStepViewController setStepByStepModel:[JAReturnStepByStepModel new]];
-//    [returnsStepByStepViewController setIndexInit:0];
-//    return returnsStepByStepViewController;
-//}
-
 #pragma mark - View Lifecycle
 
 - (void)viewDidLoad {
@@ -126,9 +111,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showAuthenticationScreen:) name:kShowAuthenticationScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showSignUpScreen:) name:kShowSignUpScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showCheckoutExternalPaymentsScreen:) name:kShowCheckoutExternalPaymentsScreenNotification object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showCheckoutThanksScreen:) name:kShowCheckoutThanksScreenNotification object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectRecentSearch:) name:kSelectedRecentSearchNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectItemInMenu:) name:kMenuDidSelectOptionNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectLeafCategoryInMenu:) name:kMenuDidSelectLeafCategoryNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openCart:) name:kOpenCartNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectTeaserWithCatalogUrl:) name:kDidSelectTeaserWithCatalogUrlNofication object:nil];
@@ -143,9 +125,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showProductVariationsScreen:) name:kOpenProductVariationsScreen object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showSizeGuide:) name:kShowSizeGuideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showOtherOffers:) name:kOpenOtherOffers object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showSellerReviews:) name:kOpenSellerReviews object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showNewSellerReview:) name:kOpenNewSellerReview object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showSellerCatalog:) name:kOpenSellerPage object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkRedirectInfo) name:kCheckRedirectInfoNotification object:nil];
 }
 
@@ -162,9 +142,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowAuthenticationScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowSignUpScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowCheckoutExternalPaymentsScreenNotification object:nil];
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowCheckoutThanksScreenNotification object:nil];
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:kSelectedRecentSearchNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kMenuDidSelectOptionNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kMenuDidSelectLeafCategoryNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kOpenCartNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kDidSelectTeaserWithCatalogUrlNofication object:nil];
@@ -179,20 +156,16 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kOpenProductVariationsScreen object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowSizeGuideNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kOpenOtherOffers object:nil];
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:kOpenSellerReviews object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kOpenNewSellerReview object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kOpenSellerPage object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kCheckRedirectInfoNotification object:nil];
     
 }
 
-- (void)openTargetString:(NSString *)targetString purchaseInfo:(NSString *)purchaseInfo {
-    JAScreenTarget *screenTarget = [JAScreenTarget new];
-    screenTarget.pushAnimation = YES;
-    [self openScreenTarget:[RITarget parseTarget:targetString] purchaseInfo:purchaseInfo];
+- (void)openTargetString:(NSString *)targetString purchaseInfo:(NSString *)purchaseInfo currentScreenName: (NSString *)screenName {
+    [self openScreenTarget:[RITarget parseTarget:targetString] purchaseInfo:purchaseInfo currentScreenName: (NSString *)screenName];
 }
 
-- (BOOL)openScreenTarget:(RITarget *)target purchaseInfo:(NSString *)purchaseInfo {
+- (BOOL)openScreenTarget:(RITarget *)target purchaseInfo:(NSString *)purchaseInfo currentScreenName: (NSString *)screenName {
     if ([[self topViewController] isKindOfClass:[JABaseViewController class]] && [[(JABaseViewController *)[self topViewController] targetString] isEqualToString:target.targetString]) {
         return NO;
     }
@@ -205,20 +178,15 @@
             [self pushViewController:viewController animated:true];
             return YES;
         }
-        case CATALOG_SEARCH:
-        case CATALOG_SELLER:{
-            CatalogViewController *viewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
-            viewController.searchTarget = target;
-            viewController.purchaseTrackingInfo = purchaseInfo;
-            [self pushViewController:viewController animated:true];
-            return YES;
-        }
         case CATALOG_HASH:
         case CATALOG_BRAND:
-        case CATALOG_CATEGORY: {
+        case CATALOG_CATEGORY:
+        case CATALOG_SEARCH:
+        case CATALOG_SELLER:{
             CatalogViewController *viewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];;
             viewController.searchTarget = target;
             viewController.purchaseTrackingInfo = purchaseInfo;
+            viewController.initiatorScreenName = screenName;
             [self pushViewController:viewController animated:true];
             return YES;
         }
@@ -266,31 +234,6 @@
     [self popToRootViewControllerAnimated:YES];
 }
 
-
-#pragma mark - Left Menu Actions
-- (void)didSelectItemInMenu:(NSNotification *)notification {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification object:nil];
-    NSDictionary *selectedItem = [notification object];
-    if ([selectedItem objectForKey:@"index"]) {
-        NSNumber *index = [selectedItem objectForKey:@"index"];
-        
-        if ([index isEqual:@(0)]) {
-            [self changeCenterPanel:STRING_HOME notification:notification];
-        } else {
-            if ([index isEqual:@(99)]) {
-                // It's to perform a search
-                [self pushCatalogToShowSearchResults:[selectedItem objectForKey:@"text"]];
-            } else if ([index isEqual:@(98)]) {
-                [self  pushCatalogForUndefinedSearchWithBrandTargetString:[selectedItem objectForKey:@"targetString"]
-                                                   andBrandName:[selectedItem objectForKey:@"name"]];
-            } else {
-                [self changeCenterPanel:[selectedItem objectForKey:@"name"] notification:notification];
-            }
-        }
-    }
-    
-}
-
 - (void)changeCenterPanel:(NSString *)newScreenName notification:(NSNotification *)notification {
     if ([newScreenName isEqualToString:STRING_HOME]) {
         [self showHomeScreen:nil];
@@ -310,13 +253,6 @@
     } else if ([newScreenName isEqualToString:STRING_USER_EMAIL_NOTIFICATIONS]) {
         [self showEmailNotificaitons:nil];
     }
-    
-//    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-//    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
-//    [trackingDictionary setValue:newScreenName forKey:kRIEventActionKey];
-//    [trackingDictionary setValue:@"ActionOverflow" forKey:kRIEventCategoryKey];
-//    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSideMenu]
-//                                              data:[trackingDictionary copy]];
 }
 
 #pragma mark Favorites Screen
@@ -471,34 +407,15 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAExternalPaymentsViewController class]] && [RICustomer checkIfUserIsLogged]) {
         self.neeedsExternalPaymentMethod = YES;
-        
         JAExternalPaymentsViewController *externalPaymentsVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"externalPaymentsViewController"];
-        
         externalPaymentsVC.cart = [notification.userInfo objectForKey:kCart];
-        
         [self pushViewController:externalPaymentsVC animated:YES];
     }
 }
 
-//#pragma mark Checkout Thanks Screen
-//- (void)showCheckoutThanksScreen:(NSNotification *)notification {
-//    SuccessPaymentViewController *viewCtrl = (SuccessPaymentViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Checkout" nibName:NSStringFromClass([SuccessPaymentViewController class]) resetCache:NO];
-//    viewCtrl.success = [(NSNumber *)[notification.userInfo objectForKey:@"success"] boolValue];
-//    viewCtrl.cart = [notification.userInfo objectForKey:kCart];
-//    [self pushViewController:viewCtrl animated:YES];
-//}
-
 #pragma mark Catalog Screen
 - (void)pushCatalogToShowSearchResults:(NSString *)query {
-    CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
-    catalog.searchTarget = [RITarget getTarget:CATALOG_SEARCH node:query];
-    [self pushViewController:catalog animated:YES];
-}
-
-- (void)pushCatalogForUndefinedSearchWithBrandTargetString:(NSString *)brandTargetString andBrandName:(NSString *)brandName {
-    CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
-    catalog.searchTarget = [RITarget parseTarget:brandTargetString];
-    [self pushViewController:catalog animated:YES];
+    [self openScreenTarget:[RITarget getTarget:CATALOG_SEARCH node:query] purchaseInfo:nil currentScreenName:nil];
 }
 
 - (void)didSelectLeafCategoryInMenu:(NSNotification *)notification {
@@ -509,7 +426,6 @@
     NSString* sorting = [selectedItem objectForKey:@"sorting"];
     
     if (category) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification object:nil];
         CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
         catalog.searchTarget = [RITarget getTarget:CATALOG_CATEGORY node:category.urlKey];
         
@@ -684,46 +600,16 @@
     }
 }
 
--(void)showSellerCatalog: (NSNotification *)notification {
-    NSString* targetString = [notification.userInfo objectForKey:@"targetString"];
-    NSString* title = [notification.userInfo objectForKey:@"name"];
-    
-    if(VALID_NOTEMPTY(targetString, NSString)) {
-        CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
-        RITarget *target = [RITarget parseTarget:targetString];
-        catalog.searchTarget = target;
-        catalog.title = title;
-        
-        [self pushViewController:catalog animated:YES];
-    }
-}
-
 #pragma mark - Teaser Actions
 - (void)didSelectTeaserWithCatalogUrl:(NSNotification*)notification {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
-                                                        object:nil];
-    
     NSString* targetString = [notification.userInfo objectForKey:@"targetString"];
-    NSString* title = [notification.userInfo objectForKey:@"title"];
-    
+    NSString* purchaseTrackingInfo = [notification.userInfo objectForKey:@"purchaseTrackingInfo"];
     if (targetString.length) {
-        CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
-        
-        RITarget *target = [RITarget parseTarget:targetString];
-        catalog.searchTarget = target;
-        catalog.title = title;
-
-        if ([notification.userInfo objectForKey:@"purchaseTrackingInfo"]) {
-            catalog.purchaseTrackingInfo = [notification.userInfo objectForKey:@"purchaseTrackingInfo"];
-        }
-        
-        [[MainTabBarViewController topNavigationController] pushViewController:catalog animated:YES];
+        [self openScreenTarget:[RITarget parseTarget:targetString] purchaseInfo:purchaseTrackingInfo currentScreenName:nil];
     }
 }
 
 - (void)didSelectCampaign:(NSNotification*)notification {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification object:nil];
-    
     NSString* title = [notification.userInfo objectForKey:@"title"];
     
     //this is used when the teaserGrouping is campaigns and we have to show more than one campaign
@@ -757,17 +643,13 @@
         [self pushViewController:campaignsVC animated:YES];
     } else if (campaignTargetString.length) {
         JACampaignsViewController* campaignsVC = [JACampaignsViewController new];
-        
         campaignsVC.targetString = campaignTargetString;
         campaignsVC.purchaseTrackingInfo = cameFromTeasers;
-        
         [self pushViewController:campaignsVC animated:YES];
     }
 }
 
 - (void)didSelectTeaserWithPDVUrl:(NSNotification*)notification {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification object:nil];
-    
     NSString* targetString = [notification.userInfo objectForKey:@"targetString"];
     NSString* productSku = [notification.userInfo objectForKey:@"sku"];
     
@@ -779,30 +661,24 @@
         if ([notification.userInfo objectForKey:@"richRelevance"]) {
             pdv.richRelevanceParameter = [notification.userInfo objectForKey:@"richRelevance"];
         }
-        
         if ([notification.userInfo objectForKey:@"fromCatalog"]) {
             pdv.fromCatalogue = YES;
         } else {
             pdv.fromCatalogue = NO;
         }
-        
         if ([notification.userInfo objectForKey:@"previousCategory"]) {
             NSString *previous = [notification.userInfo objectForKey:@"previousCategory"];
-            
             if (previous.length > 0) {
                 pdv.previousCategory = previous;
             }
         }
-        
         if ([notification.userInfo objectForKey:@"category"]) {
             pdv.category = [notification.userInfo objectForKey:@"category"];
         }
-        
         // For deeplink
         if ([notification.userInfo objectForKey:@"size"]) {
             pdv.preSelectedSize = [notification.userInfo objectForKey:@"size"];
         }
-        
         if ([notification.userInfo objectForKey:@"purchaseTrackingInfo"]) {
             pdv.purchaseTrackingInfo = [notification.userInfo objectForKey:@"purchaseTrackingInfo"];
         }
@@ -812,11 +688,8 @@
 }
 
 - (void)didSelectTeaserWithShopUrl:(NSNotification*)notification {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification object:nil];
-    
     NSString* targetString = [notification.userInfo objectForKey:@"targetString"];
     JAShopWebViewController* viewController = [[JAShopWebViewController alloc] init];
-    
     if([notification.userInfo objectForKey:@"title"]) {
         viewController.title = [notification.userInfo objectForKey:@"title"];
     }
@@ -826,7 +699,6 @@
     if (targetString.length) {
         viewController.targetString = targetString;
         [self pushViewController:viewController animated:YES];
-
     }
 }
 
@@ -882,7 +754,6 @@
             [screenTarget.navBarLayout setShowBackButton:NO];
             [screenTarget.navBarLayout setShowCartButton:NO];
             [screenTarget.navBarLayout setShowSearchButton:NO];
-//            [[MainTabBarViewController topNavigationController] openScreenTarget:screenTarget];
             return;
         }
     }
@@ -896,111 +767,15 @@
     [self pushViewController:viewController animated:YES];
 }
 
-//- (void)goToOnlineReturnsPaymentScreenForItems:(NSArray *)items order:(RITrackOrder*)order {
-//    JAORPaymentViewController* viewController = [[JAORPaymentViewController alloc] init];
-//    [viewController setItems:items];
-//    [viewController setOrder:order];
-//    [self goToStep:viewController forStepByStepViewController:self.returnsStepByStepViewController];
-//}
-
-//- (void)goToOnlineReturnsWaysScreenForItems:(NSArray *)items order:(RITrackOrder*)order {
-//    JAORWaysViewController* viewController = [[JAORWaysViewController alloc] init];
-//    [viewController setItems:items];
-//    [viewController setOrder:order];
-//    [self goToStep:viewController forStepByStepViewController:self.returnsStepByStepViewController];
-//}
-
-//- (void)goToOnlineReturnsReasonsScreenForItems:(NSArray *)items order:(RITrackOrder*)order {
-//    JAORReasonsViewController* viewController = [[JAORReasonsViewController alloc] init];
-//    [viewController setItems:items];
-//    [viewController setOrder:order];
-//    [self goToStep:viewController forStepByStepViewController:self.returnsStepByStepViewController];
-//}
-
-//- (void)goToOnlineReturnsCall:(RIItemCollection *)item fromOrderNumber:(NSString *)orderNumber {
-//    JAORCallToReturnViewController *viewController = [[JAORCallToReturnViewController alloc] init];
-//    [viewController setItem:item];
-//    [viewController setOrderNumber:orderNumber];
-//    [self pushViewController:viewController animated:YES];
-//}
-
-//- (void)goToOnlineReturnsConfirmConditionsForItems:(NSArray *)items order:(RITrackOrder*)order {
-//    NSString *targetString = [(RIItemCollection *)[items firstObject] onlineReturnTargetString];
-//
-//    [RIHtmlShop getHtmlShopForTargetString:targetString successBlock:^(RIHtmlShop *htmlShop) {
-//        JAORConfirmConditionsViewController *viewController = [[JAORConfirmConditionsViewController alloc] init];
-//        [viewController setHtml:htmlShop.html];
-//        [viewController setItems:items];
-//        [viewController setOrder:order];
-//        [self pushViewController:viewController animated:YES];
-//    } failureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
-//        [self goToOnlineReturnsReasonsScreenForItems:items order:order];
-//    }];
-//}
-
-//- (void)goToOnlineReturnsConfirmScreenForItems:(NSArray *)items order:(RITrackOrder*)order {
-//    JAORConfirmationScreenViewController *viewController = [[JAORConfirmationScreenViewController alloc] init];
-//    [viewController setItems:items];
-//    [viewController setOrder:order];
-//    [self goToStep:viewController forStepByStepViewController:self.returnsStepByStepViewController];
-//}
-
-//- (void)goToStep:(UIViewController *)viewController forStepByStepViewController:(JAStepByStepTabViewController *)stepByStepViewController {
-//    if ([self.viewControllers indexOfObject:stepByStepViewController] == NSNotFound) {
-//        if (stepByStepViewController == self.checkoutStepByStepViewController) {
-//            stepByStepViewController = [self getNewCheckoutStepByStepViewController];
-//            self.checkoutStepByStepViewController = stepByStepViewController;
-//        } else if (stepByStepViewController == self.returnsStepByStepViewController) {
-//            stepByStepViewController = [self getNewReturnsStepByStepViewController];
-//            if ([viewController respondsToSelector:@selector(items)]) {
-//                [(JAReturnStepByStepModel *)stepByStepViewController.stepByStepModel setItems:[viewController performSelector:@selector(items) withObject:nil]];
-//            }
-////            if ([viewController respondsToSelector:@selector(order)]) {
-////                [(JAReturnStepByStepModel *)stepByStepViewController.stepByStepModel setOrder:[viewController performSelector:@selector(order) withObject:nil]];
-////            }
-//            self.returnsStepByStepViewController = stepByStepViewController;
-//        }
-//    }
-//    if ([viewController respondsToSelector:@selector(setStateInfoValues:)]) {
-//        [viewController performSelector:@selector(setStateInfoValues:) withObject:stepByStepViewController.stepByStepModel.stepByStepValues];
-//    }
-//    if ([viewController respondsToSelector:@selector(setStateInfoLabels:)]) {
-//        [viewController performSelector:@selector(setStateInfoLabels:) withObject:stepByStepViewController.stepByStepModel.stepByStepLabels];
-//    }
-//    [self closeScreensToStackClass:[JAStepByStepTabViewController class] animated:YES];
-//    JAStepByStepTabViewController *stepByStepTabViewController = (JAStepByStepTabViewController *)[self topViewController];
-//    if ([stepByStepTabViewController isKindOfClass:[JAStepByStepTabViewController class]] && [stepByStepTabViewController.stepByStepModel isKindOfClass:[stepByStepViewController.stepByStepModel class]]) {
-//        [stepByStepTabViewController goToViewController:viewController];
-//    } else {
-//        [self pushViewController:stepByStepViewController animated:YES];
-//        [stepByStepViewController goToViewController:viewController];
-//    }
-//}
-
-#pragma mark - Recent Search
-
-//- (void)didSelectRecentSearch:(NSNotification*)notification {
-//    RISearchSuggestion *recentSearch = notification.object;
-//
-//    if (recentSearch) {
-//        CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
-//        catalog.searchTarget = [RITarget getTarget:CATALOG_SEARCH node:recentSearch.item];
-//
-//        [self pushViewController:catalog animated:YES];
-//    }
-//}
-
 - (void)updateCart:(NSNotification*) notification {
     NSMutableDictionary* userInfo = nil;
     if(VALID_NOTEMPTY(notification, NSNotification)) {
         userInfo = [[NSMutableDictionary alloc] initWithDictionary:notification.userInfo];
-        
         if(VALID_NOTEMPTY([userInfo objectForKey:kUpdateCartNotificationValue], RICart)) {
             self.cart = [userInfo objectForKey:kUpdateCartNotificationValue];
         } else {
             self.cart = nil;
         }
-        
         if(self.cart) {
             [MainTabBarViewController updateCartValueWithCartItemsCount:[self.cart.cartEntity.cartCount integerValue]];
         } else {

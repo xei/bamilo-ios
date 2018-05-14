@@ -116,10 +116,7 @@
 @synthesize hasStock;
 @synthesize freeShippingPossible;
 
-+ (NSString *)getCompleteProductWithSku:(NSString*)sku
-                           successBlock:(void (^)(id product))successBlock
-                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
-{
++ (NSString *)getCompleteProductWithSku:(NSString*)sku successBlock:(void (^)(id product))successBlock andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock {
     NSString *finalTargetString = [RITarget getTargetString:PRODUCT_DETAIL node:sku];
     return [RIProduct getCompleteProductWithTargetString:finalTargetString
                                        withRichParameter:nil
@@ -141,7 +138,7 @@
     
     NSString * url =  [RITarget getURLStringforTargetString:targetString];
     url = [NSString stringWithFormat:@"%@/%@",url,richParam];
-    url = [url  stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    url = [url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:url]
                                                             parameters:nil

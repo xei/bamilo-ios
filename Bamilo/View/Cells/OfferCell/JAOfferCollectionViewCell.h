@@ -11,8 +11,14 @@
 #import "RIProductSimple.h"
 #import "JAClickableView.h"
 
+@protocol JAOfferCollectionViewCellDelegate <NSObject>
+- (void)sellerNameTappedByProductOffer:(RIProductOffer *)offer;
+@end
+
+
 @interface JAOfferCollectionViewCell : UICollectionViewCell
 
+@property (nonatomic, weak) id<JAOfferCollectionViewCellDelegate> delegate;
 @property (nonatomic, strong) JAClickableView *addToCartClicableView;
 @property (nonatomic, strong) JAClickableView *sizeClickableView;
 

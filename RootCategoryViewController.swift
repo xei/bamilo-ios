@@ -175,13 +175,13 @@ class RootCategoryViewController: BaseViewController,
             if let cat = model as? CategoryProduct {
                 if cat.childern?.count ?? 0 > 0 {
                     self.performSegue(withIdentifier: "showsubCategories", sender: cat)
-                } else {
-                    MainTabBarViewController.topNavigationController()?.openTargetString(cat.target, purchaseInfo: nil)
+                } else if let screenName = getScreenName(){
+                    MainTabBarViewController.topNavigationController()?.openTargetString(cat.target, purchaseInfo: nil, currentScreenName: screenName)
                 }
             } else if let extLink = model as? ExternalLink, let browserLink = extLink.link, let validURL = URL(string: browserLink) {
                 UIApplication.shared.openURL(validURL)
-            } else if let link = model as? InternalLink {
-                MainTabBarViewController.topNavigationController()?.openTargetString(link.target, purchaseInfo: nil)
+            } else if let link = model as? InternalLink, let screenName = getScreenName(){
+                MainTabBarViewController.topNavigationController()?.openTargetString(link.target, purchaseInfo: nil, currentScreenName: screenName)
             }
         }
     }

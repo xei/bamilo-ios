@@ -52,6 +52,9 @@
     [RICart sharedInstance].cartEntity.cartItems = @[];
     [RICart sharedInstance].cartEntity.packages = @[];
     [RICart sharedInstance].cartEntity.cartCount = 0;
+    
+    //Ecommerce tracking
+    [[GoogleAnalyticsTracker sharedTracker] trackEcommerceCartInCheckoutWithCart:self.cart step:@(5) options:@"SuccessPayment"];
 }
 
 - (void)setupView {

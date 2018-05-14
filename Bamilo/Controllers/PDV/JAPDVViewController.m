@@ -255,6 +255,8 @@ static NSString *recommendationLogic = @"RELATED";
     // notify the InAppNotification SDK that this the active view controller
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
     self.product = product;
+    [[GoogleAnalyticsTracker sharedTracker] trackEcommerceProductClickWithProduct:product];
+    
     self.productSku = product.sku;
     [self trackingEventViewProduct:product];
     [self trackingEventLoadingTime];
@@ -266,7 +268,6 @@ static NSString *recommendationLogic = @"RELATED";
         userInfo = [NSDictionary dictionaryWithObject:self.product.favoriteAddDate forKey:@"favoriteAddDate"];
     }
     [self trackingEventMostViewedBrand];
-    
     //###################
     //EVENT : VIEW PRODUCT
     NSUInteger lenght = self.navigationController.viewControllers.count;
@@ -573,14 +574,7 @@ static NSString *recommendationLogic = @"RELATED";
 }
 
 - (void)goToSellerCatalog {
-    NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];
-    
-    if(self.product.seller) {
-        [userInfo setObject:self.product.seller.name forKey:@"name"];
-        [userInfo setObject:self.product.seller.target forKey:@"targetString"];
-    }
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:self.product.seller userInfo:userInfo];
+    [[MainTabBarViewController topNavigationController] openScreenTarget:self.product.seller.target purchaseInfo:nil currentScreenName:[self getScreenName]];
 }
 
 - (void)goToSellerLink {
@@ -647,7 +641,7 @@ static NSString *recommendationLogic = @"RELATED";
 }
 
 - (void)goToSisScreen {
-    //    [[MainTabBarViewController topNavigationController] openTargetString:self.product.brandTarget];
+    [[MainTabBarViewController topNavigationController] openTargetString:self.product.brandTarget purchaseInfo:nil currentScreenName:[self getScreenName]];
 }
 
 - (void)goToOtherSellersScreen {
@@ -662,7 +656,7 @@ static NSString *recommendationLogic = @"RELATED";
     
     //NSArray *objectToShare = @[fbmActivity, whatsAppActivity];;
     //crash fix on clicking items with name in farsi
-    NSString* webStringURL = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString* webStringURL = [url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
     NSURL* urlToBeShared = [NSURL URLWithString:webStringURL];
     
     //    WhatsAppMessage *whatsappMsg = [[WhatsAppMessage alloc] initWithMessage:[NSString stringWithFormat:@"%@ %@",STRING_SHARE_PRODUCT_MESSAGE, url] forABID:nil];
@@ -1599,6 +1593,10 @@ static NSString *recommendationLogic = @"RELATED";
 #pragma mark - JAPDVProductInfoDelegate
 - (void)sellerInfoNeedsContentToBeRefreshed {
     [self refreshContent];
+}
+
+- (void)sellerNameTapped {
+    [self goToSellerCatalog];
 }
 
 @end

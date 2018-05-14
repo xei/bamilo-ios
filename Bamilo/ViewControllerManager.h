@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "JARootViewController.h"
 #import "JACenterNavigationController.h"
 
 @interface ViewControllerManager : NSObject
@@ -24,8 +23,6 @@
 @end
 
 @interface ViewControllerManager()
-//+ (JARootViewController *) rootViewController;
-//+ (JACenterNavigationController *) centerViewController;
 + (id) topViewController;
 
 @end

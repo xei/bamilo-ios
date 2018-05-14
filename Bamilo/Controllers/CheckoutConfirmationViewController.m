@@ -106,11 +106,14 @@
                 [_cellsIndexPaths setObject:[NSMutableArray indexPathArrayOfLength:(int)package.products.count forSection: 3 + (int)idx] atIndexedSubscript: 3 + (int)idx];
             }];
             
-            [_cellsIndexPaths setObject:@[[NSIndexPath indexPathForRow:0 inSection: 3 + _packages.count]] atIndexedSubscript: 3 + _packages.count];
+            [_cellsIndexPaths setObject: @[[NSIndexPath indexPathForRow:0 inSection: 3 + _packages.count]] atIndexedSubscript: 3 + _packages.count];
             
             [self.tableView reloadData];
             [self publishScreenLoadTimeWithName:[self getScreenName] withLabel:@""];
             [self.tableView fadeIn:0.15];
+            
+            //Ecommerce traking
+            [[GoogleAnalyticsTracker sharedTracker] trackEcommerceCartInCheckoutWithCart:self.cart step:@(3) options:nil];
         } else {
             [self errorHandler:error forRequestID:0];
         }

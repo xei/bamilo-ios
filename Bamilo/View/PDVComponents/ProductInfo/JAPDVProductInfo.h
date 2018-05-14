@@ -12,6 +12,7 @@
 
 @protocol JAPDVProductInfoDelegate <NSObject>
 - (void)sellerInfoNeedsContentToBeRefreshed;
+- (void)sellerNameTapped;
 @end
 
 @interface JAPDVProductInfo : UIView

@@ -190,6 +190,9 @@
                 value: product.price
             )
             self.sendParamsToGA(params: params)
+            
+            //Ecommerce tracking
+            self.sendEcommerceEvent(product: product, actionName: kGAIPAAdd)
         }
     }
     
@@ -202,6 +205,9 @@
                 value: product.price
             )
             self.sendParamsToGA(params: params)
+            
+            //Ecommerce tracking
+            self.sendEcommerceEvent(product: product, actionName: kGAIPARemove)
         }
     }
     
@@ -333,18 +339,6 @@
         }
     }
     
-    func trackTransaction(cart: RICart) {
-        if let transActionParams = GAIDictionaryBuilder.createTransaction(
-            withId: cart.orderNr,
-            affiliation: "In-App Store",
-            revenue: cart.cartEntity.cartValue,
-            tax: cart.cartEntity.vatValue,
-            shipping: cart.cartEntity.shippingValue,
-            currencyCode: "IRR") {
-            self.sendParamsToGA(params: transActionParams)
-        }
-    }
-    
     //MARK: - Helper functions
     private func sendParamsToGA(params: GAIDictionaryBuilder?) {
         guard let params = params else { return }
@@ -353,4 +347,110 @@
         }
         GAI.sharedInstance().defaultTracker.send(params.build() as! [AnyHashable : Any])
     }
+    
+    
+    
+    // --- GA ECommerce trackings ----
+    func trackProductImpression(products: [Product], impressionList: String, impressionSource: String) {
+        let builder = GAIDictionaryBuilder.createScreenView()
+        products.map { (product) -> GAIEcommerceProduct in
+            let gaProduct = GAIEcommerceProduct()
+            gaProduct.setId(product.sku)
+            gaProduct.setName(product.name)
+            gaProduct.setBrand(product.brand)
+            if let price = product.price {
+                gaProduct.setPrice(NSNumber(value: price))
+            }
+            return gaProduct
+        }.forEach{ let _ = builder?.addProductImpression($0, impressionList: impressionList, impressionSource: impressionSource) }
+        self.sendParamsToGA(params: builder)
+    }
+    
+    
+    func trackEcommerceProductClick(product: RIProduct) {  //RIProduct must be replaced with Product after PDVController refactor
+        self.sendEcommerceEvent(product: product, actionName: kGAIPAClick)
+    }
+    
+    func trackEcommerceProductDetailView(product: RIProduct) {
+        self.sendEcommerceEvent(product: product, actionName: kGAIPADetail)
+    }
+    
+    func trackEcommerceCartInCheckout(cart: RICart, step: NSNumber, options: String? = nil) {
+        let builder = GAIDictionaryBuilder.createEvent(withCategory: "Ecommerce", action: "Checkout", label: nil, value: nil)
+        
+        if let cartItems = cart.cartEntity.cartItems,  cartItems.count > 0 {
+            cart.cartEntity.cartItems.map { self.convertCartItemToGAIProduct(cartItem: $0) }.forEach { let _ = builder?.add($0) }
+        } else if let packages = cart.cartEntity.packages, packages.count > 0 {
+            cart.cartEntity.packages.map{$0.products}.flatMap{$0}.flatMap{$0}.map { self.convertCartItemToGAIProduct(cartItem: $0) }.forEach { let _ = builder?.add($0) }
+        }
+        
+        let action = GAIEcommerceProductAction()
+        action.setAction(kGAIPACheckout)
+        action.setCheckoutStep(step)
+        if let options = options {
+            action.setCheckoutOption(options)
+        }
+        let _ = builder?.setProductAction(action)
+        self.sendParamsToGA(params: builder)
+    }
+    
+    
+    func trackTransaction(cart: RICart) {
+        let builder = GAIDictionaryBuilder.createEvent(withCategory: "Ecommerce", action: "Purchase", label: nil, value: nil)
+        cart.cartEntity.cartItems.map { self.convertCartItemToGAIProduct(cartItem: $0) }.forEach { let _ = builder?.add($0) }
+        
+        let action = GAIEcommerceProductAction()
+        action.setAction(kGAIPAPurchase)
+        action.setShipping(cart.cartEntity.shippingValue)
+        if let orderNr = cart.orderNr {
+            action.setTransactionId(orderNr)
+        }
+        action.setAffiliation("Bamilo iOS")
+        if let vatValue = cart.cartEntity.vatValue {
+            action.setTax(vatValue)
+        }
+        if let code = cart.cartEntity.couponCode {
+            action.setCouponCode(code)
+        }
+        let _ = builder?.setProductAction(action)
+        self.sendParamsToGA(params: builder)
+    }
+    
+    //Ecommerce tracking helpers
+    private func sendEcommerceEvent(product: RIProduct, actionName: String) {
+        let action = GAIEcommerceProductAction()
+        action.setAction(actionName)
+        
+        let builder = GAIDictionaryBuilder.createScreenView()
+        let _ = builder?.setProductAction(action)
+        let _ = builder?.add(self.convertRIProductToGAIProduct(product: product))
+        
+        self.sendParamsToGA(params: builder)
+    }
+    
+    private func convertCartItemToGAIProduct(cartItem: RICartItem) -> GAIEcommerceProduct {
+        let gaProduct = GAIEcommerceProduct()
+        gaProduct.setId(cartItem.sku)
+        gaProduct.setName(cartItem.name)
+        gaProduct.setBrand(cartItem.brand)
+        if let price = cartItem.price {
+            gaProduct.setPrice(price)
+        }
+        gaProduct.setQuantity(cartItem.quantity)
+        gaProduct.setVariant(cartItem.variation)
+        return gaProduct
+    }
+    
+    private func convertRIProductToGAIProduct(product: RIProduct) -> GAIEcommerceProduct {
+        let gaProduct = GAIEcommerceProduct()
+        gaProduct.setId(product.sku)
+        gaProduct.setName(product.name)
+        gaProduct.setBrand(product.brand)
+        if let price = product.price {
+            gaProduct.setPrice(price)
+        }
+        gaProduct.setQuantity(1)
+        return gaProduct
+    }
+    
 }

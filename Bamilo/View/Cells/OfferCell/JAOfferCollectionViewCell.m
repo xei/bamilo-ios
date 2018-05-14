@@ -30,8 +30,7 @@
 
 @implementation JAOfferCollectionViewCell
 
-- (void)loadWithProductOffer:(RIProductOffer*)productOffer withProductSimple:(RIProductSimple* )productSimple
-{
+- (void)loadWithProductOffer:(RIProductOffer*)productOffer withProductSimple:(RIProductSimple* )productSimple {
     self.productOfferSeller = productOffer;
     
     if (!self.clickableView) {
@@ -165,10 +164,7 @@
         [self.deliveryLabel sizeToFit];
         [self.clickableView addSubview:self.deliveryLabel];
     }
-    [self.deliveryLabel setFrame:CGRectMake(10.0f,
-                                            deliveryLabelY,
-                                            self.deliveryLabel.frame.size.width,
-                                            self.deliveryLabel.frame.size.height)];
+    [self.deliveryLabel setFrame:CGRectMake(10.0f, deliveryLabelY, self.deliveryLabel.frame.size.width, self.deliveryLabel.frame.size.height)];
     
     if (!VALID_NOTEMPTY(self.separator, UIView)) {
         self.separator = [[UIView alloc] initWithFrame:CGRectZero];
@@ -176,7 +172,6 @@
         [self addSubview:self.separator];
     }
     [self.separator setFrame:CGRectMake(0, self.height - 1, self.width, 1)];
-    
     [self setProductSimple:productSimple];
     
     if (RI_IS_RTL) {
@@ -205,18 +200,9 @@
     }
 }
 
--(void)gotoCatalogSeller
-{
-    NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];
-    
-    if(VALID_NOTEMPTY(self.productOfferSeller.seller, Seller))
-    {
-        if (VALID_NOTEMPTY(self.productOfferSeller.seller.target, NSString)) {
-        [userInfo setObject:self.productOfferSeller.seller.name forKey:@"name"];
-        [userInfo setObject:self.productOfferSeller.seller.target forKey:@"targetString"];
-
-        [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:self.productOfferSeller.seller userInfo:userInfo];
-        }
+-(void)gotoCatalogSeller {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(sellerNameTappedByProductOffer:)]) {
+        [self.delegate sellerNameTappedByProductOffer:self.productOfferSeller];
     }
 }
 
