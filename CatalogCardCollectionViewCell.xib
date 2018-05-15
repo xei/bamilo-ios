@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="Bamilosans Light.ttf">
+            <string>Bamilo-Sans-Light</string>
+        </array>
         <array key="Bamilosans Reg.ttf">
             <string>Bamilo-Sans</string>
         </array>
@@ -41,7 +44,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="چرم مشهد" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rgw-q7-MKo">
-                        <rect key="frame" x="288.5" y="265" width="43.5" height="15"/>
+                        <rect key="frame" x="275.5" y="265" width="56.5" height="15"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="hlY-gw-8E3"/>
                         </constraints>
@@ -50,7 +53,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۲۷۰،۰۰۰ ریال" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Kb-O5-coX">
-                        <rect key="frame" x="258" y="295" width="74.5" height="17"/>
+                        <rect key="frame" x="247" y="295" width="85.5" height="17"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="17" id="h5o-i0-4iw"/>
                         </constraints>
@@ -59,7 +62,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۱۰،۰۰۰ ریال" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ccm-PA-g8T">
-                        <rect key="frame" x="280.5" y="317" width="52.5" height="14"/>
+                        <rect key="frame" x="276" y="317" width="57" height="14"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="14" id="evX-ID-adr"/>
                         </constraints>
@@ -68,7 +71,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="٪۱۰۰" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r2F-AZ-0gw">
-                        <rect key="frame" x="245.5" y="317" width="30" height="14"/>
+                        <rect key="frame" x="241" y="312.5" width="30" height="23"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="30" id="pAB-KJ-GX4"/>
                         </constraints>
@@ -112,7 +115,7 @@
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(۱۲)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ohl-pD-oTx">
-                        <rect key="frame" x="88" y="318" width="17" height="13"/>
+                        <rect key="frame" x="88" y="313.5" width="18.5" height="21.5"/>
                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
@@ -121,7 +124,7 @@
                         <rect key="frame" x="16" y="336" width="30" height="14"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="جدید" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pNx-z3-YA3">
-                                <rect key="frame" x="6.5" y="1.5" width="17.5" height="12"/>
+                                <rect key="frame" x="3" y="-2.5" width="24.5" height="19.5"/>
                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="10"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -140,18 +143,52 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
+                    <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S8m-ql-GXF">
+                        <rect key="frame" x="0.0" y="0.0" width="348" height="353"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L7f-pH-pM3">
+                        <rect key="frame" x="16" y="298" width="25.5" height="14"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="255" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XK8-jA-LMX">
+                                <rect key="frame" x="3" y="-0.5" width="19.5" height="14"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="14" id="imc-4u-kHS"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="9"/>
+                                <color key="textColor" red="0.62352941179999999" green="0.62352941179999999" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="right" secondItem="XK8-jA-LMX" secondAttribute="right" constant="3" id="5Ea-Xt-6fV"/>
+                            <constraint firstItem="XK8-jA-LMX" firstAttribute="centerY" secondItem="L7f-pH-pM3" secondAttribute="centerY" id="CLY-RO-lHd"/>
+                            <constraint firstItem="XK8-jA-LMX" firstAttribute="left" secondItem="L7f-pH-pM3" secondAttribute="left" constant="3" id="UDr-Km-DfR"/>
+                            <constraint firstAttribute="height" constant="14" id="hnH-f3-j4X"/>
+                            <constraint firstItem="XK8-jA-LMX" firstAttribute="centerX" secondItem="L7f-pH-pM3" secondAttribute="centerX" id="qgs-Tu-AbZ"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="2"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
                 </subviews>
             </view>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="ccm-PA-g8T" firstAttribute="top" secondItem="1Kb-O5-coX" secondAttribute="bottom" constant="5" id="2uo-DA-JXc"/>
+                <constraint firstAttribute="bottom" secondItem="S8m-ql-GXF" secondAttribute="bottom" id="33k-fP-Iz3"/>
                 <constraint firstItem="P19-Jw-twT" firstAttribute="centerY" secondItem="ccm-PA-g8T" secondAttribute="centerY" priority="750" id="6k2-eo-3lA"/>
+                <constraint firstItem="P19-Jw-twT" firstAttribute="top" secondItem="L7f-pH-pM3" secondAttribute="bottom" constant="5" id="9Sr-g2-bdP"/>
                 <constraint firstItem="ccm-PA-g8T" firstAttribute="right" secondItem="1Kb-O5-coX" secondAttribute="right" id="DGz-qT-W3f"/>
                 <constraint firstItem="1Kb-O5-coX" firstAttribute="right" secondItem="rgw-q7-MKo" secondAttribute="right" id="GNi-pk-71N"/>
                 <constraint firstItem="eof-2J-ngd" firstAttribute="width" secondItem="gTV-IL-0wX" secondAttribute="width" multiplier="176:348" id="Ov5-3j-7rL"/>
                 <constraint firstItem="eof-2J-ngd" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="16" id="QrB-jU-MVP"/>
                 <constraint firstItem="n3a-c3-4e1" firstAttribute="left" secondItem="gTV-IL-0wX" secondAttribute="left" constant="16" id="RND-vj-NI7"/>
+                <constraint firstItem="S8m-ql-GXF" firstAttribute="left" secondItem="gTV-IL-0wX" secondAttribute="left" id="VMd-9w-R8Z"/>
                 <constraint firstItem="rgw-q7-MKo" firstAttribute="right" secondItem="n3a-c3-4e1" secondAttribute="right" id="Wpj-Cm-VVa"/>
+                <constraint firstAttribute="right" secondItem="S8m-ql-GXF" secondAttribute="right" id="XAP-4Y-AAp"/>
                 <constraint firstItem="esd-BH-8bf" firstAttribute="left" secondItem="P19-Jw-twT" secondAttribute="left" id="XV5-9h-q29"/>
                 <constraint firstItem="P19-Jw-twT" firstAttribute="centerY" secondItem="1Kb-O5-coX" secondAttribute="centerY" priority="250" id="YS5-f2-Jpm"/>
                 <constraint firstItem="P19-Jw-twT" firstAttribute="width" secondItem="P19-Jw-twT" secondAttribute="height" multiplier="5:1" id="bfT-pR-KfQ"/>
@@ -165,7 +202,9 @@
                 <constraint firstItem="n3a-c3-4e1" firstAttribute="top" secondItem="eof-2J-ngd" secondAttribute="bottom" constant="5" id="r8R-gS-ZzO"/>
                 <constraint firstItem="P19-Jw-twT" firstAttribute="left" secondItem="n3a-c3-4e1" secondAttribute="left" id="riZ-8z-CM9"/>
                 <constraint firstItem="rgw-q7-MKo" firstAttribute="top" secondItem="n3a-c3-4e1" secondAttribute="bottom" constant="5" id="sHX-Nl-GhE"/>
+                <constraint firstItem="L7f-pH-pM3" firstAttribute="left" secondItem="gTV-IL-0wX" secondAttribute="left" constant="16" id="sNo-DX-2IB"/>
                 <constraint firstItem="Ohl-pD-oTx" firstAttribute="left" secondItem="P19-Jw-twT" secondAttribute="right" constant="2" id="tMf-sa-oCu"/>
+                <constraint firstItem="S8m-ql-GXF" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="vEM-87-Pb9"/>
                 <constraint firstItem="P19-Jw-twT" firstAttribute="width" secondItem="P19-Jw-twT" secondAttribute="height" multiplier="5:1" id="wCE-g7-i8Q"/>
                 <constraint firstItem="Ohl-pD-oTx" firstAttribute="centerY" secondItem="P19-Jw-twT" secondAttribute="centerY" id="x0d-tg-4BY"/>
                 <constraint firstAttribute="right" secondItem="n3a-c3-4e1" secondAttribute="right" constant="16" id="ydj-bU-Dv7"/>
@@ -192,6 +231,9 @@
                 <outlet property="discountedPriceLabel" destination="1Kb-O5-coX" id="8BA-vp-UOP"/>
                 <outlet property="discountedPriceTopConstaint" destination="q3s-MW-MZW" id="vxK-rp-eVo"/>
                 <outlet property="newTagView" destination="esd-BH-8bf" id="Fef-g3-48B"/>
+                <outlet property="outOfStockCoverView" destination="S8m-ql-GXF" id="smS-h1-4Bz"/>
+                <outlet property="outOfStockLabel" destination="XK8-jA-LMX" id="i2z-OB-guN"/>
+                <outlet property="outOfStockTagView" destination="L7f-pH-pM3" id="YkR-Ma-3kf"/>
                 <outlet property="priceLabel" destination="ccm-PA-g8T" id="ksx-bj-0bI"/>
                 <outlet property="productImage" destination="eof-2J-ngd" id="KtW-bt-d9m"/>
                 <outlet property="rateCountLabel" destination="Ohl-pD-oTx" id="lSG-KC-EtH"/>

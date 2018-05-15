@@ -224,8 +224,6 @@
         }
     }
     
-    
-    
     func teaserTapped(attributes: EventAttributeType) {
         if  let teaserName = attributes[kEventTeaser] as? String,
             let teaserTarget = attributes[kEventTargetString] as? String {
@@ -238,7 +236,6 @@
             self.sendParamsToGA(params: params)
         }
     }
-    
     
     func login(attributes: EventAttributeType) {
         if let loginMethod = attributes[kEventMethod] as? String, let user = attributes[kEventUser] as? RICustomer {

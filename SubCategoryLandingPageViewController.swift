@@ -130,6 +130,10 @@ class SubCategoryLandingPageViewController: BaseViewController,
         }
     }
     
+    override func getScreenName() -> String! {
+        return "SubCategoriesView"
+    }
+    
     //MARK: - NavigationBarProtocol
     override func navBarleftButton() -> NavBarButtonType {
         return .search
