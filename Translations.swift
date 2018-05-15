@@ -122,4 +122,5 @@ let STRING_SURVEY = RILocalizationWrapper.localizedString("survey")!
 let STRING_NEXT = RILocalizationWrapper.localizedString("next")!
 let STRING_PLEASE_SELECT_YOUR_CHOICE = RILocalizationWrapper.localizedString("please_select_your_choice")!
 let STRING_WRITE_COMMENT = RILocalizationWrapper.localizedString("write_comment")!
+let STRING_CLOSE = RILocalizationWrapper.localizedString("close")!
 

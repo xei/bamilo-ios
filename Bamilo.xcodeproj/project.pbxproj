@@ -171,6 +171,8 @@
 		618B25701F35D85900B39440 /* DeliveryTimeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618B256F1F35D85900B39440 /* DeliveryTimeControl.swift */; };
 		618D8B431FADEF5B0006A936 /* LoadingFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618D8B421FADEF5B0006A936 /* LoadingFooterView.swift */; };
 		618D8B451FADEF680006A936 /* LoadingFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 618D8B441FADEF680006A936 /* LoadingFooterView.xib */; };
+		6190B4F820AB31CB0028F1D4 /* AppreciateSurveyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6190B4F620AB31CB0028F1D4 /* AppreciateSurveyCollectionViewCell.swift */; };
+		6190B4F920AB31CB0028F1D4 /* AppreciateSurveyCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6190B4F720AB31CB0028F1D4 /* AppreciateSurveyCollectionViewCell.xib */; };
 		6190E9E61ED4263600163F6D /* BreadcrumbsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6190E9E51ED4263600163F6D /* BreadcrumbsItem.swift */; };
 		6192B2C0204E9AAD00376D84 /* ReviewSurveyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6192B2BF204E9AAD00376D84 /* ReviewSurveyViewController.swift */; };
 		6192B2C4204EA01100376D84 /* ImageSelectQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6192B2C3204EA01100376D84 /* ImageSelectQuestionView.swift */; };
@@ -235,7 +237,6 @@
 		61B603F020A02D9300D19DC7 /* RadioColoredButtonsGroupControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B603EF20A02D9300D19DC7 /* RadioColoredButtonsGroupControl.swift */; };
 		61B603F220A0323A00D19DC7 /* RadioOptionQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B603F120A0323A00D19DC7 /* RadioOptionQuestionView.swift */; };
 		61B603F420A0324F00D19DC7 /* RadioOptionQuestionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B603F320A0324F00D19DC7 /* RadioOptionQuestionView.xib */; };
-		61B603FA20A1BCA100D19DC7 /* AppreciateSurveyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B603F920A1BCA100D19DC7 /* AppreciateSurveyViewController.swift */; };
 		61B603FE20A1C96500D19DC7 /* TextFieldQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B603FD20A1C96500D19DC7 /* TextFieldQuestionView.swift */; };
 		61B6040020A1C97300D19DC7 /* TextFieldQuestionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B603FF20A1C97300D19DC7 /* TextFieldQuestionView.xib */; };
 		61BA9B3D1E99FDEE004E9DE8 /* WidgetBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BA9B3C1E99FDEE004E9DE8 /* WidgetBase.m */; };
@@ -1250,6 +1251,8 @@
 		618B256F1F35D85900B39440 /* DeliveryTimeControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeliveryTimeControl.swift; sourceTree = "<group>"; };
 		618D8B421FADEF5B0006A936 /* LoadingFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingFooterView.swift; sourceTree = "<group>"; };
 		618D8B441FADEF680006A936 /* LoadingFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingFooterView.xib; sourceTree = "<group>"; };
+		6190B4F620AB31CB0028F1D4 /* AppreciateSurveyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppreciateSurveyCollectionViewCell.swift; sourceTree = "<group>"; };
+		6190B4F720AB31CB0028F1D4 /* AppreciateSurveyCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AppreciateSurveyCollectionViewCell.xib; sourceTree = "<group>"; };
 		6190E9E51ED4263600163F6D /* BreadcrumbsItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BreadcrumbsItem.swift; sourceTree = "<group>"; };
 		6192B2BF204E9AAD00376D84 /* ReviewSurveyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewSurveyViewController.swift; sourceTree = "<group>"; };
 		6192B2C3204EA01100376D84 /* ImageSelectQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectQuestionView.swift; sourceTree = "<group>"; };
@@ -1323,7 +1326,6 @@
 		61B603EF20A02D9300D19DC7 /* RadioColoredButtonsGroupControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioColoredButtonsGroupControl.swift; sourceTree = "<group>"; };
 		61B603F120A0323A00D19DC7 /* RadioOptionQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioOptionQuestionView.swift; sourceTree = "<group>"; };
 		61B603F320A0324F00D19DC7 /* RadioOptionQuestionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RadioOptionQuestionView.xib; sourceTree = "<group>"; };
-		61B603F920A1BCA100D19DC7 /* AppreciateSurveyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppreciateSurveyViewController.swift; sourceTree = "<group>"; };
 		61B603FD20A1C96500D19DC7 /* TextFieldQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldQuestionView.swift; sourceTree = "<group>"; };
 		61B603FF20A1C97300D19DC7 /* TextFieldQuestionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextFieldQuestionView.xib; sourceTree = "<group>"; };
 		61BA9B3B1E99FDEE004E9DE8 /* WidgetBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetBase.h; sourceTree = "<group>"; };
@@ -3354,7 +3356,6 @@
 				61FC466F201DC044000141FA /* EditProfileViewController.swift */,
 				61FC4676201F65C2000141FA /* PhoneChangeViewController.swift */,
 				6192B2BF204E9AAD00376D84 /* ReviewSurveyViewController.swift */,
-				61B603F920A1BCA100D19DC7 /* AppreciateSurveyViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -3587,6 +3588,7 @@
 		616D5032204EAA2700370C4E /* ReviewSurvey */ = {
 			isa = PBXGroup;
 			children = (
+				6190B4F520AB31B10028F1D4 /* AppreciateSurveyCollectionViewCell */,
 				616D5033204EAA3D00370C4E /* SurveyQuestionCollectionViewCell */,
 			);
 			name = ReviewSurvey;
@@ -3877,6 +3879,15 @@
 			children = (
 			);
 			name = Control;
+			sourceTree = "<group>";
+		};
+		6190B4F520AB31B10028F1D4 /* AppreciateSurveyCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				6190B4F620AB31CB0028F1D4 /* AppreciateSurveyCollectionViewCell.swift */,
+				6190B4F720AB31CB0028F1D4 /* AppreciateSurveyCollectionViewCell.xib */,
+			);
+			name = AppreciateSurveyCollectionViewCell;
 			sourceTree = "<group>";
 		};
 		6192B2BC204E90FE00376D84 /* ReviewSurvey */ = {
@@ -8330,6 +8341,7 @@
 				875743A41EA60DE0001B518A /* Ramadan-Small-50.png in Resources */,
 				875743FE1EA60E2D001B518A /* Summer-Small@2x.png in Resources */,
 				CE9AE0A21AB6D78200D56481 /* JASwitchCell.xib in Resources */,
+				6190B4F920AB31CB0028F1D4 /* AppreciateSurveyCollectionViewCell.xib in Resources */,
 				CE9AE0A31AB6D78200D56481 /* JAUndefinedSearchView.xib in Resources */,
 				875743A91EA60DE0001B518A /* Ramadan-72@2x.png in Resources */,
 				870680B91E62E1FA000368D5 /* AddressTableViewHeaderCell.xib in Resources */,
@@ -8683,7 +8695,6 @@
 				87EA03331E6DA27D00B1E062 /* ProgressItemViewModel.m in Sources */,
 				61D474841F6FD371001DA6A6 /* HomePageTeaserBox.swift in Sources */,
 				87D3DD1C1E8A323000C960FF /* BaseDataManager.m in Sources */,
-				61B603FA20A1BCA100D19DC7 /* AppreciateSurveyViewController.swift in Sources */,
 				619D0B171EA34B8600FDB255 /* FeatureBoxCollectionViewWidget.m in Sources */,
 				61832FD41ED2C039006F01FE /* RateStarsView.swift in Sources */,
 				61840B631EA397FF006739EB /* EmarsysRecommendationGridWidgetView.m in Sources */,
@@ -8761,6 +8772,7 @@
 				614ED1681F8B6DCB0096E4D6 /* HomePageDailyDealsCollectionFlowLayout.swift in Sources */,
 				875AD57F1E38C0C900584ABF /* RILocalizationWrapper.m in Sources */,
 				CE9ADF3C1AB6D78200D56481 /* JAPageControl.m in Sources */,
+				6190B4F820AB31CB0028F1D4 /* AppreciateSurveyCollectionViewCell.swift in Sources */,
 				9A3876561BCD0DBE0088B186 /* JAProductDescriptionView.m in Sources */,
 				875AD5501E38C0C900584ABF /* RISection.m in Sources */,
 				61C51E6D1FDC151700DC75EE /* ErrorControlView.swift in Sources */,

@@ -44,6 +44,7 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
         }
         
         self.collectionView.register(UINib(nibName: SurveyQuestionCollectionViewCell.nibName, bundle: nil), forCellWithReuseIdentifier: SurveyQuestionCollectionViewCell.nibName)
+        self.collectionView.register(UINib(nibName: AppreciateSurveyCollectionViewCell.nibName, bundle: nil), forCellWithReuseIdentifier: AppreciateSurveyCollectionViewCell.nibName)
 
         self.updateView(by: surveryModel)
         self.title = self.surveryModel.title ?? STRING_SURVEY
@@ -64,7 +65,7 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
     }
     
     override func closeButtonTapped() {
-        if let id = self.surveryModel.id {
+        if let id = self.surveryModel.id, let dataSource = self.dataSource, self.activeIndex != dataSource.count {
             ReviewServiceDataManager.sharedInstance.ignoreSurvey(self, surveyID: "\(id)") { (data, error) in }
         }
         super.closeButtonTapped()
@@ -86,17 +87,18 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
     //MARK: - UICollectionViewDelegate, UICollectionViewDataSource
     var mycell: UICollectionViewCell?
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let question = self.dataSource?[indexPath.row] {
+        if let dataSource = self.dataSource, indexPath.row < dataSource.count {
             let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: SurveyQuestionCollectionViewCell.nibName, for: indexPath) as! SurveyQuestionCollectionViewCell
             self.mycell = cell
-            cell.update(withModel: question)
+            cell.update(withModel: dataSource[indexPath.row])
             return cell
+        } else {
+            return self.collectionView.dequeueReusableCell(withReuseIdentifier: AppreciateSurveyCollectionViewCell.nibName, for: indexPath) as! AppreciateSurveyCollectionViewCell
         }
-        return UICollectionViewCell()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataSource?.count ?? 0
+        return (dataSource?.count ?? 0) + 1
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
@@ -141,7 +143,7 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
     private func updateView(by survey: ReviewSurvery) {
         self.dataSource = survey.pages?.flatMap({ $0.questions }).flatMap({ $0 }).filter({ !$0.isHidden && $0.type != nil })
         if let dataSourceCount = self.dataSource?.count, dataSourceCount > 1 {
-            self.pagerControl.numberOfPages = dataSourceCount
+            self.pagerControl.numberOfPages = dataSourceCount + 1
         } else {
             self.pagerControl.isHidden = true
         }
@@ -158,6 +160,8 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
     private func updateSubmitButtonTitle() {
         if let dataSource = self.dataSource, self.activeIndex == dataSource.count - 1 {
             self.submitButton.setTitle(STRING_SUBMIT_LABEL, for: .normal)
+        } else if let dataSource = self.dataSource, self.activeIndex == dataSource.count {
+            self.submitButton.setTitle(STRING_CLOSE, for: .normal)
         } else {
             self.submitButton.setTitle(STRING_NEXT, for: .normal)
         }
@@ -175,11 +179,17 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
     @IBAction func submitButtonTapped(_ sender: Any) {
         self.view.endEditing(true)
         if let dataSource = self.dataSource {
+            
+            //last view is appreciation view
+            if dataSource.count == self.activeIndex {
+                self.dismiss(animated: true, completion: nil)
+            }
+            
             if let dataSource = self.dataSource, dataSource.count > self.activeIndex {
                 self.submitQuestion(question: dataSource[self.activeIndex], isLastOne: dataSource.count - 1 == self.activeIndex)
             }
             if self.firstNotAnsweredQuestionIndex >= self.activeIndex {
-                if self.activeIndex < dataSource.count - 1 {
+                if self.activeIndex < dataSource.count {
                     self.activeIndex += 1
                     Utility.delay(duration: 0.15) {
                         self.scrollToIndex(index: self.activeIndex)
@@ -203,7 +213,10 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
         }
         
         if isLastOne {
-            self.performSegue(withIdentifier: "showSuccessReviewSubmission", sender: nil)
+            self.collectionView.isScrollEnabled = false
+            Utility.delay(duration: 4) {
+                self.dismiss(animated: true, completion: nil)
+            }
         }
     }
     
