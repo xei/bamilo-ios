@@ -200,9 +200,24 @@ class HomeViewController:   BaseViewController,
         self.artificialNavbarLogo.alpha = 1
     }
     
-    func didSelectProductSku(productSku: String) {
-        TrackerManager.postEvent(selector: EventSelectors.recommendationTappedSelector(), attributes: EventAttributes.tapEmarsysRecommendation(screenName: myBamiloPage.getScreenName(), logic: myBamiloPage.recommendationLogic))
-        self.performSegue(withIdentifier: "pushPDVViewController", sender: productSku)
+    func teaserItemTappedWithTargetString(target: String, teaserId: String, index: Int?) {
+        if let screenName = getScreenName() {
+            var teaserName: String?
+            if let index = index {
+                teaserName = "\(screenName)_\(teaserId)_\(index)"
+            } else {
+                teaserName = "\(screenName)_\(teaserId)_moreButton"
+            }
+            if let teaserName = teaserName {
+                self.goToTrackableTarget(target: RITarget.parseTarget(target), category: teaserName, label: target)
+            }
+        }
+    }
+    
+    func didSelectProductSku(productSku: String, recommendationLogic: String) {
+        if let screenName = myBamiloPage.getScreenName() {
+            self.goToTrackableTarget(target: RITarget.getTarget(.PRODUCT_DETAIL, node: productSku), category: "Emarsys", label: "\(screenName)-\(recommendationLogic)")
+        }
     }
     
     private func setAndFollowerScrollView(scrollView: UIScrollView) {
@@ -253,5 +268,10 @@ class HomeViewController:   BaseViewController,
     //MARK: - DataServiceProtocol
     func bind(_ data: Any!, forRequestId rid: Int32) {
         
+    }
+    
+    private func goToTrackableTarget(target: RITarget, category: String, label: String) {
+        TrackerManager.postEvent(selector: EventSelectors.teaserTappedSelector(), attributes: EventAttributes.teaserTapped(teaserName: category, screenName: getScreenName(), teaserTargetNode: label))
+        MainTabBarViewController.topNavigationController()?.openTargetString(target.targetString, purchaseInfo: BehaviourTrackingInfo.trackingInfo(category: category, label: label), currentScreenName: getScreenName())
     }
 }

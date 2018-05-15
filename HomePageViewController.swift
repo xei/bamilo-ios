@@ -9,6 +9,7 @@
 import UIKit
 
 protocol HomePageViewControllerDelegate: class {
+    func teaserItemTappedWithTargetString(target: String, teaserId: String, index: Int?)
     func scrollViewDidScroll(_ scrollView: UIScrollView)
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool)
 }
@@ -162,11 +163,8 @@ class HomePageViewController:   BaseViewController,
     }
     
     //MARK: - BaseHomePageTeaserBoxTableViewCellDelegate
-    func teaserItemTappedWithTargetString(target: String, teaserId: String) {
-        TrackerManager.postEvent(selector: EventSelectors.teaserTappedSelector(), attributes: EventAttributes.teaserTapped(teaserName: teaserId, screenName: getScreenName(), teaserTargetNode: target))
-        if let screenName = getScreenName() {
-            MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: "\(screenName)_\(teaserId):::\(target)", currentScreenName: screenName)
-        }
+    func teaserItemTappedWithTargetString(target: String, teaserId: String, index: Int?) {
+        self.delegate?.teaserItemTappedWithTargetString(target: target, teaserId: teaserId, index: index)
     }
     
     func teaserMustBeRemoved(at indexPath: IndexPath) {

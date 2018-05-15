@@ -66,8 +66,8 @@ class DailyDealsTableViewCell: BaseHomePageTeaserBoxTableViewCell, UICollectionV
     }
     
     @IBAction func moreButtonTapped(_ sender: Any) {
-        if let target = self.teaserModelObject?.moreOption?.target {
-            self.delegate?.teaserItemTappedWithTargetString(target: target, teaserId: self.teaserModelObject?.teaserId ?? "")
+        if let target = self.teaserModelObject?.moreOption?.target, let teaserId = self.teaserModelObject?.teaserId {
+            self.delegate?.teaserItemTappedWithTargetString(target: target, teaserId: teaserId, index: nil)
         }
     }
     
@@ -78,7 +78,7 @@ class DailyDealsTableViewCell: BaseHomePageTeaserBoxTableViewCell, UICollectionV
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let product = teaserModelObject?.products?[indexPath.row], let sku = product.sku, let id = self.teaserModelObject?.teaserId {
-            self.delegate?.teaserItemTappedWithTargetString(target: "product_detail::\(sku)", teaserId: id)
+            self.delegate?.teaserItemTappedWithTargetString(target: "product_detail::\(sku)", teaserId: id, index: indexPath.row)
         }
     }
     
