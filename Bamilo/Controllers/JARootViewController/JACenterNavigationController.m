@@ -620,17 +620,6 @@
         if ([notification.userInfo objectForKey:@"richRelevance"]) {
             pdv.richRelevanceParameter = [notification.userInfo objectForKey:@"richRelevance"];
         }
-        if ([notification.userInfo objectForKey:@"fromCatalog"]) {
-            pdv.fromCatalogue = YES;
-        } else {
-            pdv.fromCatalogue = NO;
-        }
-        if ([notification.userInfo objectForKey:@"previousCategory"]) {
-            NSString *previous = [notification.userInfo objectForKey:@"previousCategory"];
-            if (previous.length > 0) {
-                pdv.previousCategory = previous;
-            }
-        }
         if ([notification.userInfo objectForKey:@"category"]) {
             pdv.category = [notification.userInfo objectForKey:@"category"];
         }

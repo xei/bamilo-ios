@@ -81,11 +81,15 @@ class SubCategoryLandingPageViewController: BaseViewController,
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         if indexPath.section == 1, let subCats = self.subcategories, indexPath.row < subCats.count {
+            if let title = subCats[indexPath.row].name {
+                TrackerManager.postEvent(selector: EventSelectors.teaserTappedSelector(), attributes: EventAttributes.teaserTapped(teaserName: "Category", screenName: getScreenName(), teaserTargetNode: title))
+            }
             if let childs = subCats[indexPath.row].childern, childs.count > 0 {
                 self.pushToSubCatViewByCategory(category: subCats[indexPath.row])
-            } else if let target = subCats[indexPath.row].target, let screenName = getScreenName() {
-                MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: nil, currentScreenName: screenName)
+            } else if let target = subCats[indexPath.row].target, let screenName = getScreenName(), let title = subCats[indexPath.row].name {
+                MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: BehaviourTrackingInfo.trackingInfo(category: "Categoy", label: title), currentScreenName: screenName)
             }
         }
     }

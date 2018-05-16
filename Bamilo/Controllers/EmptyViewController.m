@@ -86,9 +86,9 @@
 - (void)selectFeatureItem:(NSObject *)item widgetBox:(id)widgetBox {
     if ([item isKindOfClass:[RecommendItem class]]) {
         [TrackerManager postEventWithSelector:[EventSelectors recommendationTappedSelector] attributes:[EventAttributes tapEmarsysRecommendationWithScreenName:self.parentScreenName logic:self.recommendationLogic ?: @"PERSONAL"]];
-        [[NSNotificationCenter defaultCenter] postNotificationName: kDidSelectTeaserWithPDVUrlNofication
-                                                            object: nil
-                                                          userInfo: @{@"sku": ((RecommendItem *)item).sku}];
+        
+        //track behaviour journey from here
+        [[MainTabBarViewController topNavigationController] openScreenTarget:[RITarget getTarget:PRODUCT_DETAIL node:((RecommendItem *)item).sku] purchaseInfo:[BehaviourTrackingInfo trackingInfoWithCategory:@"Emarsys" label:[NSString stringWithFormat:@"%@-%@", self.parentScreenName, self.recommendationLogic ?: @"PERSONAL"]] currentScreenName:self.parentScreenName];
     }
 }
 

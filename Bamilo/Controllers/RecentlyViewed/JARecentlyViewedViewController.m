@@ -201,7 +201,6 @@
 }
 
 #pragma mark - Load Data
-
 - (void)loadProducts {
     [self showLoading];
     [RIProduct getRecentlyViewedProductsWithSuccessBlock:^(NSArray *recentlyViewedProducts) {
@@ -256,18 +255,14 @@
             [cell setSimplePrice:chosenSimple.specialPriceFormatted andOldPrice:chosenSimple.priceFormatted];
             [cell.sizeButton setTitle:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, chosenSimple.variation] forState:UIControlStateNormal];
         }
-        [cell.sizeButton addTarget:self
-                            action:@selector(sizeButtonPressed:)
-                  forControlEvents:UIControlEventTouchUpInside];
+        [cell.sizeButton addTarget:self action:@selector(sizeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     } else {
         [cell.sizeButton setHidden:YES];
     }
     
     [cell.favoriteButton setHidden:YES];
     [cell setTag:indexPath.row];
-    [cell.feedbackView addTarget:self
-                          action:@selector(clickableViewPressedInCell:)
-                forControlEvents:UIControlEventTouchUpInside];
+    [cell.feedbackView addTarget:self action:@selector(clickableViewPressedInCell:) forControlEvents:UIControlEventTouchUpInside];
     [cell.addToCartButton addTarget:self action:@selector(addToCartButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
@@ -283,46 +278,38 @@
     } else {
         size = CGSizeMake(self.view.frame.size.width, 154.5f);
     }
-    
     self.flowLayout.itemSize = size;
     return size;
 }
 
 #pragma mark - Actions
 
-- (void)clickableViewPressedInCell:(UIButton *)button
-{
+- (void)clickableViewPressedInCell:(UIButton *)button {
     RIProduct *product = [self getProductFromIndex:button.tag];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
-                                                        object:nil
-                                                      userInfo:@{ @"sku" : product.sku,
-                                                                  @"previousCategory" : STRING_RECENTLY_VIEWED,
-                                                                  @"show_back_button" : [NSNumber numberWithBool:NO],
-                                                                  @"fromCatalog" : [NSNumber numberWithBool:YES]}];
+    //track tapping this teaser here
+    [TrackerManager postEventWithSelector:[EventSelectors teaserTappedSelector] attributes:[EventAttributes teaserTappedWithTeaserName:[self getScreenName] screenName:[self getScreenName] teaserTargetNode:product.name]];
+    
+    //track behaviour journey from here
+    [[MainTabBarViewController topNavigationController] openScreenTarget:[RITarget getTarget:PRODUCT_DETAIL node:product.sku] purchaseInfo:[BehaviourTrackingInfo trackingInfoWithCategory:[self getScreenName] label:product.name] currentScreenName:[self getScreenName]];
 }
 
-- (void)addToCartButtonPressed:(UIButton *)button
-{
+- (void)addToCartButtonPressed:(UIButton *)button {
     self.backupButton = button;
     [self finishAddToCartWithButton:button];
 }
 
 - (void)finishAddToCartWithButton:(UIButton *)button {
     RIProduct *product = [self getProductFromIndex:button.tag];
-    
     RIProductSimple* productSimple;
-    
     if (1 == product.productSimples.count) {
         productSimple = [product.productSimples firstObject];
     } else {
         RIProductSimple* simple = [self.chosenSimples objectForKey:product.sku];
         if (!VALID_NOTEMPTY(simple, RIProductSimple)) {
             //NOTHING SELECTED
-            
             self.selectedSizeAndAddToCart = YES;
             [self sizeButtonPressed:button];
-            
             return;
         } else {
             productSimple = simple;

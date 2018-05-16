@@ -15,7 +15,7 @@ import RealmSwift
     dynamic var sku: String?
 }
 
-struct BehaviourTrackingInfo {
+@objc class BehaviourTrackingInfo: NSObject {
     static func trackingInfo(category: String, label: String) -> String {
         return "\(category):::\(label)"
     }

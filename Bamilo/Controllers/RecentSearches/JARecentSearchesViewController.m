@@ -59,8 +59,6 @@
         [self.button addTarget:self action:@selector(clearRecentSearches) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:self.button];
     }
-    
-//    [self publishScreenLoadTime];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

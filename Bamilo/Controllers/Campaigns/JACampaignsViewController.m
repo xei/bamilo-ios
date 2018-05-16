@@ -336,7 +336,6 @@
 - (void)openCampaignProductWithTarget:(NSString*)targetString {
     NSMutableDictionary* userInfo = [NSMutableDictionary new];
     [userInfo setObject:targetString forKey:@"targetString"];
-    [userInfo setObject:[NSNumber numberWithBool:YES] forKey:@"show_back_button"];
     if (self.purchaseTrackingInfo) {
         [userInfo setObject:self.purchaseTrackingInfo forKey:@"purchaseTrackingInfo"];
     }

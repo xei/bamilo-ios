@@ -173,14 +173,18 @@ class RootCategoryViewController: BaseViewController,
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let model = self.getModelOfIndexPath(indexPath: indexPath) {
             if let cat = model as? CategoryProduct {
+                
+                //Track tapping on Cat item
+                TrackerManager.postEvent(selector: EventSelectors.teaserTappedSelector(), attributes: EventAttributes.teaserTapped(teaserName: "Category", screenName: getScreenName(), teaserTargetNode: cat.name ?? ""))
+                
                 if cat.childern?.count ?? 0 > 0 {
                     self.performSegue(withIdentifier: "showsubCategories", sender: cat)
-                } else if let screenName = getScreenName(){
-                    MainTabBarViewController.topNavigationController()?.openTargetString(cat.target, purchaseInfo: nil, currentScreenName: screenName)
+                } else if let screenName = getScreenName(), let categoryName = cat.name{
+                    MainTabBarViewController.topNavigationController()?.openTargetString(cat.target, purchaseInfo: BehaviourTrackingInfo.trackingInfo(category: "Category", label: categoryName), currentScreenName: screenName)
                 }
             } else if let extLink = model as? ExternalLink, let browserLink = extLink.link, let validURL = URL(string: browserLink) {
                 UIApplication.shared.openURL(validURL)
-            } else if let link = model as? InternalLink, let screenName = getScreenName(){
+            } else if let link = model as? InternalLink, let screenName = getScreenName() {
                 MainTabBarViewController.topNavigationController()?.openTargetString(link.target, purchaseInfo: nil, currentScreenName: screenName)
             }
         }
