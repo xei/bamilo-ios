@@ -84,8 +84,8 @@ class SubCategoryLandingPageViewController: BaseViewController,
         if indexPath.section == 1, let subCats = self.subcategories, indexPath.row < subCats.count {
             if let childs = subCats[indexPath.row].childern, childs.count > 0 {
                 self.pushToSubCatViewByCategory(category: subCats[indexPath.row])
-            } else if let target = subCats[indexPath.row].target {
-                MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: nil)
+            } else if let target = subCats[indexPath.row].target, let screenName = getScreenName() {
+                MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: nil, currentScreenName: screenName)
             }
         }
     }
@@ -128,6 +128,10 @@ class SubCategoryLandingPageViewController: BaseViewController,
         if let viewControllers = self.navigationController?.viewControllers, level < viewControllers.count {
             self.navigationController?.popToViewController(viewControllers[level], animated: true)
         }
+    }
+    
+    override func getScreenName() -> String! {
+        return "SubCategoriesView"
     }
     
     //MARK: - NavigationBarProtocol

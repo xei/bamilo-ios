@@ -7,7 +7,7 @@
 //
 
 #import "RIProductOffer.h"
-#import "RISeller.h"
+#import "Bamilo-Swift.h"
 #import "RIProductSimple.h"
 #import "RITarget.h"
 
@@ -150,9 +150,7 @@
     NSDictionary* sellerJSON = [productOfferJSON objectForKey:@"seller_entity"];
 
     if (VALID_NOTEMPTY(sellerJSON, NSDictionary)) {
-        
-        RISeller* newSeller = [RISeller parseSeller:sellerJSON];
-        newProductOffer.seller = newSeller;
+        newProductOffer.seller = [Seller parseToSellerWithDic:sellerJSON];
     }
     
     return newProductOffer;

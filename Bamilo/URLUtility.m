@@ -19,8 +19,8 @@
         NSArray<NSString *> *elements = [pair componentsSeparatedByString:@"="];
         
         if(elements.count >= 2) {
-            NSString *key = [[elements[0] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding] lowercaseString];
-            NSString *val = [elements[1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            NSString *key = [[elements[0] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]] lowercaseString];
+            NSString *val = [elements[1] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
             
             [dict setObject:val forKey:key];
         }

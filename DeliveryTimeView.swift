@@ -19,7 +19,7 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
     
     override func awakeFromNib() {
         self.titleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: UIColor.black)
-        self.deliveryTimeLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: UIColor.black)
+        self.deliveryTimeLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 9), color: UIColor.black)
         
         self.cityInputView.delegate = self
         self.regionInputView.delegate = self
@@ -30,7 +30,7 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
     func switchTheTextAlignments() {
         self.regionInputView.input.textField.textAlignment = .left
         self.cityInputView.input.textField.textAlignment = .left
-        
+
         self.titleLabel.textAlignment = .left
         self.deliveryTimeLabel.textAlignment = .left
     }

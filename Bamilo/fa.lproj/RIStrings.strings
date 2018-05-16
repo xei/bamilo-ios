@@ -1,7 +1,7 @@
-/* 
+/*
    RIStrings.strings
    Jumia
-   
+
    Created by Pedro Lopes on 13/09/14.
    Copyright (c) 2014 Rocket Internet. All rights reserved. */
 "string_update_necessary_title" = "بروزرسانی لازم است.";
@@ -1000,3 +1000,19 @@
 "write_comment" = "نظر بدهید";
 
 "close" = "بستن";
+
+"precense_duration_with_bamilo_label" = "همراه با بامیلو";
+
+"guarantee" = "ضمانت";
+
+"orders_count" = "تعداد سفارشات";
+
+"rate" = "امتیاز";
+
+"successful_product_supplement" = "تامین موفق کالا";
+
+"no_return_title" = "فروش بدون بازگشت";
+
+"SLA_title" = "ارسال به موقع";
+
+"no_name" = "بدون نام";

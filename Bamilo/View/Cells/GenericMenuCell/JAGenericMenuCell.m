@@ -86,7 +86,7 @@
         iconImageWidth = kIconImageWidthAndHeight;
         iconImageRightMargin = kIconImageRightMargin;
         
-        [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:[iconImageUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]] placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
+        [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:[iconImageUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]] placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
     }
     
     CGFloat separatorHeight = 0.0f;

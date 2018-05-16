@@ -42,6 +42,7 @@ import SwiftyJSON
     var pushFilterQueryString : String?
     var startCatalogStackIndexInNavigationViewController: Int?
     var purchaseTrackingInfo: String? //For tracking teaser (purchase) journeys (optional)
+    var initiatorScreenName: String?
     
     private var selectedProduct: Product? //TODO: it's not necessary to keep it, but we should do it for now because
                                           // we need to know which product (may) has been changed by PDVViewController (add to wish list)
@@ -214,6 +215,7 @@ import SwiftyJSON
                         self.productCountLabel.text = "\(totalProducts) \(STRING_FOUND_PRODUCT_COUNT)".convertTo(language: .arabic)
                     }
                     self.loadingDataInProgress = false
+                    
                     if let breadcrumbs = self.catalogData?.breadcrumbs, breadcrumbs.count > 0, false { //for now
                         self.catalogHeaderContainer.translatesAutoresizingMaskIntoConstraints = false
                         UIView.animate(withDuration: 0.15, animations: {
@@ -255,6 +257,9 @@ import SwiftyJSON
                         })
                     }
                 }
+                
+                //Ecommerce tracking behaviours
+                self.trackProductImpressions(products: receivedCatalogData.products)
             }
 
         })
@@ -266,6 +271,11 @@ import SwiftyJSON
                 callBack(success)
             }
         }
+    }
+    
+    func trackProductImpressions(products: [Product]) {
+        //track Ecommerce product impression
+        GoogleAnalyticsTracker.shared().trackProductImpression(products: products, impressionList: "Catalog Search", impressionSource: "From \(self.initiatorScreenName ?? "PushNotification")")
     }
     
     func errorHandler(_ error: Error!, forRequestID rid: Int32) {
@@ -532,7 +542,6 @@ import SwiftyJSON
             }
             self.resetBarFollowers(animated: true)
         }
-//        self.loadAvaiableSubCategories()
     }
     
     private func trackSearch(searchTarget: RITarget) {
@@ -541,18 +550,6 @@ import SwiftyJSON
             attributes: EventAttributes.searchAction(searchTarget: searchTarget)
         )
     }
-    
-//    func loadAvaiableSubCategories() {
-//        if self.searchTarget.targetType == .CATALOG_CATEGORY {
-//            CatalogDataManager.sharedInstance.getSubCategoriesFilter(self, categoryUrlKey: self.searchTarget.node, completion: { (data, errorMessages) in
-//                if errorMessages == nil {
-//                    self.subCategoryFilterItem = data as? CatalogCategoryFilterItem
-//                } else {
-////                    Utility.handleError(error: errorMessages, viewController: self)
-//                }
-//            })
-//        }
-//    }
     
     private func loadMore() {
         if self.loadingDataInProgress || self.listFullyLoaded { return }
@@ -757,8 +754,8 @@ import SwiftyJSON
     
     //MARK: - BreadcrumbsViewDelegate
     func itemTapped(item: BreadcrumbsItem) {
-        if let target = item.target {
-            MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: nil)
+        if let target = item.target, let screenName = getScreenName(){
+            MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: nil, currentScreenName: screenName)
         }
     }
     
@@ -770,7 +767,6 @@ import SwiftyJSON
         if let breadcrumbsFullPath = self.catalogData?.breadcrumbsFullPath, breadcrumbsFullPath.count > 0 {
             transaction.setCategory(breadcrumbsFullPath)
         }
-        
         return transaction
     }
     

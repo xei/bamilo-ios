@@ -11,6 +11,7 @@
 #import "JAProductSpecificationView.h"
 #import "JAProductReviewsView.h"
 #import "JATopTabsView.h"
+#import "Bamilo-Swift.h"
 
 @interface JATabNavigationViewController () <UIScrollViewDelegate, JATopTabsViewDelegate>
 
@@ -134,6 +135,9 @@
     [self.view setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:self.topTabsView];
     [self.view addSubview:self.contentScrollView];
+    
+    //GA Ecommerce tracking
+    [[GoogleAnalyticsTracker sharedTracker] trackEcommerceProductDetailViewWithProduct:self.product];
 }
 
 - (void)scrollToX:(CGFloat)x {

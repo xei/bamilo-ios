@@ -21,14 +21,14 @@ static BOOL performed;
 @implementation DeepLinkManager
 
 + (void)handleUrl:(NSURL *)url {
-    
+
     if (!isListenersReady) {
         [DeepLinkManager addToQueue:url];
         return;
     }
-    
+
     if (url.scheme) {
-        
+
         NSDictionary<NSString *, NSString *> *queryDictionary = [URLUtility parseQueryString:url];
         if ([queryDictionary objectForKey:kUTMSource] ||
             [queryDictionary objectForKey:kUTMMedium] ||
@@ -37,13 +37,13 @@ static BOOL performed;
             [queryDictionary objectForKey:kUTMContent]) {
             [[GoogleAnalyticsTracker sharedTracker] trackCampaignDataWithCampaignDictionary:queryDictionary];
         }
-        
+
         NSArray *pathComponents = [[url.path componentsSeparatedByString:@"/"] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"length > 0"]];
         if (!pathComponents.count) {
             [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
             return;
         }
-        
+
         NSString *targetKey = [pathComponents objectAtIndex:0];
         NSString *argument = pathComponents.count > 1 ? [pathComponents objectAtIndex:1] : nil;
         NSMutableString *filterString = [NSMutableString new];
@@ -52,14 +52,14 @@ static BOOL performed;
                 [filterString appendFormat:@"%@/%@/", urlQueryKey, [queryDictionary objectForKey:urlQueryKey]];
             }
         }
-        
+
         if ([DeepLinkManager searchWithTarget:targetKey argument:argument filter:filterString] ||
             [DeepLinkManager sellerPageWithTargetKey:targetKey argument:argument] ||
             [DeepLinkManager specialViewWithTarget:targetKey]) {
             performed = true;
             return;
         }
-        
+
         // ---- handle some special views with special params ----
         if ([targetKey isEqualToString:@"d"] && argument.length) {
             // PDV - bamilo://ir/d/BL683ELACCDPNGAMZ?size=1
@@ -71,14 +71,11 @@ static BOOL performed;
             [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication object:nil userInfo:userInfo];
         } else if ([targetKey isEqualToString:@"s"] && argument.length) {
             // Catalog view - search term
-            performed = true;
-            [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification object:@{ @"index": @(99), @"name": STRING_SEARCH, @"text": argument }];
+            [[MainTabBarViewController topNavigationController] openScreenTarget:[RITarget getTarget:CATALOG_SEARCH node:argument] purchaseInfo:nil currentScreenName:nil];
         } else if ([targetKey isEqualToString:@"camp"] && argument.length) {
-            performed = true;
-            [[MainTabBarViewController topNavigationController] openTargetString:[RITarget getTargetString:CAMPAIGN node:argument] purchaseInfo:nil];
+            [[MainTabBarViewController topNavigationController] openTargetString:[RITarget getTargetString:CAMPAIGN node:argument] purchaseInfo:nil currentScreenName:nil];
         } else if ([targetKey isEqualToString:@"ss"] && argument.length) {
-            performed = true;
-            [[MainTabBarViewController topNavigationController] openTargetString:[RITarget getTargetString:STATIC_PAGE node:argument] purchaseInfo:nil];
+            [[MainTabBarViewController topNavigationController] openTargetString:[RITarget getTargetString:STATIC_PAGE node:argument] purchaseInfo:nil currentScreenName:nil];
         } else if ([targetKey isEqualToString:@"externalPayment"]) {
             // externalPayment - bamilo://ir/externalPayment?orderNum=<OrderNumber>&success=<BOOL>
             performed = true;
@@ -105,7 +102,7 @@ static BOOL performed;
                                                  @"rv"  : kShowRecentlyViewedScreenNotification,
                                                  @"rc"  : kShowRecentSearchesScreenNotification
                                                  };
-    
+
     if ([targetKeyToNotificationMap objectForKey:targetKey]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:[targetKeyToNotificationMap objectForKey:targetKey] object:nil];
         return YES;
@@ -115,11 +112,11 @@ static BOOL performed;
 
 + (BOOL)sellerPageWithTargetKey:(NSString *)targetKey argument:(NSString *)argument {
     NSMutableDictionary* categoryDictionary = [NSMutableDictionary new];
-    
+
     if (argument.length) {
         [categoryDictionary setObject:argument forKey:@"category_url_key"];
     }
-    
+
     NSDictionary *sortingMap = @{
                                  @"scbr" : @"BEST_RATING",  //best rating
                                  @"scp"  : @"POPULARITY",   //popularity
@@ -129,28 +126,27 @@ static BOOL performed;
                                  @"scn"  : @"NAME",         //name
                                  @"scb"  : @"BRAND"         //brand
                                  };
-    
+
     if ([sortingMap objectForKey:targetKey] && argument.length) {
         [categoryDictionary setObject:[sortingMap objectForKey:targetKey] forKey:@"sorting"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:categoryDictionary];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:categoryDictionary];
         return YES;
     }
-    
     return NO;
 }
 
 + (BOOL)searchWithTarget:(NSString *)targetKey argument:(NSString *)argument filter:(NSString *)filter {
     BOOL successfullyHandled = NO;
-    
+
     NSMutableDictionary* categoryDictionary = [NSMutableDictionary new];
     if (argument.length) {
         [categoryDictionary setObject:argument forKey:@"category_url_key"];
     }
-    
+
     if (filter.length) {
         [categoryDictionary setObject:filter forKey:@"filter"];
     }
-    
+
     NSDictionary *sortingMap = @{
                                  @"cbr" : @"BEST_RATING",  //best rating
                                  @"cp"  : @"POPULARITY",   //popularity
@@ -160,7 +156,6 @@ static BOOL performed;
                                  @"cn"  : @"NAME",         //name
                                  @"cb"  : @"BRAND"         //brand
                                  };
-    
     if ([targetKey isEqualToString:@"c"]) {
         // Catalog view - category url
         // Do nothing more, everyThing is fine
@@ -169,12 +164,11 @@ static BOOL performed;
         [categoryDictionary setObject:[sortingMap objectForKey:targetKey] forKey:@"sorting"];
         successfullyHandled = YES;
     }
-
     if (successfullyHandled) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:categoryDictionary];
         return YES;
     }
-    
+
     return NO;
 }
 
@@ -183,7 +177,7 @@ static BOOL performed;
     if (!deepLinkPipe) {
         deepLinkPipe = [[NSMutableArray alloc] init];
     }
-    
+
     [deepLinkPipe insertObject:url atIndex:0];
 }
 

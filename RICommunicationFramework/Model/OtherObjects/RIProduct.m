@@ -11,11 +11,11 @@
 #import "RIProductSimple.h"
 #import "RIVariation.h"
 #import "RICategory.h"
-#import "RISeller.h"
 #import "RIBanner.h"
 #import "RISpecification.h"
 #import "RITarget.h"
 #import "RISearchSuggestion.h"
+#import "Bamilo-Swift.h"
 
 @implementation RIBundle
 
@@ -116,10 +116,7 @@
 @synthesize hasStock;
 @synthesize freeShippingPossible;
 
-+ (NSString *)getCompleteProductWithSku:(NSString*)sku
-                           successBlock:(void (^)(id product))successBlock
-                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
-{
++ (NSString *)getCompleteProductWithSku:(NSString*)sku successBlock:(void (^)(id product))successBlock andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock {
     NSString *finalTargetString = [RITarget getTargetString:PRODUCT_DETAIL node:sku];
     return [RIProduct getCompleteProductWithTargetString:finalTargetString
                                        withRichParameter:nil
@@ -647,9 +644,7 @@
         if ([dataDic objectForKey:@"seller_entity"]) {
             NSDictionary* sellerJSON = [dataDic objectForKey:@"seller_entity"];
             if (VALID_NOTEMPTY(sellerJSON, NSDictionary)) {
-                
-                RISeller* seller = [RISeller parseSeller:sellerJSON];
-                newProduct.seller = seller;
+                newProduct.seller = [Seller parseToSellerWithDic:sellerJSON];
             }
         }
         

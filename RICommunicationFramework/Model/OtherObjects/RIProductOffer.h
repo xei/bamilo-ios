@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class RISeller;
+@class Seller;
 
 @interface RIProductOffer : NSObject
 
@@ -23,7 +23,7 @@
 @property (nonatomic, strong) NSNumber* minDeliveryTime;
 @property (nonatomic, strong) NSNumber* maxDeliveryTime;
 @property (nonatomic, strong) NSNumber* shopFirst;
-@property (nonatomic, strong) RISeller* seller;
+@property (nonatomic, strong) Seller* seller;
 
 @property (nonatomic) BOOL freeShippingPossible;
 

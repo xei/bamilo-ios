@@ -17,7 +17,7 @@
 #import "JAPriceView.h"
 #import "JAUtils.h"
 #import "RIProduct.h"
-#import "RISeller.h"
+#import "Bamilo-Swift.h"
 #import "JARatingsViewMedium.h"
 
 #define kDistanceBetweenStarsAndText 70.0f
@@ -434,10 +434,10 @@ UIAlertViewDelegate
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithDictionary:[currentDynamicForm getValues]];
     
-    if (VALID_NOTEMPTY(self.product.seller.uid, NSString)) {
-        NSString* sellerIdKey = [currentDynamicForm getFieldNameForKey:@"sellerId"];
-        [parameters addEntriesFromDictionary:@{sellerIdKey: self.product.seller.uid}];
-    }
+//    if (VALID_NOTEMPTY(self.product.seller.uid, NSString)) {
+//        NSString* sellerIdKey = [currentDynamicForm getFieldNameForKey:@"sellerId"];
+//        [parameters addEntriesFromDictionary:@{sellerIdKey: self.product.seller.uid}];
+//    }
     
     [RIForm sendForm:currentForm
           parameters:parameters

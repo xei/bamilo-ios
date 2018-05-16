@@ -61,7 +61,7 @@ class HomePageFeaturedStoresTableViewCell: BaseHomePageTeaserBoxTableViewCell, U
         if indexPath.row == 0 {
           MainTabBarViewController.showCategories()
         } else if let target = self.featuredStores?.items?[indexPath.row - 1].target, let id = self.featuredStores?.teaserId {
-            self.delegate?.teaserItemTappedWithTargetString(target: target, teaserId: id)
+            self.delegate?.teaserItemTappedWithTargetString(target: target, teaserId: id, index: indexPath.row - 1)
         }
     }
     

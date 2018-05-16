@@ -13,7 +13,7 @@ import TBActionSheet
 protocol MyBamiloViewControllerDelegate: class {
     func scrollViewDidScroll(_ scrollView: UIScrollView)
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool)
-    func didSelectProductSku(productSku: String)
+    func didSelectProductSku(productSku: String, recommendationLogic: String)
 }
 
 
@@ -172,8 +172,8 @@ class MyBamiloViewController:   BaseViewController,
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let products = self.presentingProducts, indexPath.row < products.count, let sku = products[indexPath.row].sku {
-            self.delegate?.didSelectProductSku(productSku: sku)
+        if let products = self.presentingProducts, indexPath.row < products.count, let sku = products[indexPath.row].sku, let logic = products[indexPath.row].id {
+            self.delegate?.didSelectProductSku(productSku: sku, recommendationLogic: logic)
         }
     }
     

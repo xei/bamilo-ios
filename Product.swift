@@ -55,9 +55,14 @@ import SwiftyJSON
         variationName       <- map["variation_name"]
         shareURL            <- map["share_url"]
         
-        //checkou avaiability
+        //check avaiability
         var stockAvaiablity: Bool?
         stockAvaiablity     <- map["has_stock"]
-        hasStock = stockAvaiablity ?? true
+        
+        //for parsing another key of this entity (in different endpoints) - inconsistancy :-(
+        var isOutOfStock: Bool?
+        isOutOfStock <- map["out_of_stock"]
+        
+        hasStock = stockAvaiablity ?? isOutOfStock?.getReverse() ?? true
     }
 }

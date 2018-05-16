@@ -1776,7 +1776,7 @@
                                     <action selector="submitButtonTapped:" destination="fLe-zv-MEV" eventType="touchUpInside" id="59f-oa-sEl"/>
                                 </connections>
                             </button>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Pzc-hC-CNZ">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" ambiguous="YES" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Pzc-hC-CNZ">
                                 <rect key="frame" x="0.0" y="51" width="414" height="620"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="KsG-uT-q0X" customClass="AnimatedCollectionViewLayout" customModule="AnimatedCollectionViewLayout">

@@ -78,7 +78,7 @@ class HomePageTileTeaserTableViewCell: BaseHomePageTeaserBoxTableViewCell, UICol
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let target =  self.dataSource?.items?[indexPath.row].target, let id = self.dataSource?.teaserId {
-            self.delegate?.teaserItemTappedWithTargetString(target: target, teaserId: id)
+            self.delegate?.teaserItemTappedWithTargetString(target: target, teaserId: id, index: indexPath.row)
         }
     }
     

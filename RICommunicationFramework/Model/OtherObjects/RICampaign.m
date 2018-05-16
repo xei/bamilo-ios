@@ -16,7 +16,7 @@
                           andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 {
     NSString* url = [RITarget getURLStringforTargetString:targetString];
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:url]    
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:url]
                                                             parameters:nil
                                                             httpMethod:HttpVerbGET
                                                              cacheType:RIURLCacheDBCache
@@ -24,10 +24,10 @@
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
-                                                                  
+
                                                                   NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
                                                                   NSDictionary* data = [metadata objectForKey:@"data"];
-                                                                  
+
                                                                   if (VALID_NOTEMPTY(data, NSDictionary)) {
                                                                       RICampaign* campaign = [RICampaign parseCampaign:data country:configuration];
                                                                       dispatch_async(dispatch_get_main_queue(), ^{
@@ -38,7 +38,7 @@
                                                                   {
                                                                       failureBlock(RIApiResponseAPIError, nil);
                                                                   }
-                                                                  
+
                                                               } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                                                                   failureBlock(apiResponse, nil);
                                                               }];
@@ -63,7 +63,7 @@
 {
     NSString *campaignUrl = [RI_API_CAMPAIGN_PAGE stringByAppendingString:campaignId];
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, campaignUrl]];
-    
+
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
                                                             parameters:nil
                                                             httpMethod:HttpVerbGET
@@ -72,10 +72,10 @@
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
-                                                                  
+
                                                                   NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
                                                                   NSDictionary* data = [metadata objectForKey:@"data"];
-                                                                  
+
                                                                   if (VALID_NOTEMPTY(data, NSDictionary)) {
                                                                       RICampaign* campaign = [RICampaign parseCampaign:data country:configuration];
                                                                       dispatch_async(dispatch_get_main_queue(), ^{
@@ -86,7 +86,7 @@
                                                                   {
                                                                       failureBlock(RIApiResponseAPIError, nil);
                                                                   }
-                                                                  
+
                                                               } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                                                                   failureBlock(apiResponse, nil);
                                                               }];
@@ -103,14 +103,14 @@
                                                                   failureBlock(apiResponse, nil);
                                                               }
                                                           }];
-    
+
 }
 
 + (RICampaign*)parseCampaign:(NSDictionary*)campaignJSON
                      country:(RICountryConfiguration*)country
 {
     RICampaign* newCampaign = [[RICampaign alloc] init];
-    
+
     NSDictionary* cms = [campaignJSON objectForKey:@"cms"];
     if (VALID_NOTEMPTY(cms, NSDictionary))
     {
@@ -119,7 +119,7 @@
         {
             campaignsImageKey = @"desktop_banner";
         }
-        
+
         NSArray* bannerArray = [cms objectForKey:campaignsImageKey];
         if (VALID_NOTEMPTY(bannerArray, NSArray)) {
             NSString* bannerImageURL = [bannerArray firstObject];
@@ -128,21 +128,21 @@
             }
         }
     }
-    
+
     NSDictionary* campaignData = [campaignJSON objectForKey:@"campaign_entity"];
     if (VALID_NOTEMPTY(campaignData, NSDictionary)) {
         newCampaign.name = [campaignData objectForKey:@"name"];
 
         NSArray* campaignProductsData = [campaignData objectForKey:@"products"];
         NSMutableArray* campaignProducts = [NSMutableArray new];
-        
+
         for (NSDictionary* singleCampaignProductJSON in campaignProductsData) {
             if (VALID_NOTEMPTY(singleCampaignProductJSON, NSDictionary)) {
                 RICampaignProduct* campaignProduct = [RICampaignProduct parseCampaignProduct:singleCampaignProductJSON country:country];
                 [campaignProducts addObject:campaignProduct];
             }
         }
-        
+
         newCampaign.campaignProducts = campaignProducts;
     }
 
@@ -157,9 +157,9 @@
                                    country:(RICountryConfiguration*)country
 {
     RICampaignProduct* campaignProduct = [[RICampaignProduct alloc] init];
-    
+
     if (VALID_NOTEMPTY(campaignProductJSON, NSDictionary)) {
-        
+
         if ([campaignProductJSON objectForKey:@"save_price"]) {
             if (![[campaignProductJSON objectForKey:@"save_price"] isKindOfClass:[NSNull class]]) {
                 campaignProduct.savePrice = [campaignProductJSON objectForKey:@"save_price"];
@@ -220,53 +220,53 @@
                     campaignProduct.maxSavingPercentage = [NSNumber numberWithInteger:[maxSavingPercentageString integerValue]];
                 }
                 if (VALID_NOTEMPTY([campaignProductJSON objectForKey:@"max_saving_percentage"], NSNumber)) {
-                    campaignProduct.maxSavingPercentage = [campaignProductJSON objectForKey:@"max_saving_percentage"];    
+                    campaignProduct.maxSavingPercentage = [campaignProductJSON objectForKey:@"max_saving_percentage"];
                 }
             }
         }
-        
+
         if ([campaignProductJSON objectForKey:@"remaining_time"]) {
             if (![[campaignProductJSON objectForKey:@"remaining_time"] isKindOfClass:[NSNull class]]) {
                 campaignProduct.remainingTime = [campaignProductJSON objectForKey:@"remaining_time"];
             }
         }
-        
+
         if ([campaignProductJSON objectForKey:@"image"]) {
             if (![[campaignProductJSON objectForKey:@"image"] isKindOfClass:[NSNull class]])
                 campaignProduct.imagesUrl = [campaignProductJSON objectForKey:@"image"];
         }
-        
+
         if ([campaignProductJSON objectForKey:@"target"] && VALID_NOTEMPTY([campaignProductJSON objectForKey:@"target"], NSString)) {
             campaignProduct.targetString = [campaignProductJSON objectForKey:@"target"];
         }
-        
+
         if ([campaignProductJSON objectForKey:@"variation_name"] && VALID_NOTEMPTY([campaignProductJSON objectForKey:@"variation_name"], NSString)) {
             campaignProduct.variationName = [campaignProductJSON objectForKey:@"variation_name"];
         }
-        
+
         if ([campaignProductJSON objectForKey:@"variations_available_list"] && VALID_NOTEMPTY([campaignProductJSON objectForKey:@"variations_available_list"], NSString)) {
             campaignProduct.variationAvailableList = [campaignProductJSON objectForKey:@"variations_available_list"];
         }
-        
+
         NSArray* sizesArray = [campaignProductJSON objectForKey:@"simples"];
         if (VALID_NOTEMPTY(sizesArray, NSArray)) {
-            
+
             NSMutableArray* productSimples = [NSMutableArray new];
-            
+
             for (NSDictionary* sizeJSON in sizesArray) {
-                
+
                 if (VALID_NOTEMPTY(sizeJSON, NSDictionary)) {
-                    
+
                     RICampaignProductSimple* campaignProductSimple = [RICampaignProductSimple parseCampaignProductSimple:sizeJSON
                                                                                                                  country:country];
                     [productSimples addObject:campaignProductSimple];
                 }
             }
-            
+
             campaignProduct.productSimples = [productSimples copy];
         }
     }
-    
+
     return campaignProduct;
 }
 
@@ -278,7 +278,7 @@
                                                country:(RICountryConfiguration*)country
 {
     RICampaignProductSimple* campaignProductSimple = [[RICampaignProductSimple alloc] init];
-    
+
     if ([campaignProductSimpleJSON objectForKey:@"save_price"]) {
         if (![[campaignProductSimpleJSON objectForKey:@"save_price"] isKindOfClass:[NSNull class]]) {
             campaignProductSimple.savePrice = [campaignProductSimpleJSON objectForKey:@"save_price"];
@@ -301,7 +301,7 @@
             campaignProductSimple.variation = [campaignProductSimpleJSON objectForKey:@"variation_value"];
         }
     }
-    
+
     return campaignProductSimple;
 }
 

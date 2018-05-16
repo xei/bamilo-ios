@@ -25,6 +25,10 @@ class BaseCatallogCollectionViewCell: BaseCollectionViewCellSwift {
     @IBOutlet weak var rateCountLabel: UILabel?
     @IBOutlet weak var addToWishListButton: DOFavoriteButton?
     @IBOutlet weak var newTagView: UIView?
+    @IBOutlet weak var outOfStockTagView: UIView?
+    @IBOutlet weak var outOfStockLabel: UILabel?
+    @IBOutlet weak var outOfStockCoverView: UIView?
+    
     var product: Product?
     
     weak var delegate: BaseCatallogCollectionViewCellDelegate?
@@ -49,6 +53,12 @@ class BaseCatallogCollectionViewCell: BaseCollectionViewCellSwift {
         self.newTagView?.backgroundColor = Theme.color(kColorOrange)
         self.rateCountLabel?.textColor = Theme.color(kColorGray3)
         self.dicountPrecentageLabel?.textColor = Theme.color(kColorGray3)
+        
+        self.outOfStockCoverView?.backgroundColor = .white
+        self.outOfStockCoverView?.alpha = 0.5
+        self.outOfStockTagView?.backgroundColor = Theme.color(kColorGray1)
+        self.outOfStockLabel?.text = STRING_OUT_OF_STOCK
+        self.outOfStockLabel?.textColor = .white
         
         //apply shadow
         self.applyShadow(position: CGSize(width:0 , height: 1), color: .black, opacity: 0.2)
@@ -95,6 +105,16 @@ class BaseCatallogCollectionViewCell: BaseCollectionViewCellSwift {
             self.rateView?.isHidden = true
         }
         self.addToWishListButton?.isSelected = product.isInWishList
+        
+        if (!product.hasStock) {
+            self.outOfStockCoverView?.isHidden = false
+            self.outOfStockTagView?.isHidden = false
+            self.newTagView?.isHidden = true
+        } else {
+            self.outOfStockCoverView?.isHidden = true
+            self.outOfStockTagView?.isHidden = true
+        }
+        
         self.product = product
     }
 }

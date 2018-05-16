@@ -10,34 +10,28 @@
 
 @class RIProduct;
 
+@protocol JAPDVProductInfoDelegate <NSObject>
+- (void)sellerInfoNeedsContentToBeRefreshed;
+- (void)sellerNameTapped;
+@end
+
 @interface JAPDVProductInfo : UIView
 
 @property (nonatomic) NSString *sizesText;
+@property (nonatomic) id<JAPDVProductInfoDelegate> delegate;
 
 - (void)setupWithFrame:(CGRect)frame product:(RIProduct*)product preSelectedSize:(NSString*)preSelectedSize;
-
 - (void)setSpecialPrice:(NSString*)special andPrice:(NSString*)price andMaxSavingPercentage:(NSString*)maxSavingPercentage shouldForceFlip:(BOOL)forceFlip;
-
 - (CGFloat)getSellerInfoYPosition;
-
 - (void)addVariationsTarget:(id)target action:(SEL)action;
-
 - (void)addSizeTarget:(id)target action:(SEL)action;
-
 - (void)addReviewsTarget:(id)target action:(SEL)action;
-
 - (void)addSellerCatalogTarget:(id)target action:(SEL)action;
-
 - (void)addSellerLinkTarget:(id)target action:(SEL)action;
-
 - (void)addSellerReviewsTarget:(id)target action:(SEL)action;
-
 - (void)addOtherOffersTarget:(id)target action:(SEL)action;
-
 - (void)addSpecificationsTarget:(id)target action:(SEL)action;
-
 - (void)addDescriptionTarget:(id)target action:(SEL)action;
-
 - (void)addSisTarget:(id)target action:(SEL)action;
 
 @end
