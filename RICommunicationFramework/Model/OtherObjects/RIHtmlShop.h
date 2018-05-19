@@ -10,8 +10,9 @@
 
 @interface RIHtmlShop : NSObject
 
-@property (nonatomic, strong) NSString* html;
-@property (nonatomic, strong) NSArray* featuredBoxesArray;
+@property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSString *html;
+@property (nonatomic, strong) NSArray *featuredBoxesArray;
 
 + (NSString*)getHtmlShopForTargetString:(NSString*)targetString
                            successBlock:(void (^)(RIHtmlShop *htmlShop))sucessBlock

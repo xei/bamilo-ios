@@ -44,7 +44,10 @@
         self.navigationItem.titleView = [self navBarTitleView];
     }
     if ([self respondsToSelector:@selector(navBarTitleString)]) {
-        self.title = [self navBarTitleString];
+        if ([[self navBarTitleString] isKindOfClass:[NSString class]] && [[self navBarTitleString] length]) {
+            self.navigationItem.titleView = nil;
+            self.title = [self navBarTitleString];
+        }
     }
     if ([self respondsToSelector:@selector(navBarhideBackButton)]) {
         self.navigationItem.hidesBackButton = [self navBarhideBackButton];

@@ -188,7 +188,6 @@
             JAShopWebViewController* viewController = [[JAShopWebViewController alloc] init];
             viewController.purchaseTrackingInfo = purchaseInfo;
             [self loadScreenTarget:target forBaseViewController:viewController];
-            [viewController setTitle:target.node];
             [self pushViewController:viewController animated: true];
             return YES;
         }
