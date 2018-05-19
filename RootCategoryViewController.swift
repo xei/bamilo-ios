@@ -175,7 +175,7 @@ class RootCategoryViewController: BaseViewController,
             if let cat = model as? CategoryProduct {
                 
                 //Track tapping on Cat item
-                TrackerManager.postEvent(selector: EventSelectors.teaserTappedSelector(), attributes: EventAttributes.teaserTapped(teaserName: "Category", screenName: getScreenName(), teaserTargetNode: cat.name ?? ""))
+                TrackerManager.postEvent(selector: EventSelectors.itemTappedSelector(), attributes: EventAttributes.itemTapped(categoryEvent: "Category", screenName: getScreenName(), labelEvent: cat.name ?? ""))
                 
                 if cat.childern?.count ?? 0 > 0 {
                     self.performSegue(withIdentifier: "showsubCategories", sender: cat)

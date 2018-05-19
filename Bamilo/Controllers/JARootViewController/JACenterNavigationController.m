@@ -306,7 +306,7 @@
     if ([self showAndCheckIfUserAlreadyLoggedIn]) {
         return;
     }
-    
+
     AuthenticationContainerViewController *authenticationViewController = (AuthenticationContainerViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Authentication" nibName:@"AuthenticationContainerViewController" resetCache:YES];
     authenticationViewController.startWithSignUpViewController = YES;
     [self pushViewController:authenticationViewController animated:YES];
@@ -346,9 +346,9 @@
         OrderListViewController *myOrderViewCtrl = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"OrderListViewController"];
         [self pushViewController:myOrderViewCtrl animated:YES];
     } else {
-            [self performProtectedBlock:^(BOOL userHadSession) {
-                [[NSNotificationCenter defaultCenter] postNotification:notification];
-            }];
+        [self performProtectedBlock:^(BOOL userHadSession) {
+            [[NSNotificationCenter defaultCenter] postNotification:notification];
+        }];
     }
 }
 

@@ -84,7 +84,7 @@ class SubCategoryLandingPageViewController: BaseViewController,
         
         if indexPath.section == 1, let subCats = self.subcategories, indexPath.row < subCats.count {
             if let title = subCats[indexPath.row].name {
-                TrackerManager.postEvent(selector: EventSelectors.teaserTappedSelector(), attributes: EventAttributes.teaserTapped(teaserName: "Category", screenName: getScreenName(), teaserTargetNode: title))
+                TrackerManager.postEvent(selector: EventSelectors.itemTappedSelector(), attributes: EventAttributes.itemTapped(categoryEvent: "Category", screenName: getScreenName(), labelEvent: title))
             }
             if let childs = subCats[indexPath.row].childern, childs.count > 0 {
                 self.pushToSubCatViewByCategory(category: subCats[indexPath.row])

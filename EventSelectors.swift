@@ -50,8 +50,8 @@ import Foundation
     class func purchaseSelector() -> Selector {
         return Selector(("purchasedWithAttributes:"))
     }
-    class func teaserTappedSelector() -> Selector {
-        return Selector(("teaserTappedWithAttributes:"))
+    class func itemTappedSelector() -> Selector {
+        return Selector(("itemTappedWithAttributes:"))
     }
     class func behaviourPurchasedSelector() -> Selector {
         return Selector(("purchaseBehaviourWithAttributes:"))

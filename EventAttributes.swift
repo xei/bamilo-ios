@@ -111,11 +111,11 @@ public typealias EventAttributeType = [String:Any]
         return attributes
     }
     
-    static func teaserTapped(teaserName: String, screenName: String, teaserTargetNode: String) -> EventAttributeType {
+    static func itemTapped(categoryEvent: String, screenName: String, labelEvent: String) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
-        attributes[kEventTeaser] = teaserName
+        attributes[kGAEventCategory] = categoryEvent
         attributes[kEventScreenName] = screenName
-        attributes[kEventTargetString] = teaserTargetNode
+        attributes[kGAEventLabel] = labelEvent
         return attributes
     }
     

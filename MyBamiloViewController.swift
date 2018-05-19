@@ -208,6 +208,11 @@ class MyBamiloViewController:   BaseViewController,
     
     //MARK: - MyBamiloHeaderViewDelegate
     func menuButtonTapped() {
+        //tracking tapp action
+        if let screenName = getScreenName() {
+            TrackerManager.postEvent(selector: EventSelectors.itemTappedSelector(), attributes: EventAttributes.itemTapped(categoryEvent: "Emarsys", screenName: self.getScreenName(), labelEvent: "\(screenName)-filter"))
+        }
+        
         self.presentActionSheet()
     }
     

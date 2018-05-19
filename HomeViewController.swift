@@ -108,6 +108,7 @@ class HomeViewController:   BaseViewController,
             
             //start review survey if it's necessary
             ReviewSurveyManager.runSurveyIfItsNeeded(target: self, executionType: .background)
+            
             //to start DeeplinkManager
             DeepLinkManager.listenersReady()
         }
@@ -273,7 +274,7 @@ class HomeViewController:   BaseViewController,
     }
     
     private func goToTrackableTarget(target: RITarget, category: String, label: String) {
-        TrackerManager.postEvent(selector: EventSelectors.teaserTappedSelector(), attributes: EventAttributes.teaserTapped(teaserName: category, screenName: getScreenName(), teaserTargetNode: label))
+        TrackerManager.postEvent(selector: EventSelectors.itemTappedSelector(), attributes: EventAttributes.itemTapped(categoryEvent: category, screenName: getScreenName(), labelEvent: label))
         MainTabBarViewController.topNavigationController()?.openTargetString(target.targetString, purchaseInfo: BehaviourTrackingInfo.trackingInfo(category: category, label: label), currentScreenName: getScreenName())
     }
 }

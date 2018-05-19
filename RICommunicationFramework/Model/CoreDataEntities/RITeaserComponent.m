@@ -148,7 +148,7 @@ country:(RICountryConfiguration*)country {
         [userInfo setObject:self.targetString forKey:@"targetString"];
         [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:userInfo];
         
-        [TrackerManager postEventWithSelector:[EventSelectors teaserTappedSelector] attributes:[EventAttributes teaserTappedWithTeaserName:optionalTrackingInfo screenName:@"HomePage" teaserTargetNode:teaserTarget.node]];
+        [TrackerManager postEventWithSelector:[EventSelectors itemTappedSelector] attributes:[EventAttributes itemTappedWithCategoryEvent:optionalTrackingInfo screenName:@"HomePage" labelEvent:teaserTarget.node]];
     }
 }
 

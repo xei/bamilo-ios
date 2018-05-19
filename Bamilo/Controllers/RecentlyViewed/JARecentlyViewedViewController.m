@@ -288,7 +288,7 @@
     RIProduct *product = [self getProductFromIndex:button.tag];
     
     //track tapping this teaser here
-    [TrackerManager postEventWithSelector:[EventSelectors teaserTappedSelector] attributes:[EventAttributes teaserTappedWithTeaserName:[self getScreenName] screenName:[self getScreenName] teaserTargetNode:product.name]];
+    [TrackerManager postEventWithSelector:[EventSelectors itemTappedSelector] attributes:[EventAttributes itemTappedWithCategoryEvent:[self getScreenName] screenName:[self getScreenName] labelEvent:product.name]];
     
     //track behaviour journey from here
     [[MainTabBarViewController topNavigationController] openScreenTarget:[RITarget getTarget:PRODUCT_DETAIL node:product.sku] purchaseInfo:[BehaviourTrackingInfo trackingInfoWithCategory:[self getScreenName] label:product.name] currentScreenName:[self getScreenName]];

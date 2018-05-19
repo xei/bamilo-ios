@@ -224,13 +224,13 @@
         }
     }
     
-    func teaserTapped(attributes: EventAttributeType) {
-        if  let teaserName = attributes[kEventTeaser] as? String,
-            let teaserTarget = attributes[kEventTargetString] as? String {
+    func itemTapped(attributes: EventAttributeType) {
+        if  let categoryEventName = attributes[kGAEventCategory] as? String,
+            let labelEventName = attributes[kGAEventLabel] as? String {
             let params = GAIDictionaryBuilder.createEvent(
-                withCategory: teaserName,
+                withCategory: categoryEventName,
                 action: "Tapped",
-                label: teaserTarget,
+                label: labelEventName,
                 value: nil
             )
             self.sendParamsToGA(params: params)
