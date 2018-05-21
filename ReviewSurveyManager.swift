@@ -14,7 +14,6 @@ import UIKit
         
         //If we are not going to present any deeplink actions
         if DeepLinkManager.hasSomethingToShow() { return }
-        
         ThreadManager.execute {
             if let reviewStarter = ViewControllerManager.sharedInstance().loadViewController("ReviewSurveyStarter", resetCache: true) as? BaseNavigationController, let surveyViewCtrl = reviewStarter.viewControllers.first as? ReviewSurveyViewController {
                 surveyViewCtrl.surveryModel = reviewSurvey
@@ -23,7 +22,6 @@ import UIKit
             }
         }
     }
-    
     
     static func getJourneySurvey(orderID: String) {
         ReviewServiceDataManager.sharedInstance.getServeryAlias(nil, surveyAlias: .journeySurvey, executionType: .background) { (data, error) in

@@ -110,7 +110,7 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView == self.collectionView, let dataSource = self.dataSource, dataSource.count - 1 != self.firstNotAnsweredQuestionIndex {
+        if scrollView == self.collectionView, let dataSource = self.dataSource, dataSource.count != self.firstNotAnsweredQuestionIndex {
             //Prevent user from scrolling to other more questions before answering this question
             if let x = self.collectionView.layoutAttributesForItem(at: IndexPath(row: self.firstNotAnsweredQuestionIndex, section: 0))?.frame.minX {
                 if (scrollView.contentOffset.x < x) {

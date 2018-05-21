@@ -326,6 +326,9 @@
             
             [RIRecentlyViewedProductSku removeFromRecentlyViewed:product];
             
+            //Track add to cart behaviour
+            [[PurchaseBehaviourRecorder sharedInstance] recordAddToCartWithSku:product.sku trackingInfo: [BehaviourTrackingInfo trackingInfoWithCategory:[self getScreenName] label:product.name]];
+            
             [self loadProducts];
             
             NSDictionary* userInfo = [NSDictionary dictionaryWithObject:self.cart forKey:kUpdateCartNotificationValue];
