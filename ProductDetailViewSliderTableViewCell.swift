@@ -8,6 +8,7 @@
 
 import UIKit
 import FSPagerView
+import CHIPageControl
 
 class ProductDetailViewSliderTableViewCell: BaseProductTableViewCell, FSPagerViewDelegate, FSPagerViewDataSource {
     
@@ -16,13 +17,23 @@ class ProductDetailViewSliderTableViewCell: BaseProductTableViewCell, FSPagerVie
     private var cellIndexMapper = [Int: FSPagerViewCell]()
     private var sliderBlurView: UIVisualEffectView?
     
-    @IBOutlet weak var sliderView: FSPagerView! {
+    @IBOutlet weak private var pagerControl: CHIPageControlJalapeno! {
+        didSet {
+            self.pagerControl.backgroundColor = .clear
+            self.pagerControl.radius = 4
+            self.pagerControl.tintColor = Theme.color(kColorGray9)
+            self.pagerControl.currentPageTintColor = Theme.color(kColorOrange)
+            self.pagerControl.numberOfPages = 0
+        }
+    }
+    
+    @IBOutlet weak private var sliderView: FSPagerView! {
         didSet {
             self.sliderView.register(FSPagerViewCell.self, forCellWithReuseIdentifier: "cell")
             self.sliderView.backgroundColor = .clear
             self.sliderView.dataSource = self
             self.sliderView.delegate = self
-            self.sliderView.isInfinite = true
+            self.sliderView.isInfinite = false
             self.sliderView.transformer = FSPagerViewTransformer(type: .invertedFerrisWheel)
             self.sliderBlurView = self.sliderView.addBlurView(style: .light)
             self.sliderBlurView?.alpha = 0
@@ -47,6 +58,7 @@ class ProductDetailViewSliderTableViewCell: BaseProductTableViewCell, FSPagerVie
     override func update(withModel model: Any!) {
         if let imageList = model as? [ProductImageItem] {
             self.productImageList = imageList
+            self.pagerControl.numberOfPages = imageList.count
             self.sliderView.reloadData()
         }
     }
@@ -77,8 +89,16 @@ class ProductDetailViewSliderTableViewCell: BaseProductTableViewCell, FSPagerVie
         return self.productImageList?.count ?? 0
     }
     
-    func pagerViewDidScroll(_ pagerView: FSPagerView) {
+    func pagerView(_ pagerView: FSPagerView, didSelectItemAt index: Int) {
+        pagerView.deselectItem(at: index, animated: true)
         
+    }
+    
+    func pagerViewDidScroll(_ pagerView: FSPagerView) {
+        guard self.sliderView.currentIndex != pagerControl.currentPage else {
+            return
+        }
+        self.pagerControl.set(progress: self.sliderView.currentIndex, animated: true)
     }
 
 }

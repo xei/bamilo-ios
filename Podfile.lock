@@ -30,6 +30,7 @@ PODS:
   - AlgoliaSearch-Client (3.7.0):
     - AFNetworking (~> 2.2)
   - AnimatedCollectionViewLayout (0.3.0)
+  - CHIPageControl/Jalapeno (0.1.5)
   - CoreSDK (1.6.0)
   - Crashlytics (3.10.1):
     - Fabric (~> 1.7.5)
@@ -73,6 +74,7 @@ DEPENDENCIES:
   - AlamofireObjectMapper (~> 4.0)
   - AlgoliaSearch-Client
   - AnimatedCollectionViewLayout
+  - CHIPageControl/Jalapeno
   - Crashlytics (~> 3.9)
   - EmarsysPredictSDK
   - Fabric
@@ -104,6 +106,7 @@ SPEC REPOS:
     - AlamofireObjectMapper
     - AlgoliaSearch-Client
     - AnimatedCollectionViewLayout
+    - CHIPageControl
     - CoreSDK
     - Crashlytics
     - EmarsysPredictSDK
@@ -138,6 +141,7 @@ SPEC CHECKSUMS:
   AlamofireObjectMapper: 435adc82f5b367679bd9e71c4974a54efd0b2521
   AlgoliaSearch-Client: 8a937017f9faad0eef7a2d43fdb695f7620de140
   AnimatedCollectionViewLayout: 504b992a4258eb39d2dd2b2b48e84b4b95860fd7
+  CHIPageControl: 79d19a8ee2e35fa3c1da6533adb5364c77b5cfea
   CoreSDK: 4f79e4fea147954c9716b8b36daaaa02223b39be
   Crashlytics: aee1a064cbbf99b32efa3f056a5f458d846bc8ff
   EmarsysPredictSDK: fffffb59050eff3bb35b49990fb77acc249def6c
@@ -165,6 +169,6 @@ SPEC CHECKSUMS:
   TBActionSheet: 5ad1810015aece4a9e7d18424f16b6e745f0dc8f
   TTRangeSlider: 78188bea83f6471a06f75adbc88da5e990baeafe
 
-PODFILE CHECKSUM: c16828e64a07eb3f1e3335db49a014b8de2efe77
+PODFILE CHECKSUM: 0dca85f91513540bba97e8396cf8a32c1b7d7bc7
 
 COCOAPODS: 1.5.0

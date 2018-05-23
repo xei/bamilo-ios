@@ -25,6 +25,7 @@ target 'Bamilo' do
   pod 'TTRangeSlider', '~> 1.0.5'
   pod 'M13Checkbox'
   pod 'JSONModel'
+  pod 'CHIPageControl/Jalapeno'
   pod 'RAlertView'
   pod 'Pushwoosh'
   pod 'AnimatedCollectionViewLayout'
