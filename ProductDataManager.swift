@@ -10,7 +10,13 @@ import Foundation
 import SwiftyJSON
 
 class ProductDataManager: DataManagerSwift {
+    
     static let sharedInstance = ProductDataManager()
+    func getProductDetailInfo(_ target: DataServiceProtocol, sku: String, completion: @escaping DataClosure) {
+        ProductDataManager.requestManager.async(.get, target: target, path: "\(RI_API_PRODUCT_DETAIL)\(sku)", params: nil, type: .foreground) { (responseType, data, errorMessages) in
+            self.processResponse(responseType, aClass: Product.self, data: data, errorMessages: errorMessages, completion: completion)
+        }
+    }
     
     func addToWishList(_ target: DataServiceProtocol, sku: String, completion: @escaping DataClosure) {
         ProductDataManager.requestManager.async(.post, target: target, path:RI_API_ADD_TO_WISHLIST , params: ["sku": sku], type: .background, completion: { (responseType, data, errorMessages) in

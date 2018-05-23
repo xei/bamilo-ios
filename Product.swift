@@ -31,6 +31,7 @@ import SwiftyJSON
     var simples: [SimpleProduct]?
     var variationName: String?
     var shareURL: String?
+    var imageList: [ProductImageItem]?
     
     override init() {}
     required init?(map: Map) {}
@@ -54,6 +55,7 @@ import SwiftyJSON
         simples             <- map["simples"]
         variationName       <- map["variation_name"]
         shareURL            <- map["share_url"]
+        imageList           <- map["image_list"]
         
         //check avaiability
         var stockAvaiablity: Bool?
@@ -66,3 +68,17 @@ import SwiftyJSON
         hasStock = stockAvaiablity ?? isOutOfStock?.getReverse() ?? true
     }
 }
+
+
+class ProductImageItem: NSObject, Mappable {
+    
+    var normal: URL?
+    var zoom: URL?
+    required init?(map: Map) {}
+    func mapping(map: Map) {
+        normal <- (map["url"], URLTransform())
+        zoom <- (map["zoom"], URLTransform())
+    }
+}
+
+

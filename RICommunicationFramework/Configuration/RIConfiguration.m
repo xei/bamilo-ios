@@ -5,6 +5,7 @@
 //  Created by Miguel Chaves on 10/Jul/14.
 //  Copyright (c) 2014 Rocket Internet. All rights reserved.
 //
+// https://github.com/suzuki-0000/SKPhotoBrowser
 
 #import "RIConfiguration.h"
 

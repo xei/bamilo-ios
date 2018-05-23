@@ -46,7 +46,6 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
             self.birthdayFeildModel = birthday
             self.phoneFieldModel = phone
             self.formController?.formModelList = [phone, firstName, lastName, gender, email, birthday, nationalID, bankCard]
-            
         }
         self.formController?.setupTableView()
         self.getContent()

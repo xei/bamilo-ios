@@ -567,7 +567,7 @@ import SwiftyJSON
     
     private func showProductPage(product: Product) {
         self.selectedProduct = product
-        self.performSegue(withIdentifier: "pushPDVViewController", sender: nil)
+        self.performSegue(withIdentifier: "ProductDetailViewController", sender: nil)
     }
     
     //MARK: - UICollectionViewDataSource & UICollectionViewDelegate
@@ -744,11 +744,11 @@ import SwiftyJSON
         } else if segueName == "embedFilteredListNoResult" {
             let destinationViewCtrl = segue.destination as? FilteredListNoResultViewController
             destinationViewCtrl?.delegate = self
-        } else if segueName == "pushPDVViewController" {
-            let destinationViewCtrl = segue.destination as? JAPDVViewController
-            destinationViewCtrl?.purchaseTrackingInfo = self.purchaseTrackingInfo
-            destinationViewCtrl?.productSku = self.selectedProduct?.sku
-            destinationViewCtrl?.delegate = self
+        } else if segueName == "ProductDetailViewController" {
+            let destinationViewCtrl = segue.destination as? ProductDetailViewController
+//            destinationViewCtrl?.purchaseTrackingInfo = self.purchaseTrackingInfo
+            destinationViewCtrl?.product = self.selectedProduct
+//            destinationViewCtrl?.delegate = self
         }
     }
     
