@@ -89,7 +89,7 @@ class SubCategoryLandingPageViewController: BaseViewController,
             if let childs = subCats[indexPath.row].childern, childs.count > 0 {
                 self.pushToSubCatViewByCategory(category: subCats[indexPath.row])
             } else if let target = subCats[indexPath.row].target, let screenName = getScreenName(), let title = subCats[indexPath.row].name {
-                MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: BehaviourTrackingInfo.trackingInfo(category: "Categoy", label: title), currentScreenName: screenName)
+                MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: BehaviourTrackingInfo.trackingInfo(category: "Category", label: title), currentScreenName: screenName)
             }
         }
     }

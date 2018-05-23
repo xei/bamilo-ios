@@ -204,7 +204,7 @@ class HomeViewController:   BaseViewController,
     }
     
     func teaserItemTappedWithTargetString(target: String, teaserId: String, index: Int?) {
-        if let screenName = getScreenName() {
+        if let screenName = self.homePage.getScreenName() {
             var teaserName: String?
             if let index = index {
                 teaserName = "\(screenName)_\(teaserId)_\(index)"
@@ -212,14 +212,14 @@ class HomeViewController:   BaseViewController,
                 teaserName = "\(screenName)_\(teaserId)_moreButton"
             }
             if let teaserName = teaserName {
-                self.goToTrackableTarget(target: RITarget.parseTarget(target), category: teaserName, label: target)
+                self.goToTrackableTarget(target: RITarget.parseTarget(target), category: teaserName, label: target, screenName: screenName)
             }
         }
     }
     
     func didSelectProductSku(productSku: String, recommendationLogic: String) {
         if let screenName = myBamiloPage.getScreenName() {
-            self.goToTrackableTarget(target: RITarget.getTarget(.PRODUCT_DETAIL, node: productSku), category: "Emarsys", label: "\(screenName)-\(recommendationLogic)")
+            self.goToTrackableTarget(target: RITarget.getTarget(.PRODUCT_DETAIL, node: productSku), category: "Emarsys", label: "\(screenName)-\(recommendationLogic)", screenName: screenName)
         }
     }
     
@@ -273,8 +273,8 @@ class HomeViewController:   BaseViewController,
         
     }
     
-    private func goToTrackableTarget(target: RITarget, category: String, label: String) {
-        TrackerManager.postEvent(selector: EventSelectors.itemTappedSelector(), attributes: EventAttributes.itemTapped(categoryEvent: category, screenName: getScreenName(), labelEvent: label))
-        MainTabBarViewController.topNavigationController()?.openTargetString(target.targetString, purchaseInfo: BehaviourTrackingInfo.trackingInfo(category: category, label: label), currentScreenName: getScreenName())
+    private func goToTrackableTarget(target: RITarget, category: String, label: String, screenName: String) {
+        TrackerManager.postEvent(selector: EventSelectors.itemTappedSelector(), attributes: EventAttributes.itemTapped(categoryEvent: category, screenName: screenName, labelEvent: label))
+        MainTabBarViewController.topNavigationController()?.openTargetString(target.targetString, purchaseInfo: BehaviourTrackingInfo.trackingInfo(category: category, label: label), currentScreenName: screenName)
     }
 }
