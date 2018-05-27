@@ -21,7 +21,7 @@ class CatalogListCollectionViewCell: BaseCatallogCollectionViewCell {
             let style = NSMutableParagraphStyle()
             style.minimumLineHeight = 18
             style.maximumLineHeight = 18
-            self.titleLabel?.attributedText = NSAttributedString(string: name, attributes: [NSParagraphStyleAttributeName: style])
+            self.titleLabel?.attributedText = NSAttributedString(string: name, attributes: [NSAttributedStringKey.paragraphStyle: style])
         }
     }
 }

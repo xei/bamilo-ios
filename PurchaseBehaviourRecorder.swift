@@ -9,21 +9,21 @@
 import UIKit
 import RealmSwift
 
-@objc class PurchaseBehaviour: Object {
-    dynamic var categoryName: String?
-    dynamic var label: String?
-    dynamic var sku: String?
+@objcMembers class PurchaseBehaviour: Object {
+    @objc dynamic var categoryName: String?
+    @objc dynamic var label: String?
+    @objc dynamic var sku: String?
 }
 
-@objc class BehaviourTrackingInfo: NSObject {
-    static func trackingInfo(category: String, label: String) -> String {
+@objcMembers class BehaviourTrackingInfo: NSObject {
+    class func trackingInfo(category: String, label: String) -> String {
         return "\(category):::\(label)"
     }
 }
 
-@objc class PurchaseBehaviourRecorder: NSObject {
+@objcMembers class PurchaseBehaviourRecorder: NSObject {
     
-    static let sharedInstance = PurchaseBehaviourRecorder()
+    static var sharedInstance = PurchaseBehaviourRecorder()
     
     let realm = try! Realm()
     

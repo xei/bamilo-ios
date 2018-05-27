@@ -39,7 +39,7 @@ extension UIView {
         self.layer.borderColor = color.cgColor
     }
 
-    func bindFrameToSuperviewBounds() {
+    @objc func bindFrameToSuperviewBounds() {
         guard let superview = self.superview else {
             print("Error! `superview` was nil – call `addSubview(view: UIView)` before calling `bindFrameToSuperviewBounds()` to fix this.")
             return

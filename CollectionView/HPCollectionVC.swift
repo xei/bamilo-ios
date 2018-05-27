@@ -100,7 +100,7 @@ class HPCollectionVC: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     // MARK: - Helper
     func sizeForText (text: String, maxSize: CGSize) -> CGSize {
-        var frame = (text as NSString).boundingRect(with: maxSize, options: .usesLineFragmentOrigin, attributes: [NSFontAttributeName: font], context: NSStringDrawingContext())
+        var frame = (text as NSString).boundingRect(with: maxSize, options: .usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font as NSAttributedStringKey: font], context: NSStringDrawingContext())
         frame = frame.integral
         frame.size.width += 16.0 // give it some room at both ends
         

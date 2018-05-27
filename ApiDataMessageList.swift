@@ -8,7 +8,7 @@
 
 import ObjectMapper
 
-@objc class ApiDataMessageList:NSObject, Mappable {
+@objcMembers class ApiDataMessageList:NSObject, Mappable {
     
     var success: [ApiDataMessage]?
     var errors: [ApiDataMessage]?

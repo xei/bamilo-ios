@@ -6,7 +6,7 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-@objc class GoogleAnalyticsTracker: BaseTracker, EventTrackerProtocol, ScreenTrackerProtocol {
+@objcMembers class GoogleAnalyticsTracker: BaseTracker, EventTrackerProtocol, ScreenTrackerProtocol {
     
     private var campaginDataString: String?
     
@@ -383,7 +383,7 @@
         if let cartItems = cart.cartEntity.cartItems,  cartItems.count > 0 {
             cart.cartEntity.cartItems.map { self.convertCartItemToGAIProduct(cartItem: $0) }.forEach { let _ = builder?.add($0) }
         } else if let packages = cart.cartEntity.packages, packages.count > 0 {
-            cart.cartEntity.packages.map{$0.products}.flatMap{$0}.flatMap{$0}.map { self.convertCartItemToGAIProduct(cartItem: $0) }.forEach { let _ = builder?.add($0) }
+            cart.cartEntity.packages.map{$0.products}.compactMap{$0}.flatMap{$0}.map { self.convertCartItemToGAIProduct(cartItem: $0) }.forEach { let _ = builder?.add($0) }
         }
         
         let action = GAIEcommerceProductAction()
@@ -403,7 +403,7 @@
         if let cartItems = cart.cartEntity.cartItems,  cartItems.count > 0 {
             cart.cartEntity.cartItems.map { self.convertCartItemToGAIProduct(cartItem: $0) }.forEach { let _ = builder?.add($0) }
         } else if let packages = cart.cartEntity.packages, packages.count > 0 {
-            cart.cartEntity.packages.map{$0.products}.flatMap{$0}.flatMap{$0}.map { self.convertCartItemToGAIProduct(cartItem: $0) }.forEach { let _ = builder?.add($0) }
+            cart.cartEntity.packages.map{$0.products}.compactMap{$0}.flatMap{$0}.map { self.convertCartItemToGAIProduct(cartItem: $0) }.forEach { let _ = builder?.add($0) }
         }
         
         let action = GAIEcommerceProductAction()

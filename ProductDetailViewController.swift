@@ -8,12 +8,15 @@
 
 import UIKit
 
-class ProductDetailViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, DataServiceProtocol {
+class ProductDetailViewController: BaseViewController,
+                                    UITableViewDelegate,
+                                    UITableViewDataSource,
+                                    DataServiceProtocol {
 
     var product: Product?
     @IBOutlet weak private var tableView: UITableView!
     private var sliderCell: ProductDetailViewSliderTableViewCell?
-    
+
     enum CellType {
         case slider
     }
@@ -55,6 +58,7 @@ class ProductDetailViewController: BaseViewController, UITableViewDelegate, UITa
             case .slider:
             let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! ProductDetailViewSliderTableViewCell
             cell.update(withModel: self.product?.imageList ?? [])
+            cell.delegate = self
             cell.clipsToBounds = false
             self.sliderCell = cell
             return cell
@@ -134,6 +138,15 @@ class ProductDetailViewController: BaseViewController, UITableViewDelegate, UITa
     }
     
     func retryAction(_ callBack: RetryHandler!, forRequestId rid: Int32) {
+        self.getContent { (succes) in
+            callBack?(succes)
+        }
+    }
+}
+
+extension ProductDetailViewController: ProductDetailViewSliderTableViewCellDelegate {
+    
+    func selectSliderItem(item: ProductImageItem, cell: ProductDetailViewSliderTableViewCell) {
         
     }
 }

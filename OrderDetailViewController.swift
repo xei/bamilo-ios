@@ -12,7 +12,7 @@ class OrderDetailViewController: BaseViewController, OrderDetailTableViewCellDel
     
     @IBOutlet private weak var activiryIndicator: UIActivityIndicatorView!
     let orderTableViewCtrl = OrderDetailTableViewController()
-    var orderId: String?
+    @objc var orderId: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()

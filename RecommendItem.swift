@@ -10,7 +10,7 @@ import UIKit
 import ObjectMapper
 import EmarsysPredictSDK
 
-@objc class RecommendItem: NSObject, Mappable {
+@objcMembers class RecommendItem: NSObject, Mappable {
     
     var name: String?
     var brandName: String?

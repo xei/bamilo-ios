@@ -2,33 +2,10 @@ PODS:
   - Adjust (4.13.0):
     - Adjust/Core (= 4.13.0)
   - Adjust/Core (4.13.0)
-  - AFNetworking (2.6.3):
-    - AFNetworking/NSURLConnection (= 2.6.3)
-    - AFNetworking/NSURLSession (= 2.6.3)
-    - AFNetworking/Reachability (= 2.6.3)
-    - AFNetworking/Security (= 2.6.3)
-    - AFNetworking/Serialization (= 2.6.3)
-    - AFNetworking/UIKit (= 2.6.3)
-  - AFNetworking/NSURLConnection (2.6.3):
-    - AFNetworking/Reachability
-    - AFNetworking/Security
-    - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.6.3):
-    - AFNetworking/Reachability
-    - AFNetworking/Security
-    - AFNetworking/Serialization
-  - AFNetworking/Reachability (2.6.3)
-  - AFNetworking/Security (2.6.3)
-  - AFNetworking/Serialization (2.6.3)
-  - AFNetworking/UIKit (2.6.3):
-    - AFNetworking/NSURLConnection
-    - AFNetworking/NSURLSession
   - Alamofire (4.7.2)
   - AlamofireObjectMapper (4.1.0):
     - Alamofire (~> 4.1)
     - ObjectMapper (~> 2.0)
-  - AlgoliaSearch-Client (3.7.0):
-    - AFNetworking (~> 2.2)
   - AnimatedCollectionViewLayout (0.3.0)
   - CHIPageControl/Jalapeno (0.1.5)
   - CoreSDK (1.6.0)
@@ -49,9 +26,8 @@ PODS:
   - Masonry (1.1.0)
   - MobileEngageSDK (1.1.9):
     - CoreSDK (= 1.6.0)
-  - NewRelicAgent (5.10.1)
   - ObjectMapper (2.2.9)
-  - Pushwoosh (5.5.5)
+  - Pushwoosh (5.7.1)
   - RAlertView (0.1.1):
     - Masonry
     - RGB
@@ -72,7 +48,6 @@ DEPENDENCIES:
   - Adjust
   - Alamofire (~> 4.4)
   - AlamofireObjectMapper (~> 4.0)
-  - AlgoliaSearch-Client
   - AnimatedCollectionViewLayout
   - CHIPageControl/Jalapeno
   - Crashlytics (~> 3.9)
@@ -88,7 +63,6 @@ DEPENDENCIES:
   - Kingfisher (~> 3.0)
   - M13Checkbox
   - MobileEngageSDK (~> 1.1.9)
-  - NewRelicAgent (~> 5.10.0)
   - ObjectMapper (~> 2.2)
   - Pushwoosh
   - RAlertView
@@ -101,10 +75,8 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - Adjust
-    - AFNetworking
     - Alamofire
     - AlamofireObjectMapper
-    - AlgoliaSearch-Client
     - AnimatedCollectionViewLayout
     - CHIPageControl
     - CoreSDK
@@ -122,7 +94,6 @@ SPEC REPOS:
     - M13Checkbox
     - Masonry
     - MobileEngageSDK
-    - NewRelicAgent
     - ObjectMapper
     - Pushwoosh
     - RAlertView
@@ -136,10 +107,8 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Adjust: 8f204c1005d6635e7c931c6a2cb2f881965bf478
-  AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
   AlamofireObjectMapper: 435adc82f5b367679bd9e71c4974a54efd0b2521
-  AlgoliaSearch-Client: 8a937017f9faad0eef7a2d43fdb695f7620de140
   AnimatedCollectionViewLayout: 504b992a4258eb39d2dd2b2b48e84b4b95860fd7
   CHIPageControl: 79d19a8ee2e35fa3c1da6533adb5364c77b5cfea
   CoreSDK: 4f79e4fea147954c9716b8b36daaaa02223b39be
@@ -157,9 +126,8 @@ SPEC CHECKSUMS:
   M13Checkbox: a8c2491cfbbca10797925fd0b9154a782bf40d89
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MobileEngageSDK: a4b643dd95777079d3323c3426884e8d328d4bf8
-  NewRelicAgent: d16c572a3355d3ff9a359a6677e946c7a75a8f76
   ObjectMapper: 63cfe41bc6f8e7c8f44344c49901b8ae7de14c52
-  Pushwoosh: fdfb0f676c0991044c04e66125625208289ac2c1
+  Pushwoosh: cdf31f49f8a50d47c1b03b67ad8af1e47250022e
   RAlertView: b9996eb63ceb64c7d1879a1d1846af5e386a1808
   Realm: 0378021c424e4e2bd6a0e63b27881e929d9b9ad1
   RealmSwift: 3322562622fda2ad596985ead4d8d8be30cf838c
@@ -169,6 +137,6 @@ SPEC CHECKSUMS:
   TBActionSheet: 5ad1810015aece4a9e7d18424f16b6e745f0dc8f
   TTRangeSlider: 78188bea83f6471a06f75adbc88da5e990baeafe
 
-PODFILE CHECKSUM: 0dca85f91513540bba97e8396cf8a32c1b7d7bc7
+PODFILE CHECKSUM: 04cb9fbafb266e20e92659ffc79bcfb614733670
 
 COCOAPODS: 1.5.0

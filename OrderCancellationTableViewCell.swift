@@ -30,8 +30,8 @@ class OrderCancellationTableViewCell: AccordionTableViewCell, StepperViewControl
     private lazy var doneButton: UIBarButtonItem = { [unowned self] in
         let doneBtn = UIBarButtonItem(title: STRING_OK_LABEL, style: .plain, target: self, action: #selector(doneButtonPickerTapped(sender:)))
         doneBtn.setTitleTextAttributes([
-            NSFontAttributeName: Theme.font(kFontVariationRegular, size: 13),
-            NSForegroundColorAttributeName: Theme.color(kColorDarkGreen)
+            NSAttributedStringKey.font: Theme.font(kFontVariationRegular, size: 13),
+            NSAttributedStringKey.foregroundColor: Theme.color(kColorDarkGreen)
             ], for: .normal)
         return doneBtn
     }()
@@ -39,8 +39,8 @@ class OrderCancellationTableViewCell: AccordionTableViewCell, StepperViewControl
     private lazy var cancelButton: UIBarButtonItem = { [unowned self] in
         let cancelBtn = UIBarButtonItem(title: STRING_CANCEL, style: .plain, target: self, action: #selector(cancelButtonPickerTapped(sender:)))
         cancelBtn.setTitleTextAttributes([
-            NSFontAttributeName: Theme.font(kFontVariationRegular, size: 13),
-            NSForegroundColorAttributeName: Theme.color(kColorDarkGreen)
+            NSAttributedStringKey.font: Theme.font(kFontVariationRegular, size: 13),
+            NSAttributedStringKey.foregroundColor: Theme.color(kColorDarkGreen)
             ], for: .normal)
         return cancelBtn
     }()
@@ -66,11 +66,11 @@ class OrderCancellationTableViewCell: AccordionTableViewCell, StepperViewControl
         return toolBar
     }()
     
-    func cancelButtonPickerTapped(sender: UIBarButtonItem) {
+    @objc func cancelButtonPickerTapped(sender: UIBarButtonItem) {
         self.pickerViewTextFiled?.resignFirstResponder()
     }
     
-    func doneButtonPickerTapped(sender: UIBarButtonItem) {
+    @objc func doneButtonPickerTapped(sender: UIBarButtonItem) {
         self.pickerViewTextFiled?.resignFirstResponder()
         let selectedIndex = self.pickerView.selectedRow(inComponent: 0)
         self.selectSelectionIndex(index: selectedIndex)
@@ -201,7 +201,7 @@ class OrderCancellationTableViewCell: AccordionTableViewCell, StepperViewControl
         self.layoutIfNeeded()
     }
     
-    override static func nibName() -> String {
+    override class func nibName() -> String {
         return AppUtility.getStringFromClass(for: self)!
     }
 }

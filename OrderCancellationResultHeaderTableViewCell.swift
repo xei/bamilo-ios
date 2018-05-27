@@ -18,7 +18,7 @@ class OrderCancellationResultHeaderTableViewCell: BaseTableViewCell {
         self.successMessage.text = ORDER_CANCELLATION_SUCCESS_MESSAGES
     }
     
-    override static func nibName() -> String {
+    override class func nibName() -> String {
         return AppUtility.getStringFromClass(for: self)!
     }
     

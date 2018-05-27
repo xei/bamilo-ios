@@ -10,10 +10,10 @@ import UIKit
 import RealmSwift
 
 class SearchSuggestionItem: Object {
-    dynamic var name: String?
-    dynamic var target: String?
-    dynamic var imageUrl: String?
-    dynamic var type: String?  //can be category || product
+    @objc dynamic var name: String?
+    @objc dynamic var target: String?
+    @objc dynamic var imageUrl: String?
+    @objc dynamic var type: String?  //can be category || product
 }
 
 class LocalSearchSuggestion {

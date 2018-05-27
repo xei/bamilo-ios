@@ -42,7 +42,7 @@ class SellerScore: Mappable {
     }
 }
 
-@objc class Seller: NSObject, Mappable {
+@objcMembers class Seller: NSObject, Mappable {
     
     var isGlobal = false
     var isNew = false
@@ -82,7 +82,7 @@ class SellerScore: Mappable {
     
     
     //is only has been written for objective-c codes! (you can remove this function if it's not necessary anymore)
-    static func parseToSeller(dic: [String: Any]) -> Seller? {
+    class func parseToSeller(dic: [String: Any]) -> Seller? {
         return Seller.self.init(JSON: dic)
     }
 }

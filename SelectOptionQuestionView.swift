@@ -33,11 +33,11 @@ class SelectOptionQuestionView: BaseSurveyQuestionControlView {
             }
             if let image = model.product?.imageUrl {
                 self.productImageView.kf.setImage(with: image, options: [.transition(.fade(0.20))])
-                self.imageToSelectViewVerticalSpaceConstraint.priority = UILayoutPriorityDefaultHigh
-                self.titleLabelBottomToSelectViewConstraint.priority = UILayoutPriorityDefaultLow
+                self.imageToSelectViewVerticalSpaceConstraint.priority = .defaultHigh
+                self.titleLabelBottomToSelectViewConstraint.priority = .defaultLow
             } else {
-                self.imageToSelectViewVerticalSpaceConstraint.priority = UILayoutPriorityDefaultLow
-                self.titleLabelBottomToSelectViewConstraint.priority = UILayoutPriorityDefaultHigh
+                self.imageToSelectViewVerticalSpaceConstraint.priority = .defaultLow
+                self.titleLabelBottomToSelectViewConstraint.priority = .defaultHigh
             }
         }
     }

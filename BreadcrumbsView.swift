@@ -129,7 +129,7 @@ class BreadcrumbsView: BaseControlView {
     }
     
     //TODO: when we migrate all BaseControlView we need to use it as this function implementation
-    override static func nibInstance() -> BreadcrumbsView {
+    override class func nibInstance() -> BreadcrumbsView {
         return Bundle.main.loadNibNamed(String(describing: self), owner: self, options: nil)?.last as! BreadcrumbsView
     }
 }

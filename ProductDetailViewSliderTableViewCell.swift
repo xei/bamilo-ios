@@ -9,8 +9,13 @@
 import UIKit
 import FSPagerView
 import CHIPageControl
+protocol ProductDetailViewSliderTableViewCellDelegate: class {
+    func selectSliderItem(item: ProductImageItem, cell: ProductDetailViewSliderTableViewCell)
+}
 
 class ProductDetailViewSliderTableViewCell: BaseProductTableViewCell, FSPagerViewDelegate, FSPagerViewDataSource {
+    
+    weak var delegate: ProductDetailViewSliderTableViewCellDelegate?
     
     private static let sliderRatio: CGFloat = 2 //ratio:  320*114
     private var productImageList: [ProductImageItem]?
@@ -91,7 +96,9 @@ class ProductDetailViewSliderTableViewCell: BaseProductTableViewCell, FSPagerVie
     
     func pagerView(_ pagerView: FSPagerView, didSelectItemAt index: Int) {
         pagerView.deselectItem(at: index, animated: true)
-        
+        if let imageItem = self.productImageList?[index] {
+            self.delegate?.selectSliderItem(item: imageItem, cell: self)
+        }
     }
     
     func pagerViewDidScroll(_ pagerView: FSPagerView) {

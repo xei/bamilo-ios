@@ -9,7 +9,7 @@
 import UIKit
 import ObjectMapper
 
-@objc class BaseCatalogFilterItem: NSObject, Mappable {
+@objcMembers class BaseCatalogFilterItem: NSObject, Mappable {
     var id: String!
     var name: String = ""
     var filterSeparator: String?

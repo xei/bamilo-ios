@@ -140,7 +140,7 @@ class TourSpotLightView: UIView {
     }
     
     // MARK: - Touches
-    func userDidTap(_ recognizer: UITapGestureRecognizer) {
+    @objc func userDidTap(_ recognizer: UITapGestureRecognizer) {
         goToSpotlightAtIndex(index: currentIndex + 1)
     }
     
@@ -224,7 +224,7 @@ class TourSpotLightView: UIView {
         }
     }
     
-    func skipSpotlight() {
+    @objc func skipSpotlight() {
         goToSpotlightAtIndex(index: spotlightsArray.count)
     }
     

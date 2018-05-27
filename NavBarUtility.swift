@@ -8,18 +8,18 @@
 
 import Foundation
 
-@objc class NavBarUtility: NSObject {
+@objcMembers class NavBarUtility: NSObject {
     
     static let navbarLogoFrame = CGSize(width: 83, height: 20)
     static let barButtonItemFrame = CGSize(width: 30, height: 30)
     
-    static func navBarLogo() -> UIImageView {
+    class func navBarLogo() -> UIImageView {
         let logoView = UIImageView(image: UIImage(named: "img_navbar_logo"))
         logoView.frame.size = navbarLogoFrame
         return logoView
     }
     
-    static func navBarButton(type: NavBarButtonType, viewController: NavigationBarProtocol) -> UIBarButtonItem {
+    class func navBarButton(type: NavBarButtonType, viewController: NavigationBarProtocol) -> UIBarButtonItem {
         let button = IconButton(type: .custom)
         button.imageHeightToButtonHeightRatio = 0.8
         
@@ -58,11 +58,11 @@ import Foundation
         return barButton
     }
     
-    static func changeStatusBarColor(color: UIColor) {
+    class func changeStatusBarColor(color: UIColor) {
         (UIApplication.shared.value(forKey: "statusBar") as? UIView)?.backgroundColor = color
     }
     
-    static func getStatusBarHeight() -> CGFloat {
+    class func getStatusBarHeight() -> CGFloat {
         return UIApplication.shared.statusBarFrame.size.height
     }
 }

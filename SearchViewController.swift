@@ -14,7 +14,7 @@ import Kingfisher
     @objc optional func searchBySuggestion(targetString: String)
 }
 
-class SearchViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, DataServiceProtocol, UITextFieldDelegate, UIScrollViewDelegate, SearchViewControllerDelegate {
+@objcMembers class SearchViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, DataServiceProtocol, UITextFieldDelegate, UIScrollViewDelegate, SearchViewControllerDelegate {
 
     @IBOutlet private weak var dummyStatusbarView: UIView!
     @IBOutlet private weak var searchBarContainer: UIView!

@@ -9,7 +9,7 @@
 import Foundation
 
 extension UINavigationController {
-    func pop(step: Int, animated: Bool) {
+    @objc func pop(step: Int, animated: Bool) {
         if let targetViewController = self.previousViewController(step: step) {
             self.popToViewController(targetViewController, animated: animated)
         } else {
@@ -17,7 +17,7 @@ extension UINavigationController {
         }
     }
     
-    func previousViewController(step: Int) -> UIViewController? {
+    @objc func previousViewController(step: Int) -> UIViewController? {
         if step < self.viewControllers.count {
             return viewControllers[viewControllers.count - 1 - step]
         } else if viewControllers.count > 0 {

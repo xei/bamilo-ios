@@ -25,7 +25,7 @@ class IconTableViewCell: BaseTableViewCell {
         self.cellImageView.image = #imageLiteral(resourceName: "placeholder_list")
     }
     
-    override static func nibName() -> String {
+    override class func nibName() -> String {
         return AppUtility.getStringFromClass(for: self)!
     }
     

@@ -19,7 +19,7 @@ protocol HomePageTeaserHeightCalculator {
 class BaseHomePageTeaserBoxTableViewCell: BaseTableViewCell {
 
     weak var delegate: BaseHomePageTeaserBoxTableViewCellDelegate?
-    override static func nibName() -> String {
+    override class func nibName() -> String {
         return AppUtility.getStringFromClass(for: self)!
     }
 }

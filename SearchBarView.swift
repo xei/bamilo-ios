@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objc class SearchBarView: BaseControlView {
+@objcMembers class SearchBarView: BaseControlView {
 
     @IBOutlet weak var textField: UITextField!
     
@@ -33,7 +33,7 @@ import UIKit
     
     
     //TODO: when we migrate all BaseControlView we need to use it as this function implementation
-    override static func nibInstance() -> SearchBarView {
+    override class func nibInstance() -> SearchBarView {
         return Bundle.main.loadNibNamed(String(describing: self), owner: self, options: nil)?.last as! SearchBarView
     }
 }

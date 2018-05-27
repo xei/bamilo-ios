@@ -153,13 +153,13 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
     }
     
     //MARK: - helper functions
-    func showLogin() {
+    @objc func showLogin() {
         if !RICustomer.checkIfUserIsLogged() {
             NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.ShowAthenticationScreen), object: nil, userInfo: nil)
         }
     }
     
-    func callContctUs() {
+    @objc func callContctUs() {
         AlertManager.sharedInstance().confirmAlert("", text: STRING_CALL_CUSTOMER_SERVICE, confirm: STRING_OK, cancel: STRING_CANCEL) { (didSelectOk) in
             if didSelectOk {
                 RICountry.getConfigurationWithSuccessBlock({ (configuration) in
@@ -179,11 +179,11 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         }
     }
     
-    func showMyAddressViewController() {
+    @objc func showMyAddressViewController() {
         MainTabBarViewController.topNavigationController()?.requestNavigate(toNib: "AddressViewController", args: nil)
     }
     
-    func logoutUser() {
+    @objc func logoutUser() {
         AuthenticationDataManager.sharedInstance.logoutUser(self) { (data, error) in
             self.bind(data, forRequestId: 0)
             //EVENT: LOGOUT
@@ -204,11 +204,11 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.UserLoggedOut), object: nil, userInfo: nil)
     }
     
-    func showFAQ() {
+    @objc func showFAQ() {
         NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.SelectTeaserWithShopURL), object: nil, userInfo: ["title": STRING_GUID, "targetString": "shop_in_shop::help-ios", "show_back_button_title": ""])
     }
     
-    func sendIdeaOrReport() {
+    @objc func sendIdeaOrReport() {
         
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let saveAction = UIAlertAction(title: "گزارش مشکلات برنامه", style: .default) { _ in
@@ -229,7 +229,7 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         self.present(optionMenu, animated: true, completion: nil)
     }
     
-    func sendEmailToCS() {
+    @objc func sendEmailToCS() {
         sendEmail(subject: nil, recipient: "support@bamilo.com")
     }
     

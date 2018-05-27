@@ -137,7 +137,7 @@
     [self.view addSubview:self.contentScrollView];
     
     //GA Ecommerce tracking
-    [[GoogleAnalyticsTracker sharedTracker] trackEcommerceProductDetailViewWithProduct:self.product];
+//    [[GoogleAnalyticsTracker sharedTracker] trackEcommerceProductDetailViewWithProduct:self.product];
 }
 
 - (void)scrollToX:(CGFloat)x {

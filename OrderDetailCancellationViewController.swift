@@ -69,7 +69,7 @@ class OrderDetailCancellationViewController: BaseViewController, DataServiceProt
     }
     
     //MARK: - KeyboardNotifications
-    func keyboardWasShown(notification:NSNotification) {
+    @objc func keyboardWasShown(notification:NSNotification) {
         if !self.orderCancellationTableViewCtrl.isMoreDescriptionFieldFirstResponder() { return }
         let userInfo = notification.userInfo
         let keyboardFrame: NSValue? = userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue
@@ -80,7 +80,7 @@ class OrderDetailCancellationViewController: BaseViewController, DataServiceProt
         self.orderCancellationTableViewCtrl.scrollToMoreDescriptionField()
     }
     
-    func keyboardWillBeHidden(notification: Notification) {
+    @objc func keyboardWillBeHidden(notification: Notification) {
         if let tabbarHeight = self.navigationController?.tabBarController?.tabBar.frame.height {
             self.submitButtonBottomToSuperViewConstaint.constant = tabbarHeight
         }

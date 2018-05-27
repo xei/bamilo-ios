@@ -35,10 +35,10 @@ class OrderCancellationFooterTableViewCell: BaseTableViewCell {
     }
     
     func setCMSMessage(message: String) {
-        self.orderCancelletaionCMSViewWrapperHeightConstraint.priority = message.count == 0 ? UILayoutPriorityDefaultHigh : UILayoutPriorityDefaultLow
-        self.moreDescriptionBottomToNoticeMessageTopConstraint.priority = message.count == 0 ? UILayoutPriorityDefaultHigh : UILayoutPriorityDefaultLow
-        self.orderCancellationCMSViewBottomConstraint.priority = message.count == 0 ? UILayoutPriorityDefaultLow : UILayoutPriorityDefaultHigh
-        self.orderCancellationCMSBottomConstraint.priority = message.count == 0 ? UILayoutPriorityDefaultLow : UILayoutPriorityDefaultHigh
+        self.orderCancelletaionCMSViewWrapperHeightConstraint.priority = message.count == 0 ? .defaultHigh : .defaultLow
+        self.moreDescriptionBottomToNoticeMessageTopConstraint.priority = message.count == 0 ? .defaultHigh : .defaultLow
+        self.orderCancellationCMSViewBottomConstraint.priority = message.count == 0 ? .defaultLow : .defaultHigh
+        self.orderCancellationCMSBottomConstraint.priority = message.count == 0 ? .defaultLow : .defaultHigh
         self.orderCancellationCMSLabel.text = message
     }
     
@@ -50,7 +50,7 @@ class OrderCancellationFooterTableViewCell: BaseTableViewCell {
         
     }
     
-    override static func nibName() -> String {
+    override class func nibName() -> String {
         return AppUtility.getStringFromClass(for: self)!
     }
     

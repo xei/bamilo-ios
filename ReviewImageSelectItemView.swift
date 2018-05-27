@@ -76,7 +76,7 @@ class ReviewImageSelectItemView: BaseControlView {
         self.alpha = selected ? 1 : 0.5
     }
     
-    override static func nibInstance() -> ReviewImageSelectItemView {
+    override class func nibInstance() -> ReviewImageSelectItemView {
         return Bundle.main.loadNibNamed(String(describing: self), owner: self, options: nil)?.last as! ReviewImageSelectItemView
     }
 }

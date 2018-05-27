@@ -48,13 +48,13 @@ class CategoryTableViewCell: BaseTableViewCell {
         self.titleLabel.text = title
         if let image = imageUrl {
             self.imageViewContainerView.isHidden = false
-            self.titleToSuperviewRightConstraint.priority = UILayoutPriorityDefaultLow
-            self.titleLabelToImageRightConstraint.priority = UILayoutPriorityDefaultHigh
+            self.titleToSuperviewRightConstraint.priority = .defaultLow
+            self.titleLabelToImageRightConstraint.priority = .defaultHigh
             self.iconImageView.kf.setImage(with: image, options: [.transition(.fade(0.20))])
         } else {
             self.imageViewContainerView.isHidden = true
-            self.titleToSuperviewRightConstraint.priority = UILayoutPriorityDefaultHigh
-            self.titleLabelToImageRightConstraint.priority = UILayoutPriorityDefaultLow
+            self.titleToSuperviewRightConstraint.priority = .defaultHigh
+            self.titleLabelToImageRightConstraint.priority = .defaultLow
         }
     }
     
@@ -65,7 +65,7 @@ class CategoryTableViewCell: BaseTableViewCell {
         self.iconImageView.image = nil
     }
     
-    override static func nibName() -> String {
+    override class func nibName() -> String {
         return AppUtility.getStringFromClass(for: self)!
     }
 }

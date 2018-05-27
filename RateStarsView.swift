@@ -46,7 +46,7 @@ class RateStarsView: BaseControlView {
     }
     
     //TODO: when we migrate all BaseControlView we need to use it as this function implementation
-    override static func nibInstance() -> RateStarsView {
+    override class func nibInstance() -> RateStarsView {
         return Bundle.main.loadNibNamed(String(describing: self), owner: self, options: nil)?.last as! RateStarsView
     }
 }

@@ -19,11 +19,11 @@ class ProfileOrderTableViewCell: BaseProfileTableViewCell {
         self.iconImage.image = #imageLiteral(resourceName: "order-tracking-profile")
     }
     
-    override static func nibName() -> String {
+    override class func nibName() -> String {
         return AppUtility.getStringFromClass(for: self)!
     }
     
-    override static func cellHeight() -> CGFloat {
+    override class func cellHeight() -> CGFloat {
         return 60
     }
     

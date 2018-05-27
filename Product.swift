@@ -10,7 +10,7 @@ import UIKit
 import ObjectMapper
 import SwiftyJSON
 
-@objc class Product: NSObject, Mappable {
+@objcMembers class Product: NSObject, Mappable {
     
     var sku: String!
     var name: String?

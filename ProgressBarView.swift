@@ -69,7 +69,7 @@ class ProgressBarView: BaseControlView {
     }
     
     //TODO: when we migrate all BaseControlView we need to use it as this function implementation
-    override static func nibInstance() -> ProgressBarView {
+    override class func nibInstance() -> ProgressBarView {
         return Bundle.main.loadNibNamed(String(describing: self), owner: self, options: nil)?.last as! ProgressBarView
     }
 }

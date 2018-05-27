@@ -10,7 +10,6 @@ target 'Bamilo' do
 
   # Pods for Bamilo
   pod 'Adjust'
-  pod 'AlgoliaSearch-Client'
   pod 'Fabric'
   pod 'EmarsysPredictSDK'
   pod 'Crashlytics', '~> 3.9'
@@ -20,7 +19,6 @@ target 'Bamilo' do
   pod 'GoogleAppIndexing','~> 2.0.3'
   pod 'MobileEngageSDK','~> 1.1.9'
   pod 'JBWhatsAppActivity', '~> 1.0'
-  pod 'NewRelicAgent', '~> 5.10.0'
   pod 'SDWebImage', '~> 3.8'
   pod 'TTRangeSlider', '~> 1.0.5'
   pod 'M13Checkbox'

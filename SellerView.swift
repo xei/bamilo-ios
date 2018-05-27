@@ -13,7 +13,7 @@ import UIKit
     func goToSellerPage(target: RITarget)
 }
 
-class SellerView: BaseControlView {
+@objcMembers class SellerView: BaseControlView {
 
     @IBOutlet weak private var sellerNameLabel: UILabel!
     @IBOutlet weak private var sellerOrderCounts: UILabel!
@@ -190,7 +190,7 @@ class SellerView: BaseControlView {
         self.deliveryTimeView.fillTheView()
     }
     
-    override static func nibName() -> String {
+    override class func nibName() -> String {
         return AppUtility.getStringFromClass(for: self)!
     }
     

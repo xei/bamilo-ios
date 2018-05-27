@@ -82,7 +82,7 @@ class MyBamiloViewController:   BaseViewController,
         }
     }
     
-    func handleRefresh() {
+    @objc func handleRefresh() {
         self.isRefreshing = true
         self.loadingIndicator.stopAnimating()
         self.visibleProductCount = 0

@@ -72,7 +72,7 @@ class HomePageViewController:   BaseViewController,
         }
     }
     
-    func handleRefresh() {
+    @objc func handleRefresh() {
         self.loadingIndicator.stopAnimating()
         self.isRefreshing = true
         self.getHomePage { success in
@@ -220,7 +220,7 @@ class HomePageViewController:   BaseViewController,
         RunLoop.main.add(self.timer!, forMode: .commonModes)
     }
     
-    func updateTimer() {
+    @objc func updateTimer() {
         if let index = self.dailyDealsIndex, let interval = (self.homePage?.teasers[index] as? HomePageDailyDeals)?.ramainingSeconds {
             (self.homePage?.teasers[index] as? HomePageDailyDeals)?.ramainingSeconds = interval - 1
             self.updateCellTimer(with: interval)

@@ -10,7 +10,6 @@
 #import "JAAppDelegate.h"
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
-#import <NewRelicAgent/NewRelic.h>
 #import <GoogleAppIndexing/GoogleAppIndexing.h>
 #import "JAUtils.h"
 #import "Adjust.h"

@@ -605,7 +605,6 @@
 		875AD5531E38C0C900584ABF /* RITeaserGrouping.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD4B61E38C0C800584ABF /* RITeaserGrouping.m */; };
 		875AD5541E38C0C900584ABF /* RIURLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD4B81E38C0C800584ABF /* RIURLCache.m */; };
 		875AD5551E38C0C900584ABF /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 875AD4B91E38C0C800584ABF /* Model.xcdatamodeld */; };
-		875AD5571E38C0C900584ABF /* RIAlgolia.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD4CF1E38C0C800584ABF /* RIAlgolia.m */; };
 		875AD5581E38C0C900584ABF /* RIBanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD4D11E38C0C800584ABF /* RIBanner.m */; };
 		875AD5591E38C0C900584ABF /* RICampaign.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD4D31E38C0C800584ABF /* RICampaign.m */; };
 		875AD55A1E38C0C900584ABF /* RICart.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD4D51E38C0C800584ABF /* RICart.m */; };
@@ -1838,8 +1837,6 @@
 		875AD4C81E38C0C800584ABF /* Model_1.7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.7.xcdatamodel; sourceTree = "<group>"; };
 		875AD4C91E38C0C800584ABF /* Model_1.8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.8.xcdatamodel; sourceTree = "<group>"; };
 		875AD4CA1E38C0C800584ABF /* Model_1.9.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.9.xcdatamodel; sourceTree = "<group>"; };
-		875AD4CE1E38C0C800584ABF /* RIAlgolia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIAlgolia.h; sourceTree = "<group>"; };
-		875AD4CF1E38C0C800584ABF /* RIAlgolia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIAlgolia.m; sourceTree = "<group>"; };
 		875AD4D01E38C0C800584ABF /* RIBanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIBanner.h; sourceTree = "<group>"; };
 		875AD4D11E38C0C800584ABF /* RIBanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIBanner.m; sourceTree = "<group>"; };
 		875AD4D21E38C0C800584ABF /* RICampaign.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RICampaign.h; sourceTree = "<group>"; };
@@ -6268,8 +6265,6 @@
 		875AD4CB1E38C0C800584ABF /* OtherObjects */ = {
 			isa = PBXGroup;
 			children = (
-				875AD4CE1E38C0C800584ABF /* RIAlgolia.h */,
-				875AD4CF1E38C0C800584ABF /* RIAlgolia.m */,
 				875AD4D01E38C0C800584ABF /* RIBanner.h */,
 				875AD4D11E38C0C800584ABF /* RIBanner.m */,
 				875AD4D21E38C0C800584ABF /* RICampaign.h */,
@@ -8175,7 +8170,6 @@
 				CE9ADF281AB6D78200D56481 /* Sources */,
 				CE9AE0171AB6D78200D56481 /* Frameworks */,
 				CE9AE0311AB6D78200D56481 /* Resources */,
-				875AD58C1E38C62A00584ABF /* ShellScript */,
 				878EA5FA1E94D6DF00D97B28 /* ShellScript */,
 				615F96F61E9E11FD00614644 /* Embed App Extensions */,
 				7F5DAC444D27FC657E41E688 /* [CP] Embed Pods Frameworks */,
@@ -8633,11 +8627,9 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Bamilo/Pods-Bamilo-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
 				"${BUILT_PRODUCTS_DIR}/Adjust/Adjust.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireObjectMapper/AlamofireObjectMapper.framework",
-				"${BUILT_PRODUCTS_DIR}/AlgoliaSearch-Client/AlgoliaSearch_Client.framework",
 				"${BUILT_PRODUCTS_DIR}/AnimatedCollectionViewLayout/AnimatedCollectionViewLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/CHIPageControl/CHIPageControl.framework",
 				"${BUILT_PRODUCTS_DIR}/CoreSDK/CoreSDK.framework",
@@ -8662,11 +8654,9 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Adjust.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireObjectMapper.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlgoliaSearch_Client.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AnimatedCollectionViewLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CHIPageControl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CoreSDK.framework",
@@ -8693,19 +8683,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Bamilo/Pods-Bamilo-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		875AD58C1E38C62A00584ABF /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "SCRIPT=`/usr/bin/find \"${SRCROOT}\" -name newrelic_postbuild.sh | head -n 1`\n\n/bin/sh \"${SCRIPT}\" \"AAdde6b4d1fb2abb804137521a6709a5f5c771df14\"";
 		};
 		878EA5FA1E94D6DF00D97B28 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -9176,7 +9153,6 @@
 				618B25701F35D85900B39440 /* DeliveryTimeControl.swift in Sources */,
 				9AC4D6A71B4A926800036F1C /* JACatalogGridCollectionViewCell.m in Sources */,
 				6172EDFA1F94E70800ED36EE /* PurchaseBehaviourRecorder.swift in Sources */,
-				875AD5571E38C0C900584ABF /* RIAlgolia.m in Sources */,
 				9A4077411CE60E3300313D20 /* JABottomSubmitView.m in Sources */,
 				FF4383E31C6CD4AC003BA957 /* JASwitchRadioComponent.m in Sources */,
 				9A189E811BB54C2D0039BC14 /* JAScrolledImageGalleryView.m in Sources */,
@@ -9499,7 +9475,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "BMLO AdHoc";
 				SWIFT_OBJC_BRIDGING_HEADER = "Bamilo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(PROJECT_DIR)/Bamilo/ExternalFrameworks/RICommunicationFramework/** $(PROJECT_DIR)/Bamilo/ExternalFrameworks/FXBlurView/**";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -9779,7 +9755,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "BMLO Development";
 				SWIFT_OBJC_BRIDGING_HEADER = "Bamilo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(PROJECT_DIR)/Bamilo/ExternalFrameworks/RICommunicationFramework/** $(PROJECT_DIR)/Bamilo/ExternalFrameworks/FXBlurView/**";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -9810,7 +9786,7 @@
 				PROVISIONING_PROFILE = "b8772c30-7dca-4728-b353-5733eed76f5f";
 				PROVISIONING_PROFILE_SPECIFIER = "BMLO Production";
 				SWIFT_OBJC_BRIDGING_HEADER = "Bamilo-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(PROJECT_DIR)/Bamilo/ExternalFrameworks/RICommunicationFramework/** $(PROJECT_DIR)/Bamilo/ExternalFrameworks/FXBlurView/**";
 				VALID_ARCHS = "armv7 armv7s arm64";

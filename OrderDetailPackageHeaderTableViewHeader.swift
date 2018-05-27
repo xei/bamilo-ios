@@ -20,12 +20,12 @@ class OrderDetailPackageHeaderTableViewHeader: MutualTitleHeaderCell {
     }
     
     func update(deviationDescription: String?) {
-        deviationDescBottomSuperViewConstraint.priority = deviationDescription != nil ? UILayoutPriorityDefaultHigh : UILayoutPriorityDefaultLow
-        titleToBottomSuperViewConstraint.priority = deviationDescription != nil ? UILayoutPriorityDefaultLow : UILayoutPriorityDefaultHigh
+        deviationDescBottomSuperViewConstraint.priority = deviationDescription != nil ? .defaultHigh : .defaultLow
+        titleToBottomSuperViewConstraint.priority = deviationDescription != nil ? .defaultLow : .defaultHigh
         self.deviationDescriptionLabel.text = deviationDescription
     }
     
-    override static func nibName() -> String {
+    override class func nibName() -> String {
         return AppUtility.getStringFromClass(for: self)!
     }
 }

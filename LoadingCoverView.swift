@@ -23,7 +23,7 @@ class LoadingCoverView: BaseControlView {
         self.backgroundView.alpha = 0.7
     }
     
-    override static func nibName() -> String {
+    override class func nibName() -> String {
         return AppUtility.getStringFromClass(for: self)!
     }
 }

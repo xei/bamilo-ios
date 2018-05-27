@@ -8,9 +8,9 @@
 
 import UIKit
 
-@objc class ReviewSurveyManager: NSObject {
+@objcMembers class ReviewSurveyManager: NSObject {
     
-    private static func presentSurveyOn(viewController: UIViewController, reviewSurvey: ReviewSurvery, orderID: String) {
+    private class func presentSurveyOn(viewController: UIViewController, reviewSurvey: ReviewSurvery, orderID: String) {
         
         //If we are not going to present any deeplink actions
         if DeepLinkManager.hasSomethingToShow() { return }
@@ -23,7 +23,7 @@ import UIKit
         }
     }
     
-    static func getJourneySurvey(orderID: String) {
+    class func getJourneySurvey(orderID: String) {
         ReviewServiceDataManager.sharedInstance.getServeryAlias(nil, surveyAlias: .journeySurvey, executionType: .background) { (data, error) in
             if let dataDictionary = data as? [String: Any], let content = dataDictionary[DataManagerKeys.DataContent] as? AliasSurvey, let presentingSurvey = content.survey {
                 self.startPresentingSurvey(reviewSurvey: presentingSurvey, orderId: orderID)
@@ -33,7 +33,7 @@ import UIKit
         }
     }
     
-    static func runSurveyIfItsNeeded(target: DataServiceProtocol, executionType: ApiRequestExecutionType) {
+    class func runSurveyIfItsNeeded(target: DataServiceProtocol, executionType: ApiRequestExecutionType) {
         ReviewServiceDataManager.sharedInstance.getAvaiableUserSurvey(target, executionType: executionType) { (data, error) in
             if let dataDictionary = data as? [String: Any], let content = dataDictionary[DataManagerKeys.DataContent] as? UserSurvey, let presentingSurvey = content.surveys?.first, let orderID = content.orderNumber {
                 self.startPresentingSurvey(reviewSurvey: presentingSurvey, orderId: orderID)
@@ -46,7 +46,7 @@ import UIKit
 //        }
     }
     
-    static func startPresentingSurvey(reviewSurvey: ReviewSurvery, orderId: String) {
+    class func startPresentingSurvey(reviewSurvey: ReviewSurvery, orderId: String) {
         Utility.delay(duration: 2) {
             if let topViewController = MainTabBarViewController.topViewController() {
                 self.presentSurveyOn(viewController: topViewController, reviewSurvey: reviewSurvey, orderID: orderId)
@@ -56,7 +56,7 @@ import UIKit
     
     
     
-    private static func mockApi() -> UserSurvey {
+    private class func mockApi() -> UserSurvey {
         //mock
         let userSurvey = UserSurvey()
         let review = ReviewSurvery()

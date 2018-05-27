@@ -13,9 +13,9 @@ enum LocalLang : String {
     case arabic  = "ar"
 }
 
-struct AppUtility {
+class AppUtility {
 
-    static var appName: String? {
+    class var appName: String? {
         get {
             if let bundle = Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String {
                 return bundle.replacingOccurrences(of: " ", with: "_")
@@ -24,7 +24,7 @@ struct AppUtility {
         }
     }
     
-    static func getStringFromClass(for obj: AnyClass) -> String? {
+    class func getStringFromClass(for obj: AnyClass) -> String? {
         let fullClassString = NSStringFromClass(obj)
         if let name = appName {
             return fullClassString.replacingOccurrences(of: "\(name).", with: "")
@@ -32,7 +32,7 @@ struct AppUtility {
         return nil
     }
     
-    static func getFullClassName(for className: String) -> String? {
+    class func getFullClassName(for className: String) -> String? {
         if let appName = AppUtility.appName {
             return appName + "." + className
         }
@@ -40,7 +40,7 @@ struct AppUtility {
         return nil
     }
     
-    static func getClassFromName(name: String) -> AnyClass? {
+    class func getClassFromName(name: String) -> AnyClass? {
         if let fullClassName = getFullClassName(for: name) {
             return NSClassFromString(fullClassName)
         }
@@ -48,14 +48,14 @@ struct AppUtility {
         return nil
     }
     
-    static func getInfoValue<T>(for key:String) -> T? {
+    class func getInfoValue<T>(for key:String) -> T? {
         guard let object = Bundle.main.object(forInfoDictionaryKey: key) as? T else {
             return nil
         }
         return object
     }
     
-    static func getUserAgent() -> String {
+    class func getUserAgent() -> String {
         if let userAgent = UIWebView(frame: CGRect.zero).stringByEvaluatingJavaScript(from: "navigator.userAgent") {
             return userAgent
         }
@@ -63,7 +63,7 @@ struct AppUtility {
         return String.EMPTY
     }
     
-    static func getInfoConfigs(for key: String) -> Any? {
+    class func getInfoConfigs(for key: String) -> Any? {
         if let configs = Bundle.main.infoDictionary?[AppKeys.Configs] as? NSDictionary {
             return configs[key]
         }

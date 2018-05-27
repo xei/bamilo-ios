@@ -9,7 +9,7 @@
 import UIKit
 
 
-@objc class ScrollerBarFollower:NSObject {
+@objcMembers class ScrollerBarFollower:NSObject {
     
     var barView: UIView?
     var delay: CGFloat!

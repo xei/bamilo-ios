@@ -92,7 +92,7 @@ class DailyDealsCollectionViewCell: BaseCollectionViewCellSwift {
         self.product = product
     }
     
-    static func cellHeight(relateTo width: CGFloat) -> CGFloat {
+    class func cellHeight(relateTo width: CGFloat) -> CGFloat {
         let contentWithoudImageHeight = 2 * imagePadding + labelSmallHeight + 3 * labelBigHeight + whiteSpaceHeigt + 8
         let imageSidePadding = 2 * imagePadding
         let imageRatio:CGFloat = 1.25

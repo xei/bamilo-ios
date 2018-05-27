@@ -63,11 +63,11 @@ class SelectItemViewCell: BaseTableViewCell {
         }
     }
     
-    override static func cellHeight() -> CGFloat {
+    override class func cellHeight() -> CGFloat {
         return 52.5
     }
     
-    override static func nibName() -> String {
+    override class func nibName() -> String {
         return AppUtility.getStringFromClass(for: self)!
     }
 }

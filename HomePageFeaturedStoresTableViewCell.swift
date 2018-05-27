@@ -52,7 +52,7 @@ class HomePageFeaturedStoresTableViewCell: BaseHomePageTeaserBoxTableViewCell, U
     }
  
     //MARK: - HomePageTeaserHeightCalculator
-    static func teaserHeight(model: Any?) -> CGFloat {
+    class func teaserHeight(model: Any?) -> CGFloat {
         return HomePageFeaturedStoresTableViewCell.cellSize().height + self.bottomPadding //4 point for shadow
     }
     
@@ -87,7 +87,7 @@ class HomePageFeaturedStoresTableViewCell: BaseHomePageTeaserBoxTableViewCell, U
         }
     }
     
-    private static func cellSize() -> CGSize {
+    private class func cellSize() -> CGSize {
         let cellWidth: CGFloat = round(UIScreen.main.bounds.width / (UIDevice.current.userInterfaceIdiom == .pad ? 6.5 :  4.5))
         let cellHeight: CGFloat = 106
         return CGSize(width: cellWidth, height: cellHeight)

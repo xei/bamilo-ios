@@ -14,7 +14,7 @@ UICollectionViewDataSource {
     
     @IBOutlet weak private var collectionViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak private var collectionView: UICollectionView!
-    var recommendItems: [RecommendItem] = []
+    @objc var recommendItems: [RecommendItem] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -24,7 +24,7 @@ extension UILabel {
         
         let attrString = NSMutableAttributedString(string: title)
         
-        attrString.addAttribute(NSParagraphStyleAttributeName, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSAttributedStringKey.paragraphStyle as NSAttributedStringKey, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
         self.attributedText = attrString
     }
 

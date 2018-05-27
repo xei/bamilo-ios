@@ -9,7 +9,7 @@
 import UIKit
 import Crashlytics
 
-@objc class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate, DataServiceProtocol {
+@objcMembers class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate, DataServiceProtocol {
     
     private static var previousSelectedViewController: JACenterNavigationController?
     
@@ -24,15 +24,15 @@ import Crashlytics
         MainTabBarViewController.activateTabItem(rootViewClassType: HomeViewController.self)
         
         self.tabBar.tintColor = Theme.color(kColorExtraDarkBlue)
-        UITabBarItem.appearance().setTitleTextAttributes([NSFontAttributeName: Theme.font(kFontVariationRegular, size: 9), NSForegroundColorAttributeName: Theme.color(kColorExtraDarkBlue)], for: .selected)
-        UITabBarItem.appearance().setTitleTextAttributes([NSFontAttributeName: Theme.font(kFontVariationRegular, size: 8), NSForegroundColorAttributeName: Theme.color(kColorExtraDarkGray)], for: UIControlState())
+        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: Theme.font(kFontVariationRegular, size: 9), NSAttributedStringKey.foregroundColor: Theme.color(kColorExtraDarkBlue)], for: .selected)
+        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: Theme.font(kFontVariationRegular, size: 8), NSAttributedStringKey.foregroundColor: Theme.color(kColorExtraDarkGray)], for: UIControlState())
         
         self.tabBar.layer.borderWidth = 0.50
         self.tabBar.layer.borderColor = Theme.color(kColorLightGray).cgColor //UIColor.clear.cgColor
         self.tabBar.clipsToBounds = true
         
         
-        let attributes: [String : Any] = [NSFontAttributeName: Theme.font(kFontVariationRegular, size: 13)]
+        let attributes: [String : Any] = [NSAttributedStringKey.font.rawValue: Theme.font(kFontVariationRegular, size: 13)]
 
         if #available(iOS 10.0, *) {
             self.tabBar.items?.first?.setBadgeTextAttributes(attributes, for: .normal)
@@ -59,7 +59,7 @@ import Crashlytics
         };
     }
     
-    static func sharedInstance() -> MainTabBarViewController? {
+    class func sharedInstance() -> MainTabBarViewController? {
         return UIApplication.shared.delegate?.window??.rootViewController as? MainTabBarViewController
     }
     
@@ -87,7 +87,7 @@ import Crashlytics
         }
     }
     
-    static func activateTabItem<T>(rootViewClassType: T.Type) {
+    class func activateTabItem<T>(rootViewClassType: T.Type) {
         let tabBarController = MainTabBarViewController.sharedInstance()
         if let index = tabBarController?.viewControllers?.index(where: {
             if ($0 as! UINavigationController).viewControllers.count > 0 {
@@ -105,7 +105,7 @@ import Crashlytics
         }
     }
     
-    static func isTabItemActive<T>(tabItemClassType: T.Type) -> Bool {
+    class func isTabItemActive<T>(tabItemClassType: T.Type) -> Bool {
         let tabBarController = MainTabBarViewController.sharedInstance()
         if (tabBarController?.selectedViewController as! UINavigationController).viewControllers.count > 0 {
             return (tabBarController?.selectedViewController as? UINavigationController)?.viewControllers[0] is T
@@ -114,19 +114,19 @@ import Crashlytics
     }
     
     
-    static func topNavigationController() -> JACenterNavigationController? {
+    class func topNavigationController() -> JACenterNavigationController? {
         return MainTabBarViewController.sharedInstance()?.selectedViewController as? JACenterNavigationController
     }
     
-    static func topViewController() -> UIViewController? {
+    class func topViewController() -> UIViewController? {
         return self.topNavigationController()?.visibleViewController
     }
     
-    static func updateCartValue(cartItemsCount: Int) {
+    class func updateCartValue(cartItemsCount: Int) {
         MainTabBarViewController.sharedInstance()?.tabBar.items?.last?.badgeValue = cartItemsCount == 0 ? nil : "\(cartItemsCount)" //.convertTo(language: .arabic)
     }
     
-    static func getTabbarItemView<T>(rootViewClassType: T.Type) -> UIView? {
+    class func getTabbarItemView<T>(rootViewClassType: T.Type) -> UIView? {
         let tabBarController = MainTabBarViewController.sharedInstance()
         var targetView: UIView?
         if let index = tabBarController?.viewControllers?.index(where: {
@@ -143,23 +143,23 @@ import Crashlytics
     }
     
     //TODO: Temprory helper functions (for objective c codes)
-    static func showHome() {
+    class func showHome() {
         MainTabBarViewController.activateTabItem(rootViewClassType: HomeViewController.self)
     }
     
-    static func showWishList() {
+    class func showWishList() {
         MainTabBarViewController.activateTabItem(rootViewClassType: WishListViewController.self)
     }
     
-    static func showProfile() {
+    class func showProfile() {
         MainTabBarViewController.activateTabItem(rootViewClassType: ProfileViewController.self)
     }
     
-    static func showCart() {
+    class func showCart() {
         MainTabBarViewController.activateTabItem(rootViewClassType: CartViewController.self)
     }
     
-    static func showCategories() {
+    class func showCategories() {
         MainTabBarViewController.activateTabItem(rootViewClassType: RootCategoryViewController.self)
     }
     

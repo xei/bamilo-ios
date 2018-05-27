@@ -125,13 +125,13 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
             
             if let refund = product.refaund {
                 if let reason = refund.cancellationReason {
-                    self.refuadDescriptionLabelBottomConstraint.priority = UILayoutPriorityDefaultHigh
-                    self.cancellationReasonLabelBottomConstraint.priority = UILayoutPriorityDefaultHigh
-                    self.refundMessagesToTopSuperViewConstriant.priority = UILayoutPriorityDefaultLow
+                    self.refuadDescriptionLabelBottomConstraint.priority = .defaultHigh
+                    self.cancellationReasonLabelBottomConstraint.priority = .defaultHigh
+                    self.refundMessagesToTopSuperViewConstriant.priority = .defaultLow
                     self.cancellationReasonLabel.text = reason.convertTo(language: .arabic)
                 } else {
-                    self.refuadDescriptionLabelBottomConstraint.priority = UILayoutPriorityDefaultLow
-                    self.cancellationReasonLabelBottomConstraint.priority = UILayoutPriorityDefaultHigh
+                    self.refuadDescriptionLabelBottomConstraint.priority = .defaultLow
+                    self.cancellationReasonLabelBottomConstraint.priority = .defaultHigh
                 }
                 if let status = refund.status {
                     if status == .success {
@@ -141,17 +141,17 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
                     }
                     self.refundDescriptionLabel.text = self.getRefundMessage(refund: refund)
                     self.cancellationReasonBottomToBottomConstraint.constant = 249
-                    self.cancellationHeightConstraint.priority = UILayoutPriorityDefaultLow
+                    self.cancellationHeightConstraint.priority = .defaultLow
                     
                 } else {
-                    self.cancellationReasonBottomToBottomConstraint.priority = UILayoutPriorityDefaultHigh
-                    self.cancellationReasonLabelBottomConstraint.priority = UILayoutPriorityDefaultLow
+                    self.cancellationReasonBottomToBottomConstraint.priority = .defaultHigh
+                    self.cancellationReasonLabelBottomConstraint.priority = .defaultLow
                     self.refundDescriptionLabel.text = "   "
                 }
                 
             } else {
-                self.cancellationHeightConstraint.priority = UILayoutPriorityDefaultHigh
-                self.cancellationReasonBottomToBottomConstraint.priority = UILayoutPriorityDefaultLow
+                self.cancellationHeightConstraint.priority = .defaultHigh
+                self.cancellationReasonBottomToBottomConstraint.priority = .defaultLow
             }
             
             self.product = product
@@ -207,8 +207,8 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
     
     private func setPropoerConstraints(expanded: Bool) {
         //to set the height of cell via
-        self.headreViewBottomConstraint.priority = expanded ?  UILayoutPriorityDefaultLow:UILayoutPriorityDefaultHigh
-        self.rateButtonBottomConstraint.priority = expanded ? UILayoutPriorityDefaultHigh:UILayoutPriorityDefaultLow
+        self.headreViewBottomConstraint.priority = expanded ?  .defaultLow:.defaultHigh
+        self.rateButtonBottomConstraint.priority = expanded ? .defaultHigh:.defaultLow
         self.layoutIfNeeded()
     }
     
@@ -224,7 +224,7 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
         self.refundDescriptionLabel.text = nil
     }
     
-    override static func nibName() -> String {
+    override class func nibName() -> String {
         return AppUtility.getStringFromClass(for: self)!
     }
     

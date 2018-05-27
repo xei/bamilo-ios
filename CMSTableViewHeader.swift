@@ -39,7 +39,7 @@ class CMSTableViewHeader: UITableViewHeaderFooterView {
         self.cmsMessageLabel.text = message
     }
     
-    static func nibName() -> String {
+    class func nibName() -> String {
         return AppUtility.getStringFromClass(for: self)!
     }
 }

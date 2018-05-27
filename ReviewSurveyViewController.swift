@@ -50,14 +50,13 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
         self.title = self.surveryModel.title ?? STRING_SURVEY
         
         self.navigationController?.navigationBar.titleTextAttributes = [
-            NSFontAttributeName: Theme.font(kFontVariationBold, size: 14),
-            NSForegroundColorAttributeName: Theme.color(kColorBlue2)
-        ]
+            NSAttributedStringKey.font: Theme.font(kFontVariationBold, size: 14),
+            NSAttributedStringKey.foregroundColor: Theme.color(kColorBlue2)
+            ] as [NSAttributedStringKey : Any]
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWasShown(notification:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeHidden(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
-    
     
     deinit {
         //remove all observers for this view controller when it's deinitliazed
@@ -239,7 +238,7 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
     
     
     //MARK: - KeyboardNotifications
-    func keyboardWasShown(notification:NSNotification) {
+    @objc func keyboardWasShown(notification:NSNotification) {
         let userInfo = notification.userInfo
         let keyboardFrame: NSValue? = userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue
         let keyboardRectangle = keyboardFrame?.cgRectValue
@@ -251,7 +250,7 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
         }
     }
     
-    func keyboardWillBeHidden(notification: Notification) {
+    @objc func keyboardWillBeHidden(notification: Notification) {
         self.submitButtonBottomConstraint.constant = 0
         self.collectionView.collectionViewLayout.invalidateLayout()
         self.collectionView.panGestureRecognizer.isEnabled = true

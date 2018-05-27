@@ -43,7 +43,7 @@
     [self.carouselWidget hide];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
-    self.carouselBottomConstraint.constant = [MainTabBarViewController sharedInstance].tabBar.height;
+//    self.carouselBottomConstraint.constant = [MainTabBarViewController sharedInstance].tabBar.height;
 }
 
 - (void)getSuggestions {

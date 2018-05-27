@@ -14,7 +14,7 @@ class MyBamiloRecommendItem: RecommendItem {
     var id: String! //which is the same as recommendation logic
     var topic: String?
     
-    static func instance(with recItem: EMRecommendationItem, topic: String?, identifier: String?) -> Self? {
+    class func instance(with recItem: EMRecommendationItem, topic: String?, identifier: String?) -> Self? {
         let item = self.init(JSON: recItem.data)  //self.instance(with: recItem)
         item?.id = identifier
         item?.topic = topic

@@ -10,7 +10,7 @@ import UIKit
 import EmarsysPredictSDK
 import SwiftyJSON
 
-@objc class CatalogViewController: BaseViewController,
+@objcMembers class CatalogViewController: BaseViewController,
                                     DataServiceProtocol,
                                     JAFiltersViewControllerDelegate,
                                     CatalogHeaderViewDelegate,

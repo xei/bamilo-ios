@@ -10,7 +10,7 @@ import UIKit
 import ObjectMapper
 import SwiftyJSON
 
-@objc class CatalogPriceFilterItem: BaseCatalogFilterItem {
+@objcMembers class CatalogPriceFilterItem: BaseCatalogFilterItem {
     
     var maxPrice: Int64 = 0
     var minPrice: Int64 = 0

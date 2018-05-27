@@ -9,7 +9,7 @@
 import UIKit
 import ObjectMapper
 
-@objc class CatalogFilterOption: NSObject, Mappable {
+@objcMembers class CatalogFilterOption: NSObject, Mappable {
     
     var name: String?
     var value: String?

@@ -44,7 +44,7 @@ class MyBamiloHeaderView: UICollectionReusableView {
     }
     
     
-    static func nibName() -> String {
+    class func nibName() -> String {
         return "MyBamiloHeaderView"
     }
 }

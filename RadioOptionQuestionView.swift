@@ -31,11 +31,11 @@ class RadioOptionQuestionView: BaseSurveyQuestionControlView {
             }
             if let image = model.product?.imageUrl {
                 self.productImageView.kf.setImage(with: image, options: [.transition(.fade(0.20))])
-                self.imageToRadioViewVerticalSpaceConstraint.priority = UILayoutPriorityDefaultHigh
-                self.titleLabelBottomToRadioViewConstraint.priority = UILayoutPriorityDefaultLow
+                self.imageToRadioViewVerticalSpaceConstraint.priority = .defaultHigh
+                self.titleLabelBottomToRadioViewConstraint.priority = .defaultLow
             } else {
-                self.imageToRadioViewVerticalSpaceConstraint.priority = UILayoutPriorityDefaultLow
-                self.titleLabelBottomToRadioViewConstraint.priority = UILayoutPriorityDefaultHigh
+                self.imageToRadioViewVerticalSpaceConstraint.priority = .defaultLow
+                self.titleLabelBottomToRadioViewConstraint.priority = .defaultHigh
             }
         }
     }

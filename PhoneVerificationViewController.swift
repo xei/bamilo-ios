@@ -12,7 +12,7 @@ import UIKit
     func finishedVerifingPhone(target: PhoneVerificationViewController)
 }
 
-@objc class PhoneVerificationViewController: AuthenticationBaseViewController, UITextFieldDelegate, DataServiceProtocol {
+@objcMembers class PhoneVerificationViewController: AuthenticationBaseViewController, UITextFieldDelegate, DataServiceProtocol {
     
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var tokenCodeTextField: UITextField!
@@ -181,7 +181,7 @@ import UIKit
         PhoneVerificationViewController.verificationRequest(target: self, phone: self.phoneNumber, token: token, rid: 1) { success in callBack?(success) }
     }
     
-    static func verificationRequest(target: DataServiceProtocol, phone: String, token: String? = nil, rid: Int32, callBack: @escaping (Bool)-> Void) {
+    class func verificationRequest(target: DataServiceProtocol, phone: String, token: String? = nil, rid: Int32, callBack: @escaping (Bool)-> Void) {
         AuthenticationDataManager.sharedInstance.phoneVerification(target, phone: phone, token: token?.convertTo(language: .english)) { (data, errors) in
             if let errors = errors {
                 callBack(false)

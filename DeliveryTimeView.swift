@@ -159,7 +159,7 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
     }
     
     //TODO: when we migrate all BaseControlView we need to use it as this function implementation
-    override static func nibInstance() -> DeliveryTimeView {
+    override class func nibInstance() -> DeliveryTimeView {
         return Bundle.main.loadNibNamed(String(describing: self), owner: self, options: nil)?.last as! DeliveryTimeView
     }
 }
