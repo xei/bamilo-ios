@@ -27,14 +27,15 @@ target 'Bamilo' do
   pod 'RAlertView'
   pod 'Pushwoosh'
   pod 'AnimatedCollectionViewLayout'
-  pod 'ObjectMapper', '~> 2.2'
+  pod 'ObjectMapper'
   pod 'SwiftyJSON'
-  pod 'Kingfisher', '~> 3.0'
-  pod 'Alamofire', '~> 4.4'
-  pod 'AlamofireObjectMapper', '~> 4.0'
+  pod 'Kingfisher'
+  pod 'Alamofire'
+  pod 'AlamofireObjectMapper'
   pod 'RealmSwift'
   pod 'FSPagerView'
   pod 'TBActionSheet'
+  pod 'ImageViewer'
 
   target 'BamiloUITests' do
     inherit! :search_paths

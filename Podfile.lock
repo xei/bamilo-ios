@@ -3,30 +3,31 @@ PODS:
     - Adjust/Core (= 4.13.0)
   - Adjust/Core (4.13.0)
   - Alamofire (4.7.2)
-  - AlamofireObjectMapper (4.1.0):
+  - AlamofireObjectMapper (5.0.0):
     - Alamofire (~> 4.1)
-    - ObjectMapper (~> 2.0)
+    - ObjectMapper (~> 3.0)
   - AnimatedCollectionViewLayout (0.3.0)
   - CHIPageControl/Jalapeno (0.1.5)
   - CoreSDK (1.6.0)
-  - Crashlytics (3.10.1):
-    - Fabric (~> 1.7.5)
+  - Crashlytics (3.10.2):
+    - Fabric (~> 1.7.7)
   - EmarsysPredictSDK (1.0.38)
-  - Fabric (1.7.6)
+  - Fabric (1.7.7)
   - FSPagerView (0.7.1)
   - FXBlurView (1.6.4)
   - GoogleAnalytics (3.14.0)
   - GoogleAppIndexing (2.0.3)
   - GoogleTagManager (3.15.0):
     - GoogleAnalytics (= 3.14.0)
+  - ImageViewer (5.0.0)
   - JBWhatsAppActivity (1.0)
   - JSONModel (1.7.0)
-  - Kingfisher (3.13.1)
+  - Kingfisher (4.8.0)
   - M13Checkbox (3.2.2)
   - Masonry (1.1.0)
   - MobileEngageSDK (1.1.9):
     - CoreSDK (= 1.6.0)
-  - ObjectMapper (2.2.9)
+  - ObjectMapper (3.1.0)
   - Pushwoosh (5.7.1)
   - RAlertView (0.1.1):
     - Masonry
@@ -46,8 +47,8 @@ PODS:
 
 DEPENDENCIES:
   - Adjust
-  - Alamofire (~> 4.4)
-  - AlamofireObjectMapper (~> 4.0)
+  - Alamofire
+  - AlamofireObjectMapper
   - AnimatedCollectionViewLayout
   - CHIPageControl/Jalapeno
   - Crashlytics (~> 3.9)
@@ -58,12 +59,13 @@ DEPENDENCIES:
   - GoogleAnalytics (= 3.14.0)
   - GoogleAppIndexing (~> 2.0.3)
   - GoogleTagManager (= 3.15.0)
+  - ImageViewer
   - JBWhatsAppActivity (~> 1.0)
   - JSONModel
-  - Kingfisher (~> 3.0)
+  - Kingfisher
   - M13Checkbox
   - MobileEngageSDK (~> 1.1.9)
-  - ObjectMapper (~> 2.2)
+  - ObjectMapper
   - Pushwoosh
   - RAlertView
   - RealmSwift
@@ -88,6 +90,7 @@ SPEC REPOS:
     - GoogleAnalytics
     - GoogleAppIndexing
     - GoogleTagManager
+    - ImageViewer
     - JBWhatsAppActivity
     - JSONModel
     - Kingfisher
@@ -108,25 +111,26 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Adjust: 8f204c1005d6635e7c931c6a2cb2f881965bf478
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
-  AlamofireObjectMapper: 435adc82f5b367679bd9e71c4974a54efd0b2521
+  AlamofireObjectMapper: 5fafc816351cbbc0d486611aaeba7461c0cbad49
   AnimatedCollectionViewLayout: 504b992a4258eb39d2dd2b2b48e84b4b95860fd7
   CHIPageControl: 79d19a8ee2e35fa3c1da6533adb5364c77b5cfea
   CoreSDK: 4f79e4fea147954c9716b8b36daaaa02223b39be
-  Crashlytics: aee1a064cbbf99b32efa3f056a5f458d846bc8ff
+  Crashlytics: 0360624eea1c978a743feddb2fb1ef8b37fb7a0d
   EmarsysPredictSDK: fffffb59050eff3bb35b49990fb77acc249def6c
-  Fabric: f8d42c893bb187326a7968b62abe55c36a987a46
+  Fabric: bda89e242bce1b7b8ab264248cf3407774ce0095
   FSPagerView: 958aba39684e1573755ddcfcc29f7eebb8413cee
   FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
   GoogleAnalytics: 9be1afdb8deeac4bb5f13ca7f7d3b9db2a1f43dc
   GoogleAppIndexing: 176146164d14b30a403f5ba394fc2b51855025da
   GoogleTagManager: 39e4af1e9250e7817d328f690768e26afe560da0
+  ImageViewer: 3def6e39c6979ce3e9d001c78eec0d8b895f2f73
   JBWhatsAppActivity: e1b4dcf1b967aaf714cc784b42fb49a110972e4a
   JSONModel: 840bc0fcffb24b8454d2c026bf26fea454b8e98d
-  Kingfisher: ed9707a409cc47fddafbcd12a43a9757e3600af5
+  Kingfisher: 976d828df2b24834c6a3f2fc4d82cdbd26552be1
   M13Checkbox: a8c2491cfbbca10797925fd0b9154a782bf40d89
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MobileEngageSDK: a4b643dd95777079d3323c3426884e8d328d4bf8
-  ObjectMapper: 63cfe41bc6f8e7c8f44344c49901b8ae7de14c52
+  ObjectMapper: 20505058f54e5c3ca69e1d6de9897d152a5369a6
   Pushwoosh: cdf31f49f8a50d47c1b03b67ad8af1e47250022e
   RAlertView: b9996eb63ceb64c7d1879a1d1846af5e386a1808
   Realm: 0378021c424e4e2bd6a0e63b27881e929d9b9ad1
@@ -137,6 +141,6 @@ SPEC CHECKSUMS:
   TBActionSheet: 5ad1810015aece4a9e7d18424f16b6e745f0dc8f
   TTRangeSlider: 78188bea83f6471a06f75adbc88da5e990baeafe
 
-PODFILE CHECKSUM: 04cb9fbafb266e20e92659ffc79bcfb614733670
+PODFILE CHECKSUM: 50bc039ff8fc0916ce2a2023f7243b03707157fa
 
 COCOAPODS: 1.5.0
