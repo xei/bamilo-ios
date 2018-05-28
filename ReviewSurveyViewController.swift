@@ -140,7 +140,7 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
     }
     
     private func updateView(by survey: ReviewSurvery) {
-        self.dataSource = survey.pages?.flatMap({ $0.questions }).flatMap({ $0 }).filter({ !$0.isHidden && $0.type != nil })
+        self.dataSource = survey.pages?.compactMap({ $0.questions }).flatMap({ $0 }).filter({ !$0.isHidden && $0.type != nil })
         if let dataSourceCount = self.dataSource?.count, dataSourceCount > 1 {
             self.pagerControl.numberOfPages = dataSourceCount + 1
         } else {

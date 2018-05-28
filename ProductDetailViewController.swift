@@ -8,6 +8,9 @@
 
 import UIKit
 import ImageViewer
+import Kingfisher
+
+extension UIImageView: DisplaceableView {}
 
 class ProductDetailViewController: BaseViewController,
                                     UITableViewDelegate,
@@ -25,6 +28,7 @@ class ProductDetailViewController: BaseViewController,
     fileprivate var availableSections = [Int: [CellType]]()
     let cellIdentifiers : [CellType: String] = [
         .slider:   ProductDetailViewSliderTableViewCell.nibName()
+        
     ]
 
     override func viewDidLoad() {
@@ -58,7 +62,7 @@ class ProductDetailViewController: BaseViewController,
         switch cellType {
             case .slider:
             let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! ProductDetailViewSliderTableViewCell
-            cell.update(withModel: self.product?.imageList ?? [])
+            cell.update(withModel: self.product)
             cell.delegate = self
             cell.clipsToBounds = false
             self.sliderCell = cell
@@ -83,6 +87,9 @@ class ProductDetailViewController: BaseViewController,
                 self.sliderCell?.blurView?.alpha = 0
                 sliderRect.origin.y = self.tableView.contentOffset.y
                 sliderRect.size.height = -self.tableView.contentOffset.y + cellSliderHeight
+                sliderCell?.buttonsTopConstraint.constant = 10 + self.tableView.contentOffset.y
+            } else {
+                sliderCell?.buttonsTopConstraint.constant = 10
             }
             self.sliderCell?.visibleUIImageView?.frame = sliderRect
             
@@ -146,16 +153,26 @@ class ProductDetailViewController: BaseViewController,
 }
 
 extension ProductDetailViewController: ProductDetailViewSliderTableViewCellDelegate {
-    func selectSliderItem(item: ProductImageItem, cell: ProductDetailViewSliderTableViewCell) {
+    
+    func addOrRemoveFromWishList(product: Product, cell: ProductDetailViewSliderTableViewCell, add: Bool) {
         
+    }
+    
+    func selectSliderItem(item: ProductImageItem, atIndex: Int, cell: ProductDetailViewSliderTableViewCell) {
+        let galleryViewController = GalleryViewController(startIndex: atIndex, itemsDataSource: self, displacedViewsDataSource: self, configuration: self.galleryConfiguration())
+        galleryViewController.landedPageAtIndexCompletion = { self.sliderCell?.selectIndex(index: $0, animated: false) }
+        self.presentImageGallery(galleryViewController)
     }
 }
 
-extension ProductDetailViewController: GalleryItemsDataSource {
+
+//Image Gallery
+extension ProductDetailViewController: GalleryItemsDataSource, GalleryDisplacedViewsDataSource {
     
     func galleryConfiguration() -> GalleryConfiguration {
-        let button = UIButton(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: 80, height: 50)))
-        button.setTitle("دیدن همه", for: .normal)
+        let button = IconButton()
+        button.setImage(#imageLiteral(resourceName: "view_grid_active"), for: .normal)
+        button.frame.size = CGSize(width: 50, height: 50)
         return [
             GalleryConfigurationItem.closeButtonMode(.builtIn),
             GalleryConfigurationItem.pagingMode(.standard),
@@ -188,6 +205,7 @@ extension ProductDetailViewController: GalleryItemsDataSource {
             GalleryConfigurationItem.displacementTransitionStyle(.springBounce(0.7)),
             GalleryConfigurationItem.displacementTimingCurve(.linear),
             GalleryConfigurationItem.thumbnailsButtonMode(.custom(button)),
+            GalleryConfigurationItem.deleteButtonMode(.none),
             GalleryConfigurationItem.statusBarHidden(true),
             GalleryConfigurationItem.displacementKeepOriginalInPlace(false),
             GalleryConfigurationItem.displacementInsetMargin(50)
@@ -195,10 +213,21 @@ extension ProductDetailViewController: GalleryItemsDataSource {
     }
     
     func itemCount() -> Int {
-        return items.count
+        return self.product?.imageList?.count ?? 0
     }
     
     func provideGalleryItem(_ index: Int) -> GalleryItem {
-        return items[index].galleryItem
+        if let imageList = self.product?.imageList, index < imageList.count, let url = imageList[index].zoom {
+            return GalleryItem.image { callback in
+                KingfisherManager.shared.retrieveImage(with: url, options: [.transition(.fade(0.20))], progressBlock: nil, completionHandler: { (image, error, cacheType, url) in
+                    callback(image)
+                })
+            }
+        }
+        return GalleryItem.image(fetchImageBlock: { (calback) in })
+    }
+    
+    func provideDisplacementItem(atIndex index: Int) -> DisplaceableView? {
+        return self.sliderCell?.visibleUIImageView
     }
 }

@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -22,28 +23,78 @@
                         <rect key="frame" x="0.0" y="0.0" width="455" height="256.5"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
-                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RbB-cg-U0t" customClass="CHIPageControlJalapeno" customModule="CHIPageControl">
-                        <rect key="frame" x="115" y="204" width="209" height="20"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RbB-cg-U0t" customClass="CHIPageControlJalapeno" customModule="CHIPageControl">
+                        <rect key="frame" x="10" y="204" width="435" height="20"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="tZc-mY-knr"/>
                         </constraints>
                     </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="65s-jA-YT0" customClass="IconButton">
+                        <rect key="frame" x="10" y="10" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="Bv5-uV-L1n"/>
+                            <constraint firstAttribute="width" secondItem="65s-jA-YT0" secondAttribute="height" multiplier="1:1" id="tbI-oH-sew"/>
+                        </constraints>
+                        <state key="normal" image="share-icons"/>
+                        <connections>
+                            <action selector="shareButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="RJm-fZ-mTN"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CWz-MF-llw" customClass="DOFavoriteButton" customModule="Bamilo" customModuleProvider="target">
+                        <rect key="frame" x="55" y="10" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="YS6-Vk-WhS"/>
+                            <constraint firstAttribute="width" secondItem="CWz-MF-llw" secondAttribute="height" multiplier="1:1" id="g3M-af-xKD"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="image" keyPath="image" value="addToWishlist_highlited"/>
+                            <userDefinedRuntimeAttribute type="color" keyPath="imageColorOn">
+                                <color key="value" red="1" green="0.59999999999999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="imageColorOff">
+                                <color key="value" red="0.7843137255" green="0.7843137255" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="duration">
+                                <real key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="circleColor">
+                                <color key="value" red="1" green="0.59999999999999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
+                                <color key="value" red="1" green="0.59999999999999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                        <connections>
+                            <action selector="addToWishListButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="gID-5P-O3U"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="CWz-MF-llw" firstAttribute="width" secondItem="CWz-MF-llw" secondAttribute="height" multiplier="1:1" id="2hN-kc-Xoe"/>
                     <constraint firstItem="RbB-cg-U0t" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="GlZ-0a-J9t"/>
+                    <constraint firstItem="CWz-MF-llw" firstAttribute="centerY" secondItem="65s-jA-YT0" secondAttribute="centerY" id="Mer-So-Mqp"/>
                     <constraint firstItem="Geu-TC-AiV" firstAttribute="left" secondItem="H2p-sc-9uM" secondAttribute="left" id="Nim-AY-HBU"/>
+                    <constraint firstItem="65s-jA-YT0" firstAttribute="left" secondItem="H2p-sc-9uM" secondAttribute="left" constant="10" id="d0g-uL-wEg"/>
+                    <constraint firstItem="65s-jA-YT0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="dXq-gH-F11"/>
+                    <constraint firstAttribute="trailing" secondItem="RbB-cg-U0t" secondAttribute="trailing" constant="10" id="ixH-Ct-0aj"/>
                     <constraint firstAttribute="right" secondItem="Geu-TC-AiV" secondAttribute="right" id="mhP-UO-0Wf"/>
                     <constraint firstItem="Geu-TC-AiV" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="neR-qf-yg5"/>
                     <constraint firstAttribute="bottom" secondItem="RbB-cg-U0t" secondAttribute="bottom" constant="10" id="ogE-dJ-oa5"/>
+                    <constraint firstItem="CWz-MF-llw" firstAttribute="left" secondItem="65s-jA-YT0" secondAttribute="right" constant="5" id="t6M-gA-DU8"/>
                     <constraint firstAttribute="bottom" secondItem="Geu-TC-AiV" secondAttribute="bottom" constant="-23" id="xJi-Vz-pxk"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="buttonsTopConstraint" destination="dXq-gH-F11" id="nQi-xZ-vkX"/>
                 <outlet property="pagerControl" destination="RbB-cg-U0t" id="jiV-vd-WFh"/>
                 <outlet property="sliderView" destination="Geu-TC-AiV" id="gOK-U1-SZG"/>
             </connections>
-            <point key="canvasLocation" x="-93.5" y="-60"/>
+            <point key="canvasLocation" x="-700" y="29"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="addToWishlist_highlited" width="26" height="26"/>
+        <image name="share-icons" width="17" height="18"/>
+    </resources>
 </document>

@@ -10,17 +10,20 @@ import UIKit
 import FSPagerView
 import CHIPageControl
 protocol ProductDetailViewSliderTableViewCellDelegate: class {
-    func selectSliderItem(item: ProductImageItem, cell: ProductDetailViewSliderTableViewCell)
+    func selectSliderItem(item: ProductImageItem, atIndex: Int, cell: ProductDetailViewSliderTableViewCell)
+    func addOrRemoveFromWishList(product: Product, cell: ProductDetailViewSliderTableViewCell, add: Bool)
 }
 
 class ProductDetailViewSliderTableViewCell: BaseProductTableViewCell, FSPagerViewDelegate, FSPagerViewDataSource {
     
     weak var delegate: ProductDetailViewSliderTableViewCellDelegate?
     
+    @IBOutlet weak var buttonsTopConstraint: NSLayoutConstraint!
     private static let sliderRatio: CGFloat = 2 //ratio:  320*114
     private var productImageList: [ProductImageItem]?
     private var cellIndexMapper = [Int: FSPagerViewCell]()
     private var sliderBlurView: UIVisualEffectView?
+    private var product: Product?
     
     @IBOutlet weak private var pagerControl: CHIPageControlJalapeno! {
         didSet {
@@ -39,10 +42,9 @@ class ProductDetailViewSliderTableViewCell: BaseProductTableViewCell, FSPagerVie
             self.sliderView.dataSource = self
             self.sliderView.delegate = self
             self.sliderView.isInfinite = false
-            self.sliderView.transformer = FSPagerViewTransformer(type: .invertedFerrisWheel)
+            self.sliderView.transformer = FSPagerViewTransformer(type: .depth)
             self.sliderBlurView = self.sliderView.addBlurView(style: .light)
             self.sliderBlurView?.alpha = 0
-            
             //make force all of slider and it's subviews clipBounds to be false
             self.sliderView.clipsToBounds = false
             self.sliderView.subviews.forEach{
@@ -56,20 +58,43 @@ class ProductDetailViewSliderTableViewCell: BaseProductTableViewCell, FSPagerVie
         return self.sliderBlurView
     }
     
+    func selectIndex(index: Int, animated: Bool) {
+        self.sliderView.scrollToItem(at: index, animated: animated)
+    }
+    
     var visibleUIImageView: UIImageView? {
         return self.cellIndexMapper[self.sliderView.currentIndex]?.imageView
     }
     
     override func update(withModel model: Any!) {
-        if let imageList = model as? [ProductImageItem] {
-            self.productImageList = imageList
-            self.pagerControl.numberOfPages = imageList.count
-            self.sliderView.reloadData()
+        if let product = model as? Product {
+            if let imageList = product.imageList {
+                self.productImageList = imageList
+                self.pagerControl.numberOfPages = imageList.count
+                self.sliderView.reloadData()
+            }
+            self.product = product
         }
     }
     
     override class func cellHeight() -> CGFloat {
         return UIScreen.main.bounds.width / sliderRatio
+    }
+    
+    @IBAction func addToWishListButtonTapped(_ sender: DOFavoriteButton) {
+        if sender.isSelected {
+            sender.deselect()
+        } else {
+            sender.select()
+        }
+        if let avaiableProduct = self.product {
+            avaiableProduct.isInWishList.toggle()
+            self.delegate?.addOrRemoveFromWishList(product: avaiableProduct, cell: self, add: avaiableProduct.isInWishList)
+        }
+    }
+    
+    @IBAction func shareButtonTapped(_ sender: Any) {
+        
     }
     
     //MARK: - FSPagerViewDataSource && FSPagerViewDataSource
@@ -97,7 +122,7 @@ class ProductDetailViewSliderTableViewCell: BaseProductTableViewCell, FSPagerVie
     func pagerView(_ pagerView: FSPagerView, didSelectItemAt index: Int) {
         pagerView.deselectItem(at: index, animated: true)
         if let imageItem = self.productImageList?[index] {
-            self.delegate?.selectSliderItem(item: imageItem, cell: self)
+            self.delegate?.selectSliderItem(item: imageItem, atIndex: index, cell: self)
         }
     }
     

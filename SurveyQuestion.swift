@@ -75,7 +75,7 @@ class SurveyQuestion: NSObject, Mappable {
                         }
                     }
                     return nil
-                }).flatMap({ $0 }).reduce([:]) { $0 + $1 }
+                }).compactMap({ $0 }).reduce([:]) { $0 + $1 }
                 if let selectedOptions = selectedOptions, let id = self.id {
                     result["responses"] = [["\(id)": selectedOptions]]
                 }
