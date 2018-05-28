@@ -129,6 +129,8 @@
 		6157A3EF1F83865800B8D501 /* MyBamiloViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6157A3ED1F83865800B8D501 /* MyBamiloViewController.xib */; };
 		6157A3F31F83974100B8D501 /* MyBamiloModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6157A3F21F83974100B8D501 /* MyBamiloModel.swift */; };
 		61583DDD1EF92100007107C1 /* DeleteEntityDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61583DDC1EF92100007107C1 /* DeleteEntityDataManager.swift */; };
+		6159573F20BBF07700B8FDB8 /* ProductDetailPrimaryInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6159573D20BBF07700B8FDB8 /* ProductDetailPrimaryInfoTableViewCell.swift */; };
+		6159574020BBF07700B8FDB8 /* ProductDetailPrimaryInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6159573E20BBF07700B8FDB8 /* ProductDetailPrimaryInfoTableViewCell.xib */; };
 		615CFDFC20B41224003C6EAC /* ProductDetailViewSliderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615CFDFA20B41224003C6EAC /* ProductDetailViewSliderTableViewCell.swift */; };
 		615CFDFD20B41224003C6EAC /* ProductDetailViewSliderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 615CFDFB20B41224003C6EAC /* ProductDetailViewSliderTableViewCell.xib */; };
 		615CFE0420B43618003C6EAC /* BaseProductTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615CFE0320B43618003C6EAC /* BaseProductTableViewCell.swift */; };
@@ -1200,6 +1202,8 @@
 		6157A3ED1F83865800B8D501 /* MyBamiloViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyBamiloViewController.xib; sourceTree = "<group>"; };
 		6157A3F21F83974100B8D501 /* MyBamiloModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBamiloModel.swift; sourceTree = "<group>"; };
 		61583DDC1EF92100007107C1 /* DeleteEntityDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteEntityDataManager.swift; sourceTree = "<group>"; };
+		6159573D20BBF07700B8FDB8 /* ProductDetailPrimaryInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailPrimaryInfoTableViewCell.swift; sourceTree = "<group>"; };
+		6159573E20BBF07700B8FDB8 /* ProductDetailPrimaryInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductDetailPrimaryInfoTableViewCell.xib; sourceTree = "<group>"; };
 		615CFDFA20B41224003C6EAC /* ProductDetailViewSliderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewSliderTableViewCell.swift; sourceTree = "<group>"; };
 		615CFDFB20B41224003C6EAC /* ProductDetailViewSliderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductDetailViewSliderTableViewCell.xib; sourceTree = "<group>"; };
 		615CFE0320B43618003C6EAC /* BaseProductTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseProductTableViewCell.swift; sourceTree = "<group>"; };
@@ -3219,6 +3223,7 @@
 		6127EA0120B2E1E20064B291 /* ProductDetailView */ = {
 			isa = PBXGroup;
 			children = (
+				6159573C20BBEEF500B8FDB8 /* PrimaryInfo */,
 				6127EA0220B2E1EB0064B291 /* ProductDetailViewSlider */,
 				615CFE0320B43618003C6EAC /* BaseProductTableViewCell.swift */,
 			);
@@ -3595,6 +3600,15 @@
 				6157A3F21F83974100B8D501 /* MyBamiloModel.swift */,
 			);
 			name = MyBamilo;
+			sourceTree = "<group>";
+		};
+		6159573C20BBEEF500B8FDB8 /* PrimaryInfo */ = {
+			isa = PBXGroup;
+			children = (
+				6159573D20BBF07700B8FDB8 /* ProductDetailPrimaryInfoTableViewCell.swift */,
+				6159573E20BBF07700B8FDB8 /* ProductDetailPrimaryInfoTableViewCell.xib */,
+			);
+			name = PrimaryInfo;
 			sourceTree = "<group>";
 		};
 		615EBA7C1FEFE60100FB58DE /* CategoryCoverTableViewCell */ = {
@@ -8284,6 +8298,7 @@
 				612FE51C1EDC0D6300C2AFA0 /* ProfileUserTableViewCell.xib in Resources */,
 				875743811EA60DB9001B518A /* National-Small@3x.png in Resources */,
 				61338D021EACC63B0017BB06 /* EmarsysRecommendationMinimalCarouselWidgetView.xib in Resources */,
+				6159574020BBF07700B8FDB8 /* ProductDetailPrimaryInfoTableViewCell.xib in Resources */,
 				8757441F1EA60E48001B518A /* Tragedy-Small-50@2x.png in Resources */,
 				CE9AE03C1AB6D78200D56481 /* JANewsletterComponent~iPad.xib in Resources */,
 				875744261EA60E48001B518A /* Tragedy-72.png in Resources */,
@@ -8768,6 +8783,7 @@
 				875AD55B1E38C0C900584ABF /* RICartItem.m in Sources */,
 				CE9ADF361AB6D78200D56481 /* JAGradientLayer.m in Sources */,
 				61B603F020A02D9300D19DC7 /* RadioColoredButtonsGroupControl.swift in Sources */,
+				6159573F20BBF07700B8FDB8 /* ProductDetailPrimaryInfoTableViewCell.swift in Sources */,
 				617585F21F88D96700D66541 /* CarouselCollectionFlowLayout.swift in Sources */,
 				CEA2A1B71B25D20C00E5973F /* JADynamicField.m in Sources */,
 				61FC466E201DBBC9000141FA /* Ext+UINavigationViewController.swift in Sources */,

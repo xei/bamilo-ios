@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Bamilosans Light.ttf">
+            <string>Bamilo-Sans-Light</string>
+        </array>
+        <array key="‌Bamilosans Bold.ttf">
+            <string>Bamilo-Sans-Bold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="218" id="KGk-i7-Jjw" customClass="ProductDetailPrimaryInfoTableViewCell" customModule="Bamilo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="374" height="218"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="374" height="217.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fyF-2K-ujH">
+                        <rect key="frame" x="10" y="0.0" width="354" height="217.5"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="پولوشرت کلاسیک پولوخورش اصل مدل ۲۰۱۲ فنی سالم " textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a6P-FB-khf">
+                                <rect key="frame" x="15" y="13" width="324" height="23.5"/>
+                                <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="13"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gAH-t7-9ot" userLabel="RateViewContainer">
+                                <rect key="frame" x="165.5" y="53.5" width="173.5" height="21"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7dQ-gY-v5c" customClass="RateStarControl" customModule="Bamilo" customModuleProvider="target">
+                                        <rect key="frame" x="73.5" y="0.0" width="100" height="20"/>
+                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="100" id="5ia-kc-9Np"/>
+                                            <constraint firstAttribute="width" secondItem="7dQ-gY-v5c" secondAttribute="height" multiplier="5:1" id="bhw-jP-Sfy"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="امتیاز" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a3U-7f-yAf">
+                                        <rect key="frame" x="43" y="-0.5" width="26.5" height="22"/>
+                                        <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="12"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۳.۵" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XvJ-Ih-ahy">
+                                        <rect key="frame" x="20" y="-0.5" width="21" height="23"/>
+                                        <fontDescription key="fontDescription" name="Bamilo-Sans-Bold" family="Bamilo-Sans" pointSize="12"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(۱۶)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rvG-uw-fy8">
+                                        <rect key="frame" x="0.0" y="0.0" width="18" height="22"/>
+                                        <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="12"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="7dQ-gY-v5c" firstAttribute="top" secondItem="gAH-t7-9ot" secondAttribute="top" id="5WV-jO-z6P"/>
+                                    <constraint firstItem="7dQ-gY-v5c" firstAttribute="width" secondItem="7dQ-gY-v5c" secondAttribute="height" multiplier="5:1" id="8Jy-bE-fFP"/>
+                                    <constraint firstItem="rvG-uw-fy8" firstAttribute="centerY" secondItem="XvJ-Ih-ahy" secondAttribute="centerY" id="Alt-3U-g7N"/>
+                                    <constraint firstItem="7dQ-gY-v5c" firstAttribute="left" secondItem="a3U-7f-yAf" secondAttribute="right" constant="4" id="Fbx-Lt-1er"/>
+                                    <constraint firstItem="7dQ-gY-v5c" firstAttribute="centerY" secondItem="gAH-t7-9ot" secondAttribute="centerY" id="GmB-tf-Osv"/>
+                                    <constraint firstItem="XvJ-Ih-ahy" firstAttribute="centerY" secondItem="a3U-7f-yAf" secondAttribute="centerY" id="PNX-4A-o30"/>
+                                    <constraint firstItem="a3U-7f-yAf" firstAttribute="left" secondItem="XvJ-Ih-ahy" secondAttribute="right" constant="2" id="Qr5-3v-GQw"/>
+                                    <constraint firstItem="a3U-7f-yAf" firstAttribute="centerY" secondItem="7dQ-gY-v5c" secondAttribute="centerY" id="bUU-LN-deI"/>
+                                    <constraint firstAttribute="right" secondItem="7dQ-gY-v5c" secondAttribute="right" id="mAM-rd-iKy"/>
+                                    <constraint firstItem="XvJ-Ih-ahy" firstAttribute="left" secondItem="rvG-uw-fy8" secondAttribute="right" constant="2" id="nLO-tI-is6"/>
+                                    <constraint firstItem="rvG-uw-fy8" firstAttribute="left" secondItem="gAH-t7-9ot" secondAttribute="left" id="w70-p2-o6a"/>
+                                </constraints>
+                            </view>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="هنوز امتیازی ثبت نشده است" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lBM-8F-fMf">
+                                <rect key="frame" x="198" y="53.5" width="141" height="22"/>
+                                <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xhh-1D-hUK" userLabel="seperator">
+                                <rect key="frame" x="8" y="102.5" width="338" height="1"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="gdY-BM-ewJ"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۱۵،۴۰۴،۱۳۲" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gdC-j7-hlx">
+                                <rect key="frame" x="229.5" y="123.5" width="116.5" height="43.5"/>
+                                <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="24"/>
+                                <color key="textColor" red="0.99607843137254903" green="0.41960784313725491" blue="0.047058823529411764" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ریال" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oob-Ko-Qfr">
+                                <rect key="frame" x="203" y="135" width="20.5" height="22"/>
+                                <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" ۱۷،۳۰۰،۳۲۱ریال" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LXo-ty-u5d">
+                                <rect key="frame" x="272.5" y="169" width="73.5" height="20"/>
+                                <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="11"/>
+                                <color key="textColor" red="0.45882352941176469" green="0.45882352941176469" blue="0.45882352941176469" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="سود شما:‌ در حال محاسبه" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GMD-I4-WnO">
+                                <rect key="frame" x="15" y="169.5" width="114" height="20"/>
+                                <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="11"/>
+                                <color key="textColor" red="0.45882352939999999" green="0.45882352939999999" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6FQ-aw-Rfx">
+                                <rect key="frame" x="15" y="135.5" width="23.5" height="20"/>
+                                <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="11"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="LXo-ty-u5d" firstAttribute="right" secondItem="gdC-j7-hlx" secondAttribute="right" id="1ZF-1t-Aol"/>
+                            <constraint firstItem="gdC-j7-hlx" firstAttribute="top" secondItem="xhh-1D-hUK" secondAttribute="bottom" constant="20" id="6JA-uB-as5"/>
+                            <constraint firstItem="gAH-t7-9ot" firstAttribute="top" secondItem="a6P-FB-khf" secondAttribute="bottom" constant="17" id="ChA-mz-J0e"/>
+                            <constraint firstItem="LXo-ty-u5d" firstAttribute="top" secondItem="gdC-j7-hlx" secondAttribute="bottom" priority="750" constant="2" id="DNC-8L-4Y7"/>
+                            <constraint firstItem="GMD-I4-WnO" firstAttribute="leading" secondItem="a6P-FB-khf" secondAttribute="leading" id="G2U-dc-odT"/>
+                            <constraint firstItem="gAH-t7-9ot" firstAttribute="right" secondItem="a6P-FB-khf" secondAttribute="right" id="KDs-xr-nbu"/>
+                            <constraint firstAttribute="bottom" secondItem="gdC-j7-hlx" secondAttribute="bottom" priority="250" constant="12" id="QoB-tb-Qr0"/>
+                            <constraint firstItem="a6P-FB-khf" firstAttribute="leading" secondItem="fyF-2K-ujH" secondAttribute="leading" constant="15" id="XkS-wp-NDv"/>
+                            <constraint firstItem="6FQ-aw-Rfx" firstAttribute="leading" secondItem="a6P-FB-khf" secondAttribute="leading" id="aXD-FQ-Ipe"/>
+                            <constraint firstItem="lBM-8F-fMf" firstAttribute="right" secondItem="gAH-t7-9ot" secondAttribute="right" id="bBu-CU-Fzz"/>
+                            <constraint firstItem="gdC-j7-hlx" firstAttribute="trailing" secondItem="xhh-1D-hUK" secondAttribute="trailing" id="bUh-di-WkR"/>
+                            <constraint firstItem="xhh-1D-hUK" firstAttribute="top" secondItem="gAH-t7-9ot" secondAttribute="bottom" constant="28" id="cKY-p9-2SN"/>
+                            <constraint firstAttribute="right" secondItem="a6P-FB-khf" secondAttribute="right" constant="15" id="enu-Qr-SzY"/>
+                            <constraint firstItem="xhh-1D-hUK" firstAttribute="centerX" secondItem="fyF-2K-ujH" secondAttribute="centerX" id="h1I-dC-Nu1"/>
+                            <constraint firstItem="gdC-j7-hlx" firstAttribute="left" secondItem="Oob-Ko-Qfr" secondAttribute="right" constant="6" id="jcc-qP-4v6"/>
+                            <constraint firstItem="GMD-I4-WnO" firstAttribute="centerY" secondItem="LXo-ty-u5d" secondAttribute="centerY" id="lub-zh-DCA"/>
+                            <constraint firstItem="Oob-Ko-Qfr" firstAttribute="centerY" secondItem="gdC-j7-hlx" secondAttribute="centerY" id="nrN-E0-Jeh"/>
+                            <constraint firstItem="xhh-1D-hUK" firstAttribute="leading" secondItem="fyF-2K-ujH" secondAttribute="leading" constant="8" id="qW3-Vl-C1Z"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="LXo-ty-u5d" secondAttribute="bottom" constant="12" id="qkF-6W-O19"/>
+                            <constraint firstItem="a6P-FB-khf" firstAttribute="top" secondItem="fyF-2K-ujH" secondAttribute="top" constant="13" id="tj8-TE-Osa"/>
+                            <constraint firstItem="6FQ-aw-Rfx" firstAttribute="centerY" secondItem="gdC-j7-hlx" secondAttribute="centerY" id="xYO-NG-UrY"/>
+                            <constraint firstItem="lBM-8F-fMf" firstAttribute="centerY" secondItem="gAH-t7-9ot" secondAttribute="centerY" id="zkD-c9-PsZ"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="fyF-2K-ujH" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="4oM-EY-ceZ"/>
+                    <constraint firstAttribute="bottom" secondItem="fyF-2K-ujH" secondAttribute="bottom" id="Sts-Tc-T3r"/>
+                    <constraint firstAttribute="trailing" secondItem="fyF-2K-ujH" secondAttribute="trailing" constant="10" id="WHr-wp-vxr"/>
+                    <constraint firstItem="fyF-2K-ujH" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="hye-BW-edH"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="calculatedBenefitLabel" destination="GMD-I4-WnO" id="EDR-oF-24r"/>
+                <outlet property="commentsCountLabel" destination="rvG-uw-fy8" id="mdG-a3-xkR"/>
+                <outlet property="containerBoxView" destination="fyF-2K-ujH" id="exH-Ka-Y7t"/>
+                <outlet property="currencyLabel" destination="Oob-Ko-Qfr" id="8we-Vn-ftP"/>
+                <outlet property="discountPercentageLabel" destination="6FQ-aw-Rfx" id="8WB-F8-39q"/>
+                <outlet property="discountedPriceLabel" destination="LXo-ty-u5d" id="vd2-13-imP"/>
+                <outlet property="horizontalSpacingConstraint" destination="WHr-wp-vxr" id="lOF-l3-4et"/>
+                <outlet property="noRateLabel" destination="lBM-8F-fMf" id="z0X-jQ-jZ6"/>
+                <outlet property="priceLabel" destination="gdC-j7-hlx" id="6uG-lF-pKG"/>
+                <outlet property="productNameLabel" destination="a6P-FB-khf" id="B84-Fq-8Vu"/>
+                <outlet property="rateTitleLabel" destination="a3U-7f-yAf" id="3RD-ui-ve0"/>
+                <outlet property="rateValueLabel" destination="XvJ-Ih-ahy" id="7G1-4E-gxy"/>
+                <outlet property="rateViewControl" destination="7dQ-gY-v5c" id="yg7-EW-Rds"/>
+                <outlet property="seperatorLineView" destination="xhh-1D-hUK" id="GlP-mH-cRZ"/>
+            </connections>
+            <point key="canvasLocation" x="-336" y="-224"/>
+        </tableViewCell>
+    </objects>
+</document>

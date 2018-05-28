@@ -23,12 +23,13 @@ class ProductDetailViewController: BaseViewController,
 
     enum CellType {
         case slider
+        case primaryInfo
     }
     
     fileprivate var availableSections = [Int: [CellType]]()
     let cellIdentifiers : [CellType: String] = [
-        .slider:   ProductDetailViewSliderTableViewCell.nibName()
-        
+        .slider:        ProductDetailViewSliderTableViewCell.nibName(),
+        .primaryInfo:   ProductDetailPrimaryInfoTableViewCell.nibName()
     ]
 
     override func viewDidLoad() {
@@ -62,10 +63,15 @@ class ProductDetailViewController: BaseViewController,
         switch cellType {
             case .slider:
             let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! ProductDetailViewSliderTableViewCell
-            cell.update(withModel: self.product)
             cell.delegate = self
             cell.clipsToBounds = false
+            cell.update(withModel: self.product)
             self.sliderCell = cell
+            return cell
+            
+        case .primaryInfo:
+            let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! ProductDetailPrimaryInfoTableViewCell
+            cell.update(withModel: self.product)
             return cell
         }
     }
