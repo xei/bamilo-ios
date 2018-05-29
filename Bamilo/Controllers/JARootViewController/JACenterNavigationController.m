@@ -168,7 +168,9 @@
             viewController.purchaseTrackingInfo = purchaseInfo;
             viewController.targetString = target.targetString;
             viewController.hidesBottomBarWhenPushed = YES;
-            [self pushViewController:viewController animated:true];
+            [ThreadManager executeOnMainThread:^{
+                [self pushViewController:viewController animated:true];
+            }];
             return YES;
         }
         case CATALOG_HASH:
@@ -180,7 +182,9 @@
             viewController.searchTarget = target;
             viewController.purchaseTrackingInfo = purchaseInfo;
             viewController.initiatorScreenName = screenName;
-            [self pushViewController:viewController animated:true];
+            [ThreadManager executeOnMainThread:^{
+                [self pushViewController:viewController animated:true];
+            }];
             return YES;
         }
         case STATIC_PAGE:
@@ -188,7 +192,9 @@
             JAShopWebViewController* viewController = [[JAShopWebViewController alloc] init];
             viewController.purchaseTrackingInfo = purchaseInfo;
             [self loadScreenTarget:target forBaseViewController:viewController];
-            [self pushViewController:viewController animated: true];
+            [ThreadManager executeOnMainThread:^{
+                [self pushViewController:viewController animated: true];
+            }];
             return YES;
         }
         case EXTERNAL_LINK: {
@@ -199,7 +205,9 @@
             JACampaignsViewController *viewController = [JACampaignsViewController new];
             viewController.purchaseTrackingInfo = purchaseInfo;
             [self loadScreenTarget:target forBaseViewController:viewController];
-            [self pushViewController:viewController animated:true];
+            [ThreadManager executeOnMainThread:^{
+                [self pushViewController:viewController animated:true];
+            }];
             return YES;
         }
             
@@ -837,8 +845,9 @@
     authViewController.isForcedToLogin = force;
     authViewController.signInViewController.completion = _authenticationCompletion;
     authViewController.signUpViewController.completion = _authenticationCompletion;
-    
-    [self pushViewController:authViewController animated:animation];
+    [ThreadManager executeOnMainThread:^{
+        [self pushViewController:authViewController animated:animation];
+    }];
 }
 
 - (void)pushAuthenticationViewController:(void (^)(void))completion byAniamtion:(BOOL)animation {
