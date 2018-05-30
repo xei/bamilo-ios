@@ -16,16 +16,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNavigationBarConfigs];
-    // Do any additional setup after loading the view.
-    
-    self.delegate = self;
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-    self.interactivePopGestureRecognizer.delegate = self;
-    [self.interactivePopGestureRecognizer setEnabled:YES];
 }
 
 - (void)setNavigationBarConfigs {
@@ -55,33 +45,6 @@
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
-}
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    return YES;
-}
-
-// --- These two functions has been implemented becasue of IOS SDK Bug of swipe back gesture
-// --- in root viewcontroller !
-- (void)navigationController:(UINavigationController *)navigationController
-       didShowViewController:(UIViewController *)viewController
-                    animated:(BOOL)animate {
-    if ([self respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        if (self.viewControllers.count > 1) {
-            self.interactivePopGestureRecognizer.delegate = self;
-            self.interactivePopGestureRecognizer.enabled = YES;
-        } else {
-            self.interactivePopGestureRecognizer.delegate = nil;
-            self.interactivePopGestureRecognizer.enabled = NO;
-        }
-    }
-}
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-    if ([self respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        return self.viewControllers.count > 1;
-    }
-    return NO;
 }
 
 @end
