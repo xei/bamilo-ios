@@ -118,7 +118,6 @@ class HomeViewController:   BaseViewController,
         super.viewWillAppear(animated)
         self.homePage.viewWillAppear(animated)
         self.myBamiloPage.viewWillAppear(animated)
-        
         // Hide the navigation bar on the this view controller
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
     }

@@ -8,7 +8,7 @@
 
 #import "BaseNavigationController.h"
 
-@interface BaseNavigationController() <UIGestureRecognizerDelegate>
+@interface BaseNavigationController() <UINavigationControllerDelegate, UIGestureRecognizerDelegate>
 @end
 
 @implementation BaseNavigationController
@@ -16,14 +16,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNavigationBarConfigs];
-    // Do any additional setup after loading the view.
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-    self.interactivePopGestureRecognizer.delegate = self;
-    [self.interactivePopGestureRecognizer setEnabled:YES];
 }
 
 - (void)setNavigationBarConfigs {
@@ -53,10 +45,6 @@
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
-}
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    return YES;
 }
 
 @end

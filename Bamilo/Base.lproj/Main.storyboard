@@ -1811,7 +1811,7 @@
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Pzc-hC-CNZ">
-                                <rect key="frame" x="0.0" y="51" width="414" height="620"/>
+                                <rect key="frame" x="0.0" y="51" width="414" height="640"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="KsG-uT-q0X" customClass="AnimatedCollectionViewLayout" customModule="AnimatedCollectionViewLayout">
                                     <size key="itemSize" width="50" height="50"/>
@@ -1840,7 +1840,7 @@
                             <constraint firstItem="1hV-h5-tPH" firstAttribute="left" secondItem="dzF-yr-ery" secondAttribute="left" id="Qpb-je-S5r"/>
                             <constraint firstAttribute="right" secondItem="Pzc-hC-CNZ" secondAttribute="right" id="SSg-TU-d6m"/>
                             <constraint firstAttribute="bottom" secondItem="aQb-4C-eHr" secondAttribute="bottom" constant="715" id="aPe-xt-3OL"/>
-                            <constraint firstItem="1hV-h5-tPH" firstAttribute="top" secondItem="Pzc-hC-CNZ" secondAttribute="bottom" constant="20" id="b6A-5v-u4q"/>
+                            <constraint firstItem="1hV-h5-tPH" firstAttribute="top" secondItem="Pzc-hC-CNZ" secondAttribute="bottom" id="b6A-5v-u4q"/>
                             <constraint firstItem="aQb-4C-eHr" firstAttribute="centerX" secondItem="dzF-yr-ery" secondAttribute="centerX" id="evb-vW-Waz"/>
                             <constraint firstItem="Pzc-hC-CNZ" firstAttribute="top" secondItem="aQb-4C-eHr" secondAttribute="bottom" constant="30" id="fyZ-Qd-FyE"/>
                             <constraint firstItem="Pzc-hC-CNZ" firstAttribute="left" secondItem="dzF-yr-ery" secondAttribute="left" id="sWb-b1-kjf"/>

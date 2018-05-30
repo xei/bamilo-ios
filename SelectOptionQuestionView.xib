@@ -34,7 +34,7 @@
                             </constraints>
                         </imageView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8G2-Ys-YwN" customClass="SelectViewControl" customModule="Bamilo" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="141" width="290" height="200"/>
+                            <rect key="frame" x="0.0" y="133" width="290" height="200"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" priority="750" constant="200" id="9KD-wr-PZ9"/>
@@ -45,7 +45,7 @@
                         <constraint firstItem="8G2-Ys-YwN" firstAttribute="centerX" secondItem="Axc-UO-36o" secondAttribute="centerX" id="9vp-uP-34V"/>
                         <constraint firstItem="Axc-UO-36o" firstAttribute="centerX" secondItem="HO2-vn-9Gs" secondAttribute="centerX" id="HK9-am-0dm"/>
                         <constraint firstItem="8G2-Ys-YwN" firstAttribute="top" secondItem="HO2-vn-9Gs" secondAttribute="top" priority="250" constant="5" id="W8P-fg-MUk"/>
-                        <constraint firstItem="8G2-Ys-YwN" firstAttribute="top" secondItem="Axc-UO-36o" secondAttribute="bottom" priority="750" constant="16" id="aZk-oE-Emc"/>
+                        <constraint firstItem="8G2-Ys-YwN" firstAttribute="top" secondItem="Axc-UO-36o" secondAttribute="bottom" priority="750" constant="8" id="aZk-oE-Emc"/>
                         <constraint firstItem="8G2-Ys-YwN" firstAttribute="left" secondItem="HO2-vn-9Gs" secondAttribute="left" id="bSz-fb-4ck"/>
                         <constraint firstAttribute="right" secondItem="8G2-Ys-YwN" secondAttribute="right" id="mcO-Mr-GOB"/>
                         <constraint firstItem="Axc-UO-36o" firstAttribute="top" secondItem="HO2-vn-9Gs" secondAttribute="top" constant="5" id="wZ7-dC-6NM"/>

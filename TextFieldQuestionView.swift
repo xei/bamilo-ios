@@ -18,10 +18,10 @@ class TextFieldQuestionView: BaseSurveyQuestionControlView, UITextViewDelegate {
         super.awakeFromNib()
         self.questionTitleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
         self.answerTextView.backgroundColor = Theme.color(kColorGray10)
-        self.answerTextView.applyBorder(width: 1, color: Theme.color(kColorGray8))
         self.answerTextView.font = Theme.font(kFontVariationRegular, size: 13)
         self.answerTextView.delegate = self
-
+        self.answerTextView.layer.cornerRadius = 4
+        self.answerTextView.clipsToBounds = true
     }
 
     override func update(model: SurveyQuestion) {
@@ -38,9 +38,6 @@ class TextFieldQuestionView: BaseSurveyQuestionControlView, UITextViewDelegate {
     
     //MARK: - UITextViewDelegate
     func textViewDidEndEditing(_ textView: UITextView) {
-        //To change the color of border on focus
-        self.answerTextView.applyBorder(width: 1, color: Theme.color(kColorGray8))
-        
         //To switch back to placeholder if necessary
         if answerTextView.text == "" {
             answerTextView.textColor = .lightGray
@@ -49,7 +46,6 @@ class TextFieldQuestionView: BaseSurveyQuestionControlView, UITextViewDelegate {
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        self.answerTextView.applyBorder(width: 1, color: Theme.color(kColorOrange1))
         if answerTextView.textColor == .lightGray {
             answerTextView.text = ""
             answerTextView.textColor = Theme.color(kColorGray1)

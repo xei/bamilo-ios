@@ -88,7 +88,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    
+
     self.neeedsExternalPaymentMethod = NO;
     [self setNeedsStatusBarAppearanceUpdate];
     
@@ -837,12 +837,12 @@
     authViewController.isForcedToLogin = force;
     authViewController.signInViewController.completion = _authenticationCompletion;
     authViewController.signUpViewController.completion = _authenticationCompletion;
-    
     [self pushViewController:authViewController animated:animation];
 }
 
 - (void)pushAuthenticationViewController:(void (^)(void))completion byAniamtion:(BOOL)animation {
     [self pushAuthenticationViewController:completion byAniamtion:animation byForce:NO];
 }
+
 
 @end
