@@ -18,7 +18,7 @@ class AppreciateSurveyCollectionViewCell: BaseCollectionViewCellSwift {
         self.checkMark.markType = .checkmark
         self.checkMark.animationDuration = 1
         self.checkMark.stateChangeAnimation = .stroke
-        self.checkMark.tintColor = Theme.color(kColorOrange)
+        self.checkMark.tintColor = UIColor.fromHexString(hex: "99c857")
         self.checkMark.isUserInteractionEnabled = false
         self.checkMark.checkState = .unchecked
         self.checkMark.checkmarkLineWidth = 5

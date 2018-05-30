@@ -15,12 +15,12 @@ class RadioColoredButtonItemTableViewCell: SelectItemViewCell {
     @IBOutlet weak private var redBackgroundView: UIView!
     @IBOutlet weak private var whiteBackgroundView: UIView!
     
-    
     var progresIndex: Double = 0
     
     override func awakeFromNib() {
         super.awakeFromNib()
         self.titleLabelView.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
+        [greenBackgroundView, redBackgroundView, whiteBackgroundView].forEach { $0?.roundCorners(.allCorners, radius: 4) } 
     }
     
     override func update(withModel model: Any!) {

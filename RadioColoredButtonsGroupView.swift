@@ -28,6 +28,7 @@ class RadioColoredButtonsGroupView: SelectView {
         self.tableview.isScrollEnabled = self.isScrollEnabled
         self.tableview.reloadData()
         self.tableview.layoutIfNeeded()
+        self.tableview.separatorStyle = .none
     }
     
     override func getGetContentSizeHeight() -> CGFloat {

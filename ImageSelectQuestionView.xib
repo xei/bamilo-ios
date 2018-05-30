@@ -23,7 +23,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z3E-4Z-7Xf" customClass="ReviewImageSelectControl" customModule="Bamilo" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="40.5" width="360" height="398.5"/>
+                    <rect key="frame" x="0.0" y="168.5" width="360" height="270.5"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MlJ-YY-Oby">
@@ -39,11 +39,11 @@
                 <constraint firstItem="MlJ-YY-Oby" firstAttribute="centerX" secondItem="qQp-JS-1Nr" secondAttribute="centerX" id="2pb-KG-dLm"/>
                 <constraint firstItem="MlJ-YY-Oby" firstAttribute="width" secondItem="MlJ-YY-Oby" secondAttribute="height" multiplier="1:1" id="GtT-MN-aly"/>
                 <constraint firstAttribute="right" secondItem="z3E-4Z-7Xf" secondAttribute="right" id="HvP-sV-XHG"/>
-                <constraint firstItem="z3E-4Z-7Xf" firstAttribute="top" secondItem="MlJ-YY-Oby" secondAttribute="bottom" priority="250" constant="10" id="Khc-k4-Rii"/>
+                <constraint firstItem="z3E-4Z-7Xf" firstAttribute="top" secondItem="MlJ-YY-Oby" secondAttribute="bottom" priority="750" constant="8" id="Khc-k4-Rii"/>
                 <constraint firstAttribute="right" secondItem="qQp-JS-1Nr" secondAttribute="right" constant="20" id="MDr-wh-HA2"/>
                 <constraint firstAttribute="bottom" secondItem="z3E-4Z-7Xf" secondAttribute="bottom" constant="10" id="QSd-g4-7mK"/>
                 <constraint firstItem="qQp-JS-1Nr" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="VlS-u3-3i8"/>
-                <constraint firstItem="z3E-4Z-7Xf" firstAttribute="top" secondItem="qQp-JS-1Nr" secondAttribute="bottom" priority="750" constant="10" id="YPK-NA-kEK"/>
+                <constraint firstItem="z3E-4Z-7Xf" firstAttribute="top" secondItem="qQp-JS-1Nr" secondAttribute="bottom" priority="250" constant="10" id="YPK-NA-kEK"/>
                 <constraint firstItem="z3E-4Z-7Xf" firstAttribute="left" secondItem="iN0-l3-epB" secondAttribute="left" id="gsb-jp-YFc"/>
                 <constraint firstItem="MlJ-YY-Oby" firstAttribute="top" secondItem="qQp-JS-1Nr" secondAttribute="bottom" constant="10" id="hpP-SO-PmJ"/>
                 <constraint firstItem="qQp-JS-1Nr" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="ntj-2u-aTb"/>
