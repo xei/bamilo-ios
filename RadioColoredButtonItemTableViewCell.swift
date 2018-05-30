@@ -20,10 +20,7 @@ class RadioColoredButtonItemTableViewCell: SelectItemViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         self.titleLabelView.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
-        self.greenBackgroundView.backgroundColor = Theme.color(kColorGreen1)
-        self.redBackgroundView.backgroundColor = Theme.color(kColorRed)
     }
     
     override func update(withModel model: Any!) {

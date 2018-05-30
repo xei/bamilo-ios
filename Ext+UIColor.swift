@@ -47,4 +47,18 @@ extension UIColor {
     static let placeholderColors:[UIColor] = [ //Sequence of these colors are important
         #colorLiteral(red: 0.9764705882, green: 0.937254902, blue: 0.9176470588, alpha: 1), #colorLiteral(red: 0.9254901961, green: 0.9254901961, blue: 0.9254901961, alpha: 1), #colorLiteral(red: 0.8862745098, green: 0.9098039216, blue: 0.937254902, alpha: 1), #colorLiteral(red: 0.9137254902, green: 0.968627451, blue: 0.968627451, alpha: 1), #colorLiteral(red: 0.9607843137, green: 0.9450980392, blue: 0.968627451, alpha: 1), #colorLiteral(red: 0.9254901961, green: 0.9215686275, blue: 0.9098039216, alpha: 1)
     ]
+    
+    
+    func interpolateRGBColorTo(_ end: UIColor, fraction: CGFloat) -> UIColor? {
+        let f = min(max(0, fraction), 1)
+        
+        guard let c1 = self.cgColor.components, let c2 = end.cgColor.components else { return nil }
+        
+        let r: CGFloat = CGFloat(c1[0] + (c2[0] - c1[0]) * f)
+        let g: CGFloat = CGFloat(c1[1] + (c2[1] - c1[1]) * f)
+        let b: CGFloat = CGFloat(c1[2] + (c2[2] - c1[2]) * f)
+        let a: CGFloat = CGFloat(c1[3] + (c2[3] - c1[3]) * f)
+        
+        return UIColor(red: r, green: g, blue: b, alpha: a)
+    }
 }

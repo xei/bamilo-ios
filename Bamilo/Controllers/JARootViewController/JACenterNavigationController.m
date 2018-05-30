@@ -88,7 +88,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    
+
     self.neeedsExternalPaymentMethod = NO;
     [self setNeedsStatusBarAppearanceUpdate];
     
@@ -168,9 +168,7 @@
             viewController.purchaseTrackingInfo = purchaseInfo;
             viewController.targetString = target.targetString;
             viewController.hidesBottomBarWhenPushed = YES;
-            [ThreadManager executeOnMainThread:^{
-                [self pushViewController:viewController animated:true];
-            }];
+            [self pushViewController:viewController animated:true];
             return YES;
         }
         case CATALOG_HASH:
@@ -182,9 +180,7 @@
             viewController.searchTarget = target;
             viewController.purchaseTrackingInfo = purchaseInfo;
             viewController.initiatorScreenName = screenName;
-            [ThreadManager executeOnMainThread:^{
-                [self pushViewController:viewController animated:true];
-            }];
+            [self pushViewController:viewController animated:true];
             return YES;
         }
         case STATIC_PAGE:
@@ -192,9 +188,7 @@
             JAShopWebViewController* viewController = [[JAShopWebViewController alloc] init];
             viewController.purchaseTrackingInfo = purchaseInfo;
             [self loadScreenTarget:target forBaseViewController:viewController];
-            [ThreadManager executeOnMainThread:^{
-                [self pushViewController:viewController animated: true];
-            }];
+            [self pushViewController:viewController animated: true];
             return YES;
         }
         case EXTERNAL_LINK: {
@@ -205,9 +199,7 @@
             JACampaignsViewController *viewController = [JACampaignsViewController new];
             viewController.purchaseTrackingInfo = purchaseInfo;
             [self loadScreenTarget:target forBaseViewController:viewController];
-            [ThreadManager executeOnMainThread:^{
-                [self pushViewController:viewController animated:true];
-            }];
+            [self pushViewController:viewController animated:true];
             return YES;
         }
             
@@ -845,13 +837,12 @@
     authViewController.isForcedToLogin = force;
     authViewController.signInViewController.completion = _authenticationCompletion;
     authViewController.signUpViewController.completion = _authenticationCompletion;
-    [ThreadManager executeOnMainThread:^{
-        [self pushViewController:authViewController animated:animation];
-    }];
+    [self pushViewController:authViewController animated:animation];
 }
 
 - (void)pushAuthenticationViewController:(void (^)(void))completion byAniamtion:(BOOL)animation {
     [self pushAuthenticationViewController:completion byAniamtion:animation byForce:NO];
 }
+
 
 @end

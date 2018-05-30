@@ -127,7 +127,7 @@ import UIKit
         
         let question30 = SurveyQuestion()
         question30.title = "چقدر مایل هستید که بامیلو را به دوستان خود توصیه کنید؟"
-        question30.type = .checkbox
+        question30.type = .radio
         
         let option31 = SurveyQuestionOption()
         option31.title = "نظر من این است که"

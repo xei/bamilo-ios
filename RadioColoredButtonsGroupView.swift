@@ -31,7 +31,7 @@ class RadioColoredButtonsGroupView: SelectView {
     }
     
     override func getGetContentSizeHeight() -> CGFloat {
-        return CGFloat(self.dataSource?.count ?? 0) * 65.5
+        return CGFloat(self.dataSource?.count ?? 0) * 55.5
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
