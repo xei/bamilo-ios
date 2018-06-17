@@ -22,13 +22,17 @@ class RateStarsView: BaseControlView {
         let roundedRate = rateValue.roundByStep(step: 0.5)
         ThreadManager.execute { 
             self.starButtons.forEach { (button) in
+                button.imageHeightToButtonHeightRatio = 0.95
                 if button.tag <= Int(roundedRate) {
-                    button.imageView?.image = #imageLiteral(resourceName: "ProductRateFullStar")
+                    button.imageView?.image = #imageLiteral(resourceName: "ProductRateFullStar").withRenderingMode(.alwaysTemplate)
+                    button.imageView?.tintColor = Theme.color(kColorOrange1)
                 } else {
-                    button.imageView?.image = #imageLiteral(resourceName: "ProductRateEmptyStar")
+                    button.imageView?.image = #imageLiteral(resourceName: "ProductRateEmptyStar").withRenderingMode(.alwaysTemplate)
+                    button.imageView?.tintColor = Theme.color(kColorGray10)
                 }
                 if roundedRate > Double(Int(roundedRate)) && button.tag == Int(roundedRate) + 1 { //has 0.5
-                    button.imageView?.image = #imageLiteral(resourceName: "ProductRateHalfStar")
+                    button.imageView?.image = #imageLiteral(resourceName: "ProductRateHalfStar").withRenderingMode(.alwaysTemplate)
+                    button.imageView?.tintColor = Theme.color(kColorOrange1)
                 }
             }
         }

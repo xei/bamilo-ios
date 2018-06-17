@@ -103,8 +103,8 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
             if (product.brand ?? "").count > 0 {
                 productInfo += "\n\(STRING_BRAND): \(product.brand ?? "")"
             }
-            if (product.seller ?? "").count > 0 {
-                productInfo += "\n\(STRING_SELLER): \(product.seller ?? "")"
+            if (product.sellerName ?? "").count > 0 {
+                productInfo += "\n\(STRING_SELLER): \(product.sellerName ?? "")"
             }
             if let size = product.size {
                 productInfo += "\n\(STRING_SIZE): \(size)".convertTo(language: .arabic)

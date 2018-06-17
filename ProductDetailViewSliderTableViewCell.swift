@@ -18,12 +18,19 @@ class ProductDetailViewSliderTableViewCell: BaseProductTableViewCell, FSPagerVie
     
     weak var delegate: ProductDetailViewSliderTableViewCellDelegate?
     
+    @IBOutlet private weak var wishListButton: DOFavoriteButton!
     @IBOutlet weak var buttonsTopConstraint: NSLayoutConstraint!
-    private static let sliderRatio: CGFloat = 2 //ratio:  320*114
+    private static let sliderRatio: CGFloat = 0.94 //ratio:  320*314
     private var productImageList: [ProductImageItem]?
     private var cellIndexMapper = [Int: FSPagerViewCell]()
     private var sliderBlurView: UIVisualEffectView?
     private var product: Product?
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.contentView.backgroundColor = .white
+        self.clipsToBounds = true
+    }
     
     @IBOutlet weak private var pagerControl: CHIPageControlJalapeno! {
         didSet {
@@ -74,6 +81,8 @@ class ProductDetailViewSliderTableViewCell: BaseProductTableViewCell, FSPagerVie
                 self.sliderView.reloadData()
             }
             self.product = product
+            self.wishListButton.isSelected = product.isInWishList
+            
         }
     }
     

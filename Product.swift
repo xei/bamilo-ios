@@ -29,33 +29,40 @@ import SwiftyJSON
     var reviewsCount: Int?
     var hasStock: Bool = true
     var simples: [SimpleProduct]?
+    var simpleVariationValues: [String]?
+    var variations: [SimpleProduct]?
     var variationName: String?
     var shareURL: String?
     var imageList: [ProductImageItem]?
+    var loadedComprehensively: Bool = false
+    var seller: Seller?
     
     override init() {}
     required init?(map: Map) {}
     
     func mapping(map: Map) {
-        sku                 <- map["sku"]
-        name                <- map["name"]
-        brand               <- map["brand"]
-        maxSavingPrecentage <- map["max_saving_percentage"]
-        price               <- map["price"]
-        categoryIds         = JSON(map.JSON)["categories"].string?.split(separator: "|").map {String($0)}
-        specialPrice        <- map["special_price"]
-        imageUrl            <- (map["image"], URLTransform())
-        target              <- map["target"]
-        category            <- map["category_entity"]
-        isInWishList        <- map["is_wishlist"]
-        reviewsAverage      <- map["rating_reviews_summary.average"]
-        ratingsCount        <- map["rating_reviews_summary.ratings_total"]
-        reviewsCount        <- map["rating_reviews_summary.reviews_total"]
-        isNew               <- map["is_new"]
-        simples             <- map["simples"]
-        variationName       <- map["variation_name"]
-        shareURL            <- map["share_url"]
-        imageList           <- map["image_list"]
+        sku                   <- map["sku"]
+        name                  <- map["name"]
+        brand                 <- map["brand"]
+        maxSavingPrecentage   <- map["max_saving_percentage"]
+        price                 <- map["price"]
+        categoryIds           = JSON(map.JSON)["categories"].string?.split(separator: "|").map {String($0)}
+        simpleVariationValues = JSON(map.JSON)["variations_available_list"].string?.split(separator: ";").map {String($0).trimmingCharacters(in: .whitespacesAndNewlines)}
+        specialPrice          <- map["special_price"]
+        imageUrl              <- (map["image"], URLTransform())
+        target                <- map["target"]
+        category              <- map["category_entity"]
+        isInWishList          <- map["is_wishlist"]
+        reviewsAverage        <- map["rating_reviews_summary.average"]
+        ratingsCount          <- map["rating_reviews_summary.ratings_total"]
+        reviewsCount          <- map["rating_reviews_summary.reviews_total"]
+        isNew                 <- map["is_new"]
+        simples               <- map["simples"]
+        variationName         <- map["variation_name"]
+        shareURL              <- map["share_url"]
+        imageList             <- map["image_list"]
+        seller                <- map["seller_entity"]
+        variations            <- map["variations"]
         
         //check avaiability
         var stockAvaiablity: Bool?

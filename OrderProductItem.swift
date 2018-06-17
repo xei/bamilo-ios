@@ -46,7 +46,7 @@ class OrderProductItem: Product {
     var size: String?
     var quantity: Int?
     var histories: [OrderProductHistory]?
-    var seller: String?
+    var sellerName: String?
     var color: String?
 
     override func mapping(map: Map) {
@@ -60,7 +60,7 @@ class OrderProductItem: Product {
         size <- map["filters.size"]
         color <- map["filters.color"]
         histories <- map["histories"]
-        seller <- map["seller"]
+        sellerName <- map["seller"]
         refaund <- map["refund"]
     }
     

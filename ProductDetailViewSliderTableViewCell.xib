@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -19,9 +19,21 @@
                 <rect key="frame" x="0.0" y="0.0" width="455" height="233.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Geu-TC-AiV" customClass="FSPagerView" customModule="FSPagerView">
-                        <rect key="frame" x="0.0" y="0.0" width="455" height="256.5"/>
+                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BwQ-PM-75c" userLabel="Container">
+                        <rect key="frame" x="0.0" y="-900" width="455" height="1156.5"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Geu-TC-AiV" customClass="FSPagerView" customModule="FSPagerView">
+                                <rect key="frame" x="0.0" y="910" width="455" height="236.5"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Geu-TC-AiV" firstAttribute="top" secondItem="BwQ-PM-75c" secondAttribute="top" constant="910" id="Kb0-B1-YfG"/>
+                            <constraint firstAttribute="right" secondItem="Geu-TC-AiV" secondAttribute="right" id="Ky4-4t-uNQ"/>
+                            <constraint firstAttribute="bottom" secondItem="Geu-TC-AiV" secondAttribute="bottom" constant="10" id="XdZ-n9-eYb"/>
+                            <constraint firstItem="Geu-TC-AiV" firstAttribute="left" secondItem="BwQ-PM-75c" secondAttribute="left" id="ppH-Sg-o4v"/>
+                        </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RbB-cg-U0t" customClass="CHIPageControlJalapeno" customModule="CHIPageControl">
                         <rect key="frame" x="10" y="204" width="435" height="20"/>
@@ -72,25 +84,26 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="CWz-MF-llw" firstAttribute="width" secondItem="CWz-MF-llw" secondAttribute="height" multiplier="1:1" id="2hN-kc-Xoe"/>
+                    <constraint firstAttribute="bottom" secondItem="BwQ-PM-75c" secondAttribute="bottom" constant="-23" id="5l1-0C-7FD"/>
+                    <constraint firstItem="BwQ-PM-75c" firstAttribute="left" secondItem="H2p-sc-9uM" secondAttribute="left" id="BPr-WL-8u2"/>
                     <constraint firstItem="RbB-cg-U0t" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="GlZ-0a-J9t"/>
                     <constraint firstItem="CWz-MF-llw" firstAttribute="centerY" secondItem="65s-jA-YT0" secondAttribute="centerY" id="Mer-So-Mqp"/>
-                    <constraint firstItem="Geu-TC-AiV" firstAttribute="left" secondItem="H2p-sc-9uM" secondAttribute="left" id="Nim-AY-HBU"/>
                     <constraint firstItem="65s-jA-YT0" firstAttribute="left" secondItem="H2p-sc-9uM" secondAttribute="left" constant="10" id="d0g-uL-wEg"/>
                     <constraint firstItem="65s-jA-YT0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="dXq-gH-F11"/>
-                    <constraint firstAttribute="trailing" secondItem="RbB-cg-U0t" secondAttribute="trailing" constant="10" id="ixH-Ct-0aj"/>
-                    <constraint firstAttribute="right" secondItem="Geu-TC-AiV" secondAttribute="right" id="mhP-UO-0Wf"/>
-                    <constraint firstItem="Geu-TC-AiV" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="neR-qf-yg5"/>
+                    <constraint firstAttribute="right" secondItem="RbB-cg-U0t" secondAttribute="right" constant="10" id="ixH-Ct-0aj"/>
                     <constraint firstAttribute="bottom" secondItem="RbB-cg-U0t" secondAttribute="bottom" constant="10" id="ogE-dJ-oa5"/>
+                    <constraint firstAttribute="right" secondItem="BwQ-PM-75c" secondAttribute="right" id="rZs-jF-CZj"/>
                     <constraint firstItem="CWz-MF-llw" firstAttribute="left" secondItem="65s-jA-YT0" secondAttribute="right" constant="5" id="t6M-gA-DU8"/>
-                    <constraint firstAttribute="bottom" secondItem="Geu-TC-AiV" secondAttribute="bottom" constant="-23" id="xJi-Vz-pxk"/>
+                    <constraint firstItem="BwQ-PM-75c" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="-900" id="w8t-eA-Kue"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="buttonsTopConstraint" destination="dXq-gH-F11" id="nQi-xZ-vkX"/>
                 <outlet property="pagerControl" destination="RbB-cg-U0t" id="jiV-vd-WFh"/>
                 <outlet property="sliderView" destination="Geu-TC-AiV" id="gOK-U1-SZG"/>
+                <outlet property="wishListButton" destination="CWz-MF-llw" id="sEn-HZ-Dt2"/>
             </connections>
-            <point key="canvasLocation" x="-700" y="29"/>
+            <point key="canvasLocation" x="-700.5" y="29"/>
         </tableViewCell>
     </objects>
     <resources>

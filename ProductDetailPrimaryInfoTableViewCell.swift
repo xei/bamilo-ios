@@ -22,19 +22,78 @@ class ProductDetailPrimaryInfoTableViewCell: BaseProductTableViewCell {
     @IBOutlet weak private var discountedPriceLabel: UILabel!
     @IBOutlet weak private var calculatedBenefitLabel: UILabel!
     @IBOutlet weak private var discountPercentageLabel: UILabel!
-    
+    @IBOutlet weak private var discountPercentageContainerView: UIView!
+    @IBOutlet weak private var ratePresentorContainerView: UIView!
+    @IBOutlet weak private var rateItButton: UIButton!
+    weak var delegate: BaseProductTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         self.applyStyle()
+        self.backgroundColor = .clear
+        self.contentView.backgroundColor = .clear
+        self.clipsToBounds = false
+        self.contentView.clipsToBounds = false
     }
     
     private func applyStyle() {
-        seperatorLineView.backgroundColor = Theme.color(kColorGray8)
+        self.containerBoxView?.backgroundColor = .white
+        seperatorLineView.backgroundColor = Theme.color(kColorGray10)
         [calculatedBenefitLabel, discountedPriceLabel].forEach { $0.applyStyle(font: Theme.font(kFontVariationLight, size: 11), color: Theme.color(kColorGray3)) }
-        [productNameLabel, rateValueLabel].forEach { $0?.applyStyle(font: Theme.font(kFontVariationBold, size: 12), color: Theme.color(kColorGray1)) }
+        [productNameLabel, rateValueLabel].forEach { $0?.applyStyle(font: Theme.font(kFontVariationBold, size: 15), color: Theme.color(kColorGray1)) }
         [rateTitleLabel, commentsCountLabel, currencyLabel].forEach {$0?.applyStyle(font: Theme.font(kFontVariationLight, size: 12), color: Theme.color(kColorGray1))}
-        priceLabel.applyStyle(font: Theme.font(kFontVariationLight, size: 25), color: Theme.color(kColorOrange1))
+        priceLabel.applyStyle(font: Theme.font(kFontVariationBold, size: 25), color: Theme.color(kColorOrange1))
         noRateLabel.applyStyle(font: Theme.font(kFontVariationLight, size: 12), color: Theme.color(kColorGray3))
+        discountPercentageContainerView.applyBorder(width: 1, color: Theme.color(kColorOrange1))
+        discountPercentageLabel.applyStyle(font: Theme.font(kFontVariationLight, size: 11), color: Theme.color(kColorOrange1))
+        discountPercentageLabel.textAlignment = .center
+        discountPercentageLabel.clipsToBounds = false
+        self.rateItButton.setTitle(STRING_RATE, for: .normal)
+        self.rateItButton.applyStyle(font: Theme.font(kFontVariationLight, size: 13), color: Theme.color(kColorBlue1))
+    }
+    
+    override func update(withModel model: Any!) {
+        if let product = model as? Product {
+            self.productNameLabel.text = product.name
+            self.commentsCountLabel.text = "(\(product.reviewsCount ?? 0)".convertTo(language: .arabic)
+            if let specialPrice = product.specialPrice, let price = product.price, product.price != product.specialPrice {
+                discountedPriceLabel?.attributedText = "\(price)".formatPriceWithCurrency().strucThroughPriceFormat()
+                priceLabel?.text = "\(specialPrice)".convertTo(language: .arabic).priceFormat()
+                if let precentage = product.maxSavingPrecentage {
+                    discountPercentageLabel?.text = "%\(precentage)".convertTo(language: .arabic)
+                } else {
+                    discountPercentageLabel?.text = ""
+                }
+                discountPercentageLabel.isHidden = false
+                discountPercentageContainerView.isHidden = false
+                calculatedBenefitLabel.isHidden = false
+            } else if let price = product.price {
+                priceLabel?.text = "\(price)".formatPriceWithCurrency()
+                discountedPriceLabel?.text = nil
+                discountPercentageLabel?.text = nil
+                discountPercentageLabel.isHidden = true
+                discountPercentageContainerView.isHidden = true
+                calculatedBenefitLabel.isHidden = true
+            }
+            
+            if let rateCount = product.ratingsCount, let reviewAverage = product.reviewsAverage, rateCount != 0 {
+                noRateLabel.isHidden = true
+                self.rateItButton.isHidden = true
+                ratePresentorContainerView.isHidden = false
+                rateValueLabel?.isHidden = false
+                rateViewControl?.isHidden = false
+                rateValueLabel?.text = "\(rateCount)".convertTo(language: .arabic)
+                rateViewControl?.update(withModel: reviewAverage)
+            } else {
+                rateValueLabel?.isHidden = true
+                rateViewControl?.isHidden = true
+                noRateLabel.isHidden = false
+                ratePresentorContainerView.isHidden = true
+                self.rateItButton.isHidden = false
+            }
+        }
+    }
+    @IBAction func rateButtonTapped(_ sender: Any) {
+        self.delegate?.rateButtonTapped?(cell: self)
     }
 }

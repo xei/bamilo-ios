@@ -52,7 +52,6 @@ class HomeViewController:   BaseViewController,
         NotificationCenter.default.addObserver(self, selector: #selector(resetAllBarFrames(animated:)), name: NSNotification.Name(NotificationKeys.EnterForground), object: true)
         self.view.bringSubview(toFront: self.searchBar)
         
-        
         self.searchBar.layer.zPosition = (self.navigationController?.navigationBar.layer.zPosition ?? 0 ) + 1
     }
     

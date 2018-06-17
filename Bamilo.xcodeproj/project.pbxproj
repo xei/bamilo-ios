@@ -145,6 +145,12 @@
 		61626BF51F111818008F2463 /* EmarsysBaseTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 61626BF41F111818008F2463 /* EmarsysBaseTracker.m */; };
 		6164F54D201762910009ED19 /* PhoneVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6164F54C201762910009ED19 /* PhoneVerificationViewController.swift */; };
 		6167C1AE1F431578009293B2 /* JANoConnectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6167C1AD1F431578009293B2 /* JANoConnectionView.xib */; };
+		616A9FC220C3C36800144E5B /* TransparentHeaderHeaderTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616A9FC120C3C36800144E5B /* TransparentHeaderHeaderTableView.swift */; };
+		616A9FC420C3C56E00144E5B /* TransparentHeaderHeaderTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 616A9FC320C3C56E00144E5B /* TransparentHeaderHeaderTableView.xib */; };
+		616A9FC820C402C100144E5B /* ProductVariationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616A9FC620C402C100144E5B /* ProductVariationTableViewCell.swift */; };
+		616A9FC920C402C100144E5B /* ProductVariationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 616A9FC720C402C100144E5B /* ProductVariationTableViewCell.xib */; };
+		616A9FCD20C41A5600144E5B /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616A9FCB20C41A5600144E5B /* ImageCollectionViewCell.swift */; };
+		616A9FCE20C41A5600144E5B /* ImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 616A9FCC20C41A5600144E5B /* ImageCollectionViewCell.xib */; };
 		616D5036204EAA6F00370C4E /* SurveyQuestionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616D5034204EAA6F00370C4E /* SurveyQuestionCollectionViewCell.swift */; };
 		616D5037204EAA6F00370C4E /* SurveyQuestionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 616D5035204EAA6F00370C4E /* SurveyQuestionCollectionViewCell.xib */; };
 		616D5039204EBD8100370C4E /* BaseSurveyQuestionControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616D5038204EBD8100370C4E /* BaseSurveyQuestionControlView.swift */; };
@@ -295,12 +301,16 @@
 		61D474901F6FE1B2001DA6A6 /* HomePageSliderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D4748E1F6FE1B2001DA6A6 /* HomePageSliderTableViewCell.swift */; };
 		61D474911F6FE1B2001DA6A6 /* HomePageSliderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61D4748F1F6FE1B2001DA6A6 /* HomePageSliderTableViewCell.xib */; };
 		61D474941F7019BF001DA6A6 /* HomeDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D474931F7019BF001DA6A6 /* HomeDataManager.swift */; };
+		61D60FEC20D1028E00AAA55B /* ProductSellerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D60FEA20D1028E00AAA55B /* ProductSellerTableViewCell.swift */; };
+		61D60FED20D1028E00AAA55B /* ProductSellerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61D60FEB20D1028E00AAA55B /* ProductSellerTableViewCell.xib */; };
 		61D929341F1642C100716D4C /* Ext+CAShapreLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D929331F1642C100716D4C /* Ext+CAShapreLayer.swift */; };
 		61D929481F165AF700716D4C /* NavBarItemTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D929471F165AF700716D4C /* NavBarItemTypes.m */; };
 		61DA163D1FEE5011001C5071 /* CategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DA163B1FEE5011001C5071 /* CategoryTableViewCell.swift */; };
 		61DA163E1FEE5011001C5071 /* CategoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61DA163C1FEE5011001C5071 /* CategoryTableViewCell.xib */; };
 		61DA16411FEE7E93001C5071 /* Links.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DA16401FEE7E93001C5071 /* Links.swift */; };
 		61DBCCB61E46128300BA8251 /* IconButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 61DBCCB51E46128300BA8251 /* IconButton.m */; };
+		61DF9B0020CE84FC00379C3D /* ProductWarrantyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DF9AFE20CE84FC00379C3D /* ProductWarrantyTableViewCell.swift */; };
+		61DF9B0120CE84FC00379C3D /* ProductWarrantyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61DF9AFF20CE84FC00379C3D /* ProductWarrantyTableViewCell.xib */; };
 		61E0996C1E3E117F004ED14E /* BaseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E0996B1E3E117F004ED14E /* BaseTableViewCell.m */; };
 		61E099711E3E18F0004ED14E /* NotificationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E0996F1E3E18F0004ED14E /* NotificationTableViewCell.m */; };
 		61E099721E3E18F0004ED14E /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E099701E3E18F0004ED14E /* NotificationTableViewCell.xib */; };
@@ -355,6 +365,9 @@
 		61FDE3331F72705D00153A74 /* BaseHomePageTeaserBoxTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FDE3321F72705D00153A74 /* BaseHomePageTeaserBoxTableViewCell.swift */; };
 		61FE97D51EC9BB7700DF233D /* GridCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FE97D41EC9BB7600DF233D /* GridCollectionViewFlowLayout.swift */; };
 		61FE97D71EC9C19300DF233D /* ListCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FE97D61EC9C19300DF233D /* ListCollectionViewFlowLayout.swift */; };
+		61FF70EA20CBABB900B54077 /* ProductVariationCarouselCollectionFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FF70E920CBABB900B54077 /* ProductVariationCarouselCollectionFlowLayout.swift */; };
+		61FF70EE20CD1CE600B54077 /* ButtonCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FF70EC20CD1CE600B54077 /* ButtonCollectionViewCell.swift */; };
+		61FF70EF20CD1CE600B54077 /* ButtonCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61FF70ED20CD1CE600B54077 /* ButtonCollectionViewCell.xib */; };
 		61FFD5861EB8CE17004A3518 /* CatalogDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FFD5851EB8CE17004A3518 /* CatalogDataManager.swift */; };
 		6C18BD741AB87E0A00905FD2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A301BB19811D0700F71726 /* Images.xcassets */; };
 		6CF4AE821ADEAA290024EC34 /* JACatalogBannerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CF4AE7E1ADEAA290024EC34 /* JACatalogBannerCell.xib */; };
@@ -1224,6 +1237,12 @@
 		61626BF41F111818008F2463 /* EmarsysBaseTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysBaseTracker.m; sourceTree = "<group>"; };
 		6164F54C201762910009ED19 /* PhoneVerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneVerificationViewController.swift; sourceTree = "<group>"; };
 		6167C1AD1F431578009293B2 /* JANoConnectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JANoConnectionView.xib; sourceTree = "<group>"; };
+		616A9FC120C3C36800144E5B /* TransparentHeaderHeaderTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentHeaderHeaderTableView.swift; sourceTree = "<group>"; };
+		616A9FC320C3C56E00144E5B /* TransparentHeaderHeaderTableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransparentHeaderHeaderTableView.xib; sourceTree = "<group>"; };
+		616A9FC620C402C100144E5B /* ProductVariationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductVariationTableViewCell.swift; sourceTree = "<group>"; };
+		616A9FC720C402C100144E5B /* ProductVariationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductVariationTableViewCell.xib; sourceTree = "<group>"; };
+		616A9FCB20C41A5600144E5B /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		616A9FCC20C41A5600144E5B /* ImageCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageCollectionViewCell.xib; sourceTree = "<group>"; };
 		616D5034204EAA6F00370C4E /* SurveyQuestionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyQuestionCollectionViewCell.swift; sourceTree = "<group>"; };
 		616D5035204EAA6F00370C4E /* SurveyQuestionCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SurveyQuestionCollectionViewCell.xib; sourceTree = "<group>"; };
 		616D5038204EBD8100370C4E /* BaseSurveyQuestionControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSurveyQuestionControlView.swift; sourceTree = "<group>"; };
@@ -1409,6 +1428,8 @@
 		61D4748E1F6FE1B2001DA6A6 /* HomePageSliderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePageSliderTableViewCell.swift; sourceTree = "<group>"; };
 		61D4748F1F6FE1B2001DA6A6 /* HomePageSliderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomePageSliderTableViewCell.xib; sourceTree = "<group>"; };
 		61D474931F7019BF001DA6A6 /* HomeDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeDataManager.swift; sourceTree = "<group>"; };
+		61D60FEA20D1028E00AAA55B /* ProductSellerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductSellerTableViewCell.swift; sourceTree = "<group>"; };
+		61D60FEB20D1028E00AAA55B /* ProductSellerTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductSellerTableViewCell.xib; sourceTree = "<group>"; };
 		61D8FA0A1F25F69600B04200 /* NavigationBarProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationBarProtocol.h; sourceTree = "<group>"; };
 		61D929331F1642C100716D4C /* Ext+CAShapreLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Ext+CAShapreLayer.swift"; sourceTree = "<group>"; };
 		61D929461F165AF700716D4C /* NavBarItemTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavBarItemTypes.h; sourceTree = "<group>"; };
@@ -1418,6 +1439,8 @@
 		61DA16401FEE7E93001C5071 /* Links.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Links.swift; sourceTree = "<group>"; };
 		61DBCCB41E46128300BA8251 /* IconButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconButton.h; sourceTree = "<group>"; };
 		61DBCCB51E46128300BA8251 /* IconButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconButton.m; sourceTree = "<group>"; };
+		61DF9AFE20CE84FC00379C3D /* ProductWarrantyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductWarrantyTableViewCell.swift; sourceTree = "<group>"; };
+		61DF9AFF20CE84FC00379C3D /* ProductWarrantyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductWarrantyTableViewCell.xib; sourceTree = "<group>"; };
 		61E0996A1E3E117F004ED14E /* BaseTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTableViewCell.h; sourceTree = "<group>"; };
 		61E0996B1E3E117F004ED14E /* BaseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTableViewCell.m; sourceTree = "<group>"; };
 		61E0996E1E3E18F0004ED14E /* NotificationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationTableViewCell.h; sourceTree = "<group>"; };
@@ -1476,6 +1499,9 @@
 		61FDE3321F72705D00153A74 /* BaseHomePageTeaserBoxTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseHomePageTeaserBoxTableViewCell.swift; sourceTree = "<group>"; };
 		61FE97D41EC9BB7600DF233D /* GridCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		61FE97D61EC9C19300DF233D /* ListCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		61FF70E920CBABB900B54077 /* ProductVariationCarouselCollectionFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductVariationCarouselCollectionFlowLayout.swift; sourceTree = "<group>"; };
+		61FF70EC20CD1CE600B54077 /* ButtonCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonCollectionViewCell.swift; sourceTree = "<group>"; };
+		61FF70ED20CD1CE600B54077 /* ButtonCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ButtonCollectionViewCell.xib; sourceTree = "<group>"; };
 		61FFD5851EB8CE17004A3518 /* CatalogDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogDataManager.swift; sourceTree = "<group>"; };
 		6C18BDAB1A1B4CA300626706 /* JANewsletterComponent~iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JANewsletterComponent~iPad.xib"; sourceTree = "<group>"; };
 		6CF4AE7E1ADEAA290024EC34 /* JACatalogBannerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACatalogBannerCell.xib; sourceTree = "<group>"; };
@@ -3223,6 +3249,10 @@
 		6127EA0120B2E1E20064B291 /* ProductDetailView */ = {
 			isa = PBXGroup;
 			children = (
+				61D60FE920D1026500AAA55B /* ProductSellerTableViewCell */,
+				61DF9AFD20CE84DB00379C3D /* ProductWarrantyTableViewCell */,
+				616A9FC520C4029300144E5B /* ProductVariationTableViewCell */,
+				616A9FC020C3C2EB00144E5B /* TransparentHeaderHeaderTableView */,
 				6159573C20BBEEF500B8FDB8 /* PrimaryInfo */,
 				6127EA0220B2E1EB0064B291 /* ProductDetailViewSlider */,
 				615CFE0320B43618003C6EAC /* BaseProductTableViewCell.swift */,
@@ -3657,6 +3687,33 @@
 			name = EmarsysBaseTracker;
 			sourceTree = "<group>";
 		};
+		616A9FC020C3C2EB00144E5B /* TransparentHeaderHeaderTableView */ = {
+			isa = PBXGroup;
+			children = (
+				616A9FC120C3C36800144E5B /* TransparentHeaderHeaderTableView.swift */,
+				616A9FC320C3C56E00144E5B /* TransparentHeaderHeaderTableView.xib */,
+			);
+			name = TransparentHeaderHeaderTableView;
+			sourceTree = "<group>";
+		};
+		616A9FC520C4029300144E5B /* ProductVariationTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				616A9FC620C402C100144E5B /* ProductVariationTableViewCell.swift */,
+				616A9FC720C402C100144E5B /* ProductVariationTableViewCell.xib */,
+			);
+			name = ProductVariationTableViewCell;
+			sourceTree = "<group>";
+		};
+		616A9FCA20C41A3600144E5B /* ImageCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				616A9FCB20C41A5600144E5B /* ImageCollectionViewCell.swift */,
+				616A9FCC20C41A5600144E5B /* ImageCollectionViewCell.xib */,
+			);
+			name = ImageCollectionViewCell;
+			sourceTree = "<group>";
+		};
 		616D5032204EAA2700370C4E /* ReviewSurvey */ = {
 			isa = PBXGroup;
 			children = (
@@ -4004,6 +4061,8 @@
 		6193519F1ECAC92800330E5C /* CollectionViewCell */ = {
 			isa = PBXGroup;
 			children = (
+				61FF70EB20CD1CC400B54077 /* ButtonCollectionViewCell */,
+				616A9FCA20C41A3600144E5B /* ImageCollectionViewCell */,
 				616D5032204EAA2700370C4E /* ReviewSurvey */,
 				61B402691FC034F600E57EF4 /* WishListCollectionViewCell */,
 				61F7053C1F7665E500DCD77C /* HomePage */,
@@ -4660,6 +4719,15 @@
 			name = Slider;
 			sourceTree = "<group>";
 		};
+		61D60FE920D1026500AAA55B /* ProductSellerTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				61D60FEA20D1028E00AAA55B /* ProductSellerTableViewCell.swift */,
+				61D60FEB20D1028E00AAA55B /* ProductSellerTableViewCell.xib */,
+			);
+			name = ProductSellerTableViewCell;
+			sourceTree = "<group>";
+		};
 		61D8D8D91E656F82006650F5 /* Order */ = {
 			isa = PBXGroup;
 			children = (
@@ -4726,6 +4794,15 @@
 				61DBCCB51E46128300BA8251 /* IconButton.m */,
 			);
 			name = IconButton;
+			sourceTree = "<group>";
+		};
+		61DF9AFD20CE84DB00379C3D /* ProductWarrantyTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				61DF9AFE20CE84FC00379C3D /* ProductWarrantyTableViewCell.swift */,
+				61DF9AFF20CE84FC00379C3D /* ProductWarrantyTableViewCell.xib */,
+			);
+			name = ProductWarrantyTableViewCell;
 			sourceTree = "<group>";
 		};
 		61E099661E3E10F0004ED14E /* TableViewCells */ = {
@@ -5063,8 +5140,18 @@
 				61143A5F1ED5754900C53BA8 /* BaseCollectionFlowLayout.swift */,
 				617585F11F88D96700D66541 /* CarouselCollectionFlowLayout.swift */,
 				614ED1671F8B6DCB0096E4D6 /* HomePageDailyDealsCollectionFlowLayout.swift */,
+				61FF70E920CBABB900B54077 /* ProductVariationCarouselCollectionFlowLayout.swift */,
 			);
 			name = CollectionViewFlowLayout;
+			sourceTree = "<group>";
+		};
+		61FF70EB20CD1CC400B54077 /* ButtonCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				61FF70EC20CD1CE600B54077 /* ButtonCollectionViewCell.swift */,
+				61FF70ED20CD1CE600B54077 /* ButtonCollectionViewCell.xib */,
+			);
+			name = ButtonCollectionViewCell;
 			sourceTree = "<group>";
 		};
 		6C9355941A6EC8E700167486 /* Bundles */ = {
@@ -8318,6 +8405,7 @@
 				61AAC67C1FC08A10007FC21E /* CollectionViewLoadingFooter.xib in Resources */,
 				875744091EA60E2D001B518A /* Summer-60@2x.png in Resources */,
 				8757445A1EA60E8D001B518A /* Yalda-Small@3x.png in Resources */,
+				61D60FED20D1028E00AAA55B /* ProductSellerTableViewCell.xib in Resources */,
 				875743611EA60DA5001B518A /* Birthday.png in Resources */,
 				61E534471FA4919800CBDFED /* ProgressBarView.xib in Resources */,
 				875744281EA60E48001B518A /* Tragedy-60@2x.png in Resources */,
@@ -8338,6 +8426,7 @@
 				875743661EA60DA5001B518A /* Birthday-Small-50.png in Resources */,
 				619351A61ECAC9A900330E5C /* CatalogGridCollectionViewCell.xib in Resources */,
 				9A564CBB1B34273800F23057 /* JASellerRatingsViewController~ipad.xib in Resources */,
+				616A9FC920C402C100144E5B /* ProductVariationTableViewCell.xib in Resources */,
 				875743481EA60D8E001B518A /* Autumn-Small-40@2x.png in Resources */,
 				879F87F21E5057F10033FE87 /* PlainTableViewHeaderCell.xib in Resources */,
 				8757436E1EA60DA5001B518A /* Birthday-60@2x.png in Resources */,
@@ -8370,6 +8459,7 @@
 				875743FC1EA60E2D001B518A /* Summer.png in Resources */,
 				8757441B1EA60E48001B518A /* Tragedy.png in Resources */,
 				875743491EA60D8E001B518A /* Autumn-Small-40.png in Resources */,
+				61FF70EF20CD1CE600B54077 /* ButtonCollectionViewCell.xib in Resources */,
 				8757434B1EA60D8E001B518A /* Autumn-76.png in Resources */,
 				875743E21EA60E13001B518A /* Spring-Small-50.png in Resources */,
 				875743AC1EA60DE0001B518A /* Ramadan-60@2x.png in Resources */,
@@ -8391,6 +8481,7 @@
 				61E5791520557CFB0092D0F8 /* SelectView.xib in Resources */,
 				CE9AE0931AB6D78200D56481 /* JAGrayButtonCell.xib in Resources */,
 				CEA2A1BB1B25D53B00E5973F /* JANewRatingViewController.xib in Resources */,
+				616A9FCE20C41A5600144E5B /* ImageCollectionViewCell.xib in Resources */,
 				61B5790D1F9E2B1C00C9F454 /* OrderInfoTableViewCell.xib in Resources */,
 				61840B651EA3981E006739EB /* EmarsysRecommendationGridWidgetView.xib in Resources */,
 				875744611EA60E8E001B518A /* Yalda-76@2x.png in Resources */,
@@ -8406,6 +8497,7 @@
 				CE9AE0A31AB6D78200D56481 /* JAUndefinedSearchView.xib in Resources */,
 				875743A91EA60DE0001B518A /* Ramadan-72@2x.png in Resources */,
 				870680B91E62E1FA000368D5 /* AddressTableViewHeaderCell.xib in Resources */,
+				616A9FC420C3C56E00144E5B /* TransparentHeaderHeaderTableView.xib in Resources */,
 				875743601EA60DA5001B518A /* Birthday@2x.png in Resources */,
 				8757436B1EA60DA5001B518A /* Birthday-72@2x.png in Resources */,
 				875743C11EA60DFD001B518A /* SpecialOffer-Small.png in Resources */,
@@ -8504,6 +8596,7 @@
 				875744441EA60E71001B518A /* Winter-72@2x.png in Resources */,
 				61832FD81ED2C05B006F01FE /* RateStarsView.xib in Resources */,
 				8757443D1EA60E71001B518A /* Winter-Small.png in Resources */,
+				61DF9B0120CE84FC00379C3D /* ProductWarrantyTableViewCell.xib in Resources */,
 				61E099781E3E1A02004ED14E /* VersionTableViewCell.xib in Resources */,
 				875743E01EA60E13001B518A /* Spring-Small.png in Resources */,
 				8714E0381E45CDC3004C9B1D /* AddressTableViewCell.xib in Resources */,
@@ -8667,6 +8760,7 @@
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/TBActionSheet/TBActionSheet.framework",
 				"${BUILT_PRODUCTS_DIR}/TTRangeSlider/TTRangeSlider.framework",
+				"${BUILT_PRODUCTS_DIR}/UICircularProgressRing/UICircularProgressRing.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -8695,6 +8789,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TBActionSheet.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TTRangeSlider.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UICircularProgressRing.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -8753,6 +8848,7 @@
 				8714E0661E476DF8004C9B1D /* AddressList.m in Sources */,
 				9A6BC08A1C4907BB00DD9492 /* JAMessageView.m in Sources */,
 				617D7F391EDC16DC00F36CF7 /* Ext+UILabel.swift in Sources */,
+				61FF70EE20CD1CE600B54077 /* ButtonCollectionViewCell.swift in Sources */,
 				CE9ADF2A1AB6D78200D56481 /* JACartListHeaderView.m in Sources */,
 				1C3043021E2A3A5800BD391E /* CatalogNoResultViewController.m in Sources */,
 				875AD55E1E38C0C900584ABF /* RICountry.m in Sources */,
@@ -8988,6 +9084,7 @@
 				870BEA851E73F6BC00C5B615 /* ThemeFont.m in Sources */,
 				610ED5831E742947000D5BEC /* UITextField+Extensions.m in Sources */,
 				6193F3DE1F0CF67100DA3CDE /* EventAttributes.swift in Sources */,
+				61DF9B0020CE84FC00379C3D /* ProductWarrantyTableViewCell.swift in Sources */,
 				6199B8331FF8EC36008C62A6 /* LoadingCoverView.swift in Sources */,
 				619D0B121EA34B3500FDB255 /* FeatureBoxWidgetView.m in Sources */,
 				875AD5801E38C0C900584ABF /* RITrackingWrapper.m in Sources */,
@@ -9179,6 +9276,7 @@
 				61E6EE66209DD2FC0007ED5F /* CHILayer.swift in Sources */,
 				61C5BAF11EC1F40300F3A796 /* CatalogViewController.swift in Sources */,
 				870BEA8D1E74013F00C5B615 /* ThemeColor.m in Sources */,
+				616A9FCD20C41A5600144E5B /* ImageCollectionViewCell.swift in Sources */,
 				61F946B31ED4502100F341A6 /* ProductDataManager.swift in Sources */,
 				9AB488891B727B2D00886A44 /* UIImage+WithColor.m in Sources */,
 				CE9ADFD11AB6D78200D56481 /* JAOrderSummaryView.m in Sources */,
@@ -9219,6 +9317,7 @@
 				610767D92004ECAC00F6A849 /* OrderCancellationTableViewCell.swift in Sources */,
 				875AD5431E38C0C900584ABF /* RICountryConfiguration.m in Sources */,
 				CE9ADFDF1AB6D78200D56481 /* JAMyOrderCell.m in Sources */,
+				61FF70EA20CBABB900B54077 /* ProductVariationCarouselCollectionFlowLayout.swift in Sources */,
 				611C19141F5E88DD0073940C /* SearchBarView.swift in Sources */,
 				619D0B1A1EA34B9900FDB255 /* FeatureBoxCollectionViewWidgetView.m in Sources */,
 				61EA566A1EDE8BC20093EAD4 /* Ext+UIAlertView.swift in Sources */,
@@ -9261,10 +9360,12 @@
 				612FDC371E45E0A900A9D0BD /* CartTableViewCell.m in Sources */,
 				CE9ADFEF1AB6D78200D56481 /* JAPickerScrollView.m in Sources */,
 				870BEA801E73F5CB00C5B615 /* ThemeKeys.m in Sources */,
+				616A9FC820C402C100144E5B /* ProductVariationTableViewCell.swift in Sources */,
 				61FE97D51EC9BB7700DF233D /* GridCollectionViewFlowLayout.swift in Sources */,
 				875AD5411E38C0C900584ABF /* RIApi.m in Sources */,
 				CE9ADFF11AB6D78200D56481 /* JARecentSearchesViewController.m in Sources */,
 				87EA03261E6D98A900B1E062 /* ProgressView.m in Sources */,
+				616A9FC220C3C36800144E5B /* TransparentHeaderHeaderTableView.swift in Sources */,
 				9A4077251CE0CDA600313D20 /* NSString+Size.m in Sources */,
 				879F87F51E5058060033FE87 /* PlainTableViewHeaderCell.m in Sources */,
 				61143A641ED5BCB000C53BA8 /* FilteredListNoResultViewController.swift in Sources */,
@@ -9315,6 +9416,7 @@
 				CE9AE0021AB6D78200D56481 /* JAAddressCell.m in Sources */,
 				FF6BDCA71CE34ACB002BFE11 /* JAListNumberComponent.m in Sources */,
 				FF4383F81C71EEEB003BA957 /* JAScreenTitleComponent.m in Sources */,
+				61D60FEC20D1028E00AAA55B /* ProductSellerTableViewCell.swift in Sources */,
 				615CFE0420B43618003C6EAC /* BaseProductTableViewCell.swift in Sources */,
 				87A6814E1E40DC3C00D252AC /* ViewControllerManager.m in Sources */,
 				612553501E4F18E800975C6F /* BlueButton.m in Sources */,

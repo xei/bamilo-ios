@@ -2,18 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "1.1-half-star-9px-mdpi.png",
-      "scale" : "1x"
-    },
-    {
-      "idiom" : "universal",
-      "filename" : "1.3-half-star-27px-xhdpi.png",
-      "scale" : "2x"
-    },
-    {
-      "idiom" : "universal",
-      "filename" : "1.4-half-star-36px-xxhdpi.png",
-      "scale" : "3x"
+      "filename" : "Star Half.pdf"
     }
   ],
   "info" : {

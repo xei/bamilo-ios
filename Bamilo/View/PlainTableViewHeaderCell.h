@@ -11,7 +11,9 @@
 @interface PlainTableViewHeaderCell : UITableViewHeaderFooterView
 
 @property (copy, nonatomic) NSString *titleString;
+
 + (NSString *)nibName;
 + (CGFloat)cellHeight;
+- (void)applyStyle: (UIFont *)font color: (UIColor *)color;
 
 @end

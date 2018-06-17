@@ -132,3 +132,10 @@ let STRING_SUCCESSFUL_PRODUCT_SUMPPLEMENT = RILocalizationWrapper.localizedStrin
 let STRING_NO_RETURN_TITLE = RILocalizationWrapper.localizedString("no_return_title")!
 let STRING_SLA_TITLE = RILocalizationWrapper.localizedString("SLA_title")!
 let STRING_NO_NAME = RILocalizationWrapper.localizedString("no_name")!
+let STRING_OPTIONS = RILocalizationWrapper.localizedString("options")!
+let STRING_SELECT_TYPE = RILocalizationWrapper.localizedString("select_type")!
+let STRING_SELECT_SIZE = RILocalizationWrapper.localizedString("select_size")!
+let STRING_PRODUCT_DESCRIPTION = RILocalizationWrapper.localizedString("product_description_title")!
+let STRING_PRODUCT_SPECIFICATION = RILocalizationWrapper.localizedString("product_specifications")!
+let STRING_PRIVACY_POLICY = RILocalizationWrapper.localizedString("privacy_policy")!
+

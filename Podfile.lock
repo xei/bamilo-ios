@@ -44,6 +44,7 @@ PODS:
   - SwiftyJSON (4.1.0)
   - TBActionSheet (1.6.0)
   - TTRangeSlider (1.0.6)
+  - UICircularProgressRing (2.1.0)
 
 DEPENDENCIES:
   - Adjust
@@ -73,6 +74,7 @@ DEPENDENCIES:
   - SwiftyJSON
   - TBActionSheet
   - TTRangeSlider (~> 1.0.5)
+  - UICircularProgressRing
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -107,6 +109,7 @@ SPEC REPOS:
     - SwiftyJSON
     - TBActionSheet
     - TTRangeSlider
+    - UICircularProgressRing
 
 SPEC CHECKSUMS:
   Adjust: 8f204c1005d6635e7c931c6a2cb2f881965bf478
@@ -140,7 +143,8 @@ SPEC CHECKSUMS:
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
   TBActionSheet: 5ad1810015aece4a9e7d18424f16b6e745f0dc8f
   TTRangeSlider: 78188bea83f6471a06f75adbc88da5e990baeafe
+  UICircularProgressRing: 01b8f67bbaca7e3a83ccfa67630fe059a51211d1
 
-PODFILE CHECKSUM: 50bc039ff8fc0916ce2a2023f7243b03707157fa
+PODFILE CHECKSUM: 0bf5cafbbbbad8cbe91243af6782ebcb304eb55b
 
 COCOAPODS: 1.5.0

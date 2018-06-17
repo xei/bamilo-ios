@@ -91,9 +91,7 @@
 
 + (NSString *)getCountryPhoneNumber {
     NSArray *configuration = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICountryConfiguration class])];
-    
     RICountryConfiguration *config = (RICountryConfiguration *)configuration[0];
-    
     return config.phoneNumber;
 }
 

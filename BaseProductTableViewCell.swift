@@ -8,20 +8,27 @@
 
 import UIKit
 
+@objc protocol BaseProductTableViewCellDelegate {
+    @objc optional func rateButtonTapped(cell: ProductDetailPrimaryInfoTableViewCell)
+}
+
 class BaseProductTableViewCell: BaseTableViewCell {
 
-    @IBOutlet internal weak var containerBoxView: UIView!
-    @IBOutlet internal weak var horizontalSpacingConstraint: NSLayoutConstraint!
+    @IBOutlet internal weak var containerBoxView: UIView?
+    @IBOutlet internal weak var horizontalSpacingConstraint: NSLayoutConstraint?
     
     private let horizontalSpacing: CGFloat = 6
+    private var shadowLayer: CAShapeLayer!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.horizontalSpacingConstraint.constant = horizontalSpacing
+        self.contentView.backgroundColor = .clear
+        self.backgroundColor = .clear
+        self.horizontalSpacingConstraint?.constant = horizontalSpacing
         self.contentView.clipsToBounds = false
         self.clipsToBounds = false
-        self.containerBoxView.roundCorners(.allCorners, radius: 3)
-        self.containerBoxView.applyShadow(position: CGSize(width:0 , height: 1), color: .black, opacity: 0.2)
+        
+        self.containerBoxView?.applyShadow(position: .zero, color: .black, opacity: 0.2, radius: 4)
     }
     
     override class func cellHeight() -> CGFloat {
