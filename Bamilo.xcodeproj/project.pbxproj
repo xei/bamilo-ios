@@ -184,6 +184,9 @@
 		61840B651EA3981E006739EB /* EmarsysRecommendationGridWidgetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61840B641EA3981E006739EB /* EmarsysRecommendationGridWidgetView.xib */; };
 		61840B681EA39941006739EB /* EmarsysRecommendationGridWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 61840B671EA39941006739EB /* EmarsysRecommendationGridWidget.m */; };
 		6187ABAE207B451600B08EE5 /* Ext+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6187ABAD207B451600B08EE5 /* Ext+UIImage.swift */; };
+		6189438620D652C9007D6526 /* SellerViewControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6189438520D652C9007D6526 /* SellerViewControl.swift */; };
+		6189438A20D65541007D6526 /* ProductOldSellerViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6189438820D65541007D6526 /* ProductOldSellerViewTableViewCell.swift */; };
+		6189438B20D65541007D6526 /* ProductOldSellerViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6189438920D65541007D6526 /* ProductOldSellerViewTableViewCell.xib */; };
 		618B256C1F35D80700B39440 /* DeliveryTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618B256B1F35D80700B39440 /* DeliveryTimeView.swift */; };
 		618B256E1F35D81800B39440 /* DeliveryTimeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 618B256D1F35D81800B39440 /* DeliveryTimeView.xib */; };
 		618B25701F35D85900B39440 /* DeliveryTimeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618B256F1F35D85900B39440 /* DeliveryTimeControl.swift */; };
@@ -1284,6 +1287,9 @@
 		61840B661EA39941006739EB /* EmarsysRecommendationGridWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysRecommendationGridWidget.h; sourceTree = "<group>"; };
 		61840B671EA39941006739EB /* EmarsysRecommendationGridWidget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysRecommendationGridWidget.m; sourceTree = "<group>"; };
 		6187ABAD207B451600B08EE5 /* Ext+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UIImage.swift"; sourceTree = "<group>"; };
+		6189438520D652C9007D6526 /* SellerViewControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellerViewControl.swift; sourceTree = "<group>"; };
+		6189438820D65541007D6526 /* ProductOldSellerViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductOldSellerViewTableViewCell.swift; sourceTree = "<group>"; };
+		6189438920D65541007D6526 /* ProductOldSellerViewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductOldSellerViewTableViewCell.xib; sourceTree = "<group>"; };
 		618B256B1F35D80700B39440 /* DeliveryTimeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeliveryTimeView.swift; sourceTree = "<group>"; };
 		618B256D1F35D81800B39440 /* DeliveryTimeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeliveryTimeView.xib; sourceTree = "<group>"; };
 		618B256F1F35D85900B39440 /* DeliveryTimeControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeliveryTimeControl.swift; sourceTree = "<group>"; };
@@ -3249,6 +3255,7 @@
 		6127EA0120B2E1E20064B291 /* ProductDetailView */ = {
 			isa = PBXGroup;
 			children = (
+				6189438720D6551F007D6526 /* ProductOldSellerViewTableViewCell */,
 				61D60FE920D1026500AAA55B /* ProductSellerTableViewCell */,
 				61DF9AFD20CE84DB00379C3D /* ProductWarrantyTableViewCell */,
 				616A9FC520C4029300144E5B /* ProductVariationTableViewCell */,
@@ -3548,6 +3555,7 @@
 		615178682091DD840049907F /* Control */ = {
 			isa = PBXGroup;
 			children = (
+				6189438520D652C9007D6526 /* SellerViewControl.swift */,
 			);
 			name = Control;
 			sourceTree = "<group>";
@@ -3949,6 +3957,15 @@
 				61840B671EA39941006739EB /* EmarsysRecommendationGridWidget.m */,
 			);
 			name = Control;
+			sourceTree = "<group>";
+		};
+		6189438720D6551F007D6526 /* ProductOldSellerViewTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				6189438820D65541007D6526 /* ProductOldSellerViewTableViewCell.swift */,
+				6189438920D65541007D6526 /* ProductOldSellerViewTableViewCell.xib */,
+			);
+			name = ProductOldSellerViewTableViewCell;
 			sourceTree = "<group>";
 		};
 		618B25681F35D6C400B39440 /* DeliveryTime */ = {
@@ -8488,6 +8505,7 @@
 				9A564CC11B38187100F23057 /* JANewSellerRatingViewController~ipad.xib in Resources */,
 				CE9AE09B1AB6D78200D56481 /* JAPaymentCell.xib in Resources */,
 				61CBA0571E51FF2F005673F7 /* ButtonTableViewCell.xib in Resources */,
+				6189438B20D65541007D6526 /* ProductOldSellerViewTableViewCell.xib in Resources */,
 				6192B2C6204EA01900376D84 /* ImageSelectQuestionView.xib in Resources */,
 				875744001EA60E2D001B518A /* Summer-Small-50@2x.png in Resources */,
 				875743A41EA60DE0001B518A /* Ramadan-Small-50.png in Resources */,
@@ -8839,6 +8857,7 @@
 				87EA03331E6DA27D00B1E062 /* ProgressItemViewModel.m in Sources */,
 				61D474841F6FD371001DA6A6 /* HomePageTeaserBox.swift in Sources */,
 				87D3DD1C1E8A323000C960FF /* BaseDataManager.m in Sources */,
+				6189438A20D65541007D6526 /* ProductOldSellerViewTableViewCell.swift in Sources */,
 				619D0B171EA34B8600FDB255 /* FeatureBoxCollectionViewWidget.m in Sources */,
 				61832FD41ED2C039006F01FE /* RateStarsView.swift in Sources */,
 				61840B631EA397FF006739EB /* EmarsysRecommendationGridWidgetView.m in Sources */,
@@ -9059,6 +9078,7 @@
 				61832FDA1ED2D145006F01FE /* Ext+Double.swift in Sources */,
 				871BA8591E867FE0007680C5 /* SearchEvent.m in Sources */,
 				CE9ADF6B1AB6D78200D56481 /* JAFiltersView.m in Sources */,
+				6189438620D652C9007D6526 /* SellerViewControl.swift in Sources */,
 				CE9ADF6F1AB6D78200D56481 /* JAPDVProductInfo.m in Sources */,
 				61BA9B551E9A0645004E9DE8 /* EmarsysRecommendationCarouselCollectionViewCell.m in Sources */,
 				612553611E4F514100975C6F /* FormItemValidation.m in Sources */,

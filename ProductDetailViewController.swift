@@ -27,6 +27,7 @@ class ProductDetailViewController: BaseViewController,
         case primaryInfo
         case variation
         case warranty
+        case seller
     }
     
     private var availableSections = [Int: [CellType]]()
@@ -34,11 +35,13 @@ class ProductDetailViewController: BaseViewController,
         .slider:        ProductDetailViewSliderTableViewCell.nibName(),
         .primaryInfo:   ProductDetailPrimaryInfoTableViewCell.nibName(),
         .variation:     ProductVariationTableViewCell.nibName(),
-        .warranty:      ProductWarrantyTableViewCell.nibName()
+        .warranty:      ProductWarrantyTableViewCell.nibName(),
+        .seller:        ProductOldSellerViewTableViewCell.nibName()
     ]
     
     private let sectionNames: [Int: String] = [
-        1: STRING_OPTIONS
+        1: STRING_OPTIONS,
+        2: STRING_VENDOR
     ]
     
     private lazy var isSectionNameVisible = [Int: Bool]()
@@ -54,6 +57,9 @@ class ProductDetailViewController: BaseViewController,
         self.tableView.clipsToBounds = false
         self.tableView.showsVerticalScrollIndicator = false
         self.tableView.showsHorizontalScrollIndicator = false
+        
+        // remove extra white gaps between sections & top and bottom of tableview
+        self.tableView.sectionFooterHeight = 0
         
         cellIdentifiers.forEach { (cellId) in
             self.tableView.register(UINib(nibName: cellId.value, bundle: nil), forCellReuseIdentifier: cellId.value)
@@ -125,6 +131,10 @@ class ProductDetailViewController: BaseViewController,
             self.availableSections[self.availableSections.count] = [.variation, .warranty]
             self.isSectionNameVisible[self.availableSections.count - 1] = true
             
+            if let _ = product.seller {
+                self.availableSections[self.availableSections.count] = [.seller]
+                self.isSectionNameVisible[self.availableSections.count - 1] = true
+            }
         }
     }
     
@@ -210,7 +220,7 @@ extension ProductDetailViewController: UITableViewDataSource, UITableViewDelegat
             self.sliderCell = cell
             return cell
             
-        case .primaryInfo, .variation, .warranty:
+        case .primaryInfo, .variation, .warranty, .seller:
             let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! BaseProductTableViewCell
             cell.update(withModel: product)
             return cell
@@ -232,6 +242,10 @@ extension ProductDetailViewController: UITableViewDataSource, UITableViewDelegat
             return header
         }
         return nil
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

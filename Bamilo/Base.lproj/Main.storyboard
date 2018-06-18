@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="kvV-JZ-EK2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="kvV-JZ-EK2">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -1050,17 +1050,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="r8W-fi-eb9">
-                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="r8W-fi-eb9">
+                                <rect key="frame" x="0.0" y="-16" width="414" height="772"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="r8W-fi-eb9" firstAttribute="top" secondItem="1ze-x0-lQB" secondAttribute="bottom" id="IQR-WZ-Rpl"/>
-                            <constraint firstAttribute="trailing" secondItem="r8W-fi-eb9" secondAttribute="trailing" id="p42-6q-v5D"/>
-                            <constraint firstItem="r8W-fi-eb9" firstAttribute="leading" secondItem="geR-SC-ejl" secondAttribute="leading" id="w1n-Tn-TL0"/>
-                            <constraint firstItem="pSA-3I-mdU" firstAttribute="top" secondItem="r8W-fi-eb9" secondAttribute="bottom" id="zfC-iE-JCv"/>
+                            <constraint firstItem="r8W-fi-eb9" firstAttribute="top" secondItem="1ze-x0-lQB" secondAttribute="bottom" constant="-36" id="IQR-WZ-Rpl"/>
+                            <constraint firstAttribute="right" secondItem="r8W-fi-eb9" secondAttribute="right" id="p42-6q-v5D"/>
+                            <constraint firstItem="r8W-fi-eb9" firstAttribute="left" secondItem="geR-SC-ejl" secondAttribute="left" id="w1n-Tn-TL0"/>
+                            <constraint firstItem="pSA-3I-mdU" firstAttribute="top" secondItem="r8W-fi-eb9" secondAttribute="bottom" constant="-20" id="zfC-iE-JCv"/>
                         </constraints>
                     </view>
                     <connections>

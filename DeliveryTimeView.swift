@@ -104,19 +104,18 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
     
     //MARK: -InputTextFieldControlDelegate
     func inputValueChanged(_ inputTextFieldControl: Any!, byNewValue value: String!, inFieldIndex fieldIndex: UInt) {
-        if let inputControl = inputTextFieldControl as? InputTextFieldControl, inputControl == self.regionInputView {
-            self.getCitiesOfRegion(regionId: self.regionInputView.model.getValue())
-        } else if let inputControl = inputTextFieldControl as? InputTextFieldControl, inputControl == self.cityInputView {
-            self.getTimeDeliveryForCityId(cityID: self.cityInputView.model.getValue())
-            if let regionId = self.regionInputView.model.getValue(),
-               let cityId = self.cityInputView.model.getValue() {
+        if let inputControl = inputTextFieldControl as? InputTextFieldControl, inputControl == self.regionInputView, let regionId = self.regionInputView.model.getValue() {
+            self.getCitiesOfRegion(regionId: regionId)
+        } else if let inputControl = inputTextFieldControl as? InputTextFieldControl, inputControl == self.cityInputView, let cityID = self.cityInputView.model.getValue() {
+            self.getTimeDeliveryForCityId(cityID: cityID)
+            if let regionId = self.regionInputView.model.getValue() {
                 let selectedAreaByUser = [
                     "region" : [
                         "id": regionId,
                         "name": self.regionInputView.getStringValue()
                     ],
                     "city": [
-                        "id": cityId,
+                        "id": cityID,
                         "name": self.cityInputView.getStringValue()
                     ]
                 ]

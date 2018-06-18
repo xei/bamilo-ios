@@ -138,4 +138,4 @@ let STRING_SELECT_SIZE = RILocalizationWrapper.localizedString("select_size")!
 let STRING_PRODUCT_DESCRIPTION = RILocalizationWrapper.localizedString("product_description_title")!
 let STRING_PRODUCT_SPECIFICATION = RILocalizationWrapper.localizedString("product_specifications")!
 let STRING_PRIVACY_POLICY = RILocalizationWrapper.localizedString("privacy_policy")!
-
+let STRING_VENDOR = RILocalizationWrapper.localizedString("vendor")!

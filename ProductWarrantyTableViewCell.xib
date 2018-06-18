@@ -21,23 +21,23 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7LY-2J-hcn">
-                        <rect key="frame" x="10" y="0.0" width="348" height="64"/>
+                        <rect key="frame" x="10" y="0.0" width="348" height="74.5"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="orange_refresh" translatesAutoresizingMaskIntoConstraints="NO" id="8Oy-Kp-Otz">
-                                <rect key="frame" x="314" y="21" width="22" height="22"/>
+                                <rect key="frame" x="314" y="26.5" width="22" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="8Oy-Kp-Otz" secondAttribute="height" multiplier="1:1" id="OjY-WW-nxG"/>
                                     <constraint firstAttribute="height" constant="22" id="kZY-1l-BQG"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="754" text="Label" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cSE-dq-hVB">
-                                <rect key="frame" x="70" y="21.5" width="232" height="20.5"/>
+                                <rect key="frame" x="70" y="27" width="232" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="255" horizontalCompressionResistancePriority="760" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D8Z-mB-YIi">
-                                <rect key="frame" x="12" y="17" width="46" height="30"/>
+                                <rect key="frame" x="12" y="22.5" width="46" height="30"/>
                                 <state key="normal" title="Button"/>
                             </button>
                         </subviews>
@@ -58,7 +58,7 @@
                 <constraints>
                     <constraint firstAttribute="right" secondItem="7LY-2J-hcn" secondAttribute="right" constant="10" id="7c0-6m-3rd"/>
                     <constraint firstItem="7LY-2J-hcn" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="gBT-v3-0TT"/>
-                    <constraint firstAttribute="bottom" secondItem="7LY-2J-hcn" secondAttribute="bottom" constant="10" id="oHD-5H-yUn"/>
+                    <constraint firstAttribute="bottom" secondItem="7LY-2J-hcn" secondAttribute="bottom" id="oHD-5H-yUn"/>
                     <constraint firstItem="7LY-2J-hcn" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="y9X-6j-R6P"/>
                 </constraints>
             </tableViewCellContentView>

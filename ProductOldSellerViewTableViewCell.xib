@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="290" id="KGk-i7-Jjw" customClass="ProductOldSellerViewTableViewCell" customModule="Bamilo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="290"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="289.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NH0-PO-jeS">
+                        <rect key="frame" x="10" y="0.0" width="300" height="279.5"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jBP-KA-PQw" customClass="SellerViewControl" customModule="Bamilo" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="300" height="279.5"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="right" secondItem="jBP-KA-PQw" secondAttribute="right" id="Iz9-ym-Pne"/>
+                            <constraint firstItem="jBP-KA-PQw" firstAttribute="left" secondItem="NH0-PO-jeS" secondAttribute="left" id="d0d-PF-S7I"/>
+                            <constraint firstItem="jBP-KA-PQw" firstAttribute="top" secondItem="NH0-PO-jeS" secondAttribute="top" id="hEU-fO-IBB"/>
+                            <constraint firstAttribute="bottom" secondItem="jBP-KA-PQw" secondAttribute="bottom" id="sN6-GQ-FzM"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="NH0-PO-jeS" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="7GO-4s-2mq"/>
+                    <constraint firstItem="NH0-PO-jeS" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="EiE-KB-ua2"/>
+                    <constraint firstItem="NH0-PO-jeS" firstAttribute="left" secondItem="H2p-sc-9uM" secondAttribute="left" constant="10" id="bXu-yg-cdP"/>
+                    <constraint firstAttribute="bottom" secondItem="NH0-PO-jeS" secondAttribute="bottom" constant="10" id="xRm-h8-zN3"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="containerBoxView" destination="NH0-PO-jeS" id="c1O-nb-xBK"/>
+                <outlet property="horizontalSpacingConstraint" destination="bXu-yg-cdP" id="NWg-mv-gMB"/>
+                <outlet property="sellerViewControl" destination="jBP-KA-PQw" id="FXp-8B-11d"/>
+            </connections>
+            <point key="canvasLocation" x="-254" y="17"/>
+        </tableViewCell>
+    </objects>
+</document>

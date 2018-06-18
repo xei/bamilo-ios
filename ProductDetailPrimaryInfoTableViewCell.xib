@@ -29,7 +29,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fyF-2K-ujH">
-                        <rect key="frame" x="10" y="0.0" width="354" height="207.5"/>
+                        <rect key="frame" x="10" y="0.0" width="354" height="217.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="پولوشرت کلاسیک پولوخورش اصل مدل ۲۰۱۲ فنی سالم " textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a6P-FB-khf">
                                 <rect key="frame" x="15" y="13" width="324" height="23.5"/>
@@ -196,7 +196,7 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="fyF-2K-ujH" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="4oM-EY-ceZ"/>
-                    <constraint firstAttribute="bottom" secondItem="fyF-2K-ujH" secondAttribute="bottom" constant="10" id="Sts-Tc-T3r"/>
+                    <constraint firstAttribute="bottom" secondItem="fyF-2K-ujH" secondAttribute="bottom" id="Sts-Tc-T3r"/>
                     <constraint firstAttribute="right" secondItem="fyF-2K-ujH" secondAttribute="right" constant="10" id="WHr-wp-vxr"/>
                     <constraint firstItem="fyF-2K-ujH" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="hye-BW-edH"/>
                 </constraints>
