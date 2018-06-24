@@ -393,9 +393,9 @@
 }
 
 - (void)trackAddToCartAction:(BOOL)success {
-    RIProduct *product = [RIProduct new];
+    Product *product = [Product new];
     product.sku = self.backupSimpleSku;
-    product.price = self.cart.cartEntity.cartValue;
+    [product setPriceWithPrice: self.cart.cartEntity.cartValue];
     //EVENT : ADD TO CART
     [TrackerManager postEventWithSelector:[EventSelectors addToCartEventSelector]
                                attributes:[EventAttributes addToCartWithProduct:product screenName:[self getScreenName] success:success]];

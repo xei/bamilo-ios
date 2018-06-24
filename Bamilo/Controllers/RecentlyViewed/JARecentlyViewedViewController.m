@@ -321,8 +321,12 @@
             [self bind:data forRequestId:0];
             
             //EVENT: ADD TO CART
+            Product *convertedProduct = [Product new];
+            convertedProduct.sku = product.sku;
+            [convertedProduct setPriceWithPrice:product.price];
+            
             [TrackerManager postEventWithSelector:[EventSelectors addToCartEventSelector]
-                                       attributes:[EventAttributes addToCartWithProduct:product screenName:[self getScreenName] success:YES]];
+                                       attributes:[EventAttributes addToCartWithProduct:convertedProduct screenName:[self getScreenName] success:YES]];
             
             [RIRecentlyViewedProductSku removeFromRecentlyViewed:product];
             
@@ -338,11 +342,14 @@
             //[self hideLoading];
         } else {
             //EVENT: ADD TO CART
+            
+            Product *convertedProduct = [Product new];
+            convertedProduct.sku = product.sku;
+            [convertedProduct setPriceWithPrice:product.price];
             [TrackerManager postEventWithSelector:[EventSelectors addToCartEventSelector]
-                                       attributes:[EventAttributes addToCartWithProduct:product screenName:[self getScreenName] success:NO]];
+                                       attributes:[EventAttributes addToCartWithProduct:convertedProduct screenName:[self getScreenName] success:NO]];
             
             [self onErrorResponse:error.code messages:[error.userInfo objectForKey:kErrorMessages] showAsMessage:YES selector:@selector(finishAddToCartWithButton:) objects:@[button]];
-            //[self hideLoading];
         }
     }];
 }

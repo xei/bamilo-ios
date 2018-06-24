@@ -91,8 +91,6 @@
 
     self.neeedsExternalPaymentMethod = NO;
     [self setNeedsStatusBarAppearanceUpdate];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCart:) name:kUpdateCartNotification object:nil];
 }
 
 - (void)registerObservingOnNotifications {
@@ -714,24 +712,16 @@
     [self pushViewController:viewController animated:YES];
 }
 
-- (void)updateCart:(NSNotification*) notification {
-    NSMutableDictionary* userInfo = nil;
-    if(VALID_NOTEMPTY(notification, NSNotification)) {
-        userInfo = [[NSMutableDictionary alloc] initWithDictionary:notification.userInfo];
-        if(VALID_NOTEMPTY([userInfo objectForKey:kUpdateCartNotificationValue], RICart)) {
-            self.cart = [userInfo objectForKey:kUpdateCartNotificationValue];
-        } else {
-            self.cart = nil;
-        }
-        if(self.cart) {
-            [MainTabBarViewController updateCartValueWithCartItemsCount:[self.cart.cartEntity.cartCount integerValue]];
-        } else {
-            [userInfo removeObjectForKey:kUpdateCartNotificationValue];
-            [MainTabBarViewController updateCartValueWithCartItemsCount:0];
-        }
-    } else {
-        self.cart = nil;
-        [MainTabBarViewController updateCartValueWithCartItemsCount:0];
+
+- (void)updateCartWith:(RICart *)cart {
+    if(cart) {
+        //update navbars cart value
+        [self.viewControllers enumerateObjectsUsingBlock:^(__kindof UIViewController * _Nonnull viewCtrl, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([viewCtrl isKindOfClass:[BaseViewController class]]) {
+                [((BaseViewController *)viewCtrl) updateCartInNavBar];
+            }
+        }];
+        self.cart = cart;
     }
 }
 

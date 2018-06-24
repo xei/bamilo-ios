@@ -14,6 +14,8 @@ class TransparentHeaderHeaderTableView: PlainTableViewHeaderCell {
         super.awakeFromNib()
         self.contentView.backgroundColor = .clear
         self.backgroundColor = .clear
+        self.clipsToBounds = true
+        self.contentView.clipsToBounds = true
         
         self.applyStyle(Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
     }

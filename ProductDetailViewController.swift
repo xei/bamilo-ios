@@ -12,13 +12,17 @@ import Kingfisher
 
 extension UIImageView: DisplaceableView {}
 
-class ProductDetailViewController: BaseViewController,
-                                    DataServiceProtocol {
-
+class ProductDetailViewController: BaseViewController, DataServiceProtocol {
+    
+    var purchaseTrackingInfo: String?
     var product: Product?
     var productSku: String?
+    var animator: ZFModalTransitionAnimator?
     
     @IBOutlet weak private var tableView: UITableView!
+    @IBOutlet weak private var addToCartButton: IconButton!
+    
+    
     private var sliderCell: ProductDetailViewSliderTableViewCell?
     private let headerCellIdentifier = "Header"
 
@@ -41,7 +45,7 @@ class ProductDetailViewController: BaseViewController,
     
     private let sectionNames: [Int: String] = [
         1: STRING_OPTIONS,
-        2: STRING_VENDOR
+        3: STRING_VENDOR
     ]
     
     private lazy var isSectionNameVisible = [Int: Bool]()
@@ -57,6 +61,10 @@ class ProductDetailViewController: BaseViewController,
         self.tableView.clipsToBounds = false
         self.tableView.showsVerticalScrollIndicator = false
         self.tableView.showsHorizontalScrollIndicator = false
+        
+        self.addToCartButton.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: .white)
+        self.addToCartButton.setTitle(STRING_ADD_TO_SHOPPING_CART, for: .normal)
+        self.addToCartButton.backgroundColor = Theme.color(kColorOrange1)
         
         // remove extra white gaps between sections & top and bottom of tableview
         self.tableView.sectionFooterHeight = 0
@@ -75,11 +83,22 @@ class ProductDetailViewController: BaseViewController,
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.tabBarController?.tabBar.isHidden = true
+        self.tabBarController?.tabBar.layer.zPosition = -1
+        self.hidesBottomBarWhenPushed = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.tabBarController?.tabBar.isHidden = false
+        self.tabBarController?.tabBar.layer.zPosition = 0
+    }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView == self.tableView {
             //stretch slider when bounce up
             let cellSliderHeight = ProductDetailViewSliderTableViewCell.cellHeight() + 23 //bottom gap under the cell (slider)
-            var sliderRect = CGRect(x: 0, y:0, width: self.view.frame.width, height: cellSliderHeight - 20)
+            var sliderRect = CGRect(x: 0, y:0, width: self.view.frame.width, height: cellSliderHeight - 20) //slider image vertical gap
             if self.tableView.contentOffset.y < 0 {
                 sliderCell?.blurView?.alpha = 0
                 sliderRect.origin.y = self.tableView.contentOffset.y
@@ -89,7 +108,6 @@ class ProductDetailViewController: BaseViewController,
                 sliderCell?.buttonsTopConstraint.constant = 10
             }
             
-            
             if self.tableView.contentOffset.y >= 0 && self.tableView.contentOffset.y < cellSliderHeight {
                 //parallax behaviour for slider image
                 sliderRect.origin.y = self.tableView.contentOffset.y / 2
@@ -97,7 +115,6 @@ class ProductDetailViewController: BaseViewController,
                 //change alpha of slider's blur view
                 self.sliderCell?.blurView?.alpha = self.tableView.contentOffset.y / cellSliderHeight
             }
-            
             sliderCell?.visibleUIImageView?.frame = sliderRect
             sliderCell?.blurView?.frame = sliderRect
         }
@@ -107,11 +124,11 @@ class ProductDetailViewController: BaseViewController,
     private func getContent(completion: ((Bool)-> Void)? = nil) {
         ProductDataManager.sharedInstance.getProductDetailInfo(self, sku: product?.sku ?? productSku ??  "") { (data, error) in
             if (error == nil) {
-                completion?(true)
                 self.bind(data, forRequestId: 0)
+                completion?(true)
             } else {
-                completion?(false)
                 self.errorHandler(error, forRequestID: 0)
+                completion?(false)
             }
         }
     }
@@ -128,9 +145,18 @@ class ProductDetailViewController: BaseViewController,
             }
             
             //Variation of product
-            self.availableSections[self.availableSections.count] = [.variation, .warranty]
-            self.isSectionNameVisible[self.availableSections.count - 1] = true
+            self.availableSections[self.availableSections.count] = [.variation]
+            self.availableSections[self.availableSections.count] = [.warranty]
             
+            if let simplesCount = product.simples?.count, simplesCount > 0 {
+                self.isSectionNameVisible[self.availableSections.count - 1] = true
+            } else if let variationCount = product.variations?.count, variationCount > 1 {
+                self.isSectionNameVisible[self.availableSections.count - 1] = true
+            } else {
+                self.isSectionNameVisible[self.availableSections.count - 1] = false
+            }
+            
+            //Seller
             if let _ = product.seller {
                 self.availableSections[self.availableSections.count] = [.seller]
                 self.isSectionNameVisible[self.availableSections.count - 1] = true
@@ -161,12 +187,10 @@ class ProductDetailViewController: BaseViewController,
             simple.image = product.imageList?.first?.normal
             
             product.variations = product.variations ?? [SimpleProduct]()
-            product.variations?.append(simple)
-            
+            product.variations?.insert(simple, at: 0)
             updateViewByProduct(product: product)
         }
     }
-    
     
     func errorHandler(_ error: Error!, forRequestID rid: Int32) {
         if rid == 0 {
@@ -181,18 +205,68 @@ class ProductDetailViewController: BaseViewController,
             callBack?(succes)
         }
     }
+    
+    @IBAction func addToCartButtonTapped(_ sender: Any) {
+        if let simples = product?.simples {
+            if simples.count >= 1 {
+                let selectedSimple = simples.filter { $0.isSelected }.first
+                if let selectedSimple = selectedSimple {
+                    requestAddToCart(simpleSku: selectedSimple.sku)
+                } else {
+                    self.performSegue(withIdentifier: "showAddToCartModal", sender: nil)
+                }
+            }
+        }
+    }
+    
+    private func requestAddToCart(simpleSku: String) {
+        if let productEntity = self.product {
+            ProductDataManager.sharedInstance.addToCart(simpleSku: simpleSku, product: productEntity, viewCtrl: self)
+        }
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let segueName = segue.identifier
+        if segueName == "showAddToCartModal", let addToCartViewController = segue.destination as? AddToCartViewController {
+            addToCartViewController.product = self.product
+            self.animator = ZFModalTransitionAnimator(modalViewController: addToCartViewController)
+            animator?.isDragable = true
+            animator?.bounces = true
+            animator?.behindViewAlpha = 0.8
+            animator?.behindViewScale = 0.9
+            animator?.transitionDuration = 0.7
+            animator?.direction = .bottom
+            addToCartViewController.modalPresentationStyle = .overCurrentContext
+            addToCartViewController.delegate = self
+            addToCartViewController.transitioningDelegate = animator
+        }
+    }
+    
+    
+    override func navBarleftButton() -> NavBarButtonType {
+        return .cart
+    }
 }
 
 extension ProductDetailViewController: ProductDetailViewSliderTableViewCellDelegate {
     
     func addOrRemoveFromWishList(product: Product, cell: ProductDetailViewSliderTableViewCell, add: Bool) {
-        
+        ProductDataManager.sharedInstance.addOrRemoveFromWishList(product: product, in: self, add: add) { (success, error) in
+            self.sliderCell?.wishListButton.isSelected = product.isInWishList
+        }
     }
     
     func selectSliderItem(item: ProductImageItem, atIndex: Int, cell: ProductDetailViewSliderTableViewCell) {
         let galleryViewController = GalleryViewController(startIndex: atIndex, itemsDataSource: self, displacedViewsDataSource: self, configuration: self.galleryConfiguration())
         galleryViewController.landedPageAtIndexCompletion = { self.sliderCell?.selectIndex(index: $0, animated: false) }
         self.presentImageGallery(galleryViewController)
+    }
+    
+    func shareButtonTapped() {
+        if let url = self.product?.shareURL, let name = product?.name {
+            Utility.shareUrl(url: url, message: name, viewController: self)
+        }
     }
 }
 
@@ -223,6 +297,11 @@ extension ProductDetailViewController: UITableViewDataSource, UITableViewDelegat
         case .primaryInfo, .variation, .warranty, .seller:
             let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! BaseProductTableViewCell
             cell.update(withModel: product)
+            
+            if cellType == .variation {
+                (cell as? ProductVariationTableViewCell)?.delegate = self
+            }
+            
             return cell
         }
     }
@@ -236,12 +315,12 @@ extension ProductDetailViewController: UITableViewDataSource, UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if let name = self.sectionNames[section] {
+        if let name = self.sectionNames[section], let isVisible = isSectionNameVisible[section], isVisible {
             let header = self.tableView.dequeueReusableHeaderFooterView(withIdentifier: headerCellIdentifier) as! TransparentHeaderHeaderTableView
             header.titleString  = name
             return header
         }
-        return nil
+        return UIView(frame: .zero)
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -252,7 +331,10 @@ extension ProductDetailViewController: UITableViewDataSource, UITableViewDelegat
         if let _ = self.sectionNames[section], let isVisible = isSectionNameVisible[section], isVisible {
             return TransparentHeaderHeaderTableView.cellHeight()
         }
-        return 0
+        
+        //first section (slider) must not have height
+        //minimom acceptable height for header is 1 (apple Api) (for grouped tableview)
+        return section == 0 ? 1 : 10
     }
 }
 
@@ -268,7 +350,7 @@ extension ProductDetailViewController: GalleryItemsDataSource, GalleryDisplacedV
             GalleryConfigurationItem.swipeToDismissMode(.vertical),
             GalleryConfigurationItem.toggleDecorationViewsBySingleTap(false),
             GalleryConfigurationItem.activityViewByLongPress(false),
-            GalleryConfigurationItem.overlayColor(UIColor(white: 0.035, alpha: 1)),
+            GalleryConfigurationItem.overlayColor(.white),
             GalleryConfigurationItem.overlayColorOpacity(1),
             GalleryConfigurationItem.overlayBlurOpacity(1),
             GalleryConfigurationItem.overlayBlurStyle(UIBlurEffectStyle.light),
@@ -318,3 +400,56 @@ extension ProductDetailViewController: GalleryItemsDataSource, GalleryDisplacedV
         return self.sliderCell?.visibleUIImageView
     }
 }
+
+
+extension ProductDetailViewController: AddToCartViewControllerDelegate {
+    
+    func didSelectVariationSku(product: SimpleProduct, completionHandler:@escaping ((_ prodcut: Product)->Void)) {
+        //if we are in the same page of product
+        if let sku = self.product?.sku, product.sku == sku { return }
+        if let sku = self.productSku, product.sku == sku { return }
+
+        self.productSku = product.sku
+        self.product = nil
+        self.getContent { (sucecss) in
+            if sucecss {
+                self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+                if let product = self.product {
+                    completionHandler(product)
+                }
+            }
+        }
+    }
+    
+    func didSelectSimpleSkuFromAddToCartView(product: SimpleProduct) {
+        //update cells which have the variations
+        availableSections.forEach { (section, rows) in
+            if let row = rows.index(of: .variation) {
+                if let isInVisiableRect = tableView.indexPathsForVisibleRows?.contains(IndexPath(row: row, section: section)), isInVisiableRect {
+                    tableView.reloadRows(at: [IndexPath(row: row, section: section)], with: UITableViewRowAnimation.fade)
+                }
+            }
+        }
+    }
+    
+    func submitAddToCartSimple(product: SimpleProduct) {
+        self.requestAddToCart(simpleSku: product.sku)
+    }
+    
+}
+
+
+extension ProductDetailViewController: ProductVariationTableViewCellDelegate {
+    func didSelectVariationSku(product: SimpleProduct, cell: ProductVariationTableViewCell) {
+        
+        //if we are in the same page of product
+        if let sku = self.product?.sku, product.sku == sku { return }
+        if let sku = self.productSku, product.sku == sku { return }
+        
+        let productDetailViewCtrl =  ViewControllerManager.sharedInstance().loadViewController("ProductDetailViewController") as! ProductDetailViewController
+        productDetailViewCtrl.productSku = product.sku
+        productDetailViewCtrl.purchaseTrackingInfo = self.purchaseTrackingInfo
+        self.navigationController?.pushViewController(productDetailViewCtrl, animated: true)
+    }
+}
+

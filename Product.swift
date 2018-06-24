@@ -58,6 +58,15 @@ import SwiftyJSON
         reviewsCount          <- map["rating_reviews_summary.reviews_total"]
         isNew                 <- map["is_new"]
         simples               <- map["simples"]
+        
+        //clean up the simples property
+        if let avaiableVariations = simpleVariationValues {
+            self.simples = self.simples?.filter { $0.variationValue != nil && avaiableVariations.contains($0.variationValue!)}
+        } else {
+            self.simples?.removeAll()
+        }
+        
+        
         variationName         <- map["variation_name"]
         shareURL              <- map["share_url"]
         imageList             <- map["image_list"]
@@ -73,6 +82,16 @@ import SwiftyJSON
         isOutOfStock <- map["out_of_stock"]
         
         hasStock = stockAvaiablity ?? isOutOfStock?.getReverse() ?? true
+    }
+    
+    
+    //TODO: remove this function when there is no objective c code
+    func setPrice(price: NSNumber) {
+        self.price = price.uint64Value
+    }
+    
+    func getNSNumberPrice() -> NSNumber {
+        return NSNumber(value: price ?? 0)
     }
 }
 

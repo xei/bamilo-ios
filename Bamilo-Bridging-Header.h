@@ -71,4 +71,5 @@
 #import "GAI.h"
 #import "GAIFields.h"
 #import "GAIEcommerceFields.h"
+#import "ZFModalTransitionAnimator.h"
 

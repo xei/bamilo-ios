@@ -68,7 +68,7 @@ class ProductDetailPrimaryInfoTableViewCell: BaseProductTableViewCell {
                 discountPercentageContainerView.isHidden = false
                 calculatedBenefitLabel.isHidden = false
             } else if let price = product.price {
-                priceLabel?.text = "\(price)".formatPriceWithCurrency()
+                priceLabel?.text = "\(price)".convertTo(language: .arabic).priceFormat()
                 discountedPriceLabel?.text = nil
                 discountPercentageLabel?.text = nil
                 discountPercentageLabel.isHidden = true

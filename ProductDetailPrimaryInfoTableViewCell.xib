@@ -38,10 +38,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gAH-t7-9ot" userLabel="RateViewContainer">
-                                <rect key="frame" x="186.5" y="48.5" width="152.5" height="21"/>
+                                <rect key="frame" x="182.5" y="48.5" width="156.5" height="21"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7dQ-gY-v5c" customClass="RateStarControl" customModule="Bamilo" customModuleProvider="target">
-                                        <rect key="frame" x="52.5" y="0.0" width="100" height="20"/>
+                                        <rect key="frame" x="56.5" y="0.0" width="100" height="20"/>
                                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="100" id="5ia-kc-9Np"/>
@@ -49,7 +49,7 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="امتیاز" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a3U-7f-yAf">
-                                        <rect key="frame" x="24" y="-0.5" width="26.5" height="22"/>
+                                        <rect key="frame" x="28" y="-0.5" width="26.5" height="22"/>
                                         <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="12"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -77,7 +77,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dxu-ZS-Oxt">
-                                        <rect key="frame" x="-58" y="-0.5" width="42" height="21"/>
+                                        <rect key="frame" x="-62" y="-0.5" width="42" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -92,24 +92,18 @@
                                     <constraint firstItem="Do0-X9-O3B" firstAttribute="centerY" secondItem="XvJ-Ih-ahy" secondAttribute="centerY" id="G4q-re-UBf"/>
                                     <constraint firstItem="7dQ-gY-v5c" firstAttribute="centerY" secondItem="gAH-t7-9ot" secondAttribute="centerY" id="GmB-tf-Osv"/>
                                     <constraint firstItem="XvJ-Ih-ahy" firstAttribute="centerY" secondItem="a3U-7f-yAf" secondAttribute="centerY" id="PNX-4A-o30"/>
-                                    <constraint firstItem="XvJ-Ih-ahy" firstAttribute="right" secondItem="a3U-7f-yAf" secondAttribute="left" constant="2" id="SI2-Zv-w7Y"/>
+                                    <constraint firstItem="a3U-7f-yAf" firstAttribute="left" secondItem="XvJ-Ih-ahy" secondAttribute="right" constant="2" id="SI2-Zv-w7Y"/>
                                     <constraint firstItem="rvG-uw-fy8" firstAttribute="left" secondItem="Do0-X9-O3B" secondAttribute="right" constant="2" id="aH9-h0-Y0K"/>
                                     <constraint firstItem="a3U-7f-yAf" firstAttribute="centerY" secondItem="7dQ-gY-v5c" secondAttribute="centerY" id="bUU-LN-deI"/>
                                     <constraint firstItem="XvJ-Ih-ahy" firstAttribute="left" secondItem="rvG-uw-fy8" secondAttribute="right" constant="2" id="efT-y3-fwW"/>
                                     <constraint firstAttribute="right" secondItem="7dQ-gY-v5c" secondAttribute="right" id="mAM-rd-iKy"/>
                                     <constraint firstItem="rvG-uw-fy8" firstAttribute="left" secondItem="gAH-t7-9ot" secondAttribute="left" id="w70-p2-o6a"/>
-                                    <constraint firstItem="dxu-ZS-Oxt" firstAttribute="right" secondItem="Do0-X9-O3B" secondAttribute="left" constant="2" id="wlY-9G-UKP"/>
+                                    <constraint firstItem="Do0-X9-O3B" firstAttribute="left" secondItem="dxu-ZS-Oxt" secondAttribute="right" constant="2" id="wlY-9G-UKP"/>
                                     <constraint firstItem="dxu-ZS-Oxt" firstAttribute="centerY" secondItem="Do0-X9-O3B" secondAttribute="centerY" id="y9D-nk-hqG"/>
                                 </constraints>
                             </view>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="هنوز امتیازی ثبت نشده است" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lBM-8F-fMf">
-                                <rect key="frame" x="198" y="48.5" width="141" height="22"/>
-                                <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="12"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r1c-fr-HPl">
-                                <rect key="frame" x="147" y="44.5" width="46" height="30"/>
+                                <rect key="frame" x="147" y="44" width="46" height="30"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
                                     <action selector="rateButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="tRG-59-ChL"/>
@@ -164,6 +158,12 @@
                                     <constraint firstAttribute="right" secondItem="4jc-g8-zuB" secondAttribute="right" constant="5" id="m3T-dR-Qsh"/>
                                 </constraints>
                             </view>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="هنوز امتیازی ثبت نشده است" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lBM-8F-fMf">
+                                <rect key="frame" x="198" y="48" width="141" height="22"/>
+                                <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>

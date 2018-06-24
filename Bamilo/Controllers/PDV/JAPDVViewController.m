@@ -669,7 +669,13 @@ static NSString *recommendationLogic = @"RELATED";
         
     }
     
-    activityController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList];
+    activityController.excludedActivityTypes = @[
+                                                 UIActivityTypeAssignToContact,
+                                                 UIActivityTypeCopyToPasteboard,
+                                                 UIActivityTypePostToWeibo,
+                                                 UIActivityTypePrint,
+                                                 UIActivityTypeSaveToCameraRoll,
+                                                 UIActivityTypeAddToReadingList];
     
     [activityController setValue:[NSString stringWithFormat:STRING_SHARE_OBJECT, APP_NAME]
                           forKey:@"subject"];

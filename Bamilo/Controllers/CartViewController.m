@@ -99,8 +99,8 @@
         //remove the existing purchase behaviour with sku
         [[PurchaseBehaviourRecorder sharedInstance] deleteBehaviourWithSku:cartItem.sku];
         
-        RIProduct *product = [RIProduct new];
-        product.price = cartItem.price;
+        Product *product = [Product new];
+        [product setPriceWithPrice: cartItem.price];
         product.sku = cartItem.sku;
         [TrackerManager postEventWithSelector:[EventSelectors removeFromCartEventSelector] attributes:[EventAttributes removeFromCardWithProduct:product success:YES]];
         

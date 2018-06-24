@@ -17,6 +17,7 @@ class SimpleProduct: NSObject, Mappable {
     var specialPrice: UInt64?
     var quantity: UInt = 0
     var variationValue: String?
+    var isSelected: Bool = false
     
     override init() {}
     required init?(map: Map) {}

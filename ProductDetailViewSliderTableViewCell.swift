@@ -12,14 +12,16 @@ import CHIPageControl
 protocol ProductDetailViewSliderTableViewCellDelegate: class {
     func selectSliderItem(item: ProductImageItem, atIndex: Int, cell: ProductDetailViewSliderTableViewCell)
     func addOrRemoveFromWishList(product: Product, cell: ProductDetailViewSliderTableViewCell, add: Bool)
+    func shareButtonTapped()
 }
 
 class ProductDetailViewSliderTableViewCell: BaseProductTableViewCell, FSPagerViewDelegate, FSPagerViewDataSource {
     
     weak var delegate: ProductDetailViewSliderTableViewCellDelegate?
     
-    @IBOutlet private weak var wishListButton: DOFavoriteButton!
+    @IBOutlet weak var wishListButton: DOFavoriteButton!
     @IBOutlet weak var buttonsTopConstraint: NSLayoutConstraint!
+    
     private static let sliderRatio: CGFloat = 0.94 //ratio:  320*314
     private var productImageList: [ProductImageItem]?
     private var cellIndexMapper = [Int: FSPagerViewCell]()
@@ -103,7 +105,7 @@ class ProductDetailViewSliderTableViewCell: BaseProductTableViewCell, FSPagerVie
     }
     
     @IBAction func shareButtonTapped(_ sender: Any) {
-        
+        self.delegate?.shareButtonTapped()
     }
     
     //MARK: - FSPagerViewDataSource && FSPagerViewDataSource

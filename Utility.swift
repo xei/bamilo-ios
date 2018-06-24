@@ -38,7 +38,7 @@ import UIKit
     
     class func shareUrl(url: String, message: String, viewController: BaseViewController) {
         let textToShare = message
-        if let encodeUrl = url.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed),let myWebsite = NSURL(string: encodeUrl) {
+        if let encodeUrl = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),let myWebsite = NSURL(string: encodeUrl) {
             let objectsToShare: [Any] = [textToShare, myWebsite]
             let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
             viewController.present(activityVC, animated: true, completion: nil)

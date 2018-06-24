@@ -48,15 +48,16 @@
 
 - (void)addToCartWithAttributes:(NSDictionary<NSString *,id> *)attributes {
     NSMutableDictionary *dict = [self generateCommonAttributesUsingAttributes:attributes];
-    dict[kEventSKU] = [((RIProduct *)attributes[kEventProduct]) sku] ?: cUNKNOWN_EVENT_VALUE;
-    dict[kEventBasketValue] = [((RIProduct *)attributes[kEventProduct]) price] ?: cUNKNOWN_EVENT_VALUE;
+    Product *product = ((Product *)attributes[kEventProduct]);
+    dict[kEventSKU] = product.sku ?: cUNKNOWN_EVENT_VALUE;
+    dict[kEventBasketValue] = [product getNSNumberPrice] ?: cUNKNOWN_EVENT_VALUE;
     dict[kEventSuccess] = attributes[kEventSuccess];
     [self postEventByName:@"AddToCart" attributes:[dict copy]];
 }
 
 - (void)removeFromCartWithAttributes:(NSDictionary<NSString *,id> *)attributes {
     NSMutableDictionary *dict = [self generateCommonAttributesUsingAttributes:attributes];
-    dict[kEventSKU] = [((RIProduct *)attributes[kEventProduct]) sku] ?: cUNKNOWN_EVENT_VALUE;
+    dict[kEventSKU] = [((Product *)attributes[kEventProduct]) sku] ?: cUNKNOWN_EVENT_VALUE;
     [self postEventByName:@"RemoveFromCart" attributes:[dict copy]];
 }
 

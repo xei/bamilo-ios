@@ -106,7 +106,7 @@
     func searchFiltered(attributes: EventAttributeType) {
         if let filterQuery = attributes[kEventFilterQuery] as? String {
             let arrayOfFilterKeysAndValues = filterQuery.components(separatedBy: "/")
-            let filterKeys = arrayOfFilterKeysAndValues.enumerated().flatMap { $0 % 2 == 0 ? $1 : nil}.joined(separator: ", ")
+            let filterKeys = arrayOfFilterKeysAndValues.enumerated().compactMap { $0 % 2 == 0 ? $1 : nil}.joined(separator: ", ")
             //let filterValues = arrayOfFilterKeysAndValues.enumerated().flatMap { $0 % 2 != 0 ? $1 : nil}.joined(separator: ", ")
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: "Catalog",
@@ -182,12 +182,12 @@
     
     func addToCart(attributes: EventAttributeType) {
         if let screenName = attributes[kEventScreenName] as? String,
-            let product = attributes[kEventProduct] as? RIProduct {
+            let product = attributes[kEventProduct] as? Product {
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: screenName,
                 action: "AddToCart",
                 label: product.sku,
-                value: product.price
+                value: NSNumber(value: product.price ?? 0)
             )
             self.sendParamsToGA(params: params)
             
@@ -197,12 +197,12 @@
     }
     
     func removeFromCart(attributes: EventAttributeType) {
-        if let product = attributes[kEventProduct] as? RIProduct {
+        if let product = attributes[kEventProduct] as? Product {
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: "CART",
                 action: "RemoveFromCart",
                 label: product.sku,
-                value: product.price
+                value: NSNumber(value: product.price ?? 0)
             )
             self.sendParamsToGA(params: params)
             
@@ -274,7 +274,7 @@
     
     func checkoutStart(attributes: EventAttributeType) {
         if let cart = attributes[kEventCart] as? RICart {
-            let combinedSkus = cart.cartEntity.cartItems.map { $0.sku }.flatMap { $0 }.joined(separator: ",")
+            let combinedSkus = cart.cartEntity.cartItems.map { $0.sku }.compactMap { $0 }.joined(separator: ",")
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: "Checkout",
                 action: "CheckoutStart",
@@ -289,12 +289,12 @@
         if let cart = attributes[kEventCart] as? RICart {
             var combinedSkus: String?
             if let cartItems = cart.cartEntity.cartItems,  cartItems.count > 0 {
-                combinedSkus = cart.cartEntity.cartItems?.map { $0.sku }.flatMap { $0 }.joined(separator: ",")
+                combinedSkus = cart.cartEntity.cartItems?.map { $0.sku }.compactMap { $0 }.joined(separator: ",")
             } else if let packages = cart.cartEntity.packages, packages.count > 0 {
-                combinedSkus = cart.cartEntity.packages.map{$0.products}.flatMap{$0}.flatMap{$0}.map { $0.sku }.flatMap { $0 }.joined(separator: ",")
+                combinedSkus = cart.cartEntity.packages.map{$0.products}.compactMap{$0}.flatMap{$0}.map { $0.sku }.compactMap { $0 }.joined(separator: ",")
             }
 
-            let combinedSkusFromPackages = cart.cartEntity.packages.map{$0.products}.flatMap{$0}.flatMap{$0}.map{$0.sku}.flatMap {$0}.joined(separator: ",")
+            let combinedSkusFromPackages = cart.cartEntity.packages.map{$0.products}.compactMap{$0}.flatMap{$0}.map{$0.sku}.compactMap {$0}.joined(separator: ",")
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: "Checkout",
                 action: "CheckoutFinish",
@@ -369,11 +369,11 @@
     }
     
     
-    func trackEcommerceProductClick(product: RIProduct) {  //RIProduct must be replaced with Product after PDVController refactor
+    func trackEcommerceProductClick(product: Product) {  //RIProduct must be replaced with Product after PDVController refactor
         self.sendEcommerceEvent(product: product, actionName: kGAIPAClick)
     }
     
-    func trackEcommerceProductDetailView(product: RIProduct) {
+    func trackEcommerceProductDetailView(product: Product) {
         self.sendEcommerceEvent(product: product, actionName: kGAIPADetail)
     }
     
@@ -424,13 +424,13 @@
     }
     
     //Ecommerce tracking helpers
-    private func sendEcommerceEvent(product: RIProduct, actionName: String) {
+    private func sendEcommerceEvent(product: Product, actionName: String) {
         let action = GAIEcommerceProductAction()
         action.setAction(actionName)
         
         let builder = GAIDictionaryBuilder.createScreenView()
         let _ = builder?.setProductAction(action)
-        let _ = builder?.add(self.convertRIProductToGAIProduct(product: product))
+        let _ = builder?.add(self.convertProductToGAIProduct(product: product))
         
         self.sendParamsToGA(params: builder)
     }
@@ -448,13 +448,13 @@
         return gaProduct
     }
     
-    private func convertRIProductToGAIProduct(product: RIProduct) -> GAIEcommerceProduct {
+    private func convertProductToGAIProduct(product: Product) -> GAIEcommerceProduct {
         let gaProduct = GAIEcommerceProduct()
         gaProduct.setId(product.sku)
         gaProduct.setName(product.name)
         gaProduct.setBrand(product.brand)
         if let price = product.price {
-            gaProduct.setPrice(price)
+            gaProduct.setPrice(NSNumber(value: price))
         }
         gaProduct.setQuantity(1)
         return gaProduct

@@ -567,7 +567,10 @@ import SwiftyJSON
     
     private func showProductPage(product: Product) {
         self.selectedProduct = product
+        
+        self.hidesBottomBarWhenPushed = true
         self.performSegue(withIdentifier: "ProductDetailViewController", sender: nil)
+        self.hidesBottomBarWhenPushed = false
     }
     
     //MARK: - UICollectionViewDataSource & UICollectionViewDelegate
@@ -576,7 +579,6 @@ import SwiftyJSON
         if let product = self.catalogData?.products[indexPath.row] {
             self.showProductPage(product: product)
         }
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -666,66 +668,14 @@ import SwiftyJSON
     
     //MARK: - BaseCatallogCollectionViewCellDelegate
     func addOrRemoveFromWishList(product: Product, cell: BaseCatallogCollectionViewCell, add: Bool) {
-        
-        if !RICustomer.checkIfUserIsLogged() {
-            product.isInWishList.toggle()
+        ProductDataManager.sharedInstance.addOrRemoveFromWishList(product: product, in: self, add: add) { (success, error) in
             cell.updateWithProduct(product: product)
+            if !success {
+//                if !Utility.handleErrorMessages(error: error, viewController: self) {
+//                    self.showNotificationBarMessage(STRING_SERVER_CONNECTION_ERROR_MESSAGE, isSuccess: false)
+//                }
+            }
         }
-        
-        (self.navigationController as? JACenterNavigationController)?.performProtectedBlock({ (userHadSession) in
-            let translatedProduct = RIProduct()
-            translatedProduct.sku = product.sku
-            if let price = product.price {
-                translatedProduct.price = NSNumber(value: price)
-            }
-            if add {
-                ProductDataManager.sharedInstance.addToWishList(self, sku: product.sku, completion: { (data, error) in
-                    if error != nil {
-                        product.isInWishList.toggle()
-                        cell.updateWithProduct(product: product)
-//                        if !Utility.handleErrorMessages(error: error, viewController: self) {
-//                            self.showNotificationBarMessage(STRING_SERVER_CONNECTION_ERROR_MESSAGE, isSuccess: false)
-//                        }
-                        return
-                    }
-                    if product.isInWishList != true {
-                        product.isInWishList.toggle()
-                        cell.updateWithProduct(product: product)
-                    }
-                    self.showNotificationBar(error, isSuccess: false)
-                })
-
-                TrackerManager.postEvent(
-                    selector: EventSelectors.addToWishListSelector(),
-                    attributes: EventAttributes.addToWishList(product: translatedProduct, screenName: self.getScreenName(), success: true)
-                )
-
-            } else {
-                DeleteEntityDataManager.sharedInstance().removeFromWishList(self, sku: product.sku, completion: { (data, error) in
-                    if error != nil {
-                        product.isInWishList.toggle()
-                        cell.updateWithProduct(product: product)
-//                        if !Utility.handleErrorMessages(error: error, viewController: self) {
-//                            self.showNotificationBarMessage(STRING_SERVER_CONNECTION_ERROR_MESSAGE, isSuccess: false)
-//                        }
-                        TrackerManager.postEvent(
-                            selector: EventSelectors.removeFromWishListSelector(),
-                            attributes: EventAttributes.removeFromWishList(product: translatedProduct, screenName: self.getScreenName())
-                        )
-                        return
-                    }
-
-                    if product.isInWishList != false {
-                        product.isInWishList.toggle()
-                        cell.updateWithProduct(product: product)
-                    }
-                    self.showNotificationBar(error, isSuccess: false)
-                })
-            }
-            
-            //Inform others if it's needed
-            NotificationCenter.default.post(name: Notification.Name(rawValue: NotificationKeys.WishListUpdate), object: nil, userInfo: [NotificationKeys.NotificationProduct: product, NotificationKeys.NotificationBool: add])
-        })
     }
     
     //MARK: - prepareForSegue

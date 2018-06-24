@@ -139,3 +139,4 @@ let STRING_PRODUCT_DESCRIPTION = RILocalizationWrapper.localizedString("product_
 let STRING_PRODUCT_SPECIFICATION = RILocalizationWrapper.localizedString("product_specifications")!
 let STRING_PRIVACY_POLICY = RILocalizationWrapper.localizedString("privacy_policy")!
 let STRING_VENDOR = RILocalizationWrapper.localizedString("vendor")!
+let STRING_ADD_TO_SHOPPING_CART = RILocalizationWrapper.localizedString("add_to_shopping_cart")!

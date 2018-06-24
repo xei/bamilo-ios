@@ -219,7 +219,7 @@
 }
 
 - (void)updateCartInNavBar {
-    if (self.navBarleftButton == NavBarButtonTypeCart) {
+    if ([self respondsToSelector:@selector(navBarleftButton)] && self.navBarleftButton == NavBarButtonTypeCart) {
         self.navigationItem.rightBarButtonItem.badgeValue = [NSString stringWithFormat:@"%lu", (unsigned long)[[RICart sharedInstance].cartEntity.cartCount integerValue]];
     }
 }

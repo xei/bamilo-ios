@@ -40,7 +40,16 @@ import Crashlytics
         } else {}
         
         self.updateUserSessionAndCart()
+        
         NotificationCenter.default.addObserver(self, selector: #selector(updateUserSessionAndCart), name: NSNotification.Name(NotificationKeys.EnterForground), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateCartListener(notification:)), name: NSNotification.Name(NotificationKeys.UpdateCart), object: nil)
+    }
+    
+    func updateCartListener(notification: Notification) {
+        if let cart = notification.userInfo?[NotificationKeys.NotificationCart] as? RICart {
+            MainTabBarViewController.updateCartValue(cart: cart)
+        }
     }
     
     func updateUserSessionAndCart() {
@@ -122,8 +131,14 @@ import Crashlytics
         return self.topNavigationController()?.visibleViewController
     }
     
-    class func updateCartValue(cartItemsCount: Int) {
-        MainTabBarViewController.sharedInstance()?.tabBar.items?.last?.badgeValue = cartItemsCount == 0 ? nil : "\(cartItemsCount)" //.convertTo(language: .arabic)
+    class func updateCartValue(cart: RICart) {
+        if let cartItemsCount = cart.cartEntity?.cartCount?.intValue {
+            MainTabBarViewController.sharedInstance()?.tabBar.items?.last?.badgeValue = cartItemsCount == 0 ? nil : "\(cartItemsCount)" //.convertTo(language: .arabic)
+        }
+        
+        MainTabBarViewController.sharedInstance()?.viewControllers?.forEach {
+            ($0 as? JACenterNavigationController)?.updateCart(with: cart)
+        }
     }
     
     class func getTabbarItemView<T>(rootViewClassType: T.Type) -> UIView? {
