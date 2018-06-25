@@ -71,6 +71,10 @@ class ProductDetailViewSliderTableViewCell: BaseProductTableViewCell, FSPagerVie
         self.sliderView.scrollToItem(at: index, animated: animated)
     }
     
+    func openCurrentImage() {
+        self.pagerView(self.sliderView, didSelectItemAt: self.sliderView.currentIndex)
+    }
+    
     var visibleUIImageView: UIImageView? {
         return self.cellIndexMapper[self.sliderView.currentIndex]?.imageView
     }

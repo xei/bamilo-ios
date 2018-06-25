@@ -104,6 +104,11 @@ class ProductDetailViewController: BaseViewController, DataServiceProtocol {
                 sliderRect.origin.y = self.tableView.contentOffset.y
                 sliderRect.size.height = -self.tableView.contentOffset.y + cellSliderHeight - 20 //slider image vertical gap
                 sliderCell?.buttonsTopConstraint.constant = 10 + self.tableView.contentOffset.y
+                
+                if self.tableView.contentOffset.y < -50  {
+                    self.sliderCell?.openCurrentImage()
+                }
+                
             } else {
                 sliderCell?.buttonsTopConstraint.constant = 10
             }
@@ -375,7 +380,7 @@ extension ProductDetailViewController: GalleryItemsDataSource, GalleryDisplacedV
             GalleryConfigurationItem.displacementTimingCurve(.linear),
             GalleryConfigurationItem.thumbnailsButtonMode(.none),
             GalleryConfigurationItem.deleteButtonMode(.none),
-            GalleryConfigurationItem.statusBarHidden(true),
+            GalleryConfigurationItem.statusBarHidden(false),
             GalleryConfigurationItem.displacementKeepOriginalInPlace(false),
             GalleryConfigurationItem.displacementInsetMargin(50)
         ]

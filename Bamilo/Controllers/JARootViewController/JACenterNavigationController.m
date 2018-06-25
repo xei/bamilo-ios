@@ -397,12 +397,10 @@
 }
 
 #pragma mark - Filters
-
 - (void)showProductSpecificationScreen:(NSNotification*)notification {
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JATabNavigationViewController class]]) {
         JATabNavigationViewController *productDetailsViewController = [[JATabNavigationViewController alloc] init];
-        
         if ([notification.userInfo objectForKey:@"product"]) {
             productDetailsViewController.product = [notification.userInfo objectForKey:@"product"];
         }
