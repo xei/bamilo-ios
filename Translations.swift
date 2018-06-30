@@ -140,3 +140,7 @@ let STRING_PRODUCT_SPECIFICATION = RILocalizationWrapper.localizedString("produc
 let STRING_PRIVACY_POLICY = RILocalizationWrapper.localizedString("privacy_policy")!
 let STRING_VENDOR = RILocalizationWrapper.localizedString("vendor")!
 let STRING_ADD_TO_SHOPPING_CART = RILocalizationWrapper.localizedString("add_to_shopping_cart")!
+let STRING_SPECIFICATIONS = RILocalizationWrapper.localizedString("specifications")!
+let STRING_WHOLE_DESCRIPTION = RILocalizationWrapper.localizedString("see_whole_description")!
+let STRING_WHOLE_SPECIFICATIONS = RILocalizationWrapper.localizedString("see_whole_specifications")!
+

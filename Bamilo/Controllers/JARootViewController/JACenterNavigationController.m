@@ -162,11 +162,11 @@
     }
     switch (target.targetType) {
         case PRODUCT_DETAIL: {
-            JAPDVViewController *viewController = [JAPDVViewController new];
-            viewController.purchaseTrackingInfo = purchaseInfo;
-            viewController.targetString = target.targetString;
-            viewController.hidesBottomBarWhenPushed = YES;
-            [self pushViewController:viewController animated:true];
+            ProductDetailViewController *pdvViewCtrl = (ProductDetailViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"ProductDetailViewController"];
+            pdvViewCtrl.purchaseTrackingInfo = purchaseInfo;
+            pdvViewCtrl.productSku = target.node;
+            pdvViewCtrl.hidesBottomBarWhenPushed = YES;
+            [self pushViewController:pdvViewCtrl animated:true];
             return YES;
         }
         case CATALOG_HASH:

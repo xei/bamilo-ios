@@ -28,6 +28,7 @@ class AddToCartViewController: UIViewController {
     @IBOutlet private weak var colorLabel: UILabel!
     @IBOutlet private weak var titleSizeLabel: UILabel!
     @IBOutlet private weak var sizeLabel: UILabel!
+    @IBOutlet private weak var seperatorView: UIView!
     
     weak var delegate: AddToCartViewControllerDelegate?
     var product: Product?
@@ -40,7 +41,6 @@ class AddToCartViewController: UIViewController {
             self.update(product: product)
         }
     }
-    
     
     private func applyStyle() {
         backgroundView.backgroundColor = .white
@@ -68,6 +68,7 @@ class AddToCartViewController: UIViewController {
         }
         
         productVariationView.update(withModel: product)
+        seperatorView.backgroundColor = Theme.color(kColorGray10)
         self.product = product
     }
     
@@ -76,7 +77,7 @@ class AddToCartViewController: UIViewController {
     }
     
     @IBAction func addToCartButtonTapped(_ sender: Any) {
-        if let simples = self.product?.simples, simples.count > 0 {
+        if let simples = self.product?.presentableSimples, simples.count > 0 {
             let selectedSimple = simples.filter { $0.isSelected }.first
             if let selected = selectedSimple {
                 self.delegate?.submitAddToCartSimple(product: selected)

@@ -38,7 +38,6 @@ class ProductVariationView: BaseControlView {
     private let carouselCollectionFlowLayout = ProductVariationCarouselCollectionFlowLayout()
     private var gridButtons: [UIButton]?
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         applyStyle()
@@ -76,7 +75,7 @@ class ProductVariationView: BaseControlView {
         }
         
         //(size)Grid buttons
-        gridButtons = self.product?.simples?.map { (simple) -> UIButton? in
+        gridButtons = self.product?.presentableSimples?.map { (simple) -> UIButton? in
             if let title = simple.variationValue {
                 let button = createButton(withTitle: title, selected: simple.isSelected)
                 button.transform = CGAffineTransform(scaleX: -1, y: 1)
@@ -169,7 +168,7 @@ extension ProductVariationView {
             } else {
                 x = offset
                 row = Double(button.frame.width) + offset
-                y += Double(button.frame.height) + offset
+                y += Double(button.frame.height) + spaceGap
             }
             
             let frame = CGRect(x: CGFloat(x), y: CGFloat(y), width: button.frame.width, height: button.frame.height)
@@ -202,7 +201,9 @@ extension ProductVariationView: UICollectionViewDataSource, UICollectionViewDele
             cell.update(imageUrl: variationUrl)
             
             //selected state for first cell
-            cell.setSelected(selected: indexPath.row == 0)
+            if let sku = self.product?.sku {
+                cell.setSelected(selected: variations[indexPath.row].sku == sku)
+            }
         }
         return cell
     }

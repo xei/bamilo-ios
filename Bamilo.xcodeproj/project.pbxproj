@@ -128,6 +128,15 @@
 		6157A3EE1F83865800B8D501 /* MyBamiloViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6157A3EC1F83865800B8D501 /* MyBamiloViewController.swift */; };
 		6157A3EF1F83865800B8D501 /* MyBamiloViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6157A3ED1F83865800B8D501 /* MyBamiloViewController.xib */; };
 		6157A3F31F83974100B8D501 /* MyBamiloModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6157A3F21F83974100B8D501 /* MyBamiloModel.swift */; };
+		6157A73D20E0FB54001B8361 /* ProductSpecificsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6157A73B20E0FB54001B8361 /* ProductSpecificsTableViewCell.swift */; };
+		6157A73E20E0FB54001B8361 /* ProductSpecificsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6157A73C20E0FB54001B8361 /* ProductSpecificsTableViewCell.xib */; };
+		6157A74020E22C23001B8361 /* ProductMoreInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6157A73F20E22C23001B8361 /* ProductMoreInfoViewController.swift */; };
+		6157A74220E24C02001B8361 /* ProductDescriptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6157A74120E24C02001B8361 /* ProductDescriptionsViewController.swift */; };
+		6157A74420E24D0B001B8361 /* ProductSpecificsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6157A74320E24D0B001B8361 /* ProductSpecificsTableViewController.swift */; };
+		6157A74720E25167001B8361 /* ProductSpecificItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6157A74520E25167001B8361 /* ProductSpecificItemTableViewCell.swift */; };
+		6157A74820E25167001B8361 /* ProductSpecificItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6157A74620E25167001B8361 /* ProductSpecificItemTableViewCell.xib */; };
+		6157A74C20E25E11001B8361 /* ProductSpecificsTitleTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6157A74B20E25E11001B8361 /* ProductSpecificsTitleTableHeaderView.swift */; };
+		6157A74E20E25E2A001B8361 /* ProductSpecificsTitleTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6157A74D20E25E2A001B8361 /* ProductSpecificsTitleTableHeaderView.xib */; };
 		61583DDD1EF92100007107C1 /* DeleteEntityDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61583DDC1EF92100007107C1 /* DeleteEntityDataManager.swift */; };
 		6159573F20BBF07700B8FDB8 /* ProductDetailPrimaryInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6159573D20BBF07700B8FDB8 /* ProductDetailPrimaryInfoTableViewCell.swift */; };
 		6159574020BBF07700B8FDB8 /* ProductDetailPrimaryInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6159573E20BBF07700B8FDB8 /* ProductDetailPrimaryInfoTableViewCell.xib */; };
@@ -1222,6 +1231,15 @@
 		6157A3EC1F83865800B8D501 /* MyBamiloViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBamiloViewController.swift; sourceTree = "<group>"; };
 		6157A3ED1F83865800B8D501 /* MyBamiloViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyBamiloViewController.xib; sourceTree = "<group>"; };
 		6157A3F21F83974100B8D501 /* MyBamiloModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBamiloModel.swift; sourceTree = "<group>"; };
+		6157A73B20E0FB54001B8361 /* ProductSpecificsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductSpecificsTableViewCell.swift; sourceTree = "<group>"; };
+		6157A73C20E0FB54001B8361 /* ProductSpecificsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductSpecificsTableViewCell.xib; sourceTree = "<group>"; };
+		6157A73F20E22C23001B8361 /* ProductMoreInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductMoreInfoViewController.swift; sourceTree = "<group>"; };
+		6157A74120E24C02001B8361 /* ProductDescriptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDescriptionsViewController.swift; sourceTree = "<group>"; };
+		6157A74320E24D0B001B8361 /* ProductSpecificsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductSpecificsTableViewController.swift; sourceTree = "<group>"; };
+		6157A74520E25167001B8361 /* ProductSpecificItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductSpecificItemTableViewCell.swift; sourceTree = "<group>"; };
+		6157A74620E25167001B8361 /* ProductSpecificItemTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductSpecificItemTableViewCell.xib; sourceTree = "<group>"; };
+		6157A74B20E25E11001B8361 /* ProductSpecificsTitleTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductSpecificsTitleTableHeaderView.swift; sourceTree = "<group>"; };
+		6157A74D20E25E2A001B8361 /* ProductSpecificsTitleTableHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductSpecificsTitleTableHeaderView.xib; sourceTree = "<group>"; };
 		61583DDC1EF92100007107C1 /* DeleteEntityDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteEntityDataManager.swift; sourceTree = "<group>"; };
 		6159573D20BBF07700B8FDB8 /* ProductDetailPrimaryInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailPrimaryInfoTableViewCell.swift; sourceTree = "<group>"; };
 		6159573E20BBF07700B8FDB8 /* ProductDetailPrimaryInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductDetailPrimaryInfoTableViewCell.xib; sourceTree = "<group>"; };
@@ -3267,6 +3285,9 @@
 		6127EA0120B2E1E20064B291 /* ProductDetailView */ = {
 			isa = PBXGroup;
 			children = (
+				6157A74A20E25CAE001B8361 /* ProductSpecificsTitleTableHeaderView */,
+				6157A74920E2516C001B8361 /* ProductSpecificItemTableViewCell */,
+				6157A73A20E0FB1A001B8361 /* ProductSpecificsTableViewCell */,
 				6189438720D6551F007D6526 /* ProductOldSellerViewTableViewCell */,
 				61D60FE920D1026500AAA55B /* ProductSellerTableViewCell */,
 				61DF9AFD20CE84DB00379C3D /* ProductWarrantyTableViewCell */,
@@ -3650,6 +3671,33 @@
 				6157A3F21F83974100B8D501 /* MyBamiloModel.swift */,
 			);
 			name = MyBamilo;
+			sourceTree = "<group>";
+		};
+		6157A73A20E0FB1A001B8361 /* ProductSpecificsTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				6157A73B20E0FB54001B8361 /* ProductSpecificsTableViewCell.swift */,
+				6157A73C20E0FB54001B8361 /* ProductSpecificsTableViewCell.xib */,
+			);
+			name = ProductSpecificsTableViewCell;
+			sourceTree = "<group>";
+		};
+		6157A74920E2516C001B8361 /* ProductSpecificItemTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				6157A74520E25167001B8361 /* ProductSpecificItemTableViewCell.swift */,
+				6157A74620E25167001B8361 /* ProductSpecificItemTableViewCell.xib */,
+			);
+			name = ProductSpecificItemTableViewCell;
+			sourceTree = "<group>";
+		};
+		6157A74A20E25CAE001B8361 /* ProductSpecificsTitleTableHeaderView */ = {
+			isa = PBXGroup;
+			children = (
+				6157A74B20E25E11001B8361 /* ProductSpecificsTitleTableHeaderView.swift */,
+				6157A74D20E25E2A001B8361 /* ProductSpecificsTitleTableHeaderView.xib */,
+			);
+			name = ProductSpecificsTitleTableHeaderView;
 			sourceTree = "<group>";
 		};
 		6159573C20BBEEF500B8FDB8 /* PrimaryInfo */ = {
@@ -4190,6 +4238,9 @@
 			children = (
 				6127E9FF20B2DB470064B291 /* ProductDetailViewController.swift */,
 				6194224220D7E6C300445845 /* AddToCartViewController.swift */,
+				6157A73F20E22C23001B8361 /* ProductMoreInfoViewController.swift */,
+				6157A74120E24C02001B8361 /* ProductDescriptionsViewController.swift */,
+				6157A74320E24D0B001B8361 /* ProductSpecificsTableViewController.swift */,
 			);
 			name = ProductDetailView;
 			sourceTree = "<group>";
@@ -8464,6 +8515,7 @@
 				8757436C1EA60DA5001B518A /* Birthday-72.png in Resources */,
 				875744591EA60E8D001B518A /* Yalda.png in Resources */,
 				875743CB1EA60DFD001B518A /* SpecialOffer-60@2x.png in Resources */,
+				6157A74820E25167001B8361 /* ProductSpecificItemTableViewCell.xib in Resources */,
 				612FE51C1EDC0D6300C2AFA0 /* ProfileUserTableViewCell.xib in Resources */,
 				875743811EA60DB9001B518A /* National-Small@3x.png in Resources */,
 				61338D021EACC63B0017BB06 /* EmarsysRecommendationMinimalCarouselWidgetView.xib in Resources */,
@@ -8636,6 +8688,7 @@
 				875743E31EA60E13001B518A /* Spring-Small-40@2x.png in Resources */,
 				CE9AE0CA1AB6D78200D56481 /* JAPDVProductInfo.xib in Resources */,
 				875743A11EA60DE0001B518A /* Ramadan-Small@2x.png in Resources */,
+				6157A73E20E0FB54001B8361 /* ProductSpecificsTableViewCell.xib in Resources */,
 				CE9AE0CD1AB6D78200D56481 /* JAOrangeButtonCell.xib in Resources */,
 				875743621EA60DA5001B518A /* Birthday-Small@3x.png in Resources */,
 				CE9AE0D51AB6D78200D56481 /* JAPDVBundleSingleItem.xib in Resources */,
@@ -8674,6 +8727,7 @@
 				61036B511E65897D006E12A9 /* MutualTitleHeaderCell.xib in Resources */,
 				CEDBF8921B0DF5D00073971A /* JANewsletterComponent_RTL.xib in Resources */,
 				875743831EA60DB9001B518A /* National-Small.png in Resources */,
+				6157A74E20E25E2A001B8361 /* ProductSpecificsTitleTableHeaderView.xib in Resources */,
 				CE9AE0EA1AB6D78200D56481 /* JARatingsView.xib in Resources */,
 				CE9AE0EF1AB6D78200D56481 /* JARatingsViewMedium.xib in Resources */,
 				875744241EA60E48001B518A /* Tragedy-76.png in Resources */,
@@ -8991,6 +9045,7 @@
 				6157A3EE1F83865800B8D501 /* MyBamiloViewController.swift in Sources */,
 				61259BE11FC5819C0051CBD4 /* BreadcrumbsControl.swift in Sources */,
 				8720C33E1EE2A8CC00404378 /* App.swift in Sources */,
+				6157A74020E22C23001B8361 /* ProductMoreInfoViewController.swift in Sources */,
 				61D4748B1F6FDF7A001DA6A6 /* HomePageViewController.swift in Sources */,
 				8702FBBE1E9901AE001D1AA9 /* EventFactory.m in Sources */,
 				617D7F401EDC334900F36CF7 /* ProfileSimpleTableViewCell.swift in Sources */,
@@ -9008,6 +9063,7 @@
 				9A3876561BCD0DBE0088B186 /* JAProductDescriptionView.m in Sources */,
 				875AD5501E38C0C900584ABF /* RISection.m in Sources */,
 				61517875209451CC0049907F /* SimpleProgressBarControl.swift in Sources */,
+				6157A74420E24D0B001B8361 /* ProductSpecificsTableViewController.swift in Sources */,
 				61C51E6D1FDC151700DC75EE /* ErrorControlView.swift in Sources */,
 				9AE766CD1CBCF31400B63D8E /* JACartResumeView.m in Sources */,
 				61FC467D201F75BF000141FA /* BaseNavigationController.m in Sources */,
@@ -9293,6 +9349,7 @@
 				875AD5811E38C0C900584ABF /* RIOpenURLHandler.m in Sources */,
 				615EDF541F697DA600454A10 /* LocalSearchSuggestion.swift in Sources */,
 				613A7E981EBF692E00E1AB3F /* CatalogFilterOption.swift in Sources */,
+				6157A73D20E0FB54001B8361 /* ProductSpecificsTableViewCell.swift in Sources */,
 				9A3876641BCD0DFD0088B186 /* JAProductReviewsView.m in Sources */,
 				9A189E6A1BB31AF70039BC14 /* JAProductInfoRatingLine.m in Sources */,
 				87EA03231E6D987400B1E062 /* ProgressViewControl.m in Sources */,
@@ -9348,6 +9405,7 @@
 				61A166BA1FB6A7AA003FBA56 /* TourManager.swift in Sources */,
 				875AD54F1E38C0C900584ABF /* RISearchSuggestion.m in Sources */,
 				87A681711E41FCF300D252AC /* CheckoutProgressView.m in Sources */,
+				6157A74220E24C02001B8361 /* ProductDescriptionsViewController.swift in Sources */,
 				CE9ADFC71AB6D78200D56481 /* JAButtonWithBlur.m in Sources */,
 				FFB1B08E1CE5E163000F60AD /* JAORWaysViewController.m in Sources */,
 				CE9ADFCB1AB6D78200D56481 /* JAAddRatingView.m in Sources */,
@@ -9431,6 +9489,7 @@
 				61143A591ED55C2300C53BA8 /* Ext+Bool.swift in Sources */,
 				61CBA88C1F696013009F0EEF /* SearchSuggestionDataManager.swift in Sources */,
 				6194224A20D7E9B000445845 /* ProductVariationView.swift in Sources */,
+				6157A74720E25167001B8361 /* ProductSpecificItemTableViewCell.swift in Sources */,
 				9AEF742C1CD8A8BD00A5D574 /* JAORConfirmationScreenViewController.m in Sources */,
 				CE9ADFE51AB6D78200D56481 /* JANewsletterComponent.m in Sources */,
 				610C68A51EC742E3008FB66C /* CatalogHeaderControl.swift in Sources */,
@@ -9542,6 +9601,7 @@
 				872230E61E6A9851000748E9 /* CAPSPageMenu.m in Sources */,
 				CE9AE00E1AB6D78200D56481 /* JACampaignPageView.m in Sources */,
 				6125535B1E4F382100975C6F /* UIScrollView+Extension.m in Sources */,
+				6157A74C20E25E11001B8361 /* ProductSpecificsTitleTableHeaderView.swift in Sources */,
 				61AF00B91F402FE600543BA8 /* DOFavoriteButton.swift in Sources */,
 				8702FBC71E9919A8001D1AA9 /* SignUpEvent.m in Sources */,
 				8714E0901E48CD41004C9B1D /* DiscountSwitcherView.m in Sources */,

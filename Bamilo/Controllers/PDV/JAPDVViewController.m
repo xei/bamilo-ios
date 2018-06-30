@@ -255,7 +255,7 @@ static NSString *recommendationLogic = @"RELATED";
     // notify the InAppNotification SDK that this the active view controller
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
     self.product = product;
-    [[GoogleAnalyticsTracker sharedTracker] trackEcommerceProductClickWithProduct:product];
+//    [[GoogleAnalyticsTracker sharedTracker] trackEcommerceProductClickWithProduct:product];
     
     self.productSku = product.sku;
     [self trackingEventViewProduct:product];
@@ -714,8 +714,8 @@ static NSString *recommendationLogic = @"RELATED";
                 [self bind:data forRequestId:0];
                 
                 //EVENT: ADD TO CART
-                [TrackerManager postEventWithSelector:[EventSelectors addToCartEventSelector]
-                                           attributes:[EventAttributes addToCartWithProduct:self.product screenName:[self getScreenName] success:YES]];
+//                [TrackerManager postEventWithSelector:[EventSelectors addToCartEventSelector]
+//                                           attributes:[EventAttributes addToCartWithProduct:self.product screenName:[self getScreenName] success:YES]];
                 
                 if (VALID_NOTEMPTY(self.purchaseTrackingInfo, NSString)) {
                     [[PurchaseBehaviourRecorder sharedInstance] recordAddToCartWithSku:self.product.sku trackingInfo:self.purchaseTrackingInfo];
@@ -734,8 +734,8 @@ static NSString *recommendationLogic = @"RELATED";
                 [self updateCartInNavBar];
             } else {
                 //EVENT: ADD TO CART
-                [TrackerManager postEventWithSelector:[EventSelectors addToCartEventSelector]
-                                           attributes:[EventAttributes addToCartWithProduct:self.product screenName:[self getScreenName] success:NO]];
+//                [TrackerManager postEventWithSelector:[EventSelectors addToCartEventSelector]
+//                                           attributes:[EventAttributes addToCartWithProduct:self.product screenName:[self getScreenName] success:NO]];
                 [self onErrorResponse:RIApiResponseAPIError messages:nil showAsMessage:NO selector:@selector(addToCart) objects:nil];
                 [self hideLoading];
             }

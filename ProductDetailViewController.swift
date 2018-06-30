@@ -12,7 +12,7 @@ import Kingfisher
 
 extension UIImageView: DisplaceableView {}
 
-class ProductDetailViewController: BaseViewController, DataServiceProtocol {
+@objcMembers class ProductDetailViewController: BaseViewController, DataServiceProtocol {
     
     var purchaseTrackingInfo: String?
     var product: Product?
@@ -32,6 +32,8 @@ class ProductDetailViewController: BaseViewController, DataServiceProtocol {
         case variation
         case warranty
         case seller
+        case descripion
+        case specifications
     }
     
     private var availableSections = [Int: [CellType]]()
@@ -40,15 +42,12 @@ class ProductDetailViewController: BaseViewController, DataServiceProtocol {
         .primaryInfo:   ProductDetailPrimaryInfoTableViewCell.nibName(),
         .variation:     ProductVariationTableViewCell.nibName(),
         .warranty:      ProductWarrantyTableViewCell.nibName(),
-        .seller:        ProductOldSellerViewTableViewCell.nibName()
+        .seller:        ProductOldSellerViewTableViewCell.nibName(),
+        .descripion:    ProductSpecificsTableViewCell.nibName(),
+        .specifications:ProductSpecificsTableViewCell.nibName(),
     ]
     
-    private let sectionNames: [Int: String] = [
-        1: STRING_OPTIONS,
-        3: STRING_VENDOR
-    ]
-    
-    private lazy var isSectionNameVisible = [Int: Bool]()
+    private var sectionNames = [Int: String]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -150,21 +149,30 @@ class ProductDetailViewController: BaseViewController, DataServiceProtocol {
             }
             
             //Variation of product
+            if let simplesCount = product.presentableSimples?.count, simplesCount > 0 {
+                self.sectionNames[self.availableSections.count] = STRING_OPTIONS
+            } else if let variationCount = product.variations?.count, variationCount > 1 {
+                self.sectionNames[self.availableSections.count] = STRING_OPTIONS
+            }
             self.availableSections[self.availableSections.count] = [.variation]
             self.availableSections[self.availableSections.count] = [.warranty]
             
-            if let simplesCount = product.simples?.count, simplesCount > 0 {
-                self.isSectionNameVisible[self.availableSections.count - 1] = true
-            } else if let variationCount = product.variations?.count, variationCount > 1 {
-                self.isSectionNameVisible[self.availableSections.count - 1] = true
-            } else {
-                self.isSectionNameVisible[self.availableSections.count - 1] = false
-            }
-            
             //Seller
             if let _ = product.seller {
+                self.sectionNames[self.availableSections.count] = STRING_VENDOR
                 self.availableSections[self.availableSections.count] = [.seller]
-                self.isSectionNameVisible[self.availableSections.count - 1] = true
+            }
+            
+            //description
+            if let _ = product.productDescription {
+                self.sectionNames[self.availableSections.count] = STRING_DESCRIPTION
+                self.availableSections[self.availableSections.count] = [.descripion]
+            }
+            
+            //specifications
+            if let specifications = product.specifications, specifications.count > 0 {
+                self.sectionNames[self.availableSections.count] = STRING_SPECIFICATIONS
+                self.availableSections[self.availableSections.count] = [.specifications]
             }
         }
     }
@@ -186,13 +194,21 @@ class ProductDetailViewController: BaseViewController, DataServiceProtocol {
     func bind(_ data: Any!, forRequestId rid: Int32) {
         if let product = data as? Product {
             product.loadedComprehensively = true
-            let simple = SimpleProduct()
-            simple.sku = product.sku
-            simple.price = product.price
-            simple.image = product.imageList?.first?.normal
             
-            product.variations = product.variations ?? [SimpleProduct]()
-            product.variations?.insert(simple, at: 0)
+            if let variations = self.product?.variations {
+                //keep the previous variations to prevent refreshing the variations (view)
+                product.variations = variations
+            } else {
+                //add the product as one of variations
+                let simple = SimpleProduct()
+                simple.sku = product.sku
+                simple.price = product.price
+                simple.image = product.imageList?.first?.normal
+                
+                product.variations = product.variations ?? [SimpleProduct]()
+                product.variations?.insert(simple, at: 0)
+            }
+            
             updateViewByProduct(product: product)
         }
     }
@@ -217,8 +233,10 @@ class ProductDetailViewController: BaseViewController, DataServiceProtocol {
                 let selectedSimple = simples.filter { $0.isSelected }.first
                 if let selectedSimple = selectedSimple {
                     requestAddToCart(simpleSku: selectedSimple.sku)
-                } else {
+                } else if let presentableSimples = product?.presentableSimples, presentableSimples.count > 0 {
                     self.performSegue(withIdentifier: "showAddToCartModal", sender: nil)
+                } else if simples.count == 1, let sku = simples.first?.sku {
+                    requestAddToCart(simpleSku: sku)
                 }
             }
         }
@@ -226,10 +244,13 @@ class ProductDetailViewController: BaseViewController, DataServiceProtocol {
     
     private func requestAddToCart(simpleSku: String) {
         if let productEntity = self.product {
-            ProductDataManager.sharedInstance.addToCart(simpleSku: simpleSku, product: productEntity, viewCtrl: self)
+            ProductDataManager.sharedInstance.addToCart(simpleSku: simpleSku, product: productEntity, viewCtrl: self) { (success, error) in
+                if let info = self.purchaseTrackingInfo, success {
+                    PurchaseBehaviourRecorder.sharedInstance.recordAddToCart(sku: productEntity.sku, trackingInfo: info)
+                }
+            }
         }
     }
-    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let segueName = segue.identifier
@@ -245,15 +266,25 @@ class ProductDetailViewController: BaseViewController, DataServiceProtocol {
             addToCartViewController.modalPresentationStyle = .overCurrentContext
             addToCartViewController.delegate = self
             addToCartViewController.transitioningDelegate = animator
+        } else if segueName == "showProductMoreInfoViewController", let viewCtrl = segue.destination as? ProductMoreInfoViewController {
+            if let cellType = sender as? CellType {
+                if cellType == .descripion {
+                    viewCtrl.selectedViewType = .description
+                } else if cellType == .specifications {
+                    viewCtrl.selectedViewType = .specicifation
+                }
+            }
+            viewCtrl.product = product
         }
     }
-    
     
     override func navBarleftButton() -> NavBarButtonType {
         return .cart
     }
 }
 
+
+//MARK: - ProductDetailViewSliderTableViewCellDelegate
 extension ProductDetailViewController: ProductDetailViewSliderTableViewCellDelegate {
     
     func addOrRemoveFromWishList(product: Product, cell: ProductDetailViewSliderTableViewCell, add: Bool) {
@@ -275,7 +306,7 @@ extension ProductDetailViewController: ProductDetailViewSliderTableViewCellDeleg
     }
 }
 
-
+//MARK: - Tableview Datasource, Delegate
 extension ProductDetailViewController: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -302,11 +333,21 @@ extension ProductDetailViewController: UITableViewDataSource, UITableViewDelegat
         case .primaryInfo, .variation, .warranty, .seller:
             let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! BaseProductTableViewCell
             cell.update(withModel: product)
-            
             if cellType == .variation {
                 (cell as? ProductVariationTableViewCell)?.delegate = self
             }
+            return cell
             
+        case .descripion, .specifications:
+            let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! ProductSpecificsTableViewCell
+            
+            if cellType == .descripion {
+                cell.update(withModel: product?.shortDescription ?? product?.productDescription)
+            } else {
+                cell.update(withModel: product?.specifications)
+            }
+            cell.delegate = self
+            cell.indexPath = indexPath
             return cell
         }
     }
@@ -320,7 +361,7 @@ extension ProductDetailViewController: UITableViewDataSource, UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if let name = self.sectionNames[section], let isVisible = isSectionNameVisible[section], isVisible {
+        if let name = self.sectionNames[section] {
             let header = self.tableView.dequeueReusableHeaderFooterView(withIdentifier: headerCellIdentifier) as! TransparentHeaderHeaderTableView
             header.titleString  = name
             return header
@@ -333,7 +374,7 @@ extension ProductDetailViewController: UITableViewDataSource, UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if let _ = self.sectionNames[section], let isVisible = isSectionNameVisible[section], isVisible {
+        if let _ = self.sectionNames[section] {
             return TransparentHeaderHeaderTableView.cellHeight()
         }
         
@@ -343,7 +384,7 @@ extension ProductDetailViewController: UITableViewDataSource, UITableViewDelegat
     }
 }
 
-//Image Gallery
+//MARK: - Image Gallery
 extension ProductDetailViewController: GalleryItemsDataSource, GalleryDisplacedViewsDataSource {
     
     func galleryConfiguration() -> GalleryConfiguration {
@@ -406,7 +447,7 @@ extension ProductDetailViewController: GalleryItemsDataSource, GalleryDisplacedV
     }
 }
 
-
+//MARK: - AddToCartViewControllerDelegate
 extension ProductDetailViewController: AddToCartViewControllerDelegate {
     
     func didSelectVariationSku(product: SimpleProduct, completionHandler:@escaping ((_ prodcut: Product)->Void)) {
@@ -415,7 +456,7 @@ extension ProductDetailViewController: AddToCartViewControllerDelegate {
         if let sku = self.productSku, product.sku == sku { return }
 
         self.productSku = product.sku
-        self.product = nil
+        self.product?.sku = product.sku
         self.getContent { (sucecss) in
             if sucecss {
                 self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
@@ -431,7 +472,7 @@ extension ProductDetailViewController: AddToCartViewControllerDelegate {
         availableSections.forEach { (section, rows) in
             if let row = rows.index(of: .variation) {
                 if let isInVisiableRect = tableView.indexPathsForVisibleRows?.contains(IndexPath(row: row, section: section)), isInVisiableRect {
-                    tableView.reloadRows(at: [IndexPath(row: row, section: section)], with: UITableViewRowAnimation.fade)
+                    tableView.reloadRows(at: [IndexPath(row: row, section: section)], with: UITableViewRowAnimation.none)
                 }
             }
         }
@@ -443,7 +484,7 @@ extension ProductDetailViewController: AddToCartViewControllerDelegate {
     
 }
 
-
+//MARK: - ProductVariationTableViewCellDelegate
 extension ProductDetailViewController: ProductVariationTableViewCellDelegate {
     func didSelectVariationSku(product: SimpleProduct, cell: ProductVariationTableViewCell) {
         
@@ -458,3 +499,10 @@ extension ProductDetailViewController: ProductVariationTableViewCellDelegate {
     }
 }
 
+//MARK: - ProductSpecificsTableViewCellDelegate
+extension ProductDetailViewController: ProductSpecificsTableViewCellDelegate {
+    func seeMoreInfoTapped(cell: ProductSpecificsTableViewCell, indexPath: IndexPath) {
+        let cellType = (self.availableSections[indexPath.section])![indexPath.row]
+        self.performSegue(withIdentifier: "showProductMoreInfoViewController", sender: cellType)
+    }
+}

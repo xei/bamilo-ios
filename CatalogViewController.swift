@@ -696,7 +696,7 @@ import SwiftyJSON
             destinationViewCtrl?.delegate = self
         } else if segueName == "ProductDetailViewController" {
             let destinationViewCtrl = segue.destination as? ProductDetailViewController
-//            destinationViewCtrl?.purchaseTrackingInfo = self.purchaseTrackingInfo
+            destinationViewCtrl?.purchaseTrackingInfo = self.purchaseTrackingInfo
             destinationViewCtrl?.product = self.selectedProduct
 //            destinationViewCtrl?.delegate = self
         }

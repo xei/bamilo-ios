@@ -20,10 +20,10 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NH0-PO-jeS">
-                        <rect key="frame" x="10" y="0.0" width="300" height="279.5"/>
+                        <rect key="frame" x="10" y="0.0" width="300" height="289.5"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jBP-KA-PQw" customClass="SellerViewControl" customModule="Bamilo" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="300" height="279.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="300" height="289.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                         </subviews>
@@ -40,7 +40,7 @@
                     <constraint firstItem="NH0-PO-jeS" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="7GO-4s-2mq"/>
                     <constraint firstItem="NH0-PO-jeS" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="EiE-KB-ua2"/>
                     <constraint firstItem="NH0-PO-jeS" firstAttribute="left" secondItem="H2p-sc-9uM" secondAttribute="left" constant="10" id="bXu-yg-cdP"/>
-                    <constraint firstAttribute="bottom" secondItem="NH0-PO-jeS" secondAttribute="bottom" constant="10" id="xRm-h8-zN3"/>
+                    <constraint firstAttribute="bottom" secondItem="NH0-PO-jeS" secondAttribute="bottom" id="xRm-h8-zN3"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

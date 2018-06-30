@@ -29,6 +29,7 @@ import SwiftyJSON
     var reviewsCount: Int?
     var hasStock: Bool = true
     var simples: [SimpleProduct]?
+    var presentableSimples: [SimpleProduct]?
     var simpleVariationValues: [String]?
     var variations: [SimpleProduct]?
     var variationName: String?
@@ -36,6 +37,9 @@ import SwiftyJSON
     var imageList: [ProductImageItem]?
     var loadedComprehensively: Bool = false
     var seller: Seller?
+    var specifications: [productSpecificsTableSection]?
+    var shortDescription: String?
+    var productDescription: String?
     
     override init() {}
     required init?(map: Map) {}
@@ -60,18 +64,18 @@ import SwiftyJSON
         simples               <- map["simples"]
         
         //clean up the simples property
-        if let avaiableVariations = simpleVariationValues {
-            self.simples = self.simples?.filter { $0.variationValue != nil && avaiableVariations.contains($0.variationValue!)}
-        } else {
-            self.simples?.removeAll()
+        if let avaiableVariations = simpleVariationValues, avaiableVariations.count > 0 {
+            self.presentableSimples = self.simples?.filter { $0.variationValue != nil && avaiableVariations.contains($0.variationValue!)}
         }
-        
         
         variationName         <- map["variation_name"]
         shareURL              <- map["share_url"]
         imageList             <- map["image_list"]
         seller                <- map["seller_entity"]
         variations            <- map["variations"]
+        shortDescription      <- map["summary.short_description"]
+        productDescription    <- map["summary.description"]
+        specifications        <- map["specifications"]
         
         //check avaiability
         var stockAvaiablity: Bool?
@@ -92,6 +96,29 @@ import SwiftyJSON
     
     func getNSNumberPrice() -> NSNumber {
         return NSNumber(value: price ?? 0)
+    }
+}
+
+class productSpecificsTableSection: Mappable {
+    var header: String?
+    var body: [ProductSpecificItem]?
+    
+    required init?(map: Map) {}
+    
+    func mapping(map: Map) {
+        header  <- map["head_label"]
+        body    <- map["body"]
+    }
+}
+
+class ProductSpecificItem: Mappable {
+    var title: String?
+    var value: String?
+    required init?(map: Map) { }
+    
+    func mapping(map: Map) {
+        title <- map["key"]
+        value <- map["value"]
     }
 }
 
