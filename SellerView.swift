@@ -114,8 +114,8 @@ import UIKit
             if let totalScore = score.overall {
                 self.totalScoreValueLabel.textColor = totalScore.color ?? Theme.color(kColorGreen1)
                 if let value = totalScore.value, let maxValue = score.maxValue {
-                    self.totalScoreValueLabel.text = formatScoreValue(score: value)
-                    self.totalScoreBaseValueLabel.text = "\(STRING_FROM) \(formatScoreValue(score:maxValue)) \(STRING_RATE)"
+                    self.totalScoreValueLabel.text = Utility.formatScoreValue(score: value)
+                    self.totalScoreBaseValueLabel.text = "\(STRING_FROM) \(Utility.formatScoreValue(score:maxValue)) \(STRING_RATE)"
                 } else {
                     self.totalScoreValueLabel.text = nil
                     self.totalScoreBaseValueLabel.text = nil
@@ -127,9 +127,9 @@ import UIKit
             self.fullfilmentTitleLabel.text = score.fullfilment?.label ?? STRING_SUCCESSFUL_PRODUCT_SUMPPLEMENT
             
             self.fullfilmentValueLabel.textColor = score.fullfilment?.color ?? Theme.color(kColorGray1)
-            self.fullfilmentValueLabel.text = "\(formatScoreValue(score: score.fullfilment?.value ?? 0)) \(STRING_FROM) \(formatScoreValue(score:score.maxValue ?? 0))"
+            self.fullfilmentValueLabel.text = "\(Utility.formatScoreValue(score: score.fullfilment?.value ?? 0)) \(STRING_FROM) \(Utility.formatScoreValue(score:score.maxValue ?? 0))"
             if let value = score.fullfilment?.value, let maxValue = score.maxValue {
-                self.fullfillmentProgressView.update(withModel: CGFloat(value/maxValue))
+                self.fullfillmentProgressView.update(withModel: Double(value/maxValue))
             } else {
                 self.showErrorOnSellerScore()
             }
@@ -138,7 +138,7 @@ import UIKit
             self.notReturnedTitleLabel.text = score.notReturned?.label ?? STRING_NO_RETURN_TITLE
             
             self.notReturnedValueLabel.textColor = score.notReturned?.color ?? Theme.color(kColorGray1)
-            self.notReturnedValueLabel.text = "\(formatScoreValue(score: score.notReturned?.value ?? 0)) \(STRING_FROM) \(formatScoreValue(score:score.maxValue ?? 0))"
+            self.notReturnedValueLabel.text = "\(Utility.formatScoreValue(score: score.notReturned?.value ?? 0)) \(STRING_FROM) \(Utility.formatScoreValue(score:score.maxValue ?? 0))"
             if let value = score.notReturned?.value, let maxValue = score.maxValue {
                 self.notReturnedProgressView.update(withModel: CGFloat(value/maxValue))
             } else {
@@ -149,7 +149,7 @@ import UIKit
             self.slaReachedTitleLabel.text = score.slaReached?.label ?? STRING_SLA_TITLE
             
             self.slaReachedValueLabel.textColor = score.slaReached?.color ?? Theme.color(kColorGray1)
-            self.slaReachedValueLabel.text = "\(formatScoreValue(score: score.slaReached?.value ?? 0)) \(STRING_FROM) \(formatScoreValue(score:score.maxValue ?? 0))"
+            self.slaReachedValueLabel.text = "\(Utility.formatScoreValue(score: score.slaReached?.value ?? 0)) \(STRING_FROM) \(Utility.formatScoreValue(score:score.maxValue ?? 0))"
             if let value = score.slaReached?.value, let maxValue = score.maxValue {
                 self.slaReachedProgressView.update(withModel: CGFloat(value/maxValue))
             } else {
@@ -173,11 +173,6 @@ import UIKit
             self.newSellerBadge.alpha = seller.isNew ? 1 : 0
         }
         self.model = seller
-    }
-    
-    private func formatScoreValue(score: Double) -> String {
-        let isInteger = floor(score) == score
-        return "\(isInteger ? "\(Int(score))" : "\(score)")".convertTo(language: .arabic).persianDoubleFormat()
     }
     
     func showErrorOnSellerScore() {

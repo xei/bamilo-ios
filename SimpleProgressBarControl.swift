@@ -21,6 +21,10 @@ class SimpleProgressBarControl: BaseViewControl {
         }
     }
     
+    func setTintColor(color: UIColor) {
+        self.progressView?.setTintColor(color: color)
+    }
+    
     override func update(withModel model: Any!) {
         if let precentage = model as? Double {
             self.progressView?.setProgressPercentage(percentage: CGFloat(precentage))

@@ -11,7 +11,7 @@ import UIKit
 class ProductSpecificsTableViewController: BaseViewController {
     
     @IBOutlet private weak var tableView: UITableView!
-    var model: [productSpecificsTableSection]?
+    var model: [ProductSpecificsTableSection]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +30,7 @@ class ProductSpecificsTableViewController: BaseViewController {
         }
     }
 
-    private func updateWith(sepecifics: [productSpecificsTableSection]) {
+    private func updateWith(sepecifics: [ProductSpecificsTableSection]) {
         self.model = sepecifics
         self.tableView.reloadData()
     }

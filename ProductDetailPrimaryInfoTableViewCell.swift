@@ -14,7 +14,7 @@ class ProductDetailPrimaryInfoTableViewCell: BaseProductTableViewCell {
     @IBOutlet weak private var rateViewControl: RateStarControl!
     @IBOutlet weak private var rateTitleLabel: UILabel!
     @IBOutlet weak private var rateValueLabel: UILabel!
-    @IBOutlet weak private var commentsCountLabel: UILabel!
+    @IBOutlet weak private var ratingCountLabel: UILabel!
     @IBOutlet weak private var noRateLabel: UILabel!
     @IBOutlet weak private var seperatorLineView: UIView!
     @IBOutlet weak private var priceLabel: UILabel!
@@ -41,7 +41,7 @@ class ProductDetailPrimaryInfoTableViewCell: BaseProductTableViewCell {
         seperatorLineView.backgroundColor = Theme.color(kColorGray10)
         [calculatedBenefitLabel, discountedPriceLabel].forEach { $0.applyStyle(font: Theme.font(kFontVariationLight, size: 11), color: Theme.color(kColorGray3)) }
         [productNameLabel, rateValueLabel].forEach { $0?.applyStyle(font: Theme.font(kFontVariationBold, size: 15), color: Theme.color(kColorGray1)) }
-        [rateTitleLabel, commentsCountLabel, currencyLabel].forEach {$0?.applyStyle(font: Theme.font(kFontVariationLight, size: 12), color: Theme.color(kColorGray1))}
+        [rateTitleLabel, ratingCountLabel, currencyLabel].forEach {$0?.applyStyle(font: Theme.font(kFontVariationLight, size: 12), color: Theme.color(kColorGray1))}
         priceLabel.applyStyle(font: Theme.font(kFontVariationBold, size: 25), color: Theme.color(kColorOrange1))
         noRateLabel.applyStyle(font: Theme.font(kFontVariationLight, size: 12), color: Theme.color(kColorGray3))
         discountPercentageContainerView.applyBorder(width: 1, color: Theme.color(kColorOrange1))
@@ -55,7 +55,6 @@ class ProductDetailPrimaryInfoTableViewCell: BaseProductTableViewCell {
     override func update(withModel model: Any!) {
         if let product = model as? Product {
             self.productNameLabel.text = product.name
-            self.commentsCountLabel.text = "(\(product.reviewsCount ?? 0)".convertTo(language: .arabic)
             if let specialPrice = product.specialPrice, let price = product.price, product.price != product.specialPrice {
                 discountedPriceLabel?.attributedText = "\(price)".formatPriceWithCurrency().strucThroughPriceFormat()
                 priceLabel?.text = "\(specialPrice)".convertTo(language: .arabic).priceFormat()
@@ -76,14 +75,15 @@ class ProductDetailPrimaryInfoTableViewCell: BaseProductTableViewCell {
                 calculatedBenefitLabel.isHidden = true
             }
             
-            if let rateCount = product.ratingsCount, let reviewAverage = product.reviewsAverage, rateCount != 0 {
+            if let rateCount = product.ratings?.totalCount, let rateAverage = product.ratings?.average , rateCount != 0 {
                 noRateLabel.isHidden = true
                 self.rateItButton.isHidden = true
                 ratePresentorContainerView.isHidden = false
                 rateValueLabel?.isHidden = false
                 rateViewControl?.isHidden = false
-                rateValueLabel?.text = "\(rateCount)".convertTo(language: .arabic)
-                rateViewControl?.update(withModel: reviewAverage)
+                rateValueLabel?.text = "\(rateAverage)".convertTo(language: .arabic)
+                ratingCountLabel.text = "(\(rateCount)".convertTo(language: .arabic)
+                rateViewControl?.update(withModel: rateAverage)
             } else {
                 rateValueLabel?.isHidden = true
                 rateViewControl?.isHidden = true

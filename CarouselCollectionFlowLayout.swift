@@ -26,7 +26,6 @@ class CarouselCollectionFlowLayout: BaseCollectionFlowLayout {
     
     class func itemWidth(relateTo parentWidth: CGFloat, cellSpacing: CGFloat) -> CGFloat {
         let collectionWidth = parentWidth
-        
         if collectionWidth < smallWindowSize {
             return round((collectionWidth - (3 * cellSpacing)) / 2.25)
         } else if collectionWidth > smallWindowSize && collectionWidth < mediumWindowSize {

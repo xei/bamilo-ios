@@ -143,4 +143,10 @@ let STRING_ADD_TO_SHOPPING_CART = RILocalizationWrapper.localizedString("add_to_
 let STRING_SPECIFICATIONS = RILocalizationWrapper.localizedString("specifications")!
 let STRING_WHOLE_DESCRIPTION = RILocalizationWrapper.localizedString("see_whole_description")!
 let STRING_WHOLE_SPECIFICATIONS = RILocalizationWrapper.localizedString("see_whole_specifications")!
+let STRING_SEE_ALL_COMMENTS = RILocalizationWrapper.localizedString("see_all_comments")!
+let STRING_COMMENT = RILocalizationWrapper.localizedString("comment")!
+let STRING_MORE = RILocalizationWrapper.localizedString("more")!
+let STRING_USER_REVIEWS = RILocalizationWrapper.localizedString("user_reviews")!
+let STRING_STAR = RILocalizationWrapper.localizedString("star")!
+let STRING_ADD_COMMENT = RILocalizationWrapper.localizedString("add_comment")!
 

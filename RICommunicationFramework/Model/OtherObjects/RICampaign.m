@@ -67,8 +67,8 @@
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
                                                             parameters:nil
                                                             httpMethod:HttpVerbGET
-                                                             cacheType:RIURLCacheDBCache
-                                                             cacheTime:RIURLCacheDefaultTime
+                                                             cacheType:RIURLCacheNoCache
+                                                             cacheTime:RIURLCacheNoTime
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {

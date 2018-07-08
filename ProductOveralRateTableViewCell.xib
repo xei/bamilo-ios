@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Bamilosans Light.ttf">
+            <string>Bamilo-Sans-Light</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="104" id="KGk-i7-Jjw" customClass="ProductOveralRateTableViewCell" customModule="Bamilo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="495" height="104"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="495" height="103.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۴/۶" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fmd-fz-53Z">
+                        <rect key="frame" x="411.5" y="16" width="67.5" height="70"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="70" id="RQX-Qc-4ao"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="48"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="از ۵" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ofj-T6-ZLY">
+                        <rect key="frame" x="377.5" y="28" width="24" height="25.5"/>
+                        <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="14"/>
+                        <color key="textColor" red="0.61960784310000006" green="0.61960784310000006" blue="0.61960784310000006" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۳۳۴۲ نفر" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qAl-Hg-DcD">
+                        <rect key="frame" x="343.5" y="58.5" width="58" height="25.5"/>
+                        <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProductRateFullStar" translatesAutoresizingMaskIntoConstraints="NO" id="xyE-e2-vsZ">
+                        <rect key="frame" x="363.5" y="36" width="10" height="10"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="10" id="Gy3-2h-Sof"/>
+                            <constraint firstAttribute="width" secondItem="xyE-e2-vsZ" secondAttribute="height" multiplier="1:1" id="JKO-qL-VDU"/>
+                        </constraints>
+                    </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7On-ms-ANL" customClass="RateStarControl" customModule="Bamilo" customModuleProvider="target">
+                        <rect key="frame" x="110" y="8.5" width="40" height="8"/>
+                        <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="8" id="VXo-vh-xIe"/>
+                            <constraint firstAttribute="width" constant="40" id="WRD-S6-fsj"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XX9-pZ-ylj" customClass="SimpleProgressBarControl" customModule="Bamilo" customModuleProvider="target">
+                        <rect key="frame" x="8" y="10" width="94" height="5"/>
+                        <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="94" id="CES-iM-N3M"/>
+                            <constraint firstAttribute="height" constant="5" id="OyK-pw-tMJ"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                <real key="value" value="0.0"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hXQ-Gh-nb0" customClass="RateStarControl" customModule="Bamilo" customModuleProvider="target">
+                        <rect key="frame" x="110" y="25" width="40" height="8"/>
+                        <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="oae-hJ-OYD"/>
+                            <constraint firstAttribute="height" constant="8" id="ydS-m0-mjK"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9xi-Va-35d" customClass="SimpleProgressBarControl" customModule="Bamilo" customModuleProvider="target">
+                        <rect key="frame" x="8" y="27" width="94" height="5"/>
+                        <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="94" id="6Rs-Lq-VRV"/>
+                            <constraint firstAttribute="height" constant="5" id="tIY-ty-USm"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                <real key="value" value="0.0"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jwt-1B-dLj" customClass="RateStarControl" customModule="Bamilo" customModuleProvider="target">
+                        <rect key="frame" x="110" y="42.5" width="40" height="8"/>
+                        <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="fyC-8X-hd2"/>
+                            <constraint firstAttribute="height" constant="8" id="tjN-eB-Dg3"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C9G-JX-ItY" customClass="SimpleProgressBarControl" customModule="Bamilo" customModuleProvider="target">
+                        <rect key="frame" x="8" y="44" width="94" height="5"/>
+                        <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="94" id="0uH-PP-tSP"/>
+                            <constraint firstAttribute="height" constant="5" id="o25-IV-rPq"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                <real key="value" value="0.0"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S37-07-SiV" customClass="RateStarControl" customModule="Bamilo" customModuleProvider="target">
+                        <rect key="frame" x="110" y="59" width="40" height="8"/>
+                        <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="8" id="gJ2-kO-3dA"/>
+                            <constraint firstAttribute="width" constant="40" id="hCK-dQ-SeW"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Nm-Ko-Mzc" customClass="SimpleProgressBarControl" customModule="Bamilo" customModuleProvider="target">
+                        <rect key="frame" x="8" y="61" width="94" height="5"/>
+                        <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="94" id="eYu-ik-7no"/>
+                            <constraint firstAttribute="height" constant="5" id="uff-Rq-2e6"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                <real key="value" value="0.0"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iiJ-Jr-L1F" customClass="RateStarControl" customModule="Bamilo" customModuleProvider="target">
+                        <rect key="frame" x="110" y="76.5" width="40" height="8"/>
+                        <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="KqD-4M-Qyw"/>
+                            <constraint firstAttribute="height" constant="8" id="crc-zz-Jpl"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2EQ-oQ-3Wq" customClass="SimpleProgressBarControl" customModule="Bamilo" customModuleProvider="target">
+                        <rect key="frame" x="8" y="78" width="94" height="5"/>
+                        <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="5" id="CBd-3A-3AD"/>
+                            <constraint firstAttribute="width" constant="94" id="sFR-k9-zQk"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                <real key="value" value="0.0"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="9xi-Va-35d" firstAttribute="top" secondItem="XX9-pZ-ylj" secondAttribute="bottom" constant="12" id="1Wy-nD-wmx"/>
+                    <constraint firstItem="C9G-JX-ItY" firstAttribute="centerY" secondItem="Jwt-1B-dLj" secondAttribute="centerY" id="20N-eA-lzd"/>
+                    <constraint firstItem="2EQ-oQ-3Wq" firstAttribute="centerY" secondItem="iiJ-Jr-L1F" secondAttribute="centerY" id="2oM-49-u7X"/>
+                    <constraint firstItem="5Nm-Ko-Mzc" firstAttribute="centerY" secondItem="S37-07-SiV" secondAttribute="centerY" id="71a-aP-rJy"/>
+                    <constraint firstItem="ofj-T6-ZLY" firstAttribute="left" secondItem="xyE-e2-vsZ" secondAttribute="right" constant="4" id="BIO-oL-sbA"/>
+                    <constraint firstItem="5Nm-Ko-Mzc" firstAttribute="top" secondItem="C9G-JX-ItY" secondAttribute="bottom" constant="12" id="J9C-QN-GDp"/>
+                    <constraint firstItem="9xi-Va-35d" firstAttribute="left" secondItem="XX9-pZ-ylj" secondAttribute="left" id="KDe-tN-qcI"/>
+                    <constraint firstItem="2EQ-oQ-3Wq" firstAttribute="top" secondItem="5Nm-Ko-Mzc" secondAttribute="bottom" constant="12" id="KfV-g1-0PB"/>
+                    <constraint firstItem="qAl-Hg-DcD" firstAttribute="centerY" secondItem="Fmd-fz-53Z" secondAttribute="centerY" constant="20" id="Nw8-PK-1wt"/>
+                    <constraint firstItem="C9G-JX-ItY" firstAttribute="left" secondItem="9xi-Va-35d" secondAttribute="left" id="QLd-ga-kVh"/>
+                    <constraint firstItem="qAl-Hg-DcD" firstAttribute="right" secondItem="ofj-T6-ZLY" secondAttribute="right" id="RE9-PQ-alF"/>
+                    <constraint firstItem="iiJ-Jr-L1F" firstAttribute="left" secondItem="2EQ-oQ-3Wq" secondAttribute="right" constant="8" id="TnJ-Wj-fvB"/>
+                    <constraint firstItem="ofj-T6-ZLY" firstAttribute="centerY" secondItem="Fmd-fz-53Z" secondAttribute="centerY" constant="-10" id="U2t-6E-BT0"/>
+                    <constraint firstItem="hXQ-Gh-nb0" firstAttribute="left" secondItem="9xi-Va-35d" secondAttribute="right" constant="8" id="V5J-uI-qFo"/>
+                    <constraint firstItem="7On-ms-ANL" firstAttribute="left" secondItem="XX9-pZ-ylj" secondAttribute="right" constant="8" id="a1X-Ng-yK4"/>
+                    <constraint firstItem="XX9-pZ-ylj" firstAttribute="left" secondItem="H2p-sc-9uM" secondAttribute="left" constant="8" id="a1v-wu-NXj"/>
+                    <constraint firstItem="Fmd-fz-53Z" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="cHV-Se-b4R"/>
+                    <constraint firstAttribute="right" secondItem="Fmd-fz-53Z" secondAttribute="right" constant="16" id="czP-9i-D6Q"/>
+                    <constraint firstItem="xyE-e2-vsZ" firstAttribute="width" secondItem="xyE-e2-vsZ" secondAttribute="height" multiplier="1:1" id="dBA-FF-lva"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="qAl-Hg-DcD" secondAttribute="bottom" constant="10" id="jE4-YL-FLR"/>
+                    <constraint firstItem="C9G-JX-ItY" firstAttribute="top" secondItem="9xi-Va-35d" secondAttribute="bottom" constant="12" id="jsP-GS-tce"/>
+                    <constraint firstItem="XX9-pZ-ylj" firstAttribute="centerY" secondItem="7On-ms-ANL" secondAttribute="centerY" id="nib-Mv-OIe"/>
+                    <constraint firstItem="Jwt-1B-dLj" firstAttribute="left" secondItem="C9G-JX-ItY" secondAttribute="right" constant="8" id="prA-sn-L1z"/>
+                    <constraint firstItem="Fmd-fz-53Z" firstAttribute="left" secondItem="ofj-T6-ZLY" secondAttribute="right" constant="10" id="qJg-SD-ND2"/>
+                    <constraint firstItem="xyE-e2-vsZ" firstAttribute="centerY" secondItem="ofj-T6-ZLY" secondAttribute="centerY" id="sSc-3F-RjS"/>
+                    <constraint firstItem="5Nm-Ko-Mzc" firstAttribute="left" secondItem="C9G-JX-ItY" secondAttribute="left" id="skO-Za-YJQ"/>
+                    <constraint firstItem="2EQ-oQ-3Wq" firstAttribute="left" secondItem="5Nm-Ko-Mzc" secondAttribute="left" id="tRb-NY-e8h"/>
+                    <constraint firstItem="9xi-Va-35d" firstAttribute="centerY" secondItem="hXQ-Gh-nb0" secondAttribute="centerY" id="tqa-BR-z8J"/>
+                    <constraint firstItem="XX9-pZ-ylj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="wqs-u0-K5M"/>
+                    <constraint firstItem="S37-07-SiV" firstAttribute="left" secondItem="5Nm-Ko-Mzc" secondAttribute="right" constant="8" id="yzR-Cp-mAs"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="averageRateLabel" destination="Fmd-fz-53Z" id="prJ-oO-FaV"/>
+                <outlet property="baseRateLabel" destination="ofj-T6-ZLY" id="HIQ-Yh-Yac"/>
+                <outlet property="fiveStarProgress" destination="XX9-pZ-ylj" id="ZwQ-TK-pAj"/>
+                <outlet property="fiveStarViewControl" destination="7On-ms-ANL" id="C0G-4X-OVv"/>
+                <outlet property="fourStarProgress" destination="9xi-Va-35d" id="KBh-ar-Gff"/>
+                <outlet property="fourStarViewControl" destination="hXQ-Gh-nb0" id="GbD-e1-Szc"/>
+                <outlet property="oneStarProgress" destination="2EQ-oQ-3Wq" id="2qX-5s-m5Y"/>
+                <outlet property="oneStarViewControl" destination="iiJ-Jr-L1F" id="a5E-f0-LfB"/>
+                <outlet property="rateCountLabel" destination="qAl-Hg-DcD" id="5h5-ZN-CwR"/>
+                <outlet property="singleStarImageView" destination="xyE-e2-vsZ" id="Io1-9d-mdh"/>
+                <outlet property="threeStarProgress" destination="C9G-JX-ItY" id="Pqd-YB-SV7"/>
+                <outlet property="threeStarViewControl" destination="Jwt-1B-dLj" id="Poc-SL-fbF"/>
+                <outlet property="twoStarProgress" destination="5Nm-Ko-Mzc" id="fcH-bT-uF2"/>
+                <outlet property="twoStarViewControl" destination="S37-07-SiV" id="z4i-LY-k3k"/>
+            </connections>
+            <point key="canvasLocation" x="-357.5" y="-55"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="ProductRateFullStar" width="120" height="120"/>
+    </resources>
+</document>

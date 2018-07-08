@@ -19,12 +19,17 @@ class RateStarControl: BaseViewControl {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        self.backgroundColor = .clear
         self.rateView = RateStarsView.nibInstance()
         self.rateView?.delegate = self.delegate
         if let view = self.rateView {
+            view.backgroundColor = .clear
             self.addAnchorMatchedSubView(view: view)
         }
+    }
+    
+    func colorButtons(rateValue: Double, color: UIColor = Theme.color(kColorOrange1), disabledColor: UIColor = Theme.color(kColorGray10)) {
+        self.rateView?.colorButtons(rateValue: rateValue, color: color, disabledColor: disabledColor)
     }
     
     override func update(withModel model: Any!) {

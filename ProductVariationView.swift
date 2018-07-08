@@ -125,12 +125,13 @@ extension ProductVariationView {
         let button = UIButton(type: .system)
         button.setTitle(title, for: .normal)
         button.applyStyle(font: Theme.font(kFontVariationLight, size: 13), color: Theme.color(kColorGray1))
-        button.setTitleColor(Theme.color(kColorGray8), for: .disabled)
+        button.setTitleColor(Theme.color(kColorGray10), for: .disabled)
         button.setTitleColor(selected ? .white : Theme.color(kColorGray1), for: .normal)
         button.applyBorder(width: 1, color: Theme.color(kColorGray10))
+        button.layer.cornerRadius = 20
         button.backgroundColor = selected ? Theme.color(kColorBlue1) : .white
         button.addTarget(self, action: #selector(gridButtonTapped(sender:)), for: .touchUpInside)
-        button.contentEdgeInsets = UIEdgeInsetsMake(4.0, 10.0, 4.0, 10.0)
+        button.contentEdgeInsets = UIEdgeInsetsMake(8.0, 15.0, 8.0, 15.0)
         button.sizeToFit()
         return button
     }
@@ -161,7 +162,7 @@ extension ProductVariationView {
         
         for idx in 0 ..< buttons.count {
             let button = buttons[idx]
-            row += Double(button.frame.width) + spaceGap
+            row += Double(button.frame.width) + (idx == 1 ? offset : spaceGap)
             
             if row < Double(parentView.frame.width) {
                 x = idx == 0 ? offset : row - Double(button.frame.width)

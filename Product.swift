@@ -22,11 +22,10 @@ import SwiftyJSON
     var category: CategoryProduct?
     var imageUrl: URL?
     var target: String?
-    var reviewsAverage: Double?
-    var ratingsCount: Int?
+    var ratings: ProductRate?
+    var reviews: ProductReview?
     var isNew: Bool = false
     var isInWishList: Bool = false
-    var reviewsCount: Int?
     var hasStock: Bool = true
     var simples: [SimpleProduct]?
     var presentableSimples: [SimpleProduct]?
@@ -37,7 +36,7 @@ import SwiftyJSON
     var imageList: [ProductImageItem]?
     var loadedComprehensively: Bool = false
     var seller: Seller?
-    var specifications: [productSpecificsTableSection]?
+    var specifications: [ProductSpecificsTableSection]?
     var shortDescription: String?
     var productDescription: String?
     
@@ -50,20 +49,44 @@ import SwiftyJSON
         brand                 <- map["brand"]
         maxSavingPrecentage   <- map["max_saving_percentage"]
         price                 <- map["price"]
+        
+        ratings               <- map["rating"]
+        reviews               <- map["reviews"]
+        
+        //get rating/review counts from other places in json
+        //TODO: this code should be removed when the api has been revised in all endpoints for product entity
+        if ratings == nil {
+            ratings = ProductRate()
+        }
+        if reviews == nil {
+            reviews = ProductReview()
+        }
+        var ratingsAverage: Double?
+        ratingsAverage <- map["rating_reviews_summary.average"]
+        var ratingsCount: Int?
+        ratingsCount <- map["rating_reviews_summary.ratings_total"]
+        var reviewsCount: Int?
+        reviewsCount <- map["rating_reviews_summary.reviews_total"]
+        ratings?.totalCount = ratingsCount
+        ratings?.average = ratingsAverage
+        reviews?.totalCount = reviewsCount ?? 0
+        //END of TODO
+        
+        
         categoryIds           = JSON(map.JSON)["categories"].string?.split(separator: "|").map {String($0)}
-        simpleVariationValues = JSON(map.JSON)["variations_available_list"].string?.split(separator: ";").map {String($0).trimmingCharacters(in: .whitespacesAndNewlines)}
         specialPrice          <- map["special_price"]
         imageUrl              <- (map["image"], URLTransform())
         target                <- map["target"]
         category              <- map["category_entity"]
         isInWishList          <- map["is_wishlist"]
-        reviewsAverage        <- map["rating_reviews_summary.average"]
-        ratingsCount          <- map["rating_reviews_summary.ratings_total"]
-        reviewsCount          <- map["rating_reviews_summary.reviews_total"]
+        
         isNew                 <- map["is_new"]
         simples               <- map["simples"]
         
+        
+        //TODO: remove this part of code when all product entities has been changed
         //clean up the simples property
+        simpleVariationValues = JSON(map.JSON)["variations_available_list"].string?.split(separator: ";").map {String($0).trimmingCharacters(in: .whitespacesAndNewlines)}
         if let avaiableVariations = simpleVariationValues, avaiableVariations.count > 0 {
             self.presentableSimples = self.simples?.filter { $0.variationValue != nil && avaiableVariations.contains($0.variationValue!)}
         }
@@ -86,6 +109,43 @@ import SwiftyJSON
         isOutOfStock <- map["out_of_stock"]
         
         hasStock = stockAvaiablity ?? isOutOfStock?.getReverse() ?? true
+        
+        
+        
+        //mock of review
+        ratings?.maxValue = 5
+        reviews?.totalCount = 10
+        
+        let star0 = ProductRateStarStatistic()
+        star0.starNumber = 1
+        star0.count = 3
+        
+        let star1 = ProductRateStarStatistic()
+        star1.starNumber = 2
+        star1.count = 8
+        
+        let star2 = ProductRateStarStatistic()
+        star2.starNumber = 3
+        star2.count = 31
+        
+        let star3 = ProductRateStarStatistic()
+        star3.starNumber = 4
+        star3.count = 39
+        
+        let star4 = ProductRateStarStatistic()
+        star4.starNumber = 5
+        star4.count = 1
+        
+        ratings?.starsStatistics = [star0, star1, star2, star3, star4]
+        ratings?.totalCount = 82
+        
+        let reviewItem = ProductReviewItem()
+        reviewItem.username = "حاج کاظم خریدار"
+        reviewItem.comment = "آقا بسیار محصول عالی بود، خیلی تشکر داریم داریم هم بنده هم منزل انشاله خداوند برکتتان دهد، دست دیزاینر های بسیار خوبتان هم درد نکند انشالله، خداوند آنان را نیز خیر دنیا و آخرت بدهد، چون ظاهر قبلی بسیار بسیار بد و "
+        reviewItem.date = "دیروز"
+        reviewItem.rateScore = 4
+        
+        reviews?.items = [reviewItem, reviewItem, reviewItem, reviewItem, reviewItem, reviewItem]
     }
     
     
@@ -99,7 +159,7 @@ import SwiftyJSON
     }
 }
 
-class productSpecificsTableSection: Mappable {
+class ProductSpecificsTableSection: Mappable {
     var header: String?
     var body: [ProductSpecificItem]?
     

@@ -160,7 +160,7 @@
 
 "submit_title" = "نقد و بررسی شما ارسال شد.";
 
-"write_comment" = "نوشتن نقد و بررسی";
+"write_comment" = "ارسال نظر";
 
 "string_posted_by" = "پست شده توسط %@، %@";
 
@@ -686,7 +686,7 @@
 
 "by_someone" = "پست شده توسط %@";
 
-"user_reviews" = "نظرات و پیشنهادهای کاربر";
+"user_reviews" = "نظرات کاربران";
 
 "profile" = "اطلاعات کاربری من";
 
@@ -1032,3 +1032,11 @@
 "see_whole_description" = "مشاهده توضیحات کامل";
 
 "see_whole_specifications" = "مشاهده مشخصات کامل";
+
+"see_all_comments" = "مشاهده همه نظرات";
+
+"comment" = "نظر";
+
+"star" = "ستاره";
+
+"add_comment" = "افزودن نظر";

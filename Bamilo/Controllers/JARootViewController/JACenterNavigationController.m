@@ -765,7 +765,7 @@
 - (void)performProtectedBlock:(ProtectedBlock)block {
     if(block && ![RICustomer checkIfUserIsLogged]) {
         [self pushAuthenticationViewController:^{
-            block(NO);
+            block(YES);
         } byAniamtion:YES];
     } else {
         block(YES);
@@ -776,10 +776,10 @@
 - (void)requestNavigateToViewController:(UIViewController *)viewController args:(NSDictionary *)args {
     NSNumber *animation  = [args objectForKey:kAnimation] ?: @(YES);
     if(viewController) {
-        if([viewController conformsToProtocol:@protocol(ProtectedViewControllerProtocol)] && ![RICustomer checkIfUserIsLogged]) {
-            [self pushAuthenticationViewController:^{
+        if([viewController conformsToProtocol:@protocol(ProtectedViewControllerProtocol)]) {
+            [self performProtectedBlock:^(BOOL userHadSession) {
                 [self pushViewController:[self setArgsForViewController:viewController args:args] animated: animation.boolValue];
-            } byAniamtion:YES];
+            }];
         } else {
             [self pushViewController:[self setArgsForViewController:viewController args:args] animated: animation.boolValue];
         }

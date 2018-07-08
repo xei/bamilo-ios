@@ -34,6 +34,7 @@ extension UIImageView: DisplaceableView {}
         case seller
         case descripion
         case specifications
+        case reviewSummery
     }
     
     private var availableSections = [Int: [CellType]]()
@@ -45,6 +46,7 @@ extension UIImageView: DisplaceableView {}
         .seller:        ProductOldSellerViewTableViewCell.nibName(),
         .descripion:    ProductSpecificsTableViewCell.nibName(),
         .specifications:ProductSpecificsTableViewCell.nibName(),
+        .reviewSummery: ProductReviewSummeryTableViewCell.nibName()
     ]
     
     private var sectionNames = [Int: String]()
@@ -80,17 +82,6 @@ extension UIImageView: DisplaceableView {}
         } else {
             self.getContent()
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        self.tabBarController?.tabBar.isHidden = true
-        self.tabBarController?.tabBar.layer.zPosition = -1
-        self.hidesBottomBarWhenPushed = true
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        self.tabBarController?.tabBar.isHidden = false
-        self.tabBarController?.tabBar.layer.zPosition = 0
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -174,6 +165,11 @@ extension UIImageView: DisplaceableView {}
                 self.sectionNames[self.availableSections.count] = STRING_SPECIFICATIONS
                 self.availableSections[self.availableSections.count] = [.specifications]
             }
+            
+            //rate & review
+            if let _ = product.ratings, let reviewItems = product.reviews?.items, reviewItems.count > 0 {
+                self.availableSections[self.availableSections.count] = [.reviewSummery]
+            }
         }
     }
     
@@ -208,7 +204,6 @@ extension UIImageView: DisplaceableView {}
                 product.variations = product.variations ?? [SimpleProduct]()
                 product.variations?.insert(simple, at: 0)
             }
-            
             updateViewByProduct(product: product)
         }
     }
@@ -232,19 +227,19 @@ extension UIImageView: DisplaceableView {}
             if simples.count >= 1 {
                 let selectedSimple = simples.filter { $0.isSelected }.first
                 if let selectedSimple = selectedSimple {
-                    requestAddToCart(simpleSku: selectedSimple.sku)
+                    requestAddToCart(simpleSku: selectedSimple.sku, inViewCtrl: self)
                 } else if let presentableSimples = product?.presentableSimples, presentableSimples.count > 0 {
                     self.performSegue(withIdentifier: "showAddToCartModal", sender: nil)
                 } else if simples.count == 1, let sku = simples.first?.sku {
-                    requestAddToCart(simpleSku: sku)
+                    requestAddToCart(simpleSku: sku, inViewCtrl: self)
                 }
             }
         }
     }
     
-    private func requestAddToCart(simpleSku: String) {
+    private func requestAddToCart<T: BaseViewController & DataServiceProtocol>(simpleSku: String, inViewCtrl: T) {
         if let productEntity = self.product {
-            ProductDataManager.sharedInstance.addToCart(simpleSku: simpleSku, product: productEntity, viewCtrl: self) { (success, error) in
+            ProductDataManager.sharedInstance.addToCart(simpleSku: simpleSku, product: productEntity, viewCtrl: inViewCtrl) { (success, error) in
                 if let info = self.purchaseTrackingInfo, success {
                     PurchaseBehaviourRecorder.sharedInstance.recordAddToCart(sku: productEntity.sku, trackingInfo: info)
                 }
@@ -255,17 +250,7 @@ extension UIImageView: DisplaceableView {}
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let segueName = segue.identifier
         if segueName == "showAddToCartModal", let addToCartViewController = segue.destination as? AddToCartViewController {
-            addToCartViewController.product = self.product
-            self.animator = ZFModalTransitionAnimator(modalViewController: addToCartViewController)
-            animator?.isDragable = true
-            animator?.bounces = true
-            animator?.behindViewAlpha = 0.8
-            animator?.behindViewScale = 0.9
-            animator?.transitionDuration = 0.7
-            animator?.direction = .bottom
-            addToCartViewController.modalPresentationStyle = .overCurrentContext
-            addToCartViewController.delegate = self
-            addToCartViewController.transitioningDelegate = animator
+            prepareAddToCartView(addToCartViewController: addToCartViewController)
         } else if segueName == "showProductMoreInfoViewController", let viewCtrl = segue.destination as? ProductMoreInfoViewController {
             if let cellType = sender as? CellType {
                 if cellType == .descripion {
@@ -274,12 +259,35 @@ extension UIImageView: DisplaceableView {}
                     viewCtrl.selectedViewType = .specicifation
                 }
             }
+            viewCtrl.hidesBottomBarWhenPushed = true
+            viewCtrl.delegate = self
             viewCtrl.product = product
+        } else if segueName == "showProductReviewListViewController", let viewCtrl = segue.destination as? ProductReviewListViewController {
+            viewCtrl.product = product
+            viewCtrl.hidesBottomBarWhenPushed = true
+        } else if segueName == "showSubmitProductReviewViewController", let viewCtrl = segue.destination as? SubmitProductReviewViewController {
+            viewCtrl.hidesBottomBarWhenPushed = true
         }
     }
     
     override func navBarleftButton() -> NavBarButtonType {
         return .cart
+    }
+    
+    private func prepareAddToCartView(addToCartViewController: AddToCartViewController){
+        addToCartViewController.product = self.product
+        if animator == nil {
+            animator = ZFModalTransitionAnimator(modalViewController: addToCartViewController)
+            animator?.isDragable = true
+            animator?.bounces = true
+            animator?.behindViewAlpha = 0.8
+            animator?.behindViewScale = 0.9
+            animator?.transitionDuration = 0.7
+            animator?.direction = .bottom
+        }
+        addToCartViewController.modalPresentationStyle = .overCurrentContext
+        addToCartViewController.delegate = self
+        addToCartViewController.transitioningDelegate = animator
     }
 }
 
@@ -330,12 +338,18 @@ extension ProductDetailViewController: UITableViewDataSource, UITableViewDelegat
             self.sliderCell = cell
             return cell
             
-        case .primaryInfo, .variation, .warranty, .seller:
+        case .primaryInfo, .variation, .warranty, .seller, .reviewSummery:
             let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! BaseProductTableViewCell
             cell.update(withModel: product)
+            
             if cellType == .variation {
                 (cell as? ProductVariationTableViewCell)?.delegate = self
             }
+            
+            if cellType == .reviewSummery {
+                (cell as? ProductReviewSummeryTableViewCell)?.delegate = self
+            }
+            
             return cell
             
         case .descripion, .specifications:
@@ -349,6 +363,7 @@ extension ProductDetailViewController: UITableViewDataSource, UITableViewDelegat
             cell.delegate = self
             cell.indexPath = indexPath
             return cell
+            
         }
     }
     
@@ -421,7 +436,7 @@ extension ProductDetailViewController: GalleryItemsDataSource, GalleryDisplacedV
             GalleryConfigurationItem.displacementTimingCurve(.linear),
             GalleryConfigurationItem.thumbnailsButtonMode(.none),
             GalleryConfigurationItem.deleteButtonMode(.none),
-            GalleryConfigurationItem.statusBarHidden(false),
+            GalleryConfigurationItem.statusBarHidden(true),
             GalleryConfigurationItem.displacementKeepOriginalInPlace(false),
             GalleryConfigurationItem.displacementInsetMargin(50)
         ]
@@ -479,7 +494,7 @@ extension ProductDetailViewController: AddToCartViewControllerDelegate {
     }
     
     func submitAddToCartSimple(product: SimpleProduct) {
-        self.requestAddToCart(simpleSku: product.sku)
+        self.requestAddToCart(simpleSku: product.sku, inViewCtrl: self)
     }
     
 }
@@ -504,5 +519,34 @@ extension ProductDetailViewController: ProductSpecificsTableViewCellDelegate {
     func seeMoreInfoTapped(cell: ProductSpecificsTableViewCell, indexPath: IndexPath) {
         let cellType = (self.availableSections[indexPath.section])![indexPath.row]
         self.performSegue(withIdentifier: "showProductMoreInfoViewController", sender: cellType)
+    }
+}
+
+
+extension ProductDetailViewController: ProductReviewSummeryTableViewCellDelegate {
+    func seeAllCommentButttonTapped() {
+        self.performSegue(withIdentifier: "showProductReviewListViewController", sender: nil)
+    }
+    
+    func reviewItemSeeMoreButtonTapped(review: ProductReviewItem) {
+        
+    }
+    
+    func writeCommentButtonTapped() {
+        (navigationController as? JACenterNavigationController)?.performProtectedBlock({ (success) in
+            self.performSegue(withIdentifier: "showSubmitProductReviewViewController", sender: nil)
+        })
+    }
+}
+
+//MARK: - ProductMoreInfoViewControllerDelegate
+extension ProductDetailViewController: ProductMoreInfoViewControllerDelegate {
+
+    func requestsForAddToCart<T>(sku: String, viewCtrl: T) where T : BaseViewController, T : DataServiceProtocol {
+        self.requestAddToCart(simpleSku: sku, inViewCtrl: viewCtrl)
+    }
+    
+    func needToPrepareAddToCartViewCtrl(addToCartViewCtrl: AddToCartViewController) {
+        prepareAddToCartView(addToCartViewController: addToCartViewCtrl)
     }
 }

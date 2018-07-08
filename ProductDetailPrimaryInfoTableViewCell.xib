@@ -38,10 +38,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gAH-t7-9ot" userLabel="RateViewContainer">
-                                <rect key="frame" x="182.5" y="48.5" width="156.5" height="21"/>
+                                <rect key="frame" x="181.5" y="48.5" width="157.5" height="21"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7dQ-gY-v5c" customClass="RateStarControl" customModule="Bamilo" customModuleProvider="target">
-                                        <rect key="frame" x="56.5" y="0.0" width="100" height="20"/>
+                                        <rect key="frame" x="57.5" y="0.0" width="100" height="20"/>
                                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="100" id="5ia-kc-9Np"/>
@@ -49,16 +49,13 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="امتیاز" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a3U-7f-yAf">
-                                        <rect key="frame" x="28" y="-0.5" width="26.5" height="22"/>
+                                        <rect key="frame" x="29" y="-0.5" width="26.5" height="22"/>
                                         <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="12"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۳.۵" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XvJ-Ih-ahy">
-                                        <rect key="frame" x="6" y="-0.5" width="20" height="23"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="20" id="S3v-aW-h2i"/>
-                                        </constraints>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="۳.۵" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XvJ-Ih-ahy">
+                                        <rect key="frame" x="6" y="-0.5" width="21" height="23"/>
                                         <fontDescription key="fontDescription" name="Bamilo-Sans-Bold" family="Bamilo-Sans" pointSize="12"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -204,7 +201,6 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="calculatedBenefitLabel" destination="GMD-I4-WnO" id="EDR-oF-24r"/>
-                <outlet property="commentsCountLabel" destination="dxu-ZS-Oxt" id="4ix-Gl-ZLf"/>
                 <outlet property="containerBoxView" destination="fyF-2K-ujH" id="exH-Ka-Y7t"/>
                 <outlet property="currencyLabel" destination="Oob-Ko-Qfr" id="8we-Vn-ftP"/>
                 <outlet property="discountPercentageContainerView" destination="ORc-N1-YD0" id="NsH-4L-PrG"/>
@@ -219,6 +215,7 @@
                 <outlet property="rateTitleLabel" destination="a3U-7f-yAf" id="3RD-ui-ve0"/>
                 <outlet property="rateValueLabel" destination="XvJ-Ih-ahy" id="7G1-4E-gxy"/>
                 <outlet property="rateViewControl" destination="7dQ-gY-v5c" id="yg7-EW-Rds"/>
+                <outlet property="ratingCountLabel" destination="dxu-ZS-Oxt" id="pfs-gb-ggo"/>
                 <outlet property="seperatorLineView" destination="xhh-1D-hUK" id="GlP-mH-cRZ"/>
             </connections>
             <point key="canvasLocation" x="-342" y="-295"/>

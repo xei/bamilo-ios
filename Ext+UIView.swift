@@ -13,6 +13,37 @@ enum VerticalMoveDirection: String {
     case down = "DOWN"
 }
 
+typealias GradientPoints = (startPoint: CGPoint, endPoint: CGPoint)
+enum GradientOrientation {
+    case topRightBottomLeft
+    case topLeftBottomRight
+    case horizontal
+    case vertical
+    
+    var startPoint : CGPoint {
+        return points.startPoint
+    }
+    
+    var endPoint : CGPoint {
+        return points.endPoint
+    }
+    
+    var points : GradientPoints {
+        get {
+            switch(self) {
+            case .topRightBottomLeft:
+                return (CGPoint(x: 0.0,y: 1.0), CGPoint(x: 1.0,y: 0.0))
+            case .topLeftBottomRight:
+                return (CGPoint(x: 0.0,y: 0.0), CGPoint(x: 1,y: 1))
+            case .horizontal:
+                return (CGPoint(x: 0.0,y: 0.5), CGPoint(x: 1.0,y: 0.5))
+            case .vertical:
+                return (CGPoint(x: 0.0,y: 0.0), CGPoint(x: 0.0,y: 1.0))
+            }
+        }
+    }
+}
+
 extension UIView {
 
     func hide() {
@@ -87,6 +118,21 @@ extension UIView {
         let mask = CAShapeLayer()
         mask.path = path.cgPath
         self.layer.mask = mask
+    }
+    
+    /**
+       Create gradient for view
+     - parameter locations: Array of The values between 0 and 1, which gradient stops are specified as values
+     */
+    func applyGradient(colours: [UIColor], locations: [Double]? = nil, orientation: GradientOrientation = .horizontal) -> Void {
+        let gradient: CAGradientLayer = CAGradientLayer()
+        gradient.frame = self.bounds
+        gradient.isOpaque = true
+        gradient.colors = colours.map { $0.cgColor }
+        gradient.startPoint = orientation.startPoint
+        gradient.endPoint = orientation.endPoint
+        gradient.locations = locations?.map { NSNumber(value: $0) }
+        self.layer.insertSublayer(gradient, at: 0)
     }
     
     func addAnchorMatchedSubView(view: UIView) {

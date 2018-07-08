@@ -95,11 +95,11 @@ class BaseCatallogCollectionViewCell: BaseCollectionViewCellSwift {
             dicountPrecentageLabel?.text = nil
         }
         self.newTagView?.isHidden = !product.isNew
-        if let rateCount = product.ratingsCount, let reviewAverage = product.reviewsAverage {
+        if let rateCount = product.ratings?.totalCount, let rateAverage = product.ratings?.average {
             self.rateCountLabel?.isHidden = false
             self.rateView?.isHidden = false
             self.rateCountLabel?.text = "(\(rateCount))".convertTo(language: .arabic)
-            self.rateView?.update(withModel: reviewAverage)
+            self.rateView?.update(withModel: rateAverage)
         } else {
             self.rateCountLabel?.isHidden = true
             self.rateView?.isHidden = true

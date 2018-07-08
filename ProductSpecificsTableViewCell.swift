@@ -37,7 +37,7 @@ class ProductSpecificsTableViewCell: BaseProductTableViewCell {
             self.contetntLabel.text = description
             self.moreInfoButton.setTitle(STRING_WHOLE_DESCRIPTION, for: .normal)
             
-        } else if let specifics = model as? [productSpecificsTableSection] {
+        } else if let specifics = model as? [ProductSpecificsTableSection] {
             self.moreInfoButton.setTitle(STRING_WHOLE_SPECIFICATIONS, for: .normal)
             
             //print only first sepecification as summery

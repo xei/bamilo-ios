@@ -25,6 +25,11 @@ import UIKit
         return false
     }
     
+    class func formatScoreValue(score: Double) -> String {
+        let isInteger = floor(score) == score
+        return "\(isInteger ? "\(Int(score))" : "\(score)")".convertTo(language: .arabic).persianDoubleFormat()
+    }
+    
     class func openExternalUrlOnBrowser(urlString: String) {
         guard let url = URL(string: urlString) else {
             return

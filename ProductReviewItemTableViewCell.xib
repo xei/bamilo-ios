@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="179" id="KGk-i7-Jjw" customClass="ProductReviewItemTableViewCell" customModule="Bamilo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="358" height="179"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="358" height="178.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kva-E3-Ed5">
+                        <rect key="frame" x="10" y="5" width="338" height="169"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cNa-Ie-BPv">
+                                <rect key="frame" x="10" y="6" width="318" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pyP-Fz-Pm0">
+                                <rect key="frame" x="286" y="32" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ksI-EW-rb8">
+                                <rect key="frame" x="280" y="32" width="1" height="21"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="1" id="ItZ-x3-3OL"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hch-F1-7cR">
+                                <rect key="frame" x="233" y="32" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IZQ-EQ-Crn" customClass="RateStarControl" customModule="Bamilo" customModuleProvider="target">
+                                <rect key="frame" x="10" y="36" width="70" height="14"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="70" id="SeO-XP-NhP"/>
+                                    <constraint firstAttribute="height" constant="14" id="yau-60-gie"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4c2-eE-ON2">
+                                <rect key="frame" x="10" y="64" width="318" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vPS-nB-fvs">
+                                <rect key="frame" x="10" y="59" width="46" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="Jqh-ao-mRe"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="4c2-eE-ON2" secondAttribute="bottom" constant="10" id="0ON-7h-sbP"/>
+                            <constraint firstItem="Hch-F1-7cR" firstAttribute="centerY" secondItem="pyP-Fz-Pm0" secondAttribute="centerY" id="2X6-xB-988"/>
+                            <constraint firstItem="vPS-nB-fvs" firstAttribute="bottom" secondItem="4c2-eE-ON2" secondAttribute="bottom" id="4He-rp-R9t"/>
+                            <constraint firstItem="pyP-Fz-Pm0" firstAttribute="right" secondItem="cNa-Ie-BPv" secondAttribute="right" id="BXf-rt-tXi"/>
+                            <constraint firstItem="ksI-EW-rb8" firstAttribute="height" secondItem="pyP-Fz-Pm0" secondAttribute="height" id="EXQ-AS-jBk"/>
+                            <constraint firstItem="pyP-Fz-Pm0" firstAttribute="top" secondItem="cNa-Ie-BPv" secondAttribute="bottom" constant="5" id="FdU-KG-7O8"/>
+                            <constraint firstItem="cNa-Ie-BPv" firstAttribute="top" secondItem="kva-E3-Ed5" secondAttribute="top" constant="6" id="MI8-Gd-vN5"/>
+                            <constraint firstAttribute="trailing" secondItem="cNa-Ie-BPv" secondAttribute="trailing" constant="10" id="QHz-7r-QsU"/>
+                            <constraint firstItem="ksI-EW-rb8" firstAttribute="centerY" secondItem="pyP-Fz-Pm0" secondAttribute="centerY" id="UQ1-eA-yCV"/>
+                            <constraint firstItem="ksI-EW-rb8" firstAttribute="left" secondItem="Hch-F1-7cR" secondAttribute="right" constant="5" id="Van-Ni-5Qi"/>
+                            <constraint firstItem="cNa-Ie-BPv" firstAttribute="leading" secondItem="kva-E3-Ed5" secondAttribute="leading" constant="10" id="XhZ-xR-uit"/>
+                            <constraint firstItem="pyP-Fz-Pm0" firstAttribute="left" secondItem="ksI-EW-rb8" secondAttribute="right" constant="5" id="aah-tk-kZV"/>
+                            <constraint firstItem="4c2-eE-ON2" firstAttribute="right" secondItem="pyP-Fz-Pm0" secondAttribute="right" id="afp-2c-ldE"/>
+                            <constraint firstItem="4c2-eE-ON2" firstAttribute="left" secondItem="IZQ-EQ-Crn" secondAttribute="left" id="cOZ-WQ-sVY"/>
+                            <constraint firstItem="4c2-eE-ON2" firstAttribute="top" secondItem="pyP-Fz-Pm0" secondAttribute="bottom" constant="11" id="emW-j6-EAg"/>
+                            <constraint firstItem="IZQ-EQ-Crn" firstAttribute="centerY" secondItem="pyP-Fz-Pm0" secondAttribute="centerY" id="mlY-B7-imv"/>
+                            <constraint firstItem="vPS-nB-fvs" firstAttribute="left" secondItem="4c2-eE-ON2" secondAttribute="left" id="ogF-Q9-Npt"/>
+                            <constraint firstItem="IZQ-EQ-Crn" firstAttribute="left" secondItem="kva-E3-Ed5" secondAttribute="left" constant="10" id="q64-v2-wgy"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="right" secondItem="kva-E3-Ed5" secondAttribute="right" constant="10" id="YUG-ht-iyW"/>
+                    <constraint firstItem="kva-E3-Ed5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="h9l-bb-K4I"/>
+                    <constraint firstAttribute="bottom" secondItem="kva-E3-Ed5" secondAttribute="bottom" constant="5" id="nOd-ob-qTa"/>
+                    <constraint firstItem="kva-E3-Ed5" firstAttribute="left" secondItem="H2p-sc-9uM" secondAttribute="left" constant="10" id="vgg-Gk-HSK"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="containerView" destination="kva-E3-Ed5" id="dDG-xO-DSv"/>
+                <outlet property="dateLabel" destination="Hch-F1-7cR" id="0Oq-AA-iLb"/>
+                <outlet property="rateView" destination="IZQ-EQ-Crn" id="p2C-hX-paK"/>
+                <outlet property="reviewDescription" destination="4c2-eE-ON2" id="pz7-Mf-zP9"/>
+                <outlet property="reviewTitleLabel" destination="cNa-Ie-BPv" id="1Jz-we-B9Q"/>
+                <outlet property="reviewUserName" destination="pyP-Fz-Pm0" id="vUh-Tf-NwY"/>
+                <outlet property="seeMoreButton" destination="vPS-nB-fvs" id="1Ig-hL-i6d"/>
+                <outlet property="verticalSeperatorView" destination="ksI-EW-rb8" id="5iQ-QE-Hva"/>
+            </connections>
+            <point key="canvasLocation" x="-1068" y="-208.5"/>
+        </tableViewCell>
+    </objects>
+</document>
