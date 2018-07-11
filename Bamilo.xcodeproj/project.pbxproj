@@ -287,6 +287,10 @@
 		61B603F420A0324F00D19DC7 /* RadioOptionQuestionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B603F320A0324F00D19DC7 /* RadioOptionQuestionView.xib */; };
 		61B603FE20A1C96500D19DC7 /* TextFieldQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B603FD20A1C96500D19DC7 /* TextFieldQuestionView.swift */; };
 		61B6040020A1C97300D19DC7 /* TextFieldQuestionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B603FF20A1C97300D19DC7 /* TextFieldQuestionView.xib */; };
+		61B80E6920F61CB20028FA87 /* MinimalProductTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B80E6720F61CB20028FA87 /* MinimalProductTableViewCell.swift */; };
+		61B80E6A20F61CB20028FA87 /* MinimalProductTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B80E6820F61CB20028FA87 /* MinimalProductTableViewCell.xib */; };
+		61B80E6E20F62A670028FA87 /* SellerOfferItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B80E6C20F62A670028FA87 /* SellerOfferItemTableViewCell.swift */; };
+		61B80E6F20F62A670028FA87 /* SellerOfferItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B80E6D20F62A670028FA87 /* SellerOfferItemTableViewCell.xib */; };
 		61BA9B3D1E99FDEE004E9DE8 /* WidgetBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BA9B3C1E99FDEE004E9DE8 /* WidgetBase.m */; };
 		61BA9B411E99FE09004E9DE8 /* FeatureBoxWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BA9B401E99FE09004E9DE8 /* FeatureBoxWidget.m */; };
 		61BA9B4B1E9A009E004E9DE8 /* EmarsysRecommendationCarouselWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BA9B4A1E9A009E004E9DE8 /* EmarsysRecommendationCarouselWidget.m */; };
@@ -1428,6 +1432,10 @@
 		61B603F320A0324F00D19DC7 /* RadioOptionQuestionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RadioOptionQuestionView.xib; sourceTree = "<group>"; };
 		61B603FD20A1C96500D19DC7 /* TextFieldQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldQuestionView.swift; sourceTree = "<group>"; };
 		61B603FF20A1C97300D19DC7 /* TextFieldQuestionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextFieldQuestionView.xib; sourceTree = "<group>"; };
+		61B80E6720F61CB20028FA87 /* MinimalProductTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinimalProductTableViewCell.swift; sourceTree = "<group>"; };
+		61B80E6820F61CB20028FA87 /* MinimalProductTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MinimalProductTableViewCell.xib; sourceTree = "<group>"; };
+		61B80E6C20F62A670028FA87 /* SellerOfferItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellerOfferItemTableViewCell.swift; sourceTree = "<group>"; };
+		61B80E6D20F62A670028FA87 /* SellerOfferItemTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SellerOfferItemTableViewCell.xib; sourceTree = "<group>"; };
 		61BA9B3B1E99FDEE004E9DE8 /* WidgetBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetBase.h; sourceTree = "<group>"; };
 		61BA9B3C1E99FDEE004E9DE8 /* WidgetBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WidgetBase.m; sourceTree = "<group>"; };
 		61BA9B3F1E99FE09004E9DE8 /* FeatureBoxWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeatureBoxWidget.h; sourceTree = "<group>"; };
@@ -3362,6 +3370,7 @@
 		612FE5181EDC0A8400C2AFA0 /* TableViewCell */ = {
 			isa = PBXGroup;
 			children = (
+				61B80E6520F61AAA0028FA87 /* OtherSellerView */,
 				614927B820EB8DCA00B16B27 /* ProductReviewListView */,
 				6127EA0120B2E1E20064B291 /* ProductDetailView */,
 				61FC4671201F3C9E000141FA /* CMSTableViewHeader */,
@@ -4672,6 +4681,33 @@
 				61B603FF20A1C97300D19DC7 /* TextFieldQuestionView.xib */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		61B80E6520F61AAA0028FA87 /* OtherSellerView */ = {
+			isa = PBXGroup;
+			children = (
+				61B80E6B20F6295E0028FA87 /* SellerOfferItemTableviewCell */,
+				61B80E6620F61C790028FA87 /* MinimalProductTableViewCell */,
+			);
+			name = OtherSellerView;
+			sourceTree = "<group>";
+		};
+		61B80E6620F61C790028FA87 /* MinimalProductTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				61B80E6720F61CB20028FA87 /* MinimalProductTableViewCell.swift */,
+				61B80E6820F61CB20028FA87 /* MinimalProductTableViewCell.xib */,
+			);
+			name = MinimalProductTableViewCell;
+			sourceTree = "<group>";
+		};
+		61B80E6B20F6295E0028FA87 /* SellerOfferItemTableviewCell */ = {
+			isa = PBXGroup;
+			children = (
+				61B80E6C20F62A670028FA87 /* SellerOfferItemTableViewCell.swift */,
+				61B80E6D20F62A670028FA87 /* SellerOfferItemTableViewCell.xib */,
+			);
+			name = SellerOfferItemTableviewCell;
 			sourceTree = "<group>";
 		};
 		61BA9B391E99FDC5004E9DE8 /* Widgets */ = {
@@ -8604,6 +8640,7 @@
 				8757443F1EA60E71001B518A /* Winter-Small-50.png in Resources */,
 				8757436C1EA60DA5001B518A /* Birthday-72.png in Resources */,
 				875744591EA60E8D001B518A /* Yalda.png in Resources */,
+				61B80E6F20F62A670028FA87 /* SellerOfferItemTableViewCell.xib in Resources */,
 				875743CB1EA60DFD001B518A /* SpecialOffer-60@2x.png in Resources */,
 				6157A74820E25167001B8361 /* ProductSpecificItemTableViewCell.xib in Resources */,
 				612FE51C1EDC0D6300C2AFA0 /* ProfileUserTableViewCell.xib in Resources */,
@@ -8672,6 +8709,7 @@
 				CE9AE0691AB6D78200D56481 /* JAOrangeButtonCell_ipad_landscape.xib in Resources */,
 				8757439E1EA60DE0001B518A /* Ramadan@2x.png in Resources */,
 				875744391EA60E71001B518A /* Winter@2x.png in Resources */,
+				61B80E6A20F61CB20028FA87 /* MinimalProductTableViewCell.xib in Resources */,
 				CE9AE06F1AB6D78200D56481 /* JANewsletterComponent.xib in Resources */,
 				875743441EA60D8E001B518A /* Autumn-Small@2x.png in Resources */,
 				8757434D1EA60D8E001B518A /* Autumn-72.png in Resources */,
@@ -9310,6 +9348,7 @@
 				61036B651E65B570006E12A9 /* Order.m in Sources */,
 				6147F7531FB73D31000CBA85 /* TourNames.swift in Sources */,
 				CE9ADF731AB6D78200D56481 /* JAPaymentCell.m in Sources */,
+				61B80E6920F61CB20028FA87 /* MinimalProductTableViewCell.swift in Sources */,
 				CE9ADF741AB6D78200D56481 /* JAPDVBundleSingleItem.m in Sources */,
 				CE9ADF7A1AB6D78200D56481 /* JAPercentageBarView.m in Sources */,
 				613FF2BA1E4B2858008660CF /* SignUpViewController.m in Sources */,
@@ -9377,6 +9416,7 @@
 				875AD5631E38C0C900584ABF /* RIImage.m in Sources */,
 				CE9ADF9B1AB6D78200D56481 /* JACenterNavigationController.m in Sources */,
 				875AD5621E38C0C900584ABF /* RIHtmlShop.m in Sources */,
+				61B80E6E20F62A670028FA87 /* SellerOfferItemTableViewCell.swift in Sources */,
 				9AE766BF1CBBF01C00B63D8E /* JAEmptyCartView.m in Sources */,
 				61FCF0821FD69DF900084872 /* Ext+Error.swift in Sources */,
 				610BC2911FBC5CBF00A7C343 /* RecommendItem.swift in Sources */,

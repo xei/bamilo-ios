@@ -43,7 +43,7 @@
                         </constraints>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="65s-jA-YT0" customClass="IconButton">
-                        <rect key="frame" x="10" y="10" width="40" height="40"/>
+                        <rect key="frame" x="10" y="183.5" width="40" height="40"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="Bv5-uV-L1n"/>
                             <constraint firstAttribute="width" secondItem="65s-jA-YT0" secondAttribute="height" multiplier="1:1" id="tbI-oH-sew"/>
@@ -54,7 +54,7 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CWz-MF-llw" customClass="DOFavoriteButton" customModule="Bamilo" customModuleProvider="target">
-                        <rect key="frame" x="55" y="10" width="40" height="40"/>
+                        <rect key="frame" x="405" y="183.5" width="40" height="40"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="YS6-Vk-WhS"/>
                             <constraint firstAttribute="width" secondItem="CWz-MF-llw" secondAttribute="height" multiplier="1:1" id="g3M-af-xKD"/>
@@ -86,20 +86,20 @@
                     <constraint firstItem="CWz-MF-llw" firstAttribute="width" secondItem="CWz-MF-llw" secondAttribute="height" multiplier="1:1" id="2hN-kc-Xoe"/>
                     <constraint firstAttribute="bottom" secondItem="BwQ-PM-75c" secondAttribute="bottom" constant="-23" id="5l1-0C-7FD"/>
                     <constraint firstItem="BwQ-PM-75c" firstAttribute="left" secondItem="H2p-sc-9uM" secondAttribute="left" id="BPr-WL-8u2"/>
+                    <constraint firstAttribute="bottom" secondItem="65s-jA-YT0" secondAttribute="bottom" constant="10" id="Ciq-Ru-qbl"/>
                     <constraint firstItem="RbB-cg-U0t" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="GlZ-0a-J9t"/>
                     <constraint firstItem="CWz-MF-llw" firstAttribute="centerY" secondItem="65s-jA-YT0" secondAttribute="centerY" id="Mer-So-Mqp"/>
                     <constraint firstItem="65s-jA-YT0" firstAttribute="left" secondItem="H2p-sc-9uM" secondAttribute="left" constant="10" id="d0g-uL-wEg"/>
-                    <constraint firstItem="65s-jA-YT0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="dXq-gH-F11"/>
+                    <constraint firstAttribute="right" secondItem="CWz-MF-llw" secondAttribute="right" constant="10" id="glg-vo-we2"/>
                     <constraint firstAttribute="right" secondItem="RbB-cg-U0t" secondAttribute="right" constant="10" id="ixH-Ct-0aj"/>
                     <constraint firstAttribute="bottom" secondItem="RbB-cg-U0t" secondAttribute="bottom" constant="10" id="ogE-dJ-oa5"/>
                     <constraint firstAttribute="right" secondItem="BwQ-PM-75c" secondAttribute="right" id="rZs-jF-CZj"/>
-                    <constraint firstItem="CWz-MF-llw" firstAttribute="left" secondItem="65s-jA-YT0" secondAttribute="right" constant="5" id="t6M-gA-DU8"/>
                     <constraint firstItem="BwQ-PM-75c" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="-900" id="w8t-eA-Kue"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="buttonsTopConstraint" destination="dXq-gH-F11" id="nQi-xZ-vkX"/>
                 <outlet property="pagerControl" destination="RbB-cg-U0t" id="jiV-vd-WFh"/>
+                <outlet property="shareButton" destination="65s-jA-YT0" id="9b7-vj-bGa"/>
                 <outlet property="sliderView" destination="Geu-TC-AiV" id="gOK-U1-SZG"/>
                 <outlet property="wishListButton" destination="CWz-MF-llw" id="sEn-HZ-Dt2"/>
             </connections>
@@ -108,6 +108,6 @@
     </objects>
     <resources>
         <image name="addToWishlist_highlited" width="26" height="26"/>
-        <image name="share-icons" width="17" height="18"/>
+        <image name="share-icons" width="48" height="48"/>
     </resources>
 </document>

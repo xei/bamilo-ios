@@ -128,10 +128,10 @@ extension ProductVariationView {
         button.setTitleColor(Theme.color(kColorGray10), for: .disabled)
         button.setTitleColor(selected ? .white : Theme.color(kColorGray1), for: .normal)
         button.applyBorder(width: 1, color: Theme.color(kColorGray10))
-        button.layer.cornerRadius = 20
+        button.layer.cornerRadius = 15
         button.backgroundColor = selected ? Theme.color(kColorBlue1) : .white
         button.addTarget(self, action: #selector(gridButtonTapped(sender:)), for: .touchUpInside)
-        button.contentEdgeInsets = UIEdgeInsetsMake(8.0, 15.0, 8.0, 15.0)
+        button.contentEdgeInsets = UIEdgeInsetsMake(8.0, 25.0, 8.0, 25.0)
         button.sizeToFit()
         return button
     }

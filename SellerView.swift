@@ -14,7 +14,11 @@ import UIKit
 }
 
 @objcMembers class SellerView: BaseControlView {
-
+    
+    @IBOutlet weak private var otherSellerButtonHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak private var otherSellerTitleLabel: UILabel!
+    @IBOutlet weak private var otherSellerCountLabel: UILabel!
+    @IBOutlet weak private var seeOtherSellers: UIButton!
     @IBOutlet weak private var sellerNameLabel: UILabel!
     @IBOutlet weak private var sellerOrderCounts: UILabel!
     @IBOutlet weak private var guaranteeLabel: UILabel!
@@ -66,10 +70,18 @@ import UIKit
         self.slaReachedTitleLabel.textColor = Theme.color(kColorGray1)
         self.slaReachedValueLabel.textColor = Theme.color(kColorGray1)
         self.sellerRatingRefreshButton.setTitleColor(Theme.color(kColorOrange1), for: .normal)
-        
+        self.otherSellerCountLabel.backgroundColor = Theme.color(kColorBlue1)
+        self.otherSellerCountLabel.textColor = .white
+        self.otherSellerCountLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: .white)
+        self.otherSellerTitleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorBlue1))
+        self.otherSellerCountLabel.layer.cornerRadius = 5
+        self.otherSellerTitleLabel.text = STRING_OTHER_SELLERS
+        self.seeOtherSellers.setTitle(nil, for: .normal)
+        self.otherSellerCountLabel.text = "+۴"
     }
     
     func update(with seller: Seller) {
+        self.otherSellerButtonHeightConstraint.constant = 0
         self.sellerNameLabel.text = "\(STRING_SELLER): \(seller.name ?? STRING_NO_NAME)"
         if let orderDeliveryCount = seller.orderDeliveryCount {
             self.sellerOrderCounts.text = "\(orderDeliveryCount.label ?? STRING_ORDERS_COUNT): \(orderDeliveryCount.value ?? "")".convertTo(language: .arabic)

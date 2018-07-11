@@ -149,4 +149,4 @@ let STRING_MORE = RILocalizationWrapper.localizedString("more")!
 let STRING_USER_REVIEWS = RILocalizationWrapper.localizedString("user_reviews")!
 let STRING_STAR = RILocalizationWrapper.localizedString("star")!
 let STRING_ADD_COMMENT = RILocalizationWrapper.localizedString("add_comment")!
-
+let STRING_OTHER_SELLERS = RILocalizationWrapper.localizedString("other_sellers")!

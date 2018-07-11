@@ -93,14 +93,11 @@ extension UIImageView: DisplaceableView {}
                 sliderCell?.blurView?.alpha = 0
                 sliderRect.origin.y = self.tableView.contentOffset.y
                 sliderRect.size.height = -self.tableView.contentOffset.y + cellSliderHeight - 20 //slider image vertical gap
-                sliderCell?.buttonsTopConstraint.constant = 10 + self.tableView.contentOffset.y
                 
                 if self.tableView.contentOffset.y < -50  {
                     self.sliderCell?.openCurrentImage()
                 }
                 
-            } else {
-                sliderCell?.buttonsTopConstraint.constant = 10
             }
             
             if self.tableView.contentOffset.y >= 0 && self.tableView.contentOffset.y < cellSliderHeight {

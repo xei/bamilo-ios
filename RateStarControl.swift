@@ -28,7 +28,7 @@ class RateStarControl: BaseViewControl {
         }
     }
     
-    func colorButtons(rateValue: Double, color: UIColor = Theme.color(kColorOrange1), disabledColor: UIColor = Theme.color(kColorGray10)) {
+    func colorButtons(rateValue: Double, color: UIColor = UIColor(red:1, green:0.78, blue:0, alpha:1), disabledColor: UIColor = UIColor(red:0.85, green:0.85, blue:0.85, alpha:1)) {
         self.rateView?.colorButtons(rateValue: rateValue, color: color, disabledColor: disabledColor)
     }
     

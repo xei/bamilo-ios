@@ -20,7 +20,7 @@ class ProductDetailViewSliderTableViewCell: BaseProductTableViewCell, FSPagerVie
     weak var delegate: ProductDetailViewSliderTableViewCellDelegate?
     
     @IBOutlet weak var wishListButton: DOFavoriteButton!
-    @IBOutlet weak var buttonsTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var shareButton: IconButton!
     
     private static let sliderRatio: CGFloat = 0.94 //ratio:  320*314
     private var productImageList: [ProductImageItem]?
@@ -30,6 +30,10 @@ class ProductDetailViewSliderTableViewCell: BaseProductTableViewCell, FSPagerVie
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        shareButton.setImage( #imageLiteral(resourceName: "share-icons").withRenderingMode(.alwaysTemplate), for: .normal)
+        shareButton.imageView?.tintColor = Theme.color(kColorGray9)
+        
         self.contentView.backgroundColor = .white
         self.clipsToBounds = true
     }
