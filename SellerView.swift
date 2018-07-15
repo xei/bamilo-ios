@@ -124,9 +124,9 @@ import UIKit
         if let score = seller.score {
             self.sellerRatingErrorView.isHidden = true
             if let totalScore = score.overall {
-                self.totalScoreValueLabel.textColor = totalScore.color ?? Theme.color(kColorGreen1)
-                if let value = totalScore.value, let maxValue = score.maxValue {
-                    self.totalScoreValueLabel.text = Utility.formatScoreValue(score: value)
+                self.totalScoreValueLabel.textColor = Theme.color(kColorGreen1)
+                if let maxValue = score.maxValue {
+                    self.totalScoreValueLabel.text = Utility.formatScoreValue(score: totalScore)
                     self.totalScoreBaseValueLabel.text = "\(STRING_FROM) \(Utility.formatScoreValue(score:maxValue)) \(STRING_RATE)"
                 } else {
                     self.totalScoreValueLabel.text = nil
@@ -135,34 +135,34 @@ import UIKit
             } else {
                 self.showErrorOnSellerScore()
             }
-            self.fullfilmentTitleLabel.textColor = score.fullfilment?.color ?? Theme.color(kColorGray1)
-            self.fullfilmentTitleLabel.text = score.fullfilment?.label ?? STRING_SUCCESSFUL_PRODUCT_SUMPPLEMENT
+            self.fullfilmentTitleLabel.textColor = Theme.color(kColorGray1)
+            self.fullfilmentTitleLabel.text = STRING_SUCCESSFUL_PRODUCT_SUMPPLEMENT
             
-            self.fullfilmentValueLabel.textColor = score.fullfilment?.color ?? Theme.color(kColorGray1)
-            self.fullfilmentValueLabel.text = "\(Utility.formatScoreValue(score: score.fullfilment?.value ?? 0)) \(STRING_FROM) \(Utility.formatScoreValue(score:score.maxValue ?? 0))"
-            if let value = score.fullfilment?.value, let maxValue = score.maxValue {
+            self.fullfilmentValueLabel.textColor = Theme.color(kColorGray1)
+            self.fullfilmentValueLabel.text = "\(Utility.formatScoreValue(score: score.fullfilment ?? 0)) \(STRING_FROM) \(Utility.formatScoreValue(score:score.maxValue ?? 0))"
+            if let value = score.fullfilment, let maxValue = score.overall {
                 self.fullfillmentProgressView.update(withModel: Double(value/maxValue))
             } else {
                 self.showErrorOnSellerScore()
             }
             
-            self.notReturnedTitleLabel.textColor = score.notReturned?.color ?? Theme.color(kColorGray1)
-            self.notReturnedTitleLabel.text = score.notReturned?.label ?? STRING_NO_RETURN_TITLE
+            self.notReturnedTitleLabel.textColor = Theme.color(kColorGray1)
+            self.notReturnedTitleLabel.text = STRING_NO_RETURN_TITLE
             
-            self.notReturnedValueLabel.textColor = score.notReturned?.color ?? Theme.color(kColorGray1)
-            self.notReturnedValueLabel.text = "\(Utility.formatScoreValue(score: score.notReturned?.value ?? 0)) \(STRING_FROM) \(Utility.formatScoreValue(score:score.maxValue ?? 0))"
-            if let value = score.notReturned?.value, let maxValue = score.maxValue {
+            self.notReturnedValueLabel.textColor = Theme.color(kColorGray1)
+            self.notReturnedValueLabel.text = "\(Utility.formatScoreValue(score: score.notReturned ?? 0)) \(STRING_FROM) \(Utility.formatScoreValue(score:score.maxValue ?? 0))"
+            if let value = score.notReturned, let maxValue = score.maxValue {
                 self.notReturnedProgressView.update(withModel: CGFloat(value/maxValue))
             } else {
                 self.showErrorOnSellerScore()
             }
             
-            self.slaReachedTitleLabel.textColor = score.slaReached?.color ?? Theme.color(kColorGray1)
-            self.slaReachedTitleLabel.text = score.slaReached?.label ?? STRING_SLA_TITLE
+            self.slaReachedTitleLabel.textColor = Theme.color(kColorGray1)
+            self.slaReachedTitleLabel.text = STRING_SLA_TITLE
             
-            self.slaReachedValueLabel.textColor = score.slaReached?.color ?? Theme.color(kColorGray1)
-            self.slaReachedValueLabel.text = "\(Utility.formatScoreValue(score: score.slaReached?.value ?? 0)) \(STRING_FROM) \(Utility.formatScoreValue(score:score.maxValue ?? 0))"
-            if let value = score.slaReached?.value, let maxValue = score.maxValue {
+            self.slaReachedValueLabel.textColor = Theme.color(kColorGray1)
+            self.slaReachedValueLabel.text = "\(Utility.formatScoreValue(score: score.slaReached ?? 0)) \(STRING_FROM) \(Utility.formatScoreValue(score:score.maxValue ?? 0))"
+            if let value = score.slaReached, let maxValue = score.maxValue {
                 self.slaReachedProgressView.update(withModel: CGFloat(value/maxValue))
             } else {
                 self.showErrorOnSellerScore()

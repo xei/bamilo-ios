@@ -150,3 +150,7 @@ let STRING_USER_REVIEWS = RILocalizationWrapper.localizedString("user_reviews")!
 let STRING_STAR = RILocalizationWrapper.localizedString("star")!
 let STRING_ADD_COMMENT = RILocalizationWrapper.localizedString("add_comment")!
 let STRING_OTHER_SELLERS = RILocalizationWrapper.localizedString("other_sellers")!
+let STRING_SELLER_NAME = RILocalizationWrapper.localizedString("seller_name")!
+let STRING_SELLER_SCORE = RILocalizationWrapper.localizedString("seller_score")!
+
+

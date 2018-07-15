@@ -26,10 +26,10 @@ class ColorLabelValue<T>: Mappable {
 class SellerScore: Mappable {
     var isEnable = false
     var maxValue: Double?
-    var overall: ColorLabelValue<Double>?
-    var fullfilment: ColorLabelValue<Double>?
-    var notReturned: ColorLabelValue<Double>?
-    var slaReached: ColorLabelValue<Double>?
+    var overall: Double?
+    var fullfilment: Double?
+    var notReturned: Double?
+    var slaReached: Double?
     
     required init?(map: Map) {}
     func mapping(map: Map) {
@@ -52,10 +52,11 @@ class SellerScore: Mappable {
     var target: RITarget?
     var totalReview: Int?
     var averageReview: Int?
-    var deliveryTime: String?
     var score: SellerScore?
+    var productDeliveryTime: SellerDeliveryTime?
     var precenceDuration: ColorLabelValue<String>?
     var orderDeliveryCount: ColorLabelValue<String>?
+    var deliveryTime: SellerDeliveryTime?
     
     required init?(map: Map) {}
     func mapping(map: Map) {
@@ -67,10 +68,10 @@ class SellerScore: Mappable {
         target <- map["target"]
         totalReview <- map["reviews.total"]
         averageReview <- map["reviews.average"]
-        deliveryTime <- map["delivery_time"]
         score <- map["score"]
         orderDeliveryCount <- map["orders_count"]
         precenceDuration <- map["precenceDuration"]
+        deliveryTime <- map["delivery_time"]
         
         //Mapping filters
         let json = JSON(map.JSON)

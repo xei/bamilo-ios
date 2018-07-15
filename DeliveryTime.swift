@@ -43,6 +43,7 @@ class DeliveryTimes: NSObject, Mappable {
     var regionId: String?
     
     required init?(map: Map) {
+        
     }
 
     func mapping(map: Map) {

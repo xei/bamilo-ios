@@ -212,7 +212,7 @@ extension UIImageView: DisplaceableView {}
             }
         }
     }
-    
+     
     func retryAction(_ callBack: RetryHandler!, forRequestId rid: Int32) {
         self.getContent { (succes) in
             callBack?(succes)

@@ -122,8 +122,13 @@ class ProductDataManager: DataManagerSwift {
             if let receivedData = data as? [String: Any], let cart = receivedData[DataManagerKeys.DataContent] as? RICart {
                 NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.UpdateCart), object: nil, userInfo: [NotificationKeys.NotificationCart : cart])
             }
-            
             callBackHandler?(true, nil)
         }
     }
+    
+    
+    func getOtherSellers(_ target: DataServiceProtocol, sku: String, cityId: String? = nil, completion:@escaping DataClosure) {
+        
+    }
+    
 }

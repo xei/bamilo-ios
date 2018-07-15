@@ -31,12 +31,23 @@ class SellerOfferItemTableViewCell: BaseProductTableViewCell {
     
     
     override func update(withModel model: Any!) {
-        
+        if let item = model as? SellerListItem {
+            sellerNameLabel.text = item.seller?.name
+            deliveryTimeLabel.text = item.seller?.deliveryTime?.message
+            sellerOveralScoreLabel.text = "\(item.seller?.score?.overall ?? 0)"
+            priceLabel.text = "\(item.productOffer?.price ?? 0)".formatPriceWithCurrency()
+            oldPriceLabel.attributedText = "\(item.productOffer?.price ?? 0)".formatPriceWithCurrency().strucThroughPriceFormat()
+            dicountPrecentageLabel?.text = "%\(item.productOffer?.maxSavingPrecentage ?? 0)".convertTo(language: .arabic)
+        }
     }
     
     
     func applyStyle() {
         horizontalSeperatorView.backgroundColor = Theme.color(kColorGray5)
+        sellerNameTitleLabel.text = STRING_SELLER_NAME
+        deliveryTimeTitleLabel.text = STRING_DELIVERY_TIME
+        sellerScoreTitleLabel.text = STRING_SELLER_SCORE
+        
         [sellerNameTitleLabel, deliveryTimeTitleLabel, sellerScoreTitleLabel].forEach { $0?.applyStyle(font: Theme.font(kFontVariationRegular, size: 10), color: Theme.color(kColorGray1)) }
         [dicountPrecentageLabel, sellerOveralScoreLabel].forEach { $0?.applyStyle(font: Theme.font(kFontVariationBold, size: 12), color: .white) }
         

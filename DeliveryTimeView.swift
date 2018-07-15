@@ -50,10 +50,17 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
             })
             self.getRegionsWithCompletion()
             self.getCitiesOfRegion(regionId: savedSelectedArea["region"]?["id"])
-            self.getTimeDeliveryForCityId(cityID: savedSelectedArea["city"]?["id"])
+            self.getTimeDeliveryForCityId(cityID: DeliveryTimeView.getSelectedCityID())
         } else {
             self.getTimeDeliveryForCityId(cityID: nil)
         }
+    }
+    
+    static func getSelectedCityID() -> String? {
+        if let savedSelectedArea = UserDefaults.standard.object(forKey: "SelectedAreaByUser") as? [String: [String: String]] {
+            return savedSelectedArea["city"]?["id"]
+        }
+        return nil
     }
     
     private func updateOptionInField(inputField: InputTextFieldControl, withData: Any) {

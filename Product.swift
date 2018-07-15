@@ -39,6 +39,8 @@ import SwiftyJSON
     var specifications: [ProductSpecificsTableSection]?
     var shortDescription: String?
     var productDescription: String?
+    // == new contracts for pricing product in new apis, it must be override in any apis then we can remove other pricing variable from here
+    
     
     override init() {}
     required init?(map: Map) {}

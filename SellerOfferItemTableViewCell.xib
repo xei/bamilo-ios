@@ -20,7 +20,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x4l-8N-Kb2">
-                        <rect key="frame" x="10" y="0.0" width="373" height="203.5"/>
+                        <rect key="frame" x="10" y="0.0" width="373" height="193.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4IL-0T-ccT">
                                 <rect key="frame" x="365" y="15" width="0.0" height="0.0"/>
@@ -40,7 +40,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ffp-Jz-fGD">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ffp-Jz-fGD">
                                 <rect key="frame" x="8" y="28" width="285" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -128,18 +128,18 @@
                         <constraints>
                             <constraint firstItem="PnH-a8-jMm" firstAttribute="leading" secondItem="WCJ-cx-3WR" secondAttribute="leading" id="1PD-1r-Cb9"/>
                             <constraint firstItem="C17-Wz-ogO" firstAttribute="top" secondItem="4IL-0T-ccT" secondAttribute="bottom" constant="13" id="2Rv-x5-4k9"/>
-                            <constraint firstAttribute="trailing" secondItem="4IL-0T-ccT" secondAttribute="trailing" constant="8" id="5NZ-63-QaR"/>
+                            <constraint firstAttribute="right" secondItem="4IL-0T-ccT" secondAttribute="right" constant="8" id="5NZ-63-QaR"/>
                             <constraint firstItem="aTl-k7-zGf" firstAttribute="trailing" secondItem="HAR-V0-aXt" secondAttribute="trailing" id="5pc-th-RgV"/>
                             <constraint firstItem="HAR-V0-aXt" firstAttribute="top" secondItem="C17-Wz-ogO" secondAttribute="bottom" constant="13" id="6TD-Ec-1Ef"/>
                             <constraint firstItem="qs2-gt-k8d" firstAttribute="top" secondItem="h47-XB-4BK" secondAttribute="top" id="BvE-NF-5pb"/>
                             <constraint firstItem="PnH-a8-jMm" firstAttribute="top" secondItem="EPJ-CH-SNB" secondAttribute="bottom" constant="16" id="GPS-0g-Mny"/>
                             <constraint firstItem="PnH-a8-jMm" firstAttribute="trailing" secondItem="HAR-V0-aXt" secondAttribute="trailing" id="IHR-TX-EQh"/>
-                            <constraint firstAttribute="trailing" secondItem="WCJ-cx-3WR" secondAttribute="trailing" constant="80" id="Osx-fB-VyO"/>
+                            <constraint firstAttribute="right" secondItem="WCJ-cx-3WR" secondAttribute="right" constant="80" id="Osx-fB-VyO"/>
                             <constraint firstItem="Ffp-Jz-fGD" firstAttribute="leading" secondItem="WCJ-cx-3WR" secondAttribute="leading" id="PPl-au-76S"/>
                             <constraint firstItem="qs2-gt-k8d" firstAttribute="leading" secondItem="PnH-a8-jMm" secondAttribute="leading" id="WmV-Hb-73i"/>
                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="qs2-gt-k8d" secondAttribute="bottom" constant="8" id="XJ8-E8-Za2"/>
                             <constraint firstItem="aTl-k7-zGf" firstAttribute="leading" secondItem="5CR-gm-pzA" secondAttribute="trailing" constant="10" id="aYg-rL-LBC"/>
-                            <constraint firstItem="WCJ-cx-3WR" firstAttribute="leading" secondItem="x4l-8N-Kb2" secondAttribute="leading" constant="8" id="dHd-t9-bua"/>
+                            <constraint firstItem="WCJ-cx-3WR" firstAttribute="left" secondItem="x4l-8N-Kb2" secondAttribute="left" constant="8" id="dHd-t9-bua"/>
                             <constraint firstItem="4IL-0T-ccT" firstAttribute="top" secondItem="x4l-8N-Kb2" secondAttribute="top" constant="15" id="dlt-sp-hIu"/>
                             <constraint firstItem="EPJ-CH-SNB" firstAttribute="centerY" secondItem="HAR-V0-aXt" secondAttribute="centerY" id="f9h-LQ-vYB"/>
                             <constraint firstItem="mYb-5n-a8O" firstAttribute="top" secondItem="aTl-k7-zGf" secondAttribute="bottom" constant="2" id="fgc-pP-XGB"/>
@@ -158,7 +158,7 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="x4l-8N-Kb2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="b4I-Un-tjj"/>
-                    <constraint firstAttribute="bottom" secondItem="x4l-8N-Kb2" secondAttribute="bottom" id="kqK-5g-uyb"/>
+                    <constraint firstAttribute="bottom" secondItem="x4l-8N-Kb2" secondAttribute="bottom" constant="10" id="kqK-5g-uyb"/>
                     <constraint firstItem="x4l-8N-Kb2" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="nZ2-O9-i4f"/>
                     <constraint firstItem="x4l-8N-Kb2" firstAttribute="left" secondItem="H2p-sc-9uM" secondAttribute="left" constant="10" id="oD5-Sd-dvb"/>
                 </constraints>
@@ -166,11 +166,13 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="addToCartButton" destination="qs2-gt-k8d" id="h9N-dC-fID"/>
+                <outlet property="containerBoxView" destination="x4l-8N-Kb2" id="WFa-Ms-Lrv"/>
                 <outlet property="deliveryTimeLabel" destination="Ffp-Jz-fGD" id="TRl-h9-zqJ"/>
                 <outlet property="deliveryTimeTitleLabel" destination="C17-Wz-ogO" id="G6z-ng-PuB"/>
                 <outlet property="dicountPrecentageLabel" destination="h47-XB-4BK" id="7eq-hu-3Ex"/>
                 <outlet property="dicountPrecentageWrapperView" destination="5CR-gm-pzA" id="9tY-ef-D2R"/>
                 <outlet property="horizontalSeperatorView" destination="PnH-a8-jMm" id="dPO-FY-Xs0"/>
+                <outlet property="horizontalSpacingConstraint" destination="oD5-Sd-dvb" id="GfZ-Lz-5xs"/>
                 <outlet property="oldPriceLabel" destination="mYb-5n-a8O" id="Cp5-Mb-uYW"/>
                 <outlet property="priceLabel" destination="aTl-k7-zGf" id="yyH-cT-N4N"/>
                 <outlet property="sellerNameLabel" destination="WCJ-cx-3WR" id="ajz-AI-sdf"/>
