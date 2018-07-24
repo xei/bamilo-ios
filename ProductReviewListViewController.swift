@@ -13,8 +13,9 @@ class ProductReviewListViewController: BaseViewController, DataServiceProtocol {
     @IBOutlet private weak var tableview: UITableView!
     @IBOutlet private weak var submitReviewButton: IconButton!
     
-    
-    var product : Product?
+    var productSku : String?
+    var rating: ProductRate?
+    var review: ProductReview?
     
     private var expandedIndexPathes = [IndexPath]()
     private var loadingDataInProgress = false
@@ -47,14 +48,31 @@ class ProductReviewListViewController: BaseViewController, DataServiceProtocol {
         tableview.separatorStyle = .none
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.hidesBottomBarWhenPushed = true
+        
+        getContent()
+    }
+    
     private func loadMore() {
         if self.loadingDataInProgress || self.listFullyLoaded { return }
         self.pageNumber += 1
         self.loadingDataInProgress = true
     }
     
-    private func getContent(page: Int = 1) {
-        
+    private func getContent(page: Int = 1, completion: ((Bool)-> Void)? = nil) {
+        if let sku = productSku {
+            ProductDataManager.sharedInstance.reviewsList(self, sku: sku, pageNumber: page) { (data, error) in
+                if (error == nil) {
+                    self.bind(data, forRequestId: 0)
+                    completion?(true)
+                } else {
+                    self.errorHandler(error, forRequestID: 0)
+                    completion?(false)
+                }
+            }
+        }
     }
     
     @IBAction func submitButtonTapped(_ sender: Any) {
@@ -65,21 +83,30 @@ class ProductReviewListViewController: BaseViewController, DataServiceProtocol {
     
     //MARK: - DataServiceProtocol
     func bind(_ data: Any!, forRequestId rid: Int32) {
-        
-    }
-    
-    func errorHandler(_ error: Error!, forRequestID rid: Int32) {
-        
+        if let review = data as? ProductReview {
+            self.review = review
+            self.tableview.reloadData()
+        }
     }
     
     func retryAction(_ callBack: RetryHandler!, forRequestId rid: Int32) {
-        
+        self.getContent(page: pageNumber) { (succes) in
+            callBack?(succes)
+        }
+    }
+    
+    func errorHandler(_ error: Error!, forRequestID rid: Int32) {
+        if rid == 0 {
+            if !Utility.handleErrorMessages(error: error, viewController: self) {
+                self.handleGenericErrorCodesWithErrorControlView(Int32(error.code), forRequestID: rid)
+            }
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let segueName = segue.identifier
         if segueName == "showSubmitProductReviewViewController", let viewCtrl = segue.destination as? SubmitProductReviewViewController {
-            viewCtrl.prodcut = self.product
+            viewCtrl.prodcutSku = self.productSku
         }
     }
     
@@ -107,11 +134,13 @@ extension ProductReviewListViewController: UIScrollViewDelegate {
 
 
 extension ProductReviewListViewController: UITableViewDelegate, UITableViewDataSource {
+    
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (product?.reviews?.items?.count ?? 0) + 1
+        return section == 0 ? 1 : (review?.items?.count ?? 0)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -119,13 +148,13 @@ extension ProductReviewListViewController: UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 { //only first cell
+        if indexPath.section == 0 && indexPath.row == 0 { //only first cell
             let cell = tableview.dequeueReusableCell(withIdentifier: ProductOveralRateTableViewCell.nibName(), for: indexPath) as! ProductOveralRateTableViewCell
-            cell.update(withModel: product?.ratings)
+            cell.update(withModel: rating)
             return cell
         } else {
             let cell = tableview.dequeueReusableCell(withIdentifier: ProductReviewItemTableViewCell.nibName(), for: indexPath) as! ProductReviewItemTableViewCell
-            if let reviewItems = product?.reviews?.items, indexPath.row < reviewItems.count {
+            if let reviewItems = review?.items, indexPath.row < reviewItems.count {
                 cell.isExpanded = expandedIndexPathes.contains(indexPath)
                 cell.update(withModel: reviewItems[indexPath.row])
             }

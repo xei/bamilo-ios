@@ -12,7 +12,7 @@ import ObjectMapper
 class SellerListItem: NSObject, Mappable {
     
     var seller: Seller?
-    var productOffer: Product?
+    var productOffer: NewProduct?
     
     required init?(map: Map) {}
     func mapping(map: Map) {

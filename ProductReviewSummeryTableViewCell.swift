@@ -26,7 +26,7 @@ class ProductReviewSummeryTableViewCell: BaseProductTableViewCell {
     @IBOutlet private weak var moreCommentsButton: UIButton!
     @IBOutlet private weak var moreCommentButtonHeightConstraint: NSLayoutConstraint!
     
-    var model: Product?
+    var model: NewProduct?
     weak var delegate: ProductReviewSummeryTableViewCellDelegate?
     
     override func awakeFromNib() {
@@ -35,7 +35,7 @@ class ProductReviewSummeryTableViewCell: BaseProductTableViewCell {
         
         reviewCollectionView.register(UINib(nibName: ProductReviewCollectionViewCell.nibName, bundle: nil), forCellWithReuseIdentifier: ProductReviewCollectionViewCell.nibName)
         reviewCollectionView.showsHorizontalScrollIndicator = false
-        reviewCollectionView.clipsToBounds = false
+        reviewCollectionView.clipsToBounds = true
         reviewCollectionView.collectionViewLayout = ProductReviewCarouselCollectionFlowLayout()
         reviewCollectionView.delegate = self
         reviewCollectionView.dataSource = self
@@ -62,7 +62,7 @@ class ProductReviewSummeryTableViewCell: BaseProductTableViewCell {
     }
     
     override func update(withModel model: Any!) {
-        if let product = model as? Product {
+        if let product = model as? NewProduct {
             self.model = product
             averageRateLabel.text = Utility.formatScoreValue(score: product.ratings?.average ?? 0)
             baseAverageRateLabel.text = "\(STRING_FROM) \(Utility.formatScoreValue(score: product.ratings?.maxValue ?? 0))"

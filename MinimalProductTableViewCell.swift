@@ -12,6 +12,7 @@ import Kingfisher
 
 class MinimalProductTableViewCell: BaseProductTableViewCell {
 
+    @IBOutlet weak private var productImageShadowView: UIView!
     @IBOutlet weak private var productImageView: UIImageView!
     @IBOutlet weak private var titleLabel: UILabel!
     
@@ -21,15 +22,15 @@ class MinimalProductTableViewCell: BaseProductTableViewCell {
     }
     
     override func update(withModel model: Any!) {
-        if let product = model as? Product {
-            productImageView.kf.setImage(with: product.imageUrl, options: [.transition(.fade(0.20))])
+        if let product = model as? NewProduct {
+            productImageView.kf.setImage(with: product.image, placeholder: #imageLiteral(resourceName: "homepage_slider_placeholder"),options: [.transition(.fade(0.20))])
             titleLabel.text = product.name
         }
     }
     
     func applyStyle() {
-        titleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray))
-        productImageView.layer.cornerRadius = 3
-        productImageView.applyShadow(position: CGSize(width:0 , height: 1), color: .black, opacity: 0.2)
+        titleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
+        productImageView.layer.cornerRadius = 2
+        productImageShadowView.applyShadow(position: CGSize(width:0 , height: 1), color: .black, opacity: 0.2)
     }
 }

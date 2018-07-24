@@ -13,7 +13,6 @@
 #import "JALoadCountryViewController.h"
 #import "JARecentSearchesViewController.h"
 #import "JARecentlyViewedViewController.h"
-#import "JAPDVViewController.h"
 #import "JAExternalPaymentsViewController.h"
 #import "RIProduct.h"
 #import "RISeller.h"
@@ -604,29 +603,13 @@
 }
 
 - (void)didSelectTeaserWithPDVUrl:(NSNotification*)notification {
+    
     NSString* targetString = [notification.userInfo objectForKey:@"targetString"];
     NSString* productSku = [notification.userInfo objectForKey:@"sku"];
+    targetString = targetString ?: [RITarget getTargetString:PRODUCT_DETAIL node:productSku];
     
     if (targetString.length || productSku.length) {
-        JAPDVViewController *pdv = [JAPDVViewController new];
-        pdv.targetString = targetString;
-        pdv.productSku = productSku;
-        
-        if ([notification.userInfo objectForKey:@"richRelevance"]) {
-            pdv.richRelevanceParameter = [notification.userInfo objectForKey:@"richRelevance"];
-        }
-        if ([notification.userInfo objectForKey:@"category"]) {
-            pdv.category = [notification.userInfo objectForKey:@"category"];
-        }
-        // For deeplink
-        if ([notification.userInfo objectForKey:@"size"]) {
-            pdv.preSelectedSize = [notification.userInfo objectForKey:@"size"];
-        }
-        if ([notification.userInfo objectForKey:@"purchaseTrackingInfo"]) {
-            pdv.purchaseTrackingInfo = [notification.userInfo objectForKey:@"purchaseTrackingInfo"];
-        }
-        pdv.hidesBottomBarWhenPushed = YES;
-        [self pushViewController:pdv animated:YES];
+        [self openTargetString:targetString purchaseInfo:[notification.userInfo objectForKey:@"purchaseTrackingInfo"] currentScreenName:nil];
     }
 }
 

@@ -34,30 +34,37 @@ class SellerOfferItemTableViewCell: BaseProductTableViewCell {
         if let item = model as? SellerListItem {
             sellerNameLabel.text = item.seller?.name
             deliveryTimeLabel.text = item.seller?.deliveryTime?.message
-            sellerOveralScoreLabel.text = "\(item.seller?.score?.overall ?? 0)"
-            priceLabel.text = "\(item.productOffer?.price ?? 0)".formatPriceWithCurrency()
-            oldPriceLabel.attributedText = "\(item.productOffer?.price ?? 0)".formatPriceWithCurrency().strucThroughPriceFormat()
-            dicountPrecentageLabel?.text = "%\(item.productOffer?.maxSavingPrecentage ?? 0)".convertTo(language: .arabic)
+            sellerOveralScoreLabel.text = Utility.formatScoreValue(score: item.seller?.score?.overall ?? 0)
+            if (item.seller?.score?.overall ?? 0) == 0 {
+                sellerOveralScoreLabel.text = STRING_NO_RATE
+            }
+            priceLabel.text = "\(item.productOffer?.price?.value ?? 0)".formatPriceWithCurrency()
+            oldPriceLabel.attributedText = "\(item.productOffer?.price?.oldPrice ?? 0)".formatPriceWithCurrency().strucThroughPriceFormat()
+            dicountPrecentageLabel?.text = "%\(item.productOffer?.price?.discountPercentage ?? 0)".convertTo(language: .arabic)
+            dicountPrecentageWrapperView.isHidden = (item.productOffer?.price?.discountPercentage ?? 0) == 0
+            oldPriceLabel.isHidden = (item.productOffer?.price?.oldPrice ?? 0) == 0
         }
     }
     
     
     func applyStyle() {
-        horizontalSeperatorView.backgroundColor = Theme.color(kColorGray5)
+        horizontalSeperatorView.backgroundColor = Theme.color(kColorGray10)
         sellerNameTitleLabel.text = STRING_SELLER_NAME
         deliveryTimeTitleLabel.text = STRING_DELIVERY_TIME
         sellerScoreTitleLabel.text = STRING_SELLER_SCORE
         
-        [sellerNameTitleLabel, deliveryTimeTitleLabel, sellerScoreTitleLabel].forEach { $0?.applyStyle(font: Theme.font(kFontVariationRegular, size: 10), color: Theme.color(kColorGray1)) }
+        [sellerNameTitleLabel, deliveryTimeTitleLabel, sellerScoreTitleLabel, oldPriceLabel].forEach { $0?.applyStyle(font: Theme.font(kFontVariationRegular, size: 10), color: Theme.color(kColorGray1)) }
         [dicountPrecentageLabel, sellerOveralScoreLabel].forEach { $0?.applyStyle(font: Theme.font(kFontVariationBold, size: 12), color: .white) }
         
         sellerNameLabel.applyStyle(font: Theme.font(kFontVariationBold, size: 12), color: Theme.color(kColorGray1))
         deliveryTimeLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
         sellerOveralScoreLabel.applyStyle(font: Theme.font(kFontVariationBold, size: 12), color: .white)
-        priceLabel.applyStyle(font: Theme.font(kFontVariationBold, size: 14), color: Theme.color(kColorOrange))
+        priceLabel.applyStyle(font: Theme.font(kFontVariationBold, size: 14), color: Theme.color(kColorOrange1))
         sellerScoreWrapperView.backgroundColor = Theme.color(kColorGreen)
         dicountPrecentageWrapperView.backgroundColor = Theme.color(kColorOrange)
         addToCartButton.backgroundColor = Theme.color(kColorOrange1)
-        
+        addToCartButton.setTitle(STRING_ADD_TO_SHOPPING_CART, for: .normal)
+        addToCartButton.applyStyle(font: Theme.font(kFontVariationRegular, size: 14), color: .white)
+        addToCartButton.layer.cornerRadius = 4
     }
 }

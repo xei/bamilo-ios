@@ -252,11 +252,7 @@ class WishListViewController: BaseViewController,
             self.showEmptyViewIfItsNeeded()
             
             //TODO: temprory code, when we migrate RIProduct to Product these code must be removed
-            let convertedProduct = RIProduct()
-            convertedProduct.sku = product.sku
-            convertedProduct.price = NSNumber(value: product.price ?? 0)
-            
-            TrackerManager.postEvent(selector: EventSelectors.removeFromWishListSelector(), attributes: EventAttributes.removeFromWishList(product: convertedProduct, screenName: self.getScreenName()))
+            TrackerManager.postEvent(selector: EventSelectors.removeFromWishListSelector(), attributes: EventAttributes.removeFromWishList(product: product, screenName: self.getScreenName()))
             
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: NotificationKeys.WishListUpdate), object: nil, userInfo: [NotificationKeys.NotificationProduct: product, NotificationKeys.NotificationBool: false])
         }
@@ -330,7 +326,7 @@ class WishListViewController: BaseViewController,
             self.emptyController?.parentScreenName = self.getScreenName()
             self.emptyController?.update(UIImage(named: "emptyFavoritesIcon"))
         }
-        if segueName == "showPDVViewController", let pdvViewCtrl = segue.destination as? JAPDVViewController, let sku = sender as? String {
+        if segueName == "showPDVViewController", let pdvViewCtrl = segue.destination as? ProductDetailViewController, let sku = sender as? String {
             pdvViewCtrl.productSku = sku
         }
     }

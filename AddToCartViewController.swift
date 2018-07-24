@@ -9,9 +9,9 @@
 import UIKit
 
 protocol AddToCartViewControllerDelegate: class {
-    func submitAddToCartSimple(product: SimpleProduct)
-    func didSelectVariationSku(product: SimpleProduct, completionHandler: @escaping ((_ prodcut: Product)->Void))
-    func didSelectSimpleSkuFromAddToCartView(product: SimpleProduct)
+    func submitAddToCartSimple(product: NewProduct, refrence: UIViewController)
+    func didSelectOtherVariation(product: NewProduct, completionHandler: @escaping ((_ prodcut: NewProduct)->Void))
+    func didSelectSizeVariationFromAddToCartView(product: NewProduct)
 }
 
 class AddToCartViewController: UIViewController {
@@ -22,7 +22,7 @@ class AddToCartViewController: UIViewController {
     @IBOutlet private weak var productImageView: UIImageView!
     @IBOutlet private weak var productTitleLabel: UILabel!
     @IBOutlet private weak var productPriceLabel: UILabel!
-    @IBOutlet private weak var discountPriceLabel: UILabel!
+    @IBOutlet private weak var oldPriceLabel: UILabel!
     @IBOutlet private weak var currencyLabel: UILabel!
     @IBOutlet private weak var titleColorLabel: UILabel!
     @IBOutlet private weak var colorLabel: UILabel!
@@ -31,7 +31,7 @@ class AddToCartViewController: UIViewController {
     @IBOutlet private weak var seperatorView: UIView!
     
     weak var delegate: AddToCartViewControllerDelegate?
-    var product: Product?
+    var product: NewProduct?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,17 +54,17 @@ class AddToCartViewController: UIViewController {
         productTitleLabel.applyStyle(font: Theme.font(kFontVariationBold, size: 12), color: Theme.color(kColorGray1))
     }
     
-    private func update(product: Product) {
+    private func update(product: NewProduct) {
         
-        productImageView.kf.setImage(with: product.imageList?.first?.normal, options: [.transition(.fade(0.20))])
+        productImageView.kf.setImage(with: product.imageList?.first?.medium, options: [.transition(.fade(0.20))])
         productTitleLabel.text = product.name
         
-        if let specialPrice = product.specialPrice, let price = product.price, product.price != product.specialPrice {
-            discountPriceLabel?.attributedText = "\(price)".formatPriceWithCurrency().strucThroughPriceFormat()
-            productPriceLabel?.text = "\(specialPrice)".convertTo(language: .arabic).priceFormat()
-        } else if let price = product.price {
-            productPriceLabel?.text = "\(price)".convertTo(language: .arabic).priceFormat()
-            discountPriceLabel?.text = nil
+        
+        productPriceLabel.text = "\(product.price?.value ?? 0)".convertTo(language: .arabic).priceFormat()
+        if let oldPrice = product.price?.oldPrice {
+            oldPriceLabel.attributedText = "\(oldPrice)".formatPriceWithCurrency().strucThroughPriceFormat()
+        } else {
+            oldPriceLabel.text = nil
         }
         
         productVariationView.update(withModel: product)
@@ -77,10 +77,10 @@ class AddToCartViewController: UIViewController {
     }
     
     @IBAction func addToCartButtonTapped(_ sender: Any) {
-        if let simples = self.product?.presentableSimples, simples.count > 0 {
-            let selectedSimple = simples.filter { $0.isSelected }.first
-            if let selected = selectedSimple {
-                self.delegate?.submitAddToCartSimple(product: selected)
+        if let variations = self.product?.variations, variations.count > 0 {
+            let selectedColorProduct = variations.filter { $0.type == .size }.first?.products?.filter { $0.isSelected }.first
+            if let selected = selectedColorProduct {
+                self.delegate?.submitAddToCartSimple(product: selected, refrence: self)
             }
         } else {
             //TODO: message user to selected some of simple products
@@ -92,14 +92,14 @@ class AddToCartViewController: UIViewController {
 
 extension AddToCartViewController: ProductVariationViewDelegate {
     
-    func didSelectVariationSku(product: SimpleProduct) {
-        self.delegate?.didSelectVariationSku(product: product, completionHandler: { (product) in
-            self.update(product: product)
-        })
+    func didSelectSizeProduct(product: NewProduct) {
+        self.delegate?.didSelectSizeVariationFromAddToCartView(product: product)
     }
     
-    func didSelectSimpleSku(product: SimpleProduct) {
-        self.delegate?.didSelectSimpleSkuFromAddToCartView(product: product)
+    func didSelectOtherVariety(product: NewProduct) {
+        self.delegate?.didSelectOtherVariation(product: product, completionHandler: { (productInfo) in
+            self.update(product: productInfo)
+        })
     }
     
 }

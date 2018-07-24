@@ -14,8 +14,9 @@
 #import <EmarsysPredictSDK/EmarsysPredictSDK.h>
 
 @class RIImage, RIProductSimple, RIVariation, RIBundle, Seller, RIUndefinedSearchTerm;
+@protocol TrackableProductProtocol;
 
-@interface RIProduct : NSObject
+@interface RIProduct : NSObject <TrackableProductProtocol>
 
 @property (nonatomic, retain) NSString * attributeCareLabel;
 @property (nonatomic, retain) NSString * attributeColor;
@@ -78,6 +79,9 @@
 @property (nonatomic, retain) NSString *brandUrlKey;
 @property (nonatomic) BOOL hasStock;
 @property (nonatomic) BOOL freeShippingPossible;
+
+@property (nonatomic) BOOL isInWishList;
+@property (nonatomic, retain) NSNumber *payablePrice;
 
 /**
  *  Method to load a product and all its details given his sku. This method uses getCompleteProductWithUrl:successBlock:andFailureBlock:

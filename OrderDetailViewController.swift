@@ -88,7 +88,7 @@ class OrderDetailViewController: BaseViewController, OrderDetailTableViewCellDel
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let segueName = segue.identifier
-        if segueName == "pushPDVViewController", let pdvViewCtrl = segue.destination as? JAPDVViewController {
+        if segueName == "pushPDVViewController", let pdvViewCtrl = segue.destination as? ProductDetailViewController {
             pdvViewCtrl.productSku = sender as? String
         }
         if segueName == "pushCancellationViewController", let cancellingOrderViewCtrl = segue.destination as? OrderDetailCancellationViewController, let order = self.orderTableViewCtrl.dataSource, let avaiableCancellationReasons = order.cancellationInfo?.reasons, avaiableCancellationReasons.count > 0, let selectedProduct = sender as? OrderProductItem  {

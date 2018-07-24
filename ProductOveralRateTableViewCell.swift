@@ -28,13 +28,11 @@ class ProductOveralRateTableViewCell: BaseTableViewCell {
     
     @IBOutlet private weak var singleStarImageView: UIImageView!
     
-    var starControlsIndex: [Int: [RateStarControl: SimpleProgressBarControl]]?
+    var starControlsIndex: [Int: [RateStarControl: SimpleProgressBarControl]] = [:]
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        
         
         starControlsIndex = [
             0: [oneStarViewControl: oneStarProgress],
@@ -43,6 +41,8 @@ class ProductOveralRateTableViewCell: BaseTableViewCell {
             3: [fourStarViewControl: fourStarProgress],
             4: [fiveStarViewControl: fiveStarProgress]
         ]
+        
+        
         //rotate the star views
         [oneStarViewControl,
          oneStarProgress,
@@ -75,8 +75,8 @@ class ProductOveralRateTableViewCell: BaseTableViewCell {
         
         guard let starStatistics = rate.starsStatistics else { return }
         
-        for i in 0..<starStatistics.count {
-            let viewObj = starControlsIndex?[i]
+        for i in 0 ..< starControlsIndex.keys.count {
+            let viewObj = starControlsIndex[i]
             if let starNumber = starStatistics[i].starNumber {
                 viewObj?.keys.first?.colorButtons(
                     rateValue: Double(starNumber),
@@ -87,7 +87,7 @@ class ProductOveralRateTableViewCell: BaseTableViewCell {
             if let rateCount = starStatistics[i].count, let totalCount = rate.totalCount {
                 let progressView = viewObj?.values.first
                 progressView?.setTintColor(color: Theme.color(kColorExtraDarkBlue))
-                progressView?.update(withModel: Double(rateCount) / Double(totalCount))
+                progressView?.update(withModel: totalCount == 0 ? 0 : Double(rateCount) / Double(totalCount))
                 progressView?.backgroundColor = Theme.color(kColorGray10)
             }
         }

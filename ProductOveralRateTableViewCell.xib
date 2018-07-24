@@ -40,12 +40,6 @@
                         <color key="textColor" red="0.61960784310000006" green="0.61960784310000006" blue="0.61960784310000006" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۳۳۴۲ نفر" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qAl-Hg-DcD">
-                        <rect key="frame" x="343.5" y="58.5" width="58" height="25.5"/>
-                        <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="14"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProductRateFullStar" translatesAutoresizingMaskIntoConstraints="NO" id="xyE-e2-vsZ">
                         <rect key="frame" x="363.5" y="36" width="10" height="10"/>
                         <constraints>
@@ -158,6 +152,19 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۳۳۴۲ نفر" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qAl-Hg-DcD">
+                        <rect key="frame" x="323" y="58.5" width="58" height="25.5"/>
+                        <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_user_form" translatesAutoresizingMaskIntoConstraints="NO" id="8Zg-Tg-AEg">
+                        <rect key="frame" x="385.5" y="63" width="16" height="16"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="8Zg-Tg-AEg" secondAttribute="height" multiplier="1:1" id="BMb-BC-I0W"/>
+                            <constraint firstAttribute="width" constant="16" id="i9f-pZ-poO"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="9xi-Va-35d" firstAttribute="top" secondItem="XX9-pZ-ylj" secondAttribute="bottom" constant="12" id="1Wy-nD-wmx"/>
@@ -170,7 +177,6 @@
                     <constraint firstItem="2EQ-oQ-3Wq" firstAttribute="top" secondItem="5Nm-Ko-Mzc" secondAttribute="bottom" constant="12" id="KfV-g1-0PB"/>
                     <constraint firstItem="qAl-Hg-DcD" firstAttribute="centerY" secondItem="Fmd-fz-53Z" secondAttribute="centerY" constant="20" id="Nw8-PK-1wt"/>
                     <constraint firstItem="C9G-JX-ItY" firstAttribute="left" secondItem="9xi-Va-35d" secondAttribute="left" id="QLd-ga-kVh"/>
-                    <constraint firstItem="qAl-Hg-DcD" firstAttribute="right" secondItem="ofj-T6-ZLY" secondAttribute="right" id="RE9-PQ-alF"/>
                     <constraint firstItem="iiJ-Jr-L1F" firstAttribute="left" secondItem="2EQ-oQ-3Wq" secondAttribute="right" constant="8" id="TnJ-Wj-fvB"/>
                     <constraint firstItem="ofj-T6-ZLY" firstAttribute="centerY" secondItem="Fmd-fz-53Z" secondAttribute="centerY" constant="-10" id="U2t-6E-BT0"/>
                     <constraint firstItem="hXQ-Gh-nb0" firstAttribute="left" secondItem="9xi-Va-35d" secondAttribute="right" constant="8" id="V5J-uI-qFo"/>
@@ -178,9 +184,13 @@
                     <constraint firstItem="XX9-pZ-ylj" firstAttribute="left" secondItem="H2p-sc-9uM" secondAttribute="left" constant="8" id="a1v-wu-NXj"/>
                     <constraint firstItem="Fmd-fz-53Z" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="cHV-Se-b4R"/>
                     <constraint firstAttribute="right" secondItem="Fmd-fz-53Z" secondAttribute="right" constant="16" id="czP-9i-D6Q"/>
+                    <constraint firstItem="8Zg-Tg-AEg" firstAttribute="right" secondItem="ofj-T6-ZLY" secondAttribute="right" id="d4O-g3-ysi"/>
                     <constraint firstItem="xyE-e2-vsZ" firstAttribute="width" secondItem="xyE-e2-vsZ" secondAttribute="height" multiplier="1:1" id="dBA-FF-lva"/>
                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="qAl-Hg-DcD" secondAttribute="bottom" constant="10" id="jE4-YL-FLR"/>
                     <constraint firstItem="C9G-JX-ItY" firstAttribute="top" secondItem="9xi-Va-35d" secondAttribute="bottom" constant="12" id="jsP-GS-tce"/>
+                    <constraint firstItem="8Zg-Tg-AEg" firstAttribute="width" secondItem="8Zg-Tg-AEg" secondAttribute="height" multiplier="1:1" id="mU5-sN-2zH"/>
+                    <constraint firstItem="8Zg-Tg-AEg" firstAttribute="centerY" secondItem="qAl-Hg-DcD" secondAttribute="centerY" id="mYd-lM-mfe"/>
+                    <constraint firstItem="8Zg-Tg-AEg" firstAttribute="left" secondItem="qAl-Hg-DcD" secondAttribute="right" constant="5" id="nLG-NK-OGQ"/>
                     <constraint firstItem="XX9-pZ-ylj" firstAttribute="centerY" secondItem="7On-ms-ANL" secondAttribute="centerY" id="nib-Mv-OIe"/>
                     <constraint firstItem="Jwt-1B-dLj" firstAttribute="left" secondItem="C9G-JX-ItY" secondAttribute="right" constant="8" id="prA-sn-L1z"/>
                     <constraint firstItem="Fmd-fz-53Z" firstAttribute="left" secondItem="ofj-T6-ZLY" secondAttribute="right" constant="10" id="qJg-SD-ND2"/>
@@ -214,5 +224,6 @@
     </objects>
     <resources>
         <image name="ProductRateFullStar" width="120" height="120"/>
+        <image name="ic_user_form" width="20" height="22"/>
     </resources>
 </document>

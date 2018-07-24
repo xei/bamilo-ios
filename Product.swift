@@ -10,7 +10,7 @@ import UIKit
 import ObjectMapper
 import SwiftyJSON
 
-@objcMembers class Product: NSObject, Mappable {
+@objcMembers class Product: NSObject, Mappable, TrackableProductProtocol {
     
     var sku: String!
     var name: String?
@@ -33,14 +33,22 @@ import SwiftyJSON
     var variations: [SimpleProduct]?
     var variationName: String?
     var shareURL: String?
-    var imageList: [ProductImageItem]?
     var loadedComprehensively: Bool = false
     var seller: Seller?
     var specifications: [ProductSpecificsTableSection]?
     var shortDescription: String?
     var productDescription: String?
-    // == new contracts for pricing product in new apis, it must be override in any apis then we can remove other pricing variable from here
     
+    //MARK: -  TrackableProductProtocol
+    var payablePrice: NSNumber? {
+        get {
+            if let specialPrice = specialPrice, let price = price, price != specialPrice {
+                return NSNumber(value: specialPrice)
+            }
+            if let price = price { return NSNumber(value: price) }
+            return nil
+        }
+    }
     
     override init() {}
     required init?(map: Map) {}
@@ -74,7 +82,6 @@ import SwiftyJSON
         reviews?.totalCount = reviewsCount ?? 0
         //END of TODO
         
-        
         categoryIds           = JSON(map.JSON)["categories"].string?.split(separator: "|").map {String($0)}
         specialPrice          <- map["special_price"]
         imageUrl              <- (map["image"], URLTransform())
@@ -95,7 +102,6 @@ import SwiftyJSON
         
         variationName         <- map["variation_name"]
         shareURL              <- map["share_url"]
-        imageList             <- map["image_list"]
         seller                <- map["seller_entity"]
         variations            <- map["variations"]
         shortDescription      <- map["summary.short_description"]
@@ -112,44 +118,7 @@ import SwiftyJSON
         
         hasStock = stockAvaiablity ?? isOutOfStock?.getReverse() ?? true
         
-        
-        
-        //mock of review
-        ratings?.maxValue = 5
-        reviews?.totalCount = 10
-        
-        let star0 = ProductRateStarStatistic()
-        star0.starNumber = 1
-        star0.count = 3
-        
-        let star1 = ProductRateStarStatistic()
-        star1.starNumber = 2
-        star1.count = 8
-        
-        let star2 = ProductRateStarStatistic()
-        star2.starNumber = 3
-        star2.count = 31
-        
-        let star3 = ProductRateStarStatistic()
-        star3.starNumber = 4
-        star3.count = 39
-        
-        let star4 = ProductRateStarStatistic()
-        star4.starNumber = 5
-        star4.count = 1
-        
-        ratings?.starsStatistics = [star0, star1, star2, star3, star4]
-        ratings?.totalCount = 82
-        
-        let reviewItem = ProductReviewItem()
-        reviewItem.username = "حاج کاظم خریدار"
-        reviewItem.comment = "آقا بسیار محصول عالی بود، خیلی تشکر داریم داریم هم بنده هم منزل انشاله خداوند برکتتان دهد، دست دیزاینر های بسیار خوبتان هم درد نکند انشالله، خداوند آنان را نیز خیر دنیا و آخرت بدهد، چون ظاهر قبلی بسیار بسیار بد و "
-        reviewItem.date = "دیروز"
-        reviewItem.rateScore = 4
-        
-        reviews?.items = [reviewItem, reviewItem, reviewItem, reviewItem, reviewItem, reviewItem]
     }
-    
     
     //TODO: remove this function when there is no objective c code
     func setPrice(price: NSNumber) {
@@ -160,40 +129,3 @@ import SwiftyJSON
         return NSNumber(value: price ?? 0)
     }
 }
-
-class ProductSpecificsTableSection: Mappable {
-    var header: String?
-    var body: [ProductSpecificItem]?
-    
-    required init?(map: Map) {}
-    
-    func mapping(map: Map) {
-        header  <- map["head_label"]
-        body    <- map["body"]
-    }
-}
-
-class ProductSpecificItem: Mappable {
-    var title: String?
-    var value: String?
-    required init?(map: Map) { }
-    
-    func mapping(map: Map) {
-        title <- map["key"]
-        value <- map["value"]
-    }
-}
-
-
-class ProductImageItem: NSObject, Mappable {
-    
-    var normal: URL?
-    var zoom: URL?
-    required init?(map: Map) {}
-    func mapping(map: Map) {
-        normal <- (map["url"], URLTransform())
-        zoom <- (map["zoom"], URLTransform())
-    }
-}
-
-

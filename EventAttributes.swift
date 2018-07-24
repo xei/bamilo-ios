@@ -24,10 +24,11 @@ public typealias EventAttributeType = [String:Any]
         return attributes
     }
     
-    class func login(loginMethod: String, user: RICustomer) -> EventAttributeType {
+    class func login(loginMethod: String, user: RICustomer?, success: Bool) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventMethod] = loginMethod
-        attributes[kEventUser] = user
+        if let user = user { attributes[kEventUser] = user }
+        attributes[kEventSuccess] = success
         return attributes
     }
     
@@ -60,7 +61,7 @@ public typealias EventAttributeType = [String:Any]
         return attributes
     }
     
-    class func addToWishList(product: RIProduct, screenName: String, success: Bool) -> EventAttributeType {
+    class func addToWishList(product: TrackableProductProtocol, screenName: String, success: Bool) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventScreenName] = screenName
         attributes[kEventSuccess] = success
@@ -68,14 +69,14 @@ public typealias EventAttributeType = [String:Any]
         return attributes
     }
     
-    class func removeFromWishList(product: RIProduct, screenName: String) -> EventAttributeType {
+    class func removeFromWishList(product: TrackableProductProtocol, screenName: String) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventScreenName] = screenName
         attributes[kEventProduct] = product
         return attributes
     }
     
-    class func addToCart(product: Product, screenName: String, success: Bool) -> EventAttributeType {
+    class func addToCart(product: TrackableProductProtocol, screenName: String, success: Bool) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventScreenName] = screenName
         attributes[kEventSuccess] = success
@@ -83,7 +84,7 @@ public typealias EventAttributeType = [String:Any]
         return attributes
     }
     
-    class func removeFromCard(product: Product, success: Bool) -> EventAttributeType {
+    class func removeFromCard(product: TrackableProductProtocol, success: Bool) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventSuccess] = success
         attributes[kEventProduct] = product
@@ -119,14 +120,14 @@ public typealias EventAttributeType = [String:Any]
         return attributes
     }
     
-    class func viewProduct(parentViewScreenName: String, product: RIProduct) -> EventAttributeType {
+    class func viewProduct(parentViewScreenName: String, product: TrackableProductProtocol) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventScreenName] = parentViewScreenName
         attributes[kEventProduct] = product
         return attributes
     }
     
-    class func rateProduct(product: RIProduct) -> EventAttributeType {
+    class func rateProduct(product: TrackableProductProtocol) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventProduct] = product
         return attributes

@@ -9,8 +9,8 @@
 import UIKit
 
 protocol ProductVariationViewDelegate: class {
-    func didSelectVariationSku(product: SimpleProduct)
-    func didSelectSimpleSku(product: SimpleProduct)
+    func didSelectSizeProduct(product: NewProduct)
+    func didSelectOtherVariety(product: NewProduct)
 }
 
 class ProductVariationView: BaseControlView {
@@ -33,8 +33,8 @@ class ProductVariationView: BaseControlView {
     @IBOutlet private weak var variationContainerView: UIView!
     @IBOutlet private weak var sizesContainerView: UIView!
     
-    var selectedSimple: SimpleProduct?
-    private var product: Product?
+    var selectedProduct: NewProduct?
+    private var product: NewProduct?
     private let carouselCollectionFlowLayout = ProductVariationCarouselCollectionFlowLayout()
     private var gridButtons: [UIButton]?
     
@@ -63,23 +63,19 @@ class ProductVariationView: BaseControlView {
         self.carouselCollectionView.showsHorizontalScrollIndicator = false
     }
     
-    func update(product: Product) {
+    func update(product: NewProduct) {
         self.product = product
         
         //variation type section
         self.carouselCollectionView.reloadData()
-        if let variations = self.product?.variations {
-            setProductVariation(visible: variations.count > 1)
-        } else {
-            setProductVariation(visible: false)
-        }
+        setProductVariation(visible: (product.OtherVariaionProducts?.count ?? 0) > 0)
         
         //(size)Grid buttons
-        gridButtons = self.product?.presentableSimples?.map { (simple) -> UIButton? in
-            if let title = simple.variationValue {
-                let button = createButton(withTitle: title, selected: simple.isSelected)
+        gridButtons = product.sizeVariaionProducts?.map { (product) -> UIButton? in
+            if let name = product.name {
+                let button = createButton(withTitle: name, selected: product.isSelected)
                 button.transform = CGAffineTransform(scaleX: -1, y: 1)
-                button.isEnabled = simple.quantity > 0
+                button.isEnabled = product.hasStock
                 return button
             }
             return nil
@@ -145,11 +141,11 @@ extension ProductVariationView {
         sender.setTitleColor(.white, for: .normal)
         
         if let title = sender.titleLabel?.text {
-            self.product?.simples?.forEach { $0.isSelected = false }
-            selectedSimple = self.product?.simples?.filter { $0.variationValue == title }.first
-            selectedSimple?.isSelected = true
-            if let simple = selectedSimple {
-                self.delegate?.didSelectSimpleSku(product: simple)
+            self.product?.sizeVariaionProducts?.forEach { $0.isSelected = false }
+            let selectedSize = self.product?.sizeVariaionProducts?.filter { $0.name == title }.first
+            selectedSize?.isSelected = true
+            if let selectedSize = selectedSize {
+                self.delegate?.didSelectSizeProduct(product: selectedSize)
             }
         }
     }
@@ -191,26 +187,30 @@ extension ProductVariationView: UICollectionViewDataSource, UICollectionViewDele
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let variations = self.product?.variations, indexPath.row < variations.count {
-            self.delegate?.didSelectVariationSku(product: variations[indexPath.row])
+        if let variations = self.product?.OtherVariaionProducts, indexPath.row < variations.count {
+            delegate?.didSelectOtherVariety(product: variations[indexPath.row])
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = self.carouselCollectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.nibName, for: indexPath) as! ImageCollectionViewCell
-        if let variations = self.product?.variations, indexPath.row < variations.count, let variationUrl = variations[indexPath.row].image {
+        if let products = product?.OtherVariaionProducts, indexPath.row < products.count, let variationUrl = products[indexPath.row].image {
             cell.update(imageUrl: variationUrl)
             
             //selected state for first cell
-            if let sku = self.product?.sku {
-                cell.setSelected(selected: variations[indexPath.row].sku == sku)
+            if let sku = self.product?.sku, let productSku = products[indexPath.row].sku {
+                cell.setSelected(selected: productSku == sku)
+            }
+            
+            if let sku = self.product?.simpleSku, let productSku = products[indexPath.row].simpleSku {
+                cell.setSelected(selected: productSku == sku)
             }
         }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.product?.variations?.count ?? 0
+        return product?.OtherVariaionProducts?.count ?? 0
     }
     
 }

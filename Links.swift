@@ -35,7 +35,6 @@ class ExternalLink: Link {
     override func mapping(map: Map) {
         super.mapping(map: map)
         link <- map["external_link_ios"]
-        
     }
 }
 
@@ -58,6 +57,8 @@ class ExternalLinks: Mappable {
     }
     func mapping(map: Map) {
         items <- map["external_links"]
+        items = []
         title <- map["label"]
+        title = nil
     }
 }

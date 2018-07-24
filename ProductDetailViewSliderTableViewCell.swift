@@ -11,7 +11,7 @@ import FSPagerView
 import CHIPageControl
 protocol ProductDetailViewSliderTableViewCellDelegate: class {
     func selectSliderItem(item: ProductImageItem, atIndex: Int, cell: ProductDetailViewSliderTableViewCell)
-    func addOrRemoveFromWishList(product: Product, cell: ProductDetailViewSliderTableViewCell, add: Bool)
+    func addOrRemoveFromWishList(product: TrackableProductProtocol, cell: ProductDetailViewSliderTableViewCell, add: Bool)
     func shareButtonTapped()
 }
 
@@ -26,7 +26,7 @@ class ProductDetailViewSliderTableViewCell: BaseProductTableViewCell, FSPagerVie
     private var productImageList: [ProductImageItem]?
     private var cellIndexMapper = [Int: FSPagerViewCell]()
     private var sliderBlurView: UIVisualEffectView?
-    private var product: Product?
+    private var product: NewProduct?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -84,7 +84,7 @@ class ProductDetailViewSliderTableViewCell: BaseProductTableViewCell, FSPagerVie
     }
     
     override func update(withModel model: Any!) {
-        if let product = model as? Product {
+        if let product = model as? NewProduct {
             if let imageList = product.imageList {
                 self.productImageList = imageList
                 self.pagerControl.numberOfPages = imageList.count
@@ -120,7 +120,7 @@ class ProductDetailViewSliderTableViewCell: BaseProductTableViewCell, FSPagerVie
     func pagerView(_ pagerView: FSPagerView, cellForItemAt index: Int) -> FSPagerViewCell {
         let cell = self.sliderView.dequeueReusableCell(withReuseIdentifier: "cell", at: index)
         cell.imageView?.contentMode = .scaleAspectFit
-        cell.imageView?.kf.setImage(with: self.productImageList?[index].normal, placeholder: #imageLiteral(resourceName: "homepage_slider_placeholder"),options: [.transition(.fade(0.20))])
+        cell.imageView?.kf.setImage(with: self.productImageList?[index].large, placeholder: #imageLiteral(resourceName: "homepage_slider_placeholder"),options: [.transition(.fade(0.20))])
         cell.contentView.clipsToBounds = false
         cell.clipsToBounds = false
         cell.imageView?.layer.shadowColor = UIColor.clear.cgColor

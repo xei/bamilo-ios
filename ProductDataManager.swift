@@ -9,12 +9,20 @@
 import Foundation
 import SwiftyJSON
 
+@objc protocol TrackableProductProtocol: class {
+    var name: String? { get set }
+    var brand: String? { get set }
+    var sku: String! { get set }
+    var isInWishList: Bool { get set }
+    var payablePrice: NSNumber? { get }
+}
+
 class ProductDataManager: DataManagerSwift {
     
     static let sharedInstance = ProductDataManager()
     func getProductDetailInfo(_ target: DataServiceProtocol, sku: String, completion: @escaping DataClosure) {
         ProductDataManager.requestManager.async(.get, target: target, path: "\(RI_API_PRODUCT_DETAIL)\(sku)", params: nil, type: .foreground) { (responseType, data, errorMessages) in
-            self.processResponse(responseType, aClass: Product.self, data: data, errorMessages: errorMessages, completion: completion)
+            self.processResponse(responseType, aClass: NewProduct.self, data: data, errorMessages: errorMessages, completion: completion)
         }
     }
     
@@ -45,57 +53,74 @@ class ProductDataManager: DataManagerSwift {
         }
     }
     
+    func reviewsList(_ target: DataServiceProtocol, sku: String, pageNumber: Int, completion:@escaping DataClosure) {
+        ProductDataManager.requestManager.async(.get, target: target, path: "\(RI_API_REVIEW_LIST)\(sku)/page/\(pageNumber)", params: nil, type: .foreground) { (responseType, data, errorMessages) in
+            self.processResponse(responseType, aClass: ProductReview.self, data: data, errorMessages: errorMessages, completion: completion)
+        }
+    }
     
+    func getOtherSellers(_ target: DataServiceProtocol, sku: String, cityId: String? = nil, completion:@escaping DataClosure) {
+        ProductDataManager.requestManager.async(.get, target: target, path: "\(RI_API_SELLERS_OFFER)\(sku)", params: nil, type: .foreground) { (responseType, data, errorMessages) in
+            self.processResponse(responseType, aClass: SellerList.self, data: data, errorMessages: errorMessages, completion: completion)
+        }
+    }
+    
+    func getDescriptions(_ target: DataServiceProtocol, sku: String, completion:@escaping DataClosure) {
+        ProductDataManager.requestManager.async(.get, target: target, path: "\(RI_API_PRODUCT_DESCRIPTIONS)\(sku)", params: nil, type: .foreground) { (responseType, data, errorMessages) in
+            self.processResponse(responseType, aClass: ProductDescriptionWrapper.self, data: data, errorMessages: errorMessages, completion: completion)
+        }
+    }
+    
+    func getSpecifications(_ target: DataServiceProtocol, sku: String, completion:@escaping DataClosure) {
+        ProductDataManager.requestManager.async(.get, target: target, path: "\(RI_API_SPECIFICATION)\(sku)", params: nil, type: .foreground) { (responseType, data, errorMessages) in
+            self.processResponse(responseType, aClass: ProductSpecifics.self, data: data, errorMessages: errorMessages, completion: completion)
+        }
+    }
     
     // ------------ helpers for viewControllers ------------
-    func addOrRemoveFromWishList<T: BaseViewController & DataServiceProtocol>(product: Product, in viewCtrl: T,add: Bool, callBackHandler: ((_ success: Bool,_ error: Error?)->Void)? = nil) {
+    func addOrRemoveFromWishList<T: BaseViewController & DataServiceProtocol>(product: TrackableProductProtocol, in viewCtrl: T,add: Bool, callBackHandler: ((_ success: Bool,_ error: Error?)->Void)? = nil) {
         if !RICustomer.checkIfUserIsLogged() {
             product.isInWishList.toggle()
             callBackHandler?(false, nil)
         }
         
         (viewCtrl.navigationController as? JACenterNavigationController)?.performProtectedBlock({ (userHadSession) in
-            let translatedProduct = RIProduct()
-            translatedProduct.sku = product.sku
-            if let price = product.price {
-                translatedProduct.price = NSNumber(value: price)
-            }
             if add {
                 ProductDataManager.sharedInstance.addToWishList(viewCtrl, sku: product.sku, completion: { (data, error) in
                     if error != nil {
                         product.isInWishList.toggle()
-                        callBackHandler?(true, nil)
+                        viewCtrl.showNotificationBar(error, isSuccess: false)
+                        callBackHandler?(false, nil)
                         return
                     }
                     if product.isInWishList != true {
                         product.isInWishList.toggle()
-                        callBackHandler?(false, error)
+                        callBackHandler?(true, nil)
                     }
-                    viewCtrl.showNotificationBar(error, isSuccess: false)
                 })
                 
                 TrackerManager.postEvent(
                     selector: EventSelectors.addToWishListSelector(),
-                    attributes: EventAttributes.addToWishList(product: translatedProduct, screenName: viewCtrl.getScreenName(), success: true)
+                    attributes: EventAttributes.addToWishList(product: product, screenName: viewCtrl.getScreenName(), success: true)
                 )
                 
             } else {
                 DeleteEntityDataManager.sharedInstance().removeFromWishList(viewCtrl, sku: product.sku, completion: { (data, error) in
                     if error != nil {
                         product.isInWishList.toggle()
-                        callBackHandler?(true, nil)
+                        viewCtrl.showNotificationBar(error, isSuccess: false)
+                        callBackHandler?(false, nil)
                         TrackerManager.postEvent(
                             selector: EventSelectors.removeFromWishListSelector(),
-                            attributes: EventAttributes.removeFromWishList(product: translatedProduct, screenName: viewCtrl.getScreenName())
+                            attributes: EventAttributes.removeFromWishList(product: product, screenName: viewCtrl.getScreenName())
                         )
                         return
                     }
                     
                     if product.isInWishList != false {
                         product.isInWishList.toggle()
-                        callBackHandler?(false, error)
+                        callBackHandler?(true, error)
                     }
-                    viewCtrl.showNotificationBar(error, isSuccess: false)
                 })
             }
             
@@ -104,7 +129,7 @@ class ProductDataManager: DataManagerSwift {
         })
     }
     
-    func addToCart<T: BaseViewController & DataServiceProtocol>(simpleSku: String, product: Product, viewCtrl: T, callBackHandler: ((_ success: Bool,_ error: Error?)->Void)? = nil) {
+    func addToCart<T: BaseViewController & DataServiceProtocol>(simpleSku: String, product: TrackableProductProtocol, viewCtrl: T, callBackHandler: ((_ success: Bool,_ error: Error?)->Void)? = nil) {
         CartDataManager.sharedInstance.addProductToCart(viewCtrl, simpleSku: simpleSku) { (data, error) in
             if error != nil {
                 Utility.handleErrorMessages(error: error, viewController: viewCtrl)
@@ -125,10 +150,4 @@ class ProductDataManager: DataManagerSwift {
             callBackHandler?(true, nil)
         }
     }
-    
-    
-    func getOtherSellers(_ target: DataServiceProtocol, sku: String, cityId: String? = nil, completion:@escaping DataClosure) {
-        
-    }
-    
 }

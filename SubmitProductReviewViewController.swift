@@ -18,7 +18,7 @@ class SubmitProductReviewViewController: BaseViewController, ProtectedViewContro
     @IBOutlet weak var reviewCommentTextView: UITextView!
     @IBOutlet weak var scrollView: UIScrollView!
     
-    var prodcut: Product?
+    var prodcutSku: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()

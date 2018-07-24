@@ -11,6 +11,11 @@ import UIKit
 class SellerViewControl: BaseViewControl {
 
     var sellerView: SellerView?
+    weak var delegate: SellerViewDelegate? {
+        didSet {
+            self.sellerView?.delegate = self.delegate
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -19,11 +24,12 @@ class SellerViewControl: BaseViewControl {
         if let view = self.sellerView {
             self.addAnchorMatchedSubView(view: view)
         }
+        self.sellerView?.delegate = self.delegate
     }
     
     override func update(withModel model: Any!) {
-        if let seller = model as? Seller {
-            self.sellerView?.update(with: seller)
+        if let product = model as? NewProduct, let seller = product.seller {
+            self.sellerView?.update(with: seller, otherSellerCount: product.otherSellerCount ?? 0)
         }
     }
 

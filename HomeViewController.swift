@@ -247,8 +247,8 @@ class HomeViewController:   BaseViewController,
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let segueName = segue.identifier
         if segueName == "pushPDVViewController" {
-            let destinationViewCtrl = segue.destination as? JAPDVViewController
-            destinationViewCtrl?.productSku = sender as! String
+            let destinationViewCtrl = segue.destination as? ProductDetailViewController
+            destinationViewCtrl?.productSku = sender as? String
             //if go to pdv by segue only from Emarsys recommendations (myBamilo)
             destinationViewCtrl?.purchaseTrackingInfo = "Emarsys:\(self.myBamiloPage.getScreenName())"
         } else if segueName == "ShowSearchView", let destinationViewCtrl = segue.destination as? SearchViewController {

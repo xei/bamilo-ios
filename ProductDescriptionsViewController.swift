@@ -10,24 +10,63 @@ import UIKit
 
 class ProductDescriptionsViewController: BaseViewController {
     
-    @IBOutlet private weak var wholeDescriptionTextView: UITextView!
-    var productDescription: String?
+    @IBOutlet weak private var webView: UIWebView!
+    var product: NewProduct?
+    var isLoaded = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
-        wholeDescriptionTextView.font = Theme.font(kFontVariationRegular, size: 12)
-        wholeDescriptionTextView.isEditable = false
-        wholeDescriptionTextView.isMultipleTouchEnabled = false
-        wholeDescriptionTextView.showsVerticalScrollIndicator = false
+        [view, webView].forEach{ $0?.backgroundColor = .white }
         
-        if let desc = productDescription {
-            self.updateWithDescription(description: desc)
+        if let model = product?.descriptionHTML {
+            isLoaded = true
+            updateWithDescription(description: model)
         }
     }
 
     private func updateWithDescription(description: String) {
-        wholeDescriptionTextView.text = description
-        wholeDescriptionTextView.setContentOffset(.zero, animated: false)
+        webView.loadHTMLString(description, baseURL: nil)
+    }
+    
+    var gettinSpecificationBussy = false
+    func getContent(completion: ((Bool)-> Void)? = nil) {
+        if let sku = product?.sku, !gettinSpecificationBussy, !isLoaded {
+            ProductDataManager.sharedInstance.getDescriptions(self, sku: sku) { (data, error) in
+                self.gettinSpecificationBussy = false
+                if (error == nil) {
+                    self.bind(data, forRequestId: 0)
+                    completion?(true)
+                } else {
+                    self.errorHandler(error, forRequestID: 0)
+                    completion?(false)
+                }
+            }
+        }
+    }
+}
+
+//MARK: - DataServiceProtocol
+extension ProductDescriptionsViewController : DataServiceProtocol {
+    
+    func bind(_ data: Any!, forRequestId rid: Int32) {
+        if let model = data as? ProductDescriptionWrapper {
+            product?.descriptionHTML = model.description
+            isLoaded = true
+            updateWithDescription(description: model.description ?? "")
+        }
+    }
+    
+    func errorHandler(_ error: Error!, forRequestID rid: Int32) {
+        if rid == 0 {
+            if !Utility.handleErrorMessages(error: error, viewController: self) {
+                self.handleGenericErrorCodesWithErrorControlView(Int32(error.code), forRequestID: rid)
+            }
+        }
+    }
+    
+    func retryAction(_ callBack: RetryHandler!, forRequestId rid: Int32) {
+        self.getContent() { (succes) in
+            callBack?(succes)
+        }
     }
 }

@@ -170,8 +170,8 @@
                     </view>
                     <connections>
                         <outlet property="activiryIndicator" destination="ZTf-Vg-2Wm" id="nWh-SS-KDw"/>
-                        <segue destination="gPK-Zt-6PT" kind="show" identifier="pushPDVViewController" id="heG-nW-AOJ"/>
                         <segue destination="Lvl-X0-ycF" kind="show" identifier="pushCancellationViewController" id="Jy7-BK-hRU"/>
+                        <segue destination="1MH-zt-PDO" kind="show" identifier="pushPDVViewController" id="ieO-ix-bhr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ldn-r3-6iS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -789,24 +789,6 @@
             </objects>
             <point key="canvasLocation" x="-3227" y="-3450"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="HKc-37-oOW">
-            <objects>
-                <viewController id="gPK-Zt-6PT" customClass="JAPDVViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="0el-fz-tZL"/>
-                        <viewControllerLayoutGuide type="bottom" id="AS4-lV-zeF"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="6Je-8T-AUq">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Qde-Iw-6YS" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-377" y="108"/>
-        </scene>
         <!--Catalog View Controller-->
         <scene sceneID="aKC-VI-rqH">
             <objects>
@@ -939,7 +921,6 @@
                         <outlet property="productCountLabelTopConstraint" destination="w00-nz-i1c" id="bZ2-ZR-ieM"/>
                         <outlet property="topCollectionViewConstraint" destination="6Wq-wF-e7Z" id="h2n-bW-LSi"/>
                         <segue destination="L8G-Sy-CpX" kind="show" identifier="showFilterView" id="JKW-Pq-7fE"/>
-                        <segue destination="gPK-Zt-6PT" kind="show" identifier="pushPDVViewController" id="QvZ-9a-k1K"/>
                         <segue destination="1MH-zt-PDO" kind="show" identifier="ProductDetailViewController" id="yLY-Re-RCl"/>
                     </connections>
                 </viewController>
@@ -1090,11 +1071,12 @@
                         <segue destination="nRm-FT-QBP" kind="show" identifier="showProductReviewListViewController" id="48P-L7-x2V"/>
                         <segue destination="xwz-vB-nHq" kind="show" identifier="showSubmitProductReviewViewController" id="hAx-Pw-RUJ"/>
                         <segue destination="gwi-Ax-BR8" kind="show" identifier="showOtherSellerViewController" id="2vr-mR-RKU"/>
+                        <segue destination="zGR-x9-obn" kind="show" identifier="showAllRecommendationViewController" id="qrz-C2-bq8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yQW-T6-gDl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="91" y="847"/>
+            <point key="canvasLocation" x="90" y="845"/>
         </scene>
         <!--Add To Cart View Controller-->
         <scene sceneID="qfZ-Hn-wPD">
@@ -1293,7 +1275,7 @@
                         <outlet property="backgroundView" destination="dAE-sU-el0" id="yPv-Of-lgI"/>
                         <outlet property="colorLabel" destination="p3O-vZ-Oyc" id="LHl-IE-G5W"/>
                         <outlet property="currencyLabel" destination="gfD-Mb-Oh3" id="KzX-d4-dxZ"/>
-                        <outlet property="discountPriceLabel" destination="KKt-5N-O2T" id="Kkg-Fh-kLJ"/>
+                        <outlet property="oldPriceLabel" destination="KKt-5N-O2T" id="C9u-gd-sgO"/>
                         <outlet property="productImageView" destination="ee1-rA-b52" id="HEd-bn-vAi"/>
                         <outlet property="productPriceLabel" destination="k0f-D9-LmY" id="9ha-f4-Gex"/>
                         <outlet property="productTitleLabel" destination="W6q-2D-V3x" id="ej2-Bo-uFW"/>
@@ -1744,6 +1726,7 @@
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ArrowLeft" translatesAutoresizingMaskIntoConstraints="NO" id="alL-tK-6wv">
                                         <rect key="frame" x="15" y="19" width="12" height="12"/>
+                                        <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="alL-tK-6wv" secondAttribute="height" multiplier="1:1" id="R4P-Ao-nRe"/>
                                             <constraint firstAttribute="height" constant="12" id="k6m-vn-BAg"/>
@@ -2023,11 +2006,11 @@
                         <viewControllerLayoutGuide type="bottom" id="zI7-gT-Oag"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="pmB-dk-Chu">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="623"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="O6y-dc-Laj">
-                                <rect key="frame" x="8" y="20" width="398" height="603"/>
+                                <rect key="frame" x="8" y="20" width="398" height="716"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="clg-El-4xX">
                                     <size key="itemSize" width="50" height="50"/>
@@ -2049,7 +2032,7 @@
                     <connections>
                         <outlet property="collectionView" destination="O6y-dc-Laj" id="CuF-Qh-hAg"/>
                         <outlet property="collectionViewBottomConstraint" destination="1Qm-wx-aP1" id="Lpc-rQ-vEr"/>
-                        <segue destination="gPK-Zt-6PT" kind="show" identifier="showPDVViewController" id="IXB-Qt-zBc"/>
+                        <segue destination="1MH-zt-PDO" kind="show" identifier="showPDVViewController" id="vMD-eI-z0K"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B9M-Mn-Dsz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2188,7 +2171,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hqI-fM-Anc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2246" y="839"/>
+            <point key="canvasLocation" x="-2275" y="900"/>
         </scene>
         <!--Review Survey View Controller-->
         <scene sceneID="Bnb-iO-JQ0">
@@ -2558,7 +2541,7 @@
                     <connections>
                         <outlet property="collectionView" destination="UmC-fM-eVN" id="Hl5-3H-TVu"/>
                         <outlet property="emptyViewContainer" destination="RPa-4t-46M" id="610-rl-zXN"/>
-                        <segue destination="gPK-Zt-6PT" kind="show" identifier="showPDVViewController" id="jQX-gw-9ku"/>
+                        <segue destination="1MH-zt-PDO" kind="show" identifier="showPDVViewController" id="4vK-bS-wlZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="423-k3-LkN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2631,7 +2614,7 @@
                         <outlet property="contentContainerTopConstraint" destination="vTA-9k-dM2" id="f7G-5T-C4i"/>
                         <outlet property="searchBar" destination="VXG-cT-GiY" id="RTz-tO-seN"/>
                         <segue destination="CdM-AJ-ErQ" kind="presentation" identifier="ShowSearchView" id="aMS-rc-aBM"/>
-                        <segue destination="gPK-Zt-6PT" kind="show" identifier="pushPDVViewController" id="0C6-sJ-PTr"/>
+                        <segue destination="1MH-zt-PDO" kind="show" identifier="pushPDVViewController" id="tZ5-ei-wip"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KuD-hl-zvw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2694,23 +2677,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="608"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" delaysContentTouches="NO" bouncesZoom="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="y31-Fk-yEc">
-                                <rect key="frame" x="16" y="5" width="382" height="598"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X4C-Il-Tw1">
+                                <rect key="frame" x="0.0" y="20" width="414" height="588"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </webView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="y31-Fk-yEc" firstAttribute="centerX" secondItem="mbD-dk-8nk" secondAttribute="centerX" id="85N-Hn-EE5"/>
-                            <constraint firstItem="y31-Fk-yEc" firstAttribute="top" secondItem="mbD-dk-8nk" secondAttribute="top" constant="5" id="t87-Au-nrh"/>
-                            <constraint firstItem="y31-Fk-yEc" firstAttribute="left" secondItem="mbD-dk-8nk" secondAttribute="left" constant="16" id="uzi-ra-3TP"/>
-                            <constraint firstAttribute="bottom" secondItem="y31-Fk-yEc" secondAttribute="bottom" constant="5" id="vkB-Ba-RUh"/>
+                            <constraint firstItem="X4C-Il-Tw1" firstAttribute="leading" secondItem="mbD-dk-8nk" secondAttribute="leading" id="AXS-mk-w20"/>
+                            <constraint firstItem="Bl0-eG-ayZ" firstAttribute="top" secondItem="X4C-Il-Tw1" secondAttribute="bottom" id="cRM-Fp-cWg"/>
+                            <constraint firstAttribute="trailing" secondItem="X4C-Il-Tw1" secondAttribute="trailing" id="gHC-bU-GoY"/>
+                            <constraint firstItem="X4C-Il-Tw1" firstAttribute="top" secondItem="FAS-oc-mxD" secondAttribute="bottom" id="nTz-KY-ARb"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="wholeDescriptionTextView" destination="y31-Fk-yEc" id="Law-VH-5re"/>
+                        <outlet property="webView" destination="X4C-Il-Tw1" id="Xfk-0F-ioV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yFu-lc-h2K" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2752,7 +2733,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ArrowLeft" width="8" height="14"/>
+        <image name="ArrowLeft" width="48" height="48"/>
         <image name="ProductComment" width="48" height="48"/>
         <image name="btn_cart" width="22" height="22"/>
         <image name="filtered_list_no_result" width="40" height="40"/>
@@ -2773,10 +2754,10 @@
         <image name="tabbar_category_highlighted" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="bEV-Bv-dJp"/>
+        <segue reference="qrz-C2-bq8"/>
         <segue reference="hAx-Pw-RUJ"/>
         <segue reference="Ib5-ij-N9c"/>
-        <segue reference="QvZ-9a-k1K"/>
-        <segue reference="mLp-yH-ACJ"/>
+        <segue reference="vMD-eI-z0K"/>
+        <segue reference="aMS-rc-aBM"/>
     </inferredMetricsTieBreakers>
 </document>

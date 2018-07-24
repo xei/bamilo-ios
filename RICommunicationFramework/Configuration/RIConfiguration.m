@@ -54,7 +54,7 @@ NSString *const RI_UNIQUE_COUNTRY_USER_AGENT_INJECTION_SHOP = @"MMAMZ";
 NSString *const RI_UNIQUE_COUNTRY_NAME_SHOP = @"Myanmar";
 NSString *const RI_UNIQUE_COUNTRY_ISO_SHOP = @"MM";
 
-NSString *const RI_UNIQUE_COUNTRY_URL_BAMILO = @"http://www.bamilo.com/mobapi/";
+NSString *const RI_UNIQUE_COUNTRY_URL_BAMILO = @"https://www.bamilo.com/mobapi/";
 
 NSString *const RI_UNIQUE_COUNTRY_URL_BAMILO_STAGING = @"http://staging.bamilo.com/mobapi/";
 NSString *const RI_UNIQUE_COUNTRY_URL_BAMILO_INTEGRATION_MOBILE = @"http://integration-mobile-www.bamilo.com/mobapi/";
@@ -64,7 +64,7 @@ NSString *const RI_UNIQUE_COUNTRY_NAME_BAMILO = @"Iran";
 NSString *const RI_UNIQUE_COUNTRY_ISO_BAMILO = @"IR";
 
 NSString *const RI_MOBAPI_PREFIX = @"mobapi/";
-NSString *const RI_API_VERSION = @"v2.9/"; // ||| DO NOT CHANGE |||
+NSString *const RI_API_VERSION = @"v2.10/"; // ||| DO NOT CHANGE |||
 
 NSString *const RI_API_INFO = @"main/md5/";
 NSString *const RI_API_IMAGE_RESOLUTIONS = @"main/imageresolutions/";
@@ -75,7 +75,8 @@ NSString *const RI_API_PROMOTIONS_URL = @"main/getstatic/key/mobile_promotions/"
 
 NSString *const RI_FORMS_INDEX = @"forms/index/";
 
-NSString *const RI_API_PRODUCT_DETAIL = @"catalog/detail/sku/";
+NSString *const RI_API_PRODUCT_DETAIL = @"catalog/product/sku/";
+NSString *const RI_API_SELLERS_OFFER = @"catalog/sellers/sku/";
 NSString *const RI_API_PROD_VALIDATE = @"catalog/validate/";
 NSString *const RI_CATALOG_CATEGORIES = @"catalog/categories/";
 NSString *const RI_API_CATALOG = @"search/find/";
@@ -157,3 +158,7 @@ NSString *const RI_API_RETURN_FINISH = @"return/finishreturn/";
 NSString *const RI_API_DELETE_ADDRESS_REMOVE = @"customer/addressremove/";
 NSString *const RI_API_SURVEY_ALIAS = @"survey/alias/";
 NSString *const RI_API_USER_SURVEY = @"survey/user/";
+NSString *const RI_API_REVIEW_LIST = @"catalog/reviews/sku/";
+NSString *const RI_API_SPECIFICATION = @"catalog/specification/sku/";
+NSString *const RI_API_PRODUCT_DESCRIPTIONS = @"catalog/description/sku/";
+

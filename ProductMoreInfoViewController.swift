@@ -9,7 +9,7 @@
 import UIKit
 
 
-enum SelectedViewType {
+enum MoreInfoSelectedViewType {
     case description
     case specicifation
 }
@@ -21,9 +21,11 @@ protocol ProductMoreInfoViewControllerDelegate: class {
 
 class ProductMoreInfoViewController: BaseViewController, DataServiceProtocol {
     
-    var product: Product?
-    var selectedViewType: SelectedViewType = .description
+    var product: NewProduct?
+    var selectedViewType: MoreInfoSelectedViewType = .description
     weak var delegate: ProductMoreInfoViewControllerDelegate?
+    private var descriptionViewCtrl: ProductDescriptionsViewController?
+    private var specifictionViewCtrl: ProductSpecificsTableViewController?
     
     @IBOutlet private weak var segmentControl: UISegmentedControl!
     @IBOutlet private weak var seperatorView: UIView!
@@ -59,36 +61,46 @@ class ProductMoreInfoViewController: BaseViewController, DataServiceProtocol {
         case 0:
             self.descriptionContainerView.hide()
             self.specificationsContainerView.fadeIn(duration: 0.15)
+            
+            if let viewCtrl = specifictionViewCtrl, !viewCtrl.isLoaded {
+                viewCtrl.getContent()
+            }
         case 1:
             self.specificationsContainerView.hide()
             self.descriptionContainerView.fadeIn(duration: 0.15)
+
+            if let viewCtrl = descriptionViewCtrl, !viewCtrl.isLoaded {
+                viewCtrl.getContent()
+            }
         default: break
         }
     }
     
     
     @IBAction func addToCartButtonTapped(_ sender: Any) {
-        if let simples = product?.simples {
-            if simples.count >= 1 {
-                let selectedSimple = simples.filter { $0.isSelected }.first
-                if let selectedSimple = selectedSimple {
-                    delegate?.requestsForAddToCart(sku: selectedSimple.sku, viewCtrl: self)
-                } else if let presentableSimples = product?.presentableSimples, presentableSimples.count > 0 {
-                    self.performSegue(withIdentifier: "showAddToCartViewController", sender: nil)
-                } else if simples.count == 1, let sku = simples.first?.sku {
-                    delegate?.requestsForAddToCart(sku: sku, viewCtrl: self)
-                }
+        if let variations = product?.variations, variations.count >= 1 {
+            let sizeVariations = variations.filter { $0.type == .size }.first
+            let selectedSize = sizeVariations?.products?.filter { $0.isSelected }.first
+            if let selectedSizeSimpleSku = selectedSize?.simpleSku {
+                delegate?.requestsForAddToCart(sku: selectedSizeSimpleSku, viewCtrl: self)
+            } else if let sizeVariationProducts = sizeVariations?.products, sizeVariationProducts.count > 0 {
+                self.performSegue(withIdentifier: "showAddToCartModal", sender: nil)
+            } else if let simpleSku = self.product?.simpleSku {
+                delegate?.requestsForAddToCart(sku: simpleSku, viewCtrl: self)
             }
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let segueName = segue.identifier
-        if segueName == "embedProductDescriptionsViewController", let viewCtrl = segue.destination as? ProductDescriptionsViewController, let description = self.product?.productDescription {
-            viewCtrl.productDescription = description
-        } else if segueName == "embedProductSpecificsTableViewController", let viewCtrl = segue.destination as? ProductSpecificsTableViewController , let specifications = product?.specifications {
-            viewCtrl.model = specifications
-        } else if segueName == "showAddToCartViewController", let viewCtrl = segue.destination as? AddToCartViewController {
+        if segueName == "embedProductDescriptionsViewController", let viewCtrl = segue.destination as? ProductDescriptionsViewController {
+            descriptionViewCtrl = viewCtrl
+            viewCtrl.product = product
+        } else if segueName == "embedProductSpecificsTableViewController", let viewCtrl = segue.destination as? ProductSpecificsTableViewController {
+            specifictionViewCtrl = viewCtrl
+            viewCtrl.product = product
+        } else
+        if segueName == "showAddToCartViewController", let viewCtrl = segue.destination as? AddToCartViewController {
             delegate?.needToPrepareAddToCartViewCtrl(addToCartViewCtrl: viewCtrl)
         }
     }

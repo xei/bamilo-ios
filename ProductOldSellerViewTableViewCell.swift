@@ -13,9 +13,9 @@ class ProductOldSellerViewTableViewCell: BaseProductTableViewCell {
     @IBOutlet weak var sellerViewControl: SellerViewControl!
     
     override func update(withModel model: Any!) {
-        if let product = model as? Product, let seller = product.seller {
-            sellerViewControl.update(withModel: seller)
-            sellerViewControl.runDeliveryTimeCalculations(productSku: product.sku)
+        if let product = model as? NewProduct, let _ = product.seller {
+            sellerViewControl.update(withModel: product)
+            sellerViewControl.runDeliveryTimeCalculations(productSku: product.simpleSku ?? product.sku)
         }
     }
 }

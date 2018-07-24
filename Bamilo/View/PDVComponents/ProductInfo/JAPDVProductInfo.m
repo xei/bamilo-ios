@@ -261,7 +261,7 @@
         yOffset = CGRectGetMaxY(headerSeller.frame);
         
         SellerView *sellerView = [SellerView nibInstance];
-        [sellerView updateWith:product.seller];
+//        [sellerView updateWith:product.seller];
         
         [sellerView setNeedsLayout];
         [sellerView layoutIfNeeded];

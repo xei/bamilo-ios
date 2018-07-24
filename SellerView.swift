@@ -11,12 +11,14 @@ import UIKit
 @objc protocol SellerViewDelegate {
     func refreshContent(sellerView: SellerView)
     func goToSellerPage(target: RITarget)
+    func otherSellerButtonTapped()
 }
 
 @objcMembers class SellerView: BaseControlView {
     
     @IBOutlet weak private var otherSellerButtonHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak private var otherSellerTitleLabel: UILabel!
+    @IBOutlet weak private var otherSellerCountWrapperView: UIView!
     @IBOutlet weak private var otherSellerCountLabel: UILabel!
     @IBOutlet weak private var seeOtherSellers: UIButton!
     @IBOutlet weak private var sellerNameLabel: UILabel!
@@ -34,6 +36,8 @@ import UIKit
     @IBOutlet weak private var fullfillmentProgressView: SimpleProgressBarControl!
     @IBOutlet weak private var notReturnedProgressView: SimpleProgressBarControl!
     @IBOutlet weak private var slaReachedProgressView: SimpleProgressBarControl!
+    @IBOutlet weak private var topHorizontalSeperatorView: UIView!
+    @IBOutlet weak private var downHorizontalSeperator: UIView!
     @IBOutlet weak private var sellerRatingWrapperView: UIView!
     @IBOutlet weak private var deliveryTimeView: DeliveryTimeControl!
     @IBOutlet weak private var precenseDurationToSeperatorVerticalSpacingConstraint: NSLayoutConstraint!
@@ -42,7 +46,6 @@ import UIKit
     @IBOutlet weak private var seperatorToDeliveryTimeViewVerticalSpacingConstraint: NSLayoutConstraint!
     @IBOutlet weak private var sellerNameToGuaranteeLabelVerticalSpacingConstraint: NSLayoutConstraint!
     @IBOutlet weak private var presenceDurationToGuaranteeLabelVerticalSpacingConstraint: NSLayoutConstraint!
-    @IBOutlet weak private var horizontalSeperator: UIView!
     @IBOutlet weak private var norateView: UIView!
     @IBOutlet weak private var newSellerBadge: UIImageView!
     @IBOutlet weak private var noRateLabelToNewSellerBadgeHorizontalSpacingConstraint: NSLayoutConstraint!
@@ -57,6 +60,7 @@ import UIKit
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.backgroundColor = .clear
         self.sellerNameLabel.textColor = Theme.color(kColorGray1)
         self.sellerOrderCounts.textColor = Theme.color(kColorGray1)
         self.guaranteeLabel.textColor = Theme.color(kColorGray1)
@@ -70,18 +74,21 @@ import UIKit
         self.slaReachedTitleLabel.textColor = Theme.color(kColorGray1)
         self.slaReachedValueLabel.textColor = Theme.color(kColorGray1)
         self.sellerRatingRefreshButton.setTitleColor(Theme.color(kColorOrange1), for: .normal)
-        self.otherSellerCountLabel.backgroundColor = Theme.color(kColorBlue1)
+        self.otherSellerCountWrapperView.backgroundColor = Theme.color(kColorBlue)
         self.otherSellerCountLabel.textColor = .white
         self.otherSellerCountLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: .white)
-        self.otherSellerTitleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorBlue1))
-        self.otherSellerCountLabel.layer.cornerRadius = 5
+        self.otherSellerTitleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorBlue))
+        self.otherSellerCountWrapperView.layer.cornerRadius = 9
         self.otherSellerTitleLabel.text = STRING_OTHER_SELLERS
         self.seeOtherSellers.setTitle(nil, for: .normal)
-        self.otherSellerCountLabel.text = "+۴"
     }
     
-    func update(with seller: Seller) {
-        self.otherSellerButtonHeightConstraint.constant = 0
+    func update(with seller: Seller, otherSellerCount: Int) {
+        
+        self.downHorizontalSeperator.isHidden = otherSellerCount == 0
+        self.otherSellerButtonHeightConstraint.constant = otherSellerCount == 0 ? 0 : 47
+        self.otherSellerCountLabel.text = "+\(otherSellerCount)".convertTo(language: .arabic)
+        
         self.sellerNameLabel.text = "\(STRING_SELLER): \(seller.name ?? STRING_NO_NAME)"
         if let orderDeliveryCount = seller.orderDeliveryCount {
             self.sellerOrderCounts.text = "\(orderDeliveryCount.label ?? STRING_ORDERS_COUNT): \(orderDeliveryCount.value ?? "")".convertTo(language: .arabic)
@@ -121,7 +128,7 @@ import UIKit
             }
         }
         
-        if let score = seller.score {
+        if let score = seller.score, score.overall != 0 {
             self.sellerRatingErrorView.isHidden = true
             if let totalScore = score.overall {
                 self.totalScoreValueLabel.textColor = Theme.color(kColorGreen1)
@@ -141,7 +148,7 @@ import UIKit
             self.fullfilmentValueLabel.textColor = Theme.color(kColorGray1)
             self.fullfilmentValueLabel.text = "\(Utility.formatScoreValue(score: score.fullfilment ?? 0)) \(STRING_FROM) \(Utility.formatScoreValue(score:score.maxValue ?? 0))"
             if let value = score.fullfilment, let maxValue = score.overall {
-                self.fullfillmentProgressView.update(withModel: Double(value/maxValue))
+                self.fullfillmentProgressView.update(withModel: maxValue == 0 ? 0 : Double(value/maxValue))
             } else {
                 self.showErrorOnSellerScore()
             }
@@ -170,14 +177,14 @@ import UIKit
             self.sellerRatingViewToDeliveryTimeVerticalSpacingConstraint.priority = MASLayoutPriorityDefaultHigh
             self.seperatorToDeliveryTimeViewVerticalSpacingConstraint.priority = MASLayoutPriorityDefaultLow
             self.sellerRatingWrapperView.alpha = 1
-            self.horizontalSeperator.alpha = 1
+            self.topHorizontalSeperatorView.alpha = 1
             
             self.norateView.alpha = 0
         } else {
             self.sellerRatingViewToDeliveryTimeVerticalSpacingConstraint.priority = MASLayoutPriorityDefaultLow
             self.seperatorToDeliveryTimeViewVerticalSpacingConstraint.priority = MASLayoutPriorityDefaultHigh
             self.sellerRatingWrapperView.alpha = 0
-            self.horizontalSeperator.alpha = 0
+            self.topHorizontalSeperatorView.alpha = 0
             self.norateView.alpha = 1
             
             self.noRateLabelToRightSuperviewConstriant.priority = seller.isNew ? MASLayoutPriorityDefaultLow : MASLayoutPriorityDefaultHigh
@@ -201,6 +208,9 @@ import UIKit
         return AppUtility.getStringFromClass(for: self)!
     }
     
+    @IBAction func otherSellerButtonTapped(_ sender: Any) {
+        self.delegate?.otherSellerButtonTapped()
+    }
     
     //TODO: this function is unnecessary but we need it for now!,
     //because in PDVView we have to !! change the alignment (with previous implmentations)

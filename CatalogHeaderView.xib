@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -158,9 +158,17 @@
                         <constraint firstAttribute="height" constant="1" id="qe7-5a-yjL"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pzH-M9-j18" userLabel="horizontal seperator">
+                    <rect key="frame" x="0.0" y="0.0" width="390" height="1"/>
+                    <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="BSq-dp-krG"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="pzH-M9-j18" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="1Eo-zV-V9K"/>
                 <constraint firstItem="wve-jk-z5e" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="6xQ-zX-RHJ"/>
                 <constraint firstAttribute="right" secondItem="CfZ-Ef-zCo" secondAttribute="right" id="9LO-G6-bqP"/>
                 <constraint firstItem="CfZ-Ef-zCo" firstAttribute="left" secondItem="CcI-KF-0IB" secondAttribute="right" id="9oM-wm-eFy"/>
@@ -181,6 +189,8 @@
                 <constraint firstAttribute="bottom" secondItem="FOV-rh-6Uz" secondAttribute="bottom" id="eEX-17-49H"/>
                 <constraint firstItem="Kal-cG-7uo" firstAttribute="left" secondItem="iN0-l3-epB" secondAttribute="left" id="gcH-YK-gIa"/>
                 <constraint firstAttribute="width" secondItem="FOV-rh-6Uz" secondAttribute="width" multiplier="5:1" id="hK7-zV-THD"/>
+                <constraint firstAttribute="trailing" secondItem="pzH-M9-j18" secondAttribute="trailing" id="mCq-09-5ah"/>
+                <constraint firstItem="pzH-M9-j18" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="q10-by-Kpw"/>
                 <constraint firstItem="Auh-B5-ONh" firstAttribute="left" secondItem="FOV-rh-6Uz" secondAttribute="right" id="tHv-X1-ZdL"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>

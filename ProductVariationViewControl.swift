@@ -24,17 +24,17 @@ class ProductVariationViewControl: BaseViewControl, ProductVariationViewDelegate
     }
     
     override func update(withModel model: Any!) {
-        if let product = model as? Product {
+        if let product = model as? NewProduct {
             self.productVariationView?.update(product: product)
         }
     }
     
     //MARK: - ProductVariationTableViewCellDelegate
-    func didSelectVariationSku(product: SimpleProduct) {
-        self.delegate?.didSelectVariationSku(product: product)
+    func didSelectSizeProduct(product: NewProduct) {
+        delegate?.didSelectSizeProduct(product: product)
     }
     
-    func didSelectSimpleSku(product: SimpleProduct) {
-        self.delegate?.didSelectSimpleSku(product: product)
+    func didSelectOtherVariety(product: NewProduct) {
+        delegate?.didSelectOtherVariety(product: product)
     }
 }

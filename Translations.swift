@@ -152,5 +152,6 @@ let STRING_ADD_COMMENT = RILocalizationWrapper.localizedString("add_comment")!
 let STRING_OTHER_SELLERS = RILocalizationWrapper.localizedString("other_sellers")!
 let STRING_SELLER_NAME = RILocalizationWrapper.localizedString("seller_name")!
 let STRING_SELLER_SCORE = RILocalizationWrapper.localizedString("seller_score")!
+let STRING_NO_RATE = RILocalizationWrapper.localizedString("no_rate")!
 
 

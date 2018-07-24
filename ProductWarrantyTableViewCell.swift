@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class ProductWarrantyTableViewCell: BaseProductTableViewCell {
 
@@ -25,8 +26,9 @@ class ProductWarrantyTableViewCell: BaseProductTableViewCell {
     }
     
     override func update(withModel model: Any!) {
-        if let product = model as? Product {
-            self.warrantyTitleLabel.text = product.seller?.warranty
+        if let product = model as? NewProduct {
+            warrantyTitleLabel.text = product.returnPolicy?.title
+            warrantyImageView.kf.setImage(with: product.returnPolicy?.icon, placeholder: #imageLiteral(resourceName: "homepage_slider_placeholder"),options: [.transition(.fade(0.20))])
         }
     }
 }

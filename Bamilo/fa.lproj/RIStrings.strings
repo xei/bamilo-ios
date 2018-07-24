@@ -132,7 +132,7 @@
 
 "string_choose_size_for_all_products" = "لطفا سایز را برای تمام کالاها انتخاب کنید";
 
-"add_to_shopping_cart" = "افزودن به سبد خرید";
+"add_to_shopping_cart" = "افزودن به سبد";
 
 "string_variations" = "تنوع کالا";
 
@@ -1046,3 +1046,7 @@
 "seller_name" = "نام فروشنده";
 
 "seller_score" = "امتیاز فروشنده";
+
+"no_rate" = "بدون امتیاز";
+
+"" = "";

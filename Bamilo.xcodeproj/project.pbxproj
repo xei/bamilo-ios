@@ -78,6 +78,10 @@
 		61259BE51FC585360051CBD4 /* BreadcrumbsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61259BE41FC585360051CBD4 /* BreadcrumbsView.xib */; };
 		6127EA0020B2DB470064B291 /* ProductDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6127E9FF20B2DB470064B291 /* ProductDetailViewController.swift */; };
 		6128806C1F0A2EC3006F5240 /* TapRecommendationEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 6128806B1F0A2EC3006F5240 /* TapRecommendationEvent.m */; };
+		612AC4C621037C0600A14B3C /* ProductRecommendationWidgetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612AC4C421037C0600A14B3C /* ProductRecommendationWidgetTableViewCell.swift */; };
+		612AC4C721037C0600A14B3C /* ProductRecommendationWidgetTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 612AC4C521037C0600A14B3C /* ProductRecommendationWidgetTableViewCell.xib */; };
+		612AC4CB2106019000A14B3C /* ProductBreadCrumbTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612AC4C92106019000A14B3C /* ProductBreadCrumbTableViewCell.swift */; };
+		612AC4CC2106019000A14B3C /* ProductBreadCrumbTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 612AC4CA2106019000A14B3C /* ProductBreadCrumbTableViewCell.xib */; };
 		612FDC371E45E0A900A9D0BD /* CartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 612FDC351E45E0A900A9D0BD /* CartTableViewCell.m */; };
 		612FDC381E45E0A900A9D0BD /* CartTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 612FDC361E45E0A900A9D0BD /* CartTableViewCell.xib */; };
 		612FE5171EDC062500C2AFA0 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612FE5161EDC062500C2AFA0 /* ProfileViewController.swift */; };
@@ -158,6 +162,7 @@
 		616058E91E6AE2030079B2CD /* SearchFilterItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 616058E81E6AE2030079B2CD /* SearchFilterItem.m */; };
 		61626BF51F111818008F2463 /* EmarsysBaseTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 61626BF41F111818008F2463 /* EmarsysBaseTracker.m */; };
 		6164F54D201762910009ED19 /* PhoneVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6164F54C201762910009ED19 /* PhoneVerificationViewController.swift */; };
+		6166E97F20FB653200A65688 /* NewProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6166E97E20FB653200A65688 /* NewProduct.swift */; };
 		6167C1AE1F431578009293B2 /* JANoConnectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6167C1AD1F431578009293B2 /* JANoConnectionView.xib */; };
 		616A9FC220C3C36800144E5B /* TransparentHeaderHeaderTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616A9FC120C3C36800144E5B /* TransparentHeaderHeaderTableView.swift */; };
 		616A9FC420C3C56E00144E5B /* TransparentHeaderHeaderTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 616A9FC320C3C56E00144E5B /* TransparentHeaderHeaderTableView.xib */; };
@@ -1192,6 +1197,10 @@
 		6127E9FF20B2DB470064B291 /* ProductDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewController.swift; sourceTree = "<group>"; };
 		6128806A1F0A2EC3006F5240 /* TapRecommendationEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TapRecommendationEvent.h; sourceTree = "<group>"; };
 		6128806B1F0A2EC3006F5240 /* TapRecommendationEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TapRecommendationEvent.m; sourceTree = "<group>"; };
+		612AC4C421037C0600A14B3C /* ProductRecommendationWidgetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRecommendationWidgetTableViewCell.swift; sourceTree = "<group>"; };
+		612AC4C521037C0600A14B3C /* ProductRecommendationWidgetTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductRecommendationWidgetTableViewCell.xib; sourceTree = "<group>"; };
+		612AC4C92106019000A14B3C /* ProductBreadCrumbTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductBreadCrumbTableViewCell.swift; sourceTree = "<group>"; };
+		612AC4CA2106019000A14B3C /* ProductBreadCrumbTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductBreadCrumbTableViewCell.xib; sourceTree = "<group>"; };
 		612FDC341E45E0A900A9D0BD /* CartTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartTableViewCell.h; sourceTree = "<group>"; };
 		612FDC351E45E0A900A9D0BD /* CartTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartTableViewCell.m; sourceTree = "<group>"; };
 		612FDC361E45E0A900A9D0BD /* CartTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartTableViewCell.xib; sourceTree = "<group>"; };
@@ -1288,6 +1297,7 @@
 		61626BF31F111818008F2463 /* EmarsysBaseTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysBaseTracker.h; sourceTree = "<group>"; };
 		61626BF41F111818008F2463 /* EmarsysBaseTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysBaseTracker.m; sourceTree = "<group>"; };
 		6164F54C201762910009ED19 /* PhoneVerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneVerificationViewController.swift; sourceTree = "<group>"; };
+		6166E97E20FB653200A65688 /* NewProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProduct.swift; sourceTree = "<group>"; };
 		6167C1AD1F431578009293B2 /* JANoConnectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JANoConnectionView.xib; sourceTree = "<group>"; };
 		616A9FC120C3C36800144E5B /* TransparentHeaderHeaderTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentHeaderHeaderTableView.swift; sourceTree = "<group>"; };
 		616A9FC320C3C56E00144E5B /* TransparentHeaderHeaderTableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransparentHeaderHeaderTableView.xib; sourceTree = "<group>"; };
@@ -3328,6 +3338,8 @@
 		6127EA0120B2E1E20064B291 /* ProductDetailView */ = {
 			isa = PBXGroup;
 			children = (
+				612AC4C82106016B00A14B3C /* ProductBreadCrumbTableViewCell */,
+				612AC4C321037B5F00A14B3C /* ProductRecommendationWidgetTableViewCell */,
 				61AA6B4020E8DCED00706F9A /* ProductReviewSummery */,
 				6157A74A20E25CAE001B8361 /* ProductSpecificsTitleTableHeaderView */,
 				6157A74920E2516C001B8361 /* ProductSpecificItemTableViewCell */,
@@ -3360,6 +3372,24 @@
 				6128806B1F0A2EC3006F5240 /* TapRecommendationEvent.m */,
 			);
 			name = VisitRecommendationEvent;
+			sourceTree = "<group>";
+		};
+		612AC4C321037B5F00A14B3C /* ProductRecommendationWidgetTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				612AC4C421037C0600A14B3C /* ProductRecommendationWidgetTableViewCell.swift */,
+				612AC4C521037C0600A14B3C /* ProductRecommendationWidgetTableViewCell.xib */,
+			);
+			name = ProductRecommendationWidgetTableViewCell;
+			sourceTree = "<group>";
+		};
+		612AC4C82106016B00A14B3C /* ProductBreadCrumbTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				612AC4C92106019000A14B3C /* ProductBreadCrumbTableViewCell.swift */,
+				612AC4CA2106019000A14B3C /* ProductBreadCrumbTableViewCell.xib */,
+			);
+			name = ProductBreadCrumbTableViewCell;
 			sourceTree = "<group>";
 		};
 		612FDC331E45E08500A9D0BD /* CartTableViewCell */ = {
@@ -3943,6 +3973,7 @@
 				8720C3341EDEE19900404378 /* Data */,
 				613A7E921EBF64EB00E1AB3F /* CatalogFiltes */,
 				613A7E8C1EBF069100E1AB3F /* Product.swift */,
+				6166E97E20FB653200A65688 /* NewProduct.swift */,
 				61CC6AD11FC187B800355B78 /* SimpleProduct.swift */,
 				6170AECA20F9F3C2007A4905 /* SellerList.swift */,
 				610519411F370DA4004695BD /* DeliveryTime.swift */,
@@ -8827,6 +8858,7 @@
 				61E5791A205582E40092D0F8 /* SelectItemViewCell.xib in Resources */,
 				875743E31EA60E13001B518A /* Spring-Small-40@2x.png in Resources */,
 				CE9AE0CA1AB6D78200D56481 /* JAPDVProductInfo.xib in Resources */,
+				612AC4CC2106019000A14B3C /* ProductBreadCrumbTableViewCell.xib in Resources */,
 				875743A11EA60DE0001B518A /* Ramadan-Small@2x.png in Resources */,
 				6157A73E20E0FB54001B8361 /* ProductSpecificsTableViewCell.xib in Resources */,
 				CE9AE0CD1AB6D78200D56481 /* JAOrangeButtonCell.xib in Resources */,
@@ -8926,6 +8958,7 @@
 				8757443A1EA60E71001B518A /* Winter.png in Resources */,
 				875743E51EA60E13001B518A /* Spring-76@2x.png in Resources */,
 				61BA9B561E9A0645004E9DE8 /* EmarsysRecommendationCarouselCollectionViewCell.xib in Resources */,
+				612AC4C721037C0600A14B3C /* ProductRecommendationWidgetTableViewCell.xib in Resources */,
 				875744451EA60E71001B518A /* Winter-72.png in Resources */,
 				875744031EA60E2D001B518A /* Summer-Small-40.png in Resources */,
 				619351AC1ECAC9DD00330E5C /* CatalogCardCollectionViewCell.xib in Resources */,
@@ -9317,6 +9350,7 @@
 				617585F91F8A088500D66541 /* Transformers.swift in Sources */,
 				61B603F220A0323A00D19DC7 /* RadioOptionQuestionView.swift in Sources */,
 				611C1B321F0BAA0900C57E4D /* SearchBarSearchEvent.m in Sources */,
+				612AC4CB2106019000A14B3C /* ProductBreadCrumbTableViewCell.swift in Sources */,
 				CE9ADF601AB6D78200D56481 /* JANoConnectionView.m in Sources */,
 				617AAA441E503AB9004D9430 /* FormItemModel.m in Sources */,
 				61BBFC822003A8870000FC8A /* CancellingOrder.swift in Sources */,
@@ -9353,6 +9387,7 @@
 				612553611E4F514100975C6F /* FormItemValidation.m in Sources */,
 				8714E05D1E472CDC004C9B1D /* Address.m in Sources */,
 				61EA566C1EDEC75E0093EAD4 /* MainTabBarViewController.swift in Sources */,
+				6166E97F20FB653200A65688 /* NewProduct.swift in Sources */,
 				87EA03111E6D450300B1E062 /* FormHeaderModel.m in Sources */,
 				61EB3936200B5D3100F98C95 /* OrderCancellationResultTableViewCell.swift in Sources */,
 				8720C33C1EE2829300404378 /* DataManager.swift in Sources */,
@@ -9604,6 +9639,7 @@
 				615EBA7A1FEFE5F900FB58DE /* CategoryCoverTableViewCell.swift in Sources */,
 				617D4EEF1FEA65CC00A00799 /* RootCategoryViewController.swift in Sources */,
 				87B684DF1E49CE740042C09F /* BasicTableViewCell.m in Sources */,
+				612AC4C621037C0600A14B3C /* ProductRecommendationWidgetTableViewCell.swift in Sources */,
 				9A0BBE951BFE2482007D35CE /* JACustomNavigationBarView.m in Sources */,
 				8720C3331EDEE19200404378 /* RequestManager.swift in Sources */,
 				875AD5471E38C0C900584ABF /* RIFieldDataSetComponent.m in Sources */,

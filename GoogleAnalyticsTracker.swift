@@ -156,12 +156,12 @@
     
     func addToWishList(attributes: EventAttributeType) {
         if let screenName = attributes[kEventScreenName] as? String,
-            let product = attributes[kEventProduct] as? RIProduct {
+            let product = attributes[kEventProduct] as? TrackableProductProtocol {
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: screenName,
                 action: "AddToWishList",
                 label: product.sku,
-                value: product.price
+                value: product.payablePrice
             )
             self.sendParamsToGA(params: params)
         }
@@ -169,12 +169,12 @@
     
     func removeFromWishList(attributes: EventAttributeType) {
         if let screenName = attributes[kEventScreenName] as? String,
-            let product = attributes[kEventProduct] as? RIProduct {
+            let product = attributes[kEventProduct] as? TrackableProductProtocol {
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: screenName,
                 action: "RemoveFromWishList",
                 label: product.sku,
-                value: product.price
+                value: product.payablePrice
             )
             self.sendParamsToGA(params: params)
         }
@@ -182,12 +182,12 @@
     
     func addToCart(attributes: EventAttributeType) {
         if let screenName = attributes[kEventScreenName] as? String,
-            let product = attributes[kEventProduct] as? Product {
+            let product = attributes[kEventProduct] as? TrackableProductProtocol {
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: screenName,
                 action: "AddToCart",
                 label: product.sku,
-                value: NSNumber(value: product.price ?? 0)
+                value: product.payablePrice
             )
             self.sendParamsToGA(params: params)
             
@@ -197,12 +197,12 @@
     }
     
     func removeFromCart(attributes: EventAttributeType) {
-        if let product = attributes[kEventProduct] as? Product {
+        if let product = attributes[kEventProduct] as? TrackableProductProtocol {
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: "CART",
                 action: "RemoveFromCart",
                 label: product.sku,
-                value: NSNumber(value: product.price ?? 0)
+                value: product.payablePrice
             )
             self.sendParamsToGA(params: params)
             
@@ -213,12 +213,12 @@
     
     func viewProduct(attributes: EventAttributeType) {
         if let parentScreenName = attributes[kEventScreenName] as? String,
-            let product = attributes[kEventProduct] as? RIProduct {
+            let product = attributes[kEventProduct] as? TrackableProductProtocol {
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: "\(parentScreenName)",
                 action: "ViewProduct",
                 label: product.sku,
-                value: product.price
+                value: product.payablePrice
             )
             self.sendParamsToGA(params: params)
         }
@@ -424,7 +424,7 @@
     }
     
     //Ecommerce tracking helpers
-    private func sendEcommerceEvent(product: Product, actionName: String) {
+    private func sendEcommerceEvent(product: TrackableProductProtocol, actionName: String) {
         let action = GAIEcommerceProductAction()
         action.setAction(actionName)
         
@@ -448,13 +448,13 @@
         return gaProduct
     }
     
-    private func convertProductToGAIProduct(product: Product) -> GAIEcommerceProduct {
+    private func convertProductToGAIProduct(product: TrackableProductProtocol) -> GAIEcommerceProduct {
         let gaProduct = GAIEcommerceProduct()
         gaProduct.setId(product.sku)
         gaProduct.setName(product.name)
         gaProduct.setBrand(product.brand)
-        if let price = product.price {
-            gaProduct.setPrice(NSNumber(value: price))
+        if let price = product.payablePrice {
+            gaProduct.setPrice(price)
         }
         gaProduct.setQuantity(1)
         return gaProduct

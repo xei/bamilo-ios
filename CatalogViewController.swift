@@ -20,7 +20,6 @@ import SwiftyJSON
                                     EmarsysWebExtendProtocol,
                                     UICollectionViewDelegateFlowLayout,
                                     FilteredListNoResultViewControllerDelegate,
-                                    JAPDVViewControllerDelegate,
                                     SearchViewControllerDelegate,
                                     BreadcrumbsViewDelegate {
     
@@ -195,8 +194,8 @@ import SwiftyJSON
     func updateNavBar() {
         if let navTitle = self.catalogData?.title {
             self.navBarTitle = navTitle
-            self.title = navTitle
         }
+        self.title = self.catalogData?.title ?? ""
     }
     
     //MARK: - DataServiceProtocol
@@ -216,7 +215,7 @@ import SwiftyJSON
                     }
                     self.loadingDataInProgress = false
                     
-                    if let breadcrumbs = self.catalogData?.breadcrumbs, breadcrumbs.count > 0, false { //for now
+                    if let breadcrumbs = self.catalogData?.breadcrumbs, breadcrumbs.count > 0 { //for now
                         self.catalogHeaderContainer.translatesAutoresizingMaskIntoConstraints = false
                         UIView.animate(withDuration: 0.15, animations: {
                             self.catalogHeaderContainerHeightConstraint.constant = self.catalogHeaderContainerHeightWithBreadcrumb
@@ -449,7 +448,7 @@ import SwiftyJSON
     
     func updateProductStatusFromWishList(notification: Notification) {
         if MainTabBarViewController.topViewController() is CatalogViewController { return }
-        if let product = notification.userInfo?[NotificationKeys.NotificationProduct] as? Product ,let isInWishlist = notification.userInfo?[NotificationKeys.NotificationBool] as? Bool {
+        if let product = notification.userInfo?[NotificationKeys.NotificationProduct] as? TrackableProductProtocol ,let isInWishlist = notification.userInfo?[NotificationKeys.NotificationBool] as? Bool {
             let targetProduct = self.catalogData?.products.filter { $0.sku == product.sku }.first
             if let targetProduct = targetProduct {
                 targetProduct.isInWishList = isInWishlist
@@ -660,11 +659,6 @@ import SwiftyJSON
         self.tabBarScrollFollower?.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
     }
     
-    //MARK: - JAPDVViewControllerDelegate
-    func add(toWishList sku: String!, add: Bool) {
-        self.selectedProduct?.isInWishList = add
-        self.collectionView.reloadData()
-    }
     
     //MARK: - BaseCatallogCollectionViewCellDelegate
     func addOrRemoveFromWishList(product: Product, cell: BaseCatallogCollectionViewCell, add: Bool) {
@@ -697,8 +691,7 @@ import SwiftyJSON
         } else if segueName == "ProductDetailViewController" {
             let destinationViewCtrl = segue.destination as? ProductDetailViewController
             destinationViewCtrl?.purchaseTrackingInfo = self.purchaseTrackingInfo
-            destinationViewCtrl?.product = self.selectedProduct
-//            destinationViewCtrl?.delegate = self
+            destinationViewCtrl?.productSku = self.selectedProduct?.sku
         }
     }
     

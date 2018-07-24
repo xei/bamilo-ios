@@ -36,7 +36,7 @@ class ProductRateStarStatistic: NSObject, Mappable {
     override init() {}
     
     func mapping(map: Map) {
-        starNumber <- map["title"]
+        starNumber <- map["star_number"]
         count <- map["count"]
     }
 }

@@ -14,7 +14,6 @@
 #import "RITeaserComponent.h"
 
 @interface JACampaignsViewController () <SearchViewControllerDelegate>
-
 @property (nonatomic, strong)NSMutableArray* campaignPages;
 @property (nonatomic, strong)JATopTabsView* topTabsView;
 @property (nonatomic, strong)UIScrollView* scrollView;
@@ -22,26 +21,17 @@
 // size picker view
 @property (strong, nonatomic) JAPicker *picker;
 @property (strong, nonatomic) NSMutableArray *pickerDataSource;
-
 // for the retry connection, is necessary to store this stuff
 @property (nonatomic, strong)RICampaignProduct* backupCampaignProduct;
 @property (nonatomic, strong)NSString* backupSimpleSku;
-
 @property (nonatomic, assign)BOOL shouldPerformButtonActions;
-
 @property (nonatomic, assign)BOOL pickerNamesAlreadySet;
-
 @property (nonatomic, assign)NSInteger campaignIndex;
 @property (nonatomic, assign)NSNumber *clickedCampaignIndex;
-
 @property (nonatomic, assign)JACampaignPageView* campaignPageWithSizePickerOpen;
-
 @property (nonatomic, assign)RIApiResponse apiResponse;
-
 @property (nonatomic, assign)BOOL isLoaded;
-
 @property (nonatomic, strong)NSMutableArray* activeCampaignComponents;
-
 @property (strong, nonatomic) RICart *cart;
 
 @end
@@ -55,10 +45,7 @@
     self.pickerNamesAlreadySet = NO;
     
     CGRect bounds = [self viewBounds];
-    self.topTabsView = [[JATopTabsView alloc] initWithFrame:CGRectMake(bounds.origin.x,
-                                                                       bounds.origin.y,
-                                                                       bounds.size.width,
-                                                                       49.0f)];
+    self.topTabsView = [[JATopTabsView alloc] initWithFrame:CGRectMake(bounds.origin.x, bounds.origin.y, bounds.size.width, 49.0f)];
     self.topTabsView.delegate = self;
     [self.view addSubview:self.topTabsView];
     
@@ -93,8 +80,7 @@
     [super didReceiveMemoryWarning];
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [self showLoading];
     
     [self closePicker];
@@ -178,9 +164,7 @@
                 }
             }
         }
-        
         [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
-        
         self.pickerNamesAlreadySet = YES;
     } else if (VALID_NOTEMPTY(self.targetString, NSString)) {
         [self createCampaignPageAtX:currentX];

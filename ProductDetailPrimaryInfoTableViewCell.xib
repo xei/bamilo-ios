@@ -73,8 +73,8 @@
                                             <constraint firstAttribute="width" constant="16" id="Wlr-WL-ohH"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dxu-ZS-Oxt">
-                                        <rect key="frame" x="-62" y="-0.5" width="42" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dxu-ZS-Oxt">
+                                        <rect key="frame" x="-20" y="10" width="0.0" height="0.0"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -100,8 +100,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r1c-fr-HPl">
-                                <rect key="frame" x="147" y="44" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
+                                <rect key="frame" x="163" y="44" width="30" height="30"/>
                                 <connections>
                                     <action selector="rateButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="tRG-59-ChL"/>
                                 </connections>
@@ -204,10 +203,10 @@
                 <outlet property="containerBoxView" destination="fyF-2K-ujH" id="exH-Ka-Y7t"/>
                 <outlet property="currencyLabel" destination="Oob-Ko-Qfr" id="8we-Vn-ftP"/>
                 <outlet property="discountPercentageContainerView" destination="ORc-N1-YD0" id="NsH-4L-PrG"/>
-                <outlet property="discountPercentageLabel" destination="4jc-g8-zuB" id="L8x-Ol-5YX"/>
-                <outlet property="discountedPriceLabel" destination="LXo-ty-u5d" id="vd2-13-imP"/>
+                <outlet property="discountPercentageLabel" destination="4jc-g8-zuB" id="3L5-Uz-W79"/>
                 <outlet property="horizontalSpacingConstraint" destination="WHr-wp-vxr" id="lOF-l3-4et"/>
                 <outlet property="noRateLabel" destination="lBM-8F-fMf" id="z0X-jQ-jZ6"/>
+                <outlet property="oldPriceLabel" destination="LXo-ty-u5d" id="I2G-0U-49f"/>
                 <outlet property="priceLabel" destination="gdC-j7-hlx" id="6uG-lF-pKG"/>
                 <outlet property="productNameLabel" destination="a6P-FB-khf" id="B84-Fq-8Vu"/>
                 <outlet property="rateItButton" destination="r1c-fr-HPl" id="FXk-25-GSL"/>

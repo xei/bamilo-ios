@@ -53,7 +53,6 @@
 @end
 
 @implementation RIProduct
-
 @synthesize attributeCareLabel;
 @synthesize attributeColor;
 @synthesize attributeDescription;
@@ -115,6 +114,14 @@
 
 @synthesize hasStock;
 @synthesize freeShippingPossible;
+
+- (NSNumber *)getPayablePrice {
+    return price;
+}
+
+- (BOOL)getIsInWishList {
+    return favoriteAddDate != nil;
+}
 
 + (NSString *)getCompleteProductWithSku:(NSString*)sku successBlock:(void (^)(id product))successBlock andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock {
     NSString *finalTargetString = [RITarget getTargetString:PRODUCT_DETAIL node:sku];

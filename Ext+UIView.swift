@@ -135,7 +135,7 @@ extension UIView {
         self.layer.insertSublayer(gradient, at: 0)
     }
     
-    func addAnchorMatchedSubView(view: UIView) {
+    @objc func addAnchorMatchedSubView(view: UIView) {
 
         view.frame = self.bounds;
         self.addSubview(view)

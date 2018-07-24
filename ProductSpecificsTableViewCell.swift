@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ProductSpecificsTableViewCellDelegate: class {
-    func seeMoreInfoTapped(cell: ProductSpecificsTableViewCell, indexPath: IndexPath)
+    func seeMoreInfoTapped(cell: BaseProductTableViewCell, indexPath: IndexPath)
 }
 
 class ProductSpecificsTableViewCell: BaseProductTableViewCell {

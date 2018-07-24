@@ -54,7 +54,11 @@ class ProductReviewItemTableViewCell: BaseTableViewCell {
             if let rateScore = reviewItem.rateScore {
                 rateView.colorButtons(rateValue: Double(rateScore), disabledColor: Theme.color(kColorGray9))
             }
+            
+            let beforeSizeFitFrame = reviewDescription.frame
             reviewDescription.sizeToFit()
+            reviewDescription.frame = CGRect(origin: beforeSizeFitFrame.origin, size: CGSize(width: beforeSizeFitFrame.width, height: reviewDescription.frame.height))
+            
             
             seeMoreButton.isHidden = isExpanded || reviewDescription.numberOfVisibleLines <= minimizedLineNumbers
             reviewDescription.numberOfLines = seeMoreButton.isHidden ? 0 : minimizedLineNumbers

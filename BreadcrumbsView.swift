@@ -15,8 +15,6 @@ protocol BreadcrumbsViewDelegate: class {
 class BreadcrumbsView: BaseControlView {
 
     @IBOutlet weak private var scrollview: UIScrollView!
-    @IBOutlet weak private var verticalSeperator: UIView!
-    
     private var breadcrumbs: [BreadcrumbsItem]?
     
     private lazy var buttons = [UIButton]()
@@ -28,7 +26,6 @@ class BreadcrumbsView: BaseControlView {
         self.backgroundColor = .clear
         self.scrollview.transform = CGAffineTransform(scaleX: -1, y: 1)
         self.scrollview.backgroundColor = .clear
-        self.verticalSeperator.backgroundColor = Theme.color(kColorExtraExtraLightGray)
         self.scrollview.alwaysBounceHorizontal = true
         self.scrollview.alwaysBounceVertical = false
         self.scrollview.showsHorizontalScrollIndicator = false
@@ -41,11 +38,11 @@ class BreadcrumbsView: BaseControlView {
     var buttonBackgroundColor = Theme.color(kColorBlue10)
     var buttonTitleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
     var buttonVerticalMargin: CGFloat = 8
-    var buttonHorizontalMargin: CGFloat = 4
-    var buttonHorizontalPadding: CGFloat = 4
-    var imageHorizontalMargin: CGFloat = 4
-    var imageSize = CGSize(width: 5, height: 11)
-    var buttonBorderRadius: CGFloat = 3
+    var buttonHorizontalMargin: CGFloat = 2
+    var buttonHorizontalPadding: CGFloat = 8
+    var imageHorizontalMargin: CGFloat = 0
+    var imageSize = CGSize(width: 15, height: 15)
+    var buttonBorderRadius: CGFloat = 15
     var wholeContentMargin: CGFloat = 16
     
     private func createButton(item: BreadcrumbsItem) -> UIButton {
@@ -106,6 +103,7 @@ class BreadcrumbsView: BaseControlView {
                 //Is not last item
                 if let arrowImage = UIImage(named: "ArrowLeft") {
                     let imageView = UIImageView(image: arrowImage)
+                    imageView.tintColor = Theme.color(kColorBlue)
                     imageView.contentMode = .scaleAspectFit
                     imageView.transform = CGAffineTransform(scaleX: -1, y: 1)
                     self.arrowImageViews.append(imageView)

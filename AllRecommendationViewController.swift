@@ -74,7 +74,7 @@ UICollectionViewDataSource {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let segueName = segue.identifier
-        if segueName == "showPDVViewController", let pdvViewCtrl = segue.destination as? JAPDVViewController, let sku = sender as? String {
+        if segueName == "showPDVViewController", let pdvViewCtrl = segue.destination as? ProductDetailViewController, let sku = sender as? String {
             pdvViewCtrl.productSku = sku
         }
     }

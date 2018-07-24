@@ -28,7 +28,8 @@ class BaseProductTableViewCell: BaseTableViewCell {
         self.contentView.clipsToBounds = false
         self.clipsToBounds = false
         
-        self.containerBoxView?.applyShadow(position: .zero, color: .black, opacity: 0.2, radius: 4)
+        self.containerBoxView?.applyShadow(position: CGSize(width:0 , height: 1), color: .black, opacity: 0.2)
+        self.containerBoxView?.layer.cornerRadius = 3
     }
     
     override class func cellHeight() -> CGFloat {

@@ -30,7 +30,12 @@ class ProductReviewCollectionViewCell: BaseCollectionViewCellSwift {
             rateViewControl.update(withModel: reviewItem.rateScore)
             descriptionLabel.text = reviewItem.comment
             descriptionLabel.numberOfLines = 3
+            
+            let beforeSizeFitFrame = descriptionLabel.frame
             descriptionLabel.sizeToFit()
+            descriptionLabel.frame = CGRect(origin: beforeSizeFitFrame.origin, size: CGSize(width: beforeSizeFitFrame.width, height: descriptionLabel.frame.height))
+            
+            descriptionLabel.textAlignment = .right
             seeMoreButton.isHidden = descriptionLabel.numberOfVisibleLines <= 3
             seeMoreButton.isUserInteractionEnabled = false
             

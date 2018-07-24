@@ -12,23 +12,28 @@ import UIKit
 class OtherSellerViewController: BaseViewController, DataServiceProtocol {
 
     
-    var product: Product?
+    var product: NewProduct?
     private var dataSource: SellerList?
     @IBOutlet private weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.view.backgroundColor = Theme.color(kColorGray10)
+        self.tableView.backgroundColor = Theme.color(kColorGray10)
         [MinimalProductTableViewCell.nibName(), SellerOfferItemTableViewCell.nibName()].forEach {
             tableView.register(UINib(nibName: $0, bundle: nil), forCellReuseIdentifier: $0)
         }
         
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.tableFooterView = UIView(frame: .zero)
+        tableView.separatorStyle = .none
+        tableView.contentInset = UIEdgeInsetsMake(8, 0, 8, 0)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.hidesBottomBarWhenPushed = true
         getContent()
     }
     
@@ -66,6 +71,14 @@ class OtherSellerViewController: BaseViewController, DataServiceProtocol {
                 self.handleGenericErrorCodesWithErrorControlView(Int32(error.code), forRequestID: rid)
             }
         }
+    }
+    
+    override func navBarTitleString() -> String! {
+        return STRING_OTHER_SELLERS
+    }
+    
+    override func getScreenName() -> String! {
+        return "OtherSellerView"
     }
 }
 

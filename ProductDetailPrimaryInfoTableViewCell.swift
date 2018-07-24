@@ -19,9 +19,9 @@ class ProductDetailPrimaryInfoTableViewCell: BaseProductTableViewCell {
     @IBOutlet weak private var seperatorLineView: UIView!
     @IBOutlet weak private var priceLabel: UILabel!
     @IBOutlet weak private var currencyLabel: UILabel!
-    @IBOutlet weak private var discountedPriceLabel: UILabel!
-    @IBOutlet weak private var calculatedBenefitLabel: UILabel!
     @IBOutlet weak private var discountPercentageLabel: UILabel!
+    @IBOutlet weak private var calculatedBenefitLabel: UILabel!
+    @IBOutlet weak private var oldPriceLabel: UILabel!
     @IBOutlet weak private var discountPercentageContainerView: UIView!
     @IBOutlet weak private var ratePresentorContainerView: UIView!
     @IBOutlet weak private var rateItButton: UIButton!
@@ -39,7 +39,7 @@ class ProductDetailPrimaryInfoTableViewCell: BaseProductTableViewCell {
     private func applyStyle() {
         self.containerBoxView?.backgroundColor = .white
         seperatorLineView.backgroundColor = Theme.color(kColorGray10)
-        [calculatedBenefitLabel, discountedPriceLabel].forEach { $0.applyStyle(font: Theme.font(kFontVariationLight, size: 11), color: Theme.color(kColorGray3)) }
+        [calculatedBenefitLabel, oldPriceLabel].forEach { $0.applyStyle(font: Theme.font(kFontVariationLight, size: 11), color: Theme.color(kColorGray3)) }
         [productNameLabel, rateValueLabel].forEach { $0?.applyStyle(font: Theme.font(kFontVariationBold, size: 15), color: Theme.color(kColorGray1)) }
         [rateTitleLabel, ratingCountLabel, currencyLabel].forEach {$0?.applyStyle(font: Theme.font(kFontVariationLight, size: 12), color: Theme.color(kColorGray1))}
         priceLabel.applyStyle(font: Theme.font(kFontVariationBold, size: 25), color: Theme.color(kColorOrange1))
@@ -53,27 +53,13 @@ class ProductDetailPrimaryInfoTableViewCell: BaseProductTableViewCell {
     }
     
     override func update(withModel model: Any!) {
-        if let product = model as? Product {
-            self.productNameLabel.text = product.name
-            if let specialPrice = product.specialPrice, let price = product.price, product.price != product.specialPrice {
-                discountedPriceLabel?.attributedText = "\(price)".formatPriceWithCurrency().strucThroughPriceFormat()
-                priceLabel?.text = "\(specialPrice)".convertTo(language: .arabic).priceFormat()
-                if let precentage = product.maxSavingPrecentage {
-                    discountPercentageLabel?.text = "%\(precentage)".convertTo(language: .arabic)
-                } else {
-                    discountPercentageLabel?.text = ""
-                }
-                discountPercentageLabel.isHidden = false
-                discountPercentageContainerView.isHidden = false
-                calculatedBenefitLabel.isHidden = false
-            } else if let price = product.price {
-                priceLabel?.text = "\(price)".convertTo(language: .arabic).priceFormat()
-                discountedPriceLabel?.text = nil
-                discountPercentageLabel?.text = nil
-                discountPercentageLabel.isHidden = true
-                discountPercentageContainerView.isHidden = true
-                calculatedBenefitLabel.isHidden = true
-            }
+        if let product = model as? NewProduct {
+            productNameLabel.text = product.name
+            priceLabel.text = "\(product.price?.value ?? 0)".convertTo(language: .arabic).priceFormat()
+            oldPriceLabel.attributedText = product.price?.oldPrice != nil ? "\(product.price?.oldPrice ?? 0)".formatPriceWithCurrency().strucThroughPriceFormat() : nil
+            discountPercentageLabel.text = product.price?.discountPercentage != nil ? "%\(product.price?.discountPercentage ?? 0)".convertTo(language: .arabic) : nil
+            calculatedBenefitLabel.text = "\(product.price?.discountBenefit ?? 0)"
+            discountPercentageContainerView.isHidden = product.price?.discountPercentage == nil
             
             if let rateCount = product.ratings?.totalCount, let rateAverage = product.ratings?.average , rateCount != 0 {
                 noRateLabel.isHidden = true

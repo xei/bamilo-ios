@@ -10,7 +10,8 @@ import UIKit
 
 
 protocol ProductVariationTableViewCellDelegate: class {
-    func didSelectVariationSku(product: SimpleProduct, cell: ProductVariationTableViewCell)
+    func didSelectOtherVariety(product: NewProduct)
+    func moreInfoButtonTapped(viewType: MoreInfoSelectedViewType)
 }
 
 class ProductVariationTableViewCell: BaseProductTableViewCell, ProductVariationViewDelegate {
@@ -19,7 +20,7 @@ class ProductVariationTableViewCell: BaseProductTableViewCell, ProductVariationV
     @IBOutlet private weak var descriptionButton: UIButton!
     @IBOutlet private weak var productVariationViewControl: ProductVariationViewControl!
     
-    private var product: Product?
+    private var product: NewProduct?
     weak var delegate: ProductVariationTableViewCellDelegate?
     
     override func awakeFromNib() {
@@ -34,20 +35,28 @@ class ProductVariationTableViewCell: BaseProductTableViewCell, ProductVariationV
         [descriptionButton,  productSpecificationButton].forEach { $0.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorBlue)) }
     }
     
+    @IBAction func moreDescriptionButtonTapped(_ sender: Any) {
+        delegate?.moreInfoButtonTapped(viewType: .description)
+    }
+    
+    @IBAction func moreSpecificationsButtonTapped(_ sender: Any) {
+        delegate?.moreInfoButtonTapped(viewType: .specicifation)
+    }
+    
     override func update(withModel model: Any!) {
-        if let product = model as? Product {
+        if let product = model as? NewProduct {
             self.product = product
             self.productVariationViewControl.update(withModel: product)
         }
     }
     
     //MARK: - ProductVariationViewDelegate
-    func didSelectSimpleSku(product: SimpleProduct) {
+    func didSelectSizeProduct(product: NewProduct) {
         
     }
     
-    func didSelectVariationSku(product: SimpleProduct) {
-        self.delegate?.didSelectVariationSku(product: product, cell: self)
+    func didSelectOtherVariety(product: NewProduct) {
+        self.delegate?.didSelectOtherVariety(product: product)
     }
 }
 

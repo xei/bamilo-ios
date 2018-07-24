@@ -141,6 +141,7 @@ class RootCategoryViewController: BaseViewController,
             self.bind(data, forRequestId: requestID)
         } else {
             self.errorHandler(error, forRequestID: requestID)
+            self.bind(data, forRequestId: requestID)
         }
     }
     
@@ -245,10 +246,9 @@ class RootCategoryViewController: BaseViewController,
             self.incomingInternalLinks = model
         } else if let model = data as? ExternalLinks {
             self.incomingExternalLinks = model
-        } else {
-            self.handleGenericErrorCodesWithErrorControlView(Int32(NSURLErrorBadServerResponse), forRequestID: rid)
         }
-        if requestIdsInProgress.count == 0, successRequestIds.count == 2 {
+        
+        if requestIdsInProgress.count == 0 {
             self.publishScreenLoadTime(withName: self.getScreenName(), withLabel: "")
             self.categories = self.incomingCategories
             self.externalLinks = self.incomingExternalLinks
@@ -267,10 +267,10 @@ class RootCategoryViewController: BaseViewController,
         if let _ = self.categories {
             self.sectionTypes[self.sectionTypes.keys.count] = Categories.self
         }
-        if let _ = self.internalLinks {
+        if let linkItems = self.internalLinks?.items, linkItems.count > 0 {
             self.sectionTypes[self.sectionTypes.keys.count] = InternalLinks.self
         }
-        if let _ = self.externalLinks {
+        if let linkItems = self.externalLinks?.items, linkItems.count > 0 {
             self.sectionTypes[self.sectionTypes.keys.count] = ExternalLinks.self
         }
     }
