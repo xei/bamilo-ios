@@ -28,7 +28,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="134" height="230"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder_grid" translatesAutoresizingMaskIntoConstraints="NO" id="iBh-VX-LnF">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder_grid" translatesAutoresizingMaskIntoConstraints="NO" id="iBh-VX-LnF">
                         <rect key="frame" x="10" y="10" width="114" height="141.5"/>
                         <color key="backgroundColor" red="0.92549019610000005" green="0.92549019610000005" blue="0.92549019610000005" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>

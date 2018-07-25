@@ -41,7 +41,7 @@ class ProductReviewItemTableViewCell: BaseTableViewCell {
         
         if let backgroundColor = self.containerView.backgroundColor {
             let whiteClear = UIColor.white.withAlphaComponent(0)
-            seeMoreButton.applyGradient(colours: [whiteClear, backgroundColor, backgroundColor, whiteClear], locations: [0, 0.3 , 0.7, 1],orientation: .horizontal)
+            seeMoreButton.applyGradient(colours: [whiteClear, backgroundColor, backgroundColor, backgroundColor], locations: [0, 0.3 , 0.7, 1],orientation: .horizontal)
         }
     }
     

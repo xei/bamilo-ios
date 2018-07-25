@@ -28,7 +28,7 @@ class ProductReviewListViewController: BaseViewController, DataServiceProtocol {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         submitReviewButton.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: .white)
-        submitReviewButton.setTitle(STRING_SUBMIT_LABEL, for: .normal)
+        submitReviewButton.setTitle(STRING_ADD_COMMENT, for: .normal)
         submitReviewButton.backgroundColor = Theme.color(kColorOrange1)
         
         let image = #imageLiteral(resourceName: "ProductComment").withRenderingMode(.alwaysTemplate)
@@ -51,26 +51,27 @@ class ProductReviewListViewController: BaseViewController, DataServiceProtocol {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.hidesBottomBarWhenPushed = true
-        
         getContent()
     }
     
     private func loadMore() {
-        if self.loadingDataInProgress || self.listFullyLoaded { return }
+        if loadingDataInProgress || listFullyLoaded { return }
         self.pageNumber += 1
-        self.loadingDataInProgress = true
+        getContent(page: pageNumber)
     }
     
     private func getContent(page: Int = 1, completion: ((Bool)-> Void)? = nil) {
-        if let sku = productSku {
-            ProductDataManager.sharedInstance.reviewsList(self, sku: sku, pageNumber: page) { (data, error) in
+        if let sku = productSku, !loadingDataInProgress {
+            loadingDataInProgress = true
+            ProductDataManager.sharedInstance.getReviewsList(self, sku: sku, pageNumber: page, type: page == 1 ? .foreground : .background) { (data, error) in
                 if (error == nil) {
-                    self.bind(data, forRequestId: 0)
+                    self.bind(data, forRequestId: page == 1 ? 0 : 1)
                     completion?(true)
                 } else {
                     self.errorHandler(error, forRequestID: 0)
                     completion?(false)
                 }
+                self.loadingDataInProgress = false
             }
         }
     }
@@ -84,7 +85,14 @@ class ProductReviewListViewController: BaseViewController, DataServiceProtocol {
     //MARK: - DataServiceProtocol
     func bind(_ data: Any!, forRequestId rid: Int32) {
         if let review = data as? ProductReview {
-            self.review = review
+            if rid == 0 {
+                self.review = review
+            } else if let items = review.items {
+                self.review?.items?.append(contentsOf: items)
+            }
+            if let lastPageNum = self.review?.pagination?.totalPage {
+                listFullyLoaded = lastPageNum == pageNumber
+            }
             self.tableview.reloadData()
         }
     }

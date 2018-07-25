@@ -39,8 +39,8 @@ class CategoryProduct : NSObject, Mappable {
         
         name = parsedName ?? parsedLabel
         urlKey <- map["url_key"]
-        image <- (map["image"], URLTransform())
-        coverImage <- (map["cover_image"], URLTransform())
+        image <- (map["image"], URLTransform(shouldEncodeURLString: true, allowedCharacterSet: .urlQueryAllowed))
+        coverImage <- (map["cover_image"], URLTransform(shouldEncodeURLString: true, allowedCharacterSet: .urlQueryAllowed))
         id <- map["id"]
         target <- map["target"]
         childern <- map["children"]

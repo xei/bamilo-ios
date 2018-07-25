@@ -82,6 +82,8 @@
 		612AC4C721037C0600A14B3C /* ProductRecommendationWidgetTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 612AC4C521037C0600A14B3C /* ProductRecommendationWidgetTableViewCell.xib */; };
 		612AC4CB2106019000A14B3C /* ProductBreadCrumbTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612AC4C92106019000A14B3C /* ProductBreadCrumbTableViewCell.swift */; };
 		612AC4CC2106019000A14B3C /* ProductBreadCrumbTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 612AC4CA2106019000A14B3C /* ProductBreadCrumbTableViewCell.xib */; };
+		612AC4D0210766CD00A14B3C /* SellerSortingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612AC4CE210766CC00A14B3C /* SellerSortingTableViewCell.swift */; };
+		612AC4D1210766CD00A14B3C /* SellerSortingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 612AC4CF210766CC00A14B3C /* SellerSortingTableViewCell.xib */; };
 		612FDC371E45E0A900A9D0BD /* CartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 612FDC351E45E0A900A9D0BD /* CartTableViewCell.m */; };
 		612FDC381E45E0A900A9D0BD /* CartTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 612FDC361E45E0A900A9D0BD /* CartTableViewCell.xib */; };
 		612FE5171EDC062500C2AFA0 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612FE5161EDC062500C2AFA0 /* ProfileViewController.swift */; };
@@ -1201,6 +1203,8 @@
 		612AC4C521037C0600A14B3C /* ProductRecommendationWidgetTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductRecommendationWidgetTableViewCell.xib; sourceTree = "<group>"; };
 		612AC4C92106019000A14B3C /* ProductBreadCrumbTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductBreadCrumbTableViewCell.swift; sourceTree = "<group>"; };
 		612AC4CA2106019000A14B3C /* ProductBreadCrumbTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductBreadCrumbTableViewCell.xib; sourceTree = "<group>"; };
+		612AC4CE210766CC00A14B3C /* SellerSortingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellerSortingTableViewCell.swift; sourceTree = "<group>"; };
+		612AC4CF210766CC00A14B3C /* SellerSortingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SellerSortingTableViewCell.xib; sourceTree = "<group>"; };
 		612FDC341E45E0A900A9D0BD /* CartTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartTableViewCell.h; sourceTree = "<group>"; };
 		612FDC351E45E0A900A9D0BD /* CartTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartTableViewCell.m; sourceTree = "<group>"; };
 		612FDC361E45E0A900A9D0BD /* CartTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartTableViewCell.xib; sourceTree = "<group>"; };
@@ -3392,6 +3396,15 @@
 			name = ProductBreadCrumbTableViewCell;
 			sourceTree = "<group>";
 		};
+		612AC4CD2107669A00A14B3C /* SellerSortingTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				612AC4CE210766CC00A14B3C /* SellerSortingTableViewCell.swift */,
+				612AC4CF210766CC00A14B3C /* SellerSortingTableViewCell.xib */,
+			);
+			name = SellerSortingTableViewCell;
+			sourceTree = "<group>";
+		};
 		612FDC331E45E08500A9D0BD /* CartTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -4726,6 +4739,7 @@
 		61B80E6520F61AAA0028FA87 /* OtherSellerView */ = {
 			isa = PBXGroup;
 			children = (
+				612AC4CD2107669A00A14B3C /* SellerSortingTableViewCell */,
 				61B80E6B20F6295E0028FA87 /* SellerOfferItemTableviewCell */,
 				61B80E6620F61C790028FA87 /* MinimalProductTableViewCell */,
 			);
@@ -8908,6 +8922,7 @@
 				61832FD81ED2C05B006F01FE /* RateStarsView.xib in Resources */,
 				8757443D1EA60E71001B518A /* Winter-Small.png in Resources */,
 				61DF9B0120CE84FC00379C3D /* ProductWarrantyTableViewCell.xib in Resources */,
+				612AC4D1210766CD00A14B3C /* SellerSortingTableViewCell.xib in Resources */,
 				61E099781E3E1A02004ED14E /* VersionTableViewCell.xib in Resources */,
 				875743E01EA60E13001B518A /* Spring-Small.png in Resources */,
 				8714E0381E45CDC3004C9B1D /* AddressTableViewCell.xib in Resources */,
@@ -9675,6 +9690,7 @@
 				9AEF74251CD8A86900A5D574 /* JAORConfirmConditionsViewController.m in Sources */,
 				6CF4AE881ADEABBB0024EC34 /* JACatalogBannerCell.m in Sources */,
 				61143A591ED55C2300C53BA8 /* Ext+Bool.swift in Sources */,
+				612AC4D0210766CD00A14B3C /* SellerSortingTableViewCell.swift in Sources */,
 				61CBA88C1F696013009F0EEF /* SearchSuggestionDataManager.swift in Sources */,
 				6194224A20D7E9B000445845 /* ProductVariationView.swift in Sources */,
 				6157A74720E25167001B8361 /* ProductSpecificItemTableViewCell.swift in Sources */,

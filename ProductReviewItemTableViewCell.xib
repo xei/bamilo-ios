@@ -62,8 +62,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vPS-nB-fvs">
-                                <rect key="frame" x="10" y="59" width="46" height="25"/>
+                                <rect key="frame" x="10" y="59" width="50" height="25"/>
                                 <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="8fK-bK-1V6"/>
                                     <constraint firstAttribute="height" constant="25" id="Jqh-ao-mRe"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>

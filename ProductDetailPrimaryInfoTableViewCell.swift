@@ -58,7 +58,7 @@ class ProductDetailPrimaryInfoTableViewCell: BaseProductTableViewCell {
             priceLabel.text = "\(product.price?.value ?? 0)".convertTo(language: .arabic).priceFormat()
             oldPriceLabel.attributedText = product.price?.oldPrice != nil ? "\(product.price?.oldPrice ?? 0)".formatPriceWithCurrency().strucThroughPriceFormat() : nil
             discountPercentageLabel.text = product.price?.discountPercentage != nil ? "%\(product.price?.discountPercentage ?? 0)".convertTo(language: .arabic) : nil
-            calculatedBenefitLabel.text = "\(product.price?.discountBenefit ?? 0)"
+            calculatedBenefitLabel.text = "سود شما : \("\(product.price?.discountBenefit ?? 0)".formatPriceWithCurrency())"
             discountPercentageContainerView.isHidden = product.price?.discountPercentage == nil
             
             if let rateCount = product.ratings?.totalCount, let rateAverage = product.ratings?.average , rateCount != 0 {

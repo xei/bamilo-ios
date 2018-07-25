@@ -49,10 +49,12 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TlH-ZA-EBH">
-                        <rect key="frame" x="20" y="54.5" width="30" height="25"/>
+                        <rect key="frame" x="20" y="54.5" width="50" height="25"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="25" id="gnT-Pa-vdI"/>
+                            <constraint firstAttribute="width" constant="50" id="iqu-Wy-Oob"/>
                         </constraints>
+                        <state key="normal" title="Button"/>
                     </button>
                 </subviews>
             </view>

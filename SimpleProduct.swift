@@ -28,6 +28,6 @@ class SimpleProduct: NSObject, Mappable {
         specialPrice <- map["special_price"]
         variationValue <- map["variation_value"]
         quantity <- map["quantity"]
-        image <- (map["image"], URLTransform())
+        image <- (map["image"], URLTransform(shouldEncodeURLString: true, allowedCharacterSet: .urlQueryAllowed))
     }
 }

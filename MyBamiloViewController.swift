@@ -68,7 +68,11 @@ class MyBamiloViewController:   BaseViewController,
         self.refreshControl = UIRefreshControl.init()
         self.refreshControl?.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
         if let refreshControl = self.refreshControl {
-            self.collectionView.addSubview(refreshControl)
+            if #available(iOS 10.0, *) {
+                self.collectionView.refreshControl = refreshControl
+            } else {
+                self.collectionView.addSubview(refreshControl)
+            }
         }
         self.collectionView.alwaysBounceVertical = true
     }

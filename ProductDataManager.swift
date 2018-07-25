@@ -53,8 +53,8 @@ class ProductDataManager: DataManagerSwift {
         }
     }
     
-    func reviewsList(_ target: DataServiceProtocol, sku: String, pageNumber: Int, completion:@escaping DataClosure) {
-        ProductDataManager.requestManager.async(.get, target: target, path: "\(RI_API_REVIEW_LIST)\(sku)/page/\(pageNumber)", params: nil, type: .foreground) { (responseType, data, errorMessages) in
+    func getReviewsList(_ target: DataServiceProtocol, sku: String, pageNumber: Int, type: ApiRequestExecutionType, completion:@escaping DataClosure) {
+        ProductDataManager.requestManager.async(.get, target: target, path: "\(RI_API_REVIEW_LIST)\(sku)/page/\(pageNumber)", params: nil, type: type) { (responseType, data, errorMessages) in
             self.processResponse(responseType, aClass: ProductReview.self, data: data, errorMessages: errorMessages, completion: completion)
         }
     }
@@ -74,6 +74,19 @@ class ProductDataManager: DataManagerSwift {
     func getSpecifications(_ target: DataServiceProtocol, sku: String, completion:@escaping DataClosure) {
         ProductDataManager.requestManager.async(.get, target: target, path: "\(RI_API_SPECIFICATION)\(sku)", params: nil, type: .foreground) { (responseType, data, errorMessages) in
             self.processResponse(responseType, aClass: ProductSpecifics.self, data: data, errorMessages: errorMessages, completion: completion)
+        }
+    }
+    
+    func addReview(_ target: DataServiceProtocol, sku: String, rate: Int, title: String?, comment: String?, completion:@escaping DataClosure) {
+        var params: [String: Any] = [
+            "sku": sku,
+            "rate": rate
+            ]
+        if let title = title { params["title"] = title }
+        if let comment = comment { params["comment"] = comment }
+        
+        ProductDataManager.requestManager.async(.post, target: target, path: RI_API_ADD_PRODUCT_REVIEW, params: params, type: .foreground) { (responseType, data, errorMessages) in
+            self.processResponse(responseType, aClass: nil, data: data, errorMessages: errorMessages, completion: completion)
         }
     }
     

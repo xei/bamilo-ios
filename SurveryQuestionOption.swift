@@ -25,7 +25,7 @@ class SurveyQuestionOption: NSObject, Mappable, SelectViewItemDataSourceProtocol
         id <- map["id"]
         title <- map["title"]
         value <- map["value"]
-        image <- (map["image"], URLTransform())
+        image <- (map["image"], URLTransform(shouldEncodeURLString: true, allowedCharacterSet: .urlQueryAllowed))
         
         var other: Bool?
         other <- map["other"]

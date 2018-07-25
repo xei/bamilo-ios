@@ -18,7 +18,7 @@ class HomePageTileTeaserItem:NSObject, Mappable {
     required init?(map: Map) {}
     
     func mapping(map: Map) {
-        imageUrl <- (map["image_portrait"], URLTransform())
+        imageUrl <- (map["image_portrait"], URLTransform(shouldEncodeURLString: true, allowedCharacterSet: .urlQueryAllowed))
         target <- map["target"]
     }
 }

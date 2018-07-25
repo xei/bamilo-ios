@@ -153,5 +153,6 @@ let STRING_OTHER_SELLERS = RILocalizationWrapper.localizedString("other_sellers"
 let STRING_SELLER_NAME = RILocalizationWrapper.localizedString("seller_name")!
 let STRING_SELLER_SCORE = RILocalizationWrapper.localizedString("seller_score")!
 let STRING_NO_RATE = RILocalizationWrapper.localizedString("no_rate")!
-
+let STRING_SUMISSION_SUCCESS = RILocalizationWrapper.localizedString("review_submission_success")!
+let STRING_PLZ_ADD_RATE = RILocalizationWrapper.localizedString("please_add_your_rate")!
 

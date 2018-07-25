@@ -22,19 +22,17 @@ extension UIImageView: DisplaceableView {}
     @IBOutlet weak private var tableView: UITableView!
     @IBOutlet weak private var addToCartButton: IconButton!
     
-    
     private var sliderCell: ProductDetailViewSliderTableViewCell?
     private let headerCellIdentifier = "Header"
     private var recommendItems: [RecommendItem]?
-
+    private var calculatedDeliveryTimeMessage: String?
+    
     enum CellType {
         case slider
         case primaryInfo
         case variation
         case warranty
         case seller
-//        case descripion
-//        case specifications
         case reviewSummery
         case relatedItems
         case breadcrumbs
@@ -47,11 +45,9 @@ extension UIImageView: DisplaceableView {}
         .variation:     ProductVariationTableViewCell.nibName(),
         .warranty:      ProductWarrantyTableViewCell.nibName(),
         .seller:        ProductOldSellerViewTableViewCell.nibName(),
-//        .descripion:    ProductSpecificsTableViewCell.nibName(),
-//        .specifications:ProductSpecificsTableViewCell.nibName(),
         .reviewSummery: ProductReviewSummeryTableViewCell.nibName(),
         .relatedItems : ProductRecommendationWidgetTableViewCell.nibName(),
-        .breadcrumbs: ProductBreadCrumbTableViewCell.nibName()
+        .breadcrumbs:   ProductBreadCrumbTableViewCell.nibName()
     ]
     
     private var sectionNames = [Int: String]()
@@ -104,7 +100,7 @@ extension UIImageView: DisplaceableView {}
                 sliderRect.origin.y = self.tableView.contentOffset.y
                 sliderRect.size.height = -self.tableView.contentOffset.y + cellSliderHeight - 20 //slider image vertical gap
                 
-                if self.tableView.contentOffset.y < -50  {
+                if self.tableView.contentOffset.y < -100  {
                     self.sliderCell?.openCurrentImage()
                 }
                 
@@ -164,18 +160,6 @@ extension UIImageView: DisplaceableView {}
                 self.sectionNames[self.availableSections.count] = STRING_VENDOR
                 self.availableSections[self.availableSections.count] = [.seller]
             }
-            
-            //description
-//            if let _ = product.shortDescription {
-//                self.sectionNames[self.availableSections.count] = STRING_DESCRIPTION
-//                self.availableSections[self.availableSections.count] = [.descripion]
-//            }
-            
-            //specifications
-//            if let _ = product.shortSpecifications {
-//                self.sectionNames[self.availableSections.count] = STRING_SPECIFICATIONS
-//                self.availableSections[self.availableSections.count] = [.specifications]
-//            }
             
             //rate & review
             if let _ = product.ratings, let reviewItems = product.reviews?.items, reviewItems.count > 0 {
@@ -279,6 +263,7 @@ extension UIImageView: DisplaceableView {}
             viewCtrl.hidesBottomBarWhenPushed = true
         } else if segueName == "showAllRecommendationViewController", let viewCtrl = segue.destination as? AllRecommendationViewController {
             viewCtrl.recommendItems = self.recommendItems ?? []
+            viewCtrl.hidesBottomBarWhenPushed = false
         }
     }
     
@@ -351,32 +336,22 @@ extension ProductDetailViewController: UITableViewDataSource, UITableViewDelegat
             
         case .primaryInfo, .variation, .warranty, .seller, .reviewSummery:
             let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! BaseProductTableViewCell
-            cell.update(withModel: product)
-            
+
             if cellType == .variation {
                 (cell as? ProductVariationTableViewCell)?.delegate = self
             }
             
             if cellType == .seller {
                 (cell as? ProductOldSellerViewTableViewCell)?.sellerViewControl.delegate = self
+                (cell as? ProductOldSellerViewTableViewCell)?.preValueDeliveryTimeValue = calculatedDeliveryTimeMessage
             }
             
             if cellType == .reviewSummery {
                 (cell as? ProductReviewSummeryTableViewCell)?.delegate = self
             }
             
+            cell.update(withModel: product)
             return cell
-//        case .descripion, .specifications:
-//            let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! ProductSpecificsTableViewCell
-//
-//            if cellType == .descripion {
-//                cell.update(withModel: product?.shortDescription)
-//            } else {
-//                cell.update(withModel: product?.specifications)
-//            }
-//            cell.delegate = self
-//            cell.indexPath = indexPath
-//            return cell
         case .relatedItems:
             let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! ProductRecommendationWidgetTableViewCell
             if let firstSix = recommendItems?.prefix(6) {
@@ -543,14 +518,6 @@ extension ProductDetailViewController: ProductVariationTableViewCellDelegate {
 
 }
 
-//MARK: - ProductSpecificsTableViewCellDelegate
-//extension ProductDetailViewController: ProductSpecificsTableViewCellDelegate {
-//    func seeMoreInfoTapped(cell: BaseProductTableViewCell, indexPath: IndexPath) {
-//        let cellType = (self.availableSections[indexPath.section])![indexPath.row]
-//        self.performSegue(withIdentifier: "showProductMoreInfoViewController", sender: cellType)
-//    }
-//}
-
 
 extension ProductDetailViewController: ProductReviewSummeryTableViewCellDelegate {
     func seeAllCommentButttonTapped() {
@@ -593,6 +560,10 @@ extension ProductDetailViewController: SellerViewDelegate {
     
     func goToSellerPage(target: RITarget) {
         (navigationController as? JACenterNavigationController)?.openScreenTarget(target, purchaseInfo: purchaseTrackingInfo, currentScreenName: getScreenName())
+    }
+    
+    func updateDeliveryTimeValue(value: String?) {
+        calculatedDeliveryTimeMessage = value
     }
 }
 

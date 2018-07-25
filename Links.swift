@@ -17,7 +17,7 @@ class Link: Mappable {
     }
     func mapping(map: Map) {
         label <- map["label"]
-        imageURl <- (map["image"], URLTransform())
+        imageURl <- (map["image"], URLTransform(shouldEncodeURLString: true, allowedCharacterSet: .urlQueryAllowed))
     }
 }
 

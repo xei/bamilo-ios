@@ -84,7 +84,7 @@ import SwiftyJSON
         
         categoryIds           = JSON(map.JSON)["categories"].string?.split(separator: "|").map {String($0)}
         specialPrice          <- map["special_price"]
-        imageUrl              <- (map["image"], URLTransform())
+        imageUrl              <- (map["image"], URLTransform(shouldEncodeURLString: true, allowedCharacterSet: .urlQueryAllowed))
         target                <- map["target"]
         category              <- map["category_entity"]
         isInWishList          <- map["is_wishlist"]

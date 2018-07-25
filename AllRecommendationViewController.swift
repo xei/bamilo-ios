@@ -28,21 +28,6 @@ UICollectionViewDataSource {
         let flowLayout = GridCollectionViewFlowLayout()
         self.collectionView.contentInset = UIEdgeInsets(top: flowLayout.cellSpacing, left: 0, bottom: flowLayout.cellSpacing, right: 0)
         self.collectionView.collectionViewLayout = flowLayout
-        
-        if let tabbar = self.tabBarController?.tabBar {
-            self.collectionViewBottomConstraint.constant = tabbar.frame.height
-        }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.hidesBottomBarWhenPushed = false
-        self.tabBarController?.tabBar.isHidden = false
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.tabBarController?.tabBar.isHidden = false
     }
     
     //MARK: - UICollectionViewDataSource & UICollectionViewDelegate

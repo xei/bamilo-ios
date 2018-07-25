@@ -54,7 +54,7 @@ class NewProduct: NSObject, Mappable, TrackableProductProtocol {
         name <- map["title"]
         brand <- map["brand"]
         price <- map["price"]
-        image <- (map["image"], URLTransform())
+        image <- (map["image"], URLTransform(shouldEncodeURLString: true, allowedCharacterSet: .urlQueryAllowed))
         imageList <- map["image_list"]
         shareURL <- map["share_url"]
         isNew <- map["is_new"]
@@ -89,7 +89,7 @@ class ProductReturnPolicy:NSObject, Mappable {
     
     func mapping(map: Map) {
         title <- map["title"]
-        icon <- (map["icon"], URLTransform())
+        icon <- (map["icon"], URLTransform(shouldEncodeURLString: true, allowedCharacterSet: .urlQueryAllowed))
     }
 }
 
@@ -130,8 +130,8 @@ class ProductImageItem: NSObject, Mappable {
     var large: URL?
     required init?(map: Map) {}
     func mapping(map: Map) {
-        medium <- (map["medium"], URLTransform())
-        large <- (map["large"], URLTransform())
+        medium <- (map["medium"], URLTransform(shouldEncodeURLString: true, allowedCharacterSet: .urlQueryAllowed))
+        large <- (map["large"], URLTransform(shouldEncodeURLString: true, allowedCharacterSet: .urlQueryAllowed))
     }
 }
 

@@ -161,4 +161,4 @@ NSString *const RI_API_USER_SURVEY = @"survey/user/";
 NSString *const RI_API_REVIEW_LIST = @"catalog/reviews/sku/";
 NSString *const RI_API_SPECIFICATION = @"catalog/specification/sku/";
 NSString *const RI_API_PRODUCT_DESCRIPTIONS = @"catalog/description/sku/";
-
+NSString *const RI_API_ADD_PRODUCT_REVIEW = @"rating/addproductreview/";

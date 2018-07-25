@@ -12,6 +12,7 @@ import UIKit
     func refreshContent(sellerView: SellerView)
     func goToSellerPage(target: RITarget)
     func otherSellerButtonTapped()
+    func updateDeliveryTimeValue(value: String?)
 }
 
 @objcMembers class SellerView: BaseControlView {
@@ -81,6 +82,7 @@ import UIKit
         self.otherSellerCountWrapperView.layer.cornerRadius = 9
         self.otherSellerTitleLabel.text = STRING_OTHER_SELLERS
         self.seeOtherSellers.setTitle(nil, for: .normal)
+        deliveryTimeView.delegate = self
     }
     
     func update(with seller: Seller, otherSellerCount: Int) {
@@ -199,9 +201,9 @@ import UIKit
         self.sellerRatingErrorView.alpha = 1
     }
     
-    func runDeliveryTimeCalculations(productSku: String) {
+    func runDeliveryTimeCalculations(productSku: String, preValue: String?) {
         self.deliveryTimeView.productSku = productSku
-        self.deliveryTimeView.fillTheView()
+        self.deliveryTimeView.fillTheView(prefilledValue: preValue)
     }
     
     override class func nibName() -> String {
@@ -252,5 +254,11 @@ import UIKit
     
     @IBAction func sellerRatingRefreshButtonTapped(_ sender: Any) {
         self.delegate?.refreshContent(sellerView: self)
+    }
+}
+
+extension SellerView: DeliveryTimeViewDelegate {
+    func updateDeliveryTimeValue(value: String?) {
+        delegate?.updateDeliveryTimeValue(value: value)
     }
 }

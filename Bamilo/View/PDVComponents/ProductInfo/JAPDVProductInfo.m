@@ -266,7 +266,7 @@
         [sellerView setNeedsLayout];
         [sellerView layoutIfNeeded];
         [sellerView setFrame:CGRectMake(0, yOffset, frame.size.width, [sellerView getCalculatedHeight])];
-        [sellerView runDeliveryTimeCalculationsWithProductSku:((RIProductSimple *)product.productSimples.firstObject).sku];
+//        [sellerView runDeliveryTimeCalculationsWithProductSku:((RIProductSimple *)product.productSimples.firstObject).sku];
         [sellerView switchTheTextAlignments];
         sellerView.delegate = self;
         [self addSubview:sellerView];

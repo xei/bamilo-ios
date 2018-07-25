@@ -19,6 +19,7 @@ class SubmitProductReviewViewController: BaseViewController, ProtectedViewContro
     @IBOutlet weak var scrollView: UIScrollView!
     
     var prodcutSku: String?
+    var rateValue: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,7 +67,18 @@ class SubmitProductReviewViewController: BaseViewController, ProtectedViewContro
     }
     
     @IBAction func submitButtonTapped(_ sender: Any) {
+        guard let sku = prodcutSku, self.rateValue != 0 else {
+            self.showNotificationBarMessage(STRING_PLZ_ADD_RATE, isSuccess: false)
+            return
+        }
         
+        ProductDataManager.sharedInstance.addReview(self, sku: sku, rate: rateValue, title: reviewTitleTextField.text, comment: reviewCommentTextView.text) { (data, error) in
+            if (error == nil) {
+                self.bind(data, forRequestId: 0)
+            } else {
+                self.errorHandler(error, forRequestID: 0)
+            }
+        }
     }
     
     @objc private func keyboardWillShown(notification: Notification) {
@@ -89,9 +101,27 @@ class SubmitProductReviewViewController: BaseViewController, ProtectedViewContro
     }
 }
 
+//MARK: - DataServiceProtocol
+extension SubmitProductReviewViewController: DataServiceProtocol {
+    
+    func bind(_ data: Any!, forRequestId rid: Int32) {
+        if let viewCtrl = self.navigationController?.previousViewController(step: 1) as? BaseViewController {
+            self.navigationController?.popViewController(animated: true)
+            viewCtrl.showNotificationBarMessage(STRING_SUMISSION_SUCCESS, isSuccess: true)
+        }
+    }
+    
+    func errorHandler(_ error: Error!, forRequestID rid: Int32) {
+        if !Utility.handleErrorMessages(error: error, viewController: self) {
+            self.showNotificationBarMessage(STRING_ERROR_MESSAGE, isSuccess: false)
+        }
+    }
+}
+
 //MARK: - RateStarsViewDelegate
 extension SubmitProductReviewViewController: RateStarsViewDelegate {
     func rateValueSelected(value: Int) {
         starDescriptionLabel.text = "\(value) \(STRING_STAR)".convertTo(language: .arabic)
+        rateValue = value
     }
 }

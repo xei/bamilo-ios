@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol DeliveryTimeViewDelegate: class {
+    func updateDeliveryTimeValue(value: String?)
+}
+
 class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServiceProtocol {
 
     @IBOutlet private weak var titleLabel: UILabel!
@@ -15,6 +19,7 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
     @IBOutlet private weak var cityInputView: InputTextFieldControl!
     @IBOutlet private weak var deliveryTimeLabel: UILabel!
     @IBOutlet private weak var deliveryTimeTitleLabel: UILabel!
+    weak var delegate: DeliveryTimeViewDelegate?
     var productSku: String!
     
     override func awakeFromNib() {
@@ -35,7 +40,7 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
         self.deliveryTimeLabel.textAlignment = .left
     }
     
-    func fillTheView() {
+    func fillTheView(preDefaultValue: String?) {
         self.regionInputView.model = FormItemModel.init(textValue: nil, fieldName: "", andIcon: nil, placeholder: STRING_PROVINCE, type: .options, validation: nil, selectOptions: nil)
         self.cityInputView.model = FormItemModel.init(textValue: nil, fieldName: "", andIcon: nil, placeholder: STRING_CITY, type: .options, validation: nil, selectOptions: nil)
         
@@ -50,9 +55,18 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
             })
             self.getRegionsWithCompletion()
             self.getCitiesOfRegion(regionId: savedSelectedArea["region"]?["id"])
-            self.getTimeDeliveryForCityId(cityID: DeliveryTimeView.getSelectedCityID())
+            if let preValue = preDefaultValue {
+                self.deliveryTimeLabel.text = preValue
+            } else {
+                self.getTimeDeliveryForCityId(cityID: DeliveryTimeView.getSelectedCityID())
+            }
         } else {
-            self.getTimeDeliveryForCityId(cityID: nil)
+            if let preValue = preDefaultValue {
+                self.deliveryTimeLabel.text = preValue
+                self.getRegionsWithCompletion()
+            } else {
+                self.getTimeDeliveryForCityId(cityID: nil)
+            }
         }
     }
     
@@ -102,6 +116,9 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
         ProductDataManager.sharedInstance.getDeliveryTime(self, sku: self.productSku, cityId: cityID) { (data, error) in
             if error == nil, let data = data {
                 self.bind(data, forRequestId: 2)
+                if let value = self.deliveryTimeLabel.text {
+                    self.delegate?.updateDeliveryTimeValue(value: value)
+                }
             } else {
                 self.deliveryTimeLabel.text = nil
                 self.deliveryTimeTitleLabel.text = nil

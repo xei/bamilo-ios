@@ -33,8 +33,8 @@ class SellerViewControl: BaseViewControl {
         }
     }
 
-    func runDeliveryTimeCalculations(productSku: String) {
-        sellerView?.runDeliveryTimeCalculations(productSku: productSku)
+    func runDeliveryTimeCalculations(productSku: String, preValue: String?) {
+        sellerView?.runDeliveryTimeCalculations(productSku: productSku, preValue: preValue)
     }
     
 }

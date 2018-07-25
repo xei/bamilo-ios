@@ -19,8 +19,8 @@ class ProductReviewCollectionViewCell: BaseCollectionViewCellSwift {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        applyStyle()
         seeMoreButton.setTitle(STRING_MORE, for: .normal)
+        applyStyle()
     }
     
     override func update(withModel model: Any) {
@@ -51,7 +51,7 @@ class ProductReviewCollectionViewCell: BaseCollectionViewCellSwift {
         
         if let backgroundColor = self.backgroundColor {
             let whiteClear = UIColor.white.withAlphaComponent(0)
-            seeMoreButton.applyGradient(colours: [whiteClear, backgroundColor, backgroundColor, whiteClear], locations: [0, 0.3 , 0.7, 1],orientation: .horizontal)
+            seeMoreButton.applyGradient(colours: [whiteClear, backgroundColor, backgroundColor], locations: [0, 0.3 ,1],orientation: .horizontal)
         }
     }
 }
