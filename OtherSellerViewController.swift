@@ -11,19 +11,21 @@ import UIKit
 
 class OtherSellerViewController: BaseViewController, DataServiceProtocol {
 
+    @IBOutlet private weak var tableView: UITableView!
     
     var product: NewProduct?
     private var dataSource: SellerList?
-    @IBOutlet private weak var tableView: UITableView!
+    private var sortingMethod: SellerSortingMethod = .price
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = Theme.color(kColorGray10)
         self.tableView.backgroundColor = Theme.color(kColorGray10)
-        [MinimalProductTableViewCell.nibName(), SellerOfferItemTableViewCell.nibName()].forEach {
+        [MinimalProductTableViewCell.nibName(),
+         SellerOfferItemTableViewCell.nibName(),
+         SellerSortingTableViewCell.nibName()].forEach {
             tableView.register(UINib(nibName: $0, bundle: nil), forCellReuseIdentifier: $0)
         }
-        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.tableFooterView = UIView(frame: .zero)
@@ -55,7 +57,7 @@ class OtherSellerViewController: BaseViewController, DataServiceProtocol {
     func bind(_ data: Any!, forRequestId rid: Int32) {
         if let sellerList = data as? SellerList {
             dataSource = sellerList
-            tableView.reloadData()
+            sortWithMethod(method: sortingMethod)
         }
     }
     
@@ -86,7 +88,7 @@ class OtherSellerViewController: BaseViewController, DataServiceProtocol {
 //MARK: - UITableviewDelegate & UITableViewDataSource
 extension OtherSellerViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? 1 : (self.dataSource?.items?.count ?? 0)
+        return section == 0 ? 2 : (self.dataSource?.items?.count ?? 0)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -95,15 +97,52 @@ extension OtherSellerViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: MinimalProductTableViewCell.nibName(), for: indexPath) as! MinimalProductTableViewCell
-            cell.update(withModel:  product)
-            return cell
+            if indexPath.row == 0 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: MinimalProductTableViewCell.nibName(), for: indexPath) as! MinimalProductTableViewCell
+                cell.update(withModel:  product)
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: SellerSortingTableViewCell.nibName(), for: indexPath) as! SellerSortingTableViewCell
+                cell.updateUIFor(method: sortingMethod)
+                cell.delegate = self
+                return cell
+            }
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: SellerOfferItemTableViewCell.nibName(), for: indexPath) as! SellerOfferItemTableViewCell
             if let listItems = dataSource?.items, indexPath.row < listItems.count {
                 cell.update(withModel:  listItems[indexPath.row])
             }
+            cell.delegate = self
             return cell
+        }
+    }
+}
+
+extension OtherSellerViewController: SellerOfferItemTableViewCellDelegate {
+    func addToCart(simpleSku: String, product: TrackableProductProtocol) {
+        ProductDataManager.sharedInstance.addToCart(simpleSku: simpleSku, product: product, viewCtrl: self)
+    }
+}
+
+extension OtherSellerViewController: SellerSortingTableViewCellDelegate {
+    func updateWithSortingMethod(method: SellerSortingMethod) {
+        sortWithMethod(method: method)
+        self.sortingMethod = method
+    }
+    
+    private func sortWithMethod(method: SellerSortingMethod) {
+        ThreadManager.execute {
+            self.dataSource?.items?.sort(by: { (first, sec) -> Bool in
+                if method == .score, let firstOveral = first.seller?.score?.overall, let secOveral = sec.seller?.score?.overall {
+                    return firstOveral > secOveral
+                } else if method == .price, let firstValue = first.productOffer?.price?.value, let secValue = sec.productOffer?.price?.value {
+                    return firstValue > secValue
+                } else if method == .time, let firstTime = first.seller?.deliveryTime?.timStampValue, let secTime = sec.seller?.deliveryTime?.timStampValue {
+                    return firstTime > secTime
+                }
+                return false
+            })
+            self.tableView.reloadData()
         }
     }
 }

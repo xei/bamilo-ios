@@ -34,6 +34,7 @@ extension UIImageView: DisplaceableView {}
         case warranty
         case seller
         case reviewSummery
+        case emptyReview
         case relatedItems
         case breadcrumbs
     }
@@ -47,7 +48,8 @@ extension UIImageView: DisplaceableView {}
         .seller:        ProductOldSellerViewTableViewCell.nibName(),
         .reviewSummery: ProductReviewSummeryTableViewCell.nibName(),
         .relatedItems : ProductRecommendationWidgetTableViewCell.nibName(),
-        .breadcrumbs:   ProductBreadCrumbTableViewCell.nibName()
+        .breadcrumbs:   ProductBreadCrumbTableViewCell.nibName(),
+        .emptyReview:   ProductEmptyReviewTableViewCell.nibName()
     ]
     
     private var sectionNames = [Int: String]()
@@ -55,8 +57,8 @@ extension UIImageView: DisplaceableView {}
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.clipsToBounds = true
-        self.view.backgroundColor = Theme.color(kColorGray10)
-        self.tableView.backgroundColor = Theme.color(kColorGray10)
+        self.view.backgroundColor = Theme.color(kColorGray)
+        self.tableView.backgroundColor = Theme.color(kColorGray)
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.tableView.separatorStyle = .none
@@ -162,13 +164,16 @@ extension UIImageView: DisplaceableView {}
             }
             
             //rate & review
+            self.sectionNames[self.availableSections.count] = STRING_RATE_AND_REVIEW
             if let _ = product.ratings, let reviewItems = product.reviews?.items, reviewItems.count > 0 {
                 self.availableSections[self.availableSections.count] = [.reviewSummery]
+            } else {
+                self.availableSections[self.availableSections.count] = [.emptyReview]
             }
             
             //related items
             if let items = self.recommendItems, items.count > 0 {
-                self.sectionNames[self.availableSections.count] = STRING_RECENTLY_VIEWED
+                self.sectionNames[self.availableSections.count] = STRING_RELATED_ITEMS
                 self.availableSections[self.availableSections.count] = [.relatedItems]
             }
             
@@ -235,7 +240,7 @@ extension UIImageView: DisplaceableView {}
     
     private func requestAddToCart<T: BaseViewController & DataServiceProtocol>(simpleSku: String, inViewCtrl: T) {
         if let productEntity = self.product {
-            ProductDataManager.sharedInstance.addToCart(simpleSku: simpleSku, product: Product(), viewCtrl: inViewCtrl) { (success, error) in
+            ProductDataManager.sharedInstance.addToCart(simpleSku: simpleSku, product: productEntity, viewCtrl: inViewCtrl) { (success, error) in
                 if let info = self.purchaseTrackingInfo, success {
                     PurchaseBehaviourRecorder.sharedInstance.recordAddToCart(sku: productEntity.sku, trackingInfo: info)
                 }
@@ -255,6 +260,7 @@ extension UIImageView: DisplaceableView {}
         } else if segueName == "showProductReviewListViewController", let viewCtrl = segue.destination as? ProductReviewListViewController {
             viewCtrl.productSku = product?.sku
             viewCtrl.rating = product?.ratings
+            viewCtrl.signleReviewItem = sender as? ProductReviewItem
             viewCtrl.hidesBottomBarWhenPushed = true
         } else if segueName == "showSubmitProductReviewViewController", let viewCtrl = segue.destination as? SubmitProductReviewViewController {
             viewCtrl.hidesBottomBarWhenPushed = true
@@ -333,10 +339,17 @@ extension ProductDetailViewController: UITableViewDataSource, UITableViewDelegat
             cell.layer.zPosition = -100
             self.sliderCell = cell
             return cell
-            
+        case .emptyReview :
+            let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! ProductEmptyReviewTableViewCell
+            cell.delegate = self
+            return cell
         case .primaryInfo, .variation, .warranty, .seller, .reviewSummery:
             let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! BaseProductTableViewCell
-
+            
+            if cellType == .primaryInfo {
+                (cell as? ProductDetailPrimaryInfoTableViewCell)?.delegate = self
+            }
+            
             if cellType == .variation {
                 (cell as? ProductVariationTableViewCell)?.delegate = self
             }
@@ -498,6 +511,13 @@ extension ProductDetailViewController: AddToCartViewControllerDelegate {
     }
 }
 
+//MARK: - BaseProductTableViewCellDelegate
+extension ProductDetailViewController: ProductDetailPrimaryInfoTableViewCellDelegate {
+    func rateButtonTapped() {
+        writeCommentButtonTapped()
+    }
+}
+
 //MARK: - ProductVariationTableViewCellDelegate
 extension ProductDetailViewController: ProductVariationTableViewCellDelegate {
     
@@ -518,14 +538,14 @@ extension ProductDetailViewController: ProductVariationTableViewCellDelegate {
 
 }
 
-
+//MARK: - ProductReviewSummeryTableViewCell
 extension ProductDetailViewController: ProductReviewSummeryTableViewCellDelegate {
     func seeAllCommentButttonTapped() {
         self.performSegue(withIdentifier: "showProductReviewListViewController", sender: nil)
     }
     
     func reviewItemSeeMoreButtonTapped(review: ProductReviewItem) {
-        
+        self.performSegue(withIdentifier: "showProductReviewListViewController", sender: review)
     }
     
     func writeCommentButtonTapped() {

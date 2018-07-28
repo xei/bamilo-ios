@@ -8,10 +8,6 @@
 
 import UIKit
 
-@objc protocol BaseProductTableViewCellDelegate {
-    @objc optional func rateButtonTapped(cell: ProductDetailPrimaryInfoTableViewCell)
-}
-
 class BaseProductTableViewCell: BaseTableViewCell {
 
     @IBOutlet internal weak var containerBoxView: UIView?

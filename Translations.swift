@@ -155,4 +155,7 @@ let STRING_SELLER_SCORE = RILocalizationWrapper.localizedString("seller_score")!
 let STRING_NO_RATE = RILocalizationWrapper.localizedString("no_rate")!
 let STRING_SUMISSION_SUCCESS = RILocalizationWrapper.localizedString("review_submission_success")!
 let STRING_PLZ_ADD_RATE = RILocalizationWrapper.localizedString("please_add_your_rate")!
+let STRING_RELATED_ITEMS = RILocalizationWrapper.localizedString("related_items")!
+let STRING_RATE_IT = RILocalizationWrapper.localizedString("rate_it")!
+let STRING_RATE_AND_REVIEW = RILocalizationWrapper.localizedString("rate_and_review")!
 

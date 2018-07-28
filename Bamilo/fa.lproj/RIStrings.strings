@@ -138,7 +138,7 @@
 
 "string_rate_now" = "آیا این کالا را دارید؟ به آن امتیاز بدهید.";
 
-"related_items" = "کالاهای مرتبط";
+"related_items" = "کالاهای مشابه";
 
 "product_features_title" = "امکانات کالا";
 
@@ -1052,3 +1052,7 @@
 "please_add_your_rate" = "لطفا امتیاز خود را وارد نمایید";
 
 "review_submission_success" = "ثبت نظر شما با موفقیت انجام شد";
+
+"rate_it" = "نظر دهید";
+
+"rate_and_review" = "امتیاز و نظرات";

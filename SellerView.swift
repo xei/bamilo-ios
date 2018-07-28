@@ -91,7 +91,7 @@ import UIKit
         self.otherSellerButtonHeightConstraint.constant = otherSellerCount == 0 ? 0 : 47
         self.otherSellerCountLabel.text = "+\(otherSellerCount)".convertTo(language: .arabic)
         
-        self.sellerNameLabel.text = "\(STRING_SELLER): \(seller.name ?? STRING_NO_NAME)"
+        self.sellerNameLabel.text = "\(STRING_VENDOR): \(seller.name ?? STRING_NO_NAME)"
         if let orderDeliveryCount = seller.orderDeliveryCount {
             self.sellerOrderCounts.text = "\(orderDeliveryCount.label ?? STRING_ORDERS_COUNT): \(orderDeliveryCount.value ?? "")".convertTo(language: .arabic)
             self.sellerOrderCounts.textColor = orderDeliveryCount.color ?? Theme.color(kColorGray1)

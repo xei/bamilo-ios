@@ -64,10 +64,12 @@ class ProductReviewSummeryTableViewCell: BaseProductTableViewCell {
     override func update(withModel model: Any!) {
         if let product = model as? NewProduct {
             self.model = product
-            averageRateLabel.text = Utility.formatScoreValue(score: product.ratings?.average ?? 0)
+            averageRateLabel.text = Utility.formatScoreValue(score: Double(round(10*(product.ratings?.average ?? 0))/10))
             baseAverageRateLabel.text = "\(STRING_FROM) \(Utility.formatScoreValue(score: product.ratings?.maxValue ?? 0))"
             rateCountLabel.text = "\(product.ratings?.totalCount ?? 0) \(STRING_COMMENT)".convertTo(language: .arabic)
             reviewCollectionView.reloadData()
+            
+            reviewCollectionView.isHidden = (product.reviews?.totalCount ?? 0) == 0
             moreCommentButtonHeightConstraint.constant = (product.reviews?.totalCount ?? 0) == 0 ? 0 :47
             moreCommentsButton.isHidden = (product.reviews?.totalCount ?? 0) == 0
         }

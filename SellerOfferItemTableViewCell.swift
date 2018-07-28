@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol SellerOfferItemTableViewCellDelegate: class {
+    func addToCart(simpleSku: String, product: TrackableProductProtocol)
+}
+
 class SellerOfferItemTableViewCell: BaseProductTableViewCell {
 
     @IBOutlet weak private var sellerNameTitleLabel: UILabel!
@@ -23,6 +27,9 @@ class SellerOfferItemTableViewCell: BaseProductTableViewCell {
     @IBOutlet weak private var dicountPrecentageLabel: UILabel!
     @IBOutlet weak private var dicountPrecentageWrapperView: UIView!
     @IBOutlet weak private var addToCartButton: UIButton!
+    
+    weak var delegate: SellerOfferItemTableViewCellDelegate?
+    var model: SellerListItem?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -43,6 +50,13 @@ class SellerOfferItemTableViewCell: BaseProductTableViewCell {
             dicountPrecentageLabel?.text = "%\(item.productOffer?.price?.discountPercentage ?? 0)".convertTo(language: .arabic)
             dicountPrecentageWrapperView.isHidden = (item.productOffer?.price?.discountPercentage ?? 0) == 0
             oldPriceLabel.isHidden = (item.productOffer?.price?.oldPrice ?? 0) == 0
+            self.model = item
+        }
+    }
+    
+    @IBAction func addToCartButtonTapped(_ sender: Any) {
+        if let product = self.model?.productOffer {
+            self.delegate?.addToCart(simpleSku: product.simpleSku ?? product.sku, product: product)
         }
     }
     

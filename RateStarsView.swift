@@ -32,16 +32,17 @@ class RateStarsView: BaseControlView {
             self.starButtons.forEach { (button) in
                 button.imageHeightToButtonHeightRatio = 0.95
                 if button.tag <= Int(roundedRate) {
-                    button.imageView?.image = #imageLiteral(resourceName: "ProductRateFullStar").withRenderingMode(.alwaysTemplate)
-                    button.imageView?.tintColor = color
+                    button.setImage(#imageLiteral(resourceName: "ProductRateFullStar").withRenderingMode(.alwaysTemplate), for: .normal)
+                    button.tintColor = color
                 } else {
-                    button.imageView?.image = #imageLiteral(resourceName: "ProductRateEmptyStar").withRenderingMode(.alwaysTemplate)
-                    button.imageView?.tintColor = disabledColor
+                    button.setImage(#imageLiteral(resourceName: "ProductRateEmptyStar").withRenderingMode(.alwaysTemplate), for: .normal)
+                    button.tintColor = disabledColor
                 }
                 if roundedRate > Double(Int(roundedRate)) && button.tag == Int(roundedRate) + 1 { //has 0.5
-                    button.imageView?.image = #imageLiteral(resourceName: "ProductRateHalfStar").withRenderingMode(.alwaysTemplate)
-                    button.imageView?.tintColor = color
+                    button.setImage(#imageLiteral(resourceName: "ProductRateHalfStar").withRenderingMode(.alwaysTemplate), for: .normal)
+                    button.tintColor = color
                 }
+                
             }
         }
     }

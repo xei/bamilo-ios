@@ -99,8 +99,14 @@
                                     <constraint firstItem="dxu-ZS-Oxt" firstAttribute="centerY" secondItem="Do0-X9-O3B" secondAttribute="centerY" id="y9D-nk-hqG"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r1c-fr-HPl">
-                                <rect key="frame" x="163" y="44" width="30" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r1c-fr-HPl" customClass="IconButton">
+                                <rect key="frame" x="145" y="35" width="48" height="48"/>
+                                <state key="normal" image="ProductComment"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="positionStatus">
+                                        <integer key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="rateButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="tRG-59-ChL"/>
                                 </connections>
@@ -221,6 +227,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="ProductComment" width="48" height="48"/>
         <image name="ic_user_form" width="20" height="22"/>
     </resources>
 </document>

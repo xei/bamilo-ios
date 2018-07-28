@@ -69,7 +69,7 @@ class ProductOveralRateTableViewCell: BaseTableViewCell {
     override func update(withModel model: Any!) {
         guard let rate = model as? ProductRate else { return }
         
-        averageRateLabel.text = Utility.formatScoreValue(score: rate.average ?? 0)
+        averageRateLabel.text = Utility.formatScoreValue(score: Double(round(10*(rate.average ?? 0))/10))
         baseRateLabel.text = "\(STRING_FROM) \(Utility.formatScoreValue(score: rate.maxValue ?? 0))"
         rateCountLabel.text = "\(rate.totalCount ?? 0) \(STRING_COMMENT)".convertTo(language: .arabic)
         

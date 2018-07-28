@@ -68,7 +68,7 @@
         kColorBlue10: [UIColor withHexString:@"#e9e8ee"],
         kColorOrange: [UIColor withRGBA:255 green:191 blue:2 alpha:1.0f],
         kColorGreen: [UIColor withRGBA:0 green:160 blue:0 alpha:1.0],
-        kColorGray: [UIColor withRepeatingRGBA:217 alpha:1.0f],
+        kColorGray: [UIColor withHexString:@"#f8f8f8"],
         kColorDarkGray: [UIColor withRepeatingRGBA:115 alpha:1.0f],
         kColorExtraDarkGray: [UIColor withRepeatingRGBA:80 alpha:1.0f],
         kColorLightGray: [UIColor withRepeatingRGBA:146 alpha:1.0f],

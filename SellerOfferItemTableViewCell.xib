@@ -123,6 +123,9 @@
                                     <constraint firstAttribute="height" constant="29" id="Kc1-kZ-OEM"/>
                                     <constraint firstAttribute="width" constant="121" id="OnT-hA-dE6"/>
                                 </constraints>
+                                <connections>
+                                    <action selector="addToCartButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="4GM-vm-52D"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

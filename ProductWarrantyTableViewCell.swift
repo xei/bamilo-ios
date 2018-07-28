@@ -23,6 +23,8 @@ class ProductWarrantyTableViewCell: BaseProductTableViewCell {
         seeMoreButton.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorBlue))
         
         seeMoreButton.setTitle(STRING_PRIVACY_POLICY, for: .normal)
+        
+        seeMoreButton.isHidden = true
     }
     
     override func update(withModel model: Any!) {

@@ -134,11 +134,13 @@ extension ProductVariationView {
     
     @objc func gridButtonTapped(sender: UIButton) {
         gridButtons?.forEach {
+            $0.applyBorder(width: 1, color: Theme.color(kColorGray10))
             $0.backgroundColor = .white
             $0.setTitleColor(Theme.color(kColorGray1), for: .normal)
         }
         sender.backgroundColor = Theme.color(kColorBlue1)
         sender.setTitleColor(.white, for: .normal)
+        sender.applyBorder(width: 0, color: .clear)
         
         if let title = sender.titleLabel?.text {
             self.product?.sizeVariaionProducts?.forEach { $0.isSelected = false }

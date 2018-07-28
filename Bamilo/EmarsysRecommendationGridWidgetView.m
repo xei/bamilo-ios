@@ -26,7 +26,7 @@ const int numberOfColumns = 2;
     [self setWidgetBacgkround:[UIColor clearColor]];
     self.collectionView.backgroundColor = [UIColor clearColor];
     [self.moreButton applyStyle:[Theme font:kFontVariationRegular size:12.0f] color:[Theme color:kColorBlue]];
-    [self.moreButton setTitle:STRING_RECENTLY_VIEWED forState:UIControlStateNormal];
+    [self.moreButton setTitle:STRING_RELATED_ITEMS forState:UIControlStateNormal];
     [self.collectionView registerNib:[UINib nibWithNibName:[EmarsysRecommendationCarouselCollectionViewCell nibName] bundle:nil] forCellWithReuseIdentifier:[EmarsysRecommendationCarouselCollectionViewCell nibName]];
 }
 

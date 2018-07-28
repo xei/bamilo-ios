@@ -16,6 +16,7 @@ class ProductReviewListViewController: BaseViewController, DataServiceProtocol {
     var productSku : String?
     var rating: ProductRate?
     var review: ProductReview?
+    var signleReviewItem: ProductReviewItem?
     
     private var expandedIndexPathes = [IndexPath]()
     private var loadingDataInProgress = false
@@ -46,12 +47,16 @@ class ProductReviewListViewController: BaseViewController, DataServiceProtocol {
         tableview.tableFooterView = UIView(frame: .zero)
         tableview.showsVerticalScrollIndicator = false
         tableview.separatorStyle = .none
+        if let _ = signleReviewItem {
+            expandedIndexPathes = [IndexPath(row: 0, section: 1)]
+        } else {
+            getContent()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.hidesBottomBarWhenPushed = true
-        getContent()
     }
     
     private func loadMore() {
@@ -148,7 +153,7 @@ extension ProductReviewListViewController: UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? 1 : (review?.items?.count ?? 0)
+        return section == 0 ? 1 : (signleReviewItem != nil ? 1 : (review?.items?.count ?? 0))
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -165,6 +170,9 @@ extension ProductReviewListViewController: UITableViewDelegate, UITableViewDataS
             if let reviewItems = review?.items, indexPath.row < reviewItems.count {
                 cell.isExpanded = expandedIndexPathes.contains(indexPath)
                 cell.update(withModel: reviewItems[indexPath.row])
+            } else if let reviewItems = signleReviewItem {
+                cell.isExpanded = true
+                cell.update(withModel: reviewItems)
             }
             return cell
         }

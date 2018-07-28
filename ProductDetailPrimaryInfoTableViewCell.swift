@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol ProductDetailPrimaryInfoTableViewCellDelegate: class {
+    func rateButtonTapped()
+}
+
 class ProductDetailPrimaryInfoTableViewCell: BaseProductTableViewCell {
     
     @IBOutlet weak private var productNameLabel: UILabel!
@@ -24,8 +28,8 @@ class ProductDetailPrimaryInfoTableViewCell: BaseProductTableViewCell {
     @IBOutlet weak private var oldPriceLabel: UILabel!
     @IBOutlet weak private var discountPercentageContainerView: UIView!
     @IBOutlet weak private var ratePresentorContainerView: UIView!
-    @IBOutlet weak private var rateItButton: UIButton!
-    weak var delegate: BaseProductTableViewCellDelegate?
+    @IBOutlet weak private var rateItButton: IconButton!
+    weak var delegate: ProductDetailPrimaryInfoTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -37,7 +41,7 @@ class ProductDetailPrimaryInfoTableViewCell: BaseProductTableViewCell {
     }
     
     private func applyStyle() {
-        self.containerBoxView?.backgroundColor = .white
+        containerBoxView?.backgroundColor = .white
         seperatorLineView.backgroundColor = Theme.color(kColorGray10)
         [calculatedBenefitLabel, oldPriceLabel].forEach { $0.applyStyle(font: Theme.font(kFontVariationLight, size: 11), color: Theme.color(kColorGray3)) }
         [productNameLabel, rateValueLabel].forEach { $0?.applyStyle(font: Theme.font(kFontVariationBold, size: 15), color: Theme.color(kColorGray1)) }
@@ -48,8 +52,11 @@ class ProductDetailPrimaryInfoTableViewCell: BaseProductTableViewCell {
         discountPercentageLabel.applyStyle(font: Theme.font(kFontVariationLight, size: 11), color: Theme.color(kColorOrange1))
         discountPercentageLabel.textAlignment = .center
         discountPercentageLabel.clipsToBounds = false
-        self.rateItButton.setTitle(STRING_RATE, for: .normal)
-        self.rateItButton.applyStyle(font: Theme.font(kFontVariationLight, size: 13), color: Theme.color(kColorBlue1))
+        rateItButton.setTitle(STRING_RATE_IT, for: .normal)
+        rateItButton.applyStyle(font: Theme.font(kFontVariationLight, size: 13), color: Theme.color(kColorBlue))
+        
+        rateItButton.setImage( #imageLiteral(resourceName: "ProductComment").withRenderingMode(.alwaysTemplate), for: .normal)
+        rateItButton.imageView?.tintColor = Theme.color(kColorBlue)
     }
     
     override func update(withModel model: Any!) {
@@ -80,6 +87,6 @@ class ProductDetailPrimaryInfoTableViewCell: BaseProductTableViewCell {
         }
     }
     @IBAction func rateButtonTapped(_ sender: Any) {
-        self.delegate?.rateButtonTapped?(cell: self)
+        self.delegate?.rateButtonTapped()
     }
 }

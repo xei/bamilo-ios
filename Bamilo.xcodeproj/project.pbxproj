@@ -205,6 +205,8 @@
 		61832FD81ED2C05B006F01FE /* RateStarsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61832FD71ED2C05B006F01FE /* RateStarsView.xib */; };
 		61832FDA1ED2D145006F01FE /* Ext+Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61832FD91ED2D145006F01FE /* Ext+Double.swift */; };
 		61832FDE1ED2DC0D006F01FE /* RateStarControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61832FDD1ED2DC0D006F01FE /* RateStarControl.swift */; };
+		6183DD1A210CAA4C00CD2339 /* ProductEmptyReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6183DD18210CAA4C00CD2339 /* ProductEmptyReviewTableViewCell.swift */; };
+		6183DD1B210CAA4C00CD2339 /* ProductEmptyReviewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6183DD19210CAA4C00CD2339 /* ProductEmptyReviewTableViewCell.xib */; };
 		61840B631EA397FF006739EB /* EmarsysRecommendationGridWidgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61840B621EA397FF006739EB /* EmarsysRecommendationGridWidgetView.m */; };
 		61840B651EA3981E006739EB /* EmarsysRecommendationGridWidgetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61840B641EA3981E006739EB /* EmarsysRecommendationGridWidgetView.xib */; };
 		61840B681EA39941006739EB /* EmarsysRecommendationGridWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 61840B671EA39941006739EB /* EmarsysRecommendationGridWidget.m */; };
@@ -1348,6 +1350,8 @@
 		61832FD71ED2C05B006F01FE /* RateStarsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RateStarsView.xib; sourceTree = "<group>"; };
 		61832FD91ED2D145006F01FE /* Ext+Double.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Ext+Double.swift"; sourceTree = "<group>"; };
 		61832FDD1ED2DC0D006F01FE /* RateStarControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateStarControl.swift; sourceTree = "<group>"; };
+		6183DD18210CAA4C00CD2339 /* ProductEmptyReviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductEmptyReviewTableViewCell.swift; sourceTree = "<group>"; };
+		6183DD19210CAA4C00CD2339 /* ProductEmptyReviewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductEmptyReviewTableViewCell.xib; sourceTree = "<group>"; };
 		61840B611EA397FF006739EB /* EmarsysRecommendationGridWidgetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysRecommendationGridWidgetView.h; sourceTree = "<group>"; };
 		61840B621EA397FF006739EB /* EmarsysRecommendationGridWidgetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysRecommendationGridWidgetView.m; sourceTree = "<group>"; };
 		61840B641EA3981E006739EB /* EmarsysRecommendationGridWidgetView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmarsysRecommendationGridWidgetView.xib; sourceTree = "<group>"; };
@@ -3342,6 +3346,7 @@
 		6127EA0120B2E1E20064B291 /* ProductDetailView */ = {
 			isa = PBXGroup;
 			children = (
+				6183DD17210CAA2100CD2339 /* ProductEmptyReviewTableViewCell */,
 				612AC4C82106016B00A14B3C /* ProductBreadCrumbTableViewCell */,
 				612AC4C321037B5F00A14B3C /* ProductRecommendationWidgetTableViewCell */,
 				61AA6B4020E8DCED00706F9A /* ProductReviewSummery */,
@@ -4114,6 +4119,15 @@
 				61832FDD1ED2DC0D006F01FE /* RateStarControl.swift */,
 			);
 			name = Control;
+			sourceTree = "<group>";
+		};
+		6183DD17210CAA2100CD2339 /* ProductEmptyReviewTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				6183DD18210CAA4C00CD2339 /* ProductEmptyReviewTableViewCell.swift */,
+				6183DD19210CAA4C00CD2339 /* ProductEmptyReviewTableViewCell.xib */,
+			);
+			name = ProductEmptyReviewTableViewCell;
 			sourceTree = "<group>";
 		};
 		61840B5E1EA39773006739EB /* EmarsysRecommendationGridWidget */ = {
@@ -8945,6 +8959,7 @@
 				61E099721E3E18F0004ED14E /* NotificationTableViewCell.xib in Resources */,
 				8757434E1EA60D8E001B518A /* Autumn-60@3x.png in Resources */,
 				875743431EA60D8E001B518A /* Autumn-Small@3x.png in Resources */,
+				6183DD1B210CAA4C00CD2339 /* ProductEmptyReviewTableViewCell.xib in Resources */,
 				875744601EA60E8D001B518A /* Yalda-Small-40.png in Resources */,
 				8714E0681E478DF2004C9B1D /* CheckoutProgressView.xib in Resources */,
 				8757439F1EA60DE0001B518A /* Ramadan.png in Resources */,
@@ -9412,6 +9427,7 @@
 				61B80E6920F61CB20028FA87 /* MinimalProductTableViewCell.swift in Sources */,
 				CE9ADF741AB6D78200D56481 /* JAPDVBundleSingleItem.m in Sources */,
 				CE9ADF7A1AB6D78200D56481 /* JAPercentageBarView.m in Sources */,
+				6183DD1A210CAA4C00CD2339 /* ProductEmptyReviewTableViewCell.swift in Sources */,
 				613FF2BA1E4B2858008660CF /* SignUpViewController.m in Sources */,
 				61E6EE65209DD2FC0007ED5F /* CHIPageControllable.swift in Sources */,
 				87EA03091E6C695D00B1E062 /* IconTableViewHeaderCell.m in Sources */,
